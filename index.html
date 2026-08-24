@@ -73,6 +73,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .setup code{background:var(--panel2);padding:2px 6px;border-radius:5px;font-size:.85em;color:var(--acc)}
 
 /* ---- report ---- */
+.hidden{display:none!important}
 .report{display:none}
 .report.show{display:block}
 .place{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin:22px 0 6px;color:var(--ink2);font-size:.88rem}
@@ -126,6 +127,28 @@ section.blk{margin-top:30px}
 .ext a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink)}
 .ext a span{display:block;font-size:.78rem;color:var(--ink2);margin-top:2px}
 .ext a:hover{border-color:var(--line2);text-decoration:none}
+.focusbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.focusbar button{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:7px 13px;font-size:.8rem;font-weight:600;color:var(--ink2);cursor:pointer}
+.focusbar button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
+.focusbar button.all{border-style:dashed}
+.focusnote{font-size:.78rem;color:var(--ink3);margin-top:8px}
+.focusnote a{color:var(--ink2);text-decoration:underline}
+.ckey{display:flex;gap:14px;font-size:.72rem;color:var(--ink2);margin-bottom:6px}
+.ckey i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
+.chart h3{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:2px}
+.chart .cs{font-size:.72rem;color:var(--ink3);margin-bottom:10px}
+.sug{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-bottom:10px}
+.sug h3{font-family:var(--disp);font-size:1rem;font-weight:600;margin-bottom:5px}
+.sug .ev{font-size:.8rem;color:var(--acc);margin-bottom:8px}
+.sug ul{list-style:none;display:flex;flex-direction:column;gap:6px}
+.sug li{font-size:.85rem;color:var(--ink2);padding-left:14px;position:relative;line-height:1.5}
+.sug li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:1px;background:var(--ink3)}
+.sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
+.sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
+.sugcat{font-size:.7rem;font-weight:700;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px}
+.caveat{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-top:14px;font-size:.82rem;color:var(--ink2);line-height:1.6}
+.caveat b{color:var(--ink);display:block;margin-bottom:6px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
 .diag{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.8rem;color:var(--ink2)}
 .diag summary{cursor:pointer;color:var(--ink3);font-weight:600;letter-spacing:.06em;font-size:.72rem}
 .diag pre{white-space:pre-wrap;word-break:break-all;font-size:.74rem;color:var(--ink3);margin-top:8px;line-height:1.5}
@@ -168,6 +191,8 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <div class="report" id="report">
     <div class="place" id="place"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
+    <div class="focusbar" id="focusbar" aria-label="Focus the report"></div>
+    <div class="focusnote" id="focusnote"></div>
     <div class="brief" id="brief"></div>
     <div id="sections"></div>
     <details class="diag" id="diag"><summary>SOURCES &amp; DIAGNOSTICS</summary><div id="diagbody"></div></details>
@@ -175,16 +200,20 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v1.2</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v1.2';
+const VERSION = 'v2.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
+// Optional AI-written suggestions. OFF by default and deliberately has no button
+// while false, so there is no dead control on screen. Turning this on requires an
+// Anthropic API key held server-side in a Netlify function — see README.
+const AI_ASSIST = false;
 const GEOCODER = 'https://geocoding.geo.census.gov/geocoder/geographies';
 const API = 'https://api.census.gov/data';
 /* ========================================== */
@@ -214,6 +243,20 @@ const PAST_VARS=[...v('B01003',1), ...v('B03002',1,3,4,5,6,7,8,9,12), ...v('B050
 /* ================= STATE ================= */
 const $=id=>document.getElementById(id);
 let LOG=[]; let DATA=null; let SCOPE='tract';
+/* Focus filters. Empty set = show everything. Each focus names the data sections
+   it keeps (by theme) and which outreach categories stay visible. */
+const FOCUS_DEFS=[
+ {k:'families', label:'Families & youth', themes:['families'],            cats:['Children & youth']},
+ {k:'seniors',  label:'Seniors',          themes:['seniors'],             cats:['Seniors & isolation']},
+ {k:'hardship', label:'Hardship & work',  themes:['hardship','work'],     cats:['Hardship & work','Two neighbourhoods at once']},
+ {k:'housing',  label:'Housing',          themes:['housing'],             cats:['Housing pressure']},
+ {k:'language', label:'Language & newcomers', themes:['language'],        cats:['Language & newcomers']},
+ {k:'change',   label:'Change over time', themes:['change','people'],     cats:['A changing community']}
+];
+let FOCUS=new Set();
+function focusThemes(){const t=new Set();FOCUS.forEach(k=>FOCUS_DEFS.find(f=>f.k===k).themes.forEach(x=>t.add(x)));return t}
+function focusCats(){const c=new Set();FOCUS.forEach(k=>FOCUS_DEFS.find(f=>f.k===k).cats.forEach(x=>c.add(x)));return c}
+function focusLabel(){return FOCUS.size?[...FOCUS].map(k=>FOCUS_DEFS.find(f=>f.k===k).label).join(' + '):'Everything'}
 function log(s){LOG.push(s);}
 function key(){return CENSUS_KEY||localStorage.getItem('terrain-census-key')||''}
 
@@ -413,6 +456,418 @@ function brief(M,levels,scope){
   return s.join(' ');
 }
 
+/* ================= METRIC DICTIONARY (drives the CSV export) ================= */
+const SPEC=[
+ ['pop','Population','B01003','n'],['hh','Households','B25003','n'],
+ ['medAge','Median age','B01002','d1'],['kids','Children under 18','B09001','n'],
+ ['kidsShare','Children, share of residents','B09001','p'],['kidsPerHH','Children per household','B09001','d2'],
+ ['medInc','Median household income','B19013','$'],['gini','Income inequality (Gini)','B19083','d2'],
+ ['incLow','Households under $35k','B19001','p'],['incHigh','Households over $150k','B19001','p'],
+ ['poverty','People below poverty line','B17001','p'],['childPoverty','Children below poverty line','B17001','p'],
+ ['unemp','Unemployed, civilian labour force','B23025','p'],
+ ['snap','Households receiving SNAP','B22010','p'],['pubAssist','Households on cash public assistance','B19057','p'],
+ ['uninsured','No health insurance','B27010','p'],
+ ['foreign','Born outside the U.S.','B05002','p'],['recentOfForeign','Foreign-born who arrived 2010 or later','B05005','p'],
+ ['englishOnly','Speaks only English at home','C16001','p'],['limEng','Limited-English households','C16002','p'],
+ ['renters','Renter households','B25003','p'],['rent30','Renters paying 30%+ of income','B25070','p'],
+ ['rent50','Renters paying 50%+ of income','B25070','p'],['overcrowd','Overcrowded homes','B25014','p'],
+ ['noCar','Households without a vehicle','B25044','p'],
+ ['singleParent','Single-parent families with children','B11003','p'],
+ ['famWithKids','Families with children','B11003','p'],
+ ['seniorsAlone','Households: senior living alone','B11010','p'],['seniorsAloneN','Seniors living alone (count)','B11010','n'],
+ ['students','Enrolled in school','B14001','p'],['k12','Enrolled in K-12 (count)','B14001','n'],['college','Enrolled in college (count)','B14001','n']
+];
+const fmtCell=(v,t)=>v==null?'':t==='p'?(Math.round(v*10)/10):t==='$'?Math.round(v):t==='d1'?(Math.round(v*10)/10):t==='d2'?(Math.round(v*100)/100):Math.round(v);
+
+/* ================= OUTREACH RULES =================
+   Each rule fires on a threshold, states the number that triggered it, suggests
+   concrete next steps, and ends with a question to ask a real person locally.
+   Nothing here is a conclusion about people — it is a place to start looking. */
+const RULES=[
+ {id:'lang-primary',cat:'Language & newcomers',w:9,
+  on:m=>m.langs[0]&&m.langs[0].share>=8,
+  ev:m=>`${fmtPct(m.langs[0].share)} speak ${m.langs[0].name} at home — about ${fmtNum(m.langs[0].count)} people.`,
+  t:m=>`Materials and welcome in ${m.langs[0].name}`,
+  do:m=>[`Translate the essentials first: service times, address, a contact name, what to expect on a first visit.`,
+        `Ask whether anyone already in the congregation speaks ${m.langs[0].name} — a person is worth more than a printed sheet.`,
+        `${m.langs[0].ltvw&&m.langs[0].count?fmtPct(m.langs[0].ltvw/m.langs[0].count*100):'Some'} of them report speaking English less than "very well," so spoken help matters as much as written.`],
+  ask:m=>`Which nearby business, school, or shop already serves ${m.langs[0].name}-speaking families? Start there, not with a flyer.`},
+ {id:'lang-second',cat:'Language & newcomers',w:6,
+  on:m=>m.langs[1]&&m.langs[1].share>=5,
+  ev:m=>`Two languages beyond English are common here: ${m.langs[0].name} (${fmtPct(m.langs[0].share)}) and ${m.langs[1].name} (${fmtPct(m.langs[1].share)}).`,
+  t:()=>`Plan for more than one language`,
+  do:()=>[`Avoid designing a single "Spanish service" answer if two distinct communities live here.`,
+          `Signage and printed basics in both; interpretation offered rather than assumed.`],
+  ask:()=>`Do these two communities overlap socially, or are they separate? A neighbour will know in one conversation what the data cannot say.`},
+ {id:'limeng',cat:'Language & newcomers',w:8,
+  on:m=>m.limEng>=8,
+  ev:m=>`${fmtPct(m.limEng)} of households have no one over 14 who speaks English well.`,
+  t:()=>`Practical help with forms and phone calls`,
+  do:()=>[`A standing "help with paperwork" hour reaches people no sermon series will.`,
+          `School letters, medical forms, benefit applications, landlord notices — these are the daily friction.`,
+          `Partner with a local legal-aid or immigrant-services office rather than improvising advice.`],
+  ask:()=>`What paperwork do families here dread most? Ask three people; the answers repeat quickly.`},
+ {id:'foreign',cat:'Language & newcomers',w:7,
+  on:m=>m.foreign>=15&&m.origins&&m.origins.length,
+  ev:m=>`${fmtPct(m.foreign)} were born outside the U.S. — most often ${m.origins.slice(0,3).map(o=>o.name).join(', ')}.`,
+  t:()=>`Know which communities are actually here`,
+  do:m=>[`Learn the difference between the groups rather than treating "immigrant" as one category.`,
+         `Food, holidays, and hospitality translate before doctrine does.`,
+         `Check whether a congregation of the same background already serves them — partner rather than compete.`],
+  ask:()=>`Who are the recognised elders or leaders in each of these communities? Meet them before planning anything.`},
+ {id:'recent',cat:'Language & newcomers',w:6,
+  on:m=>m.recentOfForeign>=25&&m.foreign>=8,
+  ev:m=>`${fmtPct(m.recentOfForeign)} of the foreign-born here arrived in the last decade or so.`,
+  t:()=>`First-year needs, not settled-community needs`,
+  do:()=>[`Recent arrivals need driving, banking, schools, doctors, and a phone plan before they need a programme.`,
+          `A welcome dinner for new neighbours costs little and surfaces needs you would not guess.`],
+  ask:()=>`What was hardest in your first year here? Ask someone who arrived recently and let the answer set the agenda.`},
+
+ {id:'kids',cat:'Children & youth',w:9,
+  on:m=>m.kidsShare>=24,
+  ev:m=>`${fmtPct(m.kidsShare)} of residents are under 18 — about ${fmtNum(m.kids)} children.`,
+  t:()=>`This is a children's neighbourhood`,
+  do:()=>[`Anything for children will out-reach anything for adults here.`,
+          `School-holiday cover is the scarcest thing working parents need.`,
+          `Safe-space policy, background checks, and trained volunteers before you advertise — get this right first.`],
+  ask:()=>`What do parents here do during school holidays? The gap in that answer is your opening.`},
+ {id:'single-parent',cat:'Children & youth',w:8,
+  on:m=>m.singleParent>=30,
+  ev:m=>`${fmtPct(m.singleParent)} of families with children are headed by a single parent.`,
+  t:()=>`Design around one adult, not two`,
+  do:()=>[`Childcare during any adult gathering, or the gathering excludes them by default.`,
+          `Practical help — a repaired car, a cooked meal, an hour of quiet — outranks another evening event.`,
+          `Watch the language from the front: "bring your husband" quietly closes the door.`],
+  ask:()=>`What time of day is hardest for a parent doing this alone? Build around that hour.`},
+ {id:'schools',cat:'Children & youth',w:7,
+  on:m=>m.k12>=400,
+  ev:m=>`About ${fmtNum(m.k12)} children here are enrolled in K-12.`,
+  t:()=>`The schools are the biggest door in the neighbourhood`,
+  do:()=>[`Ask the principal what they are short of — supplies, tutors, coats, breakfast — and supply exactly that.`,
+          `Teacher appreciation is unglamorous, cheap, and remembered for years.`,
+          `Offer space or volunteers before offering a message.`],
+  ask:()=>`Which school here has the fewest volunteers? That is where you are most needed and least duplicated.`},
+ {id:'college',cat:'Children & youth',w:5,
+  on:m=>m.college>=150,
+  ev:m=>`About ${fmtNum(m.college)} residents are enrolled in college.`,
+  t:()=>`A student population is within reach`,
+  do:()=>[`Students respond to food, laundry, quiet study space, and rides at term boundaries.`,
+          `Term dates, not the church calendar, govern when they are reachable.`],
+  ask:()=>`Where do students here actually live — on campus, or in these blocks? That changes everything about timing.`},
+
+ {id:'seniors-alone',cat:'Seniors & isolation',w:8,
+  on:m=>m.seniorsAlone>=12,
+  ev:m=>`${fmtPct(m.seniorsAlone)} of households are a person over 65 living alone — about ${fmtNum(m.seniorsAloneN)} homes.`,
+  t:()=>`Isolation is the need hiding in plain sight`,
+  do:()=>[`A reliable phone call beats an occasional visit; a scheduled visit beats both.`,
+          `Daytime gatherings reach people that evening events never will.`,
+          `Watch for the practical: a lightbulb, a form, a lift to an appointment.`],
+  ask:()=>`Who here has not been asked about in six months? Someone in your congregation already knows a name.`},
+ {id:'older-area',cat:'Seniors & isolation',w:6,
+  on:m=>m.medAge>=45,
+  ev:m=>`Median age is ${m.medAge==null?'—':m.medAge.toFixed(1)} — an older neighbourhood.`,
+  t:()=>`Accessibility is outreach`,
+  do:()=>[`Hearing, seating, parking distance, step-free access, print size — each one silently includes or excludes.`,
+          `Grief and caregiving support are chronically under-provided and deeply needed.`],
+  ask:()=>`Sit at the back of your own sanctuary with the sound as it is. Can you follow it comfortably?`},
+ {id:'seniors-nocar',cat:'Seniors & isolation',w:7,
+  on:m=>m.seniorsAlone>=10&&m.noCar>=8,
+  ev:m=>`${fmtPct(m.seniorsAlone)} are seniors living alone and ${fmtPct(m.noCar)} of households have no vehicle.`,
+  t:()=>`Transport is the barrier before belief is`,
+  do:()=>[`A rota of drivers changes attendance more than any advertising.`,
+          `Map who lives within walking distance versus who needs a lift.`],
+  ask:()=>`How many of your regulars stopped coming when they stopped driving?`},
+
+ {id:'poverty',cat:'Hardship & work',w:9,
+  on:m=>m.poverty>=18,
+  ev:(m,c)=>`${fmtPct(m.poverty)} live below the poverty line${c&&c.poverty!=null?` (county: ${fmtPct(c.poverty)})`:''}.`,
+  t:()=>`Material need is widespread here`,
+  do:()=>[`A benevolence fund with a clear, dignified process — no interrogation at the door.`,
+          `Utility and rent arrears are the emergencies that arrive first.`,
+          `Coordinate with existing agencies so help is not duplicated for some and absent for others.`],
+  ask:()=>`Where do people here go when money runs out before the month does? Find that place and support it.`},
+ {id:'child-poverty',cat:'Hardship & work',w:9,
+  on:m=>m.childPoverty!=null&&m.poverty!=null&&m.childPoverty>=m.poverty+5,
+  ev:m=>`${fmtPct(m.childPoverty)} of children are below the poverty line, against ${fmtPct(m.poverty)} of people overall.`,
+  t:()=>`Children are carrying more of the hardship`,
+  do:()=>[`School holidays remove school meals — that gap is predictable and fillable.`,
+          `Weekend food for children is a well-established, low-friction programme.`,
+          `Shoes, coats, and school supplies at the right week of the year.`],
+  ask:()=>`Ask the school office what percentage qualify for free meals. Compare it with this number.`},
+ {id:'snap',cat:'Hardship & work',w:7,
+  on:m=>m.snap>=12,
+  ev:m=>`${fmtPct(m.snap)} of households received SNAP food assistance in the past year.`,
+  t:()=>`Food insecurity is measurable here`,
+  do:()=>[`Check what pantry exists within walking distance — not driving distance.`,
+          `Help with SNAP enrolment reaches people who qualify but never applied.`,
+          `Consider a regular meal rather than a food handout; a table is different from a queue.`],
+  ask:()=>`Where is the nearest food pantry, and what are its opening hours? If you cannot answer, neither can your neighbours.`},
+ {id:'unemp',cat:'Hardship & work',w:6,
+  on:(m,c)=>m.unemp>=7||(c&&m.unemp!=null&&c.unemp!=null&&m.unemp>=c.unemp+3),
+  ev:(m,c)=>`Unemployment is ${fmtPct(m.unemp)}${c&&c.unemp!=null?` against ${fmtPct(c.unemp)} across the county`:''}.`,
+  t:()=>`Work is a live need`,
+  do:()=>[`A job club — CV help, interview practice, a printer, a reference — is cheap and effective.`,
+          `Employers in your congregation are a more valuable asset than a noticeboard.`],
+  ask:()=>`Who in your congregation hires people? Start the conversation there.`},
+ {id:'uninsured',cat:'Hardship & work',w:6,
+  on:m=>m.uninsured>=10,
+  ev:m=>`${fmtPct(m.uninsured)} have no health insurance.`,
+  t:()=>`Health access is a gap`,
+  do:()=>[`A health fair with a local clinic reaches people who avoid medical settings.`,
+          `Enrolment help during open enrolment is concrete and time-bound.`,
+          `Know the nearest free or sliding-scale clinic by name and hours.`],
+  ask:()=>`What do uninsured neighbours do when a child gets sick at 9pm? The answer tells you what to build.`},
+ {id:'shiftwork',cat:'Hardship & work',w:7,
+  on:m=>m.occ&&m.occ[1]&&m.occ[1][1]>=22,
+  ev:m=>`${fmtPct(m.occ[1][1])} work in service occupations — shift patterns, evenings, and weekends.`,
+  t:()=>`Sunday morning may be their working hour`,
+  do:()=>[`If your only front door opens at 11am Sabbath, shift workers cannot walk through it.`,
+          `A midweek or evening gathering reaches a group that is otherwise structurally excluded.`,
+          `Record or repeat teaching so a missed week is not a lost month.`],
+  ask:()=>`Ask three neighbours what hours they work. Then look at your service times again.`},
+ {id:'professional',cat:'Hardship & work',w:4,
+  on:m=>m.occ&&m.occ[0]&&m.occ[0][1]>=45,
+  ev:m=>`${fmtPct(m.occ[0][1])} work in management and professional roles.`,
+  t:()=>`Time-poor rather than cash-poor`,
+  do:()=>[`Short, well-run, predictable commitments are respected; open-ended ones are quietly declined.`,
+          `Skills — accounting, law, IT, medicine — are the donation most easily given and most often unasked for.`],
+  ask:()=>`What would you ask a busy professional to give if you could not ask for money?`},
+
+ {id:'rent50',cat:'Housing pressure',w:9,
+  on:m=>m.rent50>=20,
+  ev:m=>`${fmtPct(m.rent50)} of renters pay more than half their income in rent.`,
+  t:()=>`Households one setback from losing housing`,
+  do:()=>[`Small, fast emergency assistance prevents evictions that cost far more to undo.`,
+          `Know the local eviction process and a legal-aid contact before someone needs it at short notice.`,
+          `Ask about arrears early — people rarely volunteer it until the notice arrives.`],
+  ask:()=>`Who in your congregation has been evicted or nearly evicted? They know what would have helped.`},
+ {id:'rent30',cat:'Housing pressure',w:6,
+  on:m=>m.rent30>=45&&m.rent50<20,
+  ev:m=>`${fmtPct(m.rent30)} of renters are cost-burdened, paying 30% or more of income in rent.`,
+  t:()=>`Housing costs squeeze the ordinary budget`,
+  do:()=>[`Expect little slack for fees, trips, camps, or giving — price everything accordingly, or not at all.`,
+          `"Free, and genuinely free" removes a barrier you may not see.`],
+  ask:()=>`Does anything you run have a cost attached that quietly filters who attends?`},
+ {id:'renters',cat:'Housing pressure',w:6,
+  on:(m,c)=>m.renters>=45||(c&&m.renters!=null&&c.renters!=null&&m.renters>=c.renters+15),
+  ev:(m,c)=>`${fmtPct(m.renters)} of households rent${c&&c.renters!=null?` against ${fmtPct(c.renters)} across the county`:''}.`,
+  t:()=>`A neighbourhood that turns over`,
+  do:()=>[`Renters move more often — a welcome for new arrivals matters more than a long-term membership drive.`,
+          `Relationships need re-forming continuously; assume a rolling population, not a fixed one.`,
+          `Apartment buildings need a different approach from streets of houses.`],
+  ask:()=>`How would someone who moved in last month find out you exist?`},
+ {id:'overcrowd',cat:'Housing pressure',w:6,
+  on:m=>m.overcrowd>=5,
+  ev:m=>`${fmtPct(m.overcrowd)} of homes have more than one person per room.`,
+  t:()=>`Space itself is scarce`,
+  do:()=>[`Quiet study space for students is a real and rarely offered gift.`,
+          `Hosting in homes may be difficult — meet on neutral ground and do not make it awkward.`],
+  ask:()=>`Where does a teenager here go to do homework?`},
+ {id:'nocar',cat:'Housing pressure',w:7,
+  on:m=>m.noCar>=10,
+  ev:m=>`${fmtPct(m.noCar)} of households have no vehicle.`,
+  t:()=>`Distance is measured in buses, not miles`,
+  do:()=>[`Anything more than a short walk or one bus ride away is effectively out of reach.`,
+          `A lift rota, or meeting closer to where people live, beats better advertising.`],
+  ask:()=>`Walk from the nearest bus stop to your door. How long did it take, and would you do it in the rain?`},
+
+ {id:'divided',cat:'Two neighbourhoods at once',w:10,
+  on:m=>m.incLow>=20&&m.incHigh>=20,
+  ev:m=>`${fmtPct(m.incLow)} of households earn under $35k while ${fmtPct(m.incHigh)} earn over $150k.`,
+  t:()=>`You are serving two very different neighbourhoods`,
+  do:()=>[`One programme will fit one group and quietly exclude the other — plan two front doors.`,
+          `Cost, timing, transport, and dress code all sort people without anyone intending it.`,
+          `The harder work is getting both groups into the same room and keeping it comfortable for the poorer one.`],
+  ask:()=>`When both groups are present, who does the talking? That answer is the real measure.`},
+ {id:'gini',cat:'Two neighbourhoods at once',w:5,
+  on:m=>m.gini>=0.48,
+  ev:m=>`Income inequality here scores ${m.gini==null?'—':m.gini.toFixed(2)} on the Gini index — high.`,
+  t:()=>`Averages will mislead you here`,
+  do:()=>[`Median income hides the spread; do not plan for the middle, because fewer people live there than you think.`],
+  ask:()=>`Which street feels different from the next one over? Walk the boundary.`},
+ {id:'affluent',cat:'Two neighbourhoods at once',w:5,
+  on:m=>m.incHigh>=35&&m.incLow<20,
+  ev:m=>`${fmtPct(m.incHigh)} of households earn over $150k; only ${fmtPct(m.incLow)} under $35k.`,
+  t:()=>`Comfortable, and not therefore reached`,
+  do:()=>[`Material need is low; isolation, exhaustion, family strain, and meaning are not.`,
+          `Generosity capacity here can fund work in neighbourhoods that have none — say so plainly.`,
+          `Avoid assuming affluence equals contentment; it rarely does.`],
+  ask:()=>`What would make a busy, well-off neighbour give up an evening? It is not usually a programme.`},
+
+ {id:'shift-race',cat:'A changing community',w:7,
+  on:m=>m.past&&m.race.some((r,i)=>Math.abs((r[1]??0)-(m.past.race[i][1]??0))>=8),
+  ev:m=>{const d=m.race.map((r,i)=>[r[0],(r[1]??0)-(m.past.race[i][1]??0)]).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]))[0];
+        return `Over ten years the ${d[0]} share has moved ${d[1]>0?'up':'down'} ${Math.abs(d[1]).toFixed(0)} points.`},
+  t:()=>`The neighbourhood is not who it was`,
+  do:()=>[`A congregation that stopped changing when the neighbourhood did will feel like a visitor's mismatch.`,
+          `Leadership that reflects who lives here now speaks louder than any welcome statement.`,
+          `Listen for a year before launching; arriving with a finished plan reads as arriving with an agenda.`],
+  ask:()=>`Does the front of your church look like the street outside it? Ask someone honest.`},
+ {id:'growth',cat:'A changing community',w:5,
+  on:m=>m.past&&m.past.pop&&m.pop&&(m.pop-m.past.pop)/m.past.pop>=0.06,
+  ev:m=>`The population has grown by about ${fmtNum(m.pop-m.past.pop)} in ten years.`,
+  t:()=>`New people are arriving`,
+  do:()=>[`New residents have no established church loyalty — the window is the first months after a move.`,
+          `New housing developments are worth a specific, deliberate welcome.`],
+  ask:()=>`Where is the new housing going up, and who is moving into it?`},
+ {id:'foreign-shift',cat:'A changing community',w:6,
+  on:m=>m.past&&m.past.foreign!=null&&m.foreign!=null&&(m.foreign-m.past.foreign)>=5,
+  ev:m=>`The foreign-born share has risen about ${(m.foreign-m.past.foreign).toFixed(0)} points in ten years.`,
+  t:()=>`Immigration is reshaping this area now`,
+  do:()=>[`This is a trend, not a snapshot — plan for where it is heading, not where it was.`,
+          `Second-generation children often bridge two worlds and carry the strain of it.`],
+  ask:()=>`Who arrived here in the last five years and would be willing to tell you honestly how it went?`}
+];
+
+function suggestions(M,scope){
+  const m=M[scope], c=M.county;
+  const hits=RULES.filter(r=>{try{return !!r.on(m,c)}catch(e){return false}})
+    .map(r=>({...r, evidence:r.ev(m,c), title:r.t(m,c), steps:r.do(m,c), question:r.ask(m,c)}))
+    .sort((a,b)=>b.w-a.w);
+  const cats=[];
+  hits.forEach(h=>{ let g=cats.find(x=>x.cat===h.cat); if(!g){g={cat:h.cat,items:[]};cats.push(g)} g.items.push(h); });
+  return {hits,cats};
+}
+
+/* ================= CHARTS (inline SVG — no library, prints cleanly) ================= */
+const SVGC={gold:'#F0B443',dim:'#6B737D',ink:'#A6ADB6',line:'#2A3038'};
+function chartGrouped(cats,a,b){
+  const W=560,H=210,PL=42,PB=40,PT=10,PR=8, n=cats.length;
+  const max=Math.max(...a.vals.concat(b?b.vals:[]),1)*1.15;
+  const gw=(W-PL-PR)/n, bw=b?gw*0.30:gw*0.45;
+  const y=v=>PT+(H-PT-PB)*(1-v/max);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
+  [0,max/2,max].forEach(g=>{s+=`<line x1="${PL}" x2="${W-PR}" y1="${y(g)}" y2="${y(g)}" stroke="${SVGC.line}" stroke-width="1"/>`
+    +`<text x="${PL-6}" y="${y(g)+4}" fill="${SVGC.dim}" font-size="13" text-anchor="end">${Math.round(g)}%</text>`;});
+  cats.forEach((cat,i)=>{
+    const x0=PL+i*gw+gw/2;
+    const av=a.vals[i]??0, bv=b?(b.vals[i]??0):null;
+    if(b){
+      s+=`<rect x="${x0-bw-2}" y="${y(av)}" width="${bw}" height="${Math.max(0,H-PB-y(av))}" fill="${SVGC.gold}" rx="2"/>`;
+      s+=`<rect x="${x0+2}" y="${y(bv)}" width="${bw}" height="${Math.max(0,H-PB-y(bv))}" fill="${SVGC.dim}" opacity=".55" rx="2"/>`;
+    } else s+=`<rect x="${x0-bw/2}" y="${y(av)}" width="${bw}" height="${Math.max(0,H-PB-y(av))}" fill="${SVGC.gold}" rx="2"/>`;
+    String(cat).split('\n').forEach((ln,k)=>{s+=`<text x="${x0}" y="${H-PB+15+k*13}" fill="${SVGC.ink}" font-size="12.5" text-anchor="middle">${esc(ln)}</text>`;});
+  });
+  s+=`</svg>`;
+  const key=`<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(a.name)}</span>${b?`<span><i style="background:${SVGC.dim};opacity:.55"></i>${esc(b.name)}</span>`:''}</div>`;
+  return key+s;
+}
+function chartLollipop(rows,aName,bName){
+  const W=560,rowH=31,PL=176,PR=54,H=rows.length*rowH+18;
+  const max=Math.max(...rows.map(r=>Math.max(r.me??0,r.cty??0)),1)*1.2;
+  const x=v=>PL+(W-PL-PR)*(v/max);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
+  rows.forEach((r,i)=>{
+    const yy=14+i*rowH;
+    s+=`<text x="${PL-10}" y="${yy+4}" fill="${SVGC.ink}" font-size="13" text-anchor="end">${esc(r.label)}</text>`;
+    s+=`<line x1="${PL}" x2="${W-PR}" y1="${yy}" y2="${yy}" stroke="${SVGC.line}" stroke-width="1"/>`;
+    if(r.cty!=null&&r.me!=null) s+=`<line x1="${x(Math.min(r.me,r.cty))}" x2="${x(Math.max(r.me,r.cty))}" y1="${yy}" y2="${yy}" stroke="${SVGC.gold}" stroke-width="2" opacity=".45"/>`;
+    if(r.cty!=null) s+=`<circle cx="${x(r.cty)}" cy="${yy}" r="4" fill="${SVGC.dim}"/>`;
+    if(r.me!=null) s+=`<circle cx="${x(r.me)}" cy="${yy}" r="5.5" fill="${SVGC.gold}"/>`;
+    if(r.me!=null) s+=`<text x="${W-PR+6}" y="${yy+4}" fill="${SVGC.gold}" font-size="13" font-weight="600">${fmtPct(r.me)}</text>`;
+  });
+  s+=`</svg>`;
+  return `<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(aName)}</span><span><i style="background:${SVGC.dim}"></i>${esc(bName)}</span></div>`+s;
+}
+function chartSlope(items,thenLabel,nowLabel){
+  const W=600,H=230,PT=20,PB=30,PL=64,PR=196;
+  const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
+  const y=v=>PT+(H-PT-PB)*(1-v/max);
+  let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
+  s+=`<line x1="${PL}" x2="${PL}" y1="${PT}" y2="${H-PB}" stroke="${SVGC.line}"/><line x1="${W-PR}" x2="${W-PR}" y1="${PT}" y2="${H-PB}" stroke="${SVGC.line}"/>`;
+  s+=`<text x="${PL}" y="${H-PB+16}" fill="${SVGC.dim}" font-size="12" text-anchor="middle">${esc(thenLabel)}</text>`;
+  s+=`<text x="${W-PR}" y="${H-PB+16}" fill="${SVGC.dim}" font-size="12" text-anchor="middle">${esc(nowLabel)}</text>`;
+  items.forEach(it=>{
+    const up=it.now>=it.then, col=Math.abs(it.now-it.then)>=3?SVGC.gold:SVGC.dim;
+    s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="2" opacity="${col===SVGC.gold?1:.5}"/>`;
+    s+=`<circle cx="${PL}" cy="${y(it.then)}" r="3.5" fill="${col}"/><circle cx="${W-PR}" cy="${y(it.now)}" r="3.5" fill="${col}"/>`;
+    s+=`<text x="${PL-7}" y="${y(it.then)+4}" fill="${SVGC.dim}" font-size="12" text-anchor="end">${fmtPct(it.then)}</text>`;
+    s+=`<text x="${W-PR+8}" y="${y(it.now)+4}" fill="${col}" font-size="12.5" font-weight="600">${esc(it.name)} ${fmtPct(it.now)}</text>`;
+  });
+  s+=`</svg>`; return s;
+}
+
+/* ================= EXPORT ================= */
+function csvEscape(v){const s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
+function buildCSV(M,levels,geo){
+  const cols=Object.keys(levels);
+  const head=['Metric','Census table','Units',...cols.map(l=>levels[l].kind+' — '+levels[l].short)];
+  const rows=[head];
+  SPEC.forEach(([k,label,table,t])=>{
+    rows.push([label,table,t==='p'?'percent':t==='$'?'US dollars':'count / value',...cols.map(l=>fmtCell(M[l]?.[k],t))]);
+  });
+  rows.push([]);
+  rows.push(['Ethnic makeup (percent of residents)','B03002','percent',...cols.map(()=>'')]);
+  (M[cols[0]].race||[]).forEach((r,i)=>rows.push([r[0],'B03002','percent',...cols.map(l=>fmtCell(M[l].race[i][1],'p'))]));
+  rows.push([]);
+  rows.push(['Household income spread','B19001','percent',...cols.map(()=>'')]);
+  [['Under $25k','lt25'],['$25k–$50k','b25_50'],['$50k–$100k','b50_100'],['$100k–$150k','b100_150'],['Over $150k','gt150']]
+    .forEach(([lab,k])=>rows.push([lab,'B19001','percent',...cols.map(l=>fmtCell(M[l].inc[k],'p'))]));
+  rows.push([]);
+  rows.push(['Languages spoken at home','C16001','percent',...cols.map(()=>'')]);
+  (M[cols[0]].langs||[]).slice(0,10).forEach(x=>{
+    rows.push([x.name,'C16001','percent',...cols.map(l=>{const f=(M[l].langs||[]).find(y=>y.name===x.name);return fmtCell(f?f.share:null,'p')})]);
+  });
+  rows.push([]);
+  rows.push(['Occupation of employed residents','C24010','percent',...cols.map(()=>'')]);
+  (M[cols[0]].occ||[]).forEach((o,i)=>rows.push([o[0],'C24010','percent',...cols.map(l=>fmtCell(M[l].occ[i][1],'p'))]));
+  rows.push([]);
+  rows.push([`Source: U.S. Census Bureau, American Community Survey 5-year estimates ${ACS_YEAR-4}–${ACS_YEAR}.`]);
+  rows.push([`Geography: ${levels.tract.name}${geo&&geo.matched?' · '+geo.matched:''}. Figures are estimates with margins of error.`]);
+  rows.push([`Generated by Terrain ${VERSION} on ${new Date().toLocaleDateString()}.`]);
+  return rows.map(r=>r.map(csvEscape).join(',')).join('\r\n');
+}
+function buildReport(M,levels,scope,geo,focusCatSet,focusName){
+  const L=[],p=s=>L.push(s);
+  const lv=levels[scope];
+  p('COMMUNITY MAP — '+lv.kind.toUpperCase()+': '+lv.short);
+  p(levels.tract.name+(levels.cousub?', '+levels.cousub.name:'')+', '+levels.county.name);
+  if(geo&&geo.matched)p('Address searched: '+geo.matched);
+  p('Generated '+new Date().toLocaleString()+' · Terrain '+VERSION);
+  p(''); p('THE BRIEF'); p('-'.repeat(60));
+  p(brief(M,levels,scope).replace(/<[^>]+>/g,''));
+  p(''); p('KEY NUMBERS'); p('-'.repeat(60));
+  const cols=Object.keys(levels);
+  p(['Metric',...cols.map(l=>levels[l].short)].join(' | '));
+  SPEC.forEach(([k,label,,t])=>{
+    const vals=cols.map(l=>{const v=M[l]?.[k];return v==null?'—':t==='p'?fmtPct(v,1):t==='$'?fmtMoney(v):t==='d1'?v.toFixed(1):t==='d2'?v.toFixed(2):fmtNum(v)});
+    p([label,...vals].join(' | '));
+  });
+  const S=suggestions(M,scope);
+  const cats=(focusCatSet&&focusCatSet.size)?S.cats.filter(g=>focusCatSet.has(g.cat)):S.cats;
+  const shown=cats.reduce((n,g)=>n+g.items.length,0);
+  p(''); p('WHERE TO LOOK — '+shown+' prompt'+(shown===1?'':'s')+(focusName&&focusName!=='Everything'?' · focused on '+focusName+' (of '+S.hits.length+' in total)':'')); p('-'.repeat(60));
+  p('These are starting points, not conclusions. Each one names the number behind it.');
+  cats.forEach(g=>{
+    p(''); p('## '+g.cat.toUpperCase());
+    g.items.forEach(h=>{
+      p(''); p('• '+h.title); p('  Why: '+h.evidence);
+      h.steps.forEach(s=>p('  - '+s));
+      p('  Ask locally: '+h.question);
+    });
+  });
+  p(''); p('WHAT THIS DATA CANNOT TELL YOU'); p('-'.repeat(60));
+  p('- Whether people want what the numbers suggest they might need.');
+  p('- What is already being done well by neighbours, schools, and other congregations.');
+  p('- Anything about faith, trust, history, or hurt in this neighbourhood.');
+  p('- Small-area figures are estimates with margins of error; treat small gaps as noise.');
+  p('');
+  p('Source: U.S. Census Bureau, American Community Survey 5-year estimates '+(ACS_YEAR-4)+'–'+ACS_YEAR+
+    (M.cousub&&M.cousub.past?'; ten-year comparison against '+(ACS_PAST-4)+'–'+ACS_PAST+'.':'.'));
+  return L.join('\n');
+}
+function download(name,text,mime){
+  try{
+    const blob=new Blob([text],{type:mime+';charset=utf-8'});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement('a');
+    a.href=url; a.download=name; a.rel='noopener';
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{URL.revokeObjectURL(url);a.remove();},4000);
+    return true;
+  }catch(e){ return false; }
+}
+
 /* ================= RENDER ================= */
 function tick(vals,scope,fmt=fmtPct,max){
   // vals: {tract,cousub,county}
@@ -430,20 +885,66 @@ function card(label,val,fmt,vals,scope,sub,max){
 function bars(rows,fmt=fmtPct){ // rows: [[label,val,cmpVal?]]
   return `<div class="bars">${rows.map(([l,v,c])=>`<div class="brow"><div class="bl">${esc(l)}</div><div class="bb"><i style="width:${Math.max(0,Math.min(100,v||0))}%"></i></div><div class="bv">${fmt(v)}${c!=null?`<small>${fmt(c)}</small>`:''}</div></div>`).join('')}</div>`;
 }
+function renderFocus(){
+  $('focusbar').innerHTML=`<button class="all ${FOCUS.size?'':'on'}" data-f="">Everything</button>`+
+    FOCUS_DEFS.map(f=>`<button class="${FOCUS.has(f.k)?'on':''}" data-f="${f.k}" aria-pressed="${FOCUS.has(f.k)}">${esc(f.label)}</button>`).join('');
+  $('focusbar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.f;
+    if(!k) FOCUS.clear(); else FOCUS.has(k)?FOCUS.delete(k):FOCUS.add(k);
+    renderFocus(); applyFocus();
+  });
+}
+function applyFocus(){
+  const th=focusThemes(), cats=focusCats(), on=FOCUS.size>0;
+  let hiddenSec=0, shownP=0, hiddenP=0;
+  document.querySelectorAll('#sections section.blk').forEach(sec=>{
+    const t=(sec.dataset.theme||'').split(' ');
+    const keep = !on || t.includes('prompts') || t.some(x=>th.has(x));
+    sec.classList.toggle('hidden',!keep);
+    if(!keep) hiddenSec++;
+  });
+  document.querySelectorAll('#sections .suggroup').forEach(g=>{
+    const keep = !on || cats.has(g.dataset.cat);
+    g.classList.toggle('hidden',!keep);
+    const n=g.querySelectorAll('.sug').length;
+    keep?shownP+=n:hiddenP+=n;
+  });
+  const note=$('focusnote');
+  if(!on){ note.innerHTML=`Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Tap a chip above to narrow it.`; }
+  else{
+    note.innerHTML=`Focused on <b style="color:var(--ink2)">${esc(focusLabel())}</b> — showing ${shownP} of ${shownP+hiddenP} prompts`+
+      (hiddenSec?`, ${hiddenSec} data section${hiddenSec===1?'':'s'} hidden`:'')+
+      `. <a href="#" id="showall">Show everything</a>`;
+    const sa=$('showall'); if(sa) sa.onclick=e=>{e.preventDefault();FOCUS.clear();renderFocus();applyFocus();};
+  }
+}
 function render(){
   if(!DATA) return; const {M,levels,geo}=DATA; const me=M[SCOPE]; const cty=M.county;
   const pick=k=>Object.fromEntries(Object.keys(levels).map(l=>[l,M[l][k]]));
   $('place').innerHTML=`<b>${esc(levels.tract.name)}</b> <span>in ${esc(levels.cousub?levels.cousub.name:'')}${levels.cousub?', ':''}${esc(levels.county.name)}</span>${geo.matched?`<span>· ${esc(geo.matched)}</span>`:''}`;
   $('scope').innerHTML=Object.keys(levels).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
   $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;render();});
+  renderFocus();
   $('brief').innerHTML=`<div class="k">THE BRIEF</div><p>${brief(M,levels,SCOPE)}</p>
-    <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="share">Share this map</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
+    <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="dlcsv">Download data (CSV)</button><button class="btn ghost" id="dlrep">Download report</button><button class="btn ghost" id="share">Share</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
   $('copy').onclick=async()=>{const t=$('brief').querySelector('p').innerText;try{await navigator.clipboard.writeText(t);$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy the brief',1500)}catch(e){prompt('Copy this:',t)}};
+  const stamp=(levels[SCOPE].short||'area').replace(/[^A-Za-z0-9]+/g,'-').toLowerCase();
+  $('dlcsv').onclick=()=>{
+    const ok=download('terrain-'+stamp+'-data.csv',buildCSV(M,levels,geo),'text/csv');
+    $('dlcsv').textContent= ok?'Saved ✓':'Could not save';
+    setTimeout(()=>$('dlcsv').textContent='Download data (CSV)',1800);
+  };
+  $('dlrep').onclick=()=>{
+    const ok=download('terrain-'+stamp+'-report.txt',buildReport(M,levels,SCOPE,geo,focusCats(),focusLabel()),'text/plain');
+    $('dlrep').textContent= ok?'Saved ✓':'Could not save';
+    setTimeout(()=>$('dlrep').textContent='Download report',1800);
+  };
   $('share').onclick=async()=>{const u=location.href;if(navigator.share){try{await navigator.share({title:'Community Map — '+levels.tract.name,url:u})}catch(e){}}else{try{await navigator.clipboard.writeText(u);$('share').textContent='Link copied'}catch(e){prompt('Copy this link:',u)}}};
 
   const S=SCOPE, cmpName=S==='county'?null:'county';
   const secs=[];
-  secs.push(`<section class="blk"><h2>Economy</h2><div class="grid">
+  const shiftSrc=(S==='tract'&&M.cousub?.past)?M.cousub:(me.past?me:null);
+  secs.push(`<section class="blk" data-theme="hardship work"><h2>Economy</h2><div class="grid">
     ${card('Median household income',me.medInc,fmtMoney,pick('medInc'),S)}
     ${card('Below the poverty line',me.poverty,fmtPct,pick('poverty'),S,'all people')}
     ${card('Children in poverty',me.childPoverty,fmtPct,pick('childPoverty'),S,'under 18')}
@@ -455,14 +956,18 @@ function render(){
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
-  secs.push(`<section class="blk"><h2>Wealth &amp; hardship</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="hardship"><h2>Wealth &amp; hardship</h2><div class="grid">
     ${card('Households under $35k',me.incLow,fmtPct,pick('incLow'),S)}
     ${card('Households over $150k',me.incHigh,fmtPct,pick('incHigh'),S)}
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
     <div class="card"><div class="n" style="font-size:1.2rem;line-height:1.25;padding-top:4px">${divided?'Sharply divided':me.incHigh>=35?'Mostly affluent':me.incLow>=35?'Mostly struggling':'Mixed incomes'}</div><div class="l">How this reads</div><div class="sub">${divided?'Both ends of the income scale are large here.':'Based on the share of households at each end of the income scale.'}</div></div>
-    <div class="card wide"><div class="l">Household income spread${cmpName?' <span class="sub">· small figure = county</span>':''}</div>${bars([['Under $25k',me.inc.lt25,cmpName?cty.inc.lt25:null],['$25k – $50k',me.inc.b25_50,cmpName?cty.inc.b25_50:null],['$50k – $100k',me.inc.b50_100,cmpName?cty.inc.b50_100:null],['$100k – $150k',me.inc.b100_150,cmpName?cty.inc.b100_150:null],['Over $150k',me.inc.gt150,cmpName?cty.inc.gt150:null]])}</div>
+    <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Gold dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
+      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short)}</div>
+    <div class="card wide chart"><h3>Household income spread</h3><div class="cs">Share of households in each bracket${cmpName?', against the county':''}</div>
+      ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
+        {name:levels[S].short,vals:[me.inc.lt25,me.inc.b25_50,me.inc.b50_100,me.inc.b100_150,me.inc.gt150]},
+        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null)}</div>
   </div></section>`);
-  const shiftSrc=(S==='tract'&&M.cousub?.past)?M.cousub:(me.past?me:null);
   let shift='';
   if(shiftSrc){ const now=Object.fromEntries(shiftSrc.race), then=Object.fromEntries(shiftSrc.past.race);
     const ch=Object.keys(now).map(k=>[k,(now[k]??0)-(then[k]??0)]).filter(d=>Math.abs(d[1])>=1).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
@@ -472,21 +977,24 @@ function render(){
       ${Math.abs(fb)>=1?`<span class="chip ${fb>0?'up':''}">Born abroad <b>${fb>0?'+':'−'}${Math.abs(fb).toFixed(0)} pts</b></span>`:''}
       ${shiftSrc.past.pop&&shiftSrc.pop?`<span class="chip">Population <b>${shiftSrc.pop>=shiftSrc.past.pop?'+':'−'}${fmtNum(Math.abs(shiftSrc.pop-shiftSrc.past.pop))}</b></span>`:''}</div></div>`;
   }
-  secs.push(`<section class="blk"><h2>People</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2><div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
+    ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · gold marks a shift of 3 points or more</div>
+      ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
+        (ACS_PAST-4)+'–'+ACS_PAST,(ACS_YEAR-4)+'–'+ACS_YEAR)}</div>`:''}
     ${card('Born outside the U.S.',me.foreign,fmtPct,pick('foreign'),S)}
     ${card('Arrived 2010 or later',me.recentOfForeign,fmtPct,pick('recentOfForeign'),S,'share of the foreign-born')}
     <div class="card wide"><div class="l">Where the foreign-born were born <span class="sub">· top countries, share of all foreign-born</span></div>${me.origins&&me.origins.length?bars(me.origins.map(o=>[o.name,o.share])):'<div class="sub" style="margin-top:8px">Too few to publish for this area.</div>'}</div>
     ${shift}
   </div></section>`);
   const topL=me.langs.slice(0,6);
-  secs.push(`<section class="blk"><h2>Language</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="language"><h2>Language</h2><div class="grid">
     ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
     ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
     <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
     ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
   </div></section>`);
-  secs.push(`<section class="blk"><h2>Housing &amp; distress</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="housing"><h2>Housing &amp; distress</h2><div class="grid">
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
     ${card('Severely rent-burdened',me.rent50,fmtPct,pick('rent50'),S,'renters paying 50%+ of income')}
@@ -499,7 +1007,7 @@ function render(){
         <a href="https://evictionlab.org/eviction-tracking/pennsylvania/" target="_blank" rel="noopener">Eviction Lab · Pennsylvania<span>Monthly filings statewide; Philadelphia by tract and Pittsburgh by ZIP.</span></a>
       </div></div>
   </div></section>`);
-  secs.push(`<section class="blk"><h2>Families &amp; age</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2><div class="grid">
     ${card('Median age',me.medAge,x=>x==null?'—':x.toFixed(1),pick('medAge'),S,null,70)}
     ${card('Children',me.kidsShare,fmtPct,pick('kidsShare'),S,`${fmtNum(me.kids)} under 18 · ${me.kidsPerHH!=null?me.kidsPerHH.toFixed(2)+' per household':''}`)}
     ${card('Single-parent families',me.singleParent,fmtPct,pick('singleParent'),S,'of families with children')}
@@ -507,7 +1015,20 @@ function render(){
     ${card('Families with children',me.famWithKids,fmtPct,pick('famWithKids'),S,'of all families')}
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
+  const SG=suggestions(M,SCOPE);
+  secs.push(`<section class="blk" data-theme="prompts"><h2>Where to look</h2>
+    <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
+    ${SG.cats.map(g=>`<div class="suggroup" data-cat="${esc(g.cat)}"><div class="sugcat">${esc(g.cat)}</div>`+g.items.map(h=>`<div class="sug">
+        <h3>${esc(h.title)}</h3>
+        <div class="ev">${esc(h.evidence)}</div>
+        <ul>${h.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
+        <div class="q"><b>ASK LOCALLY</b>${esc(h.question)}</div>
+      </div>`).join('')+`</div>`).join('')}
+    <div class="caveat"><b>What this cannot tell you</b>
+      Whether people want what these numbers suggest they might need. What neighbours, schools, and other congregations already do well. Anything about faith, trust, history, or hurt on these streets. Small-area figures are estimates — treat small gaps as noise and large ones as signal, then go and ask.</div>
+  </section>`);
   $('sections').innerHTML=secs.join('');
+  applyFocus();
   $('diagbody').innerHTML=`<p>American Community Survey 5-year estimates, ${ACS_YEAR-4}–${ACS_YEAR} (and ${ACS_PAST-4}–${ACS_PAST} for the ten-year shift). Tract-level figures are estimates with real margins of error — treat small differences as noise, and large ones as signal. Geography from the Census Geocoder. Tables: B01002 B01003 B03002 B05002 B05005 B05006 B09001 B11003 B11010 B14001 B17001 B19001 B19013 B19057 B19083 B22010 B23025 B25003 B25014 B25044 B25070 B27010 C16001 C16002 C24010.</p><pre>${esc(LOG.join('\n'))}</pre>`;
   $('report').classList.add('show');
 }
