@@ -7,10 +7,14 @@
 const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov']);
 
 export default async (request) => {
+  // Errors are NEVER cached. Caching an error response poisons the CDN: every
+  // later request for the same URL gets the stale failure back, even after the
+  // underlying problem is fixed. Only clean successes get a cache lifetime.
+  const NO_STORE = 'no-store, max-age=0';
   const json = (body, status = 200) =>
     new Response(JSON.stringify(body), {
       status,
-      headers: { 'content-type': 'application/json', 'cache-control': 'public, max-age=86400' }
+      headers: { 'content-type': 'application/json', 'cache-control': NO_STORE }
     });
 
   let target;
@@ -29,8 +33,21 @@ export default async (request) => {
       signal: AbortSignal.timeout(9000)
     });
     const text = await upstream.text();
+    // The Census returns HTML (e.g. an "Invalid Key" page) instead of an HTTP
+    // error code when something is wrong, so sniff the body rather than trusting
+    // the status. Anything that is not clean JSON is treated as a failure.
+    const looksJson = text.trimStart().startsWith('[') || text.trimStart().startsWith('{');
+    const ok = upstream.ok && looksJson;
+    if (!ok) {
+      const title = /<title>([^<]{0,120})<\/title>/i.exec(text);
+      return json(
+        { error: title ? 'Census says: ' + title[1].trim() : 'Census returned an unexpected response.',
+          status: upstream.status },
+        502
+      );
+    }
     return new Response(text, {
-      status: upstream.status,
+      status: 200,
       headers: { 'content-type': 'application/json', 'cache-control': 'public, max-age=86400' }
     });
   } catch (e) {
