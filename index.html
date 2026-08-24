@@ -175,14 +175,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v1.0</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v1.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v1.0';
-const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
+const VERSION = 'v1.1';
+const CENSUS_KEY = '';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
 const GEOCODER = 'https://geocoding.geo.census.gov/geocoder/geographies';
@@ -227,13 +227,33 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 const chunk=(a,n)=>{const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o};
 function titleCase(s){return s.replace(/\w\S*/g,w=>w[0].toUpperCase()+w.slice(1).toLowerCase())}
 
-async function getJSON(url,label){
-  log('GET '+label+' → '+url.replace(/key=[^&]+/,'key=…'));
-  let r;
-  try{ r=await fetch(url); }catch(e){ throw new Error(label+': the browser could not reach the server ('+e.message+'). If you are online, this is usually a network block or CORS — see diagnostics.'); }
+const PROXY='/.netlify/functions/census?u=';
+let useProxy=false;
+const clean=u=>u.replace(/key=[^&]+/,'key=…');
+async function raw(url,label,via){
+  log('GET '+label+(via?' [via proxy]':'')+' → '+clean(url));
+  const r=await fetch(via?PROXY+encodeURIComponent(url):url);
   const txt=await r.text();
   if(!r.ok) throw new Error(label+': HTTP '+r.status+' — '+txt.slice(0,220));
-  try{ return JSON.parse(txt); }catch(e){ throw new Error(label+': the server did not return JSON — '+txt.slice(0,220)); }
+  let j; try{ j=JSON.parse(txt); }catch(e){ throw new Error(label+': the server did not return JSON — '+txt.slice(0,220)); }
+  if(j&&j.error&&!Array.isArray(j)) throw new Error(label+': '+j.error);
+  return j;
+}
+async function getJSON(url,label){
+  if(useProxy) return raw(url,label,true);
+  try{
+    return await raw(url,label,false);
+  }catch(e){
+    // A CORS block or network refusal surfaces as a TypeError with no HTTP status.
+    // Retry once through our own server, then stay on the proxy for this session.
+    if(/HTTP \d|did not return JSON/.test(e.message)) throw e;
+    log('direct call blocked ('+e.message+') — switching to the built-in proxy');
+    try{
+      const j=await raw(url,label,true); useProxy=true; return j;
+    }catch(e2){
+      throw new Error(label+': could not reach the Census, directly or through the proxy. '+e2.message);
+    }
+  }
 }
 
 /* ================= GEOCODING (free, Census Bureau) ================= */
