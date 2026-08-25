@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="color-scheme" content="dark">
+<meta name="color-scheme" content="light dark">
 <title>Community Map — Terrain</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -17,16 +17,26 @@
    Edit CONFIG below (the API key) and redeploy. Version stamp: footer.
    ============================================================ */
 :root{
-  --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
-  --ink:#EDF1F6; --ink2:#A3AEBC; --ink3:#68737F;
-  --acc:#4C9AFF; --acc-soft:#8FC2FF; --acc-dim:rgba(76,154,255,.13);
-  --acc-glow:rgba(76,154,255,.30);
+  /* light is the default; dark lives in the [data-theme="dark"] block below */
+  --bg:#F6F8FB; --panel:#FFFFFF; --panel2:#F0F4F9; --line:#E3E9F0; --line2:#CBD5E1;
+  --ink:#0E1726; --ink2:#4A5768; --ink3:#78879B;
+  --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
+  --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
+  --shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px -14px rgba(15,23,42,.22);
   --font:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Space Grotesk','Manrope',system-ui,sans-serif;
   --r:14px;
 }
+:root[data-theme="dark"]{
+  --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
+  --ink:#EDF1F6; --ink2:#A3AEBC; --ink3:#68737F;
+  --acc:#4C9AFF; --acc-soft:#8FC2FF; --acc-dim:rgba(76,154,255,.13);
+  --acc-glow:rgba(76,154,255,.30); --btn-ink:#05192F;
+  --shadow:none;
+}
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
+html,body{transition:background .25s ease,color .25s ease}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;min-height:100dvh;
   -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1,"cv11" 1}
 a{color:var(--acc);text-decoration:none}
@@ -36,17 +46,21 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ---- shell ---- */
-.top{position:sticky;top:0;z-index:20;background:rgba(6,8,12,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+.top{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 86%, transparent);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   border-bottom:1px solid var(--line)}
 .top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
-  background:linear-gradient(90deg,transparent,var(--acc-glow) 25%,var(--acc-glow) 75%,transparent);opacity:.7}
+  background:linear-gradient(90deg,transparent,var(--acc-glow) 25%,var(--acc-glow) 75%,transparent);opacity:.6}
 .top .in{max-width:1040px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:18px}
 .wordmark{font-family:var(--disp);font-weight:700;letter-spacing:.22em;font-size:.78rem;color:var(--ink)}
 .wordmark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:9px;vertical-align:1px;
-  box-shadow:0 0 0 3px rgba(76,154,255,.16),0 0 12px var(--acc-glow)}
+  box-shadow:0 0 0 3px var(--acc-dim),0 0 12px var(--acc-glow)}
 nav.tools{display:flex;gap:4px;margin-left:auto}
+.top .in{gap:10px}
 nav.tools a{font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
+.themebtn{background:var(--panel);border:1px solid var(--line2);border-radius:10px;width:40px;height:40px;cursor:pointer;
+  font-size:1rem;line-height:1;color:var(--ink2);flex:none;display:flex;align-items:center;justify-content:center}
+.themebtn:hover{border-color:var(--acc);color:var(--acc)}
 .wrap{max-width:1040px;margin:0 auto;padding:20px 18px 90px}
 @media(max-width:520px){
   .wrap{padding:16px 14px 90px}
@@ -66,8 +80,8 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .field input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:14px 14px;font-size:1rem}
 .field input::placeholder{color:var(--ink3)}
 .field input:focus{border-color:var(--acc);outline:none}
-.btn{background:var(--acc);color:#05192F;border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap;
-  min-height:46px;letter-spacing:-.01em;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 6px 18px -8px var(--acc-glow);
+.btn{background:var(--acc);color:var(--btn-ink);border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap;
+  min-height:46px;letter-spacing:-.01em;box-shadow:0 6px 18px -8px var(--acc-glow);
   transition:transform .12s ease,box-shadow .2s ease,background .2s ease}
 .btn:hover{background:var(--acc-soft)}
 .btn:active{transform:translateY(1px) scale(.99)}
@@ -102,7 +116,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .scope button small{display:block;font-size:.68rem;font-weight:500;color:var(--ink3);line-height:1.1;margin-top:1px}
 
 .brief{margin:16px 0 8px;padding:22px 20px 18px;border:1px solid var(--line2);border-radius:var(--r);position:relative;overflow:hidden;
-  background:linear-gradient(180deg,rgba(76,154,255,.055),transparent 55%),linear-gradient(180deg,var(--panel2),var(--panel))}
+  background:linear-gradient(180deg,var(--acc-dim),transparent 55%),var(--panel);box-shadow:var(--shadow)}
 .brief::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
   background:linear-gradient(90deg,var(--acc),rgba(76,154,255,0))}
 .brief .k{font-size:.7rem;font-weight:700;letter-spacing:.2em;color:var(--ink3);margin-bottom:10px}
@@ -117,7 +131,7 @@ section.blk{margin-top:30px}
 .blk h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}.grid.g3{grid-template-columns:repeat(3,1fr)}}
-.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r);
+.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);
   padding:15px 15px 13px;min-height:118px;display:flex;flex-direction:column;transition:border-color .2s ease}
 .card:hover{border-color:var(--line2)}
 .card.wide{grid-column:1/-1}
@@ -156,7 +170,7 @@ section.blk{margin-top:30px}
 .focusbar button{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;font-size:.82rem;font-weight:600;
   color:var(--ink2);cursor:pointer;min-height:40px;transition:border-color .18s ease,color .18s ease,background .18s ease}
 .focusbar button:hover{border-color:var(--ink3);color:var(--ink)}
-.focusbar button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc);box-shadow:0 0 16px -6px var(--acc-glow)}
+.focusbar button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
 .focusbar button.all{border-style:dashed}
 .focusnote{font-size:.78rem;color:var(--ink3);margin-top:8px}
 .focusnote a{color:var(--ink2);text-decoration:underline}
@@ -165,7 +179,7 @@ section.blk{margin-top:30px}
 .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .chart h3{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:2px}
 .chart .cs{font-size:.72rem;color:var(--ink3);margin-bottom:10px}
-.sug{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-left:2px solid var(--acc);
+.sug{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--acc);box-shadow:var(--shadow);
   border-radius:var(--r);padding:15px 16px;margin-bottom:10px}
 .sug h3{font-family:var(--disp);font-size:1rem;font-weight:600;margin-bottom:5px}
 .sug .ev{font-size:.8rem;color:var(--acc);margin-bottom:8px}
@@ -175,6 +189,15 @@ section.blk{margin-top:30px}
 .sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
 .sugcat{font-size:.7rem;font-weight:700;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px}
+.zones{margin:18px 0 4px}
+.zone{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow)}
+.zh{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.zn{width:24px;height:24px;border-radius:50%;background:var(--acc);color:var(--btn-ink);font-weight:700;font-size:.8rem;
+  display:flex;align-items:center;justify-content:center;flex:none}
+.zh b{font-family:var(--disp);font-size:.95rem}
+.zd{font-size:.76rem;color:var(--ink3)}
+.zwhy{font-size:.8rem;color:var(--acc);margin-top:6px;line-height:1.5}
+.zmove{font-size:.84rem;color:var(--ink2);margin-top:6px;line-height:1.55}
 .moves{margin-bottom:20px}
 .movehead{margin-bottom:10px}
 .movehead b{display:block;font-family:var(--disp);font-size:1.02rem;color:var(--ink);margin-bottom:4px}
@@ -230,13 +253,14 @@ section.blk{margin-top:30px}
 .diag pre{white-space:pre-wrap;word-break:break-all;font-size:.74rem;color:var(--ink3);margin-top:8px;line-height:1.5}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacing:.08em}
-@media print{body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
+@media print{:root{--bg:#fff;--panel:#fff;--ink:#111;--ink2:#333;--ink3:#666;--shadow:none}body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
 </style>
 </head>
 <body>
 <header class="top"><div class="in">
   <div class="wordmark"><i></i>TERRAIN</div>
   <nav class="tools"><a class="on" href="#">Community Map</a></nav>
+  <button class="themebtn" id="themebtn" aria-label="Switch between light and dark"></button>
 </div></header>
 
 <main class="wrap">
@@ -270,19 +294,20 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <div class="focusbar" id="focusbar" aria-label="Focus the report"></div>
     <div class="focusnote" id="focusnote"></div>
     <div class="brief" id="brief"></div>
+    <div id="zoneslot"></div>
     <div id="sections"></div>
     <details class="diag" id="diag"><summary>SOURCES &amp; DIAGNOSTICS</summary><div id="diagbody"></div></details>
   </div>
 
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.7</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v2.7';
+const VERSION = 'v3.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -318,6 +343,22 @@ const PAST_VARS=[...v('B01003',1), ...v('B03002',1,3,4,5,6,7,8,9,12), ...v('B050
 /* ================= STATE ================= */
 const $=id=>document.getElementById(id);
 let LOG=[]; let DATA=null; let SCOPE='tract';
+/* Light by default. The choice is remembered per device. */
+function applyTheme(t){
+  document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');
+  const b=document.getElementById('themebtn');
+  if(b){ b.textContent = t==='dark' ? '\u2600' : '\u263D'; b.title = t==='dark' ? 'Switch to light' : 'Switch to dark'; }
+}
+function initTheme(){
+  const saved=localStorage.getItem('terrain-theme')||'light';
+  applyTheme(saved);
+  const b=document.getElementById('themebtn');
+  if(b) b.onclick=()=>{
+    const next=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
+    localStorage.setItem('terrain-theme',next); applyTheme(next);
+    if(DATA){ render(); drawZones(); }   // redraw charts and the map in the new palette
+  };
+}
 /* Focus filters. Empty set = show everything. Each focus names the data sections
    it keeps (by theme) and which outreach categories stay visible. */
 const FOCUS_DEFS=[
@@ -1236,8 +1277,12 @@ function suggestions(M,scope){
 }
 
 /* ================= CHARTS (inline SVG — no library, prints cleanly) ================= */
-const SVGC={gold:'#4C9AFF',dim:'#68737F',ink:'#A3AEBC',line:'#28313D'};
+const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+// Charts pick their colours up from the active theme rather than hard-coded hex,
+// so the same code draws correctly on white or on near-black.
+const svgc=()=>({gold:cssVar('--acc')||'#1F6FEB',dim:cssVar('--ink3')||'#78879B',ink:cssVar('--ink2')||'#4A5768',line:cssVar('--line2')||'#CBD5E1'});
 function chartGrouped(cats,a,b){
+  const SVGC=svgc();
   const W=460,H=200,PL=44,PB=44,PT=10,PR=8, n=cats.length;
   const max=Math.max(...a.vals.concat(b?b.vals:[]),1)*1.15;
   const gw=(W-PL-PR)/n, bw=b?gw*0.30:gw*0.45;
@@ -1259,6 +1304,7 @@ function chartGrouped(cats,a,b){
   return key+s;
 }
 function chartLollipop(rows,aName,bName){
+  const SVGC=svgc();
   const W=440,rowH=34,PL=152,PR=50,H=rows.length*rowH+18;
   const max=Math.max(...rows.map(r=>Math.max(r.me??0,r.cty??0)),1)*1.2;
   const x=v=>PL+(W-PL-PR)*(v/max);
@@ -1296,6 +1342,7 @@ function declutter(ys,gap,top,bottom){
   return out;
 }
 function chartSlope(items,thenLabel,nowLabel){
+  const SVGC=svgc();
   const W=490,H=284,PT=18,PB=42,PL=54,PR=176;
   const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
@@ -1320,6 +1367,151 @@ function chartSlope(items,thenLabel,nowLabel){
     s+=`<text x="${W-PR+12}" y="${yR[i]+4}" fill="${col}" font-size="15.5" font-weight="600">${esc(shortName(it.name))} ${fmtPct(it.now)}</text>`;
   });
   s+=`</svg>`; return s;
+}
+
+/* ================= HOT ZONES =================
+   The tracts immediately around the church, scored for where to go first.
+   Boundaries come from the Census Bureau's own TIGERweb service; the figures
+   come from the same ACS tables as the rest of the report. Drawn as SVG here,
+   so there is no mapping library, no map key, and no per-view cost. */
+const TIGER='https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/0/query';
+const MI_LAT=1/69;                       // degrees of latitude per mile
+const miles=(a,b)=>{                     // rough distance, fine at this scale
+  const dy=(a.lat-b.lat)*69, dx=(a.lon-b.lon)*69*Math.cos(a.lat*Math.PI/180);
+  return Math.sqrt(dx*dx+dy*dy);
+};
+
+async function fetchNearbyShapes(centre,radiusMi){
+  const dLat=radiusMi*MI_LAT, dLon=dLat/Math.max(0.2,Math.cos(centre.lat*Math.PI/180));
+  const env=[centre.lon-dLon,centre.lat-dLat,centre.lon+dLon,centre.lat+dLat].join(',');
+  const url=TIGER+'?geometry='+encodeURIComponent(env)+'&geometryType=esriGeometryEnvelope&inSR=4326&outSR=4326'
+    +'&spatialRel=esriSpatialRelIntersects&outFields=GEOID,BASENAME,CENTLAT,CENTLON&returnGeometry=true&f=geojson';
+  const gj=await getJSON(url,'Tract boundaries');
+  return (gj.features||[]).map(f=>{
+    const a=f.properties||{};
+    const rings=[];
+    if(f.geometry&&f.geometry.type==='Polygon') rings.push(f.geometry.coordinates[0]);
+    else if(f.geometry&&f.geometry.type==='MultiPolygon') f.geometry.coordinates.forEach(poly=>rings.push(poly[0]));
+    const lat=parseFloat(String(a.CENTLAT||'').replace('+','')), lon=parseFloat(String(a.CENTLON||'').replace('+',''));
+    return {geoid:a.GEOID,name:a.BASENAME,lat,lon,rings};
+  }).filter(x=>x.geoid&&x.rings.length&&isFinite(x.lat)&&isFinite(x.lon));
+}
+
+/* One call brings back every tract in the county, so scoring the neighbours
+   costs nothing extra beyond what we already fetch. */
+const ZONE_VARS=[...v('B01003',1),...v('B19013',1),...v('B17001',1,2),...v('B09001',1),
+  ...v('B25003',1,3),...v('B27010',1,17,33,50,66),...v('B22010',1,2),...v('C16002',1,4,7,10,13),
+  ...v('B25044',1,3,10),...v('B11003',1,3,10,16),...v('B25070',1,7,8,9,10,11),...v('B05002',1,13),...v('B01002',1)];
+async function fetchCountyTracts(geo){
+  const q='for=tract:*&in=state:'+geo.county.STATE+'%20county:'+geo.county.COUNTY;
+  const rows=await getJSON(API+'/'+ACS_YEAR+'/acs/acs5?get=NAME,'+ZONE_VARS.join(',')+'&'+q+'&key='+key(),'County tracts');
+  const head=rows[0], out={};
+  rows.slice(1).forEach(r=>{
+    const o={}; head.forEach((h,i)=>o[h]=r[i]);
+    out[o.state+o.county+o.tract]=o;
+  });
+  return out;
+}
+
+function zoneMetrics(o){
+  const g=k=>N(o[k]), S=(t,...ns)=>ns.reduce((s,n)=>s+(g(t+'_'+String(n).padStart(3,'0')+'E')||0),0);
+  const m={};
+  m.pop=g('B01003_001E'); m.medInc=g('B19013_001E'); m.medAge=g('B01002_001E');
+  m.poverty=pct(g('B17001_002E'),g('B17001_001E'));
+  m.kids=g('B09001_001E'); m.kidsShare=pct(m.kids,m.pop);
+  m.hh=g('B25003_001E'); m.renters=pct(g('B25003_003E'),m.hh);
+  m.uninsured=pct(S('B27010',17,33,50,66),g('B27010_001E'));
+  m.snap=pct(g('B22010_002E'),g('B22010_001E'));
+  m.limEng=pct(S('C16002',4,7,10,13),g('C16002_001E'));
+  m.noCar=pct(S('B25044',3,10),g('B25044_001E'));
+  const fk=S('B11003',3,10,16); m.singleParent=pct(S('B11003',10,16),fk);
+  const rb=(g('B25070_001E')||0)-(g('B25070_011E')||0);
+  m.rent50=pct(g('B25070_010E'),rb);
+  m.foreign=pct(g('B05002_013E'),g('B05002_001E'));
+  return m;
+}
+
+/* Where to go first = real need, enough people to be worth it, close enough to
+   walk or drive in ten minutes. Distance is weighted hard on purpose: a slightly
+   needier tract three miles away is not the place to start. */
+function scoreZone(m,dist,homeM){
+  const cap=(x,c)=>Math.min(x??0,c)/c;
+  const need =
+      cap(m.poverty,40)*1.35 + cap(m.childPovertyProxy??m.kidsShare,40)*0.85 +
+      cap(m.snap,35)*1.0  + cap(m.uninsured,25)*1.1 +
+      cap(m.limEng,30)*0.95 + cap(m.rent50,45)*0.9 +
+      cap(m.noCar,30)*0.7 + cap(m.singleParent,55)*0.8;
+  const reach = 1/(1+Math.pow(Math.max(dist,0.15)/0.9,1.6));   // ~1 at the door, ~0.3 at 1.5 miles
+  const size  = cap(m.pop,6000)*0.6+0.4;
+  const contrast = homeM&&homeM.poverty!=null&&m.poverty!=null ? cap(Math.max(0,m.poverty-homeM.poverty),20)*0.5 : 0;
+  return {score:(need*reach*size)+contrast, need, reach};
+}
+function zoneReasons(m,homeM){
+  const r=[];
+  const add=(cond,txt)=>{ if(cond) r.push(txt); };
+  add(m.poverty>=18,`${fmtPct(m.poverty)} below the poverty line`);
+  add(m.kidsShare>=24,`${fmtPct(m.kidsShare)} children — about ${fmtNum(m.kids)}`);
+  add(m.snap>=12,`${fmtPct(m.snap)} on SNAP`);
+  add(m.uninsured>=10,`${fmtPct(m.uninsured)} uninsured`);
+  add(m.limEng>=8,`${fmtPct(m.limEng)} of households have limited English`);
+  add(m.rent50>=20,`${fmtPct(m.rent50)} of renters pay over half their income`);
+  add(m.noCar>=10,`${fmtPct(m.noCar)} have no car`);
+  add(m.singleParent>=32,`${fmtPct(m.singleParent)} of families with children have one parent`);
+  add(m.medAge!=null&&m.medAge>=48,`median age ${m.medAge.toFixed(0)}`);
+  add(r.length===0&&m.pop,`${fmtNum(m.pop)} people, close by`);
+  return r.slice(0,4);
+}
+/* One concrete first move per zone, chosen from what that zone's numbers show. */
+function zoneFirstMove(m){
+  if(m.limEng>=12) return 'Start with a paperwork clinic and English classes — this block needs help with forms before it needs anything else.';
+  if(m.uninsured>=13) return 'Start with a blood pressure and wellness table — health access is the open door here.';
+  if(m.kidsShare>=27) return 'Start with children and their parents: a holiday club plus a parenting course with childcare.';
+  if(m.snap>=15||m.poverty>=25) return 'Start with food at a table rather than a queue, and pair it with the budget course.';
+  if(m.rent50>=25) return 'Start with eviction prevention and a tenants\u2019 rights evening — the clock runs fast here.';
+  if(m.noCar>=15) return 'Start by going to them: a ride rota, and literature where people wait rather than at doors.';
+  if(m.singleParent>=38) return 'Start with respite and childcare — one adult households have no slack at all.';
+  if(m.medAge>=48) return 'Start with seniors: a wellness check, a weekday gathering, and a ride rota.';
+  return 'Start by walking it and knocking on a dozen doors — the figures here are unremarkable, which usually means the need is relational.';
+}
+
+/* ---- the map ---- */
+function zoneMap(church,zones,all,radiusMi){
+  const C=svgc(), W=560,H=430, pad=16;
+  const pts=all.flatMap(z=>z.rings.flat());
+  if(!pts.length) return '';
+  const latC=church.lat, kx=Math.cos(latC*Math.PI/180);
+  const xs=pts.map(p=>p[0]*kx), ys=pts.map(p=>p[1]);
+  let minX=Math.min(...xs),maxX=Math.max(...xs),minY=Math.min(...ys),maxY=Math.max(...ys);
+  const spanX=maxX-minX||0.01, spanY=maxY-minY||0.01;
+  const sc=Math.min((W-pad*2)/spanX,(H-pad*2)/spanY);
+  const ox=(W-spanX*sc)/2, oy=(H-spanY*sc)/2;
+  const X=lon=>ox+(lon*kx-minX)*sc, Y=lat=>H-(oy+(lat-minY)*sc);   // y flipped: north up
+  const path=rings=>rings.map(r=>'M'+r.map(p=>X(p[0]).toFixed(1)+','+Y(p[1]).toFixed(1)).join('L')+'Z').join(' ');
+  const rank={}; zones.forEach((z,i)=>rank[z.geoid]=i+1);
+  let sv=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
+  sv+=`<title>Census tracts around the church, shaded by opportunity</title>`;
+  all.forEach(z=>{
+    const r=rank[z.geoid];
+    const fill=r?`color-mix(in srgb, ${C.gold} ${34-(r-1)*7}%, transparent)`:'transparent';
+    sv+=`<path d="${path(z.rings)}" fill="${fill}" stroke="${r?C.gold:C.line}" stroke-width="${r?1.8:1}" stroke-opacity="${r?0.95:0.65}"/>`;
+  });
+  // distance rings at half a mile and one mile
+  [0.5,1].forEach(mi=>{
+    const rx=(mi*MI_LAT)*sc;
+    sv+=`<circle cx="${X(church.lon).toFixed(1)}" cy="${Y(church.lat).toFixed(1)}" r="${rx.toFixed(1)}" fill="none" stroke="${C.dim}" stroke-width="1" stroke-dasharray="3 5" opacity=".55"/>`;
+    sv+=`<text x="${X(church.lon).toFixed(1)}" y="${(Y(church.lat)-rx-4).toFixed(1)}" fill="${C.dim}" font-size="12" text-anchor="middle">${mi} mi</text>`;
+  });
+  zones.forEach((z,i)=>{
+    sv+=`<circle cx="${X(z.lon).toFixed(1)}" cy="${Y(z.lat).toFixed(1)}" r="15" fill="${C.gold}" opacity=".92"/>`;
+    sv+=`<text x="${X(z.lon).toFixed(1)}" y="${(Y(z.lat)+5).toFixed(1)}" font-size="15" font-weight="700" text-anchor="middle" fill="var(--btn-ink)">${i+1}</text>`;
+  });
+  // the church itself
+  const cx=X(church.lon).toFixed(1), cy=Y(church.lat).toFixed(1);
+  sv+=`<g><circle cx="${cx}" cy="${cy}" r="7" fill="none" stroke="${C.ink}" stroke-width="2.5"/>`;
+  sv+=`<line x1="${cx}" y1="${(+cy-13)}" x2="${cx}" y2="${(+cy-4)}" stroke="${C.ink}" stroke-width="2.5"/>`;
+  sv+=`<line x1="${(+cx-5)}" y1="${(+cy-9)}" x2="${(+cx+5)}" y2="${(+cy-9)}" stroke="${C.ink}" stroke-width="2.5"/></g>`;
+  sv+=`</svg>`;
+  return sv;
 }
 
 /* ================= EXPORT ================= */
@@ -1729,6 +1921,51 @@ function render(){
   $('report').classList.add('show');
 }
 
+/* ---- hot zones: fetched after the report, drawn when they arrive ---- */
+let ZONES=null;
+async function loadZones(geo,M){
+  ZONES=null;
+  const host=document.getElementById('zoneslot');
+  if(!host) return;
+  const c=geo.coords?{lat:+geo.coords.y,lon:+geo.coords.x}:null;
+  if(!c||!isFinite(c.lat)){ host.innerHTML=''; return; }
+  host.innerHTML=`<div class="note" id="zonewait">Looking at the blocks around the church\u2026</div>`;
+  try{
+    const [shapes,acs]=await Promise.all([fetchNearbyShapes(c,1.8),fetchCountyTracts(geo)]);
+    const homeGeoid=geo.county.STATE+geo.county.COUNTY+geo.tract.TRACT;
+    const scored=shapes.map(z=>{
+      const row=acs[z.geoid]; if(!row) return null;
+      const m=zoneMetrics(row);
+      if(!m.pop||m.pop<200) return null;
+      const dist=miles(c,{lat:z.lat,lon:z.lon});
+      const {score,need}=scoreZone(m,dist,M.tract);
+      return {...z,m,dist,score,need,home:z.geoid===homeGeoid};
+    }).filter(Boolean).sort((a,b)=>b.score-a.score);
+    ZONES={all:shapes,top:scored.slice(0,4),church:c};
+    drawZones();
+  }catch(e){
+    log('hot zones unavailable: '+e.message);
+    host.innerHTML=`<div class="note">Nearby-block view unavailable right now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(e.message.slice(0,90))})</span></div>`;
+  }
+}
+function drawZones(){
+  const host=document.getElementById('zoneslot');
+  if(!host||!ZONES||!ZONES.top.length) return;
+  const {top,all,church}=ZONES;
+  host.innerHTML=`<div class="zones">
+    <div class="movehead"><b>Where to go first</b>
+      <span>The ${top.length} blocks around this church with the most need within the shortest reach. Shaded darkest first. Dashed rings are half a mile and one mile from your door.</span></div>
+    <div class="chart" style="padding:12px">${zoneMap(church,top,all,1.8)}</div>
+    ${top.map((z,i)=>`<div class="zone">
+      <div class="zh"><span class="zn">${i+1}</span><b>${esc(z.name?('Tract '+z.name):z.geoid)}</b>
+        <span class="zd">${z.dist<0.15?'at the church door':z.dist.toFixed(1)+' mi away'}${z.home?' \u00b7 your own block':''}</span></div>
+      <div class="zwhy">${z.m.pop?fmtNum(z.m.pop)+' people':''}${zoneReasons(z.m,null).length?' \u00b7 '+zoneReasons(z.m,null).join(' \u00b7 '):''}</div>
+      <div class="zmove">${esc(zoneFirstMove(z.m))}</div>
+    </div>`).join('')}
+    <div class="note" style="margin-top:8px">Boundaries and figures are the Census Bureau\u2019s own. Ranking weights need against distance \u2014 a needier block three miles away is not where a two-church district should start.</div>
+  </div>`;
+}
+
 /* ================= RUN ================= */
 function setStatus(t,err){const s=$('status');s.className='status'+(err?' err':'');s.innerHTML=err?esc(t):(t?'<span class="dot"></span>'+esc(t):'');}
 async function run(getGeo){
@@ -1758,6 +1995,7 @@ async function run(getGeo){
     DATA={M,levels,geo}; SCOPE='tract';
     setStatus('');
     render();
+    loadZones(geo,M);   // runs after the report is already on screen
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
     const msg = e.message==='KEYBAD'
@@ -1778,6 +2016,7 @@ $('loc').onclick=()=>{
 $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localStorage.setItem('terrain-census-key',k); $('setup').style.display='none'; setStatus('Key saved on this device. Map it again.'); };
 $('ver').textContent=VERSION;
 (function boot(){
+  initTheme();
   aiClaimPass();
   if(!key()){$('setup').style.display='block';}
   const h=new URLSearchParams(location.hash.slice(1));
