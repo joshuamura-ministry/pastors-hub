@@ -17,9 +17,10 @@
    Edit CONFIG below (the API key) and redeploy. Version stamp: footer.
    ============================================================ */
 :root{
-  --bg:#08090B; --panel:#0F1114; --panel2:#14171B; --line:#1E2228; --line2:#2A3038;
-  --ink:#ECEEF1; --ink2:#A6ADB6; --ink3:#6B737D;
-  --acc:#F0B443; --acc-dim:rgba(240,180,67,.14);
+  --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
+  --ink:#EDF1F6; --ink2:#A3AEBC; --ink3:#68737F;
+  --acc:#4C9AFF; --acc-soft:#8FC2FF; --acc-dim:rgba(76,154,255,.13);
+  --acc-glow:rgba(76,154,255,.30);
   --font:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Space Grotesk','Manrope',system-ui,sans-serif;
   --r:14px;
@@ -35,15 +36,27 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 /* ---- shell ---- */
-.top{position:sticky;top:0;z-index:20;background:rgba(8,9,11,.86);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+.top{position:sticky;top:0;z-index:20;background:rgba(6,8,12,.82);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
   border-bottom:1px solid var(--line)}
+.top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--acc-glow) 25%,var(--acc-glow) 75%,transparent);opacity:.7}
 .top .in{max-width:1040px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:18px}
 .wordmark{font-family:var(--disp);font-weight:700;letter-spacing:.22em;font-size:.78rem;color:var(--ink)}
-.wordmark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:9px;vertical-align:1px}
+.wordmark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:9px;vertical-align:1px;
+  box-shadow:0 0 0 3px rgba(76,154,255,.16),0 0 12px var(--acc-glow)}
 nav.tools{display:flex;gap:4px;margin-left:auto}
 nav.tools a{font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
-.wrap{max-width:1040px;margin:0 auto;padding:20px 18px 80px}
+.wrap{max-width:1040px;margin:0 auto;padding:20px 18px 90px}
+@media(max-width:520px){
+  .wrap{padding:16px 14px 90px}
+  .grid{gap:9px}
+  .card{min-height:108px;padding:13px 13px 11px}
+  .brief{padding:19px 16px 16px}
+  .field input{padding:15px 14px;font-size:1.02rem}
+  .brief .acts{gap:7px}
+  .brief .acts button{flex:1 1 auto;min-width:calc(50% - 4px)}
+}
 
 /* ---- ask ---- */
 .ask{padding:28px 0 14px}
@@ -53,10 +66,14 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .field input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:14px 14px;font-size:1rem}
 .field input::placeholder{color:var(--ink3)}
 .field input:focus{border-color:var(--acc);outline:none}
-.btn{background:var(--acc);color:#141005;border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap}
-.btn:active{transform:scale(.98)}
-.btn.ghost{background:transparent;color:var(--ink2);border:1px solid var(--line2);padding:11px 14px;font-weight:600}
-.btn.ghost:hover{color:var(--ink);border-color:var(--ink3)}
+.btn{background:var(--acc);color:#05192F;border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap;
+  min-height:46px;letter-spacing:-.01em;box-shadow:0 1px 0 rgba(255,255,255,.18) inset,0 6px 18px -8px var(--acc-glow);
+  transition:transform .12s ease,box-shadow .2s ease,background .2s ease}
+.btn:hover{background:var(--acc-soft)}
+.btn:active{transform:translateY(1px) scale(.99)}
+.btn.ghost{background:var(--panel);color:var(--ink2);border:1px solid var(--line2);padding:11px 15px;font-weight:600;
+  min-height:44px;box-shadow:none;font-size:.86rem}
+.btn.ghost:hover{color:var(--ink);border-color:var(--acc);background:var(--panel2)}
 .btn[disabled]{opacity:.5;cursor:default}
 .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
 .hint{font-size:.82rem;color:var(--ink3)}
@@ -75,15 +92,19 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 /* ---- report ---- */
 .hidden{display:none!important}
 .report{display:none}
-.report.show{display:block}
+.report.show{display:block;animation:rise .38s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .place{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin:22px 0 6px;color:var(--ink2);font-size:.88rem}
 .place b{color:var(--ink);font-weight:600}
 .scope{display:inline-flex;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:3px;margin:12px 0 4px}
 .scope button{background:transparent;border:none;border-radius:8px;padding:7px 12px;font-size:.84rem;font-weight:600;color:var(--ink2);cursor:pointer}
-.scope button.on{background:var(--panel2);color:var(--ink)}
+.scope button.on{background:var(--acc-dim);color:var(--acc);box-shadow:0 0 0 1px rgba(76,154,255,.35) inset}
 .scope button small{display:block;font-size:.68rem;font-weight:500;color:var(--ink3);line-height:1.1;margin-top:1px}
 
-.brief{margin:16px 0 8px;padding:22px 20px 18px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);position:relative}
+.brief{margin:16px 0 8px;padding:22px 20px 18px;border:1px solid var(--line2);border-radius:var(--r);position:relative;overflow:hidden;
+  background:linear-gradient(180deg,rgba(76,154,255,.055),transparent 55%),linear-gradient(180deg,var(--panel2),var(--panel))}
+.brief::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--acc),rgba(76,154,255,0))}
 .brief .k{font-size:.7rem;font-weight:700;letter-spacing:.2em;color:var(--ink3);margin-bottom:10px}
 .brief p{font-family:var(--disp);font-size:clamp(1.05rem,2.6vw,1.35rem);line-height:1.5;font-weight:500}
 .brief p b{color:var(--acc);font-weight:600}
@@ -92,12 +113,16 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 
 section.blk{margin-top:30px}
 .blk h2{font-family:var(--disp);font-weight:600;font-size:.72rem;letter-spacing:.22em;color:var(--ink3);text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
-.blk h2::after{content:"";flex:1;height:1px;background:var(--line)}
+.blk h2::before{content:"";width:4px;height:4px;border-radius:50%;background:var(--acc);flex:none;box-shadow:0 0 8px var(--acc-glow)}
+.blk h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 @media(min-width:640px){.grid{grid-template-columns:repeat(4,1fr)}.grid.g3{grid-template-columns:repeat(3,1fr)}}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 14px 12px;min-height:118px;display:flex;flex-direction:column}
+.card{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:var(--r);
+  padding:15px 15px 13px;min-height:118px;display:flex;flex-direction:column;transition:border-color .2s ease}
+.card:hover{border-color:var(--line2)}
 .card.wide{grid-column:1/-1}
-.card .n{font-family:var(--disp);font-size:clamp(1.6rem,5vw,2.1rem);font-weight:600;line-height:1;letter-spacing:-.02em;color:var(--ink)}
+.card .n{font-family:var(--disp);font-size:clamp(1.75rem,5.4vw,2.15rem);font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--ink);
+  font-variant-numeric:tabular-nums}
 .card .n small{font-size:.55em;color:var(--ink2);font-weight:500;margin-left:2px}
 .card .n.na{color:var(--ink3);font-size:1.1rem;line-height:1.3;font-weight:500;padding-top:6px}
 .card .l{font-size:.78rem;color:var(--ink2);margin-top:6px;line-height:1.3}
@@ -128,17 +153,20 @@ section.blk{margin-top:30px}
 .ext a span{display:block;font-size:.78rem;color:var(--ink2);margin-top:2px}
 .ext a:hover{border-color:var(--line2);text-decoration:none}
 .focusbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
-.focusbar button{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:7px 13px;font-size:.8rem;font-weight:600;color:var(--ink2);cursor:pointer}
-.focusbar button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
+.focusbar button{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;font-size:.82rem;font-weight:600;
+  color:var(--ink2);cursor:pointer;min-height:40px;transition:border-color .18s ease,color .18s ease,background .18s ease}
+.focusbar button:hover{border-color:var(--ink3);color:var(--ink)}
+.focusbar button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc);box-shadow:0 0 16px -6px var(--acc-glow)}
 .focusbar button.all{border-style:dashed}
 .focusnote{font-size:.78rem;color:var(--ink3);margin-top:8px}
 .focusnote a{color:var(--ink2);text-decoration:underline}
-.ckey{display:flex;gap:14px;font-size:.72rem;color:var(--ink2);margin-bottom:6px}
+.ckey{display:flex;gap:14px;font-size:.76rem;color:var(--ink2);margin-bottom:8px;flex-wrap:wrap}
 .ckey i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
 .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
 .chart h3{font-size:.82rem;font-weight:600;color:var(--ink);margin-bottom:2px}
 .chart .cs{font-size:.72rem;color:var(--ink3);margin-bottom:10px}
-.sug{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-bottom:10px}
+.sug{background:linear-gradient(180deg,var(--panel2),var(--panel));border:1px solid var(--line);border-left:2px solid var(--acc);
+  border-radius:var(--r);padding:15px 16px;margin-bottom:10px}
 .sug h3{font-family:var(--disp);font-size:1rem;font-weight:600;margin-bottom:5px}
 .sug .ev{font-size:.8rem;color:var(--acc);margin-bottom:8px}
 .sug ul{list-style:none;display:flex;flex-direction:column;gap:6px}
@@ -148,7 +176,8 @@ section.blk{margin-top:30px}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
 .sugcat{font-size:.7rem;font-weight:700;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px}
 .ideas{margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
-.ideas summary{cursor:pointer;font-size:.78rem;font-weight:700;letter-spacing:.06em;color:var(--acc);list-style:none}
+.ideas summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.04em;color:var(--acc);list-style:none;
+  min-height:42px;display:flex;align-items:center;gap:2px;-webkit-user-select:none;user-select:none}
 .ideas summary::-webkit-details-marker{display:none}
 .ideas summary::before{content:"+ ";font-weight:700}
 .ideas[open] summary::before{content:"\2212 "}
@@ -171,7 +200,8 @@ section.blk{margin-top:30px}
 .caveat{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;margin-top:14px;font-size:.82rem;color:var(--ink2);line-height:1.6}
 .caveat b{color:var(--ink);display:block;margin-bottom:6px;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase}
 .diag{margin-top:26px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;font-size:.8rem;color:var(--ink2)}
-.diag summary{cursor:pointer;color:var(--ink3);font-weight:600;letter-spacing:.06em;font-size:.72rem}
+.diag summary{cursor:pointer;color:var(--ink3);font-weight:600;letter-spacing:.06em;font-size:.72rem;
+  min-height:40px;display:flex;align-items:center}
 .diag pre{white-space:pre-wrap;word-break:break-all;font-size:.74rem;color:var(--ink3);margin-top:8px;line-height:1.5}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacing:.08em}
@@ -221,13 +251,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.3</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v2.3';
+const VERSION = 'v2.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -878,15 +908,15 @@ function suggestions(M,scope){
 }
 
 /* ================= CHARTS (inline SVG — no library, prints cleanly) ================= */
-const SVGC={gold:'#F0B443',dim:'#6B737D',ink:'#A6ADB6',line:'#2A3038'};
+const SVGC={gold:'#4C9AFF',dim:'#68737F',ink:'#A3AEBC',line:'#28313D'};
 function chartGrouped(cats,a,b){
-  const W=560,H=210,PL=42,PB=40,PT=10,PR=8, n=cats.length;
+  const W=460,H=200,PL=44,PB=44,PT=10,PR=8, n=cats.length;
   const max=Math.max(...a.vals.concat(b?b.vals:[]),1)*1.15;
   const gw=(W-PL-PR)/n, bw=b?gw*0.30:gw*0.45;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
   [0,max/2,max].forEach(g=>{s+=`<line x1="${PL}" x2="${W-PR}" y1="${y(g)}" y2="${y(g)}" stroke="${SVGC.line}" stroke-width="1"/>`
-    +`<text x="${PL-6}" y="${y(g)+4}" fill="${SVGC.dim}" font-size="13" text-anchor="end">${Math.round(g)}%</text>`;});
+    +`<text x="${PL-6}" y="${y(g)+4}" fill="${SVGC.dim}" font-size="14" text-anchor="end">${Math.round(g)}%</text>`;});
   cats.forEach((cat,i)=>{
     const x0=PL+i*gw+gw/2;
     const av=a.vals[i]??0, bv=b?(b.vals[i]??0):null;
@@ -894,25 +924,25 @@ function chartGrouped(cats,a,b){
       s+=`<rect x="${x0-bw-2}" y="${y(av)}" width="${bw}" height="${Math.max(0,H-PB-y(av))}" fill="${SVGC.gold}" rx="2"/>`;
       s+=`<rect x="${x0+2}" y="${y(bv)}" width="${bw}" height="${Math.max(0,H-PB-y(bv))}" fill="${SVGC.dim}" opacity=".55" rx="2"/>`;
     } else s+=`<rect x="${x0-bw/2}" y="${y(av)}" width="${bw}" height="${Math.max(0,H-PB-y(av))}" fill="${SVGC.gold}" rx="2"/>`;
-    String(cat).split('\n').forEach((ln,k)=>{s+=`<text x="${x0}" y="${H-PB+15+k*13}" fill="${SVGC.ink}" font-size="12.5" text-anchor="middle">${esc(ln)}</text>`;});
+    String(cat).split('\n').forEach((ln,k)=>{s+=`<text x="${x0}" y="${H-PB+16+k*14}" fill="${SVGC.ink}" font-size="14" text-anchor="middle">${esc(ln)}</text>`;});
   });
   s+=`</svg>`;
   const key=`<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(a.name)}</span>${b?`<span><i style="background:${SVGC.dim};opacity:.55"></i>${esc(b.name)}</span>`:''}</div>`;
   return key+s;
 }
 function chartLollipop(rows,aName,bName){
-  const W=560,rowH=31,PL=176,PR=54,H=rows.length*rowH+18;
+  const W=440,rowH=34,PL=152,PR=50,H=rows.length*rowH+18;
   const max=Math.max(...rows.map(r=>Math.max(r.me??0,r.cty??0)),1)*1.2;
   const x=v=>PL+(W-PL-PR)*(v/max);
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
   rows.forEach((r,i)=>{
     const yy=14+i*rowH;
-    s+=`<text x="${PL-10}" y="${yy+4}" fill="${SVGC.ink}" font-size="13" text-anchor="end">${esc(r.label)}</text>`;
+    s+=`<text x="${PL-10}" y="${yy+4}" fill="${SVGC.ink}" font-size="14" text-anchor="end">${esc(r.label)}</text>`;
     s+=`<line x1="${PL}" x2="${W-PR}" y1="${yy}" y2="${yy}" stroke="${SVGC.line}" stroke-width="1"/>`;
     if(r.cty!=null&&r.me!=null) s+=`<line x1="${x(Math.min(r.me,r.cty))}" x2="${x(Math.max(r.me,r.cty))}" y1="${yy}" y2="${yy}" stroke="${SVGC.gold}" stroke-width="2" opacity=".45"/>`;
     if(r.cty!=null) s+=`<circle cx="${x(r.cty)}" cy="${yy}" r="4" fill="${SVGC.dim}"/>`;
     if(r.me!=null) s+=`<circle cx="${x(r.me)}" cy="${yy}" r="5.5" fill="${SVGC.gold}"/>`;
-    if(r.me!=null) s+=`<text x="${W-PR+6}" y="${yy+4}" fill="${SVGC.gold}" font-size="13" font-weight="600">${fmtPct(r.me)}</text>`;
+    if(r.me!=null) s+=`<text x="${W-PR+6}" y="${yy+4}" fill="${SVGC.gold}" font-size="14" font-weight="600">${fmtPct(r.me)}</text>`;
   });
   s+=`</svg>`;
   return `<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(aName)}</span><span><i style="background:${SVGC.dim}"></i>${esc(bName)}</span></div>`+s;
@@ -930,16 +960,19 @@ function declutter(ys,gap,top,bottom){
   return out;
 }
 function chartSlope(items,thenLabel,nowLabel){
-  const W=620,H=250,PT=20,PB=32,PL=74,PR=205;
+  const W=490,H=284,PT=18,PB=42,PL=54,PR=176;
   const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" width="100%" preserveAspectRatio="xMidYMid meet">`;
   s+=`<line x1="${PL}" x2="${PL}" y1="${PT}" y2="${H-PB}" stroke="${SVGC.line}"/><line x1="${W-PR}" x2="${W-PR}" y1="${PT}" y2="${H-PB}" stroke="${SVGC.line}"/>`;
-  s+=`<text x="${PL}" y="${H-PB+16}" fill="${SVGC.dim}" font-size="12" text-anchor="middle">${esc(thenLabel)}</text>`;
-  s+=`<text x="${W-PR}" y="${H-PB+16}" fill="${SVGC.dim}" font-size="12" text-anchor="middle">${esc(nowLabel)}</text>`;
-  const GAP=16;
-  const yR=declutter(items.map(it=>y(it.now)),GAP,PT+6,H-PB-4);
-  const yL=declutter(items.map(it=>y(it.then)),GAP,PT+6,H-PB-4);
+  s+=`<text x="${PL}" y="${H-PB+22}" fill="${SVGC.dim}" font-size="14" text-anchor="middle">${esc(thenLabel)}</text>`;
+  s+=`<text x="${W-PR}" y="${H-PB+22}" fill="${SVGC.dim}" font-size="14" text-anchor="middle">${esc(nowLabel)}</text>`;
+  const GAP=20;
+  // keep labels clear of the year captions along the bottom
+  const yR=declutter(items.map(it=>y(it.now)),GAP,PT+6,H-PB-10);
+  const yL=declutter(items.map(it=>y(it.then)),GAP,PT+6,H-PB-10);
+  // long names would run off the edge of the card, so shorten them here only
+  const shortName=n=>({'Hispanic / Latino':'Hispanic','Two or more':'2+ races','Born abroad':'Born abroad'}[n])||(n.length>13?n.slice(0,12)+'…':n);
   items.forEach((it,i)=>{
     const col=Math.abs(it.now-it.then)>=3?SVGC.gold:SVGC.dim;
     s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="2" opacity="${col===SVGC.gold?1:.5}"/>`;
@@ -947,8 +980,8 @@ function chartSlope(items,thenLabel,nowLabel){
     // leader lines, drawn only where a label had to move off its dot
     if(Math.abs(yL[i]-y(it.then))>1.5) s+=`<line x1="${PL-5}" y1="${y(it.then)}" x2="${PL-11}" y2="${yL[i]}" stroke="${SVGC.line2||SVGC.dim}" stroke-width="1" opacity=".5"/>`;
     if(Math.abs(yR[i]-y(it.now))>1.5) s+=`<line x1="${W-PR+4}" y1="${y(it.now)}" x2="${W-PR+10}" y2="${yR[i]}" stroke="${col}" stroke-width="1" opacity=".5"/>`;
-    s+=`<text x="${PL-13}" y="${yL[i]+4}" fill="${SVGC.dim}" font-size="12" text-anchor="end">${fmtPct(it.then)}</text>`;
-    s+=`<text x="${W-PR+12}" y="${yR[i]+4}" fill="${col}" font-size="12.5" font-weight="600">${esc(it.name)} ${fmtPct(it.now)}</text>`;
+    s+=`<text x="${PL-13}" y="${yL[i]+4}" fill="${SVGC.dim}" font-size="14" text-anchor="end">${fmtPct(it.then)}</text>`;
+    s+=`<text x="${W-PR+12}" y="${yR[i]+4}" fill="${col}" font-size="15.5" font-weight="600">${esc(shortName(it.name))} ${fmtPct(it.now)}</text>`;
   });
   s+=`</svg>`; return s;
 }
@@ -1056,15 +1089,30 @@ function bars(rows,fmt=fmtPct){ // rows: [[label,val,cmpVal?]]
   return `<div class="bars">${rows.map(([l,v,c])=>`<div class="brow"><div class="bl">${esc(l)}</div><div class="bb"><i style="width:${Math.max(0,Math.min(100,v||0))}%"></i></div><div class="bv">${fmt(v)}${c!=null?`<small>${fmt(c)}</small>`:''}</div></div>`).join('')}</div>`;
 }
 /* ---- AI planner (optional; only appears when a key is set server-side) ---- */
-let AI_READY=null;
+let AI_INFO=null;
+const aiPass=()=>localStorage.getItem('terrain-ai-pass')||'';
+/* Unlock once per device with ?ai=YOURPASSPHRASE on the end of the address.
+   The passphrase is then remembered here and stripped out of the URL, so it does
+   not sit in the address bar, in a screenshot, or in a shared link. */
+function aiClaimPass(){
+  const q=new URLSearchParams(location.search);
+  const h=new URLSearchParams((location.hash||'').replace(/^#/,''));
+  const given=q.get('ai')||h.get('ai');
+  if(given){
+    localStorage.setItem('terrain-ai-pass',given.trim());
+    q.delete('ai'); h.delete('ai');
+    const qs=q.toString(), hs=h.toString();
+    history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+(hs?'#'+hs:''));
+  }
+}
 async function aiProbe(){
-  if(AI_READY!==null) return AI_READY;
+  if(AI_INFO!==null) return AI_INFO;
   try{
     const r=await fetch('/.netlify/functions/advise');
     const j=await r.json();
-    AI_READY=!!(j&&j.enabled);
-  }catch(e){ AI_READY=false; }
-  return AI_READY;
+    AI_INFO={enabled:!!(j&&j.enabled), locked:!!(j&&j.locked)};
+  }catch(e){ AI_INFO={enabled:false,locked:false}; }
+  return AI_INFO;
 }
 function aiSummary(M,levels,scope,geo){
   const me=M[scope], S=suggestions(M,scope), cats=focusCats();
@@ -1116,11 +1164,14 @@ function mdToHtml(t){
   return out.join('');
 }
 async function aiMount(M,levels,geo){
-  if(!(await aiProbe())) return;
+  const info=await aiProbe();
+  if(!info.enabled) return;
+  // Private: no button, no hint, nothing at all unless this device is unlocked.
+  if(info.locked && !aiPass()) return;
   const host=document.getElementById('aislot'); if(!host) return;
   host.innerHTML=`<div class="aibox">
     <h3>Go deeper with Claude</h3>
-    <div class="sub2">Sends the figures above — never your address book, never anything about individuals — and asks for a sequenced plan: what to do first, what it costs, and what would prove it wrong. Costs a few cents per plan, billed to your own Anthropic account.</div>
+    <div class="sub2">Sends the figures above — never your address book, never anything about individuals — and asks for a sequenced plan: what to do first, what it costs, and what would prove it wrong. Costs a few cents per plan, billed to your own Anthropic account.${info.locked?' <b style="color:var(--acc)">Private to you</b> — other people do not see this panel.':''}</div>
     <button class="btn" id="aigo">Write a ministry plan</button>
     <div class="aiout" id="aiout"></div>
   </div>`;
@@ -1128,9 +1179,16 @@ async function aiMount(M,levels,geo){
     const btn=document.getElementById('aigo'), out=document.getElementById('aiout');
     btn.disabled=true; btn.textContent='Thinking… (20–40 seconds)'; out.innerHTML='';
     try{
-      const r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},
+      const r=await fetch('/.netlify/functions/advise',{method:'POST',
+        headers:{'content-type':'application/json','x-terrain-pass':aiPass()},
         body:JSON.stringify({summary:aiSummary(M,levels,SCOPE,geo)})});
       const j=await r.json();
+      if(j&&j.code==='locked'){
+        // A stale or wrong passphrase — forget it and hide the panel again.
+        localStorage.removeItem('terrain-ai-pass');
+        host.innerHTML=`<p class="note">The ministry planner is locked. Reopen the site with your private link to unlock it on this device.</p>`;
+        return;
+      }
       if(!r.ok||j.error) throw new Error(j.error||('HTTP '+r.status));
       // Tolerate either the function's shape or the raw API's, and never print NaN.
       const u=j.usage||{}, ti=+(u.in??u.input_tokens), to=+(u.out??u.output_tokens);
@@ -1219,7 +1277,7 @@ function render(){
     ${card('Households over $150k',me.incHigh,fmtPct,pick('incHigh'),S)}
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
     <div class="card"><div class="n" style="font-size:1.2rem;line-height:1.25;padding-top:4px">${divided?'Sharply divided':me.incHigh>=35?'Mostly affluent':me.incLow>=35?'Mostly struggling':'Mixed incomes'}</div><div class="l">How this reads</div><div class="sub">${divided?'Both ends of the income scale are large here.':'Based on the share of households at each end of the income scale.'}</div></div>
-    <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Gold dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
+    <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Blue dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
       ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short)}</div>
     <div class="card wide chart"><h3>Household income spread</h3><div class="cs">Share of households in each bracket${cmpName?', against the county':''}</div>
       ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
@@ -1237,7 +1295,7 @@ function render(){
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2><div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
-    ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · gold marks a shift of 3 points or more</div>
+    ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
         (ACS_PAST-4)+'–'+ACS_PAST,(ACS_YEAR-4)+'–'+ACS_YEAR)}</div>`:''}
     ${card('Born outside the U.S.',me.foreign,fmtPct,pick('foreign'),S)}
@@ -1345,6 +1403,7 @@ $('loc').onclick=()=>{
 $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localStorage.setItem('terrain-census-key',k); $('setup').style.display='none'; setStatus('Key saved on this device. Map it again.'); };
 $('ver').textContent=VERSION;
 (function boot(){
+  aiClaimPass();
   if(!key()){$('setup').style.display='block';}
   const h=new URLSearchParams(location.hash.slice(1));
   if(h.get('a')){$('addr').value=h.get('a'); if(key()) run(()=>geocodeAddress(h.get('a')));}
