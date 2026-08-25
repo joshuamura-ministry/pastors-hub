@@ -241,6 +241,13 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
 .sugcat{font-family:var(--disp);font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);text-transform:none;
   margin:26px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.zviews{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}
+.zviews button{flex:1 1 auto;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 12px;
+  font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:40px;white-space:nowrap}
+.zviews button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
+.zscale{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--ink3);margin:8px 0 2px}
+.zscale i{flex:1;height:7px;border-radius:4px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 6%,transparent),var(--acc))}
 .mapbox{position:relative;width:100%;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
 .mapinner{position:absolute;top:0;left:0;width:640px;height:470px;transform-origin:0 0}
 .mapinner .tile{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none}
@@ -403,13 +410,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.8</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v3.8';
+const VERSION = 'v4.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1738,6 +1745,19 @@ function mobilizeMath(M,zones){
    so there is no mapping library, no map key, and no per-view cost. */
 const TIGER='https://tigerweb.geo.census.gov/arcgis/rest/services/TIGERweb/Tracts_Blocks/MapServer/0/query';
 const MI_LAT=1/69;                       // degrees of latitude per mile
+/* Area of a tract in square miles, straight from its boundary (shoelace on
+   equirectangular coordinates). Population alone is misleading — a big rural
+   tract and a tight city block can hold the same number of people. */
+function ringAreaSqMi(ring,lat0){
+  const kx=69.172*Math.cos(lat0*Math.PI/180), ky=69.055;
+  let a=0;
+  for(let i=0,j=ring.length-1;i<ring.length;j=i++){
+    const x1=ring[j][0]*kx, y1=ring[j][1]*ky, x2=ring[i][0]*kx, y2=ring[i][1]*ky;
+    a+=(x1*y2-x2*y1);
+  }
+  return Math.abs(a/2);
+}
+const tractArea=z=>z.rings.reduce((t,r)=>t+ringAreaSqMi(r,z.lat),0);
 const miles=(a,b)=>{                     // rough distance, fine at this scale
   const dy=(a.lat-b.lat)*69, dx=(a.lon-b.lon)*69*Math.cos(a.lat*Math.PI/180);
   return Math.sqrt(dx*dx+dy*dy);
@@ -1763,7 +1783,8 @@ async function fetchNearbyShapes(centre,radiusMi){
    costs nothing extra beyond what we already fetch. */
 const ZONE_VARS=[...v('B01003',1),...v('B19013',1),...v('B17001',1,2),...v('B09001',1),
   ...v('B25003',1,3),...v('B27010',1,17,33,50,66),...v('B22010',1,2),...v('C16002',1,4,7,10,13),
-  ...v('B25044',1,3,10),...v('B11003',1,3,10,16),...v('B25070',1,7,8,9,10,11),...v('B05002',1,13),...v('B01002',1)];
+  ...v('B25044',1,3,10),...v('B11003',1,3,10,16),...v('B25070',1,7,8,9,10,11),...v('B05002',1,13),...v('B01002',1),
+  ...v('B11010',5,12),...v('B14001',1,4,5,6,7)];
 async function fetchCountyTracts(geo){
   const q='for=tract:*&in=state:'+geo.county.STATE+'%20county:'+geo.county.COUNTY;
   const rows=await getJSON(API+'/'+ACS_YEAR+'/acs/acs5?get=NAME,'+ZONE_VARS.join(',')+'&'+q+'&key='+key(),'County tracts');
@@ -1790,6 +1811,8 @@ function zoneMetrics(o){
   const rb=(g('B25070_001E')||0)-(g('B25070_011E')||0);
   m.rent50=pct(g('B25070_010E'),rb);
   m.foreign=pct(g('B05002_013E'),g('B05002_001E'));
+  m.seniorsAlone=pct(S('B11010',5,12),m.hh); m.seniorsAloneN=S('B11010',5,12);
+  m.k12=S('B14001',4,5,6,7);
   return m;
 }
 
@@ -1808,6 +1831,7 @@ function scoreZone(m,dist,homeM){
   const contrast = homeM&&homeM.poverty!=null&&m.poverty!=null ? cap(Math.max(0,m.poverty-homeM.poverty),20)*0.5 : 0;
   return {score:(need*reach*size)+contrast, need, reach};
 }
+const mapsUrlZ=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
 function zoneReasons(m,homeM){
   const r=[];
   const add=(cond,txt)=>{ if(cond) r.push(txt); };
@@ -1881,9 +1905,13 @@ function basemap(church,zones,all){
   return {z,P,tiles};
 }
 
-function zoneMap(church,zones,all,radiusMi){
+function zoneMap(church,zones,all,radiusMi,scored,view){
   const C=svgc();
   if(!all.length) return '';
+  const V=VIEWS[view]||VIEWS.opportunity;
+  const vals=(scored||[]).map(z=>V.key(z)||0);
+  const hi=Math.max(...vals,0.0001);
+  const byId={}; (scored||[]).forEach(z=>byId[z.geoid]=V.key(z)||0);
   const {z,P,tiles}=basemap(church,zones,all);
   const path=rings=>rings.map(r=>'M'+r.map(p=>{const q=P(p[0],p[1]);return q[0].toFixed(1)+','+q[1].toFixed(1)}).join('L')+'Z').join(' ');
   const rank={}; zones.forEach((zn,i)=>rank[zn.geoid]=i+1);
@@ -1892,10 +1920,13 @@ function zoneMap(church,zones,all,radiusMi){
   const milePx=Math.abs(merc.y(church.lat-1/69,z)-merc.y(church.lat,z));
   let sv=`<svg class="mapsvg" viewBox="0 0 ${MAPW} ${MAPH}" role="img" preserveAspectRatio="none">`;
   sv+=`<title>Streets around the church with the priority blocks shaded</title>`;
+  // every tract is shaded on the active measure, so the map reads as a whole
   all.forEach(zn=>{
     const r=rank[zn.geoid];
-    sv+=`<path d="${path(zn.rings)}" fill="${r?C.gold:'none'}" fill-opacity="${r?(0.34-(r-1)*0.06):0}"
-      stroke="${r?C.gold:C.dim}" stroke-width="${r?2.4:1.2}" stroke-opacity="${r?0.95:0.45}"/>`;
+    const v=byId[zn.geoid];
+    const t=v==null?0:Math.pow(Math.min(v/hi,1),0.7);   // gamma: keeps mid-range visible
+    sv+=`<path d="${path(zn.rings)}" fill="${C.gold}" fill-opacity="${(t*0.62).toFixed(3)}"
+      stroke="${r?C.gold:C.dim}" stroke-width="${r?2.6:1}" stroke-opacity="${r?0.95:0.35}"/>`;
   });
   [0.5,1].forEach(mi=>{
     sv+=`<circle cx="${ch[0].toFixed(1)}" cy="${ch[1].toFixed(1)}" r="${(milePx*mi).toFixed(1)}" fill="none"
@@ -2534,22 +2565,58 @@ function render(){
   aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
+  const wantR=SCOPE_RADIUS[SCOPE]||1.8;
+  if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
   buildSecNav();
   $('diagbody').innerHTML=`<p>American Community Survey 5-year estimates, ${ACS_YEAR-4}–${ACS_YEAR} (and ${ACS_PAST-4}–${ACS_PAST} for the ten-year shift). Tract-level figures are estimates with real margins of error — treat small differences as noise, and large ones as signal. Geography from the Census Geocoder. Tables: B01002 B01003 B03002 B05002 B05005 B05006 B09001 B11003 B11010 B14001 B17001 B19001 B19013 B19057 B19083 B22010 B23025 B25003 B25014 B25044 B25070 B27010 C16001 C16002 C24010.</p><pre>${esc(LOG.join('\n'))}</pre>`;
   $('report').classList.add('show');
 }
 
 /* ---- hot zones: fetched after the report, drawn when they arrive ---- */
-let ZONES=null, ZONES_STATE='idle';
-async function loadZones(geo,M){
-  ZONES=null; ZONES_STATE='loading';
+let ZONES=null, ZONES_STATE='idle', ZONES_R=0;
+/* The map should cover what the tabs are talking about: a couple of miles for
+   the neighbourhood, wider for the town, wider still for the county. */
+const SCOPE_RADIUS={tract:1.8,cousub:4.5,place:4.5,county:10};
+/* Three ways to read the same blocks:
+   opportunity = need weighted by how close it is (where to start)
+   need        = hardship alone, distance ignored (where it is worst)
+   population  = people per square mile (where the people actually are) */
+const VIEWS={
+  opportunity:{label:'Where to start', key:z=>z.score,
+    blurb:'Need weighted against distance \u2014 the blocks worth walking to first.',
+    unit:z=>z.dist<0.15?'at the door':z.dist.toFixed(1)+' mi'},
+  need:{label:'Greatest need', key:z=>z.need,
+    blurb:'Hardship alone, ignoring distance. Some of these may be a drive away.',
+    unit:z=>fmtPct(z.m.poverty)+' in poverty'},
+  children:{label:'Children', key:z=>z.m.kidsShare||0,
+    blurb:'Share of residents under 18 \u2014 where the families are.',
+    unit:z=>fmtPct(z.m.kidsShare)+' children'},
+  seniors:{label:'Seniors alone', key:z=>z.m.seniorsAlone||0,
+    blurb:'Households that are one person over 65 living alone \u2014 where isolation concentrates.',
+    unit:z=>fmtPct(z.m.seniorsAlone)+' seniors alone'},
+  language:{label:'Language', key:z=>Math.max(z.m.limEng||0,(z.m.foreign||0)*0.6),
+    blurb:'Households with limited English, weighted with the foreign-born share \u2014 where language is the first barrier.',
+    unit:z=>fmtPct(z.m.limEng)+' limited English'},
+  population:{label:'Most people', key:z=>z.density||0,
+    blurb:'People per square mile, measured from each block\u2019s own boundary \u2014 not raw counts, which flatter big empty tracts.',
+    unit:z=>z.density?fmtNum(Math.round(z.density))+'/sq mi':''}
+};
+let ZVIEW='opportunity';
+async function loadZones(geo,M,radius){
+  const R=radius||SCOPE_RADIUS[SCOPE]||1.8;
+  if(ZONES_STATE==='loading'&&ZONES_R===R) return;
+  ZONES=null; ZONES_STATE='loading'; ZONES_R=R;
   const host=document.getElementById('zoneslot');
   if(!host) return;
   const c=geo.coords?{lat:+geo.coords.y,lon:+geo.coords.x}:null;
   if(!c||!isFinite(c.lat)){ ZONES_STATE='idle'; host.innerHTML=''; return; }
   host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`;
   try{
-    const [shapes,acs]=await Promise.all([fetchNearbyShapes(c,1.8),fetchCountyTracts(geo)]);
+    const [shapesAll,acs]=await Promise.all([fetchNearbyShapes(c,R),fetchCountyTracts(geo)]);
+    // a county view can return hundreds of tracts; draw the nearest 150
+    const shapes=shapesAll
+      .map(z=>({...z,_d:miles(c,{lat:z.lat,lon:z.lon})}))
+      .sort((a,b)=>a._d-b._d).slice(0,150);
     const homeGeoid=geo.county.STATE+geo.county.COUNTY+geo.tract.TRACT;
     const scored=shapes.map(z=>{
       const row=acs[z.geoid]; if(!row) return null;
@@ -2557,9 +2624,11 @@ async function loadZones(geo,M){
       if(!m.pop||m.pop<200) return null;
       const dist=miles(c,{lat:z.lat,lon:z.lon});
       const {score,need}=scoreZone(m,dist,M.tract);
-      return {...z,m,dist,score,need,home:z.geoid===homeGeoid};
-    }).filter(Boolean).sort((a,b)=>b.score-a.score);
-    ZONES={all:shapes,top:scored.slice(0,4),church:c}; ZONES_STATE='ready';
+      const area=tractArea(z);
+      return {...z,m,dist,score,need,area,density:area>0.02?m.pop/area:null,
+              home:z.geoid===homeGeoid};
+    }).filter(Boolean);
+    ZONES={all:shapes,scored,church:c,radius:R}; ZONES_STATE='ready';
     drawZones();
   }catch(e){
     log('hot zones unavailable: '+e.message);
@@ -2573,21 +2642,38 @@ function drawZones(){
   if(!host) return;
   if(ZONES_STATE==='loading'){ host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`; return; }
   if(ZONES_STATE==='failed'){ host.innerHTML=`<div class="note">Nearby-block view unavailable right now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(ZONES_ERR.slice(0,90))})</span></div>`; return; }
-  if(!ZONES||!ZONES.top.length){ host.innerHTML=''; return; }
-  const {top,all,church}=ZONES;
+  if(!ZONES||!ZONES.scored||!ZONES.scored.length){ host.innerHTML=''; return; }
+  const V=VIEWS[ZVIEW]||VIEWS.opportunity;
+  const levels=(DATA&&DATA.levels)||{county:{short:'your county',name:'your county'}};
+  const top=[...ZONES.scored].sort((a,b)=>(V.key(b)||0)-(V.key(a)||0)).slice(0,4);
+  const {all,church}=ZONES;
   host.innerHTML=`<div class="zones">
     <div class="movehead"><b>Hotspots</b>
-      <span>The ${top.length} blocks around this church with the most need within the shortest reach. Shaded darkest first. Dashed rings are half a mile and one mile from your door.</span></div>
-    ${zoneMap(church,top,all,1.8)}
+      <span>${esc(V.blurb)} Every block is shaded on the measure you choose; the four strongest are numbered. Showing about ${ZONES.radius} miles around the church \u2014 the view widens when you switch to Town or County above.</span></div>
+    <div class="zviews">${Object.keys(VIEWS).map(k=>`<button data-v="${k}" class="${k===ZVIEW?'on':''}">${esc(VIEWS[k].label)}</button>`).join('')}</div>
+    ${zoneMap(church,top,all,1.8,ZONES.scored,ZVIEW)}
+    <div class="zscale"><span>less</span><i></i><span>more</span></div>
     ${top.map((z,i)=>`<div class="zone">
       <div class="zh"><span class="zn">${i+1}</span><b>${esc(z.name?('Tract '+z.name):z.geoid)}</b>
-        <span class="zd">${z.dist<0.15?'at the church door':z.dist.toFixed(1)+' mi away'}${z.home?' \u00b7 your own block':''}</span></div>
+        <span class="zd">${z.dist<0.15?'at the church door':z.dist.toFixed(1)+' mi away'}${z.home?' \u00b7 your own block':''}${z.density?' \u00b7 '+fmtNum(Math.round(z.density))+' people/sq mi':''}</span></div>
       <div class="zwhy">${z.m.pop?fmtNum(z.m.pop)+' people':''}${zoneReasons(z.m,null).length?' \u00b7 '+zoneReasons(z.m,null).join(' \u00b7 '):''}</div>
       <div class="zmove">${esc(zoneFirstMove(z.m))}</div>
       <a class="zdir" href="https://www.google.com/maps/search/?api=1&query=${z.lat},${z.lon}" target="_blank" rel="noopener">Open this block in Maps \u2192</a>
     </div>`).join('')}
     <div class="note" style="margin-top:8px">Boundaries and figures are the Census Bureau\u2019s own. Ranking weights need against distance \u2014 a needier block three miles away is not where a two-church district should start.</div>
+
+    <div class="card wide" style="min-height:0;margin-top:14px">
+      <div class="l" style="margin-bottom:6px">Crime, drugs and volunteer safety \u2014 what this map deliberately does not show</div>
+      <p class="note" style="line-height:1.6">There is no free national source of crime data at block level. The FBI publishes by <b>police department</b>, covering a whole town or city at once; overdose figures are published by <b>county</b>. Shading these blocks with a town-wide number would invent detail that does not exist, so this map leaves it out and points you at the real sources instead.</p>
+      <div class="ext" style="margin-top:10px">
+        <a href="https://cde.ucr.cjis.gov/" target="_blank" rel="noopener">FBI Crime Data Explorer<span>Search the police department serving ${esc(levels.county.short)} for violent and property crime rates by year.</span></a>
+        <a href="https://www.cdc.gov/overdose-prevention/data-research/facts-stats/" target="_blank" rel="noopener">CDC overdose data<span>Overdose deaths and opioid dispensing, published by county \u2014 useful for whether recovery ministry is a live need here.</span></a>
+        <a href="${mapsUrlZ(levels.county.name+' county open data crime map')}" target="_blank" rel="noopener">Your county or city open-data portal<span>Some cities publish incident-level crime with map coordinates; most townships do not. Worth one search for ${esc(levels.county.short)}.</span></a>
+      </div>
+      <p class="note" style="margin-top:10px;line-height:1.6"><b style="color:var(--ink)">Two cautions before you use any of it.</b> Reported crime follows policing as much as it follows crime, so a heavily-policed poor block looks worse than a lightly-policed wealthy one. And a map captioned \u201cdangerous areas\u201d, shown to a board, can harden the very fear that keeps a congregation out of a neighbourhood. For volunteer safety the practical answers are the old ones: go in pairs, go in daylight, tell someone where you are, and ask people who live there what they would avoid.</p>
+    </div>
   </div>`;
+  host.querySelectorAll('.zviews button').forEach(b=>b.onclick=()=>{ ZVIEW=b.dataset.v; drawZones(); });
   fitMap();
 }
 
@@ -2620,7 +2706,7 @@ async function run(getGeo){
     DATA={M,levels,geo}; SCOPE='tract';
     setStatus('');
     render();
-    loadZones(geo,M);   // runs after the report is already on screen
+    loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
     if(e.message==='NOCODE'){ localStorage.removeItem('terrain-code'); showGate('That code is no longer valid. Ask Pastor Josh for a current one.'); return; }
