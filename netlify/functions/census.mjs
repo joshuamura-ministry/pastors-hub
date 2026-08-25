@@ -4,7 +4,7 @@
 // does not apply. Auto-detected at /.netlify/functions/census — no config file.
 //
 // Only these two hosts are allowed, so this can never be used as an open proxy.
-const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov']);
+const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov', 'tigerweb.geo.census.gov']);
 
 export default async (request) => {
   // Errors are NEVER cached. Caching an error response poisons the CDN: every
