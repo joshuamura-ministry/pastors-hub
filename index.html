@@ -175,6 +175,16 @@ section.blk{margin-top:30px}
 .sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
 .sugcat{font-size:.7rem;font-weight:700;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin:18px 0 8px}
+.strat{background:var(--panel);border:1px solid var(--line);border-left:2px solid var(--acc);border-radius:12px;
+  padding:12px 14px;margin-bottom:11px;font-size:.85rem;line-height:1.6;color:var(--ink2)}
+.strat b{display:block;font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);margin-bottom:5px;font-weight:700}
+.kindrow{margin:13px 0 4px}
+.kind{font-size:.64rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;padding:3px 9px;border-radius:999px;
+  border:1px solid var(--line2);color:var(--ink3)}
+.kind.k-serve{color:var(--acc);border-color:rgba(76,154,255,.45)}
+.kind.k-equip{color:#7FD1B9;border-color:rgba(127,209,185,.4)}
+.kind.k-belong{color:#C4A6E8;border-color:rgba(196,166,232,.4)}
+.kind.k-invite{color:#E8B87F;border-color:rgba(232,184,127,.4)}
 .ideas{margin-top:10px;border-top:1px solid var(--line);padding-top:9px}
 .ideas summary{cursor:pointer;font-size:.82rem;font-weight:700;letter-spacing:.04em;color:var(--acc);list-style:none;
   min-height:42px;display:flex;align-items:center;gap:2px;-webkit-user-select:none;user-select:none}
@@ -251,13 +261,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.5</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v2.6</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v2.5';
+const VERSION = 'v2.6';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -529,132 +539,185 @@ const SPEC=[
 ];
 const fmtCell=(v,t)=>v==null?'':t==='p'?(Math.round(v*10)/10):t==='$'?Math.round(v):t==='d1'?(Math.round(v*10)/10):t==='d2'?(Math.round(v*100)/100):Math.round(v);
 
-/* ================= MINISTRY IDEAS =================
-   Concrete things a two-church district can actually run, attached to the rule
-   that triggers them. Each: n = name, d = what it is and the first move,
-   c = what it costs you, p = who to do it with.
-   Adventist-specific structures (Pathfinders, Adventurers, Community Services,
-   ADRA, health ministries) are named where they fit, because they already exist
-   and are usually under-used. */
+/* ================= MINISTRY STRATEGY =================
+   Every need generates a cluster, not a single act. The four kinds follow the
+   method described in Ministry of Healing p.143 — mingle, show sympathy,
+   minister to needs, win confidence, then "Follow Me":
+     Serve  - meet the felt need first, with no strings attached
+     Equip  - teach the skill the need exposes (this is where seminars belong)
+     Belong - an ongoing group, so people have somewhere to keep coming back to
+     Invite - the spiritual step, offered openly once trust is real
+   A strategy with only Serve is charity. Only Invite is a sales pitch. The arc
+   is the ministry. */
+const KIND={serve:'Serve',equip:'Equip',belong:'Belong',invite:'Invite'};
 const EFFORT={solo:'One person, this week',team:'Small team, about a month',budget:'Needs a budget line',partner:'Needs an outside partner'};
+
+const STRATEGY={
+ 'Children & youth':'Serve the parents, not only the children. A holiday club fills a gap for a week; a parenting course, a strengthened marriage, and a monthly family night change what happens in that home all year. Reach the child through a programme, reach the family through the parent, and the whole household moves together.',
+ 'Language & newcomers':'Language is the door, not the ministry. Help with the paperwork that frightens people, teach the English and citizenship that free them, then give them a room where their culture is honoured rather than tolerated. Spiritual conversation follows in the language people pray in.',
+ 'Seniors & isolation':'Isolation is not solved by an event — it is solved by somebody expected. Build the reliable rhythm first (a call, a lift, a Tuesday), teach what this stage of life actually asks about, and pair generations so being needed is part of the cure.',
+ 'Hardship & work':'Relieve the emergency, then attack what caused it. A food parcel meets today; budgeting, job skills, and cooking on a low income change next year. Do both under one roof, at a table rather than a queue, and dignity survives the help.',
+ 'Housing pressure':'Housing stress runs on a clock — arrears, notice, eviction. Be fast and small early, know the process before anyone needs it, and teach tenants what they are entitled to. In a neighbourhood that turns over, welcoming new arrivals beats any advertising.',
+ 'Two neighbourhoods at once':'One programme will fit one half and quietly exclude the other. Plan two front doors, then do the harder work of getting both groups into the same room. Affluence is not the absence of need; it is a different poverty, and it can fund the ministry the other half needs.',
+ 'A changing community':'Listen for a year before launching anything. A congregation that stopped changing when its neighbourhood did will feel like a mismatch no welcome sign can fix. Leadership that reflects the street, and partnership rather than absorption, is the whole strategy.'
+};
+
 const IDEAS={
+ /* ---------- LANGUAGE & NEWCOMERS ---------- */
  'lang-primary':[
-  {n:'Bilingual welcome card',d:'One card, both languages: service times, address, a name and mobile number, and what happens when you walk in. Hand it to every visitor and put it in every door-knock bag. Start by writing the English side today and having it checked by a native speaker — never a machine translation alone.',c:EFFORT.solo,p:'A bilingual member, or a neighbouring congregation'},
-  {n:'Live interpretation, one service a month',d:'Not a separate service — the same service with headsets or a whispered translation at the back. Begin with one Sabbath a month so it is sustainable, and announce it in both languages.',c:EFFORT.team,p:'Conference multilingual ministries coordinator'},
-  {n:'Language exchange evening',d:'Members practise the community language, neighbours practise English, over food. It is a low-threshold reason for people to enter the building who would never come to a service first.',c:EFFORT.team,p:'A local ESL teacher or library literacy programme'}],
+  {k:KIND.serve,n:'Bilingual welcome card and signage',d:'Service times, address, a name and a mobile number, and what actually happens when you walk in — both languages, checked by a native speaker, never machine-translated alone.',c:EFFORT.solo,p:'A bilingual member or a neighbouring congregation'},
+  {k:KIND.equip,n:'Free English classes, twice a week',d:'Consistently the most-used door a church can open in a language community. Teach practical English — doctor, school, landlord, job interview — not grammar drills.',c:EFFORT.partner,p:'Community college adult education, or a retired teacher in the pews'},
+  {k:KIND.belong,n:'Language exchange supper',d:'Members practise their language, neighbours practise English, everyone eats. A low-threshold reason to enter the building for people who would never come to a service first.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.belong,n:'Interpretation at one service a month',d:'Not a separate service — the same service, with headsets or a whispered translation at the back. Start monthly so it survives, and announce it in both languages.',c:EFFORT.team,p:'Conference multilingual ministries coordinator'},
+  {k:KIND.invite,n:'Bible study in their language',d:'A small group in the heart language, led by or with a native speaker. Faith conversations happen in the language people pray in, not the one they work in.',c:EFFORT.team,p:'Conference for translated study guides'}],
  'limeng':[
-  {n:'Paperwork clinic',d:'Two hours, twice a month, in the fellowship hall: school forms, medical intake, benefit applications, landlord letters. Volunteers help read and fill, never advise on law. Advertise at the laundromat and the grocery, not just online.',c:EFFORT.team,p:'Local legal aid — agree in advance what you refer rather than answer'},
-  {n:'Phone-call buddy',d:'Some calls need a native speaker on the line: a utility company, a doctor\'s office, a landlord. A rota of three members with a shared mobile covers most of it.',c:EFFORT.solo,p:'None needed'},
-  {n:'Translated emergency sheet',d:'One laminated page: what to do in a medical emergency, who to call for utility shut-off, the free clinic, the food pantry, the church. Translate it and give it away everywhere.',c:EFFORT.solo,p:'County social services for accurate numbers'}],
+  {k:KIND.serve,n:'Paperwork clinic',d:'Two hours, twice a month: school forms, medical intake, benefit applications, landlord letters. Volunteers help read and fill; they never give legal advice.',c:EFFORT.team,p:'Local legal aid — agree in advance what you refer rather than answer'},
+  {k:KIND.serve,n:'Phone-call buddy',d:'Some calls need a native speaker on the line — the utility company, the doctor, the landlord. Three members and a shared mobile covers most of it.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.equip,n:'Navigating American systems, six evenings',d:'Schools, healthcare, credit, taxes, renting, and police interactions. The knowledge gap costs these households real money and real fear every month.',c:EFFORT.team,p:'A member who arrived recently should co-teach it'},
+  {k:KIND.belong,n:'Family-to-family pairing',d:'Match a settled household with a newer one for six months. Personal, practical, and it builds friendship in both directions rather than a service relationship.',c:EFFORT.team,p:'None needed'}],
  'foreign':[
-  {n:'Nations Sabbath',d:'A service built around the countries actually represented in the neighbourhood — food, testimony, music, in their languages. Invite through the shops and restaurants of those communities, in person.',c:EFFORT.team,p:'Community leaders from each group — visit them first, do not just invite'},
-  {n:'Citizenship and English classes',d:'Weekly, in the building, free. Consistently one of the most-used doors a church can open in an immigrant neighbourhood.',c:EFFORT.partner,p:'Community college adult education or a local immigrant services nonprofit'},
-  {n:'Airport-and-arrival network',d:'A standing offer to help newly arrived families with the first fortnight: a mattress, a ride, a phone plan, school registration.',c:EFFORT.team,p:'ADRA or the conference refugee ministries contact'}],
+  {k:KIND.serve,n:'Arrival network',d:'A standing offer for newly arrived families in their first fortnight — a mattress, a ride, a phone plan, school registration.',c:EFFORT.team,p:'ADRA or the conference refugee ministries contact'},
+  {k:KIND.equip,n:'Citizenship class',d:'Weekly, free, in the building, with practice interviews. It leads somewhere concrete, which is why people finish it.',c:EFFORT.partner,p:'A local immigrant services nonprofit'},
+  {k:KIND.equip,n:'Parenting between two cultures',d:'Four nights on the strain immigrant parents feel — children fluent in a world the parents are still learning, and the authority that quietly erodes. Deeply felt, rarely addressed by anyone.',c:EFFORT.team,p:'A counsellor or teacher from that community'},
+  {k:KIND.belong,n:'Nations Sabbath, then a standing group',d:'Food, testimony, music, languages — but make it the launch of something monthly, not a one-off cultural showcase.',c:EFFORT.team,p:'Community leaders — visit them before inviting them'},
+  {k:KIND.invite,n:'Partner with a congregation of that background',d:'One may already meet nearby without a building. Sharing your space well is often better ministry than starting your own programme.',c:EFFORT.partner,p:'That congregation, approached as equals'}],
  'recent':[
-  {n:'First-year survival course',d:'Six evenings: driving licence, banking, schools, doctors, renting, and taxes. Teach it plainly, feed people, and let the questions run long.',c:EFFORT.team,p:'A member who arrived recently should co-teach it'},
-  {n:'New-neighbour dinner',d:'Quarterly meal for anyone who moved into the area in the last year. No programme, no appeal — just a table, name badges, and someone whose job is to introduce people.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'New-neighbour dinner, quarterly',d:'Anyone who moved into the area this year. No programme, no appeal — a table, name badges, and someone whose job is introducing people.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.equip,n:'First-year survival course',d:'Driving licence, banking, schools, doctors, renting, taxes. Feed people and let the questions run long.',c:EFFORT.team,p:'A recent arrival co-teaches'},
+  {k:KIND.equip,n:'Driving practice and licence help',d:'Unglamorous and enormous. A licence changes a family\u2019s employment, healthcare, and church attendance all at once.',c:EFFORT.team,p:'Members with patience and insurance'}],
 
+ /* ---------- CHILDREN & YOUTH: a family strategy, not a kids' programme ---------- */
  'kids':[
-  {n:'School-holiday day camp',d:'The scarcest thing working parents need. Even three days in one holiday week, 8am to 3pm, meets a need nothing else in your calendar touches. Background checks and a written safeguarding policy first, before a single flyer.',c:EFFORT.budget,p:'Conference youth department for safeguarding standards'},
-  {n:'Adventurers and Pathfinders as community clubs',d:'Open them properly to the neighbourhood rather than running them for church children only. Uniformed, structured, weekly, and free or nearly — few community offers match it.',c:EFFORT.team,p:'Conference Pathfinder area coordinator'},
-  {n:'Saturday-night family film and supper',d:'Low-threshold, low-cost, and it puts parents in your building without asking anything of them. Rotate who cooks.',c:EFFORT.solo,p:'None needed'},
-  {n:'Homework club',d:'Two afternoons a week with tutors and a snack. Reaches the exact families the numbers point to, and builds trust with the schools at the same time.',c:EFFORT.team,p:'The nearest elementary school office'}],
+  {k:KIND.serve,n:'School-holiday day camp',d:'The scarcest thing working parents need. Even three days, 8am\u20133pm, meets a need nothing else on your calendar touches. Safeguarding policy and background checks before a single flyer.',c:EFFORT.budget,p:'Conference youth department for safeguarding standards'},
+  {k:KIND.serve,n:'Homework club',d:'Two afternoons a week, tutors and a snack. Reaches the families the numbers point to and builds trust with the schools at the same time.',c:EFFORT.team,p:'The nearest elementary school'},
+  {k:KIND.equip,n:'Parenting course \u2014 four nights, childcare provided',d:'Discipline without shouting, screens and phones, anxiety in children, and how faith is actually formed at home. Advertise it to the neighbourhood, not the congregation. In a young-family area this is the highest-value thing a church can offer, and almost nobody else offers it free.',c:EFFORT.team,p:'Conference family ministries; a local counsellor or paediatric nurse to co-present'},
+  {k:KIND.equip,n:'Marriage strengthening evenings',d:'Stable homes are what children actually need. A date-night series with a short talk, food, and free childcare reaches couples who would never attend anything called counselling \u2014 and the childcare is the whole reason they can come.',c:EFFORT.team,p:'A trained couple; conference family ministries materials'},
+  {k:KIND.equip,n:'Family worship coaching',d:'Most parents want to pass on faith and have no idea how. Teach a ten-minute rhythm that survives a real weeknight, and hand them the materials to do it.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.belong,n:'Monthly family night',d:'Games, a shared meal, something made together. The pattern matters more than the content \u2014 it makes your building an ordinary part of a family\u2019s month.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.belong,n:'Adventurers and Pathfinders, opened properly',d:'Run them for the neighbourhood rather than for church children. Uniformed, structured, weekly, nearly free \u2014 very little in the community matches that offer.',c:EFFORT.team,p:'Conference Pathfinder area coordinator'},
+  {k:KIND.invite,n:'Vacation Bible School as an on-ramp',d:'VBS only pays off if something catches the families afterwards \u2014 the family night, the parenting course, a children\u2019s club. Plan the follow-through before you plan the week.',c:EFFORT.budget,p:'Conference children\u2019s ministries'},
+  {k:KIND.invite,n:'Child dedication open to the community',d:'Many unchurched parents want a blessing for a new baby and have nowhere to ask. Offer it warmly, with no membership condition attached.',c:EFFORT.solo,p:'None needed'}],
  'single-parent':[
-  {n:'Childcare at every adult gathering',d:'Not an add-on — a condition. If an adult event has no children\'s provision, single parents cannot come, and the invitation is hollow. Build a rota before you build the programme.',c:EFFORT.team,p:'None needed'},
-  {n:'Respite Saturday',d:'One afternoon a month where the church takes the children for four hours and the parent does whatever they need — sleep, an appointment, nothing at all.',c:EFFORT.team,p:'Safeguarding-trained volunteers only'},
-  {n:'Car and home repair day',d:'Members with tools fix what single-parent households cannot afford to fix. Practical help outranks another evening meeting, every time.',c:EFFORT.team,p:'A member mechanic; a hardware store may donate'},
-  {n:'Single-parent support circle',d:'Monthly, with food and childcare, led by a single parent rather than about them. Confidential, and not a Bible study unless they ask for one.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'Childcare at every adult gathering',d:'Not an add-on, a condition. If an adult event has no children\u2019s provision, single parents cannot attend and the invitation is hollow.',c:EFFORT.team,p:'Safeguarding-trained volunteers'},
+  {k:KIND.serve,n:'Respite Saturday',d:'One afternoon a month the church takes the children for four hours and the parent sleeps, works, or does nothing at all.',c:EFFORT.team,p:'Safeguarding-trained volunteers only'},
+  {k:KIND.serve,n:'Car and home repair day',d:'Members with tools fix what a one-income household cannot afford to fix. Practical help outranks another evening meeting every time.',c:EFFORT.team,p:'A member mechanic; a hardware store may donate'},
+  {k:KIND.equip,n:'Parenting alone \u2014 a course of their own',d:'Discipline without a second adult, co-parenting with an ex, managing guilt, raising boys or girls without the other parent present. Run it separately from the general parenting course; the questions are different.',c:EFFORT.team,p:'A single parent co-leads it \u2014 this is not optional'},
+  {k:KIND.equip,n:'Money course for one income',d:'Budgeting, benefits, debt, and building a small emergency fund. Financial pressure is the constant background noise in these homes.',c:EFFORT.team,p:'A member accountant; conference stewardship materials'},
+  {k:KIND.belong,n:'Single-parent circle',d:'Monthly, with food and childcare, led by a single parent rather than about them. Confidential, and not a Bible study unless they ask for one.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.invite,n:'Adopt-a-family mentoring',d:'A stable family walks alongside a single-parent household \u2014 school runs, a spare pair of hands, a birthday remembered. Discipleship happens in the car, not the classroom.',c:EFFORT.team,p:'None needed'}],
  'schools':[
-  {n:'Adopt a school',d:'Ask the principal one question — what are you short of — and then supply exactly that, repeatedly, without branding it. Coats, shoes, supplies, breakfast items, or volunteer hours.',c:EFFORT.budget,p:'The school principal and PTA'},
-  {n:'Teacher appreciation',d:'A cooked breakfast in the staff room once a term. Cheap, unglamorous, and it opens the door to everything else.',c:EFFORT.solo,p:'The school office'},
-  {n:'Back-to-school backpack drive',d:'Filled backpacks distributed in August, no questions and no queue photos. Dignity is the whole design.',c:EFFORT.budget,p:'Community Services federation; local businesses sponsor easily'}],
+  {k:KIND.serve,n:'Adopt a school',d:'Ask the principal what they are short of, supply exactly that, repeatedly, without branding it. Coats, shoes, supplies, breakfast, volunteer hours.',c:EFFORT.budget,p:'The principal and PTA'},
+  {k:KIND.serve,n:'Teacher appreciation breakfast',d:'Once a term in the staff room. Cheap, unglamorous, and it opens the door to everything else you might do with that school.',c:EFFORT.solo,p:'The school office'},
+  {k:KIND.equip,n:'Take the parenting seminar to the school',d:'Schools want parent engagement and have no budget for it. Offer your parenting or teen-anxiety evening in their hall, free \u2014 you reach hundreds of families you would never otherwise meet.',c:EFFORT.team,p:'The school principal'},
+  {k:KIND.belong,n:'After-school club',d:'Sport, music, cooking, or coding \u2014 whatever your members can actually teach. Weekly and reliable beats ambitious and occasional.',c:EFFORT.team,p:'The school for referrals'},
+  {k:KIND.invite,n:'Graduation blessing and mentoring',d:'A blessing service for school leavers, and a mentor for the year after. The gap between school and whatever comes next is when young people are most reachable and most dropped.',c:EFFORT.team,p:'None needed'}],
  'college':[
-  {n:'Sunday supper for students',d:'A free cooked meal at the end of the week, term time only. Students come for food and stay for people.',c:EFFORT.team,p:'Campus chaplaincy, so you are not duplicating'},
-  {n:'Study space and laundry',d:'Open a quiet room with wifi and power during exam weeks; offer free laundry. Both are real student pain points and cost you almost nothing.',c:EFFORT.solo,p:'None needed'},
-  {n:'Rides at term boundaries',d:'Move-in, move-out, and airport runs at holidays. It is the moment students most need help and are most grateful for it.',c:EFFORT.team,p:'None needed'}],
+  {k:KIND.serve,n:'Sunday supper, term time',d:'A free cooked meal at the end of the week. Students come for food and stay for people.',c:EFFORT.team,p:'Campus chaplaincy, so you are not duplicating'},
+  {k:KIND.serve,n:'Study space, laundry, and term-boundary rides',d:'A quiet room with wifi during exam weeks, free laundry, lifts at move-in and move-out. Real pain points that cost almost nothing.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.equip,n:'Life-skills evenings',d:'Cooking on a student budget, managing anxiety, money, relationships. Practical, and it addresses what students actually lie awake about.',c:EFFORT.team,p:'A member counsellor or dietitian'},
+  {k:KIND.belong,n:'Student small group in a home',d:'Homesickness responds to a family table far better than to a programme. One host family can change a whole year for six students.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.invite,n:'Questions-welcome study series',d:'Students engage with hard questions honestly asked. Make doubt safe to voice and the conversation goes deep quickly.',c:EFFORT.team,p:'None needed'}],
 
+ /* ---------- SENIORS & ISOLATION ---------- */
  'seniors-alone':[
-  {n:'Weekly call rota',d:'Every isolated senior gets the same person calling on the same day each week. Consistency matters far more than length — five minutes reliably beats an hour occasionally.',c:EFFORT.solo,p:'None needed'},
-  {n:'Daytime midweek gathering',d:'Coffee, a short devotional, a hot lunch, and a health talk. Tuesday at 11am reaches people that Wednesday at 7pm never will.',c:EFFORT.team,p:'Local senior centre — coordinate rather than compete'},
-  {n:'Odd-jobs squad',d:'Lightbulbs, smoke alarms, gutters, a stuck window. Publicise it as a free service to anyone over 70 in the neighbourhood, church member or not.',c:EFFORT.team,p:'Pathfinders can do this and earn honours doing it'},
-  {n:'Bereavement follow-up',d:'A named person who contacts every widowed neighbour at one month, six months, and the first anniversary — long after everyone else has stopped.',c:EFFORT.solo,p:'Local funeral homes will tell you who is grieving alone'}],
+  {k:KIND.serve,n:'Weekly call rota',d:'The same person calling on the same day each week. Consistency matters far more than length \u2014 five minutes reliably beats an hour occasionally.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.serve,n:'Odd-jobs squad',d:'Lightbulbs, smoke alarms, gutters, a stuck window. Offer it free to anyone over 70 in the neighbourhood, member or not.',c:EFFORT.team,p:'Pathfinders can run this and earn honours doing it'},
+  {k:KIND.equip,n:'Seminars for this stage of life',d:'Grief recovery, memory and brain health, falls prevention, and end-of-life and estate planning. Seniors attend these in numbers because nobody else offers them and everybody is thinking about them.',c:EFFORT.team,p:'Conference health ministries; a local attorney for the planning night'},
+  {k:KIND.equip,n:'Technology help hour',d:'Video calls with grandchildren, online banking, spotting scams. Attacks the isolation and the financial risk at once.',c:EFFORT.solo,p:'Pathfinders or teenagers teach this brilliantly'},
+  {k:KIND.belong,n:'Daytime midweek gathering',d:'Coffee, a short devotional, a hot lunch, a talk. Tuesday at 11am reaches people that Wednesday at 7pm never will.',c:EFFORT.team,p:'Local senior centre \u2014 coordinate rather than compete'},
+  {k:KIND.belong,n:'Intergenerational pairing',d:'Match a senior with a young family or a Pathfinder. Being needed is half the cure for isolation, and the children gain more than they give.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.invite,n:'Bible study in homes',d:'For people who cannot easily travel, the study comes to the living room. Small, unhurried, and often the most fruitful ministry a district has.',c:EFFORT.team,p:'None needed'}],
  'older-area':[
-  {n:'Accessibility audit',d:'Walk your own building with someone using a stick or a wheelchair. Parking distance, steps, door weight, seat spacing, toilet access, hearing loop, print size. Fix the cheapest three within a month.',c:EFFORT.solo,p:'A member with mobility needs leads it, not follows it'},
-  {n:'Large-print and audio everything',d:'Bulletins, hymn sheets, study guides. And record the sermon audio for those who cannot attend.',c:EFFORT.solo,p:'None needed'},
-  {n:'Caregivers\' respite and support',d:'The spouse caring for someone with dementia is often more isolated than the patient. A monthly group plus sitting service reaches an invisible population.',c:EFFORT.team,p:'Area Agency on Aging'}],
+  {k:KIND.serve,n:'Accessibility audit of your own building',d:'Walk it with someone using a stick or a wheelchair. Parking distance, steps, door weight, seat spacing, toilets, hearing loop, print size. Fix the cheapest three within a month.',c:EFFORT.solo,p:'A member with mobility needs leads it'},
+  {k:KIND.equip,n:'Health seminars that fit the age',d:'Blood pressure, diabetes, joints, sleep, medication reviews. The Adventist health message offered as a service rather than a sermon.',c:EFFORT.partner,p:'Conference health ministries; a local clinic'},
+  {k:KIND.equip,n:'Caregivers\u2019 course and respite',d:'The spouse caring for someone with dementia is often more isolated than the patient. Teach the skills, then sit with the patient so the carer gets three hours off.',c:EFFORT.team,p:'Area Agency on Aging'},
+  {k:KIND.belong,n:'Large print, audio, and a ride',d:'Bulletins and study guides in large print, sermon audio for those who cannot attend, and a driver rota. Three small things that decide whether people can participate at all.',c:EFFORT.solo,p:'None needed'}],
  'seniors-nocar':[
-  {n:'Ride ministry with a real rota',d:'Named drivers, named passengers, published times, and a backup driver. Informal offers collapse; a rota survives.',c:EFFORT.team,p:'Check insurance with the conference before you start'},
-  {n:'Satellite gathering',d:'If a cluster of people cannot travel, meet where they are — a lounge in a senior building, a home, a community room.',c:EFFORT.team,p:'The building manager, who usually says yes'}],
+  {k:KIND.serve,n:'Ride ministry with a real rota',d:'Named drivers, named passengers, published times, a backup. Informal offers collapse; a rota survives.',c:EFFORT.team,p:'Check insurance with the conference first'},
+  {k:KIND.belong,n:'Satellite gathering where they already are',d:'If a cluster cannot travel, meet in the lounge of their building or a neighbour\u2019s home. The building manager usually says yes.',c:EFFORT.team,p:'The building manager'}],
 
+ /* ---------- HARDSHIP & WORK ---------- */
  'poverty':[
-  {n:'Benevolence fund with a written process',d:'Decide the rules before the need arrives: what you cover, the limit, who decides, how fast. A clear process protects both the applicant\'s dignity and the treasurer.',c:EFFORT.budget,p:'Church board approval'},
-  {n:'Utility and rent arrears help',d:'Pay the arrears directly to the utility or landlord, not to the person. It removes suspicion on both sides and keeps the relationship clean.',c:EFFORT.budget,p:'County emergency assistance office — they often match'},
-  {n:'Community Services centre, properly run',d:'Clothing and household goods, open predictable hours, arranged like a shop rather than a handout. Let people choose. Choice is the difference between charity and dignity.',c:EFFORT.team,p:'Adventist Community Services federation'}],
+  {k:KIND.serve,n:'Benevolence fund with a written process',d:'Decide the rules before the need arrives: what you cover, the limit, who decides, how fast. A clear process protects the applicant\u2019s dignity and the treasurer alike.',c:EFFORT.budget,p:'Church board approval'},
+  {k:KIND.serve,n:'Community Services centre run like a shop',d:'Clothing and household goods, predictable hours, arranged so people choose rather than receive. Choice is the difference between charity and dignity.',c:EFFORT.team,p:'Adventist Community Services federation'},
+  {k:KIND.equip,n:'Financial course, eight weeks',d:'Budgeting, debt, credit, and saving a small emergency fund. Relief without this is a revolving door \u2014 and this is where a church genuinely changes a household\u2019s trajectory.',c:EFFORT.team,p:'A member accountant; conference stewardship ministries'},
+  {k:KIND.equip,n:'Cooking well on very little',d:'Six sessions: cook together, eat together, take the food home. Health message, money, and hospitality in one evening.',c:EFFORT.team,p:'Conference health ministries'},
+  {k:KIND.belong,n:'A weekly table, not a queue',d:'Same night each week, everyone eats the same food, members sit and eat with guests rather than serving and standing.',c:EFFORT.team,p:'Regional food bank'},
+  {k:KIND.invite,n:'Ask what they are carrying',d:'People in hardship are rarely asked how their soul is. Once trust is real, the offer of prayer and study lands as care rather than a condition.',c:EFFORT.solo,p:'None needed'}],
  'child-poverty':[
-  {n:'Weekend food backpacks',d:'Discreet bags of easy food into schoolbags on Friday for children on free meals. The school identifies recipients; you never see a name. Proven, simple, low-drama.',c:EFFORT.budget,p:'School counsellor or nurse'},
-  {n:'Holiday meal cover',d:'School holidays remove school meals. A daily lunch club during one holiday week is predictable, fillable, and immediately relieving.',c:EFFORT.team,p:'Regional food bank for supply'},
-  {n:'Shoes and coats before winter',d:'Sized, new, and given without ceremony in October. Ask the school what sizes are needed rather than guessing.',c:EFFORT.budget,p:'School office'}],
+  {k:KIND.serve,n:'Weekend food backpacks',d:'Discreet bags of easy food into schoolbags on Friday for children on free meals. The school identifies recipients; you never see a name.',c:EFFORT.budget,p:'School counsellor or nurse'},
+  {k:KIND.serve,n:'Holiday meal cover and winter coats',d:'School holidays remove school meals \u2014 a daily lunch club for one holiday week is predictable and immediately relieving. Sized coats and shoes in October, given without ceremony.',c:EFFORT.budget,p:'Regional food bank; school office for sizes'},
+  {k:KIND.equip,n:'Support the parents, quietly',d:'Pair the food with the money course and the parenting course, offered to everyone rather than aimed at recipients. Never make help conditional on attending anything.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.belong,n:'Free-to-attend children\u2019s programmes',d:'Audit camp fees, trip costs, uniforms, and materials. Any price quietly filters out exactly the children this figure is about.',c:EFFORT.budget,p:'None needed'}],
  'snap':[
-  {n:'Regular community meal',d:'A table, not a queue. Same night every week, everyone eats the same food, members sit and eat with guests rather than serving and standing.',c:EFFORT.team,p:'Regional food bank; local restaurants often donate'},
-  {n:'Food pantry, or support the one that exists',d:'Check first whether one is within walking distance. If yes, supply it. If no, start one — and mind opening hours that suit shift workers.',c:EFFORT.partner,p:'Regional food bank membership'},
-  {n:'SNAP enrolment help',d:'Many who qualify never apply. Two trained volunteers at a monthly clinic can change a household\'s month.',c:EFFORT.partner,p:'County assistance office training'},
-  {n:'Community garden',d:'Ongoing food, outdoor work, and a reason for neighbours to be on your property weekly. Fits the health message honestly.',c:EFFORT.team,p:'Penn State Extension master gardeners'}],
+  {k:KIND.serve,n:'Pantry, or support the one that exists',d:'Check first whether one is within walking distance. If yes, supply it; if no, start one \u2014 with hours that suit shift workers.',c:EFFORT.partner,p:'Regional food bank membership'},
+  {k:KIND.serve,n:'SNAP enrolment help',d:'Many who qualify never apply. Two trained volunteers at a monthly clinic can change a household\u2019s month.',c:EFFORT.partner,p:'County assistance office training'},
+  {k:KIND.equip,n:'Budget cooking school',d:'Cheap, plant-based, filling, taught by doing. Attacks food insecurity and health together, and it is the ministry Adventists are best equipped to run.',c:EFFORT.team,p:'Conference health ministries'},
+  {k:KIND.belong,n:'Community garden',d:'Ongoing food, outdoor work, and a reason for neighbours to be on your property every week through the growing season.',c:EFFORT.team,p:'Penn State Extension master gardeners'}],
  'unemp':[
-  {n:'Job club',d:'Weekly: CV help, interview practice, a printer and scanner, and a member who will act as a reference. Two hours, same time each week.',c:EFFORT.team,p:'PA CareerLink'},
-  {n:'Employer breakfast',d:'Members who hire meet members who need work. Blunt, unspiritual, and effective.',c:EFFORT.solo,p:'Business owners in the congregation'},
-  {n:'Skills short-course',d:'Food-safety certification, forklift, basic IT, English for work. A certificate that leads to a wage is real ministry.',c:EFFORT.partner,p:'Community college workforce division'}],
+  {k:KIND.serve,n:'Job club',d:'Weekly: CV help, interview practice, a printer and scanner, and a member willing to be a reference.',c:EFFORT.team,p:'PA CareerLink'},
+  {k:KIND.equip,n:'Certificate short-courses',d:'Food safety, forklift, basic IT, English for work. A certificate that leads to a wage is real ministry.',c:EFFORT.partner,p:'Community college workforce division'},
+  {k:KIND.belong,n:'Employer breakfast',d:'Members who hire meet members who need work. Blunt, unspiritual, effective.',c:EFFORT.solo,p:'Business owners in the congregation'},
+  {k:KIND.invite,n:'Identity beyond employment',d:'Long unemployment corrodes a person\u2019s sense of worth. A small group that treats them as more than a job search is quietly pastoral.',c:EFFORT.solo,p:'None needed'}],
  'uninsured':[
-  {n:'Health expo with real screenings',d:'Blood pressure, glucose, BMI, vision — with a nurse present and a written referral pathway for anything found. A screening with nowhere to refer is worse than none.',c:EFFORT.partner,p:'Adventist health system hospital or a local free clinic'},
-  {n:'Insurance enrolment clinic',d:'During open enrolment, a trained navigator in your building for two Sundays. Time-bound, concrete, and genuinely hard to get elsewhere.',c:EFFORT.partner,p:'A certified ACA navigator organisation'},
-  {n:'Know-your-clinic card',d:'The nearest free and sliding-scale clinics, hours, languages, and whether they ask about immigration status. Print it, translate it, give it out.',c:EFFORT.solo,p:'County health department'},
-  {n:'CHIP or a lifestyle course',d:'The Adventist health message as a service to the neighbourhood rather than a sermon — cooking, movement, stress, sleep.',c:EFFORT.team,p:'Conference health ministries'}],
+  {k:KIND.serve,n:'Health expo with real screenings',d:'Blood pressure, glucose, BMI, vision \u2014 with a nurse present and a written referral pathway. A screening with nowhere to refer is worse than none.',c:EFFORT.partner,p:'Adventist health system hospital or a free clinic'},
+  {k:KIND.serve,n:'Insurance enrolment clinic',d:'During open enrolment, a certified navigator in your building for two weekends. Time-bound and genuinely hard to get elsewhere.',c:EFFORT.partner,p:'An ACA navigator organisation'},
+  {k:KIND.equip,n:'CHIP or a lifestyle course',d:'Eight weeks on food, movement, sleep, and stress, with measurements at both ends. For people who cannot afford care, prevention is the affordable medicine.',c:EFFORT.team,p:'Conference health ministries'},
+  {k:KIND.belong,n:'Walking group and know-your-clinic card',d:'A weekly walk anyone can join, and a translated card listing free and sliding-scale clinics with hours.',c:EFFORT.solo,p:'County health department for accurate details'}],
  'shiftwork':[
-  {n:'A second gathering at a working-person hour',d:'Sunday evening, or a weeknight. If your only front door opens Sabbath morning, shift workers are structurally excluded no matter how warm the welcome.',c:EFFORT.team,p:'None needed'},
-  {n:'Recorded teaching',d:'Audio or video of each study, posted the same day, so a missed week is not a lost month.',c:EFFORT.solo,p:'None needed'},
-  {n:'Shift-worker supper',d:'Late food after evening shifts end — 10pm on a Friday reaches hospital and retail staff nobody else is reaching.',c:EFFORT.team,p:'None needed'}],
+  {k:KIND.serve,n:'Shift-worker supper',d:'Late food after evening shifts end. 10pm on a Friday reaches hospital and retail staff nobody else is reaching.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.equip,n:'Recorded teaching, posted same day',d:'Audio or video of each study so a missed week is not a lost month. Structural inclusion, not a courtesy.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.belong,n:'A second gathering at a working hour',d:'Sunday evening or a weeknight. If your only front door opens Sabbath morning, shift workers are excluded no matter how warm the welcome.',c:EFFORT.team,p:'None needed'}],
  'professional':[
-  {n:'Skills-based volunteering',d:'Ask for an accountant\'s expertise, a lawyer\'s hour, an IT afternoon — not another rota slot. People give what they are good at more readily than time they do not have.',c:EFFORT.solo,p:'None needed'},
-  {n:'Short, finite commitments',d:'Six-week courses with a stated end date get accepted; open-ended commitments get declined politely and permanently.',c:EFFORT.solo,p:'None needed'},
-  {n:'Fund the neighbouring work',d:'Affluent congregations can bankroll ministry in neighbourhoods that cannot fund their own. Say it plainly and show exactly where the money goes.',c:EFFORT.solo,p:'The other church in your district'}],
+  {k:KIND.serve,n:'Skills-based volunteering',d:'Ask for an accountant\u2019s expertise or a lawyer\u2019s hour, not another rota slot. People give what they are good at more readily than time they do not have.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.equip,n:'Burnout, marriage, and parenting teenagers',d:'The real poverty here is time and meaning. A well-run four-night seminar on exhaustion or raising teenagers will out-draw a doctrinal series in this neighbourhood.',c:EFFORT.team,p:'A member counsellor; conference family ministries'},
+  {k:KIND.belong,n:'Short, finite small groups',d:'Six weeks with a stated end date gets accepted; open-ended commitments get declined politely and permanently.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.invite,n:'Fund the neighbouring work',d:'Say plainly that this congregation can bankroll ministry in a neighbourhood that cannot, and report back with specifics.',c:EFFORT.solo,p:'The other church in your district'}],
 
+ /* ---------- HOUSING ---------- */
  'rent50':[
-  {n:'Eviction-prevention fund',d:'Small and fast beats large and slow — a few hundred dollars in week one prevents a crisis that costs thousands to undo. Set the criteria in advance.',c:EFFORT.budget,p:'Local legal aid, so you know the process before it is urgent'},
-  {n:'Know the eviction timeline',d:'Learn what a Pennsylvania notice looks like, how many days follow, and who to call. Train three members. When someone shows you a notice, hours matter.',c:EFFORT.solo,p:'Legal aid or a tenants\' union'},
-  {n:'Ask about arrears early',d:'Build one question into pastoral visits: are you behind on anything. People rarely volunteer it until the notice arrives, which is usually too late.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'Eviction-prevention fund',d:'Small and fast beats large and slow \u2014 a few hundred dollars in week one prevents a crisis costing thousands to undo. Set criteria in advance.',c:EFFORT.budget,p:'Local legal aid'},
+  {k:KIND.equip,n:'Know your rights as a tenant',d:'One evening on what a Pennsylvania notice looks like, the days that follow, and who to call. Train three members too \u2014 when someone shows you a notice, hours matter.',c:EFFORT.team,p:'Legal aid or a tenants\u2019 union'},
+  {k:KIND.equip,n:'Budget and debt course',d:'The same eight-week course that serves the poverty finding. Rent burden and debt are usually one problem seen from two angles.',c:EFFORT.team,p:'A member accountant'},
+  {k:KIND.serve,n:'Ask about arrears early',d:'Build one question into pastoral visits: are you behind on anything. People rarely volunteer it until the notice arrives, which is usually too late.',c:EFFORT.solo,p:'None needed'}],
  'rent30':[
-  {n:'Make everything genuinely free',d:'Audit every activity for hidden cost — camp fees, trip costs, uniform, a book, a meal. Any price quietly filters who attends.',c:EFFORT.solo,p:'None needed'},
-  {n:'Household goods exchange',d:'Furniture, appliances, and kit passed on rather than bought. Saves the exact households under pressure real money.',c:EFFORT.team,p:'Community Services centre'}],
+  {k:KIND.serve,n:'Make everything genuinely free',d:'Audit every activity for hidden cost \u2014 camp fees, trips, uniform, a book, a meal. Any price quietly filters who attends.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.belong,n:'Household goods exchange',d:'Furniture, appliances, and kit passed on rather than bought, saving squeezed households real money.',c:EFFORT.team,p:'Community Services centre'}],
  'renters':[
-  {n:'New-mover welcome',d:'A small gift at the door within a fortnight of someone moving in — a local information sheet, a loaf, an invitation. In a high-turnover area this beats any advertising.',c:EFFORT.solo,p:'None needed'},
-  {n:'Apartment-building strategy',d:'Blocks need a different approach from streets. Ask the manager about a community room, a residents\' event, or a noticeboard slot.',c:EFFORT.team,p:'Building managers'},
-  {n:'Assume a rolling congregation',d:'Design for people arriving and leaving continuously — repeat the basics often, and never assume everyone has heard the story.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'New-mover welcome',d:'A small gift at the door within a fortnight of someone moving in \u2014 a local information sheet, a loaf, an invitation. Beats any advertising in a high-turnover area.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.belong,n:'Apartment-building strategy',d:'Blocks need a different approach from streets. Ask the manager about a community room, a residents\u2019 event, or a noticeboard slot.',c:EFFORT.team,p:'Building managers'},
+  {k:KIND.equip,n:'Design for a rolling congregation',d:'Repeat the basics often and never assume everyone has heard the story. In a neighbourhood that turns over, a fixed curriculum quietly excludes newcomers.',c:EFFORT.solo,p:'None needed'}],
  'overcrowd':[
-  {n:'Open study space',d:'Quiet room, wifi, power, tea, staffed two evenings a week. In overcrowded housing, a teenager has nowhere to do homework.',c:EFFORT.team,p:'None needed'},
-  {n:'Meet on neutral ground',d:'Home hospitality may be embarrassing to reciprocate. Host at the church or a park and never make the imbalance visible.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'Open study space',d:'Quiet room, wifi, power, tea, staffed two evenings a week. In overcrowded housing a teenager has nowhere to do homework.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.belong,n:'Meet on neutral ground',d:'Home hospitality may be impossible to reciprocate. Host at the church or a park and never make the imbalance visible.',c:EFFORT.solo,p:'None needed'}],
  'nocar':[
-  {n:'Walk your own catchment',d:'Time the walk from the nearest bus stop to your door, in the rain. That walk is your real front door for a tenth of these households.',c:EFFORT.solo,p:'None needed'},
-  {n:'Ride rota',d:'Published, named, insured, with a backup. The single highest-yield practical ministry in a low-car neighbourhood.',c:EFFORT.team,p:'Check conference insurance guidance'},
-  {n:'Deliver rather than invite',d:'Food, study materials, and visits go to people; do not require the journey in.',c:EFFORT.team,p:'None needed'}],
+  {k:KIND.serve,n:'Ride rota, published and insured',d:'The highest-yield practical ministry in a low-car neighbourhood, and the one most often left informal until it collapses.',c:EFFORT.team,p:'Conference insurance guidance'},
+  {k:KIND.serve,n:'Deliver rather than invite',d:'Food, study materials, and visits go to people; do not require the journey in.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.belong,n:'Walk your own catchment',d:'Time the walk from the nearest bus stop to your door, in the rain. That walk is the real front door for a tenth of these households.',c:EFFORT.solo,p:'None needed'}],
 
+ /* ---------- DIVIDED / AFFLUENT / CHANGING ---------- */
  'divided':[
-  {n:'Two front doors, one family',d:'Plan two entry points — one that costs nothing and asks nothing, one that suits people with money and no time — then work deliberately at getting both groups into the same room.',c:EFFORT.team,p:'None needed'},
-  {n:'Audit the invisible filters',d:'Cost, timing, transport, dress, and vocabulary all sort people without anyone intending it. List yours honestly with someone from the poorer side of the divide.',c:EFFORT.solo,p:'A member who knows both sides'},
-  {n:'Watch who speaks',d:'When both groups are in the room, notice who talks, who serves, and who decides. That is the real measure of whether you have one church or two.',c:EFFORT.solo,p:'None needed'}],
+  {k:KIND.serve,n:'Two front doors, one family',d:'Plan one entry point that costs nothing and asks nothing, and one that suits people with money and no time \u2014 then work deliberately at getting both into the same room.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.equip,n:'Audit the invisible filters',d:'Cost, timing, transport, dress, and vocabulary sort people without anyone intending it. List yours honestly with someone from the poorer side.',c:EFFORT.solo,p:'A member who knows both sides'},
+  {k:KIND.belong,n:'Mixed small groups by life stage, not income',d:'Parents of toddlers have more in common across an income gap than they expect. Group by season of life and the divide becomes far less visible.',c:EFFORT.team,p:'None needed'},
+  {k:KIND.invite,n:'Watch who speaks',d:'When both groups are in the room, notice who talks, who serves, and who decides. That is the real measure of whether you have one church or two.',c:EFFORT.solo,p:'None needed'}],
  'affluent':[
-  {n:'Address the actual poverty',d:'Time, exhaustion, isolation, family strain, and meaning. A course on burnout or parenting teenagers will out-draw a doctrinal series here.',c:EFFORT.team,p:'None needed'},
-  {n:'Generosity with a visible destination',d:'Fund named work in a named neighbourhood and report back with specifics. Vague appeals underperform badly with this group.',c:EFFORT.solo,p:'The other church in your district'}],
+  {k:KIND.equip,n:'Address the actual poverty',d:'Time, exhaustion, isolation, family strain, and meaning. Courses on burnout, marriage, and raising teenagers reach this neighbourhood where a doctrinal series will not.',c:EFFORT.team,p:'A member counsellor'},
+  {k:KIND.belong,n:'Serving together as the entry point',d:'Affluent neighbours often join a work party before they join a study. Give them something demanding and worthwhile to do beside other people.',c:EFFORT.team,p:'The other church in your district'},
+  {k:KIND.invite,n:'Generosity with a visible destination',d:'Fund named work in a named neighbourhood and report back with specifics. Vague appeals underperform badly here.',c:EFFORT.solo,p:'None needed'}],
  'gini':[
-  {n:'Walk the boundary',d:'Find the street where the neighbourhood changes and walk it with someone who lives there. The average hides it; your feet will not.',c:EFFORT.solo,p:'None needed'}],
-
+  {k:KIND.serve,n:'Walk the boundary',d:'Find the street where the neighbourhood changes and walk it with someone who lives there. The average hides it; your feet will not.',c:EFFORT.solo,p:'None needed'}],
  'shift-race':[
-  {n:'Listen for a year',d:'Before launching anything, hold listening conversations with twenty neighbours from the groups that have grown. Arriving with a finished plan reads as arriving with an agenda.',c:EFFORT.solo,p:'None needed'},
-  {n:'Leadership that reflects the street',d:'Who is on the platform speaks louder than any welcome statement. If nobody from the growing community is in leadership, that is the first thing to change — genuinely, not decoratively.',c:EFFORT.team,p:'Conference for training and mentoring'},
-  {n:'Partner rather than absorb',d:'A congregation of that background may already be meeting nearby with no building. Sharing your building well is often better ministry than starting a programme.',c:EFFORT.partner,p:'The other congregation, approached as equals'}],
+  {k:KIND.serve,n:'Listen for a year',d:'Twenty listening conversations with neighbours from the groups that have grown, before launching anything. Arriving with a finished plan reads as arriving with an agenda.',c:EFFORT.solo,p:'None needed'},
+  {k:KIND.belong,n:'Leadership that reflects the street',d:'Who is on the platform speaks louder than any welcome statement. If nobody from the growing community is in leadership, that is the first thing to change \u2014 genuinely, not decoratively.',c:EFFORT.team,p:'Conference for training and mentoring'},
+  {k:KIND.equip,n:'Train your own congregation',d:'A frank series on welcome, assumptions, and the difference between hospitality and absorption. The barrier is often inside the building, not outside it.',c:EFFORT.team,p:'Conference multicultural ministries'},
+  {k:KIND.invite,n:'Partner rather than absorb',d:'A congregation of that background may already meet nearby without a building. Sharing space well is often better ministry than starting a programme.',c:EFFORT.partner,p:'That congregation, as equals'}],
  'growth':[
-  {n:'Target the new developments',d:'Find where the new housing is and be present as people move in — the window is the first months, before habits set.',c:EFFORT.team,p:'Township planning office lists approved developments'}],
+  {k:KIND.serve,n:'Target the new developments',d:'Find where new housing is going up and be present as people move in. The window is the first months, before habits set.',c:EFFORT.team,p:'Township planning office lists approved developments'},
+  {k:KIND.belong,n:'New-resident welcome group',d:'A six-week group for anyone new to the area \u2014 not about church, about the area. Friendship forms fastest among people who all arrived recently.',c:EFFORT.team,p:'None needed'}],
  'foreign-shift':[
-  {n:'Plan for the trend, not the snapshot',d:'This is moving in one direction. Build language and cultural capacity now, ahead of the curve rather than behind it.',c:EFFORT.team,p:'Conference multicultural ministries'},
-  {n:'Second-generation ministry',d:'Children bridging two cultures carry a specific strain their parents often cannot see. A youth worker who understands it is worth a great deal.',c:EFFORT.team,p:'Conference youth department'}]
+  {k:KIND.equip,n:'Build capacity ahead of the curve',d:'This is moving in one direction. Start the language and cultural work now rather than reacting in five years.',c:EFFORT.team,p:'Conference multicultural ministries'},
+  {k:KIND.belong,n:'Second-generation youth ministry',d:'Children bridging two cultures carry a strain their parents often cannot see. A youth worker who understands it is worth a great deal.',c:EFFORT.team,p:'Conference youth department'}]
 };
 
 /* ================= OUTREACH RULES =================
@@ -947,16 +1010,24 @@ function chartLollipop(rows,aName,bName){
   s+=`</svg>`;
   return `<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(aName)}</span><span><i style="background:${SVGC.dim}"></i>${esc(bName)}</span></div>`+s;
 }
-// Nudge labels apart when their values sit close together, so text never overlaps.
+// Nudge labels apart so text never overlaps. Two passes: push down from the top,
+// then, if the last one has run past the bottom, push back up from the bottom.
+// The gap shrinks if it has to, so a crowded chart always fits inside its box.
 function declutter(ys,gap,top,bottom){
-  const idx=ys.map((y,i)=>[y,i]).sort((a,b)=>a[0]-b[0]);
-  const out=ys.slice();
-  let prev=-1e9;
-  idx.forEach(([y,i])=>{ const v=Math.max(y,prev+gap); out[i]=v; prev=v; });
-  const over=out.length?Math.max(...out)-bottom:0;
-  if(over>0){ for(let i=0;i<out.length;i++) out[i]-=over; }
-  const under=out.length?top-Math.min(...out):0;
-  if(under>0){ for(let i=0;i<out.length;i++) out[i]+=under; }
+  const n=ys.length; if(!n) return [];
+  const g=Math.min(gap,(bottom-top)/Math.max(1,n-1));
+  const order=ys.map((y,i)=>[y,i]).sort((a,b)=>a[0]-b[0]);
+  const out=new Array(n);
+  let prev=-Infinity;
+  order.forEach(([y,i])=>{ const v=Math.max(y,prev+g,top); out[i]=v; prev=v; });
+  // pass two: pull back inside the bottom edge
+  let next=Infinity;
+  for(let k=n-1;k>=0;k--){
+    const i=order[k][1];
+    const v=Math.min(out[i],next-g,bottom);
+    out[i]=Math.max(v,top);
+    next=out[i];
+  }
   return out;
 }
 function chartSlope(items,thenLabel,nowLabel){
@@ -1039,12 +1110,16 @@ function buildReport(M,levels,scope,geo,focusCatSet,focusName){
   p('These are starting points, not conclusions. Each one names the number behind it.');
   cats.forEach(g=>{
     p(''); p('## '+g.cat.toUpperCase());
+    if(STRATEGY[g.cat]){ p('   THE APPROACH: '+STRATEGY[g.cat]); }
     g.items.forEach(h=>{
       p(''); p('• '+h.title); p('  Why: '+h.evidence);
       h.steps.forEach(s=>p('  - '+s));
       if(h.ideas&&h.ideas.length){
         p('  Ministry ideas:');
-        h.ideas.forEach(i=>{ p('    * '+i.n+' ['+i.c+' · with: '+i.p+']'); p('      '+i.d); });
+        ['Serve','Equip','Belong','Invite'].forEach(kind=>{
+          h.ideas.filter(i=>i.k===kind).forEach(i=>{ p('    * ['+kind.toUpperCase()+'] '+i.n+' — '+i.c+' · with: '+i.p); p('      '+i.d); });
+        });
+        h.ideas.filter(i=>!i.k).forEach(i=>{ p('    * '+i.n+' — '+i.c+' · with: '+i.p); p('      '+i.d); });
       }
       p('  Ask locally: '+h.question);
     });
@@ -1140,8 +1215,12 @@ function aiSummary(M,levels,scope,geo){
   L.push('WHAT THE RULE ENGINE ALREADY FLAGGED (do not simply repeat these — build on them, prioritise between them, and say where you disagree):');
   S.hits.filter(h=>!cats.size||cats.has(h.cat)).forEach(h=>{
     L.push('- ['+h.cat+'] '+h.title+' — '+h.evidence);
-    if(h.ideas&&h.ideas.length) L.push('    existing idea list: '+h.ideas.map(i=>i.n).join('; '));
+    if(h.ideas&&h.ideas.length) L.push('    ideas already listed: '+h.ideas.map(i=>(i.k?i.k+': ':'')+i.n).join('; '));
   });
+  L.push('');
+  L.push('THE APPROACH THIS TOOL TAKES (follow it, and say so if you think a finding calls for something different):');
+  Object.keys(STRATEGY).filter(c=>S.hits.some(h=>h.cat===c&&(!cats.size||cats.has(c)))).forEach(c=>L.push('- '+c+': '+STRATEGY[c]));
+  L.push('Every need should produce a cluster, not a single act: SERVE (meet the felt need), EQUIP (teach the skill it exposes — seminars, courses, classes), BELONG (an ongoing group), INVITE (the spiritual step, once trust is real). A plan that is all service is charity; a plan that is all invitation is a sales pitch.');
   L.push('');
   L.push('CAVEATS: these are ACS 5-year estimates with margins of error at this small a geography. Homelessness and eviction data are only published county-wide and are not included. Nothing here says what the neighbourhood wants, what other churches and agencies already do, or anything about faith and history on these streets.');
   L.push('');
@@ -1334,12 +1413,18 @@ function render(){
   const SG=suggestions(M,SCOPE);
   secs.push(`<section class="blk" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
-    ${SG.cats.map(g=>`<div class="suggroup" data-cat="${esc(g.cat)}"><div class="sugcat">${esc(g.cat)}</div>`+g.items.map(h=>`<div class="sug">
+    ${SG.cats.map(g=>`<div class="suggroup" data-cat="${esc(g.cat)}"><div class="sugcat">${esc(g.cat)}</div>
+      ${STRATEGY[g.cat]?`<div class="strat"><b>The approach</b>${esc(STRATEGY[g.cat])}</div>`:''}`+g.items.map(h=>`<div class="sug">
         <h3>${esc(h.title)}</h3>
         <div class="ev">${esc(h.evidence)}</div>
         <ul>${h.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-        ${h.ideas.length?`<details class="ideas"><summary>${h.ideas.length} ministry idea${h.ideas.length===1?'':'s'} for this</summary>
-          ${h.ideas.map(i=>`<div class="idea"><h4>${esc(i.n)}</h4><p>${esc(i.d)}</p><div class="tags"><span>${esc(i.c)}</span><span>With: ${esc(i.p)}</span></div></div>`).join('')}
+        ${h.ideas.length?`<details class="ideas"><summary>${h.ideas.length} ministry idea${h.ideas.length===1?'':'s'} — serve, equip, belong, invite</summary>
+          ${['Serve','Equip','Belong','Invite'].map(kind=>{
+            const set=h.ideas.filter(i=>i.k===kind); if(!set.length) return '';
+            return `<div class="kindrow"><span class="kind k-${kind.toLowerCase()}">${kind}</span></div>`+
+              set.map(i=>`<div class="idea"><h4>${esc(i.n)}</h4><p>${esc(i.d)}</p><div class="tags"><span>${esc(i.c)}</span><span>With: ${esc(i.p)}</span></div></div>`).join('');
+          }).join('')}
+          ${h.ideas.filter(i=>!i.k).map(i=>`<div class="idea"><h4>${esc(i.n)}</h4><p>${esc(i.d)}</p><div class="tags"><span>${esc(i.c)}</span><span>With: ${esc(i.p)}</span></div></div>`).join('')}
         </details>`:''}
         <div class="q"><b>ASK LOCALLY</b>${esc(h.question)}</div>
       </div>`).join('')+`</div>`).join('')}
