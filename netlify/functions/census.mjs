@@ -11,21 +11,29 @@ const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov', 'tigerweb
 // Leave the variable unset and the tool stays open to everyone.
 // Enforced here, on the server: the page itself is public HTML, so a check in the
 // browser would stop nobody. Without a valid code no Census data is returned at all.
+// Format:  CODE:Name@Conference   (the @Conference part is optional)
+//   PA-2026-K7M2:Pennsylvania Conference@Pennsylvania   -> tied to one conference
+//   NAD-2026-R8QM:National@*                            -> works for any conference
+//   OH-2026-M5RK:Ohio Conference                        -> no @ means any, same as *
 const CODES = (() => {
   const m = new Map();
   (process.env.TERRAIN_CODES || '').split(',').forEach(pair => {
     const raw = pair.trim(); if (!raw) return;
-    const i = raw.indexOf(':');
-    const code = (i === -1 ? raw : raw.slice(0, i)).trim();
-    const who = (i === -1 ? '' : raw.slice(i + 1)).trim();
-    if (code) m.set(code.toLowerCase(), who || 'Verified');
+    const at = raw.lastIndexOf('@');
+    const scope = at === -1 ? '*' : raw.slice(at + 1).trim();
+    const head = at === -1 ? raw : raw.slice(0, at);
+    const i = head.indexOf(':');
+    const code = (i === -1 ? head : head.slice(0, i)).trim();
+    const who = (i === -1 ? '' : head.slice(i + 1)).trim();
+    if (code) m.set(code.toLowerCase(), { name: who || 'Verified', conf: scope || '*' });
   });
   return m;
 })();
-const codeName = given => {
+const lookup = given => {
   const g = (given || '').trim().toLowerCase();
   return g && CODES.has(g) ? CODES.get(g) : null;
 };
+const codeName = given => { const e = lookup(given); return e ? e.name : null; };
 
 export default async (request) => {
   // Errors are NEVER cached. Caching an error response poisons the CDN: every
@@ -43,7 +51,15 @@ export default async (request) => {
   const given = request.headers.get('x-terrain-code') || url0.searchParams.get('code') || '';
   const who = codeName(given);
   if (url0.searchParams.get('check')) {
-    return json({ required: CODES.size > 0, ok: CODES.size === 0 || !!who, name: who || '' });
+    const entry = lookup(given);
+    return json({
+      required: CODES.size > 0,
+      ok: CODES.size === 0 || !!entry,
+      name: entry ? entry.name : '',
+      // Which conference this code belongs to. '*' means it works anywhere.
+      conf: entry ? entry.conf : '',
+      picked: url0.searchParams.get('conf') || ''
+    });
   }
   if (CODES.size > 0 && !who) {
     return json({ error: 'This tool is limited to invited pastors. Enter your access code to continue.', code: 'nocode' }, 401);
