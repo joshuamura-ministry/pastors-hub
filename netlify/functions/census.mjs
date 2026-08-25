@@ -6,6 +6,27 @@
 // Only these two hosts are allowed, so this can never be used as an open proxy.
 const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov', 'tigerweb.geo.census.gov']);
 
+// Access codes. Set TERRAIN_CODES in Netlify as a comma-separated list. Each entry
+// is either CODE or CODE:Name, e.g.  PA-JMURA:Joshua Mura, PA-WEST:Bill Carter
+// Leave the variable unset and the tool stays open to everyone.
+// Enforced here, on the server: the page itself is public HTML, so a check in the
+// browser would stop nobody. Without a valid code no Census data is returned at all.
+const CODES = (() => {
+  const m = new Map();
+  (process.env.TERRAIN_CODES || '').split(',').forEach(pair => {
+    const raw = pair.trim(); if (!raw) return;
+    const i = raw.indexOf(':');
+    const code = (i === -1 ? raw : raw.slice(0, i)).trim();
+    const who = (i === -1 ? '' : raw.slice(i + 1)).trim();
+    if (code) m.set(code.toLowerCase(), who || 'Verified');
+  });
+  return m;
+})();
+const codeName = given => {
+  const g = (given || '').trim().toLowerCase();
+  return g && CODES.has(g) ? CODES.get(g) : null;
+};
+
 export default async (request) => {
   // Errors are NEVER cached. Caching an error response poisons the CDN: every
   // later request for the same URL gets the stale failure back, even after the
@@ -16,6 +37,17 @@ export default async (request) => {
       status,
       headers: { 'content-type': 'application/json', 'cache-control': NO_STORE }
     });
+
+  // Access check. Runs before anything else, so no code means no data.
+  const url0 = new URL(request.url);
+  const given = request.headers.get('x-terrain-code') || url0.searchParams.get('code') || '';
+  const who = codeName(given);
+  if (url0.searchParams.get('check')) {
+    return json({ required: CODES.size > 0, ok: CODES.size === 0 || !!who, name: who || '' });
+  }
+  if (CODES.size > 0 && !who) {
+    return json({ error: 'This tool is limited to invited pastors. Enter your access code to continue.', code: 'nocode' }, 401);
+  }
 
   let target;
   try {
