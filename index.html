@@ -403,13 +403,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.7</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v3.7';
+const VERSION = 'v3.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -498,9 +498,10 @@ let useProxy=false;
    the user rather than the actual lock. */
 let ACCESS={required:false,ok:true,name:''};
 const accessCode=()=>localStorage.getItem('terrain-code')||'';
-async function checkAccess(code){
+async function checkAccess(code,conf){
   try{
-    const r=await fetch('/.netlify/functions/census?check=1',{headers:{'x-terrain-code':code||accessCode()}});
+    const r=await fetch('/.netlify/functions/census?check=1'+(conf?'&conf='+encodeURIComponent(conf):''),
+      {headers:{'x-terrain-code':code||accessCode()}});
     return await r.json();
   }catch(e){ return {required:false,ok:true,name:'',offline:true}; }
 }
@@ -2247,11 +2248,23 @@ function wireCode(){
     const err=document.getElementById('gerr');
     if(!code){ err.className='status err'; err.textContent='Enter the code you were given.'; return; }
     b.disabled=true; b.textContent='Checking\u2026';
-    const res=await checkAccess(code);
+    const res=await checkAccess(code, PICKED?PICKED.conf:'');
     b.disabled=false; b.textContent='Enter';
+    // A code tied to one conference should not admit someone who picked another.
+    if(res.ok && res.conf && res.conf!=='*' && PICKED &&
+       res.conf.toLowerCase()!==PICKED.conf.toLowerCase()){
+      err.className='status err';
+      err.innerHTML=`That code belongs to the <b>${esc(res.conf)} Conference</b>, not ${esc(PICKED.conf)}. `+
+        `<a href="#" id="switchconf">Switch to ${esc(res.conf)}</a> or use your own conference\u2019s code.`;
+      const sw=document.getElementById('switchconf');
+      if(sw) sw.onclick=ev=>{ ev.preventDefault();
+        const u=UNIONS.find(x=>x.confs.includes(res.conf));
+        choose(res.conf,u); setTimeout(()=>{ const i2=document.getElementById('gcode'); if(i2){i2.value=code;} },50); };
+      return;
+    }
     if(res.ok){
       localStorage.setItem('terrain-code',code);
-      if(PICKED) localStorage.setItem('terrain-conf',PICKED.conf);
+      localStorage.setItem('terrain-conf', (res.conf&&res.conf!=='*')?res.conf:(PICKED?PICKED.conf:''));
       ACCESS=res; hideGate(); showWho();
     }else{
       err.className='status err';
