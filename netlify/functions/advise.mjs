@@ -9,7 +9,24 @@
 //                                  there is never a dead control on screen.
 // POST → { text }                  a ministry plan written from the numbers.
 
-const MODEL = process.env.ADVISE_MODEL || 'claude-sonnet-5';
+const MODEL = (process.env.ADVISE_MODEL || 'claude-sonnet-5').trim();
+const FN_VERSION = 'advise-1.1';
+// Copy-paste on a phone very often brings a trailing newline or a stray space with
+// it, and the API rejects the key without saying why. Trim before use.
+const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
+// Optional private passphrase. If TERRAIN_AI_PASS is set, every request must carry
+// it. Enforced HERE, on the server — hiding the button in the browser alone would
+// stop nobody, since the function has a public URL.
+const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
+// Constant-time-ish compare, so the response time cannot be used to guess it.
+function passOk(given){
+  const g = (given || '').trim();
+  if (!PASS) return true;
+  if (g.length !== PASS.length) return false;
+  let diff = 0;
+  for (let i = 0; i < PASS.length; i++) diff |= PASS.charCodeAt(i) ^ g.charCodeAt(i);
+  return diff === 0;
+}
 const MAX_BODY = 24000;
 
 const NO_STORE = 'no-store, max-age=0';
@@ -37,11 +54,23 @@ Format in plain markdown: ## for section headings, - for bullets, **bold** spari
 
 export default async (request) => {
   if (request.method === 'GET') {
-    return reply({ enabled: !!process.env.ANTHROPIC_API_KEY, model: MODEL });
+    return reply({
+      enabled: !!KEY,
+      model: MODEL,
+      fn: FN_VERSION,
+      locked: !!PASS,
+      // A shape check only — never the key itself. Helps diagnose a bad paste.
+      keyLooksRight: KEY.startsWith('sk-ant-') && KEY.length > 40,
+      keyLength: KEY.length
+    });
   }
   if (request.method !== 'POST') return reply({ error: 'Use GET or POST.' }, 405);
 
-  const key = process.env.ANTHROPIC_API_KEY;
+  if (!passOk(request.headers.get('x-terrain-pass'))) {
+    return reply({ error: 'This ministry planner is private to the pastor who set it up.', code: 'locked' }, 401);
+  }
+
+  const key = KEY;
   if (!key) {
     return reply({ error: 'No API key is configured on the server, so AI planning is switched off.' }, 503);
   }
@@ -78,6 +107,19 @@ export default async (request) => {
     const data = await res.json().catch(() => null);
     if (!res.ok) {
       const detail = data && data.error && data.error.message ? data.error.message : 'HTTP ' + res.status;
+      if (res.status === 401 || /api-key|authentication/i.test(detail)) {
+        return reply({
+          error: 'Anthropic rejected the API key. Copy it again from console.anthropic.com (it begins sk-ant-), ' +
+                 'paste it into Netlify as ANTHROPIC_API_KEY with no spaces or line breaks, and redeploy — ' +
+                 'environment variables only reach the function on a new deploy.'
+        }, 401);
+      }
+      if (res.status === 400 && /model/i.test(detail)) {
+        return reply({ error: 'That model name was not accepted: "' + MODEL + '". Check the ADVISE_MODEL variable, or remove it to use the default.' }, 400);
+      }
+      if (res.status === 429) {
+        return reply({ error: 'Rate limited by Anthropic, or the account has no credit. Check billing at console.anthropic.com, then try again.' }, 429);
+      }
       return reply({ error: 'The AI service refused the request: ' + detail }, 502);
     }
     const text = (data.content || [])
