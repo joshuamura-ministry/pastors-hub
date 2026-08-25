@@ -58,6 +58,21 @@ nav.tools{display:flex;gap:4px;margin-left:auto}
 .top .in{gap:10px}
 nav.tools a{font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
+.secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
+  padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
+  background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+.secnav::-webkit-scrollbar{display:none}
+.secnav button{flex:none;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 13px;
+  font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;white-space:nowrap;min-height:38px}
+.secnav button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
+.totop{position:fixed;right:16px;bottom:18px;z-index:40;background:var(--panel);border:1px solid var(--line2);
+  border-radius:999px;padding:11px 15px;font-size:.82rem;font-weight:700;color:var(--ink2);cursor:pointer;
+  box-shadow:0 6px 22px -10px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;min-height:44px}
+.totop:hover{border-color:var(--acc);color:var(--acc)}
+.totop[hidden]{display:none}
+section.blk,#brief{scroll-margin-top:calc(var(--topH,58px) + 62px)}
+@media print{.secnav,.totop{display:none}}
 .themebtn{background:var(--panel);border:1px solid var(--line2);border-radius:10px;width:40px;height:40px;cursor:pointer;
   font-size:1rem;line-height:1;color:var(--ink2);flex:none;display:flex;align-items:center;justify-content:center}
 .themebtn:hover{border-color:var(--acc);color:var(--acc)}
@@ -215,10 +230,19 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 ul.plain{list-style:none;display:flex;flex-direction:column;gap:9px}
 ul.plain li{font-size:.85rem;color:var(--ink2);line-height:1.6;padding-left:14px;position:relative}
 ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.5}
-.role{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 15px;margin-bottom:9px;box-shadow:var(--shadow)}
-.role h4{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:7px}
-.rw{font-size:.84rem;color:var(--ink2);line-height:1.55;margin-top:6px}
-.rw b{display:inline-block;min-width:74px;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);font-weight:700;vertical-align:top}
+.role{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
+.role h4{font-family:var(--disp);font-size:1.02rem;font-weight:600;color:var(--ink);margin-bottom:10px;
+  padding-bottom:9px;border-bottom:1px solid var(--line)}
+.rw{display:grid;grid-template-columns:78px 1fr;gap:4px 12px;align-items:start;
+  font-size:.84rem;color:var(--ink2);line-height:1.6;margin-top:9px}
+/* label in its own column so wrapped lines stay aligned instead of falling back
+   to the margin, and in the accent colour so it reads as a label, not as text */
+.rw b{font-size:.64rem;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);font-weight:700;
+  padding-top:.28em;white-space:nowrap}
+@media(max-width:430px){
+  .rw{grid-template-columns:1fr;gap:2px}
+  .rw b{padding-top:0}
+}
 ol.ladder{list-style:none;counter-reset:l;display:flex;flex-direction:column;gap:11px}
 ol.ladder li{position:relative;padding-left:14px;border-left:2px solid var(--acc);opacity:.95}
 ol.ladder li b{display:block;font-family:var(--disp);font-size:.9rem;color:var(--ink);margin-bottom:2px}
@@ -325,6 +349,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     </div>
   </div>
 
+  <div class="secnav" id="secnav" hidden></div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
@@ -335,15 +360,16 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <details class="diag" id="diag"><summary>SOURCES &amp; DIAGNOSTICS</summary><div id="diagbody"></div></details>
   </div>
 
+  <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.3</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v3.3';
+const VERSION = 'v3.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2017,6 +2043,51 @@ async function aiMount(M,levels,geo){
     }finally{ btn.disabled=false; }
   };
 }
+/* The report is long. This bar lets a pastor jump straight to the part he wants,
+   and it only lists sections that are actually visible under the current focus. */
+function buildSecNav(){
+  const nav=document.getElementById('secnav'); if(!nav) return;
+  const secs=[...document.querySelectorAll('#sections section.blk')].filter(x=>!x.classList.contains('hidden'));
+  if(!DATA||!secs.length){ nav.hidden=true; return; }
+  secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
+  nav.hidden=false;
+  nav.innerHTML=`<button data-t="brief">Brief</button>`+
+    secs.map(x=>`<button data-t="${x.id}">${esc(x.querySelector('h2').textContent)}</button>`).join('');
+  nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const el=document.getElementById(b.dataset.t)||document.getElementById('brief');
+    if(!el) return;
+    // This report can run to 18,000px. Smooth-scrolling that far takes seconds and
+    // feels broken, so long jumps land immediately and only short ones animate.
+    const far=Math.abs(el.getBoundingClientRect().top)>2500;
+    el.scrollIntoView({behavior:far?'auto':'smooth',block:'start'});
+    setTimeout(markSection,far?60:420);
+  });
+  markSection();
+}
+function markSection(){
+  const nav=document.getElementById('secnav'); if(!nav||nav.hidden) return;
+  const line=(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58)+90;
+  const marks=[{id:'brief',el:document.getElementById('brief')},
+    ...[...document.querySelectorAll('#sections section.blk')].filter(x=>!x.classList.contains('hidden')).map(x=>({id:x.id,el:x}))]
+    .filter(x=>x.el);
+  let cur=marks[0]&&marks[0].id;
+  marks.forEach(m=>{ if(m.el.getBoundingClientRect().top<=line) cur=m.id; });
+  nav.querySelectorAll('button').forEach(b=>{
+    const on=b.dataset.t===cur;
+    if(on&&!b.classList.contains('on')) b.scrollIntoView({block:'nearest',inline:'center',behavior:'smooth'});
+    b.classList.toggle('on',on);
+  });
+}
+function measureTop(){
+  const t=document.querySelector('.top');
+  if(t) document.documentElement.style.setProperty('--topH',Math.round(t.getBoundingClientRect().height)+'px');
+}
+window.addEventListener('scroll',()=>{
+  markSection();
+  const b=document.getElementById('totop'); if(b) b.hidden=window.scrollY<500;
+},{passive:true});
+window.addEventListener('resize',measureTop);
+
 function renderFocus(){
   $('focusbar').innerHTML=`<button class="all ${FOCUS.size?'':'on'}" data-f="">Everything</button>`+
     FOCUS_DEFS.map(f=>`<button class="${FOCUS.has(f.k)?'on':''}" data-f="${f.k}" aria-pressed="${FOCUS.has(f.k)}">${esc(f.label)}</button>`).join('');
@@ -2041,6 +2112,7 @@ function applyFocus(){
     const n=g.querySelectorAll('.sug').length;
     keep?shownP+=n:hiddenP+=n;
   });
+  buildSecNav();
   const note=$('focusnote');
   if(!on){ note.innerHTML=`Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Tap a chip above to narrow it.`; }
   else{
@@ -2220,6 +2292,7 @@ function render(){
   aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
+  buildSecNav();
   $('diagbody').innerHTML=`<p>American Community Survey 5-year estimates, ${ACS_YEAR-4}–${ACS_YEAR} (and ${ACS_PAST-4}–${ACS_PAST} for the ten-year shift). Tract-level figures are estimates with real margins of error — treat small differences as noise, and large ones as signal. Geography from the Census Geocoder. Tables: B01002 B01003 B03002 B05002 B05005 B05006 B09001 B11003 B11010 B14001 B17001 B19001 B19013 B19057 B19083 B22010 B23025 B25003 B25014 B25044 B25070 B27010 C16001 C16002 C24010.</p><pre>${esc(LOG.join('\n'))}</pre>`;
   $('report').classList.add('show');
 }
@@ -2327,6 +2400,9 @@ $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localSt
 $('ver').textContent=VERSION;
 (function boot(){
   initTheme();
+  measureTop();
+  const tt=document.getElementById('totop');
+  if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});
   aiClaimPass();
   if(!key()){$('setup').style.display='block';}
   const h=new URLSearchParams(location.hash.slice(1));
