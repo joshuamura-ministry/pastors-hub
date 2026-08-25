@@ -58,6 +58,35 @@ nav.tools{display:flex;gap:4px;margin-left:auto}
 .top .in{gap:10px}
 nav.tools a{font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
+/* Fixed 38px tiles rather than fluid ones: at 11 columns a fluid grid collapses
+   to ~26px on a phone, which is below a reliable tap target. The map scrolls
+   sideways instead, and the searchable list below is the full alternative. */
+.usmapwrap{overflow-x:auto;scrollbar-width:none;margin:16px -4px 0;padding:0 4px}
+.usmapwrap::-webkit-scrollbar{display:none}
+.usmap{display:grid;grid-template-columns:repeat(11,38px);gap:4px;width:max-content;margin:0 auto}
+.usmap button{width:38px;height:38px;border-radius:6px;border:1px solid transparent;font-size:.68rem;font-weight:700;
+  cursor:pointer;padding:0;color:#fff;letter-spacing:.02em}
+.usmap button.blank{background:none;border:none;cursor:default;pointer-events:none}
+.usmap button:hover{outline:2px solid var(--ink);outline-offset:1px}
+.usmap button.sel{outline:3px solid var(--ink);outline-offset:1px}
+.ulegend{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:.7rem;color:var(--ink2);margin:8px 0 2px}
+.ulegend span i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px}
+.clist{margin-top:10px;max-height:280px;overflow:auto}
+.cgroup{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin:12px 0 5px}
+.crow{display:block;width:100%;text-align:left;background:var(--panel2);border:1px solid var(--line);border-radius:9px;
+  padding:11px 13px;margin-bottom:5px;font-size:.88rem;color:var(--ink);cursor:pointer;min-height:42px}
+.crow:hover{border-color:var(--acc);color:var(--acc)}
+.crow small{display:block;color:var(--ink3);font-size:.72rem;margin-top:2px}
+.chosen{margin-top:14px;padding:14px 15px;border:1px solid var(--acc);border-radius:var(--r);background:var(--acc-dim)}
+.chosen[hidden]{display:none}
+.chosen b{display:block;font-family:var(--disp);font-size:1.05rem;margin-bottom:2px}
+.chosen .cu{font-size:.76rem;color:var(--ink2);margin-bottom:10px}
+.gate{display:none;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:22px 20px;margin-top:20px;box-shadow:var(--shadow)}
+.gate[hidden]{display:none}
+.gate.show{display:block}
+.gate h2{font-family:var(--disp);font-size:1.35rem;margin-bottom:6px}
+.whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap}
+.whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;padding:0 0 0 8px}
 .secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -350,6 +379,17 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   </div>
 
   <div class="secnav" id="secnav" hidden></div>
+  <div class="gate" id="gate" hidden>
+    <h2>Find your conference</h2>
+    <p class="sub">Tap your state on the map, or search the list. Then enter the access code for your conference.</p>
+    <div class="usmapwrap"><div id="usmap"></div></div>
+    <div class="field" style="margin-top:16px">
+      <input id="csearch" type="text" autocomplete="off" placeholder="Or search: Pennsylvania, Allegheny East, Texico…" aria-label="Search conferences">
+    </div>
+    <div id="clist"></div>
+    <div class="chosen" id="chosen" hidden></div>
+    <p class="note" id="ghelp" style="margin-top:14px">Codes are issued per person, so one can be withdrawn without disturbing anyone else. If your conference is not yet enrolled, the screen will tell you who to ask.</p>
+  </div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
@@ -363,13 +403,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.5</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v3.7</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v3.5';
+const VERSION = 'v3.7';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -452,11 +492,25 @@ function titleCase(s){return s.replace(/\w\S*/g,w=>w[0].toUpperCase()+w.slice(1)
 // which is how we walk away from any previously cached bad response.
 const PROXY='/.netlify/functions/census?cv=2&u=';
 let useProxy=false;
+/* ---- invited access ----
+   The page is public HTML; the data is not. Every Census request carries the
+   code and the server refuses without it, so a code check here is a courtesy to
+   the user rather than the actual lock. */
+let ACCESS={required:false,ok:true,name:''};
+const accessCode=()=>localStorage.getItem('terrain-code')||'';
+async function checkAccess(code){
+  try{
+    const r=await fetch('/.netlify/functions/census?check=1',{headers:{'x-terrain-code':code||accessCode()}});
+    return await r.json();
+  }catch(e){ return {required:false,ok:true,name:'',offline:true}; }
+}
 const clean=u=>u.replace(/key=[^&]+/,'key=…');
 async function raw(url,label,via){
   log('GET '+label+(via?' [via proxy]':'')+' → '+clean(url));
-  const r=await fetch(via?PROXY+encodeURIComponent(url):url);
+  const r=await fetch(via?PROXY+encodeURIComponent(url):url,
+    via?{headers:{'x-terrain-code':accessCode()}}:undefined);
   const txt=await r.text();
+  if(r.status===401&&/nocode/.test(txt)) throw new Error('NOCODE');
   if(/invalid key/i.test(txt)) throw new Error('KEYBAD');
   if(!r.ok&&!txt.trimStart().startsWith('{')) throw new Error(label+': HTTP '+r.status+' — '+txt.slice(0,220));
   let j; try{ j=JSON.parse(txt); }catch(e){ throw new Error(label+': the server did not return JSON — '+txt.slice(0,220)); }
@@ -464,13 +518,14 @@ async function raw(url,label,via){
   return j;
 }
 async function getJSON(url,label){
-  if(useProxy) return raw(url,label,true);
+  // With invited access on, never go direct — a direct call would bypass the gate.
+  if(useProxy||ACCESS.required) return raw(url,label,true);
   try{
     return await raw(url,label,false);
   }catch(e){
     // A CORS block or network refusal surfaces as a TypeError with no HTTP status.
     // Retry once through our own server, then stay on the proxy for this session.
-    if(e.message==='KEYBAD') throw e;
+    if(e.message==='KEYBAD'||e.message==='NOCODE') throw e;
     if(/HTTP \d|did not return JSON/.test(e.message)) throw e;
     log('direct call blocked ('+e.message+') — switching to the built-in proxy');
     try{
@@ -837,6 +892,67 @@ const IDEAS={
   {k:KIND.equip,n:'Build capacity ahead of the curve',d:'This is moving in one direction. Start the language and cultural work now rather than reacting in five years.',c:EFFORT.team,p:'Conference multicultural ministries'},
   {k:KIND.belong,n:'Second-generation youth ministry',d:'Children bridging two cultures carry a strain their parents often cannot see. A youth worker who understands it is worth a great deal.',c:EFFORT.team,p:'Conference youth department'}]
 };
+
+/* ================= NAD STRUCTURE =================
+   Unions, their territories, and their conferences, taken from the North
+   American Division's own organizational-structure page (nadadventist.org).
+   Union territory is clean and mappable by state; local conference boundaries
+   are not — regional conferences overlap the others across the same states —
+   so the map colours by union and the conference list does the rest. */
+const UNIONS=[
+ {id:'atl', name:'Atlantic Union',        hue:205,
+  states:['CT','ME','MA','NH','NY','RI','VT'],
+  confs:['Bermuda','Greater New York','New York','Northeastern','Northern New England','Southern New England']},
+ {id:'col', name:'Columbia Union',        hue:262,
+  states:['DE','MD','NJ','OH','PA','VA','DC','WV'],
+  confs:['Allegheny East','Allegheny West','Chesapeake','Mountain View','New Jersey','Ohio','Pennsylvania','Potomac']},
+ {id:'lak', name:'Lake Union',            hue:172,
+  states:['IL','IN','MI','WI'],
+  confs:['Illinois','Indiana','Lake Region','Michigan','Wisconsin']},
+ {id:'mid', name:'Mid-America Union',     hue:38,
+  states:['CO','IA','KS','MN','MO','NE','ND','SD','WY'],
+  confs:['Central States','Dakota','Iowa-Missouri','Kansas-Nebraska','Minnesota','Rocky Mountain']},
+ {id:'npu', name:'North Pacific Union',   hue:150,
+  states:['AK','ID','MT','OR','WA'],
+  confs:['Alaska','Idaho','Montana','Oregon','Upper Columbia','Washington']},
+ {id:'pac', name:'Pacific Union',         hue:12,
+  states:['AZ','CA','HI','NV','UT'],
+  confs:['Arizona','Central California','Hawaii','Nevada-Utah','Northern California','Southeastern California','Southern California']},
+ {id:'sou', name:'Southern Union',        hue:330,
+  states:['AL','FL','GA','KY','MS','NC','SC','TN'],
+  confs:['Carolina','Florida','Georgia-Cumberland','Gulf States','Kentucky-Tennessee','South Atlantic','South Central','Southeastern']},
+ {id:'swu', name:'Southwestern Union',    hue:90,
+  states:['AR','LA','NM','OK','TX'],
+  confs:['Arkansas-Louisiana','Oklahoma','Southwest Region','Texas','Texico']},
+ {id:'can', name:'Adventist Church in Canada', hue:220, states:[],
+  confs:['Alberta','British Columbia','Manitoba-Saskatchewan','Maritime','Newfoundland and Labrador','Ontario','Quebec']},
+ {id:'gmm', name:'Guam-Micronesia Mission', hue:190, states:[],
+  confs:['Guam-Micronesia Mission']}
+];
+const STATE_UNION={};
+UNIONS.forEach(u=>u.states.forEach(s=>STATE_UNION[s]=u.id));
+
+/* A schematic grid, not a geographic outline: every state is the same size and
+   in roughly the right place. On a phone this is far easier to tap than real
+   state shapes, and it needs no map data at all. */
+const GRID=[
+ ['AK','', '', '', '', '', '', '', '', '', 'ME'],
+ ['', '', '', '', '', '', '', '', 'VT','NH',''],
+ ['WA','ID','MT','ND','MN','IL','WI','MI','NY','CT','MA'],
+ ['OR','NV','WY','SD','IA','IN','OH','PA','NJ','RI',''],
+ ['CA','UT','CO','NE','MO','KY','WV','VA','MD','DE',''],
+ ['','AZ','NM','KS','AR','TN','NC','SC','DC','',''],
+ ['','','','OK','LA','MS','AL','GA','','',''],
+ ['HI','','','TX','','','','FL','','','']
+];
+const STATE_NAMES={AK:'Alaska',AL:'Alabama',AR:'Arkansas',AZ:'Arizona',CA:'California',CO:'Colorado',CT:'Connecticut',
+ DC:'District of Columbia',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',IA:'Iowa',ID:'Idaho',IL:'Illinois',
+ IN:'Indiana',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',MA:'Massachusetts',MD:'Maryland',ME:'Maine',MI:'Michigan',
+ MN:'Minnesota',MO:'Missouri',MS:'Mississippi',MT:'Montana',NC:'North Carolina',ND:'North Dakota',NE:'Nebraska',
+ NH:'New Hampshire',NJ:'New Jersey',NM:'New Mexico',NV:'Nevada',NY:'New York',OH:'Ohio',OK:'Oklahoma',OR:'Oregon',
+ PA:'Pennsylvania',RI:'Rhode Island',SC:'South Carolina',SD:'South Dakota',TN:'Tennessee',TX:'Texas',UT:'Utah',
+ VA:'Virginia',VT:'Vermont',WA:'Washington',WI:'Wisconsin',WV:'West Virginia',WY:'Wyoming'};
+const unionById=id=>UNIONS.find(u=>u.id===id);
 
 /* ================= NEIGHBOURHOOD PROFILE =================
    Tags computed from this tract's own numbers. Ideas below declare which tags
@@ -2078,6 +2194,119 @@ function markSection(){
     b.classList.toggle('on',on);
   });
 }
+let PICKED=null;
+function unionColour(u,strong){ return `hsl(${u.hue} ${strong?68:46}% ${strong?46:58}%)`; }
+function drawUSMap(){
+  const host=document.getElementById('usmap'); if(!host) return;
+  host.className='usmap';
+  host.innerHTML=GRID.flat().map(st=>{
+    if(!st) return `<button class="blank" tabindex="-1" aria-hidden="true"></button>`;
+    const u=unionById(STATE_UNION[st]);
+    return `<button data-st="${st}" title="${esc(STATE_NAMES[st]||st)}" aria-label="${esc(STATE_NAMES[st]||st)}"
+      style="background:${u?unionColour(u):'var(--line2)'}">${st}</button>`;
+  }).join('');
+  const used=[...new Set(Object.values(STATE_UNION))];
+  const wrap=host.parentElement;
+  wrap.insertAdjacentHTML('afterend',`<p class="note" style="margin:6px 0 0;font-size:.74rem">Swipe the map sideways to reach the east and west coasts \u2014 or use the search box below.</p><div class="ulegend">${used.map(id=>{const u=unionById(id);
+    return `<span><i style="background:${unionColour(u)}"></i>${esc(u.name.replace(' Union',''))}</span>`}).join('')}</div>`);
+  // start centred, so neither coast is hidden off the edge on a phone
+  wrap.scrollLeft=Math.max(0,(host.scrollWidth-wrap.clientWidth)/2);
+  host.querySelectorAll('button[data-st]').forEach(b=>b.onclick=()=>{
+    host.querySelectorAll('button').forEach(x=>x.classList.remove('sel'));
+    b.classList.add('sel');
+    const u=unionById(STATE_UNION[b.dataset.st]);
+    listConferences(u?[u]:[], STATE_NAMES[b.dataset.st]);
+  });
+}
+function listConferences(unions,forState){
+  const host=document.getElementById('clist'); if(!host) return;
+  host.className='clist';
+  if(!unions.length){ host.innerHTML=`<p class="note">No conference found for that search.</p>`; return; }
+  host.innerHTML=(forState?`<p class="note" style="margin-top:10px">${esc(forState)} is served by the ${esc(unions[0].name)}. Regional conferences overlap the same territory \u2014 choose the one that employs you.</p>`:'')
+    +unions.map(u=>`<div class="cgroup">${esc(u.name)}</div>`+
+      u.confs.map(c=>`<button class="crow" data-c="${esc(c)}" data-u="${u.id}">${esc(c)} Conference<small>${esc(u.name)}</small></button>`).join('')
+    ).join('');
+  host.querySelectorAll('.crow').forEach(b=>b.onclick=()=>choose(b.dataset.c,unionById(b.dataset.u)));
+}
+function choose(conf,u){
+  PICKED={conf,union:u?u.name:''};
+  const box=document.getElementById('chosen'); if(!box) return;
+  box.hidden=false;
+  box.innerHTML=`<b>${esc(conf)} Conference</b><div class="cu">${esc(u?u.name:'')}</div>
+    <div class="field"><input id="gcode" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Access code" aria-label="Access code"><button class="btn" id="gbtn">Enter</button></div>
+    <div class="status" id="gerr"></div>
+    <p class="note" style="margin-top:8px">No code for ${esc(conf)} yet? Ask your conference ministerial director, or contact Pastor Josh to have your conference added.</p>`;
+  wireCode();
+  box.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function wireCode(){
+  const b=document.getElementById('gbtn'), i=document.getElementById('gcode');
+  if(!b||!i) return;
+  const go=async()=>{
+    const code=(i.value||'').trim();
+    const err=document.getElementById('gerr');
+    if(!code){ err.className='status err'; err.textContent='Enter the code you were given.'; return; }
+    b.disabled=true; b.textContent='Checking\u2026';
+    const res=await checkAccess(code);
+    b.disabled=false; b.textContent='Enter';
+    if(res.ok){
+      localStorage.setItem('terrain-code',code);
+      if(PICKED) localStorage.setItem('terrain-conf',PICKED.conf);
+      ACCESS=res; hideGate(); showWho();
+    }else{
+      err.className='status err';
+      err.textContent='That code was not recognised. Check for a typo, or ask whoever gave it to you.';
+    }
+  };
+  b.onclick=go;
+  i.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
+}
+function showGate(msg){
+  const g=$('gate'); if(!g) return;
+  g.hidden=false; g.classList.add('show');
+  document.querySelector('.ask').style.display='none';
+  $('report').classList.remove('show');
+  const e=$('gerr'); if(e){ e.className='status'+(msg?' err':''); e.textContent=msg||''; }
+}
+function hideGate(){
+  const g=$('gate'); if(g){ g.hidden=true; g.classList.remove('show'); }
+  const a=document.querySelector('.ask'); if(a) a.style.display='';
+}
+function showWho(){
+  if(!ACCESS.required||!ACCESS.ok) return;
+  const nav=document.querySelector('.top .in');
+  if(!nav||document.getElementById('whoami')) return;
+  const d=document.createElement('div');
+  d.className='whoami'; d.id='whoami';
+  const conf=localStorage.getItem('terrain-conf');
+  d.innerHTML=`${esc(ACCESS.name||'Verified')}${conf?' \u00b7 '+esc(conf):''}<button id="signout">sign out</button>`;
+  nav.appendChild(d);
+  document.getElementById('signout').onclick=()=>{
+    localStorage.removeItem('terrain-code');
+    localStorage.removeItem('terrain-conf');
+    location.reload();
+  };
+}
+async function initAccess(){
+  ACCESS=await checkAccess();
+  if(ACCESS.required&&!ACCESS.ok){
+    showGate('');
+    drawUSMap();
+    listConferences(UNIONS,'');
+    const s=document.getElementById('csearch');
+    if(s) s.addEventListener('input',()=>{
+      const q=s.value.trim().toLowerCase();
+      if(!q){ listConferences(UNIONS,''); return; }
+      const hit=UNIONS.map(u=>{
+        const confs=u.confs.filter(c=>c.toLowerCase().includes(q));
+        const byState=u.states.some(st=>(STATE_NAMES[st]||'').toLowerCase().includes(q)||st.toLowerCase()===q);
+        const byUnion=u.name.toLowerCase().includes(q);
+        return (confs.length||byState||byUnion)?{...u,confs:(confs.length?confs:u.confs)}:null;
+      }).filter(Boolean);
+      listConferences(hit,'');
+    });
+  } else { hideGate(); showWho(); }
+}
 function measureTop(){
   const t=document.querySelector('.top');
   if(t) document.documentElement.style.setProperty('--topH',Math.round(t.getBoundingClientRect().height)+'px');
@@ -2381,6 +2610,7 @@ async function run(getGeo){
     loadZones(geo,M);   // runs after the report is already on screen
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
+    if(e.message==='NOCODE'){ localStorage.removeItem('terrain-code'); showGate('That code is no longer valid. Ask Pastor Josh for a current one.'); return; }
     const msg = e.message==='KEYBAD'
       ? 'The Census rejected the API key. If it is new, click the activation link in the Census Bureau email, wait a minute, and try again.'
       : e.message;
@@ -2400,6 +2630,7 @@ $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localSt
 $('ver').textContent=VERSION;
 (function boot(){
   initTheme();
+  initAccess();
   measureTop();
   const tt=document.getElementById('totop');
   if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});
