@@ -460,13 +460,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.7</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v4.7';
+const VERSION = 'v4.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2715,8 +2715,195 @@ const ES={
  'Korean':'coreano','Chinese':'chino','Vietnamese':'vietnamita','Tagalog':'tagalo',
  'Other Asian / Pacific':'otro asiático / del Pacífico','Arabic':'árabe','Other':'otro',
  'White':'blanca','Hispanic / Latino':'hispana / latina','Black':'negra','Asian':'asiática',
- 'Two or more':'dos o más','Not recorded':'sin registrar'
+ 'Two or more':'dos o más','Not recorded':'sin registrar',
+ // card subtitles
+ 'all people':'toda la población','under 18':'menores de 18',
+ 'of the civilian labour force':'de la fuerza laboral civil',
+ 'food assistance, past year':'ayuda alimentaria, último año',
+ 'cash assistance income':'ingreso por asistencia en efectivo',
+ 'of households':'de los hogares','of all families':'de todas las familias',
+ 'of families with children':'de las familias con hijos',
+ 'people age 5+':'personas de 5 años o más',
+ 'no one 14+ speaks English well':'nadie mayor de 14 habla bien inglés',
+ 'renters paying 30%+ of income':'inquilinos que pagan 30% o más de su ingreso',
+ 'renters paying 50%+ of income':'inquilinos que pagan 50% o más de su ingreso',
+ 'more than 1 person per room':'más de una persona por habitación',
+ 'share of the foreign-born':'de los nacidos en el extranjero',
+ 'Gini index · 0 equal, 1 unequal':'Índice de Gini · 0 igual, 1 desigual',
+ 'Income inequality':'Desigualdad de ingresos','How this reads':'Cómo se lee esto',
+ 'Households under $35k':'Hogares con menos de $35 mil','Households over $150k':'Hogares con más de $150 mil',
+ 'Sharply divided':'Marcadamente dividido','Mostly affluent':'Mayormente acomodado',
+ 'Mostly struggling':'Mayormente con dificultades','Mixed incomes':'Ingresos mixtos',
+ 'What people do for work':'En qué trabaja la gente',
+ 'Households on public assistance':'Hogares con asistencia pública',
+ 'Arrived 2010 or later':'Llegaron en 2010 o después',
+ 'Where the foreign-born were born':'Dónde nacieron los nacidos en el extranjero',
+ 'Other languages spoken at home':'Otros idiomas hablados en casa',
+ 'Enrolled in school':'Matriculados','Children':'Niños','Population':'Población'
 };
+/* Second Spanish batch: the prose that fills the report. Merged into ES.
+   Exact whole-string matches only, same rule as the first batch. */
+Object.assign(ES,{
+
+// ---- section intros and framing ----
+'Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.':
+ 'Qué tradiciones ya trabajan alrededor de esta dirección y cuáles no. Los puntos provienen de OpenStreetMap; la adherencia por condado se enlaza más abajo.',
+'Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.':
+ 'Todo lo anterior supone personas que lo hagan. Esta parte trata de movilizar a la congregación, y de decir quiénes somos en palabras que el vecino entienda.',
+'Talking to people who are not Adventists':'Hablar con personas que no son adventistas',
+'Roles this neighbourhood actually needs':'Funciones que este vecindario realmente necesita',
+'The ladder: from watching to leading in six weeks':'La escalera: de observar a dirigir en seis semanas',
+'What members will say, and what to answer':'Lo que dirán los miembros, y qué responder',
+'Six rules for public communication':'Seis reglas para la comunicación pública',
+'The approach':'El enfoque','The principle':'El principio','How to use this':'Cómo usar esto',
+'Instead of':'En vez de','Say':'Diga','Who':'Quién','First step':'Primer paso','Training':'Capacitación',
+'Ask locally':'Pregunte en el vecindario','Where to start':'Por dónde empezar','Do not':'No haga esto',
+'What they teach':'Qué enseñan','Where it differs':'En qué se diferencia','Common ground':'Terreno común',
+'Why here':'Por qué aquí','Reach →':'Alcance →','Show →':'Ver →','Hide':'Ocultar',
+'Serve':'Servir','Equip':'Capacitar','Belong':'Pertenecer','Invite':'Invitar',
+'Open a door':'Abrir una puerta','Build trust':'Ganar confianza','Go deeper':'Profundizar',
+'Invite a decision':'Invitar a decidir','The campaign, in order':'La campaña, en orden',
+'Nearest congregations':'Congregaciones más cercanas','Other traditions':'Otras tradiciones',
+'One person, this week':'Una persona, esta semana','Small team, about a month':'Un equipo pequeño, un mes',
+'Needs a budget line':'Requiere presupuesto','Needs an outside partner':'Requiere un aliado externo',
+
+// ---- category strategies ----
+'Serve the parents, not only the children. A holiday club fills a gap for a week; a parenting course, a strengthened marriage, and a monthly family night change what happens in that home all year. Reach the child through a programme, reach the family through the parent, and the whole household moves together.':
+ 'Sirva a los padres, no solo a los niños. Un club de vacaciones llena una semana; un curso de crianza, un matrimonio fortalecido y una noche familiar mensual cambian lo que ocurre en ese hogar todo el año. Al niño se le alcanza con un programa; a la familia, a través del padre — y la casa entera se mueve junta.',
+'Language is the door, not the ministry. Help with the paperwork that frightens people, teach the English and citizenship that free them, then give them a room where their culture is honoured rather than tolerated. Spiritual conversation follows in the language people pray in.':
+ 'El idioma es la puerta, no el ministerio. Ayude con los trámites que asustan, enseñe el inglés y la ciudadanía que liberan, y luego déles un lugar donde su cultura sea honrada y no apenas tolerada. La conversación espiritual llega en el idioma en que la gente ora.',
+'Isolation is not solved by an event — it is solved by somebody expected. Build the reliable rhythm first (a call, a lift, a Tuesday), teach what this stage of life actually asks about, and pair generations so being needed is part of the cure.':
+ 'La soledad no se resuelve con un evento, sino con alguien a quien se espera. Establezca primero el ritmo confiable (una llamada, un viaje, un martes), enseñe lo que esta etapa de la vida realmente pregunta, y una a las generaciones: sentirse necesario es parte de la cura.',
+'Relieve the emergency, then attack what caused it. A food parcel meets today; budgeting, job skills, and cooking on a low income change next year. Do both under one roof, at a table rather than a queue, and dignity survives the help.':
+ 'Alivie la emergencia y luego ataque su causa. Una bolsa de comida resuelve hoy; el presupuesto, el oficio y la cocina económica cambian el próximo año. Haga ambas cosas bajo el mismo techo, en una mesa y no en una fila, y la dignidad sobrevive a la ayuda.',
+'Housing stress runs on a clock — arrears, notice, eviction. Be fast and small early, know the process before anyone needs it, and teach tenants what they are entitled to. In a neighbourhood that turns over, welcoming new arrivals beats any advertising.':
+ 'La presión de vivienda corre contra el reloj: atrasos, notificación, desalojo. Actúe rápido y en pequeño desde temprano, conozca el proceso antes de que alguien lo necesite, y enseñe a los inquilinos sus derechos. En un vecindario que rota, recibir a los que llegan vale más que cualquier publicidad.',
+'One programme will fit one half and quietly exclude the other. Plan two front doors, then do the harder work of getting both groups into the same room. Affluence is not the absence of need; it is a different poverty, and it can fund the ministry the other half needs.':
+ 'Un solo programa servirá a una mitad y excluirá calladamente a la otra. Planifique dos puertas de entrada y luego haga el trabajo más difícil: reunir a ambos grupos en la misma sala. La abundancia no es ausencia de necesidad; es otra pobreza, y puede financiar el ministerio que la otra mitad necesita.',
+'Listen for a year before launching anything. A congregation that stopped changing when its neighbourhood did will feel like a mismatch no welcome sign can fix. Leadership that reflects the street, and partnership rather than absorption, is the whole strategy.':
+ 'Escuche durante un año antes de lanzar nada. Una congregación que dejó de cambiar cuando su vecindario cambió se sentirá ajena, y ningún cartel de bienvenida lo arregla. Un liderazgo que refleje la calle, y alianzas en vez de absorción: esa es toda la estrategia.',
+'Say plainly who you are, early and in the open — and say it without insider vocabulary. Hiding the name until the last night of a series costs more than it ever gains. Using words only members understand quietly tells a visitor they are outside.':
+ 'Diga con claridad quién es usted, desde el principio y a la vista — y dígalo sin vocabulario interno. Ocultar el nombre hasta la última noche de una serie cuesta más de lo que gana. Usar palabras que solo los miembros entienden le dice al visitante, en voz baja, que está afuera.',
+'Ask for a named, bounded job, not for "help".':'Pida un trabajo concreto y con fecha de término, no "ayuda".',
+'Most members are not unwilling; they are unasked and untrained. This is the path from a congregation that watches to one that works. Tap through the steps — each has what to do, the words that work, and what comes next.':
+ 'La mayoría de los miembros no son reacios: nadie se lo ha pedido y nadie los ha capacitado. Este es el camino de una congregación que mira a una que trabaja. Recorra los pasos; cada uno trae qué hacer, las palabras que funcionan y qué sigue.',
+'Nobody needs to know all the lessons. They need to be one lesson ahead of the person they are studying with. The pastor’s job is not to give every study — it is to take somebody with them to every study.':
+ 'Nadie necesita saber todas las lecciones. Basta con ir una lección por delante de la persona con quien estudia. La tarea del pastor no es dar todos los estudios, sino llevar a alguien consigo a cada estudio.',
+
+// ---- the walkthrough ----
+'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
+'Cast it once, from the front':'Preséntelo una vez, desde el púlpito',
+'One sermon that names this neighbourhood rather than "the world". Use the figures from this report — the number of children, the languages spoken, the households with no car. People give themselves to something specific and ignore something general.':
+ 'Un sermón que nombre este vecindario y no "el mundo". Use las cifras de este informe: cuántos niños, qué idiomas se hablan, cuántos hogares sin auto. La gente se entrega a lo concreto e ignora lo general.',
+'Make no appeal at the end. Tell them to think, and that you will be asking people personally this week. The absence of an altar call is what makes the personal ask land.':
+ 'No haga llamado al final. Dígales que lo piensen y que esta semana usted hablará con personas en particular. La ausencia de llamado es justamente lo que da fuerza a la petición personal.',
+'Ask personally, and ask small':'Pida en persona, y pida poco',
+'Nobody volunteers from a pulpit appeal. People say yes to a named person asking for a named job with an end date. Face to face, one at a time, bounded.':
+ 'Nadie se ofrece por un llamado desde el púlpito. La gente dice que sí cuando una persona con nombre le pide una tarea concreta con fecha de término. Cara a cara, de uno en uno, acotado.',
+'Expect a third to say yes, so ask three times as many as you need. Never ask a group — a group can always assume somebody else will.':
+ 'Cuente con que un tercio dirá que sí: pida a tres veces más de los que necesita. Nunca pida a un grupo; en un grupo siempre se supone que lo hará otro.',
+'Train before you send':'Capacite antes de enviar',
+'One evening, ninety minutes. How to knock, what to say in the first twenty seconds, when to leave, what never to promise, what to do when someone is hostile or in tears. Role-play it; talking about it is not training.':
+ 'Una noche, noventa minutos. Cómo tocar la puerta, qué decir en los primeros veinte segundos, cuándo retirarse, qué nunca prometer y qué hacer si alguien responde con hostilidad o en llanto. Practíquenlo actuando; hablar de ello no es capacitación.',
+'Finish by praying for the streets by name. It changes how people knock the next morning.':
+ 'Terminen orando por las calles, por su nombre. Cambia la forma en que se toca la puerta a la mañana siguiente.',
+'Go with them the first time':'Vaya con ellos la primera vez',
+'The pastor goes on the first round — not to supervise, but to be seen doing it and to be there when the first door is slammed. Members who watch you do it will do it.':
+ 'El pastor sale en la primera ronda, no para supervisar, sino para que lo vean hacerlo y para estar allí cuando les cierren la primera puerta. Los miembros que lo ven hacerlo, lo hacen.',
+'"I will take the first two houses while you watch. Then you take two and I will watch. Then we compare notes in the car."':
+ '"Yo tomo las dos primeras casas y usted observa. Luego usted toma dos y yo observo. Después comparamos en el auto."',
+'Debrief the same evening while it is fresh. Ask what surprised them, not how it went.':
+ 'Conversen esa misma noche, mientras está fresco. Pregunte qué les sorprendió, no cómo les fue.',
+'Take one with you to every study':'Lleve a alguien a cada estudio bíblico',
+'The highest-yield habit in a district: never give a Bible study alone. They watch, then read aloud, then teach one section, then lead while you sit quietly. Six weeks from watching to leading.':
+ 'El hábito más productivo de un distrito: nunca dar un estudio bíblico solo. Observan, luego leen en voz alta, luego enseñan una sección, y luego dirigen mientras usted calla. Seis semanas de observar a dirigir.',
+'When they lead their own, they take an apprentice. That step is what turns a programme into a movement, and it is the one most often skipped.':
+ 'Cuando dirijan el suyo, que lleven a un aprendiz. Ese paso convierte un programa en un movimiento, y es el que más se omite.',
+'Report back, publicly and specifically':'Informe, en público y con detalle',
+'Every month from the front: doors knocked, conversations had, studies running, one story. Not statistics for their own sake — evidence that it is real. Nothing recruits like visible progress.':
+ 'Cada mes desde el púlpito: puertas tocadas, conversaciones reales, estudios en marcha, una historia. No cifras por las cifras, sino evidencia de que es real. Nada recluta como el progreso visible.',
+'Thank people by name, then make the next ask immediately, while the room believes it works.':
+ 'Agradezca por nombre y haga la siguiente petición de inmediato, mientras la sala cree que funciona.',
+'Guard the collapse point':'Cuide el punto donde todo se cae',
+'Campaigns rarely fail at the door. They fail at follow-up. Somebody must own the list of everyone who came to anything and make sure each is contacted within a week.':
+ 'Las campañas rara vez fallan en la puerta: fallan en el seguimiento. Alguien debe hacerse cargo de la lista de todos los que asistieron a algo y asegurarse de que cada uno sea contactado en una semana.',
+'If you fill only one role from this whole report, fill this one.':
+ 'Si de todo este informe llena una sola función, que sea esta.',
+
+// ---- hotspots ----
+'Hotspots':'Zonas prioritarias',
+'Need weighted against distance — the blocks worth walking to first.':
+ 'Necesidad ponderada por distancia: las manzanas que conviene caminar primero.',
+'Hardship alone, ignoring distance. Some of these may be a drive away.':
+ 'Solo la necesidad, sin considerar distancia. Algunas quedan a varios minutos en auto.',
+'People per square mile, measured from each block’s own boundary — not raw counts, which flatter big empty tracts.':
+ 'Habitantes por milla cuadrada, calculado desde el propio límite de cada manzana — no conteos brutos, que favorecen a los sectores grandes y vacíos.',
+'Share of residents under 18 — where the families are.':
+ 'Proporción de residentes menores de 18 años: dónde están las familias.',
+'Households that are one person over 65 living alone — where isolation concentrates.':
+ 'Hogares de una sola persona mayor de 65 años: dónde se concentra la soledad.',
+'Households with limited English, weighted with the foreign-born share — where language is the first barrier.':
+ 'Hogares con inglés limitado, ponderados con la proporción de nacidos en el extranjero: dónde el idioma es la primera barrera.',
+'at the church door':'en la puerta de la iglesia','your own block':'su propia manzana',
+
+// ---- what the data cannot say ----
+'What this cannot tell you':'Lo que esto no puede decirle',
+'Read this before drawing conclusions.':'Lea esto antes de sacar conclusiones.',
+'Read this — it matters:':'Lea esto, importa:',
+'These are starting points, not conclusions.':'Son puntos de partida, no conclusiones.',
+
+// ---- outreach prompts: titles and the local questions ----
+ "This is a children's neighbourhood":"Este es un vecindario de niños",
+ "Design around one adult, not two":"Diseñe pensando en un solo adulto, no dos",
+ "The schools are the biggest door in the neighbourhood":"Las escuelas son la puerta más grande del vecindario",
+ "A student population is within reach":"Hay una población estudiantil a su alcance",
+ "Isolation is the need hiding in plain sight":"La soledad es la necesidad que está a la vista y no se ve",
+ "Accessibility is outreach":"La accesibilidad es evangelismo",
+ "Transport is the barrier before belief is":"El transporte es la barrera antes que la fe",
+ "Material need is widespread here":"La necesidad material es generalizada aquí",
+ "Children are carrying more of the hardship":"Los niños cargan con más de la necesidad",
+ "Food insecurity is measurable here":"El hambre aquí es medible",
+ "Work is a live need":"El trabajo es una necesidad urgente",
+ "Health access is a gap":"El acceso a la salud es una brecha",
+ "Sunday morning may be their working hour":"El sábado por la mañana puede ser su hora de trabajo",
+ "Time-poor rather than cash-poor":"Pobres de tiempo, no de dinero",
+ "Households one setback from losing housing":"Hogares a un tropiezo de perder su vivienda",
+ "Housing costs squeeze the ordinary budget":"El costo de la vivienda ahoga el presupuesto",
+ "A neighbourhood that turns over":"Un vecindario que cambia de habitantes",
+ "Space itself is scarce":"El espacio mismo escasea",
+ "Distance is measured in buses, not miles":"La distancia se mide en autobuses, no en millas",
+ "You are serving two very different neighbourhoods":"Usted atiende dos vecindarios muy distintos",
+ "Averages will mislead you here":"Los promedios aquí lo engañarán",
+ "Comfortable, and not therefore reached":"Acomodados, y por eso mismo no alcanzados",
+ "The neighbourhood is not who it was":"El vecindario ya no es el de antes",
+ "New people are arriving":"Está llegando gente nueva",
+ "Immigration is reshaping this area now":"La inmigración está transformando esta zona ahora",
+ "Know which communities are actually here":"Sepa qué comunidades hay realmente aquí",
+ "Practical help with forms and phone calls":"Ayuda práctica con formularios y llamadas",
+ "Plan for more than one language":"Planifique para más de un idioma",
+ "First-year needs, not settled-community needs":"Necesidades del primer año, no de una comunidad establecida",
+ "What do parents here do during school holidays? The gap in that answer is your opening.":"¿Qué hacen los padres de aquí durante las vacaciones escolares? El vacío en esa respuesta es su oportunidad.",
+ "What time of day is hardest for a parent doing this alone? Build around that hour.":"¿Qué hora del día es la más difícil para un padre o madre que lo hace solo? Construya alrededor de esa hora.",
+ "Which school here has the fewest volunteers? That is where you are most needed and least duplicated.":"¿Qué escuela de aquí tiene menos voluntarios? Ahí es donde más falta hace usted y menos duplica a otros.",
+ "Who in your life needs your silence more than your advice right now?":"¿Quién en su vida necesita ahora más su silencio que su consejo?",
+ "Who here has not been asked about in six months? Someone in your congregation already knows a name.":"¿Por quién no ha preguntado nadie en seis meses? Alguien de su congregación ya tiene ese nombre.",
+ "How many of your regulars stopped coming when they stopped driving?":"¿Cuántos de sus miembros habituales dejaron de venir cuando dejaron de conducir?",
+ "Where do people here go when money runs out before the month does? Find that place and support it.":"¿A dónde va la gente de aquí cuando el dinero se acaba antes que el mes? Encuentre ese lugar y apóyelo.",
+ "Where is the nearest food pantry, and what are its opening hours? If you cannot answer, neither can your neighbours.":"¿Dónde está el banco de alimentos más cercano y en qué horario abre? Si usted no lo sabe, sus vecinos tampoco.",
+ "Who in your congregation hires people? Start the conversation there.":"¿Quién en su congregación contrata personal? Empiece la conversación ahí.",
+ "Ask three neighbours what hours they work. Then look at your service times again.":"Pregunte a tres vecinos en qué horario trabajan. Después vuelva a mirar los horarios de sus cultos.",
+ "Who in your congregation has been evicted or nearly evicted? They know what would have helped.":"¿Quién en su congregación ha sido desalojado o estuvo a punto? Ellos saben qué habría ayudado.",
+ "How would someone who moved in last month find out you exist?":"Alguien que se mudó aquí el mes pasado, ¿cómo se enteraría de que usted existe?",
+ "Where does a teenager here go to do homework?":"¿Dónde hace la tarea un adolescente de este vecindario?",
+ "Walk from the nearest bus stop to your door. How long did it take, and would you do it in the rain?":"Camine desde la parada de autobús más cercana hasta su puerta. ¿Cuánto tardó, y lo haría bajo la lluvia?",
+ "When both groups are present, who does the talking? That answer is the real measure.":"Cuando ambos grupos están presentes, ¿quién habla? Esa respuesta es la verdadera medida.",
+ "Which street feels different from the next one over? Walk the boundary.":"¿Qué calle se siente distinta de la siguiente? Camine ese límite.",
+ "Does your congregation look like the street outside it? Ask someone honest.":"¿Se parece su congregación a la calle de afuera? Pregúntele a alguien honesto.",
+ "Where is the new housing going up, and who is moving into it?":"¿Dónde se están construyendo viviendas nuevas y quién se está mudando allí?",
+ "What was hardest in your first year here? Ask someone who arrived recently and let the answer set the agenda.":"¿Qué fue lo más difícil de su primer año aquí? Pregúntele a alguien que llegó hace poco y deje que la respuesta fije la agenda.",
+ "What paperwork do families here dread most? Ask three people; the answers repeat quickly.":"¿Qué trámite temen más las familias de aquí? Pregunte a tres personas; las respuestas se repiten rápido."
+});
+
 let LANG=localStorage.getItem('terrain-lang')||'en';
 const tr=t=>{ if(LANG!=='es') return t; const k=(t||'').trim(); return (ES[k]!==undefined)?ES[k]:t; };
 /* Applied after each render. Whole-string matches only, so "45% renters" is
@@ -2727,8 +2914,9 @@ function translateDOM(){
   // with child nodes are skipped, so a sentence containing a figure is never
   // half-replaced.
   const walk=document.querySelectorAll(
-    'button, summary, h1, h2, h3, h4, label, a, span, small, p, div, li, th, td');
+    'button, summary, h1, h2, h3, h4, h5, label, a, span, small, p, div, li, th, td, b, strong, em');
   walk.forEach(el=>{
+    if(el.closest('.lg')) return;      // handled below with abbreviations
     if(!el.children.length){
       const t=el.textContent.trim();
       if(ES[t]!==undefined) el.textContent=ES[t];
@@ -2741,6 +2929,16 @@ function translateDOM(){
       if(n.nodeType!==3) return;
       const t=n.nodeValue.trim();
       if(t && ES[t]!==undefined) n.nodeValue=n.nodeValue.replace(t,ES[t]);
+    });
+  });
+  // The Nbhd / Town / County legend sits three-across under every card, so the
+  // Spanish must be abbreviated or the words touch.
+  const SHORT={'Nbhd':'Barrio','Town':'Munic.','County':'Cond.'};
+  document.querySelectorAll('.lg span').forEach(sp=>{
+    sp.childNodes.forEach(n=>{
+      if(n.nodeType!==3) return;
+      const t=n.nodeValue.trim();
+      if(SHORT[t]!==undefined) n.nodeValue=n.nodeValue.replace(t,SHORT[t]);
     });
   });
   document.querySelectorAll('input[placeholder]').forEach(i=>{
@@ -3159,6 +3357,7 @@ function wireStepper(){
     host.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
       i=Math.max(0,Math.min(ENGAGE.length-1,i+ +b.dataset.go)); draw();
     });
+    translateDOM();
   };
   draw();
 }
