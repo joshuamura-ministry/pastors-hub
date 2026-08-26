@@ -543,13 +543,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.7</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.7';
+const VERSION = 'v5.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -650,6 +650,7 @@ let useProxy=false;
    code and the server refuses without it, so a code check here is a courtesy to
    the user rather than the actual lock. */
 let ACCESS={required:false,ok:true,name:''};
+let ACCESS_CHECKED=false;   // true only once the server has actually answered
 const accessCode=()=>localStorage.getItem('terrain-code')||'';
 async function checkAccess(code,conf){
   try{
@@ -3613,6 +3614,7 @@ function showHub(){
 }
 function openTool(id){
   setTimeout(renderRecent,0);
+  setTimeout(()=>{ const n=$('secnav'); if(n) n.scrollLeft=0; },30);
   TOOL=id;
   const hub=$('hub'); if(hub) hub.hidden=true;
   const bar=$('toolbar'); if(bar){ bar.hidden=false; $('toolname').textContent=TOOLS[id].name; }
@@ -3702,6 +3704,7 @@ function buildSecNav(){
   nav.hidden=false;
   nav.innerHTML=((TOOL==='survey'||FLAT)?`<button data-t="brief">Brief</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.querySelector('h2').textContent)}</button>`).join('');
+  nav.scrollLeft=0;      // always start at the first section, not wherever it was
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const el=document.getElementById(b.dataset.t)||document.getElementById('brief');
     if(!el) return;
@@ -3810,6 +3813,19 @@ function showGate(msg){
   const g=$('gate'); if(!g) return;
   g.hidden=false; g.classList.add('show');
   document.querySelector('.ask').style.display='none';
+  // Signing out, or a code that stopped working, must leave nothing behind.
+  // The previous church's figures sitting under the gate is both confusing and
+  // a small privacy leak on a shared iPad.
+  DATA=null; ZONES=null; CONGS=null; ZONES_STATE='idle'; CONGS_STATE='idle'; TOOL=null;
+  const sec=$('sections'); if(sec) sec.innerHTML='';
+  // The diagnostics panel holds the request log, which contains the address —
+  // it must go too, not just the visible report.
+  LOG=[];
+  const db=$('diagbody'); if(db) db.innerHTML='';
+  const pl=$('place'); if(pl) pl.innerHTML='';
+  const br=$('brief'); if(br) br.innerHTML='';
+  ['hub','toolbar','secnav'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
+  ['focusbar','focusnote','scope'].forEach(id=>{ const e=$(id); if(e) e.innerHTML=''; });
   $('report').classList.remove('show');
   const e=$('gerr'); if(e){ e.className='status'+(msg?' err':''); e.textContent=msg||''; }
 }
@@ -3830,11 +3846,15 @@ function showWho(){
   document.getElementById('signout').onclick=()=>{
     localStorage.removeItem('terrain-code');
     localStorage.removeItem('terrain-conf');
-    location.reload();
+    ACCESS={required:true,ok:false,name:''};
+    showGate('');            // clear on the spot, so nothing lingers if the reload is slow
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+    try{ location.reload(); }catch(e){}
   };
 }
 async function initAccess(){
   ACCESS=await checkAccess();
+  ACCESS_CHECKED=true;
   if(ACCESS.required&&!ACCESS.ok){
     showGate('');
     drawUSMap();
@@ -4396,9 +4416,23 @@ $('ver').textContent=VERSION;
   if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});
   aiClaimPass();
   if(!key()){$('setup').style.display='block';}
+  // A permalink must not run itself before we know the visitor is allowed in.
+  // Without this, signing out reloaded the page, the #a=... hash re-ran the
+  // lookup, and the report reappeared underneath the gate.
   const h=new URLSearchParams(location.hash.slice(1));
-  if(h.get('a')){$('addr').value=h.get('a'); if(key()) run(()=>geocodeAddress(h.get('a')));}
-  else if(h.get('ll')){const [la,lo]=h.get('ll').split(',').map(Number); if(key()&&!isNaN(la)) run(()=>geocodePoint(lo,la));}
+  const runPermalink=()=>{
+    if(ACCESS.required && !ACCESS.ok) return;
+    if(h.get('a')){ $('addr').value=h.get('a'); if(key()){ if(!TOOL&&!FLAT) openTool('survey'); run(()=>geocodeAddress(h.get('a'))); } }
+    else if(h.get('ll')){ const [la,lo]=h.get('ll').split(',').map(Number);
+      if(key()&&!isNaN(la)){ if(!TOOL&&!FLAT) openTool('survey'); run(()=>geocodePoint(lo,la)); } }
+  };
+  if(h.get('a')||h.get('ll')){
+    // initAccess is async, so wait for the verdict before acting on the hash
+    let tries=0;
+    const wait=setInterval(()=>{
+      if(ACCESS_CHECKED||++tries>40){ clearInterval(wait); runPermalink(); }
+    },100);
+  }
 })();
 </script>
 </body>
