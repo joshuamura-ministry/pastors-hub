@@ -295,6 +295,30 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .zd{font-size:.76rem;color:var(--ink3)}
 .zwhy{font-size:.8rem;color:var(--acc);margin-top:6px;line-height:1.5}
 .zmove{font-size:.84rem;color:var(--ink2);margin-top:6px;line-height:1.55}
+.doct{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 15px;margin-bottom:8px;box-shadow:var(--shadow)}
+.doct summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:48px}
+.doct summary::-webkit-details-marker{display:none}
+.doct summary::before{content:"+";color:var(--acc);font-weight:700;font-size:1rem}
+.doct[open] summary::before{content:"\2212"}
+.doct summary b{font-family:var(--disp);font-size:.97rem;font-weight:600;color:var(--ink)}
+.doct .dn{margin-left:auto;font-size:.72rem;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 9px;white-space:nowrap}
+.dshare{font-size:.8rem;color:var(--ink3);margin:0 0 10px;line-height:1.5}
+.dsec{margin-bottom:12px}
+.dsec>b{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+.diffs{display:flex;flex-direction:column;gap:7px}
+.diff{font-size:.83rem;color:var(--ink2);line-height:1.55;padding-left:11px;border-left:2px solid var(--acc)}
+.diff span{display:block;font-weight:600;color:var(--ink);font-size:.8rem}
+.dopen,.dcaution{font-size:.84rem;line-height:1.6;padding:11px 12px;border-radius:9px;margin-bottom:11px}
+.dopen{background:var(--acc-dim);color:var(--ink2)}
+.dcaution{background:var(--panel2);border:1px solid var(--line);color:var(--ink2)}
+.dopen b,.dcaution b{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px}
+.dopen b{color:var(--acc)}
+.dcaution b{color:#C2603A}
+.congs{display:flex;flex-direction:column;gap:2px}
+.cong{display:grid;grid-template-columns:1fr auto;gap:2px 10px;padding:9px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.cong b{font-size:.88rem;font-weight:600;color:var(--ink)}
+.cong span{grid-column:1;font-size:.78rem;color:var(--ink2)}
+.cong a{grid-row:1/3;grid-column:2;align-self:center;font-size:.78rem;font-weight:600}
 .moves{margin-bottom:20px}
 .movehead{margin-bottom:10px}
 .movehead b{display:block;font-family:var(--disp);font-size:1.18rem;font-weight:600;color:var(--ink);margin-bottom:5px}
@@ -410,13 +434,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.0</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v4.0';
+const VERSION = 'v4.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -476,7 +500,8 @@ const FOCUS_DEFS=[
  {k:'hardship', label:'Hardship & work',  themes:['hardship','work'],     cats:['Hardship & work','Two neighbourhoods at once']},
  {k:'housing',  label:'Housing',          themes:['housing'],             cats:['Housing pressure']},
  {k:'language', label:'Language & newcomers', themes:['language'],        cats:['Language & newcomers']},
- {k:'change',   label:'Change over time', themes:['change','people'],     cats:['A changing community']}
+ {k:'change',   label:'Change over time', themes:['change','people'],     cats:['A changing community']},
+ {k:'faith',    label:'Churches nearby',  themes:['faith'],               cats:[]}
 ];
 let FOCUS=new Set();
 function focusThemes(){const t=new Set();FOCUS.forEach(k=>FOCUS_DEFS.find(f=>f.k===k).themes.forEach(x=>t.add(x)));return t}
@@ -1738,6 +1763,519 @@ function mobilizeMath(M,zones){
   return {hh,pairs,visits:pairs*8};
 }
 
+/* ================= WHAT THEY TEACH =================
+   A working reference for a pastor who is about to knock on doors in a
+   neighbourhood full of people who already believe something.
+
+   Three rules held throughout, because breaking them costs the conversation:
+   1. Each tradition is stated as its own adherents would state it. A caricature
+      is spotted immediately and ends the discussion.
+   2. Internal diversity is named. "Baptists believe" is nearly always too broad;
+      where a tradition is genuinely split, it says so.
+   3. Common ground comes before difference. It is not a softening tactic — it is
+      usually where an honest conversation actually starts. */
+
+const SDA_POINTS={
+  soul:'The dead sleep, unconscious, until the resurrection; immortality is God\u2019s gift at the second coming, not an innate possession of the soul (Ecc 9:5, 1 Cor 15:51-54).',
+  hell:'The finally impenitent are consumed and cease to exist; the fire\u2019s results are eternal, not its duration (Mal 4:1-3, Rom 6:23).',
+  sabbath:'The seventh day, Saturday, remains the Bible Sabbath, unchanged in the New Testament (Gen 2:2-3, Ex 20:8-11, Lk 4:16).',
+  law:'Saved by grace through faith alone; the law remains the standard of God\u2019s character, not the means of salvation (Eph 2:8-10, Rev 14:12).',
+  coming:'One visible, audible, literal second coming \u2014 no secret rapture and no earthly millennium; the millennium is spent in heaven (1 Th 4:16-17, Rev 20).',
+  sanctuary:'Christ began a final work of judgment in the heavenly sanctuary in 1844 (Dan 8:14, Heb 8:1-2).',
+  gift:'The gift of prophecy was manifested in the ministry of Ellen White, subordinate always to Scripture.',
+  health:'The body is God\u2019s temple; health practice is part of discipleship, not a rule for salvation (1 Cor 6:19-20).',
+  baptism:'Baptism by immersion, on personal profession of faith.'
+};
+
+const DOCTRINE={
+ catholic:{
+  label:'Catholic', share:'The largest Christian body in most US counties.',
+  teach:[
+   'Authority rests on Scripture together with Sacred Tradition, interpreted by the Church\u2019s magisterium.',
+   'The soul is immortal and goes at death to heaven, hell, or purgatory \u2014 a state of purification for those destined for heaven.',
+   'Salvation comes by grace, received through faith and the sacraments; the Church rejects the charge that it teaches salvation earned by works.',
+   'Sunday is the Lord\u2019s Day, and the Church holds it changed the day by its own apostolic authority.',
+   'Mary is honoured as the Mother of God, immaculately conceived and assumed; saints may be asked to intercede.'],
+  differs:[
+   ['State of the dead','Immortal soul and purgatory against '+SDA_POINTS.soul],
+   ['Hell','Eternal conscious punishment against '+SDA_POINTS.hell],
+   ['Sabbath','Sunday observance, openly attributed to church authority rather than Scripture'],
+   ['Authority','Tradition and magisterium alongside Scripture, against sola scriptura'],
+   ['Mediation','Saints and Mary as intercessors, against Christ as sole mediator (1 Tim 2:5)']],
+  common:['The Trinity, the incarnation, the bodily resurrection of Christ, and the authority of Scripture as inspired.',
+   'A serious tradition of care for the poor and of social teaching that many Adventists would recognise.',
+   'A reverence for worship and for the sacredness of time.'],
+  open:'The Sabbath conversation is unusually direct here, because Catholic catechisms state plainly that the Church changed the day. That is an honest starting point rather than an accusation.',
+  caution:'Never say Catholics teach salvation by works \u2014 they explicitly deny it, and saying so will cost you the conversation. Practising Catholics vary enormously in how much they know or follow.'
+ },
+ baptist:{
+  label:'Baptist', share:'The largest Protestant family in the South and much of the country.',
+  teach:[
+   'Scripture alone as the rule of faith; no binding creed above it.',
+   'Believer\u2019s baptism by full immersion, never infant baptism.',
+   'The local congregation is autonomous \u2014 there is no "Baptist position" binding all Baptists.',
+   'Most hold to eternal security: a genuinely saved person cannot finally be lost.',
+   'The soul is immortal and goes at death consciously to heaven or hell; hell is eternal conscious punishment.'],
+  differs:[
+   ['State of the dead','Conscious existence at death against '+SDA_POINTS.soul],
+   ['Hell','Eternal torment against '+SDA_POINTS.hell],
+   ['Sabbath','Sunday worship, usually held to be apostolic practice rather than commanded'],
+   ['Security','Once saved always saved against the possibility of falling away (Heb 6:4-6)'],
+   ['Last things','Many hold a secret rapture and an earthly millennium, against '+SDA_POINTS.coming]],
+  common:['Sola scriptura \u2014 the strongest shared ground you have; an argument from the Bible alone will be taken seriously.',
+   'Baptism by immersion on profession of faith, identical in mode and meaning.',
+   'Religious liberty and separation of church and state, historically a Baptist cause before it was an Adventist one.',
+   'A high view of personal conversion and of evangelism.'],
+  open:'Because the authority is Scripture alone, texts on the state of the dead and the Sabbath can be examined directly without arguing about tradition first. This is the tradition where a Bible study most often lands.',
+  caution:'Southern Baptist, Independent Baptist, American Baptist and National Baptist congregations differ sharply. Do not assume one congregation\u2019s position holds for the next.'
+ },
+ methodist:{
+  label:'Methodist & Wesleyan', share:'Historically strong in the Midwest, Appalachia, and among Black congregations (AME, AME Zion, CME).',
+  teach:[
+   'Arminian: grace is offered to all and can be resisted; salvation can be lost.',
+   'Sanctification is a real work of grace \u2014 Wesley taught believers may be perfected in love.',
+   'Infant baptism is practised, usually by sprinkling, as a sign of prevenient grace.',
+   'The soul is immortal; hell is generally eternal, though many modern Methodists hold this loosely.',
+   'Scripture is primary, read alongside tradition, reason and experience.'],
+  differs:[
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul],
+   ['Sabbath','Sunday observance'],
+   ['Baptism','Infant baptism by sprinkling against '+SDA_POINTS.baptism],
+   ['Authority','Tradition, reason and experience given weight alongside Scripture']],
+  common:['Arminian theology \u2014 free will, resistible grace, the possibility of falling away. Adventism is closer to Methodism here than to any other large body.',
+   'The emphasis on sanctification and holy living.',
+   'A strong tradition of social holiness, temperance and care for the poor. Early Adventism drew heavily from Methodism.'],
+  open:'Shared Wesleyan ground on grace and sanctification makes this a warm conversation. The state of the dead is usually the first genuine surprise.',
+  caution:'The historically Black Methodist denominations carry a distinct heritage of struggle and leadership; approach as a guest, not an instructor.'
+ },
+ pentecostal:{
+  label:'Pentecostal & charismatic', share:'The fastest-growing Christian family in America, and strong among Hispanic and immigrant communities.',
+  teach:[
+   'Baptism in the Holy Spirit as an experience after conversion, in many streams evidenced by speaking in tongues.',
+   'The gifts of the Spirit \u2014 healing, prophecy, tongues \u2014 continue fully today.',
+   'Worship is expressive and expects the immediate presence of God.',
+   'Eternal conscious punishment; the soul goes at death to its reward.',
+   'Oneness (Apostolic) Pentecostals reject the Trinity, holding that Father, Son and Spirit are modes of one Person, and baptise in Jesus\u2019 name only.'],
+  differs:[
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul],
+   ['Hell','Eternal torment against '+SDA_POINTS.hell],
+   ['Sabbath','Sunday worship'],
+   ['Tongues','Tongues as the necessary evidence of Spirit baptism, against the Adventist reading of 1 Cor 12:30'],
+   ['Trinity','Oneness streams only \u2014 a genuine and serious difference; most Pentecostals are Trinitarian'],
+   ['Prosperity','Some streams teach material prosperity as the mark of faith']],
+  common:['Belief that the gifts of the Spirit, including prophecy, continue in the church \u2014 rare common ground, and directly relevant to the Adventist understanding of the prophetic gift.',
+   'Expectation of Christ\u2019s soon return, often urgent.',
+   'A high view of conversion and of prayer.'],
+  open:'The continuing gift of prophecy is a natural bridge: both traditions expect God still speaks. Move from there to how a prophetic gift is tested by Scripture (Isa 8:20).',
+  caution:'Establish first whether the congregation is Trinitarian or Oneness \u2014 the conversations are entirely different. Do not mock expressive worship; sincerity here is real.'
+ },
+ lutheran:{
+  label:'Lutheran', share:'Concentrated in the upper Midwest and Pennsylvania.',
+  teach:[
+   'Justification by faith alone \u2014 the doctrine on which Luther held the church stands or falls.',
+   'Scripture alone is the authority, though the Lutheran confessions carry great weight.',
+   'Baptism, including infant baptism, is a means of grace that conveys what it signifies.',
+   'Christ is truly present in the Lord\u2019s Supper, in and under the bread and wine.',
+   'Most Lutherans today hold the soul immortal, though Luther himself spoke of the dead as sleeping.'],
+  differs:[
+   ['State of the dead','Conscious afterlife in most modern Lutheran teaching against '+SDA_POINTS.soul],
+   ['Sabbath','Sunday worship; the moral law upheld but the day held to be changed'],
+   ['Baptism','Infant baptism as a means of grace against '+SDA_POINTS.baptism],
+   ['Communion','The real bodily presence, against a memorial understanding']],
+  common:['Justification by faith alone \u2014 Adventism\u2019s clearest agreement with the Reformation, and the heart of the Adventist message of righteousness by faith.',
+   'Sola scriptura as a principle.',
+   'Luther\u2019s own view of the dead as sleeping is a striking and useful piece of common history.'],
+  open:'Luther on soul sleep is the most disarming entry point available: this is not an Adventist novelty but a Reformation position that was later dropped.',
+  caution:'The Missouri Synod, Wisconsin Synod and ELCA differ considerably in how conservatively they read Scripture.'
+ },
+ presbyterian:{
+  label:'Presbyterian & Reformed', share:'Historically influential well beyond its numbers.',
+  teach:[
+   'God\u2019s sovereign election \u2014 salvation rests on God\u2019s choice, and the saved will certainly persevere.',
+   'Covenant theology binds Old and New Testaments into one covenant of grace.',
+   'Infant baptism as the covenant sign, replacing circumcision.',
+   'The Westminster Confession as a subordinate standard.',
+   'Historically, strict observance of Sunday as the Christian Sabbath \u2014 the Puritan Sabbath.'],
+  differs:[
+   ['Election','Unconditional election and irresistible grace against the Adventist Arminian position that grace may be resisted'],
+   ['Sabbath','The day transferred to Sunday, though the principle of a weekly Sabbath is strongly held'],
+   ['Baptism','Infant baptism against '+SDA_POINTS.baptism],
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul]],
+  common:['A serious, unembarrassed commitment to the moral law and to the fourth commandment as binding \u2014 the argument is about which day, not whether.',
+   'Covenant continuity between the Testaments, which supports the Adventist case for the law\u2019s permanence.',
+   'A tradition of careful, text-driven theology; sloppy proof-texting will not persuade here.'],
+  open:'You already agree that the Sabbath commandment stands. The question narrows to a single point: what changed the day, and on whose authority.',
+  caution:'This tradition prizes theological precision. Come prepared, and concede a point honestly when it is made.'
+ },
+ anglican:{
+  label:'Episcopal & Anglican', share:'Small in number, historically significant, and internally very broad.',
+  teach:[
+   'Scripture, tradition and reason held together; the Book of Common Prayer shapes belief through worship.',
+   'Bishops in apostolic succession; sacramental life is central.',
+   'Infant baptism and confirmation.',
+   'Belief ranges from Anglo-Catholic to evangelical to strongly liberal within one communion.'],
+  differs:[
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul],
+   ['Sabbath','Sunday observance'],
+   ['Authority','Tradition and reason weighted alongside Scripture'],
+   ['Baptism','Infant baptism against '+SDA_POINTS.baptism]],
+  common:['Reverence in worship and the shape of the church year.',
+   'The historic creeds and a firm Trinitarian faith.',
+   'Often a strong record of social service in the neighbourhood.'],
+  open:'Ask what this particular parish holds before assuming anything \u2014 the range within Anglicanism is wider than between many separate denominations.',
+  caution:'Do not assume liberal or conservative from the sign outside.'
+ },
+ orthodox:{
+  label:'Orthodox', share:'Greek, Russian, Serbian, Coptic and Ethiopian communities, often tied closely to ethnicity.',
+  teach:[
+   'Holy Tradition \u2014 Scripture, councils, fathers and liturgy \u2014 as the single deposit of faith.',
+   'Salvation as theosis, a lifelong participation in the divine life.',
+   'Icons venerated, not worshipped; the distinction is carefully maintained.',
+   'The soul at death enters a conscious state awaiting the general resurrection; purgatory as such is rejected.',
+   'Ancient liturgy in a form largely unchanged for centuries.'],
+  differs:[
+   ['Authority','Holy Tradition as inseparable from Scripture, against sola scriptura'],
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul],
+   ['Icons','Veneration of icons and saints against the Adventist reading of the second commandment'],
+   ['Sabbath','Sunday as the day of resurrection; the seventh day still noticed liturgically in parts of the East']],
+  common:['A deep sense of God\u2019s holiness and of worship as encounter rather than performance.',
+   'Fasting and bodily discipline understood as spiritual, which connects to the Adventist health message.',
+   'Resistance to the idea that Christianity should be made comfortable.'],
+  open:'Orthodoxy is usually entwined with family and nation. Enter through hospitality and long friendship, not argument; conversions here are slow and relational.',
+  caution:'Calling icon veneration idolatry in a first conversation ends it. The theological distinction they draw is genuine and old.'
+ },
+ evangelical:{
+  label:'Evangelical & nondenominational', share:'The fastest-growing category in America \u2014 nondenominational adherents rose by nearly nine million between 2010 and 2020.',
+  teach:[
+   'A personal, born-again relationship with Jesus as the centre.',
+   'The Bible as authoritative, usually read plainly and devotionally.',
+   'Contemporary worship, low liturgy, strong small-group culture.',
+   'Very commonly a pre-tribulation rapture followed by seven years of tribulation and an earthly millennium.',
+   'Eternal conscious punishment; the soul goes at death to its reward.'],
+  differs:[
+   ['Last things','A secret rapture and an earthly millennium against '+SDA_POINTS.coming],
+   ['State of the dead','Conscious afterlife against '+SDA_POINTS.soul],
+   ['Hell','Eternal torment against '+SDA_POINTS.hell],
+   ['Law','The moral law often treated as abolished with the old covenant, against '+SDA_POINTS.law],
+   ['Sabbath','Sunday worship, frequently without any claim that a command requires it']],
+  common:['A living personal faith in Christ and a real expectation that he returns.',
+   'Confidence in Scripture, which makes a Bible study on prophecy welcome rather than strange.',
+   'Genuine interest in end-time events \u2014 often the widest open door in this whole list.'],
+  open:'Prophecy. Interest in Daniel and Revelation is already high; the difference is in the framework, and a careful study of the texts themselves is usually welcomed rather than resisted.',
+  caution:'Dispensationalism is assumed rather than argued in most of these congregations \u2014 many members have never heard there is another reading. Introduce it as a question, not a correction.'
+ },
+ jw:{
+  label:"Jehovah's Witnesses", share:'Small in number, highly visible, and door-to-door like no one else.',
+  teach:[
+   'God\u2019s name is Jehovah; Jesus is God\u2019s first creation, not God the Son \u2014 the Trinity is rejected.',
+   'The dead are unconscious and cease to exist; there is no eternal torment.',
+   '144,000 go to heaven to rule; the great crowd lives forever on a restored earth.',
+   'Christ began ruling invisibly in 1914.',
+   'No blood transfusions, no military service, no birthdays or Christmas.'],
+  differs:[
+   ['Trinity','The deity of Christ and the personality of the Holy Spirit denied \u2014 the deepest difference on this list'],
+   ['Heaven','A limited heavenly class of 144,000, against the Adventist reading'],
+   ['Authority','The Governing Body\u2019s interpretation is binding; the New World Translation is used exclusively'],
+   ['1914','An invisible return in 1914, against '+SDA_POINTS.coming]],
+  common:['Conditional immortality \u2014 they agree the dead are unconscious and that the wicked are destroyed rather than tormented.',
+   'Rejection of eternal hell fire, on much the same texts.',
+   'Serious Bible study habits and willingness to discuss doctrine at length.'],
+  open:'You share two of the most distinctive positions in this list. But the conversation must begin with the deity of Christ, because everything else depends on it \u2014 agreement about the soul is not agreement about the Saviour.',
+  caution:'Do not mistake shared conclusions on death and hell for closeness. The Christological gap is fundamental. Expect a well-trained interlocutor.'
+ },
+ lds:{
+  label:'Latter-day Saints', share:'Concentrated in the Intermountain West but present nationwide.',
+  teach:[
+   'The Book of Mormon, Doctrine and Covenants and Pearl of Great Price stand alongside the Bible.',
+   'A living prophet and apostles receive continuing revelation.',
+   'The Godhead is three distinct beings, one in purpose; God the Father has a body.',
+   'Souls pre-existed birth; after death come three degrees of glory, and faithful members may progress toward godhood.',
+   'Temple ordinances, including baptism for the dead; the Word of Wisdom forbids alcohol, tobacco, coffee and tea.'],
+  differs:[
+   ['Scripture','Additional scripture and a living prophet whose word binds, against Scripture as the final rule'],
+   ['God','A physically embodied Father and three separate beings, against the Trinity'],
+   ['Humanity','Pre-existence of souls and eventual exaltation to godhood, against creation and the creature-Creator distinction'],
+   ['Salvation','Ordinances performed for the dead, against '+SDA_POINTS.soul]],
+  common:['A health code with striking practical overlap \u2014 abstinence from alcohol and tobacco, and an emphasis on the body.',
+   'Strong families, tithing, service, and a global missionary culture.',
+   'Belief that God still speaks through prophets \u2014 though the test of that claim is where the conversation must go.'],
+  open:'The Word of Wisdom and family life are natural first ground. The theological conversation has to reach the nature of God and the sufficiency of Scripture; there is no way round it.',
+  caution:'Members are well practised at deflecting attack and are usually sincere and kind. Antagonism confirms what they have been taught to expect.'
+ },
+ quaker:{
+  label:'Quaker, Mennonite & Anabaptist', share:'Small, historically concentrated in Pennsylvania, Ohio and Indiana.',
+  teach:[
+   'Adult baptism on confession of faith; the church is a voluntary community of disciples.',
+   'Nonviolence and refusal of the sword, held as central rather than optional.',
+   'Simplicity of life and separation from worldly display.',
+   'Quakers additionally hold to the inner light \u2014 the Spirit\u2019s direct witness \u2014 and often worship in silence without clergy.'],
+  differs:[
+   ['Sabbath','Sunday worship'],
+   ['State of the dead','Generally a conscious afterlife against '+SDA_POINTS.soul],
+   ['Revelation','Quaker reliance on the inner light can place experience above the written word']],
+  common:['Believer\u2019s baptism, and a church of committed disciples rather than a parish of everyone.',
+   'Nonviolence \u2014 the Adventist noncombatancy tradition has real kinship here.',
+   'Simplicity, modesty, stewardship and a suspicion of worldly display.'],
+  open:'Shared convictions about peace and simple living run deep. These are people who already accept that faith should visibly change how you live.',
+  caution:'Old Order communities may not welcome unsolicited approaches at all; respect that entirely.'
+ },
+ jewish:{
+  label:'Jewish', share:'Concentrated in metropolitan areas; Orthodox, Conservative, Reform and secular differ enormously.',
+  teach:[
+   'One God, indivisible; the Trinity and the incarnation are rejected.',
+   'The Torah and, for Orthodox and Conservative Jews, the rabbinic tradition of the Talmud.',
+   'The seventh-day Sabbath, from Friday sunset to Saturday nightfall \u2014 kept with great care.',
+   'The Messiah has not yet come; Jesus is not the Messiah.',
+   'Views of the afterlife vary widely and are far less central than in Christianity.'],
+  differs:[
+   ['Messiah','Jesus rejected as Messiah and as divine \u2014 the entire difference in one point'],
+   ['New Testament','Not received as Scripture'],
+   ['Atonement','Repentance, prayer and deeds rather than a substitutionary sacrifice']],
+  common:['The seventh-day Sabbath \u2014 you keep the same day, and that fact alone opens doors closed to every other Christian group.',
+   'Dietary law, with real overlap between kashrut and the Adventist health message.',
+   'The Hebrew Scriptures as the word of God, and the sanctuary service you both take seriously.'],
+  open:'Sabbath. An Adventist is the one Christian who can say honestly "we keep your day, and for your reasons." Begin there, and go slowly.',
+  caution:'Two millennia of Christian persecution sit behind any such conversation, and Adventists are not exempt from that history in Jewish memory. Targeted proselytising is deeply offensive to most Jewish communities; friendship and honesty about who you are matter more than any argument.'
+ },
+ muslim:{
+  label:'Muslim', share:'Growing quickly, and often the most misunderstood community in a neighbourhood.',
+  teach:[
+   'Tawhid \u2014 the absolute oneness of God. To associate partners with God is the gravest sin.',
+   'The Qur\u2019an is God\u2019s final revelation; Muhammad is the last prophet.',
+   'Jesus (Isa) is honoured as a great prophet, born of a virgin, but not divine and not crucified.',
+   'The five pillars: creed, prayer five times daily, alms, fasting in Ramadan, pilgrimage.',
+   'A day of judgment followed by paradise or hell; the soul is conscious after death.'],
+  differs:[
+   ['Christ','The deity, crucifixion and atoning death of Jesus denied \u2014 the central difference'],
+   ['Scripture','The Qur\u2019an supersedes the Bible, which is held to have been corrupted'],
+   ['Salvation','Submission and deeds weighed at judgment, against salvation by grace'],
+   ['Sabbath','Friday congregational prayer, which is not a Sabbath rest in the biblical sense']],
+  common:['One God, creator, sovereign and merciful; a shared horror of idolatry.',
+   'Modesty, fasting, abstinence from alcohol and pork \u2014 practical overlap that Muslims notice immediately in Adventists.',
+   'Prophets, judgment, resurrection and the reality of revelation.',
+   'A high regard for Jesus and for Mary, which surprises most Christians.'],
+  open:'Health and modesty. An Adventist who does not drink, does not eat pork, fasts, and prays is legible to a Muslim in a way most Americans are not. Hospitality comes long before doctrine.',
+  caution:'Never begin with the Trinity \u2014 it will be heard as polytheism before it is understood. Never disparage the Qur\u2019an or Muhammad. Many Muslim neighbours are recent arrivals facing suspicion; ordinary kindness is doing real ministry.'
+ },
+ hindu:{
+  label:'Hindu', share:'Growing in university and technology areas; often South Asian immigrant communities.',
+  teach:[
+   'One ultimate reality, Brahman, worshipped through many deities and forms.',
+   'Karma and samsara \u2014 the soul is reborn through many lives according to its deeds.',
+   'Moksha, release from the cycle of rebirth, is the goal rather than a final judgment.',
+   'The Vedas, Upanishads, Bhagavad Gita and other scriptures; enormous internal variety.',
+   'Dharma \u2014 duty appropriate to one\u2019s place in life \u2014 shapes ethics.'],
+  differs:[
+   ['Time','Cyclical rebirth against a single life followed by resurrection and judgment'],
+   ['Soul','An eternal, transmigrating soul against '+SDA_POINTS.soul],
+   ['God','Many forms of the divine against one personal Creator'],
+   ['Salvation','Release achieved through many lifetimes, against grace received once in Christ']],
+  common:['A serious moral seriousness about consequence and about how a life is lived.',
+   'Vegetarianism, widely practised, with immediate practical common ground.',
+   'Reverence, prayer and family devotion as ordinary parts of life.'],
+  open:'Vegetarian hospitality is not a tactic here, it is a genuine meeting point. Then: the offer of grace, which has no parallel in a karmic framework and is often the most arresting thing a Christian can say.',
+  caution:'"Idol worship" is heard as contempt. Ask what an image means to the person before assuming. Recent immigrants may also be navigating real isolation.'
+ },
+ buddhist:{
+  label:'Buddhist', share:'Both immigrant communities and a large number of American converts.',
+  teach:[
+   'No creator God; the question is generally set aside rather than answered.',
+   'The Four Noble Truths: suffering, its cause in craving, its cessation, and the eightfold path.',
+   'Rebirth driven by karma, but no permanent self \u2014 anatta, the doctrine of no-soul.',
+   'Nirvana is the ending of craving and of the cycle, not a place of reward.',
+   'Meditation and mindfulness as central practice.'],
+  differs:[
+   ['God','No personal Creator against the God who makes, judges and saves'],
+   ['Self','No enduring soul \u2014 different from the Adventist position and from the immortal-soul view alike'],
+   ['Salvation','Self-liberation through practice against grace received'],
+   ['Hope','Cessation as the goal against resurrection and a restored earth']],
+  common:['Honesty about suffering, which most religion evades and Scripture does not.',
+   'Discipline, meditation, simplicity and non-attachment to possessions.',
+   'Compassion as a formed practice rather than a feeling.'],
+  open:'Suffering. Buddhism names it unflinchingly; Christianity answers it with a God who entered it. That is a conversation of real weight rather than a debating point.',
+  caution:'Many American Buddhists are former Christians who left over hypocrisy or over hell. Do not open with hell. The Adventist rejection of eternal torment may be genuinely surprising to them.'
+ },
+ sikh:{
+  label:'Sikh', share:'Concentrated in California, New York and New Jersey.',
+  teach:[
+   'One God, formless and beyond image; idol worship rejected outright.',
+   'The Guru Granth Sahib, the scripture, is the eternal living Guru after ten human Gurus.',
+   'Rebirth and karma, with liberation through devotion to God and honest living.',
+   'The five articles of faith, including uncut hair and the turban.',
+   'Seva \u2014 selfless service \u2014 and the langar, a free community kitchen open to all.'],
+  differs:[
+   ['Christ','Jesus not held as the unique Son of God or as Saviour'],
+   ['Rebirth','Reincarnation against resurrection and judgment'],
+   ['Scripture','The Guru Granth Sahib as final authority']],
+  common:['Uncompromising monotheism and rejection of images \u2014 nearer to the Adventist position than most.',
+   'Service to the poor as a religious obligation; the langar feeds anyone who comes, which any Adventist community services team would recognise.',
+   'Modesty, temperance, and a distinctive appearance that invites the same misunderstanding Adventists sometimes meet.'],
+  open:'Serve alongside them. The langar is an open door, and shared work builds more trust than any first conversation about doctrine.',
+  caution:'Sikhs are frequently mistaken for Muslims and have suffered for it. Knowing the difference, and saying so, earns immediate respect.'
+ },
+ secular:{
+  label:'No religion, agnostic & atheist', share:'Now roughly a third of American adults, and the largest single group in many neighbourhoods \u2014 including some where the map above shows plenty of churches.',
+  teach:[
+   'Claims about God are held to lack sufficient evidence; some deny God, more simply see no reason to believe.',
+   'Morality is grounded in human wellbeing, reason and empathy rather than revelation.',
+   'Suffering, and the behaviour of religious institutions, are the most common reasons given for unbelief.',
+   'Many are not hostile but indifferent \u2014 religion is simply not a live question.'],
+  differs:[
+   ['Revelation','No authoritative Scripture; the Bible is a human document'],
+   ['Creation','Purely natural origins, no purpose behind existence'],
+   ['Hope','This life is all there is; death is final in a way even the Adventist view is not']],
+  common:['Insistence on evidence and consistency \u2014 which Adventism, alone among Christian bodies, can meet on hell without flinching.',
+   'Moral seriousness about hypocrisy, injustice and the abuse of religious power.',
+   'Real interest in health, community and meaning, all of which the church can offer without preconditions.'],
+  open:'Two doors. First, the Adventist rejection of eternal torment removes what is, for many, the single strongest moral objection to Christianity. Second, deeds without conditions \u2014 they have usually met the argument and rarely the kindness.',
+  caution:'Do not treat indifference as hostility, or an objection as an attack. The most common reason given for leaving church is not intellectual but the conduct of Christians; that cannot be argued away, only outlived.'
+ },
+ 'christian-other':{
+  label:'Christian, denomination not recorded',
+  teach:['OpenStreetMap has this building tagged as Christian without a denomination. Worth finding out which \u2014 the sign outside, or ten minutes online, will tell you.'],
+  differs:[], common:[],
+  open:'Identify it before assuming anything. The approach differs completely between, say, a Catholic parish and an independent Baptist church.',
+  caution:''
+ }
+};
+
+/* ================= CONGREGATIONS NEARBY =================
+   Who else is already on these streets. Points come from OpenStreetMap, which
+   tags places of worship with religion and denomination.
+
+   One honest limit, stated on screen as well as here: OSM coverage of small
+   storefront and rented-hall congregations is patchy, so this is a floor, never
+   a complete list. It answers "who is visibly here", not "who is here".
+
+   County-level adherence (US Religion Census 2020) is a different shape of data
+   entirely — adherents per 1,000 by denomination, published by county — so it is
+   linked rather than mapped. Mixing the two would imply a precision neither has. */
+const OVERPASS='https://overpass-api.de/api/interpreter';
+
+/* OSM denomination tags are messy and inconsistent. Fold them into families a
+   pastor would recognise, and keep anything unrecognised as "other" rather than
+   guessing. */
+const DENOM_FAMILIES=[
+ {k:'adventist',   label:'Seventh-day Adventist', match:/adventist/i, ours:true},
+ {k:'catholic',    label:'Catholic',              match:/catholic|roman_catholic/i},
+ {k:'baptist',     label:'Baptist',               match:/baptist/i},
+ {k:'methodist',   label:'Methodist',             match:/methodist|wesleyan|ame|african_methodist/i},
+ {k:'pentecostal', label:'Pentecostal & charismatic', match:/pentecostal|assemblies_of_god|apostolic|charismatic|foursquare|church_of_god/i},
+ {k:'lutheran',    label:'Lutheran',              match:/lutheran/i},
+ {k:'presbyterian',label:'Presbyterian & Reformed', match:/presbyterian|reformed|calvinist/i},
+ {k:'anglican',    label:'Episcopal & Anglican',  match:/episcopal|anglican/i},
+ {k:'orthodox',    label:'Orthodox',              match:/orthodox|coptic/i},
+ {k:'evangelical', label:'Evangelical & nondenominational', match:/evangelical|nondenominational|non-denominational|community|bible_church|calvary|vineyard/i},
+ {k:'jw',          label:"Jehovah's Witnesses",   match:/jehovah/i},
+ {k:'lds',         label:'Latter-day Saints',     match:/mormon|latter_day_saints|latter-day/i},
+ {k:'quaker',      label:'Quaker & Mennonite',    match:/quaker|friends|mennonite|brethren|amish/i},
+ {k:'jewish',      label:'Jewish',                match:/jewish|judaism|orthodox_judaism|reform_judaism|conservative_judaism/i, religion:/jewish/i},
+ {k:'muslim',      label:'Muslim',                match:/muslim|islam|sunni|shia/i, religion:/muslim/i},
+ {k:'hindu',       label:'Hindu',                 match:/hindu/i, religion:/hindu/i},
+ {k:'buddhist',    label:'Buddhist',              match:/buddhist/i, religion:/buddhist/i},
+ {k:'sikh',        label:'Sikh',                  match:/sikh/i, religion:/sikh/i}
+];
+function denomFamily(tags){
+  const d=(tags.denomination||'')+' '+(tags['denomination:en']||'');
+  const r=(tags.religion||'');
+  for(const f of DENOM_FAMILIES){
+    if(d && f.match.test(d)) return f;
+    if(f.religion && f.religion.test(r)) return f;
+  }
+  if(/christian/i.test(r)) return {k:'christian-other',label:'Christian, denomination not recorded'};
+  if(r) return {k:'other',label:r.replace(/_/g,' ').replace(/\b\w/g,c=>c.toUpperCase())};
+  return {k:'unknown',label:'Not recorded'};
+}
+
+async function fetchCongregations(centre,radiusMi){
+  const m=Math.round(radiusMi*1609);
+  const q=`[out:json][timeout:25];(`
+    +`node["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
+    +`way["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
+    +`relation["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
+    +`);out center tags;`;
+  const j=await getJSON(OVERPASS+'?data='+encodeURIComponent(q),'Congregations');
+  // OSM often holds the same church twice — a node for the building and a way for
+  // its outline, a few metres apart. Match on name plus proximity, not on exact
+  // coordinates, which never agree.
+  const out=[];
+  const norm=n=>n.toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\b(the|church|of|st|saint)\b/g,'').trim();
+  (j.elements||[]).forEach(e=>{
+    const t=e.tags||{};
+    const lat=e.lat??(e.center&&e.center.lat), lon=e.lon??(e.center&&e.center.lon);
+    if(!isFinite(lat)||!isFinite(lon)) return;
+    const name=(t.name||'').trim();
+    const dup=out.find(o=>{
+      const close=miles({lat,lon},{lat:o.lat,lon:o.lon})<0.06;   // ~100 metres
+      if(!close) return false;
+      if(!name||o.name==='Unnamed place of worship') return true; // unnamed point beside a known one
+      return norm(o.name)===norm(name);
+    });
+    if(dup) return;
+    out.push({name:name||'Unnamed place of worship', fam:denomFamily(t), lat, lon,
+              dist:miles(centre,{lat,lon})});
+  });
+  return out.sort((a,b)=>a.dist-b.dist);
+}
+
+function doctrineCard(key,count){
+  const d=DOCTRINE[key]; if(!d) return '';
+  return `<details class="doct"><summary><b>${esc(d.label)}</b>${count?`<span class="dn">${count} nearby</span>`:''}</summary>
+    ${d.share?`<p class="dshare">${esc(d.share)}</p>`:''}
+    ${d.teach.length?`<div class="dsec"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.differs.length?`<div class="dsec"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
+    ${d.common.length?`<div class="dsec"><b>Common ground</b><ul class="plain">${d.common.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.open?`<div class="dopen"><b>Where to start</b>${esc(d.open)}</div>`:''}
+    ${d.caution?`<div class="dcaution"><b>Do not</b>${esc(d.caution)}</div>`:''}
+  </details>`;
+}
+function congregationsHTML(list,radiusMi,county){
+  if(!list.length){
+    return `<div class="card wide note" style="min-height:0">No places of worship are recorded in OpenStreetMap within ${radiusMi} miles of this address. That rarely means none exist \u2014 small and rented-hall congregations are frequently missing from the map. Worth a drive and a look.</div>`;
+  }
+  const groups={};
+  list.forEach(c=>{ (groups[c.fam.k]=groups[c.fam.k]||{label:c.fam.label,ours:c.fam.ours,items:[]}).items.push(c); });
+  const ordered=Object.values(groups).sort((a,b)=>b.items.length-a.items.length);
+  const ours=list.filter(c=>c.fam.ours);
+  const named=list.filter(c=>c.name!=='Unnamed place of worship');
+  return `
+  <div class="card wide" style="min-height:0">
+    <div class="l" style="margin-bottom:8px">Who else is within ${radiusMi} miles \u00b7 ${fmtNum(list.length)} places of worship on the map</div>
+    ${bars(ordered.map(g=>[g.label,g.items.length/list.length*100]),x=>Math.round(x/100*list.length))}
+    <div class="note" style="margin-top:12px;line-height:1.6">
+      ${ours.length
+        ? `<b style="color:var(--acc)">${ours.length} Adventist ${ours.length===1?'congregation':'congregations'}</b> within this radius \u2014 ${esc(ours.map(o=>o.name).join(', '))}.`
+        : `<b>No Adventist congregation is recorded within ${radiusMi} miles.</b>`}
+    </div>
+  </div>
+  <div class="card wide" style="min-height:0">
+    <div class="l" style="margin-bottom:8px">Nearest congregations</div>
+    <div class="congs">${named.slice(0,12).map(c=>`<div class="cong">
+      <b>${esc(c.name)}</b>
+      <span>${esc(c.fam.label)} \u00b7 ${c.dist<0.1?'next door':c.dist.toFixed(1)+' mi'}</span>
+      <a href="https://www.google.com/maps/search/?api=1&query=${c.lat},${c.lon}" target="_blank" rel="noopener">map</a>
+    </div>`).join('')}</div>
+    ${named.length>12?`<div class="note" style="margin-top:8px">${named.length-12} more not listed.</div>`:''}
+  </div>
+  <div class="sugcat" style="margin-top:26px">What these traditions teach</div>
+  <div class="strat"><b>How to use this</b>Each entry states the teaching as its own members would state it, then the point of difference, then the common ground. Get the first part wrong in front of someone and you lose the conversation before you reach the second. Traditions are not monolithic — where a family is genuinely divided, it says so.</div>
+  ${ordered.filter(g=>DOCTRINE[Object.keys(groups).find(k=>groups[k]===g)]).map(g=>{
+    const key=Object.keys(groups).find(k=>groups[k]===g);
+    return doctrineCard(key,g.items.length);
+  }).join('')}
+  <details class="ideas" style="margin-top:10px"><summary>Traditions not on the map nearby — including the largest group of all</summary>
+    ${Object.keys(DOCTRINE).filter(k=>!groups[k]&&k!=='christian-other').map(k=>doctrineCard(k,0)).join('')}
+  </details>
+
+  <div class="card wide note" style="min-height:0;line-height:1.6">
+    <b style="color:var(--ink)">Read this before drawing conclusions.</b> These points come from OpenStreetMap, which volunteers maintain. Storefront churches, congregations renting school halls, and new plants are routinely missing, so treat the count as a floor rather than a total \u2014 and a denomination shown here may be a building rather than a living congregation.
+    <div class="ext" style="margin-top:10px">
+      <a href="https://www.thearda.com/us-religion/census/congregational-membership" target="_blank" rel="noopener">County adherence \u00b7 US Religion Census 2020<span>Adherents per 1,000 people by denomination for ${esc(county)} \u2014 the only county-level religious data in the country. Published by county, not by block, so it sits alongside this list rather than on the map.</span></a>
+    </div>
+    <div style="margin-top:10px">The purpose is to see what is already covered and what is not. The US Religion Census asks plainly that its data not be used for marketing; the same restraint belongs here. A neighbouring church doing good work is a partner to know, not a competitor to outflank.</div>
+  </div>`;
+}
+
 /* ================= HOT ZONES =================
    The tracts immediately around the church, scored for where to go first.
    Boundaries come from the Census Bureau's own TIGERweb service; the figures
@@ -1831,7 +2369,6 @@ function scoreZone(m,dist,homeM){
   const contrast = homeM&&homeM.poverty!=null&&m.poverty!=null ? cap(Math.max(0,m.poverty-homeM.poverty),20)*0.5 : 0;
   return {score:(need*reach*size)+contrast, need, reach};
 }
-const mapsUrlZ=q=>'https://www.google.com/search?q='+encodeURIComponent(q);
 function zoneReasons(m,homeM){
   const r=[];
   const add=(cond,txt)=>{ if(cond) r.push(txt); };
@@ -2028,6 +2565,22 @@ function buildReport(M,levels,scope,geo,focusCatSet,focusName){
       p('  Ask locally: '+h.question);
     });
   });
+  if(CONGS&&CONGS.length){
+    p(''); p('CHURCHES NEARBY (within 2 miles, from OpenStreetMap)'); p('-'.repeat(60));
+    const g={}; CONGS.forEach(c=>{ g[c.fam.label]=(g[c.fam.label]||0)+1; });
+    Object.entries(g).sort((a,b)=>b[1]-a[1]).forEach(([k,n])=>p('  '+n+'  '+k));
+    p('  Coverage note: small and rented-hall congregations are often missing from OpenStreetMap, so this is a floor rather than a total.');
+    p('');
+    p('  WHAT THESE TRADITIONS TEACH');
+    const fams=[...new Set(CONGS.map(c=>c.fam.k))].filter(k=>DOCTRINE[k]);
+    fams.forEach(k=>{
+      const d=DOCTRINE[k];
+      p(''); p('  ## '+d.label);
+      d.differs.forEach(([h,t])=>p('    Differs \u2014 '+h+': '+t));
+      if(d.open) p('    Where to start: '+d.open);
+      if(d.caution) p('    Do not: '+d.caution);
+    });
+  }
   p(''); p('WHAT THIS DATA CANNOT TELL YOU'); p('-'.repeat(60));
   p('- Whether people want what the numbers suggest they might need.');
   p('- What is already being done well by neighbours, schools, and other congregations.');
@@ -2133,6 +2686,13 @@ function aiSummary(M,levels,scope,geo){
   Object.keys(STRATEGY).filter(c=>S.hits.some(h=>h.cat===c&&(!cats.size||cats.has(c)))).forEach(c=>L.push('- '+c+': '+STRATEGY[c]));
   L.push('Every need should produce a cluster, not a single act: SERVE (meet the felt need), EQUIP (teach the skill it exposes — seminars, courses, classes), BELONG (an ongoing group), INVITE (the spiritual step, once trust is real). A plan that is all service is charity; a plan that is all invitation is a sales pitch.');
   L.push('');
+  if(CONGS&&CONGS.length){
+    const g={}; CONGS.forEach(c=>{ g[c.fam.label]=(g[c.fam.label]||0)+1; });
+    L.push('CONGREGATIONS WITHIN 2 MILES (OpenStreetMap, incomplete \u2014 small and rented-hall churches are often missing): '
+      +Object.entries(g).sort((a,b)=>b[1]-a[1]).map(([k,n])=>n+' '+k).join(', ')
+      +'. Use this to say what looks already covered and what does not, and to suggest partnership rather than competition.');
+    L.push('');
+  }
   L.push('CAVEATS: these are ACS 5-year estimates with margins of error at this small a geography. Homelessness and eviction data are only published county-wide and are not included. Nothing here says what the neighbourhood wants, what other churches and agencies already do, or anything about faith and history on these streets.');
   L.push('');
   L.push('Write the ministry plan.');
@@ -2493,6 +3053,11 @@ function render(){
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
   const SG=suggestions(M,SCOPE);
+  secs.push(`<section class="blk" data-theme="faith"><h2>Churches nearby</h2>
+    <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
+    <div id="congslot"></div>
+  </section>`);
+
   secs.push(`<section class="blk" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
@@ -2565,6 +3130,7 @@ function render(){
   aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
+  drawCongregations();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
   buildSecNav();
@@ -2572,7 +3138,33 @@ function render(){
   $('report').classList.add('show');
 }
 
+/* ---- congregations: fetched after the report, drawn when they arrive ---- */
+async function loadCongregations(geo){
+  const c=geo.coords?{lat:+geo.coords.y,lon:+geo.coords.x}:null;
+  if(!c||!isFinite(c.lat)){ CONGS_STATE='idle'; return; }
+  CONGS_STATE='loading'; drawCongregations();
+  try{
+    CONGS=await fetchCongregations(c,2);
+    CONGS_STATE='ready';
+  }catch(e){
+    log('congregations unavailable: '+e.message);
+    CONGS_STATE='failed'; CONGS_ERR=e.message;
+  }
+  drawCongregations();
+}
+let CONGS_ERR='';
+function drawCongregations(){
+  const host=document.getElementById('congslot');
+  if(!host) return;
+  const county=(DATA&&DATA.levels&&DATA.levels.county.short)||'this county';
+  if(CONGS_STATE==='loading'){ host.innerHTML='<div class="note">Looking for congregations nearby\u2026</div>'; return; }
+  if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="note">The map service that lists places of worship did not answer just now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(CONGS_ERR.slice(0,80))})</span></div>`; return; }
+  if(!CONGS){ host.innerHTML=''; return; }
+  host.innerHTML=congregationsHTML(CONGS,2,county);
+}
+
 /* ---- hot zones: fetched after the report, drawn when they arrive ---- */
+let CONGS=null, CONGS_STATE='idle';
 let ZONES=null, ZONES_STATE='idle', ZONES_R=0;
 /* The map should cover what the tabs are talking about: a couple of miles for
    the neighbourhood, wider for the town, wider still for the county. */
@@ -2662,16 +3254,6 @@ function drawZones(){
     </div>`).join('')}
     <div class="note" style="margin-top:8px">Boundaries and figures are the Census Bureau\u2019s own. Ranking weights need against distance \u2014 a needier block three miles away is not where a two-church district should start.</div>
 
-    <div class="card wide" style="min-height:0;margin-top:14px">
-      <div class="l" style="margin-bottom:6px">Crime, drugs and volunteer safety \u2014 what this map deliberately does not show</div>
-      <p class="note" style="line-height:1.6">There is no free national source of crime data at block level. The FBI publishes by <b>police department</b>, covering a whole town or city at once; overdose figures are published by <b>county</b>. Shading these blocks with a town-wide number would invent detail that does not exist, so this map leaves it out and points you at the real sources instead.</p>
-      <div class="ext" style="margin-top:10px">
-        <a href="https://cde.ucr.cjis.gov/" target="_blank" rel="noopener">FBI Crime Data Explorer<span>Search the police department serving ${esc(levels.county.short)} for violent and property crime rates by year.</span></a>
-        <a href="https://www.cdc.gov/overdose-prevention/data-research/facts-stats/" target="_blank" rel="noopener">CDC overdose data<span>Overdose deaths and opioid dispensing, published by county \u2014 useful for whether recovery ministry is a live need here.</span></a>
-        <a href="${mapsUrlZ(levels.county.name+' county open data crime map')}" target="_blank" rel="noopener">Your county or city open-data portal<span>Some cities publish incident-level crime with map coordinates; most townships do not. Worth one search for ${esc(levels.county.short)}.</span></a>
-      </div>
-      <p class="note" style="margin-top:10px;line-height:1.6"><b style="color:var(--ink)">Two cautions before you use any of it.</b> Reported crime follows policing as much as it follows crime, so a heavily-policed poor block looks worse than a lightly-policed wealthy one. And a map captioned \u201cdangerous areas\u201d, shown to a board, can harden the very fear that keeps a congregation out of a neighbourhood. For volunteer safety the practical answers are the old ones: go in pairs, go in daylight, tell someone where you are, and ask people who live there what they would avoid.</p>
-    </div>
   </div>`;
   host.querySelectorAll('.zviews button').forEach(b=>b.onclick=()=>{ ZVIEW=b.dataset.v; drawZones(); });
   fitMap();
@@ -2707,6 +3289,7 @@ async function run(getGeo){
     setStatus('');
     render();
     loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
+    loadCongregations(geo);
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
     if(e.message==='NOCODE'){ localStorage.removeItem('terrain-code'); showGate('That code is no longer valid. Ask Pastor Josh for a current one.'); return; }
