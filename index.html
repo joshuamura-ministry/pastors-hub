@@ -267,6 +267,30 @@ ul.plain li{font-size:.85rem;color:var(--ink2);line-height:1.6;padding-left:14px
 ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.5}
 .tick{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink2);text-transform:none;letter-spacing:0;
   font-weight:600;cursor:pointer;min-height:42px}
+.audgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin-bottom:14px}
+.audbtn{display:flex;align-items:center;gap:9px;background:var(--panel);border:1px solid var(--line2);
+  border-radius:12px;padding:13px 14px;font-size:.86rem;font-weight:600;color:var(--ink);cursor:pointer;
+  text-align:left;min-height:52px;box-shadow:var(--shadow)}
+.audbtn span{font-size:1.15rem;flex:none}
+.audbtn:hover{border-color:var(--acc)}
+.audbtn.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
+.prop{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow)}
+.prophead{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
+.propk{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:5px}
+.prophead h3{font-family:var(--disp);font-size:1.2rem;font-weight:600;color:var(--ink);line-height:1.25}
+.props{margin-bottom:16px}
+.props>b{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:7px}
+.props p{font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:8px}
+.props p b{color:var(--ink);font-weight:600}
+.propopen{font-family:var(--disp);font-size:1rem !important;color:var(--ink) !important;line-height:1.6 !important;
+  padding-left:12px;border-left:3px solid var(--acc);margin-bottom:12px !important}
+.propnote{font-size:.8rem !important;color:var(--ink3) !important;font-style:italic}
+.objx{font-size:.86rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:2px solid var(--line2);margin-bottom:11px}
+.objx span{display:block;font-weight:600;color:var(--ink);margin-bottom:3px}
+.propclose{border-top:1px solid var(--line);padding-top:13px;margin-top:4px}
+.propclose p{font-family:var(--disp);font-size:.98rem;color:var(--ink);line-height:1.6}
+.propacts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.propacts .btn{flex:1 1 auto}
 .steptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
 .steptabs button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);
   font-weight:700;font-size:.9rem;color:var(--ink2);cursor:pointer}
@@ -460,13 +484,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.8</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v4.8';
+const VERSION = 'v5.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2542,6 +2566,362 @@ function fitMap(){
 }
 window.addEventListener('resize',()=>fitMap());
 
+/* ================= MAKE THE CASE =================
+   The same findings, argued to the group that has to act on them. A board hears
+   cost, risk and stewardship; a deacons' meeting hears logistics; a men's
+   ministry hears fatherlessness. The figures never change — the emphasis,
+   the ask, and the objections do.
+
+   Everything below is generated from this tract's own numbers. No proposal is
+   the same twice, because no neighbourhood is. */
+
+const AUD=[
+ {id:'board', label:'Church board', icon:'\u2696\ufe0f',
+  care:['cost','risk','stewardship','whether this is a passing enthusiasm'],
+  frame:'This is not a new programme asking for money. It is a decision about whether we know who lives around this building.',
+  gift:'The board is the only body that can commit the calendar, the budget line and the building. Nothing below happens without a vote here.',
+  ask:m=>`Approve a named coordinator, a modest line for materials, and the use of the building on one additional evening a week for the next six months.`,
+  obj:[['"We have tried outreach before and nothing came of it."',
+        'Most efforts fail at follow-up rather than at the door. This proposal names one person to own the list of everyone we meet. That single role is the difference, and it costs nothing but a name.'],
+       ['"We do not have the people."',
+        'The arithmetic is smaller than it feels. Reaching one in ten households in the nearest block takes about four pairs doing eight visits over two months \u2014 eight members, twice a month.'],
+       ['"Why this neighbourhood and not somewhere needier?"',
+        'A needier block three miles away is not where a district with our capacity should start. Distance decides whether people actually go.']],
+  win:'a written report to the board at ninety days: doors knocked, names gathered, who has been contacted, and one story.'},
+
+ {id:'elders', label:'Elders', icon:'\ud83d\udcd6',
+  care:['spiritual oversight','doctrinal soundness','the health of the flock'],
+  frame:'The question before us is not whether the neighbourhood needs us. It is whether we are willing to be the ones who go.',
+  gift:'Elders can do what no programme can: model it. When an elder knocks on a door, the congregation learns that this is normal work, not the pastor\u2019s hobby.',
+  ask:m=>`Each elder to take one apprentice, give one Bible study, and visit two homes a month for six months \u2014 and to report it, briefly, at every elders\u2019 meeting.`,
+  obj:[['"I am not trained for this."',
+        'You need to be one lesson ahead of the person you study with, not an expert. The pastor takes you the first time, you watch, then you lead while he sits quietly.'],
+       ['"My duties are inside the church."',
+        'The flock inside is fed by the same work that reaches the flock outside. A congregation that stops going out gets older and smaller, and the pastoral load grows heavier, not lighter.']],
+  win:'every elder has given at least one Bible study and taken at least one member with him.'},
+
+ {id:'deacons', label:'Deacons & deaconesses', icon:'\ud83d\udee0\ufe0f',
+  care:['practical service','the building','doing things properly'],
+  frame:'Everything the church wants to do in this neighbourhood runs through the practical work you already do.',
+  gift:'Deacons and deaconesses make the difference between an event that happens and an event people return to: the room ready, the welcome warm, the follow-through reliable.',
+  ask:m=>`Take ownership of the practical side of one recurring community offering: setup, welcome at the door, refreshments, and making sure every visitor is greeted by name the second time.`,
+  obj:[['"That is a lot of extra Sabbaths."',
+        'It is one fixed evening a month, published a year ahead, shared across the team. Open-ended asks exhaust people; a diary does not.'],
+       ['"We already do this for church events."',
+        'Same skill, one step further out. The people who set up a fellowship lunch can set up a community meal, and the second is where new faces come.']],
+  win:'one community offering running on a fixed monthly date, with the room ready every time.'},
+
+ {id:'bible-workers', label:'Bible worker team', icon:'\ud83d\udcda',
+  care:['souls','training','being equipped rather than sent out cold'],
+  frame:'The neighbourhood already has people who would study the Bible if somebody asked them. What it lacks is people who ask.',
+  gift:'A Bible worker team turns interest into discipleship. Every other ministry here gathers names; this is the ministry that takes them somewhere.',
+  ask:m=>`Form a team of six who will each carry one Bible study, meet monthly to compare notes and pray, and bring an apprentice within six months.`,
+  obj:[['"I could never teach a Bible study."',
+        'Most studies are read-and-discuss, not lecture. If you can read a paragraph aloud and ask "what do you make of that?", you can give a Bible study.'],
+       ['"What if they ask something I cannot answer?"',
+        '"That is a good question \u2014 let me find out and bring you the answer next week" is a legitimate answer, and it guarantees a next week.'],
+       ['"Where would we even find people who want to study?"',
+        'Every other ministry in this plan gathers names. The team does not need to find people; it needs to be ready when the names arrive.']],
+  win:'six studies running, and at least two team members have taken an apprentice of their own.'},
+
+ {id:'prayer', label:'Prayer ministry', icon:'\ud83d\ude4f',
+  care:['intercession','faithfulness','the spiritual reality behind the numbers'],
+  frame:'Every figure in this report is a household with a name. This ministry is the one that carries them before God by name rather than in general.',
+  gift:'Prayer ministry is the only work here that housebound members can do at full strength \u2014 and it is often the most consistent team in the church.',
+  ask:m=>`Take the streets in the nearest block by name, three names each, and pray weekly \u2014 and receive a short update each month so the praying stays specific.`,
+  obj:[['"We already pray for the community."',
+        'Generally, yes. This is different: named streets, named people, updated monthly. Specific prayer is sustained prayer.'],
+       ['"We cannot get out to visit."',
+        'You do not need to. The visiting pairs bring you names; you carry them. Housebound members are frequently the most reliable intercessors in a congregation.']],
+  win:'every household the visiting pairs meet is being prayed for by name within a week.'},
+
+ {id:'community', label:'Community outreach', icon:'\ud83e\udd1d',
+  care:['meeting real need','not duplicating what exists','being welcomed rather than tolerated'],
+  frame:'The need here is measurable, and so is the gap. This is about serving where the gap actually is instead of where we assume it is.',
+  gift:'Community outreach is the church\u2019s first impression. It decides whether this building is a place people walk past or walk into.',
+  ask:m=>`Run one felt-need offering monthly, in the block identified below, and keep a record of every person who attends so nobody is met once and forgotten.`,
+  obj:[['"Are we just duplicating the food bank?"',
+        'Ask them first. If they are covering it, partner rather than compete \u2014 and put our effort where nobody is working.'],
+       ['"People will only come for what they can get."',
+        'Some will, and that is still worth doing. But food at a table rather than a queue changes the encounter, and the relationships that form there are the point.']],
+  win:'one offering running monthly with a named contact list, and one working relationship with another local organisation.'},
+
+ {id:'family', label:'Family ministry', icon:'\ud83d\udc6a',
+  care:['marriages','parenting','the pressure households are under'],
+  frame:'The households around this church are under measurable strain, and the strain lands on parents before it lands on anyone else.',
+  gift:'Family ministry reaches the child through a programme and the family through the parent \u2014 and the whole household moves together.',
+  ask:m=>`Run a parenting course and a marriage-strengthening evening within the next six months, with childcare provided at both, and open them to the neighbourhood rather than the membership.`,
+  obj:[['"Our families are already stretched thin."',
+        'That is the argument for it, not against. Six sessions with childcare is less burden than another year without help.'],
+       ['"Non-members will not come to a church for that."',
+        'They come for childcare and practical help long before they come for a service. Advertise what it is, honestly, with our name on it.']],
+  win:'one course completed with neighbourhood families in the room, not only members.'},
+
+ {id:'mens', label:"Men's ministry", icon:'\ud83d\udd28',
+  care:['purpose','doing rather than discussing','being useful'],
+  frame:'This neighbourhood has households with no man in them, and boys who will meet almost no steady adult men this year.',
+  gift:'Men\u2019s ministry can offer the two things this need actually requires: presence and practical work. Not a programme \u2014 a man who keeps turning up.',
+  ask:m=>`Two things: a monthly practical work morning \u2014 repairs, yards, moving furniture for people who cannot \u2014 and one man mentoring one boy, consistently, for a year.`,
+  obj:[['"We are not counsellors."',
+        'Nobody is asking you to counsel. Fix a fence, teach a skill, show up at a game. Consistency is the whole intervention.'],
+       ['"We tried a men\u2019s breakfast and it fizzled."',
+        'Breakfasts fizzle because eating together is not a purpose. Work gives men a reason to be in a room, and the conversation happens sideways while doing something.']],
+  win:'a work morning running monthly, and at least three mentoring relationships that have lasted six months.'},
+
+ {id:'womens', label:"Women's ministry", icon:'\ud83c\udf3f',
+  care:['relationships','the women carrying households alone','hospitality that is real'],
+  frame:'A large share of the families around us are led by one adult, and she is usually carrying it with no slack at all.',
+  gift:'Women\u2019s ministry can reach women that no programme reaches, because it offers what is actually short: company, help, and somebody who notices.',
+  ask:m=>`A monthly gathering with childcare provided, and a practical support rota \u2014 meals after a birth, a lift to an appointment, an afternoon of respite.`,
+  obj:[['"We do not have the numbers."',
+        'Six women can run a rota. This does not need a committee; it needs a diary and somebody who answers the phone.'],
+       ['"Would neighbourhood women even come?"',
+        'To a service, maybe not yet. To childcare, respite and company, frequently yes \u2014 and that is where the friendship starts.']],
+  win:'a rota that has actually been used, and neighbourhood women attending regularly.'},
+
+ {id:'youth', label:'Youth & Pathfinders', icon:'\ud83e\udded',
+  care:['the young people they already have','relevance','not being an afterthought'],
+  frame:'The number of children within walking distance of this building is not a projection. They are already here.',
+  gift:'Youth ministry is the one part of the church that other parents will hand their children to before they trust anything else we do.',
+  ask:m=>`Open Pathfinders and one holiday programme to the neighbourhood \u2014 advertised outside the church, with safeguarding checks completed before anything is announced.`,
+  obj:[['"Our young people are already busy."',
+        'This gives them something worth being busy with. Young people leave churches that ask nothing of them.'],
+       ['"Safeguarding is a lot of work."',
+        'It is, and it is not optional. Start the checks now so they are done before the first advertisement goes out.']],
+  win:'neighbourhood children enrolled, and every leader checked and trained.'},
+
+ {id:'health', label:'Health ministry', icon:'\ud83e\ude7a',
+  care:['practical health','credibility','the body as God\u2019s temple'],
+  frame:'Health is the door this church can open more naturally than any other, and the need for it here is measurable.',
+  gift:'Medically trained members are the most under-asked people in most congregations, and health is the offering the community accepts first.',
+  ask:m=>`One wellness table a month \u2014 blood pressure, a five-minute conversation, a written referral for anything concerning \u2014 with the referral pathway agreed before the first screening.`,
+  obj:[['"We are not a clinic."',
+        'A blood pressure check and a kind conversation is not practising medicine. Agree in advance what happens when a reading is bad, and stay inside that line.'],
+       ['"Is this just a way of getting people in?"',
+        'No, and it must not be. Run the health offering because health matters. Invite people to other things separately and openly.']],
+  win:'a table running monthly, a referral pathway agreed in writing, and every medically trained member asked by name.'},
+
+ {id:'media', label:'Media & AV team', icon:'\ud83c\udfa5',
+  care:['reach','quality','doing it properly or not at all'],
+  frame:'What this church says about itself online is the first thing most neighbours will ever encounter of us.',
+  gift:'The media team decides whether a person who searches for us at 11pm finds a living church or an abandoned page.',
+  ask:m=>`Own three things: an accurate, current public page with service times and a real photograph; every community offering advertised where neighbours actually look; and one short piece of content a month in the languages spoken here.`,
+  obj:[['"We already stream the service."',
+        'Streaming serves the people who already come. This is about the person who has never been \u2014 different content, different place, different purpose.'],
+       ['"We do not have the equipment."',
+        'A phone and honest writing beat a studio and silence. Accuracy first: wrong service times cost more than low production values.']],
+  win:'a public page that is accurate, and every community event advertised beyond the church walls.'}
+];
+
+/* Which figures matter to which audience. The proposal leads with the ones that
+   will actually move that room. */
+const AUD_EMPH={
+ board:['pop','poverty','medInc','kids'], elders:['pop','poverty','langs','seniorsAlone'],
+ deacons:['pop','kids','poverty'], 'bible-workers':['pop','langs','kids','seniorsAlone'],
+ prayer:['pop','poverty','singleParent','seniorsAlone'],
+ community:['poverty','snap','uninsured','noCar'],
+ family:['kids','singleParent','rent50','poverty'],
+ mens:['singleParent','kids','jobless'], womens:['singleParent','kids','seniorsAlone'],
+ youth:['kids','k12','singleParent'], health:['uninsured','poverty','seniorsAlone','medAge'],
+ media:['langs','limEng','pop','medAge']
+};
+function figLine(k,m,levels){
+  const P=x=>fmtPct(x), N=x=>fmtNum(x);
+  switch(k){
+   case 'pop': return `about ${N(m.pop)} people live in ${esc(levels.tract.short)}`;
+   case 'poverty': return m.poverty!=null?`${P(m.poverty)} of them live below the poverty line`:null;
+   case 'medInc': return m.medInc?`the median household income is ${fmtMoney(m.medInc)}`:null;
+   case 'kids': return m.kidsShare!=null?`${P(m.kidsShare)} of residents are children \u2014 roughly ${N(m.kids)} of them`:null;
+   case 'k12': return m.k12?`about ${N(m.k12)} are enrolled in school`:null;
+   case 'singleParent': return m.singleParent>=20?`${P(m.singleParent)} of families with children are led by one parent`:null;
+   case 'seniorsAlone': return m.seniorsAlone>=8?`${P(m.seniorsAlone)} of households are a senior living alone`:null;
+   case 'langs': return (m.langs&&m.langs[0]&&m.langs[0].share>=5)?`${P(m.langs[0].share)} speak ${esc(m.langs[0].name)} at home`:null;
+   case 'limEng': return m.limEng>=5?`${P(m.limEng)} of households have limited English`:null;
+   case 'snap': return m.snap>=8?`${P(m.snap)} of households receive SNAP`:null;
+   case 'uninsured': return m.uninsured>=6?`${P(m.uninsured)} have no health insurance`:null;
+   case 'noCar': return m.noCar>=8?`${P(m.noCar)} of households have no vehicle`:null;
+   case 'rent50': return m.rent50>=18?`${P(m.rent50)} of renters pay more than half their income in rent`:null;
+   case 'jobless': return m.jobless>=5?`${P(m.jobless)} of the labour force is unemployed`:null;
+   case 'medAge': return m.medAge!=null?`the median age is ${m.medAge}`:null;
+  }
+  return null;
+}
+
+
+/* ---- what this particular neighbourhood adds to the ask ----
+   Keyed on the profile tags derived from the tract's own figures. A proposal in
+   a Spanish-speaking, car-less block asks for different things than the same
+   proposal in an affluent, ageing one — and meets different objections. */
+const TAILOR=[
+ {tag:'limited-english', aud:'*',
+  ask:{'*':'a small budget for translating every piece of printed material, and one bilingual member checking it before it goes out',
+       media:'every public notice produced in both languages, checked by a native speaker before publication',
+       board:'a line for translation \u2014 it is small, and without it half the block cannot read what we publish'},
+  obj:['"Surely most people here speak some English."',
+       'Some do. But a household with limited English will not attend anything it cannot read the details of, and a translated flyer costs less than an evening of our time.']},
+ {tag:'immigrant', aud:'*',
+  ask:{'*':'help with the paperwork that frightens people \u2014 forms, appointments, phone calls \u2014 which opens doors nothing else opens',
+       community:'a monthly paperwork clinic: forms, letters, appointments, with two people who are patient and unhurried'},
+  obj:['"We are not immigration advisors."',
+       'Nobody is asking you to give legal advice. Sitting with somebody while they fill in a form, and making one phone call on their behalf, is what is actually needed.']},
+ {tag:'many-kids', aud:'*',
+  ask:{'*':'childcare provided at every adult event, with safeguarding checks completed before anything is advertised',
+       board:'approval to begin safeguarding checks now, because they take longer than people expect and nothing for children can be announced without them',
+       youth:'places held open for neighbourhood children, not only members\u2019 children'},
+  obj:['"Childcare is a lot of trouble for one evening."',
+       'Without it, every parent in this block is quietly excluded. It is not an extra \u2014 in a neighbourhood this young it is the difference between an event people can attend and one they cannot.']},
+ {tag:'single-parents', aud:'*',
+  ask:{'*':'practical respite \u2014 an afternoon, a meal, a lift \u2014 offered to households where one adult is carrying everything',
+       mens:'one man mentoring one boy, consistently, for a year \u2014 in a block where many boys will meet almost no steady adult men',
+       womens:'a support rota that is actually used: meals after a birth, a lift to an appointment, an afternoon off'},
+  obj:['"Are we not intruding on private family matters?"',
+       'A meal and an afternoon are not an intrusion. Households with one adult have no slack, and practical help is received long before advice is.']},
+ {tag:'no-car', aud:'*',
+  ask:{'*':'a named driver rota with a named backup, published rather than promised',
+       board:'approval for a transport rota, including a check with the conference on insurance'},
+  obj:['"Can people not make their own way?"',
+       'A significant share of households here have no vehicle. Where transport is the barrier, transport is the ministry \u2014 and an unpublished offer of lifts collapses within a month.']},
+ {tag:'seniors-alone', aud:'*',
+  ask:{'*':'a weekly contact for people living alone \u2014 the same person, the same day, so it is expected rather than occasional'},
+  obj:['"They have families of their own."',
+       'Many do, at a distance. The figure here counts households where one person over sixty-five lives alone, and the need is not company at Christmas but somebody expected on a Tuesday.']},
+ {tag:'uninsured', aud:'*',
+  ask:{'*':'a monthly wellness table with a referral pathway agreed in writing before the first screening',
+       health:'every medically trained member asked by name, and the referral pathway settled before we take a single blood pressure'},
+  obj:['"What if we find something serious?"',
+       'That is precisely why the referral pathway is agreed first. Knowing where to send somebody is part of the offering, not an afterthought.']},
+ {tag:'food-insecure', aud:'*',
+  ask:{'*':'food served at a table rather than handed out in a queue, paired with the budgeting course so this year and next year are both addressed'},
+  obj:['"Is the food bank not already doing this?"',
+       'Ask them before starting anything. If they have it covered, partner and put our effort where nobody is working \u2014 duplication helps nobody and irritates the people already serving.']},
+ {tag:'renters', aud:'*',
+  ask:{'*':'a fast, small hardship fund for arrears \u2014 rent runs on a clock, and help three weeks early costs a fraction of help three weeks late'},
+  obj:['"We cannot pay everybody\u2019s rent."',
+       'No, and this is not that. A small amount early, once, with the process understood in advance, prevents the far larger crisis of an eviction.']},
+ {tag:'affluent', aud:'*',
+  ask:{'*':'two front doors, not one \u2014 what serves a struggling household will not reach a comfortable one, and the reverse is equally true'},
+  obj:['"People here do not need anything from us."',
+       'Not materially. But affluence is a different poverty \u2014 time, isolation, meaning \u2014 and this half of the neighbourhood can fund the ministry the other half needs.']},
+ {tag:'changing', aud:'*',
+  ask:{'*':'a deliberate welcome for new arrivals, because in a neighbourhood that turns over, greeting people who have just moved in beats any advertising'},
+  obj:['"The neighbourhood has changed and we no longer fit it."',
+       'That is an argument for listening for a year before launching, and for leadership that reflects the street. It is not an argument for staying inside.']},
+ {tag:'service-work', aud:'*',
+  ask:{'*':'at least one offering outside standard hours, because a large share of this block works when we normally meet'},
+  obj:['"Nobody would come at that time."',
+       'Nobody who already comes, no. This is aimed at the people whose working hours have always excluded them from everything we run.']},
+ {tag:'students', aud:'*',
+  ask:{'*':'a quiet, warm room with wifi during exam season \u2014 unglamorous, and one of the few things students actually accept'},
+  obj:['"Students never stay."',
+       'Many do not. Some do, and the ones who leave carry what they were given here somewhere else. Both are worth the room.']},
+ {tag:'jobless', aud:'*',
+  ask:{'*':'practical employment help \u2014 CVs, interviews, and an introduction to the members who actually hire people'},
+  obj:['"We are not an employment agency."',
+       'One member who hires, one afternoon of interview practice, and one honest introduction is not an agency. It is a network, which is what people without one are missing.']},
+ {tag:'crowded', aud:'*',
+  ask:{'*':'meeting space offered to the neighbourhood, because homes here are too small to host anything'},
+  obj:['"The hall is already busy."',
+       'It is busy for us. A room that sits empty six days a week is the most underused asset this church owns, and space itself is scarce on these streets.']}
+];
+/* The opening sentence should name what is true here, not what is true of
+   neighbourhoods in general. Ordered by severity: the first match wins. */
+const OPENERS=[
+ ['very-poor', m=>`Roughly one household in three around this building is living below the poverty line. That is not a national statistic \u2014 it is this postcode.`],
+ ['poor',      m=>`${fmtPct(m.poverty)} of the people within walking distance of this building live below the poverty line.`],
+ ['very-immigrant', m=>`This is now an immigrant neighbourhood: ${fmtPct(m.foreign)} of residents were born outside the United States, and the church that learns their language first will be the one they trust.`],
+ ['limited-english', m=>`${fmtPct(m.limEng)} of households on these streets cannot easily conduct their affairs in English. That single fact reshapes everything we print and everything we run.`],
+ ['many-kids',  m=>`There are roughly ${fmtNum(m.kids)} children living within walking distance of this building \u2014 ${fmtPct(m.kidsShare)} of everyone here.`],
+ ['very-old',   m=>`This is an ageing neighbourhood, median age ${m.medAge}, and ${fmtPct(m.seniorsAlone)} of households are one person over sixty-five living alone.`],
+ ['seniors-alone', m=>`${fmtPct(m.seniorsAlone)} of the households around us are a senior living alone. Isolation here is measurable.`],
+ ['divided',    m=>`Two neighbourhoods share these streets: ${fmtPct(m.incLow)} of households live on under $35,000 while ${fmtPct(m.incHigh)} live on over $150,000. One programme will reach one of them.`],
+ ['affluent',   m=>`This is a comfortable neighbourhood \u2014 ${fmtPct(m.incHigh)} of households are over $150,000 \u2014 and comfortable neighbourhoods are among the least reached in America.`],
+ ['changing',   m=>`This neighbourhood is not who it was ten years ago, and a congregation that stopped changing when its streets did will feel like a mismatch no welcome sign can fix.`],
+ ['renters',    m=>`${fmtPct(m.renters)} of households here rent, and ${fmtPct(m.rent50)} of renters pay more than half their income to keep a roof on. Housing pressure is the daily reality on these streets.`]
+];
+function openerFor(tags,m){
+  for(const [tag,fn] of OPENERS) if(tags.has(tag)){ try{ return fn(m); }catch(e){} }
+  return null;
+}
+/* Only three requirements are shown, so they must be the three that matter most
+   here — ordered by how severe the underlying figure actually is, not by their
+   position in the list above. */
+const SEVERITY={
+ 'limited-english':m=>m.limEng, 'immigrant':m=>m.foreign*0.5, 'many-kids':m=>m.kidsShare,
+ 'single-parents':m=>m.singleParent*0.7, 'no-car':m=>m.noCar*1.3, 'seniors-alone':m=>m.seniorsAlone*1.2,
+ 'uninsured':m=>m.uninsured*1.2, 'food-insecure':m=>m.snap, 'renters':m=>m.rent50,
+ 'affluent':m=>m.incHigh*0.6, 'changing':()=>12, 'service-work':m=>(m.occ&&m.occ[1]?m.occ[1][1]*0.4:8),
+ 'students':()=>8, 'jobless':m=>m.jobless*2, 'crowded':m=>m.overcrowd*1.5
+};
+function tailorFor(audId,tags,m){
+  const hits=TAILOR.filter(t=>tags.has(t.tag)).map(t=>{
+    let sev=10;
+    try{ const f=SEVERITY[t.tag]; if(f) sev=f(m)||0; }catch(e){}
+    return {...t, sev};
+  }).sort((a,b)=>b.sev-a.sev);
+  const asks=hits.map(t=>t.ask[audId]||t.ask['*']).filter(Boolean);
+  const objs=hits.filter(t=>t.obj).map(t=>t.obj);
+  return {asks:asks.slice(0,3), objs:objs.slice(0,3)};
+}
+
+function buildProposal(audId,M,levels,SG){
+  const a=AUD.find(x=>x.id===audId); if(!a) return '';
+  const m=M.tract, cty=M.county;
+  const tags=(SG&&SG.tags)?SG.tags:new Set();
+  const TL=tailorFor(audId,tags,m);
+  const OP=openerFor(tags,m);
+  const facts=(AUD_EMPH[audId]||['pop','poverty']).map(k=>figLine(k,m,levels)).filter(Boolean);
+  const hot=(ZONES&&ZONES.scored&&ZONES.scored.length)
+    ? [...ZONES.scored].sort((x,y)=>y.score-x.score)[0] : null;
+  const move=(SG&&SG.moves&&SG.moves.length)?SG.moves[0]:null;
+  const later=(SG&&SG.moves&&SG.moves.length>1)?SG.moves[SG.moves.length-1]:null;
+  const d=new Date(); d.setDate(d.getDate()+90);
+  const by=d.toLocaleDateString(undefined,{month:'long',day:'numeric',year:'numeric'});
+
+  return `<div class="prop" id="prop">
+   <div class="prophead">
+     <div class="propk">Proposal \u00b7 ${esc(a.label)}</div>
+     <h3>${esc(levels.tract.short)} \u2014 the case for acting here</h3>
+   </div>
+
+   <div class="props"><b>1 \u00b7 What we are looking at</b>
+     ${OP?`<p class="propopen">${esc(OP)}</p>`:''}
+     <p>${esc(a.frame)}</p>
+     <p>Within this block, ${facts.join('; ')}.${
+       (m.poverty!=null&&cty.poverty!=null&&m.poverty>cty.poverty+4)
+        ? ` That poverty rate is above the ${fmtPct(cty.poverty)} across ${esc(levels.county.short)}.`
+        : (m.medInc&&cty.medInc&&m.medInc<cty.medInc*0.8)
+          ? ` Household income here sits well below the ${fmtMoney(cty.medInc)} county figure.` : ''}
+       These are U.S. Census figures, not impressions.</p>
+     ${hot?`<p>The single block with the most need within walking distance is <b>Tract ${esc(hot.name||hot.geoid)}</b>, ${hot.dist<0.15?'at our door':hot.dist.toFixed(1)+' miles away'}, with about ${fmtNum(hot.m.pop)} residents${hot.m.poverty!=null?` and ${fmtPct(hot.m.poverty)} below the poverty line`:''}. That is where we would begin.</p>`:''}
+   </div>
+
+   <div class="props"><b>2 \u00b7 Why this is your work specifically</b>
+     <p>${esc(a.gift)}</p>
+   </div>
+
+   <div class="props"><b>3 \u00b7 What is being asked</b>
+     <p>${esc(a.ask(m))}</p>
+     ${TL.asks.length?`<p>This neighbourhood adds three specific requirements:</p><ul class="plain">${TL.asks.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+     ${move?`<p>The first move the figures point to is <b>${esc(move.n)}</b>. ${esc(move.reason||'')}</p>`:''}
+     ${later?`<p>Note the order. ${esc(later.n)} belongs at the end of this work, not the beginning \u2014 a reaping meeting harvests what earlier months planted, and run first it harvests nothing.</p>`:''}
+   </div>
+
+   <div class="props"><b>4 \u00b7 What you might be thinking</b>
+     ${[...a.obj,...TL.objs].map(([q,ans])=>`<div class="objx"><span>${esc(q)}</span>${esc(ans)}</div>`).join('')}
+   </div>
+
+   <div class="props"><b>5 \u00b7 How we will know it worked</b>
+     <p>By <b>${by}</b>: ${esc(a.win)}</p>
+     ${TL.asks.length?`<p>And specifically for this neighbourhood: ${esc(TL.asks[0])} \u2014 in place, not merely agreed.</p>`:''}
+     <p class="propnote">If that has not happened by then, this proposal should be reviewed honestly rather than quietly continued.</p>
+   </div>
+
+   <div class="propclose">
+     <p>${esc(levels.tract.short)} is not a mission field somewhere else. It is the ground this building stands on, and these are the people already living on it.</p>
+   </div>
+  </div>`;
+}
+
 /* ================= EXPORT ================= */
 function csvEscape(v){const s=String(v??'');return /[",\n]/.test(s)?'"'+s.replace(/"/g,'""')+'"':s}
 function buildCSV(M,levels,geo){
@@ -3335,6 +3715,33 @@ const ENGAGE=[
   say:'"Who has the list? Who called them? When?" \u2014 asked out loud at every board meeting until it is normal.',
   next:'If you fill only one role from this whole report, fill this one.'}
 ];
+function wireProposals(M,levels,SG){
+  document.querySelectorAll('.audbtn').forEach(b=>b.onclick=()=>{
+    document.querySelectorAll('.audbtn').forEach(x=>x.classList.toggle('on',x===b));
+    const slot=document.getElementById('propslot');
+    slot.innerHTML=buildProposal(b.dataset.aud,M,levels,SG)+
+      `<div class="propacts">
+         <button class="btn" id="propcopy">Copy this proposal</button>
+         <button class="btn ghost" id="propdl">Download as text</button>
+         <button class="btn ghost" id="propprint">Print</button>
+       </div>`;
+    const plain=()=>{
+      const el=document.getElementById('prop');
+      return el.innerText.replace(/\n{3,}/g,'\n\n').trim();
+    };
+    document.getElementById('propcopy').onclick=async e=>{
+      try{ await navigator.clipboard.writeText(plain()); e.target.textContent='Copied \u2713';
+        setTimeout(()=>e.target.textContent='Copy this proposal',1600); }catch(err){}
+    };
+    document.getElementById('propdl').onclick=()=>{
+      const name='proposal-'+b.dataset.aud+'-'+(levels.tract.short||'tract').replace(/\W+/g,'-')+'.txt';
+      download(name,plain(),'text/plain');
+    };
+    document.getElementById('propprint').onclick=()=>window.print();
+    translateDOM();
+    slot.scrollIntoView({behavior:'smooth',block:'start'});
+  });
+}
 function wireStepper(){
   const host=document.getElementById('stepper'); if(!host) return;
   let i=0;
@@ -3375,7 +3782,7 @@ function applyFocus(){
   let hiddenSec=0, shownP=0, hiddenP=0;
   document.querySelectorAll('#sections section.blk').forEach(sec=>{
     const t=(sec.dataset.theme||'').split(' ');
-    const keep = !on || t.includes('prompts') || t.includes('mobilize') || t.some(x=>th.has(x));
+    const keep = !on || t.includes('prompts') || t.includes('mobilize') || t.includes('case') || t.some(x=>th.has(x));
     sec.classList.toggle('hidden',!keep);
     if(!keep) hiddenSec++;
   });
@@ -3580,12 +3987,19 @@ function render(){
     <div class="sugcat">What members will say, and what to answer</div>
     ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
   </section>`);
+
+  secs.push(`<section class="blk" data-theme="case"><h2>Make the case</h2>
+    <p class="note" style="margin-bottom:12px">The same findings, argued to the group that has to act on them. Choose who you are speaking to — the figures stay the same, the emphasis, the ask and the objections change.</p>
+    <div class="audgrid">${AUD.map(a=>`<button class="audbtn" data-aud="${a.id}"><span>${a.icon}</span>${esc(a.label)}</button>`).join('')}</div>
+    <div id="propslot"></div>
+  </section>`);
   $('sections').innerHTML=secs.join('');
   aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
   wireStepper();
+  wireProposals(M,levels,SG);
   translateDOM();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
