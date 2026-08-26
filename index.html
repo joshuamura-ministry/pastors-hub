@@ -188,7 +188,6 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .card .l{font-size:.78rem;color:var(--ink2);margin-top:6px;line-height:1.3}
 .card .sub{font-size:.72rem;color:var(--ink3);margin-top:2px}
 /* comparison tick: where the neighbourhood sits vs town & county */
-.tick{margin-top:auto;padding-top:10px}
 .tick .bar{position:relative;height:3px;background:var(--line2);border-radius:2px}
 .tick .bar i{position:absolute;top:-4px;width:2px;height:11px;border-radius:1px;background:var(--ink3);margin-left:-1px}
 .tick .bar i.me{background:var(--acc);width:3px;height:13px;top:-5px;margin-left:-1.5px}
@@ -266,16 +265,24 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 ul.plain{list-style:none;display:flex;flex-direction:column;gap:9px}
 ul.plain li{font-size:.85rem;color:var(--ink2);line-height:1.6;padding-left:14px;position:relative}
 ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.5}
-.assign{display:flex;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
-.assign .pname{flex:1 1 190px;background:var(--panel2);border:1px solid var(--line2);border-radius:9px;
-  padding:10px 12px;font-size:.86rem;color:var(--ink);min-height:42px;margin:0}
-.assign .pname:focus{border-color:var(--acc);outline:none}
 .tick{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink2);text-transform:none;letter-spacing:0;
   font-weight:600;cursor:pointer;min-height:42px}
-.tick input{width:20px;height:20px;accent-color:var(--acc);margin:0}
-.role.filled{border-color:var(--acc)}
-.role.filled h4::after{content:" \2713";color:var(--acc)}
-ol.ladder li .tick b{font-family:var(--disp);font-size:.9rem;color:var(--ink)}
+.steptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
+.steptabs button{width:42px;height:42px;border-radius:50%;border:1px solid var(--line2);background:var(--panel);
+  font-weight:700;font-size:.9rem;color:var(--ink2);cursor:pointer}
+.steptabs button.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink)}
+.stepcard{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:16px;box-shadow:var(--shadow)}
+.stepn{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:5px}
+.stepcard h4{font-family:var(--disp);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:8px}
+.stepcard p{font-size:.87rem;color:var(--ink2);line-height:1.65}
+.saybox,.nextbox{margin-top:12px;padding:12px 13px;border-radius:10px;font-size:.86rem;line-height:1.6;color:var(--ink2)}
+.saybox{background:var(--acc-dim);font-style:italic}
+.nextbox{background:var(--panel2);border:1px solid var(--line)}
+.saybox b,.nextbox b{display:block;font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;font-style:normal}
+.saybox b{color:var(--acc)} .nextbox b{color:var(--ink3)}
+.stepnav{display:flex;gap:8px;margin-top:14px}
+.stepnav .btn{flex:1}
+.stepnav .btn[disabled]{opacity:.4;pointer-events:none}
 .role{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
 .role h4{font-family:var(--disp);font-size:1.02rem;font-weight:600;color:var(--ink);margin-bottom:10px;
   padding-bottom:9px;border-bottom:1px solid var(--line)}
@@ -399,6 +406,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 <header class="top"><div class="in">
   <div class="wordmark"><i></i>TERRAIN</div>
   <nav class="tools"><a class="on" href="#">Community Map</a></nav>
+  <button class="themebtn" id="langbtn" aria-label="English / Español">ES</button>
   <button class="themebtn" id="themebtn" aria-label="Switch between light and dark"></button>
 </div></header>
 
@@ -452,13 +460,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.5</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.7</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v4.5';
+const VERSION = 'v4.7';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -499,6 +507,18 @@ function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');
   const b=document.getElementById('themebtn');
   if(b){ b.textContent = t==='dark' ? '\u2600' : '\u263D'; b.title = t==='dark' ? 'Switch to light' : 'Switch to dark'; }
+}
+function initLang(){
+  const b=document.getElementById('langbtn');
+  if(!b) return;
+  b.textContent = LANG==='es' ? 'EN' : 'ES';
+  b.title = LANG==='es' ? 'Switch to English' : 'Cambiar a español';
+  b.onclick=()=>{
+    LANG = LANG==='es' ? 'en' : 'es';
+    localStorage.setItem('terrain-lang',LANG);
+    location.reload();   // simplest way to restore English cleanly
+  };
+  translateDOM();
 }
 function initTheme(){
   const saved=localStorage.getItem('terrain-theme')||'light';
@@ -1765,30 +1785,8 @@ const OBJECTIONS=[
 /* The plan is saved per tract on this device. It is a working sheet for one
    pastor, not a shared system — sharing it with elders needs the back-office
    work specced for the meetings tool. Said plainly on screen too. */
-const planKey=()=>'terrain-plan-'+((DATA&&DATA.levels&&DATA.levels.tract.name)||'x').replace(/\W+/g,'');
-function planRead(){ try{ return JSON.parse(localStorage.getItem(planKey())||'{}'); }catch(e){ return {}; } }
-function planWrite(p){ try{ localStorage.setItem(planKey(),JSON.stringify(p)); }catch(e){} }
-function planSet(k,v){ const p=planRead(); p[k]=v; planWrite(p); }
 
 /* Eight weeks from a start date, built from the roles this tract actually needs. */
-function planWeeks(start,roles){
-  const d=new Date(start+'T12:00:00');
-  if(isNaN(d)) return [];
-  const wk=n=>{ const x=new Date(d); x.setDate(x.getDate()+n*7);
-    return x.toLocaleDateString(undefined,{month:'short',day:'numeric'}); };
-  const r=n=>roles[n]?roles[n].n:null;
-  const steps=[
-   ['Week 1 · '+wk(0), 'Name the people. Fill in the roles above with real names, and ask each one personally \u2014 not from the pulpit.'],
-   ['Week 2 · '+wk(1), 'Train the visiting pairs: one evening on how to knock, what to say, when to leave, and what never to promise.'],
-   ['Week 3 · '+wk(2), 'Walk the first hotspot together. Eight addresses per pair. Debrief the same evening while it is fresh.'],
-   ['Week 4 · '+wk(3), 'Start the apprenticeship: take one member with you to every Bible study you give this month.'],
-   ['Week 5 · '+wk(4), 'Run the first felt-need offering \u2014 whatever the report put at stage one for this neighbourhood.'],
-   ['Week 6 · '+wk(5), 'Interest coordinator reports: every name gathered so far, and who has contacted each one.'],
-   ['Week 7 · '+wk(6), 'Second visit round, same streets. The second visit is where trust starts; most campaigns stop before it.'],
-   ['Week 8 · '+wk(7), 'Review with the board: what happened, what to keep, what to drop, and who moves up the ladder.']
-  ];
-  return steps;
-}
 function mobilizeRoles(tags){
   // Visiting pairs, study apprentices and the interest coordinator are the
   // backbone of any campaign; tag-matched roles must not crowd them out.
@@ -2655,6 +2653,142 @@ function download(name,text,mime){
   }catch(e){ return false; }
 }
 
+/* ================= ESPAÑOL =================
+   Interface, headings, controls and the brief. Exact-match only: a string is
+   translated when the whole visible text matches, so numbers and names inside
+   sentences are never mangled.
+
+   Deliberately NOT translated yet: the 115 ministry ideas and the 19 doctrinal
+   entries. That is many thousands of words of theological writing, and machine
+   Spanish in front of a Spanish-speaking pastor would be worse than English.
+   Those need a native speaker's review before they go in. */
+const ES={
+ // header and controls
+ 'Community Map':'Mapa comunitario','sign out':'cerrar sesión',
+ 'Who lives around your church?':'¿Quién vive alrededor de su iglesia?',
+ 'Type the church address. Terrain reads the U.S. Census for that block, the town, and the county — and writes the summary in plain English.':
+   'Escriba la dirección de la iglesia. Terrain consulta el censo de EE. UU. para esa manzana, el municipio y el condado, y redacta el resumen en lenguaje sencillo.',
+ 'Map it':'Analizar','Use my location':'Usar mi ubicación',
+ 'Standing in the parking lot? Tap this.':'¿Está en el estacionamiento? Toque aquí.',
+ 'Neighbourhood':'Vecindario','Town':'Municipio','County':'Condado',
+ 'THE BRIEF':'EL RESUMEN',
+ 'Copy the brief':'Copiar el resumen','Download data (CSV)':'Descargar datos (CSV)',
+ 'Download report':'Descargar informe','Share':'Compartir','Print':'Imprimir',
+ 'Everything':'Todo','Families & youth':'Familias y jóvenes','Seniors':'Adultos mayores',
+ 'Hardship & work':'Necesidad y trabajo','Housing':'Vivienda',
+ 'Language & newcomers':'Idioma y recién llegados','Change over time':'Cambios en diez años',
+ 'Churches nearby':'Iglesias cercanas',
+ // section headings
+ 'Economy':'Economía','Wealth & hardship':'Riqueza y necesidad','People':'Población',
+ 'Language':'Idioma','Housing & distress':'Vivienda y presión','Families & age':'Familias y edad',
+ 'Where to look':'Dónde mirar','Mobilization':'Movilización','Hotspots':'Zonas prioritarias',
+ // map layers
+ 'Where to start':'Por dónde empezar','Greatest need':'Mayor necesidad','Children':'Niños',
+ 'Seniors alone':'Mayores que viven solos','Most people':'Más densidad',
+ 'less':'menos','more':'más',
+ // gate
+ 'Find your conference':'Encuentre su asociación',
+ 'Tap your state on the map, or search the list. Then enter the access code for your conference.':
+   'Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.',
+ 'Access code':'Código de acceso','Enter':'Entrar',
+ // common labels
+ 'Median household income':'Ingreso medio del hogar','Below the poverty line':'Bajo el umbral de pobreza',
+ 'Children in poverty':'Niños en pobreza','Unemployed':'Desempleados',
+ 'Households on SNAP':'Hogares con SNAP','No health insurance':'Sin seguro médico',
+ 'Households':'Hogares','Renters':'Inquilinos','Median age':'Edad media',
+ 'In school':'Estudiando','Single-parent families':'Familias monoparentales',
+ 'Seniors living alone':'Mayores que viven solos','Families with children':'Familias con hijos',
+ 'Born outside the U.S.':'Nacidos fuera de EE. UU.','Only English at home':'Solo inglés en casa',
+ 'Limited-English households':'Hogares con inglés limitado','No vehicle':'Sin vehículo',
+ 'Rent-burdened':'Carga de alquiler','Severely rent-burdened':'Carga severa de alquiler',
+ 'Overcrowded homes':'Viviendas hacinadas','Ethnic makeup':'Composición étnica',
+ 'Household income spread':'Distribución del ingreso','Ten years of change':'Diez años de cambio',
+ 'How this area compares':'Comparación con el condado',
+ 'Back to top':'Volver arriba','Top':'Arriba',
+ '← Back':'← Atrás','Next step →':'Siguiente →',
+ 'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
+ 'Words that work':'Palabras que funcionan','Then':'Después',
+ 'Brief':'Resumen',
+ // language names, so the brief reads "habla español" rather than "habla Spanish"
+ 'Spanish':'español','French / Haitian Creole':'francés / criollo haitiano','German':'alemán',
+ 'Russian / Polish / Slavic':'ruso / polaco / eslavo','Other European':'otro europeo',
+ 'Korean':'coreano','Chinese':'chino','Vietnamese':'vietnamita','Tagalog':'tagalo',
+ 'Other Asian / Pacific':'otro asiático / del Pacífico','Arabic':'árabe','Other':'otro',
+ 'White':'blanca','Hispanic / Latino':'hispana / latina','Black':'negra','Asian':'asiática',
+ 'Two or more':'dos o más','Not recorded':'sin registrar'
+};
+let LANG=localStorage.getItem('terrain-lang')||'en';
+const tr=t=>{ if(LANG!=='es') return t; const k=(t||'').trim(); return (ES[k]!==undefined)?ES[k]:t; };
+/* Applied after each render. Whole-string matches only, so "45% renters" is
+   never touched — the brief is translated by its own builder instead. */
+function translateDOM(){
+  if(LANG!=='es') return;
+  // Cast wide: any leaf element whose entire text has a translation. Elements
+  // with child nodes are skipped, so a sentence containing a figure is never
+  // half-replaced.
+  const walk=document.querySelectorAll(
+    'button, summary, h1, h2, h3, h4, label, a, span, small, p, div, li, th, td');
+  walk.forEach(el=>{
+    if(!el.children.length){
+      const t=el.textContent.trim();
+      if(ES[t]!==undefined) el.textContent=ES[t];
+      return;
+    }
+    // Mixed markup: translate each text node on its own, never the whole element.
+    // "Neighbourhood<small>Tract 1004.02</small>" becomes "Vecindario<small>Tract
+    // 1004.02</small>" without touching the tract number.
+    el.childNodes.forEach(n=>{
+      if(n.nodeType!==3) return;
+      const t=n.nodeValue.trim();
+      if(t && ES[t]!==undefined) n.nodeValue=n.nodeValue.replace(t,ES[t]);
+    });
+  });
+  document.querySelectorAll('input[placeholder]').forEach(i=>{
+    if(ES[i.placeholder]!==undefined) i.placeholder=ES[i.placeholder];
+  });
+  const h1=document.querySelector('.ask h1'), lead=document.querySelector('.ask p.lead');
+  if(h1&&ES[h1.textContent.trim()]) h1.textContent=ES[h1.textContent.trim()];
+  if(lead&&ES[lead.textContent.trim()]) lead.textContent=ES[lead.textContent.trim()];
+}
+/* The brief is generated, not fixed text, so it gets its own Spanish builder. */
+function briefES(M,levels,scope){
+  const me=M[scope], cty=M.county, label=levels[scope].short, s=[];
+  s.push(`<b>${esc(label)}</b> tiene alrededor de <b>${fmtNum(me.pop)}</b> habitantes en <b>${fmtNum(me.hh)}</b> hogares.`);
+  let h=`Un <b>${fmtPct(me.renters)}</b> alquila su vivienda`;
+  if(scope!=='county'&&me.renters!=null&&cty.renters!=null){
+    const d=me.renters-cty.renters;
+    h+= Math.abs(d)<3?' — similar al condado':(d>0?` — muy por encima del ${fmtPct(cty.renters)} del condado`:` — por debajo del ${fmtPct(cty.renters)} del condado`);
+  }
+  h+=`, con una edad media de <b>${me.medAge==null?'—':me.medAge}</b>`;
+  if(me.medAge!=null) h+= me.medAge<33?' — un vecindario joven':me.medAge>46?' — un vecindario mayor':'';
+  s.push(h+'.');
+  let e=`El ingreso medio del hogar es <b>${fmtMoney(me.medInc)}</b>`;
+  if(scope!=='county'&&me.medInc&&cty.medInc){ const r=me.medInc/cty.medInc;
+    e+= r<0.75?` — muy por debajo de los ${fmtMoney(cty.medInc)} del condado`
+      : r>1.25?` — muy por encima de los ${fmtMoney(cty.medInc)} del condado`
+      : ` (condado: ${fmtMoney(cty.medInc)})`; }
+  e+=`; el <b>${fmtPct(me.poverty)}</b> vive bajo el umbral de pobreza`;
+  if(me.childPoverty!=null&&me.childPoverty>=me.poverty+4) e+=`, y el <b>${fmtPct(me.childPoverty)}</b> de los niños también`;
+  if(me.snap!=null&&me.snap>=10) e+=`; el <b>${fmtPct(me.snap)}</b> de los hogares recibe SNAP`;
+  s.push(e+'.');
+  if(me.incLow>=20&&me.incHigh>=20)
+    s.push(`Riqueza y necesidad conviven aquí: el <b>${fmtPct(me.incLow)}</b> de los hogares gana menos de $35 mil mientras el <b>${fmtPct(me.incHigh)}</b> supera los $150 mil — son dos vecindarios muy distintos a la vez.`);
+  else if(me.incHigh>=35) s.push(`Es una zona acomodada: el <b>${fmtPct(me.incHigh)}</b> de los hogares supera los $150 mil.`);
+  else if(me.incLow>=35) s.push(`La estrechez económica es generalizada: el <b>${fmtPct(me.incLow)}</b> de los hogares gana menos de $35 mil.`);
+  const top=me.langs[0];
+  s.push(top&&top.share>=5
+    ? `En casa, el <b>${fmtPct(top.share)}</b> habla ${esc(tr(top.name))}; el <b>${fmtPct(me.limEng)}</b> de los hogares tiene inglés limitado.`
+    : `Casi todos hablan solo inglés en casa (<b>${fmtPct(me.englishOnly)}</b>).`);
+  const f=[];
+  if(me.kidsShare>=24) f.push(`el <b>${fmtPct(me.kidsShare)}</b> de los residentes son niños`);
+  if(me.singleParent>=30) f.push(`el <b>${fmtPct(me.singleParent)}</b> de las familias con hijos tiene un solo padre`);
+  if(me.seniorsAlone>=12) f.push(`el <b>${fmtPct(me.seniorsAlone)}</b> de los hogares es una persona mayor que vive sola`);
+  if(me.rent50>=20) f.push(`el <b>${fmtPct(me.rent50)}</b> de los inquilinos paga más de la mitad de su ingreso en alquiler`);
+  if(me.noCar>=10) f.push(`el <b>${fmtPct(me.noCar)}</b> de los hogares no tiene auto`);
+  if(f.length) s.push(f.join('; ').replace(/^./,c=>c.toUpperCase())+'.');
+  return s.join(' ');
+}
+
 /* ================= RENDER ================= */
 function tick(vals,scope,fmt=fmtPct,max){
   // vals: {tract,cousub,county}
@@ -2973,46 +3107,60 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 window.addEventListener('resize',measureTop);
 
-function wirePlan(){
-  const p=planRead();
-  document.querySelectorAll('.pname').forEach(i=>{
-    i.value=p[i.dataset.k]||'';
-    i.oninput=()=>{ planSet(i.dataset.k,i.value); markAsked(); };
-  });
-  document.querySelectorAll('.pdone').forEach(c=>{
-    c.checked=!!p[c.dataset.k];
-    c.onchange=()=>{ planSet(c.dataset.k,c.checked); markAsked(); };
-  });
-  const st=document.getElementById('planstart');
-  if(st){
-    st.value=p.start||'';
-    st.onchange=()=>{ planSet('start',st.value); drawWeeks(); };
-    drawWeeks();
-  }
-  markAsked();
-}
-function markAsked(){
-  document.querySelectorAll('.role').forEach(r=>{
-    const done=r.querySelector('.pdone'), name=r.querySelector('.pname');
-    r.classList.toggle('filled', !!(done&&done.checked) && !!(name&&name.value.trim()));
-  });
-  const roles=document.querySelectorAll('.role').length;
-  const filled=document.querySelectorAll('.role.filled').length;
-  const bar=document.getElementById('planprog');
-  if(bar) bar.innerHTML=`<div class="progress"><div style="width:${roles?Math.round(filled/roles*100):0}%"></div></div>
-    <p class="note">${filled} of ${roles} roles filled and asked.</p>`;
-}
-function drawWeeks(){
-  const host=document.getElementById('planweeks'); if(!host) return;
-  const p=planRead();
-  if(!p.start){ host.innerHTML='<p class="note" style="margin-top:10px">Pick a date and the eight weeks below will fill in.</p>'; return; }
-  const weeks=planWeeks(p.start,{});
-  host.innerHTML='<ol class="ladder" style="margin-top:12px">'+weeks.map(([w,t],i)=>
-    `<li><label class="tick"><input type="checkbox" class="pdone" data-k="wk${i}"${p['wk'+i]?' checked':''}> <b>${esc(w)}</b></label><span>${esc(t)}</span></li>`
-  ).join('')+'</ol>';
-  host.querySelectorAll('.pdone').forEach(c=>{
-    c.onchange=()=>{ planSet(c.dataset.k,c.checked); };
-  });
+const ENGAGE=[
+ {n:'Cast it once, from the front',
+  what:'One sermon that names this neighbourhood rather than "the world". Use the figures from this report \u2014 the number of children, the languages spoken, the households with no car. People give themselves to something specific and ignore something general.',
+  say:'"Within a mile of this building there are about a thousand children, and hundreds of homes where nobody speaks confident English. We will not reach them by opening the doors and hoping."',
+  next:'Make no appeal at the end. Tell them to think, and that you will be asking people personally this week. The absence of an altar call is what makes the personal ask land.'},
+ {n:'Ask personally, and ask small',
+  what:'Nobody volunteers from a pulpit appeal. People say yes to a named person asking for a named job with an end date. Face to face, one at a time, bounded.',
+  say:'"I am putting together four pairs to visit eight homes each over the next two months. Would you and your wife take one? One afternoon a fortnight, finishing in October."',
+  next:'Expect a third to say yes, so ask three times as many as you need. Never ask a group \u2014 a group can always assume somebody else will.'},
+ {n:'Train before you send',
+  what:'One evening, ninety minutes. How to knock, what to say in the first twenty seconds, when to leave, what never to promise, what to do when someone is hostile or in tears. Role-play it; talking about it is not training.',
+  say:'"You are not selling anything and you are not winning an argument. You are finding out what this street needs, and letting somebody meet a Christian who is kind."',
+  next:'Finish by praying for the streets by name. It changes how people knock the next morning.'},
+ {n:'Go with them the first time',
+  what:'The pastor goes on the first round \u2014 not to supervise, but to be seen doing it and to be there when the first door is slammed. Members who watch you do it will do it.',
+  say:'"I will take the first two houses while you watch. Then you take two and I will watch. Then we compare notes in the car."',
+  next:'Debrief the same evening while it is fresh. Ask what surprised them, not how it went.'},
+ {n:'Take one with you to every study',
+  what:'The highest-yield habit in a district: never give a Bible study alone. They watch, then read aloud, then teach one section, then lead while you sit quietly. Six weeks from watching to leading.',
+  say:'"You do not need to know all the lessons. You need to be one lesson ahead of the person you study with \u2014 and I am one lesson ahead of you."',
+  next:'When they lead their own, they take an apprentice. That step is what turns a programme into a movement, and it is the one most often skipped.'},
+ {n:'Report back, publicly and specifically',
+  what:'Every month from the front: doors knocked, conversations had, studies running, one story. Not statistics for their own sake \u2014 evidence that it is real. Nothing recruits like visible progress.',
+  say:'"Four pairs knocked sixty-two doors last month. Eleven real conversations, three studies started. Here is what happened at one of them."',
+  next:'Thank people by name, then make the next ask immediately, while the room believes it works.'},
+ {n:'Guard the collapse point',
+  what:'Campaigns rarely fail at the door. They fail at follow-up. Somebody must own the list of everyone who came to anything and make sure each is contacted within a week.',
+  say:'"Who has the list? Who called them? When?" \u2014 asked out loud at every board meeting until it is normal.',
+  next:'If you fill only one role from this whole report, fill this one.'}
+];
+function wireStepper(){
+  const host=document.getElementById('stepper'); if(!host) return;
+  let i=0;
+  const draw=()=>{
+    const st=ENGAGE[i];
+    host.innerHTML=`
+      <div class="steptabs">${ENGAGE.map((x,n)=>`<button data-s="${n}" class="${n===i?'on':''}" title="${esc(x.n)}">${n+1}</button>`).join('')}</div>
+      <div class="stepcard">
+        <div class="stepn">Step ${i+1} of ${ENGAGE.length}</div>
+        <h4>${esc(st.n)}</h4>
+        <p>${esc(st.what)}</p>
+        <div class="saybox"><b>Words that work</b>${esc(st.say)}</div>
+        <div class="nextbox"><b>Then</b>${esc(st.next)}</div>
+        <div class="stepnav">
+          <button class="btn ghost" ${i===0?'disabled':''} data-go="-1">\u2190 Back</button>
+          <button class="btn" ${i===ENGAGE.length-1?'disabled':''} data-go="1">Next step \u2192</button>
+        </div>
+      </div>`;
+    host.querySelectorAll('.steptabs button').forEach(b=>b.onclick=()=>{ i=+b.dataset.s; draw(); });
+    host.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>{
+      i=Math.max(0,Math.min(ENGAGE.length-1,i+ +b.dataset.go)); draw();
+    });
+  };
+  draw();
 }
 function renderFocus(){
   $('focusbar').innerHTML=`<button class="all ${FOCUS.size?'':'on'}" data-f="">Everything</button>`+
@@ -3040,9 +3188,15 @@ function applyFocus(){
   });
   buildSecNav();
   const note=$('focusnote');
-  if(!on){ note.innerHTML=`Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Tap a chip above to narrow it.`; }
+  if(!on){ note.innerHTML = LANG==='es'
+      ? `Mostrando todo — ${shownP} indicacion${shownP===1?'':'es'} en todos los temas. Toque una etiqueta para filtrar.`
+      : `Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Tap a chip above to narrow it.`; }
   else{
-    note.innerHTML=`Focused on <b style="color:var(--ink2)">${esc(focusLabel())}</b> — showing ${shownP} of ${shownP+hiddenP} prompts`+
+    note.innerHTML = LANG==='es'
+      ? `Filtrado por <b style="color:var(--ink2)">${esc(focusLabel())}</b> — mostrando ${shownP} de ${shownP+hiddenP} indicaciones`+
+        (hiddenSec?`, ${hiddenSec} sección${hiddenSec===1?'':'es'} oculta${hiddenSec===1?'':'s'}`:'')+
+        `. <a href="#" id="showall">Mostrar todo</a>`
+      : `Focused on <b style="color:var(--ink2)">${esc(focusLabel())}</b> — showing ${shownP} of ${shownP+hiddenP} prompts`+
       (hiddenSec?`, ${hiddenSec} data section${hiddenSec===1?'':'s'} hidden`:'')+
       `. <a href="#" id="showall">Show everything</a>`;
     const sa=$('showall'); if(sa) sa.onclick=e=>{e.preventDefault();FOCUS.clear();renderFocus();applyFocus();};
@@ -3055,7 +3209,7 @@ function render(){
   $('scope').innerHTML=Object.keys(levels).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
   $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;render();});
   renderFocus();
-  $('brief').innerHTML=`<div class="k">THE BRIEF</div><p>${brief(M,levels,SCOPE)}</p>
+  $('brief').innerHTML=`<div class="k">${LANG==='es'?'EL RESUMEN':'THE BRIEF'}</div><p>${LANG==='es'?briefES(M,levels,SCOPE):brief(M,levels,SCOPE)}</p>
     <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="dlcsv">Download data (CSV)</button><button class="btn ghost" id="dlrep">Download report</button><button class="btn ghost" id="share">Share</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
   $('copy').onclick=async()=>{const t=$('brief').querySelector('p').innerText;try{await navigator.clipboard.writeText(t);$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy the brief',1500)}catch(e){prompt('Copy this:',t)}};
   const stamp=(levels[SCOPE].short||'area').replace(/[^A-Za-z0-9]+/g,'-').toLowerCase();
@@ -3207,25 +3361,18 @@ function render(){
     <div class="sugcat">Roles this neighbourhood actually needs</div>
     <div id="planprog"></div>
     <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
-    <div class="note" style="margin-bottom:10px">Write real names in. Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
+    <div class="note" style="display:none"> Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
     ${RL.map((r,ri)=>`<div class="role" data-role="${ri}"><h4>${esc(r.n)}</h4>
       <div class="rw"><b>Who</b>${esc(r.who)}</div>
       <div class="rw"><b>First step</b>${esc(r.first)}</div>
       <div class="rw"><b>Training</b>${esc(r.train)}</div>
-      <div class="assign">
-        <input type="text" class="pname" data-k="role${ri}" placeholder="Who will do this? Write a name" aria-label="Name for ${esc(r.n)}">
-        <label class="tick"><input type="checkbox" class="pdone" data-k="done${ri}"> asked</label>
-      </div>
     </div>`).join('')}
     <div class="card wide note" style="min-height:0">Rough arithmetic for hotspot 1: about <b>${fmtNum(MM.hh)}</b> households. Reaching one in ten of them with a personal visit over two months takes roughly <b>${MM.pairs} pairs</b> doing eight visits each. That is ${MM.pairs*2} members — a number worth naming out loud at a board meeting, because it is usually smaller than people fear.</div>
 
-    <div class="sugcat">Your eight-week plan</div>
-    <div class="strat"><b>The principle</b>A campaign with no dates is a wish. Put a start date in and the weeks below fill themselves — then take the whole thing to the board rather than an idea.</div>
-    <div class="card wide" style="min-height:0">
-      <label style="display:block;margin-bottom:6px">Start date</label>
-      <input type="date" id="planstart" style="max-width:220px">
-      <div id="planweeks"></div>
-    </div>
+
+    <div class="sugcat">Getting members off the pew — step by step</div>
+    <div class="strat"><b>The principle</b>Most members are not unwilling; they are unasked and untrained. This is the path from a congregation that watches to one that works. Tap through the steps — each has what to do, the words that work, and what comes next.</div>
+    <div class="stepper" id="stepper"></div>
 
     <div class="sugcat">The ladder: from watching to leading in six weeks</div>
     <div class="strat"><b>The principle</b>Nobody needs to know all the lessons. They need to be one lesson ahead of the person they are studying with. The pastor’s job is not to give every study — it is to take somebody with them to every study.</div>
@@ -3239,7 +3386,8 @@ function render(){
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
-  wirePlan();
+  wireStepper();
+  translateDOM();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
   buildSecNav();
@@ -3270,6 +3418,7 @@ function drawCongregations(){
   if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="note">The map service that lists places of worship did not answer just now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(CONGS_ERR.slice(0,80))})</span></div>`; return; }
   if(!CONGS){ host.innerHTML=''; return; }
   host.innerHTML=congregationsHTML(CONGS,2,county);
+  translateDOM();
 }
 
 /* ---- hot zones: fetched after the report, drawn when they arrive ---- */
@@ -3366,6 +3515,7 @@ function drawZones(){
   </div>`;
   host.querySelectorAll('.zviews button').forEach(b=>b.onclick=()=>{ ZVIEW=b.dataset.v; drawZones(); });
   fitMap();
+  translateDOM();
 }
 
 /* ================= RUN ================= */
@@ -3421,6 +3571,7 @@ $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localSt
 $('ver').textContent=VERSION;
 (function boot(){
   initTheme();
+  initLang();
   initAccess();
   measureTop();
   const tt=document.getElementById('totop');
