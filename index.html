@@ -266,6 +266,16 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 ul.plain{list-style:none;display:flex;flex-direction:column;gap:9px}
 ul.plain li{font-size:.85rem;color:var(--ink2);line-height:1.6;padding-left:14px;position:relative}
 ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:6px;height:6px;border-radius:50%;background:var(--acc);opacity:.5}
+.assign{display:flex;gap:8px;margin-top:11px;padding-top:11px;border-top:1px solid var(--line);flex-wrap:wrap;align-items:center}
+.assign .pname{flex:1 1 190px;background:var(--panel2);border:1px solid var(--line2);border-radius:9px;
+  padding:10px 12px;font-size:.86rem;color:var(--ink);min-height:42px;margin:0}
+.assign .pname:focus{border-color:var(--acc);outline:none}
+.tick{display:flex;align-items:center;gap:7px;font-size:.8rem;color:var(--ink2);text-transform:none;letter-spacing:0;
+  font-weight:600;cursor:pointer;min-height:42px}
+.tick input{width:20px;height:20px;accent-color:var(--acc);margin:0}
+.role.filled{border-color:var(--acc)}
+.role.filled h4::after{content:" \2713";color:var(--acc)}
+ol.ladder li .tick b{font-family:var(--disp);font-size:.9rem;color:var(--ink)}
 .role{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px 16px;margin-bottom:10px;box-shadow:var(--shadow)}
 .role h4{font-family:var(--disp);font-size:1.02rem;font-weight:600;color:var(--ink);margin-bottom:10px;
   padding-bottom:9px;border-bottom:1px solid var(--line)}
@@ -298,8 +308,16 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .doct{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:0 15px;margin-bottom:8px;box-shadow:var(--shadow)}
 .doct summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:10px;min-height:48px}
 .doct summary::-webkit-details-marker{display:none}
-.doct summary::before{content:"+";color:var(--acc);font-weight:700;font-size:1rem}
-.doct[open] summary::before{content:"\2212"}
+/* A bare "+" was too easy to miss, so each card carries a labelled control. */
+.doct summary::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none;opacity:.5}
+.doct[open] summary::before{opacity:1}
+.reach{margin-left:auto;flex:none;font-size:.74rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--acc);background:var(--acc-dim);border:1px solid rgba(31,111,235,.28);border-radius:999px;
+  padding:6px 12px;white-space:nowrap}
+.reach::after{content:"Reach \2192"}
+.doct[open] .reach::after{content:"Close"}
+.doct .dn{margin-left:auto}
+.doct .dn+.reach{margin-left:8px}
 .doct summary b{font-family:var(--disp);font-size:.97rem;font-weight:600;color:var(--ink)}
 .doct .dn{margin-left:auto;font-size:.72rem;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 9px;white-space:nowrap}
 .dshare{font-size:.8rem;color:var(--ink3);margin:0 0 10px;line-height:1.5}
@@ -434,13 +452,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.2</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v4.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v4.2';
+const VERSION = 'v4.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1744,6 +1762,33 @@ const OBJECTIONS=[
  {q:'"I tried before and nothing happened."',a:'Usually the follow-up failed, not the person. Interest coordination is a role for a reason \u2014 make sure this time somebody owns it.'}
 ];
 
+/* The plan is saved per tract on this device. It is a working sheet for one
+   pastor, not a shared system — sharing it with elders needs the back-office
+   work specced for the meetings tool. Said plainly on screen too. */
+const planKey=()=>'terrain-plan-'+((DATA&&DATA.levels&&DATA.levels.tract.name)||'x').replace(/\W+/g,'');
+function planRead(){ try{ return JSON.parse(localStorage.getItem(planKey())||'{}'); }catch(e){ return {}; } }
+function planWrite(p){ try{ localStorage.setItem(planKey(),JSON.stringify(p)); }catch(e){} }
+function planSet(k,v){ const p=planRead(); p[k]=v; planWrite(p); }
+
+/* Eight weeks from a start date, built from the roles this tract actually needs. */
+function planWeeks(start,roles){
+  const d=new Date(start+'T12:00:00');
+  if(isNaN(d)) return [];
+  const wk=n=>{ const x=new Date(d); x.setDate(x.getDate()+n*7);
+    return x.toLocaleDateString(undefined,{month:'short',day:'numeric'}); };
+  const r=n=>roles[n]?roles[n].n:null;
+  const steps=[
+   ['Week 1 · '+wk(0), 'Name the people. Fill in the roles above with real names, and ask each one personally \u2014 not from the pulpit.'],
+   ['Week 2 · '+wk(1), 'Train the visiting pairs: one evening on how to knock, what to say, when to leave, and what never to promise.'],
+   ['Week 3 · '+wk(2), 'Walk the first hotspot together. Eight addresses per pair. Debrief the same evening while it is fresh.'],
+   ['Week 4 · '+wk(3), 'Start the apprenticeship: take one member with you to every Bible study you give this month.'],
+   ['Week 5 · '+wk(4), 'Run the first felt-need offering \u2014 whatever the report put at stage one for this neighbourhood.'],
+   ['Week 6 · '+wk(5), 'Interest coordinator reports: every name gathered so far, and who has contacted each one.'],
+   ['Week 7 · '+wk(6), 'Second visit round, same streets. The second visit is where trust starts; most campaigns stop before it.'],
+   ['Week 8 · '+wk(7), 'Review with the board: what happened, what to keep, what to drop, and who moves up the ladder.']
+  ];
+  return steps;
+}
 function mobilizeRoles(tags){
   // Visiting pairs, study apprentices and the interest coordinator are the
   // backbone of any campaign; tag-matched roles must not crowd them out.
@@ -2150,7 +2195,12 @@ const DOCTRINE={
    County-level adherence (US Religion Census 2020) is a different shape of data
    entirely — adherents per 1,000 by denomination, published by county — so it is
    linked rather than mapped. Mixing the two would imply a precision neither has. */
-const OVERPASS='https://overpass-api.de/api/interpreter';
+/* Two mirrors, tried in order. A Netlify function is killed at about ten
+   seconds, so the query must finish well inside that — hence the short server
+   timeout, the `nwr` shorthand instead of three separate statements, and the
+   fallback when the main instance is busy. */
+const OVERPASS_HOSTS=['https://overpass-api.de/api/interpreter',
+                      'https://overpass.kumi.systems/api/interpreter'];
 
 /* OSM denomination tags are messy and inconsistent. Fold them into families a
    pastor would recognise, and keep anything unrecognised as "other" rather than
@@ -2189,12 +2239,13 @@ function denomFamily(tags){
 
 async function fetchCongregations(centre,radiusMi){
   const m=Math.round(radiusMi*1609);
-  const q=`[out:json][timeout:25];(`
-    +`node["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
-    +`way["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
-    +`relation["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});`
-    +`);out center tags;`;
-  const j=await getJSON(OVERPASS+'?data='+encodeURIComponent(q),'Congregations');
+  const q=`[out:json][timeout:8];nwr["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});out center tags;`;
+  let j=null, lastErr=null;
+  for(const host of OVERPASS_HOSTS){
+    try{ j=await getJSON(host+'?data='+encodeURIComponent(q),'Congregations'); break; }
+    catch(e){ lastErr=e; log('overpass mirror failed ('+host.split('/')[2]+'): '+e.message); }
+  }
+  if(!j) throw lastErr||new Error('no response');
   // OSM often holds the same church twice — a node for the building and a way for
   // its outline, a few metres apart. Match on name plus proximity, not on exact
   // coordinates, which never agree.
@@ -2220,7 +2271,7 @@ async function fetchCongregations(centre,radiusMi){
 
 function doctrineCard(key,count){
   const d=DOCTRINE[key]; if(!d) return '';
-  return `<details class="doct"><summary><b>${esc(d.label)}</b>${count?`<span class="dn">${count} nearby</span>`:''}</summary>
+  return `<details class="doct"><summary><b>${esc(d.label)}</b>${count?`<span class="dn">${count} nearby</span>`:''}<span class="reach" aria-hidden="true"></span></summary>
     ${d.share?`<p class="dshare">${esc(d.share)}</p>`:''}
     ${d.teach.length?`<div class="dsec"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
     ${d.differs.length?`<div class="dsec"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
@@ -2249,13 +2300,14 @@ function congregationsHTML(list,radiusMi,county){
     </div>
   </div>
   <div class="card wide" style="min-height:0">
-    <div class="l" style="margin-bottom:8px">Nearest congregations</div>
-    <div class="congs">${named.slice(0,12).map(c=>`<div class="cong">
+    <details class="ideas"><summary>Nearest congregations — see the list of ${Math.min(named.length,12)}</summary>
+    <div class="congs" style="margin-top:8px">${named.slice(0,12).map(c=>`<div class="cong">
       <b>${esc(c.name)}</b>
       <span>${esc(c.fam.label)} \u00b7 ${c.dist<0.1?'next door':c.dist.toFixed(1)+' mi'}</span>
       <a href="https://www.google.com/maps/search/?api=1&query=${c.lat},${c.lon}" target="_blank" rel="noopener">map</a>
     </div>`).join('')}</div>
     ${named.length>12?`<div class="note" style="margin-top:8px">${named.length-12} more not listed.</div>`:''}
+    </details>
   </div>
   <div class="sugcat" style="margin-top:26px">What these traditions teach</div>
   <div class="strat"><b>How to use this</b>Each entry states the teaching as its own members would state it, then the point of difference, then the common ground. Get the first part wrong in front of someone and you lose the conversation before you reach the second. Traditions are not monolithic — where a family is genuinely divided, it says so.</div>
@@ -2921,6 +2973,47 @@ window.addEventListener('scroll',()=>{
 },{passive:true});
 window.addEventListener('resize',measureTop);
 
+function wirePlan(){
+  const p=planRead();
+  document.querySelectorAll('.pname').forEach(i=>{
+    i.value=p[i.dataset.k]||'';
+    i.oninput=()=>{ planSet(i.dataset.k,i.value); markAsked(); };
+  });
+  document.querySelectorAll('.pdone').forEach(c=>{
+    c.checked=!!p[c.dataset.k];
+    c.onchange=()=>{ planSet(c.dataset.k,c.checked); markAsked(); };
+  });
+  const st=document.getElementById('planstart');
+  if(st){
+    st.value=p.start||'';
+    st.onchange=()=>{ planSet('start',st.value); drawWeeks(); };
+    drawWeeks();
+  }
+  markAsked();
+}
+function markAsked(){
+  document.querySelectorAll('.role').forEach(r=>{
+    const done=r.querySelector('.pdone'), name=r.querySelector('.pname');
+    r.classList.toggle('filled', !!(done&&done.checked) && !!(name&&name.value.trim()));
+  });
+  const roles=document.querySelectorAll('.role').length;
+  const filled=document.querySelectorAll('.role.filled').length;
+  const bar=document.getElementById('planprog');
+  if(bar) bar.innerHTML=`<div class="progress"><div style="width:${roles?Math.round(filled/roles*100):0}%"></div></div>
+    <p class="note">${filled} of ${roles} roles filled and asked.</p>`;
+}
+function drawWeeks(){
+  const host=document.getElementById('planweeks'); if(!host) return;
+  const p=planRead();
+  if(!p.start){ host.innerHTML='<p class="note" style="margin-top:10px">Pick a date and the eight weeks below will fill in.</p>'; return; }
+  const weeks=planWeeks(p.start,{});
+  host.innerHTML='<ol class="ladder" style="margin-top:12px">'+weeks.map(([w,t],i)=>
+    `<li><label class="tick"><input type="checkbox" class="pdone" data-k="wk${i}"${p['wk'+i]?' checked':''}> <b>${esc(w)}</b></label><span>${esc(t)}</span></li>`
+  ).join('')+'</ol>';
+  host.querySelectorAll('.pdone').forEach(c=>{
+    c.onchange=()=>{ planSet(c.dataset.k,c.checked); };
+  });
+}
 function renderFocus(){
   $('focusbar').innerHTML=`<button class="all ${FOCUS.size?'':'on'}" data-f="">Everything</button>`+
     FOCUS_DEFS.map(f=>`<button class="${FOCUS.has(f.k)?'on':''}" data-f="${f.k}" aria-pressed="${FOCUS.has(f.k)}">${esc(f.label)}</button>`).join('');
@@ -3112,12 +3205,27 @@ function render(){
       <ul class="plain">${HONESTY.map(h=>`<li>${esc(h)}</li>`).join('')}</ul></div>
 
     <div class="sugcat">Roles this neighbourhood actually needs</div>
+    <div id="planprog"></div>
     <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
-    ${RL.map(r=>`<div class="role"><h4>${esc(r.n)}</h4>
+    <div class="note" style="margin-bottom:10px">Write real names in. Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
+    ${RL.map((r,ri)=>`<div class="role" data-role="${ri}"><h4>${esc(r.n)}</h4>
       <div class="rw"><b>Who</b>${esc(r.who)}</div>
       <div class="rw"><b>First step</b>${esc(r.first)}</div>
-      <div class="rw"><b>Training</b>${esc(r.train)}</div></div>`).join('')}
+      <div class="rw"><b>Training</b>${esc(r.train)}</div>
+      <div class="assign">
+        <input type="text" class="pname" data-k="role${ri}" placeholder="Who will do this? Write a name" aria-label="Name for ${esc(r.n)}">
+        <label class="tick"><input type="checkbox" class="pdone" data-k="done${ri}"> asked</label>
+      </div>
+    </div>`).join('')}
     <div class="card wide note" style="min-height:0">Rough arithmetic for hotspot 1: about <b>${fmtNum(MM.hh)}</b> households. Reaching one in ten of them with a personal visit over two months takes roughly <b>${MM.pairs} pairs</b> doing eight visits each. That is ${MM.pairs*2} members — a number worth naming out loud at a board meeting, because it is usually smaller than people fear.</div>
+
+    <div class="sugcat">Your eight-week plan</div>
+    <div class="strat"><b>The principle</b>A campaign with no dates is a wish. Put a start date in and the weeks below fill themselves — then take the whole thing to the board rather than an idea.</div>
+    <div class="card wide" style="min-height:0">
+      <label style="display:block;margin-bottom:6px">Start date</label>
+      <input type="date" id="planstart" style="max-width:220px">
+      <div id="planweeks"></div>
+    </div>
 
     <div class="sugcat">The ladder: from watching to leading in six weeks</div>
     <div class="strat"><b>The principle</b>Nobody needs to know all the lessons. They need to be one lesson ahead of the person they are studying with. The pastor’s job is not to give every study — it is to take somebody with them to every study.</div>
@@ -3131,6 +3239,7 @@ function render(){
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
+  wirePlan();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
   buildSecNav();
