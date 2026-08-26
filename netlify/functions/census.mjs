@@ -82,7 +82,9 @@ export default async (request) => {
   try {
     const upstream = await fetch(target.toString(), {
       headers: { accept: 'application/json', 'user-agent': 'terrain-community-map' },
-      signal: AbortSignal.timeout(9000)
+      // A Netlify function is terminated around ten seconds, so give up first and
+      // return a readable error rather than being killed mid-flight.
+      signal: AbortSignal.timeout(8500)
     });
     const text = await upstream.text();
     // The Census returns HTML (e.g. an "Invalid Key" page) instead of an HTTP
