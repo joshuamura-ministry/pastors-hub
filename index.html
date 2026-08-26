@@ -88,22 +88,25 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap}
 .whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;padding:0 0 0 8px}
 .offtab{display:none !important}
-.workspaces{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:18px 0 4px}
-.workspaces[hidden]{display:none}
-.workspaces button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--panel);
-  border:1px solid var(--line2);border-radius:12px;padding:13px 15px;cursor:pointer;text-align:left;
-  min-height:60px;box-shadow:var(--shadow);transition:border-color .15s,background .15s}
-.workspaces button b{font-family:var(--disp);font-size:.97rem;font-weight:600;color:var(--ink)}
-.workspaces button span{font-size:.75rem;color:var(--ink3)}
-.workspaces button:hover{border-color:var(--acc)}
-.workspaces button.on{background:var(--acc-dim);border-color:var(--acc)}
-.workspaces button.on b{color:var(--acc)}
-.workspaces button.on span{color:var(--acc-soft)}
-@media print{
-  .workspaces{display:none}
-  /* print the whole report, not just the open workspace */
-  .offtab{display:block !important}
-}
+.hub{margin-top:26px}
+.hub[hidden]{display:none}
+.hub h2{font-family:var(--disp);font-size:clamp(1.5rem,5vw,2rem);font-weight:600;color:var(--ink);margin-bottom:4px}
+.hub .sub{margin-bottom:18px}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+.tool{display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:var(--panel);
+  border:1px solid var(--line2);border-radius:var(--r);padding:20px 18px;cursor:pointer;text-align:left;
+  box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
+.tool:hover{border-color:var(--acc);transform:translateY(-2px)}
+.tool .tico{font-size:1.7rem;line-height:1}
+.tool b{font-family:var(--disp);font-size:1.15rem;font-weight:600;color:var(--ink)}
+.tool .td{font-size:.85rem;color:var(--ink2);line-height:1.6}
+.toolbar{display:flex;align-items:center;gap:10px;margin:18px 0 2px}
+.toolbar[hidden]{display:none}
+.backtools{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;
+  font-size:.82rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:42px}
+.backtools:hover{border-color:var(--acc);color:var(--acc)}
+.toolname{font-family:var(--disp);font-size:1.05rem;font-weight:600;color:var(--ink)}
+@media print{.hub,.toolbar{display:none} .offtab{display:block !important}}
 .secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -446,7 +449,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 <body>
 <header class="top"><div class="in">
   <div class="wordmark"><i></i>TERRAIN</div>
-  <nav class="tools"><a class="on" href="#">Community Map</a></nav>
+  <nav class="tools"><a class="on" href="#" id="brandlink">Pastors Hub</a></nav>
   <button class="themebtn" id="langbtn" aria-label="English / Español">ES</button>
   <button class="themebtn" id="themebtn" aria-label="Switch between light and dark"></button>
 </div></header>
@@ -476,12 +479,26 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     </div>
   </div>
 
-  <nav class="workspaces" id="workspaces" hidden>
-    <button data-tab="analytics" class="on"><b>Community Analytics</b><span>Who lives here</span></button>
-    <button data-tab="strategy"><b>Strategy</b><span>Where to begin</span></button>
-    <button data-tab="mobilize"><b>Mobilize</b><span>Getting members out</span></button>
-    <button data-tab="case"><b>Make the Case</b><span>Proposals to present</span></button>
-  </nav>
+  <div class="hub" id="hub" hidden>
+    <h2>Your tools</h2>
+    <p class="sub">Choose what you need. More will appear here as they are built.</p>
+    <div class="tools">
+      <button class="tool" data-tool="survey">
+        <span class="tico">🗺️</span>
+        <b>Community Survey</b>
+        <span class="td">Who lives around your church — income, languages, children, seniors, housing — with the blocks to reach first and how to mobilize members.</span>
+      </button>
+      <button class="tool" data-tool="case">
+        <span class="tico">📋</span>
+        <b>Make the Case</b>
+        <span class="td">Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.</span>
+      </button>
+    </div>
+  </div>
+  <div class="toolbar" id="toolbar" hidden>
+    <button class="backtools" id="backtools">← Tools</button>
+    <span class="toolname" id="toolname"></span>
+  </div>
   <div class="secnav" id="secnav" hidden></div>
   <div class="gate" id="gate" hidden>
     <h2>Find your conference</h2>
@@ -507,13 +524,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.1</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.1';
+const VERSION = 'v5.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3112,6 +3129,15 @@ const ES={
  'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
+ 'Your tools':'Sus herramientas',
+ 'Choose what you need. More will appear here as they are built.':
+   'Elija lo que necesita. Aquí irán apareciendo más a medida que se construyan.',
+ 'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso',
+ 'Who lives around your church — income, languages, children, seniors, housing — with the blocks to reach first and how to mobilize members.':
+   'Quién vive alrededor de su iglesia: ingresos, idiomas, niños, adultos mayores y vivienda, con las manzanas por donde empezar y cómo movilizar a los miembros.',
+ 'Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.':
+   'Convierta los hallazgos en una propuesta escrita para la sala en la que va a entrar: junta, ancianos, diáconos o cualquiera de doce ministerios.',
+ '← Tools':'← Herramientas','Pastors Hub':'Pastors Hub',
  'Community Analytics':'Análisis comunitario','Who lives here':'Quién vive aquí',
  'Strategy':'Estrategia','Where to begin':'Por dónde empezar',
  'Mobilize':'Movilizar','Getting members out':'Poner a los miembros en marcha',
@@ -3544,40 +3570,56 @@ async function aiMount(M,levels,geo){
 }
 /* The report is long. This bar lets a pastor jump straight to the part he wants,
    and it only lists sections that are actually visible under the current focus. */
-let TAB='analytics';
-/* ?flat=1 shows every workspace at once — one long page. Printing does the same,
-   because a printed report should contain the whole thing, not the tab that
-   happened to be open. */
+let TOOL=null;              // null = the hub; 'survey' | 'case' = inside a tool
 const FLAT=new URLSearchParams(location.search).has('flat');
-/* Four workspaces rather than one long scroll. The section bar below becomes the
-   sub-navigation for whichever workspace is open. */
-function applyTab(){
-  document.querySelectorAll('#sections section.blk').forEach(sec=>{
-    sec.classList.toggle('offtab', !FLAT && (sec.dataset.tab||'analytics')!==TAB);
-  });
+
+/* The hub is the front door. A pastor picks a tool, works inside it, and comes
+   back out. New tools become new tiles here rather than more sections bolted to
+   the bottom of one long page. */
+const TOOLS={
+  survey:{name:'Community Survey', tabs:['analytics','strategy','mobilize']},
+  case:  {name:'Make the Case',    tabs:['case']}
+};
+function showHub(){
+  // In flat view there is no hub — everything is on one page already.
+  if(FLAT){ const a=document.querySelector('.ask'); if(a) a.style.display=''; return; }
+  TOOL=null;
+  const hub=$('hub'); if(hub) hub.hidden=FLAT?true:!(ACCESS.ok!==false);
+  const bar=$('toolbar'); if(bar) bar.hidden=true;
+  const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
+  $('report').classList.remove('show');
+  const nav=$('secnav'); if(nav) nav.hidden=true;
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function openTool(id){
+  TOOL=id;
+  const hub=$('hub'); if(hub) hub.hidden=true;
+  const bar=$('toolbar'); if(bar){ bar.hidden=false; $('toolname').textContent=TOOLS[id].name; }
+  const ask=document.querySelector('.ask'); if(ask) ask.style.display=DATA?'none':'';
+  if(DATA){ $('report').classList.add('show'); applyTool(); }
+  window.scrollTo({top:0,behavior:'auto'});
+}
+function applyTool(){
   if(FLAT){
-    ['brief','focusbar','focusnote'].forEach(id=>{const e=document.getElementById(id); if(e) e.classList.remove('offtab');});
-    const w=document.getElementById('workspaces'); if(w) w.hidden=true;
+    document.querySelectorAll('.offtab').forEach(e=>e.classList.remove('offtab'));
+    const hub=$('hub'); if(hub) hub.hidden=true;
     return;
   }
-  const brief=document.getElementById('brief'), acts=document.querySelector('.brief .acts');
-  if(brief) brief.classList.toggle('offtab', TAB!=='analytics');
-  const fb=document.getElementById('focusbar'), fn=document.getElementById('focusnote');
-  const showFocus = TAB==='analytics'||TAB==='strategy';
-  if(fb) fb.classList.toggle('offtab', !showFocus);
-  if(fn) fn.classList.toggle('offtab', !showFocus);
-  document.querySelectorAll('#workspaces button').forEach(b=>b.classList.toggle('on',b.dataset.tab===TAB));
+  const allow=(TOOLS[TOOL]||{tabs:[]}).tabs;
+  document.querySelectorAll('#sections section.blk').forEach(sec=>{
+    sec.classList.toggle('offtab', !allow.includes(sec.dataset.tab||'analytics'));
+  });
+  const inSurvey = TOOL==='survey';
+  ['brief','focusbar','focusnote'].forEach(id=>{
+    const e=document.getElementById(id); if(e) e.classList.toggle('offtab', !inSurvey);
+  });
   buildSecNav();
 }
-function wireWorkspaces(){
-  const nav=document.getElementById('workspaces');
-  if(!nav||!DATA) return;
-  nav.hidden=false;
-  nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
-    TAB=b.dataset.tab; applyTab();
-    window.scrollTo({top:0,behavior:'auto'});
-  });
-  applyTab();
+function wireHub(){
+  document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));
+  const back=$('backtools'); if(back) back.onclick=showHub;
+  const brand=$('brandlink');
+  if(brand) brand.onclick=e=>{ e.preventDefault(); if(ACCESS.ok!==false) showHub(); };
 }
 function buildSecNav(){
   const nav=document.getElementById('secnav'); if(!nav) return;
@@ -3586,7 +3628,7 @@ function buildSecNav(){
   if(!DATA||!secs.length){ nav.hidden=true; return; }
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
-  nav.innerHTML=(TAB==='analytics'?`<button data-t="brief">Brief</button>`:'')+
+  nav.innerHTML=((TOOL==='survey'||FLAT)?`<button data-t="brief">Brief</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.querySelector('h2').textContent)}</button>`).join('');
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const el=document.getElementById(b.dataset.t)||document.getElementById('brief');
@@ -3683,7 +3725,7 @@ function wireCode(){
     if(res.ok){
       localStorage.setItem('terrain-code',code);
       localStorage.setItem('terrain-conf', (res.conf&&res.conf!=='*')?res.conf:(PICKED?PICKED.conf:''));
-      ACCESS=res; hideGate(); showWho();
+      ACCESS=res; hideGate(); showWho(); showHub();
     }else{
       err.className='status err';
       err.textContent='That code was not recognised. Check for a typo, or ask whoever gave it to you.';
@@ -3701,7 +3743,8 @@ function showGate(msg){
 }
 function hideGate(){
   const g=$('gate'); if(g){ g.hidden=true; g.classList.remove('show'); }
-  const a=document.querySelector('.ask'); if(a) a.style.display='';
+  const a=document.querySelector('.ask');
+  if(a) a.style.display = (FLAT||TOOL||DATA) ? '' : 'none';
 }
 function showWho(){
   if(!ACCESS.required||!ACCESS.ok) return;
@@ -4063,7 +4106,7 @@ function render(){
   drawCongregations();
   wireStepper();
   wireProposals(M,levels,SG);
-  wireWorkspaces();
+  if(TOOL) applyTool();
   translateDOM();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
@@ -4223,6 +4266,7 @@ async function run(getGeo){
     if(levels.place&&!levels.cousub){ levels.cousub=levels.place; M.cousub=M.place; delete levels.place; delete M.place; }
     DATA={M,levels,geo}; SCOPE='tract';
     setStatus('');
+    const ask=document.querySelector('.ask'); if(ask&&!FLAT) ask.style.display='none';
     render();
     loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
     loadCongregations(geo);
@@ -4248,6 +4292,7 @@ $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localSt
 $('ver').textContent=VERSION;
 (function boot(){
   initTheme();
+  wireHub();
   initLang();
   initAccess();
   measureTop();
