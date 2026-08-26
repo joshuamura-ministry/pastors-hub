@@ -87,6 +87,23 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .gate h2{font-family:var(--disp);font-size:1.35rem;margin-bottom:6px}
 .whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap}
 .whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;padding:0 0 0 8px}
+.offtab{display:none !important}
+.workspaces{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:8px;margin:18px 0 4px}
+.workspaces[hidden]{display:none}
+.workspaces button{display:flex;flex-direction:column;align-items:flex-start;gap:2px;background:var(--panel);
+  border:1px solid var(--line2);border-radius:12px;padding:13px 15px;cursor:pointer;text-align:left;
+  min-height:60px;box-shadow:var(--shadow);transition:border-color .15s,background .15s}
+.workspaces button b{font-family:var(--disp);font-size:.97rem;font-weight:600;color:var(--ink)}
+.workspaces button span{font-size:.75rem;color:var(--ink3)}
+.workspaces button:hover{border-color:var(--acc)}
+.workspaces button.on{background:var(--acc-dim);border-color:var(--acc)}
+.workspaces button.on b{color:var(--acc)}
+.workspaces button.on span{color:var(--acc-soft)}
+@media print{
+  .workspaces{display:none}
+  /* print the whole report, not just the open workspace */
+  .offtab{display:block !important}
+}
 .secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -459,6 +476,12 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     </div>
   </div>
 
+  <nav class="workspaces" id="workspaces" hidden>
+    <button data-tab="analytics" class="on"><b>Community Analytics</b><span>Who lives here</span></button>
+    <button data-tab="strategy"><b>Strategy</b><span>Where to begin</span></button>
+    <button data-tab="mobilize"><b>Mobilize</b><span>Getting members out</span></button>
+    <button data-tab="case"><b>Make the Case</b><span>Proposals to present</span></button>
+  </nav>
   <div class="secnav" id="secnav" hidden></div>
   <div class="gate" id="gate" hidden>
     <h2>Find your conference</h2>
@@ -484,13 +507,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.0</span></div>
+    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.0';
+const VERSION = 'v5.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3089,6 +3112,10 @@ const ES={
  'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
+ 'Community Analytics':'Análisis comunitario','Who lives here':'Quién vive aquí',
+ 'Strategy':'Estrategia','Where to begin':'Por dónde empezar',
+ 'Mobilize':'Movilizar','Getting members out':'Poner a los miembros en marcha',
+ 'Make the Case':'Presentar el caso','Proposals to present':'Propuestas para presentar',
  // language names, so the brief reads "habla español" rather than "habla Spanish"
  'Spanish':'español','French / Haitian Creole':'francés / criollo haitiano','German':'alemán',
  'Russian / Polish / Slavic':'ruso / polaco / eslavo','Other European':'otro europeo',
@@ -3517,13 +3544,49 @@ async function aiMount(M,levels,geo){
 }
 /* The report is long. This bar lets a pastor jump straight to the part he wants,
    and it only lists sections that are actually visible under the current focus. */
+let TAB='analytics';
+/* ?flat=1 shows every workspace at once — one long page. Printing does the same,
+   because a printed report should contain the whole thing, not the tab that
+   happened to be open. */
+const FLAT=new URLSearchParams(location.search).has('flat');
+/* Four workspaces rather than one long scroll. The section bar below becomes the
+   sub-navigation for whichever workspace is open. */
+function applyTab(){
+  document.querySelectorAll('#sections section.blk').forEach(sec=>{
+    sec.classList.toggle('offtab', !FLAT && (sec.dataset.tab||'analytics')!==TAB);
+  });
+  if(FLAT){
+    ['brief','focusbar','focusnote'].forEach(id=>{const e=document.getElementById(id); if(e) e.classList.remove('offtab');});
+    const w=document.getElementById('workspaces'); if(w) w.hidden=true;
+    return;
+  }
+  const brief=document.getElementById('brief'), acts=document.querySelector('.brief .acts');
+  if(brief) brief.classList.toggle('offtab', TAB!=='analytics');
+  const fb=document.getElementById('focusbar'), fn=document.getElementById('focusnote');
+  const showFocus = TAB==='analytics'||TAB==='strategy';
+  if(fb) fb.classList.toggle('offtab', !showFocus);
+  if(fn) fn.classList.toggle('offtab', !showFocus);
+  document.querySelectorAll('#workspaces button').forEach(b=>b.classList.toggle('on',b.dataset.tab===TAB));
+  buildSecNav();
+}
+function wireWorkspaces(){
+  const nav=document.getElementById('workspaces');
+  if(!nav||!DATA) return;
+  nav.hidden=false;
+  nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    TAB=b.dataset.tab; applyTab();
+    window.scrollTo({top:0,behavior:'auto'});
+  });
+  applyTab();
+}
 function buildSecNav(){
   const nav=document.getElementById('secnav'); if(!nav) return;
-  const secs=[...document.querySelectorAll('#sections section.blk')].filter(x=>!x.classList.contains('hidden'));
+  const secs=[...document.querySelectorAll('#sections section.blk')]
+    .filter(x=>!x.classList.contains('hidden')&&!x.classList.contains('offtab'));
   if(!DATA||!secs.length){ nav.hidden=true; return; }
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
-  nav.innerHTML=`<button data-t="brief">Brief</button>`+
+  nav.innerHTML=(TAB==='analytics'?`<button data-t="brief">Brief</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.querySelector('h2').textContent)}</button>`).join('');
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const el=document.getElementById(b.dataset.t)||document.getElementById('brief');
@@ -3878,13 +3941,13 @@ function render(){
     ${shift}
   </div></section>`);
   const topL=me.langs.slice(0,6);
-  secs.push(`<section class="blk" data-theme="language"><h2>Language</h2><div class="grid">
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2><div class="grid">
     ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
     ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
     <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
     ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
   </div></section>`);
-  secs.push(`<section class="blk" data-theme="housing"><h2>Housing &amp; distress</h2><div class="grid">
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="housing"><h2>Housing &amp; distress</h2><div class="grid">
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
     ${card('Severely rent-burdened',me.rent50,fmtPct,pick('rent50'),S,'renters paying 50%+ of income')}
@@ -3906,12 +3969,12 @@ function render(){
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
   const SG=suggestions(M,SCOPE);
-  secs.push(`<section class="blk" data-theme="faith"><h2>Churches nearby</h2>
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>
     <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
     <div id="congslot"></div>
   </section>`);
 
-  secs.push(`<section class="blk" data-theme="prompts"><h2>Where to look</h2>
+  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
@@ -3951,7 +4014,7 @@ function render(){
   </section>`);
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES);
-  secs.push(`<section class="blk" data-theme="mobilize"><h2>Mobilization</h2>
+  secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
     <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.</p>
 
     <div class="sugcat">Talking to people who are not Adventists</div>
@@ -3988,7 +4051,7 @@ function render(){
     ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
   </section>`);
 
-  secs.push(`<section class="blk" data-theme="case"><h2>Make the case</h2>
+  secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>
     <p class="note" style="margin-bottom:12px">The same findings, argued to the group that has to act on them. Choose who you are speaking to — the figures stay the same, the emphasis, the ask and the objections change.</p>
     <div class="audgrid">${AUD.map(a=>`<button class="audbtn" data-aud="${a.id}"><span>${a.icon}</span>${esc(a.label)}</button>`).join('')}</div>
     <div id="propslot"></div>
@@ -4000,6 +4063,7 @@ function render(){
   drawCongregations();
   wireStepper();
   wireProposals(M,levels,SG);
+  wireWorkspaces();
   translateDOM();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
   if(DATA&&ZONES_STATE!=='loading'&&ZONES_R!==wantR) loadZones(DATA.geo,DATA.M,wantR);
