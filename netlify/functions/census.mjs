@@ -4,7 +4,11 @@
 // does not apply. Auto-detected at /.netlify/functions/census — no config file.
 //
 // Only these two hosts are allowed, so this can never be used as an open proxy.
-const ALLOWED = new Set(['geocoding.geo.census.gov', 'api.census.gov', 'tigerweb.geo.census.gov']);
+const ALLOWED = new Set([
+  'geocoding.geo.census.gov', 'api.census.gov', 'tigerweb.geo.census.gov',
+  // OpenStreetMap's query service, for congregations near the church
+  'overpass-api.de', 'overpass.kumi.systems'
+]);
 
 // Access codes. Set TERRAIN_CODES in Netlify as a comma-separated list. Each entry
 // is either CODE or CODE:Name, e.g.  PA-JMURA:Joshua Mura, PA-WEST:Bill Carter
