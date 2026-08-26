@@ -106,6 +106,14 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
   font-size:.82rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:42px}
 .backtools:hover{border-color:var(--acc);color:var(--acc)}
 .toolname{font-family:var(--disp);font-size:1.05rem;font-weight:600;color:var(--ink)}
+.changech{margin-left:auto}
+.changech[hidden]{display:none}
+.recent{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+.recent .rlab{font-size:.74rem;color:var(--ink3);align-self:center;margin-right:2px}
+.recent button{background:var(--panel2);border:1px solid var(--line2);border-radius:999px;padding:8px 13px;
+  font-size:.8rem;color:var(--ink2);cursor:pointer;min-height:40px;max-width:100%;overflow:hidden;
+  text-overflow:ellipsis;white-space:nowrap}
+.recent button:hover{border-color:var(--acc);color:var(--acc)}
 @media print{.hub,.toolbar{display:none} .offtab{display:block !important}}
 .secnav[hidden]{display:none}
 #datacred[hidden]{display:none}
@@ -233,7 +241,14 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .ext a{display:block;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;color:var(--ink)}
 .ext a span{display:block;font-size:.78rem;color:var(--ink2);margin-top:2px}
 .ext a:hover{border-color:var(--line2);text-decoration:none}
-.focusbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0}
+.focusbar{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 0;align-items:flex-start}
+.focustoggle{display:flex;align-items:center;gap:8px}
+.focustoggle .fk{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+.focustoggle .fcar{color:var(--ink3);font-size:.7rem}
+.focustoggle.on .fk,.focustoggle.on .fcar{color:var(--acc)}
+.focusclear{color:var(--ink3) !important}
+.focusmenu{flex-basis:100%;display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;padding-top:10px;border-top:1px solid var(--line)}
+.focusmenu.hide{display:none}
 .focusbar button{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;font-size:.82rem;font-weight:600;
   color:var(--ink2);cursor:pointer;min-height:40px;transition:border-color .18s ease,color .18s ease,background .18s ease}
 .focusbar button:hover{border-color:var(--ink3);color:var(--ink)}
@@ -468,6 +483,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
       <button class="btn ghost" id="loc">Use my location</button>
       <span class="hint">Standing in the parking lot? Tap this.</span>
     </div>
+    <div id="recentwrap"></div>
     <div class="status" id="status" aria-live="polite"></div>
     <div class="setup" id="setup" style="display:none">
       <h3>One-time setup: a free Census key</h3>
@@ -500,6 +516,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <div class="toolbar" id="toolbar" hidden>
     <button class="backtools" id="backtools">← Tools</button>
     <span class="toolname" id="toolname"></span>
+    <button class="backtools changech" id="changech" hidden>Change church</button>
   </div>
   <div class="secnav" id="secnav" hidden></div>
   <div class="gate" id="gate" hidden>
@@ -526,13 +543,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.5</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.7</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.5';
+const VERSION = 'v5.7';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3139,7 +3156,7 @@ const ES={
    'Quién vive alrededor de su iglesia: ingresos, idiomas, niños, adultos mayores y vivienda, con las manzanas por donde empezar y cómo movilizar a los miembros.',
  'Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.':
    'Convierta los hallazgos en una propuesta escrita para la sala en la que va a entrar: junta, ancianos, diáconos o cualquiera de doce ministerios.',
- '← Tools':'← Herramientas','Pastors Hub':'Pastors Hub',
+ '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Pastors Hub':'Pastors Hub',
  'Community Analytics':'Análisis comunitario','Who lives here':'Quién vive aquí',
  'Strategy':'Estrategia','Where to begin':'Por dónde empezar',
  'Mobilize':'Movilizar','Getting members out':'Poner a los miembros en marcha',
@@ -3595,9 +3612,11 @@ function showHub(){
   window.scrollTo({top:0,behavior:'auto'});
 }
 function openTool(id){
+  setTimeout(renderRecent,0);
   TOOL=id;
   const hub=$('hub'); if(hub) hub.hidden=true;
   const bar=$('toolbar'); if(bar){ bar.hidden=false; $('toolname').textContent=TOOLS[id].name; }
+  const ch=$('changech'); if(ch) ch.hidden=!DATA;
   const ask=document.querySelector('.ask'); if(ask) ask.style.display=DATA?'none':'';
   if(DATA){ $('report').classList.add('show'); applyTool(); }
   window.scrollTo({top:0,behavior:'auto'});
@@ -3605,6 +3624,35 @@ function openTool(id){
 /* The place line: inside a single-purpose tool the church address leads, because
    that is the anchor there. In the survey the tract leads, because the sections
    below are about the tract. */
+/* A two-church district switches back and forth constantly, so the last few
+   addresses stay one tap away. Device-local, like everything else here. */
+function recentGet(){ try{ return JSON.parse(localStorage.getItem('terrain-recent')||'[]'); }catch(e){ return []; } }
+function recentAdd(addr){
+  if(!addr) return;
+  const list=recentGet().filter(x=>x.toLowerCase()!==addr.toLowerCase());
+  list.unshift(addr);
+  try{ localStorage.setItem('terrain-recent',JSON.stringify(list.slice(0,5))); }catch(e){}
+}
+function renderRecent(){
+  const host=document.getElementById('recentwrap'); if(!host) return;
+  const list=recentGet();
+  if(!list.length){ host.innerHTML=''; return; }
+  host.innerHTML=`<div class="recent"><span class="rlab">Recent:</span>`+
+    list.map((a,i)=>`<button data-r="${i}" title="${esc(a)}">${esc(a.length>34?a.slice(0,32)+'\u2026':a)}</button>`).join('')+`</div>`;
+  host.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+    const a=recentGet()[+b.dataset.r];
+    const inp=document.getElementById('addr');
+    if(inp){ inp.value=a; document.getElementById('go').click(); }
+  });
+}
+function showAddressForm(){
+  const ask=document.querySelector('.ask'); if(!ask) return;
+  ask.style.display='';
+  const inp=document.getElementById('addr');
+  if(inp){ inp.value=''; inp.focus(); }
+  renderRecent();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 function renderPlace(levels,geo){
   const el=document.getElementById('place'); if(!el) return;
   const single=TOOL&&(TOOLS[TOOL]||{tabs:[]}).tabs.length===1&&!FLAT;
@@ -3641,6 +3689,7 @@ function applyTool(){
 function wireHub(){
   document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));
   const back=$('backtools'); if(back) back.onclick=showHub;
+  const ch=$('changech'); if(ch) ch.onclick=showAddressForm;
   const brand=$('brandlink');
   if(brand) brand.onclick=e=>{ e.preventDefault(); if(ACCESS.ok!==false) showHub(); };
 }
@@ -3802,7 +3851,11 @@ async function initAccess(){
       }).filter(Boolean);
       listConferences(hit,'');
     });
-  } else { hideGate(); showWho(); }
+  } else {
+    hideGate(); showWho();
+    // A returning pastor with a stored code lands on the hub, not a blank page.
+    if(!FLAT&&!DATA) showHub();
+  }
 }
 function measureTop(){
   const t=document.querySelector('.top');
@@ -3900,12 +3953,27 @@ function wireStepper(){
   };
   draw();
 }
+/* One control, not a second row of chips. The section bar above already lists
+   Housing, Language, Families and Churches nearby; a parallel row of nearly the
+   same words was doing a different job under almost the same names. */
+let FOCUS_OPEN=false;
 function renderFocus(){
-  $('focusbar').innerHTML=`<button class="all ${FOCUS.size?'':'on'}" data-f="">Everything</button>`+
-    FOCUS_DEFS.map(f=>`<button class="${FOCUS.has(f.k)?'on':''}" data-f="${f.k}" aria-pressed="${FOCUS.has(f.k)}">${esc(f.label)}</button>`).join('');
-  $('focusbar').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  const label = FOCUS.size ? focusLabel() : (LANG==='es'?'Todo':'Everything');
+  $('focusbar').innerHTML=
+    `<button class="focustoggle ${FOCUS.size?'on':''}" id="focustoggle" aria-expanded="${FOCUS_OPEN}">`+
+      `<span class="fk">${LANG==='es'?'Enfoque':'Focus'}</span>${esc(label)}<span class="fcar">${FOCUS_OPEN?'\u25B4':'\u25BE'}</span></button>`+
+    (FOCUS.size?`<button class="focusclear" data-f="">${LANG==='es'?'Quitar filtro':'Clear'}</button>`:'')+
+    `<div class="focusmenu ${FOCUS_OPEN?'':'hide'}">`+
+      FOCUS_DEFS.map(f=>`<button class="${FOCUS.has(f.k)?'on':''}" data-f="${f.k}" aria-pressed="${FOCUS.has(f.k)}">${esc(f.label)}</button>`).join('')+
+    `</div>`;
+  const t=document.getElementById('focustoggle');
+  if(t) t.onclick=()=>{ FOCUS_OPEN=!FOCUS_OPEN; renderFocus(); };
+  // the menu is built after the translation pass, so translate it here too
+  if(typeof translateDOM==='function') translateDOM();
+  $('focusbar').querySelectorAll('[data-f]').forEach(b=>b.onclick=()=>{
     const k=b.dataset.f;
-    if(!k) FOCUS.clear(); else FOCUS.has(k)?FOCUS.delete(k):FOCUS.add(k);
+    if(!k){ FOCUS.clear(); FOCUS_OPEN=false; }
+    else FOCUS.has(k)?FOCUS.delete(k):FOCUS.add(k);
     renderFocus(); applyFocus();
   });
 }
@@ -3927,8 +3995,8 @@ function applyFocus(){
   buildSecNav();
   const note=$('focusnote');
   if(!on){ note.innerHTML = LANG==='es'
-      ? `Mostrando todo — ${shownP} indicacion${shownP===1?'':'es'} en todos los temas. Toque una etiqueta para filtrar.`
-      : `Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Tap a chip above to narrow it.`; }
+      ? `Mostrando todo — ${shownP} indicacion${shownP===1?'':'es'} en todos los temas. Use Enfoque para filtrar.`
+      : `Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Use Focus to narrow it.`; }
   else{
     note.innerHTML = LANG==='es'
       ? `Filtrado por <b style="color:var(--ink2)">${esc(focusLabel())}</b> — mostrando ${shownP} de ${shownP+hiddenP} indicaciones`+
@@ -4293,6 +4361,8 @@ async function run(getGeo){
     DATA={M,levels,geo}; SCOPE='tract';
     setStatus('');
     const ask=document.querySelector('.ask'); if(ask&&!FLAT) ask.style.display='none';
+    recentAdd((geo.matched||document.getElementById('addr').value||'').trim());
+    const ch=document.getElementById('changech'); if(ch&&TOOL) ch.hidden=false;
     render();
     loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
     loadCongregations(geo);
