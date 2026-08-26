@@ -107,6 +107,8 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .backtools:hover{border-color:var(--acc);color:var(--acc)}
 .toolname{font-family:var(--disp);font-size:1.05rem;font-weight:600;color:var(--ink)}
 @media print{.hub,.toolbar{display:none} .offtab{display:block !important}}
+.secnav[hidden]{display:none}
+#datacred[hidden]{display:none}
 .secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -120,7 +122,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
   box-shadow:0 6px 22px -10px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;min-height:44px}
 .totop:hover{border-color:var(--acc);color:var(--acc)}
 .totop[hidden]{display:none}
-section.blk,#brief{scroll-margin-top:calc(var(--topH,58px) + 62px)}
+section.blk,#brief,#propslot{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 @media print{.secnav,.totop{display:none}}
 .themebtn{background:var(--panel);border:1px solid var(--line2);border-radius:10px;width:40px;height:40px;cursor:pointer;
   font-size:1rem;line-height:1;color:var(--ink2);flex:none;display:flex;align-items:center;justify-content:center}
@@ -523,14 +525,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
-    <div><b>TERRAIN</b> · Community Map</div>
-    <div>Data: U.S. Census Bureau, ACS 5-year · <span id="ver">v5.2</span></div>
+    <div><b>TERRAIN</b> · Pastors Hub</div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.2';
+const VERSION = 'v5.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3581,6 +3583,7 @@ const TOOLS={
   case:  {name:'Make the Case',    tabs:['case']}
 };
 function showHub(){
+  const dc=document.getElementById('datacred'); if(dc&&!FLAT) dc.hidden=true;
   // In flat view there is no hub — everything is on one page already.
   if(FLAT){ const a=document.querySelector('.ask'); if(a) a.style.display=''; return; }
   TOOL=null;
@@ -3599,7 +3602,19 @@ function openTool(id){
   if(DATA){ $('report').classList.add('show'); applyTool(); }
   window.scrollTo({top:0,behavior:'auto'});
 }
+/* The place line: inside a single-purpose tool the church address leads, because
+   that is the anchor there. In the survey the tract leads, because the sections
+   below are about the tract. */
+function renderPlace(levels,geo){
+  const el=document.getElementById('place'); if(!el) return;
+  const single=TOOL&&(TOOLS[TOOL]||{tabs:[]}).tabs.length===1&&!FLAT;
+  el.innerHTML = single
+    ? `${geo.matched?`<b>${esc(geo.matched)}</b>`:`<b>${esc(levels.tract.name)}</b>`}<span>${esc(levels.tract.name)} \u00b7 ${esc(levels.cousub?levels.cousub.name+', ':'')}${esc(levels.county.name)}</span>`
+    : `<b>${esc(levels.tract.name)}</b> <span>in ${esc(levels.cousub?levels.cousub.name:'')}${levels.cousub?', ':''}${esc(levels.county.name)}</span>${geo.matched?`<span>\u00b7 ${esc(geo.matched)}</span>`:''}`;
+}
 function applyTool(){
+  const dc=document.getElementById('datacred');
+  if(dc) dc.hidden = !(FLAT || TOOL==='survey');
   if(FLAT){
     document.querySelectorAll('.offtab').forEach(e=>e.classList.remove('offtab'));
     const hub=$('hub'); if(hub) hub.hidden=true;
@@ -3609,11 +3624,19 @@ function applyTool(){
   document.querySelectorAll('#sections section.blk').forEach(sec=>{
     sec.classList.toggle('offtab', !allow.includes(sec.dataset.tab||'analytics'));
   });
+  const single=(TOOLS[TOOL]||{tabs:[]}).tabs.length===1;
+  // One section means the tool bar already names it: no chip bar, no repeated heading
+  const nav=document.getElementById('secnav'); if(nav&&single) nav.hidden=true;
+  document.querySelectorAll('#sections section.blk').forEach(sec=>{
+    const h=sec.querySelector('h2'); if(h) h.classList.toggle('offtab', single&&!FLAT);
+  });
+  const sc=document.getElementById('scope'); if(sc) sc.classList.toggle('offtab', single&&!FLAT);
+  if(DATA) try{ renderPlace(DATA.levels,DATA.geo); }catch(e){}
   const inSurvey = TOOL==='survey';
   ['brief','focusbar','focusnote'].forEach(id=>{
     const e=document.getElementById(id); if(e) e.classList.toggle('offtab', !inSurvey);
   });
-  buildSecNav();
+  if(!single) buildSecNav();
 }
 function wireHub(){
   document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));
@@ -3845,7 +3868,10 @@ function wireProposals(M,levels,SG){
     };
     document.getElementById('propprint').onclick=()=>window.print();
     translateDOM();
-    slot.scrollIntoView({behavior:'smooth',block:'start'});
+    // scroll so the top of the proposal clears the sticky header, not under it
+    const y=slot.getBoundingClientRect().top+window.scrollY
+            -((parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58)+16);
+    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
   });
 }
 function wireStepper(){
@@ -3917,7 +3943,7 @@ function applyFocus(){
 function render(){
   if(!DATA) return; const {M,levels,geo}=DATA; const me=M[SCOPE]; const cty=M.county;
   const pick=k=>Object.fromEntries(Object.keys(levels).map(l=>[l,M[l][k]]));
-  $('place').innerHTML=`<b>${esc(levels.tract.name)}</b> <span>in ${esc(levels.cousub?levels.cousub.name:'')}${levels.cousub?', ':''}${esc(levels.county.name)}</span>${geo.matched?`<span>· ${esc(geo.matched)}</span>`:''}`;
+  renderPlace(levels,geo);
   $('scope').innerHTML=Object.keys(levels).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
   $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;render();});
   renderFocus();
