@@ -8,7 +8,7 @@
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /* ============================================================
    TERRAIN · Community Map · v1.0
@@ -26,6 +26,7 @@
   --font:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Space Grotesk','Manrope',system-ui,sans-serif;
   --r:14px;
+  --script:'Cormorant Garamond',Georgia,serif;
 }
 :root[data-theme="dark"]{
   --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
@@ -56,7 +57,7 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
   box-shadow:0 0 0 3px var(--acc-dim),0 0 12px var(--acc-glow)}
 nav.tools{display:flex;gap:4px;margin-left:auto}
 .top .in{gap:10px}
-nav.tools a{font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
+nav.tools a{min-height:40px;display:flex;align-items:center;font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
 /* Fixed 38px tiles rather than fluid ones: at 11 columns a fluid grid collapses
    to ~26px on a phone, which is below a reliable tap target. The map scrolls
@@ -86,8 +87,30 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .gate.show{display:block}
 .gate h2{font-family:var(--disp);font-size:1.35rem;margin-bottom:6px}
 .whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap}
-.whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;padding:0 0 0 8px}
+.whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;
+  padding:11px 4px 11px 10px;min-height:44px}
 .offtab{display:none !important}
+/* Quotations. Ellen White in the script face, Scripture in the display face,
+   both with the citation beneath. Restrained: a hairline rule and a small
+   diamond rather than anything ornamental. */
+.egw{position:relative;margin:22px 0;padding:24px 22px 20px;border-radius:var(--r);
+  background:linear-gradient(160deg,var(--acc-dim),transparent 70%);border:1px solid var(--line2)}
+.egw::before{content:"";position:absolute;left:0;top:18px;bottom:18px;width:3px;border-radius:3px;
+  background:linear-gradient(180deg,var(--acc),transparent)}
+.egw q{display:block;quotes:none;font-family:var(--script);font-style:italic;font-weight:600;
+  font-size:clamp(1.22rem,4.4vw,1.65rem);line-height:1.5;color:var(--ink);letter-spacing:.005em}
+.egw cite{display:block;margin-top:12px;font-style:normal;font-size:.78rem;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--acc);font-weight:700}
+.verse{display:flex;gap:12px;align-items:flex-start;margin:0 0 16px;padding:12px 0 0}
+.verse .vmark{color:var(--acc);opacity:.5;font-size:1rem;line-height:1.4;flex:none}
+.verse q{quotes:none;font-family:var(--script);font-style:italic;font-size:1.06rem;line-height:1.55;color:var(--ink2)}
+.verse cite{display:block;font-style:normal;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink3);font-weight:700;margin-top:5px}
+.hubwelcome{text-align:center;padding:6px 0 2px}
+.hubwelcome h2{font-family:var(--disp);font-size:clamp(1.9rem,6.5vw,2.6rem)}
+.rule{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--line2)}
+.rule::before,.rule::after{content:"";flex:1;height:1px;background:var(--line2)}
+.rule span{color:var(--acc);opacity:.55;font-size:.75rem}
 .hub{margin-top:26px}
 .hub[hidden]{display:none}
 .hub h2{font-family:var(--disp);font-size:clamp(1.5rem,5vw,2rem);font-weight:600;color:var(--ink);margin-bottom:4px}
@@ -292,7 +315,7 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .mapcredit{position:absolute;right:0;bottom:0;background:color-mix(in srgb, var(--panel) 88%, transparent);
   font-size:.64rem;color:var(--ink3);padding:2px 7px;border-top-left-radius:8px;line-height:1.5}
 .mapcredit a{color:var(--ink2)}
-.zdir{display:inline-block;margin-top:8px;font-size:.78rem;font-weight:600}
+.zdir{display:inline-flex;align-items:center;margin-top:6px;font-size:.8rem;font-weight:600;min-height:44px;padding:4px 0}
 .speak{width:100%;border-collapse:collapse;font-size:.84rem}
 .speak th{text-align:left;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);padding:0 0 8px;font-weight:700}
 .speak td{padding:9px 0;border-top:1px solid var(--line);vertical-align:top}
@@ -311,21 +334,46 @@ ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:6px;heig
 .audbtn span{font-size:1.15rem;flex:none}
 .audbtn:hover{border-color:var(--acc)}
 .audbtn.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
-.prop{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:20px 18px;box-shadow:var(--shadow)}
-.prophead{border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:14px}
-.propk{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:5px}
-.prophead h3{font-family:var(--disp);font-size:1.2rem;font-weight:600;color:var(--ink);line-height:1.25}
-.props{margin-bottom:16px}
-.props>b{display:block;font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:7px}
-.props p{font-size:.88rem;color:var(--ink2);line-height:1.7;margin-bottom:8px}
+.prop{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:26px 22px 24px;box-shadow:var(--shadow)}
+.prophead{border-bottom:2px solid var(--acc);padding-bottom:14px;margin-bottom:20px}
+.propk{font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:7px}
+.prophead h3{font-family:var(--disp);font-size:clamp(1.3rem,4.6vw,1.65rem);font-weight:600;color:var(--ink);line-height:1.2}
+.props{margin-bottom:24px}
+.props>b{display:block;font-family:var(--disp);font-size:1.02rem;font-weight:700;color:var(--acc);
+  text-transform:none;letter-spacing:-.01em;margin-bottom:9px}
+.props p{font-size:.97rem;color:var(--ink2);line-height:1.75;margin-bottom:12px}
 .props p b{color:var(--ink);font-weight:600}
-.propopen{font-family:var(--disp);font-size:1rem !important;color:var(--ink) !important;line-height:1.6 !important;
-  padding-left:12px;border-left:3px solid var(--acc);margin-bottom:12px !important}
-.propnote{font-size:.8rem !important;color:var(--ink3) !important;font-style:italic}
-.objx{font-size:.86rem;color:var(--ink2);line-height:1.65;padding-left:12px;border-left:2px solid var(--line2);margin-bottom:11px}
-.objx span{display:block;font-weight:600;color:var(--ink);margin-bottom:3px}
-.propclose{border-top:1px solid var(--line);padding-top:13px;margin-top:4px}
-.propclose p{font-family:var(--disp);font-size:.98rem;color:var(--ink);line-height:1.6}
+.props ul.plain li{font-size:.95rem;line-height:1.7}
+.propnote{font-size:.85rem !important;color:var(--ink3) !important;font-style:italic}
+.propopen{font-family:var(--disp);font-size:clamp(1.05rem,3.6vw,1.22rem) !important;color:var(--ink) !important;
+  line-height:1.55 !important;padding:14px 0 14px 16px;border-left:4px solid var(--acc);
+  background:linear-gradient(90deg,var(--acc-dim),transparent 70%);border-radius:0 8px 8px 0;margin-bottom:16px !important}
+.objx{font-size:.95rem;color:var(--ink2);line-height:1.7;padding:13px 15px;background:var(--panel2);
+  border:1px solid var(--line);border-radius:10px;margin-bottom:10px;border-left:3px solid var(--line2)}
+.objx span{display:block;font-weight:700;color:var(--ink);margin-bottom:5px;font-size:.95rem}
+.propclose{border-top:1px solid var(--line);padding-top:18px;margin-top:6px}
+.propclose p{font-family:var(--disp);font-size:clamp(1.05rem,3.6vw,1.2rem);color:var(--ink);line-height:1.6;font-weight:500}
+.propclose p+p{margin-top:10px;font-size:.97rem;color:var(--ink2);font-family:var(--sans);font-weight:400}
+/* Different audiences show a different number of charts, so the block changes
+   height. Chrome's scroll anchoring compensates by moving the page — which is
+   exactly the jumping we removed. Turn it off here. */
+#propslot{overflow-anchor:none}
+.donuts{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin:18px 0 20px}
+.donutbox{margin:0;background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:16px 14px 14px}
+.donutbox figcaption{font-family:var(--disp);font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:10px;text-align:center}
+.dwrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.donutsvg{width:150px;height:150px;flex:none}
+.dctr{font-family:var(--disp);font-weight:700;font-size:17px;fill:var(--ink)}
+.dsub{font-size:8px;fill:var(--ink3)}
+.dlegend{width:100%;display:flex;flex-direction:column;gap:6px}
+.dlg{display:flex;align-items:center;gap:8px;font-size:.83rem;color:var(--ink2)}
+.dlg i{width:11px;height:11px;border-radius:3px;flex:none}
+.dlg span{flex:1}
+.dlg b{color:var(--ink);font-weight:700}
+.dlchart{width:100%;margin-top:12px;background:none;border:1px solid var(--line2);border-radius:9px;
+  padding:9px;font-size:.78rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:40px}
+.dlchart:hover{border-color:var(--acc);color:var(--acc)}
+@media print{.dlchart{display:none}}
 .propacts{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
 .propacts .btn{flex:1 1 auto}
 .steptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px}
@@ -498,8 +546,15 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   </div>
 
   <div class="hub" id="hub" hidden>
-    <h2>Your tools</h2>
-    <p class="sub">Choose what you need. More will appear here as they are built.</p>
+    <div class="hubwelcome">
+      <h2>Welcome</h2>
+      <p class="sub">Choose what you need. More will appear here as they are built.</p>
+    </div>
+    <div class="egw">
+      <q>Christ's method alone will give true success in reaching the people. The Saviour mingled with men as one who desired their good. He showed His sympathy for them, ministered to their needs, and won their confidence. Then He bade them, &ldquo;Follow Me.&rdquo;</q>
+      <cite>Ellen G. White &middot; The Ministry of Healing, p. 143</cite>
+    </div>
+    <div class="rule"><span>&#10022;</span></div>
     <div class="tools">
       <button class="tool" data-tool="survey">
         <span class="tico">🗺️</span>
@@ -543,13 +598,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v5.8</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v5.8';
+const VERSION = 'v6.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1641,7 +1696,87 @@ const RULES=[
   t:()=>`Immigration is reshaping this area now`,
   do:()=>[`This is a trend, not a snapshot — plan for where it is heading, not where it was.`,
           `Second-generation children often bridge two worlds and carry the strain of it.`],
-  ask:()=>`Who arrived here in the last five years and would be willing to tell you honestly how it went?`}
+  ask:()=>`Who arrived here in the last five years and would be willing to tell you honestly how it went?`},
+ {id:'grandparents', t:()=>`Grandparents are raising children here`, th:['families'],
+  when:m=>m.grandKids>=4||(m.seniorsAlone>=10&&m.kidsShare>=22),
+  ev:m=>`Older adults and children both make up a large share of this block \u2014 the pattern of grandparents raising grandchildren.`,
+  steps:['Ask the school who is picking the children up. The answer is often grandparents.',
+         'Time anything for children so a sixty-eight-year-old can attend it \u2014 daytime, seated, and close.',
+         'Offer respite before you offer teaching. These households are tired in a particular way.'],
+  ask:'Who in this neighbourhood is raising a grandchild? Ask at the school gate, not from the pulpit.',
+  ideas:['senior-day','kids-health','family-life-series']},
+ {id:'veterans', t:()=>`There are likely veterans on these streets`, th:['people','hardship'],
+  when:m=>m.pop>=1500,
+  ev:m=>`In a block of ${fmtNum(m.pop)} people there will be veterans, and their needs \u2014 isolation, injury, paperwork \u2014 are rarely met by a general programme.`,
+  steps:['Find the nearest VA office and know its hours before you need them.',
+         'A veterans\u2019 coffee morning fills faster than almost anything else a church runs.',
+         'Ask, do not assume. Some want to talk about it and most do not.'],
+  ask:'Who in your congregation served? Start the ministry with them, not for them.',
+  ideas:['senior-day','mental-health','skills-center']},
+ {id:'night-shift', t:()=>`Some of this block is asleep when we meet`, th:['hardship','housing'],
+  when:m=>m.occ&&m.occ[1]&&m.occ[1][1]>=20,
+  ev:m=>`${fmtPct(m.occ[1][1])} work service jobs, where nights and weekends are normal and Saturday morning is a working hour.`,
+  steps:['Run one thing after 9pm or before 7am and see who comes.',
+         'Record and share teaching so a night-shift worker is not permanently excluded.',
+         'Ask three neighbours what hours they work before setting any schedule.'],
+  ask:'If a person works every Saturday, is there any way into this church for them at all?',
+  ideas:['study-hall','skills-center','warming']},
+ {id:'disability', t:()=>`Access decides who can come at all`, th:['seniors','housing'],
+  when:m=>m.medAge>=42||m.seniorsAlone>=10,
+  ev:m=>`With a median age of ${m.medAge} and ${fmtPct(m.seniorsAlone)} of households a senior alone, mobility and hearing shape attendance more than interest does.`,
+  steps:['Walk your own entrance with a stick, a wheelchair and a pram. Fix what you find.',
+         'Check the hearing loop actually works. Most do not.',
+         'Large print costs nothing and is noticed immediately.'],
+  ask:'Could somebody with a walking frame get from the car park to a seat unaided today?',
+  ideas:['senior-day','walking-club','free-venue']},
+ {id:'grief', t:()=>`Grief is unattended here`, th:['seniors','people'],
+  when:m=>m.seniorsAlone>=9||m.medAge>=45,
+  ev:m=>`An older neighbourhood produces a steady stream of bereavement, and almost nobody runs anything for it.`,
+  steps:['A six-week grief group needs one trained leader and a quiet room.',
+         'Contact the local funeral directors \u2014 they know who has nobody.',
+         'The second year is lonelier than the first. Diary the anniversary.'],
+  ask:'Who has been widowed in this neighbourhood in the last two years, and who visited them?',
+  ideas:['grief','senior-day','mental-health']},
+ {id:'debt', t:()=>`Debt is doing quiet damage`, th:['hardship','housing'],
+  when:m=>m.rent50>=20||m.snap>=12,
+  ev:m=>`${fmtPct(m.rent50)} of renters pay over half their income in rent${m.snap>=12?` and ${fmtPct(m.snap)} of households receive SNAP`:''} \u2014 the conditions where debt takes hold.`,
+  steps:['A budgeting course is more useful than a food parcel, and far less often offered.',
+         'Know which local agency renegotiates debt before somebody asks you.',
+         'Say plainly that the church does not lend money, and mean it \u2014 it protects everyone.'],
+  ask:'Where does somebody here go when the payday loan comes due?',
+  ideas:['budget-course','skills-center','free-venue']},
+ {id:'newborn', t:()=>`New babies arrive here constantly`, th:['families'],
+  when:m=>m.kidsShare>=24&&m.medAge<=38,
+  ev:m=>`A young neighbourhood \u2014 median age ${m.medAge}, ${fmtPct(m.kidsShare)} children \u2014 means new mothers on these streets every month.`,
+  steps:['A meal rota after a birth is the most-accepted help a church offers, member or not.',
+         'A weekday parent-and-baby hour costs a room and a kettle.',
+         'Ask the health visitor what is missing locally. They will tell you exactly.'],
+  ask:'Who had a baby on this street in the last six months, and did anyone bring a meal?',
+  ideas:['family-life-series','kids-health','meals']},
+ {id:'isolationyoung', t:()=>`Young adults here are more alone than they look`, th:['people'],
+  when:m=>m.medAge<=34&&m.renters>=40,
+  ev:m=>`A young, renting neighbourhood \u2014 median age ${m.medAge}, ${fmtPct(m.renters)} renting \u2014 usually means people living far from family and moving often.`,
+  steps:['A shared meal beats an event. Cook, do not programme.',
+         'Sunday evening is the loneliest hour of the week for people living alone.',
+         'Ask them to help with something within a month, or they will drift.'],
+  ask:'Who ate alone last night within a hundred yards of this building?',
+  ideas:['meals','study-hall','sanctuary-music']},
+ {id:'commuters', t:()=>`This is a neighbourhood people leave each morning`, th:['hardship','change'],
+  when:m=>m.occ&&m.occ[0]&&m.occ[0][1]>=38&&m.noCar<=8,
+  ev:m=>`${fmtPct(m.occ[0][1])} work professional roles and almost everyone has a car \u2014 a commuter pattern, where the streets empty at eight and refill at seven.`,
+  steps:['Nothing scheduled between 9am and 5pm on a weekday will reach these households.',
+         'Saturday morning and Sunday afternoon are the only genuinely free blocks.',
+         'Anything offered must be finite and diarised, or it will not be accepted.'],
+  ask:'What time is this street actually at home? Plan everything around that answer.',
+  ideas:['family-life-series','marriage-course','free-venue']},
+ {id:'foodaccess', t:()=>`Getting food here is harder than it looks`, th:['hardship','housing'],
+  when:m=>m.noCar>=12&&m.snap>=10,
+  ev:m=>`${fmtPct(m.noCar)} of households have no vehicle and ${fmtPct(m.snap)} receive SNAP \u2014 the combination that turns a supermarket two miles away into a real barrier.`,
+  steps:['A lift to a supermarket once a fortnight is worth more than a food parcel.',
+         'Find out what is actually within walking distance, and what it costs there.',
+         'A church car park is a legitimate site for a produce stall.'],
+  ask:'Where does somebody without a car buy fresh food around here, and what does it cost them?',
+  ideas:['garden','lot-market','disaster']}
 ];
 
 function suggestions(M,scope){
@@ -2626,6 +2761,38 @@ function fitMap(){
 }
 window.addEventListener('resize',()=>fitMap());
 
+/* ---- Scripture and Spirit of Prophecy, set against the sections they belong to ----
+   KJV throughout: it is public domain, so it can be quoted in full without
+   restriction, and it is the text most of these congregations read from.
+   Ellen White quotations are given with book and page so a pastor can check
+   them, and are used only where they say something the section actually needs. */
+const SCRIPTURE={
+ economy:  ['The rich and poor meet together: the LORD is the maker of them all.','Proverbs 22:2'],
+ wealth:   ['He that hath pity upon the poor lendeth unto the LORD; and that which he hath given will he pay him again.','Proverbs 19:17'],
+ people:   ['And hath made of one blood all nations of men for to dwell on all the face of the earth, and hath determined the times before appointed, and the bounds of their habitation.','Acts 17:26'],
+ language: ['And I saw another angel fly in the midst of heaven, having the everlasting gospel to preach unto them that dwell on the earth, and to every nation, and kindred, and tongue, and people.','Revelation 14:6'],
+ housing:  ['Is it not to deal thy bread to the hungry, and that thou bring the poor that are cast out to thy house?','Isaiah 58:7'],
+ families: ['God setteth the solitary in families: he bringeth out those which are bound with chains.','Psalm 68:6'],
+ faith:    ['I have planted, Apollos watered; but God gave the increase.','1 Corinthians 3:6'],
+ prompts:  ['Say not ye, There are yet four months, and then cometh harvest? behold, I say unto you, Lift up your eyes, and look on the fields; for they are white already to harvest.','John 4:35'],
+ mobilize: ['The harvest truly is plenteous, but the labourers are few; pray ye therefore the Lord of the harvest, that he will send forth labourers into his harvest.','Matthew 9:37, 38'],
+ 'case':   ['Then I said unto them, Ye see the distress that we are in... come, and let us build up the wall of Jerusalem, that we be no more a reproach... So they strengthened their hands for this good work.','Nehemiah 2:17, 18']
+};
+const EGW={
+ prompts:['By personal labor reach those around you. Become acquainted with them. Preaching will not do the work that needs to be done... By visiting the people, talking, praying, sympathizing with them, you will win hearts.',
+          'Ellen G. White \u00b7 Testimonies for the Church, vol. 9, p. 41'],
+ mobilize:['Many have gone down to ruin who might have been saved, if their neighbors, common men and women, had put forth personal effort for them. Many are waiting to be personally addressed. In the very family, the neighborhood, the town where we live, there is work for us to do as missionaries for Christ.',
+           'Ellen G. White \u00b7 The Desire of Ages, p. 141'],
+ faith:['Our neighbors are not merely our associates and special friends; they are not simply those who belong to our church, or who think as we do. Our neighbors are the whole human family.',
+        'Ellen G. White \u00b7 The Desire of Ages, p. 503'],
+ 'case':['Open your eyes and see who are around you; make yourselves acquainted with the helpless, afflicted, and needy.',
+         'Ellen G. White \u00b7 Testimonies for the Church, vol. 2, p. 29']
+};
+const verseHTML=k=>{ const v=SCRIPTURE[k]; return v?
+  `<div class="verse"><span class="vmark">&#10022;</span><div><q>${esc(v[0])}</q><cite>${esc(v[1])} &middot; KJV</cite></div></div>`:''; };
+const egwHTML=k=>{ const q=EGW[k]; return q?
+  `<div class="egw"><q>${esc(q[0])}</q><cite>${esc(q[1])}</cite></div>`:''; };
+
 /* ================= MAKE THE CASE =================
    The same findings, argued to the group that has to act on them. A board hears
    cost, risk and stewardship; a deacons' meeting hears logistics; a men's
@@ -2638,8 +2805,8 @@ window.addEventListener('resize',()=>fitMap());
 const AUD=[
  {id:'board', label:'Church board', icon:'\u2696\ufe0f',
   care:['cost','risk','stewardship','whether this is a passing enthusiasm'],
-  frame:'This is not a new programme asking for money. It is a decision about whether we know who lives around this building.',
-  gift:'The board is the only body that can commit the calendar, the budget line and the building. Nothing below happens without a vote here.',
+  frame:'This is not a request for a new programme. It is a question about whether we know the people we have been praying for by name, and whether we intend to do anything about it.',
+  gift:'Only the board can turn willingness into a decision. A coordinator, a line in the budget, an evening on the calendar \u2014 without those three, everything below stays a good idea that people talk about warmly and never do.',
   ask:m=>`Approve a named coordinator, a modest line for materials, and the use of the building on one additional evening a week for the next six months.`,
   obj:[['"We have tried outreach before and nothing came of it."',
         'Most efforts fail at follow-up rather than at the door. This proposal names one person to own the list of everyone we meet. That single role is the difference, and it costs nothing but a name.'],
@@ -2647,34 +2814,37 @@ const AUD=[
         'The arithmetic is smaller than it feels. Reaching one in ten households in the nearest block takes about four pairs doing eight visits over two months \u2014 eight members, twice a month.'],
        ['"Why this neighbourhood and not somewhere needier?"',
         'A needier block three miles away is not where a district with our capacity should start. Distance decides whether people actually go.']],
+  close:'A board can approve a plan or approve a delay. Both are decisions, and only one of them will still look right in five years.',
   win:'a written report to the board at ninety days: doors knocked, names gathered, who has been contacted, and one story.'},
 
  {id:'elders', label:'Elders', icon:'\ud83d\udcd6',
   care:['spiritual oversight','doctrinal soundness','the health of the flock'],
-  frame:'The question before us is not whether the neighbourhood needs us. It is whether we are willing to be the ones who go.',
-  gift:'Elders can do what no programme can: model it. When an elder knocks on a door, the congregation learns that this is normal work, not the pastor\u2019s hobby.',
+  frame:'The question is not whether this neighbourhood needs the gospel. It is whether the men who lead this church are willing to be the first ones out of the door.',
+  gift:'An elder knocking on a door teaches the congregation more in one afternoon than a year of appeals. When they see you go, going becomes normal. When they never see you go, it stays the pastor\u2019s hobby.',
   ask:m=>`Each elder to take one apprentice, give one Bible study, and visit two homes a month for six months \u2014 and to report it, briefly, at every elders\u2019 meeting.`,
   obj:[['"I am not trained for this."',
         'You need to be one lesson ahead of the person you study with, not an expert. The pastor takes you the first time, you watch, then you lead while he sits quietly.'],
        ['"My duties are inside the church."',
         'The flock inside is fed by the same work that reaches the flock outside. A congregation that stops going out gets older and smaller, and the pastoral load grows heavier, not lighter.']],
+  close:'The congregation will go where its elders have already been. They will not go anywhere else.',
   win:'every elder has given at least one Bible study and taken at least one member with him.'},
 
  {id:'deacons', label:'Deacons & deaconesses', icon:'\ud83d\udee0\ufe0f',
   care:['practical service','the building','doing things properly'],
-  frame:'Everything the church wants to do in this neighbourhood runs through the practical work you already do.',
-  gift:'Deacons and deaconesses make the difference between an event that happens and an event people return to: the room ready, the welcome warm, the follow-through reliable.',
+  frame:'Everything the church hopes to do in this neighbourhood will pass through your hands before it ever reaches a pulpit.',
+  gift:'You decide whether a visitor comes back. The room ready, the welcome warm, the second visit remembered \u2014 that is not support work, it is the ministry, and no sermon repairs a cold arrival.',
   ask:m=>`Take ownership of the practical side of one recurring community offering: setup, welcome at the door, refreshments, and making sure every visitor is greeted by name the second time.`,
   obj:[['"That is a lot of extra Sabbaths."',
         'It is one fixed evening a month, published a year ahead, shared across the team. Open-ended asks exhaust people; a diary does not.'],
        ['"We already do this for church events."',
         'Same skill, one step further out. The people who set up a fellowship lunch can set up a community meal, and the second is where new faces come.']],
+  close:'Nobody remembers the sermon from their first visit. They remember whether anyone was glad to see them.',
   win:'one community offering running on a fixed monthly date, with the room ready every time.'},
 
  {id:'bible-workers', label:'Bible worker team', icon:'\ud83d\udcda',
   care:['souls','training','being equipped rather than sent out cold'],
-  frame:'The neighbourhood already has people who would study the Bible if somebody asked them. What it lacks is people who ask.',
-  gift:'A Bible worker team turns interest into discipleship. Every other ministry here gathers names; this is the ministry that takes them somewhere.',
+  frame:'There are people on these streets who would open a Bible this month if somebody sat down with them. What is missing is not interest. It is company.',
+  gift:'Every other ministry here gathers names. Yours is the one that takes a person somewhere. Without this team, everything else becomes hospitality with no destination.',
   ask:m=>`Form a team of six who will each carry one Bible study, meet monthly to compare notes and pray, and bring an apprentice within six months.`,
   obj:[['"I could never teach a Bible study."',
         'Most studies are read-and-discuss, not lecture. If you can read a paragraph aloud and ask "what do you make of that?", you can give a Bible study.'],
@@ -2682,95 +2852,185 @@ const AUD=[
         '"That is a good question \u2014 let me find out and bring you the answer next week" is a legitimate answer, and it guarantees a next week.'],
        ['"Where would we even find people who want to study?"',
         'Every other ministry in this plan gathers names. The team does not need to find people; it needs to be ready when the names arrive.']],
+  close:'Somewhere on these streets is a person who would say yes to a Bible study this month. The only question is whether anyone will ask.',
   win:'six studies running, and at least two team members have taken an apprentice of their own.'},
 
  {id:'prayer', label:'Prayer ministry', icon:'\ud83d\ude4f',
   care:['intercession','faithfulness','the spiritual reality behind the numbers'],
-  frame:'Every figure in this report is a household with a name. This ministry is the one that carries them before God by name rather than in general.',
-  gift:'Prayer ministry is the only work here that housebound members can do at full strength \u2014 and it is often the most consistent team in the church.',
+  frame:'Behind every figure in this report is a front door, and behind that door is a family with a name. This ministry is the one that carries them.',
+  gift:'This is the one work that a housebound member can do at full strength, and it is usually the most faithful team in the church. Named streets, named people, prayed for weekly, updated monthly.',
   ask:m=>`Take the streets in the nearest block by name, three names each, and pray weekly \u2014 and receive a short update each month so the praying stays specific.`,
   obj:[['"We already pray for the community."',
         'Generally, yes. This is different: named streets, named people, updated monthly. Specific prayer is sustained prayer.'],
        ['"We cannot get out to visit."',
         'You do not need to. The visiting pairs bring you names; you carry them. Housebound members are frequently the most reliable intercessors in a congregation.']],
+  close:'Every name on that list is a household God already knows. We are simply agreeing to carry them.',
   win:'every household the visiting pairs meet is being prayed for by name within a week.'},
 
  {id:'community', label:'Community outreach', icon:'\ud83e\udd1d',
   care:['meeting real need','not duplicating what exists','being welcomed rather than tolerated'],
-  frame:'The need here is measurable, and so is the gap. This is about serving where the gap actually is instead of where we assume it is.',
-  gift:'Community outreach is the church\u2019s first impression. It decides whether this building is a place people walk past or walk into.',
+  frame:'We can keep guessing what this neighbourhood needs, or we can serve where the need actually is. The figures below remove the guesswork.',
+  gift:'You are the first impression this building makes. You decide whether we are the church people walk past or the one they walk into when something goes wrong.',
   ask:m=>`Run one felt-need offering monthly, in the block identified below, and keep a record of every person who attends so nobody is met once and forgotten.`,
   obj:[['"Are we just duplicating the food bank?"',
         'Ask them first. If they are covering it, partner rather than compete \u2014 and put our effort where nobody is working.'],
        ['"People will only come for what they can get."',
         'Some will, and that is still worth doing. But food at a table rather than a queue changes the encounter, and the relationships that form there are the point.']],
+  close:'People do not care what we believe until they have seen what we are willing to do on a Tuesday.',
   win:'one offering running monthly with a named contact list, and one working relationship with another local organisation.'},
 
  {id:'family', label:'Family ministry', icon:'\ud83d\udc6a',
   care:['marriages','parenting','the pressure households are under'],
-  frame:'The households around this church are under measurable strain, and the strain lands on parents before it lands on anyone else.',
-  gift:'Family ministry reaches the child through a programme and the family through the parent \u2014 and the whole household moves together.',
+  frame:'The households around this church are under real strain, and it lands on parents first. We can hand them a programme, or we can hand them relief.',
+  gift:'Reach a child with a programme and you have a term. Reach the parents and you have changed what happens in that house all year \u2014 and the whole household moves together.',
   ask:m=>`Run a parenting course and a marriage-strengthening evening within the next six months, with childcare provided at both, and open them to the neighbourhood rather than the membership.`,
   obj:[['"Our families are already stretched thin."',
         'That is the argument for it, not against. Six sessions with childcare is less burden than another year without help.'],
        ['"Non-members will not come to a church for that."',
         'They come for childcare and practical help long before they come for a service. Advertise what it is, honestly, with our name on it.']],
+  close:'Every family we strengthen changes a house we will never see inside \u2014 and a generation we will not live to meet.',
   win:'one course completed with neighbourhood families in the room, not only members.'},
 
  {id:'mens', label:"Men's ministry", icon:'\ud83d\udd28',
   care:['purpose','doing rather than discussing','being useful'],
-  frame:'This neighbourhood has households with no man in them, and boys who will meet almost no steady adult men this year.',
-  gift:'Men\u2019s ministry can offer the two things this need actually requires: presence and practical work. Not a programme \u2014 a man who keeps turning up.',
+  frame:'There are boys within a mile of this building who will not have one steady adult man in their lives this year. We have a room full of them every Sabbath.',
+  gift:'You can offer the two things this need actually requires and no committee can manufacture: presence, and useful work. A fence fixed, a skill taught, a game attended, over and over.',
   ask:m=>`Two things: a monthly practical work morning \u2014 repairs, yards, moving furniture for people who cannot \u2014 and one man mentoring one boy, consistently, for a year.`,
   obj:[['"We are not counsellors."',
         'Nobody is asking you to counsel. Fix a fence, teach a skill, show up at a game. Consistency is the whole intervention.'],
        ['"We tried a men\u2019s breakfast and it fizzled."',
         'Breakfasts fizzle because eating together is not a purpose. Work gives men a reason to be in a room, and the conversation happens sideways while doing something.']],
+  close:'A boy on these streets does not need a programme. He needs one man who keeps turning up. That is within our power.',
   win:'a work morning running monthly, and at least three mentoring relationships that have lasted six months.'},
 
  {id:'womens', label:"Women's ministry", icon:'\ud83c\udf3f',
   care:['relationships','the women carrying households alone','hospitality that is real'],
-  frame:'A large share of the families around us are led by one adult, and she is usually carrying it with no slack at all.',
-  gift:'Women\u2019s ministry can reach women that no programme reaches, because it offers what is actually short: company, help, and somebody who notices.',
+  frame:'A large share of the mothers around us are carrying a household on their own, with nobody to take the afternoon. That is a need this ministry is built to meet.',
+  gift:'You can reach women no programme reaches, because you are offering what is genuinely short here \u2014 company, practical help, and somebody who notices.',
   ask:m=>`A monthly gathering with childcare provided, and a practical support rota \u2014 meals after a birth, a lift to an appointment, an afternoon of respite.`,
   obj:[['"We do not have the numbers."',
         'Six women can run a rota. This does not need a committee; it needs a diary and somebody who answers the phone.'],
        ['"Would neighbourhood women even come?"',
         'To a service, maybe not yet. To childcare, respite and company, frequently yes \u2014 and that is where the friendship starts.']],
+  close:'She does not need to be told she is doing well. She needs somebody to take the afternoon.',
   win:'a rota that has actually been used, and neighbourhood women attending regularly.'},
 
  {id:'youth', label:'Youth & Pathfinders', icon:'\ud83e\udded',
   care:['the young people they already have','relevance','not being an afterthought'],
-  frame:'The number of children within walking distance of this building is not a projection. They are already here.',
-  gift:'Youth ministry is the one part of the church that other parents will hand their children to before they trust anything else we do.',
+  frame:'The children are already here. They are already growing up. The only decision in front of us is whether this church is part of it.',
+  gift:'Parents will hand you their children before they trust anything else we do. That is an enormous trust and a very short window.',
   ask:m=>`Open Pathfinders and one holiday programme to the neighbourhood \u2014 advertised outside the church, with safeguarding checks completed before anything is announced.`,
   obj:[['"Our young people are already busy."',
         'This gives them something worth being busy with. Young people leave churches that ask nothing of them.'],
        ['"Safeguarding is a lot of work."',
         'It is, and it is not optional. Start the checks now so they are done before the first advertisement goes out.']],
+  close:'The children within walking distance of this building are already growing up. The only question is whether we are in the room while they do.',
   win:'neighbourhood children enrolled, and every leader checked and trained.'},
 
  {id:'health', label:'Health ministry', icon:'\ud83e\ude7a',
   care:['practical health','credibility','the body as God\u2019s temple'],
-  frame:'Health is the door this church can open more naturally than any other, and the need for it here is measurable.',
-  gift:'Medically trained members are the most under-asked people in most congregations, and health is the offering the community accepts first.',
+  frame:'We have been given a health message and a community that needs one. Those two facts have been sitting a hundred yards apart for years.',
+  gift:'The medically trained members of this church are the most under-asked people in it. Health is also the one offering this community accepts without suspicion.',
   ask:m=>`One wellness table a month \u2014 blood pressure, a five-minute conversation, a written referral for anything concerning \u2014 with the referral pathway agreed before the first screening.`,
   obj:[['"We are not a clinic."',
         'A blood pressure check and a kind conversation is not practising medicine. Agree in advance what happens when a reading is bad, and stay inside that line.'],
        ['"Is this just a way of getting people in?"',
         'No, and it must not be. Run the health offering because health matters. Invite people to other things separately and openly.']],
+  close:'We have been given a health message for a hundred and fifty years. There is a street outside that needs it now.',
   win:'a table running monthly, a referral pathway agreed in writing, and every medically trained member asked by name.'},
 
  {id:'media', label:'Media & AV team', icon:'\ud83c\udfa5',
   care:['reach','quality','doing it properly or not at all'],
-  frame:'What this church says about itself online is the first thing most neighbours will ever encounter of us.',
-  gift:'The media team decides whether a person who searches for us at 11pm finds a living church or an abandoned page.',
+  frame:'Most people will meet this church on a screen long before they meet us at a door. Right now that first impression is out of our hands.',
+  gift:'You decide what a stranger finds at eleven at night when they search for a church. A living page or an abandoned one \u2014 that is the whole difference, and it costs almost nothing.',
   ask:m=>`Own three things: an accurate, current public page with service times and a real photograph; every community offering advertised where neighbours actually look; and one short piece of content a month in the languages spoken here.`,
   obj:[['"We already stream the service."',
         'Streaming serves the people who already come. This is about the person who has never been \u2014 different content, different place, different purpose.'],
        ['"We do not have the equipment."',
         'A phone and honest writing beat a studio and silence. Accuracy first: wrong service times cost more than low production values.']],
-  win:'a public page that is accurate, and every community event advertised beyond the church walls.'}
+  close:'Somebody in this neighbourhood will look us up tonight. What they find will decide whether they ever come.',
+  win:'a public page that is accurate, and every community event advertised beyond the church walls.'},
+
+ {id:'sabbathschool', label:'Sabbath School council', icon:'\u{1F4D6}',
+  care:['teaching','the classes','whether anyone new ever arrives'],
+  frame:'Sabbath School is the one hour a week when this church already does small groups well. The question is whether any of those groups is open to a person who has never been.',
+  gift:'A class is far less intimidating than a service, and far easier to invite somebody to. You already have the format \u2014 what is missing is a class designed for someone who has never opened a Bible.',
+  ask:m=>`Open one class deliberately for beginners and visitors \u2014 no assumed vocabulary, no assumed Bible knowledge \u2014 and give it a teacher who is warm rather than the most learned.`,
+  obj:[['"Our classes are already full."','Full of members. Count how many people have joined a class in the last two years having never attended before.'],
+       ['"Visitors can join any class."','In theory. In practice a class that opens mid-book with insider shorthand tells a visitor within four minutes that this was not built for him.']],
+  win:'one beginners class running weekly, with at least three people attending who were not members a year ago.',
+  close:'Nobody is converted by a sermon they did not understand. They are converted in the small room, by somebody who knew their name.'},
+
+ {id:'finance', label:'Treasurer & finance', icon:'\u{1F4B0}',
+  care:['stewardship','sustainability','not starting what cannot be finished'],
+  frame:'This is a question about where the money already in this church is going, and whether any of it is reaching the street outside.',
+  gift:'The treasurer decides whether a plan is real. A budget line is the difference between a vote of thanks and a ministry that still exists in June.',
+  ask:m=>`A modest, ring-fenced community line \u2014 small, spent locally, reported monthly \u2014 and a decision to fund the first three months rather than promising a year.`,
+  obj:[['"We cannot afford a new commitment."','Then fund three months and review. Most of what is proposed here costs time rather than money \u2014 the budget line covers materials, not salaries.'],
+       ['"How do we measure the return?"','Names contacted, studies running, people attending who were not here last year. Reported to the board at ninety days, in writing.']],
+  win:'the line exists, has been spent, and the board has seen an itemised account of what it bought.',
+  close:'A church that spends everything on itself is not being careful with money. It is being careful with the wrong thing.'},
+
+ {id:'smallgroups', label:'Small group leaders', icon:'\u{1F3E1}',
+  care:['depth','their people','not being handed another programme'],
+  frame:'Small groups are where interest becomes relationship, and this neighbourhood produces interest faster than we have rooms to receive it.',
+  gift:'You already know how to lead a room of eight. What is being asked is to open one of those rooms to somebody who has never been to church at all.',
+  ask:m=>`Two groups opened to the neighbourhood rather than the membership \u2014 meeting in homes, at a fixed weekday hour, with somebody responsible for inviting.`,
+  obj:[['"Our group has been together for years."','That is the strength and the risk. A group that has not added anybody in three years has quietly become a friendship rather than a ministry.'],
+       ['"Where would we find people?"','Every other part of this plan gathers names. Your job is to be ready when they arrive, not to find them.']],
+  win:'two groups running with people in them who were not part of this church a year ago.',
+  close:'The church grows in living rooms long before it grows in the sanctuary.'},
+
+ {id:'hospitality', label:'Greeters & hospitality', icon:'\u{1F91D}',
+  care:['the welcome','first impressions','doing the small things well'],
+  frame:'A visitor decides whether to return in the first four minutes, and almost none of that decision has anything to do with the sermon.',
+  gift:'You control the four minutes that decide everything: the door, the seat, the name remembered, the invitation to stay for lunch.',
+  ask:m=>`A named greeter every week, a follow-up within seven days for every visitor who leaves a contact, and one member assigned to sit with anyone who arrives alone.`,
+  obj:[['"We are a friendly church."','Every church says so, and most mean it about each other. Ask somebody who visited once and never came back.'],
+       ['"We cannot chase people."','A single message that says it was good to meet you is not chasing. Silence after a first visit is the most common reason people do not return.']],
+  win:'every visitor for three months has been contacted within a week by a named person.',
+  close:'People forget what was preached. Nobody forgets being ignored.'},
+
+ {id:'literature', label:'Literature ministry', icon:'\u{1F4DA}',
+  care:['getting truth into hands','coverage','faithful quiet work'],
+  frame:'There are thousands of homes within a mile of this building, and most of them have never received anything from us at all.',
+  gift:'This is the ministry that reaches the people who will never come to an event and never open the door \u2014 and it can be done by members who find conversation hard.',
+  ask:m=>`Named racks in named places, restocked on a fixed day, plus one systematic distribution of a genuinely useful piece \u2014 health, family, or grief \u2014 rather than whatever is in the cupboard.`,
+  obj:[['"People just throw them away."','Most do. Some do not, and the cost per home is pennies. This is the cheapest sowing the church has.'],
+       ['"Nobody reads any more."','They read what they need. Distribute something that answers a real question and the take-up changes completely.']],
+  win:'a route running on a fixed schedule with a record of what went where.',
+  close:'Sowing is not glamorous and it is not optional. Somebody put a page in your hand once too.'},
+
+ {id:'seniorsmin', label:'Senior members', icon:'\u{1F553}',
+  care:['being useful','being included','the church they built'],
+  frame:'The older members of this church are frequently the most available, the most experienced, and the least asked.',
+  gift:'You have what almost nobody else here has: time on a weekday, decades of practice, and the patience for people who take a long while to trust anybody.',
+  ask:m=>`A weekday visiting and telephone ministry \u2014 the same people, the same day each week \u2014 and one hour a month teaching a younger member how you did it.`,
+  obj:[['"We have done our turn."','You have. And the neighbourhood has more people living alone than it has ever had, and you are the ones who know how to sit with them.'],
+       ['"We cannot get about like we used to."','A telephone reaches further than a car, and a kitchen table is a perfectly good place to disciple somebody.']],
+  win:'a weekday contact rota running, and at least two younger members apprenticed to it.',
+  close:'The church does not need its older members to step back. It needs them to hand something on.'},
+
+ {id:'youngadults', label:'Young adults', icon:'\u{1F393}',
+  care:['authenticity','purpose','not being talked at'],
+  frame:'Young adults leave churches that ask nothing of them, and stay in churches that hand them something that matters.',
+  gift:'You can reach an age group nobody else here can reach, and you are the most credible people in this building to a twenty-two-year-old who has never been to church.',
+  ask:m=>`Take ownership of one piece of this outreach outright \u2014 not helping with somebody else\u2019s, running your own \u2014 with a budget, a decision, and the right to get it wrong.`,
+  obj:[['"They are too busy."','They are busy with things that ask something of them. This asks something of them.'],
+       ['"They lack experience."','So did everyone. Experience is what happens after you are trusted, not before.']],
+  win:'one initiative planned, run and reviewed by young adults, without a committee rescuing it.',
+  close:'A generation does not leave because the doctrine was too hard. It leaves because nothing was ever asked of it.'},
+
+ {id:'school', label:'Church school & education', icon:'\u{1F3EB}',
+  care:['the children','enrolment','the school\u2019s place in the community'],
+  frame:'A church school is the longest-term evangelism this denomination does, and its catchment is the neighbourhood in this report.',
+  gift:'You have the children of non-member families for six hours a day, five days a week, for years. No other ministry here has anything remotely like that access, or that responsibility.',
+  ask:m=>`Open the school\u2019s doors to the neighbourhood beyond enrolment \u2014 a holiday programme, a parenting evening, a homework club \u2014 and treat every non-member family as the mission they are.`,
+  obj:[['"We are stretched already."','This is not more teaching. It is using the building and the trust you already have on the evenings it sits empty.'],
+       ['"Parents only want the academics."','They come for the academics. They stay because somebody cared about their child, and that is where the conversation begins.']],
+  win:'neighbourhood families using the school outside school hours, and every family known by name.',
+  close:'Every child in that classroom goes home to a household we would otherwise never enter.'}
+
 ];
 
 /* Which figures matter to which audience. The proposal leads with the ones that
@@ -2783,7 +3043,11 @@ const AUD_EMPH={
  family:['kids','singleParent','rent50','poverty'],
  mens:['singleParent','kids','jobless'], womens:['singleParent','kids','seniorsAlone'],
  youth:['kids','k12','singleParent'], health:['uninsured','poverty','seniorsAlone','medAge'],
- media:['langs','limEng','pop','medAge']
+ media:['langs','limEng','pop','medAge'],
+ sabbathschool:['pop','kids','langs'], finance:['pop','poverty','medInc'],
+ smallgroups:['pop','singleParent','langs'], hospitality:['pop','medAge','langs'],
+ literature:['pop','poverty','noCar'], seniorsmin:['seniorsAlone','medAge','noCar'],
+ youngadults:['pop','kids','k12'], school:['kids','k12','singleParent']
 };
 function figLine(k,m,levels){
   const P=x=>fmtPct(x), N=x=>fmtNum(x);
@@ -2881,25 +3145,88 @@ const TAILOR=[
  {tag:'crowded', aud:'*',
   ask:{'*':'meeting space offered to the neighbourhood, because homes here are too small to host anything'},
   obj:['"The hall is already busy."',
-       'It is busy for us. A room that sits empty six days a week is the most underused asset this church owns, and space itself is scarce on these streets.']}
+       'It is busy for us. A room that sits empty six days a week is the most underused asset this church owns, and space itself is scarce on these streets.']},
+ {tag:'very-poor', aud:'*',
+  ask:{'*':'help given without a form to fill in first \u2014 in a neighbourhood this hard-pressed, dignity is the scarcest thing we can offer',
+       finance:'a small discretionary fund the pastor can spend the same day, without a committee'},
+  obj:['"Are we not encouraging dependency?"',
+       'Dependency comes from help that never changes anything. Relief plus a route out \u2014 budgeting, work, skills \u2014 is the opposite, and it is what this proposal asks for.']},
+ {tag:'child-poverty', aud:'*',
+  ask:{'*':'anything for children offered free, with no visible difference between the child who pays and the child who cannot',
+       school:'quiet fee assistance that no child in the classroom can identify'},
+  obj:['"Where do we draw the line on who qualifies?"',
+       'Draw it wide. Policing eligibility usually costs more than simply feeding everyone who turns up.']},
+ {tag:'very-uninsured', aud:'*',
+  ask:{'*':'a standing relationship with one free or sliding-scale clinic, so a screening can end in an actual appointment'},
+  obj:['"We cannot be responsible for their health care."',
+       'We are not. We are responsible for knowing where to send somebody, which takes one afternoon to find out.']},
+ {tag:'spanish', aud:'*',
+  ask:{'*':'Spanish-language ministry that is genuinely led rather than translated \u2014 a service, a group or a class where Spanish is the first language in the room',
+       media:'a Spanish page and Spanish notices, checked by a native speaker'},
+  obj:['"Should they not join the English service?"',
+       'Some will, in time. But people worship, grieve and pray in their first language, and a translated service is a guest experience rather than a home.']},
+ {tag:'very-old', aud:'*',
+  ask:{'*':'transport, hearing loops and daytime timing \u2014 an evening event in an ageing neighbourhood excludes most of it before it starts'},
+  obj:['"Older people are already churched."',
+       'Many were, decades ago, and drifted. A neighbourhood this age is full of people with a church history and no current church.']},
+ {tag:'professional', aud:'*',
+  ask:{'*':'commitments that are precise and finite \u2014 people who run their week in calendar slots accept a defined ask and refuse an open-ended one'},
+  obj:['"They are too busy to be involved."',
+       'They are busy with what they have already agreed to. Ask for six sessions with dates, not for ongoing help.']},
+ {tag:'family-heavy', aud:'*',
+  ask:{'*':'programming that takes the whole household at once, because a parent who cannot bring the children simply does not come'},
+  obj:['"Children make everything harder to run."',
+       'They do, and their absence makes everything impossible to fill. Plan for them from the start rather than tolerating them.']},
+ {tag:'dense', aud:'*',
+  ask:{'*':'work the blocks systematically rather than scattering effort \u2014 at this density one thorough street is worth five partial ones'},
+  obj:['"Should we not cover as much ground as possible?"',
+       'Not here. Repeat contact on a few streets changes more than a single pass over many.']},
+ {tag:'car-dependent', aud:'*',
+  ask:{'*':'plan around parking, lifts and timing rather than hoping for passers-by \u2014 nobody walks past this building'},
+  obj:['"Why does nobody ever drop in?"',
+       'Because there is nobody on foot to drop in. Here, visibility is not a location \u2014 it is an invitation somebody has to accept.']},
+ {tag:'homeowners', aud:'*',
+  ask:{'*':'ask members to open their homes \u2014 in a settled, owner-occupied neighbourhood the living room is the most underused asset the church has'},
+  obj:['"People value their privacy here."',
+       'They do, which is exactly why an invitation into a home carries weight that an invitation to a building never will.']},
+ {tag:'settled', aud:'*',
+  ask:{'*':'plan in years rather than campaigns \u2014 people here do not move, so a relationship begun this year is still there in five',
+       board:'approve a three-year horizon rather than a six-week series, and judge it accordingly'},
+  obj:['"Nothing ever seems to change here."',
+       'In a settled neighbourhood change is slow and then permanent. That is an argument for patience, not for giving up.']}
 ];
 /* The opening sentence should name what is true here, not what is true of
    neighbourhoods in general. Ordered by severity: the first match wins. */
 const OPENERS=[
- ['very-poor', m=>`Roughly one household in three around this building is living below the poverty line. That is not a national statistic \u2014 it is this postcode.`],
- ['poor',      m=>`${fmtPct(m.poverty)} of the people within walking distance of this building live below the poverty line.`],
- ['very-immigrant', m=>`This is now an immigrant neighbourhood: ${fmtPct(m.foreign)} of residents were born outside the United States, and the church that learns their language first will be the one they trust.`],
- ['limited-english', m=>`${fmtPct(m.limEng)} of households on these streets cannot easily conduct their affairs in English. That single fact reshapes everything we print and everything we run.`],
- ['many-kids',  m=>`There are roughly ${fmtNum(m.kids)} children living within walking distance of this building \u2014 ${fmtPct(m.kidsShare)} of everyone here.`],
- ['very-old',   m=>`This is an ageing neighbourhood, median age ${m.medAge}, and ${fmtPct(m.seniorsAlone)} of households are one person over sixty-five living alone.`],
- ['seniors-alone', m=>`${fmtPct(m.seniorsAlone)} of the households around us are a senior living alone. Isolation here is measurable.`],
- ['divided',    m=>`Two neighbourhoods share these streets: ${fmtPct(m.incLow)} of households live on under $35,000 while ${fmtPct(m.incHigh)} live on over $150,000. One programme will reach one of them.`],
- ['affluent',   m=>`This is a comfortable neighbourhood \u2014 ${fmtPct(m.incHigh)} of households are over $150,000 \u2014 and comfortable neighbourhoods are among the least reached in America.`],
- ['changing',   m=>`This neighbourhood is not who it was ten years ago, and a congregation that stopped changing when its streets did will feel like a mismatch no welcome sign can fix.`],
- ['renters',    m=>`${fmtPct(m.renters)} of households here rent, and ${fmtPct(m.rent50)} of renters pay more than half their income to keep a roof on. Housing pressure is the daily reality on these streets.`]
+ ['very-poor', m=>`One household in three within sight of our front door is living below the poverty line. Not in a mission field overseas \u2014 here, on the streets we drive down every Sabbath morning.`],
+ ['poor',      m=>`${fmtPct(m.poverty)} of the people who live within walking distance of this church cannot make the month reach the money. We have been meeting in the middle of that for years.`],
+ ['very-immigrant', m=>`${fmtPct(m.foreign)} of our neighbours were born in another country. God has brought the mission field to our doorstep, and the first church that learns to say welcome in their language will be the church they trust.`],
+ ['limited-english', m=>`${fmtPct(m.limEng)} of the households around us cannot easily read a letter, fill in a form, or ask a question in English. Every notice we have ever put on that noticeboard was written past them.`],
+ ['many-kids',  m=>`There are about ${fmtNum(m.kids)} children living within walking distance of this building. Most of them will grow up without ever being invited inside it \u2014 unless something changes this year.`],
+ ['very-old',   m=>`The median age on these streets is ${m.medAge}, and ${fmtPct(m.seniorsAlone)} of households are one person over sixty-five, on their own. Some of them will go a full week without a conversation.`],
+ ['seniors-alone', m=>`${fmtPct(m.seniorsAlone)} of the homes around us hold one older person, living alone. Loneliness is the quietest need in this neighbourhood and the easiest one for us to meet.`],
+ ['divided',    m=>`Two neighbourhoods share these streets. ${fmtPct(m.incLow)} of households live on under $35,000; ${fmtPct(m.incHigh)} live on over $150,000. We have been running one programme and wondering why half the community never comes.`],
+ ['affluent',   m=>`${fmtPct(m.incHigh)} of the households around us earn over $150,000, and comfortable neighbourhoods are among the least reached in America. Nobody here is hungry. Plenty of them are empty.`],
+ ['changing',   m=>`The neighbourhood outside these doors is not the one this congregation was built for. That is not a complaint \u2014 it is an invitation, and we can either accept it or keep preaching to a community that has already moved.`],
+ ['renters',    m=>`${fmtPct(m.rent50)} of the renters around us hand over more than half of what they earn just to keep a roof up. They are one broken car away from losing it.`]
 ];
+/* Lead with the strongest card in this hand, not the first one in the list.
+   Each opener carries a weight drawn from the figure behind it, so a tract with
+   13% poverty and 25% children opens on the children, not on a 7% language
+   figure that happened to sit higher in the array. */
+const OPENER_WEIGHT={
+ 'very-poor':m=>(m.poverty||0)*2.4, 'poor':m=>(m.poverty||0)*1.7,
+ 'very-immigrant':m=>(m.foreign||0)*1.4, 'limited-english':m=>(m.limEng||0)*1.9,
+ 'many-kids':m=>(m.kidsShare||0)*1.6, 'very-old':m=>(m.medAge||0)*0.65,
+ 'seniors-alone':m=>(m.seniorsAlone||0)*1.6, 'divided':m=>Math.min(m.incLow||0,m.incHigh||0)*1.5,
+ 'affluent':m=>(m.incHigh||0)*0.95, 'changing':()=>26, 'renters':m=>(m.rent50||0)*1.2
+};
 function openerFor(tags,m){
-  for(const [tag,fn] of OPENERS) if(tags.has(tag)){ try{ return fn(m); }catch(e){} }
+  const hits=OPENERS.filter(([tag])=>tags.has(tag)).map(([tag,fn])=>{
+    let w=20; try{ const f=OPENER_WEIGHT[tag]; if(f) w=f(m)||0; }catch(e){}
+    return {tag,fn,w};
+  }).sort((a,b)=>b.w-a.w);
+  for(const h of hits){ try{ return h.fn(m); }catch(e){} }
   return null;
 }
 /* Only three requirements are shown, so they must be the three that matter most
@@ -2921,6 +3248,98 @@ function tailorFor(audId,tags,m){
   const asks=hits.map(t=>t.ask[audId]||t.ask['*']).filter(Boolean);
   const objs=hits.filter(t=>t.obj).map(t=>t.obj);
   return {asks:asks.slice(0,3), objs:objs.slice(0,3)};
+}
+
+/* ---- donut charts for a proposal ----
+   Parts of a whole read faster than a table when you are standing in front of a
+   board. Drawn as SVG so they scale, and downloadable as PNG so they can be
+   dropped into a slide or printed on a handout. */
+/* `centre` is what belongs in the middle — a real count. Percentage slices sum
+   to about 100, and printing that as the centre figure ("92 of people") is
+   meaningless, so the caller passes the population or household count instead. */
+function donut(title, parts, note, centre){
+  const total=parts.reduce((n,p)=>n+p.v,0)||1;
+  const mid=(centre!=null&&isFinite(centre))?centre:total;
+  const R=54, C=2*Math.PI*R, cx=70, cy=70;
+  const cols=['#1F6FEB','#4C9AFF','#8FC2FF','#C7DCFF','#E4EEFF','#B9C6D6'];
+  let off=0;
+  const arcs=parts.map((p,i)=>{
+    const frac=p.v/total, len=C*frac;
+    const el=`<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${p.c||cols[i%cols.length]}"
+      stroke-width="26" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}"
+      stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;
+    off+=len; return el;
+  }).join('');
+  const legend=parts.map((p,i)=>`<div class="dlg"><i style="background:${p.c||cols[i%cols.length]}"></i>
+     <span>${esc(p.n)}</span><b>${fmtPct(p.v/total*100)}</b></div>`).join('');
+  return `<figure class="donutbox">
+    <figcaption>${esc(title)}</figcaption>
+    <div class="dwrap">
+      <svg viewBox="0 0 140 140" class="donutsvg" role="img" aria-label="${esc(title)}">
+        ${arcs}
+        <text x="70" y="66" text-anchor="middle" class="dctr">${fmtNum(Math.round(mid))}</text>
+        <text x="70" y="82" text-anchor="middle" class="dsub">${esc(note||'')}</text>
+      </svg>
+      <div class="dlegend">${legend}</div>
+    </div>
+    <button class="dlchart" type="button">Download chart</button>
+  </figure>`;
+}
+/* Which charts to show is decided by the audience: a family ministry proposal
+   opens on ages, a media proposal on languages. */
+function proposalCharts(audId,M){
+  const m=M.tract, out=[];
+  const ages=[{n:'Children under 18',v:m.kids||0},
+              {n:'Adults 18\u201364',v:Math.max(0,(m.pop||0)-(m.kids||0)-(m.seniors||0))},
+              {n:'Seniors 65+',v:m.seniors||Math.round((m.pop||0)*0.16)}];
+  const income=[{n:'Under $35,000',v:m.incLow||0},{n:'$35,000\u2013$150,000',v:Math.max(0,100-(m.incLow||0)-(m.incHigh||0))},{n:'Over $150,000',v:m.incHigh||0}];
+  const lang=(m.langs&&m.langs.length)
+    ? [{n:'English only',v:m.englishOnly||0}].concat(m.langs.slice(0,3).map(l=>({n:l.name,v:l.share})))
+    : null;
+  const housing=[{n:'Own their home',v:Math.max(0,100-(m.renters||0))},{n:'Rent',v:m.renters||0}];
+  const pick={
+    board:['ages','income'], elders:['ages','income'], deacons:['ages'],
+    'bible-workers':['ages','lang'], prayer:['ages'], community:['income','housing'],
+    family:['ages','housing'], mens:['ages'], womens:['ages'],
+    youth:['ages'], health:['ages','income'], media:['lang','ages']
+  }[audId]||['ages'];
+  pick.forEach(k=>{
+    if(k==='ages') out.push(donut('Who lives here', ages, 'people', m.pop));
+    if(k==='income') out.push(donut('Household income', income, 'households', m.hh));
+    if(k==='housing') out.push(donut('Owning and renting', housing, 'households', m.hh));
+    if(k==='lang'&&lang) out.push(donut('Language at home', lang, 'people', m.pop));
+  });
+  return out.length?`<div class="donuts">${out.join('')}</div>`:'';
+}
+/* PNG export: serialise the SVG, draw it on a canvas at 2x, hand back a file.
+   No library, and it works offline. */
+function downloadChart(fig, name){
+  const svg=fig.querySelector('svg'); if(!svg) return;
+  const clone=svg.cloneNode(true);
+  clone.setAttribute('xmlns','http://www.w3.org/2000/svg');
+  clone.setAttribute('width',560); clone.setAttribute('height',560);
+  const cs=getComputedStyle(document.documentElement);
+  const style=document.createElementNS('http://www.w3.org/2000/svg','style');
+  style.textContent=`.dctr{font:700 17px 'Fraunces',Georgia,serif;fill:${cs.getPropertyValue('--ink')}}
+    .dsub{font:400 8px system-ui;fill:${cs.getPropertyValue('--ink3')}}`;
+  clone.insertBefore(style, clone.firstChild);
+  const bg=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  bg.setAttribute('width','140'); bg.setAttribute('height','140'); bg.setAttribute('fill','#ffffff');
+  clone.insertBefore(bg, clone.firstChild);
+  const xml=new XMLSerializer().serializeToString(clone);
+  const img=new Image();
+  img.onload=()=>{
+    const cv=document.createElement('canvas'); cv.width=1120; cv.height=1120;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,cv.width,cv.height);
+    ctx.drawImage(img,0,0,cv.width,cv.height);
+    cv.toBlob(bl=>{
+      const url=URL.createObjectURL(bl); const a=document.createElement('a');
+      a.href=url; a.download=name; document.body.appendChild(a); a.click();
+      setTimeout(()=>{URL.revokeObjectURL(url); a.remove();},400);
+    },'image/png');
+  };
+  img.src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(xml)));
 }
 
 function buildProposal(audId,M,levels,SG){
@@ -2952,6 +3371,7 @@ function buildProposal(audId,M,levels,SG){
         : (m.medInc&&cty.medInc&&m.medInc<cty.medInc*0.8)
           ? ` Household income here sits well below the ${fmtMoney(cty.medInc)} county figure.` : ''}
        These are U.S. Census figures, not impressions.</p>
+     ${proposalCharts(audId,M)}
      ${hot?`<p>The single block with the most need within walking distance is <b>Tract ${esc(hot.name||hot.geoid)}</b>, ${hot.dist<0.15?'at our door':hot.dist.toFixed(1)+' miles away'}, with about ${fmtNum(hot.m.pop)} residents${hot.m.poverty!=null?` and ${fmtPct(hot.m.poverty)} below the poverty line`:''}. That is where we would begin.</p>`:''}
    </div>
 
@@ -2977,7 +3397,8 @@ function buildProposal(audId,M,levels,SG){
    </div>
 
    <div class="propclose">
-     <p>${esc(levels.tract.short)} is not a mission field somewhere else. It is the ground this building stands on, and these are the people already living on it.</p>
+     <p>${esc(a.close||'These are not statistics. They are our neighbours, and they are already here.')}</p>
+     <p>We are not being asked to become a different church. We are being asked to walk out of the door we already have, into the neighbourhood God already placed us in.</p>
    </div>
   </div>`;
 }
@@ -3149,7 +3570,7 @@ const ES={
  'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
- 'Your tools':'Sus herramientas',
+ 'Welcome':'Bienvenido','Your tools':'Sus herramientas',
  'Choose what you need. More will appear here as they are built.':
    'Elija lo que necesita. Aquí irán apareciendo más a medida que se construyan.',
  'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso',
@@ -3161,7 +3582,8 @@ const ES={
  'Community Analytics':'Análisis comunitario','Who lives here':'Quién vive aquí',
  'Strategy':'Estrategia','Where to begin':'Por dónde empezar',
  'Mobilize':'Movilizar','Getting members out':'Poner a los miembros en marcha',
- 'Make the Case':'Presentar el caso','Proposals to present':'Propuestas para presentar',
+ 'Make the Case':'Presentar el caso','Make the case':'Presentar el caso','Proposals to present':'Propuestas para presentar',
+ 'Housing pressure':'Presión de vivienda','Open this block in Maps →':'Ver esta manzana en Maps →',
  // language names, so the brief reads "habla español" rather than "habla Spanish"
  'Spanish':'español','French / Haitian Creole':'francés / criollo haitiano','German':'alemán',
  'Russian / Polish / Slavic':'ruso / polaco / eslavo','Other European':'otro europeo',
@@ -3940,11 +4362,14 @@ function wireProposals(M,levels,SG){
       download(name,plain(),'text/plain');
     };
     document.getElementById('propprint').onclick=()=>window.print();
+    slot.querySelectorAll('.donutbox').forEach((fig,i)=>{
+      const btn=fig.querySelector('.dlchart');
+      if(btn) btn.onclick=()=>downloadChart(fig,
+        'chart-'+b.dataset.aud+'-'+(i+1)+'-'+(levels.tract.short||'tract').replace(/\W+/g,'-')+'.png');
+    });
     translateDOM();
-    // scroll so the top of the proposal clears the sticky header, not under it
-    const y=slot.getBoundingClientRect().top+window.scrollY
-            -((parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58)+16);
-    window.scrollTo({top:Math.max(0,y),behavior:'smooth'});
+    // Deliberately no scrolling. The buttons stay put and only the text beneath
+    // them changes, so a pastor can compare two audiences without losing his place.
   });
 }
 function wireStepper(){
@@ -4054,7 +4479,7 @@ function render(){
   const S=SCOPE, cmpName=S==='county'?null:'county';
   const secs=[];
   const shiftSrc=(S==='tract'&&M.cousub?.past)?M.cousub:(me.past?me:null);
-  secs.push(`<section class="blk" data-theme="hardship work"><h2>Economy</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="hardship work"><h2>Economy</h2>${verseHTML('economy')}<div class="grid">
     ${card('Median household income',me.medInc,fmtMoney,pick('medInc'),S)}
     ${card('Below the poverty line',me.poverty,fmtPct,pick('poverty'),S,'all people')}
     ${card('Children in poverty',me.childPoverty,fmtPct,pick('childPoverty'),S,'under 18')}
@@ -4066,7 +4491,7 @@ function render(){
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
-  secs.push(`<section class="blk" data-theme="hardship"><h2>Wealth &amp; hardship</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="hardship"><h2>Wealth &amp; hardship</h2>${verseHTML('wealth')}<div class="grid">
     ${card('Households under $35k',me.incLow,fmtPct,pick('incLow'),S)}
     ${card('Households over $150k',me.incHigh,fmtPct,pick('incHigh'),S)}
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
@@ -4087,7 +4512,7 @@ function render(){
       ${Math.abs(fb)>=1?`<span class="chip ${fb>0?'up':''}">Born abroad <b>${fb>0?'+':'−'}${Math.abs(fb).toFixed(0)} pts</b></span>`:''}
       ${shiftSrc.past.pop&&shiftSrc.pop?`<span class="chip">Population <b>${shiftSrc.pop>=shiftSrc.past.pop?'+':'−'}${fmtNum(Math.abs(shiftSrc.pop-shiftSrc.past.pop))}</b></span>`:''}</div></div>`;
   }
-  secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
     ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
@@ -4098,13 +4523,13 @@ function render(){
     ${shift}
   </div></section>`);
   const topL=me.langs.slice(0,6);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2><div class="grid">
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2>${verseHTML('language')}<div class="grid">
     ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
     ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
     <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
     ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
   </div></section>`);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="housing"><h2>Housing &amp; distress</h2><div class="grid">
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="housing"><h2>Housing &amp; distress</h2>${verseHTML('housing')}<div class="grid">
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
     ${card('Severely rent-burdened',me.rent50,fmtPct,pick('rent50'),S,'renters paying 50%+ of income')}
@@ -4117,7 +4542,7 @@ function render(){
         <a href="https://evictionlab.org/eviction-tracking/pennsylvania/" target="_blank" rel="noopener">Eviction Lab · Pennsylvania<span>Monthly filings statewide; Philadelphia by tract and Pittsburgh by ZIP.</span></a>
       </div></div>
   </div></section>`);
-  secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2><div class="grid">
+  secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2>${verseHTML('families')}<div class="grid">
     ${card('Median age',me.medAge,x=>x==null?'—':x.toFixed(1),pick('medAge'),S,null,70)}
     ${card('Children',me.kidsShare,fmtPct,pick('kidsShare'),S,`${fmtNum(me.kids)} under 18 · ${me.kidsPerHH!=null?me.kidsPerHH.toFixed(2)+' per household':''}`)}
     ${card('Single-parent families',me.singleParent,fmtPct,pick('singleParent'),S,'of families with children')}
@@ -4126,12 +4551,12 @@ function render(){
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
   const SG=suggestions(M,SCOPE);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>${verseHTML('faith')}${egwHTML('faith')}
     <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
     <div id="congslot"></div>
   </section>`);
 
-  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
+  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>${verseHTML('prompts')}${egwHTML('prompts')}
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
@@ -4171,7 +4596,7 @@ function render(){
   </section>`);
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES);
-  secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
+  secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>${verseHTML('mobilize')}${egwHTML('mobilize')}
     <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.</p>
 
     <div class="sugcat">Talking to people who are not Adventists</div>
@@ -4208,7 +4633,7 @@ function render(){
     ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
   </section>`);
 
-  secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>
+  secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>${verseHTML('case')}${egwHTML('case')}
     <p class="note" style="margin-bottom:12px">The same findings, argued to the group that has to act on them. Choose who you are speaking to — the figures stay the same, the emphasis, the ask and the objections change.</p>
     <div class="audgrid">${AUD.map(a=>`<button class="audbtn" data-aud="${a.id}"><span>${a.icon}</span>${esc(a.label)}</button>`).join('')}</div>
     <div id="propslot"></div>
