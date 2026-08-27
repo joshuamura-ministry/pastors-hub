@@ -606,13 +606,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.3</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v6.3';
+const VERSION = 'v6.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -662,7 +662,10 @@ function initLang(){
   b.onclick=()=>{
     LANG = LANG==='es' ? 'en' : 'es';
     localStorage.setItem('terrain-lang',LANG);
-    location.reload();   // simplest way to restore English cleanly
+    // Switching language reloads the page. Remember which tool the pastor was
+    // in, or he lands back in the survey having been in Make the Case.
+    try{ sessionStorage.setItem('terrain-tool', TOOL||''); }catch(e){}
+    location.reload();
   };
   translateDOM();
 }
@@ -4077,6 +4080,7 @@ function showHub(){
   window.scrollTo({top:0,behavior:'auto'});
 }
 function openTool(id){
+  const dg=document.getElementById('diag'); if(dg&&id!=='survey') dg.open=false;
   setTimeout(renderRecent,0);
   setTimeout(()=>{ const n=$('secnav'); if(n) n.scrollLeft=0; },30);
   TOOL=id;
@@ -4129,6 +4133,15 @@ function renderPlace(levels,geo){
 function applyTool(){
   const dc=document.getElementById('datacred');
   if(dc) dc.hidden = !(FLAT || TOOL==='survey');
+  // Diagnostics belong to the survey, where the requests were made. A <details>
+  // keeps its open state across renders, so it also has to be closed on the way
+  // out — otherwise opening it once leaves it open inside every other tool.
+  const dg=document.getElementById('diag');
+  if(dg){
+    const inSurveyOnly = FLAT || TOOL==='survey';
+    dg.classList.toggle('offtab', !inSurveyOnly);
+    if(!inSurveyOnly) dg.open=false;
+  }
   if(FLAT){
     document.querySelectorAll('.offtab').forEach(e=>e.classList.remove('offtab'));
     const hub=$('hub'); if(hub) hub.hidden=true;
@@ -4311,6 +4324,7 @@ function showWho(){
     localStorage.removeItem('terrain-code');
     localStorage.removeItem('terrain-conf');
     ACCESS={required:true,ok:false,name:''};
+    try{ sessionStorage.removeItem('terrain-tool'); }catch(e){}
     showGate('');            // clear on the spot, so nothing lingers if the reload is slow
     try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
     try{ location.reload(); }catch(e){}
@@ -4889,9 +4903,11 @@ $('ver').textContent=VERSION;
   const h=new URLSearchParams(location.hash.slice(1));
   const runPermalink=()=>{
     if(ACCESS.required && !ACCESS.ok) return;
-    if(h.get('a')){ $('addr').value=h.get('a'); if(key()){ if(!TOOL&&!FLAT) openTool('survey'); run(()=>geocodeAddress(h.get('a'))); } }
+    let want='survey';
+    try{ const t=sessionStorage.getItem('terrain-tool'); if(t&&TOOLS[t]) want=t; sessionStorage.removeItem('terrain-tool'); }catch(e){}
+    if(h.get('a')){ $('addr').value=h.get('a'); if(key()){ if(!TOOL&&!FLAT) openTool(want); run(()=>geocodeAddress(h.get('a'))); } }
     else if(h.get('ll')){ const [la,lo]=h.get('ll').split(',').map(Number);
-      if(key()&&!isNaN(la)){ if(!TOOL&&!FLAT) openTool('survey'); run(()=>geocodePoint(lo,la)); } }
+      if(key()&&!isNaN(la)){ if(!TOOL&&!FLAT) openTool(want); run(()=>geocodePoint(lo,la)); } }
   };
   if(h.get('a')||h.get('ll')){
     // initAccess is async, so wait for the verdict before acting on the hash
