@@ -279,7 +279,8 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .focusbar button.all{border-style:dashed}
 .focusnote{font-size:.78rem;color:var(--ink3);margin-top:8px}
 .focusnote a{color:var(--ink2);text-decoration:underline}
-.stagehead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:22px 0 9px}
+.stagehead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:30px 0 11px;
+  padding-top:14px;border-top:1px solid var(--line)}
 .stagenum{width:25px;height:25px;border-radius:50%;background:var(--acc);color:var(--btn-ink);font-weight:700;font-size:.82rem;
   display:flex;align-items:center;justify-content:center;flex:none}
 .stagehead b{font-family:var(--disp);font-size:1.02rem;font-weight:600;color:var(--ink)}
@@ -298,8 +299,12 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .sug li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:1px;background:var(--ink3)}
 .sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
-.sugcat{font-family:var(--disp);font-size:1.02rem;font-weight:600;letter-spacing:-.01em;color:var(--ink);text-transform:none;
-  margin:26px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+.sugcat{font-family:var(--disp);font-size:clamp(1.18rem,3.9vw,1.38rem);font-weight:700;letter-spacing:-.01em;
+  color:var(--acc);text-transform:none;
+  margin:42px 0 14px;padding-top:18px;border-top:2px solid var(--acc-dim);
+  display:flex;align-items:center;gap:10px}
+.sugcat::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
+.sugcat:first-of-type{margin-top:24px}
 .zviews{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}
 .zviews button{flex:1 1 auto;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 12px;
   font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:40px;white-space:nowrap}
@@ -455,7 +460,10 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .cong a{grid-row:1/3;grid-column:2;align-self:center;font-size:.78rem;font-weight:600}
 .moves{margin-bottom:20px}
 .movehead{margin-bottom:10px}
-.movehead b{display:block;font-family:var(--disp);font-size:1.18rem;font-weight:600;color:var(--ink);margin-bottom:5px}
+.movehead{margin-top:38px;padding-top:18px;border-top:2px solid var(--acc-dim)}
+.movehead b{display:flex;align-items:center;gap:10px;font-family:var(--disp);
+  font-size:clamp(1.18rem,3.9vw,1.38rem);font-weight:700;color:var(--acc);margin-bottom:6px}
+.movehead b::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
 .movehead span{font-size:.8rem;color:var(--ink3);line-height:1.5;display:block}
 .move{background:linear-gradient(180deg,rgba(76,154,255,.06),transparent 60%),linear-gradient(180deg,var(--panel2),var(--panel));
   border:1px solid var(--line2);border-radius:var(--r);padding:15px 16px;margin-bottom:9px}
@@ -598,13 +606,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v6.1';
+const VERSION = 'v6.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1191,7 +1199,7 @@ function profile(m,c){
   on(m.occ&&m.occ[0]&&m.occ[0][1]>=42,'professional');
   on(m.occ&&m.occ[1]&&m.occ[1][1]>=20,'service-work');
   on(m.renters>=40,'renters');               on(m.renters<=28,'homeowners');
-  on(m.rent50>=18,'rent-burdened');          on(m.overcrowd>=4,'crowded');
+  on(m.rent50>=18&&m.renters>=15,'rent-burdened');          on(m.overcrowd>=4,'crowded');
   on(m.noCar>=9,'no-car');                   on(m.noCar!=null&&m.noCar<5,'car-dependent');
   on(m.pop!=null&&m.pop>=5000,'dense');
   if(m.past){
@@ -1439,6 +1447,32 @@ const SMALL_GROUPS=[
 SIGNATURE.push(...SMALL_GROUPS);
 
 /* Score the pool against this neighbourhood and return the best fits. */
+/* Chips shown to a pastor. Three rules: never print a tag beside its stronger
+   twin ("older" next to "very old" reads as sloppiness), give them plain names,
+   and drop the ones that describe the data rather than the neighbourhood. */
+const TAG_SUPERSEDED={'older':'very-old','poor':'very-poor','immigrant':'very-immigrant',
+  'uninsured':'very-uninsured','families':'many-kids'};
+const TAG_LABEL={'very-old':'notably older','older':'older','many-kids':'lots of children',
+  'families':'families','single-parents':'single-parent families','family-heavy':'family households',
+  'seniors-alone':'seniors living alone','students':'students nearby','schools-near':'schools nearby',
+  'very-immigrant':'strongly immigrant','immigrant':'immigrant','newcomers':'recent arrivals',
+  'spanish':'Spanish-speaking','multilingual':'multilingual','limited-english':'limited English',
+  'very-poor':'deep poverty','poor':'poverty','child-poverty':'child poverty',
+  'food-insecure':'food insecurity','very-uninsured':'widely uninsured','uninsured':'uninsured',
+  'jobless':'unemployment','affluent':'affluent','low-income':'low income','divided':'rich and poor together',
+  'professional':'professional work','service-work':'service work','renters':'renting',
+  'homeowners':'homeowners','rent-burdened':'rent burdened','crowded':'overcrowded housing',
+  'no-car':'households without a car','car-dependent':'car dependent','dense':'a large population',
+  'changing':'changing','growing':'growing','settled':'settled','young':'young'};
+function displayTags(tags){
+  const out=[];
+  tags.forEach(t=>{
+    const stronger=TAG_SUPERSEDED[t];
+    if(stronger&&tags.has(stronger)) return;      // "older" is redundant beside "very old"
+    out.push(TAG_LABEL[t]||t.replace(/-/g,' '));
+  });
+  return out;
+}
 function signatureMoves(m,c,tags,limit){
   const scored=SIGNATURE.map(s=>{
     const hits=s.need.filter(t=>tags.has(t)).length;
@@ -1614,15 +1648,18 @@ const RULES=[
   ask:()=>`What would you ask a busy professional to give if you could not ask for money?`},
 
  {id:'rent50',cat:'Housing pressure',w:9,
-  on:m=>m.rent50>=20,
-  ev:m=>`${fmtPct(m.rent50)} of renters pay more than half their income in rent.`,
+  // The share is of RENTERS. In a neighbourhood that barely rents, a high
+  // share can be a handful of households, so require a real renting population
+  // and say how many households that actually is.
+  on:m=>m.rent50>=20&&m.renters>=15,
+  ev:m=>`${fmtPct(m.rent50)} of renters pay more than half their income in rent \u2014 about ${fmtNum(Math.round((m.hh||0)*(m.renters||0)/100*(m.rent50||0)/100))} households here.`,
   t:()=>`Households one setback from losing housing`,
   do:()=>[`Small, fast emergency assistance prevents evictions that cost far more to undo.`,
           `Know the local eviction process and a legal-aid contact before someone needs it at short notice.`,
           `Ask about arrears early — people rarely volunteer it until the notice arrives.`],
   ask:()=>`Who in your congregation has been evicted or nearly evicted? They know what would have helped.`},
  {id:'rent30',cat:'Housing pressure',w:6,
-  on:m=>m.rent30>=45&&m.rent50<20,
+  on:m=>m.rent30>=45&&m.rent50<20&&m.renters>=15,
   ev:m=>`${fmtPct(m.rent30)} of renters are cost-burdened, paying 30% or more of income in rent.`,
   t:()=>`Housing costs squeeze the ordinary budget`,
   do:()=>[`Expect little slack for fees, trips, camps, or giving — price everything accordingly, or not at all.`,
@@ -2503,7 +2540,13 @@ function congregationsHTML(list,radiusMi,county){
   }
   const groups={};
   list.forEach(c=>{ (groups[c.fam.k]=groups[c.fam.k]||{label:c.fam.label,ours:c.fam.ours,items:[]}).items.push(c); });
-  const ordered=Object.values(groups).sort((a,b)=>b.items.length-a.items.length);
+  // "Denomination not recorded" is a gap in OpenStreetMap, not a tradition.
+  // It still counts, so it stays in the bars — but always at the bottom, and it
+  // never gets a doctrine card, because there is nothing to say about it.
+  const vague=k=>k==='christian-other'||k==='unknown';
+  const ordered=Object.entries(groups)
+    .sort((a,b)=>(vague(a[0])?1:0)-(vague(b[0])?1:0) || b[1].items.length-a[1].items.length)
+    .map(e=>e[1]);
   const ours=list.filter(c=>c.fam.ours);
   const named=list.filter(c=>c.name!=='Unnamed place of worship');
   return `
@@ -2528,10 +2571,9 @@ function congregationsHTML(list,radiusMi,county){
   </div>
   <div class="sugcat" style="margin-top:26px">What these traditions teach</div>
   <div class="strat"><b>How to use this</b>Each entry states the teaching as its own members would state it, then the point of difference, then the common ground. Get the first part wrong in front of someone and you lose the conversation before you reach the second. Traditions are not monolithic — where a family is genuinely divided, it says so.</div>
-  ${ordered.filter(g=>DOCTRINE[Object.keys(groups).find(k=>groups[k]===g)]).map(g=>{
-    const key=Object.keys(groups).find(k=>groups[k]===g);
-    return doctrineCard(key,g.items.length);
-  }).join('')}
+  ${ordered.map(g=>Object.keys(groups).find(k=>groups[k]===g))
+     .filter(k=>DOCTRINE[k]&&!vague(k))
+     .map(k=>doctrineCard(k,groups[k].items.length)).join('')}
   <details class="ideas" style="margin-top:10px"><summary>Traditions not on the map nearby — including the largest group of all</summary>
     ${Object.keys(DOCTRINE).filter(k=>!groups[k]&&k!=='christian-other').map(k=>doctrineCard(k,0)).join('')}
   </details>
@@ -4573,7 +4615,7 @@ function render(){
         <div class="tags"><span>${esc(x.c)}</span><span>With: ${esc(x.p)}</span></div>
       </div>`).join('');
       }).join('')}
-      <div class="profiletags">This neighbourhood reads as: ${[...SG.tags].map(t=>`<span>${esc(t.replace(/-/g,' '))}</span>`).join(' ')}</div>
+      <div class="profiletags">This neighbourhood reads as: ${displayTags(SG.tags).map(t=>`<span>${esc(t)}</span>`).join('')}</div>
     </div>`:''}
     ${SG.cats.map(g=>`<div class="suggroup" data-cat="${esc(g.cat)}"><div class="sugcat">${esc(g.cat)}</div>
       ${STRATEGY[g.cat]?`<div class="strat"><b>The approach</b>${esc(STRATEGY[g.cat])}</div>`:''}`+g.items.map(h=>`<div class="sug">
