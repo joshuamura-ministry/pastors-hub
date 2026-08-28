@@ -611,10 +611,60 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .sheet ul{list-style:none;margin-top:6px;columns:2;column-gap:18px}
 .sheet li{break-inside:avoid;margin:0 0 7px;padding-left:22px;position:relative;font-size:.84rem;color:#111}
 .sheet li::before{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border:1.5px solid #333}
+
+/* ===== Reports rows ===== */
+.rpt{display:flex;align-items:center;gap:12px;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+.rpt>div{flex:1;min-width:0}
+.rpt b{display:block;font-weight:600;color:var(--ink);font-size:.92rem}
+.rpt span{display:block;font-size:.78rem;color:var(--ink3);margin-top:2px;line-height:1.45}
+.rpt .btn{flex:0 0 auto;min-height:36px;padding:0 14px;font-size:.82rem}
+/* ===== Forms library ===== */
+.flib{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));margin-top:14px}
+.fcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:13px 14px;box-shadow:var(--shadow);display:flex;flex-direction:column}
+.fcard h3{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:3px}
+.fcard .fw{font-size:.78rem;color:var(--ink3);margin-bottom:6px}
+.fcard p{font-size:.82rem;color:var(--ink2);line-height:1.5;flex:1}
+.fcard .facts{display:flex;gap:6px;margin-top:10px;flex-wrap:wrap}
+.fcard .facts button{min-height:34px;padding:0 11px;border-radius:8px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink2);font-size:.8rem;font-weight:600;cursor:pointer;font-family:inherit}
+.fcard .facts button.pri{background:var(--acc);border-color:var(--acc);color:var(--btn-ink)}
+.ftag{display:inline-block;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--acc);background:var(--acc-dim);border-radius:5px;padding:2px 6px;margin-left:6px}
+.fnote{font-size:.8rem;color:var(--ink3);line-height:1.55;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+/* the printable sheet itself */
+#formsheet{display:none;background:#fff;color:#111;line-height:1.5}
+#formsheet h1{font-family:var(--disp);font-size:1.6rem;font-weight:700;color:#111;margin-bottom:2px;line-height:1.2}
+#formsheet h2{font-family:var(--disp);font-size:1.05rem;font-weight:700;color:#111;margin:18px 0 6px;padding-bottom:3px;border-bottom:1.5px solid #111}
+#formsheet h3{font-family:var(--disp);font-size:.94rem;font-weight:700;color:#111;margin:12px 0 3px}
+#formsheet .sub{color:#555;font-size:.84rem;margin-bottom:10px}
+#formsheet p{font-size:.86rem;margin:0 0 8px}
+#formsheet .lead2{font-size:.88rem;margin-bottom:12px}
+#formsheet .ll{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#666;font-weight:700;margin-top:8px}
+#formsheet .ln{border-bottom:1px solid #999;height:24px;margin:0 0 8px}
+#formsheet .lnr{display:flex;gap:14px}
+#formsheet .lnr>div{flex:1}
+#formsheet .cb{padding-left:22px;position:relative;margin:0 0 7px;font-size:.85rem;break-inside:avoid}
+#formsheet .cb::before{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border:1.5px solid #333}
+#formsheet .cbl{padding-left:22px;position:relative;margin:0 0 4px;font-size:.85rem}
+#formsheet .cbl::before{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border:1.5px solid #333}
+#formsheet .duty{font-size:.79rem;color:#444;margin:1px 0 8px 22px;line-height:1.45}
+#formsheet .need{font-size:.72rem;color:#111;font-weight:700}
+#formsheet .two{columns:2;column-gap:22px}
+#formsheet .two>*{break-inside:avoid}
+#formsheet table{width:100%;border-collapse:collapse;font-size:.8rem;margin:6px 0 10px}
+#formsheet th,#formsheet td{border:1px solid #999;padding:4px 6px;text-align:left}
+#formsheet th{background:#eee;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+#formsheet .foot{margin-top:16px;padding-top:8px;border-top:1px solid #bbb;font-size:.72rem;color:#666}
+#formsheet .cert{border:3px double #111;padding:28px;text-align:center;margin-top:10px}
+#formsheet .cert h1{font-size:2rem;margin-bottom:10px}
+#formsheet .num{font-size:.78rem;color:#444}
 @media print{
   body[data-print] *{visibility:hidden}
   body[data-print="sheet"] #printsheet,body[data-print="sheet"] #printsheet *{visibility:visible}
   body[data-print="plan"] #plandoc,body[data-print="plan"] #plandoc *{visibility:visible}
+  body[data-print="form"] #formsheet,body[data-print="form"] #formsheet *{visibility:visible}
+  body[data-print="form"] #formsheet{position:absolute;left:0;top:0;width:100%;border:none;padding:0;margin:0;box-shadow:none;display:block !important}
+  #formsheet{font-size:10.5pt}
+  #formsheet .pg{break-before:page}
+  #formsheet .keep{break-inside:avoid}
   body[data-print] #printsheet,body[data-print] #plandoc{position:absolute;left:0;top:0;width:100%;border:none;padding:0;margin:0;box-shadow:none;display:block !important}
   #plandoc{font-size:10.5pt}
   .pdoc .pg{break-before:page}
@@ -796,6 +846,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <div class="pmode" id="pmode" hidden>
       <button type="button" data-m="plan" class="on">Plan</button>
       <button type="button" data-m="track">Track</button>
+      <button type="button" data-m="forms">Forms</button>
     </div>
     <div id="pplan">
     <div class="pintro">
@@ -831,6 +882,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <div id="pout"></div>
     </div>
     <div id="ptrack" hidden></div>
+    <div id="pforms" hidden></div>
   </div>
   <div class="toolbar" id="toolbar" hidden>
     <button class="backtools" id="backtools">← Tools</button>
@@ -862,13 +914,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v7.2';
+const VERSION = 'v7.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -4520,8 +4572,9 @@ function plannerOpen(){
     mode.querySelectorAll('button').forEach(b=>b.onclick=()=>{
       const m=b.dataset.m;
       mode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
-      $('pplan').hidden = m!=='plan'; $('ptrack').hidden = m!=='track';
+      $('pplan').hidden = m!=='plan'; $('ptrack').hidden = m!=='track'; $('pforms').hidden = m!=='forms';
       if(m==='track') trackOpen();
+      if(m==='forms') formsOpen();
       window.scrollTo({top:0,behavior:'auto'});
     });
     const on=mode.querySelector('button.on'); if(on&&on.dataset.m==='track'&&PLAN) trackOpen();
@@ -4920,8 +4973,37 @@ function nightDates(p){
 }
 /* gift thresholds scale with the length of the series */
 function giftMarks(p){
-  const n=p.nights;
-  return {book:Math.max(3,Math.round(n*0.40)), bible:Math.min(18,Math.max(6,Math.round(n*0.75))), picture:Math.min(24,Math.max(4,Math.round(n*0.92)))};
+  /* Thresholds scale with the length of the series rather than being fixed,
+     because a five-night series and a thirty-night series are not the same
+     campaign. The ratios come from the playbook's own set for a 26-night
+     run — a book around two fifths of the way, a Bible around seven tenths,
+     the large picture near the end — and they reproduce its 18 and 24
+     exactly at 26 nights while staying sane at 5 or at 40.
+
+     Three rules hold at every length: no tier may exceed the number of
+     nights; the top tier never requires perfect attendance, since a gift
+     nobody can reach is not an incentive; and the tiers stay strictly
+     apart. A series too short to carry three tiers carries two, or one. */
+  const n=Math.max(1,p.nights|0);
+  let tiers;
+  if(n>=8){
+    let book=Math.max(1,Math.round(n*0.40));
+    let bible=Math.min(18,Math.round(n*0.70));
+    let picture=Math.min(24,Math.round(n*0.92));
+    picture=Math.min(picture,n-1);          // never perfect attendance
+    bible=Math.min(bible,picture-1);
+    book=Math.min(book,bible-1);
+    tiers=[{k:'book',n:'Gift book',at:book},{k:'bible',n:'Gift Bible',at:bible},{k:'picture',n:'Large picture',at:picture}];
+  } else if(n>=5){
+    tiers=[{k:'book',n:'Gift book',at:Math.max(1,Math.round(n*0.45))},{k:'bible',n:'Gift Bible',at:n-1}];
+  } else {
+    tiers=[{k:'book',n:'Gift book',at:Math.max(1,n-1)}];
+  }
+  const g={tiers,n,short:n<8};
+  g.book   = (tiers.find(t=>t.k==='book')   ||{}).at ?? null;
+  g.bible  = (tiers.find(t=>t.k==='bible')  ||{}).at ?? null;
+  g.picture= (tiers.find(t=>t.k==='picture')||{}).at ?? null;
+  return g;
 }
 function pAtt(person){ return Object.keys(person.att||{}).filter(k=>person.att[k]).length; }
 function preachedTopics(){ const set=new Set(); Object.values(RECS.nights||{}).forEach(n=>{ if(n.topic&&n.topic!=='other') set.add(n.topic); }); return set; }
@@ -4971,12 +5053,13 @@ function trackRender(){
   const gm=giftMarks(p), q=visitQueue(p), last=lastHeldIndex(p);
   const held=Object.keys(RECS.nights||{}).filter(k=>RECS.nights[k]&&RECS.nights[k].att).length;
   const guests=RECS.people.filter(x=>!x.member);
-  const tabs=[['nights','Nights',held+'/'+p.nights],['people','People',guests.length],['visits','Visits',q.rows.length],['gifts','Gifts',''],['gate','Table','']];
+  const tabs=[['nights','Nights',held+'/'+p.nights],['people','People',guests.length],['visits','Visits',q.rows.length],['gifts','Gifts',''],['gate','Table',''],['reports','Reports','']];
   let body='';
   if(TVIEW==='nights') body=viewNights(p);
   else if(TVIEW==='people') body=viewPeople(p);
   else if(TVIEW==='visits') body=viewVisits(p,q);
   else if(TVIEW==='gifts') body=viewGifts(p,gm);
+  else if(TVIEW==='reports') body=viewReports(p);
   else body=viewGate(p);
   host.innerHTML=`
     <div class="phead" style="margin-top:0"><h2>${esc(p.church||'Your church')}</h2><span class="hint">${p.nights} nights from ${pDate(new Date(p.date+'T12:00:00'))}${last>=0?' · week '+(Math.floor(last/p.perweek)+1):''}</span></div>
@@ -4985,6 +5068,7 @@ function trackRender(){
     ${body}`;
   host.querySelectorAll('.tsub button').forEach(b=>b.onclick=()=>{TVIEW=b.dataset.t;trackRender();window.scrollTo({top:0,behavior:'smooth'});});
   wireTrack(p);
+  if(TVIEW==='reports') wireReports(p);
 }
 function viewNights(p){
   const ds=nightDates(p), today=new Date(); today.setHours(23,59,59,0);
@@ -5054,11 +5138,12 @@ function viewVisits(p,q){
 }
 function viewGifts(p,gm){
   const rows=RECS.people.map(x=>({x,n:pAtt(x)})).filter(r=>r.n>0).sort((a,b)=>b.n-a.n);
-  const due=(n)=>{const out=[]; if(n>=gm.book)out.push('gift book'); if(n>=gm.bible)out.push('gift Bible'); if(n>=gm.picture)out.push('large picture'); return out;};
-  return `<p class="note" style="margin-bottom:10px">A free lecture copy every night attended. Beyond that the thresholds scale with a ${p.nights}-night series: a gift book at <b>${gm.book}</b> nights, a Bible at <b>${gm.bible}</b>, the large picture at <b>${gm.picture}</b>. A small picture goes to anyone who brings a guest — and one to the guest. Hand this list to the registration table.</p>
+  const due=(n)=>gm.tiers.filter(t=>n>=t.at).map(t=>t.n.toLowerCase());
+  const nextAt=(n)=>{ const t=gm.tiers.find(t=>n<t.at); return t?t.at+' night'+(t.at===1?'':'s')+' ('+t.n.toLowerCase()+')':null; };
+  return `<p class="note" style="margin-bottom:10px">A free lecture copy every night attended. Beyond that the thresholds scale with a ${p.nights}-night series: ${gm.tiers.map(t=>t.n.toLowerCase()+' at <b>'+t.at+'</b> night'+(t.at===1?'':'s')).join(', ')}.${gm.short?' A series this short carries '+(gm.tiers.length===1?'a single tier':'two tiers')+' — three would put a gift out of reach.':''} A small picture goes to anyone who brings a guest — and one to the guest. Hand this list to the registration table.</p>
   ${rows.length?rows.map(r=>{const d=due(r.n); return `<div class="tvisit" style="border-left-color:${d.length?'var(--acc)':'var(--line2)'}">
     <div class="vh"><b>${esc(r.x.name||'(no name)')}</b><span class="vw">${r.n} night${r.n===1?'':'s'}</span></div>
-    <div class="vd">${d.length?'Due: <em>'+d.join(', ')+'</em>':'Nothing due yet — next at '+(r.n<gm.book?gm.book+' nights (book)':r.n<gm.bible?gm.bible+' nights (Bible)':gm.picture+' nights (picture)')+'.'}</div>
+    <div class="vd">${d.length?'Due: <em>'+d.join(', ')+'</em>':(nextAt(r.n)?'Nothing due yet — next at '+nextAt(r.n)+'.':'Nothing due yet.')}</div>
   </div>`;}).join(''):`<div class="tempty">Mark attendance on the People tab and this list builds itself each night.</div>`}`;
 }
 function viewGate(p){
@@ -5137,6 +5222,680 @@ function enlistSection(p,pl){
 function enlistWire(p,pl){
   const pr=$('en-print'); if(pr) pr.onclick=()=>{ document.body.dataset.print='sheet'; window.print(); setTimeout(()=>delete document.body.dataset.print,600); };
 }
+/* ================= REPORTS, EXPORT AND BACKUP =================
+   Everything the record book can give back. Two things are typed — the
+   night and the person — and everything below is derived from them, so
+   none of this is a second place to keep data up to date.
+
+   Three ways out:
+     · CSV, for a spreadsheet or a mail merge;
+     · printable reports, for the board and for the teams working that week;
+     · one backup file holding the whole book, so the records laptop can
+       hand the pastor's phone a copy without a server in between.
+   Nothing leaves the device unless the pastor exports it deliberately. */
+
+function repSlug(){ const p=PLAN; return ((p.church||'church').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'church'); }
+function repStamp(){ return new Date().toISOString().slice(0,10); }
+function repCSV(rows){ return rows.map(r=>r.map(csvEscape).join(',')).join('\r\n'); }
+
+/* ---- what the plan expected, against what actually happened ---- */
+function repActuals(p){
+  const ds=nightDates(p), gm=giftMarks(p);
+  const held=[]; for(let i=0;i<p.nights;i++){ const r=(RECS.nights||{})[i]; if(r&&(r.att||r.subject)) held.push({i,d:ds[i],r}); }
+  const atts=held.map(h=>+h.r.att||0).filter(n=>n>0);
+  const peak=atts.length?Math.max(...atts):0, first=atts.length?atts[0]:0, latest=atts.length?atts[atts.length-1]:0;
+  const avg=atts.length?Math.round(atts.reduce((a,b)=>a+b,0)/atts.length):0;
+  const guests=RECS.people.filter(x=>!x.member);
+  const members=RECS.people.filter(x=>x.member);
+  const cards=held.reduce((a,h)=>a+(+h.r.cards||0),0);
+  const decisions={}; TOPICS.forEach(t=>{ if(t.id==='other') return; decisions[t.id]=guests.filter(x=>(x.beliefs||{})[t.id]).length; });
+  const baptismReady=guests.filter(x=>(x.beliefs||{}).baptism).length;
+  const studying=guests.filter(x=>+x.sfc>0).length;
+  const asked={visit:guests.filter(x=>(x.req||{}).visit).length,
+               material:guests.filter(x=>(x.req||{}).material).length,
+               info:guests.filter(x=>(x.req||{}).info).length};
+  const eligible={}; gm.tiers.forEach(t=>{ eligible[t.k]=guests.filter(x=>pAtt(x)>=t.at).length; });
+  const unassigned=guests.filter(x=>!(x.worker||'').trim()).length;
+  const retention=first?Math.round(latest/first*100):0;
+  return {ds,gm,held,atts,peak,first,latest,avg,guests,members,cards,decisions,baptismReady,studying,asked,eligible,unassigned,retention};
+}
+
+/* ---- CSV: one row per person, every field the record book holds ---- */
+function repPeopleCSV(p){
+  const ds=nightDates(p), gm=giftMarks(p);
+  const head=['Name','Ticket','Member','Age','Phone','Email','Address','Church / religion','How they heard',
+    'Nights attended','First night','Last night','Lessons completed','Assigned worker','Interest or prospect',
+    ...TOPICS.filter(t=>t.id!=='other').map(t=>'Cleared: '+t.n),
+    'Asked: material','Asked: information','Asked: visit',
+    ...gm.tiers.map(t=>t.n+' earned'),'Notes'];
+  const rows=[head];
+  RECS.people.forEach(x=>{
+    const att=x.att||{}, idx=Object.keys(att).filter(k=>att[k]).map(Number).sort((a,b)=>a-b);
+    const n=idx.length;
+    rows.push([x.name||'',x.ticket||'',x.member?'member':'guest',x.age||'',x.phone||'',x.email||'',x.addr||'',
+      x.religion||'',x.referred||'', n,
+      idx.length?pDate(ds[idx[0]]):'', idx.length?pDate(ds[idx[idx.length-1]]):'',
+      x.sfc!=null?x.sfc:'', x.worker||'', x.kind||'',
+      ...TOPICS.filter(t=>t.id!=='other').map(t=>(x.beliefs||{})[t.id]?'yes':''),
+      (x.req||{}).material?'yes':'',(x.req||{}).info?'yes':'',(x.req||{}).visit?'yes':'',
+      ...gm.tiers.map(t=>n>=t.at?'yes':''),
+      (x.notes||'').replace(/\s+/g,' ')]);
+  });
+  return repCSV(rows);
+}
+
+/* ---- CSV: one row per meeting ---- */
+function repNightsCSV(p){
+  const ds=nightDates(p);
+  const rows=[['Night','Date','Subject','Topic','Total attendance','Non-members','First-timers','Call made','Cards returned']];
+  for(let i=0;i<p.nights;i++){
+    const r=(RECS.nights||{})[i]||{};
+    const t=TOPICS.find(x=>x.id===r.topic);
+    rows.push([i+1,pDate(ds[i]),r.subject||'',t?t.n:'',r.att!=null?r.att:'',r.non!=null?r.non:'',
+      r.first!=null?r.first:'',r.call||'',r.cards!=null?r.cards:'']);
+  }
+  return repCSV(rows);
+}
+
+/* ---- CSV: the interest file, shaped for a mail merge ---- */
+function repInterestCSV(p){
+  const rows=[['First name','Full name','Address','Phone','Email','Nights attended','Assigned worker','Why they are on this list']];
+  RECS.people.filter(x=>!x.member).forEach(x=>{
+    const n=pAtt(x); const why=[];
+    if((x.req||{}).visit) why.push('asked for a visit');
+    if((x.req||{}).material) why.push('asked for reading material');
+    if(+x.sfc>0) why.push(x.sfc+' lessons completed');
+    if((x.beliefs||{}).baptism) why.push('marked baptism');
+    if(!why.length&&n>0) why.push('attended '+n+' night'+(n===1?'':'s'));
+    if(!why.length) why.push('on the file, has not attended');
+    rows.push([(x.name||'').trim().split(/\s+/)[0]||'',x.name||'',x.addr||'',x.phone||'',x.email||'',n,x.worker||'',why.join('; ')]);
+  });
+  return repCSV(rows);
+}
+
+/* ---- printable: the report for the board ---- */
+function repBoardDoc(p){
+  const A=repActuals(p), T=planTargets(p,planPlace(p)), S=planSchedule(p);
+  const D=new Date(p.date+'T12:00:00');
+  const pc=(a,b)=>b?Math.round(a/b*100)+'%':'—';
+  const pace=(a,b)=>{ if(!b) return ''; const r=a/b; return r>=1?'on target':r>=0.75?'close':'behind'; };
+  const half=Math.ceil((p.seats||0)*0.5);
+  const bar=(a,b)=>{ const w=b?Math.min(100,Math.round(a/b*100)):0; return `<div style="background:#eee;height:9px;border:1px solid #999"><div style="background:#555;height:9px;width:${w}%"></div></div>`; };
+  const row=(label,actual,target,note)=>`<tr><td>${label}</td><td><b>${actual}</b></td><td>${target}</td><td>${note||''}</td></tr>`;
+  const dec=TOPICS.filter(t=>t.id!=='other').map(t=>`<tr><td>${esc(t.n)}</td><td><b>${A.decisions[t.id]}</b></td><td>${pc(A.decisions[t.id],A.guests.length)} of guests</td></tr>`).join('');
+  return `<h1>Campaign report</h1>
+  <div class="sub">${esc(p.church||'Our church')} · opening night ${pDate(D)} · ${A.held.length} of ${p.nights} nights held · report run ${new Date().toLocaleDateString()}</div>
+  <h2>Where we stand</h2>
+  <table><tr><th>Measure</th><th>Actual</th><th>Target</th><th>Pace</th></tr>
+  ${row('Opening night attendance',A.first||'—',half+' (half the hall)',pace(A.first,half))}
+  ${row('Best night so far',A.peak||'—','—','')}
+  ${row('Most recent night',A.latest||'—','—',A.first?A.retention+'% of opening':'')}
+  ${row('Average attendance',A.avg||'—','—','')}
+  ${row('Guests registered',A.guests.length,T.prereg+' pre-registered was the goal',pace(A.guests.length,T.prereg))}
+  ${row('Members attending',A.members.length,p.members+' on the books',pace(A.members.length,p.members))}
+  ${row('Studying the lessons',A.studying,T.studies+' studies was the pre-work benchmark',pace(A.studying,T.studies))}
+  ${row('Decision cards returned',A.cards,'—','')}
+  </table>
+  <h3>Attendance holding</h3>
+  ${bar(A.latest,A.first||1)}
+  <p class="num">Opening night ${A.first||0} · latest ${A.latest||0} · ${A.retention}% holding. A series that holds above roughly three quarters of its opening night is doing well; a sharp fall usually means visitation has slipped, not that the preaching has.</p>
+  <h2>Decisions cleared</h2>
+  <table><tr><th>Subject</th><th>Guests cleared</th><th>Share</th></tr>${dec}</table>
+  <p class="num"><b>${A.baptismReady}</b> ${A.baptismReady===1?'guest has':'guests have'} marked baptism. Remember the counsel: a candidate should have gone over the message at least three times before the date is set — heard it preached, worked the lessons, and either attended the class or been taken through it at home.</p>
+  <h2>Work outstanding this week</h2>
+  <table><tr><th>Item</th><th>Number</th><th>Who</th></tr>
+  <tr><td>Guests asking for a personal visit</td><td><b>${A.asked.visit}</b></td><td>${esc((PLAN.roster||{}).visit||'visitation coordinator')}</td></tr>
+  <tr><td>Guests asking for reading material</td><td><b>${A.asked.material}</b></td><td>${esc((PLAN.roster||{}).materials||'materials coordinator')}</td></tr>
+  <tr><td>Guests asking for information</td><td><b>${A.asked.info}</b></td><td>${esc((PLAN.roster||{}).visit||'visitation coordinator')}</td></tr>
+  <tr><td>Guests with no worker assigned</td><td><b>${A.unassigned}</b></td><td>${esc((PLAN.roster||{}).coord||'campaign coordinator')}</td></tr>
+  </table>
+  ${A.unassigned?`<p class="num"><b>Every guest should have one name beside them.</b> ${A.unassigned} ${A.unassigned===1?'does':'do'} not. That is the first thing to fix at this meeting — an unassigned guest is the one who quietly stops coming.</p>`:'<p class="num">Every guest has a worker assigned. That is the single strongest predictor that they will still be here at the end.</p>'}
+  <h2>Gifts earned so far</h2>
+  <table><tr><th>Gift</th><th>Nights required</th><th>Guests eligible</th></tr>
+  ${A.gm.tiers.map(t=>`<tr><td>${t.n}</td><td>${t.at}</td><td><b>${A.eligible[t.k]||0}</b></td></tr>`).join('')}</table>
+  <p class="num">Thresholds are set from a ${p.nights}-night series${A.gm.short?', which is short enough that it carries '+(A.gm.tiers.length===1?'one tier':'two tiers')+' rather than three':''}. Order against the eligible column, not the hopeful one.</p>
+  <h2>Nights held</h2>
+  <table><tr><th>#</th><th>Date</th><th>Subject</th><th>In</th><th>Non-members</th><th>Call</th><th>Cards</th></tr>
+  ${A.held.map(h=>`<tr><td>${h.i+1}</td><td>${pDate(h.d)}</td><td>${esc(h.r.subject||'')}</td><td>${h.r.att!=null?h.r.att:''}</td><td>${h.r.non!=null?h.r.non:''}</td><td>${esc(h.r.call||'')}</td><td>${h.r.cards!=null?h.r.cards:''}</td></tr>`).join('')||'<tr><td colspan="7">No nights recorded yet.</td></tr>'}
+  </table>
+  <div class="foot">${esc(p.church||'')} · figures from the campaign record book · Terrain ${VERSION}</div>`;
+}
+
+/* ---- printable: the list the visiting teams carry out the door ---- */
+function repVisitDoc(p){
+  const q=visitQueue(p);
+  const urgent=q.rows.filter(r=>r.urgent), rest=q.rows.filter(r=>!r.urgent);
+  const card=r=>`<div class="keep" style="border:1px solid #999;padding:10px;margin-bottom:9px">
+    <b>${esc(r.person.name||'(no name)')}</b>${r.urgent?' <b>· GO THIS WEEK</b>':''}
+    <div class="num">${esc(r.type)} · attended ${r.att} night${r.att===1?'':'s'}${r.worker?' · assigned to '+esc(r.worker):' · <b>no worker assigned</b>'}</div>
+    <div class="num">${esc(r.person.phone||'no phone on file')}${r.person.addr?' · '+esc(r.person.addr):''}</div>
+    <p style="font-size:.8rem;margin:5px 0 4px">${esc(r.why)}</p>
+    ${r.lit?`<div class="num">Take: ${esc(r.lit)}</div>`:''}
+    <div class="lnr"><div><div class="ll">Visited on</div><div class="ln"></div></div><div><div class="ll">By</div><div class="ln"></div></div></div>
+    <div class="ll">What was said · next step</div><div class="ln"></div><div class="ln"></div>
+  </div>`;
+  return `<h1>Visitation list</h1>
+  <div class="sub">${esc(p.church||'Our church')} · week ${q.week||1} of the series · ${q.rows.length} on the list · generated ${new Date().toLocaleDateString()}</div>
+  <p class="lead2">Organised by ${esc((PLAN.roster||{}).visit||'the visitation coordinator')}. Go in twos. Go when you said you would. Bring this sheet back filled in — a visit that is not written down did not happen as far as the next team is concerned.</p>
+  ${urgent.length?`<h2>Go this week — ${urgent.length}</h2>
+    <p class="num">These came at least once and have now missed two nights running. Five minutes at the door, a warm word, and leave. Do not go in, do not preach, do not ask why. Most of them come back if someone notices within the week.</p>
+    ${urgent.map(card).join('')}`:'<h2>Nobody has dropped out this week</h2><p class="num">No one who attended has missed two consecutive nights. Keep the weekly rounds going anyway.</p>'}
+  ${rest.length?`<h2>The rest of the round — ${rest.length}</h2>${rest.map(card).join('')}`:''}
+  <div class="foot">${esc(p.church||'')} · generated from the record book · Terrain ${VERSION}</div>`;
+}
+
+/* ---- printable: what the registration table needs tonight ---- */
+function repGiftDoc(p){
+  const gm=giftMarks(p);
+  const g=RECS.people.filter(x=>!x.member).map(x=>({x,n:pAtt(x)})).filter(r=>r.n>0).sort((a,b)=>b.n-a.n);
+  const tier=n=>{ const m=gm.tiers.filter(t=>n>=t.at); return m.length?m[m.length-1].n:''; };
+  return `<h1>Gift eligibility — tonight</h1>
+  <div class="sub">${esc(p.church||'Our church')} · ${new Date().toLocaleDateString()} · ${gm.tiers.map(t=>t.n.toLowerCase()+' at '+t.at).join(' · ')}</div>
+  <p class="lead2">For the registration table. Keep the framed samples on display where people can see them — the gifts build attendance because people can see what they are working toward, not because they are told about them.</p>
+  <table><tr><th>Name</th><th>Ticket</th><th>Nights</th><th>Now eligible for</th><th>Given</th></tr>
+  ${g.map(r=>`<tr><td>${esc(r.x.name||'')}</td><td>${esc(r.x.ticket||'')}</td><td><b>${r.n}</b></td><td>${tier(r.n)}</td><td></td></tr>`).join('')||'<tr><td colspan="5">No guest attendance recorded yet.</td></tr>'}
+  </table>
+  <p class="num">A small picture goes to anyone who brings a guest — and one to the guest as well. That is not on this list because it is not earned by attendance; watch for it at the door.</p>
+  <div class="foot">${esc(p.church||'')} · Terrain ${VERSION}</div>`;
+}
+
+/* ---- backup: the whole book, in and out ---- */
+function repBackup(){
+  const p=PLAN;
+  const pack={terrain:'record-book',v:1,exported:new Date().toISOString(),
+    version:VERSION, plan:p, records:RECS};
+  download(`${repSlug()}-backup-${repStamp()}.json`, JSON.stringify(pack,null,2), 'application/json');
+}
+function repRestore(file,done){
+  const fr=new FileReader();
+  fr.onload=()=>{
+    try{
+      const pack=JSON.parse(fr.result);
+      if(!pack||pack.terrain!=='record-book'||!pack.records) return done('That file is not a Terrain backup.');
+      const inc=pack.records, mine=RECS;
+      const incN=Object.keys(inc.nights||{}).length, incP=(inc.people||[]).length;
+      const myN=Object.keys(mine.nights||{}).length, myP=(mine.people||[]).length;
+      if(inc.id!==mine.id && !confirm(`That backup is for a different campaign:\n\n${inc.church||'?'} — opening ${inc.date||'?'}\n\nThis device holds: ${mine.church||'?'} — opening ${mine.date||'?'}\n\nOpen it anyway? Your current book will be replaced.`)) return done('Left alone.');
+      if((myN||myP) && !confirm(`Replace what is on this device?\n\nOn this device: ${myN} night${myN===1?'':'s'}, ${myP} ${myP===1?'person':'people'}\nIn the file:    ${incN} night${incN===1?'':'s'}, ${incP} ${incP===1?'person':'people'}\n\nThis cannot be undone. Export a backup first if you are unsure.`)) return done('Left alone.');
+      const all=recsAll(); all[inc.id]=inc; localStorage.setItem(REC_KEY,JSON.stringify(all));
+      RECS=inc; done(`Opened: ${incN} night${incN===1?'':'s'} and ${incP} ${incP===1?'person':'people'}.`, true);
+    }catch(e){ done('That file could not be read.'); }
+  };
+  fr.onerror=()=>done('That file could not be read.');
+  fr.readAsText(file);
+}
+
+/* ---- the Reports screen ---- */
+function viewReports(p){
+  const A=repActuals(p);
+  const dl=(id,label,note,pri)=>`<div class="rpt"><div><b>${label}</b><span>${note}</span></div><button class="btn${pri?'':' ghost'}" data-rep="${id}">${pri?'Print':'Download'}</button></div>`;
+  return `<p class="note">Two things get typed — the night and the person. Everything on this screen is worked out from those, so there is nothing here to keep up to date separately.</p>
+  <div class="phead" style="margin-top:14px"><h2>Print</h2><span class="hint">for the board, the teams and the table</span></div>
+  ${dl('board','Report for the board','Attendance against your targets, decisions cleared, work outstanding, every night held',1)}
+  ${dl('visits','Visitation list for this week',(A.guests.length?visitQueue(p).rows.length:0)+' on the list · the sheet the teams carry out the door',1)}
+  ${dl('gifts','Gift list for the registration table','Who is eligible tonight, in attendance order',1)}
+  <div class="phead" style="margin-top:18px"><h2>Export</h2><span class="hint">opens in Excel, Numbers or Sheets</span></div>
+  ${dl('csv-people','People — every field','All ${n} records with attendance, decisions, requests and notes'.replace('${n}',RECS.people.length))}
+  ${dl('csv-nights','Nights — one row per meeting','Subject, attendance, call made and cards returned')}
+  ${dl('csv-interest','Interest file for a mail merge',A.guests.length+' guests with addresses and why each is on the list')}
+  <div class="phead" style="margin-top:18px"><h2>Move this book to another device</h2><span class="hint">no server involved</span></div>
+  <p class="note">Records live in this browser on this device. If the records team enters at the table and you read it on your phone, export a backup at the end of the night and open it on the other device. The file holds the whole book — plan and records together.</p>
+  ${dl('backup','Export a backup','One file, everything in it. Do this at the end of every meeting night.')}
+  <div class="rpt"><div><b>Open a backup</b><span>Replaces what is on this device — it will ask first</span></div>
+    <button class="btn ghost" id="rep-restore">Choose file</button></div>
+  <input type="file" id="rep-file" accept=".json,application/json" hidden>
+  <div class="hint" id="rep-msg" style="margin-top:8px"></div>`;
+}
+function wireReports(p){
+  const host=$('ptrack');
+  host.querySelectorAll('[data-rep]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.rep, slug=repSlug(), st=repStamp();
+    if(k==='board') return repPrint(repBoardDoc(p));
+    if(k==='visits') return repPrint(repVisitDoc(p));
+    if(k==='gifts') return repPrint(repGiftDoc(p));
+    if(k==='csv-people') return download(`${slug}-people-${st}.csv`, repPeopleCSV(p),'text/csv');
+    if(k==='csv-nights') return download(`${slug}-nights-${st}.csv`, repNightsCSV(p),'text/csv');
+    if(k==='csv-interest') return download(`${slug}-interest-file-${st}.csv`, repInterestCSV(p),'text/csv');
+    if(k==='backup') return repBackup();
+  });
+  const btn=$('rep-restore'), inp=$('rep-file'), msg=$('rep-msg');
+  if(btn&&inp){
+    btn.onclick=()=>inp.click();
+    inp.onchange=()=>{ const f=inp.files&&inp.files[0]; if(!f) return;
+      repRestore(f,(text,ok)=>{ msg.textContent=text; inp.value=''; if(ok) trackRender(); }); };
+  }
+}
+function repPrint(html){
+  let s=$('formsheet');
+  if(!s){ s=document.createElement('div'); s.id='formsheet'; document.body.appendChild(s); }
+  s.innerHTML=html;
+  document.body.dataset.print='form'; window.print();
+  setTimeout(()=>{ delete document.body.dataset.print; },600);
+}
+
+/* ================= FORMS LIBRARY =================
+   Every printable a campaign needs, generated from the plan rather than
+   photocopied blank. The church name, the dates, the venue, the committee
+   sizes, the print runs and the names already typed into the roster are
+   filled in before the sheet leaves the screen — so what the pastor hands
+   out on Sabbath morning is his church's form, not a generic one.
+
+   Place-driven throughout: a neighbourhood with many children gets the
+   children's committees marked required and staffed by night; a
+   neighbourhood without cars gets a drivers rota; a second language gets a
+   bilingual checker on every printed piece.
+
+   Written in Terrain's own words. Where the playbook supplies a compiled
+   proprietary list — the lesson titles, the statements of faith, the
+   letter texts — Terrain supplies the structure and the pastor supplies
+   his own content, or selects his published set separately. */
+
+function fname(ctx,id){ const n=(ctx.roster[id]||'').trim(); return n||'________________________'; }
+function fdash(ctx,id){ const n=(ctx.roster[id]||'').trim(); return n||'—'; }
+function fline(n){ let o=''; for(let i=0;i<n;i++) o+='<div class="ln"></div>'; return o; }
+function fcontact(){ return `<div class="ll">Name</div><div class="ln"></div>
+  <div class="ll">Address</div><div class="ln"></div>
+  <div class="lnr"><div><div class="ll">City</div><div class="ln"></div></div><div><div class="ll">State</div><div class="ln"></div></div><div><div class="ll">Zip</div><div class="ln"></div></div></div>
+  <div class="lnr"><div><div class="ll">Phone</div><div class="ln"></div></div><div><div class="ll">Email</div><div class="ln"></div></div></div>`; }
+
+/* everything a form generator needs, computed once */
+function formCtx(){
+  const p=PLAN, pl=planPlace(p), T=planTargets(p,pl), S=planSchedule(p);
+  const roles=planLeaderRoles(p,pl), fit=planLeaderFit(roles,p.leaders);
+  const Tg=pl?pl.tags:new Set(), has=(...k)=>k.some(x=>Tg.has(x));
+  const D=new Date(p.date+'T12:00:00');
+  const seats=p.seats||0, G=giftMarks(p);
+  const kids=has('many-kids','families','single-parents','family-heavy');
+  const noCar=has('no-car','seniors-alone','very-old');
+  const bi=has('spanish','limited-english','multilingual');
+  const H=p.kind!=='prophecy', P=p.kind!=='health';
+  const seriesName = p.kind==='health' ? 'health and hope series' : p.kind==='prophecy' ? 'Bible prophecy series' : 'Bible prophecy and health series';
+  return {p,pl,T,S,D,G,roles,fit,roster:p.roster||{},Tg,has,seats,kids,noCar,bi,H,P,seriesName,
+    lang:(pl&&pl.lang)||'',
+    church:p.church||'Our church',
+    open:pDate(D), close:pDate(S.close), nights:p.nights, perweek:p.perweek,
+    weeks:Math.ceil(p.nights/p.perweek)};
+}
+
+/* header block every sheet carries */
+function fhead(ctx,title,sub){
+  return `<h1>${esc(title)}</h1><div class="sub">${esc(ctx.church)} · ${esc(sub||('Opening night '+ctx.open+' · '+ctx.nights+' nights'))}</div>`;
+}
+function ffoot(ctx){
+  return `<div class="foot">${esc(ctx.church)} · ${esc(ctx.seriesName)} opening ${esc(ctx.open)} · prepared with Terrain ${VERSION}</div>`;
+}
+
+/* ---- the committees this church actually needs, with sizes and duties ---- */
+function fCommittees(ctx){
+  const c=[], seats=ctx.seats, T=ctx.T;
+  const ushers=seats?Math.max(2,Math.ceil(seats/25)*2):null;
+  c.push({n:'Prayer ministry',need:`about ${T.bands} prayer bands`,req:1,
+    d:['Pray daily, by name, for the people this campaign is trying to reach.','Meet in a set room thirty to sixty minutes before each meeting.','Stay in the meeting and keep praying through the preaching and the appeal.','Take the list of names — interests are prayed for individually, not in general.']});
+  c.push({n:'Ushers',need:ushers?`${ushers} ushers — two for every twenty-five seats`:'two for every twenty-five attending',req:1,
+    d:['Seat people and hand out materials in your own section.','Work the same section every night so guests keep seeing the same face.','Collect the offering.','Count out decision cards by row, pass them, and gather them in.','Learn the names of the people in your section.']});
+  c.push({n:'Hosts and hostesses',need:'2–4 at the doors each night',req:1,
+    d:['Meet every guest at the door before anyone else does.','Hand out the evening schedule.','Give every person a ticket book or a scanner card on opening night; after that send new arrivals to the registration table.','Watch for parents with young children and walk them to the children\u2019s program.','Watch the seating and hand over to the ushers once the hall is filling.','Give out the lecture copy as people leave.']});
+  c.push({n:'Registration',need:'2–3 each evening, plus a second table on gift nights',req:1,
+    d:['Set the table up before the doors open and take it down after.','Register each new person once for the whole series.','Keep back copies of the lecture magazine for anyone who missed a night.','Hand out the gift books, Bibles and pictures as people become eligible.','Keep the framed samples of the gifts on display where they can be seen.']});
+  c.push({n:'Attendance records',need:'2–3, at least one comfortable with a computer',req:1,
+    d:['Collect the tickets or scan the cards each evening.','Enter every name, address and phone number the same night.','Enter what each person marked on their decision card.','Produce the alphabetical attendance list and the gift-eligibility list for the registration table.','Hand the visitation coordinator the names of everyone who came once and then missed two nights running.']});
+  c.push({n:'Bible School',need:'a leader and co-leader, 4–6 correctors, 2–3 at the table, 1 answering questions',req:1,
+    d:['Give the lessons out to guests and take completed ones back.','Correct each lesson by hand and return it with a note, not just a mark.','Keep a file per student showing which lessons are done.','Pass anyone who finishes to the pastor for a personal visit.']});
+  c.push({n:'Parking attendants',need:'2–4, more if the lot is dark or shared',
+    d:['Be visible — vests and torches, at the entrance before the first car.','Members park furthest away; the near spaces are for guests.','Keep the accessible spaces staffed and clear.','Umbrellas at the door when it rains.','Stay until the last car has gone.']});
+  c.push({n:'Children\u2019s meetings',need:'4 leaders — one for each night of the week',req:ctx.kids?1:0,
+    why:ctx.kids?'the survey shows many children in these blocks — without this the parents cannot come':'',
+    d:['One leader owns one night of the week for the whole campaign, so the children see the same face.','Programme for ages five to eleven: a Bible story, a continued story running about five evenings, a nature or health piece, and a craft.','Helpers for the crafts and the door.','Start and finish with the adult meeting so parents are not waiting.']});
+  c.push({n:'Babysitting',need:'2–3 per night',req:ctx.kids?1:0,
+    d:['Birth to four years old, in a separate room from the older children.','Name tags on every child and a matching tag for the parent.','Nappies, wipes, safe toys, a cot and a rocking chair.','Never fewer than two adults in the room.']});
+  c.push({n:'Resource centre',need:'2 each evening',
+    d:['Decide the stock and order it well before opening night.','Display it where people pass, not in a corner.','Cash box, receipts, and a written record of what sold each night.']});
+  c.push({n:'Decoration',need:'2–3, working before the series',
+    d:['Platform, entrance and signage ready before opening night, not during it.','Mark the reserved seats clearly.','Keep the hall looking prepared every single night — the tenth night should look like the first.']});
+  if(ctx.noCar) c.push({n:'Transportation',need:'a named driver and a named backup for every night',req:1,
+    why:'many households here have no car, or are seniors living alone',
+    d:['Build the route and the pick-up times before opening night and print them.','A named backup for every driver — one missed pick-up loses a family for the series.','Bring people early enough to be greeted, not seated in the dark.','Ask about mobility needs when you take the booking, not at the kerb.']});
+  if(ctx.bi) c.push({n:'Translation and bilingual checking',need:'2–3 fluent readers',req:1,
+    why:(ctx.lang||'a second language')+' is widely spoken in these blocks',
+    d:['Read every printed piece in both languages before it goes to the printer.','Arrange live translation for the meetings that need it.','Lead the seminar night that runs in '+(ctx.lang||'the second language')+'.']});
+  if(ctx.H) c.push({n:'Health team',need:'nurses and health professionals from the congregation',
+    d:['Run the screenings, the expo stations and the cooking school.','Collect a pre-registration from every person at every event.','Hand each attendee on to the series by name, not by flyer.']});
+  return c;
+}
+
+/* ============ THE FORMS ============ */
+const FORMS=[
+
+{id:'enlist',name:'Committee enlistment form',who:'Every member, Sabbath morning',tag:'sign-up',
+ blurb:'One sheet per member listing every committee this campaign needs, what each one actually does, and how many people it takes. Committees the neighbourhood requires are marked. Collect the same day and type the names into the roster.',
+ build(ctx){
+  const C=fCommittees(ctx), chairs=pDate(addMonths(ctx.D,-4));
+  return `${fhead(ctx,'Where will you serve?','A place for every member · opening night '+ctx.open)}
+  <p class="lead2">Every member has a part in this. Read the committees below, tick every one you are willing to serve on, and hand this back today. Chairpersons are chosen by <b>${esc(chairs)}</b>, so the committees can begin their work in order.</p>
+  ${fcontact()}
+  <div class="ll" style="margin-top:12px">The best times to reach me</div><div class="ln"></div>
+  <h2>I am willing to serve on</h2>
+  ${C.map(x=>`<div class="keep"><div class="cbl"><b>${esc(x.n)}</b> — <span class="need">${esc(x.need)}</span>${x.req?' <b>· needed here</b>':''}</div>
+    <div class="duty">${x.d.map(d=>esc(d)).join('<br>')}${x.why?`<br><i>Required for this neighbourhood: ${esc(x.why)}.</i>`:''}</div></div>`).join('')}
+  <h2>Also</h2>
+  <div class="cb">I would rather help behind the scenes than at the front.</div>
+  <div class="cb">I can host a home Bible group, or bring refreshments.</div>
+  <div class="cb">I can offer a lift to someone who has no transport.</div>
+  <div class="cb">I will pray daily for this series whether or not I can serve on a committee.</div>
+  <div class="ll" style="margin-top:10px">I could also help with</div><div class="ln"></div><div class="ln"></div>
+  <h2>The people I am praying for and will invite</h2>
+  <p class="num">Every member keeps three to five names. These are the people this campaign is actually for.</p>
+  ${fline(5)}
+  ${ffoot(ctx)}`;}},
+
+{id:'supplies',name:'Supplies and quantities checklist',who:'Materials coordinator',tag:'ordering',
+ blurb:'Everything the campaign has to have, grouped by the team that uses it, with quantities worked out from your hall, your nights and your print run. This is what makes "supplies ordered" a benchmark you can actually check.',
+ build(ctx){
+  const T=ctx.T, seats=ctx.seats, n=ctx.nights;
+  const lect=seats*n, lectOrder=Math.ceil(lect*1.15), cards=Math.ceil(seats*n*0.6);
+  const tickets=Math.ceil(seats*1.4), ushers=seats?Math.max(2,Math.ceil(seats/25)*2):4;
+  const bibles=Math.max(6,Math.round(seats*0.12)), books=Math.max(12,Math.round(seats*0.3));
+  const pics=Math.max(6,Math.round(seats*0.1)), smallpics=Math.max(20,Math.round(seats*0.4));
+  const C=fCommittees(ctx); const tags=C.length*3+12;
+  const row=(a,b,c)=>`<tr><td>${a}</td><td>${b}</td><td>${c||''}</td></tr>`;
+  const tbl=(h,rows)=>`<h3>${h}</h3><table><tr><th>Item</th><th>How many</th><th>Ordered / on hand</th></tr>${rows.join('')}</table>`;
+  return `${fhead(ctx,'Supplies for the campaign','Quantities from a '+seats+'-seat hall over '+n+' nights')}
+  <p class="lead2">Ordered by <b>${esc(fname(ctx,'materials'))}</b>, materials coordinator. Handbills must be ordered by <b>${esc(pDate(addMonths(ctx.D,-3)))}</b> at the latest — three months out. Everything else should be in hand two weeks before opening night.</p>
+  ${tbl('Advertising',[
+    row('Handbills',T.handbills?T.handbills.toLocaleString():'one per household in the target blocks','Order by '+pDate(addMonths(ctx.D,-3))),
+    row('Postcard handbills for hand delivery',Math.round((T.handbills||seats*10)*0.15).toLocaleString()),
+    row('Posters','200–300, ten-block radius','Up 2 weeks out'),
+    row('Reserved-seat tickets',T.prereg.toLocaleString()+' (pre-registration goal)'),
+    row('Door hangers for flats and condos','as the territory requires')])}
+  ${tbl('Registration and records',[
+    row('Ticket books or scanner cards',tickets.toLocaleString()+' (seats + 40% margin)'),
+    row('Registration envelopes',tickets.toLocaleString()),
+    row('Skirted table, 8 foot','1, plus a second for gift nights'),
+    row('Five-drawer roller case for supplies','1'),
+    row('Pens','3 dozen'),
+    row('Computer, printer, paper','1 station at the table'),
+    row('Name tags for personnel',tags+' (every usher, host, steward)')])}
+  ${tbl('Preaching and platform',[
+    row('Sermon set with graphics','1 complete set, '+n+' nights'),
+    row('Computers','2 — one for the audience screen, one for the speaker'),
+    row('Projector, screen, remote','1 each'),
+    row('PA, lapel mic, mics for musicians','1 set'),
+    row('Backdrop, pulpit, platform chairs','1 set'),
+    row('Lecture magazines',lectOrder.toLocaleString()+' ('+seats+' × '+n+' nights + 15% surplus)','Surplus covers missed nights'),
+    row('Piano or keyboard','1')])}
+  ${tbl('Appeals and decisions',[
+    row('Decision cards',cards.toLocaleString()),
+    row('Pencils','counted out by rows'),
+    row('Offering buckets and envelopes','1 per usher + spares'),
+    row('Question box and 4×6 cards','1 box, 500 cards')])}
+  ${tbl('Gifts and incentives',[
+    ...ctx.G.tiers.map(t=>{ const q=t.k==='bible'?bibles:t.k==='picture'?pics:books;
+      return row(t.n+'s',q+' (threshold '+t.at+' night'+(t.at===1?'':'s')+')'); }),
+    row('Small pictures',smallpics+' (for anyone bringing a guest, and the guest)'),
+    row('Framed samples for display','1 of each')])}
+  ${tbl('Bible School',[
+    row('Lesson sets','1 per enrolled student — order against your Bible School registrations'),
+    row('File boxes, folders, alphabetical dividers','1 system'),
+    row('Certificates of completion','order to your enrolment')])}
+  ${ctx.kids?tbl('Children and babysitting',[
+    row('Bible story felts / visual aids','4 sets — one per leader'),
+    row('Craft materials',(ctx.pl&&ctx.pl.zones?'for 20–40 children a night':'for 20–40 children a night')),
+    row('Cots, safe toys, rocking chair','birth to four room'),
+    row('Nappies, wipes, name tags','a full campaign\u2019s worth')]):''}
+  ${tbl('Outside and after',[
+    row('Torches and high-vis for parking',Math.max(2,Math.round(seats/60))),
+    row('Umbrellas for the door','6'),
+    row('Baptismal robes and bags','order once decisions are counted'),
+    row('Books for the visitation team','one per new convert per visit — six visits over twelve weeks')])}
+  ${ctx.bi?`<h3>Second-language printing</h3><p>Every piece above that carries words is ordered in both English and ${esc(ctx.lang||'the second language')}, checked by a fluent reader before it goes to press.</p>`:''}
+  ${ffoot(ctx)}`;}},
+
+{id:'letters',name:'Interest-file letters (four)',who:'Interest file coordinator',tag:'mailing',
+ blurb:'The four-letter sequence that works an interest file, with your church, your dates, your venue and your mailing days already in. Each one is written to be sent as it stands or edited before printing.',
+ build(ctx){
+  const D=ctx.D, mail4=pDate(addDays(D,-10));
+  const churn=ctx.has('renters','rent-burdened','changing');
+  const cadence=churn?'every two months':'quarterly';
+  const m1=pDate(addMonths(D,-12)), m2=pDate(addMonths(D,-9)), m3=pDate(addMonths(D,-5));
+  const co=fname(ctx,'interest'), coord=fname(ctx,'coord');
+  const L=(no,when,head,body)=>`<div class="pg keep"><h2>Letter ${no} — ${esc(head)}</h2>
+    <p class="num"><b>Post on or before ${esc(when)}.</b> Print on church letterhead. Sign it by hand — a signed letter is opened, a printed one is filed.</p>
+    ${body}
+    <p style="margin-top:14px">Sincerely,</p><div class="ln" style="width:60%"></div>
+    <p class="num">${esc(coord)} · ${esc(ctx.church)}</p></div>`;
+  return `${fhead(ctx,'The four letters','Interest file worked '+cadence+(churn?' — this neighbourhood turns over quickly':''))}
+  <p class="lead2">Kept and posted by <b>${esc(co)}</b>. About a quarter of a well-worked interest file responds within a year, and the file is the single largest source the hall fills from. Post ${esc(cadence)}; the fourth letter is the invitation and it must be in the post by <b>${esc(mail4)}</b> at the very latest.</p>
+  ${L(1,m1,'A book, offered freely',`<p>Dear Friend,</p>
+    <p>Every so often something comes across my desk that I want to put into other people\u2019s hands rather than keep on my shelf. This is one of those.</p>
+    <p>I would like to send you a copy of a short book, with no cost and no obligation of any kind. It is about the questions most of us carry quietly — where the world is going, whether anyone is listening, what hope looks like when the news is bad.</p>
+    <p>If you would like one, return the enclosed card, or telephone the church office. I will get it to you.</p>
+    <p>You will hear from me again occasionally. If you would rather not, tell me and I will take your name off the list gladly.</p>`)}
+  ${L(2,m2,'The Bible lessons',`<p>Dear Friend,</p>
+    <p>Some months ago I sent you a book. I hope it found you well.</p>
+    <p>A number of people in ${esc(ctx.church.split(',')[0]||'our area')} have been working through a set of Bible studies — at home, at their own pace, with no one calling round unless they ask. Each lesson takes about twenty minutes. You mark it, send it back, and someone here reads it and writes to you personally.</p>
+    <p>There is no charge and no obligation. If you would like to start, return the card enclosed.</p>`)}
+  ${L(3,m3,'The seminar invitation',`<p>Dear Friend,</p>
+    <p>We are running a short seminar here at ${esc(ctx.church)} and I thought of you.</p>
+    <p>${ctx.H?'It is practical rather than theoretical — the things that actually move health in the direction you want it to go, taught by people who use them.':'It is a plain-English walk through the parts of the Bible people find hardest to get into on their own.'} It is free, it is open to anyone, and you are welcome to bring someone with you.</p>
+    <p>Details are on the enclosed card. If you would like a place kept, telephone the number on it and we will hold one for you.</p>`)}
+  ${L(4,mail4,'The series itself',`<p>Dear Friend,</p>
+    <p>I am writing to invite you personally to a series of meetings beginning <b>${esc(ctx.open)}</b> at ${esc(ctx.church)}.</p>
+    <p>Over ${ctx.nights} evenings we will work through ${ctx.P?'the prophecies of the Bible — what they say about the times we are living in, and what they say about the future':'a plain, practical look at living well and living with hope'}. ${ctx.H&&ctx.P?'Some evenings deal with health, some with prophecy; all of them deal with hope.':''}</p>
+    <p>There is no charge and no collection taken from visitors. The enclosed handbill has the full list of subjects and the times. A seat has been reserved in your name — bring the card with you, or telephone us and we will confirm it.</p>
+    <p>If you have been meaning to come to something like this for years and never quite have, this is the one. I would be glad to see you there.</p>`)}
+  <div class="pg keep"><h2>Working the file</h2>
+  <p>Names come from every source there is: everyone who ever wrote to a broadcast ministry in this area, past attendees of every health programme and seminar, correspondence students, former members, and the friends and relatives every member can name. Keep it on a computer, one record per person, and post ${esc(cadence)} without fail.</p>
+  <p>Mail only inside a twenty to thirty minute drive of the hall. Beyond that the response does not repay the postage.</p>
+  ${ctx.bi?`<p>Every letter goes out in English and in ${esc(ctx.lang||'the second language')}, checked by a fluent reader first.</p>`:''}
+  </div>
+  ${ffoot(ctx)}`;}},
+
+{id:'bibleschool',name:'Bible School registration',who:'Bible School team',tag:'enrolment',
+ blurb:'One card per student, with your series name and venue already on it, plus the instructor-side lesson tracker so the team can see at a glance who is where.',
+ build(ctx){
+  let nums=''; for(let i=1;i<=30;i++) nums+=`<td>${i}</td>`;
+  return `${fhead(ctx,'Bible School registration','Enrol at any meeting · lessons corrected by hand and returned')}
+  <p class="lead2">Series: <b>${esc(ctx.seriesName)}</b> · ${esc(ctx.church)} · ${esc(ctx.open)} to ${esc(ctx.close)}</p>
+  <div class="lnr"><div><div class="ll">Date enrolled</div><div class="ln"></div></div><div><div class="ll">Enrolled on night number</div><div class="ln"></div></div></div>
+  ${fcontact()}
+  <div class="ll">Best time to be telephoned</div><div class="ln"></div>
+  <div class="cb">This is the first time I have studied the Bible in any systematic way.</div>
+  <div class="cb">I would like the lessons posted to me.</div>
+  <div class="cb">I would like to collect them at the meetings.</div>
+  <div class="cb">I would welcome someone going through them with me at home.</div>
+  <h2>For the Bible School team</h2>
+  <div class="lnr"><div><div class="ll">Instructor assigned</div><div class="ln"></div></div><div><div class="ll">Date of first contact</div><div class="ln"></div></div></div>
+  <p class="num">Ring the lessons as they come back completed and corrected.</p>
+  <table><tr>${nums}</tr><tr>${'<td style="height:20px"></td>'.repeat(30)}</tr></table>
+  <div class="ll">Notes — questions raised, what to follow up</div>${fline(4)}
+  <div class="cb">Completed the full course — pass to ${esc(fdash(ctx,'coord'))} for a personal visit.</div>
+  ${ffoot(ctx)}`;}},
+
+{id:'response',name:'Nightly response card',who:'Ushers, every night',tag:'decisions',
+ blurb:'A general-purpose response card that works on any night, with your church and ticket-number field on it. Print a stack per night; the ticket number is what joins the card to the attendance record.',
+ build(ctx){
+  const card=(title,opts)=>`<div class="keep" style="border:1px solid #999;padding:12px;margin-bottom:14px">
+    <h3 style="margin-top:0">${esc(title)}</h3>
+    ${opts.map(o=>`<div class="cb">${esc(o)}</div>`).join('')}
+    <div class="lnr"><div><div class="ll">Name</div><div class="ln"></div></div><div><div class="ll">Ticket number</div><div class="ln"></div></div></div>
+    <div class="lnr"><div><div class="ll">Phone</div><div class="ln"></div></div><div><div class="ll">Email</div><div class="ln"></div></div></div>
+  </div>`;
+  return `${fhead(ctx,'Response cards','Print a stack for every night · the ticket number joins this card to the record')}
+  <p class="lead2">Ushers count these out by rows and gather them in the same way. The records team enters what is marked here the same evening, and the visitation coordinator works from it the next morning. A card marked and never followed up is worse than no card at all.</p>
+  ${card('Tonight\u2019s response',['I would like to know more about what was said tonight.','I would like someone to visit me at home.','I would like to enrol in the free Bible lessons.','I would like to be prayed for.'])}
+  ${card('A step I want to take',['I am giving my life to Jesus Christ tonight.','I have walked away and tonight I am coming back.','I want to be baptised.','I have been baptised before and want to unite with this church.','I am not ready to decide, but I want to keep coming.'])}
+  ${card('Prayer request',['Please pray for my health.','Please pray for my family.','Please pray about my work or finances.','Please pray for me to be free of a habit I cannot break alone.','Please pray about something I would rather write below.'])}
+  ${card('What would help me',['A visit at home, at a time that suits me.','A telephone call.','Reading material on what was covered tonight.','A lift to the meetings — I have no transport.'].concat(ctx.kids?['Something for my children while I attend.']:[]).concat(ctx.bi?['Materials in '+(ctx.lang||'my first language')+'.']:[]))}
+  <div class="foot">Blank space for a written request:</div>${fline(3)}
+  ${ffoot(ctx)}`;}},
+
+{id:'nightly',name:'Nightly record sheet',who:'Attendance records team',tag:'tracking',
+ blurb:'The paper backup for the records team — one sheet per night, with the date of every meeting already worked out. Use it when the computer is not to hand, then enter it the same evening.',
+ build(ctx){
+  const d=nightDates(ctx.p);
+  const rows=d.map((x,i)=>`<tr><td>${i+1}</td><td>${pDate(x)}</td><td></td><td></td><td></td><td></td></tr>`).join('');
+  return `${fhead(ctx,'Nightly record','Every meeting date, worked out from opening night')}
+  <p class="lead2">Kept by <b>${esc(fname(ctx,'records'))}</b>. Fill this in at the door and enter it into the computer the same evening — a night entered three days late is a visit made three days late.</p>
+  <table><tr><th>#</th><th>Date</th><th>Total in</th><th>Non-members</th><th>New tonight</th><th>Cards in</th></tr>${rows}</table>
+  <h2>Each night, before you leave the hall</h2>
+  <div class="cb">Every ticket collected or every card scanned.</div>
+  <div class="cb">Every new name, address, phone and email entered.</div>
+  <div class="cb">Every decision card entered against the right ticket number.</div>
+  <div class="cb">Tomorrow\u2019s gift-eligibility list printed for the registration table.</div>
+  <div class="cb">The drop-out list — anyone who came once and has now missed two nights running — handed to ${esc(fdash(ctx,'visit'))}.</div>
+  <h2>Names to hand to visitation tonight</h2>
+  <p class="num">Missed two consecutive nights after attending at least once. A five-minute call at the door, no further in.</p>
+  ${fline(6)}
+  ${ffoot(ctx)}`;}},
+
+{id:'afterbaptism',name:'After-baptism visitation card',who:'Visitation coordinator',tag:'nurture',
+ blurb:'One card per new believer covering the twelve weeks after baptism — six visits, a different member each time, with the dates calculated from their baptism date. This is the schedule that produces the friendships that keep people.',
+ build(ctx){
+  const V=[[1,'Knowing Christ through personal devotions','A book on the life of Christ','Invite to the fellowship meal next Sabbath'],
+           [3,'That this church is worldwide, not just this room','The church papers — national and union','Show them where their church sits in something much larger'],
+           [5,'The joy of Sabbath keeping','—','A personal invitation to dinner in a member\u2019s home'],
+           [7,'Sharing your faith, gently','A book on how to study with someone else','Ask who they are already praying for'],
+           [9,'God\u2019s deliverance at the end','The book on the great controversy','Read the closing pages together, out loud'],
+           [11,'Settling into the rhythm of the church','Next quarter\u2019s Sabbath School lessons','Invite to the fellowship meal next Sabbath']];
+  return `${fhead(ctx,'After baptism — the first twelve weeks','One card per new believer · a different visitor each time')}
+  <p class="lead2">Organised by <b>${esc(fname(ctx,'visit'))}</b>. More people are lost in the six months after baptism than at any other point, and the reason is nearly always the same: no friends inside the church. Rotate the visitor every time deliberately — six visits by six different members is six friendships, and a new believer who can name seven people here is very unlikely to leave.</p>
+  <div class="lnr"><div><div class="ll">New believer</div><div class="ln"></div></div><div><div class="ll">Date baptised</div><div class="ln"></div></div></div>
+  <div class="lnr"><div><div class="ll">Phone</div><div class="ln"></div></div><div><div class="ll">Address</div><div class="ln"></div></div></div>
+  <div class="ll">Spiritual guardian assigned</div><div class="ln"></div>
+  <table><tr><th>Week</th><th>Theme of the visit</th><th>What to take</th><th>Visitor</th><th>Done</th></tr>
+  ${V.map(v=>`<tr><td><b>${v[0]}</b></td><td>${esc(v[1])}<br><span class="num">${esc(v[3])}</span></td><td>${esc(v[2])}</td><td></td><td></td></tr>`).join('')}</table>
+  <h2>The seven names</h2>
+  <p class="num">Ask at week 5 and again at week 11: who in this church do you know well enough to telephone? Write the names. Fewer than seven by the end of twelve weeks is the warning sign — act on it by introducing people deliberately, not by hoping.</p>
+  <table><tr>${'<td style="height:26px"></td>'.repeat(7)}</tr></table>
+  <h2>Watch for</h2>
+  <div class="cb"><b>Discouragement</b> — stopped coming, or comes and leaves fast. A hurried handshake, no lingering, cheerfulness gone. Ring the same week; do not wait for the next Sabbath.</div>
+  <div class="cb"><b>Not settling in</b> — arrives late, leaves at the closing hymn, sits alone, skips Sabbath School and every social event. A telephone call about a specific event beats any general announcement.</div>
+  <div class="cb"><b>Drift, around a year on</b> — present but superficial, no personal devotional life, no outreach of their own. The answer is a small group of six to eight, not another sermon.</div>
+  <div class="cb"><b>Disillusion with leadership</b> — usually after they join a committee and see how the church really works. One or two honest conversations, early.</div>
+  ${ffoot(ctx)}`;}},
+
+{id:'certificate',name:'Certificate of completion',who:'Bible School team',tag:'nurture',
+ blurb:'For students who finish the Bible course. Your church name is set; print on heavier paper and sign it by hand.',
+ build(ctx){
+  return `<div class="cert"><h1>Certificate of Completion</h1>
+  <p style="font-size:.9rem;color:#444;margin-bottom:20px">${esc(ctx.church)}</p>
+  <p style="font-size:.86rem">This certifies that</p>
+  <div class="ln" style="margin:14px 8%"></div>
+  <p style="font-size:.86rem">has completed the full course of Bible studies<br>and is warmly commended for their diligence.</p>
+  <div style="display:flex;gap:30px;margin-top:34px">
+    <div style="flex:1"><div class="ln"></div><div class="ll" style="text-align:center">Date</div></div>
+    <div style="flex:1"><div class="ln"></div><div class="ll" style="text-align:center">Instructor</div></div>
+    <div style="flex:1"><div class="ln"></div><div class="ll" style="text-align:center">Pastor</div></div>
+  </div>
+  <p style="margin-top:26px;font-size:.8rem;color:#555">Grace and peace to you from God our Father.</p></div>`;}},
+
+{id:'visitcard',name:'Visitation card',who:'Visiting pairs, during the series',tag:'visitation',
+ blurb:'One card per household on the visiting list, with the four laws of the harvest on the back so a pair knows before they knock which kind of visit this is.',
+ build(ctx){
+  return `${fhead(ctx,'Visitation card','One per household · carried by the visiting pair')}
+  ${fcontact()}
+  <div class="lnr"><div><div class="ll">Ticket number</div><div class="ln"></div></div><div><div class="ll">Nights attended</div><div class="ln"></div></div></div>
+  <div class="ll">How they came to us (handbill, member, Bible school, health event, interest file)</div><div class="ln"></div>
+  <h2>Why this visit</h2>
+  <div class="cb">They asked for one on a response card.</div>
+  <div class="cb">They came at least once and have now missed two nights running — <b>five minutes at the door only, do not go in.</b></div>
+  <div class="cb">They marked a decision and need it confirmed.</div>
+  <div class="cb">Bible studies in progress — this is the regular visit.</div>
+  <div class="cb">Sabbath truth visit — only after two or three home visits already made.</div>
+  <div class="cb">Former member. Weeks of kindness before any invitation; love in action, never argument.</div>
+  <h2>The visit</h2>
+  <div class="lnr"><div><div class="ll">Date</div><div class="ln"></div></div><div><div class="ll">Who went (always two)</div><div class="ln"></div></div></div>
+  <div class="ll">What was said, what they asked, what they need</div>${fline(5)}
+  <div class="ll">Left with them</div><div class="ln"></div>
+  <div class="ll">Next step, and by when</div><div class="ln"></div>
+  <h2>Before you knock</h2>
+  <p class="num">Go in twos. Go when you said you would. Do not stay longer than you are wanted, and never argue a point — you are there because someone came to a meeting and something reached them. Mingle, sympathise, minister, win confidence; only then invite. If it is a drop-out call, it is five minutes at the door and a warm word, nothing more.</p>
+  ${ctx.noCar?`<p class="num"><b>This neighbourhood:</b> many households have no car and many seniors live alone. Ask about a lift before you leave — it is often the whole reason someone stopped coming.</p>`:''}
+  ${ctx.bi?`<p class="num"><b>This neighbourhood:</b> ${esc(ctx.lang||'a second language')} is widely spoken. Send a pair who can speak it.</p>`:''}
+  ${ffoot(ctx)}`;}},
+
+{id:'prereg',name:'Pre-registration slip',who:'Every member, every programme',tag:'sign-up',
+ blurb:'The reserved-seat slip members hand to friends and every pre-work programme collects. Your goal is on it, so the person filling it in knows the hall is really being filled.',
+ build(ctx){
+  const slip=()=>`<div class="keep" style="border:1px dashed #777;padding:11px;margin-bottom:11px">
+    <h3 style="margin-top:0">A seat reserved for you</h3>
+    <p style="font-size:.8rem;margin-bottom:6px">${esc(ctx.church)} · beginning <b>${esc(ctx.open)}</b> · ${ctx.nights} evenings · no charge</p>
+    <div class="lnr"><div><div class="ll">Name</div><div class="ln"></div></div><div><div class="ll">Phone</div><div class="ln"></div></div></div>
+    <div class="lnr"><div><div class="ll">Email</div><div class="ln"></div></div><div><div class="ll">Seats needed</div><div class="ln"></div></div></div>
+    <div class="cb" style="font-size:.79rem">I would like a lift to the meetings.</div>
+    ${ctx.kids?'<div class="cb" style="font-size:.79rem">I am bringing children — please reserve places in the children\u2019s programme.</div>':''}
+    <div class="lnr"><div><div class="ll">Invited by (member)</div><div class="ln"></div></div><div><div class="ll">Collected at</div><div class="ln"></div></div></div>
+  </div>`;
+  return `${fhead(ctx,'Pre-registration slips','Goal: '+ctx.T.prereg.toLocaleString()+' before opening night')}
+  <p class="lead2">Collected by <b>${esc(fname(ctx,'prereg'))}</b> from every source there is — the three Sabbaths before opening night, every health programme and seminar, every home Bible group, every personal invitation. Aim to fill half the hall this way before a single handbill is counted. Friends inviting friends fills a hall; mass mail draws one to three people per thousand pieces.</p>
+  ${slip()}${slip()}${slip()}${slip()}
+  <div class="foot">Stubs go back to the pre-registration coordinator. Every person on this list gets a confirmation letter and a brochure one week before opening night, and a reserved seat with their name on it when they arrive.</div>`;}}
+
+];
+
+/* ---- the library screen ---- */
+function formsOpen(){
+  const host=$('pforms'); if(!host||!PLAN) return;
+  const ctx=formCtx();
+  host.innerHTML=`<div class="phead"><h2>Forms for ${esc(ctx.church)}</h2><span class="hint">${FORMS.length} documents, filled from your plan</span></div>
+  <p class="note" style="margin-top:6px">Every sheet below is built from what you have already entered — your dates, your hall, your committee sizes, your print run, and the names in your roster. Print one, or download it as a file you can keep, edit and send on. Nothing here is generic: change the plan and these change with it.</p>
+  <div class="flib">${FORMS.map(f=>`<div class="fcard">
+    <h3>${esc(f.name)}${f.tag?`<span class="ftag">${esc(f.tag)}</span>`:''}</h3>
+    <div class="fw">${esc(f.who)}</div>
+    <p>${esc(f.blurb)}</p>
+    <div class="facts"><button class="pri" data-print="${f.id}">Print</button><button data-dl="${f.id}">Download</button><button data-prev="${f.id}">Preview</button></div>
+  </div>`).join('')}</div>
+  <div class="fnote"><b>Coming next:</b> these will be fillable inside Terrain — type the names straight in, and the enlistment sheet will feed the roster without re-keying. For now they print and download.<br><br>Where the playbook supplies its own published wording — the lesson titles, the statements of faith, the appeal texts — Terrain gives you the structure and leaves the content to you or to the published set, rather than reprinting it.</div>
+  <div id="formsheet"></div>`;
+  host.querySelectorAll('[data-print]').forEach(b=>b.onclick=()=>formPrint(b.dataset.print));
+  host.querySelectorAll('[data-dl]').forEach(b=>b.onclick=()=>formDownload(b.dataset.dl));
+  host.querySelectorAll('[data-prev]').forEach(b=>b.onclick=()=>formPreview(b.dataset.prev));
+}
+function formBuild(id){
+  const f=FORMS.find(x=>x.id===id); if(!f) return null;
+  try{ return {f,html:f.build(formCtx())}; }catch(e){ console.error('form',id,e); return null; }
+}
+function formPrint(id){
+  const r=formBuild(id); if(!r) return;
+  const s=$('formsheet'); s.innerHTML=r.html;
+  document.body.dataset.print='form'; window.print();
+  setTimeout(()=>{ delete document.body.dataset.print; },600);
+}
+function formPreview(id){
+  const r=formBuild(id); if(!r) return;
+  const s=$('formsheet'); const open=s.dataset.showing===id;
+  if(open){ s.style.display='none'; s.dataset.showing=''; return; }
+  s.innerHTML=r.html; s.style.display='block'; s.dataset.showing=id;
+  s.style.padding='20px'; s.style.border='1px solid var(--line)'; s.style.borderRadius='12px'; s.style.marginTop='14px';
+  s.scrollIntoView({behavior:'smooth',block:'start'});
+}
+function formDownload(id){
+  const r=formBuild(id); if(!r) return;
+  const ctx=formCtx();
+  const style=`body{font-family:Georgia,'Times New Roman',serif;max-width:7.5in;margin:0 auto;padding:28px;color:#111;line-height:1.5}
+  h1{font-size:1.6rem;margin:0 0 2px;line-height:1.2}h2{font-size:1.05rem;margin:18px 0 6px;padding-bottom:3px;border-bottom:1.5px solid #111}
+  h3{font-size:.94rem;margin:12px 0 3px}.sub{color:#555;font-size:.84rem;margin-bottom:10px}p{font-size:.86rem;margin:0 0 8px}
+  .lead2{font-size:.88rem;margin-bottom:12px}.ll{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:#666;font-weight:700;margin-top:8px}
+  .ln{border-bottom:1px solid #999;height:24px;margin:0 0 8px}.lnr{display:flex;gap:14px}.lnr>div{flex:1}
+  .cb,.cbl{padding-left:22px;position:relative;margin:0 0 7px;font-size:.85rem}
+  .cb::before,.cbl::before{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border:1.5px solid #333}
+  .duty{font-size:.79rem;color:#444;margin:1px 0 8px 22px;line-height:1.45}.need{font-size:.72rem;font-weight:700}
+  table{width:100%;border-collapse:collapse;font-size:.8rem;margin:6px 0 10px}
+  th,td{border:1px solid #999;padding:4px 6px;text-align:left}th{background:#eee;font-size:.72rem;text-transform:uppercase;letter-spacing:.06em}
+  .foot{margin-top:16px;padding-top:8px;border-top:1px solid #bbb;font-size:.72rem;color:#666}.num{font-size:.78rem;color:#444}
+  .cert{border:3px double #111;padding:28px;text-align:center}.cert h1{font-size:2rem;margin-bottom:10px}
+  @media print{.pg{break-before:page}.keep{break-inside:avoid}body{padding:0}}`;
+  const doc=`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>${esc(r.f.name)} — ${esc(ctx.church)}</title><style>${style}</style></head><body>${r.html}</body></html>`;
+  const slug=(ctx.church||'church').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'church';
+  const blob=new Blob([doc],{type:'text/html;charset=utf-8'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`${slug}-${id}.html`;
+  document.body.appendChild(a); a.click();
+  setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1500);
+}
+
 /* ---- the whole plan as one printable document ---- */
 function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName){
   const D=new Date(p.date+'T12:00:00'), close=phases.find(x=>x.tag==='series').end;
