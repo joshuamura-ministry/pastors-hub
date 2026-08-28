@@ -514,6 +514,213 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .diag summary{cursor:pointer;color:var(--ink3);font-weight:600;letter-spacing:.06em;font-size:.72rem;
   min-height:40px;display:flex;align-items:center}
 .diag pre{white-space:pre-wrap;word-break:break-all;font-size:.74rem;color:var(--ink3);margin-top:8px;line-height:1.5}
+
+/* ---- Evangelism Planner ----
+   The countdown is the whole idea, so the rail carries it: months-out in the
+   display face, large and tabular, running down the left like a launch clock.
+   Everything else (form, cards) reuses the hub's own tokens. */
+.planner{padding-top:10px}
+.planner[hidden]{display:none}
+.pintro h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.6rem,5.2vw,2.5rem);line-height:1.12;letter-spacing:-.01em;max-width:18ch}
+.pintro p.lead{color:var(--ink2);margin:10px 0 20px;max-width:56ch}
+.pform{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 12px;background:var(--panel);border:1px solid var(--line2);
+  border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
+@media(min-width:640px){.pform{grid-template-columns:repeat(3,1fr)}}
+.pf{display:flex;flex-direction:column;gap:5px}
+.pf{justify-content:flex-end}
+.pf>span.lb{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink3)}
+.pf input{background:var(--panel2);border:1px solid var(--line2);border-radius:11px;padding:12px 12px;font-size:1rem;min-width:0;width:100%;color:var(--ink)}
+.pf input:focus{border-color:var(--acc);outline:none}
+.pf input::placeholder{color:var(--ink3)}
+.pf-wide{grid-column:1/-1}
+.prow{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:8px;margin-top:4px}
+.prow .btn{min-height:46px}
+.seg{display:flex;gap:4px;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:4px}
+.seg button{flex:1;min-height:40px;border:none;background:none;border-radius:9px;font-weight:600;font-size:.9rem;color:var(--ink2);cursor:pointer}
+.seg button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--line)}
+.pbench{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
+@media(min-width:640px){.pbench{grid-template-columns:repeat(4,1fr)}}
+.phead{margin-top:30px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+.phead h2{font-family:var(--disp);font-weight:600;font-size:clamp(1.35rem,4.6vw,1.7rem);letter-spacing:-.02em}
+.phead .hint{margin-left:auto}
+.rail{position:relative;margin-top:14px;padding-left:0}
+.rail::before{content:"";position:absolute;left:34px;top:8px;bottom:8px;width:1px;background:linear-gradient(180deg,var(--acc-glow),var(--line2) 30%,var(--line2) 85%,transparent)}
+.phase{position:relative;display:grid;grid-template-columns:70px 1fr;gap:0 14px;padding:16px 0 18px}
+.phase+.phase{border-top:1px solid var(--line)}
+.phase .mo{text-align:center;padding-top:2px}
+.phase .mo b{display:block;font-family:var(--disp);font-size:1.6rem;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--ink);
+  font-variant-numeric:tabular-nums;background:var(--bg);position:relative;z-index:1;padding:2px 0}
+.phase .mo small{display:block;position:relative;z-index:1;background:var(--bg);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-top:3px}
+.phase.now .mo b{color:var(--acc)}
+.phase.past{opacity:.55}
+.phase .pb{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;box-shadow:var(--shadow)}
+.phase.now .pb{border-color:var(--acc)}
+.phase .pt{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.phase .pt b{font-family:var(--disp);font-size:1.08rem;font-weight:600;color:var(--ink)}
+.phase .pt .dates{font-size:.76rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.phase .pt .tag{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:3px 8px}
+.phase ul{list-style:none;margin:10px 0 0}
+.phase li{position:relative;padding-left:16px;margin:6px 0;font-size:.88rem;color:var(--ink2);line-height:1.5}
+.phase li::before{content:"";position:absolute;left:0;top:.65em;width:6px;height:6px;border-radius:50%;background:var(--line2)}
+.phase li.key::before{background:var(--acc)}
+.phase li b{color:var(--ink);font-weight:600}
+.phase .bm{margin-top:12px;padding-top:10px;border-top:1px dashed var(--line2);font-size:.82rem;color:var(--ink2)}
+.phase .bm b{color:var(--ink);font-family:var(--disp);font-weight:600}
+.pplace{display:flex;flex-direction:column;gap:6px;margin:0 0 14px;padding:14px 16px;border-radius:var(--r);
+  background:linear-gradient(160deg,var(--acc-dim),transparent 70%);border:1px solid var(--line2);font-size:.88rem;color:var(--ink2);line-height:1.55}
+.pplace>b{font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.pplace span b{color:var(--ink);font-weight:600}
+.pplace.off{background:var(--panel2)}
+.pplace.off>b{color:var(--ink3)}
+.pplace .btn{align-self:flex-start;margin-top:4px}
+.lroles{display:grid;grid-template-columns:1fr;gap:6px;margin:8px 0 2px}
+@media(min-width:640px){.lroles{grid-template-columns:repeat(2,1fr)}}
+.lrole{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:9px 11px;font-size:.8rem;line-height:1.45;color:var(--ink2)}
+.lrole b{display:block;color:var(--ink);font-family:var(--disp);font-weight:600;font-size:.9rem;margin-bottom:2px}
+.lrole.core{border-color:var(--acc-glow)}
+.lrole.core b::after{content:" \00b7 core";font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);font-weight:700}
+.lrole em{display:block;font-style:normal;color:var(--acc);font-size:.74rem;margin-top:3px}
+.phase li.plain{padding-left:0}
+.phase li.plain::before{display:none}
+.enlist{max-width:640px;margin:0 auto;padding:8px 0 60px}
+.enlist h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.15;letter-spacing:-.01em}
+.enlist .lead{color:var(--ink2);margin:10px 0 18px;line-height:1.6}
+.enlist .card2{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
+.enlist label.fl{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
+.enlist label.fl span{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink3)}
+.enlist input,.enlist textarea{background:var(--panel2);border:1px solid var(--line2);border-radius:10px;padding:11px 12px;font-size:1rem;color:var(--ink);width:100%;font-family:inherit}
+.enlist input:focus,.enlist textarea:focus{border-color:var(--acc);outline:none}
+.pick{display:flex;flex-direction:column;gap:6px;margin-top:6px}
+.pick button{display:flex;align-items:flex-start;gap:10px;text-align:left;background:var(--panel2);border:1px solid var(--line2);border-radius:11px;padding:11px 12px;cursor:pointer;font-family:inherit;color:var(--ink2)}
+.pick button.on{border-color:var(--acc);background:var(--acc-dim)}
+.pick button .bx{flex:0 0 auto;width:20px;height:20px;border-radius:6px;border:2px solid var(--line2);margin-top:1px}
+.pick button.on .bx{background:var(--acc);border-color:var(--acc)}
+.pick button b{display:block;color:var(--ink);font-weight:600;font-size:.94rem}
+.pick button small{display:block;font-size:.78rem;color:var(--ink3);line-height:1.45;margin-top:2px}
+.signup{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+.signup .sh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.signup .sh b{font-family:var(--disp);font-weight:600;color:var(--ink)}
+.signup .sh span{margin-left:auto;font-size:.74rem;color:var(--ink3)}
+.signup .sr{font-size:.8rem;color:var(--ink2);margin-top:4px;line-height:1.5}
+.signup .sr em{font-style:normal;color:var(--acc);font-weight:600}
+.sheet{background:#fff;color:#111;border:1px solid var(--line);border-radius:var(--r);padding:20px;margin-top:12px;font-size:.9rem;line-height:1.5}
+.sheet h3{font-family:var(--disp);font-size:1.2rem;margin-bottom:2px;color:#111}
+.sheet .sub{color:#555;font-size:.82rem;margin-bottom:12px}
+.sheet .ln{border-bottom:1px solid #999;height:26px;margin:0 0 10px}
+.sheet .ll{font-size:.7rem;letter-spacing:.1em;text-transform:uppercase;color:#666;font-weight:700}
+.sheet ul{list-style:none;margin-top:6px;columns:2;column-gap:18px}
+.sheet li{break-inside:avoid;margin:0 0 7px;padding-left:22px;position:relative;font-size:.84rem;color:#111}
+.sheet li::before{content:"";position:absolute;left:0;top:1px;width:13px;height:13px;border:1.5px solid #333}
+@media print{
+  body[data-print] *{visibility:hidden}
+  body[data-print="sheet"] #printsheet,body[data-print="sheet"] #printsheet *{visibility:visible}
+  body[data-print="plan"] #plandoc,body[data-print="plan"] #plandoc *{visibility:visible}
+  body[data-print] #printsheet,body[data-print] #plandoc{position:absolute;left:0;top:0;width:100%;border:none;padding:0;margin:0;box-shadow:none;display:block !important}
+  #plandoc{font-size:10.5pt}
+  .pdoc .pg{break-before:page}
+  .pdoc .keep{break-inside:avoid}
+}
+.pdoc{display:none;background:#fff;color:#111;line-height:1.5}
+.pdoc h1{font-family:var(--disp);font-size:1.9rem;font-weight:700;color:#111;line-height:1.15;margin-bottom:4px}
+.pdoc h2{font-family:var(--disp);font-size:1.15rem;font-weight:700;color:#111;margin:22px 0 8px;padding-bottom:4px;border-bottom:1.5px solid #111}
+.pdoc h3{font-family:var(--disp);font-size:.98rem;font-weight:700;color:#111;margin:12px 0 2px}
+.pdoc p,.pdoc li,.pdoc td,.pdoc th{color:#111;font-size:.86rem}
+.pdoc .dsub{color:#555;font-size:.9rem;margin-bottom:14px}
+.pdoc .dgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:10px 0}
+.pdoc .dk{border:1px solid #bbb;border-radius:6px;padding:8px 10px}
+.pdoc .dk b{display:block;font-family:var(--disp);font-size:1.35rem;color:#111}
+.pdoc .dk span{font-size:.72rem;color:#555;line-height:1.35;display:block}
+.pdoc table{width:100%;border-collapse:collapse;margin-top:6px}
+.pdoc th{text-align:left;font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:#555;border-bottom:1px solid #999;padding:4px 6px 4px 0}
+.pdoc td{border-bottom:1px solid #ddd;padding:5px 6px 5px 0;vertical-align:top}
+.pdoc td.dt{white-space:nowrap;color:#555;font-size:.78rem}
+.pdoc ul{list-style:disc;margin:4px 0 0 18px}
+.pdoc li{margin:2px 0}
+.pdoc .sig{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:26px}
+.pdoc .sig div{border-top:1px solid #333;padding-top:4px;font-size:.75rem;color:#555}
+.pmode{display:flex;gap:4px;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:4px;margin:0 0 16px;max-width:280px}
+.pmode button{flex:1;min-height:40px;border:none;background:none;border-radius:9px;font-weight:600;font-size:.92rem;color:var(--ink2);cursor:pointer;font-family:inherit}
+.pmode button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--line)}
+.tsub{display:flex;gap:6px;overflow-x:auto;margin:0 0 14px;padding-bottom:2px;-webkit-overflow-scrolling:touch}
+.tsub button{flex:0 0 auto;min-height:38px;padding:0 14px;border-radius:999px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink2);font-weight:600;font-size:.85rem;cursor:pointer;font-family:inherit}
+.tsub button.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tsub button b{font-weight:700}
+.tnight{display:grid;grid-template-columns:52px 1fr;gap:4px 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+.tnight.done{border-color:var(--acc-glow)}
+.tnight .tn{text-align:center}
+.tnight .tn b{display:block;font-family:var(--disp);font-size:1.3rem;font-weight:700;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums}
+.tnight .tn small{display:block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-top:3px}
+.tnight.done .tn b{color:var(--acc)}
+.tnight .tdate{font-size:.74rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.tnight input,.tnight select{background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:8px 9px;font-size:.9rem;color:var(--ink);width:100%;min-width:0;font-family:inherit}
+.tnight input:focus,.tnight select:focus{border-color:var(--acc);outline:none}
+.tgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin-top:6px}
+.tgrid label{display:flex;flex-direction:column;gap:3px}
+.tgrid label span{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+.tgrid .wide{grid-column:1/-1}
+.tperson{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+.tperson .ph{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;cursor:pointer}
+.tperson .ph b{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:.98rem}
+.tperson .ph .pc{margin-left:auto;font-size:.72rem;color:var(--ink3);font-variant-numeric:tabular-nums}
+.tperson .pmeta{font-size:.76rem;color:var(--ink3);width:100%}
+.tperson .pbody{margin-top:10px;border-top:1px solid var(--line);padding-top:10px}
+.tperson .pbody input,.tperson .pbody select,.tperson .pbody textarea{background:var(--panel2);border:1px solid var(--line2);border-radius:9px;padding:8px 9px;font-size:.9rem;color:var(--ink);width:100%;min-width:0;font-family:inherit}
+.tperson .pbody textarea{min-height:64px;resize:vertical}
+.chips{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+.chip{border:1px solid var(--line2);background:var(--panel2);color:var(--ink2);border-radius:999px;min-height:32px;padding:0 11px;font-size:.78rem;font-weight:600;cursor:pointer;font-family:inherit}
+.chip.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.chip.sm{min-height:28px;padding:0 9px;font-size:.72rem}
+.tvisit{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:12px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+.tvisit.urgent{border-left-color:#c25b4a}
+.tvisit .vh{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tvisit .vh b{font-family:var(--disp);font-weight:600;color:var(--ink)}
+.tvisit .vh i{font-style:normal;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 7px}
+.tvisit.urgent .vh i{color:#c25b4a;background:rgba(194,91,74,.12)}
+.tvisit .vw{margin-left:auto;font-size:.74rem;color:var(--ink3)}
+.tvisit .vd{font-size:.82rem;color:var(--ink2);line-height:1.5;margin-top:4px}
+.tvisit .vd em{font-style:normal;color:var(--ink);font-weight:600}
+.tempty{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:16px;text-align:center;color:var(--ink2);font-size:.88rem;line-height:1.55}
+.tbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+.tbar .btn{min-height:42px}
+.rgroup{margin-top:14px}
+.rgh{display:flex;flex-direction:column;gap:2px;margin:0 0 8px}
+.rgh b{font-family:var(--disp);font-weight:600;font-size:1.02rem;color:var(--ink)}
+.rgh span{font-size:.78rem;color:var(--ink3)}
+.rrole{display:grid;grid-template-columns:1fr;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+@media(min-width:720px){.rrole{grid-template-columns:1fr 220px;gap:6px 14px}.rrole .rr2{grid-column:1}.rrole .rname{grid-column:2;grid-row:1/3;align-self:start}}
+.rrole.core{border-color:var(--acc-glow)}
+.rrole .rr1{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+.rrole .rr1 b{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:.95rem}
+.rrole .rr1 i{font-style:normal;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 7px}
+.rrole .rr1 i.rq{color:#c25b4a;background:rgba(194,91,74,.12)}
+.rrole .rr1 small{font-size:.74rem;color:var(--ink3)}
+.rrole .rr2{font-size:.8rem;color:var(--ink2);line-height:1.5}
+.rrole .rr2 em{font-style:normal;color:var(--acc)}
+.rrole .rname{background:var(--panel2);border:1px solid var(--line2);border-radius:10px;padding:10px 11px;font-size:.95rem;width:100%;min-width:0;color:var(--ink)}
+.rrole .rname:focus{border-color:var(--acc);outline:none}
+.streams{display:grid;grid-template-columns:1fr;gap:8px;margin-top:12px}
+@media(min-width:720px){.streams{grid-template-columns:repeat(2,1fr)}}
+.stream{display:grid;grid-template-columns:1fr auto;gap:2px 12px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 13px;box-shadow:var(--shadow)}
+.stream .sn b{display:block;font-family:var(--disp);font-weight:600;color:var(--ink);font-size:.95rem}
+.stream .sn span{font-size:.72rem;color:var(--ink3)}
+.stream .st{text-align:right}
+.stream .st b{display:block;font-family:var(--disp);font-size:1.3rem;font-weight:700;line-height:1;color:var(--acc);font-variant-numeric:tabular-nums}
+.stream .st small{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700}
+.stream .snote{grid-column:1/-1;font-size:.8rem;color:var(--ink2);line-height:1.5;margin-top:4px}
+.budget{display:grid;grid-template-columns:1fr;gap:10px;margin-top:12px}
+@media(min-width:720px){.budget{grid-template-columns:repeat(2,1fr)}}
+.bud{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:13px 15px;box-shadow:var(--shadow)}
+.bud.inc{background:var(--panel2)}
+.bud .bh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.bud .bh b{font-family:var(--disp);font-weight:600;font-size:1.02rem;color:var(--ink)}
+.bud .bh span{font-family:var(--disp);font-weight:700;color:var(--acc);font-variant-numeric:tabular-nums;font-size:.95rem;text-align:right}
+.bud .bn{font-size:.78rem;color:var(--ink3);margin:3px 0 6px;line-height:1.45}
+.bud ul{list-style:none;margin-top:6px}
+.bud li{position:relative;padding-left:14px;font-size:.82rem;color:var(--ink2);margin:4px 0;line-height:1.45}
+.bud li::before{content:"";position:absolute;left:0;top:.62em;width:5px;height:1px;background:var(--ink3)}
+.pnext{margin-top:26px;background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:14px 15px;font-size:.84rem;color:var(--ink2);line-height:1.6}
+.pnext b{color:var(--ink);display:block;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px}
+@media(max-width:420px){.phase{grid-template-columns:56px 1fr;gap:0 10px}.rail::before{left:27px}.phase .mo b{font-size:1.35rem}}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacing:.08em}
 @media print{:root{--bg:#fff;--panel:#fff;--ink:#111;--ink2:#333;--ink3:#666;--shadow:none}body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
@@ -553,6 +760,9 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     </div>
   </div>
 
+  <!-- public sign-up page: reached by a share link, no code, no hub -->
+  <div class="enlist" id="enlistpage" hidden></div>
+
   <div class="hub" id="hub" hidden>
     <div class="hubwelcome">
       <h2>Welcome</h2>
@@ -574,7 +784,54 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
         <b>Make the Case</b>
         <span class="td">Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.</span>
       </button>
+      <button class="tool" data-tool="planner">
+        <span class="tico">📅</span>
+        <b>Evangelism Planner</b>
+        <span class="td">Set opening night and the size of your church. Terrain counts backward eighteen months — revival, training, outreach, the meetings, and the nurture after — with a benchmark for every phase.</span>
+      </button>
     </div>
+  </div>
+
+  <!-- ===== Evangelism Planner: the countdown calendar ===== -->
+  <div class="planner" id="planner" hidden>
+    <div class="pmode" id="pmode" hidden>
+      <button type="button" data-m="plan" class="on">Plan</button>
+      <button type="button" data-m="track">Track</button>
+    </div>
+    <div id="pplan">
+    <div class="pintro">
+      <h1>Count backward from opening night.</h1>
+      <p class="lead">A master plan begins at the first night of the meetings and works back twelve to eighteen months. Give Terrain five numbers and a date; it lays the phases on the calendar and sets a starting benchmark for each one.</p>
+    </div>
+    <div id="pplace"></div>
+    <div class="pform" id="pform">
+      <label class="pf pf-wide"><span class="lb">Church or district</span><input id="pl-church" type="text" placeholder="Bucks County SDA, Warminster PA" autocomplete="off"></label>
+      <label class="pf"><span class="lb">Active members</span><input id="pl-members" type="number" inputmode="numeric" min="1" placeholder="60"></label>
+      <label class="pf"><span class="lb">Can lead a team</span><input id="pl-leaders" type="number" inputmode="numeric" min="0" placeholder="8"></label>
+      <label class="pf"><span class="lb">Willing workers</span><input id="pl-workers" type="number" inputmode="numeric" min="1" placeholder="20"></label>
+      <label class="pf"><span class="lb">Opening night</span><input id="pl-date" type="date"></label>
+      <label class="pf"><span class="lb">Nights of meetings</span><input id="pl-nights" type="number" inputmode="numeric" min="1" placeholder="20"></label>
+      <label class="pf"><span class="lb">Nights per week</span><input id="pl-perweek" type="number" inputmode="numeric" min="1" max="7" value="4"></label>
+      <label class="pf"><span class="lb">Seats in the hall</span><input id="pl-seats" type="number" inputmode="numeric" min="1" placeholder="150"></label>
+      <label class="pf"><span class="lb">Names on interest file</span><input id="pl-file" type="number" inputmode="numeric" min="0" placeholder="0 if none yet"></label>
+      <label class="pf"><span class="lb">Budget, if known ($)</span><input id="pl-budget" type="number" inputmode="numeric" min="0" placeholder="optional"></label>
+      <div class="pf pf-wide">
+        <span class="lb">Kind of series</span>
+        <div class="seg" id="pl-kind" role="radiogroup" aria-label="Kind of series">
+          <button type="button" data-k="prophecy" role="radio" aria-checked="false">Prophecy</button>
+          <button type="button" data-k="health" role="radio" aria-checked="false">Health</button>
+          <button type="button" data-k="both" role="radio" aria-checked="true" class="on">Both</button>
+        </div>
+      </div>
+      <div class="pf pf-wide prow">
+        <button class="btn" id="pl-build">Build the countdown</button>
+        <button class="btn ghost" id="pl-clear" hidden>Start over</button>
+        <span class="hint" id="pl-status"></span>
+      </div>
+    </div>
+    <div id="pout"></div>
+    </div>
+    <div id="ptrack" hidden></div>
   </div>
   <div class="toolbar" id="toolbar" hidden>
     <button class="backtools" id="backtools">← Tools</button>
@@ -606,13 +863,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v6.5</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v6.5';
+const VERSION = 'v7.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -4064,11 +4321,14 @@ const FLAT=new URLSearchParams(location.search).has('flat');
    back out. New tools become new tiles here rather than more sections bolted to
    the bottom of one long page. */
 const TOOLS={
-  survey:{name:'Community Survey', tabs:['analytics','strategy','mobilize']},
-  case:  {name:'Make the Case',    tabs:['case']}
+  survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
+  case:   {name:'Make the Case',     tabs:['case']},
+  // standalone: does not need a church address or Census data; it has its own panel
+  planner:{name:'Evangelism Planner',tabs:[], standalone:true}
 };
 function showHub(){
   const dc=document.getElementById('datacred'); if(dc&&!FLAT) dc.hidden=true;
+  const pl=$('planner'); if(pl) pl.hidden=true;
   // In flat view there is no hub — everything is on one page already.
   if(FLAT){ const a=document.querySelector('.ask'); if(a) a.style.display=''; return; }
   TOOL=null;
@@ -4086,6 +4346,15 @@ function openTool(id){
   TOOL=id;
   const hub=$('hub'); if(hub) hub.hidden=true;
   const bar=$('toolbar'); if(bar){ bar.hidden=false; $('toolname').textContent=TOOLS[id].name; }
+  if(TOOLS[id].standalone){
+    const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
+    $('report').classList.remove('show');
+    const nav=$('secnav'); if(nav) nav.hidden=true;
+    const ch=$('changech'); if(ch) ch.hidden=true;
+    const pl=$('planner'); if(pl){ pl.hidden=false; plannerOpen(); }
+    window.scrollTo({top:0,behavior:'auto'});
+    return;
+  }
   const ch=$('changech'); if(ch) ch.hidden=!DATA;
   const ask=document.querySelector('.ask'); if(ask) ask.style.display=DATA?'none':'';
   if(DATA){ $('report').classList.add('show'); applyTool(); }
@@ -4165,6 +4434,885 @@ function applyTool(){
   });
   if(!single) buildSecNav();
 }
+/* ================= EVANGELISM PLANNER =================
+   Step 2 of the tool. Three layers shape the plan:
+     1. the place  — the survey's tract profile, hotspot blocks and nearby
+                     congregations, when the church has been mapped;
+     2. the church — members, leaders who can run a team, willing workers;
+     3. the campaign — opening night, length, kind of series.
+   Results scale on three things: the time left to prepare, the number of
+   members, and the number of leaders. Finding the leaders is phase one.
+   The phase list encodes the public-evangelism cycle: revival, training,
+   community outreach, seminars, home groups, advertising, the series, nurture
+   (prayer lists of 3–5 names, bands of 2–4, outreach attendance at 3×
+   membership, home groups of 4–6 that bond 3 weeks and study 12, handbills
+   in the last two weeks, a prayer walk one week out, ten days of prayer).
+   Device-local, like everything in Terrain. */
+const PLAN_KEY='terrain-plan';
+let PLAN=null;
+const MON=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+function pDate(d){ return MON[d.getMonth()]+' '+d.getDate()+', '+d.getFullYear(); }
+function addMonths(d,n){ const x=new Date(d); const day=x.getDate(); x.setDate(1); x.setMonth(x.getMonth()+n); x.setDate(Math.min(day,new Date(x.getFullYear(),x.getMonth()+1,0).getDate())); return x; }
+function addDays(d,n){ const x=new Date(d); x.setDate(x.getDate()+n); return x; }
+function planGet(){ try{ return JSON.parse(localStorage.getItem(PLAN_KEY)||'null'); }catch(e){ return null; } }
+function planSave(p){ try{ localStorage.setItem(PLAN_KEY,JSON.stringify(p)); }catch(e){} }
+
+/* ---- layer 1: the place, read from the survey if it has been run ---- */
+function planPlace(){
+  if(!DATA||!DATA.M||!DATA.M.tract) return null;
+  const M=DATA.M, m=M.tract;
+  let tags=new Set(); try{ tags=profile(m,M.county); }catch(e){}
+  // households in the blocks to reach first: the top four hotspot zones if the
+  // block view loaded, otherwise the home tract
+  let hh=m.hh||0, zones=[];
+  if(ZONES&&ZONES.scored&&ZONES.scored.length){
+    zones=[...ZONES.scored].sort((a,b)=>(b.score||0)-(a.score||0)).slice(0,4);
+    const zp=zones.reduce((s,z)=>s+(z.m&&z.m.pop||0),0);
+    if(zp) hh=Math.round(zp/2.6);
+  }
+  const pairs=Math.max(2,Math.round(hh*0.10/8/4));           // 10% of households, 8 addresses a pair, four rounds
+  const denoms={};
+  if(CONGS&&CONGS.length) CONGS.forEach(c=>{ if(c.fam&&c.fam!=='other') denoms[c.fam]=(denoms[c.fam]||0)+1; });
+  const topDenoms=Object.entries(denoms).sort((a,b)=>b[1]-a[1]).slice(0,2).map(x=>(typeof DOCTRINE!=='undefined'&&DOCTRINE[x[0]]&&DOCTRINE[x[0]].label)||x[0]);
+  const lang=(m.langs&&m.langs[0]&&m.langs[0].share>=6)?m.langs[0].name:null;
+  return {name:m.name||'this tract', town:M.cousub?M.cousub.name:'', county:M.county?M.county.name:'',
+          tags, hh, pairs, zones:zones.length, denoms:topDenoms, lang, pop:m.pop, seniorsAloneN:m.seniorsAloneN, kids:m.kids};
+}
+function placeWords(pl){
+  const T=pl.tags, w=[];
+  if(T.has('very-poor')) w.push('high poverty'); else if(T.has('poor')||T.has('low-income')) w.push('low income');
+  if(T.has('food-insecure')) w.push('food insecurity');
+  if(T.has('very-uninsured')||T.has('uninsured')) w.push('many uninsured');
+  if(T.has('spanish')) w.push('Spanish-speaking'); else if(T.has('limited-english')||T.has('multilingual')) w.push('several languages');
+  if(T.has('very-immigrant')||T.has('immigrant')) w.push('immigrant families');
+  if(T.has('many-kids')||T.has('families')) w.push('many children');
+  if(T.has('single-parents')) w.push('single parents');
+  if(T.has('seniors-alone')||T.has('very-old')) w.push('seniors living alone');
+  if(T.has('no-car')) w.push('households without a car');
+  if(T.has('renters')||T.has('rent-burdened')) w.push('renters');
+  if(T.has('changing')) w.push('a changing neighborhood');
+  if(T.has('affluent')||T.has('professional')) w.push('professional households');
+  if(T.has('students')) w.push('students');
+  return w;
+}
+
+/* ---- layer 2 + 3: the church and the campaign ---- */
+function plannerOpen(){
+  PLAN=planGet();
+  const kindBtns=[...document.querySelectorAll('#pl-kind button')];
+  kindBtns.forEach(b=>b.onclick=()=>{ kindBtns.forEach(x=>{ x.classList.toggle('on',x===b); x.setAttribute('aria-checked',x===b?'true':'false'); }); });
+  renderPlaceStrip();
+  if(PLAN){
+    $('pl-church').value=PLAN.church||''; $('pl-members').value=PLAN.members||''; $('pl-leaders').value=PLAN.leaders||''; $('pl-workers').value=PLAN.workers||'';
+    $('pl-date').value=PLAN.date||''; $('pl-nights').value=PLAN.nights||''; $('pl-perweek').value=PLAN.perweek||4;
+    $('pl-seats').value=PLAN.seats||''; $('pl-file').value=(PLAN.file==null?'':PLAN.file); $('pl-budget').value=PLAN.budget||'';
+    kindBtns.forEach(x=>{ const on=x.dataset.k===(PLAN.kind||'both'); x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); });
+    plannerRender(PLAN);
+  } else {
+    if(!$('pl-church').value){
+      if(DATA&&DATA.geo&&DATA.geo.matched) $('pl-church').value=DATA.geo.matched;
+      else { const r=recentGet(); if(r.length) $('pl-church').value=r[0]; }
+    }
+    $('pout').innerHTML=''; $('pl-clear').hidden=true; $('pl-status').textContent='';
+  }
+  const mode=$('pmode');
+  if(mode){
+    mode.hidden=!PLAN;
+    mode.querySelectorAll('button').forEach(b=>b.onclick=()=>{
+      const m=b.dataset.m;
+      mode.querySelectorAll('button').forEach(x=>x.classList.toggle('on',x===b));
+      $('pplan').hidden = m!=='plan'; $('ptrack').hidden = m!=='track';
+      if(m==='track') trackOpen();
+      window.scrollTo({top:0,behavior:'auto'});
+    });
+    const on=mode.querySelector('button.on'); if(on&&on.dataset.m==='track'&&PLAN) trackOpen();
+  }
+  $('pl-build').onclick=plannerBuild;
+  $('pl-clear').onclick=()=>{ if(!confirm('Clear this plan from this device?')) return; localStorage.removeItem(PLAN_KEY); PLAN=null;
+    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; plannerOpen(); };
+}
+function renderPlaceStrip(){
+  const host=$('pplace'); if(!host) return;
+  const pl=planPlace();
+  if(!pl){
+    host.innerHTML=`<div class="pplace off"><b>The place</b><span>Map the church in the Community Survey first and this plan bends to the neighborhood — the programs it needs, the households to reach, the languages, the churches already there.</span>
+      <button class="btn ghost" id="pl-gosurvey">Open the survey</button></div>`;
+    const g=$('pl-gosurvey'); if(g) g.onclick=()=>{ openTool('survey'); if(!DATA) showAddressForm(); };
+    return;
+  }
+  const w=placeWords(pl);
+  host.innerHTML=`<div class="pplace"><b>The place · from the survey</b>
+    <span><b>${esc(pl.name)}</b>${pl.town?', '+esc(pl.town):''}${pl.county?' · '+esc(pl.county):''}. ${w.length?'Marked by '+w.join(', ')+'.':'No strong markers — a settled, mixed neighborhood.'}
+    ${pl.zones?` About <b>${pl.hh.toLocaleString()} households</b> in the ${pl.zones} blocks to reach first.`:` About <b>${pl.hh.toLocaleString()} households</b> in the home tract.`}
+    ${pl.denoms.length?` Nearest churches are mostly ${pl.denoms.map(d=>esc(d)).join(' and ')}.`:''}</span></div>`;
+}
+function plannerBuild(){
+  const church=$('pl-church').value.trim();
+  const members=+$('pl-members').value, leaders=+$('pl-leaders').value, workers=+$('pl-workers').value, nights=+$('pl-nights').value, perweek=Math.max(1,Math.min(7,+$('pl-perweek').value||4));
+  const date=$('pl-date').value;
+  const kind=(document.querySelector('#pl-kind button.on')||{}).dataset?.k||'both';
+  const st=$('pl-status');
+  if(!date){ st.textContent='Pick the opening night first — everything counts back from it.'; $('pl-date').focus(); return; }
+  if(!(members>0)){ st.textContent='How many active members? A rough number is fine.'; $('pl-members').focus(); return; }
+  if(!(leaders>=0)||$('pl-leaders').value===''){ st.textContent='How many members could lead a team? Zero is an honest answer.'; $('pl-leaders').focus(); return; }
+  if(!(workers>0)){ st.textContent='How many members are willing to work? Even a few.'; $('pl-workers').focus(); return; }
+  if(!(nights>0)){ st.textContent='How many nights of meetings?'; $('pl-nights').focus(); return; }
+  const seats=+$('pl-seats').value||0, file=$('pl-file').value===''?null:Math.max(0,+$('pl-file').value), budget=+$('pl-budget').value||0;
+  if(!(seats>0)){ st.textContent='How many seats in the hall? Pre-work aims to fill half of them.'; $('pl-seats').focus(); return; }
+  PLAN={church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,built:Date.now(),v:3};
+  planSave(PLAN); st.textContent='Saved on this device.'; plannerRender(PLAN);
+  const md=$('pmode'); if(md) md.hidden=false;
+  setTimeout(()=>{ const o=$('pout'); if(o) o.scrollIntoView({behavior:'smooth',block:'start'}); },50);
+}
+
+/* ---- the leaders: which teams this campaign needs, and whether the church has enough people to lead them ---- */
+function planLeaderRoles(p,pl){
+  /* The campaign organization as the playbook lays it out: coordinators the
+     pastor appoints, pre-work teams from the equipping phase, and the series
+     committees members sign up for on Sabbath morning. Chairpersons are chosen
+     at least four months before opening night. Place-driven roles (children,
+     transportation, translation) are required where the survey says so. */
+  const T=pl?pl.tags:new Set(), H=p.kind!=='prophecy', P=p.kind!=='health';
+  const kids=T.has('many-kids')||T.has('families')||T.has('single-parents')||T.has('family-heavy');
+  const noCar=T.has('no-car')||T.has('seniors-alone')||T.has('very-old');
+  const bi=T.has('spanish')||T.has('limited-english')||T.has('multilingual');
+  const seats=p.seats||0, ushers=seats?Math.max(2,Math.ceil(seats/25)*2):null;
+  const R=[
+    // coordinators — chosen by the pastor
+    {g:'coord',id:'coord',n:'Campaign coordinator',who:'the pastor',core:1,d:'Responsible for the organization of the whole campaign; every committee chair reports here. Usually leads the visitation.'},
+    {g:'coord',id:'assoc',n:'Associate coordinator',who:'a local church leader',core:1,d:'Works with the heads of every committee so each area runs smoothly; the pastor\u2019s second.'},
+    {g:'coord',id:'treasurer',n:'Treasurer',who:'usually the church treasurer',d:'Builds the budget with the coordinator, opens an evangelistic account, receives and counts the weekly offering, pays every bill.'},
+    {g:'coord',id:'prereg',n:'Pre-registration coordinator',who:'',core:1,d:'Collects every pre-registration — from Sabbath mornings, every preparation program, personal deliveries, the interest-file mailing and the media-interest mailing — and sends the confirmation letter and brochure one week before opening night.'},
+    {g:'coord',id:'materials',n:'Materials coordinator',who:'',d:'Orders all materials and books, keeps the inventory, counts out lecture magazines and gifts for the door, has decision cards and pencils counted by rows, and offering buckets and envelopes for the whole series.'},
+    {g:'coord',id:'visit',n:'Visitation coordinator',who:'the pastor or coordinator',core:1,d:'Organizes visiting teams of pastors and lay members, takes the names nightly from the records team — a visitation card for every non-Adventist guest — and runs weekly, systematic visits. Without it many drop out.'},
+    {g:'coord',id:'platform',n:'Platform coordinator',who:'',d:'Runs each evening\u2019s program: meets all participants twenty minutes before, reviews announcements with the evangelist, places schedules, gift books and Bible on the podium, and leads the platform prayer.'},
+    {g:'coord',id:'music',n:'Music coordinator',who:'',d:'Pianist or organist every night, background music as people come and go, special music and every appeal song, planned with the evangelist to fit the evening\u2019s topic.'},
+    {g:'coord',id:'committees',n:'Committees coordinator',who:'',d:'Organizes all the committees below and sees that each chair has staffed and prepared their piece.'},
+    // pre-work teams — from the equipping phase
+    {g:'pre',id:'interest',n:'Interest file & Bible school',who:'',core:1,d:'Keeps every name from every source on a computer, runs the four letters, assigns studies, and keeps the Bible School running through and after the series.'},
+    {g:'pre',id:'lit',n:'Literature & mailing',who:'',d:'Divides the territory, runs the monthly rounds and the mailings; the handbill distribution in the last two weeks.'},
+    {g:'pre',id:'groups',n:'Home Bible groups',who:'',d:'Recruits hosts and leaders, supplies the lessons and DVDs, keeps the groups meeting the full run, and brings every guest to opening night with a ticket.'},
+    ...(H?[{g:'pre',id:'health',n:'Health ministries',who:'',d:'Health expo, cooking school, screenings; recruits the nurses and health professionals in the church and collects pre-registrations at every event.',why:H?'':''}]:[]),
+    ...(bi?[{g:'pre',id:'lang',n:'Bilingual & translation',who:'',req:1,d:'Checks every printed piece, arranges translation, leads the '+(pl.lang||'second-language')+' night.',why:(pl.lang||'a second language')+' is spoken widely here'}]:[]),
+    // series committees — members sign up Sabbath morning; chair chosen by the board or the pastor
+    {g:'series',id:'prayer',n:'Prayer',who:'',core:1,d:'Enlists members who intercede by name, daily; meets thirty minutes before every meeting in a designated room, then sits in the meeting praying for the evangelist and for specific interests.'},
+    {g:'series',id:'ushers',n:'Ushers',who:'',d:'Two ushers for every twenty-five people'+(ushers?' — <b>'+ushers+'</b> for a full hall':'')+'; the same section every night so guests see familiar faces; decision cards by rows.'},
+    {g:'series',id:'hosts',n:'Hosts & hostesses',who:'',d:'The welcome at the door, the seating, name badges, the first impression every single night.'},
+    {g:'series',id:'registration',n:'Registration',who:'',d:'Registers every guest once, hands out the lecture schedule, keeps the framed gift pictures on display.'},
+    {g:'series',id:'records',n:'Attendance records',who:'',d:'Ticket books or scanner cards; a free lecture copy for every night attended; the nightly list of who is eligible for gifts; feeds the visitation team every name.'},
+    {g:'series',id:'bibleschool',n:'Bible School',who:'',d:'Lessons during the series that answer the questions the preaching raises; many keep studying after the last night.'},
+    {g:'series',id:'parking',n:'Parking attendants',who:'',d:'Visible, with flashlights; guidance and security outside from arrival to departure.'},
+    {g:'series',id:'children',n:'Children\u2019s meetings & babysitting',who:'',req:kids,d:'A program for the children every night'+(kids?' — required here, or the parents cannot come':'')+'.',why:kids?'many children in the neighborhood':''},
+    {g:'series',id:'resource',n:'Resource center',who:'',d:'Materials sold and given: books, lessons, recordings; stocked by the materials coordinator.'},
+    {g:'series',id:'decoration',n:'Decoration',who:'',d:'The hall looks ready every night: platform, entrance, signage, the reserved seats marked.'},
+    {g:'series',id:'transportation',n:'Transportation',who:'',req:noCar,d:'A named drivers rota with a backup every night'+(noCar?' — in this neighborhood it is the ministry, not a support role':'')+'.',why:noCar?'many households have no car or are seniors alone':''}
+  ];
+  return R;
+}
+/* Small churches combine roles. Core roles stay separate; the rest pair up
+   until the count fits the leaders available. The treasurer is usually the
+   church treasurer already and is not counted against the leaders. */
+function planLeaderFit(roles,leaders){
+  const PAIRS=[['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
+  let list=roles.map(r=>({...r,names:[r.n],ids:[r.id]}));
+  let merged=[];
+  const need=()=>list.filter(r=>r.id!=='treasurer').length;
+  for(const [a,b] of PAIRS){
+    if(need()<=leaders) break;
+    const ia=list.findIndex(r=>r.id===a), ib=list.findIndex(r=>r.id===b);
+    if(ia<0||ib<0||list[ia].core||list[ib].core||list[ia].names.length>1||list[ib].names.length>1) continue;
+    list[ia]={...list[ia],n:list[ia].n+' + '+list[ib].n,names:[...list[ia].names,...list[ib].names],ids:[...list[ia].ids,...list[ib].ids],req:list[ia].req||list[ib].req,why:list[ia].why||list[ib].why,d:list[ia].d+' Also: '+list[ib].d.charAt(0).toLowerCase()+list[ib].d.slice(1)};
+    merged.push([a,b]); list.splice(ib,1);
+  }
+  return {list,merged,gap:Math.max(0,need()-leaders),full:roles.filter(r=>r.id!=='treasurer').length,need:need()};
+}
+/* ---- targets: floors from the playbook, scaled by the church and the place ---- */
+function planTargets(p,pl){
+  const T=pl?pl.tags:new Set();
+  const groups=Math.max(1,Math.round(p.workers/5));
+  const churn=(T.has('renters')||T.has('rent-burdened')||T.has('changing'))?1.3:1;   // interests decay faster where people move
+  const hh=pl?pl.hh:0;
+  return {
+    prayerLo:p.members*3, prayerHi:p.members*5,
+    bands:Math.max(1,Math.round(p.members/3)),
+    outreach:p.members*3,
+    instructors:Math.max(1,Math.round(p.workers*0.5)),
+    studies:Math.max(1,Math.round(p.workers*0.5)),
+    groups, guests:groups*5,
+    weeks:Math.ceil(p.nights/p.perweek),
+    hh, pairs:pl?pl.pairs:Math.max(2,Math.round(p.workers/4)),
+    handbills:hh?hh:null, literature:hh?hh*3:null,
+    prereg:Math.round(Math.max(Math.ceil((p.seats||0)*0.5),p.members*1.5)*churn), churn, halfHall:Math.ceil((p.seats||0)*0.5)
+  };
+}
+
+/* ---- the calendar: 18 months when there is time; compressed to the runway when there is not ---- */
+function planSchedule(p){
+  const D=new Date(p.date+'T12:00:00'); const today=new Date(); today.setHours(12,0,0,0);
+  const finalStart=addDays(D,-14);
+  const W=[3,3,3,3,3,2]; // months per phase in the full model, 17 in all
+  const prepDays=Math.round((finalStart-today)/86400000);
+  let bounds, mode;
+  if(prepDays>=17*30){ // enough runway: fixed anchors
+    mode='full'; bounds=[18,15,12,9,6,3].map(k=>addMonths(D,-k)); bounds.push(finalStart);
+  } else if(prepDays>0){ // compress proportionally onto what is left
+    mode='compressed'; const tot=W.reduce((a,b)=>a+b,0); bounds=[today]; let acc=0;
+    W.forEach(w=>{ acc+=w; bounds.push(addDays(today,Math.round(prepDays*acc/tot))); });
+  } else { mode='late'; bounds=[today,today,today,today,today,today,finalStart]; }
+  const moOut=d=>Math.max(0,Math.round((D-d)/86400000/30.44));
+  return {D,today,finalStart,prepDays,mode,bounds,moOut,close:addDays(D,(Math.ceil(p.nights/p.perweek)*7)-1)};
+}
+function planPhases(p,pl){
+  const S=planSchedule(p), D=S.D, T=planTargets(p,pl), Tg=pl?pl.tags:new Set();
+  const H=p.kind!=='prophecy', P=p.kind!=='health';
+  const roles=planLeaderRoles(p,pl), fit=planLeaderFit(roles,p.leaders);
+  const li=(t,key)=>({t,key:!!key});
+  const has=(...k)=>k.some(x=>Tg.has(x));
+  // the 15-week home-group runway if there is room for it; 8 weeks if not
+  const groupWeeks=S.prepDays>=140?15:8, groupsStart=addDays(D,-groupWeeks*7);
+  const ph=(i,name,items,bench,extra)=>({...extra,name,items,bench,start:S.bounds[i],end:addDays(S.bounds[i+1],-1),mo:S.moOut(S.bounds[i])});
+  // leaders block for phase one
+  const chairsBy=addMonths(D,-4);
+  const leadersHtml=`<div class="lroles">${fit.list.filter(r=>r.core||r.req).map(r=>`<div class="lrole${r.core?' core':''}"><b>${esc(r.n)}</b><span>${r.d}</span>${r.why?`<em>Because ${esc(r.why)}.</em>`:''}</div>`).join('')}</div><p class="note" style="margin-top:6px">The core roles and the ones the neighborhood requires. The full roster — every coordinator and committee with a place for a name — is below the countdown. Chairpersons must be chosen by <b>${pDate(chairsBy)}</b>, four months out, so the committees can work in order.</p>`;
+  const leadLine= p.leaders>=fit.full ? `<b>${fit.full} roles, ${p.leaders} leaders</b> — every coordinator and committee can have its own leader.`
+    : fit.gap===0 ? `<b>${fit.full} roles combined into ${fit.need}, ${p.leaders} leaders</b> — each leader carries one.`
+    : `<b>${fit.full} roles combined into ${fit.need}, ${p.leaders} leaders</b> — <b>${fit.gap} more leader${fit.gap>1?'s':''}</b> must be found or someone carries two. That is the first prayer request.`;
+  // outreach shaped by the place
+  const outreach=[];
+  if(has('food-insecure','very-poor')) outreach.push(li('<b>Because of food insecurity:</b> cooking school and a food-pantry partnership come first, and handbills go door to door by hand, not by mail.',1));
+  if(has('uninsured','very-uninsured')) outreach.push(li('<b>Because many are uninsured:</b> the Health Expo with free screenings is the anchor event; nurses and health professionals in the church are on the roster by name.',1));
+  if(has('spanish','limited-english','multilingual')) outreach.push(li('<b>Because '+(pl.lang||'another language')+' is spoken widely:</b> every handbill, card and lesson in two languages; a bilingual member checks each piece; one seminar night runs in '+(pl.lang||'that language')+'.',1));
+  if(has('no-car','seniors-alone','very-old')) outreach.push(li('<b>Because of seniors alone and households without a car:</b> a named drivers rota with backups, an earlier start time, and visitation weighted to those blocks'+(pl&&pl.seniorsAloneN?' ('+pl.seniorsAloneN.toLocaleString()+' seniors live alone here)':'')+'.',1));
+  if(has('many-kids','families','single-parents','family-heavy')) outreach.push(li('<b>Because of the children:</b> a children\u2019s program every night of the series is required, and a parenting seminar or VBS enters the pre-work.',1));
+  if(has('renters','rent-burdened','changing')) outreach.push(li('<b>Because people move often here:</b> mail the interest file every two months instead of quarterly, and aim for '+T.prereg+' pre-registrations — the file decays faster.'));
+  if(has('jobless','service-work')) outreach.push(li('A financial-peace or job-skills seminar meets a felt need here.'));
+  if(has('affluent','professional')) outreach.push(li('Stress management and Creation Health seminars fit a professional neighborhood; print quality matters more here.'));
+  if(pl&&pl.denoms.length) outreach.push(li('<b>Because the nearest churches are '+pl.denoms.join(' and ')+':</b> the visitation and objections training is tuned to what those neighbors already believe — common ground first.',1));
+  const generic=[li('Felt-need programs start'+(H?' — health fairs, blood-pressure screenings, stop-smoking, stress and weight management':'')+(H&&P?'; ':'')+(P?(H?'plus ':' — ')+'a Bible-prophecy or archeology seminar':'')+'.')];
+  const litLine= T.hh ? li('Literature teams divide the '+(pl.zones?pl.zones+' blocks to reach first':'home tract')+' — about <b>'+T.hh.toLocaleString()+' households</b>: one handbill per home and three touches over the campaign (<b>'+T.literature.toLocaleString()+' pieces</b>). <b>'+T.pairs+' visiting pairs</b>, eight addresses each, four rounds.',1)
+                      : li('Literature teams divide the territory and pass out enrollment cards'+(H?', health and cooking-school brochures':'')+(P?', Bible-seminar flyers':'')+'.',1);
+  const mailEvery=has('renters','rent-burdened','changing')?'every two months':'quarterly';
+  const close=S.close;
+  // the last three Sabbaths before opening night: handbills and pre-registration forms go out in church
+  const sabbaths=[]; { let d=addDays(D,-1); while(d.getDay()!==6) d=addDays(d,-1); for(let i=0;i<3;i++){ sabbaths.unshift(new Date(d)); d=addDays(d,-7);} }
+  const handbillOrder=addMonths(D,-3), lettersOut=addDays(D,-10), membersHandbills=addDays(D,-14);
+  const fileN=p.file==null?null:p.file;
+  return {S,T,fit,phases:[
+    ph(0,'Find the leaders and set the date',
+      [li('<b>Opening night fixed:</b> '+pDate(D)+'. Every other date on this page hangs on it.',1),
+       li('<b>Pray over and select the leaders.</b> '+leadLine,1),
+       {t:leadersHtml,key:false,plain:true},
+       li('Launch the prayer ministry: a prayer coordinator and assistant; every member keeps a list of 3–5 names and prays daily; prayer bands of 2–4 before and after church and midweek.'),
+       li('Hold an evangelistic rally so the whole church hears the vision and the date. Draft the budget with the board — 30% pre-work, 50% meetings, 20% follow-up (see the budget below).'),
+       li('Set the church\u2019s effort the same way the playbook does: about half of it on pre-campaign preparation, a fifth on the meetings themselves, and nearly a third on keeping what is won.')],
+      `<b>${fit.need} leaders named</b> · <b>${T.prayerLo.toLocaleString()}–${T.prayerHi.toLocaleString()} names</b> on prayer lists (${p.members} × 3–5) · about <b>${T.bands} prayer bands</b>`),
+    ph(1,'Revive and train',
+      [li('Revival weekend with the emphasis on the Holy Spirit — prayer, Bible study, service.',1),
+       li('Training on the job: lay Bible instructors, small-group leaders, literature teams'+(H?', the health team':'')+(has('spanish','limited-english','multilingual')?', bilingual checkers':'')+'. Members watch the pastor do it, then do it with him.',1),
+       li('Build the interest file from every source'+(fileN!=null?' — <b>'+fileN.toLocaleString()+' names</b> today':'')+' and put it on a computer: media interests, past seminar and health-program attendees, former members, correspondence students, members\u2019 friends. First of four letters goes out now (a free book), then '+mailEvery+': lessons offered, a felt-need seminar, and finally the invitation.'),
+       li('Literature teams adopt a specific territory and visit it <b>once a month, all year</b> — get to know the people by name, pray for them, bring a book or DVD at Christmas.'),
+       li('Ministry teams meet monthly to report — without it they drop out.')],
+      `<b>${p.workers} workers</b> in training · <b>${T.instructors} lay Bible instructors</b> chosen · interest file started · first mailing out`),
+    ph(2,'Community outreach begins',
+      [litLine, li('Visitation program: everyone on the interest file, former and inactive members, media interests, children and spouses of members.',1),
+       li('Former Adventists get their own list and a long-term plan: weeks of visits before any invitation, love in action before any argument.'),
+       ...outreach, ...generic, li('A pre-registration form at every program; second letter to the interest file — the Bible-lesson offer.')],
+      `outreach attendance building toward <b>${T.outreach.toLocaleString()}</b> this year (3 × ${p.members}) · every interest visited once${T.hh?' · first literature round through all '+T.hh.toLocaleString()+' households':''}`),
+    ph(3,'Seminars and Bible studies',
+      [...(H?[li('Health Expo with screening stations and the health-age appraisal; Natural Lifestyle Cooking School, seven nights.',1)]:[]),
+       ...(P?[li('Daniel and Revelation home seminars or an archeology seminar — the prophecy on-ramp.',1)]:[]),
+       li('Every lay Bible instructor has at least one study running before opening night.',1),
+       li('Third letter to the interest file — the felt-need seminar invitation. Monthly team reports continue — examine, evaluate, encourage.')],
+      `<b>${T.studies} Bible studies</b> in progress (one per instructor, minimum) · pre-registrations collected at every event`),
+    ph(4,'Home Bible groups and committees',
+      [li('Form home Bible study groups of 4–6 members; each member invites one friend who is not an Adventist. '+(groupWeeks===15?'Bond and pray as a group for 3 weeks, then 12 weeks of lessons.':'The runway is short: one week to bond, then seven weeks of lessons.')+' <b>Groups begin '+pDate(groupsStart)+'.</b>',1),
+       li('<b>Chairpersons chosen by '+pDate(addMonths(D,-4))+'</b> — four months out at the latest. Then the enlistment form goes out on Sabbath morning and members sign up for the committees: prayer, ushers, hosts, registration, records, Bible School, parking, children\u2019s meetings, resource center, decoration'+(has('no-car','seniors-alone','very-old')?', transportation':'')+'.',1),
+       li('Set up the campaign web page with pre-registration on it, and print its address on every piece that goes out — a third of pre-registrations can come that way. Ask the media ministries to mail your handbill to their interest lists; that request goes in <b>4–6 weeks before the mailing</b> ('+pDate(addDays(D,-52))+').'),
+       li('<b>Order the handbills by '+pDate(handbillOrder)+'</b> — three months out is the minimum. Order supplies'+(has('spanish','limited-english','multilingual')?' in both languages':'')+'; lock the venue and the nightly schedule.')],
+      `<b>${T.groups} home groups</b> running with <b>${T.guests} guests</b> · every committee staffed · supplies ordered`),
+    ph(5,'Advertise and pre-register',
+      [li('Handbills, doorknockers and posters'+(T.handbills?' — <b>'+T.handbills.toLocaleString()+' handbills</b>, one per household in the target blocks':'')+' — and every member pre-registers friends and neighbors. Friends inviting friends is the best advertising there is.',1),
+       ...(H?[li('Handbills and pre-registration forms go out during the last two weeks of cooking school and at the health-expo booth.')]:[]),
+       li('Reserved-seat tickets to everyone in the home groups, every Bible-study student, every cooking-school and seminar attendee, every correspondence student. Offer rides to anyone who needs one.'),
+       li('<b>'+pDate(membersHandbills)+':</b> every member receives handbills and reserved-seat forms to enroll friends, relatives and co-workers; stubs come back to the pre-registration coordinator.',1),
+       li('<b>Handbills and pre-registration forms passed out in church three Sabbaths running:</b> '+sabbaths.map(pDate).join(', ')+'.',1),
+       li('<b>'+pDate(lettersOut)+':</b> the fourth letter — handbill and invitation — mailed to the whole interest file, all media interests, and every personal contact; ten days before is the latest. Mail only within a 20–30 minute drive of the hall.',1),
+       li('Handbill carries a phone number and the web address; whoever answers pre-registers the caller and sends a confirmation letter. Phones staffed at least 8 to 5.'),
+       li('<b>200–300 posters</b> in a ten-block radius of the hall two weeks out, with the dates of the whole series on them; small flyers in doctors\u2019 offices, laundromats, waiting rooms.'),
+       li('Be honest about mass mail: it draws about <b>1–3 people per 1,000 handbills</b>'+(T.handbills?' — '+Math.round(T.handbills/1000)+'–'+Math.round(T.handbills*3/1000)+' from yours':'')+'. The hall fills from the streams above, not the mailbox. Plan for all the advertising to land on one day.'),
+       li('Walk each committee through opening night. Print the response cards, decision cards and nightly records.')],
+      `<b>${T.prereg} pre-registrations</b> in hand${T.churn>1?' (raised for a neighborhood that moves often)':''} · handbills in every home in the territory`),
+    {name:'The last two weeks',start:addDays(D,-14),end:addDays(D,-1),tag:'final',
+     items:[li('<b>Ten Days of Prayer</b> immediately before the series: '+pDate(addDays(D,-10))+' – '+pDate(addDays(D,-1))+'.',1),
+       li('<b>Prayer walk</b> the handbill territory one week out — '+pDate(addDays(D,-7))+' — praying for the people who received them.',1),
+       li('<b>'+pDate(addDays(D,-9))+':</b> call the post office to confirm the handbills arrived. <b>'+pDate(addDays(D,-7))+':</b> handbills land in homes; a few members in the target area call when theirs arrives. Same day: confirmation letter and brochure to everyone pre-registered.',1),
+       li('If the budget allows: one large newspaper ad five days out ('+pDate(addDays(D,-5))+'), radio 50–100 spots Monday to Friday of opening week, cable TV only if you can afford 34–38 spots in five days.'),
+       li('Final committee check, supplies laid out, music and media rehearsed'+(has('no-car','seniors-alone','very-old')?', drivers confirmed by name':'')+'. Platform team meets twenty minutes before; prayer team thirty.')],
+     bench:`every member praying by name · every team ready · every pre-registered guest confirmed`},
+    {name:'The meetings',start:D,end:close,tag:'series',
+     items:[li('<b>'+p.nights+' nights</b>, '+p.perweek+' a week — opening '+pDate(D)+', closing '+pDate(close)+'.',1),
+       li('Nightly records: attendance, response cards, requests for studies. Every interest visited within days — visit, visit, visit.',1),
+       li('Appeals made in earnest; objections answered in the home. Baptism classes #1 and #2 run alongside the meetings.'),
+       li('A weekly letter to everyone attending — it keeps attendance steady and brings back people who drifted.'),
+       li('Attendance gifts, announced from the first night: a lecture copy every night attended, a book after the three key subjects, a Bible at 18 nights, a large picture at 24, a small picture for everyone who brings a guest — and one for the guest.'),
+       li('Prayer bands keep meeting through the series.')],
+     bench:`attendance held from opening night to closing · decisions recorded by name`},
+    {name:'Nurture and follow-up',start:addDays(close,1),end:addMonths(close,3),tag:'after',
+     items:[li('Integrate every new believer into a Sabbath School class, a small group and a friend — the apostles\u2019 doctrine, fellowship, bread and prayers.',1),
+       li('Keep studying with those who have not yet decided; the interest file stays alive. New believers get a weekly Bible-study class, a new-believers\u2019 Sabbath class, and books to keep growing — immerse and instruct, never dip and drop.'),
+       li('Celebrate: testimonies, a fellowship meal, the baptisms.'),
+       li('Evaluate with every team: what worked, what to change, and the date of the next series.')],
+     bench:`baptisms celebrated · each new believer placed · next opening night set`}
+  ]};
+}
+/* ---- where the audience comes from: the twelve invitation streams, with a target where one can be derived ---- */
+function planStreams(p,T,pl){
+  const H=p.kind!=='prophecy', P=p.kind!=='health';
+  const D=new Date(p.date+'T12:00:00');
+  const w=(n,when,who,target,note)=>({n,when,who,target,note});
+  const rows=[
+    w('Community outreach programs','From the first program to opening night','Health & literature teams',null,'Handbills and reserved-seat tickets at every cooking school, expo and seminar; the last night of each program becomes the invitation.'),
+    w('Home Bible groups','Groups start '+pDate(addDays(D,-105)),'Home-groups leader',T.guests,'Every guest gets a handbill, a pre-registration card, a confirmation letter, and a member who goes with them.'),
+    w('Bible-study contacts','All year','Interest file & Bible school',T.studies,'Each student gets a handbill and a ride if needed; unfinished lessons continue through the Bible School during the series.'),
+    w('Former Adventists','Visits begin 12 months out','Visitation leader',null,'Their own list, weeks of visiting before any invitation; most respond to kindness, not debate.'),
+    w('Friends, neighbors, co-workers','Every member, every phase','Every member',p.members,'The most effective advertising there is. One name per member is the floor.'),
+    w('Literature-territory contacts','Monthly visits all year','Literature & mailing',null,'The people the teams have come to know by name in their territory.'),
+    w('Interest file','Four letters, then a visit','Interest file & Bible school',(p.file!=null&&p.file>0)?Math.round(p.file*0.25):null,'Letter 1: free book. Letter 2: Bible lessons. Letter 3: felt-need seminar. Letter 4: the invitation. About a quarter respond within a year.'),
+    w('Correspondence-school students','Visit each before the series','Bible instructors',null,'Check which lessons they have completed; visit; invite with a handbill and reserved seat.'),
+    w('Media interests','Letter + handbill 10 days out','Interest file & Bible school',null,'Everyone who ever wrote in to a broadcast ministry in your area; call every one.'),
+    w('Members\u2019 relatives','Hand-delivered invitations','Every member',null,'Ask each member: who of my closest people does not yet know Jesus for these last days?'),
+    w('Sabbath-morning handbills','Three Sabbaths before opening','Publicity',null,'Handbill plus pre-registration form, three weeks running.'),
+    w('Lending library (CD/DVD)','Two weeks out','Media',null,'Everyone who ever borrowed from the church library gets a handbill.')
+  ].filter(r=>!(r.n==='Home Bible groups'&&!P&&!H));
+  const named=rows.reduce((a,r)=>a+(r.target||0),0);
+  return {rows,named};
+}
+function planBudget(p,pl,T){
+  const H=p.kind!=='prophecy', P=p.kind!=='health', Tg=pl?pl.tags:new Set();
+  const B=p.budget||0, m=x=>B?'$'+Math.round(B*x).toLocaleString():Math.round(x*100)+'%';
+  const kids=Tg.has('many-kids')||Tg.has('families')||Tg.has('single-parents')||Tg.has('family-heavy');
+  const bi=Tg.has('spanish')||Tg.has('limited-english')||Tg.has('multilingual');
+  return [
+    {n:'Pre-work',share:0.30,amt:m(0.30),note:'The people reached here are the first fruits of the baptisms. Many programs pay for themselves with a modest fee.',
+     lines:[ 'Interest-file mailings (four letters, postage)','Bible studies: enrollment cards, lessons',
+       ...(P?['Home Bible seminars: brochures for hand distribution, DVDs and lessons','Archeology program: brochures, outline summaries']:[]),
+       ...(H?['Health Expo: panels, advertising, literature','Cooking school: brochures, cookbooks, workbooks, food samples (offset by registration fee)']:[]),
+       'Literature outreach: the pieces for the territory'+(T.literature?' (~'+T.literature.toLocaleString()+')':''),
+       ...(bi?['Translation and second-language printing']:[])]},
+    {n:'The meetings',share:0.50,amt:m(0.50),note:'Advertising is not preaching, but nobody hears preaching they were never told about.',
+     lines:[ 'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills and social ads','Newspaper, radio and TV only with extra budget','Personal invitation letters',
+       'Auditorium rental, if not in the church','Lecture outlines, Bible lessons, gift Bibles, gift books, lecture magazines','Attendance incentives (gift books, pictures, DVDs)',
+       ...(kids?['Children\u2019s meetings: supplies every night']:['Children\u2019s meetings supplies']),
+       'Office and records: ticket books or scanner cards, decision cards, visitation cards, labels and postage for weekly letters, offering envelopes']},
+    {n:'Nurture and follow-up',share:0.20,amt:m(0.20),note:'Immerse and instruct — never dip and drop.',
+     lines:['Books for new believers (a study guide and a doctrinal companion)','Weekly Bible-study class materials','New-believers\u2019 Sabbath class','Follow-up mailings and visits']},
+    {n:'Income',share:null,amt:B?'balance = conference subsidy requested':'',note:'',
+     lines:['Pre-campaign offering','Local church subsidy','Campaign offerings, nightly','Follow-up offering','Program fees (cooking school registration)']}
+  ];
+}
+function plannerRender(p){
+  const pl=planPlace();
+  const {S,T,fit,phases}=planPhases(p,pl);
+  const today=new Date(); today.setHours(0,0,0,0);
+  const D=S.D, daysOut=Math.round((D-today)/86400000);
+  const runway= daysOut<0?'Opening night has passed.' : daysOut===0?'Opening night is today.' : `${daysOut} days to opening night — ${Math.round(daysOut/30.44)} months of runway.`;
+  const modeNote = S.mode==='full' ? (S.bounds[0]>today?` The eighteen-month countdown begins ${pDate(S.bounds[0])}; until then, pray and finish the survey.`:'')
+    : S.mode==='compressed' ? ` The full plan wants eighteen months; the six preparation phases have been compressed onto the ${S.prepDays} days you have. Shorter phases mean smaller targets are honest — the benchmarks are floors, adjust them.`
+    : ' There is no preparation window left; only the last two weeks, the meetings, and the nurture after remain on the calendar.';
+  const kindName={prophecy:'Prophecy',health:'Health',both:'Prophecy and health'}[p.kind]||'Both';
+  const ST=planStreams(p,T,pl), BU=planBudget(p,pl,T);
+  const roster=p.roster||{};
+  const namedCount=fit.list.filter(r=>(roster[r.id]||'').trim()).length;
+  const G={coord:['Coordinators','Chosen by the pastor. Each committee chair reports to the campaign coordinator.'],pre:['Pre-work teams','The equipping phase; these teams work all year before opening night.'],series:['Series committees','Members sign up on Sabbath morning from the enlistment form; the chair is chosen by the board or the pastor.']};
+  const rosterHtml=`<div class="phead"><h2>The roster</h2><span class="hint">${namedCount} of ${fit.list.length} named${fit.gap?' · '+fit.gap+' leader'+(fit.gap>1?'s':'')+' still to find':''}</span></div>
+    <p class="note" style="margin-top:6px">Every role in the campaign organization with its job and a place for a name. Names are saved on this device as you type. Roles marked <b>core</b> cannot be combined; roles marked <b>required</b> are there because of the neighborhood.</p>
+    ${Object.keys(G).map(g=>{const rows=fit.list.filter(r=>r.g===g); if(!rows.length) return ''; return `<div class="rgroup"><div class="rgh"><b>${G[g][0]}</b><span>${G[g][1]}</span></div>
+      ${rows.map(r=>`<div class="rrole${r.core?' core':''}${r.req?' req':''}"><div class="rr1"><b>${esc(r.n)}</b>${r.core?'<i>core</i>':''}${r.req?'<i class="rq">required</i>':''}${r.who?`<small>${esc(r.who)}</small>`:''}</div><div class="rr2">${r.d}${r.why?` <em>Because ${esc(r.why)}.</em>`:''}</div><input class="rname" data-role="${esc(r.id)}" type="text" placeholder="Name" value="${esc(roster[r.id]||'')}" autocomplete="off"></div>`).join('')}</div>`;}).join('')}`;
+  const streamsHtml=`<div class="phead"><h2>Where the hall fills from</h2><span class="hint">goal: half the hall from pre-work — ${T.halfHall} of ${p.seats} seats</span></div>
+    <p class="note" style="margin-top:6px">Twelve streams feed opening night. Where a number can be derived from your church and the survey it is shown as a starting target; the rest are counted as the teams report. Named so far: <b>${ST.named}</b> of ${T.prereg} pre-registrations wanted${ST.named>=T.prereg?' — the floor is covered on paper; now make it real.':'.'}</p>
+    <div class="streams">${ST.rows.map(r=>`<div class="stream"><div class="sn"><b>${esc(r.n)}</b><span>${esc(r.when)} · ${esc(r.who)}</span></div><div class="st">${r.target!=null?`<b>${r.target.toLocaleString()}</b><small>target</small>`:'<b>—</b><small>count as you go</small>'}</div><div class="snote">${esc(r.note)}</div></div>`).join('')}</div>`;
+  const budgetHtml=`<div class="phead"><h2>The budget</h2><span class="hint">${p.budget?'$'+p.budget.toLocaleString()+' · 30 / 50 / 20':'30% pre-work · 50% meetings · 20% follow-up'}</span></div>
+    <p class="note" style="margin-top:6px">It is not the size of the budget that decides the harvest; it is how many interests the members create before the meetings, and how wisely the money is placed. Spread over the nine months before opening night.${p.budget?'':' Enter a total above and each part becomes a dollar figure.'}</p>
+    <div class="budget">${BU.map(b=>`<div class="bud${b.share==null?' inc':''}"><div class="bh"><b>${esc(b.n)}</b><span>${esc(b.amt)}</span></div>${b.note?`<div class="bn">${esc(b.note)}</div>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}</div>`;
+  const bench=`<div class="pbench">
+    <div class="card"><div class="n">${fit.need}<small>/${p.leaders}</small></div><div class="l">roles to lead · leaders you have</div><div class="sub">${fit.gap?fit.gap+' still to find':'every role has a leader'} · ${namedCount} named</div></div>
+    <div class="card"><div class="n">${T.prereg}</div><div class="l">pre-registrations for opening night</div><div class="sub">half the hall (${T.halfHall} of ${p.seats} seats)${T.churn>1?', raised for churn':''}</div></div>
+    <div class="card"><div class="n">${T.outreach.toLocaleString()}</div><div class="l">outreach attendance this year</div><div class="sub">three times the membership · ${T.studies} Bible studies running</div></div>
+    <div class="card"><div class="n">${T.hh?T.hh.toLocaleString():T.groups+'+'+T.guests}</div><div class="l">${T.hh?'households to reach':'home groups, with guests'}</div><div class="sub">${T.hh?T.pairs+' visiting pairs · '+T.handbills.toLocaleString()+' handbills':'4–6 members, each bringing a friend'}</div></div>
+  </div>`;
+  const rail=phases.map(ph=>{
+    const st=ph.start, en=ph.end;
+    const past=en<today, now=st<=today&&today<=en;
+    const mo=ph.tag==='series'?'<b>0</b><small>open</small>':ph.tag==='after'?'<b>+3</b><small>after</small>':ph.tag==='final'?'<b>14</b><small>days</small>':`<b>${ph.mo}</b><small>mo out</small>`;
+    return `<div class="phase${past?' past':''}${now?' now':''}">
+      <div class="mo">${mo}</div>
+      <div class="pb">
+        <div class="pt"><b>${ph.name}</b><span class="dates">${pDate(st)} – ${pDate(en)}</span>${now?'<span class="tag">now</span>':''}</div>
+        <ul>${ph.items.map(i=>`<li${i.key?' class="key"':(i.plain?' class="plain"':'')}>${i.t}</li>`).join('')}</ul>
+        <div class="bm">Benchmark: ${ph.bench}</div>
+      </div>
+    </div>`;
+  }).join('');
+  $('pout').innerHTML=`
+    <div class="tbar"><button class="btn" id="pl-doc">Print the whole plan</button><span class="hint">for the board, the conference, or your own file</span></div>
+    <div class="phead"><h2>${esc(p.church||'Your church')} · ${kindName} series</h2><span class="hint">${p.members} members · ${p.leaders} leaders · ${p.workers} workers · ${p.nights} nights · ${p.seats} seats</span></div>
+    <p class="note" style="margin-top:6px">${runway}${modeNote}${pl?'':' No survey yet: the neighborhood has not shaped this plan.'}</p>
+    ${bench}
+    <div class="phead"><h2>The countdown</h2><span class="hint">Opening night ${pDate(D)}</span></div>
+    <div class="rail">${rail}</div>
+    ${enlistSection(p,pl)}
+    ${rosterHtml}
+    ${streamsHtml}
+    ${budgetHtml}
+    ${planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName)}
+    <div class="pnext"><b>Next step</b>Saved on this device; it rebuilds from the survey whenever you open it. The next build adds the monthly report — each team enters its actual numbers against these targets and the plan shows what is on pace — then the roster with a name for every role — both are in now. Tap <b>Track</b> at the top once the meetings begin.</div>`;
+  $('pl-clear').hidden=false;
+  const pd=$('pl-doc'); if(pd) pd.onclick=()=>{ document.body.dataset.print='plan'; window.print(); setTimeout(()=>delete document.body.dataset.print,600); };
+  enlistWire(p,pl); enlistPublish(p,pl);
+  // roster names: save as typed, without re-rendering the page under the cursor
+  $('pout').querySelectorAll('input.rname').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      PLAN.roster=PLAN.roster||{}; PLAN.roster[inp.dataset.role]=inp.value; planSave(PLAN);
+      const n=[...$('pout').querySelectorAll('input.rname')].filter(x=>x.value.trim()).length;
+      const h=$('pout').querySelector('.phead:has(h2) .hint'); // first hint is the header; update the roster one directly
+      const rh=[...$('pout').querySelectorAll('.phead')].find(x=>x.querySelector('h2')&&x.querySelector('h2').textContent==='The roster');
+      if(rh){ const sp=rh.querySelector('.hint'); if(sp) sp.textContent=n+' of '+[...$('pout').querySelectorAll('input.rname')].length+' named'+(fit.gap?' · '+fit.gap+' leader'+(fit.gap>1?'s':'')+' still to find':''); }
+    });
+  });
+}
+
+
+/* ================= THE TRACKER =================
+   Step 5. Used during the meetings, not before. Records live in their own
+   store so rebuilding or clearing a plan never destroys a series of records.
+
+   The data model is the record-keeping chapter's: ticket number, contact
+   details, nightly attendance, how they heard, religion, age, nights attended,
+   requests, the seven belief decisions, the personal-visit box, lessons
+   completed, notes, and exactly one assigned worker per guest.
+
+   The visitation queue applies the weekly schedule: the strongest rule is that
+   anyone who came once and has then missed two consecutive nights gets a door
+   visit before the week is out. Interests are ordered the way the book orders
+   them — attending regularly, then literature requests, then decisions, then
+   Bible-school students. */
+const REC_KEY='terrain-records';
+const TOPICS=[
+  {id:'salvation',n:'Salvation in Christ'},{id:'coming',n:'The second coming'},
+  {id:'sabbath',n:'The Sabbath'},{id:'death',n:'State of the dead'},
+  {id:'lifestyle',n:'Healthful living'},{id:'church',n:'The remnant church'},
+  {id:'baptism',n:'Baptism'},{id:'other',n:'Other subject'}
+];
+const CALLS=['—','Hand-raising','Kneeling','Standing','Card','Prayer','Altar','Combination','Meditation','After-meeting'];
+const GATED={sabbath:'books on the Sabbath',death:'books on the state of the dead',church:'books on the mark of the beast and the remnant'};
+let RECS=null, TVIEW='nights', TOPEN=null;
+function campId(p){ return (p.church||'church').trim().toLowerCase().replace(/\s+/g,'-')+'|'+p.date; }
+function recsAll(){ try{ return JSON.parse(localStorage.getItem(REC_KEY)||'{}')||{}; }catch(e){ return {}; } }
+function recsSave(){ try{ const a=recsAll(); a[RECS.id]=RECS; localStorage.setItem(REC_KEY,JSON.stringify(a)); }catch(e){} }
+function recsLoad(p){
+  const id=campId(p), all=recsAll();
+  RECS=all[id]||{id,church:p.church,date:p.date,nights:{},people:[],v:1};
+  RECS.church=p.church; return RECS;
+}
+/* every meeting date, generated from the plan — never hand-entered */
+function nightDates(p){
+  const D=new Date(p.date+'T12:00:00'), out=[];
+  for(let i=0;i<p.nights;i++){ const wk=Math.floor(i/p.perweek), ix=i%p.perweek; out.push(addDays(D,wk*7+ix)); }
+  return out;
+}
+/* gift thresholds scale with the length of the series */
+function giftMarks(p){
+  const n=p.nights;
+  return {book:Math.max(3,Math.round(n*0.40)), bible:Math.min(18,Math.max(6,Math.round(n*0.75))), picture:Math.min(24,n)};
+}
+function pAtt(person){ return Object.keys(person.att||{}).filter(k=>person.att[k]).length; }
+function preachedTopics(){ const set=new Set(); Object.values(RECS.nights||{}).forEach(n=>{ if(n.topic&&n.topic!=='other') set.add(n.topic); }); return set; }
+function lastHeldIndex(p){
+  const today=new Date(); today.setHours(23,59,59,0);
+  const ds=nightDates(p); let last=-1;
+  ds.forEach((d,i)=>{ if(d<=today) last=i; });
+  // a night counts as held once its date has passed or a record exists for it
+  Object.keys(RECS.nights||{}).forEach(k=>{ const i=+k; if(RECS.nights[k]&&(RECS.nights[k].att||RECS.nights[k].subject)) last=Math.max(last,i); });
+  return Math.min(last,p.nights-1);
+}
+
+/* ---- the visitation queue ---- */
+function visitQueue(p){
+  const last=lastHeldIndex(p), preached=preachedTopics(), out=[];
+  const weekOf=i=>Math.floor(i/p.perweek)+1;
+  RECS.people.forEach(person=>{
+    if(person.member) return;
+    const att=pAtt(person), a=person.att||{};
+    const missedLastTwo = last>=1 && att>0 && !a[last] && !a[last-1];
+    const never = att===0;
+    let type=null, why='', urgent=false, lit='';
+    if(person.req&&person.req.visit){ type='Personal visit requested'; why='Asked on a card to be visited by the pastor or a Bible instructor.'; urgent=true; }
+    else if(missedLastTwo){ type='Pop call at the door'; why='Came '+att+' night'+(att>1?'s':'')+', then missed the last two. Five minutes at the door, do not go in — the point is to get them back before the week ends.'; urgent=true; }
+    else if(person.beliefs&&person.beliefs.baptism){ type='Baptismal decision visit'; why='Responded to the baptism appeal. Confirm the decision, set a date, get them into the class.'; lit='Baptismal booklet'; }
+    else if(preached.has('sabbath')&&att>0&&!(person.beliefs&&person.beliefs.sabbath)){ type='Sabbath truth visit'; why='The Sabbath has been presented and they are attending, but nothing is marked cleared. Has it been heard before? Is it clear? Is anything hindering?'; lit='Something on the Sabbath'; }
+    else if(person.req&&person.req.material){ type='Literature request'; why='Asked on a card for reading material — take it in person rather than mailing it.'; }
+    else if(preached.has('coming')&&att>0&&!(person.beliefs&&person.beliefs.coming)){ type='Clear and set'; why='Attending; the second coming has been preached but is not yet marked cleared. Find out where they stand before the testing truths.'; lit='Something on the second coming'; }
+    else if(person.beliefs&&person.beliefs.salvation&&att>0){ type='Growing in Jesus'; why='Marked a decision for Christ. Follow it up in the home.'; lit='Steps to Christ'; }
+    else if(never&&person.name){ type='Get them started'; why='On the file but has not attended a single night. Take a handbill.'; lit='Series handbill'; }
+    else if(att>0){ type='Follow-up visit'; why='Attending. Keep the weekly contact — the preaching raises questions that only a visit answers.'; }
+    if(!type) return;
+    out.push({person,type,why,urgent,lit,att,worker:person.worker||'',
+      rank:(urgent?0:1)*100 + (att>0?0:40) + (person.req&&person.req.material?5:10) - Math.min(att,20)});
+  });
+  out.sort((a,b)=>a.rank-b.rank || b.att-a.att);
+  return {rows:out,week:last<0?0:weekOf(last)};
+}
+
+/* ---- render ---- */
+function trackOpen(){
+  const p=PLAN; if(!p) return;
+  recsLoad(p); trackRender();
+}
+function trackRender(){
+  const p=PLAN, host=$('ptrack');
+  const gm=giftMarks(p), q=visitQueue(p), last=lastHeldIndex(p);
+  const held=Object.keys(RECS.nights||{}).filter(k=>RECS.nights[k]&&RECS.nights[k].att).length;
+  const guests=RECS.people.filter(x=>!x.member);
+  const tabs=[['nights','Nights',held+'/'+p.nights],['people','People',guests.length],['visits','Visits',q.rows.length],['gifts','Gifts',''],['gate','Table','']];
+  let body='';
+  if(TVIEW==='nights') body=viewNights(p);
+  else if(TVIEW==='people') body=viewPeople(p);
+  else if(TVIEW==='visits') body=viewVisits(p,q);
+  else if(TVIEW==='gifts') body=viewGifts(p,gm);
+  else body=viewGate(p);
+  host.innerHTML=`
+    <div class="phead" style="margin-top:0"><h2>${esc(p.church||'Your church')}</h2><span class="hint">${p.nights} nights from ${pDate(new Date(p.date+'T12:00:00'))}${last>=0?' · week '+(Math.floor(last/p.perweek)+1):''}</span></div>
+    <p class="note" style="margin-top:6px">Records are kept separately from the plan on this device — rebuilding or clearing the plan will not touch them.</p>
+    <div class="tsub">${tabs.map(t=>`<button data-t="${t[0]}" class="${TVIEW===t[0]?'on':''}">${t[1]}${t[2]!==''?' <b>'+t[2]+'</b>':''}</button>`).join('')}</div>
+    ${body}`;
+  host.querySelectorAll('.tsub button').forEach(b=>b.onclick=()=>{TVIEW=b.dataset.t;trackRender();window.scrollTo({top:0,behavior:'smooth'});});
+  wireTrack(p);
+}
+function viewNights(p){
+  const ds=nightDates(p), today=new Date(); today.setHours(23,59,59,0);
+  return `<p class="note" style="margin-bottom:10px">Every meeting date is generated from the plan. Fill each night in as it happens: what was preached, how many came, and what kind of appeal was made. A night with no response opportunity is a different night from one with three.</p>
+  ${ds.map((d,i)=>{ const r=RECS.nights[i]||{}; const done=!!(r.att||r.subject);
+    return `<div class="tnight${done?' done':''}">
+      <div class="tn"><b>${i+1}</b><small>night</small></div>
+      <div>
+        <div class="tdate">${pDate(d)}${d>today?' · ahead':''}</div>
+        <div class="tgrid">
+          <label class="wide"><span>Subject preached</span><input data-n="${i}" data-f="subject" type="text" value="${esc(r.subject||'')}" placeholder="Your title for tonight"></label>
+          <label class="wide"><span>Which decision does it touch</span><select data-n="${i}" data-f="topic">${TOPICS.map(t=>`<option value="${t.id}"${r.topic===t.id?' selected':''}>${t.n}</option>`).join('')}<option value=""${!r.topic?' selected':''}>—</option></select></label>
+          <label><span>Attendance</span><input data-n="${i}" data-f="att" type="number" inputmode="numeric" min="0" value="${r.att!=null?r.att:''}"></label>
+          <label><span>Non-members</span><input data-n="${i}" data-f="non" type="number" inputmode="numeric" min="0" value="${r.non!=null?r.non:''}"></label>
+          <label><span>First-timers</span><input data-n="${i}" data-f="first" type="number" inputmode="numeric" min="0" value="${r.first!=null?r.first:''}"></label>
+          <label><span>Cards returned</span><input data-n="${i}" data-f="cards" type="number" inputmode="numeric" min="0" value="${r.cards!=null?r.cards:''}"></label>
+          <label class="wide"><span>Appeal made</span><select data-n="${i}" data-f="call">${CALLS.map(c=>`<option${(r.call||'—')===c?' selected':''}>${c}</option>`).join('')}</select></label>
+        </div>
+      </div>
+    </div>`;}).join('')}`;
+}
+function viewPeople(p){
+  const gm=giftMarks(p), ds=nightDates(p);
+  if(!RECS.people.length) return `<div class="tbar"><button class="btn" id="t-add">Add the first person</button></div>
+    <div class="tempty">Nobody registered yet. Everyone who comes on the first night fills in a registration form — member or guest — and after that newcomers register at the table. Add them here as the forms come in.</div>`;
+  return `<div class="tbar"><button class="btn" id="t-add">Add a person</button><span class="hint">${RECS.people.filter(x=>!x.member).length} guests · ${RECS.people.filter(x=>x.member).length} members</span></div>
+  ${RECS.people.map((x,i)=>{ const open=TOPEN===i, att=pAtt(x);
+    const b=x.beliefs||{}, cleared=TOPICS.filter(t=>t.id!=='other'&&b[t.id]).length;
+    return `<div class="tperson">
+      <div class="ph" data-open="${i}"><b>${esc(x.name||'(no name)')}</b>${x.member?'<i class="rq" style="font-style:normal;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--ink3)">member</i>':''}<span class="pc">${att} night${att===1?'':'s'}${cleared?' · '+cleared+' cleared':''}${x.worker?' · '+esc(x.worker):''}</span>
+        <div class="pmeta">${esc([x.phone,x.religion,x.kind].filter(Boolean).join(' · '))||'tap to open'}</div></div>
+      ${open?`<div class="pbody">
+        <div class="tgrid">
+          <label class="wide"><span>Name</span><input data-p="${i}" data-f="name" type="text" value="${esc(x.name||'')}"></label>
+          <label><span>Ticket / card no.</span><input data-p="${i}" data-f="ticket" type="text" value="${esc(x.ticket||'')}"></label>
+          <label><span>Age</span><input data-p="${i}" data-f="age" type="text" value="${esc(x.age||'')}"></label>
+          <label><span>Phone</span><input data-p="${i}" data-f="phone" type="tel" value="${esc(x.phone||'')}"></label>
+          <label><span>Email</span><input data-p="${i}" data-f="email" type="email" value="${esc(x.email||'')}"></label>
+          <label class="wide"><span>Address</span><input data-p="${i}" data-f="addr" type="text" value="${esc(x.addr||'')}" placeholder="Street, city, state, zip"></label>
+          <label><span>Church / religion</span><input data-p="${i}" data-f="religion" type="text" value="${esc(x.religion||'')}"></label>
+          <label><span>How they heard</span><input data-p="${i}" data-f="referred" type="text" value="${esc(x.referred||'')}" placeholder="Handbill, friend, group…"></label>
+          <label><span>Lessons completed</span><input data-p="${i}" data-f="sfc" type="number" inputmode="numeric" min="0" value="${x.sfc!=null?x.sfc:''}"></label>
+          <label><span>Assigned worker</span><input data-p="${i}" data-f="worker" type="text" value="${esc(x.worker||'')}" placeholder="One name only"></label>
+          <label class="wide"><span>Interest or prospect — your judgment</span><select data-p="${i}" data-f="kind"><option value=""${!x.kind?' selected':''}>not yet judged</option><option value="interest"${x.kind==='interest'?' selected':''}>interest — making changes</option><option value="prospect"${x.kind==='prospect'?' selected':''}>prospect — debating</option></select></label>
+        </div>
+        <div style="margin-top:10px"><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700">Nights attended</span>
+          <div class="chips">${ds.map((d,ni)=>`<button class="chip sm${(x.att||{})[ni]?' on':''}" data-att="${i}:${ni}" title="${pDate(d)}">${ni+1}</button>`).join('')}</div></div>
+        <div style="margin-top:10px"><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700">Decisions cleared</span>
+          <div class="chips">${TOPICS.filter(t=>t.id!=='other').map(t=>`<button class="chip${b[t.id]?' on':''}" data-bel="${i}:${t.id}">${t.n}</button>`).join('')}</div></div>
+        <div style="margin-top:10px"><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700">Asked for</span>
+          <div class="chips">${[['material','Reading material'],['info','Information'],['visit','A personal visit']].map(r=>`<button class="chip${(x.req||{})[r[0]]?' on':''}" data-req="${i}:${r[0]}">${r[1]}</button>`).join('')}
+            <button class="chip${x.member?' on':''}" data-mem="${i}">Church member</button></div></div>
+        <label style="display:block;margin-top:10px"><span style="font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);font-weight:700">Visitation notes</span>
+          <textarea data-p="${i}" data-f="notes" placeholder="What was said, what to do next">${esc(x.notes||'')}</textarea></label>
+        <div style="margin-top:10px;display:flex;gap:8px"><button class="btn ghost" data-del="${i}">Remove</button></div>
+      </div>`:''}
+    </div>`;}).join('')}`;
+}
+function viewVisits(p,q){
+  if(!q.rows.length) return `<div class="tempty">No visits queued yet. The queue builds itself from the nights and the people — the moment someone has come once and then missed two nights running, they appear here at the top.</div>`;
+  return `<p class="note" style="margin-bottom:10px">Next to preaching, this is the work that decides the series. Ordered the way the book orders interests: those attending regularly first, then literature requests, then decisions, then Bible-school students. When attendance sags, it is almost always this list that has been neglected.</p>
+  ${q.rows.map(r=>`<div class="tvisit${r.urgent?' urgent':''}">
+    <div class="vh"><b>${esc(r.person.name||'(no name)')}</b><i>${esc(r.type)}</i><span class="vw">${r.worker?esc(r.worker):'unassigned'}</span></div>
+    <div class="vd">${esc(r.why)}${r.lit?` <em>Take: ${esc(r.lit)}.</em>`:''}</div>
+    ${r.person.phone?`<div class="vd" style="color:var(--ink3)">${esc(r.person.phone)}${r.person.addr?' · '+esc(r.person.addr):''}</div>`:''}
+  </div>`).join('')}`;
+}
+function viewGifts(p,gm){
+  const rows=RECS.people.map(x=>({x,n:pAtt(x)})).filter(r=>r.n>0).sort((a,b)=>b.n-a.n);
+  const due=(n)=>{const out=[]; if(n>=gm.book)out.push('gift book'); if(n>=gm.bible)out.push('gift Bible'); if(n>=gm.picture)out.push('large picture'); return out;};
+  return `<p class="note" style="margin-bottom:10px">A free lecture copy every night attended. Beyond that the thresholds scale with a ${p.nights}-night series: a gift book at <b>${gm.book}</b> nights, a Bible at <b>${gm.bible}</b>, the large picture at <b>${gm.picture}</b>. A small picture goes to anyone who brings a guest — and one to the guest. Hand this list to the registration table.</p>
+  ${rows.length?rows.map(r=>{const d=due(r.n); return `<div class="tvisit" style="border-left-color:${d.length?'var(--acc)':'var(--line2)'}">
+    <div class="vh"><b>${esc(r.x.name||'(no name)')}</b><span class="vw">${r.n} night${r.n===1?'':'s'}</span></div>
+    <div class="vd">${d.length?'Due: <em>'+d.join(', ')+'</em>':'Nothing due yet — next at '+(r.n<gm.book?gm.book+' nights (book)':r.n<gm.bible?gm.bible+' nights (Bible)':gm.picture+' nights (picture)')+'.'}</div>
+  </div>`;}).join(''):`<div class="tempty">Mark attendance on the People tab and this list builds itself each night.</div>`}`;
+}
+function viewGate(p){
+  const preached=preachedTopics();
+  const rows=Object.keys(GATED).map(k=>({k,n:TOPICS.find(t=>t.id===k).n,ok:preached.has(k)}));
+  return `<p class="note" style="margin-bottom:10px">Nothing goes on the resource table before it has been preached. A visitor who finds a book on the mark of the beast on night three has been handed the hardest truth with none of the groundwork.</p>
+  ${rows.map(r=>`<div class="tvisit" style="border-left-color:${r.ok?'var(--acc)':'#c25b4a'}">
+    <div class="vh"><b>${esc(r.n)}</b><i>${r.ok?'cleared':'hold'}</i></div>
+    <div class="vd">${r.ok?'Preached — '+esc(GATED[r.k])+' may go out.':'Not yet preached. Keep '+esc(GATED[r.k])+' off the table.'}</div>
+  </div>`).join('')}
+  <div class="tvisit" style="border-left-color:var(--line2)"><div class="vh"><b>Everything else</b></div><div class="vd">Christ-centred books, health titles and the lecture copies are always fine. Mark each night's subject on the Nights tab and this gate keeps itself.</div></div>`;
+}
+function wireTrack(p){
+  const host=$('ptrack');
+  host.querySelectorAll('[data-n]').forEach(el=>{
+    const save=()=>{ const i=el.dataset.n, f=el.dataset.f; RECS.nights[i]=RECS.nights[i]||{};
+      RECS.nights[i][f]= (el.type==='number') ? (el.value===''?null:+el.value) : el.value; recsSave(); };
+    el.addEventListener('change',()=>{ save(); if(el.dataset.f==='topic'||el.dataset.f==='att') trackRender(); });
+    el.addEventListener('input',save);
+  });
+  host.querySelectorAll('[data-p]').forEach(el=>{
+    el.addEventListener('input',()=>{ const x=RECS.people[+el.dataset.p], f=el.dataset.f;
+      x[f]= el.type==='number' ? (el.value===''?null:+el.value) : el.value; recsSave(); });
+  });
+  host.querySelectorAll('[data-open]').forEach(el=>el.onclick=()=>{ const i=+el.dataset.open; TOPEN = TOPEN===i?null:i; trackRender(); });
+  host.querySelectorAll('[data-att]').forEach(el=>el.onclick=()=>{ const [i,n]=el.dataset.att.split(':').map(Number);
+    const x=RECS.people[i]; x.att=x.att||{}; x.att[n]=!x.att[n]; recsSave(); trackRender(); });
+  host.querySelectorAll('[data-bel]').forEach(el=>el.onclick=()=>{ const [i,k]=el.dataset.bel.split(':');
+    const x=RECS.people[+i]; x.beliefs=x.beliefs||{}; x.beliefs[k]=!x.beliefs[k]; recsSave(); trackRender(); });
+  host.querySelectorAll('[data-req]').forEach(el=>el.onclick=()=>{ const [i,k]=el.dataset.req.split(':');
+    const x=RECS.people[+i]; x.req=x.req||{}; x.req[k]=!x.req[k]; recsSave(); trackRender(); });
+  host.querySelectorAll('[data-mem]').forEach(el=>el.onclick=()=>{ const x=RECS.people[+el.dataset.mem]; x.member=!x.member; recsSave(); trackRender(); });
+  host.querySelectorAll('[data-del]').forEach(el=>el.onclick=()=>{ if(!confirm('Remove this person and their record?')) return;
+    RECS.people.splice(+el.dataset.del,1); TOPEN=null; recsSave(); trackRender(); });
+  const add=$('t-add'); if(add) add.onclick=()=>{ RECS.people.unshift({name:'',att:{},beliefs:{},req:{}}); TOPEN=0; recsSave(); trackRender();
+    setTimeout(()=>{ const f=host.querySelector('input[data-f="name"]'); if(f) f.focus(); },60); };
+}
+
+
+/* ================= ENLISTMENT =================
+   Step one of any campaign: the members have to be recruited before a roster
+   can be staffed. Two ways in, because Sabbath morning is paper and the rest
+   of the week is a phone:
+     · a printable sheet listing every committee, filled in by hand;
+     · a share link to a public sign-up page that writes straight into the
+       pastor's inbox here.
+   The digital side uses the ministry's existing Firebase project on its own
+   enlist/ path. If it is unreachable the page says so and the paper sheet
+   still works — nothing depends on the network. */
+const FB={apiKey:"AIzaSyDUBDjNkekomVzJ15fRbt4W53fUtmYQ9pc",authDomain:"joshuamura.firebaseapp.com",
+  databaseURL:"https://joshuamura-default-rtdb.firebaseio.com",projectId:"joshuamura",
+  storageBucket:"joshuamura.firebasestorage.app",messagingSenderId:"907772957025",
+  appId:"1:907772957025:web:6671580d9acd9c3aeb7520"};
+let FBDB=null, FBFAIL=null;
+function fbId(p){ return ((p.church||'church').trim().toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')||'church')+'-'+p.date; }
+function loadScript(src){ return new Promise((ok,no)=>{ const t=document.createElement('script'); t.src=src; t.onload=ok; t.onerror=()=>no(new Error('offline')); document.head.appendChild(t); }); }
+async function fbReady(){
+  if(FBDB) return FBDB;
+  if(FBFAIL) throw FBFAIL;
+  try{
+    if(typeof firebase==='undefined'){
+      await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js');
+      await loadScript('https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js');
+    }
+    if(!firebase.apps.length) firebase.initializeApp(FB);
+    FBDB=firebase.database(); return FBDB;
+  }catch(e){ FBFAIL=e; throw e; }
+}
+/* the committees a member can volunteer for — the roster, minus the roles a
+   pastor appoints himself */
+function enlistRoles(p,pl){
+  const fit=planLeaderFit(planLeaderRoles(p,pl),p.leaders);
+  return fit.list.filter(r=>r.g!=='coord'||['materials','platform','music'].some(id=>(r.ids||[r.id]).includes(id)));
+}
+function enlistLink(p){
+  const base=location.href.split('#')[0];
+  return base+'#enlist='+encodeURIComponent(fbId(p));
+}
+
+/* ---- the pastor's side: sheet, link, inbox ---- */
+function enlistSection(p,pl){
+  const roles=enlistRoles(p,pl), link=enlistLink(p);
+  const D=new Date(p.date+'T12:00:00'), chairs=addMonths(D,-4);
+  return `<div class="phead"><h2>Enlist the church</h2><span class="hint">${roles.length} committees open · chairs by ${pDate(chairs)}</span></div>
+    <p class="note" style="margin-top:6px">Before a roster can be staffed the members have to be asked. Print the sheet for Sabbath morning, and send the link to everyone who would rather sign up on their phone. Both land in the same place.</p>
+    <div class="tbar" style="margin-top:12px">
+      <button class="btn" id="en-print">Print the sign-up sheet</button>
+      <button class="btn ghost" id="en-copy">Copy the sign-up link</button>
+      <button class="btn ghost" id="en-refresh">Check for sign-ups</button>
+      <span class="hint" id="en-msg"></span>
+    </div>
+    <div id="en-inbox"></div>
+    <div id="printsheet" class="sheet">
+      <h3>${esc(p.church||'Our church')} — evangelistic series sign-up</h3>
+      <div class="sub">Opening night ${pDate(D)} · ${p.nights} nights. Every member has a place in this. Tick every committee you are willing to serve on, and hand this back today.</div>
+      <div class="ll">Name</div><div class="ln"></div>
+      <div class="ll">Phone</div><div class="ln"></div>
+      <div class="ll">Email</div><div class="ln"></div>
+      <div class="ll" style="margin-top:6px">I am willing to serve on</div>
+      <ul>${roles.map(r=>`<li>${esc(r.n)}</li>`).join('')}</ul>
+      <div class="ll" style="margin-top:8px">I could also help with</div><div class="ln"></div>
+      <div style="font-size:.78rem;color:#555;margin-top:6px">Or sign up from your phone: ${esc(link)}</div>
+    </div>`;
+}
+function enlistWire(p,pl){
+  const msg=$('en-msg');
+  const pr=$('en-print'); if(pr) pr.onclick=()=>{ document.body.dataset.print='sheet'; window.print(); setTimeout(()=>delete document.body.dataset.print,600); };
+  const cp=$('en-copy'); if(cp) cp.onclick=async()=>{
+    const link=enlistLink(p);
+    try{ await navigator.clipboard.writeText(link); msg.textContent='Link copied.'; }
+    catch(e){ msg.textContent=link; }
+  };
+  const rf=$('en-refresh'); if(rf) rf.onclick=()=>enlistInbox(p,pl,true);
+  enlistInbox(p,pl,false);
+}
+async function enlistInbox(p,pl,loud){
+  const host=$('en-inbox'), msg=$('en-msg'); if(!host) return;
+  if(loud) msg.textContent='Checking…';
+  let subs=[];
+  try{
+    const db=await fbReady();
+    const snap=await db.ref('enlist/'+fbId(p)).limitToLast(300).once('value');
+    subs=Object.entries(snap.val()||{}).map(([k,v])=>({k,...v})).sort((a,b)=>(b.ts||0)-(a.ts||0));
+    if(loud) msg.textContent=subs.length?subs.length+' sign-up'+(subs.length>1?'s':'')+'.':'No sign-ups yet.';
+  }catch(e){
+    host.innerHTML=`<div class="tempty">Digital sign-ups are not reachable right now — the printed sheet still works, and you can type names straight into the roster. ${loud?'<br><span style="color:var(--ink3);font-size:.8rem">('+esc((e&&e.message)||'offline')+')</span>':''}</div>`;
+    if(loud) msg.textContent='';
+    return;
+  }
+  if(!subs.length){ host.innerHTML=`<div class="tempty">No sign-ups yet. Send the link, or type the names from the printed sheets into the roster below.</div>`; return; }
+  const roles=enlistRoles(p,pl);
+  const nameOf=id=>{const r=roles.find(x=>(x.ids||[x.id]).includes(id)); return r?r.n:id;};
+  host.innerHTML=subs.map(v=>`<div class="signup">
+    <div class="sh"><b>${esc(v.name||'(no name)')}</b><span>${esc(v.when||'')}</span></div>
+    <div class="sr">${esc([v.phone,v.email].filter(Boolean).join(' · '))}</div>
+    <div class="sr">Willing to serve: <em>${(v.roles||[]).map(id=>esc(nameOf(id))).join(', ')||'anything needed'}</em></div>
+    ${v.note?`<div class="sr" style="color:var(--ink3)">${esc(v.note)}</div>`:''}
+  </div>`).join('');
+}
+
+/* ---- the member's side: the public page ---- */
+async function enlistPublic(id){
+  document.querySelectorAll('.top,.hub,.toolbar,.secnav,.report,.ask,.gate,#planner,footer').forEach(el=>{ if(el) el.hidden=true; });
+  const host=$('enlistpage'); host.hidden=false;
+  host.innerHTML=`<div class="card2"><p class="lead">Loading the sign-up…</p></div>`;
+  let meta=null;
+  try{ const db=await fbReady(); const s=await db.ref('enlistmeta/'+id).once('value'); meta=s.val(); }catch(e){}
+  if(!meta){ host.innerHTML=`<h1>Sign-up not found</h1><p class="lead">This link may be out of date. Ask your pastor for a current one, or sign the printed sheet at church.</p>`; return; }
+  const roles=meta.roles||[];
+  let picked=new Set();
+  host.innerHTML=`
+    <h1>${esc(meta.church||'Our church')} — I want to help</h1>
+    <p class="lead">Opening night ${esc(meta.dateLabel||'')}${meta.nights?' · '+meta.nights+' nights':''}. Every member has a place in this series. Tick everything you are willing to serve on — the pastor will follow up with you.</p>
+    <div class="card2">
+      <label class="fl"><span>Your name</span><input id="en-name" type="text" autocomplete="name"></label>
+      <label class="fl"><span>Phone</span><input id="en-phone" type="tel" autocomplete="tel"></label>
+      <label class="fl"><span>Email (optional)</span><input id="en-email" type="email" autocomplete="email"></label>
+    </div>
+    <div class="card2">
+      <span style="font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;color:var(--ink3)">I am willing to serve on</span>
+      <div class="pick" id="en-pick">${roles.map(r=>`<button type="button" data-r="${esc(r.id)}"><span class="bx"></span><span><b>${esc(r.n)}</b><small>${esc(r.d||'')}</small></span></button>`).join('')}</div>
+    </div>
+    <div class="card2">
+      <label class="fl"><span>Anything else you could help with</span><textarea id="en-note" rows="2" placeholder="A skill, a language, a vehicle, a home to host in…"></textarea></label>
+      <div id="en-err" class="err" style="min-height:1.2em"></div>
+      <button class="btn" id="en-send">Sign me up</button>
+      <p class="note" style="margin-top:10px">Your details go to your pastor for this series only.</p>
+    </div>`;
+  host.querySelectorAll('#en-pick button').forEach(b=>b.onclick=()=>{
+    const r=b.dataset.r; if(picked.has(r)) picked.delete(r); else picked.add(r);
+    b.classList.toggle('on',picked.has(r));
+  });
+  $('en-send').onclick=async()=>{
+    const name=$('en-name').value.trim(), phone=$('en-phone').value.trim(), email=$('en-email').value.trim(), note=$('en-note').value.trim();
+    const err=$('en-err'), btn=$('en-send');
+    if(!name){ err.textContent='Please add your name.'; $('en-name').focus(); return; }
+    if(!phone&&!email){ err.textContent='A phone or an email, so the pastor can reach you.'; $('en-phone').focus(); return; }
+    btn.textContent='Sending…'; btn.disabled=true; err.textContent='';
+    try{
+      const db=await fbReady();
+      await db.ref('enlist/'+id).push({name,phone,email,note,roles:[...picked],when:new Date().toLocaleString(),ts:Date.now()});
+      host.innerHTML=`<h1>Thank you, ${esc(name.split(' ')[0])}.</h1>
+        <p class="lead">Your name is with the pastor. He will be in touch about ${picked.size?'the committee'+(picked.size>1?'s':'')+' you chose':'where you can help'} before the series begins.</p>
+        <div class="card2"><p style="line-height:1.6">“Every church member should be engaged in some line of service for the Master.” There is a place in this for everyone — thank you for taking yours.</p></div>`;
+      window.scrollTo({top:0,behavior:'smooth'});
+    }catch(e){
+      err.textContent='Could not send — check your connection, or sign the sheet at church.';
+      btn.textContent='Sign me up'; btn.disabled=false;
+    }
+  };
+}
+/* the pastor publishes the committee list so the public page can read it */
+async function enlistPublish(p,pl){
+  try{
+    const db=await fbReady(), roles=enlistRoles(p,pl);
+    await db.ref('enlistmeta/'+fbId(p)).set({church:p.church||'',dateLabel:pDate(new Date(p.date+'T12:00:00')),nights:p.nights,
+      roles:roles.map(r=>({id:(r.ids||[r.id])[0],n:r.n,d:(r.d||'').replace(/<[^>]+>/g,'')})),ts:Date.now()});
+  }catch(e){}
+}
+
+
+/* ---- the whole plan as one printable document ---- */
+function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName){
+  const D=new Date(p.date+'T12:00:00'), close=phases.find(x=>x.tag==='series').end;
+  const money=x=>p.budget?'$'+Math.round(p.budget*x).toLocaleString():Math.round(x*100)+'%';
+  const place=pl?(()=>{const w=placeWords(pl); return `<p>${esc(pl.name)}${pl.town?', '+esc(pl.town):''}${pl.county?' · '+esc(pl.county):''}. ${w.length?'Marked by '+w.join(', ')+'.':'A settled, mixed neighborhood.'} About ${pl.hh.toLocaleString()} households in the blocks to reach first.${pl.denoms.length?' Nearest churches are mostly '+pl.denoms.join(' and ')+'.':''}</p>`;})():'<p>No community survey has been run for this church yet, so the neighborhood has not shaped this plan.</p>';
+  const strip=h=>(h||'').replace(/<[^>]+>/g,'');
+  return `<div id="plandoc" class="pdoc">
+    <h1>${esc(p.church||'Our church')} — evangelistic plan</h1>
+    <div class="dsub">${esc(kindName)} series · ${p.nights} nights, ${p.perweek} a week · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
+    <div class="dgrid">
+      <div class="dk"><b>${p.members}</b><span>active members</span></div>
+      <div class="dk"><b>${fit.need}</b><span>roles to lead (${p.leaders} leaders)</span></div>
+      <div class="dk"><b>${T.prereg}</b><span>pre-registrations wanted</span></div>
+      <div class="dk"><b>${p.budget?'$'+p.budget.toLocaleString():'—'}</b><span>budget</span></div>
+    </div>
+    <h2>The field</h2>${place}
+    <h2>What we are aiming at</h2>
+    <ul>
+      <li>Outreach attendance of <b>${T.outreach.toLocaleString()}</b> this year — three times our membership.</li>
+      <li><b>${T.prayerLo.toLocaleString()}–${T.prayerHi.toLocaleString()}</b> names on member prayer lists, three to five each, prayed for daily.</li>
+      <li><b>${T.studies}</b> Bible studies running before opening night, at least one per lay instructor.</li>
+      <li><b>${T.groups}</b> home Bible groups with about <b>${T.guests}</b> guests.</li>
+      <li><b>${T.prereg}</b> pre-registrations in hand — half the ${p.seats} seats filled before a single advertisement is counted.</li>
+      ${T.hh?`<li><b>${T.hh.toLocaleString()}</b> households reached with literature, worked by <b>${T.pairs}</b> visiting pairs.</li>`:''}
+    </ul>
+    <h2 class="pg">The countdown</h2>
+    <table><thead><tr><th style="width:26%">When</th><th>What happens</th></tr></thead><tbody>
+    ${phases.map(ph=>`<tr class="keep"><td class="dt"><b>${esc(ph.name)}</b><br>${pDate(ph.start)} –<br>${pDate(ph.end)}</td>
+      <td><ul>${ph.items.filter(i=>!i.plain).map(i=>`<li>${strip(i.t)}</li>`).join('')}</ul>
+      <p style="margin-top:5px;color:#555"><b>Benchmark:</b> ${strip(ph.bench)}</p></td></tr>`).join('')}
+    </tbody></table>
+    <h2 class="pg">Who does what</h2>
+    <p class="dsub" style="margin-bottom:6px">Chairpersons to be chosen by ${pDate(addMonths(D,-4))}, four months before opening night.</p>
+    <table><thead><tr><th style="width:34%">Role</th><th style="width:24%">Name</th><th>Responsibility</th></tr></thead><tbody>
+    ${fit.list.map(r=>`<tr class="keep"><td><b>${esc(r.n)}</b>${r.core?' <span style="font-size:.62rem;color:#555">CORE</span>':''}</td>
+      <td>${esc(roster[r.id]||'—')}</td><td>${strip(r.d)}</td></tr>`).join('')}
+    </tbody></table>
+    <h2 class="pg">Where the hall fills from</h2>
+    <table><thead><tr><th style="width:32%">Stream</th><th style="width:14%">Target</th><th>Who and when</th></tr></thead><tbody>
+    ${ST.rows.map(r=>`<tr class="keep"><td><b>${esc(r.n)}</b></td><td>${r.target!=null?r.target.toLocaleString():'—'}</td>
+      <td>${esc(r.who)} · ${esc(r.when)}<br><span style="color:#555">${esc(r.note)}</span></td></tr>`).join('')}
+    </tbody></table>
+    <h2 class="pg">The budget</h2>
+    <p class="dsub" style="margin-bottom:6px">Thirty percent on pre-work, fifty on the meetings, twenty on keeping what is won — spread across the nine months before opening night.</p>
+    ${BU.map(b=>`<div class="keep"><h3>${esc(b.n)}${b.share!=null?' — '+money(b.share):''}</h3>
+      ${b.note?`<p style="color:#555">${esc(b.note)}</p>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}
+    <p style="margin-top:10px;color:#555">It is not the size of the budget that decides the harvest. It is how many interests the members create before the meetings, and how wisely the money is placed.</p>
+    <div class="sig"><div>Pastor</div><div>Church board · date</div></div>
+  </div>`;
+}
+
 function wireHub(){
   document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));
   const back=$('backtools'); if(back) back.onclick=showHub;
@@ -4330,7 +5478,14 @@ function showWho(){
     try{ location.reload(); }catch(e){}
   };
 }
+function enlistRoute(){
+  const m=(location.hash||'').match(/^#enlist=(.+)$/);
+  if(!m) return false;
+  enlistPublic(decodeURIComponent(m[1]));
+  return true;
+}
 async function initAccess(){
+  if(enlistRoute()) return;
   ACCESS=await checkAccess();
   ACCESS_CHECKED=true;
   if(ACCESS.required&&!ACCESS.ok){
@@ -4903,8 +6058,26 @@ $('ver').textContent=VERSION;
   const h=new URLSearchParams(location.hash.slice(1));
   const runPermalink=()=>{
     if(ACCESS.required && !ACCESS.ok) return;
-    let want='survey';
-    try{ const t=sessionStorage.getItem('terrain-tool'); if(t&&TOOLS[t]) want=t; sessionStorage.removeItem('terrain-tool'); }catch(e){}
+    // Three cases, and they are different:
+    //   key absent  → a fresh visit or a shared permalink: open the survey
+    //   key = 'case'→ our own reload from inside a tool: go back to that tool
+    //   key = ''    → our own reload from the hub: stay on the hub, open nothing
+    let want='survey', hadKey=false;
+    try{
+      const t=sessionStorage.getItem('terrain-tool');
+      hadKey = t!==null;
+      if(t&&TOOLS[t]) want=t; else if(hadKey) want=null;
+      sessionStorage.removeItem('terrain-tool');
+    }catch(e){}
+    if(want===null){
+      // He was on the hub. Reload the figures quietly so the tools are ready the
+      // moment he taps one, but put him back on the hub rather than in a report.
+      if(key()&&h.get('a')){ $('addr').value=h.get('a');
+        run(()=>geocodeAddress(h.get('a'))).then(()=>showHub()).catch(()=>showHub()); }
+      else if(key()&&h.get('ll')){ const [la,lo]=h.get('ll').split(',').map(Number);
+        if(!isNaN(la)) run(()=>geocodePoint(lo,la)).then(()=>showHub()).catch(()=>showHub()); }
+      return;
+    }
     if(h.get('a')){ $('addr').value=h.get('a'); if(key()){ if(!TOOL&&!FLAT) openTool(want); run(()=>geocodeAddress(h.get('a'))); } }
     else if(h.get('ll')){ const [la,lo]=h.get('ll').split(',').map(Number);
       if(key()&&!isNaN(la)){ if(!TOOL&&!FLAT) openTool(want); run(()=>geocodePoint(lo,la)); } }
