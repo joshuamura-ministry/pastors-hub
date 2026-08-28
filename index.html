@@ -314,6 +314,13 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .askrow b{font-family:var(--disp);font-size:1.5rem;font-weight:700;color:var(--ink);flex:none;min-width:2.2em;line-height:1.1}
 .askrow span{font-size:.84rem;color:var(--ink2);line-height:1.55}
 .askrow span b{font-family:inherit;font-size:inherit;display:inline;min-width:0;color:var(--ink)}
+.verdict{display:flex;gap:10px;align-items:baseline;margin-top:11px;padding:10px 12px;border-radius:10px;border:1px solid var(--line)}
+.verdict b{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;flex:none}
+.verdict span{font-size:.83rem;line-height:1.55;color:var(--ink2)}
+.v-ok{background:rgba(46,160,90,.07);border-color:rgba(46,160,90,.35)}.v-ok b{color:#2ea05a}
+.v-warn{background:rgba(200,140,20,.08);border-color:rgba(200,140,20,.38)}.v-warn b{color:#c88c14}
+.v-stop{background:rgba(200,60,60,.07);border-color:rgba(200,60,60,.35)}.v-stop b{color:#c83c3c}
+.askbox{margin-bottom:14px}
 .asknote{font-size:.79rem;color:var(--ink3);line-height:1.55;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
 .suggroup{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden}
 .suggroup>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;min-height:56px;
@@ -950,13 +957,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.8</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.9</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v7.8';
+const VERSION = 'v7.9';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2416,9 +2423,44 @@ function mobilizeRoles(tags){
 }
 /* Rough arithmetic a pastor can sanity-check, not a projection. */
 function mobilizeMath(M,zones){
+  /* What the neighbourhood needs, before anyone asks whether the church can
+     supply it: reach one home in ten with a personal visit over about two
+     months, at eight addresses per pair per round, four rounds. */
   const hh=(zones&&zones.top&&zones.top[0]&&zones.top[0].m.pop)?Math.round(zones.top[0].m.pop/2.6):(M.tract.hh||0);
-  const pairs=Math.max(2,Math.round(hh*0.10/8/4));
-  return {hh,pairs,visits:pairs*8};
+  const target=Math.round(hh*0.10);
+  const pairs=Math.max(2,Math.round(target/8/4));
+  return {hh,target,pairs,people:pairs*2,visits:pairs*8};
+}
+
+/* Demand is only half a plan. This is the other half: what the congregation
+   can actually field, read from the Evangelism Planner if the pastor has
+   built a countdown. Without it the survey states a number with no idea
+   whether it is trivial or impossible for this church — which is how "34
+   members" ends up on screen in front of a congregation of twenty-five. */
+function congregationFit(MM){
+  let p=null; try{ p=PLAN||planGet(); }catch(e){}
+  if(!p||!p.members) return {known:false, MM};
+  const members=p.members, workers=Math.min(p.workers||0,members), leaders=Math.min(p.leaders||0,members);
+  const need=MM.people;
+  const perPair=32;                                  // 8 addresses × 4 rounds
+  const canPairs=Math.floor(workers/2);
+  const canReach=canPairs*perPair;
+  const share=Math.round(need/members*100);
+  let verdict, detail, scope=null;
+  if(workers>=need){
+    verdict='within reach';
+    detail=`Your ${workers} willing workers cover this with ${workers-need} to spare. The constraint here is not people — it is training and follow-through.`;
+  } else if(members>=need){
+    verdict='needs recruiting';
+    detail=`This asks ${need} of your ${members} members — ${share}% of the congregation — but only ${workers} have said they are willing. ${need-workers} more must be enlisted, or the target narrowed.`;
+    scope=canReach;
+  } else {
+    verdict='beyond this congregation';
+    detail=`This block needs ${need} people on the doors and the church has ${members} members in total. It cannot be done at one home in ten. Narrow the ground rather than exhaust the church.`;
+    scope=canReach;
+  }
+  return {known:true,members,workers,leaders,need,share,canPairs,canReach,verdict,detail,scope,MM,
+    ratio: canReach&&MM.target?Math.max(1,Math.round(MM.hh/canReach)):null};
 }
 
 /* ================= WHAT THEY TEACH =================
@@ -6497,17 +6539,9 @@ function render(){
     <div id="aislot"></div>
   </section>`);
 
-  const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES);
+  const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>${verseHTML('mobilize')}${egwHTML('mobilize')}
     <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.</p>
-
-    <div class="askbox">
-      <div class="askl">What this neighbourhood asks of your congregation</div>
-      <div class="askrow"><b>${MM.pairs*2}</b><span>members, working in <b>${MM.pairs} pairs</b>, to put a personal visit into one home in ten across the ${fmtNum(MM.hh)} households of your densest block — eight visits each, over about two months</span></div>
-      <div class="askrow"><b>${RL.length}</b><span>distinct roles, ranked below against what this tract actually looks like rather than a standard list${RL.length>3?` — the three at the top (${RL.slice(0,3).map(r=>esc(r.n.toLowerCase())).join(', ')}) carry any campaign anywhere; the rest are here because of what the numbers said`:''}</span></div>
-      <div class="askrow"><b>6</b><span>weeks to take a member from watching to leading a study, using the ladder below — nobody needs to know everything, only to stay one lesson ahead</span></div>
-      <div class="asknote">${MM.pairs*2} people is usually a smaller number than a board fears. Name it out loud before anyone estimates it in their head.</div>
-    </div>
 
     <details class="suggroup mgroup">
       <summary class="sugcat"><span class="sgt">Talking to people who are not Adventists</span><span class="sgn">${SPEAK.length} phrases · ${HONESTY.length} rules</span><i class="chev"></i></summary>
@@ -6524,17 +6558,26 @@ function render(){
     </details>
 
     <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">Roles this neighbourhood actually needs</span><span class="sgn">${RL.length} roles</span><i class="chev"></i></summary>
+      <summary class="sugcat"><span class="sgt">What this neighbourhood asks of your congregation</span><span class="sgn">${FIT.known?FIT.need+' of '+FIT.members:RL.length+' roles'}</span><i class="chev"></i></summary>
       <div class="sgbody">
+    <div class="askbox">
+      <div class="askl">The ask, in numbers</div>
+      <div class="askrow"><b>${fmtNum(MM.target)}</b><span>homes to reach — one in ten of the ${fmtNum(MM.hh)} households in your densest block, visited personally over about two months</span></div>
+      <div class="askrow"><b>${MM.people}</b><span>members on the doors, working as <b>${MM.pairs} pairs</b>, at eight addresses each per round, four rounds</span></div>
+      ${FIT.known?`<div class="askrow"><b>${FIT.share}%</b><span>of your ${FIT.members}-member congregation — you have <b>${FIT.workers}</b> willing workers and <b>${FIT.leaders}</b> who can lead a team</span></div>
+      <div class="verdict v-${FIT.verdict==='within reach'?'ok':FIT.verdict==='needs recruiting'?'warn':'stop'}">
+        <b>${esc(FIT.verdict)}</b><span>${esc(FIT.detail)}</span></div>
+      ${FIT.scope!=null?`<div class="asknote"><b>The honest alternative.</b> ${FIT.workers} workers make ${FIT.canPairs} pairs, and ${FIT.canPairs} pairs can cover about <b>${fmtNum(FIT.canReach)}</b> homes properly in the same two months. That is one home in ${FIT.ratio} rather than one in ten. Pick the ${fmtNum(FIT.canReach)} densest addresses and visit them well, rather than spreading ${FIT.workers} people over ${fmtNum(MM.target)} doors and doing none of it properly.</div>`:`<div class="asknote">A visit that is made and never followed up is worse than one never made. Size the ground to the people you actually have.</div>`}`
+      :`<div class="asknote"><b>Terrain does not know your congregation yet.</b> This is what the neighbourhood needs — not what your church can field. Open the <b>Evangelism Planner</b> and enter your membership, your willing workers and the people who can lead a team, and this section will tell you whether ${MM.people} is comfortable, a stretch, or out of reach, and what to do about it either way.</div>`}
+    </div>
     <div id="planprog"></div>
-    <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
+    <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". The ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
     <div class="note" style="display:none"> Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
     ${RL.map((r,ri)=>`<div class="role" data-role="${ri}"><h4>${esc(r.n)}</h4>
       <div class="rw"><b>Who</b>${esc(r.who)}</div>
       <div class="rw"><b>First step</b>${esc(r.first)}</div>
       <div class="rw"><b>Training</b>${esc(r.train)}</div>
     </div>`).join('')}
-    <div class="card wide note" style="min-height:0">Rough arithmetic for hotspot 1: about <b>${fmtNum(MM.hh)}</b> households. Reaching one in ten of them with a personal visit over two months takes roughly <b>${MM.pairs} pairs</b> doing eight visits each — ${MM.pairs*2} members in all.</div>
       </div>
     </details>
 
