@@ -287,12 +287,11 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .focusbar button.all{border-style:dashed}
 .focusnote{font-size:.78rem;color:var(--ink3);margin-top:8px}
 .focusnote a{color:var(--ink2);text-decoration:underline}
-.stagehead{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin:30px 0 11px;
-  padding-top:14px;border-top:1px solid var(--line)}
+.stagehead{display:flex;align-items:center;gap:10px;margin:0;padding:14px 15px;min-height:56px;border:none}
+.stagehead b{flex:1;min-width:0}
 .stagenum{width:25px;height:25px;border-radius:50%;background:var(--acc);color:var(--btn-ink);font-weight:700;font-size:.82rem;
   display:flex;align-items:center;justify-content:center;flex:none}
 .stagehead b{font-family:var(--disp);font-size:1.02rem;font-weight:600;color:var(--ink)}
-.stageblurb{flex-basis:100%;font-size:.79rem;color:var(--ink3);line-height:1.55}
 .ckey{display:flex;gap:14px;font-size:.76rem;color:var(--ink2);margin-bottom:8px;flex-wrap:wrap}
 .ckey i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:0}
 .chart{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:14px}
@@ -308,6 +307,14 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
 .catintro{margin-top:30px}
+.askbox{background:linear-gradient(180deg,var(--acc-dim),transparent 70%),var(--panel);border:1px solid var(--acc);
+  border-radius:var(--r);padding:15px 16px;margin-bottom:16px}
+.askl{font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:10px}
+.askrow{display:flex;gap:12px;align-items:baseline;margin-bottom:9px}
+.askrow b{font-family:var(--disp);font-size:1.5rem;font-weight:700;color:var(--ink);flex:none;min-width:2.2em;line-height:1.1}
+.askrow span{font-size:.84rem;color:var(--ink2);line-height:1.55}
+.askrow span b{font-family:inherit;font-size:inherit;display:inline;min-width:0;color:var(--ink)}
+.asknote{font-size:.79rem;color:var(--ink3);line-height:1.55;margin-top:10px;padding-top:9px;border-top:1px solid var(--line)}
 .suggroup{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden}
 .suggroup>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:14px 16px;min-height:56px;
   -webkit-tap-highlight-color:transparent}
@@ -483,16 +490,18 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .movehead b::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
 .movehead span{font-size:.8rem;color:var(--ink3);line-height:1.5;display:block}
 .move{background:linear-gradient(180deg,rgba(76,154,255,.06),transparent 60%),linear-gradient(180deg,var(--panel2),var(--panel));
-  border:1px solid var(--line2);border-radius:var(--r);margin-bottom:9px;overflow:hidden}
-.move>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:9px;padding:13px 15px;min-height:48px;
-  -webkit-tap-highlight-color:transparent}
-.move>summary::-webkit-details-marker{display:none}
-.move>summary:hover{background:rgba(127,127,127,.05)}
-.move>summary:focus-visible{outline:2px solid var(--acc);outline-offset:-2px;border-radius:var(--r)}
+  border:1px solid var(--line2);border-radius:var(--r);padding:15px 16px;margin-bottom:9px}
 .move .mk{margin-bottom:7px}
-.move h4{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--ink);margin:0;flex:1;min-width:0;line-height:1.35}
-.move .mbody{padding:0 15px 15px}
-.move[open]>summary{padding-bottom:9px}
+.move h4{font-family:var(--disp);font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:5px}
+.stage{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin-bottom:10px;box-shadow:var(--shadow);overflow:hidden}
+.stage>summary{list-style:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.stage>summary::-webkit-details-marker{display:none}
+.stage>summary:hover{background:rgba(127,127,127,.05)}
+.stage>summary:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.stage[open]>summary{border-bottom:1px solid var(--line)}
+.stage .stagebody{padding:13px 14px 14px}
+.stage .stageblurb{font-size:.82rem;color:var(--ink3);line-height:1.55;margin-bottom:12px}
+.stagen{font-size:.72rem;color:var(--ink3);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:2px 9px;flex:none}
 .chev{flex:none;width:9px;height:9px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);
   transform:rotate(45deg);transition:transform .18s ease;margin-top:-4px}
 details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
@@ -941,13 +950,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.7</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v7.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v7.7';
+const VERSION = 'v7.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -6313,7 +6322,9 @@ function applyFocus(){
     sec.classList.toggle('hidden',!keep);
     if(!keep) hiddenSec++;
   });
-  document.querySelectorAll('#sections .suggroup').forEach(g=>{
+  // Only the strategy groups carry data-cat; the mobilize panels share the
+  // class for styling but are not categories and must never be filtered out.
+  document.querySelectorAll('#sections .suggroup[data-cat]').forEach(g=>{
     const keep = !on || cats.has(g.dataset.cat);
     g.classList.toggle('hidden',!keep);
     const n=g.querySelectorAll('.sug').length;
@@ -6443,18 +6454,22 @@ function render(){
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
-        <span>Matched to this tract’s profile and sequenced the way a campaign actually works: open a door, build trust, go deeper, then invite a decision. Tap any move to read what it is and why it suits these streets. A different neighbourhood produces a different list — and a different order of work.</span></div>
+        <span>Matched to this tract’s profile and sequenced the way a campaign actually works: open a door, build trust, go deeper, then invite a decision. Tap a stage to open the moves inside it. A different neighbourhood produces a different list — and a different order of work.</span></div>
       ${['open','trust','deeper','decide'].map(st=>{
         const set=SG.moves.filter(x=>x.stage===st); if(!set.length) return '';
-        return `<div class="stagehead"><span class="stagenum">${STAGE[st].n}</span><b>${esc(STAGE[st].label)}</b><span class="stageblurb">${esc(STAGE[st].blurb)}</span></div>`+
-        set.map(x=>`<details class="move">
-        <summary><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><h4>${esc(x.n)}</h4><i class="chev"></i></summary>
-        <div class="mbody">
-          <p>${esc(x.d)}</p>
-          <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
-          <div class="tags"><span>${esc(x.c)}</span><span>With: ${esc(x.p)}</span></div>
-        </div>
-      </details>`).join('');
+        return `<details class="stage">
+          <summary class="stagehead"><span class="stagenum">${STAGE[st].n}</span><b>${esc(STAGE[st].label)}</b><span class="stagen">${set.length} move${set.length===1?'':'s'}</span><i class="chev"></i></summary>
+          <div class="stagebody">
+          <p class="stageblurb">${esc(STAGE[st].blurb)}</p>
+          ${set.map(x=>`<div class="move">
+            <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span></div>
+            <h4>${esc(x.n)}</h4>
+            <p>${esc(x.d)}</p>
+            <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
+            <div class="tags"><span>${esc(x.c)}</span><span>With: ${esc(x.p)}</span></div>
+          </div>`).join('')}
+          </div>
+        </details>`;
       }).join('')}
       <div class="profiletags">This neighbourhood reads as: ${displayTags(SG.tags).map(t=>`<span>${esc(t)}</span>`).join('')}</div>
     </div>`:''}
@@ -6486,7 +6501,17 @@ function render(){
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>${verseHTML('mobilize')}${egwHTML('mobilize')}
     <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.</p>
 
-    <div class="sugcat">Talking to people who are not Adventists</div>
+    <div class="askbox">
+      <div class="askl">What this neighbourhood asks of your congregation</div>
+      <div class="askrow"><b>${MM.pairs*2}</b><span>members, working in <b>${MM.pairs} pairs</b>, to put a personal visit into one home in ten across the ${fmtNum(MM.hh)} households of your densest block — eight visits each, over about two months</span></div>
+      <div class="askrow"><b>${RL.length}</b><span>distinct roles, ranked below against what this tract actually looks like rather than a standard list${RL.length>3?` — the three at the top (${RL.slice(0,3).map(r=>esc(r.n.toLowerCase())).join(', ')}) carry any campaign anywhere; the rest are here because of what the numbers said`:''}</span></div>
+      <div class="askrow"><b>6</b><span>weeks to take a member from watching to leading a study, using the ladder below — nobody needs to know everything, only to stay one lesson ahead</span></div>
+      <div class="asknote">${MM.pairs*2} people is usually a smaller number than a board fears. Name it out loud before anyone estimates it in their head.</div>
+    </div>
+
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">Talking to people who are not Adventists</span><span class="sgn">${SPEAK.length} phrases · ${HONESTY.length} rules</span><i class="chev"></i></summary>
+      <div class="sgbody">
     <div class="strat"><b>The principle</b>Say plainly who you are, early and in the open — and say it without insider vocabulary. Hiding the name until the last night of a series costs more than it ever gains. Using words only members understand quietly tells a visitor they are outside.</div>
     <div class="card wide" style="min-height:0">
       <table class="speak"><thead><tr><th>Instead of</th><th>Say</th></tr></thead><tbody>
@@ -6495,8 +6520,12 @@ function render(){
     </div>
     <div class="card wide" style="min-height:0"><div class="l" style="margin-bottom:8px">Six rules for public communication</div>
       <ul class="plain">${HONESTY.map(h=>`<li>${esc(h)}</li>`).join('')}</ul></div>
+      </div>
+    </details>
 
-    <div class="sugcat">Roles this neighbourhood actually needs</div>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">Roles this neighbourhood actually needs</span><span class="sgn">${RL.length} roles</span><i class="chev"></i></summary>
+      <div class="sgbody">
     <div id="planprog"></div>
     <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
     <div class="note" style="display:none"> Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
@@ -6505,19 +6534,32 @@ function render(){
       <div class="rw"><b>First step</b>${esc(r.first)}</div>
       <div class="rw"><b>Training</b>${esc(r.train)}</div>
     </div>`).join('')}
-    <div class="card wide note" style="min-height:0">Rough arithmetic for hotspot 1: about <b>${fmtNum(MM.hh)}</b> households. Reaching one in ten of them with a personal visit over two months takes roughly <b>${MM.pairs} pairs</b> doing eight visits each. That is ${MM.pairs*2} members — a number worth naming out loud at a board meeting, because it is usually smaller than people fear.</div>
+    <div class="card wide note" style="min-height:0">Rough arithmetic for hotspot 1: about <b>${fmtNum(MM.hh)}</b> households. Reaching one in ten of them with a personal visit over two months takes roughly <b>${MM.pairs} pairs</b> doing eight visits each — ${MM.pairs*2} members in all.</div>
+      </div>
+    </details>
 
-
-    <div class="sugcat">Getting members off the pew — step by step</div>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">Getting members off the pew — step by step</span><span class="sgn">the sequence</span><i class="chev"></i></summary>
+      <div class="sgbody">
     <div class="strat"><b>The principle</b>Most members are not unwilling; they are unasked and untrained. This is the path from a congregation that watches to one that works. Tap through the steps — each has what to do, the words that work, and what comes next.</div>
     <div class="stepper" id="stepper"></div>
+      </div>
+    </details>
 
-    <div class="sugcat">The ladder: from watching to leading in six weeks</div>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">The ladder: from watching to leading in six weeks</span><span class="sgn">${LADDER.length} rungs</span><i class="chev"></i></summary>
+      <div class="sgbody">
     <div class="strat"><b>The principle</b>Nobody needs to know all the lessons. They need to be one lesson ahead of the person they are studying with. The pastor’s job is not to give every study — it is to take somebody with them to every study.</div>
     <div class="card wide" style="min-height:0"><ol class="ladder">${LADDER.map(l=>`<li><b>${esc(l.n)}</b><span>${esc(l.d)}</span></li>`).join('')}</ol></div>
+      </div>
+    </details>
 
-    <div class="sugcat">What members will say, and what to answer</div>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">What members will say, and what to answer</span><span class="sgn">${OBJECTIONS.length} objections</span><i class="chev"></i></summary>
+      <div class="sgbody">
     ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
+      </div>
+    </details>
   </section>`);
 
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>${verseHTML('case')}${egwHTML('case')}
