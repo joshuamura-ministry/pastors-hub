@@ -411,7 +411,7 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .zscale{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--ink3);margin:8px 0 2px}
 .zscale i{flex:1;height:7px;border-radius:4px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 6%,transparent),var(--acc))}
-.mapbox{position:relative;width:100%;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
+.mapbox{position:relative;width:100%;aspect-ratio:640/470;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
 .mapinner{position:absolute;top:0;left:0;width:640px;height:470px;transform-origin:0 0}
 .mapinner .tile{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none}
 :root[data-theme="dark"] .mapinner .tile{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.92) saturate(.75)}
@@ -1029,13 +1029,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.12</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.13</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.12';
+const VERSION = 'v9.13';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3977,9 +3977,8 @@ function fitMap(tries){
     if((tries||0)<30) requestAnimationFrame(()=>fitMap((tries||0)+1));
     return;
   }
-  const s=w/MAPW;
-  inner.style.transform='scale('+s+')';
-  box.style.height=(MAPH*s)+'px';
+  // Box height is set by CSS aspect-ratio; only scale the inner canvas to width.
+  inner.style.transform='scale('+(w/MAPW)+')';
 }
 window.addEventListener('resize',()=>fitMap());
 
