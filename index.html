@@ -339,6 +339,8 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .facbar[open]>summary .chev{transform:rotate(-135deg)}
 .facbarbody{padding:0 15px 15px}
 .facblock{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.immgroup{border-color:var(--acc)}
+.stagenum.imm{background:var(--acc);color:#fff;font-size:1rem}
 .capsaved{font-size:.82rem;font-weight:700;color:var(--ok,#1a9e6a);opacity:0;transform:translateY(2px);transition:.2s}
 .capsaved.show{opacity:1;transform:none}
 .btn.capdone{background:var(--ok,#1a9e6a);border-color:var(--ok,#1a9e6a);color:#fff}
@@ -433,6 +435,10 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
   color:var(--ink);text-transform:none;margin:0;padding:0;border:none}
 .suggroup:first-of-type{margin-top:0}
 .zviews{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}
+.zscope{display:inline-flex;flex-wrap:wrap;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:3px;margin:6px 0 10px}
+.zscope button{background:transparent;border:none;border-radius:8px;padding:7px 12px;font-size:.84rem;font-weight:600;color:var(--ink2);cursor:pointer}
+.zscope button.on{background:var(--acc-dim);color:var(--acc);box-shadow:0 0 0 1px rgba(76,154,255,.35) inset}
+.zscope button small{display:block;font-size:.68rem;font-weight:500;color:var(--ink3);line-height:1.1;margin-top:1px}
 @media(max-width:520px){.zviews button{flex:1 1 auto;min-width:calc(50% - 3px);font-size:.82rem;padding:9px 8px}}
 .zviews button{flex:1 1 auto;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 12px;
   font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:40px;white-space:nowrap}
@@ -548,6 +554,12 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .obj span{font-size:.84rem;color:var(--ink2);line-height:1.6}
 .zones{margin:18px 0 4px}
 .zone{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow);overflow-wrap:anywhere}
+.zonefold{padding:0}
+.zonefold>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+.zonefold>summary::-webkit-details-marker{display:none}
+.zonefold>summary .chev{margin-left:auto;width:8px;height:8px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:.15s}
+.zonefold[open]>summary .chev{transform:rotate(-135deg)}
+.zonefoldbody{padding:0 14px 13px}
 .zh{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .zn{width:24px;height:24px;border-radius:50%;background:var(--acc);color:var(--btn-ink);font-weight:700;font-size:.8rem;
   display:flex;align-items:center;justify-content:center;flex:none}
@@ -1059,13 +1071,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.31</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.34</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.31';
+const VERSION = 'v9.34';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2650,6 +2662,24 @@ function displayTags(tags){
     out.push(TAG_LABEL[t]||t.replace(/-/g,' '));
   });
   return out;
+}
+// The immigrant/newcomer moves, gathered into one visible group and named to the
+// actual community — so reaching immigrant families is never buried in the general
+// list. Returns [] when the neighbourhood has little immigrant presence.
+const IMMIGRANT_MOVES=['welcome-table','interpreter-bank','rights-clinic','newcomer-circle','lit-multilingual','translate-help','esl-center','esl-to-scripture','conversation-cafe','proph-language'];
+function immigrantMoves(m,tags){
+  // Show the group when foreign-born share is meaningful, or many limited-English.
+  const show=(m.foreign>=12)||(m.limEng>=10)||tags.has('immigrant')||tags.has('very-immigrant');
+  if(!show) return [];
+  const byId={}; SIGNATURE.forEach(s=>byId[s.id]=s);
+  const out=[];
+  IMMIGRANT_MOVES.forEach(id=>{ const s=byId[id]; if(!s) return;
+    // only include if its gate matches this tract at all
+    if(!s.need.some(t=>tags.has(t))) return;
+    out.push({...s, stage:s.st||'trust',
+      reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()});
+  });
+  return out.slice(0,6);
 }
 function signatureMoves(m,c,tags,limit){
   const scored=SIGNATURE.map(s=>{
@@ -4989,6 +5019,7 @@ const ES={
  'Step 3 \u00b7 Hand out the jobs \u2014 what your people can actually do':'Paso 3 \u00b7 Reparta las tareas \u2014 lo que su gente realmente puede hacer',
  'Help already nearby':'Ayuda que ya est\u00e1 cerca',
  'Set up your church — counts & facilities':'Configure su iglesia — n\u00fameros e instalaciones',
+ 'Reaching':'Alcanzando a',
  'Coaching corner':'Rinc\u00f3n del entrenador',
  'Open when members hesitate':'\u00c1bralo cuando los miembros duden',
  'The proven playbook':'El manual probado',
@@ -7524,7 +7555,7 @@ function render(){
   const pick=k=>Object.fromEntries(Object.keys(levels).map(l=>[l,M[l][k]]));
   renderPlace(levels,geo);
   $('scope').innerHTML=Object.keys(levels).filter(l=>levels[l]&&levels[l].kind).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
-  $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;render();});
+  $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{ SCOPE=b.dataset.s; render(); if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]); });
   renderFocus();
   $('brief').innerHTML=`<div class="k">${LANG==='es'?'EL RESUMEN':'THE BRIEF'}</div><p>${LANG==='es'?briefES(M,levels,SCOPE):brief(M,levels,SCOPE)}</p>
     <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="dlcsv">Download data (CSV)</button><button class="btn ghost" id="dlrep">Download report</button><button class="btn ghost" id="share">Share</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
@@ -7621,6 +7652,8 @@ function render(){
     <div id="helpslot"></div>
   </section>`);
   const SG=suggestions(M,SCOPE);
+  const IMM=immigrantMoves(M[SCOPE], new Set(SG.tags||[]));
+  const IMMNAME=(typeof groupPhrase==='function')?groupPhrase(M[SCOPE]):'immigrant families';
   secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>
     <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
     <div id="congslot"></div>
@@ -7637,6 +7670,21 @@ function render(){
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
         <span>Matched to this tract's numbers and grouped by what each one asks of the church. Open the group that fits where your congregation is — start with the easy ways in, move to a monthly rhythm, take on a weekly commitment only when you are ready. Inside each group the proven playbook comes first, then creative extras. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
+      ${IMM.length?`<details class="stage immgroup" open>
+        <summary class="stagehead"><span class="stagenum imm">\u2691</span><b>Reaching ${esc(IMMNAME)}</b><span class="stagen">${IMM.length} idea${IMM.length===1?'':'s'}</span><i class="chev"></i></summary>
+        <div class="stagebody">
+        <p class="stageblurb">Ministry to immigrant and newcomer families, gathered in one place and matched to who actually lives here. The guiding rule throughout: welcome first, help freely, and never ask about anyone\u2019s papers or status.</p>
+        ${IMM.map(x=>`<div class="move">
+          <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><span class="stagetag">${STAGE[x.stage].n}. ${esc(STAGE[x.stage].label)}</span></div>
+          <h4>${esc(x.n)}</h4>
+          <p>${esc(x.d)}</p>
+          <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
+          ${x.how&&x.how.length?`<div class="mhow"><b>How to start</b><ol>${x.how.map(h=>`<li>${esc(h)}</li>`).join('')}</ol></div>`:''}
+          <div class="mreq"><span class="ld l${x.load}">${esc(LOAD[x.load])}</span><span>${x.ppl===1?'1 person':x.ppl+' people'}</span><span>${['no cost','modest outlay','budget line'][x.cost]}</span>${(x.skill||[]).map(k=>`<span>${esc(SKILL[k])}</span>`).join('')}</div>
+          <div class="tags"><span>With: ${esc(x.p)}</span></div>
+        </div>`).join('')}
+        </div>
+      </details>`:''}
       ${BANDS.map((B,bi)=>{
         const set=SG.moves.filter(x=>bandOf(x.load)===bi);
         if(!set.length) return '';
@@ -7768,6 +7816,7 @@ function render(){
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
+  drawHelp();     // Help-nearby lives in the rebuilt sections too — repopulate it
   capRender();
   wireStepper();
   wireProposals(M,levels,SG);
@@ -7884,21 +7933,30 @@ function drawZones(){
   const {all,church}=ZONES;
   host.innerHTML=`<div class="zones">
     <div class="movehead"><b>Hotspots</b>
-      <span>${esc(V.blurb)} Every block is shaded on the measure you choose; the four strongest are numbered. Showing about ${ZONES.radius} miles around the church \u2014 the view widens when you switch to Town or County above.</span></div>
+      <span>${esc(V.blurb)} Every block is shaded on the measure you choose; the four strongest are numbered. Showing about ${ZONES.radius} miles around the church \u2014 switch the reach below and the map, radius and blocks all widen.</span></div>
+    <div class="zscope" id="zscope">${Object.keys(levels).filter(l=>levels[l]&&levels[l].kind).map(l=>`<button data-zs="${l}" class="${l===SCOPE?'on':''}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('')}</div>
     <div class="zviews">${Object.keys(VIEWS).map(k=>`<button data-v="${k}" class="${k===ZVIEW?'on':''}">${esc(VIEWS[k].label)}</button>`).join('')}</div>
     ${zoneMap(church,top,all,1.8,ZONES.scored,ZVIEW)}
     <div class="zscale"><span>less</span><i></i><span>more</span></div>
-    ${top.map((z,i)=>`<div class="zone">
-      <div class="zh"><span class="zn">${i+1}</span><b>${esc(z.name?('Tract '+z.name):z.geoid)}</b>
-        <span class="zd">${z.dist<0.15?'at the church door':z.dist.toFixed(1)+' mi away'}${z.home?' \u00b7 your own block':''}${z.density?' \u00b7 '+fmtNum(Math.round(z.density))+' people/sq mi':''}</span></div>
-      <div class="zwhy">${z.m.pop?fmtNum(z.m.pop)+' people':''}${zoneReasons(z.m,null).length?' \u00b7 '+zoneReasons(z.m,null).join(' \u00b7 '):''}</div>
-      <div class="zmove">${esc(zoneFirstMove(z.m))}</div>
-      <a class="zdir" href="https://www.google.com/maps/search/?api=1&query=${z.lat},${z.lon}" target="_blank" rel="noopener">Open this block in Maps \u2192</a>
-    </div>`).join('')}
+    ${top.map((z,i)=>`<details class="zone zonefold">
+      <summary class="zh"><span class="zn">${i+1}</span><b>${esc(z.name?('Tract '+z.name):z.geoid)}</b>
+        <span class="zd">${z.dist<0.15?'at the church door':z.dist.toFixed(1)+' mi away'}${z.home?' \u00b7 your own block':''}${z.density?' \u00b7 '+fmtNum(Math.round(z.density))+' people/sq mi':''}</span><i class="chev"></i></summary>
+      <div class="zonefoldbody">
+        <div class="zwhy">${z.m.pop?fmtNum(z.m.pop)+' people':''}${zoneReasons(z.m,null).length?' \u00b7 '+zoneReasons(z.m,null).join(' \u00b7 '):''}</div>
+        <div class="zmove">${esc(zoneFirstMove(z.m))}</div>
+        <a class="zdir" href="https://www.google.com/maps/search/?api=1&query=${z.lat},${z.lon}" target="_blank" rel="noopener">Open this block in Maps \u2192</a>
+      </div>
+    </details>`).join('')}
     <div class="note" style="margin-top:8px">Boundaries and figures are the Census Bureau\u2019s own. Ranking weights need against distance \u2014 a needier block three miles away is not where a two-church district should start.</div>
 
   </div>`;
   host.querySelectorAll('.zviews button').forEach(b=>b.onclick=()=>{ ZVIEW=b.dataset.v; drawZones(); });
+  host.querySelectorAll('#zscope button').forEach(b=>b.onclick=()=>{
+    // Switch scope right from the map — updates the whole report AND widens the
+    // radius/hotspots to the new reach, without scrolling back to the top toggle.
+    SCOPE=b.dataset.zs; render();
+    if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
+  });
   fitMap();
   translateDOM();
 }
