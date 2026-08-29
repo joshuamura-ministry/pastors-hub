@@ -322,9 +322,21 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .coachhead span{display:block;text-transform:none;letter-spacing:0;font-size:.9rem;font-weight:500;color:var(--ink2);margin-top:3px}
 .capbox{padding:0}
 .congfail{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line2);border-radius:12px;background:var(--panel2)}
+.helpmapped{margin-top:6px}
+.helprow{padding:7px 0;border-top:1px solid var(--line)}
+.helprow:first-of-type{border-top:0}
+.helprow a{font-weight:600}
+.helprow span{display:block;font-size:.8rem;color:var(--ink3);margin-top:1px}
 .congfail b{font-weight:700;color:var(--ink)}
 .congfail span{font-size:.86rem;color:var(--ink2);line-height:1.5}
 .capgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:4px}
+.facblock{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.facgrid{display:flex;flex-wrap:wrap;gap:8px}
+.facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.facchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line2);flex:none;transition:.12s}
+.facchip.on{color:var(--ink);border-color:var(--acc);background:var(--acc-dim)}
+.facchip.on i{background:var(--acc);border-color:var(--acc);box-shadow:inset 0 0 0 2px var(--panel)}
+.facfit{display:inline-flex;align-items:center;gap:4px;font-size:.72rem;font-weight:700;color:var(--acc);background:var(--acc-dim);border-radius:6px;padding:2px 7px;margin-left:6px}
 .capf{display:flex;flex-direction:column}
 .capf .capl{flex:1}
 .capin{width:100%;min-height:44px;padding:8px 13px;border:1px solid var(--line2);border-radius:10px;
@@ -1036,13 +1048,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.17</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.20</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.17';
+const VERSION = 'v9.20';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1608,6 +1620,7 @@ const GRID=[
  ['','','','OK','LA','MS','AL','GA','','',''],
  ['HI','','','TX','','','','FL','','','']
 ];
+const STATE_FIPS={'01':'AL','02':'AK','04':'AZ','05':'AR','06':'CA','08':'CO','09':'CT','10':'DE','11':'DC','12':'FL','13':'GA','15':'HI','16':'ID','17':'IL','18':'IN','19':'IA','20':'KS','21':'KY','22':'LA','23':'ME','24':'MD','25':'MA','26':'MI','27':'MN','28':'MS','29':'MO','30':'MT','31':'NE','32':'NV','33':'NH','34':'NJ','35':'NM','36':'NY','37':'NC','38':'ND','39':'OH','40':'OK','41':'OR','42':'PA','44':'RI','45':'SC','46':'SD','47':'TN','48':'TX','49':'UT','50':'VT','51':'VA','53':'WA','54':'WV','55':'WI','56':'WY','72':'PR'};
 const STATE_NAMES={AK:'Alaska',AL:'Alabama',AR:'Arkansas',AZ:'Arizona',CA:'California',CO:'Colorado',CT:'Connecticut',
  DC:'District of Columbia',DE:'Delaware',FL:'Florida',GA:'Georgia',HI:'Hawaii',IA:'Iowa',ID:'Idaho',IL:'Illinois',
  IN:'Indiana',KS:'Kansas',KY:'Kentucky',LA:'Louisiana',MA:'Massachusetts',MD:'Maryland',ME:'Maine',MI:'Michigan',
@@ -1885,6 +1898,24 @@ const MOVE_REQ={
    kept on the device, and every one of them is optional: answer nothing and
    the moves rank exactly as before, with a line saying so. */
 const CAP_KEY='terrain-capacity';
+// A church's building shapes what it can host. Remembered per device with the rest
+// of the church profile, so every report and the planner see it.
+const FACILITIES=[
+  {k:'kitchen',   n:'Kitchen / fellowship hall', d:'A working kitchen and a room to seat people'},
+  {k:'classrooms',n:'Classrooms',                d:'Several rooms for classes or children'},
+  {k:'gym',       n:'Gym / indoor court',        d:'An indoor space for sport or large groups'},
+  {k:'field',     n:'Field / playground',        d:'Outdoor space — a field, yard or playground'},
+  {k:'center',    n:'Community / multipurpose center', d:'A large flexible hall for big gatherings'}
+];
+// Which facility each move wants, and the moves a facility unlocks or strengthens.
+const MOVE_FACILITY={
+  'vbs':'classrooms','sports-camp':'gym','pathfinders':'classrooms','moms-group':'classrooms',
+  'community-dinner':'kitchen','fall-festival':'field','backpack-giveaway':'center',
+  'christmas-store':'center','cooking-school':'kitchen','chip':'kitchen','health-expo':'center',
+  'homework-club':'classrooms','study-hall':'classrooms','senior-day':'center','clothing-closet':'center',
+  'food-pantry':'center','lot-sport':'field','story-corner':'classrooms','music-academy':'classrooms',
+  'skills-center':'classrooms','esl-center':'classrooms','conversation-cafe':'kitchen','mens-breakfast':'kitchen'
+};
 const CAP_SKILLS=[
   {k:'lead',n:'Can lead a group or give a study'},
   {k:'medical',n:'Nurses or health professionals'},
@@ -1930,7 +1961,9 @@ function capMerged(){
   const volunteers=(c.volunteers!=null?c.volunteers:null);
   // If the pastor has counted his own volunteers, plan around his number.
   // Only fall back to the one-third rule when he has not.
-  return {members, leaders, volunteers,
+  const facils=(c.facilities&&typeof c.facilities==='object')?c.facilities:{};
+  return {members, leaders, volunteers, facilities:facils,
+    hasFacility:k=>!!facils[k],
     hands: volunteers!=null?Math.max(1,volunteers)
          : members!=null?Math.max(1,Math.round(members*WILLING_SHARE)):null,
     estimated: volunteers==null,
@@ -2560,12 +2593,25 @@ function signatureMoves(m,c,tags,limit){
     const hits=s.need.filter(t=>tags.has(t)).length;
     if(!hits) return null;
     const boost=(s.boost||[]).filter(t=>tags.has(t)).length;
-    let fit=s.w+hits*2+boost*3;
+    // SPECIFICITY: a move that matches most of its own gate is a sharp signal for
+    // THIS neighbourhood; one that fires on a few of many broad tags is generic and
+    // shows up everywhere. Reward the share of the gate that matched, so a tightly
+    // targeted move can out-rank a broad high-weight staple in the tract it fits.
+    const specificity = hits / Math.max(1, s.need.length);      // 0..1
+    let fit=s.w + hits*2 + boost*3 + Math.round(specificity*6);
+    // Broad, always-eligible moves (big gates) get a damp so they don't crowd
+    // out the neighbourhood-specific ones in every single report. The broader the
+    // gate, the stronger the damp.
+    if(s.need.length>=5) fit-=Math.min(8,(s.need.length-3)*2);
     const F=moveFeasible(s);
-    // A move the church cannot staff should not head the list, but it should
-    // still be visible — it is the thing worth recruiting toward.
     if(F.known){ if(F.easy) fit+=6; else if(!F.ok) fit-=Math.min(9,3*F.gaps.length); }
-    return {...s, stage:s.st||'trust', fit, feas:F, reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
+    // FACILITY BOOST: if a move needs a room the church has, lift it — that is
+    // exactly the outreach this building is built to host.
+    const cap=capMerged(); const need=MOVE_FACILITY[s.id];
+    let facilityFit=false;
+    if(need && cap.ready && cap.hasFacility && cap.hasFacility(need)){ fit+=7; facilityFit=true; }
+    return {...s, stage:s.st||'trust', fit, feas:F, facilityFit, facilityNeed:need,
+      reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
   }).filter(Boolean);
   // Select by TIER first: the proven playbook, then the creative extras.
   //
@@ -2591,7 +2637,11 @@ function signatureMoves(m,c,tags,limit){
   // and more-involved ways in. Backfill from lighter bands, never heavier.
   const pickBands=(arr,total,share)=>{
     const bands=[[],[],[]];
-    arr.forEach(x=>bands[bandOf(x.load)].push(x));
+    // A facility the church already has genuinely lowers the lift of the move it
+    // hosts, so a facility-boosted move drops one band lighter for selection —
+    // that is how "our gym unlocks a sports camp" actually reaches the list.
+    const effBand=x=>Math.max(0, bandOf(x.load) - (x.facilityFit?1:0));
+    arr.forEach(x=>bands[effBand(x)].push(x));
     const pool=bands.map(weave);
     const quota=share.map(s=>Math.ceil(total*s));
     const out=[];
@@ -3705,6 +3755,114 @@ async function fetchCongregations(centre,radiusMi){
   return out.sort((a,b)=>a.dist-b.dist);
 }
 
+/* ================= HELP ALREADY NEARBY (resources a pastor can connect with) =================
+   Two honest layers:
+   1) Curated launcher links into real directories, built for the loaded county/state.
+      Always accurate, works everywhere, never fabricated.
+   2) A live OpenStreetMap strip of what is actually mapped nearby (patchy but real). */
+
+const HELP_CATS=[
+  {id:'food', icon:'🥫', name:'Food pantries & banks',
+   osm:'nwr["social_facility"="food_bank"](around:R,LAT,LON);nwr["amenity"="food_bank"](around:R,LAT,LON);nwr["social_facility:for"="soup_kitchen"](around:R,LAT,LON);',
+   links:c=>[
+     {t:'Feeding America food-bank locator', u:'https://www.feedingamerica.org/find-your-local-foodbank', d:`Enter a ZIP in ${esc(c.county)} to find the regional food bank and its partner pantries.`},
+     {t:'FoodPantries.org', u:'https://www.foodpantries.org/st/'+c.stateSlug, d:`Community-listed pantries across ${esc(c.state)}, searchable by city.`},
+     {t:'211 — food assistance', u:'https://www.211.org/', d:'Dial 211 or search online for food help open right now in your area.'}
+   ]},
+  {id:'ministers', icon:'⛪', name:'Ministerial councils & church networks',
+   osm:null,   // not meaningfully mapped in OSM — links only
+   links:c=>[
+     {t:`Search: ministerial association · ${esc(c.county)}`, u:'https://www.google.com/search?q='+encodeURIComponent('ministerial association '+c.county+' '+c.state), d:'Local pastor fellowships often meet monthly — the fastest way in is a direct search.'},
+     {t:`Search: evangelical / interfaith council · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('interfaith council OR evangelical association '+c.short+' '+c.state), d:'Interfaith and evangelical councils coordinate community response and share resources.'},
+     {t:'Christian Churches Together / local affiliates', u:'https://www.google.com/search?q='+encodeURIComponent('christian ministers fellowship '+c.short), d:'A wider net for citywide prayer breakfasts, unity services, and clergy networks.'}
+   ]},
+  {id:'housing', icon:'🏠', name:'Homeless & housing services',
+   osm:'nwr["social_facility"="shelter"](around:R,LAT,LON);nwr["social_facility"="housing"](around:R,LAT,LON);nwr["amenity"="shelter"]["shelter_type"="emergency"](around:R,LAT,LON);',
+   links:c=>[
+     {t:`HUD Continuum of Care · ${esc(c.short)}`, u:'https://www.hudexchange.info/housing-and-homeless-assistance/homeless-help/', d:'The lead agency coordinating shelters and housing help for your county.'},
+     {t:'211 — housing & shelter', u:'https://www.211.org/', d:'Emergency shelter, rent help, and utility assistance available locally.'},
+     {t:`Search: homeless services · ${esc(c.county)}`, u:'https://www.google.com/search?q='+encodeURIComponent('homeless services OR rescue mission '+c.county+' '+c.state), d:'Rescue missions and day centers, many of them faith-based.'}
+   ]},
+  {id:'recovery', icon:'🕊️', name:'Recovery, addiction & crisis',
+   osm:'nwr["healthcare"="rehabilitation"](around:R,LAT,LON);nwr["social_facility:for"="drug_addicted"](around:R,LAT,LON);',
+   links:c=>[
+     {t:'SAMHSA treatment locator', u:'https://findtreatment.gov/', d:'Official federal directory of vetted addiction and mental-health treatment near any ZIP.'},
+     {t:'Celebrate Recovery group finder', u:'https://locator.crgroups.info/', d:'Church-based recovery groups — a natural partner or referral for congregations.'},
+     {t:'988 Suicide & Crisis Lifeline', u:'https://988lifeline.org/', d:'Call or text 988, any time. Free, confidential crisis support nationwide.'}
+   ]}
+];
+
+let HELP=null, HELP_STATE='idle', HELP_ERR='', HELP_LINKCTX=null;
+
+async function fetchHelp(centre,radiusMi){
+  const m=Math.round(radiusMi*1609);
+  const parts=HELP_CATS.filter(c=>c.osm).map(c=>c.osm.replace(/R/g,m).replace(/LAT/g,centre.lat).replace(/LON/g,centre.lon)).join('');
+  const q=`[out:json][timeout:12];(${parts});out center tags;`;
+  let j=null, lastErr=null;
+  for(const host of OVERPASS_HOSTS){
+    try{
+      const ctrl=new AbortController(); const timer=setTimeout(()=>ctrl.abort(),12000);
+      const r=await fetch(host+'?data='+encodeURIComponent(q),{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      j=await r.json(); break;
+    }catch(e){ lastErr=e; log('help overpass failed ('+host.split('/')[2]+'): '+e.message); }
+  }
+  if(!j) throw lastErr||new Error('no response');
+  const catOf=t=>{
+    if(t.social_facility==='food_bank'||t.amenity==='food_bank'||t['social_facility:for']==='soup_kitchen') return 'food';
+    if(t.social_facility==='shelter'||t.social_facility==='housing'||(t.amenity==='shelter')) return 'housing';
+    if(t.healthcare==='rehabilitation'||t['social_facility:for']==='drug_addicted') return 'recovery';
+    return null;
+  };
+  const out=[];
+  (j.elements||[]).forEach(e=>{
+    const t=e.tags||{};
+    const lat=e.lat??(e.center&&e.center.lat), lon=e.lon??(e.center&&e.center.lon);
+    if(!isFinite(lat)||!isFinite(lon)) return;
+    const cat=catOf(t); if(!cat) return;
+    const name=(t.name||t.operator||'').trim(); if(!name) return;   // skip unnamed — not useful to a pastor
+    if(out.find(o=>o.cat===cat && o.name.toLowerCase()===name.toLowerCase())) return;
+    out.push({cat,name,lat,lon,dist:miles(centre,{lat,lon}),
+      addr:[t['addr:housenumber'],t['addr:street']].filter(Boolean).join(' '),
+      phone:t.phone||t['contact:phone']||''});
+  });
+  return out.sort((a,b)=>a.dist-b.dist);
+}
+
+async function loadHelp(geo){
+  const c=geo.coords?{lat:+geo.coords.y,lon:+geo.coords.x}:null;
+  if(!c||!isFinite(c.lat)){ HELP_STATE='idle'; return; }
+  HELP_STATE='loading'; drawHelp();
+  try{ HELP=await fetchHelp(c,3); HELP_STATE='ready'; }
+  catch(e){ log('help unavailable: '+e.message); HELP_STATE='failed'; HELP_ERR=e.message; }
+  drawHelp();
+}
+
+function drawHelp(){
+  const host=document.getElementById('helpslot'); if(!host) return;
+  const ctx=HELP_LINKCTX||{county:'your county',short:'your area',state:'',stateSlug:''};
+  // Curated links always render — real and universal.
+  const linkBlocks=HELP_CATS.map(cat=>{
+    const live=(HELP||[]).filter(h=>h.cat===cat.id).slice(0,6);
+    const liveHTML = !cat.osm ? '' :
+      HELP_STATE==='loading' ? `<div class="note" style="margin:.4em 0">Checking what’s mapped nearby…</div>` :
+      HELP_STATE==='failed'  ? `<div class="note" style="margin:.4em 0">Live map lookup was unreachable — the directory links above still work. <a href="#" data-help-retry>Try again</a></div>` :
+      live.length ? `<div class="helpmapped"><div class="l" style="margin:.5em 0 .3em">Mapped within ~3 miles</div>${live.map(h=>`<div class="helprow"><a href="${mapsUrl(h.name+' '+(h.addr||''))}" target="_blank" rel="noopener"><b>${esc(h.name)}</b></a><span>${h.dist.toFixed(1)} mi${h.addr?' · '+esc(h.addr):''}${h.phone?' · '+esc(h.phone):''}</span></div>`).join('')}</div>`
+      : `<div class="note" style="margin:.4em 0">Nothing tagged in OpenStreetMap here yet — that usually means it isn’t mapped, not that it isn’t there. Use the directories above.</div>`;
+    return `<details class="suggroup" ${cat.id==='food'?'open':''}>
+      <summary class="sugcat"><span>${cat.icon}</span> ${esc(cat.name)}<span class="sgn">${cat.links(ctx).length} link${cat.osm?' + map':''}</span><i class="chev"></i></summary>
+      <div class="sgbody">
+        <div class="ext">${cat.links(ctx).map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${esc(l.t)}<span>${l.d}</span></a>`).join('')}</div>
+        ${liveHTML}
+      </div>
+    </details>`;
+  }).join('');
+  host.innerHTML=linkBlocks;
+  const rb=host.querySelector('[data-help-retry]');
+  if(rb) rb.onclick=e=>{ e.preventDefault(); if(DATA&&DATA.geo) loadHelp(DATA.geo); };
+}
+
 function doctrineCard(key,count){
   const d=DOCTRINE[key]; if(!d) return '';
   return `<details class="doct"><summary><b>${esc(d.label)}</b>${count?`<span class="dn">${count} nearby</span>`:''}<span class="reach" aria-hidden="true"></span></summary>
@@ -3789,6 +3947,7 @@ function ringAreaSqMi(ring,lat0){
   return Math.abs(a/2);
 }
 const tractArea=z=>z.rings.reduce((t,r)=>t+ringAreaSqMi(r,z.lat),0);
+const mapsUrl=q=>'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(q);
 const miles=(a,b)=>{                     // rough distance, fine at this scale
   const dy=(a.lat-b.lat)*69, dx=(a.lon-b.lon)*69*Math.cos(a.lat*Math.PI/180);
   return Math.sqrt(dx*dx+dy*dy);
@@ -4756,6 +4915,7 @@ const ES={
  'Step 1 \u00b7 Count your people':'Paso 1 \u00b7 Cuente a su gente',
  'Step 2 \u00b7 What this neighbourhood asks of your congregation':'Paso 2 \u00b7 Lo que este vecindario pide de su congregaci\u00f3n',
  'Step 3 \u00b7 Hand out the jobs \u2014 what your people can actually do':'Paso 3 \u00b7 Reparta las tareas \u2014 lo que su gente realmente puede hacer',
+ 'Help already nearby':'Ayuda que ya est\u00e1 cerca',
  'Coaching corner':'Rinc\u00f3n del entrenador',
  'Open when members hesitate':'\u00c1bralo cuando los miembros duden',
  'The proven playbook':'El manual probado',
@@ -5640,6 +5800,18 @@ function planPhases(p,pl){
   if(has('jobless','service-work')) outreach.push(li('A financial-peace or job-skills seminar meets a felt need here.'));
   if(has('affluent','professional')) outreach.push(li('Stress management and Creation Health seminars fit a professional neighborhood; print quality matters more here.'));
   if(pl&&pl.denoms.length) outreach.push(li('<b>Because the nearest churches are '+pl.denoms.join(' and ')+':</b> the visitation and objections training is tuned to what those neighbors already believe — common ground first.',1));
+  // FACILITIES: the church's own building is the cheapest, warmest bridge event.
+  { const cap=capMerged();
+    if(cap.ready&&cap.facilities){
+      const fx=[];
+      if(cap.facilities.kitchen) fx.push('a monthly community dinner in your fellowship hall');
+      if(cap.facilities.gym) fx.push('a sports night or day-camp in your gym');
+      if(cap.facilities.classrooms) fx.push('VBS and a children\\u2019s or ESL class using your classrooms');
+      if(cap.facilities.field) fx.push('a fall festival or family field day on your grounds');
+      if(cap.facilities.center) fx.push('a health expo, back-to-school giveaway or Christmas store in your center');
+      if(fx.length) outreach.push(li('<b>Because of what your church has:</b> build the pre-work bridge events around your own building — '+fx.join('; ')+'. These cost little, run on your turf, and let neighbours meet the church before the first meeting.',1));
+    }
+  }
   const generic=[li('Felt-need programs start'+(H?' — health fairs, blood-pressure screenings, stop-smoking, stress and weight management':'')+(H&&P?'; ':'')+(P?(H?'plus ':' — ')+'a Bible-prophecy or archeology seminar':'')+'.')];
   const litLine= T.hh ? li('Literature teams divide the '+(pl.zones?pl.zones+' blocks to reach first':'home tract')+' — about <b>'+T.hh.toLocaleString()+' households</b>: one handbill per home and three touches over the campaign (<b>'+T.literature.toLocaleString()+' pieces</b>). <b>'+T.pairs+' visiting pairs</b>, eight addresses each, four rounds.',1)
                       : li('Literature teams divide the territory and pass out enrollment cards'+(H?', health and cooking-school brochures':'')+(P?', Bible-seminar flyers':'')+'.',1);
@@ -6975,7 +7147,7 @@ function showGate(msg){
   // Signing out, or a code that stopped working, must leave nothing behind.
   // The previous church's figures sitting under the gate is both confusing and
   // a small privacy leak on a shared iPad.
-  DATA=null; ZONES=null; CONGS=null; ZONES_STATE='idle'; CONGS_STATE='idle'; TOOL=null;
+  DATA=null; ZONES=null; CONGS=null; HELP=null; ZONES_STATE='idle'; CONGS_STATE='idle'; HELP_STATE='idle'; TOOL=null;
   const sec=$('sections'); if(sec) sec.innerHTML='';
   // The diagnostics panel holds the request log, which contains the address —
   // it must go too, not just the visible report.
@@ -7134,6 +7306,13 @@ function capRender(){
         : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them.`}</span></div>`:''}
       <div class="caprow" style="margin-top:10px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
         <span class="caphint" style="margin:0;align-self:center">Kept on this device. Shared with nobody.</span></div>
+      <div class="facblock">
+        <div class="capl" style="margin-bottom:8px">What your church has to work with — the building shapes what you can host, so Terrain will lift the outreach your rooms are built for.</div>
+        <div class="facgrid">
+          ${FACILITIES.map(f=>{const on=!!((capGet()||{}).facilities||{})[f.k];
+            return `<button type="button" class="facchip${on?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`;}).join('')}
+        </div>
+      </div>
     </div>`;
   const set=(k,raw)=>{ const cur=capGet()||{}; const n=raw===''?null:Math.max(0,Math.round(+raw));
     if(n==null){ delete cur[k]; } else { cur[k]=n; } capSave(cur); render(); };
@@ -7141,6 +7320,13 @@ function capRender(){
     el.addEventListener('change',()=>set(k,el.value));
     el.addEventListener('keydown',e=>{ if(e.key==='Enter') el.blur(); }); };
   wire('cap-m','members'); wire('cap-l','leaders'); wire('cap-v','volunteers');
+  host.querySelectorAll('.facchip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const cur=capGet()||{}; const f=cur.facilities&&typeof cur.facilities==='object'?cur.facilities:{};
+      const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
+      cur.facilities=f; capSave(cur); render();
+    });
+  });
   const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
 }
 function wireStepper(){
@@ -7309,10 +7495,10 @@ function render(){
     ${card('Overcrowded homes',me.overcrowd,fmtPct,pick('overcrowd'),S,'more than 1 person per room')}
     ${card('No vehicle',me.noCar,fmtPct,pick('noCar'),S,'of households')}
     <div class="card wide"><div class="l">Homelessness and evictions are only published at county level</div>
-      <p class="note" style="margin-top:6px">HUD counts people experiencing homelessness once a year by <b>Continuum of Care</b>, which in Pennsylvania is usually the county. Eviction filings are tracked by county courts. Neither is broken down to the neighbourhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the county reports:</p>
+      <p class="note" style="margin-top:6px">HUD counts people experiencing homelessness once a year by <b>Continuum of Care</b> (usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighbourhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:</p>
       <div class="ext">
         <a href="https://www.hudexchange.info/programs/coc/coc-homeless-populations-and-subpopulations-reports/" target="_blank" rel="noopener">HUD Point-in-Time count · ${esc(levels.county.name)}<span>Choose the year, then the CoC that covers ${esc(levels.county.short)}. Sheltered and unsheltered counts, by household type.</span></a>
-        <a href="https://evictionlab.org/eviction-tracking/pennsylvania/" target="_blank" rel="noopener">Eviction Lab · Pennsylvania<span>Monthly filings statewide; Philadelphia by tract and Pittsburgh by ZIP.</span></a>
+        <a href="https://evictionlab.org/eviction-tracking/${esc(levels.state.slug||'')}/" target="_blank" rel="noopener">Eviction Lab${levels.state.name?' · '+esc(levels.state.name):''}<span>${levels.state.name?'Eviction filing trends for '+esc(levels.state.name)+'. Not every state has tracked data — the page will say if '+esc(levels.state.name)+' is covered.':'Eviction filing trends by state and metro.'}</span></a>
       </div></div>
   </div></section>`);
   secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2>${verseHTML('families')}<div class="grid">
@@ -7323,6 +7509,10 @@ function render(){
     ${card('Families with children',me.famWithKids,fmtPct,pick('famWithKids'),S,'of all families')}
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Help already nearby</h2>
+    <p class="note" style="margin-bottom:12px">Who is already serving this community — food, housing, recovery, and fellow ministers — so outreach starts with a phone call, not from scratch. The directory links are live and cover every county; the mapped results are whatever OpenStreetMap happens to hold nearby (real, but incomplete).</p>
+    <div id="helpslot"></div>
+  </section>`);
   const SG=suggestions(M,SCOPE);
   secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>
     <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
@@ -7349,7 +7539,7 @@ function render(){
             const tset=set.filter(x=>tierOf(x)===ti); if(!tset.length) return '';
             return `<div class="bandlab"><b>${esc(TIERS[ti].n)}</b><span>${esc(TIERS[ti].d)}</span></div>`+tset.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}">
             <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><span class="stagetag">${STAGE[x.stage].n}. ${esc(STAGE[x.stage].label)}</span>${x.feas&&x.feas.known&&!x.feas.ok?'<span class="badge b-gap">Not yet</span>':''}</div>
-            <h4>${esc(x.n)}</h4>
+            <h4>${esc(x.n)}${x.facilityFit?`<span class="facfit">✓ uses your ${esc(((FACILITIES.find(f=>f.k===x.facilityNeed)||{}).n||'space').toLowerCase())}</span>`:''}</h4>
             <p>${esc(x.d)}</p>
             <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
             ${x.how&&x.how.length?`<div class="mhow"><b>How to start</b><ol>${x.how.map(h=>`<li>${esc(h)}</li>`).join('')}</ol></div>`:''}
@@ -7619,6 +7809,10 @@ async function run(getGeo){
     if(geo.cousub&&geo.cousub.COUSUB&&!/^0+$/.test(geo.cousub.COUSUB)){ const nm=titleCase(geo.cousub.NAME||''); levels.cousub={kind:'Town',name:nm,short:nm.replace(/ (Township|Borough|City|Town)$/i,'')}; }
     else if(geo.place&&geo.place.PLACE){ const nm=titleCase(geo.place.NAME||''); levels.place={kind:'Town',name:nm,short:nm.replace(/ (City|Borough|Town|CDP)$/i,'')}; }
     levels.county={kind:'County',name:geo.county.NAME,short:(geo.county.NAME||'').replace(/ County$/,'')};
+    { const ab=STATE_FIPS[geo.county.STATE]||''; const nm=STATE_NAMES[ab]||'';
+      levels.state={abbr:ab,name:nm,slug:nm.toLowerCase().replace(/ /g,'-')};
+      HELP_LINKCTX={county:levels.county.name,short:(levels.cousub?levels.cousub.short:levels.county.short),
+        state:nm,stateSlug:nm.toLowerCase().replace(/ /g,'-')}; }
     setStatus('Reading the Census for '+levels.tract.name+'…');
     const M={};
     const jobs=Object.keys(levels).map(async l=>{
@@ -7640,6 +7834,7 @@ async function run(getGeo){
     render();
     loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
     loadCongregations(geo);
+    loadHelp(geo);
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
     if(e.message==='NOCODE'){ localStorage.removeItem('terrain-code'); showGate('That code is no longer valid. Ask Pastor Josh for a current one.'); return; }
