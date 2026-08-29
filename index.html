@@ -1044,7 +1044,6 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   </div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
-    <div id="facslot"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
     <div class="focusbar" id="focusbar" aria-label="Focus the report"></div>
     <div class="focusnote" id="focusnote"></div>
@@ -1056,13 +1055,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.22</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.23</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.22';
+const VERSION = 'v9.23';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1913,7 +1912,14 @@ const FACILITIES=[
   {k:'classrooms',n:'Classrooms',                d:'Several rooms for classes or children'},
   {k:'gym',       n:'Gym / indoor court',        d:'An indoor space for sport or large groups'},
   {k:'field',     n:'Field / playground',        d:'Outdoor space — a field, yard or playground'},
-  {k:'center',    n:'Community / multipurpose center', d:'A large flexible hall for big gatherings'}
+  {k:'center',    n:'Community / multipurpose center', d:'A large flexible hall for big gatherings'},
+  {k:'parking',   n:'Large parking lot',         d:'Room for a market, drive-in, or car-care day'},
+  {k:'stage',     n:'Stage / auditorium',        d:'A platform and seating for concerts or programs'},
+  {k:'av',        n:'Sound & projection / livestream', d:'AV gear to record, project, or stream'},
+  {k:'nursery',   n:'Nursery / childcare room',  d:'A safe, equipped space for little ones'},
+  {k:'library',   n:'Library / quiet study room',d:'A quiet space for tutoring or reading'},
+  {k:'vehicle',   n:'Church van / bus',          d:'Transport for pickups, trips, and deliveries'},
+  {k:'grounds',   n:'Large grounds / garden space', d:'Land for a community garden or outdoor events'}
 ];
 // Which facility each move wants, and the moves a facility unlocks or strengthens.
 const MOVE_FACILITY={
@@ -1922,7 +1928,10 @@ const MOVE_FACILITY={
   'christmas-store':'center','cooking-school':'kitchen','chip':'kitchen','health-expo':'center',
   'homework-club':'classrooms','study-hall':'classrooms','senior-day':'center','clothing-closet':'center',
   'food-pantry':'center','lot-sport':'field','story-corner':'classrooms','music-academy':'classrooms',
-  'skills-center':'classrooms','esl-center':'classrooms','conversation-cafe':'kitchen','mens-breakfast':'kitchen'
+  'skills-center':'classrooms','esl-center':'classrooms','conversation-cafe':'kitchen','mens-breakfast':'kitchen',
+  'lot-market':'parking','drive-in':'parking','car-care':'parking','sanctuary-music':'stage',
+  'music-academy':'stage','moms-group':'nursery','homework-club':'library','study-hall':'library',
+  'garden':'grounds','lift-rota':'vehicle','senior-day':'vehicle'
 };
 const CAP_SKILLS=[
   {k:'lead',n:'Can lead a group or give a study'},
@@ -7290,11 +7299,15 @@ function wireProposals(M,levels,SG){
     // them changes, so a pastor can compare two audiences without losing his place.
   });
 }
+let FACBAR_OPEN=null;   // remembers the bar's open/closed state across re-renders
 function facilitiesBar(){
   const host=$('facslot'); if(!host) return;
   const cur=(capGet()||{}); const fac=cur.facilities&&typeof cur.facilities==='object'?cur.facilities:{};
   const onCount=Object.values(fac).filter(Boolean).length;
-  host.innerHTML=`<details class="facbar"${onCount?'':' open'}>
+  // Default open until the pastor has set facilities; after that, honour whatever
+  // state they last left it in — so toggling a chip never snaps the bar shut.
+  const open = FACBAR_OPEN!=null ? FACBAR_OPEN : (onCount===0);
+  host.innerHTML=`<details class="facbar"${open?' open':''}>
     <summary><b>Your church facilities</b><span>${onCount?onCount+' selected — shaping the plan below':'Tap what your church has, so the plan fits your building'}</span><i class="chev"></i></summary>
     <div class="facbarbody">
       <p class="note" style="margin:0 0 10px">The building shapes what you can host. Whatever you mark here lifts the outreach it unlocks — a gym raises a sports camp, classrooms raise VBS, a kitchen raises a community dinner — across the moves below and in the Evangelism Planner. Kept on this device.</p>
@@ -7303,11 +7316,16 @@ function facilitiesBar(){
       </div>
     </div>
   </details>`;
+  const det=host.querySelector('.facbar');
+  // Track manual open/close so it survives the next render.
+  if(det) det.addEventListener('toggle',()=>{ FACBAR_OPEN=det.open; });
   host.querySelectorAll('.facchip').forEach(chip=>{
     chip.addEventListener('click',()=>{
       const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
       const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
-      c.facilities=f; capSave(c); render();
+      c.facilities=f; capSave(c);
+      FACBAR_OPEN=true;               // a chip was just tapped — keep the bar open
+      render();
     });
   });
 }
@@ -7537,6 +7555,7 @@ function render(){
 
   secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
+    <div id="facslot"></div>
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
