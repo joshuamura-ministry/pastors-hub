@@ -1029,13 +1029,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.13</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.14</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.13';
+const VERSION = 'v9.14';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3969,6 +3969,7 @@ function zoneMap(church,zones,all,radiusMi,scored,view){
   return `<div class="mapbox" id="mapbox"><div class="mapinner" id="mapinner">${tiles}${sv}</div>
     <div class="mapcredit">${TILE.credit}</div></div>`;
 }
+let MAP_RO=null;
 function fitMap(tries){
   const box=document.getElementById('mapbox'), inner=document.getElementById('mapinner');
   if(!box||!inner) return;
@@ -3979,6 +3980,15 @@ function fitMap(tries){
   }
   // Box height is set by CSS aspect-ratio; only scale the inner canvas to width.
   inner.style.transform='scale('+(w/MAPW)+')';
+  // Keep it exact: observe the box so any settle or resize rescales the inner.
+  if(window.ResizeObserver){
+    if(MAP_RO) MAP_RO.disconnect();
+    MAP_RO=new ResizeObserver(entries=>{
+      const cw=entries[0].contentRect.width;
+      if(cw) inner.style.transform='scale('+(cw/MAPW)+')';
+    });
+    MAP_RO.observe(box);
+  }
 }
 window.addEventListener('resize',()=>fitMap());
 
