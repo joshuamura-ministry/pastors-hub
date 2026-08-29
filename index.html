@@ -1014,13 +1014,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.1';
+const VERSION = 'v9.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1686,6 +1686,15 @@ const BANDS=[
  {k:2,n:'A standing commitment',d:'Every week, and somebody has to actually be there each time — unlocking, staying, locking up. Worth doing, but count the cost first: one of these done faithfully beats three abandoned by March.'}
 ];
 function bandOf(load){ return load<=1?0:load===2?1:2; }
+/* Two shelves, proven first. The pastor asked for the recognizable playbook at
+   the top and the inventive material clearly labeled underneath it, and he is
+   right: a board says yes to a food pantry it has seen work in five other
+   churches before it says yes to a seed swap on the wall. */
+const TIERS=[
+ {n:'The proven playbook',d:'The ministries churches across the country actually run — food pantries, VBS, health fairs, homework clubs, grief groups — matched to this neighbourhood\'s numbers and ordered by how well each fits here. Nothing experimental on this shelf: pick from it first.'},
+ {n:'Creative extras',d:'Smaller, more unusual ideas — most cost nothing and need one or two people. Add these around the playbook, not instead of it.'}
+];
+const tierOf=x=>x.tier===2?1:0;
 const MOVE_LOAD={
   'prayer-box':0, 'pantry-box':0, 'wifi-porch':0, 'noticeboard':0,
   'glow-racks':0, 'free-venue':0, 'disaster':0, 'lit-doors':1,
@@ -1901,8 +1910,84 @@ function moveFeasible(x){
     easy: x.cost===0 && x.ppl<=Math.min(2,c.hands)};
 }
 const SIGNATURE=[
+ /* ---------- THE PROVEN PLAYBOOK ADDITIONS (v9.2) ----------
+    The staples a board recognizes on sight — the ministries American churches
+    demonstrably run at scale. tier:1 marks the proven playbook; tier:2 marks
+    the creative extras. The report lists tier 1 first. ---------- */
+ {id:'vbs',tier:1,st:'open',k:KIND.belong,n:'Vacation Bible School',
+  need:['many-kids','families','family-heavy','k12','schools-near'],boost:['many-kids','child-poverty'],w:12,ppl:8,cost:1,skill:['kids'],load:1,
+  d:'The single most proven children\'s outreach American churches run: one week each summer of songs, crafts, Bible stories, games, and snacks, free to every child in the neighborhood. Working parents need the summer coverage, children remember it for years, and registration hands you the name and address of every family that came.',
+  why:m=>`About ${fmtNum(m.kids)} children live here — ${fmtPct(m.kidsShare)} of the whole tract.`,
+  how:['Pick a week in June or July and order a VBS kit through the conference or the ABC.','Recruit five teams: registration, music, crafts, games, snacks — most churches run it well with 8–12 people.','Flyer the elementary school and the library, and invite every family the church already serves.','Close with a family night, and visit every registered family within two weeks.'],
+  c:EFFORT.team,p:'Conference children\'s ministries; a neighboring church to share staff'},
+ {id:'food-pantry',tier:1,st:'open',k:KIND.serve,n:'A real food pantry, on a schedule',
+  need:['food-insecure','poor','very-poor','snap','low-income'],boost:['very-poor','child-poverty'],w:12,ppl:6,cost:1,skill:['admin'],load:2,
+  d:'Not a box on the sidewalk — a stocked room, open the same two hours every other week, with groceries handed over by name. Partner with the regional food bank and the cost per family collapses. This is the most common way churches in America serve their neighborhoods, because it works.',
+  why:m=>`${fmtPct(m.snap)} of households here used SNAP this year${m.childPoverty>=15?`, and ${fmtPct(m.childPoverty)} of children live below the poverty line`:''}.`,
+  how:['Call the regional food bank and register as a partner agency — the food then costs cents on the dollar.','Set fixed hours, say the first and third Sunday morning, and never miss them.','Keep a simple sign-in and greet returning families by name.','Print the church\'s service times on the bag, and nothing else.'],
+  c:EFFORT.team,p:'The regional food bank; Adventist Community Services'},
+ {id:'clothing-closet',tier:1,st:'open',k:KIND.serve,n:'Community Services clothing closet',
+  need:['poor','low-income','child-poverty','renters','single-parents'],boost:['very-poor'],w:11,ppl:5,cost:0,skill:['admin'],load:2,
+  d:'The classic Adventist Community Services ministry: a sorted room of clean clothing, coats, and children\'s sizes, open set hours twice a month, free or nearly free. Members donate and sort; the neighborhood shops with dignity. Winter coats and back-to-school clothes are the two seasons that fill it.',
+  why:m=>`${fmtPct(m.incLow)} of households here earn under $35k${m.renters>=40?`, and ${fmtPct(m.renters)} rent`:''} — clothing a growing child is a real monthly cost.`,
+  how:['Claim one room, add racks and a fitting curtain, and set two open mornings a month.','Announce a members\' donation drive with a short list of what is actually needed.','Sort by size, keep it tidy like a store, and restock coats in October and school clothes in August.'],
+  c:EFFORT.team,p:'Adventist Community Services'},
+ {id:'community-dinner',tier:1,st:'open',k:KIND.belong,n:'Free community dinner',
+  need:['poor','seniors-alone','low-income','renters','dense'],boost:['very-poor','seniors-alone'],w:11,ppl:6,cost:1,skill:['cook'],load:2,
+  d:'One hot meal a month at real tables, with members eating alongside guests rather than serving from behind a counter — plus the big one at Thanksgiving. People come for the food and return for the company; for a senior living alone it may be the one meal that month eaten with other people.',
+  why:m=>`${fmtPct(m.poverty)} live below the poverty line and ${fmtPct(m.seniorsAlone)} of households are a senior living alone.`,
+  how:['Pick a fixed evening — the last Sunday works — and plan a simple, generous menu.','Set tables of six and seat members among guests; nobody serves from behind a counter after the line closes.','Invite through the pantry, the school, and the funeral homes, and hold a full Thanksgiving dinner in November.'],
+  c:EFFORT.team,p:'A local grocer for donations'},
+ {id:'backpack-giveaway',tier:1,st:'open',k:KIND.serve,n:'Back-to-school backpack giveaway',
+  need:['many-kids','child-poverty','schools-near','k12','single-parents'],boost:['child-poverty','very-poor'],w:11,ppl:6,cost:2,skill:[],load:1,
+  d:'Filled backpacks handed out at an August event with food, games, and a prayer over the school year. One of the most recognized church outreaches in the country: parents facing a hundred-dollar supply list per child line up early, and every bag carries the church\'s name into a classroom.',
+  why:m=>`Roughly ${fmtNum(m.k12)} school-age children live here${m.childPoverty>=15?`, and ${fmtPct(m.childPoverty)} of children are below the poverty line`:''}.`,
+  how:['Get the real supply lists from the school district in June.','Ask members and two or three local businesses to sponsor bags at a fixed cost each.','Run it as a Sunday afternoon event in early August with food and games, not a handout line.','Keep the registration list and invite those families to the fall festival and VBS.'],
+  c:EFFORT.budget,p:'The school district; local businesses to sponsor bags'},
+ {id:'fall-festival',tier:1,st:'open',k:KIND.belong,n:'Fall festival on the church grounds',
+  need:['families','many-kids','settled','family-heavy'],boost:['many-kids'],w:10,ppl:8,cost:1,skill:[],load:1,
+  d:'A free October family evening — game booths, hay bales, candy, cider, a bounce house if the budget reaches. Families are already looking for somewhere safe to take children that week, and a church lot full of light and games is the easiest invitation of the year for a neighbor to accept.',
+  why:m=>`${fmtPct(m.kidsShare)} of residents here are children — about ${fmtNum(m.kids)} of them, most within walking or short driving distance.`,
+  how:['Book the last Saturday of October and assign one game booth per family or Sabbath School class.','Buy candy in bulk, borrow hay and pumpkins from a local farm, and string real lights.','Station greeters at the entrance collecting nothing but first names, and hand every family an invitation to one concrete next thing.'],
+  c:EFFORT.team,p:'Members with trucks and games; a local farm'},
+ {id:'pathfinders',tier:1,st:'trust',k:KIND.belong,n:'Pathfinder & Adventurer club, open to the neighborhood',
+  need:['many-kids','families','k12','family-heavy'],boost:['many-kids'],w:12,ppl:5,cost:1,skill:['kids'],load:2,
+  d:'The denomination\'s own scouting ministry — uniforms, honors, camping, community service — meeting twice a month and opened deliberately to non-member children. Whole families have joined the church through a child who joined the club first; it is the most reliable youth bridge Adventists own.',
+  why:m=>`About ${fmtNum(m.k12)} school-age children live in this tract — the exact age band the club is built for.`,
+  how:['Register the club with the conference youth department and get two adults background-checked and trained.','Set meetings on the first and third Sabbath afternoon or Sunday, and publish the year\'s calendar up front.','Tell every family the church serves that neighborhood kids are welcome, uniform provided if needed.'],
+  c:EFFORT.team,p:'Conference youth ministries'},
+ {id:'stop-smoking',tier:1,st:'trust',k:KIND.equip,n:'Stop-smoking program (Breathe-Free)',
+  need:['poor','service-work','low-income','jobless'],boost:['very-poor'],w:8,ppl:2,cost:0,skill:['medical'],load:1,
+  d:'The oldest Adventist community program there is, and it still fills rooms: eight sessions to quit, run twice a year, free. Smoking now concentrates in the neighborhoods with the least money for it — and everyone who quits tells the story of where they quit.',
+  why:m=>`${fmtPct(m.incLow)} of households earn under $35k and ${fmtPct(m.occ[1][1])} work service jobs — the demographics where smoking rates run highest today.`,
+  how:['Order the Breathe-Free 2 materials from the conference health department.','Schedule eight evening sessions and advertise through the clinic, the pharmacy, and the county quit-line.','Pair each participant with a member who calls twice a week between sessions.'],
+  c:EFFORT.team,p:'Conference health ministries; the county quit-line'},
+ {id:'moms-group',tier:1,st:'trust',k:KIND.belong,n:'Moms\' morning group with childcare',
+  need:['families','many-kids','single-parents','young','family-heavy'],boost:['single-parents'],w:10,ppl:4,cost:0,skill:['kids'],load:2,
+  d:'Two hours, twice a month: coffee, honest conversation, a short practical talk — and, the actual draw, someone trustworthy watching the children in the next room. Mothers of small children are among the most isolated adults in any neighborhood, and groups exactly like this are how thousands of churches reach them.',
+  why:m=>`${fmtPct(m.kidsShare)} of this tract is children${m.singleParent>=20?`, and ${fmtPct(m.singleParent)} of families with children are run by one parent`:''}.`,
+  how:['Pick two weekday mornings a month and lock in two background-checked childcare volunteers first.','Keep the format simple: coffee, one fifteen-minute practical topic, and unhurried talk.','Grow it by personal invitation — the school gate, the pediatrician\'s waiting room, the pantry line.'],
+  c:EFFORT.team,p:'None needed'},
+ {id:'sports-camp',tier:1,st:'open',k:KIND.belong,n:'Summer sports camp week',
+  need:['many-kids','k12','families','schools-near'],boost:['many-kids'],w:10,ppl:6,cost:1,skill:['kids'],load:1,
+  d:'One week, mornings only: soccer or basketball drills, snacks, a short character talk, a t-shirt at the end. Cheaper to run than VBS, it reaches the kids who would not come to VBS — and parents will sign up for anything free with a schedule in the summer.',
+  why:m=>`About ${fmtNum(m.k12)} school-age children live here, and summer is the season with the least for them to do.`,
+  how:['Pick a sport your members can actually coach and a week in late June.','Cap registration at what six adults can supervise; order t-shirts with the church name.','End Friday with a family cookout and hand parents the fall calendar.'],
+  c:EFFORT.team,p:'A member coach; the school athletic department'},
+ {id:'car-care',tier:1,st:'open',k:KIND.serve,n:'Car care day for single parents and seniors',
+  need:['single-parents','poor','low-income','service-work'],boost:['very-poor'],w:9,ppl:5,cost:1,skill:['trade'],load:1,
+  d:'Twice a year the practical members set up in the lot: oil changes, wiper blades, bulbs, tire pressure, fluid top-offs — free, while guests have coffee inside. For a single mother an oil change is eighty dollars and half a Saturday; this is the church doing something unmistakably useful with its own hands.',
+  why:m=>`${fmtPct(m.singleParent)} of families with children here have one parent, and ${fmtPct(m.incLow)} of households earn under $35k — car trouble is a budget crisis on these streets.`,
+  how:['Recruit the mechanics and handy members and pick a spring and a fall Saturday.','Ask an auto parts store for discounted oil and wipers in exchange for a banner.','Take reservations by name so nobody waits long, and serve real coffee and food inside while they do.'],
+  c:EFFORT.team,p:'A member mechanic; an auto parts store'},
+ {id:'christmas-store',tier:1,st:'open',k:KIND.serve,n:'Christmas toy store for parents',
+  need:['child-poverty','poor','many-kids','single-parents','very-poor'],boost:['child-poverty'],w:11,ppl:6,cost:2,skill:['admin'],load:1,
+  d:'Donated new toys set out store-style in December, where parents in a hard year shop for their own children at a few dollars apiece — or free — and wrap on site. Dignity is the whole design: the parents give the gifts, not the church. Churches that run this are remembered by name for years.',
+  why:m=>`${fmtPct(m.childPoverty)} of children in this tract live below the poverty line — December is the month that gap hurts most.`,
+  how:['Collect new, unwrapped toys from members and local businesses through November.','Invite families by name through the school counselor and the pantry list.','Set it up like a real store with carts and wrapping tables, and let parents choose.'],
+  c:EFFORT.budget,p:'The school counselor for invitations; local businesses for toys'},
  /* ---------- HEALTH: our deepest bench ---------- */
- {id:'bp-clinic',st:'open',k:KIND.serve,n:'Monthly blood pressure and wellness check',
+ {id:'bp-clinic',tier:1,st:'open',k:KIND.serve,n:'Monthly blood pressure and wellness check',
   need:['uninsured','older','seniors-alone','poor','service-work'],boost:['very-uninsured','very-old','no-car'],w:10,
   d:'A table in the foyer or on the parking lot, one Sunday a month: blood pressure, pulse, weight, a five-minute conversation, and a written referral for anything concerning. Nurses in the congregation can run it with no physician present. It is the lowest-cost, highest-trust door we have.',
   why:(m,t)=>t.has('very-uninsured')||t.has('uninsured')
@@ -1911,12 +1996,12 @@ const SIGNATURE=[
       ? `${fmtPct(m.seniorsAlone)} of households are a senior living alone \u2014 about ${fmtNum(m.seniorsAloneN)} homes where nobody checks.`
       : `${fmtPct(m.occ[1][1])} work service jobs, where hourly work makes a weekday appointment costly.`,
   c:EFFORT.solo,p:'Nurses and medical staff already in your pews'},
- {id:'health-expo',st:'open',k:KIND.serve,n:'Full health expo — screenings with a referral pathway',
+ {id:'health-expo',tier:1,st:'open',k:KIND.serve,n:'Full health expo — screenings with a referral pathway',
   need:['uninsured','poor','food-insecure'],boost:['very-uninsured','very-poor','immigrant'],w:9,
   d:'Blood pressure, glucose, BMI, vision, and body composition, with a nurse present and a written pathway to a real clinic. Add an interpreter table if the neighborhood needs one. Screening with nowhere to refer is worse than none — line the referrals up first.',
   why:m=>`${fmtPct(m.uninsured)} uninsured and ${fmtPct(m.poverty)} below the poverty line — this is a neighborhood that delays care until it is an emergency.`,
   c:EFFORT.partner,p:'Adventist health system hospital, or the county free clinic'},
- {id:'chip',st:'trust',k:KIND.equip,n:'CHIP or a lifestyle medicine course',
+ {id:'chip',tier:1,st:'trust',k:KIND.equip,n:'CHIP or a lifestyle medicine course',
   need:['uninsured','older','affluent','professional'],boost:['very-old','poor'],w:8,
   d:'Eight weeks on food, movement, sleep, and stress, with real measurements at both ends and a graduation night. It works in an affluent neighborhood as prevention and in a poor one as the only affordable medicine. Participants become friends of the church long before they become anything else.',
   why:(m,t)=>t.has('very-uninsured')||(t.has('uninsured')&&!t.has('affluent'))
@@ -1925,12 +2010,12 @@ const SIGNATURE=[
       ? `${fmtPct(m.occ[0][1])} in professional roles and ${fmtPct(m.incHigh)} of households over $150k \u2014 an audience that turns out for evidence-based health.`
       : `Median age ${m.medAge==null?'\u2014':m.medAge.toFixed(0)}, the stage of life when lifestyle change stops being theoretical.`,
   c:EFFORT.team,p:'Conference health ministries'},
- {id:'cooking-school',st:'trust',k:KIND.equip,n:'Plant-based cooking school',
+ {id:'cooking-school',tier:1,st:'trust',k:KIND.equip,n:'Plant-based cooking school',
   need:['food-insecure','poor','uninsured','families'],boost:['very-poor','child-poverty'],w:8,
   d:'Six sessions: cook together, eat together, take the food home with the recipe and the shopping list. Cheap, filling, genuinely healthier — and it answers the food-cost question the numbers are raising rather than lecturing about diet.',
   why:m=>`${fmtPct(m.snap)} of households used SNAP this year${m.childPoverty>=20?`, and ${fmtPct(m.childPoverty)} of children are below the poverty line`:''}.`,
   c:EFFORT.team,p:'Conference health ministries; regional food bank for supply'},
- {id:'mental-health',st:'trust',k:KIND.equip,n:'Stress, anxiety, and burnout evenings',
+ {id:'mental-health',tier:1,st:'trust',k:KIND.equip,n:'Stress, anxiety, and burnout evenings',
   need:['professional','students','single-parents','service-work'],boost:['affluent','young'],w:8,
   d:'Four evenings on exhaustion, anxiety, sleep, and phones — taught by a counsellor or mental-health nurse, not preached. In a professional neighborhood this fills a room that a doctrinal series would not, and it names the poverty that money does not fix.',
   why:(m,t)=>t.has('students')?`About ${fmtNum(m.college)} residents are studying, the group most exposed to anxiety and least likely to seek help.`
@@ -1938,17 +2023,17 @@ const SIGNATURE=[
     :t.has('single-parents')?`${fmtPct(m.singleParent)} of families with children are run by one adult, with no one to hand over to.`
     :`${fmtPct(m.occ[1][1])} work service jobs \u2014 irregular hours, thin margins, high stress.`,
   c:EFFORT.team,p:'A member counsellor or mental-health nurse'},
- {id:'grief',st:'deeper',k:KIND.belong,n:'Grief recovery group',
+ {id:'grief',tier:1,st:'deeper',k:KIND.belong,n:'Grief recovery group',
   need:['older','seniors-alone','very-old'],boost:['very-old'],w:7,
   d:'Eight weeks, open to the whole community, run twice a year. Funeral homes will refer to you because almost nobody else offers it. The most consistently fruitful ministry an older neighborhood has.',
   why:m=>`Median age ${m.medAge==null?'—':m.medAge.toFixed(0)} and ${fmtPct(m.seniorsAlone)} of households are one senior living alone.`,
   c:EFFORT.team,p:'Local funeral homes will refer'},
- {id:'kids-health',st:'open',k:KIND.serve,n:'Sports physicals and vision screening before term',
+ {id:'kids-health',tier:1,st:'open',k:KIND.serve,n:'Sports physicals and vision screening before term',
   need:['many-kids','families','child-poverty','uninsured'],boost:['very-poor'],w:7,
   d:'August, before school starts, with a physician and nurses. Sports physicals are required, cost money, and are a genuine barrier for uninsured families — this removes it and puts you in front of every parent in the neighborhood.',
   why:m=>`About ${fmtNum(m.kids)} children live here and ${fmtPct(m.uninsured)} of residents are uninsured.`,
   c:EFFORT.partner,p:'A physician member; the school district for referrals'},
- {id:'walking-club',st:'open',k:KIND.belong,n:'Neighborhood walking club from the church door',
+ {id:'walking-club',tier:2,st:'open',k:KIND.belong,n:'Neighborhood walking club from the church door',
   need:['older','car-dependent','affluent','families'],boost:['very-old'],w:5,
   d:'Same time, three mornings a week, from your parking lot. Free, needs no equipment, and turns your address into a place people arrive at habitually. Conversation on a walk goes deeper than conversation in a pew.',
   why:(m,t)=>t.has('very-old')||t.has('older')
@@ -1957,132 +2042,132 @@ const SIGNATURE=[
   c:EFFORT.solo,p:'None needed'},
 
  /* ---------- BIBLE, PROPHECY, AND THE MESSAGE ---------- */
- {id:'proph-news',st:'decide',k:KIND.invite,n:'Prophecy in the headlines — four nights',
+ {id:'proph-news',tier:1,st:'decide',k:KIND.invite,n:'Prophecy in the headlines — four nights',
   need:['settled','homeowners','older','changing'],boost:['very-old','homeowners'],w:8,
   d:'A short, honest series connecting Daniel and Revelation to what people are actually anxious about, with the full study offered afterwards to anyone who wants it. Four nights respects people\'s time and still lets you say what matters.',
   why:(m,t)=>t.has('homeowners')?`${fmtPct(100-(m.renters??0))} own their homes here \u2014 people stay long enough for a series and its follow-up to bear fruit.`
     :t.has('changing')?`This neighborhood has changed markedly in ten years; unsettled times are when these questions get asked out loud.`
     :`A stable population, where the people who attend in spring are still here in autumn.`,
   c:EFFORT.budget,p:'Conference evangelism department'},
- {id:'proph-language',st:'decide',k:KIND.invite,n:'Prophecy seminar in the community\'s language',
+ {id:'proph-language',tier:1,st:'decide',k:KIND.invite,n:'Prophecy seminar in the community\'s language',
   need:['immigrant','spanish','multilingual','limited-english'],boost:['very-immigrant','newcomers'],w:9,
   d:'The same message, taught in the language people pray in, by or with a native speaker. Immigrant communities are often more open to Scripture than the surrounding culture and are routinely reached by nobody at all.',
   why:m=>`${fmtPct(m.foreign)} were born abroad${m.langs[0]?` and ${fmtPct(m.langs[0].share)} speak ${m.langs[0].name} at home`:''}.`,
   c:EFFORT.budget,p:'Conference multilingual ministries; a native-speaking presenter'},
- {id:'questions-night',st:'deeper',k:KIND.invite,n:'Hard questions night — no sermon, just answers',
+ {id:'questions-night',tier:2,st:'deeper',k:KIND.invite,n:'Hard questions night — no sermon, just answers',
   need:['students','professional','young','changing'],boost:['students'],w:7,
   d:'Suffering, science, other religions, the Bible\'s reliability. Take real questions, submitted anonymously, and answer them honestly including where the honest answer is "we do not know". Educated and young neighborhoods respect this and distrust polish.',
   why:(m,t)=>t.has('students')?`About ${fmtNum(m.college)} residents are in college \u2014 an age that will argue honestly if you let them.`
     :t.has('changing')?`A neighborhood whose makeup has shifted markedly in ten years; assumptions travel badly here.`
     :`${fmtPct(m.occ[0][1])} in professional roles \u2014 an audience that responds to evidence, not volume.`,
   c:EFFORT.team,p:'None needed'},
- {id:'archaeology',st:'deeper',k:KIND.invite,n:'Archaeology and the Bible',
+ {id:'archaeology',tier:2,st:'deeper',k:KIND.invite,n:'Archaeology and the Bible',
   need:['professional','affluent','older','homeowners'],boost:['affluent'],w:5,
   d:'Three evenings of artefacts, excavations, and manuscripts. It reaches sceptical, educated neighbors who would never attend a prophecy series, and it earns the right to a second conversation.',
   why:m=>`${fmtPct(m.occ[0][1])} work in management and professional roles.`,
   c:EFFORT.budget,p:'Conference; a visiting presenter'},
- {id:'bible-by-post',st:'deeper',k:KIND.invite,n:'Bible school by post and by phone',
+ {id:'bible-by-post',tier:1,st:'deeper',k:KIND.invite,n:'Bible school by post and by phone',
   need:['no-car','seniors-alone','very-old','crowded'],boost:['no-car'],w:6,
   d:'For people who cannot easily travel, the study comes to them: printed lessons, marked and returned, with a phone call about each one. Old-fashioned, cheap, and it reaches the people every event-based ministry misses.',
   why:m=>`${fmtPct(m.noCar)} of households have no vehicle${m.seniorsAlone>=11?` and ${fmtPct(m.seniorsAlone)} are seniors living alone`:''}.`,
   c:EFFORT.solo,p:'Conference Bible school materials'},
- {id:'family-life-series',st:'trust',k:KIND.invite,n:'Family life series as the front door',
+ {id:'family-life-series',tier:1,st:'trust',k:KIND.invite,n:'Family life series as the front door',
   need:['families','many-kids','single-parents','family-heavy'],boost:['many-kids','child-poverty'],w:9,
   d:'Run parenting, marriage, and money as a public series, then let the spiritual series follow for those who ask. In a young-family neighborhood this out-draws a doctrinal opening every time — and the people who come are the people who stay.',
   why:m=>`${fmtPct(m.kidsShare)} of residents are children and ${fmtPct(m.singleParent)} of families with children have one parent.`,
   c:EFFORT.team,p:'Conference family ministries'},
 
  /* ---------- LITERATURE ---------- */
- {id:'glow-racks',st:'open',k:KIND.serve,n:'Literature racks where people actually wait',
+ {id:'glow-racks',tier:1,st:'open',k:KIND.serve,n:'Literature racks where people actually wait',
   need:['renters','no-car','dense','service-work','low-income'],boost:['no-car','dense'],w:6,
   d:'Laundromats, bus stops, clinics, barbershops, apartment lobbies. Small tracts in the right language, restocked on a fixed day by a named person. It costs almost nothing and works precisely where a door-knock will not.',
   why:m=>`${fmtPct(m.renters)} rent${m.noCar>=9?` and ${fmtPct(m.noCar)} have no car — these are the places they wait`:''}.`,
   c:EFFORT.solo,p:'Conference literature ministries'},
- {id:'lit-doors',st:'open',k:KIND.serve,n:'Book drop on settled streets',
+ {id:'lit-doors',tier:1,st:'open',k:KIND.serve,n:'Book drop on settled streets',
   need:['homeowners','settled','older'],boost:['homeowners'],w:5,
   d:'A quality book left at the door with a card offering the free Bible study, then a follow-up visit six weeks later — the follow-up is the ministry, the book is the introduction. Works where people stay put long enough to be found again.',
   why:m=>`Only ${fmtPct(m.renters)} rent here, so the household you visit next spring is likely the same household.`,
   c:EFFORT.budget,p:'Conference literature ministries'},
- {id:'lit-multilingual',st:'open',k:KIND.serve,n:'Literature in the languages spoken here',
+ {id:'lit-multilingual',tier:1,st:'open',k:KIND.serve,n:'Literature in the languages spoken here',
   need:['immigrant','multilingual','spanish','limited-english'],boost:['very-immigrant'],w:7,
   d:'Order in the languages the data shows, not the ones you assume. A single title in the right language, given by a person who speaks it, outperforms a box of English books.',
   why:m=>`Top languages at home: ${m.langs.slice(0,3).map(x=>x.name+' '+fmtPct(x.share)).join(', ')}.`,
   c:EFFORT.solo,p:'Conference multilingual ministries'},
- {id:'kids-books',st:'open',k:KIND.serve,n:'Children\'s story books through the school',
+ {id:'kids-books',tier:2,st:'open',k:KIND.serve,n:'Children\'s story books through the school',
   need:['many-kids','families','schools-near','child-poverty'],boost:['child-poverty'],w:6,
   d:'Donate quality children\'s Bible story books to the school library and the classroom reading corners, plus a set for the waiting room at the paediatric clinic. Welcomed where a tract would not be.',
   why:m=>`About ${fmtNum(m.k12)} children here are in K-12.`,
   c:EFFORT.budget,p:'School librarian'},
 
  /* ---------- THE PROPERTY: six days a week it sits empty ---------- */
- {id:'lot-market',st:'open',k:KIND.belong,n:'Open the parking lot — market or food-truck night',
+ {id:'lot-market',tier:1,st:'open',k:KIND.belong,n:'Open the parking lot — market or food-truck night',
   need:['dense','families','renters','low-income'],boost:['many-kids','dense'],w:8,
   d:'A produce market, a food-truck evening, or both, monthly on your own land. Members host a free lemonade and games table rather than a literature table. You become the address where the neighborhood gathers before you are the address where they worship.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract${m.renters>=40?`, ${fmtPct(m.renters)} of them renting with little outdoor space of their own`:''}.`,
   c:EFFORT.team,p:'Township for permits; local growers and food trucks'},
- {id:'lot-sport',st:'open',k:KIND.belong,n:'Turn the lot into a court',
+ {id:'lot-sport',tier:2,st:'open',k:KIND.belong,n:'Turn the lot into a court',
   need:['many-kids','young','dense','low-income'],boost:['many-kids','crowded'],w:7,
   d:'Paint lines, put up two hoops or a net, open it on fixed evenings with an adult present. In a neighborhood full of children and short of space, a free safe place to play is worth more than any leaflet — and the parents come with them.',
   why:m=>`${fmtPct(m.kidsShare)} of residents are under 18${m.overcrowd>=4?` and ${fmtPct(m.overcrowd)} of homes are overcrowded`:''}.`,
   c:EFFORT.budget,p:'None needed; a local sports club may co-run it'},
- {id:'sanctuary-music',st:'open',k:KIND.belong,n:'Lend the sanctuary as a recital hall',
+ {id:'sanctuary-music',tier:2,st:'open',k:KIND.belong,n:'Lend the sanctuary as a recital hall',
   need:['professional','affluent','students','families'],boost:['affluent','students'],w:7,
   d:'Free to music teachers, school ensembles, and community choirs for recitals and rehearsals. A hundred parents sit in your sanctuary hearing their own children, which no advertisement can buy. Offer it with genuinely no strings.',
   why:(m,t)=>t.has('affluent')?`${fmtPct(m.incHigh)} of households earn over $150k \u2014 music lessons are common here and free venues are not.`
     :t.has('students')?`About ${fmtNum(m.college)} residents are studying, and student ensembles are always short of a room.`
     :`About ${fmtNum(m.kids)} children live here, and school music departments rarely have a hall of their own.`,
   c:EFFORT.solo,p:'Local music teachers and school music departments'},
- {id:'study-hall',st:'open',k:KIND.serve,n:'Free study hall and co-working',
+ {id:'study-hall',tier:2,st:'open',k:KIND.serve,n:'Free study hall and co-working',
   need:['students','crowded','renters','professional'],boost:['crowded','students'],w:6,
   d:'Wifi, power, quiet, tea, two evenings a week and Sunday afternoons. In overcrowded housing there is nowhere to think; for remote workers there is nowhere free to go. Both groups arrive weekly, without being asked to believe anything.',
   why:m=>`${fmtPct(m.overcrowd)} of homes have more than one person per room${m.college>=150?` and about ${fmtNum(m.college)} residents are studying`:''}.`,
   c:EFFORT.solo,p:'None needed'},
- {id:'warming',st:'open',k:KIND.serve,n:'Warming and cooling station',
+ {id:'warming',tier:1,st:'open',k:KIND.serve,n:'Warming and cooling station',
   need:['poor','very-poor','no-car','seniors-alone'],boost:['very-poor'],w:6,
   d:'Register with the county as a heat or cold shelter. Some days a year it is the most important building in the neighborhood, and it puts your church on the county\'s official list of places that help.',
   why:m=>`${fmtPct(m.poverty)} live below the poverty line${m.seniorsAlone>=11?` and ${fmtPct(m.seniorsAlone)} of households are a senior alone`:''} — utility shut-offs and heat waves hit here first.`,
   c:EFFORT.team,p:'County emergency management'},
- {id:'free-venue',st:'open',k:KIND.serve,n:'Free room for recovery and support groups',
+ {id:'free-venue',tier:1,st:'open',k:KIND.serve,n:'Free room for recovery and support groups',
   need:['poor','jobless','service-work','low-income'],boost:['very-poor','jobless'],w:6,
   d:'AA, NA, Al-Anon, and grief or caregiver groups all need free, reliable, non-judgemental rooms. Say yes, charge nothing, do not attend, and do not evangelise the meeting. Trust compounds over years.',
   why:m=>`${fmtPct(m.poverty)} in poverty and ${fmtPct(m.unemp)} unemployed — the conditions where these groups are most needed and least hosted.`,
   c:EFFORT.solo,p:'Local AA/NA intergroup'},
- {id:'garden',st:'trust',k:KIND.belong,n:'Community garden on church land',
+ {id:'garden',tier:1,st:'trust',k:KIND.belong,n:'Community garden on church land',
   need:['food-insecure','poor','crowded','renters'],boost:['very-poor','crowded'],w:7,
   d:'Beds allocated to neighborhood households, not just members, with a shared tool shed and a watering rota. Food, outdoor work, and a reason for the same people to be on your property every week for six months.',
   why:m=>`${fmtPct(m.snap)} of households used SNAP${m.renters>=40?` and ${fmtPct(m.renters)} rent, so few have growing space`:''}.`,
   c:EFFORT.team,p:'Penn State Extension master gardeners'},
- {id:'drive-in',st:'open',k:KIND.belong,n:'Outdoor film night on the lot',
+ {id:'drive-in',tier:1,st:'open',k:KIND.belong,n:'Outdoor film night on the lot',
   need:['car-dependent','families','many-kids','settled'],boost:['many-kids'],w:5,
   d:'A projector, a sheet, free popcorn, a family film, four times a summer. Cheap, unthreatening, and in a car-dependent suburb people will drive to it who would never walk into a service.',
   why:m=>`${fmtPct(100-(m.noCar??0))} of households have a car and ${fmtPct(m.kidsShare)} of residents are children.`,
   c:EFFORT.budget,p:'None needed'},
- {id:'esl-center',st:'trust',k:KIND.equip,n:'Make the building a language and citizenship center',
+ {id:'esl-center',tier:1,st:'trust',k:KIND.equip,n:'Make the building a language and citizenship center',
   need:['immigrant','limited-english','newcomers','very-immigrant'],boost:['very-immigrant','limited-english'],w:9,
   d:'Not one class — a schedule: English at two levels, citizenship preparation, and a paperwork clinic, all in the same building on the same evenings. Depth in one thing beats a scattering of six, and this community will tell each other about it.',
   why:m=>`${fmtPct(m.limEng)} of households have no confident English speaker and ${fmtPct(m.foreign)} were born abroad.`,
   c:EFFORT.partner,p:'Community college adult education; a local immigrant services nonprofit'},
- {id:'skills-center',st:'trust',k:KIND.equip,n:'Weekday skills center',
+ {id:'skills-center',tier:2,st:'trust',k:KIND.equip,n:'Weekday skills center',
   need:['jobless','low-income','service-work','poor'],boost:['jobless'],w:7,
   d:'Your empty weekday building plus a certificate course that leads to a wage — food safety, forklift, basic IT, CNA preparation. Partner with the community college so the certificate is real. This changes household income, which changes everything else.',
   why:m=>`Unemployment ${fmtPct(m.unemp)} and ${fmtPct(m.incLow)} of households under $35k.`,
   c:EFFORT.partner,p:'Community college workforce division; PA CareerLink'},
- {id:'disaster',st:'open',k:KIND.serve,n:'Register as a disaster response site',
+ {id:'disaster',tier:1,st:'open',k:KIND.serve,n:'Register as a disaster response site',
   need:['settled','dense','poor','older'],boost:['dense'],w:4,
   d:'Train a small ACS disaster response team and register your building with the county as a staging or distribution point. It costs little in a normal year and makes you indispensable in a bad one.',
   why:()=>`A settled neighborhood where the church building is a fixed, known point.`,
   c:EFFORT.team,p:'Adventist Community Services disaster response; county emergency management'},
- {id:'blood-drive',st:'open',k:KIND.serve,n:'Standing blood drive',
+ {id:'blood-drive',tier:1,st:'open',k:KIND.serve,n:'Standing blood drive',
   need:['settled','homeowners','older','professional'],boost:['homeowners'],w:4,
   d:'Quarterly, with the Red Cross doing the work and your members doing hospitality. It brings dozens of neighbors into the building for an hour, on a health theme, with no ask attached.',
   why:()=>`A stable neighborhood where a repeating quarterly rhythm will build recognition.`,
   c:EFFORT.solo,p:'American Red Cross'},
- {id:'senior-day',st:'trust',k:KIND.belong,n:'Weekday senior day program',
+ {id:'senior-day',tier:1,st:'trust',k:KIND.belong,n:'Weekday senior day program',
   need:['very-old','seniors-alone','older'],boost:['very-old'],w:7,
   d:'One full weekday: transport, a hot lunch, exercise, a talk, games, and a nurse checking blood pressure. It fills the building on a dead day and answers isolation with something dependable rather than occasional.',
   why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior living alone — about ${fmtNum(m.seniorsAloneN)} homes.`,
   c:EFFORT.team,p:'Area Agency on Aging; local senior center'},
- {id:'music-academy',st:'trust',k:KIND.belong,n:'Neighborhood music academy',
+ {id:'music-academy',tier:2,st:'trust',k:KIND.belong,n:'Neighborhood music academy',
   need:['families','affluent','many-kids','professional'],boost:['affluent'],w:6,
   d:'Low-cost lessons in your rooms on weekday evenings, taught by members and local teachers, ending in a termly concert. Families commit for years, which is exactly the timescale relationships need.',
   why:m=>`About ${fmtNum(m.kids)} children live here${m.incHigh>=30?`, in a neighborhood where ${fmtPct(m.incHigh)} of households earn over $150k`:''}.`,
@@ -2095,262 +2180,262 @@ const SIGNATURE=[
     to start rather than a list of things it cannot afford. */
 
  /* ---------- OPEN: costs almost nothing, needs almost nobody ---------- */
- {id:'prayer-box',st:'open',k:KIND.serve,n:'A prayer request box at the gate',
+ {id:'prayer-box',tier:2,st:'open',k:KIND.serve,n:'A prayer request box at the gate',
   need:['dense','poor','renters','service-work','crowded'],boost:['very-poor'],w:9,ppl:1,cost:0,skill:[],
   d:'A weatherproof box on the fence with cards and a pen: write what you would like prayed for, anonymously if you prefer. Someone empties it weekly and the prayer team actually prays. Answer any that leave a name with a handwritten note, never a leaflet. It is the cheapest thing on this list and it tells you what the street is carrying.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract; a box asks nothing of them and gives you their own words for what hurts.`,
   c:EFFORT.solo,p:'Nobody outside the church'},
- {id:'pantry-box',st:'open',k:KIND.serve,n:'A pantry and book box on the sidewalk',
+ {id:'pantry-box',tier:2,st:'open',k:KIND.serve,n:'A pantry and book box on the sidewalk',
   need:['food-insecure','poor','very-poor','low-income','snap' ],boost:['child-poverty'],w:10,ppl:1,cost:1,skill:['trade'],
   d:'One cupboard at the edge of your property, open all hours: canned food, diapers, a shelf of books. Take what you need, leave what you can. No form, no queue, no eye contact required. Restock it on a rota and it becomes the most-used thing your church owns.',
   why:m=>`${fmtPct(m.snap)} of households here receive food assistance${m.childPoverty>=20?`, and ${fmtPct(m.childPoverty)} of children live below the poverty line`:''}.`,
   c:EFFORT.solo,p:'A local food bank for bulk stock'},
- {id:'wifi-porch',st:'open',k:KIND.serve,n:'Open the wifi and put out a charging bench',
+ {id:'wifi-porch',tier:2,st:'open',k:KIND.serve,n:'Open the wifi and put out a charging bench',
   need:['poor','students','renters','young','low-income'],boost:['very-poor'],w:7,ppl:1,cost:0,skill:[],
   d:'Unlock the guest wifi, put a bench and a power strip under the porch, and post the password on the noticeboard. People doing homework, job applications and immigration paperwork will sit there. You have not run a program; you have made your building useful on a Tuesday.',
   why:m=>`${fmtPct(m.poverty)} live below the poverty line${m.college>=25?`, in a tract where ${fmtPct(m.college)} hold a degree — the gap is who has a desk to work at`:''}.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'blessing-bags',st:'open',k:KIND.serve,n:'Blessing bags for people working the awkward shifts',
+ {id:'blessing-bags',tier:2,st:'open',k:KIND.serve,n:'Blessing bags for people working the awkward shifts',
   need:['service-work','jobless','poor','dense'],boost:['very-poor'],w:7,ppl:3,cost:1,skill:[],
   d:'Bags for the people who keep the neighborhood running at hours nobody thanks them for: gas stations, care homes, night overnight stocking, bus depots. Water, a snack, something warm, a card with the church address and no sermon on it. Delivered by two members who introduce themselves and leave.',
   why:m=>`${fmtPct(m.occ[1][1])} of workers here are in service occupations, where the hours are the ones nobody else wants.`,
   c:EFFORT.team,p:'Local employers'},
- {id:'noticeboard',st:'open',k:KIND.belong,n:'Give your noticeboard to the neighborhood',
+ {id:'noticeboard',tier:2,st:'open',k:KIND.belong,n:'Give your noticeboard to the neighborhood',
   need:['settled','homeowners','older','dense'],boost:[],w:6,ppl:1,cost:0,skill:[],
   d:'Mount a real community bulletin board on your outside wall, facing the sidewalk: yard sales, a room for rent, someone offering piano lessons, the township meeting nobody heard about, a lost dog. One member clears the dead notices every week. A church that is useful to a street before it is interesting to it earns the right to be interesting later.',
   why:m=>`${fmtPct(m.settled!==undefined?m.settled:m.homeowners)} of households own their home here — a settled street that keeps its own notices.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'lift-rota',st:'open',k:KIND.serve,n:'A standing lifts rota to appointments',
+ {id:'lift-rota',tier:2,st:'open',k:KIND.serve,n:'A standing lifts rota to appointments',
   need:['no-car','seniors-alone','very-old','older'],boost:['no-car','very-old'],w:11,ppl:3,cost:0,skill:['vehicle','weekday'],
   d:'Not a minibus and not a program: three or four members with cars and a shared calendar, taking neighbors to hospital appointments, the pharmacy and the supermarket. Twenty minutes each way is twenty minutes of conversation nobody scheduled, twice a month, for years.',
   why:m=>`${fmtPct(m.noCar)} of households have no car${m.seniorsAlone>=10?`, and ${fmtPct(m.seniorsAlone)} are a senior living alone`:''}.`,
   c:EFFORT.team,p:'Local clinics; the county'},
 
  /* ---------- TRUST: repeating, useful, and mostly cheap ---------- */
- {id:'homework-club',st:'trust',k:KIND.equip,n:'Weekly homework club',
+ {id:'homework-club',tier:1,st:'trust',k:KIND.equip,n:'Weekly homework club',
   need:['many-kids','families','schools-near','k12','single-parents','child-poverty'],boost:['child-poverty','crowded'],w:11,ppl:4,cost:0,skill:['teach','kids'],
   d:'One weekday hour after school, every week of term: a quiet table, a snack, and adults who can help with maths. Crowded homes have nowhere to work and working parents cannot supervise at five o\u2019clock. Consistency is the whole product — miss weeks and it dies.',
   why:m=>`About ${fmtNum(m.k12)} school-age children live here${m.overcrowd>=5?`, and ${fmtPct(m.overcrowd)} of homes are overcrowded — there is nowhere quiet to work`:''}.`,
   c:EFFORT.team,p:'The nearest school; retired teachers'},
- {id:'repair-cafe',st:'trust',k:KIND.serve,n:'Fix-it Saturday',
+ {id:'repair-cafe',tier:2,st:'trust',k:KIND.serve,n:'Fix-it Saturday',
   need:['poor','low-income','renters','older','service-work'],boost:['very-poor'],w:9,ppl:4,cost:0,skill:['trade'],
   d:'One Saturday a month the practical members set up tables and mend what people bring — lamps, bikes, a torn seam, a laptop that will not start. Free, unhurried, and side by side rather than face to face, which is how men in particular start talking.',
   why:m=>`${fmtPct(m.poverty)} live below the poverty line, where replacing a broken thing is not an option.`,
   c:EFFORT.team,p:'A local repair group; a hardware shop'},
- {id:'job-club',st:'trust',k:KIND.equip,n:'Job club — CVs, applications, practice interviews',
+ {id:'job-club',tier:1,st:'trust',k:KIND.equip,n:'Job club — CVs, applications, practice interviews',
   need:['jobless','unemp','poor','service-work','young'],boost:['jobless'],w:10,ppl:2,cost:0,skill:['admin','teach'],
   d:'A weekly two hours: a computer, a printer, someone who can write a decent CV and someone who will sit through a mock interview and be honest afterwards. Members who hire people are unusually good at this and rarely asked.',
   why:m=>`Unemployment here runs at ${fmtPct(m.unemp)}${m.college<20?`, in a tract where only ${fmtPct(m.college)} hold a degree`:''}.`,
   c:EFFORT.team,p:'The workforce center; local employers'},
- {id:'money-course',st:'trust',k:KIND.equip,n:'Budgeting and debt evenings',
+ {id:'money-course',tier:1,st:'trust',k:KIND.equip,n:'Budgeting and debt evenings',
   need:['poor','low-income','renters','single-parents','service-work'],boost:['very-poor','child-poverty'],w:9,ppl:2,cost:0,skill:['teach'],
   d:'Six evenings on where the money actually goes, what to do about a debt letter, and how to build a first $500 of savings. Taught plainly, with childcare in the next room. Money is the most private thing in a household, which is exactly why help with it builds trust so fast.',
   why:m=>`${fmtPct(m.incLow)} of households earn under $35k${m.renters>=45?`, and ${fmtPct(m.renters)} rent, where a bad month means a moving van`:''}.`,
   c:EFFORT.team,p:'A credit union; a nonprofit credit counselor'},
- {id:'conversation-cafe',st:'trust',k:KIND.equip,n:'English conversation café',
+ {id:'conversation-cafe',tier:1,st:'trust',k:KIND.equip,n:'English conversation café',
   need:['limited-english','immigrant','very-immigrant','multilingual','spanish','newcomers'],boost:['very-immigrant'],w:11,ppl:4,cost:0,skill:['teach'],
   d:'Not a class — a room with tea and enough native speakers to sit one to a table and just talk. Far less intimidating than a course, needs no curriculum, and the people who come are new here and have almost nobody.',
   why:m=>`${fmtPct(m.limEng)} of households speak English less than very well${m.foreign>=20?`; ${fmtPct(m.foreign)} of residents were born abroad`:''}.`,
   c:EFFORT.team,p:'The library; an immigrant services agency'},
- {id:'toy-swap',st:'trust',k:KIND.serve,n:'Seasonal toy, coat and uniform swap',
+ {id:'toy-swap',tier:2,st:'trust',k:KIND.serve,n:'Seasonal toy, coat and uniform swap',
   need:['many-kids','single-parents','poor','child-poverty','families'],boost:['child-poverty','very-poor'],w:8,ppl:5,cost:0,skill:['admin'],
   d:'Four times a year: bring what your children have outgrown, take what fits. Dignified because everyone is both giving and receiving. School uniform in August is the one that fills a hall.',
   why:m=>`${fmtPct(m.childPoverty)} of children here live below the poverty line${m.singleParent>=25?`, and ${fmtPct(m.singleParent)} of families are headed by one parent`:''}.`,
   c:EFFORT.team,p:'Schools; a children\u2019s center'},
- {id:'digital-help',st:'trust',k:KIND.equip,n:'Digital help desk for older neighbors',
+ {id:'digital-help',tier:2,st:'trust',k:KIND.equip,n:'Digital help desk for older neighbors',
   need:['very-old','older','seniors-alone'],boost:['very-old'],w:9,ppl:2,cost:0,skill:['weekday'],
   d:'Two hours a week: patient portals, video calls to grandchildren, the bank that closed the local branch, the scam text that frightened them. Younger members are startlingly good at this and it puts two generations at one screen.',
   why:m=>`The median age here is ${m.medAge}${m.seniorsAlone>=10?`, and ${fmtPct(m.seniorsAlone)} of households are one senior living alone`:''}.`,
   c:EFFORT.team,p:'the Area Agency on Aging or the local library'},
- {id:'meal-train',st:'trust',k:KIND.serve,n:'A meal rota for new babies, illness and bereavement',
+ {id:'meal-train',tier:1,st:'trust',k:KIND.serve,n:'A meal rota for new babies, illness and bereavement',
   need:['families','many-kids','young','settled','seniors-alone'],boost:[],w:8,ppl:5,cost:1,skill:['cook'],
   d:'A shared calendar and a rule: any household on this street with a new baby, a hospital discharge or a funeral gets a hot meal three times that fortnight. Ask the neighbors to nominate each other. It costs a casserole and it is remembered for a decade.',
   why:m=>`About ${fmtNum(m.kids)} children live here, and ${fmtPct(m.seniorsAlone)} of households are a senior on their own — both ends of a street where nobody cooks on a hard week.`,
   c:EFFORT.team,p:'Neighbors; the local midwifery team'},
- {id:'bereavement-visits',st:'trust',k:KIND.belong,n:'A bereavement visiting rota',
+ {id:'bereavement-visits',tier:1,st:'trust',k:KIND.belong,n:'A bereavement visiting rota',
   need:['very-old','older','seniors-alone'],boost:['very-old','seniors-alone'],w:9,ppl:3,cost:0,skill:['weekday'],
   d:'Everyone visits in the first fortnight and nobody visits in the sixth month, which is when it is hardest. Keep a list, and send someone at one month, three months, six months and the first anniversary. Take nothing, say little, stay an hour.',
   why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior living alone — about ${fmtNum(m.seniorsAloneN)} homes where a death leaves no one in the house.`,
   c:EFFORT.solo,p:'Local funeral homes; the doctor\u2019s office'},
 
  /* ---------- DEEPER: the stage that was nearly empty ---------- */
- {id:'kitchen-study',st:'deeper',k:KIND.invite,n:'One study, at one kitchen table',
+ {id:'kitchen-study',tier:1,st:'deeper',k:KIND.invite,n:'One study, at one kitchen table',
   need:['settled','homeowners','older','families','poor','renters'],boost:[],w:12,ppl:1,cost:0,skill:['lead'],
   d:'The smallest unit of evangelism and the most productive: one member, one household, one evening a week, one lesson at a time. No hall, no budget, no advertising. A church of twelve can run six of these and reach more people than a series would.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract. Six studies running weekly reaches more of them, more deeply, than most public efforts.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'walk-study',st:'deeper',k:KIND.invite,n:'Walk-and-talk study',
+ {id:'walk-study',tier:2,st:'deeper',k:KIND.invite,n:'Walk-and-talk study',
   need:['older','seniors-alone','no-car','settled','young'],boost:[],w:9,ppl:1,cost:0,skill:['lead'],
   d:'Some people will never sit opposite you with a Bible open, but will walk a mile beside you. Same passage, same questions, shoulder to shoulder and no eye contact — which is precisely why the harder things get said.',
   why:m=>`${fmtPct(m.noCar)} of households have no car, and ${fmtPct(m.seniorsAlone)} are a senior alone; walking is what people here already do.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'supper-study',st:'deeper',k:KIND.belong,n:'Supper club that opens a Bible at the end',
+ {id:'supper-study',tier:2,st:'deeper',k:KIND.belong,n:'Supper club that opens a Bible at the end',
   need:['young','students','professional','renters','newcomers'],boost:[],w:10,ppl:3,cost:1,skill:['cook','lead'],
   d:'Eat first, properly, at a real table — then twenty minutes on one passage and one question, and stop while people still want more. Younger adults who would decline a Bible study will accept a dinner invitation from someone they like.',
   why:m=>`The median age here is ${m.medAge}${m.renters>=45?` and ${fmtPct(m.renters)} rent — a population that eats out and lives alone`:''}.`,
   c:EFFORT.team,p:'Nobody'},
- {id:'text-thread',st:'deeper',k:KIND.invite,n:'One question a week, by message',
+ {id:'text-thread',tier:2,st:'deeper',k:KIND.invite,n:'One question a week, by message',
   need:['young','students','service-work','professional','newcomers'],boost:[],w:9,ppl:1,cost:0,skill:['lead'],
   d:'A short group message every Wednesday: one verse, one honest question, no obligation to answer. People reply at midnight when they cannot sleep. Costs nothing, crosses shift patterns, and reaches the person who will never make a Tuesday evening.',
   why:m=>`${fmtPct(m.occ[1][1])} work service jobs on rotas that no fixed weekly meeting can accommodate.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'workplace-study',st:'deeper',k:KIND.invite,n:'Break-room study where members already work',
+ {id:'workplace-study',tier:2,st:'deeper',k:KIND.invite,n:'Break-room study where members already work',
   need:['service-work','jobless','young','professional'],boost:[],w:8,ppl:1,cost:0,skill:['lead'],
   d:'Half an hour in the break room, on the member\u2019s own shift, with colleagues who already trust them. Ask permission properly, keep it exactly to time, and never let it look like company business. The relationship is already built; you are only opening a book inside it.',
   why:m=>`${fmtPct(m.occ[1][1])} of workers here are in service occupations — the mission field most members are already standing in.`,
   c:EFFORT.solo,p:'The member\u2019s employer'},
- {id:'health-to-why',st:'deeper',k:KIND.invite,n:'From the health course to why we live this way',
+ {id:'health-to-why',tier:1,st:'deeper',k:KIND.invite,n:'From the health course to why we live this way',
   need:['uninsured','very-uninsured','older','poor','service-work'],boost:[],w:11,ppl:2,cost:0,skill:['lead','medical'],
   d:'The natural next step nobody takes. On the last night of a cooking school or lifestyle course, offer four more evenings on where the principles come from — rest, trust, the body as a gift. The audience is already there, already convinced it works, and already asking.',
   why:m=>`${fmtPct(m.uninsured)} here have no health insurance; the people who came for the health are the ones most ready to ask why.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'grief-to-hope',st:'deeper',k:KIND.invite,n:'From grief group into the hope study',
+ {id:'grief-to-hope',tier:1,st:'deeper',k:KIND.invite,n:'From grief group into the hope study',
   need:['very-old','older','seniors-alone'],boost:['very-old'],w:10,ppl:2,cost:0,skill:['lead'],
   d:'A grief group answers a question it cannot itself resolve. When the twelve weeks end, offer six more on what the Bible actually says about death, sleep and resurrection — plainly, without argument, to people who now trust you and desperately want to know.',
   why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior alone; bereavement here is common and largely unaccompanied.`,
   c:EFFORT.solo,p:'A hospice or bereavement service'},
- {id:'parents-study',st:'deeper',k:KIND.belong,n:'Parenting group that becomes family worship',
+ {id:'parents-study',tier:1,st:'deeper',k:KIND.belong,n:'Parenting group that becomes family worship',
   need:['many-kids','single-parents','families','family-heavy','child-poverty'],boost:[],w:10,ppl:2,cost:0,skill:['lead','kids'],
   d:'Six weeks on discipline, screens, sleep and shouting — the things parents actually lie awake about. Then offer six more on building a family life with God in it, and show them what ten minutes of worship with small children genuinely looks like.',
   why:m=>`${fmtPct(m.kidsShare)} of this tract\u2019s population are children${m.singleParent>=25?`, and ${fmtPct(m.singleParent)} of families have one parent doing it alone`:''}.`,
   c:EFFORT.team,p:'Schools; a children\u2019s center'},
- {id:'esl-to-scripture',st:'deeper',k:KIND.invite,n:'Reading the Bible as the English text',
+ {id:'esl-to-scripture',tier:2,st:'deeper',k:KIND.invite,n:'Reading the Bible as the English text',
   need:['limited-english','immigrant','very-immigrant','spanish','multilingual'],boost:['very-immigrant'],w:10,ppl:2,cost:0,skill:['teach','lang'],
   d:'Offered openly to a conversation café that already meets: a weekly hour reading the Gospels aloud in simple English, with the first language alongside for anything hard. Language learning and Scripture happen to suit each other exactly, and nobody is being tricked — say plainly what the text is.',
   why:m=>`${fmtPct(m.limEng)} of households speak English less than very well; ${fmtPct(m.foreign)} of residents were born abroad.`,
   c:EFFORT.team,p:'A literacy nonprofit'},
- {id:'late-room',st:'deeper',k:KIND.belong,n:'A late room for young adults',
+ {id:'late-room',tier:2,st:'deeper',k:KIND.belong,n:'A late room for young adults',
   need:['young','students','renters','newcomers'],boost:['students'],w:9,ppl:2,cost:0,skill:['lead'],
   d:'Nine o\u2019clock on a weeknight, when younger adults are actually free: coffee, one hard question, no leader at the front and no closing prayer unless someone asks. Doubt is welcome and answers are not rushed. This is the room most churches do not have.',
   why:m=>`Median age ${m.medAge}${m.college>=30?`, ${fmtPct(m.college)} degree-holding — a population that asks questions and dislikes being handled`:''}.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'mens-breakfast',st:'deeper',k:KIND.belong,n:'Men\u2019s breakfast, one chapter',
+ {id:'mens-breakfast',tier:1,st:'deeper',k:KIND.belong,n:'Men\u2019s breakfast, one chapter',
   need:['service-work','jobless','settled','older','homeowners'],boost:[],w:8,ppl:2,cost:1,skill:['cook','lead'],
   d:'Saturday, seven o\u2019clock, cooked breakfast, one chapter, home by nine. Men who will not come to anything called a group will come to breakfast. Keep it short, keep the food good, and never let it become a service.',
   why:m=>`${fmtPct(m.occ[1][1])} work service jobs and ${fmtPct(m.unemp)} are unemployed — a Saturday morning is often the one free slot.`,
   c:EFFORT.team,p:'Nobody'},
- {id:'doorstep-prayer',st:'deeper',k:KIND.invite,n:'Prayer walk that knocks',
+ {id:'doorstep-prayer',tier:1,st:'deeper',k:KIND.invite,n:'Prayer walk that knocks',
   need:['dense','poor','crowded','renters','service-work'],boost:['very-poor'],w:9,ppl:4,cost:0,skill:[],
   d:'Two members walk one street a week, praying quietly, and knock only to ask one question: is there anything you would like us to pray for? Take no literature. Write the answers down and come back in a month to ask how it went. Most of the interest a church ever gets starts here.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract; this is the only method on the list that scales with willingness rather than money.`,
   c:EFFORT.team,p:'Nobody'},
- {id:'recovery-study',st:'deeper',k:KIND.belong,n:'A step group that opens the Bible',
+ {id:'recovery-study',tier:1,st:'deeper',k:KIND.belong,n:'A step group that opens the Bible',
   need:['poor','jobless','very-poor','renters','young'],boost:['very-poor'],w:8,ppl:2,cost:0,skill:['lead'],
   d:'For people already in recovery from something, run openly by someone who has been there. The steps and the Scriptures line up more closely than either camp admits. Confidentiality absolute, attendance never reported, and no one is ever a project.',
   why:m=>`${fmtPct(m.poverty)} live below the poverty line and unemployment is ${fmtPct(m.unemp)} — conditions where addiction is common and support is thin.`,
   c:EFFORT.solo,p:'Local recovery fellowships'},
- {id:'seniors-scripture',st:'deeper',k:KIND.belong,n:'Memory and Scripture hour',
+ {id:'seniors-scripture',tier:1,st:'deeper',k:KIND.belong,n:'Memory and Scripture hour',
   need:['very-old','seniors-alone','older'],boost:['very-old'],w:8,ppl:2,cost:0,skill:['weekday'],
   d:'A weekday hour in a care home or your own hall: familiar hymns, familiar passages, said aloud together. For people losing recent memory, the old words are often the last thing to go and the first thing to bring them back into the room. Families notice this and never forget it.',
   why:m=>`Median age ${m.medAge}, with ${fmtPct(m.seniorsAlone)} of households a senior living alone.`,
   c:EFFORT.team,p:'Care homes; the memory clinic'},
- {id:'neighbor-table',st:'deeper',k:KIND.invite,n:'Ask-me-anything table at somebody else\u2019s event',
+ {id:'neighbor-table',tier:2,st:'deeper',k:KIND.invite,n:'Ask-me-anything table at somebody else\u2019s event',
   need:['dense','settled','families','professional','young'],boost:[],w:7,ppl:2,cost:0,skill:['lead'],
   d:'Not your event — the school fête, the street party, the farmers\u2019 market. A table, two chairs, and a sign that says: ask a Christian anything, no pitch. Bring nothing to hand out. You will spend three hours and have four conversations that matter.',
   why:m=>`${fmtPct(m.settled!==undefined?m.settled:m.homeowners)} of households are settled owners — a neighborhood with its own calendar you can join rather than compete with.`,
   c:EFFORT.solo,p:'Whoever runs the event'},
 
  /* ---------- DECIDE: small and honest, not only the big series ---------- */
- {id:'come-and-see',st:'decide',k:KIND.invite,n:'A come-and-see Sabbath',
+ {id:'come-and-see',tier:1,st:'decide',k:KIND.invite,n:'A come-and-see Sabbath',
   need:['settled','families','older','homeowners','dense'],boost:[],w:9,ppl:5,cost:1,skill:['cook'],
   d:'One Sabbath a quarter built entirely for visitors: nothing assumed, no insider vocabulary, every term explained as it comes, and a proper meal afterwards where members are seated deliberately among guests. Everyone who has been served by the church all year gets a personal invitation to this one.',
   why:m=>`About ${fmtNum(m.pop)} people live within this tract; most will never attend a series but many would come once if a neighbor asked.`,
   c:EFFORT.team,p:'Nobody'},
- {id:'four-nights',st:'decide',k:KIND.invite,n:'Four nights, not four weeks',
+ {id:'four-nights',tier:1,st:'decide',k:KIND.invite,n:'Four nights, not four weeks',
   need:['service-work','young','renters','jobless','poor'],boost:[],w:10,ppl:6,cost:1,skill:['lead','admin'],
   d:'A short series a working person can actually finish: four consecutive evenings, an hour each, one clear question a night, ending with a straightforward invitation. Far easier to fill than three weeks, and it can be run twice a year instead of once a decade.',
   why:m=>`${fmtPct(m.occ[1][1])} work service jobs${m.renters>=45?` and ${fmtPct(m.renters)} rent`:''} — a population that cannot commit three weeks of evenings.`,
   c:EFFORT.team,p:'Nobody'},
- {id:'open-baptism-class',st:'decide',k:KIND.equip,n:'An open enquiry class, not a closed baptismal one',
+ {id:'open-baptism-class',tier:1,st:'decide',k:KIND.equip,n:'An open enquiry class, not a closed baptismal one',
   need:['settled','older','families','young','professional'],boost:[],w:9,ppl:1,cost:0,skill:['lead'],
   d:'Advertise it as what it is: eight weeks on what Adventists actually believe and why, open to anyone, no commitment implied and none requested. People who would never say yes to a baptismal class will sit through an enquiry class, and some of them finish it ready.',
   why:m=>`${m.college>=25?`${fmtPct(m.college)} here hold a degree — a neighborhood that wants to examine a claim before accepting it.`:`A plain, unpressured explanation reaches people that an appeal never will.`}`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'decision-visit',st:'decide',k:KIND.invite,n:'The visit after the course ends',
+ {id:'decision-visit',tier:1,st:'decide',k:KIND.invite,n:'The visit after the course ends',
   need:['older','settled','uninsured','families','poor'],boost:[],w:11,ppl:2,cost:0,skill:['lead'],
   d:'Whatever ended — cooking school, grief group, homework club, four nights — go and see every person who came, in their home, within a fortnight. Thank them, ask what they thought, and ask plainly whether they would like to keep going. Most churches run the program and never make this visit, which is where nearly all the loss happens.',
   why:m=>`Everything above generates names. About ${fmtNum(m.pop)} people live here; the ones who already came to something are the shortest distance to a decision.`,
-  c:EFFORT.solo,p:'Nobody'},,
+  c:EFFORT.solo,p:'Nobody'},
  /* ---------- LIGHT LIFT: more of them, because this is the band a church
       actually starts in. One or two people, no rota, no budget meeting.
       Several of these can be done by a single member who never tells
       anybody they are doing it. ---------- */
- {id:'birthday-cards',st:'open',k:KIND.belong,n:'A card on the doorstep for every new baby',
+ {id:'birthday-cards',tier:2,st:'open',k:KIND.belong,n:'A card on the doorstep for every new baby',
   need:['families','many-kids','young','settled','family-heavy'],boost:[],w:8,ppl:1,cost:0,skill:[],load:0,
   d:'One member watches for the new strollers on the street and puts a handwritten card through the door — congratulations, our name, a phone number, nothing else. No visit, no invitation, no leaflet. New parents remember who noticed them, and they remember it for years.',
   why:m=>`About ${fmtNum(m.kids)} children live here and ${fmtPct(m.kidsShare)} of the population is under eighteen — this street produces new babies constantly.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'thank-you-run',st:'open',k:KIND.serve,n:'Thank the people nobody thanks',
+ {id:'thank-you-run',tier:2,st:'open',k:KIND.serve,n:'Thank the people nobody thanks',
   need:['service-work','dense','poor','settled','older'],boost:[],w:7,ppl:2,cost:1,skill:[],load:1,
   d:'Twice a year, take something small to the bin crew, the postal workers, the doctor\u2019s office reception, the school office and the fire station. A card, a tray of something, and the church name. It costs an afternoon and it changes how every one of those people talks about you when your name comes up.',
   why:m=>`${fmtPct(m.occ[1][1])} of workers here are in service jobs — the people who keep this neighborhood running and are almost never thanked for it.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'seed-swap',st:'open',k:KIND.belong,n:'A seed and cutting swap on the wall',
+ {id:'seed-swap',tier:2,st:'open',k:KIND.belong,n:'A seed and cutting swap on the wall',
   need:['settled','homeowners','older','very-old','poor'],boost:[],w:6,ppl:1,cost:0,skill:[],load:0,
   d:'A shelf and a few envelopes by the gate: leave a cutting, take a cutting. Gardeners are among the easiest people in any neighborhood to fall into conversation with, and they come back — plants have seasons and so do the people who grow them.',
   why:m=>`${fmtPct(m.homeowners)} of households own their home here; settled streets garden, and gardeners talk.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'phone-check',st:'open',k:KIND.serve,n:'A standing phone round for people on their own',
+ {id:'phone-check',tier:2,st:'open',k:KIND.serve,n:'A standing phone round for people on their own',
   need:['seniors-alone','very-old','older','no-car'],boost:['seniors-alone'],w:10,ppl:2,cost:0,skill:[],load:1,
   d:'Two members, a list of names, one call each a fortnight. Not pastoral visiting and not a survey — a two-minute call to ask how the week has been. For someone who lives alone this may be the only call they get, and the first person to notice something is wrong will be whoever made it.',
   why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior living alone — about ${fmtNum(m.seniorsAloneN)} homes where nobody would notice for days.`,
   c:EFFORT.solo,p:'The local clinic; the Area Agency on Aging'},
- {id:'school-supplies',st:'open',k:KIND.serve,n:'Fill the school\u2019s quiet cupboard',
+ {id:'school-supplies',tier:1,st:'open',k:KIND.serve,n:'Fill the school\u2019s quiet cupboard',
   need:['child-poverty','poor','many-kids','schools-near','single-parents'],boost:['child-poverty'],w:9,ppl:2,cost:1,skill:[],load:1,
   d:'Ring the nearest elementary school and ask what they quietly buy for children whose families cannot — shoes, coats, pencil cases, breakfast. Take it in twice a year with no publicity and no photographs. Schools protect the families they serve, and a church that helps without asking to be seen gets trusted quickly.',
   why:m=>`${fmtPct(m.childPoverty)} of children here live below the poverty line, across roughly ${fmtNum(m.k12)} school-age children.`,
   c:EFFORT.solo,p:'The nearest elementary school'},
- {id:'bench',st:'open',k:KIND.belong,n:'Put a bench where people already stop',
+ {id:'bench',tier:2,st:'open',k:KIND.belong,n:'Put a bench where people already stop',
   need:['dense','older','very-old','no-car','settled','crowded'],boost:[],w:6,ppl:2,cost:1,skill:['trade'],load:0,
   d:'Between the bus stop and the shops, on your boundary, facing the sidewalk rather than the building. People waiting, people resting halfway home, people with nowhere else to sit. A bench asks nothing and gets used every day for twenty years.',
   why:m=>`${fmtPct(m.noCar)} of households have no car — people here walk and wait, and there is usually nowhere to sit.`,
   c:EFFORT.solo,p:'The township, if it faces public sidewalk'},
- {id:'funeral-teas',st:'open',k:KIND.serve,n:'Offer the hall for funeral teas, free',
+ {id:'funeral-teas',tier:2,st:'open',k:KIND.serve,n:'Offer the hall for funeral teas, free',
   need:['very-old','older','seniors-alone','settled','poor'],boost:['very-old'],w:9,ppl:3,cost:0,skill:['cook'],load:1,
   d:'Tell the two nearest funeral homes that your hall and a pot of tea are available at no charge to anyone in the neighborhood, member or not. Families remember who carried them through the worst fortnight of their lives, and funeral homes refer constantly once they trust you.',
   why:m=>`Median age here is ${m.medAge}${m.seniorsAlone>=10?`, with ${fmtPct(m.seniorsAlone)} of households a senior living alone`:''} — this is a common need and few churches offer it.`,
   c:EFFORT.solo,p:'Local funeral homes'},
- {id:'translate-help',st:'open',k:KIND.serve,n:'Sit with someone through the hard paperwork',
+ {id:'translate-help',tier:2,st:'open',k:KIND.serve,n:'Sit with someone through the hard paperwork',
   need:['immigrant','very-immigrant','limited-english','spanish','multilingual','newcomers'],boost:['very-immigrant'],w:10,ppl:2,cost:0,skill:['lang'],load:1,
   d:'Offer, by word of mouth, to sit with anyone facing a form they cannot read — immigration, benefits, school registration, a hospital letter. No advice, no advocacy, just a bilingual member at the kitchen table for an hour. It is the single most useful thing a bilingual congregation owns.',
   why:m=>`${fmtPct(m.limEng)} of households speak English less than very well and ${fmtPct(m.foreign)} were born abroad — the paperwork here is relentless.`,
   c:EFFORT.solo,p:'Immigrant services or legal aid'},
- {id:'jar-of-prayer',st:'open',k:KIND.invite,n:'Take the prayer list back to the street',
+ {id:'jar-of-prayer',tier:2,st:'open',k:KIND.invite,n:'Take the prayer list back to the street',
   need:['dense','settled','poor','older','families'],boost:[],w:8,ppl:1,cost:0,skill:[],load:1,
   d:'When somebody outside the church asks for prayer — through the box, at a stall, on the phone — write it down, pray for it, and go back a month later to ask how it turned out. Almost nobody does the going back. It is the cheapest follow-up in existence and it astonishes people.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract. Remembering one of them a month later costs nothing and is remembered for years.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'winter-check',st:'open',k:KIND.serve,n:'The cold-snap knock',
+ {id:'winter-check',tier:2,st:'open',k:KIND.serve,n:'The cold-snap knock',
   need:['very-old','seniors-alone','poor','very-poor','older','low-income'],boost:['very-poor'],w:9,ppl:4,cost:1,skill:[],load:1,
   d:'When the forecast turns hard, two members walk the streets you already know and knock on the doors of anyone elderly or alone: is the heating working, is there food in, do you need anything fetched. Twice a winter. Fuel poverty kills quietly and the people it kills do not ask for help.',
   why:m=>`${fmtPct(m.poverty)} live below the poverty line and ${fmtPct(m.seniorsAlone)} of households are a senior alone — the overlap is who dies in a cold week.`,
   c:EFFORT.team,p:'The county office on aging'},
- {id:'noticeboard-jobs',st:'open',k:KIND.serve,n:'A jobs and small-work board',
+ {id:'noticeboard-jobs',tier:2,st:'open',k:KIND.serve,n:'A jobs and small-work board',
   need:['jobless','service-work','poor','young','low-income'],boost:['jobless'],w:7,ppl:1,cost:0,skill:[],load:0,
   d:'Half your outside noticeboard given to work: local vacancies, someone needing a gardener, a member with a van who will move a sofa. Refreshed weekly by one person with a phone. In a neighborhood short of work, this is the most-read thing you will ever put on a wall.',
   why:m=>`Unemployment here is ${fmtPct(m.unemp)} and ${fmtPct(m.incLow)} of households earn under $35k.`,
   c:EFFORT.solo,p:'The workforce center'},
- {id:'lending-shelf',st:'open',k:KIND.equip,n:'A lending shelf of tools and equipment',
+ {id:'lending-shelf',tier:2,st:'open',k:KIND.equip,n:'A lending shelf of tools and equipment',
   need:['poor','renters','low-income','young','crowded'],boost:['very-poor'],w:7,ppl:2,cost:1,skill:['trade'],load:0,
   d:'A drill, a carpet cleaner, a pressure washer, a sewing machine, a folding table. Borrow it for a weekend, bring it back. Renters and people in small apartments cannot store these and cannot justify buying them, and every loan is a conversation at the door.',
   why:m=>`${fmtPct(m.renters)} of households rent${m.overcrowd>=5?` and ${fmtPct(m.overcrowd)} are overcrowded`:''} — no shed, no storage, no reason to own a drill.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'welcome-newcomers',st:'open',k:KIND.belong,n:'A welcome note for people who just moved in',
+ {id:'welcome-newcomers',tier:2,st:'open',k:KIND.belong,n:'A welcome note for people who just moved in',
   need:['newcomers','renters','changing','young','immigrant'],boost:['changing'],w:8,ppl:1,cost:1,skill:[],load:1,
   d:'Watch for the vans. A card through the door with the useful things nobody tells you — bin day, the good doctor, where the store open latest is, the bus that actually runs — and the church name at the bottom. Practical, unpushy, and it reaches people in the fortnight when they have no one.',
   why:m=>`${fmtPct(m.renters)} of households rent here, which means a steady turnover of people who know nobody on their own street.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'exam-packs',st:'open',k:KIND.serve,n:'Exam-season packs for teenagers',
+ {id:'exam-packs',tier:2,st:'open',k:KIND.serve,n:'Exam-season packs for teenagers',
   need:['many-kids','schools-near','families','k12','students'],boost:[],w:6,ppl:2,cost:1,skill:[],load:1,
   d:'In exam season, a small bag left at the school office or handed out at the gate: pens, a snack, a bottle of water, a note that says somebody is thinking of you. Teenagers are the group churches reach worst and the group most saturated in pressure nobody acknowledges.',
   why:m=>`About ${fmtNum(m.k12)} school-age children live here.`,
   c:EFFORT.solo,p:'The nearest high school'},
- {id:'trash-cans',st:'open',k:KIND.serve,n:'Take the trash cans out',
+ {id:'trash-cans',tier:2,st:'open',k:KIND.serve,n:'Take the trash cans out',
   need:['very-old','seniors-alone','older','no-car'],boost:['very-old'],w:7,ppl:2,cost:0,skill:[],load:1,
   d:'Two members, one street, trash day. Wheel the cans to the curb the night before and back up the driveway the next evening for anyone who cannot manage it — the elderly, someone recovering from surgery, a widow on her own. Twenty minutes a week. Neighbors notice this and talk about it long before they would ever come to a service.',
   why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior on their own — about ${fmtNum(m.seniorsAloneN)} homes.`,
   c:EFFORT.solo,p:'Nobody'},
- {id:'story-corner',st:'open',k:KIND.belong,n:'Half an hour of stories at the library',
+ {id:'story-corner',tier:2,st:'open',k:KIND.belong,n:'Half an hour of stories at the library',
   need:['many-kids','families','single-parents','family-heavy','child-poverty'],boost:[],w:7,ppl:2,cost:0,skill:['kids'],load:2,
   d:'Not at your building — at theirs. Offer the library or the children\u2019s center a member who will read to under-fives once a month. You are a guest in somebody else\u2019s room, which is exactly the right posture, and the parents in that room are the hardest-to-reach group in the neighborhood.',
   why:m=>`${fmtPct(m.kidsShare)} of people here are children${m.singleParent>=25?` and ${fmtPct(m.singleParent)} of families have one parent`:''}.`,
@@ -2446,18 +2531,17 @@ function signatureMoves(m,c,tags,limit){
     if(F.known){ if(F.easy) fit+=6; else if(!F.ok) fit-=Math.min(9,3*F.gaps.length); }
     return {...s, stage:s.st||'trust', fit, feas:F, reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
   }).filter(Boolean);
-  // Select by BAND first, then balance the stages inside each band.
+  // Select by TIER first: the proven playbook, then the creative extras.
   //
-  // The old order did this backwards: it filled a stage quota, and because
-  // almost every "go deeper" and "build trust" move is a weekly commitment,
-  // the heavy band was full before the light one was looked at. A tract with
-  // twenty-two light options was shown two. A pastor opening the light box
-  // must find a real list there — that box is the one he can act on this week.
-  const bands=[[],[],[]];
-  scored.forEach(x=>bands[bandOf(x.load)].push(x));
-  const order={open:0,trust:1,deeper:2,decide:3};
-  // Inside a band, interleave the stages so a band is never all door-openers:
-  // take the best of each stage in turn, then the next best, and so on.
+  // Earlier versions sorted by lightness of effort, which meant the quirky
+  // near-zero-effort ideas (a prayer box, a seed swap, a bench) always led the
+  // list and the recognizable ministries — pantry, VBS, homework club — sank
+  // to the bottom. The pastor reads the top five and judges the whole report
+  // by them, so the top five must be the things churches actually run.
+  const tiers=[[],[]];
+  scored.forEach(x=>tiers[tierOf(x)].push(x));
+  // Inside a tier, interleave the campaign stages so the shelf is never all
+  // door-openers: take the best of each stage in turn, then the next best.
   const weave=arr=>{
     const q={open:[],trust:[],deeper:[],decide:[]};
     arr.sort((a,b)=>b.fit-a.fit||a.n.localeCompare(b.n)).forEach(x=>q[x.stage].push(x));
@@ -2466,21 +2550,15 @@ function signatureMoves(m,c,tags,limit){
       for(const st of ['open','trust','deeper','decide']){ if(q[st].length){ out.push(q[st].shift()); any=true; } } }
     return out;
   };
-  const pool=bands.map(weave);
-  // Quotas favour the light end deliberately. A church that starts something
-  // small and finishes it attempts something larger next year.
-  const want=[Math.max(6,Math.round(limit*0.5)), Math.max(3,Math.round(limit*0.2)), Math.max(3,Math.round(limit*0.3))];
-  const out=[];
-  pool.forEach((p,i)=>out.push(...p.slice(0,want[i])));
-  // Anything unfilled — a tract with few light matches, say — is backfilled
-  // from the lightest band that still has candidates, never from the heaviest.
-  // Backfill only from the two lighter bands. If a tract matches few light
-  // options the honest answer is a shorter list, not a long one padded out
-  // with weekly commitments a church was never going to take on.
-  for(let i=0;i<2&&out.length<limit;i++){
-    pool[i].slice(want[i]).forEach(x=>{ if(out.length<limit) out.push(x); });
-  }
-  return out.sort((a,b)=>bandOf(a.load)-bandOf(b.load) || a.involve-b.involve || b.fit-a.fit);
+  const proven=weave(tiers[0]), creative=weave(tiers[1]);
+  // Roughly two thirds proven, one third creative; backfill from the proven
+  // shelf if the tract matched few creative ideas — never the other way round.
+  const wantProven=Math.max(8,Math.round(limit*0.67));
+  const out=proven.slice(0,wantProven);
+  creative.slice(0,Math.max(0,limit-out.length)).forEach(x=>out.push(x));
+  if(out.length<limit) proven.slice(wantProven).forEach(x=>{ if(out.length<limit) out.push(x); });
+  // Proven first; inside a tier, best fit first, lighter ask breaking ties.
+  return out.sort((a,b)=>tierOf(a)-tierOf(b) || b.fit-a.fit || a.involve-b.involve);
 }
 
 /* ================= OUTREACH RULES =================
@@ -4537,7 +4615,7 @@ function buildReport(M,levels,scope,geo,focusCatSet,focusName){
   if(S.moves.length){
     p(''); p('THE CAMPAIGN, IN ORDER'); p('-'.repeat(60));
     p('Matched to this tract\'s profile: '+[...S.tags].join(', '));
-    S.moves.forEach(x=>{ p(''); p('* ['+x.k.toUpperCase()+'] '+x.n+' \u2014 '+x.c+' \u00b7 with: '+x.p);
+    S.moves.forEach(x=>{ p(''); p('* ['+(x.tier===2?'CREATIVE':'PROVEN')+' \u00b7 '+x.k.toUpperCase()+'] '+x.n+' \u2014 '+x.c+' \u00b7 with: '+x.p);
       p('  '+x.d); p('  Why here: '+x.reason); });
   }
   const cats=(focusCatSet&&focusCatSet.size)?S.cats.filter(g=>focusCatSet.has(g.cat)):S.cats;
@@ -4608,6 +4686,20 @@ function download(name,text,mime){
    Spanish in front of a Spanish-speaking pastor would be worse than English.
    Those need a native speaker's review before they go in. */
 const ES={
+ 'The proven playbook':'El manual probado',
+ 'Creative extras':'Extras creativos',
+ 'Vacation Bible School':'Escuela B\u00edblica de Vacaciones',
+ 'A real food pantry, on a schedule':'Una despensa de alimentos de verdad, con horario fijo',
+ 'Community Services clothing closet':'Ropero comunitario de Servicios a la Comunidad',
+ 'Free community dinner':'Cena comunitaria gratuita',
+ 'Back-to-school backpack giveaway':'Entrega de mochilas para el regreso a clases',
+ 'Fall festival on the church grounds':'Festival de oto\u00f1o en el terreno de la iglesia',
+ 'Pathfinder & Adventurer club, open to the neighborhood':'Club de Conquistadores y Aventureros, abierto al vecindario',
+ 'Stop-smoking program (Breathe-Free)':'Programa para dejar de fumar (Respira Libre)',
+ "Moms' morning group with childcare":'Grupo matutino de mam\u00e1s con cuidado de ni\u00f1os',
+ 'Summer sports camp week':'Semana de campamento deportivo de verano',
+ 'Car care day for single parents and seniors':'D\u00eda de cuidado del auto para padres solos y adultos mayores',
+ 'Christmas toy store for parents':'Tienda navide\u00f1a de juguetes para los padres',
  // header and controls
  'Community Map':'Mapa comunitario','sign out':'cerrar sesión',
  'Who lives around your church?':'¿Quién vive alrededor de su iglesia?',
@@ -5015,7 +5107,7 @@ function aiSummary(M,levels,scope,geo){
   L.push('THIS NEIGHBOURHOOD\'S PROFILE (tags derived from the figures): '+[...S.tags].join(', '));
   L.push('');
   L.push('THE CAMPAIGN THE TOOL ALREADY SEQUENCED FOR THIS PROFILE (stage 1 opens a door, 4 invites a decision) \u2014 build on these, reorder them, or argue against them:');
-  S.moves.forEach(x=>L.push('- [stage '+(STAGE[x.stage]?STAGE[x.stage].n:'?')+' '+(STAGE[x.stage]?STAGE[x.stage].label:'')+'] '+x.n+' \u2014 '+x.reason));
+  S.moves.forEach(x=>L.push('- ['+(x.tier===2?'creative extra':'proven playbook')+' \u00b7 stage '+(STAGE[x.stage]?STAGE[x.stage].n:'?')+' '+(STAGE[x.stage]?STAGE[x.stage].label:'')+'] '+x.n+' \u2014 '+x.reason));
   L.push('');
   L.push('STRENGTHS AVAILABLE TO HIM: medical and nursing members (screenings, blood pressure clinics, health expos, CHIP and lifestyle courses, plant-based cooking schools); Bible and prophecy teaching (Daniel and Revelation series, archaeology, questions nights); literature ministry; and church property that sits unused six days a week (car park, sanctuary, fellowship hall, land). Use these where the data supports them.');
   L.push('');
@@ -7161,13 +7253,13 @@ function render(){
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
-        <span>Matched to this tract's profile and grouped by what each one asks of the church — start with the light box and work down. Every idea still carries the campaign stage it belongs to, because the order of the work matters: open a door, build trust, go deeper, then invite a decision. A different neighbourhood produces a different list.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
-      ${BANDS.map((B,bi)=>{
-        const set=SG.moves.filter(x=>bandOf(x.load)===bi); if(!set.length) return '';
-        return `<details class="stage band${bi}">
-          <summary class="stagehead"><span class="stagenum">${bi+1}</span><b>${esc(B.n)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
+        <span>Two lists, both matched to this tract's numbers. First <b>the proven playbook</b> — the ministries churches across the country actually run, ordered by how well each one fits here. Then <b>creative extras</b> to add around them. Every card still carries its campaign stage — open a door, build trust, go deeper, invite a decision — and what it asks of the church.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
+      ${TIERS.map((T,ti)=>{
+        const set=SG.moves.filter(x=>tierOf(x)===ti); if(!set.length) return '';
+        return `<details class="stage band${ti}"${ti===0?' open':''}>
+          <summary class="stagehead"><span class="stagenum">${ti+1}</span><b>${esc(T.n)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
           <div class="stagebody">
-          <p class="stageblurb">${esc(B.d)}</p>
+          <p class="stageblurb">${esc(T.d)}</p>
           ${set.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}">
             <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><span class="stagetag">${STAGE[x.stage].n}. ${esc(STAGE[x.stage].label)}</span>${x.feas&&x.feas.known&&!x.feas.ok?'<span class="badge b-gap">Not yet</span>':''}</div>
             <h4>${esc(x.n)}</h4>
