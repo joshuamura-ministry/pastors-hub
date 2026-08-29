@@ -339,6 +339,9 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .facbar[open]>summary .chev{transform:rotate(-135deg)}
 .facbarbody{padding:0 15px 15px}
 .facblock{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.capsaved{font-size:.82rem;font-weight:700;color:var(--ok,#1a9e6a);opacity:0;transform:translateY(2px);transition:.2s}
+.capsaved.show{opacity:1;transform:none}
+.btn.capdone{background:var(--ok,#1a9e6a);border-color:var(--ok,#1a9e6a);color:#fff}
 .facgrid{display:flex;flex-wrap:wrap;gap:8px}
 .facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
 .facchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line2);flex:none;transition:.12s}
@@ -1056,13 +1059,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.29</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.31</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.29';
+const VERSION = 'v9.31';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7352,6 +7355,23 @@ function wireProposals(M,levels,SG){
     // them changes, so a pastor can compare two audiences without losing his place.
   });
 }
+// Re-render the report while keeping the pastor's place in the "Set up your church"
+// panel. A full render() rebuilds #sections and briefly collapses the page height,
+// so an absolute scroll restore clamps wrong (the jump). Anchoring to the panel and
+// correcting by how far it moved survives the collapse. Used by every setup input.
+let CAP_DONE=false;     // pastor clicked 'Done' — shows the All-set confirmation
+function capReRender(){
+  const p1=document.getElementById('capslot');
+  const anchor1=p1?(p1.closest('.askpanel')||p1):null;
+  const before=anchor1?anchor1.getBoundingClientRect().top:0;
+  render();
+  const restore=()=>{
+    const p2=document.getElementById('capslot');
+    const anchor2=p2?(p2.closest('.askpanel')||p2):null;
+    if(anchor2){ const after=anchor2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
+  };
+  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
+}
 function capRender(){
   const host=$('capslot'); if(!host) return;
   const c=capMerged(), any=c.ready;
@@ -7381,11 +7401,16 @@ function capRender(){
             return `<button type="button" class="facchip${on?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`;}).join('')}
         </div>
       </div>
-      <div class="caprow" style="margin-top:12px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
-        <span class="caphint" style="margin:0;align-self:center">Kept on this device. Shared with nobody.</span></div>
+      <div class="caprow" style="margin-top:14px;flex-wrap:wrap;gap:10px;align-items:center">
+        <button class="btn ${CAP_DONE?'capdone':''}" id="cap-done">${CAP_DONE?'\u2713 All set':'Done \u2014 I\u2019ve entered my church'}</button>
+        ${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
+        <span class="capsaved" id="cap-saved" aria-live="polite"></span>
+        <span class="caphint" style="margin:0;align-self:center">Saved on this device. Shared with nobody.</span>
+      </div>
     </div>`;
   const set=(k,raw)=>{ const cur=capGet()||{}; const n=raw===''?null:Math.max(0,Math.round(+raw));
-    if(n==null){ delete cur[k]; } else { cur[k]=n; } capSave(cur); render(); };
+    if(n==null){ delete cur[k]; } else { cur[k]=n; } CAP_DONE=false; capSave(cur); capReRender();
+      requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); }); };
   const wire=(id,k)=>{ const el=$(id); if(!el) return;
     el.addEventListener('change',()=>set(k,el.value));
     el.addEventListener('keydown',e=>{ if(e.key==='Enter') el.blur(); }); };
@@ -7394,24 +7419,22 @@ function capRender(){
     chip.addEventListener('click',()=>{
       const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
       const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
-      c.facilities=f; capSave(c);
-      // A full render() rebuilds #sections, which briefly collapses the page height
-      // and makes an absolute scrollY restore clamp to the wrong value — that's the
-      // jump. Instead, anchor to the setup panel itself: remember how far down the
-      // screen it sits, rebuild, then re-scroll so the panel lands at that same spot.
-      const panel=host.closest('.askpanel')||host;
-      const before=panel.getBoundingClientRect().top;
-      render();
-      const restore=()=>{
-        const p2=document.getElementById('capslot');
-        const anchor=p2?(p2.closest('.askpanel')||p2):null;
-        if(anchor){ const after=anchor.getBoundingClientRect().top;
-          window.scrollBy(0, after-before); }
-      };
-      requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
+      c.facilities=f; CAP_DONE=false; capSave(c);
+      capReRender();               // keep the pastor's place — no jump
+      requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
     });
   });
-  const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
+  const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); CAP_DONE=false; capSave({}); capReRender(); };
+  // Live 'saved' flash — reassures each entry landed, without a re-render.
+  const flashSaved=()=>{ const s=$('cap-saved'); if(!s) return;
+    s.textContent='\u2713 Saved'; s.classList.add('show');
+    clearTimeout(flashSaved._t); flashSaved._t=setTimeout(()=>s.classList.remove('show'),1400); };
+  window.__capFlash=flashSaved;
+  // Done button: confirm in place, no scroll, no jump. Just marks 'All set'.
+  const done=$('cap-done'); if(done) done.onclick=e=>{ e.preventDefault();
+    CAP_DONE=true;
+    done.textContent='\u2713 All set'; done.classList.add('capdone');
+    const s=$('cap-saved'); if(s){ s.textContent='\u2713 Everything is logged'; s.classList.add('show'); } };
 }
 function wireStepper(){
   const host=document.getElementById('stepper'); if(!host) return;
