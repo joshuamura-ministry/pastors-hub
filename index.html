@@ -158,7 +158,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
   box-shadow:0 6px 22px -10px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;min-height:44px}
 .totop:hover{border-color:var(--acc);color:var(--acc)}
 .totop[hidden]{display:none}
-section.blk,#brief,#propslot{scroll-margin-top:calc(var(--topH,58px) + 70px)}
+section.blk,#brief,#propslot,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 @media print{.secnav,.totop{display:none}}
 /* A collapsed section must never silently vanish from a printed report.
    The chevrons and the tap affordance go; the content stays. */
@@ -330,7 +330,14 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .congfail b{font-weight:700;color:var(--ink)}
 .congfail span{font-size:.86rem;color:var(--ink2);line-height:1.5}
 .capgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:4px}
-.facblock{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.facbar{margin:6px 0 4px;border:1px solid var(--line2);border-radius:12px;background:var(--panel2);overflow:hidden}
+.facbar>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 15px}
+.facbar>summary::-webkit-details-marker{display:none}
+.facbar>summary b{font-family:var(--disp);font-size:1rem;color:var(--ink)}
+.facbar>summary span{font-size:.82rem;color:var(--ink3)}
+.facbar>summary .chev{margin-left:auto;width:9px;height:9px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:.15s}
+.facbar[open]>summary .chev{transform:rotate(-135deg)}
+.facbarbody{padding:0 15px 15px}
 .facgrid{display:flex;flex-wrap:wrap;gap:8px}
 .facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
 .facchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line2);flex:none;transition:.12s}
@@ -1037,6 +1044,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   </div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
+    <div id="facslot"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
     <div class="focusbar" id="focusbar" aria-label="Focus the report"></div>
     <div class="focusnote" id="focusnote"></div>
@@ -1048,13 +1056,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.20</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.22</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.20';
+const VERSION = 'v9.22';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3850,7 +3858,7 @@ function drawHelp(){
       HELP_STATE==='failed'  ? `<div class="note" style="margin:.4em 0">Live map lookup was unreachable — the directory links above still work. <a href="#" data-help-retry>Try again</a></div>` :
       live.length ? `<div class="helpmapped"><div class="l" style="margin:.5em 0 .3em">Mapped within ~3 miles</div>${live.map(h=>`<div class="helprow"><a href="${mapsUrl(h.name+' '+(h.addr||''))}" target="_blank" rel="noopener"><b>${esc(h.name)}</b></a><span>${h.dist.toFixed(1)} mi${h.addr?' · '+esc(h.addr):''}${h.phone?' · '+esc(h.phone):''}</span></div>`).join('')}</div>`
       : `<div class="note" style="margin:.4em 0">Nothing tagged in OpenStreetMap here yet — that usually means it isn’t mapped, not that it isn’t there. Use the directories above.</div>`;
-    return `<details class="suggroup" ${cat.id==='food'?'open':''}>
+    return `<details class="suggroup">
       <summary class="sugcat"><span>${cat.icon}</span> ${esc(cat.name)}<span class="sgn">${cat.links(ctx).length} link${cat.osm?' + map':''}</span><i class="chev"></i></summary>
       <div class="sgbody">
         <div class="ext">${cat.links(ctx).map(l=>`<a href="${l.u}" target="_blank" rel="noopener">${esc(l.t)}<span>${l.d}</span></a>`).join('')}</div>
@@ -7282,6 +7290,27 @@ function wireProposals(M,levels,SG){
     // them changes, so a pastor can compare two audiences without losing his place.
   });
 }
+function facilitiesBar(){
+  const host=$('facslot'); if(!host) return;
+  const cur=(capGet()||{}); const fac=cur.facilities&&typeof cur.facilities==='object'?cur.facilities:{};
+  const onCount=Object.values(fac).filter(Boolean).length;
+  host.innerHTML=`<details class="facbar"${onCount?'':' open'}>
+    <summary><b>Your church facilities</b><span>${onCount?onCount+' selected — shaping the plan below':'Tap what your church has, so the plan fits your building'}</span><i class="chev"></i></summary>
+    <div class="facbarbody">
+      <p class="note" style="margin:0 0 10px">The building shapes what you can host. Whatever you mark here lifts the outreach it unlocks — a gym raises a sports camp, classrooms raise VBS, a kitchen raises a community dinner — across the moves below and in the Evangelism Planner. Kept on this device.</p>
+      <div class="facgrid">
+        ${FACILITIES.map(f=>`<button type="button" class="facchip${fac[f.k]?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`).join('')}
+      </div>
+    </div>
+  </details>`;
+  host.querySelectorAll('.facchip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
+      const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
+      c.facilities=f; capSave(c); render();
+    });
+  });
+}
 function capRender(){
   const host=$('capslot'); if(!host) return;
   const c=capMerged(), any=c.ready;
@@ -7306,13 +7335,6 @@ function capRender(){
         : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them.`}</span></div>`:''}
       <div class="caprow" style="margin-top:10px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
         <span class="caphint" style="margin:0;align-self:center">Kept on this device. Shared with nobody.</span></div>
-      <div class="facblock">
-        <div class="capl" style="margin-bottom:8px">What your church has to work with — the building shapes what you can host, so Terrain will lift the outreach your rooms are built for.</div>
-        <div class="facgrid">
-          ${FACILITIES.map(f=>{const on=!!((capGet()||{}).facilities||{})[f.k];
-            return `<button type="button" class="facchip${on?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`;}).join('')}
-        </div>
-      </div>
     </div>`;
   const set=(k,raw)=>{ const cur=capGet()||{}; const n=raw===''?null:Math.max(0,Math.round(+raw));
     if(n==null){ delete cur[k]; } else { cur[k]=n; } capSave(cur); render(); };
@@ -7320,13 +7342,7 @@ function capRender(){
     el.addEventListener('change',()=>set(k,el.value));
     el.addEventListener('keydown',e=>{ if(e.key==='Enter') el.blur(); }); };
   wire('cap-m','members'); wire('cap-l','leaders'); wire('cap-v','volunteers');
-  host.querySelectorAll('.facchip').forEach(chip=>{
-    chip.addEventListener('click',()=>{
-      const cur=capGet()||{}; const f=cur.facilities&&typeof cur.facilities==='object'?cur.facilities:{};
-      const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
-      cur.facilities=f; capSave(cur); render();
-    });
-  });
+
   const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
 }
 function wireStepper(){
@@ -7661,6 +7677,7 @@ function render(){
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
+  facilitiesBar();
   capRender();
   wireStepper();
   wireProposals(M,levels,SG);
