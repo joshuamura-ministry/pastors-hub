@@ -317,6 +317,11 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .capn.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink)}
 .capsk{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:7px 0;border-top:1px solid var(--line)}
 .capsk>span{flex:1;min-width:150px;font-size:.82rem;color:var(--ink2)}
+.capd{display:flex;gap:11px;align-items:baseline;margin-top:12px;padding:11px 12px;border-radius:10px;background:var(--acc-dim);border:1px solid var(--acc)}
+.capd{margin-bottom:8px}
+.capd b{font-family:var(--disp);font-size:1.5rem;font-weight:700;color:var(--acc);flex:none;line-height:1.1}
+.capd span{font-size:.82rem;color:var(--ink2);line-height:1.55}
+.capd span b{font-family:inherit;font-size:inherit;color:var(--ink)}
 .caphint{display:block;font-size:.74rem;color:var(--ink3);margin-top:5px}
 .badge{font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;border-radius:5px;padding:3px 7px;margin-left:6px}
 .b-easy{background:rgba(46,160,90,.13);color:#2ea05a}
@@ -339,6 +344,7 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .verdict{display:flex;gap:10px;align-items:baseline;margin-top:11px;padding:10px 12px;border-radius:10px;border:1px solid var(--line)}
 .verdict b{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;font-weight:700;flex:none}
 .verdict span{font-size:.83rem;line-height:1.55;color:var(--ink2)}
+.v-more{background:var(--acc-dim);border-color:var(--acc)}.v-more b{color:var(--acc)}
 .v-ok{background:rgba(46,160,90,.07);border-color:rgba(46,160,90,.35)}.v-ok b{color:#2ea05a}
 .v-warn{background:rgba(200,140,20,.08);border-color:rgba(200,140,20,.38)}.v-warn b{color:#c88c14}
 .v-stop{background:rgba(200,60,60,.07);border-color:rgba(200,60,60,.35)}.v-stop b{color:#c83c3c}
@@ -979,13 +985,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v8.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v8.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v8.0';
+const VERSION = 'v8.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1683,24 +1689,49 @@ const CAP_SKILLS=[
 let CAP=null;
 function capGet(){ if(CAP) return CAP; try{ CAP=JSON.parse(localStorage.getItem(CAP_KEY)||'null'); }catch(e){ CAP=null; } return CAP; }
 function capSave(c){ CAP=c; try{ localStorage.setItem(CAP_KEY,JSON.stringify(c)); }catch(e){} }
-/* The planner already knows the congregation. Ask only what it does not. */
+/* Deliberately independent of the Evangelism Planner, and deliberately two
+   questions — the only two numbers a pastor already knows without looking
+   anything up. Everything else is derived and every assumption is printed on
+   screen rather than buried here.
+
+   ATTENDANCE gives the hands. About a third of a congregation turns out for
+   something beyond the service; that figure is deliberately cautious, because
+   a plan built on the hopeful number falls over in week three.
+
+   LEADERS gives the ceiling, and it is the more binding of the two. A church
+   of 130 with four leaders cannot run eight things at once, however many
+   hands it has — every effort needs one person who owns it, chases it and
+   notices when it stops. Hands without an owner is how good ideas die in
+   month two, so the number of concurrent efforts is capped by leaders, not
+   by willingness.
+
+   WHO those people are — their gifts — is a question for the members
+   themselves rather than the pastor guessing on their behalf, and it belongs
+   in its own tool. Until that exists, a move's skill requirements are shown
+   as information and never used to rule anything out. */
+const WILLING_SHARE=0.35;
+const PAIRS_PER_LEADER=5;
 function capMerged(){
-  const c=capGet()||{}; let p=null; try{ p=PLAN||planGet(); }catch(e){}
-  const weekly = c.weekly!=null ? c.weekly : (p&&p.workers ? p.workers : null);
-  return {weekly, budget:(c.budget!=null?c.budget:null), skills:c.skills||{},
-    members:(p&&p.members)||null, fromPlan:!!(p&&p.workers&&c.weekly==null)};
+  const c=capGet()||{};
+  const members=(c.members!=null?c.members:null);
+  const leaders=(c.leaders!=null?c.leaders:null);
+  return {members, leaders,
+    hands: members!=null?Math.max(1,Math.round(members*WILLING_SHARE)):null,
+    concurrent: leaders!=null?Math.max(1,leaders):null,
+    ready: members!=null};
 }
-function capHas(k){ const c=capMerged(); return (c.skills[k]||0)>0; }
-/* Can this church run this move — and if not, what is missing? */
+/* Can this church staff this move? Hands first, then whether anyone is free
+   to own it. Cost is shown but never blocks — a church with no money still
+   needs to see what money would buy. */
 function moveFeasible(x){
   const c=capMerged();
-  if(c.weekly==null && !Object.keys(c.skills).length && c.budget==null) return {known:false};
+  if(!c.ready) return {known:false};
   const gaps=[];
-  if(c.weekly!=null && x.ppl>c.weekly) gaps.push(`needs ${x.ppl} people, you have ${c.weekly}`);
-  if(c.budget!=null && x.cost>c.budget) gaps.push(x.cost===2?'needs a real budget line':'needs some money');
-  (x.skill||[]).forEach(k=>{ if(!capHas(k)) gaps.push('needs '+SKILL[k]); });
+  if(x.ppl>c.hands) gaps.push(`needs ${x.ppl} people; about ${c.hands} of your congregation would turn out`);
+  if(c.leaders===0 && x.ppl>2) gaps.push('needs someone to own it, and you have named no leaders');
   return {known:true, ok:!gaps.length, gaps,
-    easy: x.cost===0 && x.ppl<=2 && !(x.skill||[]).filter(k=>!capHas(k)).length};
+    solo: x.ppl<=2,                                   // no leader required
+    easy: x.cost===0 && x.ppl<=Math.min(2,c.hands)};
 }
 const SIGNATURE=[
  /* ---------- HEALTH: our deepest bench ---------- */
@@ -2750,28 +2781,45 @@ function mobilizeMath(M,zones){
    whether it is trivial or impossible for this church — which is how "34
    members" ends up on screen in front of a congregation of twenty-five. */
 function congregationFit(MM){
-  let p=null; try{ p=PLAN||planGet(); }catch(e){}
-  if(!p||!p.members) return {known:false, MM};
-  const members=p.members, workers=Math.min(p.workers||0,members), leaders=Math.min(p.leaders||0,members);
+  const c=capMerged();
+  if(!c.members) return {known:false, MM};
+  const members=c.members, workers=c.hands, leaders=c.leaders;
   const need=MM.people;
   const perPair=32;                                  // 8 addresses × 4 rounds
-  const canPairs=Math.floor(workers/2);
+  // Hands set one ceiling and leaders set a lower one. Twenty pairs with two
+  // leaders is not twenty pairs; it is two supervised pairs and eighteen that
+  // quietly stop. Cap by whichever binds first and say which it was.
+  const handPairs=Math.floor(workers/2);
+  const supPairs = leaders!=null ? leaders*PAIRS_PER_LEADER : null;
+  const ledCapped = supPairs!=null && supPairs<handPairs;
+  const canPairs = Math.max(1, ledCapped ? supPairs : handPairs);
   const canReach=canPairs*perPair;
   const share=Math.round(need/members*100);
-  let verdict, detail, scope=null;
-  if(workers>=need){
+  let verdict, detail, scope=null, upside=null;
+  if(workers>=need*2 && canReach>MM.target){
+    // The common case, and the one the old wording missed: the standard asks
+    // far less than the church can give. Telling him he is "fine" wastes it.
+    verdict='room to go further';
+    upside=Math.min(canReach,MM.hh);
+    detail=`One home in ten asks ${need} people, and about ${workers} of your congregation would turn out. That standard is a floor for a church short of people, and you are not short. ${canPairs} pairs could visit about ${fmtNum(upside)} homes in the same two months — ${Math.round(upside/MM.hh*100)}% of the block rather than 10%. The question is not whether you can reach ${fmtNum(MM.target)} homes; it is why you would stop there.`
+      + (ledCapped ? ` One limit to respect: ${handPairs} pairs are possible on numbers, but ${leaders} leader${leaders===1?'':'s'} can only supervise about ${supPairs}. Raise up more leaders and the ground opens; send out unsupervised pairs and most of them stop by the third round.` : '');
+  } else if(workers>=need){
     verdict='within reach';
-    detail=`Your ${workers} willing workers cover this with ${workers-need} to spare. The constraint here is not people — it is training and follow-through.`;
+    detail=`About ${workers} of your congregation would turn out, which covers the ${need} needed with ${workers-need} to spare.`
+      + (leaders!=null ? (ledCapped
+          ? ` Leaders are the tighter limit: ${handPairs} pairs are possible on numbers but ${leaders} leader${leaders===1?'':'s'} can supervise about ${supPairs}. Run ${supPairs} well rather than ${handPairs} badly.`
+          : ` Your ${leaders} leader${leaders===1?'':'s'} can supervise this comfortably — one leader per five pairs is the working limit.`)
+        : ' The constraint here is not people — it is training and follow-through.');
   } else if(members>=need){
     verdict='needs recruiting';
-    detail=`This asks ${need} of your ${members} members — ${share}% of the congregation — but only ${workers} have said they are willing. ${need-workers} more must be enlisted, or the target narrowed.`;
+    detail=`This asks ${need} people — ${share}% of your ${members}. On the usual pattern about ${workers} would turn out, so ${need-workers} more than normally volunteer must be personally asked, or the ground narrowed. A church can exceed its usual third, but only when someone asks each person by name for a specific job.`;
     scope=canReach;
   } else {
     verdict='beyond this congregation';
-    detail=`This block needs ${need} people on the doors and the church has ${members} members in total. It cannot be done at one home in ten. Narrow the ground rather than exhaust the church.`;
+    detail=`This block needs ${need} people on the doors and about ${members} are in the room on a Sabbath. It cannot be done at one home in ten by this congregation. Narrow the ground rather than exhaust the church — a small church that visits one street thoroughly will see more than a large one that leaflets a district.`;
     scope=canReach;
   }
-  return {known:true,members,workers,leaders,need,share,canPairs,canReach,verdict,detail,scope,MM,
+  return {known:true,members,workers,leaders,need,share,canPairs,canReach,handPairs,supPairs,ledCapped,verdict,detail,scope,upside,MM,
     ratio: canReach&&MM.target?Math.max(1,Math.round(MM.hh/canReach)):null};
 }
 
@@ -6619,27 +6667,28 @@ function wireProposals(M,levels,SG){
 }
 function capRender(){
   const host=$('capslot'); if(!host) return;
-  const c=capMerged(), saved=capGet()||{}, any=(c.weekly!=null||c.budget!=null||Object.keys(c.skills).length);
-  const n=(k,v)=>`<button class="capn${(saved.skills&&saved.skills[k])===v?' on':''}" data-sk="${k}" data-v="${v}">${v}</button>`;
-  host.innerHTML=`<details class="suggroup mgroup capbox"${any?'':' open'}>
-    <summary class="sugcat"><span class="sgt">What can your church actually field?</span>
-      <span class="sgn">${any?'answered':'2 minutes'}</span><i class="chev"></i></summary>
+  const c=capMerged(), any=c.ready;
+  const lab = any ? (c.members+' · '+(c.leaders!=null?c.leaders+' leaders':'leaders?')) : 'two taps';
+  host.innerHTML=`<details class="suggroup mgroup capbox"${any&&c.leaders!=null?'':' open'}>
+    <summary class="sugcat"><span class="sgt">How big is your congregation?</span>
+      <span class="sgn">${lab}</span><i class="chev"></i></summary>
     <div class="sgbody">
-      <p class="note" style="margin-bottom:12px">Everything below this box is matched to the neighbourhood. This box is the other half — what you have to work with. Answer as much or as little as you like; leave it blank and nothing breaks, you just get a longer list with more on it you cannot use.${c.members?` Your plan says <b>${c.members} members</b>.`:''}</p>
-      <div class="capq"><span class="capl">How many people will give an hour a week to something outside the church?</span>
-        <div class="caprow">${[0,2,4,6,10,15,25,40].map(v=>`<button class="capn${c.weekly===v?' on':''}" data-w="${v}">${v===40?'40+':v}</button>`).join('')}</div>
-        ${c.fromPlan?`<span class="caphint">Taken from your planner\u2019s willing-workers figure. Tap to change it here.</span>`:''}</div>
-      <div class="capq"><span class="capl">What could you spend on outreach this year?</span>
-        <div class="caprow">${['Nothing beyond what we own','A modest amount','A real budget line'].map((t,v)=>`<button class="capn wide${c.budget===v?' on':''}" data-b="${v}">${t}</button>`).join('')}</div></div>
-      <div class="capq"><span class="capl">Who do you actually have? Tap a number for each.</span>
-        ${CAP_SKILLS.map(sk=>`<div class="capsk"><span>${esc(sk.n)}</span><div class="caprow">${[0,1,2,3,5,8].map(v=>n(sk.k,v)).join('')}</div></div>`).join('')}</div>
-      <div class="caprow" style="margin-top:12px"><button class="btn ghost" id="cap-clear">Clear all this</button></div>
+      <p class="note" style="margin-bottom:12px">Everything below is matched to the neighbourhood. This is the other half — the church standing in front of it. Two numbers, roughly right, kept on this device and shared with nobody.</p>
+      <div class="capq"><span class="capl">On an average Sabbath, how many people are actually in the room?</span>
+        <div class="caprow">${[12,20,30,45,60,90,130,200,300].map(v=>`<button class="capn${c.members===v?' on':''}" data-m="${v}">${v===300?'300+':v}</button>`).join('')}</div></div>
+      <div class="capq"><span class="capl">How many church leaders? Elders, deacons, department heads, Sabbath School teachers — anyone who already carries something.</span>
+        <div class="caprow">${[0,1,2,3,4,6,8,12,20].map(v=>`<button class="capn${c.leaders===v?' on':''}" data-l="${v}">${v===20?'20+':v}</button>`).join('')}</div></div>
+      ${any?`<div class="capd"><b>${c.hands}</b><span><b>hands.</b> Roughly a third of a congregation turns out for something beyond the service, so ${c.hands} of your ${c.members} is what Terrain plans around. Deliberately cautious — a plan built on the hopeful number falls over in week three. Moves needing more are marked below, not hidden.</span></div>`:''}
+      ${any&&c.leaders!=null?`<div class="capd"><b>${c.concurrent}</b><span><b>${c.leaders===0?'no owners.':'at once.'}</b> ${c.leaders===0
+        ? 'You have named no leaders. Anything needing more than a couple of people has nobody to own it, chase it and notice when it stops — so the list below leads with what one or two members can carry alone.'
+        : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them, rather than opening six and abandoning four.`}</span></div>`:''}
+      ${any?`<div class="caprow" style="margin-top:12px"><button class="btn ghost" id="cap-clear">Clear this</button></div>`:''}
+      <p class="caphint" style="margin-top:12px">Terrain does not ask which members can teach, drive, cook or lead a study. That is a question for the members themselves, not for you to guess — and it is coming as its own tool, filled in by the congregation, which will sharpen everything on this page.</p>
     </div></details>`;
-  const save=fn=>{ const cur=capGet()||{skills:{}}; cur.skills=cur.skills||{}; fn(cur); capSave(cur); render(); };
-  host.querySelectorAll('[data-w]').forEach(b=>b.onclick=e=>{e.preventDefault();save(c=>c.weekly=+b.dataset.w);});
-  host.querySelectorAll('[data-b]').forEach(b=>b.onclick=e=>{e.preventDefault();save(c=>c.budget=+b.dataset.b);});
-  host.querySelectorAll('[data-sk]').forEach(b=>b.onclick=e=>{e.preventDefault();save(c=>c.skills[b.dataset.sk]=+b.dataset.v);});
-  const cl=$('cap-clear'); if(cl) cl.onclick=e=>{e.preventDefault(); capSave({skills:{}}); render();};
+  const set=(k,v)=>{ const cur=capGet()||{}; cur[k]=v; capSave(cur); render(); };
+  host.querySelectorAll('[data-m]').forEach(b=>b.onclick=e=>{e.preventDefault();set('members',+b.dataset.m);});
+  host.querySelectorAll('[data-l]').forEach(b=>b.onclick=e=>{e.preventDefault();set('leaders',+b.dataset.l);});
+  const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
 }
 function wireStepper(){
   const host=document.getElementById('stepper'); if(!host) return;
@@ -6845,7 +6894,7 @@ function render(){
             <h4>${esc(x.n)}</h4>
             <p>${esc(x.d)}</p>
             <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
-            <div class="mreq"><span>${x.ppl===1?'1 person':x.ppl+' people'}</span><span>${['no cost','modest outlay','budget line'][x.cost]}</span>${(x.skill||[]).map(k=>`<span${capHas(k)?' class="have"':''}>${esc(SKILL[k])}</span>`).join('')}</div>
+            <div class="mreq"><span>${x.ppl===1?'1 person':x.ppl+' people'}</span><span>${['no cost','modest outlay','budget line'][x.cost]}</span>${(x.skill||[]).map(k=>`<span>${esc(SKILL[k])}</span>`).join('')}</div>
             ${x.feas&&x.feas.known&&!x.feas.ok?`<div class="mgap"><b>What is missing</b>${x.feas.gaps.map(g=>esc(g)).join(' · ')}</div>`:''}
             <div class="tags"><span>${esc(x.c)}</span><span>With: ${esc(x.p)}</span></div>
           </div>`).join('')}
@@ -6903,11 +6952,11 @@ function render(){
       <div class="askl">The ask, in numbers</div>
       <div class="askrow"><b>${fmtNum(MM.target)}</b><span>homes to reach — one in ten of the ${fmtNum(MM.hh)} households in your densest block, visited personally over about two months</span></div>
       <div class="askrow"><b>${MM.people}</b><span>members on the doors, working as <b>${MM.pairs} pairs</b>, at eight addresses each per round, four rounds</span></div>
-      ${FIT.known?`<div class="askrow"><b>${FIT.share}%</b><span>of your ${FIT.members}-member congregation — you have <b>${FIT.workers}</b> willing workers and <b>${FIT.leaders}</b> who can lead a team</span></div>
-      <div class="verdict v-${FIT.verdict==='within reach'?'ok':FIT.verdict==='needs recruiting'?'warn':'stop'}">
+      ${FIT.known?`<div class="askrow"><b>${FIT.share}%</b><span>of your ${FIT.members}-member congregation — about <b>${FIT.workers}</b> would turn out${FIT.leaders!=null?`, and <b>${FIT.leaders}</b> already lead something`:''}</span></div>
+      <div class="verdict v-${FIT.verdict==='room to go further'?'more':FIT.verdict==='within reach'?'ok':FIT.verdict==='needs recruiting'?'warn':'stop'}">
         <b>${esc(FIT.verdict)}</b><span>${esc(FIT.detail)}</span></div>
       ${FIT.scope!=null?`<div class="asknote"><b>The honest alternative.</b> ${FIT.workers} workers make ${FIT.canPairs} pairs, and ${FIT.canPairs} pairs can cover about <b>${fmtNum(FIT.canReach)}</b> homes properly in the same two months. That is one home in ${FIT.ratio} rather than one in ten. Pick the ${fmtNum(FIT.canReach)} densest addresses and visit them well, rather than spreading ${FIT.workers} people over ${fmtNum(MM.target)} doors and doing none of it properly.</div>`:`<div class="asknote">A visit that is made and never followed up is worse than one never made. Size the ground to the people you actually have.</div>`}`
-      :`<div class="asknote"><b>Terrain does not know your congregation yet.</b> This is what the neighbourhood needs — not what your church can field. Open the <b>Evangelism Planner</b> and enter your membership, your willing workers and the people who can lead a team, and this section will tell you whether ${MM.people} is comfortable, a stretch, or out of reach, and what to do about it either way.</div>`}
+      :`<div class="asknote"><b>This is what the neighbourhood needs — not what your church can field.</b> Tap three numbers in <b>What can your church actually field?</b> above and this becomes a judgment instead of a demand: whether ${MM.people} people is comfortable, a stretch, or out of reach, and what to do about it either way.</div>`}
     </div>
     <div id="planprog"></div>
     <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". The ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
