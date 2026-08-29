@@ -338,6 +338,7 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .facbar>summary .chev{margin-left:auto;width:9px;height:9px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:.15s}
 .facbar[open]>summary .chev{transform:rotate(-135deg)}
 .facbarbody{padding:0 15px 15px}
+.facblock{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
 .facgrid{display:flex;flex-wrap:wrap;gap:8px}
 .facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
 .facchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line2);flex:none;transition:.12s}
@@ -1055,13 +1056,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.24</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.26</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.24';
+const VERSION = 'v9.26';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -4934,6 +4935,7 @@ const ES={
  'Step 2 \u00b7 What this neighbourhood asks of your congregation':'Paso 2 \u00b7 Lo que este vecindario pide de su congregaci\u00f3n',
  'Step 3 \u00b7 Hand out the jobs \u2014 what your people can actually do':'Paso 3 \u00b7 Reparta las tareas \u2014 lo que su gente realmente puede hacer',
  'Help already nearby':'Ayuda que ya est\u00e1 cerca',
+ 'Set up your church — counts & facilities':'Configure su iglesia — n\u00fameros e instalaciones',
  'Coaching corner':'Rinc\u00f3n del entrenador',
  'Open when members hesitate':'\u00c1bralo cuando los miembros duden',
  'The proven playbook':'El manual probado',
@@ -7300,36 +7302,6 @@ function wireProposals(M,levels,SG){
     // them changes, so a pastor can compare two audiences without losing his place.
   });
 }
-let FACBAR_OPEN=null;   // remembers the bar's open/closed state across re-renders
-function facilitiesBar(){
-  const host=$('facslot'); if(!host) return;
-  const cur=(capGet()||{}); const fac=cur.facilities&&typeof cur.facilities==='object'?cur.facilities:{};
-  const onCount=Object.values(fac).filter(Boolean).length;
-  // Default open until the pastor has set facilities; after that, honour whatever
-  // state they last left it in — so toggling a chip never snaps the bar shut.
-  const open = FACBAR_OPEN!=null ? FACBAR_OPEN : (onCount===0);
-  host.innerHTML=`<details class="facbar"${open?' open':''}>
-    <summary><b>Your church facilities</b><span>${onCount?onCount+' selected — shaping the plan below':'Tap what your church has, so the plan fits your building'}</span><i class="chev"></i></summary>
-    <div class="facbarbody">
-      <p class="note" style="margin:0 0 10px">The building shapes what you can host. Whatever you mark here lifts the outreach it unlocks — a gym raises a sports camp, classrooms raise VBS, a kitchen raises a community dinner — across the moves below and in the Evangelism Planner. Kept on this device.</p>
-      <div class="facgrid">
-        ${FACILITIES.map(f=>`<button type="button" class="facchip${fac[f.k]?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`).join('')}
-      </div>
-    </div>
-  </details>`;
-  const det=host.querySelector('.facbar');
-  // Track manual open/close so it survives the next render.
-  if(det) det.addEventListener('toggle',()=>{ FACBAR_OPEN=det.open; });
-  host.querySelectorAll('.facchip').forEach(chip=>{
-    chip.addEventListener('click',()=>{
-      const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
-      const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
-      c.facilities=f; capSave(c);
-      FACBAR_OPEN=true;               // a chip was just tapped — keep the bar open
-      render();
-    });
-  });
-}
 function capRender(){
   const host=$('capslot'); if(!host) return;
   const c=capMerged(), any=c.ready;
@@ -7352,7 +7324,14 @@ function capRender(){
       ${any&&c.leaders!=null?`<div class="capd"><b>${c.concurrent}</b><span><b>${c.leaders===0?'no owners.':'ministries at once.'}</b> ${c.leaders===0
         ? 'You have named no leaders. Anything needing more than a couple of people has nobody to own it, chase it and notice when it stops.'
         : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them.`}</span></div>`:''}
-      <div class="caprow" style="margin-top:10px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
+      <div class="facblock">
+        <div class="capl" style="margin-bottom:8px">What your church has to work with — the building shapes what you can host, so Terrain lifts the outreach your rooms are built for.</div>
+        <div class="facgrid">
+          ${FACILITIES.map(f=>{const on=!!((capGet()||{}).facilities||{})[f.k];
+            return `<button type="button" class="facchip${on?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`;}).join('')}
+        </div>
+      </div>
+      <div class="caprow" style="margin-top:12px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
         <span class="caphint" style="margin:0;align-self:center">Kept on this device. Shared with nobody.</span></div>
     </div>`;
   const set=(k,raw)=>{ const cur=capGet()||{}; const n=raw===''?null:Math.max(0,Math.round(+raw));
@@ -7361,7 +7340,15 @@ function capRender(){
     el.addEventListener('change',()=>set(k,el.value));
     el.addEventListener('keydown',e=>{ if(e.key==='Enter') el.blur(); }); };
   wire('cap-m','members'); wire('cap-l','leaders'); wire('cap-v','volunteers');
-
+  host.querySelectorAll('.facchip').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
+      const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
+      c.facilities=f; capSave(c);
+      const y=window.scrollY; render();      // keep the pastor's place — no jump
+      requestAnimationFrame(()=>{ window.scrollTo(0,y); requestAnimationFrame(()=>window.scrollTo(0,y)); });
+    });
+  });
   const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
 }
 function wireStepper(){
@@ -7556,8 +7543,12 @@ function render(){
 
   secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
-    <div id="facslot"></div>
     <div id="zoneslot"></div>
+    <div class="askpanel askjoin" style="margin:14px 0">
+      <div class="asktitle">Set up your church — counts &amp; facilities</div>
+      <p class="note" style="margin:0 0 4px">Fill this in once. Everything below — the moves, Mobilization and the Evangelism Planner — is shaped by what you enter here.</p>
+      <div id="capslot"></div>
+    </div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
         <span>Matched to this tract's numbers and grouped by what each one asks of the church. Open the group that fits where your congregation is — start with the easy ways in, move to a monthly rhythm, take on a weekly commitment only when you are ready. Inside each group the proven playbook comes first, then creative extras. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
@@ -7614,15 +7605,10 @@ function render(){
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
-    <p class="note" style="margin-bottom:14px">Everything above needs people to do it. This section turns the survey into workers, in three steps: <b>count your people</b>, see <b>what this neighbourhood asks</b> of them, then <b>hand out the jobs by name</b>. The numbers you type recalculate everything beneath them as you go.</p>
-
-    <div class="askpanel askjoin">
-      <div class="asktitle">Step 1 · Count your people</div>
-      <div id="capslot"></div>
-    </div>
+    <p class="note" style="margin-bottom:14px">Everything above needs people to do it. Using the counts and facilities you set up under <b>Signature moves</b>, this turns the survey into workers: what the neighbourhood asks of your congregation, then how to hand out the jobs by name.</p>
 
     <div class="askpanel">
-      <div class="asktitle">Step 2 · What this neighbourhood asks of your congregation</div>
+      <div class="asktitle">What this neighbourhood asks of your congregation</div>
     <div class="askbox">
       <div class="askl">The ask, in numbers</div>
       <div class="askrow"><b>${fmtNum(MM.target)}</b><span>homes to reach — one in ten of the ${fmtNum(MM.hh)} households in your densest block, visited personally over about two months</span></div>
@@ -7636,7 +7622,7 @@ function render(){
     </div>
 
     <div class="askpanel">
-      <div class="asktitle">Step 3 · Hand out the jobs — what your people can actually do</div>
+      <div class="asktitle">Hand out the jobs — what your people can actually do</div>
       <div id="planprog"></div>
       <div class="strat"><b>The principle</b>Ask for a named, bounded job, never for "help". The ${RL.length} roles below are what this neighbourhood asks of your congregation, ranked against this tract's profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.${FIT.known?` You counted about ${FIT.workers} willing hands${FIT.leaders!=null?` and ${FIT.leaders} leader${FIT.leaders===1?'':'s'}`:''} — these are the jobs to fill with them, one person and one job at a time.`:''}</div>
     ${RL.map((r,ri)=>`<div class="role" data-role="${ri}"><h4>${esc(r.n)}</h4>
@@ -7697,7 +7683,6 @@ function render(){
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
-  facilitiesBar();
   capRender();
   wireStepper();
   wireProposals(M,levels,SG);
