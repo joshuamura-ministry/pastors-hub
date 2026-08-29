@@ -306,7 +306,13 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .sug li::before{content:"";position:absolute;left:0;top:.55em;width:5px;height:1px;background:var(--ink3)}
 .sug .q{margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:.82rem;color:var(--ink2)}
 .sug .q b{color:var(--ink3);font-weight:600;font-size:.7rem;letter-spacing:.12em;display:block;margin-bottom:3px}
-.capbox{border-color:var(--acc)}
+.askpanel{background:var(--panel);border:1px solid var(--acc);border-radius:var(--r);padding:14px 15px;margin-bottom:10px;box-shadow:var(--shadow)}
+.askjoin{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;padding-bottom:8px}
+.askpanel:not(.askjoin){border-top-left-radius:0;border-top-right-radius:0}
+.asktitle{font-family:var(--disp);font-size:clamp(1.06rem,3.4vw,1.2rem);font-weight:700;color:var(--acc);
+  margin-bottom:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
+.asktitle::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
+.capbox{padding:0}
 .capq{margin-bottom:14px}
 .capl{display:block;font-size:.82rem;color:var(--ink2);font-weight:600;margin-bottom:7px;line-height:1.45}
 .caprow{display:flex;gap:6px;flex-wrap:wrap}
@@ -1001,13 +1007,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v8.7</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v8.7';
+const VERSION = 'v9.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2343,15 +2349,40 @@ function signatureMoves(m,c,tags,limit){
     if(F.known){ if(F.easy) fit+=6; else if(!F.ok) fit-=Math.min(9,3*F.gaps.length); }
     return {...s, stage:s.st||'trust', fit, feas:F, reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
   }).filter(Boolean);
-  // Selection still balances the campaign stages, so a list is never all
-  // door-openers with nothing to follow them. Presentation is by burden.
-  const byStage=st=>scored.filter(x=>x.stage===st).sort((a,b)=>b.fit-a.fit||a.n.localeCompare(b.n));
-  const open=byStage('open'), trust=byStage('trust'), deeper=byStage('deeper'), decide=byStage('decide');
-  const out=[...open.slice(0,4),...trust.slice(0,3),...deeper.slice(0,4),...decide.slice(0,2)];
-  [...open.slice(4),...trust.slice(3),...deeper.slice(4),...decide.slice(2)].forEach(x=>{ if(out.length<limit) out.push(x); });
-  // Light things lead. A church that starts something small and finishes it
-  // will attempt something larger next year; a church that opens with its
-  // heaviest option usually does neither.
+  // Select by BAND first, then balance the stages inside each band.
+  //
+  // The old order did this backwards: it filled a stage quota, and because
+  // almost every "go deeper" and "build trust" move is a weekly commitment,
+  // the heavy band was full before the light one was looked at. A tract with
+  // twenty-two light options was shown two. A pastor opening the light box
+  // must find a real list there — that box is the one he can act on this week.
+  const bands=[[],[],[]];
+  scored.forEach(x=>bands[bandOf(x.load)].push(x));
+  const order={open:0,trust:1,deeper:2,decide:3};
+  // Inside a band, interleave the stages so a band is never all door-openers:
+  // take the best of each stage in turn, then the next best, and so on.
+  const weave=arr=>{
+    const q={open:[],trust:[],deeper:[],decide:[]};
+    arr.sort((a,b)=>b.fit-a.fit||a.n.localeCompare(b.n)).forEach(x=>q[x.stage].push(x));
+    const out=[]; let any=true;
+    while(any){ any=false;
+      for(const st of ['open','trust','deeper','decide']){ if(q[st].length){ out.push(q[st].shift()); any=true; } } }
+    return out;
+  };
+  const pool=bands.map(weave);
+  // Quotas favour the light end deliberately. A church that starts something
+  // small and finishes it attempts something larger next year.
+  const want=[Math.max(6,Math.round(limit*0.5)), Math.max(3,Math.round(limit*0.2)), Math.max(3,Math.round(limit*0.3))];
+  const out=[];
+  pool.forEach((p,i)=>out.push(...p.slice(0,want[i])));
+  // Anything unfilled — a tract with few light matches, say — is backfilled
+  // from the lightest band that still has candidates, never from the heaviest.
+  // Backfill only from the two lighter bands. If a tract matches few light
+  // options the honest answer is a shorter list, not a long one padded out
+  // with weekly commitments a church was never going to take on.
+  for(let i=0;i<2&&out.length<limit;i++){
+    pool[i].slice(want[i]).forEach(x=>{ if(out.length<limit) out.push(x); });
+  }
   return out.sort((a,b)=>bandOf(a.load)-bandOf(b.load) || a.involve-b.involve || b.fit-a.fit);
 }
 
@@ -2684,7 +2715,7 @@ function suggestions(M,scope){
   const hits=RULES.filter(r=>{try{return !!r.on(m,c)}catch(e){return false}})
     .map(r=>({...r, evidence:r.ev(m,c), title:r.t(m,c), steps:r.do(m,c), question:r.ask(m,c), ideas:IDEAS[r.id]||[]}))
     .sort((a,b)=>b.w-a.w);
-  const moves=signatureMoves(m,c,tags,14);
+  const moves=signatureMoves(m,c,tags,18);
   const cats=[];
   hits.forEach(h=>{ let g=cats.find(x=>x.cat===h.cat); if(!g){g={cat:h.cat,items:[]};cats.push(g)} g.items.push(h); });
   return {hits,cats,tags,moves};
@@ -6821,23 +6852,22 @@ function wireProposals(M,levels,SG){
 function capRender(){
   const host=$('capslot'); if(!host) return;
   const c=capMerged(), any=c.ready;
-  const lab = any ? (c.members+' · '+(c.leaders!=null?c.leaders+' leaders':'leaders?')) : 'two taps';
-  host.innerHTML=`<details class="suggroup mgroup capbox"${any&&c.leaders!=null?'':' open'}>
-    <summary class="sugcat"><span class="sgt">How big is your congregation?</span>
-      <span class="sgn">${lab}</span><i class="chev"></i></summary>
-    <div class="sgbody">
-      <p class="note" style="margin-bottom:12px">Everything below is matched to the neighbourhood. This is the other half — the church standing in front of it. Two numbers, roughly right, kept on this device and shared with nobody.</p>
+  // Deliberately not a dropdown. Tapping a number rebuilds the report, and a
+  // collapsible would snap shut on every tap — worse, the thing these numbers
+  // change sits directly underneath, and a pastor should watch it move as he
+  // answers rather than having to go and open it.
+  host.innerHTML=`<div class="capbox">
       <div class="capq"><span class="capl">On an average Sabbath, how many people are actually in the room?</span>
         <div class="caprow">${[12,20,30,45,60,90,130,200,300].map(v=>`<button class="capn${c.members===v?' on':''}" data-m="${v}">${v===300?'300+':v}</button>`).join('')}</div></div>
       <div class="capq"><span class="capl">How many church leaders? Elders, deacons, department heads, Sabbath School teachers — anyone who already carries something.</span>
         <div class="caprow">${[0,1,2,3,4,6,8,12,20].map(v=>`<button class="capn${c.leaders===v?' on':''}" data-l="${v}">${v===20?'20+':v}</button>`).join('')}</div></div>
-      ${any?`<div class="capd"><b>${c.hands}</b><span><b>hands.</b> Roughly a third of a congregation turns out for something beyond the service, so ${c.hands} of your ${c.members} is what Terrain plans around. Deliberately cautious — a plan built on the hopeful number falls over in week three. Moves needing more are marked below, not hidden.</span></div>`:''}
+      ${any?`<div class="capd"><b>${c.hands}</b><span><b>hands.</b> Roughly a third of a congregation turns out for something beyond the service, so ${c.hands} of your ${c.members} is what Terrain plans around — deliberately cautious, because a plan built on the hopeful number falls over in week three.</span></div>`:''}
       ${any&&c.leaders!=null?`<div class="capd"><b>${c.concurrent}</b><span><b>${c.leaders===0?'no owners.':'at once.'}</b> ${c.leaders===0
-        ? 'You have named no leaders. Anything needing more than a couple of people has nobody to own it, chase it and notice when it stops — so the list below leads with what one or two members can carry alone.'
-        : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them, rather than opening six and abandoning four.`}</span></div>`:''}
-      ${any?`<div class="caprow" style="margin-top:12px"><button class="btn ghost" id="cap-clear">Clear this</button></div>`:''}
-      <p class="caphint" style="margin-top:12px">Terrain does not ask which members can teach, drive, cook or lead a study. That is a question for the members themselves, not for you to guess — and it is coming as its own tool, filled in by the congregation, which will sharpen everything on this page.</p>
-    </div></details>`;
+        ? 'You have named no leaders. Anything needing more than a couple of people has nobody to own it, chase it and notice when it stops.'
+        : `Every effort needs one person who owns it. With ${c.leaders} leader${c.leaders===1?'':'s'} you can realistically have ${c.concurrent} thing${c.concurrent===1?'':'s'} running at once — start fewer and finish them.`}</span></div>`:''}
+      <div class="caprow" style="margin-top:10px">${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
+        <span class="caphint" style="margin:0;align-self:center">Kept on this device. Shared with nobody.</span></div>
+    </div>`;
   const set=(k,v)=>{ const cur=capGet()||{}; cur[k]=v; capSave(cur); render(); };
   host.querySelectorAll('[data-m]').forEach(b=>b.onclick=e=>{e.preventDefault();set('members',+b.dataset.m);});
   host.querySelectorAll('[data-l]').forEach(b=>b.onclick=e=>{e.preventDefault();set('leaders',+b.dataset.l);});
@@ -7037,7 +7067,7 @@ function render(){
         <span>Matched to this tract's profile and grouped by what each one asks of the church — start with the light box and work down. Every idea still carries the campaign stage it belongs to, because the order of the work matters: open a door, build trust, go deeper, then invite a decision. A different neighbourhood produces a different list.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
       ${BANDS.map((B,bi)=>{
         const set=SG.moves.filter(x=>bandOf(x.load)===bi); if(!set.length) return '';
-        return `<details class="stage band${bi}"${bi===0?' open':''}>
+        return `<details class="stage band${bi}">
           <summary class="stagehead"><span class="stagenum">${bi+1}</span><b>${esc(B.n)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
           <div class="stagebody">
           <p class="stageblurb">${esc(B.d)}</p>
@@ -7081,12 +7111,11 @@ function render(){
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>${verseHTML('mobilize')}${egwHTML('mobilize')}
-    <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse. Start with the two numbers; everything under them is sized to your answer.</p>
-    <div id="capslot"></div>
+    <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse. Answer the two questions and the ask underneath them resizes as you tap.</p>
+    <div class="askpanel askjoin"><div id="capslot"></div></div>
 
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">What this neighbourhood asks of your congregation</span><span class="sgn">${FIT.known?FIT.need+' of '+FIT.members:RL.length+' roles'}</span><i class="chev"></i></summary>
-      <div class="sgbody">
+    <div class="askpanel">
+      <div class="asktitle">What this neighbourhood asks of your congregation</div>
     <div class="askbox">
       <div class="askl">The ask, in numbers</div>
       <div class="askrow"><b>${fmtNum(MM.target)}</b><span>homes to reach — one in ten of the ${fmtNum(MM.hh)} households in your densest block, visited personally over about two months</span></div>
@@ -7097,6 +7126,10 @@ function render(){
       ${FIT.scope!=null?`<div class="asknote"><b>The honest alternative.</b> ${FIT.workers} workers make ${FIT.canPairs} pairs, and ${FIT.canPairs} pairs can cover about <b>${fmtNum(FIT.canReach)}</b> homes properly in the same two months. That is one home in ${FIT.ratio} rather than one in ten. Pick the ${fmtNum(FIT.canReach)} densest addresses and visit them well, rather than spreading ${FIT.workers} people over ${fmtNum(MM.target)} doors and doing none of it properly.</div>`:`<div class="asknote">A visit that is made and never followed up is worse than one never made. Size the ground to the people you actually have.</div>`}`
       :`<div class="asknote"><b>This is what the neighbourhood needs — not what your church can field.</b> Tap three numbers in <b>What can your church actually field?</b> above and this becomes a judgment instead of a demand: whether ${MM.people} people is comfortable, a stretch, or out of reach, and what to do about it either way.</div>`}
     </div>
+    </div>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">The roles to ask for by name</span><span class="sgn">${RL.length} roles</span><i class="chev"></i></summary>
+      <div class="sgbody">
     <div id="planprog"></div>
     <div class="strat"><b>The principle</b>Ask for a named, bounded job, not for "help". The ${RL.length} roles below are ranked against this tract’s profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.</div>
     <div class="note" style="display:none"> Ticked steps and names are kept on this device so you can come back to them — they are not shared with anyone, and clearing your browser clears them.</div>
