@@ -330,6 +330,22 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .move.easy{border-color:rgba(46,160,90,.4)}
 .mreq{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}
 .mreq span{font-size:.68rem;color:var(--ink3);background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:3px 9px}
+.bandhead{margin:16px 0 9px;padding:9px 12px;border-radius:10px;border:1px solid var(--line)}
+.bandhead:first-child{margin-top:2px}
+.bandhead b{display:block;font-size:.7rem;letter-spacing:.13em;text-transform:uppercase;font-weight:700;margin-bottom:3px}
+.bandhead span{display:block;font-size:.79rem;color:var(--ink2);line-height:1.55}
+.bandhead.b0{background:rgba(46,160,90,.07);border-color:rgba(46,160,90,.35)}.bandhead.b0 b{color:#2ea05a}
+.bandhead.b1{background:var(--acc-dim);border-color:var(--acc)}.bandhead.b1 b{color:var(--acc)}
+.bandhead.b2{background:rgba(200,140,20,.08);border-color:rgba(200,140,20,.4)}.bandhead.b2 b{color:#c88c14}
+.stagetag{font-size:.62rem;letter-spacing:.06em;text-transform:uppercase;font-weight:700;color:var(--ink3);
+  background:var(--panel2);border:1px solid var(--line);border-radius:5px;padding:3px 7px;margin-left:6px}
+.stage.band0>summary .stagenum{background:#2ea05a}
+.stage.band2>summary .stagenum{background:#c88c14}
+.mreq span.ld{font-weight:700;letter-spacing:.02em}
+.mreq span.l0,.mreq span.l1{color:#2ea05a;border-color:rgba(46,160,90,.4);background:rgba(46,160,90,.08)}
+.mreq span.l2{color:var(--acc);border-color:var(--acc);background:var(--acc-dim)}
+.mreq span.l3{color:#c88c14;border-color:rgba(200,140,20,.45);background:rgba(200,140,20,.09)}
+.mreq span.l4{color:#c83c3c;border-color:rgba(200,60,60,.4);background:rgba(200,60,60,.08)}
 .mreq span.have{color:#2ea05a;border-color:rgba(46,160,90,.4)}
 .mgap{margin-top:8px;font-size:.78rem;color:var(--ink3);line-height:1.5}
 .mgap b{display:block;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
@@ -985,13 +1001,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v8.3</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v8.7</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v8.3';
+const VERSION = 'v8.7';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1627,6 +1643,55 @@ const STAGE={
      skill — a capability that must exist, or the move is not on
    Defaults are deliberately conservative: an untagged move is assumed to need
    a small team and some money, so nothing is promised lightly. */
+
+/* ---- How much this actually asks of the church, week after week ----------
+   People and money describe setting a thing up. They say nothing about the
+   burden of keeping it going, and that is what a congregation actually feels.
+   Lending the sanctuary as a recital hall reads as "two people, no cost" —
+   but somebody has to be in that building every single session, unlocking,
+   staying, locking up. You cannot leave a church open for nobody.
+
+     load 0  put it there and top it up now and then
+     load 1  a few times a year
+     load 2  once a month
+     load 3  every week, and someone must be present each time
+     load 4  a campaign — consecutive nights or a full season
+
+   Involvement sorts the list. Light things lead, because a church that starts
+   something small and finishes it will attempt something larger next year;
+   a church that opens with its heaviest option usually does neither. */
+const LOAD={0:'Set it and top it up',1:'A few times a year',2:'Monthly',3:'Weekly, someone present',4:'A campaign'};
+/* Three bands, so the weight is legible as a heading rather than only as a
+   sort order. Deliberately not called "sacrifice levels" — the lightest
+   things here are real ministry, not a lesser grade of it, and a pantry box
+   on the pavement has fed more people than many campaigns. What is being
+   measured is the standing commitment: how much of the congregation's
+   ordinary week this permanently occupies. */
+const BANDS=[
+ {k:0,n:'Light lift',      d:'One or two people, now and then. Nothing here needs a rota, a budget or a meeting to begin — a willing member could start most of these before next Sabbath.'},
+ {k:1,n:'A monthly rhythm',d:'One date a month that somebody owns and protects. More than a gesture, less than a commitment that eats every week. This is where most churches should be living.'},
+ {k:2,n:'A standing commitment',d:'Every week, and somebody has to actually be there each time — unlocking, staying, locking up. Worth doing, but count the cost first: one of these done faithfully beats three abandoned by March.'}
+];
+function bandOf(load){ return load<=1?0:load===2?1:2; }
+const MOVE_LOAD={
+  'prayer-box':0, 'pantry-box':0, 'wifi-porch':0, 'noticeboard':0,
+  'glow-racks':0, 'free-venue':0, 'disaster':0, 'lit-doors':1,
+  'lit-multilingual':1, 'kids-books':1, 'blessing-bags':1, 'toy-swap':1,
+  'drive-in':1, 'blood-drive':1, 'kids-health':1, 'come-and-see':1,
+  'neighbour-table':1, 'lot-sport':1, 'bp-clinic':2, 'repair-cafe':2,
+  'lot-market':2, 'meal-train':2, 'bereavement-visits':2, 'walking-club':2,
+  'garden':2, 'decision-visit':2, 'doorstep-prayer':2, 'mens-breakfast':2,
+  'supper-study':2, 'seniors-scripture':2, 'lift-rota':2, 'text-thread':2,
+  'walk-study':3, 'kitchen-study':3, 'workplace-study':3, 'late-room':3,
+  'questions-night':3, 'archaeology':3, 'bible-by-post':3, 'grief':3,
+  'grief-to-hope':3, 'health-to-why':3, 'parents-study':3, 'esl-to-scripture':3,
+  'recovery-study':3, 'open-baptism-class':3, 'homework-club':3, 'job-club':3,
+  'money-course':3, 'digital-help':3, 'conversation-cafe':3, 'mental-health':3,
+  'cooking-school':3, 'study-hall':3, 'sanctuary-music':3, 'warming':3,
+  'music-academy':3, 'skills-center':3, 'esl-center':3, 'senior-day':3,
+  'chip':3, 'family-life-series':3, 'health-expo':4, 'proph-news':4,
+  'proph-language':4, 'four-nights':4
+};
 const SKILL={medical:'nurses or health professionals',teach:'teachers or tutors',music:'musicians',
   lead:'someone who can lead a group or give a study',lang:'bilingual members',vehicle:'a van, or drivers',
   kids:'members good with children',cook:'someone who can cook for a crowd',trade:'practical or trade skills',
@@ -2103,7 +2168,91 @@ const SIGNATURE=[
   need:['older','settled','uninsured','families','poor'],boost:[],w:11,ppl:2,cost:0,skill:['lead'],
   d:'Whatever ended — cooking school, grief group, homework club, four nights — go and see every person who came, in their home, within a fortnight. Thank them, ask what they thought, and ask plainly whether they would like to keep going. Most churches run the programme and never make this visit, which is where nearly all the loss happens.',
   why:m=>`Everything above generates names. About ${fmtNum(m.pop)} people live here; the ones who already came to something are the shortest distance to a decision.`,
+  c:EFFORT.solo,p:'Nobody'},,
+ /* ---------- LIGHT LIFT: more of them, because this is the band a church
+      actually starts in. One or two people, no rota, no budget meeting.
+      Several of these can be done by a single member who never tells
+      anybody they are doing it. ---------- */
+ {id:'birthday-cards',st:'open',k:KIND.belong,n:'A card on the doorstep for every new baby',
+  need:['families','many-kids','young','settled','family-heavy'],boost:[],w:8,ppl:1,cost:0,skill:[],load:0,
+  d:'One member watches for the new prams on the street and puts a handwritten card through the door — congratulations, our name, a phone number, nothing else. No visit, no invitation, no leaflet. New parents remember who noticed them, and they remember it for years.',
+  why:m=>`About ${fmtNum(m.kids)} children live here and ${fmtPct(m.kidsShare)} of the population is under eighteen — this street produces new babies constantly.`,
   c:EFFORT.solo,p:'Nobody'},
+ {id:'thank-you-run',st:'open',k:KIND.serve,n:'Thank the people nobody thanks',
+  need:['service-work','dense','poor','settled','older'],boost:[],w:7,ppl:2,cost:1,skill:[],load:1,
+  d:'Twice a year, take something small to the bin crew, the postal workers, the surgery reception, the school office and the fire station. A card, a tray of something, and the church name. It costs an afternoon and it changes how every one of those people talks about you when your name comes up.',
+  why:m=>`${fmtPct(m.occ[1][1])} of workers here are in service jobs — the people who keep this neighbourhood running and are almost never thanked for it.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'seed-swap',st:'open',k:KIND.belong,n:'A seed and cutting swap on the wall',
+  need:['settled','homeowners','older','very-old','poor'],boost:[],w:6,ppl:1,cost:0,skill:[],load:0,
+  d:'A shelf and a few envelopes by the gate: leave a cutting, take a cutting. Gardeners are among the easiest people in any neighbourhood to fall into conversation with, and they come back — plants have seasons and so do the people who grow them.',
+  why:m=>`${fmtPct(m.homeowners)} of households own their home here; settled streets garden, and gardeners talk.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'phone-check',st:'open',k:KIND.serve,n:'A standing phone round for people on their own',
+  need:['seniors-alone','very-old','older','no-car'],boost:['seniors-alone'],w:10,ppl:2,cost:0,skill:[],load:1,
+  d:'Two members, a list of names, one call each a fortnight. Not pastoral visiting and not a survey — a two-minute call to ask how the week has been. For someone who lives alone this may be the only call they get, and the first person to notice something is wrong will be whoever made it.',
+  why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior living alone — about ${fmtNum(m.seniorsAloneN)} homes where nobody would notice for days.`,
+  c:EFFORT.solo,p:'The surgery; Age UK'},
+ {id:'school-supplies',st:'open',k:KIND.serve,n:'Fill the school\u2019s quiet cupboard',
+  need:['child-poverty','poor','many-kids','schools-near','single-parents'],boost:['child-poverty'],w:9,ppl:2,cost:1,skill:[],load:1,
+  d:'Ring the nearest primary and ask what they quietly buy for children whose families cannot — shoes, coats, pencil cases, breakfast. Take it in twice a year with no publicity and no photographs. Schools protect the families they serve, and a church that helps without asking to be seen gets trusted quickly.',
+  why:m=>`${fmtPct(m.childPoverty)} of children here live below the poverty line, across roughly ${fmtNum(m.k12)} school-age children.`,
+  c:EFFORT.solo,p:'The nearest primary school'},
+ {id:'bench',st:'open',k:KIND.belong,n:'Put a bench where people already stop',
+  need:['dense','older','very-old','no-car','settled','crowded'],boost:[],w:6,ppl:2,cost:1,skill:['trade'],load:0,
+  d:'Between the bus stop and the shops, on your boundary, facing the pavement rather than the building. People waiting, people resting halfway home, people with nowhere else to sit. A bench asks nothing and gets used every day for twenty years.',
+  why:m=>`${fmtPct(m.noCar)} of households have no car — people here walk and wait, and there is usually nowhere to sit.`,
+  c:EFFORT.solo,p:'The council, if it faces their pavement'},
+ {id:'funeral-teas',st:'open',k:KIND.serve,n:'Offer the hall for funeral teas, free',
+  need:['very-old','older','seniors-alone','settled','poor'],boost:['very-old'],w:9,ppl:3,cost:0,skill:['cook'],load:1,
+  d:'Tell the two nearest funeral directors that your hall and a pot of tea are available at no charge to anyone in the neighbourhood, member or not. Families remember who carried them through the worst fortnight of their lives, and funeral directors refer constantly once they trust you.',
+  why:m=>`Median age here is ${m.medAge}${m.seniorsAlone>=10?`, with ${fmtPct(m.seniorsAlone)} of households a senior living alone`:''} — this is a common need and few churches offer it.`,
+  c:EFFORT.solo,p:'Local funeral directors'},
+ {id:'translate-help',st:'open',k:KIND.serve,n:'Sit with someone through the hard paperwork',
+  need:['immigrant','very-immigrant','limited-english','spanish','multilingual','newcomers'],boost:['very-immigrant'],w:10,ppl:2,cost:0,skill:['lang'],load:1,
+  d:'Offer, by word of mouth, to sit with anyone facing a form they cannot read — immigration, benefits, school registration, a hospital letter. No advice, no advocacy, just a bilingual member at the kitchen table for an hour. It is the single most useful thing a bilingual congregation owns.',
+  why:m=>`${fmtPct(m.limEng)} of households speak English less than very well and ${fmtPct(m.foreign)} were born abroad — the paperwork here is relentless.`,
+  c:EFFORT.solo,p:'A settlement or advice charity'},
+ {id:'jar-of-prayer',st:'open',k:KIND.invite,n:'Take the prayer list back to the street',
+  need:['dense','settled','poor','older','families'],boost:[],w:8,ppl:1,cost:0,skill:[],load:1,
+  d:'When somebody outside the church asks for prayer — through the box, at a stall, on the phone — write it down, pray for it, and go back a month later to ask how it turned out. Almost nobody does the going back. It is the cheapest follow-up in existence and it astonishes people.',
+  why:m=>`About ${fmtNum(m.pop)} people live in this tract. Remembering one of them a month later costs nothing and is remembered for years.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'winter-check',st:'open',k:KIND.serve,n:'The cold-snap knock',
+  need:['very-old','seniors-alone','poor','very-poor','older','low-income'],boost:['very-poor'],w:9,ppl:4,cost:1,skill:[],load:1,
+  d:'When the forecast turns hard, two members walk the streets you already know and knock on the doors of anyone elderly or alone: is the heating working, is there food in, do you need anything fetched. Twice a winter. Fuel poverty kills quietly and the people it kills do not ask for help.',
+  why:m=>`${fmtPct(m.poverty)} live below the poverty line and ${fmtPct(m.seniorsAlone)} of households are a senior alone — the overlap is who dies in a cold week.`,
+  c:EFFORT.team,p:'The council\u2019s welfare team'},
+ {id:'noticeboard-jobs',st:'open',k:KIND.serve,n:'A jobs and small-work board',
+  need:['jobless','service-work','poor','young','low-income'],boost:['jobless'],w:7,ppl:1,cost:0,skill:[],load:0,
+  d:'Half your outside noticeboard given to work: local vacancies, someone needing a gardener, a member with a van who will move a sofa. Refreshed weekly by one person with a phone. In a neighbourhood short of work, this is the most-read thing you will ever put on a wall.',
+  why:m=>`Unemployment here is ${fmtPct(m.unemp)} and ${fmtPct(m.incLow)} of households earn under $35k.`,
+  c:EFFORT.solo,p:'The job centre'},
+ {id:'lending-shelf',st:'open',k:KIND.equip,n:'A lending shelf of tools and equipment',
+  need:['poor','renters','low-income','young','crowded'],boost:['very-poor'],w:7,ppl:2,cost:1,skill:['trade'],load:0,
+  d:'A drill, a carpet cleaner, a wallpaper steamer, a sewing machine, a folding table. Borrow it for a weekend, bring it back. Renters and people in small flats cannot store these and cannot justify buying them, and every loan is a conversation at the door.',
+  why:m=>`${fmtPct(m.renters)} of households rent${m.overcrowd>=5?` and ${fmtPct(m.overcrowd)} are overcrowded`:''} — no shed, no storage, no reason to own a drill.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'welcome-newcomers',st:'open',k:KIND.belong,n:'A welcome note for people who just moved in',
+  need:['newcomers','renters','changing','young','immigrant'],boost:['changing'],w:8,ppl:1,cost:1,skill:[],load:1,
+  d:'Watch for the vans. A card through the door with the useful things nobody tells you — bin day, the good doctor, where the late shop is, the bus that actually runs — and the church name at the bottom. Practical, unpushy, and it reaches people in the fortnight when they have no one.',
+  why:m=>`${fmtPct(m.renters)} of households rent here, which means a steady turnover of people who know nobody on their own street.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'exam-packs',st:'open',k:KIND.serve,n:'Exam-season packs for teenagers',
+  need:['many-kids','schools-near','families','k12','students'],boost:[],w:6,ppl:2,cost:1,skill:[],load:1,
+  d:'In exam season, a small bag left at the school office or handed out at the gate: pens, a snack, a bottle of water, a note that says somebody is thinking of you. Teenagers are the group churches reach worst and the group most saturated in pressure nobody acknowledges.',
+  why:m=>`About ${fmtNum(m.k12)} school-age children live here.`,
+  c:EFFORT.solo,p:'The nearest secondary school'},
+ {id:'wheelie-bins',st:'open',k:KIND.serve,n:'Bring the bins in',
+  need:['very-old','seniors-alone','older','no-car'],boost:['very-old'],w:7,ppl:2,cost:0,skill:[],load:1,
+  d:'Two members, one street, bin day. Take out and bring back in the bins of anyone who struggles with it. It is faintly absurd, takes twenty minutes a week, and it is the kind of thing neighbours notice and talk about long before they would ever come to a service.',
+  why:m=>`${fmtPct(m.seniorsAlone)} of households are one senior on their own — about ${fmtNum(m.seniorsAloneN)} homes.`,
+  c:EFFORT.solo,p:'Nobody'},
+ {id:'story-corner',st:'open',k:KIND.belong,n:'Half an hour of stories at the library',
+  need:['many-kids','families','single-parents','family-heavy','child-poverty'],boost:[],w:7,ppl:2,cost:0,skill:['kids'],load:2,
+  d:'Not at your building — at theirs. Offer the library or the children\u2019s centre a member who will read to under-fives once a month. You are a guest in somebody else\u2019s room, which is exactly the right posture, and the parents in that room are the hardest-to-reach group in the neighbourhood.',
+  why:m=>`${fmtPct(m.kidsShare)} of people here are children${m.singleParent>=25?` and ${fmtPct(m.singleParent)} of families have one parent`:''}.`,
+  c:EFFORT.solo,p:'The library; a children\u2019s centre'}
 ];
 
 /* Fold the requirements in, with a cautious default for anything untagged. */
@@ -2114,6 +2263,10 @@ SIGNATURE.forEach(x=>{
   if(x.ppl==null)  x.ppl  = r.ppl!=null?r.ppl:4;
   if(x.cost==null) x.cost = r.cost!=null?r.cost:1;
   if(!x.skill)     x.skill= r.skill||[];
+  if(x.load==null) x.load = MOVE_LOAD[x.id]!=null?MOVE_LOAD[x.id]:2;
+  // One number the list can be sorted on. Ongoing burden dominates, because
+  // that is what a congregation feels; people and money only break ties.
+  x.involve = x.load*10 + Math.min(x.ppl,12) + x.cost*3;
 });
 
 /* ---- small groups: the shape depends on the housing, not on preference ---- */
@@ -2190,16 +2343,16 @@ function signatureMoves(m,c,tags,limit){
     if(F.known){ if(F.easy) fit+=6; else if(!F.ok) fit-=Math.min(9,3*F.gaps.length); }
     return {...s, stage:s.st||'trust', fit, feas:F, reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
   }).filter(Boolean);
+  // Selection still balances the campaign stages, so a list is never all
+  // door-openers with nothing to follow them. Presentation is by burden.
   const byStage=st=>scored.filter(x=>x.stage===st).sort((a,b)=>b.fit-a.fit||a.n.localeCompare(b.n));
-  // A campaign runs in order. Door-openers lead; a reaping meeting is one line at
-  // the end, never the headline — run first it harvests nothing.
   const open=byStage('open'), trust=byStage('trust'), deeper=byStage('deeper'), decide=byStage('decide');
-  // Compose the sequence, then order it. Slicing after concatenation would drop
-  // the closing stage, which is exactly the part a pastor is looking for.
   const out=[...open.slice(0,4),...trust.slice(0,3),...deeper.slice(0,4),...decide.slice(0,2)];
   [...open.slice(4),...trust.slice(3),...deeper.slice(4),...decide.slice(2)].forEach(x=>{ if(out.length<limit) out.push(x); });
-  const order={open:0,trust:1,deeper:2,decide:3};
-  return out.sort((a,b)=>order[a.stage]-order[b.stage]||b.fit-a.fit);
+  // Light things lead. A church that starts something small and finishes it
+  // will attempt something larger next year; a church that opens with its
+  // heaviest option usually does neither.
+  return out.sort((a,b)=>bandOf(a.load)-bandOf(b.load) || a.involve-b.involve || b.fit-a.fit);
 }
 
 /* ================= OUTREACH RULES =================
@@ -6879,24 +7032,23 @@ function render(){
   secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>${verseHTML('prompts')}${egwHTML('prompts')}
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
-    <div id="capslot"></div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
-        <span>Matched to this tract’s profile and sequenced the way a campaign actually works: open a door, build trust, go deeper, then invite a decision. Tap a stage to open the moves inside it. A different neighbourhood produces a different list — and a different order of work.</span></div>
-      ${['open','trust','deeper','decide'].map(st=>{
-        const set=SG.moves.filter(x=>x.stage===st); if(!set.length) return '';
-        return `<details class="stage">
-          <summary class="stagehead"><span class="stagenum">${STAGE[st].n}</span><b>${esc(STAGE[st].label)}</b><span class="stagen">${set.length} move${set.length===1?'':'s'}</span><i class="chev"></i></summary>
+        <span>Matched to this tract's profile and grouped by what each one asks of the church — start with the light box and work down. Every idea still carries the campaign stage it belongs to, because the order of the work matters: open a door, build trust, go deeper, then invite a decision. A different neighbourhood produces a different list.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
+      ${BANDS.map((B,bi)=>{
+        const set=SG.moves.filter(x=>bandOf(x.load)===bi); if(!set.length) return '';
+        return `<details class="stage band${bi}"${bi===0?' open':''}>
+          <summary class="stagehead"><span class="stagenum">${bi+1}</span><b>${esc(B.n)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
           <div class="stagebody">
-          <p class="stageblurb">${esc(STAGE[st].blurb)}</p>
-          ${set.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}${x.feas&&x.feas.easy?' easy':''}">
-            <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span>${x.feas&&x.feas.easy?'<span class="badge b-easy">Could start this month</span>':''}${x.feas&&x.feas.known&&!x.feas.ok?'<span class="badge b-gap">Not yet</span>':''}</div>
+          <p class="stageblurb">${esc(B.d)}</p>
+          ${set.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}">
+            <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><span class="stagetag">${STAGE[x.stage].n}. ${esc(STAGE[x.stage].label)}</span>${x.feas&&x.feas.known&&!x.feas.ok?'<span class="badge b-gap">Not yet</span>':''}</div>
             <h4>${esc(x.n)}</h4>
             <p>${esc(x.d)}</p>
             <div class="mwhy"><b>Why here</b>${esc(x.reason)}</div>
-            <div class="mreq"><span>${x.ppl===1?'1 person':x.ppl+' people'}</span><span>${['no cost','modest outlay','budget line'][x.cost]}</span>${(x.skill||[]).map(k=>`<span>${esc(SKILL[k])}</span>`).join('')}</div>
+            <div class="mreq"><span class="ld l${x.load}">${esc(LOAD[x.load])}</span><span>${x.ppl===1?'1 person':x.ppl+' people'}</span><span>${['no cost','modest outlay','budget line'][x.cost]}</span>${(x.skill||[]).map(k=>`<span>${esc(SKILL[k])}</span>`).join('')}</div>
             ${x.feas&&x.feas.known&&!x.feas.ok?`<div class="mgap"><b>What is missing</b>${x.feas.gaps.map(g=>esc(g)).join(' · ')}</div>`:''}
-            <div class="tags"><span>${esc(x.c)}</span><span>With: ${esc(x.p)}</span></div>
+            <div class="tags"><span>With: ${esc(x.p)}</span></div>
           </div>`).join('')}
           </div>
         </details>`;
@@ -6929,21 +7081,8 @@ function render(){
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>${verseHTML('mobilize')}${egwHTML('mobilize')}
-    <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse.</p>
-
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">Talking to people who are not Adventists</span><span class="sgn">${SPEAK.length} phrases · ${HONESTY.length} rules</span><i class="chev"></i></summary>
-      <div class="sgbody">
-    <div class="strat"><b>The principle</b>Say plainly who you are, early and in the open — and say it without insider vocabulary. Hiding the name until the last night of a series costs more than it ever gains. Using words only members understand quietly tells a visitor they are outside.</div>
-    <div class="card wide" style="min-height:0">
-      <table class="speak"><thead><tr><th>Instead of</th><th>Say</th></tr></thead><tbody>
-      ${SPEAK.map(x=>`<tr><td class="si">${esc(x.i)}</td><td><b>${esc(x.o)}</b><span>${esc(x.w)}</span></td></tr>`).join('')}
-      </tbody></table>
-    </div>
-    <div class="card wide" style="min-height:0"><div class="l" style="margin-bottom:8px">Six rules for public communication</div>
-      <ul class="plain">${HONESTY.map(h=>`<li>${esc(h)}</li>`).join('')}</ul></div>
-      </div>
-    </details>
+    <p class="note" style="margin-bottom:14px">Everything above assumes people to do it. This part is about getting the congregation off the pew — and about saying who we are in words a neighbour can actually parse. Start with the two numbers; everything under them is sized to your answer.</p>
+    <div id="capslot"></div>
 
     <details class="suggroup mgroup">
       <summary class="sugcat"><span class="sgt">What this neighbourhood asks of your congregation</span><span class="sgn">${FIT.known?FIT.need+' of '+FIT.members:RL.length+' roles'}</span><i class="chev"></i></summary>
@@ -6991,6 +7130,20 @@ function render(){
     ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
       </div>
     </details>
+    <details class="suggroup mgroup">
+      <summary class="sugcat"><span class="sgt">Talking to people who are not Adventists</span><span class="sgn">${SPEAK.length} phrases · ${HONESTY.length} rules</span><i class="chev"></i></summary>
+      <div class="sgbody">
+    <div class="strat"><b>The principle</b>Say plainly who you are, early and in the open — and say it without insider vocabulary. Hiding the name until the last night of a series costs more than it ever gains. Using words only members understand quietly tells a visitor they are outside.</div>
+    <div class="card wide" style="min-height:0">
+      <table class="speak"><thead><tr><th>Instead of</th><th>Say</th></tr></thead><tbody>
+      ${SPEAK.map(x=>`<tr><td class="si">${esc(x.i)}</td><td><b>${esc(x.o)}</b><span>${esc(x.w)}</span></td></tr>`).join('')}
+      </tbody></table>
+    </div>
+    <div class="card wide" style="min-height:0"><div class="l" style="margin-bottom:8px">Six rules for public communication</div>
+      <ul class="plain">${HONESTY.map(h=>`<li>${esc(h)}</li>`).join('')}</ul></div>
+      </div>
+    </details>
+
   </section>`);
 
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>${verseHTML('case')}${egwHTML('case')}
