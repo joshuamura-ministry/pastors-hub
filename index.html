@@ -553,6 +553,7 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .obj b{display:block;font-family:var(--disp);font-size:.92rem;color:var(--ink);margin-bottom:5px}
 .obj span{font-size:.84rem;color:var(--ink2);line-height:1.6}
 .zones{margin:18px 0 4px}
+#zoneslot{transition:opacity .18s ease}
 .zone{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow);overflow-wrap:anywhere}
 .zonefold{padding:0}
 .zonefold>summary{list-style:none;cursor:pointer;padding:12px 14px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
@@ -1071,13 +1072,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.35</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.36</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.35';
+const VERSION = 'v9.36';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7405,29 +7406,22 @@ function capReRender(){
 }
 // Change scope (Neighbourhood/Town/County) and reload the map, keeping the pastor
 // anchored to the Hotspots block they were looking at — no jump to the bottom.
-function scopeReRender(){
-  const a1=document.getElementById('zoneslot');
+function scopeReRender(){ scopeSwitch('zoneslot'); }
+// From the TOP scope selector: keep the pastor near the top where they clicked.
+function scopeReRenderTop(){ scopeSwitch('scope'); }
+// Shared scope switch: rebuild the report and reload the wider map, holding the
+// pastor anchored to the given element so the view stays put. Because the map now
+// keeps its old content while the new radius loads (no collapse), the correction is
+// tiny and applied before paint — no flicker, no jump.
+function scopeSwitch(anchorId){
+  const a1=document.getElementById(anchorId);
   const before=a1?a1.getBoundingClientRect().top:0;
   render();
+  // Correct synchronously, before the browser paints the new frame, so the shift is
+  // never visible. render() has already rebuilt the DOM at this point.
+  const a2=document.getElementById(anchorId);
+  if(a2){ const after=a2.getBoundingClientRect().top; const d=after-before; if(Math.abs(d)>1) window.scrollBy(0,d); }
   if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
-  const restore=()=>{
-    const a2=document.getElementById('zoneslot');
-    if(a2){ const after=a2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
-  };
-  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
-}
-// From the TOP scope selector: keep the pastor near the top where they clicked,
-// anchored to the scope row itself, while still reloading the wider map.
-function scopeReRenderTop(){
-  const a1=document.getElementById('scope');
-  const before=a1?a1.getBoundingClientRect().top:0;
-  render();
-  if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
-  const restore=()=>{
-    const a2=document.getElementById('scope');
-    if(a2){ const after=a2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
-  };
-  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
 }
 function capRender(){
   const host=$('capslot'); if(!host) return;
@@ -7915,12 +7909,15 @@ let ZVIEW='need';
 async function loadZones(geo,M,radius){
   const R=radius||SCOPE_RADIUS[SCOPE]||1.8;
   if(ZONES_STATE==='loading'&&ZONES_R===R) return;
-  ZONES=null; ZONES_STATE='loading'; ZONES_R=R;
+  ZONES_STATE='loading'; ZONES_R=R;
   const host=document.getElementById('zoneslot');
   if(!host) return;
   const c=geo.coords?{lat:+geo.coords.y,lon:+geo.coords.x}:null;
-  if(!c||!isFinite(c.lat)){ ZONES_STATE='idle'; host.innerHTML=''; return; }
-  host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`;
+  if(!c||!isFinite(c.lat)){ ZONES=null; ZONES_STATE='idle'; host.innerHTML=''; return; }
+  // Keep the previous map visible while the new radius loads, so switching scope
+  // does not blank it to a loading message (which reads as a flicker).
+  if(!ZONES){ host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`; }
+  else { host.style.opacity='0.55'; }
   try{
     const [shapesAll,acs]=await Promise.all([fetchNearbyShapes(c,R),fetchCountyTracts(geo)]);
     // a county view can return hundreds of tracts; draw the nearest 150
@@ -7950,7 +7947,10 @@ let ZONES_ERR='';
 function drawZones(){
   const host=document.getElementById('zoneslot');
   if(!host) return;
-  if(ZONES_STATE==='loading'){ host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`; return; }
+  // While loading a new radius, keep whatever is already drawn rather than blanking
+  // to a loading note (prevents the map flicker on a scope switch).
+  if(ZONES_STATE==='loading'){ if(!host.querySelector('.zones')) host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`; return; }
+  host.style.opacity='';
   if(ZONES_STATE==='failed'){ host.innerHTML=`<div class="note">Nearby-block view unavailable right now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(ZONES_ERR.slice(0,90))})</span></div>`; return; }
   if(!ZONES||!ZONES.scored||!ZONES.scored.length){ host.innerHTML=''; return; }
   const V=VIEWS[ZVIEW]||VIEWS.need;
