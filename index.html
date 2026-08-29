@@ -1029,13 +1029,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.10</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.11</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.10';
+const VERSION = 'v9.11';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3931,7 +3931,7 @@ function basemap(church,zones,all){
 function zoneMap(church,zones,all,radiusMi,scored,view){
   const C=svgc();
   if(!all.length) return '';
-  const V=VIEWS[view]||VIEWS.opportunity;
+  const V=VIEWS[view]||VIEWS.need;
   const vals=(scored||[]).map(z=>V.key(z)||0);
   const hi=Math.max(...vals,0.0001);
   const byId={}; (scored||[]).forEach(z=>byId[z.geoid]=V.key(z)||0);
@@ -7511,9 +7511,6 @@ const SCOPE_RADIUS={tract:1.8,cousub:4.5,place:4.5,county:10};
    need        = hardship alone, distance ignored (where it is worst)
    population  = people per square mile (where the people actually are) */
 const VIEWS={
-  opportunity:{label:'Where to start', key:z=>z.score,
-    blurb:'Need weighted against distance \u2014 the blocks worth walking to first.',
-    unit:z=>z.dist<0.15?'at the door':z.dist.toFixed(1)+' mi'},
   need:{label:'Greatest need', key:z=>z.need,
     blurb:'Hardship alone, ignoring distance. Some of these may be a drive away.',
     unit:z=>fmtPct(z.m.poverty)+' in poverty'},
@@ -7530,7 +7527,7 @@ const VIEWS={
     blurb:'People per square mile, measured from each block\u2019s own boundary \u2014 not raw counts, which flatter big empty tracts.',
     unit:z=>z.density?fmtNum(Math.round(z.density))+'/sq mi':''}
 };
-let ZVIEW='opportunity';
+let ZVIEW='need';
 async function loadZones(geo,M,radius){
   const R=radius||SCOPE_RADIUS[SCOPE]||1.8;
   if(ZONES_STATE==='loading'&&ZONES_R===R) return;
@@ -7572,7 +7569,7 @@ function drawZones(){
   if(ZONES_STATE==='loading'){ host.innerHTML=`<div class="note">Looking at the blocks around the church\u2026</div>`; return; }
   if(ZONES_STATE==='failed'){ host.innerHTML=`<div class="note">Nearby-block view unavailable right now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(ZONES_ERR.slice(0,90))})</span></div>`; return; }
   if(!ZONES||!ZONES.scored||!ZONES.scored.length){ host.innerHTML=''; return; }
-  const V=VIEWS[ZVIEW]||VIEWS.opportunity;
+  const V=VIEWS[ZVIEW]||VIEWS.need;
   const levels=(DATA&&DATA.levels)||{county:{short:'your county',name:'your county'}};
   const top=[...ZONES.scored].sort((a,b)=>(V.key(b)||0)-(V.key(a)||0)).slice(0,4);
   const {all,church}=ZONES;
