@@ -412,10 +412,10 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .zscale i{flex:1;height:7px;border-radius:4px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 6%,transparent),var(--acc))}
 .mapbox{position:relative;width:100%;aspect-ratio:640/470;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
-.mapinner{position:absolute;top:0;left:0;width:640px;height:470px;transform-origin:0 0}
-.mapinner .tile{position:absolute;width:256px;height:256px;user-select:none;-webkit-user-drag:none}
+.mapinner{position:absolute;inset:0;width:100%;height:100%}
+.mapinner .tile{position:absolute;user-select:none;-webkit-user-drag:none}
 :root[data-theme="dark"] .mapinner .tile{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.92) saturate(.75)}
-.mapsvg{position:absolute;inset:0;width:640px;height:470px}
+.mapsvg{position:absolute;inset:0;width:100%;height:100%}
 .mapcredit{position:absolute;right:0;bottom:0;background:color-mix(in srgb, var(--panel) 88%, transparent);
   font-size:.64rem;color:var(--ink3);padding:2px 7px;border-top-left-radius:8px;line-height:1.5}
 .mapcredit a{color:var(--ink2)}
@@ -1029,13 +1029,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.14</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.15</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.14';
+const VERSION = 'v9.15';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3923,7 +3923,8 @@ function basemap(church,zones,all){
     const tx=((x%max)+max)%max;
     // deliberately NOT lazy: there are only a handful, they are all on screen at
     // once, and lazy loading leaves blank bands inside a scaled container.
-    tiles+=`<img class="tile" alt="" decoding="async" src="${TILE.url(z,tx,y)}" style="left:${x*TS-ox}px;top:${y*TS-oy}px">`;
+    const L=((x*TS-ox)/MAPW*100), T=((y*TS-oy)/MAPH*100), Wp=(TS/MAPW*100), Hp=(TS/MAPH*100);
+    tiles+=`<img class="tile" alt="" decoding="async" src="${TILE.url(z,tx,y)}" style="left:${L.toFixed(4)}%;top:${T.toFixed(4)}%;width:${Wp.toFixed(4)}%;height:${Hp.toFixed(4)}%">`;
   }
   return {z,P,tiles};
 }
@@ -3969,27 +3970,7 @@ function zoneMap(church,zones,all,radiusMi,scored,view){
   return `<div class="mapbox" id="mapbox"><div class="mapinner" id="mapinner">${tiles}${sv}</div>
     <div class="mapcredit">${TILE.credit}</div></div>`;
 }
-let MAP_RO=null;
-function fitMap(tries){
-  const box=document.getElementById('mapbox'), inner=document.getElementById('mapinner');
-  if(!box||!inner) return;
-  const w=box.clientWidth;
-  if(!w){                       // not laid out yet on first render — wait a frame
-    if((tries||0)<30) requestAnimationFrame(()=>fitMap((tries||0)+1));
-    return;
-  }
-  // Box height is set by CSS aspect-ratio; only scale the inner canvas to width.
-  inner.style.transform='scale('+(w/MAPW)+')';
-  // Keep it exact: observe the box so any settle or resize rescales the inner.
-  if(window.ResizeObserver){
-    if(MAP_RO) MAP_RO.disconnect();
-    MAP_RO=new ResizeObserver(entries=>{
-      const cw=entries[0].contentRect.width;
-      if(cw) inner.style.transform='scale('+(cw/MAPW)+')';
-    });
-    MAP_RO.observe(box);
-  }
-}
+function fitMap(){ /* map now scales itself via CSS; nothing to do */ }
 window.addEventListener('resize',()=>fitMap());
 
 /* ---- Scripture and Spirit of Prophecy, set against the sections they belong to ----
