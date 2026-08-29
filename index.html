@@ -1055,13 +1055,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.23</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.24</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.23';
+const VERSION = 'v9.24';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3810,6 +3810,7 @@ const HELP_CATS=[
 ];
 
 let HELP=null, HELP_STATE='idle', HELP_ERR='', HELP_LINKCTX=null;
+let STATE_INFO={abbr:'',name:'',slug:''};   // current state, kept OUT of `levels`
 
 async function fetchHelp(centre,radiusMi){
   const m=Math.round(radiusMi*1609);
@@ -7450,7 +7451,7 @@ function render(){
   if(!DATA) return; const {M,levels,geo}=DATA; const me=M[SCOPE]; const cty=M.county;
   const pick=k=>Object.fromEntries(Object.keys(levels).map(l=>[l,M[l][k]]));
   renderPlace(levels,geo);
-  $('scope').innerHTML=Object.keys(levels).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
+  $('scope').innerHTML=Object.keys(levels).filter(l=>levels[l]&&levels[l].kind).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
   $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{SCOPE=b.dataset.s;render();});
   renderFocus();
   $('brief').innerHTML=`<div class="k">${LANG==='es'?'EL RESUMEN':'THE BRIEF'}</div><p>${LANG==='es'?briefES(M,levels,SCOPE):brief(M,levels,SCOPE)}</p>
@@ -7532,7 +7533,7 @@ function render(){
       <p class="note" style="margin-top:6px">HUD counts people experiencing homelessness once a year by <b>Continuum of Care</b> (usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighbourhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:</p>
       <div class="ext">
         <a href="https://www.hudexchange.info/programs/coc/coc-homeless-populations-and-subpopulations-reports/" target="_blank" rel="noopener">HUD Point-in-Time count · ${esc(levels.county.name)}<span>Choose the year, then the CoC that covers ${esc(levels.county.short)}. Sheltered and unsheltered counts, by household type.</span></a>
-        <a href="https://evictionlab.org/eviction-tracking/${esc(levels.state.slug||'')}/" target="_blank" rel="noopener">Eviction Lab${levels.state.name?' · '+esc(levels.state.name):''}<span>${levels.state.name?'Eviction filing trends for '+esc(levels.state.name)+'. Not every state has tracked data — the page will say if '+esc(levels.state.name)+' is covered.':'Eviction filing trends by state and metro.'}</span></a>
+        <a href="https://evictionlab.org/eviction-tracking/${esc(STATE_INFO.slug||'')}/" target="_blank" rel="noopener">Eviction Lab${STATE_INFO.name?' · '+esc(STATE_INFO.name):''}<span>${STATE_INFO.name?'Eviction filing trends for '+esc(STATE_INFO.name)+'. Not every state has tracked data — the page will say if '+esc(STATE_INFO.name)+' is covered.':'Eviction filing trends by state and metro.'}</span></a>
       </div></div>
   </div></section>`);
   secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2>${verseHTML('families')}<div class="grid">
@@ -7846,7 +7847,10 @@ async function run(getGeo){
     else if(geo.place&&geo.place.PLACE){ const nm=titleCase(geo.place.NAME||''); levels.place={kind:'Town',name:nm,short:nm.replace(/ (City|Borough|Town|CDP)$/i,'')}; }
     levels.county={kind:'County',name:geo.county.NAME,short:(geo.county.NAME||'').replace(/ County$/,'')};
     { const ab=STATE_FIPS[geo.county.STATE]||''; const nm=STATE_NAMES[ab]||'';
-      levels.state={abbr:ab,name:nm,slug:nm.toLowerCase().replace(/ /g,'-')};
+      // State info is NOT a display scope and must NOT go in `levels` — every loop
+      // over levels (Census fetch, CSV/text export, scope buttons) would choke on
+      // it, which is what produced the stray "undefined" scope tab. Keep it apart.
+      STATE_INFO={abbr:ab,name:nm,slug:nm.toLowerCase().replace(/ /g,'-')};
       HELP_LINKCTX={county:levels.county.name,short:(levels.cousub?levels.cousub.short:levels.county.short),
         state:nm,stateSlug:nm.toLowerCase().replace(/ /g,'-')}; }
     setStatus('Reading the Census for '+levels.tract.name+'…');
