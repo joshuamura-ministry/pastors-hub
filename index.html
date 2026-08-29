@@ -1071,13 +1071,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.34</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.35</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.34';
+const VERSION = 'v9.35';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7403,6 +7403,32 @@ function capReRender(){
   };
   requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
 }
+// Change scope (Neighbourhood/Town/County) and reload the map, keeping the pastor
+// anchored to the Hotspots block they were looking at — no jump to the bottom.
+function scopeReRender(){
+  const a1=document.getElementById('zoneslot');
+  const before=a1?a1.getBoundingClientRect().top:0;
+  render();
+  if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
+  const restore=()=>{
+    const a2=document.getElementById('zoneslot');
+    if(a2){ const after=a2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
+  };
+  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
+}
+// From the TOP scope selector: keep the pastor near the top where they clicked,
+// anchored to the scope row itself, while still reloading the wider map.
+function scopeReRenderTop(){
+  const a1=document.getElementById('scope');
+  const before=a1?a1.getBoundingClientRect().top:0;
+  render();
+  if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
+  const restore=()=>{
+    const a2=document.getElementById('scope');
+    if(a2){ const after=a2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
+  };
+  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
+}
 function capRender(){
   const host=$('capslot'); if(!host) return;
   const c=capMerged(), any=c.ready;
@@ -7555,7 +7581,7 @@ function render(){
   const pick=k=>Object.fromEntries(Object.keys(levels).map(l=>[l,M[l][k]]));
   renderPlace(levels,geo);
   $('scope').innerHTML=Object.keys(levels).filter(l=>levels[l]&&levels[l].kind).map(l=>`<button role="tab" aria-selected="${l===SCOPE}" class="${l===SCOPE?'on':''}" data-s="${l}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('');
-  $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{ SCOPE=b.dataset.s; render(); if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]); });
+  $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{ SCOPE=b.dataset.s; scopeReRenderTop(); });
   renderFocus();
   $('brief').innerHTML=`<div class="k">${LANG==='es'?'EL RESUMEN':'THE BRIEF'}</div><p>${LANG==='es'?briefES(M,levels,SCOPE):brief(M,levels,SCOPE)}</p>
     <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="dlcsv">Download data (CSV)</button><button class="btn ghost" id="dlrep">Download report</button><button class="btn ghost" id="share">Share</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
@@ -7954,8 +7980,7 @@ function drawZones(){
   host.querySelectorAll('#zscope button').forEach(b=>b.onclick=()=>{
     // Switch scope right from the map — updates the whole report AND widens the
     // radius/hotspots to the new reach, without scrolling back to the top toggle.
-    SCOPE=b.dataset.zs; render();
-    if(DATA&&DATA.geo&&DATA.M) loadZones(DATA.geo,DATA.M,SCOPE_RADIUS[SCOPE]);
+    SCOPE=b.dataset.zs; scopeReRender();
   });
   fitMap();
   translateDOM();
