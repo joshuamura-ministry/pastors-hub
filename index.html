@@ -51,7 +51,7 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
   border-bottom:1px solid var(--line)}
 .top::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
   background:linear-gradient(90deg,transparent,var(--acc-glow) 25%,var(--acc-glow) 75%,transparent);opacity:.6}
-.top .in{max-width:1040px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;gap:18px}
+.top .in{max-width:1040px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;flex-wrap:wrap;gap:18px}
 .wordmark{font-family:var(--disp);font-weight:700;letter-spacing:.22em;font-size:.78rem;color:var(--ink)}
 .wordmark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:9px;vertical-align:1px;
   box-shadow:0 0 0 3px var(--acc-dim),0 0 12px var(--acc-glow)}
@@ -86,7 +86,12 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .gate[hidden]{display:none}
 .gate.show{display:block}
 .gate h2{font-family:var(--disp);font-size:1.35rem;margin-bottom:6px}
-.whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap}
+.whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px}
+.whoami #signout{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
+@media(max-width:520px){
+  .top .in{gap:10px 12px}
+  .whoami{margin-left:0;flex-basis:100%;justify-content:flex-end;order:9}
+}
 .whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;
   padding:11px 4px 11px 10px;min-height:44px}
 .offtab{display:none !important}
@@ -405,13 +410,15 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
   color:var(--ink);text-transform:none;margin:0;padding:0;border:none}
 .suggroup:first-of-type{margin-top:0}
 .zviews{display:flex;gap:6px;margin:0 0 10px;flex-wrap:wrap}
+@media(max-width:520px){.zviews button{flex:1 1 auto;min-width:calc(50% - 3px);font-size:.82rem;padding:9px 8px}}
 .zviews button{flex:1 1 auto;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 12px;
   font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:40px;white-space:nowrap}
 .zviews button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
 .zscale{display:flex;align-items:center;gap:8px;font-size:.7rem;color:var(--ink3);margin:8px 0 2px}
 .zscale i{flex:1;height:7px;border-radius:4px;
   background:linear-gradient(90deg,color-mix(in srgb,var(--acc) 6%,transparent),var(--acc))}
-.mapbox{position:relative;width:100%;aspect-ratio:640/470;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
+.mapbox{position:relative;width:100%;aspect-ratio:640/470;min-height:240px;overflow:hidden;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel2)}
+.mapbox::before{content:"";display:block;padding-top:73.4375%}
 .mapinner{position:absolute;inset:0;width:100%;height:100%}
 .mapinner .tile{position:absolute;user-select:none;-webkit-user-drag:none}
 :root[data-theme="dark"] .mapinner .tile{filter:invert(1) hue-rotate(180deg) brightness(.92) contrast(.92) saturate(.75)}
@@ -517,7 +524,7 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .obj b{display:block;font-family:var(--disp);font-size:.92rem;color:var(--ink);margin-bottom:5px}
 .obj span{font-size:.84rem;color:var(--ink2);line-height:1.6}
 .zones{margin:18px 0 4px}
-.zone{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow)}
+.zone{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow);overflow-wrap:anywhere}
 .zh{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .zn{width:24px;height:24px;border-radius:50%;background:var(--acc);color:var(--btn-ink);font-weight:700;font-size:.8rem;
   display:flex;align-items:center;justify-content:center;flex:none}
@@ -1029,13 +1036,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.15</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.17</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.15';
+const VERSION = 'v9.17';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3900,9 +3907,18 @@ const merc={
   y:(lat,z)=>{const r=lat*Math.PI/180;
     return (1-Math.log(Math.tan(r)+1/Math.cos(r))/Math.PI)/2*TS*Math.pow(2,z);}
 };
-function pickZoom(bbox){
+function pickZoom(bbox,church){
   for(let z=17;z>=10;z--){
-    const w=merc.x(bbox.e,z)-merc.x(bbox.w,z), h=merc.y(bbox.n,z)-merc.y(bbox.s,z);
+    let w,h;
+    if(church){
+      // View is centred on the church, so it must reach the farthest edge on each
+      // side: span = 2 * max(distance church->edge) in x and y.
+      const cxp=merc.x(church.lon,z), cyp=merc.y(church.lat,z);
+      w=2*Math.max(Math.abs(merc.x(bbox.e,z)-cxp),Math.abs(cxp-merc.x(bbox.w,z)));
+      h=2*Math.max(Math.abs(merc.y(bbox.s,z)-cyp),Math.abs(cyp-merc.y(bbox.n,z)));
+    }else{
+      w=merc.x(bbox.e,z)-merc.x(bbox.w,z); h=merc.y(bbox.n,z)-merc.y(bbox.s,z);
+    }
     if(w<=MAPW-30&&h<=MAPH-30) return z;
   }
   return 10;
@@ -3911,8 +3927,9 @@ function basemap(church,zones,all){
   const pts=all.flatMap(z=>z.rings.flat()).concat([[church.lon,church.lat]]);
   const bbox={w:Math.min(...pts.map(p=>p[0])),e:Math.max(...pts.map(p=>p[0])),
               s:Math.min(...pts.map(p=>p[1])),n:Math.max(...pts.map(p=>p[1]))};
-  const z=pickZoom(bbox);
-  const cx=(merc.x(bbox.w,z)+merc.x(bbox.e,z))/2, cy=(merc.y(bbox.n,z)+merc.y(bbox.s,z))/2;
+  const z=pickZoom(bbox,church);
+  // Centre on the church itself, so its marker sits in the middle of the frame.
+  const cx=merc.x(church.lon,z), cy=merc.y(church.lat,z);
   const ox=cx-MAPW/2, oy=cy-MAPH/2;
   const P=(lon,lat)=>[merc.x(lon,z)-ox, merc.y(lat,z)-oy];
   let tiles='';
