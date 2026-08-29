@@ -312,7 +312,13 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .asktitle{font-family:var(--disp);font-size:clamp(1.06rem,3.4vw,1.2rem);font-weight:700;color:var(--acc);
   margin-bottom:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .asktitle::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
+.coachhead{margin:34px 0 4px;padding-top:16px;border-top:1px solid var(--line);
+  font-family:var(--disp);font-size:.7rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3)}
+.coachhead span{display:block;text-transform:none;letter-spacing:0;font-size:.9rem;font-weight:500;color:var(--ink2);margin-top:3px}
 .capbox{padding:0}
+.congfail{display:flex;flex-direction:column;gap:8px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line2);border-radius:12px;background:var(--panel2)}
+.congfail b{font-weight:700;color:var(--ink)}
+.congfail span{font-size:.86rem;color:var(--ink2);line-height:1.5}
 .capgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:4px}
 .capf{display:flex;flex-direction:column}
 .capf .capl{flex:1}
@@ -1024,13 +1030,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.5</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.5';
+const VERSION = 'v9.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1695,7 +1701,7 @@ const BANDS=[
  {k:1,n:'A monthly rhythm',d:'One date a month that somebody owns and protects. More than a gesture, less than a commitment that eats every week. This is where most churches should be living.'},
  {k:2,n:'A standing commitment',d:'Every week, and somebody has to actually be there each time — unlocking, staying, locking up. Worth doing, but count the cost first: one of these done faithfully beats three abandoned by March.'}
 ];
-function bandOf(load){ return load<=1?0:load===2?1:2; }
+function bandOf(load){ return load<=0?0:load===1?1:2; }   // 0 light · 1 monthly · 2 standing
 /* Two shelves, proven first. The pastor asked for the recognizable playbook at
    the top and the inventive material clearly labeled underneath it, and he is
    right: a board says yes to a food pantry it has seen work in five other
@@ -1706,23 +1712,38 @@ const TIERS=[
 ];
 const tierOf=x=>x.tier===2?1:0;
 const MOVE_LOAD={
-  'prayer-box':0, 'pantry-box':0, 'wifi-porch':0, 'noticeboard':0,
-  'glow-racks':0, 'free-venue':0, 'disaster':0, 'lit-doors':1,
-  'lit-multilingual':1, 'kids-books':1, 'blessing-bags':1, 'toy-swap':1,
-  'drive-in':1, 'blood-drive':1, 'kids-health':1, 'come-and-see':1,
-  'neighbour-table':1, 'lot-sport':1, 'bp-clinic':2, 'repair-cafe':2,
-  'lot-market':2, 'meal-train':2, 'bereavement-visits':2, 'walking-club':2,
-  'garden':2, 'decision-visit':2, 'doorstep-prayer':2, 'mens-breakfast':2,
-  'supper-study':2, 'seniors-scripture':2, 'lift-rota':2, 'text-thread':2,
-  'walk-study':3, 'kitchen-study':3, 'workplace-study':3, 'late-room':3,
-  'questions-night':3, 'archaeology':3, 'bible-by-post':3, 'grief':3,
-  'grief-to-hope':3, 'health-to-why':3, 'parents-study':3, 'esl-to-scripture':3,
-  'recovery-study':3, 'open-baptism-class':3, 'homework-club':3, 'job-club':3,
-  'money-course':3, 'digital-help':3, 'conversation-cafe':3, 'mental-health':3,
-  'cooking-school':3, 'study-hall':3, 'sanctuary-music':3, 'warming':3,
-  'music-academy':3, 'skills-center':3, 'esl-center':3, 'senior-day':3,
-  'chip':3, 'family-life-series':3, 'health-expo':4, 'proph-news':4,
-  'proph-language':4, 'four-nights':4
+  // Judged by how much WORK a move is to pull off — people, setup, skill, cost —
+  // not by how often it repeats. A prayer walk two members can do this afternoon
+  // is a light lift; a week-long VBS with eight staff and a kit is not, however
+  // rarely it runs.
+
+  // --- LIGHT LIFT: one or two people, no setup, start this week ---
+  'doorstep-prayer':0, 'prayer-box':0, 'jar-of-prayer':0, 'glow-racks':0,
+  'lit-doors':0, 'lit-multilingual':0, 'kids-books':0, 'blessing-bags':0,
+  'thank-you-run':0, 'phone-check':0, 'trash-cans':0, 'noticeboard':0,
+  'noticeboard-jobs':0, 'seed-swap':0, 'bench':0, 'funeral-teas':0,
+  'translate-help':0, 'exam-packs':0, 'school-supplies':0, 'wifi-porch':0,
+  'lending-shelf':0, 'text-thread':0, 'walk-study':0, 'workplace-study':0,
+  'kitchen-study':0, 'neighbor-table':0,
+
+  // --- A MONTHLY RHYTHM: a small team, one date a month, some setup ---
+  'pantry-box':1, 'toy-swap':1, 'drive-in':1, 'blood-drive':1, 'repair-cafe':1,
+  'meal-train':1, 'bereavement-visits':1, 'lift-rota':1, 'mens-breakfast':1,
+  'supper-study':1, 'seniors-scripture':1, 'walking-club':1, 'garden':1,
+  'warming':1, 'free-venue':1, 'disaster':1, 'lot-sport':1, 'lot-market':1,
+  'car-care':1, 'fall-festival':1, 'community-dinner':1, 'backpack-giveaway':1,
+  'christmas-store':1, 'come-and-see':1, 'decision-visit':1, 'parents-study':1,
+  'grief-to-hope':1, 'health-to-why':1, 'recovery-study':1, 'late-room':1,
+  'esl-to-scripture':1, 'open-baptism-class':1, 'grief':1, 'bible-by-post':1,
+
+  // --- A STANDING COMMITMENT: weekly presence, or a big multi-staff production ---
+  'vbs':2, 'health-expo':2, 'sports-camp':2, 'pathfinders':2, 'homework-club':2,
+  'job-club':2, 'money-course':2, 'conversation-cafe':2, 'digital-help':2,
+  'mental-health':2, 'cooking-school':2, 'study-hall':2, 'sanctuary-music':2,
+  'music-academy':2, 'skills-center':2, 'esl-center':2, 'senior-day':2,
+  'chip':2, 'family-life-series':2, 'proph-news':2, 'proph-language':2,
+  'stop-smoking':2, 'moms-group':2, 'kids-health':2, 'questions-night':2,
+  'archaeology':2, 'four-nights':2, 'food-pantry':2, 'clothing-closet':2
 };
 /* ---- How to actually start ------------------------------------------------
    A description tells a board what a thing is. It does not tell the member
@@ -1736,7 +1757,6 @@ const HOW={
  'blessing-bags':['Pick four workplaces on shifts nobody thanks: overnight stocking, a gas station, the nursing home, the fire station.','Fill gallon bags: bottled water, a snack, hand warmers in winter, and a card with the church name and a phone number.','Two members deliver them in person, introduce themselves by name, and leave. No invitation, no tract.','Put it on the calendar twice a year so it actually happens again.'],
  'noticeboard':['Mount a lockable glass-front bulletin board on your outside wall, facing the sidewalk.','Seed it: township meeting dates, the food pantry hours, a school calendar, two local business cards.','Put a line at the bottom: "Anyone may post here. Ask inside for a key."','One member clears anything out of date every week — a dead board is worse than none.'],
  'lift-rota':['Ask for four members with cars and clean driving records who can give one weekday morning a month.','Set up a shared calendar and one phone number people call to book.','Tell the local clinic, the pharmacy and the senior center that the service exists and who to call.','Ask about mobility needs at booking, not at the curb.'],
- 'birthday-cards':['Ask one member to watch for new strollers, new car seats and baby announcements on the streets nearest the church.','Buy plain congratulations cards — nothing with a Bible verse or the church logo on the front.','Handwrite it: congratulations, our name, a phone number, and one sentence offering a meal if it would help.','Put it through the door. No knock, no visit, no follow-up unless they call.'],
  'thank-you-run':['Make a list of five places: sanitation crew, mail carriers, the school office, the clinic front desk, the firehouse.','Bake or buy something that keeps, and write a card for each place naming what they do.','Two members deliver in person during a shift change, when people are actually there.','Do it again in six months. Once is a gesture; twice is a relationship.'],
  'seed-swap':['Fix a small shelf and a weatherproof box by the gate, with envelopes and a pencil.','Start it off with seeds from members\u2019 gardens, labeled with the plant and the month to sow.','Add a sign: "Leave a seed, take a seed. Cuttings welcome in spring."','One gardener in the church checks it monthly and refills the envelopes.'],
  'phone-check':['Build the list: members who live alone, plus neighbors named by anyone in the congregation.','Ask two members to take five names each and call once a fortnight.','Keep it to two minutes and one question — how has your week been. Not a survey, not a devotional.','Write down anything worrying and tell the pastor the same day.'],
@@ -1748,7 +1768,7 @@ const HOW={
  'winter-check':['Draw up the list before winter: elderly, living alone, in poor housing, known to any member.','Set the trigger — when the forecast drops below 20°F for two nights, the calls go out.','Two members walk together and ask three things: is the heat working, is there food in, is there anything to fetch.','Have the county office on aging number in your pocket for anything you cannot fix yourselves.'],
  'noticeboard-jobs':['Give half your outside bulletin board to work, with its own heading.','Post three kinds of thing: local job openings, neighbors needing small paid work, and members offering skills.','One person refreshes it every Friday from the state job board and word of mouth.','Take down anything filled the same week — stale listings kill it fast.'],
  'lending-shelf':['Start with six things people cannot store: a drill, a carpet cleaner, a pressure washer, a sewing machine, a folding table, a wet vac.','Keep a clipboard: name, phone, item, date out, date back.','Set one rule and print it — bring it back clean and working, or tell us what broke.','One member owns the shelf and chases the returns. Without that it empties in a season.'],
- 'welcome-newcomers':['Ask members to report moving vans on their own street.','Write one card that fits any household: trash day, a good doctor, the store open latest, which bus actually runs, the church name at the bottom.','Deliver it within two weeks of the move, through the door, no knock.','Add one handwritten line naming their street, so it reads as a neighbor rather than a mailing.'],
+ 'welcome-newcomers':['Print a simple “welcome to the neighborhood” card: trash day, a good doctor, the store open latest, which bus actually runs, and the church name at the bottom.','Leave a small stack with the local realtor, the apartment leasing office, and any community mailbox board.','Ask a member who meets a new family naturally — at work, at the school gate — to hand one over.','Keep it useful and unpushy; it is a genuine welcome, not a mailing.'],
  'exam-packs':['Call the high school office in April and ask whether they would hand out a small bag at exam time.','Fill them: pens, a granola bar, a bottle of water, and a note that says somebody is thinking of you.','Keep the note short and unbranded — one sentence and the church name.','Offer again the following year. Schools accept the second offer far more readily than the first.'],
  'trash-cans':['Pick one street the church already knows and list who struggles to move a trash can.','Ask two members to take the night before and the evening after, every week.','Knock once to offer. If they say no, take them off the list and do not ask again.','Keep it going through winter — that is the point at which it actually matters.'],
  'story-corner':['Call the library or the community center — not your own building — and offer a reader once a month.','Choose a member who reads well aloud and likes small children, and let them pick the books.','Read for twenty minutes, no religious content unless the venue asks. You are a guest in their room.','Stay for the coffee afterwards. The parents in that room are why you came.'],
@@ -2375,11 +2395,6 @@ const SIGNATURE=[
       actually starts in. One or two people, no rota, no budget meeting.
       Several of these can be done by a single member who never tells
       anybody they are doing it. ---------- */
- {id:'birthday-cards',tier:2,st:'open',k:KIND.belong,n:'A card on the doorstep for every new baby',
-  need:['families','many-kids','young','settled','family-heavy'],boost:[],w:8,ppl:1,cost:0,skill:[],load:0,
-  d:'One member watches for the new strollers on the street and puts a handwritten card through the door — congratulations, our name, a phone number, nothing else. No visit, no invitation, no leaflet. New parents remember who noticed them, and they remember it for years.',
-  why:m=>`About ${fmtNum(m.kids)} children live here and ${fmtPct(m.kidsShare)} of the population is under eighteen — this street produces new babies constantly.`,
-  c:EFFORT.solo,p:'Nobody'},
  {id:'thank-you-run',tier:2,st:'open',k:KIND.serve,n:'Thank the people nobody thanks',
   need:['service-work','dense','poor','settled','older'],boost:[],w:7,ppl:2,cost:1,skill:[],load:1,
   d:'Twice a year, take something small to the bin crew, the postal workers, the doctor\u2019s office reception, the school office and the fire station. A card, a tray of something, and the church name. It costs an afternoon and it changes how every one of those people talks about you when your name comes up.',
@@ -2437,7 +2452,7 @@ const SIGNATURE=[
   c:EFFORT.solo,p:'Nobody'},
  {id:'welcome-newcomers',tier:2,st:'open',k:KIND.belong,n:'A welcome note for people who just moved in',
   need:['newcomers','renters','changing','young','immigrant'],boost:['changing'],w:8,ppl:1,cost:1,skill:[],load:1,
-  d:'Watch for the vans. A card through the door with the useful things nobody tells you — bin day, the good doctor, where the store open latest is, the bus that actually runs — and the church name at the bottom. Practical, unpushy, and it reaches people in the fortnight when they have no one.',
+  d:'A simple “new to the neighborhood” card left with the local realtor, the apartment leasing office, or a community mailbox board — the useful things nobody tells you: trash day, a good doctor, the store open latest, which bus actually runs, and the church name at the bottom. Practical, unpushy, and it reaches people in the weeks when they know no one.',
   why:m=>`${fmtPct(m.renters)} of households rent here, which means a steady turnover of people who know nobody on their own street.`,
   c:EFFORT.solo,p:'Nobody'},
  {id:'exam-packs',tier:2,st:'open',k:KIND.serve,n:'Exam-season packs for teenagers',
@@ -2465,7 +2480,7 @@ SIGNATURE.forEach(x=>{
   if(x.ppl==null)  x.ppl  = r.ppl!=null?r.ppl:4;
   if(x.cost==null) x.cost = r.cost!=null?r.cost:1;
   if(!x.skill)     x.skill= r.skill||[];
-  if(x.load==null) x.load = MOVE_LOAD[x.id]!=null?MOVE_LOAD[x.id]:2;
+  x.load = MOVE_LOAD[x.id]!=null?MOVE_LOAD[x.id]:(x.load!=null?Math.min(2,x.load):2);
   if(!x.how)       x.how  = HOW[x.id]||[];
   // One number the list can be sorted on. Ongoing burden dominates, because
   // that is what a congregation feels; people and money only break ties.
@@ -2674,7 +2689,7 @@ const RULES=[
   t:()=>`Isolation is the need hiding in plain sight`,
   do:()=>[`A reliable phone call beats an occasional visit; a scheduled visit beats both.`,
           `Daytime gatherings reach people that evening events never will.`,
-          `Watch for the practical: a lightbulb, a form, a lift to an appointment.`],
+          `Offer the practical when you notice it: a lightbulb, a form, a lift to an appointment.`],
   ask:()=>`Who here has not been asked about in six months? Someone in your congregation already knows a name.`},
  {id:'older-area',cat:'Seniors & isolation',w:6,
   on:m=>m.medAge>=45,
@@ -3605,7 +3620,8 @@ const DOCTRINE={
    timeout, the `nwr` shorthand instead of three separate statements, and the
    fallback when the main instance is busy. */
 const OVERPASS_HOSTS=['https://overpass-api.de/api/interpreter',
-                      'https://overpass.kumi.systems/api/interpreter'];
+                      'https://overpass.kumi.systems/api/interpreter',
+                      'https://maps.mail.ru/osm/tools/overpass/api/interpreter'];
 
 /* OSM denomination tags are messy and inconsistent. Fold them into families a
    pastor would recognise, and keep anything unrecognised as "other" rather than
@@ -3647,7 +3663,16 @@ async function fetchCongregations(centre,radiusMi){
   const q=`[out:json][timeout:8];nwr["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});out center tags;`;
   let j=null, lastErr=null;
   for(const host of OVERPASS_HOSTS){
-    try{ j=await getJSON(host+'?data='+encodeURIComponent(q),'Congregations'); break; }
+    try{
+      // Overpass is public and needs no key, so call it directly rather than
+      // routing it through the Census proxy (which only knows the Census API).
+      const ctrl=new AbortController();
+      const timer=setTimeout(()=>ctrl.abort(),12000);
+      const r=await fetch(host+'?data='+encodeURIComponent(q),{signal:ctrl.signal});
+      clearTimeout(timer);
+      if(!r.ok) throw new Error('HTTP '+r.status);
+      j=await r.json(); break;
+    }
     catch(e){ lastErr=e; log('overpass mirror failed ('+host.split('/')[2]+'): '+e.message); }
   }
   if(!j) throw lastErr||new Error('no response');
@@ -4720,7 +4745,8 @@ const ES={
  'Step 1 \u00b7 Count your people':'Paso 1 \u00b7 Cuente a su gente',
  'Step 2 \u00b7 What this neighbourhood asks of your congregation':'Paso 2 \u00b7 Lo que este vecindario pide de su congregaci\u00f3n',
  'Step 3 \u00b7 Hand out the jobs \u2014 what your people can actually do':'Paso 3 \u00b7 Reparta las tareas \u2014 lo que su gente realmente puede hacer',
- 'When members hesitate \u2014 the coaching corner':'Cuando los miembros dudan \u2014 el rinc\u00f3n del entrenador',
+ 'Coaching corner':'Rinc\u00f3n del entrenador',
+ 'Open when members hesitate':'\u00c1bralo cuando los miembros duden',
  'The proven playbook':'El manual probado',
  'Creative extras':'Extras creativos',
  'Vacation Bible School':'Escuela B\u00edblica de Vacaciones',
@@ -7303,7 +7329,7 @@ function render(){
         if(!set.length) return '';
         // Proven first inside each effort group, best fit first.
         set.sort((a,b)=>tierOf(a)-tierOf(b) || b.fit-a.fit);
-        const label=['Easy — start this week','Medium — a monthly rhythm','Bigger — a standing commitment'][bi];
+        const label=B.n;   // Light lift · A monthly rhythm · A standing commitment
         return `<details class="stage band${bi}">
           <summary class="stagehead"><span class="stagenum">${bi+1}</span><b>${esc(label)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
           <div class="stagebody">
@@ -7384,8 +7410,8 @@ function render(){
     </div>`).join('')}
     </div>
 
-    <div class="asktitle" style="margin-top:30px">When members hesitate — the coaching corner</div>
-    <p class="note" style="margin-bottom:12px">Open these as you need them: the step-by-step path off the pew, the six-week ladder from watching to leading, answers to what members will say, and plain words for talking to neighbours.</p>
+    <div class="coachhead">Coaching corner<span>Open when members hesitate</span></div>
+    <p class="note" style="margin:0 0 12px">The step-by-step path off the pew, the six-week ladder from watching to leading, answers to what members will say, and plain words for talking to neighbours.</p>
 
     <details class="suggroup mgroup">
       <summary class="sugcat"><span class="sgt">Getting members off the pew — step by step</span><span class="sgn">the sequence</span><i class="chev"></i></summary>
@@ -7466,9 +7492,12 @@ function drawCongregations(){
   const host=document.getElementById('congslot');
   if(!host) return;
   const county=(DATA&&DATA.levels&&DATA.levels.county.short)||'this county';
-  if(CONGS_STATE==='loading'){ host.innerHTML='<div class="note">Looking for congregations nearby\u2026</div>'; return; }
-  if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="note">The map service that lists places of worship did not answer just now \u2014 the rest of the report is unaffected. <span style="color:var(--ink3)">(${esc(CONGS_ERR.slice(0,80))})</span></div>`; return; }
-  if(!CONGS){ host.innerHTML=''; return; }
+  if(CONGS_STATE==='loading'){ host.innerHTML='<div class="note">Looking for places of worship nearby\u2026</div>'; return; }
+  if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="congfail"><b>The map of nearby churches did not load.</b><span>OpenStreetMap\u2019s free lookup service was slow or unreachable just now — the rest of the report is unaffected.</span><button class="btn ghost" id="cong-retry">Try again</button></div>`;
+    const rb=document.getElementById('cong-retry'); if(rb) rb.onclick=e=>{ e.preventDefault(); if(DATA&&DATA.geo) loadCongregations(DATA.geo); };
+    return; }
+  if(!CONGS){ host.innerHTML='<div class="note">No congregation data yet.</div>'; return; }
+  if(!CONGS.length){ host.innerHTML='<div class="note">OpenStreetMap lists no places of worship within about two miles of this address. That may simply mean they are not mapped here — worth confirming on the ground.</div>'; return; }
   host.innerHTML=congregationsHTML(CONGS,2,county);
   translateDOM();
 }
