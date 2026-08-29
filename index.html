@@ -1056,13 +1056,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.26</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.29</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.26';
+const VERSION = 'v9.29';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1164,6 +1164,23 @@ const N=x=>{if(x===null||x===undefined||x==='')return null;const n=+x;return (is
 const pct=(a,b)=>(a==null||!b)?null:a/b*100;
 const fmtPct=(p,d=0)=>p==null?'—':(Math.round(p*10**d)/10**d).toFixed(d)+'%';
 const fmtNum=n=>n==null?'—':Math.round(n).toLocaleString('en-US');
+// Name the specific immigrant community from the Census data, so guidance can say
+// "the Ukrainian community here" instead of a generic "immigrant families".
+// Uses the largest non-English home language, or the top origin country.
+function topGroup(m){
+  // origins are countries (Ukraine, Mexico, Brazil); langs are languages.
+  const o=(m&&m.origins||[]).filter(x=>x.n>0);
+  if(o.length && o[0].share>=12) return {kind:'origin', name:o[0].name, share:o[0].share};
+  const langs=(m&&m.langs||[]).filter(x=>x.name && !/^english/i.test(x.name));
+  if(langs.length && langs[0].share>=8) return {kind:'lang', name:langs[0].name, share:langs[0].share};
+  return null;
+}
+// A natural phrase for the community, for use inside a sentence.
+function groupPhrase(m){
+  const g=topGroup(m); if(!g) return 'immigrant and newcomer families';
+  if(g.kind==='origin') return 'the '+g.name+'-born community here';
+  return g.name+'-speaking households here';
+}
 const fmtMoney=n=>n==null?'—':'$'+Math.round(n/1000)+'k';
 const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const chunk=(a,n)=>{const o=[];for(let i=0;i<a.length;i+=n)o.push(a.slice(i,i+n));return o};
@@ -1308,8 +1325,7 @@ function metrics(o,past,origins){
   m.students=pct(g('B14001_002E'),g('B14001_001E')); m.k12=S('B14001',4,5,6,7); m.college=S('B14001',8,9);
   m.kids=g('B09001_001E'); m.kidsShare=pct(m.kids,m.pop); m.kidsPerHH=(m.kids!=null&&m.hh)?m.kids/m.hh:null;
   m.foreign=pct(g('B05002_013E'),g('B05002_001E')); m.foreignN=g('B05002_013E');
-  m.recentN=g('B05005_004E'); m.recentOfForeign=pct(m.recentN,m.foreignN);
-  const ot=g('C24010_001E');
+  m.recentN=g('B05005_004E'); m.recentOfForeign=pct(m.recentN,m.foreignN);  const ot=g('C24010_001E');
   m.occ=[['Management & professional',S('C24010',3,39)],['Service jobs',S('C24010',19,55)],['Sales & office',S('C24010',27,63)],['Construction & maintenance',S('C24010',30,66)],['Production & transport',S('C24010',34,70)]].map(([n,c])=>[n,pct(c,ot)]);
   if(origins){
     const tot=N(origins['B05006_001E'])||0;
@@ -1653,6 +1669,7 @@ function profile(m,c){
   on(m.k12>=400,'schools-near');
   on(m.foreign>=12,'immigrant');             on(m.foreign>=25,'very-immigrant');
   on(m.recentOfForeign>=25&&m.foreign>=8,'newcomers');
+  on(m.recentOfForeign>=35&&m.foreign>=10,'recent-arrivals');   // a strong recent-immigration signal, for the newcomer-focused moves
   on(L&&/spanish/i.test(L.name)&&L.share>=6,'spanish');
   on(m.langs&&m.langs.filter(x=>x.share>=4).length>=2,'multilingual');
   on(m.limEng>=6,'limited-english');
@@ -1932,7 +1949,8 @@ const MOVE_FACILITY={
   'skills-center':'classrooms','esl-center':'classrooms','conversation-cafe':'kitchen','mens-breakfast':'kitchen',
   'lot-market':'parking','drive-in':'parking','car-care':'parking','sanctuary-music':'stage',
   'music-academy':'stage','moms-group':'nursery','homework-club':'library','study-hall':'library',
-  'garden':'grounds','lift-rota':'vehicle','senior-day':'vehicle'
+  'garden':'grounds','lift-rota':'vehicle','senior-day':'vehicle',
+  'newcomer-circle':'kitchen','rights-clinic':'classrooms','welcome-table':'parking'
 };
 const CAP_SKILLS=[
   {k:'lead',n:'Can lead a group or give a study'},
@@ -2002,6 +2020,30 @@ function moveFeasible(x){
     easy: x.cost===0 && x.ppl<=Math.min(2,c.hands)};
 }
 const SIGNATURE=[
+ {id:'welcome-table',tier:1,st:'open',k:KIND.serve,n:'A no-questions welcome table',
+  need:['immigrant','very-immigrant','newcomers','limited-english','poor','service-work'],boost:['very-immigrant','recent-arrivals'],w:11,ppl:3,cost:0,skill:[],load:0,
+  d:'A simple table — coffee, snacks for the kids, and members who greet people warmly and ask nothing. No forms, no sign-in, no questions about papers or status, ever. For families who have learned to fear anyone official, a church that simply welcomes them without a clipboard is a rare and disarming thing, and it is where trust begins.',
+  why:m=>`This reaches ${groupPhrase(m)} — about ${fmtPct(m.foreign)} of residents were born abroad. Many avoid help that asks for identification; this asks for nothing.`,
+  how:['Set up a friendly table at a market, festival, or outside the church on a busy day.','Rule number one for every volunteer: never ask about immigration status, papers, or income — greet, listen, and help.','Have coffee, water, snacks, and a few genuinely useful local tips written in the community\u2019s language.','Let people come back a second and third time before you ever invite them to anything.'],
+  c:EFFORT.team,p:'None needed'},
+ {id:'interpreter-bank',tier:1,st:'trust',k:KIND.serve,n:'A volunteer interpreter bank',
+  need:['limited-english','immigrant','very-immigrant','multilingual','newcomers'],boost:['limited-english'],w:10,ppl:4,cost:0,skill:['lang'],load:1,
+  d:'A short list of bilingual members who will go with a neighbour to the doctor, the school meeting, the housing office, or the courthouse and quietly interpret. Limited English turns ordinary appointments into walls; a trusted interpreter at your side turns them back into doors. Nothing builds a bridge into a family faster than showing up when they are frightened and outnumbered.',
+  why:m=>`${fmtPct(m.limEng)} of households here have limited English${(m.langs&&m.langs[0])?`, most often ${m.langs[0].name}-speaking`:''}. This help is what ${groupPhrase(m)} needs most and gets least.`,
+  how:['Ask your bilingual members which languages they can interpret, and make a simple on-call list.','Spread the word through the school, the clinic, and word of mouth that the church will send someone.','Pair each interpreter with a driver where cars are scarce.','Keep it confidential — an interpreter hears private things and holds them in trust.'],
+  c:EFFORT.team,p:'None needed; bilingual members are the ministry'},
+ {id:'rights-clinic',tier:1,st:'open',k:KIND.equip,n:'Know-your-rights & legal-aid referral night',
+  need:['immigrant','very-immigrant','newcomers','limited-english','poor'],boost:['recent-arrivals','very-immigrant'],w:9,ppl:3,cost:1,skill:['admin'],load:1,
+  d:'One evening, in the community\u2019s language, where a real immigration attorney or an accredited legal-aid group explains rights, warns against the notarios and scams that prey on newcomers, and takes referrals — the church hosts and translates, the professionals give the actual advice. Do NOT give legal advice yourselves; connect people to those licensed to give it. Accurate information from someone trustworthy is itself a form of protection.',
+  why:m=>`${groupPhrase(m)} are frequent targets of fraud and misinformation${m.recentOfForeign>=20?`, and ${fmtPct(m.recentOfForeign)} of the foreign-born arrived recently`:''}. A trustworthy referral night meets a real and urgent need.`,
+  how:['Partner with a local immigration legal-aid nonprofit or a licensed attorney — never improvise legal advice yourselves.','Host the evening at the church in the community\u2019s language, with childcare and food.','Cover the essentials: your rights, avoiding notario fraud, and where to get real help.','Collect nothing but a first name and a way to follow up, and only if they offer it.'],
+  c:EFFORT.team,p:'A local immigration legal-aid organization or licensed attorney'},
+ {id:'newcomer-circle',tier:1,st:'trust',k:KIND.belong,n:'A newcomer welcome circle',
+  need:['newcomers','immigrant','very-immigrant','limited-english'],boost:['recent-arrivals'],w:9,ppl:4,cost:0,skill:[],load:1,
+  d:'A warm monthly gathering for families new to the country — a shared meal from their own cuisines, help with the hundred small mysteries of a new place (the bus, the school, the doctor, the paperwork), and the simple gift of not being alone. Isolation is the deepest wound of migration; a circle of friends who remember your name is the beginning of a church family.',
+  why:m=>`${m.recentN?`About ${fmtNum(m.recentN)} residents here arrived in the country recently`:'Recent arrivals here'}, many from ${(topGroup(m)&&topGroup(m).kind==='origin')?topGroup(m).name:'abroad'} — in the lonely first years when a welcoming community changes everything.`,
+  how:['Pick a monthly evening and share a potluck — invite families to bring a dish from home.','Have a few members ready to help with practical newcomer questions, one on one.','Celebrate the holidays of the community\u2019s culture, not only your own.','Let belonging come first; the invitation to faith is far more natural once someone is no longer a stranger.'],
+  c:EFFORT.team,p:'None needed'},
  /* ---------- THE PROVEN PLAYBOOK ADDITIONS (v9.2) ----------
     The staples a board recognizes on sight — the ministries American churches
     demonstrably run at scale. tier:1 marks the proven playbook; tier:2 marks
@@ -2352,7 +2394,7 @@ const SIGNATURE=[
 
  /* ---------- DEEPER: the stage that was nearly empty ---------- */
  {id:'kitchen-study',tier:1,st:'deeper',k:KIND.invite,n:'One study, at one kitchen table',
-  need:['settled','homeowners','older','families','poor','renters'],boost:[],w:12,ppl:1,cost:0,skill:['lead'],
+  need:['settled','older','families','poor'],boost:[],w:8,ppl:1,cost:0,skill:['lead'],
   d:'The smallest unit of evangelism and the most productive: one member, one household, one evening a week, one lesson at a time. No hall, no budget, no advertising. A church of twelve can run six of these and reach more people than a series would.',
   why:m=>`About ${fmtNum(m.pop)} people live in this tract. Six studies running weekly reaches more of them, more deeply, than most public efforts.`,
   c:EFFORT.solo,p:'Nobody'},
@@ -2616,7 +2658,11 @@ function signatureMoves(m,c,tags,limit){
     // shows up everywhere. Reward the share of the gate that matched, so a tightly
     // targeted move can out-rank a broad high-weight staple in the tract it fits.
     const specificity = hits / Math.max(1, s.need.length);      // 0..1
-    let fit=s.w + hits*2 + boost*3 + Math.round(specificity*6);
+    // Weight specificity heavily: a move that sharply matches THIS neighbourhood
+    // (most of its own gate lit up) should lead over a generically-good move that
+    // fits everywhere. This is what stops one or two universal moves heading
+    // every report regardless of the tract.
+    let fit=s.w + hits*2 + boost*3 + Math.round(specificity*12);
     // Broad, always-eligible moves (big gates) get a damp so they don't crowd
     // out the neighbourhood-specific ones in every single report. The broader the
     // gate, the stronger the damp.
@@ -2628,7 +2674,7 @@ function signatureMoves(m,c,tags,limit){
     const cap=capMerged(); const need=MOVE_FACILITY[s.id];
     let facilityFit=false;
     if(need && cap.ready && cap.hasFacility && cap.hasFacility(need)){ fit+=7; facilityFit=true; }
-    return {...s, stage:s.st||'trust', fit, feas:F, facilityFit, facilityNeed:need,
+    return {...s, stage:s.st||'trust', fit, spec:specificity, feas:F, facilityFit, facilityNeed:need,
       reason:(()=>{try{return s.why(m,tags)}catch(e){return ''}})()};
   }).filter(Boolean);
   // Select by TIER first: the proven playbook, then the creative extras.
@@ -2644,7 +2690,11 @@ function signatureMoves(m,c,tags,limit){
   // door-openers: take the best of each stage in turn, then the next best.
   const weave=arr=>{
     const q={open:[],trust:[],deeper:[],decide:[]};
-    arr.sort((a,b)=>b.fit-a.fit||a.n.localeCompare(b.n)).forEach(x=>q[x.stage].push(x));
+    // Sort each stage by SPECIFICITY first, then fit — so within a band the move
+    // that most sharply targets THIS neighbourhood leads, rather than a broadly
+    // applicable move that happens to have a high base weight. This is what keeps
+    // the same one or two universal moves from heading every report.
+    arr.sort((a,b)=>(b.spec||0)-(a.spec||0)||b.fit-a.fit||a.n.localeCompare(b.n)).forEach(x=>q[x.stage].push(x));
     const out=[]; let any=true;
     while(any){ any=false;
       for(const st of ['open','trust','deeper','decide']){ if(q[st].length){ out.push(q[st].shift()); any=true; } } }
@@ -7345,8 +7395,20 @@ function capRender(){
       const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
       const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
       c.facilities=f; capSave(c);
-      const y=window.scrollY; render();      // keep the pastor's place — no jump
-      requestAnimationFrame(()=>{ window.scrollTo(0,y); requestAnimationFrame(()=>window.scrollTo(0,y)); });
+      // A full render() rebuilds #sections, which briefly collapses the page height
+      // and makes an absolute scrollY restore clamp to the wrong value — that's the
+      // jump. Instead, anchor to the setup panel itself: remember how far down the
+      // screen it sits, rebuild, then re-scroll so the panel lands at that same spot.
+      const panel=host.closest('.askpanel')||host;
+      const before=panel.getBoundingClientRect().top;
+      render();
+      const restore=()=>{
+        const p2=document.getElementById('capslot');
+        const anchor=p2?(p2.closest('.askpanel')||p2):null;
+        if(anchor){ const after=anchor.getBoundingClientRect().top;
+          window.scrollBy(0, after-before); }
+      };
+      requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
     });
   });
   const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); capSave({}); render(); };
