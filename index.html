@@ -314,7 +314,8 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .asktitle::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
 .capbox{padding:0}
 .capgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:4px}
-.capf{display:block}
+.capf{display:flex;flex-direction:column}
+.capf .capl{flex:1}
 .capin{width:100%;min-height:44px;padding:8px 13px;border:1px solid var(--line2);border-radius:10px;
   background:var(--panel);color:var(--ink);font:inherit;font-size:1.05rem;font-weight:600}
 .capin:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
@@ -1023,13 +1024,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.4</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.4';
+const VERSION = 'v9.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7286,26 +7287,30 @@ function render(){
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
   const SG=suggestions(M,SCOPE);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>${verseHTML('faith')}${egwHTML('faith')}
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Churches nearby</h2>
     <p class="note" style="margin-bottom:12px">Which traditions are already at work around this address, and which are not. Points are from OpenStreetMap; county-level adherence is linked below.</p>
     <div id="congslot"></div>
   </section>`);
 
-  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>${verseHTML('prompts')}${egwHTML('prompts')}
+  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
-        <span>Two lists, both matched to this tract's numbers: first the proven playbook — the ministries churches across the country actually run — then creative extras to add around them. Inside each, ideas are grouped by what they ask of the church: a light lift first, then a monthly rhythm, then a standing weekly commitment. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
-      ${TIERS.map((T,ti)=>{
-        const set=SG.moves.filter(x=>tierOf(x)===ti); if(!set.length) return '';
-        return `<details class="stage band${ti}"${ti===0?' open':''}>
-          <summary class="stagehead"><span class="stagenum">${ti+1}</span><b>${esc(T.n)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
+        <span>Matched to this tract's numbers and grouped by what each one asks of the church. Open the group that fits where your congregation is — start with the easy ways in, move to a monthly rhythm, take on a weekly commitment only when you are ready. Inside each group the proven playbook comes first, then creative extras. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
+      ${BANDS.map((B,bi)=>{
+        const set=SG.moves.filter(x=>bandOf(x.load)===bi);
+        if(!set.length) return '';
+        // Proven first inside each effort group, best fit first.
+        set.sort((a,b)=>tierOf(a)-tierOf(b) || b.fit-a.fit);
+        const label=['Easy — start this week','Medium — a monthly rhythm','Bigger — a standing commitment'][bi];
+        return `<details class="stage band${bi}">
+          <summary class="stagehead"><span class="stagenum">${bi+1}</span><b>${esc(label)}</b><span class="stagen">${set.length} idea${set.length===1?'':'s'}</span><i class="chev"></i></summary>
           <div class="stagebody">
-          <p class="stageblurb">${esc(T.d)}</p>
-          ${BANDS.map((B,bi)=>{
-            const bset=set.filter(x=>bandOf(x.load)===bi); if(!bset.length) return '';
-            return `<div class="bandlab"><b>${esc(B.n)}</b><span>${esc(B.d)}</span></div>`+bset.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}">
+          <p class="stageblurb">${esc(B.d)}</p>
+          ${[0,1].map(ti=>{
+            const tset=set.filter(x=>tierOf(x)===ti); if(!tset.length) return '';
+            return `<div class="bandlab"><b>${esc(TIERS[ti].n)}</b><span>${esc(TIERS[ti].d)}</span></div>`+tset.map(x=>`<div class="move${x.feas&&x.feas.known&&!x.feas.ok?' notyet':''}">
             <div class="mk"><span class="kind k-${x.k.toLowerCase()}">${x.k}</span><span class="stagetag">${STAGE[x.stage].n}. ${esc(STAGE[x.stage].label)}</span>${x.feas&&x.feas.known&&!x.feas.ok?'<span class="badge b-gap">Not yet</span>':''}</div>
             <h4>${esc(x.n)}</h4>
             <p>${esc(x.d)}</p>
