@@ -990,6 +990,32 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfrosterrow b{flex:1 1 auto}
 .gfrosterrow .btn{height:34px;font-size:.82rem}
 
+
+/* --- the progress bar rewards you --- */
+.gfbarwrap{position:relative}
+.gfbar{position:relative;overflow:hidden}
+.gfbarfill{position:relative;overflow:hidden}
+.gfbarfill::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  transform:translateX(-100%);opacity:0}
+.gfbarfill.flash::after{animation:gfshimmer .5s ease-out}
+@keyframes gfshimmer{0%{transform:translateX(-100%);opacity:.9}100%{transform:translateX(100%);opacity:0}}
+.gfbarfill.flash{box-shadow:0 0 9px var(--acc)}
+.gfsparks{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.gfburst{position:absolute;top:50%;width:0;height:0}
+.gfburst i{position:absolute;left:0;top:0;width:3px;height:3px;border-radius:50%;
+  background:var(--acc);box-shadow:0 0 5px var(--acc);
+  animation:gfspark .6s cubic-bezier(.2,.6,.3,1) forwards}
+.gfburst.big i{width:4px;height:4px;animation-duration:.85s}
+.gfburst u{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;
+  border:2px solid var(--acc);animation:gfring .8s ease-out forwards}
+@keyframes gfspark{0%{transform:translate(0,0) scale(1);opacity:1}
+  100%{transform:translate(var(--dx),var(--dy)) scale(.25);opacity:0}}
+@keyframes gfring{0%{transform:scale(.35);opacity:.85}100%{transform:scale(2.8);opacity:0}}
+@media (prefers-reduced-motion: reduce){
+  .gfbarfill.flash{box-shadow:none}
+  .gfbarfill.flash::after,.gfburst i,.gfburst u{animation:none;opacity:0}
+}
 /* --- one statement at a time: the moving part --- */
 .gfstage{position:relative;min-height:60vh;display:flex;align-items:center}
 .gfcardq{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
@@ -1020,6 +1046,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfsecn{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--acc);font-weight:700}
 .gfsect-t{font-family:var(--disp);font-size:1.7rem;margin:6px 0 12px}
 .gfsect .gfverse{text-align:left}
+.gfsectn{font-size:.78rem;color:var(--ink3);margin-top:10px}
 .gfsm{height:36px;font-size:.82rem}
 .gfcardq .gfnav{justify-content:space-between}
 @media (prefers-reduced-motion: reduce){
@@ -1185,13 +1212,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.43</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.5</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.43';
+const VERSION = 'v9.5';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -8237,132 +8264,132 @@ const GF_EV=[
 ];
 
 const GIFTS=[
-{id:'admin',n:'Administration',
+{id:'admin',fam:'lead',n:'Administration',
  d:'Turning a good intention into a plan that actually runs — steps, dates, and who is doing what.',
- s:['I enjoy turning ministry ideas into clear steps, schedules, and assignments.',
-    'I can organize people, resources, and details without losing sight of the purpose.',
-    'Ministries I coordinate usually become clearer and more dependable.',
-    'Others often ask me to organize projects, events, or ministry systems.']},
-{id:'leader',n:'Leadership',
+  s:['I like taking a good idea and turning it into a plan with dates and names on it.',
+    'I can keep people, money and details straight without losing sight of why we\'re doing it.',
+    'Things I\'ve organised have ended up running better than before I took them on.',
+    'People come to me when something needs organising.']},
+{id:'leader',fam:'lead',n:'Leadership',
  d:'Carrying responsibility for a direction, and helping others own it rather than merely follow it.',
- s:['I feel comfortable accepting responsibility when a group needs direction.',
-    'I can communicate a vision and help people take ownership of it.',
-    'Groups I lead usually move from discussion into meaningful action.',
-    'People willingly look to me for direction and follow-through.']},
-{id:'teach',n:'Teaching',
+  s:['When a group has no direction, I\'m willing to step up and take responsibility for it.',
+    'I can explain where we\'re going in a way that makes people want to come along.',
+    'Groups I\'ve led have stopped talking and started doing.',
+    'People follow my lead without being pushed into it.']},
+{id:'teach',fam:'word',n:'Teaching',
  d:'Studying Scripture until it is clear, then making it clear to somebody else.',
- s:['I enjoy studying biblical truth until I can explain it clearly.',
-    'I can adjust my teaching for different ages and levels of understanding.',
-    'People have grown in understanding or changed their lives after I taught them.',
-    'Others encourage me to teach or regularly ask me to explain Scripture.']},
-{id:'knowl',n:'Knowledge and research',
+  s:['I enjoy studying a passage until I really understand it.',
+    'I can explain the same truth to a child and to an adult, and both of them get it.',
+    'People have told me they understood something, or changed something, because of how I taught it.',
+    'People ask me to teach, or ask me what a passage means.']},
+{id:'knowl',fam:'word',n:'Knowledge and research',
  d:'Digging out the history, context, and accuracy that keep the church from teaching error.',
- s:['I enjoy investigating biblical history, context, and meaning.',
-    'I can gather, verify, and organize information accurately.',
-    'My research has helped people answer important questions or avoid error.',
-    'Others regularly ask me to research subjects or clarify difficult information.']},
-{id:'wisdom',n:'Wisdom',
+  s:['I like digging into the background of a passage \u2014 the history, the culture, what it meant then.',
+    'I\'m good at finding information and checking whether it\'s actually true.',
+    'Something I looked into has answered a real question, or kept someone from believing something false.',
+    'People bring me things to look up or to check.']},
+{id:'wisdom',fam:'word',n:'Wisdom',
  d:'Seeing how Scripture lands in a real situation, and naming the practical next step.',
- s:['I enjoy helping people apply Scripture to real-life situations.',
-    'I can see possible consequences and identify a practical next step.',
-    'My counsel has helped people make healthier or more faithful decisions.',
-    'Others seek my advice when facing complicated decisions.']},
-{id:'discern',n:'Discernment',
+  s:['I like helping people work out what the Bible means for the mess they\'re actually in.',
+    'I can usually see where a decision will lead, and name the next sensible step.',
+    'People have made better decisions after talking something through with me.',
+    'People come to me when a decision is complicated.']},
+{id:'discern',fam:'word',n:'Discernment',
  d:'Testing teaching and impressions against Scripture, fairly, without becoming suspicious of everyone.',
- s:['I naturally test teachings, spiritual impressions, and decisions against Scripture.',
-    'I can recognize inconsistencies or unhealthy spiritual patterns while remaining fair.',
-    'My discernment has helped someone avoid confusion, deception, or harm.',
-    'Mature believers have affirmed that I exercise sound spiritual judgment.']},
-{id:'encour',n:'Encouragement and exhortation',
+  s:['I check what I\'m taught against Scripture instead of just taking it as read.',
+    'I usually notice when something is off in a teaching or a situation \u2014 and I can say so without turning it into an attack.',
+    'Something I spotted early has kept someone from being misled or hurt.',
+    'Older believers I respect have told me I have good spiritual judgement.']},
+{id:'encour',fam:'people',n:'Encouragement and exhortation',
  d:'Putting courage back into people who are ready to quit, and giving them something to do next.',
- s:['I feel drawn to people who are discouraged, afraid, or ready to give up.',
-    'I can communicate hope while helping someone take a practical next step.',
-    'People often regain courage after talking or praying with me.',
-    'Others seek me when they need encouragement, correction, or spiritual strength.']},
-{id:'shep',n:'Shepherding and pastoral care',
+  s:['I\'m drawn to people who are discouraged or about to give up.',
+    'I can give someone hope and a next step at the same time.',
+    'People have kept going with something because of a conversation with me.',
+    'People come to me when they need lifting \u2014 or need straightening out.']},
+{id:'shep',fam:'people',n:'Shepherding and pastoral care',
  d:'Staying with people over time — noticing who is missing before anyone else does.',
- s:['I desire to walk with people through their spiritual growth over time.',
-    'I notice when someone is missing, struggling, new, or becoming disconnected.',
-    'People have grown spiritually through my consistent care and follow-up.',
-    'Others trust me with the ongoing spiritual care of individuals or groups.']},
-{id:'mercy',n:'Mercy',
+  s:['I want to stay with people for the long haul, not just help them once.',
+    'I notice when someone is missing, new, or quietly struggling.',
+    'People have grown spiritually because I kept following up with them.',
+    'People trust me to look after others.']},
+{id:'mercy',fam:'people',n:'Mercy',
  d:'Being moved by suffering, and able to sit with it without rushing to fix or judge.',
- s:["I'm deeply moved when I encounter suffering, grief, loneliness, or brokenness.",
-    'I can listen patiently without rushing to judge or fix someone.',
-    'My presence and actions have brought comfort to hurting people.',
-    'People feel safe sharing their struggles with me.']},
-{id:'helps',n:'Helps',
+  s:['Suffering gets to me \u2014 grief, loneliness, people who are in a bad way.',
+    'I can sit with someone in a hard place without rushing to fix them.',
+    'Just being there has made a real difference to people who were hurting.',
+    'People tell me things they don\'t tell anyone else.']},
+{id:'helps',fam:'hands',n:'Helps',
  d:'Making somebody else\u2019s ministry possible, and not needing your name on it.',
- s:["I enjoy supporting another person's ministry, even when my work isn't visible.",
-    'I can anticipate what leaders or team members need to serve effectively.',
-    'My support has helped other people accomplish more than they could alone.',
-    'Others know they can depend on me for behind-the-scenes assistance.']},
-{id:'serve',n:'Service',
+  s:['I\'m happy making someone else\'s ministry work, even if nobody knows I did it.',
+    'I can see what a leader or a team needs before they ask for it.',
+    'What I\'ve done behind the scenes has let other people do more than they could alone.',
+    'People know they can rely on me for the jobs nobody sees.']},
+{id:'serve',fam:'hands',n:'Service',
  d:'Seeing the practical need nobody else noticed, and doing the work without being asked twice.',
- s:['I quickly notice practical needs that others may overlook.',
-    "I'm willing and able to complete hands-on tasks without needing recognition.",
-    'My work has removed practical obstacles and met genuine needs.',
-    "People ask for my help because they know I'll follow through."]},
-{id:'hosp',n:'Hospitality',
+  s:['I spot practical jobs that need doing that other people walk straight past.',
+    'I\'m willing and able to do hands-on work without being thanked for it.',
+    'Work I\'ve done has fixed real problems and met real needs.',
+    'People ask me for help because they know I\'ll actually do it.']},
+{id:'hosp',fam:'out',n:'Hospitality',
  d:'Making a stranger feel they belong here, including people unlike you.',
- s:['I enjoy making newcomers and visitors feel genuinely welcomed.',
-    'I can include people from backgrounds or age groups different from mine.',
-    'People tend to feel comfortable and connected when I host or welcome them.',
-    'Others regularly ask me to greet, host, or help create a welcoming environment.']},
-{id:'evang',n:'Evangelism',
+  s:['I like making new people feel welcome.',
+    'I\'m comfortable including people who aren\'t like me \u2014 different age, background, or language.',
+    'People have felt at home and come back because of the welcome they got.',
+    'People ask me to greet, host, or look after visitors.']},
+{id:'evang',fam:'out',n:'Evangelism',
  d:'Real friendships outside the church, and the ability to explain Jesus without cornering anyone.',
- s:['I desire meaningful relationships with people outside the church community.',
-    'I can explain the gospel clearly and respectfully.',
-    'My conversations have helped people move closer to Jesus or begin studying Scripture.',
-    "Others have affirmed my ability to connect with people who don't yet follow Christ."]},
-{id:'mission',n:'Mission and pioneering ministry',
+  s:['I want real friendships with people outside the church.',
+    'I can explain what I believe clearly, without being pushy about it.',
+    'Someone has moved closer to Jesus, or started studying the Bible, after talking with me.',
+    'Others have told me I\'m good with people who don\'t yet believe.']},
+{id:'mission',fam:'out',n:'Mission and pioneering ministry',
  d:'Drawn to the people the church is not reaching, and able to start something where nothing exists.',
- s:["I feel drawn toward people, neighborhoods, or cultures the church isn't currently reaching.",
-    'I can adapt my communication and approach in unfamiliar environments.',
-    'I have helped begin a new group, outreach effort, ministry, or community connection.',
-    'Others recognize me as someone who can build bridges and begin new work.']},
-{id:'faith',n:'Faith',
+  s:['I\'m drawn to people and places the church isn\'t reaching.',
+    'I can adjust how I talk and act when I\'m somewhere unfamiliar.',
+    'I\'ve helped start something new \u2014 a group, an outreach, a way into a community.',
+    'People see me as someone who can start things and build bridges.']},
+{id:'faith',fam:'lead',n:'Faith',
  d:'Steady confidence in God when the outcome is genuinely unclear — and it steadies other people.',
- s:["I remain confident in God's promises when the outcome is uncertain.",
-    'I can help a group move forward prayerfully when a challenge appears overwhelming.',
-    'My confidence in God has strengthened others during difficult seasons.',
-    'People seek me when they need courage to trust God and move forward.']},
-{id:'inter',n:'Intercession',
+  s:['I stay confident in God\'s promises even when I can\'t see how it will work out.',
+    'I can help a group keep going and keep praying when a problem looks too big.',
+    'My confidence in God has held other people up through a hard time.',
+    'People come to me when they need courage to trust God.']},
+{id:'inter',fam:'out',n:'Intercession',
  d:'Sustained prayer for particular people, kept up long after everyone else has moved on.',
- s:['I feel a sustained desire to pray for particular people and needs.',
-    'I faithfully remember prayer requests and continue praying over time.',
-    'People have reported strength, guidance, or clear answers connected with our prayers.',
-    'Others regularly ask me to pray for them or their ministry.']},
-{id:'giving',n:'Giving',
+  s:['I find myself praying for the same people and needs over long stretches of time.',
+    'I remember what people asked me to pray about, and I keep praying it.',
+    'People have told me about real help or answers that came alongside our praying.',
+    'People ask me to pray for them or for their ministry.']},
+{id:'giving',fam:'lead',n:'Giving',
  d:'Quiet generosity joined to careful stewardship — the resources are managed so they can be given.',
- s:['I experience joy when I can quietly use my resources to help God\u2019s work.',
-    'I manage my money, time, possessions, or connections so I can give generously.',
-    'My generosity has helped a person or ministry accomplish something meaningful.',
-    'Others recognize that I combine generosity with thoughtful stewardship.']},
-{id:'proclaim',n:'Biblical proclamation and prophecy',
+  s:['I\'m glad when I can quietly use what I have to help God\'s work.',
+    'I manage my money, time and things so that I\'m actually able to give.',
+    'Something I gave has made a real difference to a person or a ministry.',
+    'People see me as generous, and careful with what I have.']},
+{id:'proclaim',fam:'word',n:'Biblical proclamation and prophecy',
  d:'A burden to speak God\u2019s Word into the present moment, with courage and with love.',
- s:['I feel a strong burden to speak biblical truth into present spiritual conditions.',
-    'I can communicate truth with courage, love, and clarity.',
-    "Messages I've shared have brought conviction, comfort, or a desire to respond to God.",
-    "Church leaders have affirmed my ability to proclaim God's Word faithfully."]},
-{id:'healing',n:'Healing and restoration',
+  s:['I feel a weight to say what God is saying about what\'s going on right now.',
+    'I can say a hard thing with courage and still say it with love.',
+    'Something I\'ve said publicly has convicted people, comforted them, or moved them to respond to God.',
+    'Church leaders have told me I handle God\'s Word well when I speak.']},
+{id:'healing',fam:'people',n:'Healing and restoration',
  d:'Drawn to the wounded — praying with them while respecting confidentiality and professional care.',
- s:['I feel drawn to people facing illness, addiction, grief, trauma, or emotional wounds.',
-    'I can offer prayer and support while respecting confidentiality and professional care.',
-    'People have experienced renewed hope or meaningful restoration through my care.',
-    'Others call upon me when someone needs prayer and compassionate support.']},
-{id:'reconcile',n:'Reconciliation',
+  s:['I\'m drawn to people dealing with illness, addiction, grief, or deep hurt.',
+    'I can pray with someone and support them without overstepping \u2014 I know when a doctor or counsellor is needed.',
+    'People have found real hope again through the care I gave them.',
+    'People call me when someone needs prayer and a steady presence.']},
+{id:'reconcile',fam:'people',n:'Reconciliation',
  d:'Staying calm and impartial in conflict, and walking people back toward each other.',
- s:['I desire to help when conflict is damaging relationships or ministry.',
-    'I can listen fairly and guide people toward an honest, biblical conversation.',
-    'I have helped individuals or groups rebuild trust after conflict.',
-    'Leaders trust me to remain calm, impartial, and focused on restoration.']},
-{id:'creative',n:'Creative communication and craftsmanship',
+  s:['When a conflict is damaging people, I want to help sort it out.',
+    'I can listen fairly to both sides and get them talking honestly.',
+    'I\'ve helped people trust each other again after a falling-out.',
+    'Leaders trust me to stay calm and even-handed when there\'s trouble.']},
+{id:'creative',fam:'hands',n:'Creative communication and craftsmanship',
  d:'Music, writing, design, video, sound, or building — skill offered to God and used by the church.',
- s:['I enjoy serving God through music, writing, art, video, photography, design, technology, or building.',
-    'I can produce creative or technical work with dependable quality.',
-    'My creative work has improved worship, understanding, communication, or outreach.',
-    'Others have affirmed that my creative or technical ability strengthens ministry.']}
+  s:['I like serving God through what I make \u2014 music, writing, art, video, photos, design, tech, or building.',
+    'I can produce work to a decent standard, reliably.',
+    'Something I made has helped worship, or helped people understand or hear about Jesus.',
+    'People have told me that what I make strengthens the church.']}
 ];
 
 /* The ministries a member can actually be placed into, and the gifts each one
@@ -8771,32 +8798,58 @@ function gfOverview(P,S){
 function gfRand(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0;
   let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t;
   return ((t^t>>>14)>>>0)/4294967296; }; }
+const GF_FAMS=[
+ {id:'word',  t:'Scripture and truth',
+  l:'These ask about the Bible itself \u2014 studying it, understanding it, explaining it, and telling when something does not line up with it.'},
+ {id:'people',t:'Walking with people',
+  l:'These ask about people rather than tasks \u2014 the ones who are struggling, grieving, falling out with each other, or quietly slipping away.'},
+ {id:'lead',  t:'Leading and organising',
+  l:'These ask about carrying responsibility \u2014 direction, plans, resources, and holding steady when the outcome is not yet clear.'},
+ {id:'out',   t:'Reaching beyond the church',
+  l:'These ask about people who are not here yet \u2014 neighbours, visitors, strangers, and the praying that goes on behind all of it.'},
+ {id:'hands', t:'Hands and craft',
+  l:'These ask about practical and made things \u2014 the work, the skill, and the jobs that hold everything else up.'}
+];
+/* Statements are grouped into five families so a member has some idea what
+   they are answering about. What is deliberately NOT shown is which gift a
+   statement belongs to: inside a family the gifts are shuffled and no two
+   neighbouring statements target the same one, so nobody can answer toward the
+   gift they would like to have. Family-level orientation, gift-level blindness.
+   The four kinds of evidence stay mixed throughout. */
 const GF_ORDER=(()=>{
-  /* Four passes over all twenty-one gifts. Because every gift appears exactly
-     once per pass, no gift can come up twice inside any run of twenty-one
-     statements — so a member never meets two questions about the same gift on
-     the same page and starts answering the pattern instead of the truth. The
-     evidence type rotates per gift per pass, so each page is also a mix of
-     desire, ability, fruit and confirmation rather than a page of one kind. */
-  const r=gfRand(20260829), n=GIFTS.length, out=[];
-  const off=GIFTS.map((g,i)=>i%GF_EV.length);
-  for(let pass=0;pass<GF_EV.length;pass++){
-    const order=GIFTS.map((g,i)=>i);
-    for(let i=order.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [order[i],order[j]]=[order[j],order[i]]; }
-    // Keep the seam between passes clean too: nothing from the last six of the
-    // previous pass may appear in the first six of this one.
-    const tail=out.slice(-6).map(x=>x[0]);
-    for(let i=0;i<6&&i<order.length;i++){
-      if(tail.includes(order[i])){
-        for(let j=6;j<order.length;j++){
-          if(!tail.includes(order[j])){ [order[i],order[j]]=[order[j],order[i]]; break; }
-        }
+  /* Inside a family the gifts are shuffled once, and that order then repeats
+     across the four passes. Repeating rather than re-shuffling makes the
+     spacing provable: the same gift comes round again after exactly as many
+     statements as there are gifts in that family \u2014 five apart in the big
+     sections, three in the smallest. Re-shuffling each pass left the spacing
+     to chance, and chance duly produced collisions.
+
+     The order is predictable in structure but invisible in practice, because
+     nothing on screen says which gift a statement belongs to. */
+  const r=gfRand(20260829), out=[], starts=[], ends=[];
+  GF_FAMS.forEach(fam=>{
+    const idx=GIFTS.map((g,i)=>[g,i]).filter(x=>x[0].fam===fam.id).map(x=>x[1]);
+    for(let i=idx.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [idx[i],idx[j]]=[idx[j],idx[i]]; }
+    const k=idx.length;
+    starts.push(out.length);
+    for(let pass=0;pass<GF_EV.length;pass++){
+      for(let n=0;n<k;n++){
+        // The gift order repeats unchanged each pass, which spaces every gift
+        // exactly as far apart as the family is wide. Rotating the order
+        // instead made the end of one pass collide with the start of the next.
+        // It is the evidence that rotates: across the four passes each gift is
+        // asked once about desire, once about ability, once about fruit and
+        // once about what others say — never twice about the same thing.
+        out.push([idx[n],(pass+n)%GF_EV.length]);
       }
     }
-    order.forEach(gi=>out.push([gi,(pass+off[gi])%GF_EV.length]));
-  }
+    ends.push(out.length-1);
+  });
+  out.starts=starts; out.ends=ends;
   return out;
 })();
+const GF_SECT_STARTS=GF_ORDER.starts;
+const GF_SECT_ENDS=GF_ORDER.ends;
 const GF_TOTAL=GF_ORDER.length;
 const GF_PAGES=Math.ceil(GF_TOTAL/GF_PER_PAGE);
 
@@ -8804,7 +8857,7 @@ const GF_PAGES=Math.ceil(GF_TOTAL/GF_PER_PAGE);
 let GFS=null;
 function gfLoad(){
   try{ GFS=JSON.parse(localStorage.getItem(GF_KEY)||'null'); }catch(e){ GFS=null; }
-  if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},i:0,sect:0,done:false,sent:false};
+  if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},i:0,sect:-1,done:false,sent:false};
   if(!GFS.a) GFS.a={};
   return GFS;
 }
@@ -8979,7 +9032,7 @@ function gfRenderIntro(h){
     <p class="note">There are ${GF_TOTAL} statements. It takes about ten minutes, and you can stop and come back \u2014 your answers save themselves on this phone as you go.</p>
     <p class="note">Answer for the way you have actually been over the past few years, not the way you would like to be. If you are newer in the faith, answer according to the desire you sense in your heart.</p>
     <p class="note">Some statements ask about results \u2014 whether anything came of it, whether anyone else has noticed. If you have never had the chance to find out, say so. <b>&ldquo;I haven't had an opportunity to know&rdquo; is not a wrong answer and it does not count against you.</b> It simply tells us the gift is untested rather than absent.</p>
-    <p class="note">The statements are mixed together on purpose, so you are answering honestly rather than answering toward the gift you hope to have.</p>
+    <p class="note">The statements come in five sections — Scripture, people, leading, reaching out, and practical work — so you know roughly what you are answering about. Which gift any single statement is measuring is deliberately not shown, so that you answer honestly rather than toward the gift you would like to have.</p>
   </div>
   <div class="card gfcard">
     <label class="gflab" for="gfname">Your name</label>
@@ -8995,7 +9048,7 @@ function gfRenderIntro(h){
     ? 'When you finish, your answers and your name are sent to your pastor so he can talk with you about where you might serve. They are not shared with anyone else, and they are not used for anything but ministry placement.'
     : 'Your answers stay on this device. At the end you will get a short code you can send to your pastor if you want him to see the result.';
   document.getElementById('gfstart').onclick=()=>{
-    GFS.name=nm.value.trim(); GFS.i=0; GFS.sect=0; gfSave(); gfRenderPage(gfHost());
+    GFS.name=nm.value.trim(); GFS.i=0; GFS.sect=-1; gfSave(); gfRenderPage(gfHost());
     window.scrollTo({top:0,behavior:'auto'});
   };
 }
@@ -9010,29 +9063,18 @@ function gfRenderIntro(h){
    only — they are deliberately NOT gift categories, because grouping by gift
    would undo the interleaving and let a member answer toward the gift they
    want. */
-const GF_SECT_SIZE=14;
-const GF_SECTS=[
- {t:'Where we begin',
-  l:'Answer for how you have actually been these past few years \u2014 not how you would like to be.',
-  v:['Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord.','1 Corinthians 12:4\u20135']},
- {t:'Keep going',
-  l:'There is no right answer here, and nothing is being graded. The only wrong answer is a flattering one.',
-  v:['As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God.','1 Peter 4:10']},
- {t:'Halfway',
-  l:'Forty-two behind you. If a statement describes something you have never had the chance to try, say so \u2014 it counts for you, not against you.',
-  v:['But now hath God set the members every one of them in the body, as it hath pleased him.','1 Corinthians 12:18']},
- {t:'Still with us',
-  l:'Some of these will feel repetitive. They are asking slightly different things \u2014 what you want, what you can do, and what has come of it.',
-  v:['Having then gifts differing according to the grace that is given to us, let us wait on our ministering.','Romans 12:6']},
- {t:'The last stretch',
-  l:'Twenty-eight to go. Keep answering quickly \u2014 your first instinct is usually more honest than your second.',
-  v:['And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers; For the perfecting of the saints, for the work of the ministry.','Ephesians 4:11\u201312']},
- {t:'The end of it',
-  l:'Last fourteen.',
-  v:['Well done, thou good and faithful servant: thou hast been faithful over a few things, I will make thee ruler over many things.','Matthew 25:21']}
+const GF_VERSE_SET=[
+ ['Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord.','1 Corinthians 12:4\u20135'],
+ ['As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God.','1 Peter 4:10'],
+ ['But now hath God set the members every one of them in the body, as it hath pleased him.','1 Corinthians 12:18'],
+ ['Having then gifts differing according to the grace that is given to us, let us wait on our ministering.','Romans 12:6'],
+ ['And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers; For the perfecting of the saints, for the work of the ministry.','Ephesians 4:11\u201312']
 ];
-const GF_SECT_COUNT=Math.ceil(GF_TOTAL/GF_SECT_SIZE);
-const gfSectOf=i=>Math.floor(i/GF_SECT_SIZE);
+const GF_SECTS=GF_FAMS.map((f,i)=>({t:f.t,l:f.l,v:GF_VERSE_SET[i]}));
+const GF_SECT_COUNT=GF_SECTS.length;
+const gfSectOf=i=>{ let n=0; for(let k=0;k<GF_SECT_STARTS.length;k++) if(i>=GF_SECT_STARTS[k]) n=k; return n; };
+const gfIsSectStart=i=>GF_SECT_STARTS.indexOf(i)>=0;
+const gfIsSectEnd=i=>GF_SECT_ENDS.indexOf(i)>=0;
 const gfReduced=()=>{
   try{ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; }
 };
@@ -9048,7 +9090,7 @@ function gfIndex(){
 function gfRenderPage(h){
   const i=gfIndex();
   GFS.i=i;
-  if(i%GF_SECT_SIZE===0&&GFS.sect!==gfSectOf(i)) return gfRenderSection(h,gfSectOf(i));
+  if(gfIsSectStart(i)&&GFS.sect!==gfSectOf(i)) return gfRenderSection(h,gfSectOf(i));
   h.innerHTML=gfChrome(i)+`<div class="gfstage" id="gfstage">${gfCardHTML(i)}</div>`;
   gfWireCard(h,i);
 }
@@ -9062,6 +9104,7 @@ function gfRenderSection(h,sec){
      <h2 class="gfsect-t">${esc(S.t)}</h2>
      <div class="gfverse gfsmall"><q>${esc(S.v[0])}</q><cite>${esc(S.v[1])} \u00b7 KJV</cite></div>
      <p class="note">${esc(S.l)}</p>
+     <p class="note gfsectn">${(GF_SECT_ENDS[sec]-GF_SECT_STARTS[sec]+1)} statements \u00b7 answer what is true of you, not what a Christian is supposed to say. Nobody is marking this.</p>
      <button class="btn gfbig" id="gfgo">${sec===0?'Start':'Carry on'}</button>
    </div></div>`;
   document.getElementById('gfgo').onclick=()=>{
@@ -9079,7 +9122,10 @@ function gfChrome(i){
   const ans=gfAnswered();
   const sec=gfSectOf(i);
   return `<div class="gftop-bar">
-    <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
+    <div class="gfbarwrap">
+      <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
+      <div class="gfsparks" id="gfsparks"></div>
+    </div>
     <div class="gfmeta">
       <span class="gfcount">${Math.min(i+1,GF_TOTAL)} of ${GF_TOTAL}</span>
       <span class="gfdots">${GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('')}</span>
@@ -9104,6 +9150,39 @@ function gfCardHTML(i,enter){
 }
 
 /* remove the entry offset on the next frame so the card animates in */
+/* A small reward every time the bar moves. Three things at once: a shimmer
+   sweeping the filled portion, a flare at the leading edge, and a spark burst
+   thrown off the head of the bar. Crossing into a new section gets a bigger
+   one. All of it is skipped for anyone who has asked their device for reduced
+   motion — the bar still advances, it simply does it quietly. */
+function gfSpark(h,pct,big){
+  if(gfReduced()) return;
+  const fill=h.querySelector('.gfbarfill');
+  const layer=h.querySelector('.gfsparks');
+  if(fill){
+    fill.classList.remove('flash');
+    void fill.offsetWidth;            // force a reflow so the animation restarts
+    fill.classList.add('flash');
+  }
+  if(!layer) return;
+  const burst=document.createElement('div');
+  burst.className='gfburst'+(big?' big':'');
+  burst.style.left=pct+'%';
+  const n=big?9:5;
+  for(let i=0;i<n;i++){
+    const d=document.createElement('i');
+    const ang=(-140+(280/(n-1))*i)*Math.PI/180;
+    const dist=(big?26:16)+Math.random()*(big?14:8);
+    d.style.setProperty('--dx',(Math.cos(ang)*dist).toFixed(1)+'px');
+    d.style.setProperty('--dy',(Math.sin(ang)*dist-(big?6:4)).toFixed(1)+'px');
+    d.style.animationDelay=(i*18)+'ms';
+    burst.appendChild(d);
+  }
+  if(big){ const ring=document.createElement('u'); burst.appendChild(ring); }
+  layer.appendChild(burst);
+  setTimeout(()=>burst.remove(),big?1100:750);
+}
+
 function gfSettle(h){
   const c=h.querySelector('.gfcardq.gfin');
   if(!c) return;
@@ -9117,7 +9196,7 @@ function gfWireCard(h,i){
   const advance=(to)=>{
     GFS.i=Math.max(0,Math.min(GF_TOTAL,to)); gfSave();
     if(GFS.i>=GF_TOTAL){ GFS.done=true; gfSave(); gfRender(); window.scrollTo({top:0,behavior:'auto'}); return; }
-    if(GFS.i%GF_SECT_SIZE===0&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
+    if(gfIsSectStart(GFS.i)&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
     h.innerHTML=gfChrome(GFS.i)+`<div class="gfstage" id="gfstage">${gfCardHTML(GFS.i,'in')}</div>`;
     gfWireCard(h,GFS.i); gfSettle(h);
   };
@@ -9134,8 +9213,11 @@ function gfWireCard(h,i){
       GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
       card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
       b.classList.add('gfpulse');
+      const pct=Math.round(gfAnswered()/GF_TOTAL*100);
       const bar=h.querySelector('.gfbarfill');
-      if(bar) bar.style.width=Math.round(gfAnswered()/GF_TOTAL*100)+'%';
+      if(bar) bar.style.width=pct+'%';
+      // a section finished is worth more than a statement finished
+      gfSpark(h,pct,gfIsSectEnd(i)&&i+1<GF_TOTAL);
       setTimeout(()=>leave(i+1,false),gfReduced()?0:200);
     };
   });
@@ -9226,7 +9308,7 @@ function gfRenderResult(h,S,name,own){
     document.getElementById('gfprint').onclick=()=>window.print();
     document.getElementById('gfredo').onclick=()=>{
       if(!confirm('Clear your answers and start the whole assessment again?')) return;
-      GFS={name:GFS.name,a:{},i:0,sect:0,done:false,sent:false}; gfSave(); gfRender();
+      GFS={name:GFS.name,a:{},i:0,sect:-1,done:false,sent:false}; gfSave(); gfRender();
     };
     gfRenderSend(document.getElementById('gfsendbox'));
   }
