@@ -932,6 +932,74 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacing:.08em}
 @media print{:root{--bg:#fff;--panel:#fff;--ink:#111;--ink2:#333;--ink3:#666;--shadow:none}body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
+
+/* ===== Discover Your Spiritual Gifts (the member-facing tool) ===== */
+.gifts{max-width:760px;margin:0 auto;padding:0 14px 60px}
+.gfhead{margin:14px 0 10px}
+.gfhead h2{font-family:var(--disp);font-size:1.5rem;margin:0 0 4px}
+.gfcard{padding:16px 18px;margin:12px 0}
+.gfcard h3{font-family:var(--disp);font-size:1.05rem;margin:0 0 8px}
+.gfcard .note+.note{margin-top:7px}
+.gfverse{border-left:3px solid var(--acc);background:var(--panel2);border-radius:0 10px 10px 0;
+  padding:12px 15px;margin:14px 0}
+.gfverse q{display:block;font-family:var(--script);font-size:1.12rem;line-height:1.5;color:var(--ink);quotes:none}
+.gfverse cite{display:block;margin-top:6px;font-style:normal;font-size:.74rem;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--ink3);font-weight:700}
+.gfbar{height:8px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:10px 0 5px}
+.gfbarfill{height:100%;background:var(--acc);transition:width .25s}
+.gfcount{margin-bottom:10px}
+.gfq{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:14px 16px;margin:10px 0}
+.gfq.gfmiss{border-color:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
+.gfst{font-size:1rem;line-height:1.5;color:var(--ink);margin:0 0 10px}
+.gfopts{display:flex;flex-wrap:wrap;gap:6px}
+.gfopt{background:var(--panel2);border:1px solid var(--line2);color:var(--ink2);border-radius:999px;
+  font:inherit;font-size:.82rem;padding:7px 13px;cursor:pointer;line-height:1.2}
+.gfopt:hover{border-color:var(--acc)}
+.gfopt.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink);font-weight:700}
+.gfnav{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.gfnav .btn{height:44px}
+.gfnavnote{margin-top:7px;color:var(--acc)}
+.gfbig{height:46px;margin-top:12px}
+.gfbackr{margin-bottom:10px}
+.gflab{display:block;font-size:.8rem;font-weight:700;color:var(--ink2);margin-bottom:5px}
+.gifts input[type=text],.gifts textarea{width:100%;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:10px;color:var(--ink);font:inherit;padding:11px 12px;margin-bottom:8px}
+.gfcode{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.76rem;word-break:break-all}
+.gftop{border-top:1px solid var(--line);padding:11px 0}
+.gftop:first-of-type{border-top:0;padding-top:2px}
+.gftop b{font-size:1.02rem}
+.gfsc{float:right;font-weight:700;color:var(--acc)}
+.gfb{display:inline-block;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  border-radius:999px;padding:2px 8px;margin-left:5px;vertical-align:2px}
+.gfb.dem{background:var(--acc-dim);color:var(--acc)}
+.gfb.eme{background:var(--panel2);color:var(--ink2);border:1px solid var(--line2)}
+.gfb.lat{background:transparent;color:var(--ink3);border:1px dashed var(--line2)}
+.gfrow{display:flex;align-items:center;gap:10px;padding:6px 0}
+.gfrn{flex:1 1 auto;font-size:.88rem}
+.gfrb{flex:0 0 84px;height:7px;background:var(--panel2);border-radius:999px;overflow:hidden}
+.gfrb div{height:100%;background:var(--acc)}
+.gfrv{flex:0 0 28px;text-align:right;font-size:.8rem;font-weight:700;color:var(--ink2)}
+.gfrec{border-top:1px solid var(--line);padding:12px 0}
+.gfrec:first-of-type{border-top:0}
+.gfrech{display:flex;align-items:baseline;gap:10px;margin-bottom:5px}
+.gfrech b{font-size:1.02rem}
+.gfpct{margin-left:auto;font-weight:700;color:var(--acc);white-space:nowrap}
+.gfrosterrow{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0}
+.gfrosterrow:first-of-type{border-top:0}
+.gfrosterrow b{flex:1 1 auto}
+.gfrosterrow .btn{height:34px;font-size:.82rem}
+.gfrank{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;
+  background:var(--acc);color:var(--btn-ink);border-radius:6px;font-size:.72rem;font-weight:700;margin-right:7px;vertical-align:1px}
+.gfwhy{color:var(--ink);border-left:2px solid var(--line2);padding-left:10px;margin-top:6px}
+.gfdl{margin-top:9px}
+.gfdl b{display:block;font-size:.7rem;letter-spacing:.07em;text-transform:uppercase;color:var(--ink3);margin-bottom:2px}
+.gfverse.gfsmall{margin:11px 0 2px;padding:9px 12px}
+.gfverse.gfsmall q{font-size:1rem}
+.gftop{padding:16px 0}
+.gfcombo{font-family:var(--script);font-size:1.1rem;line-height:1.45;color:var(--ink);
+  background:var(--panel2);border-radius:10px;padding:11px 14px;margin:10px 0}
+@media print{.gfnav,.gfopts,.gfbar,#gfsendbox{display:none!important}}
 </style>
 </head>
 <body>
@@ -996,8 +1064,16 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
         <b>Evangelism Planner</b>
         <span class="td">Set opening night and the size of your church. Terrain counts backward eighteen months — revival, training, outreach, the meetings, and the nurture after — with a benchmark for every phase.</span>
       </button>
+      <button class="tool" data-tool="gifts">
+        <span class="tico">🕊️</span>
+        <b>Spiritual Gifts</b>
+        <span class="td">Send your members a link. They answer eighty-four statements about desire, ability, fruit, and what others have seen in them — and their gifts, and the ministries that fit, come back to you here.</span>
+      </button>
     </div>
   </div>
+
+  <!-- ===== Discover Your Spiritual Gifts ===== -->
+  <div class="gifts" id="gifts" hidden><div id="giftbody"></div></div>
 
   <!-- ===== Evangelism Planner: the countdown calendar ===== -->
   <div class="planner" id="planner" hidden>
@@ -1072,13 +1148,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.36</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.42</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.36';
+const VERSION = 'v9.42';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5527,6 +5603,15 @@ async function aiMount(M,levels,geo){
    and it only lists sections that are actually visible under the current focus. */
 let TOOL=null;              // null = the hub; 'survey' | 'case' = inside a tool
 const FLAT=new URLSearchParams(location.search).has('flat');
+/* A member arriving on #gifts (or #gifts=PUBID) skips the conference access
+   code entirely. A church member should never need a conference code to answer
+   questions about themselves, and the code must never travel in a link that is
+   sent to a congregation. The ID in the link is write-only: results can be sent
+   in with it, nothing can be read out with it. */
+const GIFTS_LINK=(()=>{
+  const m=/^#gifts(?:=([A-Za-z0-9_-]+))?$/.exec(location.hash||'');
+  return m?{on:true,pub:m[1]||null}:{on:false,pub:null};
+})();
 
 /* The hub is the front door. A pastor picks a tool, works inside it, and comes
    back out. New tools become new tiles here rather than more sections bolted to
@@ -5535,11 +5620,14 @@ const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
   case:   {name:'Make the Case',     tabs:['case']},
   // standalone: does not need a church address or Census data; it has its own panel
-  planner:{name:'Evangelism Planner',tabs:[], standalone:true}
+  planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner'},
+  // member-facing, and the only tool reachable without a conference code
+  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'}
 };
 function showHub(){
   const dc=document.getElementById('datacred'); if(dc&&!FLAT) dc.hidden=true;
   const pl=$('planner'); if(pl) pl.hidden=true;
+  const gp=$('gifts'); if(gp) gp.hidden=true;
   // In flat view there is no hub — everything is on one page already.
   if(FLAT){ const a=document.querySelector('.ask'); if(a) a.style.display=''; return; }
   TOOL=null;
@@ -5567,7 +5655,10 @@ function openTool(id){
     $('report').classList.remove('show');
     const nav=$('secnav'); if(nav) nav.hidden=true;
     const ch=$('changech'); if(ch) ch.hidden=true;
-    const pl=$('planner'); if(pl){ pl.hidden=false; plannerOpen(); }
+    ['planner','gifts'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
+    const which=TOOLS[id].panel||'planner';
+    const pe=$(which);
+    if(pe){ pe.hidden=false; if(which==='gifts') giftsOpen(); else plannerOpen(); }
     window.scrollTo({top:0,behavior:'auto'});
     return;
   }
@@ -7290,6 +7381,20 @@ function showWho(){
   };
 }
 async function initAccess(){
+  if(GIFTS_LINK.on){
+    // Member view: no gate, no hub, no toolbar — one page, one job.
+    ACCESS={required:false,ok:true,name:''}; ACCESS_CHECKED=true;
+    GF_PUB_TARGET=GIFTS_LINK.pub;
+    hideGate();
+    const g=$('gate'); if(g) g.hidden=true;
+    ['hub','toolbar','secnav','changech'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
+    const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
+    const setup=$('setup'); if(setup) setup.style.display='none';
+    TOOL='gifts'; GF_VIEW='take';
+    const gp=$('gifts'); if(gp) gp.hidden=false;
+    giftsOpen();
+    return;
+  }
   ACCESS=await checkAccess();
   ACCESS_CHECKED=true;
   if(ACCESS.required&&!ACCESS.ok){
@@ -8047,6 +8152,1100 @@ $('loc').onclick=()=>{
     err=>setStatus('Location not shared ('+err.message+'). Type the address instead.',true),{enableHighAccuracy:true,timeout:12000});
 };
 $('keysave').onclick=()=>{const k=$('keyin').value.trim(); if(!k)return; localStorage.setItem('terrain-census-key',k); $('setup').style.display='none'; setStatus('Key saved on this device. Map it again.'); };
+/* ================= DISCOVER YOUR SPIRITUAL GIFTS =================
+   The fourth tool, and the only member-facing one. A member opens it from a
+   plain share link (index.html#gifts), which skips the conference access code
+   entirely — a church member should never need a conference code to answer
+   questions about themselves.
+
+   Part 1 of the pastor's assessment: twenty-one gifts, four statements each,
+   one for each kind of evidence — desire, ability, fruit, and confirmation
+   from others. The statements are deliberately interleaved so nobody can see
+   which gift they are answering for and score themselves toward the gift they
+   wish they had.
+
+   Scoring follows the spec exactly:
+     desire 20% · ability 25% · fruit 35% · confirmation 20%
+   Fruit carries the most weight because a gift is known by what it produces,
+   not by what a person hopes about themselves. "I haven't had an opportunity
+   to know" is not a zero — it is removed from the average and the remaining
+   weights are renormalised, so an untested member is not punished for being
+   untested. It does, however, keep a gift out of the "demonstrated" column,
+   which is exactly right: untested is not the same as proven.
+
+   Everything is device-local. Nothing is uploaded anywhere. The member hands
+   their result to the pastor by sending him a short code, and he pastes it
+   into his own copy, where the results collect into a roster. No backend, no
+   server holding members' spiritual self-assessments. */
+
+const GF_KEY='terrain-gifts';
+const GF_ROSTER='terrain-gifts-roster';
+const GF_PER_PAGE=7;
+
+/* value → the six-point scale. -1 is "no opportunity to know". */
+const GF_SCALE=[
+  {v:0,l:'Not true of me'},
+  {v:1,l:'Seldom true'},
+  {v:2,l:'Sometimes true'},
+  {v:3,l:'Often true'},
+  {v:4,l:'Consistently true'},
+  {v:-1,l:"I haven't had an opportunity to know"}
+];
+/* evidence order is fixed everywhere: desire, ability, fruit, confirmation */
+const GF_EV=[
+  {k:'desire',l:'Desire',w:.20},
+  {k:'ability',l:'Ability',w:.25},
+  {k:'fruit',l:'Fruit',w:.35},
+  {k:'conf',l:'Confirmed by others',w:.20}
+];
+
+const GIFTS=[
+{id:'admin',n:'Administration',
+ d:'Turning a good intention into a plan that actually runs — steps, dates, and who is doing what.',
+ s:['I enjoy turning ministry ideas into clear steps, schedules, and assignments.',
+    'I can organize people, resources, and details without losing sight of the purpose.',
+    'Ministries I coordinate usually become clearer and more dependable.',
+    'Others often ask me to organize projects, events, or ministry systems.']},
+{id:'leader',n:'Leadership',
+ d:'Carrying responsibility for a direction, and helping others own it rather than merely follow it.',
+ s:['I feel comfortable accepting responsibility when a group needs direction.',
+    'I can communicate a vision and help people take ownership of it.',
+    'Groups I lead usually move from discussion into meaningful action.',
+    'People willingly look to me for direction and follow-through.']},
+{id:'teach',n:'Teaching',
+ d:'Studying Scripture until it is clear, then making it clear to somebody else.',
+ s:['I enjoy studying biblical truth until I can explain it clearly.',
+    'I can adjust my teaching for different ages and levels of understanding.',
+    'People have grown in understanding or changed their lives after I taught them.',
+    'Others encourage me to teach or regularly ask me to explain Scripture.']},
+{id:'knowl',n:'Knowledge and research',
+ d:'Digging out the history, context, and accuracy that keep the church from teaching error.',
+ s:['I enjoy investigating biblical history, context, and meaning.',
+    'I can gather, verify, and organize information accurately.',
+    'My research has helped people answer important questions or avoid error.',
+    'Others regularly ask me to research subjects or clarify difficult information.']},
+{id:'wisdom',n:'Wisdom',
+ d:'Seeing how Scripture lands in a real situation, and naming the practical next step.',
+ s:['I enjoy helping people apply Scripture to real-life situations.',
+    'I can see possible consequences and identify a practical next step.',
+    'My counsel has helped people make healthier or more faithful decisions.',
+    'Others seek my advice when facing complicated decisions.']},
+{id:'discern',n:'Discernment',
+ d:'Testing teaching and impressions against Scripture, fairly, without becoming suspicious of everyone.',
+ s:['I naturally test teachings, spiritual impressions, and decisions against Scripture.',
+    'I can recognize inconsistencies or unhealthy spiritual patterns while remaining fair.',
+    'My discernment has helped someone avoid confusion, deception, or harm.',
+    'Mature believers have affirmed that I exercise sound spiritual judgment.']},
+{id:'encour',n:'Encouragement and exhortation',
+ d:'Putting courage back into people who are ready to quit, and giving them something to do next.',
+ s:['I feel drawn to people who are discouraged, afraid, or ready to give up.',
+    'I can communicate hope while helping someone take a practical next step.',
+    'People often regain courage after talking or praying with me.',
+    'Others seek me when they need encouragement, correction, or spiritual strength.']},
+{id:'shep',n:'Shepherding and pastoral care',
+ d:'Staying with people over time — noticing who is missing before anyone else does.',
+ s:['I desire to walk with people through their spiritual growth over time.',
+    'I notice when someone is missing, struggling, new, or becoming disconnected.',
+    'People have grown spiritually through my consistent care and follow-up.',
+    'Others trust me with the ongoing spiritual care of individuals or groups.']},
+{id:'mercy',n:'Mercy',
+ d:'Being moved by suffering, and able to sit with it without rushing to fix or judge.',
+ s:["I'm deeply moved when I encounter suffering, grief, loneliness, or brokenness.",
+    'I can listen patiently without rushing to judge or fix someone.',
+    'My presence and actions have brought comfort to hurting people.',
+    'People feel safe sharing their struggles with me.']},
+{id:'helps',n:'Helps',
+ d:'Making somebody else\u2019s ministry possible, and not needing your name on it.',
+ s:["I enjoy supporting another person's ministry, even when my work isn't visible.",
+    'I can anticipate what leaders or team members need to serve effectively.',
+    'My support has helped other people accomplish more than they could alone.',
+    'Others know they can depend on me for behind-the-scenes assistance.']},
+{id:'serve',n:'Service',
+ d:'Seeing the practical need nobody else noticed, and doing the work without being asked twice.',
+ s:['I quickly notice practical needs that others may overlook.',
+    "I'm willing and able to complete hands-on tasks without needing recognition.",
+    'My work has removed practical obstacles and met genuine needs.',
+    "People ask for my help because they know I'll follow through."]},
+{id:'hosp',n:'Hospitality',
+ d:'Making a stranger feel they belong here, including people unlike you.',
+ s:['I enjoy making newcomers and visitors feel genuinely welcomed.',
+    'I can include people from backgrounds or age groups different from mine.',
+    'People tend to feel comfortable and connected when I host or welcome them.',
+    'Others regularly ask me to greet, host, or help create a welcoming environment.']},
+{id:'evang',n:'Evangelism',
+ d:'Real friendships outside the church, and the ability to explain Jesus without cornering anyone.',
+ s:['I desire meaningful relationships with people outside the church community.',
+    'I can explain the gospel clearly and respectfully.',
+    'My conversations have helped people move closer to Jesus or begin studying Scripture.',
+    "Others have affirmed my ability to connect with people who don't yet follow Christ."]},
+{id:'mission',n:'Mission and pioneering ministry',
+ d:'Drawn to the people the church is not reaching, and able to start something where nothing exists.',
+ s:["I feel drawn toward people, neighborhoods, or cultures the church isn't currently reaching.",
+    'I can adapt my communication and approach in unfamiliar environments.',
+    'I have helped begin a new group, outreach effort, ministry, or community connection.',
+    'Others recognize me as someone who can build bridges and begin new work.']},
+{id:'faith',n:'Faith',
+ d:'Steady confidence in God when the outcome is genuinely unclear — and it steadies other people.',
+ s:["I remain confident in God's promises when the outcome is uncertain.",
+    'I can help a group move forward prayerfully when a challenge appears overwhelming.',
+    'My confidence in God has strengthened others during difficult seasons.',
+    'People seek me when they need courage to trust God and move forward.']},
+{id:'inter',n:'Intercession',
+ d:'Sustained prayer for particular people, kept up long after everyone else has moved on.',
+ s:['I feel a sustained desire to pray for particular people and needs.',
+    'I faithfully remember prayer requests and continue praying over time.',
+    'People have reported strength, guidance, or clear answers connected with our prayers.',
+    'Others regularly ask me to pray for them or their ministry.']},
+{id:'giving',n:'Giving',
+ d:'Quiet generosity joined to careful stewardship — the resources are managed so they can be given.',
+ s:['I experience joy when I can quietly use my resources to help God\u2019s work.',
+    'I manage my money, time, possessions, or connections so I can give generously.',
+    'My generosity has helped a person or ministry accomplish something meaningful.',
+    'Others recognize that I combine generosity with thoughtful stewardship.']},
+{id:'proclaim',n:'Biblical proclamation and prophecy',
+ d:'A burden to speak God\u2019s Word into the present moment, with courage and with love.',
+ s:['I feel a strong burden to speak biblical truth into present spiritual conditions.',
+    'I can communicate truth with courage, love, and clarity.',
+    "Messages I've shared have brought conviction, comfort, or a desire to respond to God.",
+    "Church leaders have affirmed my ability to proclaim God's Word faithfully."]},
+{id:'healing',n:'Healing and restoration',
+ d:'Drawn to the wounded — praying with them while respecting confidentiality and professional care.',
+ s:['I feel drawn to people facing illness, addiction, grief, trauma, or emotional wounds.',
+    'I can offer prayer and support while respecting confidentiality and professional care.',
+    'People have experienced renewed hope or meaningful restoration through my care.',
+    'Others call upon me when someone needs prayer and compassionate support.']},
+{id:'reconcile',n:'Reconciliation',
+ d:'Staying calm and impartial in conflict, and walking people back toward each other.',
+ s:['I desire to help when conflict is damaging relationships or ministry.',
+    'I can listen fairly and guide people toward an honest, biblical conversation.',
+    'I have helped individuals or groups rebuild trust after conflict.',
+    'Leaders trust me to remain calm, impartial, and focused on restoration.']},
+{id:'creative',n:'Creative communication and craftsmanship',
+ d:'Music, writing, design, video, sound, or building — skill offered to God and used by the church.',
+ s:['I enjoy serving God through music, writing, art, video, photography, design, technology, or building.',
+    'I can produce creative or technical work with dependable quality.',
+    'My creative work has improved worship, understanding, communication, or outreach.',
+    'Others have affirmed that my creative or technical ability strengthens ministry.']}
+];
+
+/* The ministries a member can actually be placed into, and the gifts each one
+   really runs on. Weights are 1-3: 3 = the ministry does not work without it,
+   1 = it helps. Taken from the ministry list in the pastor's assessment, so a
+   recommendation here names something the church can genuinely offer. */
+const GF_MIN=[
+ {n:'Personal Bible studies',d:'Sitting down weekly with one person or one family and working through Scripture together, usually in their home, over several months.',g:{teach:3,evang:3,wisdom:1,shep:1},
+  f:'Ask the pastor for one interest and one experienced partner, and give the first study together.'},
+ {n:'Adult Sabbath School teaching',d:'Preparing and leading a weekly class discussion \u2014 the study is most of the work, the hour is the smaller part.',g:{teach:3,knowl:2,shep:1,wisdom:1},
+  f:'Sit in with a current teacher for a month, then take one lesson.'},
+ {n:'Children\u2019s Sabbath School',d:'Weekly teaching for one age group, with craft, story and memory work prepared beforehand.',g:{teach:2,mercy:1,creative:2,shep:1,hosp:1},
+  f:'Assist an existing class for a quarter before leading one.'},
+ {n:'Youth ministry',d:'Being consistently present with teenagers \u2014 programme nights, but mostly the conversations either side of them.',g:{shep:3,encour:2,teach:1,faith:1},
+  f:'Show up to three consecutive youth gatherings before taking any role.'},
+ {n:'Young-adult ministry',d:'Building a small community for the age group most likely to quietly disappear: meals, study, and follow-up when someone stops coming.',g:{shep:2,encour:2,evang:1,teach:1,hosp:1},
+  f:'Host one meal for young adults and simply listen to what they need.'},
+ {n:'Adventurers',d:'Weekly club work with younger children \u2014 honours, activities, and a lot of patient supervision.',g:{teach:2,serve:1,creative:1,mercy:1,admin:1},
+  f:'Join as a helper for one term, then train for a class role.'},
+ {n:'Pathfinders',d:'Running a unit through drill, honours, camping and campouts across the year, with real safety responsibility.',g:{leader:2,teach:2,serve:1,shep:2},
+  f:'Attend a club night as an observer and talk with the director.'},
+ {n:'Vacation Bible School',d:'One intensive week each year: a station, a class, or the logistics behind them, with weeks of preparation first.',g:{admin:2,creative:2,teach:1,hosp:1},
+  f:'Take one station this coming summer rather than the whole programme.'},
+ {n:'Public evangelism support',d:'One defined role across a series \u2014 visitation, follow-up, greeting, registration, or the platform itself.',g:{proclaim:3,evang:3,faith:1,admin:1},
+  f:'Serve on the next series team in one defined role before preaching one.'},
+ {n:'New-believer discipleship',d:'Walking beside one newly baptised member for months: their questions, their habits, their first discouragement.',g:{shep:3,teach:2,encour:2},
+  f:'Ask to be paired with one newly baptised member for six months.'},
+ {n:'Community outreach',d:'Going out from the building regularly \u2014 door to door, at events, or into a specific neighbourhood \u2014 and building repeat contact.',g:{mission:2,serve:2,mercy:2,evang:1},
+  f:'Join the next outreach as a walker before helping plan one.'},
+ {n:'Community services and food distribution',d:'Sorting, stocking and handing out, plus knowing the regulars by name and noticing what they actually need.',g:{serve:3,mercy:2,admin:1,hosp:1},
+  f:'Work two distribution days, then ask where the gaps are.'},
+ {n:'Greeting and hospitality',d:'The first ninety seconds of a visitor\u2019s experience: the door, the name, the seat, and the follow-up afterwards.',g:{hosp:3,encour:1,mercy:1},
+  f:'Greet with an experienced deacon for a month of Sabbaths.'},
+ {n:'Member visitation',d:'Scheduled visits to members in their homes \u2014 listening, praying, and reporting real needs back to the pastor.',g:{shep:3,mercy:2,encour:2,inter:1},
+  f:'Visit alongside an experienced partner for 90 days before going alone.'},
+ {n:'Homebound and hospital ministry',d:'Regular visits to those who cannot come: the housebound, the hospitalised, and those in care homes.',g:{mercy:3,shep:2,serve:1,inter:1},
+  f:'Take one homebound member and visit monthly, same week each month.'},
+ {n:'Prayer ministry',d:'Holding and praying the church\u2019s requests, and often leading a prayer meeting or a prayer chain.',g:{inter:3,faith:2,mercy:1},
+  f:'Take five names from the prayer list and pray them daily for a month.'},
+ {n:'Small groups',d:'Hosting six to twelve people regularly in a home for study, prayer and honest conversation.',g:{shep:2,teach:2,hosp:2,wisdom:1},
+  f:'Co-host with an existing leader before starting a group in your home.'},
+ {n:'Health ministry',d:'Cooking classes, health talks, screenings, and steady practical teaching on how to live well.',g:{healing:2,teach:2,serve:1,mercy:1},
+  f:'Run one health talk or cooking class with a partner.'},
+ {n:'Family and marriage ministry',d:'Events, courses and quiet conversations supporting couples and parents through ordinary strain.',g:{wisdom:2,shep:2,teach:1,reconcile:1},
+  f:'Help run one family event before taking on counsel-shaped work.'},
+ {n:'Men\u2019s ministry',d:'Building a rhythm men will actually turn up to, and the accountability that grows out of it.',g:{leader:2,encour:2,shep:1,hosp:1},
+  f:'Invite three men to a monthly breakfast and keep it going for a quarter.'},
+ {n:'Women\u2019s ministry',d:'Gatherings, study and support networks, with real pastoral care running underneath.',g:{encour:2,shep:2,hosp:2,inter:1},
+  f:'Start with one prayer breakfast rather than a programme.'},
+ {n:'Senior-adult ministry',d:'Visits, transport, phone calls and gatherings that keep older members connected rather than gradually lost.',g:{mercy:2,shep:2,hosp:1,serve:1},
+  f:'Build a call list of ten seniors and phone two each week.'},
+ {n:'Disability and accessibility ministry',d:'Making the building, the service and the programmes genuinely usable, family by family.',g:{mercy:3,serve:2,admin:1},
+  f:'Walk the building with one family and write down what stops them.'},
+ {n:'Deacon or deaconess ministry',d:'The practical care of the church and its members: ordinances, buildings, benevolence, and quiet need.',g:{serve:3,helps:2,hosp:1,mercy:1},
+  f:'Shadow a serving deacon for a quarter, then ask for election.'},
+ {n:'Church administration',d:'Boards, minutes, follow-up and the calendar \u2014 making sure decisions become actions with names on them.',g:{admin:3,leader:2,wisdom:1},
+  f:'Take one committee\u2019s minutes and follow-up list for a quarter.'},
+ {n:'Clerk and records assistance',d:'Membership records, transfers, reports and the paperwork the conference depends on.',g:{admin:3,helps:2,knowl:1},
+  f:'Ask the clerk for one recurring task and carry it every month.'},
+ {n:'Event coordination',d:'One event at a time, end to end: venue, volunteers, timing, food, and the things everyone forgets.',g:{admin:3,hosp:2,helps:1},
+  f:'Run one event end to end — small, and entirely yours.'},
+ {n:'Treasury and stewardship',d:'Counting, recording, reporting and teaching \u2014 the trust of handling other people\u2019s offerings.',g:{giving:3,admin:2,knowl:1},
+  f:'Assist the treasurer through one full quarter and audit.'},
+ {n:'Worship and music',d:'Rehearsal, selection and leading \u2014 the preparation is most of it, the platform is the visible part.',g:{creative:3,proclaim:1,faith:1},
+  f:'Join one rehearsal cycle before being scheduled to lead.'},
+ {n:'Sound, livestream and video',d:'Running the desk, the stream and the recording every week, plus the setup nobody sees.',g:{creative:3,helps:2,serve:1},
+  f:'Sit at the desk with the operator for four Sabbaths.'},
+ {n:'Social media and communication',d:'Keeping the church\u2019s public face accurate and alive, and answering the strangers who message it.',g:{creative:2,evang:2,knowl:1,admin:1},
+  f:'Take one channel and post consistently for eight weeks.'},
+ {n:'Transportation ministry',d:'Standing arrangements to bring members who otherwise cannot come, week after week.',g:{serve:3,helps:2,mercy:1},
+  f:'Offer one standing ride each Sabbath to one member who needs it.'},
+ {n:'Facilities and maintenance',d:'Keeping the building safe, working and cared for, with a list that never fully ends.',g:{serve:3,helps:2,giving:1},
+  f:'Take responsibility for one part of the building for a quarter.'},
+ {n:'Safety and security',d:'Trained presence during services and events, child-protection procedure, and emergency readiness.',g:{serve:2,discern:2,helps:1,leader:1},
+  f:'Complete the safety training before any assignment.'},
+ {n:'Prison and reentry ministry',d:'Cleared, team-based visits inside, correspondence, and support for those coming out.',g:{mercy:3,evang:2,faith:2,healing:1},
+  f:'Complete the clearance and go in with an established team first.'},
+ {n:'Recovery ministry',d:'A weekly group where people fighting addiction can be honest, with confidentiality held absolutely.',g:{healing:3,mercy:2,encour:2,shep:1},
+  f:'Attend an existing group as a member for 90 days before facilitating.'},
+ {n:'Cross-cultural ministry',d:'Building bridges into a specific language or cultural community, slowly and on their terms.',g:{mission:3,hosp:2,evang:1,teach:1},
+  f:'Learn one family\u2019s story properly before proposing a programme.'},
+ {n:'Church planting and new groups',d:'Gathering a small core, praying long, and beginning something where the church currently is not.',g:{mission:3,leader:2,faith:2,evang:2},
+  f:'Gather three committed people and pray weekly for six months.'},
+ {n:'Reconciliation and peacemaking support',d:'Being brought into conflicts early, listening to both sides, and holding an honest conversation together.',g:{reconcile:3,wisdom:2,discern:1,shep:1},
+  f:'Ask the pastor to include you as a listener in one restoration process.'},
+ {n:'Discernment and doctrinal review',d:'Reviewing what the church is about to teach or distribute, and flagging what does not hold up.',g:{discern:3,knowl:2,teach:1,wisdom:1},
+  f:'Offer to review material the church is about to teach or distribute.'}
+];
+
+/* ---- how many gifts is this person's answer, not ours --------------------
+   A fixed "top three" is the thing that makes these assessments feel like a
+   horoscope. Some members have one gift towering over everything; some have
+   two that clearly belong together; some are genuine generalists whose top six
+   sit within a few points of each other, and telling that person "your top
+   three gifts are..." is simply false precision.
+
+   So the cut is found in the person's own numbers: rank them, then look for
+   the largest real drop inside the leading group. Where the drop is, the list
+   ends. A flat profile with no honest break is reported as a flat profile —
+   which is useful information about how to place someone, not a failure. */
+function gfProfile(S){
+  const ranked=S.filter(s=>s.score!==null).sort((a,b)=>(b.score-a.score)||a.n.localeCompare(b.n));
+  if(!ranked.length) return {ranked:[],core:[],support:[],low:[],shape:'none',gap:0};
+  const top=ranked[0].score;
+  // Nothing below 72% of a person's own peak, and nothing below 40 outright,
+  // can be called one of their gifts — otherwise a member who answered low on
+  // everything still gets crowned.
+  const floor=Math.max(40,Math.round(top*0.72));
+  const cand=ranked.filter(s=>s.score>=floor).slice(0,6);
+  /* Where does the list honestly end? A gap only counts as a break if it is
+     both sizeable AND clearly bigger than the other steps in the leading group.
+     Nine points between a 100 and a 91 is not a cliff — those two gifts belong
+     to the same person and usually to the same ministry. Without this test the
+     report keeps naming one gift and burying its natural partner. */
+  let cut=-1;
+  if(cand.length>1){
+    const gaps=[];
+    for(let i=0;i<Math.min(cand.length-1,4);i++) gaps.push(cand[i].score-cand[i+1].score);
+    const mx=Math.max.apply(null,gaps), at=gaps.indexOf(mx);
+    const others=gaps.filter((g,i)=>i!==at);
+    const avgOther=others.length?others.reduce((a,b)=>a+b,0)/others.length:0;
+    if(mx>=10&&mx>=Math.max(6,avgOther*1.8)) cut=at;
+  }
+  if(cut<0){
+    // No honest break: everything inside twelve points of the peak, up to four.
+    cut=Math.min(cand.filter(s=>top-s.score<=12).length-1,3);
+  }
+  const core=cand.slice(0,cut+1);
+  const support=cand.slice(cut+1,cut+3).filter(s=>s.score>=Math.round(top*0.78));
+  const sixth=ranked[Math.min(ranked.length-1,5)].score;
+  const spread=top-sixth;
+  const shape = cand.length===1 ? 'single'
+              : core.length===1 ? 'concentrated'
+              : spread>=22 ? 'concentrated'
+              : spread<=10 ? 'broad' : 'mixed';
+  /* The "what this is not" note is only honest when there is real separation.
+     On a flat profile the bottom two are noise, and printing them as though
+     they meant something is the generic filler we are trying to avoid. */
+  const low=(ranked.length>=8&&ranked[ranked.length-1].score<=Math.round(top*0.55))
+    ? ranked.slice(-2).reverse() : [];
+  /* Measured against the next gift in the whole ranking, not the next one in
+     the shortlist — otherwise a member whose single gift towers over the rest
+     is told it leads "by 0 points", because nothing else cleared the floor. */
+  const gap=core.length<ranked.length?(core[core.length-1].score-ranked[core.length].score):0;
+  return {ranked,core,support,low,shape,gap,top,spread};
+}
+
+/* What the four answers about one gift actually say when you read them
+   together. This is where two members with the same top gift stop getting the
+   same paragraph. */
+function gfWhy(s,seen){
+  const d=s.ev.desire, a=s.ev.ability, f=s.ev.fruit, c=s.ev.conf;
+  const ok=x=>x!==null&&x!==undefined&&x!==-1;
+  const un=x=>x===-1;
+  let k,t;
+  if(ok(a)&&ok(d)&&a-d>=3){
+    k='able-not-drawn';
+    t=['You are able at this but not drawn to it. Capable and willing are different things, and a leader should know which one he is asking for.',
+       'The ability is real; the pull is not. Do not let this one become the job nobody else would take.'];
+  } else if(ok(c)&&ok(d)&&c-d>=2){
+    k='others-see';
+    t=['Other people see this in you more clearly than you see it in yourself \u2014 which is usually the more reliable witness of the two.',
+       'Again, the confirmation from others runs ahead of your own estimate of yourself. Worth trusting.'];
+  } else if((un(f)||un(c))&&ok(d)&&d>=3&&ok(a)&&a>=3){
+    k='untested';
+    t=['The desire and the ability are both here. You have simply never had the chance to find out what it produces \u2014 an opportunity problem, not a gift problem.',
+       'Also untested. The same thing is true here: nothing has been proven because nothing has been asked of you yet.'];
+  } else if(un(f)&&ok(c)&&c>=3){
+    k='asked-untested';
+    t=['Others already come to you for this, though you have not seen what comes of it.',
+       'People ask you for this too, without either of you having watched where it leads.'];
+  } else if(ok(f)&&ok(c)&&f>=3&&c>=3){
+    k='proven';
+    t=['Proven: it has produced something real, and other people have said so independently.',
+       'This one is proven as well \u2014 fruit on the ground, and other people naming it.'];
+  } else if(ok(f)&&f>=3&&ok(c)&&c<=1){
+    k='quiet-fruit';
+    t=['It has borne fruit quietly. Few people seem to have noticed \u2014 worth saying out loud to a leader.',
+       'Fruit again, and again largely unnoticed. That is a pattern worth mentioning to someone.'];
+  } else if(ok(d)&&d>=3&&ok(a)&&a<=1){
+    k='wants-untrained';
+    t=['You want this more than you are currently equipped for. That is a training target, not a mismatch.',
+       'Desire ahead of training here too \u2014 the same kind of gap, and the same answer: teach it.'];
+  } else if(ok(f)&&f>=2&&ok(d)&&d>=3){
+    k='consistent';
+    t=['Consistent across what you want, what you can do, and what has come of it.',
+       'Consistent again, all four answers pointing the same way.'];
+  } else {
+    k='steady';
+    t=['A steady pattern across your answers.','Steady here as well.'];
+  }
+  const i=(seen&&seen.has(k))?1:0;
+  if(seen) seen.add(k);
+  return t[Math.min(i,t.length-1)];
+}
+
+/* Two gifts standing together usually mean something more specific than either
+   one alone. Only fires on a real pair — no fallback sentence, because a
+   generic line here would be exactly the filler we are trying to avoid. */
+const GF_COMBOS=[
+ [['mercy','shep'],'You are built for care that lasts \u2014 not the crisis visit, the fifth one.'],
+ [['mercy','inter'],'Compassion joined to sustained prayer. People will end up on your list and stay there for years.'],
+ [['mercy','healing'],'You go toward wounds most people step around, and you stay long enough to matter.'],
+ [['teach','evang'],'The classic Bible-worker pattern: able to explain, and willing to sit with someone outside the church while you do it.'],
+ [['teach','knowl'],'You are the one who checks it before the church teaches it.'],
+ [['teach','shep'],'You teach people rather than subjects \u2014 which is why they keep coming back to you afterwards.'],
+ [['admin','leader'],'You can both set a direction and make it survive contact with a calendar. That combination is rare and usually overloaded.'],
+ [['admin','helps'],'You make other people\u2019s ministries run, and you do not need your name on them.'],
+ [['leader','faith'],'You move groups forward when the outcome is not yet visible. That is the pattern behind most things that get started.'],
+ [['leader','proclaim'],'Front-facing leadership \u2014 you can name where the church is going and say it from the platform.'],
+ [['evang','mission'],'Drawn outward, to people the church is not currently reaching, and able to begin something where nothing exists.'],
+ [['evang','hosp'],'People meet Jesus at your table before they meet Him in a series.'],
+ [['hosp','serve'],'Belonging built out of practical things \u2014 chairs, food, a door held open, a name remembered.'],
+ [['serve','helps'],'The backbone pattern. Almost nothing in a church runs without someone answering this way.'],
+ [['wisdom','discern'],'You see both what is true and what it will cost \u2014 the combination the board needs and rarely has.'],
+ [['wisdom','reconcile'],'You are who a pastor should call before a conflict hardens, not after.'],
+ [['encour','shep'],'You put courage back into people and then stay to see whether it held.'],
+ [['encour','proclaim'],'You can say the hard thing in a way that lifts rather than flattens.'],
+ [['inter','faith'],'Prayer that keeps going when there is nothing visible to go on.'],
+ [['creative','helps'],'Skill offered without needing the credit \u2014 the pattern behind every sound desk and livestream that works.'],
+ [['creative','proclaim'],'You communicate truth through what you make, not only through what you say.'],
+ [['giving','admin'],'Generosity joined to stewardship. The two rarely sit in the same person, and the treasury needs both.'],
+ [['discern','knowl'],'You test things before they are taught. Guard this \u2014 it is easily mistaken for suspicion.'],
+ [['mission','faith'],'The planting pattern: drawn to unreached ground and steady when the outcome is uncertain.'],
+ [['shep','inter'],'You carry people in prayer and in person, over long stretches.'],
+ [['healing','encour'],'You meet people at their lowest and help them take one step from there.']
+];
+function gfCombo(core){
+  if(core.length<2) return null;
+  const ids=core.slice(0,3).map(s=>s.id);
+  for(const [pair,text] of GF_COMBOS){
+    if(pair.every(p=>ids.includes(p))) return text;
+  }
+  return null;
+}
+function gfShapeWords(P){
+  const n=P.core.length;
+  if(P.shape==='single')
+    return `One gift stands clearly above everything else in your answers \u2014 by ${P.gap} points. That is unusual, and it means you should be placed narrowly and deeply rather than spread across several ministries.`;
+  if(P.shape==='concentrated')
+    return `Your answers have a clear peak: ${n===1?'one gift sits':n+' gifts sit'} well above the rest, and then the profile drops away. Place yourself where ${n===1?'it belongs':'they belong'} and say no to the rest without guilt.`;
+  if(P.shape==='broad')
+    return `Your top gifts sit within a few points of each other, so no single one is your obvious calling. That is a generalist profile \u2014 genuinely useful, and it means you should be placed by what the church currently needs and what you enjoy, rather than by a score.`;
+  return `You have ${n===1?'one gift':n+' gifts'} clearly out in front, with others close behind. Start with the ${n===1?'first':'strongest'}, and let the others shape how you carry it.`;
+}
+
+/* ---- what each gift actually looks like on the ground --------------------
+   A name and a number is a label. What a member needs is: here is what this
+   looks like in a real congregation, here is the way it goes wrong, here is
+   how it grows, and here is where it stands in Scripture. Every verse below is
+   KJV, quoted exactly, and public domain. */
+const GF_DEEP={
+ admin:{
+  live:'You are the person who turns "somebody should really do something about that" into a date, a list of names, and a plan that survives the second month. In a congregation it shows up as ministries that run whether or not the pastor is in the building.',
+  shadow:'The system can quietly become the point. Watch for the moment efficiency starts mattering more than the people the system was built for \u2014 and for taking on so much coordinating that nobody else ever learns how.',
+  grow:'Hand one piece of what you organise to somebody else and coach them through it. Administration that cannot be handed on is a bottleneck wearing a nice suit.',
+  v:['Let all things be done decently and in order.','1 Corinthians 14:40']},
+ leader:{
+  live:'You can stand in front of a group that is going in circles and give it a direction people will actually follow. It shows up as committees that decide things and teams that still exist in six months.',
+  shadow:'Leadership without shepherding drives people. Watch for running ahead of the congregation, for measuring the ministry instead of knowing the members, and for confusing agreement with commitment.',
+  grow:'Pick one person and pass real authority to them, not just tasks. The test of leadership is what keeps going when you step back.',
+  v:['He that ruleth, with diligence.','Romans 12:8']},
+ teach:{
+  live:'You study until it is clear, then make it clear to somebody else \u2014 in a class, at a table, over a phone. It shows up as members who can now open their own Bible and find it themselves.',
+  shadow:'Teaching can drift toward performance, or toward information for its own sake. Watch for enjoying the study more than the people, and for answering questions nobody actually asked.',
+  grow:'Teach one person to teach. Ask a class what they did with it last week before you give them anything new.',
+  v:['The same commit thou to faithful men, who shall be able to teach others also.','2 Timothy 2:2']},
+ knowl:{
+  live:'You are the one who checks it before the church teaches it \u2014 the history, the context, whether the quotation is real. It shows up as a congregation that does not get carried off by whatever is circulating online this month.',
+  shadow:'Knowledge puffeth up. Watch for correcting people who were not wrong, for research that never turns into anything anyone can use, and for making others feel stupid for not knowing.',
+  grow:'Put one finding into plain language a fourteen-year-old could follow, and give it away.',
+  v:['For Ezra had prepared his heart to seek the law of the LORD, and to do it, and to teach in Israel statutes and judgments.','Ezra 7:10']},
+ wisdom:{
+  live:'People bring you the complicated ones \u2014 the decision with no clean answer, the situation with four people in it. You see what it will cost and can name the next step.',
+  shadow:'Being sought out is addictive, and advice given too freely stops being weighed. Watch for deciding things that were not yours to decide, and for confidence outrunning the actual facts.',
+  grow:'Ask more before answering, and say plainly when you do not know. Wisdom that can say "I am not sure" is trusted twice as far.',
+  v:['If any of you lack wisdom, let him ask of God, that giveth to all men liberally.','James 1:5']},
+ discern:{
+  live:'You notice when something is off \u2014 in a teaching, a plan, or a person\u2019s situation \u2014 usually before anyone else does, and you test it against Scripture rather than against your mood.',
+  shadow:'This is the gift most easily mistaken for suspicion, and the one most easily soured into it. Watch for assuming the worst, for testing everything and trusting nothing, and for raising alarms in public that belonged in private.',
+  grow:'Take a concern to one leader privately before you take it anywhere else, and be as quick to say "this is sound" as you are to say "this is not".',
+  v:['Beloved, believe not every spirit, but try the spirits whether they are of God.','1 John 4:1']},
+ encour:{
+  live:'People come out of a conversation with you able to try again. It shows up as the member who nearly left and did not, and usually nobody knows why except the two of you.',
+  shadow:'Encouragement can shrink into reassurance \u2014 telling people what they want to hear because you cannot bear their disappointment. Watch for avoiding the hard sentence that would actually help.',
+  grow:'Pair every word of courage with one concrete next step. Hope without a step is just a nice feeling that wears off by Tuesday.',
+  v:['But exhort one another daily, while it is called To day.','Hebrews 3:13']},
+ shep:{
+  live:'You notice who is missing. You are still checking on someone in month five, long after the crisis that made everyone else call in week one.',
+  shadow:'Shepherds burn out quietly and carry things they were never meant to carry alone. Watch for making people dependent on you rather than on Christ, and for never telling anyone how heavy it has become.',
+  grow:'Set a real number \u2014 the people you can carry well \u2014 and keep to it. Then find one other person to carry with you.',
+  v:['Feed the flock of God which is among you, taking the oversight thereof.','1 Peter 5:2']},
+ mercy:{
+  live:'You go toward suffering that other people step around, and you can sit in it without needing to fix it in the first ten minutes. Hurting people work out very quickly that they are safe with you.',
+  shadow:'Mercy absorbs pain and often forgets it is doing so. Watch for taking on what is not yours, for being unable to say no, and for keeping a confidence that has become dangerous to keep.',
+  grow:'Learn where your limits are before you meet them, and learn the one line every merciful person needs: "this is bigger than me, and I am going to bring someone in."',
+  v:['He that sheweth mercy, with cheerfulness.','Romans 12:8']},
+ helps:{
+  live:'You see what a leader or a team needs before they ask, and you supply it without needing your name attached. Whole ministries run on this and rarely say so out loud.',
+  shadow:'Invisible work is easy to take for granted \u2014 including by you. Watch for quiet resentment building where thanks never came, and for propping up something that should have been allowed to fail.',
+  grow:'Tell one leader plainly what you are carrying. Not for credit \u2014 so the load is known and can be shared.',
+  v:['Helps, governments, diversities of tongues.','1 Corinthians 12:28']},
+ serve:{
+  live:'You spot the practical need nobody mentioned and it is done before the next meeting. Chairs, a lift, a leaking tap, a meal that arrived without being asked for.',
+  shadow:'Doing is easier than being known, and service can become a place to hide. Watch for staying busy so you never have to sit still, and for judging members who serve less visibly than you do.',
+  grow:'Take one task and teach a younger member to do it beside you. Serving that trains somebody multiplies; serving that does not simply tires you out.',
+  v:['As we have therefore opportunity, let us do good unto all men.','Galatians 6:10']},
+ hosp:{
+  live:'Strangers stop feeling like strangers around you, and it happens fast. It shows up as a visitor who came once and came back, and could tell you the name of the person who spoke to them.',
+  shadow:'Hospitality can narrow to the people who are easy to welcome. Watch for a warm circle that is still a closed one, and for hosting that becomes performance rather than welcome.',
+  grow:'Each month, welcome one person who is genuinely unlike you \u2014 a different age, language, or background \u2014 and learn something true about them.',
+  v:['Use hospitality one to another without grudging.','1 Peter 4:9']},
+ evang:{
+  live:'You have real friendships outside the church, and you can talk about Jesus in them without it becoming strange. It shows up as people who started studying because of a conversation, not a campaign.',
+  shadow:'Zeal can outrun relationship, and a person can become a project. Watch for pressing when you should wait, for winning the argument and losing the friend, and for measuring yourself by decisions.',
+  grow:'Ask more questions than you answer for one month, and keep going with the friendships where nothing has happened yet.',
+  v:['Do the work of an evangelist, make full proof of thy ministry.','2 Timothy 4:5']},
+ mission:{
+  live:'You are drawn to the people the church is not reaching, and you can begin something where there is currently nothing \u2014 a group, a class, a connection into a community nobody had entered.',
+  shadow:'Starters often do not finish, and new work can be a way of avoiding the harder work of staying. Watch for leaving before something is stable, and for treating an unreached group as a project rather than as neighbours.',
+  grow:'Stay with one beginning until somebody local can carry it, then hand it over properly rather than drifting away.',
+  v:['Yea, so have I strived to preach the gospel, not where Christ was named.','Romans 15:20']},
+ faith:{
+  live:'When the outcome is genuinely unclear you are still steady, and it steadies everyone around you. Most things that get started in a church were started by somebody answering like this.',
+  shadow:'Faith can slide into presumption, and steadiness can look like not listening. Watch for calling your own preference God\u2019s will, and for dismissing the person raising a legitimate practical problem.',
+  grow:'Write down what you are trusting God for and the date. Faith that is never specific never gets tested \u2014 and never builds anything either.',
+  v:['Now faith is the substance of things hoped for, the evidence of things not seen.','Hebrews 11:1']},
+ inter:{
+  live:'People end up on your list and stay there for years. You remember the request from three months ago and you are still praying it, which almost nobody does.',
+  shadow:'Intercession is invisible and can drift into isolation, or into knowing more about people\u2019s troubles than anyone else does. Watch for prayer that becomes a place to hold information rather than to hold people.',
+  grow:'Tell one or two of the people you pray for that you are doing it. And guard what you know \u2014 a prayer list is a confidence, not a newsletter.',
+  v:['I exhort therefore, that, first of all, supplications, prayers, intercessions... be made for all men.','1 Timothy 2:1']},
+ giving:{
+  live:'You arrange your resources \u2014 money, time, a vehicle, a contact, a spare room \u2014 so that giving is possible, and then you give without wanting it announced.',
+  shadow:'Giving can buy influence, or expect it. Watch for generosity that comes with conditions attached, and for judging members who cannot give what you can.',
+  grow:'Give once this year to something you will never see the result of, and tell nobody.',
+  v:['God loveth a cheerful giver.','2 Corinthians 9:7']},
+ proclaim:{
+  live:'You carry a burden to say what God is saying into this moment \u2014 from a pulpit, a class, or a conversation \u2014 and people respond rather than merely listen.',
+  shadow:'The platform is dangerous. Watch for confusing a strong reaction with a genuine work, for saying the hard thing without the love that makes it bearable, and for a private life that is thinner than the public one.',
+  grow:'Ask one mature believer to tell you honestly what your last message did to people, and let them be honest without defending yourself.',
+  v:['Preach the word; be instant in season, out of season.','2 Timothy 4:2']},
+ healing:{
+  live:'You go toward illness, addiction, grief and trauma, and you can pray with someone without pretending you are their doctor. People call you when something has broken.',
+  shadow:'This work can promise more than God has promised, and it can take on responsibility that belongs to professionals. Watch for guaranteeing outcomes, and for keeping a person away from medical or mental-health care.',
+  grow:'Learn what is beyond you and who to refer to before you need to know. Compassion plus a referral is not a failure of faith.',
+  v:['Is any sick among you? let him call for the elders of the church; and let them pray over him.','James 5:14']},
+ reconcile:{
+  live:'You can sit between two people who are not speaking and stay fair to both. It shows up as conflicts that ended in a conversation rather than in somebody leaving the church.',
+  shadow:'Peacemaking can decay into peacekeeping \u2014 smoothing things over so the discomfort stops while the wrong stays in place. Watch for avoiding the truth in order to keep the calm.',
+  grow:'Get to the honest conversation earlier. Most church conflicts harden in the weeks nobody wanted to raise it.',
+  v:['Blessed are the peacemakers: for they shall be called the children of God.','Matthew 5:9']},
+ creative:{
+  live:'You make things \u2014 music, words, images, video, sound, buildings \u2014 and what you make helps people understand or worship. It shows up as a service that carried, and most people never think about why.',
+  shadow:'Craft can become about the craft, and technical people are easily wounded by criticism from those who could not do it. Watch for perfectionism that delays, and for building something the congregation cannot maintain.',
+  grow:'Train a second person on everything you do. A livestream, a sound desk, or a design language that only you understand is a liability the day you are ill.',
+  v:['And I have filled him with the spirit of God, in wisdom, and in understanding, and in knowledge, and in all manner of workmanship.','Exodus 31:3']}
+};
+
+/* Reads the four answers back in plain words, so a member can see exactly what
+   the score was built from rather than trusting a number. */
+function gfEvidenceLine(s){
+  const L=['not true of you','seldom true','sometimes true','often true','consistently true'];
+  const bits=[];
+  const say=(k,v,phr)=>{
+    if(v===null||v===undefined) return;
+    if(v===-1){ bits.push(phr.un); return; }
+    bits.push(phr.on.replace('%',L[v]));
+  };
+  say('d',s.ev.desire,{on:'the desire for it, %',un:'no answer given on the desire'});
+  say('a',s.ev.ability,{on:'the ability, %',un:'no answer given on the ability'});
+  say('f',s.ev.fruit,{on:'what has come of it, %',un:'no opportunity yet to see what comes of it'});
+  say('c',s.ev.conf,{on:'other people confirming it, %',un:'no opportunity yet for others to confirm it'});
+  if(!bits.length) return '';
+  return 'You answered: '+bits.slice(0,-1).join('; ')+'; and '+bits[bits.length-1]+'.';
+}
+
+/* The opening reading — assembled from this person's own spread, so two
+   members never open the same way. */
+function gfOverview(P,S){
+  const dem=P.ranked.filter(x=>x.label==='demonstrated').length;
+  const eme=P.ranked.filter(x=>x.label==='emerging').length;
+  const unt=S.filter(x=>x.unt>0).length;
+  const out=[gfShapeWords(P)];
+  if(dem&&eme)
+    out.push(`Across all twenty-one, ${dem} came back demonstrated \u2014 fruit on the ground and other people naming it \u2014 and ${eme} came back emerging, where the desire or the ability is there but the proof is not in yet.`);
+  else if(dem)
+    out.push(`${dem} of the twenty-one came back demonstrated: not just wanted, but producing something other people have noticed.`);
+  else if(eme)
+    out.push(`Nothing came back fully demonstrated yet. ${eme} came back emerging \u2014 real desire, real ability, and no track record yet, which is the normal profile of someone who has never been asked.`);
+  if(unt>=6)
+    out.push(`You marked ${unt} gifts as untested. That is a lot, and it is the most useful thing in this report: it means the honest answer for you is not a placement but a chance to find out.`);
+  else if(unt)
+    out.push(`${unt} gift${unt===1?' is':'s are'} marked untested \u2014 worth trying rather than ruling out.`);
+  const top=P.core[0];
+  if(top) out.push(`Everything below is built outward from ${top.n.toLowerCase()}.`);
+  return out;
+}
+
+/* ---- deterministic interleave --------------------------------------------
+   The statements must not appear grouped by gift, or a member can see what is
+   being measured and answer toward the gift they want. The shuffle is seeded,
+   so it is identical on every device — but answers are stored and encoded by
+   gift id, never by screen position, so even if this order ever changed, old
+   result codes would still decode correctly. */
+function gfRand(seed){ return function(){ seed|=0; seed=seed+0x6D2B79F5|0;
+  let t=Math.imul(seed^seed>>>15,1|seed); t=t+Math.imul(t^t>>>7,61|t)^t;
+  return ((t^t>>>14)>>>0)/4294967296; }; }
+const GF_ORDER=(()=>{
+  /* Four passes over all twenty-one gifts. Because every gift appears exactly
+     once per pass, no gift can come up twice inside any run of twenty-one
+     statements — so a member never meets two questions about the same gift on
+     the same page and starts answering the pattern instead of the truth. The
+     evidence type rotates per gift per pass, so each page is also a mix of
+     desire, ability, fruit and confirmation rather than a page of one kind. */
+  const r=gfRand(20260829), n=GIFTS.length, out=[];
+  const off=GIFTS.map((g,i)=>i%GF_EV.length);
+  for(let pass=0;pass<GF_EV.length;pass++){
+    const order=GIFTS.map((g,i)=>i);
+    for(let i=order.length-1;i>0;i--){ const j=Math.floor(r()*(i+1)); [order[i],order[j]]=[order[j],order[i]]; }
+    // Keep the seam between passes clean too: nothing from the last six of the
+    // previous pass may appear in the first six of this one.
+    const tail=out.slice(-6).map(x=>x[0]);
+    for(let i=0;i<6&&i<order.length;i++){
+      if(tail.includes(order[i])){
+        for(let j=6;j<order.length;j++){
+          if(!tail.includes(order[j])){ [order[i],order[j]]=[order[j],order[i]]; break; }
+        }
+      }
+    }
+    order.forEach(gi=>out.push([gi,(pass+off[gi])%GF_EV.length]));
+  }
+  return out;
+})();
+const GF_TOTAL=GF_ORDER.length;
+const GF_PAGES=Math.ceil(GF_TOTAL/GF_PER_PAGE);
+
+/* ---- state --------------------------------------------------------------- */
+let GFS=null;
+function gfLoad(){
+  try{ GFS=JSON.parse(localStorage.getItem(GF_KEY)||'null'); }catch(e){ GFS=null; }
+  if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},page:0,done:false,sent:false};
+  if(!GFS.a) GFS.a={};
+  return GFS;
+}
+function gfSave(){ try{ localStorage.setItem(GF_KEY,JSON.stringify(GFS)); }catch(e){} }
+function gfKeyOf(gi,ei){ return GIFTS[gi].id+'.'+ei; }
+function gfAnswered(){ return GF_ORDER.filter(p=>GFS.a[gfKeyOf(p[0],p[1])]!==undefined).length; }
+
+/* ---- scoring -------------------------------------------------------------
+   desire 20 · ability 25 · fruit 35 · confirmation 20. "No opportunity to
+   know" (-1) is dropped from the average and the remaining weights are
+   renormalised, so an untested member is not scored as though they had
+   answered "not true of me". It does keep the gift out of the demonstrated
+   column, which is the point: untested is not disproven, but it is not proven
+   either. */
+function gfScores(a){
+  return GIFTS.map(g=>{
+    let num=0,den=0,ev={},unt=0;
+    GF_EV.forEach((e,i)=>{
+      const v=a[g.id+'.'+i];
+      ev[e.k]=(v===undefined?null:v);
+      if(v===undefined) return;
+      if(v===-1){ unt++; return; }
+      num+=e.w*(v/4); den+=e.w;
+    });
+    const score=den>0?Math.round(num/den*100):null;
+    const fruit=ev.fruit, conf=ev.conf, des=ev.desire, abl=ev.ability;
+    let label='latent';
+    if(fruit!==null&&fruit>=3&&conf!==null&&conf>=3) label='demonstrated';
+    else if((des!==null&&des>=3)||(abl!==null&&abl>=3)) label='emerging';
+    return {id:g.id,n:g.n,d:g.d,score,ev,unt,label};
+  });
+}
+/* Ministry fit, Stage 1: gifts only. The pastor's full formula also weighs
+   passion, skills, work style, stated interest and availability — those are
+   Parts 2, 3, 5, 7 and 8, and until they exist it would be dishonest to print
+   a number that pretends to include them. So the report says plainly that this
+   match is drawn from gifts alone. */
+function gfFit(S,core){
+  const by={}; S.forEach(s=>by[s.id]=s);
+  const coreIds=(core||[]).map(c=>c.id);
+  return GF_MIN.map(m=>{
+    let num=0,den=0,drivers=[],proven=0,coreHits=0,untested=[];
+    Object.keys(m.g).forEach(gid=>{
+      const w=m.g[gid], s=by[gid];
+      if(!s||s.score===null) return;
+      // squared weights: a ministry's essential gift should dominate its match
+      // score, or a perfect fit on the one gift that matters reads as 66%.
+      num+=w*w*s.score; den+=w*w*100;
+      // A gift this member actually leads with counts as a driver even where
+      // the ministry only leans on it lightly — otherwise the explanation
+      // credits a supporting gift and never names their strongest one.
+      if(w>=2||coreIds.includes(gid)){
+        drivers.push(s);
+        if(w>=2&&s.label==='demonstrated') proven++;
+        if(w>=2&&coreIds.includes(gid)) coreHits++;
+        if(w>=2&&s.unt>0) untested.push(s);
+      }
+    });
+    const pct=den>0?Math.round(num/den*100):0;
+    // A ministry that leans on the gifts this member actually leads with beats
+    // one that merely scores well because he answered high across the board.
+    const rank=pct+coreHits*8;
+    drivers.sort((x,y)=>((coreIds.includes(y.id)?1:0)-(coreIds.includes(x.id)?1:0))||((y.score||0)-(x.score||0)));
+    return {...m,pct,rank,proven,coreHits,untested,drivers:drivers.slice(0,3)};
+  }).sort((a,b)=>b.rank-a.rank);
+}
+
+/* ---- the codes ----------------------------------------------------------- */
+function gfEncode(){
+  const chars=GIFTS.map(g=>GF_EV.map((e,i)=>{
+    const v=GFS.a[g.id+'.'+i];
+    return v===undefined?'.':(v===-1?'x':String(v));
+  }).join('')).join('');
+  const raw=['1',new Date().toISOString().slice(0,10),chars,(GFS.name||'')].join('~');
+  return 'TG1-'+btoa(unescape(encodeURIComponent(raw))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function gfDecode(code){
+  try{
+    const b=String(code||'').trim().replace(/^TG1-/,'').replace(/-/g,'+').replace(/_/g,'/');
+    const raw=decodeURIComponent(escape(atob(b)));
+    const p=raw.split('~');
+    if(p[0]!=='1') return null;
+    const chars=p[2]||''; if(chars.length!==GIFTS.length*4) return null;
+    const a={};
+    GIFTS.forEach((g,gi)=>GF_EV.forEach((e,ei)=>{
+      const c=chars[gi*4+ei];
+      if(c==='.') return;
+      a[g.id+'.'+ei]=(c==='x'?-1:parseInt(c,10));
+    }));
+    return {date:p[1]||'',name:p.slice(3).join('~')||'(no name given)',a};
+  }catch(e){ return null; }
+}
+
+/* ---- server (optional) ---------------------------------------------------
+   /.netlify/functions/gifts. If it is not deployed the tool falls back to the
+   paste-in code, so nothing here can break a live site that has not had the
+   function added yet. */
+const GF_FN='/.netlify/functions/gifts';
+let GF_PUB=null;
+async function gfPubId(){
+  if(GF_PUB) return GF_PUB;
+  const r=await fetch(GF_FN,{method:'POST',headers:{'content-type':'application/json','x-terrain-code':accessCode()},
+    body:JSON.stringify({op:'id'})});
+  if(!r.ok) throw new Error('nofn');
+  const j=await r.json();
+  GF_PUB=j.pub; return GF_PUB;
+}
+async function gfSubmit(pub,code){
+  const r=await fetch(GF_FN,{method:'POST',headers:{'content-type':'application/json'},
+    body:JSON.stringify({op:'submit',pub,code,name:GFS.name||''})});
+  if(!r.ok) throw new Error('nofn');
+  return true;
+}
+async function gfPull(){
+  const r=await fetch(GF_FN,{method:'POST',headers:{'content-type':'application/json','x-terrain-code':accessCode()},
+    body:JSON.stringify({op:'list'})});
+  if(!r.ok) throw new Error('nofn');
+  const j=await r.json();
+  return Array.isArray(j.items)?j.items:[];
+}
+
+/* ---- the pastor's roster (device-local, merged with anything the server has) */
+function gfRoster(){ try{ return JSON.parse(localStorage.getItem(GF_ROSTER)||'[]'); }catch(e){ return []; } }
+function gfRosterAdd(code){
+  const d=gfDecode(code); if(!d) return null;
+  const list=gfRoster();
+  if(list.some(x=>x.code===code)) return d;
+  list.unshift({code,name:d.name,date:d.date,ts:Date.now()});
+  try{ localStorage.setItem(GF_ROSTER,JSON.stringify(list.slice(0,500))); }catch(e){}
+  return d;
+}
+
+/* ---- scripture rest points ----------------------------------------------- */
+const GF_VERSES=[
+ ['Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord. And there are diversities of operations, but it is the same God which worketh all in all. But the manifestation of the Spirit is given to every man to profit withal.','1 Corinthians 12:4\u20137'],
+ ['As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God.','1 Peter 4:10'],
+ ['But now hath God set the members every one of them in the body, as it hath pleased him.','1 Corinthians 12:18'],
+ ['Having then gifts differing according to the grace that is given to us, let us wait on our ministering; or he that teacheth, on teaching.','Romans 12:6\u20137']
+];
+function gfVerse(i){ const v=GF_VERSES[i%GF_VERSES.length];
+  return `<div class="gfverse"><q>${esc(v[0])}</q><cite>${esc(v[1])} \u00b7 KJV</cite></div>`; }
+
+/* ---- rendering ----------------------------------------------------------- */
+function giftsOpen(){
+  gfLoad();
+  // A member arriving on the share link takes it. The pastor opening it from
+  // his own hub is almost always there to read results, so he lands on the
+  // roster with taking it himself one tap away.
+  if(GF_PUB_TARGET===null&&GF_VIEW!=='take') GF_VIEW='roster';
+  gfRender(); window.scrollTo({top:0,behavior:'auto'});
+}
+function gfHost(){ return document.getElementById('giftbody'); }
+
+function gfRender(){
+  const h=gfHost(); if(!h) return;
+  if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
+  if(GFS.done){ gfRenderResult(h,gfScores(GFS.a),GFS.name,true); return; }
+  if(GFS.page===0&&gfAnswered()===0){ gfRenderIntro(h); return; }
+  gfRenderPage(h);
+}
+
+function gfRenderIntro(h){
+  h.innerHTML=`
+  ${GF_PUB_TARGET===null?'<button class="btn ghost gfbackr" id="gfbackr">\u2190 Back to results</button>':''}
+  <div class="gfhead">
+    <h2>Discover Your Spiritual Gifts</h2>
+    <p class="sub">Every member of this church has been given something to do that nobody else can do in their place. This is a way of finding out what yours is \u2014 and what to do about it on Sabbath morning.</p>
+  </div>
+  ${gfVerse(0)}
+  <div class="card gfcard">
+    <h3>Before you begin</h3>
+    <p class="note">There are ${GF_TOTAL} statements. It takes about ten minutes, and you can stop and come back \u2014 your answers save themselves on this phone as you go.</p>
+    <p class="note">Answer for the way you have actually been over the past few years, not the way you would like to be. If you are newer in the faith, answer according to the desire you sense in your heart.</p>
+    <p class="note">Some statements ask about results \u2014 whether anything came of it, whether anyone else has noticed. If you have never had the chance to find out, say so. <b>&ldquo;I haven't had an opportunity to know&rdquo; is not a wrong answer and it does not count against you.</b> It simply tells us the gift is untested rather than absent.</p>
+    <p class="note">The statements are mixed together on purpose, so you are answering honestly rather than answering toward the gift you hope to have.</p>
+  </div>
+  <div class="card gfcard">
+    <label class="gflab" for="gfname">Your name</label>
+    <input id="gfname" type="text" placeholder="First and last name" value="${esc(GFS.name||'')}">
+    <p class="note" id="gfconsent"></p>
+    <button class="btn gfbig" id="gfstart">Begin</button>
+  </div>`;
+  const br=document.getElementById('gfbackr');
+  if(br) br.onclick=()=>{ GF_VIEW='roster'; gfRender(); };
+  const nm=document.getElementById('gfname');
+  const cons=document.getElementById('gfconsent');
+  cons.innerHTML = GF_PUB_TARGET
+    ? 'When you finish, your answers and your name are sent to your pastor so he can talk with you about where you might serve. They are not shared with anyone else, and they are not used for anything but ministry placement.'
+    : 'Your answers stay on this device. At the end you will get a short code you can send to your pastor if you want him to see the result.';
+  document.getElementById('gfstart').onclick=()=>{
+    GFS.name=nm.value.trim(); GFS.page=0; gfSave(); gfRenderPage(gfHost());
+    window.scrollTo({top:0,behavior:'auto'});
+  };
+}
+
+function gfRenderPage(h){
+  const p=Math.max(0,Math.min(GF_PAGES-1,GFS.page||0));
+  GFS.page=p;
+  const items=GF_ORDER.slice(p*GF_PER_PAGE,(p+1)*GF_PER_PAGE);
+  const ans=gfAnswered();
+  h.innerHTML=`
+  <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
+  <p class="note gfcount">${ans} of ${GF_TOTAL} answered \u00b7 page ${p+1} of ${GF_PAGES}</p>
+  ${(p>0&&p%4===0)?gfVerse(p/4):''}
+  ${items.map((pair,i)=>{
+    const gi=pair[0],ei=pair[1],k=gfKeyOf(gi,ei);
+    const cur=GFS.a[k];
+    return `<div class="gfq" data-k="${k}">
+      <p class="gfst">${esc(GIFTS[gi].s[ei])}</p>
+      <div class="gfopts">${GF_SCALE.map(o=>
+        `<button type="button" class="gfopt${cur===o.v?' on':''}" data-k="${k}" data-v="${o.v}">${esc(o.l)}</button>`).join('')}</div>
+    </div>`;
+  }).join('')}
+  <div class="gfnav">
+    <button class="btn ghost" id="gfback"${p===0?' disabled':''}>Back</button>
+    <button class="btn" id="gfnext">${p===GF_PAGES-1?'See my result':'Next'}</button>
+  </div>
+  <p class="note gfnavnote" id="gfnavnote"></p>`;
+  h.querySelectorAll('.gfopt').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.k, v=parseInt(b.dataset.v,10);
+    GFS.a[k]=v; gfSave();
+    h.querySelectorAll(`.gfopt[data-k="${k}"]`).forEach(x=>x.classList.toggle('on',x===b));
+    const a=gfAnswered();
+    h.querySelector('.gfbarfill').style.width=Math.round(a/GF_TOTAL*100)+'%';
+    h.querySelector('.gfcount').textContent=`${a} of ${GF_TOTAL} answered \u00b7 page ${p+1} of ${GF_PAGES}`;
+    const nn=document.getElementById('gfnavnote'); if(nn) nn.textContent='';
+  });
+  const back=document.getElementById('gfback');
+  if(back) back.onclick=()=>{ GFS.page=p-1; gfSave(); gfRenderPage(h); window.scrollTo({top:0,behavior:'auto'}); };
+  document.getElementById('gfnext').onclick=()=>{
+    const missing=items.filter(pair=>GFS.a[gfKeyOf(pair[0],pair[1])]===undefined);
+    if(missing.length){
+      document.getElementById('gfnavnote').textContent=
+        missing.length===1?'One statement on this page is still blank.':`${missing.length} statements on this page are still blank.`;
+      const first=h.querySelector(`.gfq[data-k="${gfKeyOf(missing[0][0],missing[0][1])}"]`);
+      if(first){ first.classList.add('gfmiss'); first.scrollIntoView({behavior:'smooth',block:'center'}); }
+      return;
+    }
+    if(p===GF_PAGES-1){ GFS.done=true; gfSave(); gfRender(); }
+    else { GFS.page=p+1; gfSave(); gfRenderPage(h); }
+    window.scrollTo({top:0,behavior:'auto'});
+  };
+}
+
+function gfBadge(l){
+  return l==='demonstrated'?'<span class="gfb dem">demonstrated</span>'
+    : l==='emerging'?'<span class="gfb eme">emerging</span>'
+    : '<span class="gfb lat">untested</span>';
+}
+function gfBar(s){
+  return `<div class="gfrow"><div class="gfrn">${esc(s.n)} ${gfBadge(s.label)}</div>
+   <div class="gfrb"><div style="width:${s.score===null?0:s.score}%"></div></div>
+   <div class="gfrv">${s.score===null?'\u2014':s.score}</div></div>`;
+}
+
+function gfRenderResult(h,S,name,own){
+  const P=gfProfile(S);
+  const fit=gfFit(S,P.core);
+  const bypct=(a,b)=>b.pct-a.pct;
+  const now=fit.filter(m=>m.proven>0).slice(0,3).sort(bypct);
+  const grow=fit.filter(m=>!now.includes(m)).slice(0,2).sort(bypct);
+  const untested=S.filter(s=>s.unt>0).length;
+  const combo=gfCombo(P.core);
+  // Two gifts in the same report must not carry the identical sentence — that
+  // is precisely what makes an assessment feel machine-written.
+  const seen=new Set();
+  const you=own?'you':esc((name||'').split(' ')[0]||'this member');
+  const your=own?'your':'their';
+
+  h.innerHTML=`
+  <div class="gfhead">
+    <h2>${own?'Your spiritual gifts':esc(name)}</h2>
+    <p class="sub">${own?'Read from '+GF_TOTAL+' answers about desire, ability, fruit, and what other people have seen in you.':'Spiritual gifts profile'}</p>
+  </div>
+  ${gfVerse(1)}
+  <div class="card gfcard">
+    <h3>${P.core.length===1?'The gift, first':'In order, strongest first'}</h3>
+    ${gfOverview(P,S).map(x=>`<p class="note">${x}</p>`).join('')}
+    ${combo?`<p class="gfcombo">${esc(combo)}</p>`:''}
+    ${P.core.map((s,i)=>gfGiftBlock(s,i,seen)).join('')}
+  </div>
+  ${P.support.length?`<div class="card gfcard"><h3>Close behind</h3>
+    <p class="note">Not far enough back to ignore. These usually shape <em>how</em> ${you} carr${own?'y':'ies'} the ${P.core.length===1?'gift':'gifts'} above, rather than standing on their own.</p>
+    ${P.support.map(s=>`<div class="gftop"><b>${esc(s.n)}</b> ${gfBadge(s.label)} <span class="gfsc">${s.score}</span>
+      <p class="note">${esc(gfWhy(s,seen))}</p></div>`).join('')}</div>`:''}
+  <div class="card gfcard">
+    <h3>Where this points \u2014 ministries to enter now</h3>
+    <p class="note">Matched on gifts, weighted toward the ${P.core.length===1?'gift':'gifts'} ${you} actually lead${own?'':'s'} with. Each begins with a small first step and ninety days, not an appointment.</p>
+    ${now.length?now.map(m=>gfRec(m,true,P)).join('')
+      :`<p class="note">Nothing here has proven fruit behind it yet, so everything sits under <b>grow into</b> rather than <b>enter now</b>. For someone who has not been given much opportunity that is the expected result \u2014 it is a starting line, not a verdict.</p>`}
+  </div>
+  ${grow.length?`<div class="card gfcard">
+    <h3>Ministries to grow into, with training</h3>
+    ${grow.map(m=>gfRec(m,false,P)).join('')}
+  </div>`:''}
+  <div class="card gfcard">
+    <h3>All twenty-one, in order</h3>
+    <p class="note">${untested?untested+' gift'+(untested===1?' includes':'s include')+' something '+you+' ha'+(own?'ve':'s')+' not had a chance to find out about. Those are marked untested \u2014 they are the ones worth being given a try.':'Every gift was answered from experience.'}</p>
+    ${P.ranked.map(gfBar).join('')}
+    ${S.filter(s=>s.score===null).map(gfBar).join('')}
+  </div>
+  ${P.low.length?`<div class="card gfcard">
+    <h3>What this profile is not</h3>
+    <p class="note">${esc(P.low.map(s=>s.n.toLowerCase()).join(' and '))} came back lowest. That is not a fault \u2014 nobody has every gift, and the point of a body is that somebody else has these. It is worth a leader knowing before ${you} ${own?'are':'is'} asked to fill a gap here out of politeness.</p>
+  </div>`:''}
+  <div class="card gfcard">
+    <h3>What happens next</h3>
+    <p class="note">A ministry leader will follow up for a short conversation. Nothing here places anyone on its own \u2014 gifts are confirmed by the church, in service, over time.</p>
+    ${own?`<div class="gfnav"><button class="btn ghost" id="gfprint">Print or save as PDF</button>
+      <button class="btn ghost" id="gfredo">Start again</button></div>`:''}
+  </div>
+  ${own?`<div class="card gfcard" id="gfsendbox"></div>`:''}`;
+
+  if(own){
+    document.getElementById('gfprint').onclick=()=>window.print();
+    document.getElementById('gfredo').onclick=()=>{
+      if(!confirm('Clear your answers and start the whole assessment again?')) return;
+      GFS={name:GFS.name,a:{},page:0,done:false,sent:false}; gfSave(); gfRender();
+    };
+    gfRenderSend(document.getElementById('gfsendbox'));
+  }
+}
+
+function gfGiftBlock(s,i,seen){
+  const D=GF_DEEP[s.id]||{};
+  return `<div class="gftop">
+    <span class="gfrank">${i+1}</span><b>${esc(s.n)}</b> ${gfBadge(s.label)} <span class="gfsc">${s.score}</span>
+    <p class="note">${esc(s.d)}</p>
+    <p class="note gfwhy">${esc(gfEvidenceLine(s))} ${esc(gfWhy(s,seen))}</p>
+    ${D.live?`<p class="note gfdl"><b>What this looks like here</b>${esc(D.live)}</p>`:''}
+    ${D.shadow?`<p class="note gfdl"><b>Where it goes wrong</b>${esc(D.shadow)}</p>`:''}
+    ${D.grow?`<p class="note gfdl"><b>How it grows</b>${esc(D.grow)}</p>`:''}
+    ${D.v?`<div class="gfverse gfsmall"><q>${esc(D.v[0])}</q><cite>${esc(D.v[1])} \u00b7 KJV</cite></div>`:''}
+  </div>`;
+}
+
+function gfRec(m,proven,P){
+  const coreIds=P.core.map(c=>c.id);
+  const lead=m.drivers.filter(d=>coreIds.includes(d.id));
+  const rest=m.drivers.filter(d=>!coreIds.includes(d.id));
+  let why='';
+  if(lead.length===1&&rest.length)
+    why=`This runs on ${lead[0].n.toLowerCase()}, which is where you lead, with ${rest.map(r=>r.n.toLowerCase()).join(' and ')} underneath it.`;
+  else if(lead.length>1)
+    why=`It needs ${lead.map(l=>l.n.toLowerCase()).join(' and ')} together \u2014 which is the shape of your profile.`;
+  else if(lead.length===1)
+    why=`Built on ${lead[0].n.toLowerCase()}, your strongest gift.`;
+  else if(m.drivers.length)
+    why=`Draws on ${m.drivers.map(d=>d.n.toLowerCase()).join(', ')}.`;
+  const provenNames=m.drivers.filter(d=>d.label==='demonstrated').map(d=>d.n.toLowerCase());
+  const extra = proven&&provenNames.length
+    ? ` Other people have already confirmed ${provenNames.join(' and ')} in you \u2014 this is not a guess.`
+    : (!proven&&m.untested.length
+      ? ` The gifts behind it have not been tested yet, which is exactly what ninety days alongside someone experienced is for.`
+      : '');
+  const train=m.untested.length
+    ? `Training to ask for: whatever lets you test ${m.untested.map(u=>u.n.toLowerCase()).join(' and ')} in a real setting, with someone watching who can tell you the truth about it afterwards.`
+    : (proven?'':'Ask for training before the responsibility, not after it.');
+  return `<div class="gfrec"><div class="gfrech"><b>${esc(m.n)}</b><span class="gfpct">${m.pct}% match</span></div>
+    ${m.d?`<p class="note gfdl"><b>What the work actually is</b>${esc(m.d)}</p>`:''}
+    <p class="note gfdl"><b>Why you</b>${esc(why)}${esc(extra)}</p>
+    <p class="note gfdl"><b>First step</b>${esc(m.f)}</p>
+    ${train?`<p class="note gfdl"><b>Training</b>${esc(train)}</p>`:''}
+    <p class="note gfdl"><b>Trial</b>Ninety days alongside someone experienced, then an honest conversation about whether to continue. Either answer at the end is a good outcome.</p></div>`;
+}
+
+function gfRenderSend(box){
+  if(!box) return;
+  const code=gfEncode();
+  if(GFS.sent){
+    box.innerHTML=`<h3>Sent to your pastor</h3><p class="note">Your result has gone through. You can close this page \u2014 it stays saved on this phone.</p>`;
+    return;
+  }
+  box.innerHTML=`<h3>Send this to your pastor</h3>
+    <p class="note" id="gfsendnote">${GF_PUB_TARGET?'This sends your name and your answers to your pastor so he can talk with you about where you might serve.':'Send him this code and he can open your full result.'}</p>
+    <div class="gfnav">${GF_PUB_TARGET?`<button class="btn" id="gfsend">Send my result</button>`:''}
+      <button class="btn ghost" id="gfcopy">Copy my code instead</button></div>
+    <textarea class="gfcode" id="gfcodebox" readonly rows="3">${esc(code)}</textarea>`;
+  const note=document.getElementById('gfsendnote');
+  const send=document.getElementById('gfsend');
+  if(send) send.onclick=async()=>{
+    send.disabled=true; send.textContent='Sending\u2026';
+    try{
+      await gfSubmit(GF_PUB_TARGET,code);
+      GFS.sent=true; gfSave(); gfRenderSend(box);
+    }catch(e){
+      send.disabled=false; send.textContent='Send my result';
+      note.innerHTML='That did not go through \u2014 you may be offline, or the church has not finished setting this up. Nothing is lost: tap <b>Copy my code instead</b> and text or email that code to your pastor. It contains your whole result.';
+    }
+  };
+  document.getElementById('gfcopy').onclick=()=>{
+    const t=document.getElementById('gfcodebox');
+    t.select(); t.setSelectionRange(0,99999);
+    try{ navigator.clipboard.writeText(t.value); }catch(e){ try{ document.execCommand('copy'); }catch(e2){} }
+    document.getElementById('gfcopy').textContent='Copied \u2014 now send it to him';
+  };
+}
+
+/* ---- the pastor's side ---------------------------------------------------- */
+let GF_VIEW='take';
+let GF_PUB_TARGET=null;   // set from the share link when a member opens it
+
+function gfRenderRoster(h){
+  const list=gfRoster();
+  h.innerHTML=`
+  <div class="gfhead">
+    <h2>Spiritual gifts \u2014 your members</h2>
+    <p class="sub">Send members the link below. Results arrive here.</p>
+    <button class="btn ghost" id="gfmine">Take the assessment myself</button>
+  </div>
+  <div class="card gfcard">
+    <h3>Your share link</h3>
+    <p class="note">This link does <b>not</b> contain your access code. Members can send results in with it; nobody can read anything out with it.</p>
+    <div class="gfnav"><button class="btn" id="gflink">Get my share link</button>
+      <button class="btn ghost" id="gfpull">Check for new results</button></div>
+    <textarea class="gfcode" id="gflinkbox" readonly rows="2" hidden></textarea>
+    <p class="note" id="gflinknote"></p>
+  </div>
+  <div class="card gfcard">
+    <h3>Add a result by code</h3>
+    <p class="note">If a member sends you a code instead, paste it here.</p>
+    <input type="text" id="gfpaste" placeholder="TG1-\u2026">
+    <button class="btn" id="gfadd">Add to my list</button>
+    <p class="note" id="gfaddnote"></p>
+  </div>
+  <div class="card gfcard">
+    <h3>${list.length} result${list.length===1?'':'s'}</h3>
+    ${list.length?list.map((r,i)=>`<div class="gfrosterrow"><b>${esc(r.name)}</b>
+      <span class="note">${esc(r.date||'')}</span>
+      <button class="btn ghost gfopen" data-i="${i}">Open</button></div>`).join('')
+      :'<p class="note">Nothing yet. Send the link to a few members and check back.</p>'}
+  </div>`;
+
+  document.getElementById('gfmine').onclick=()=>{ GF_VIEW='take'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); };
+  document.getElementById('gflink').onclick=async()=>{
+    const n=document.getElementById('gflinknote'), b=document.getElementById('gflinkbox');
+    n.textContent='Getting your link\u2026';
+    try{
+      const pub=await gfPubId();
+      b.value=location.origin+location.pathname+'#gifts='+pub;
+      b.hidden=false; b.select();
+      try{ navigator.clipboard.writeText(b.value); n.textContent='Copied. Send it to your members.'; }
+      catch(e){ n.textContent='Copy this and send it to your members.'; }
+    }catch(e){
+      b.hidden=false; b.value=location.origin+location.pathname+'#gifts';
+      n.innerHTML='The results function is not deployed yet, so results cannot arrive automatically. The link above still works \u2014 members will finish with a code to send you, and you paste it in below.';
+    }
+  };
+  document.getElementById('gfpull').onclick=async()=>{
+    const n=document.getElementById('gflinknote');
+    n.textContent='Checking\u2026';
+    try{
+      const items=await gfPull();
+      let added=0;
+      items.forEach(it=>{ if(it&&it.code&&gfRosterAdd(it.code)) added++; });
+      n.textContent=added?`${added} new result${added===1?'':'s'} added.`:'No new results.';
+      if(added) gfRenderRoster(h);
+    }catch(e){ n.textContent='Could not reach the results function \u2014 it may not be deployed yet.'; }
+  };
+  document.getElementById('gfadd').onclick=()=>{
+    const v=document.getElementById('gfpaste').value.trim();
+    const n=document.getElementById('gfaddnote');
+    const d=gfRosterAdd(v);
+    if(!d){ n.textContent='That code was not readable. Ask the member to copy the whole thing, starting with TG1-.'; return; }
+    gfRenderRoster(h);
+  };
+  h.querySelectorAll('.gfopen').forEach(b=>b.onclick=()=>{
+    const r=gfRoster()[+b.dataset.i];
+    const d=gfDecode(r.code); if(!d) return;
+    gfRenderResult(h,gfScores(d.a),d.name,false);
+    const back=document.createElement('button');
+    back.className='btn ghost'; back.textContent='\u2190 Back to all results';
+    back.onclick=()=>gfRenderRoster(h);
+    h.prepend(back);
+    window.scrollTo({top:0,behavior:'auto'});
+  });
+}
+
 $('ver').textContent=VERSION;
 (function boot(){
   initTheme(); initPrintExpand();
