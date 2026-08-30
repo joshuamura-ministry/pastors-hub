@@ -989,6 +989,43 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfrosterrow:first-of-type{border-top:0}
 .gfrosterrow b{flex:1 1 auto}
 .gfrosterrow .btn{height:34px;font-size:.82rem}
+
+/* --- one statement at a time: the moving part --- */
+.gfstage{position:relative;min-height:60vh;display:flex;align-items:center}
+.gfcardq{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:24px 22px 18px;
+  transition:transform .23s cubic-bezier(.4,0,.2,1),opacity .23s ease}
+.gfcardq.gfin{transform:translateY(22px);opacity:0}
+.gfcardq.gfout{transform:translateY(-26px);opacity:0}
+.gfcardq.gfoutdown{transform:translateY(26px);opacity:0}
+.gfqn{font-size:.7rem;letter-spacing:.09em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:9px}
+.gfcardq .gfst{font-size:1.22rem;line-height:1.45;margin-bottom:18px}
+.gfcardq .gfopts{flex-direction:column;gap:8px}
+.gfcardq .gfopt{width:100%;text-align:left;padding:13px 15px;font-size:.95rem;border-radius:12px;
+  display:flex;align-items:center;gap:11px;transition:background .12s,border-color .12s,transform .12s}
+.gfcardq .gfopt:active{transform:scale(.985)}
+.gfk{flex:0 0 22px;height:22px;line-height:22px;text-align:center;border-radius:6px;
+  background:var(--panel);border:1px solid var(--line2);font-size:.72rem;font-weight:700;color:var(--ink3)}
+.gfcardq .gfopt.on .gfk{background:var(--btn-ink);color:var(--acc);border-color:transparent}
+@keyframes gfpulse{0%{transform:scale(1)}45%{transform:scale(1.025)}100%{transform:scale(1)}}
+.gfopt.gfpulse{animation:gfpulse .2s ease}
+.gftop-bar{position:sticky;top:0;z-index:3;background:var(--bg);padding:10px 0 8px}
+.gfmeta{display:flex;align-items:center;gap:10px;margin-top:6px}
+.gfmeta .gfcount{font-size:.76rem;color:var(--ink3);font-weight:700}
+.gfdots{margin-left:auto;display:flex;gap:5px}
+.gfdots i{width:7px;height:7px;border-radius:50%;background:var(--line2);display:block}
+.gfdots i.done{background:var(--acc)}
+.gfdots i.now{background:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
+.gfsect{text-align:center}
+.gfsecn{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--acc);font-weight:700}
+.gfsect-t{font-family:var(--disp);font-size:1.7rem;margin:6px 0 12px}
+.gfsect .gfverse{text-align:left}
+.gfsm{height:36px;font-size:.82rem}
+.gfcardq .gfnav{justify-content:space-between}
+@media (prefers-reduced-motion: reduce){
+  .gfcardq,.gfcardq.gfin,.gfcardq.gfout,.gfcardq.gfoutdown{transition:none;transform:none;opacity:1}
+  .gfopt.gfpulse{animation:none}
+}
 .gfrank{display:inline-block;min-width:20px;height:20px;line-height:20px;text-align:center;
   background:var(--acc);color:var(--btn-ink);border-radius:6px;font-size:.72rem;font-weight:700;margin-right:7px;vertical-align:1px}
 .gfwhy{color:var(--ink);border-left:2px solid var(--line2);padding-left:10px;margin-top:6px}
@@ -1148,13 +1185,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.42</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.43</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.42';
+const VERSION = 'v9.43';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -8767,7 +8804,7 @@ const GF_PAGES=Math.ceil(GF_TOTAL/GF_PER_PAGE);
 let GFS=null;
 function gfLoad(){
   try{ GFS=JSON.parse(localStorage.getItem(GF_KEY)||'null'); }catch(e){ GFS=null; }
-  if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},page:0,done:false,sent:false};
+  if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},i:0,sect:0,done:false,sent:false};
   if(!GFS.a) GFS.a={};
   return GFS;
 }
@@ -8925,7 +8962,7 @@ function gfRender(){
   const h=gfHost(); if(!h) return;
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GFS.done){ gfRenderResult(h,gfScores(GFS.a),GFS.name,true); return; }
-  if(GFS.page===0&&gfAnswered()===0){ gfRenderIntro(h); return; }
+  if(!GFS.i&&gfAnswered()===0){ gfRenderIntro(h); return; }
   gfRenderPage(h);
 }
 
@@ -8958,57 +8995,160 @@ function gfRenderIntro(h){
     ? 'When you finish, your answers and your name are sent to your pastor so he can talk with you about where you might serve. They are not shared with anyone else, and they are not used for anything but ministry placement.'
     : 'Your answers stay on this device. At the end you will get a short code you can send to your pastor if you want him to see the result.';
   document.getElementById('gfstart').onclick=()=>{
-    GFS.name=nm.value.trim(); GFS.page=0; gfSave(); gfRenderPage(gfHost());
+    GFS.name=nm.value.trim(); GFS.i=0; GFS.sect=0; gfSave(); gfRenderPage(gfHost());
     window.scrollTo({top:0,behavior:'auto'});
   };
 }
 
+/* ---- one statement at a time ---------------------------------------------
+   Eighty-four statements in a scrolling list is a form, and people abandon
+   forms. One statement fills the screen; tapping an answer lights the button,
+   the card lifts away, and the next rises into its place. The movement is what
+   carries someone through eighty-four of anything.
+
+   Six sections of fourteen, each opening on a verse. The sections are pacing
+   only — they are deliberately NOT gift categories, because grouping by gift
+   would undo the interleaving and let a member answer toward the gift they
+   want. */
+const GF_SECT_SIZE=14;
+const GF_SECTS=[
+ {t:'Where we begin',
+  l:'Answer for how you have actually been these past few years \u2014 not how you would like to be.',
+  v:['Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord.','1 Corinthians 12:4\u20135']},
+ {t:'Keep going',
+  l:'There is no right answer here, and nothing is being graded. The only wrong answer is a flattering one.',
+  v:['As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God.','1 Peter 4:10']},
+ {t:'Halfway',
+  l:'Forty-two behind you. If a statement describes something you have never had the chance to try, say so \u2014 it counts for you, not against you.',
+  v:['But now hath God set the members every one of them in the body, as it hath pleased him.','1 Corinthians 12:18']},
+ {t:'Still with us',
+  l:'Some of these will feel repetitive. They are asking slightly different things \u2014 what you want, what you can do, and what has come of it.',
+  v:['Having then gifts differing according to the grace that is given to us, let us wait on our ministering.','Romans 12:6']},
+ {t:'The last stretch',
+  l:'Twenty-eight to go. Keep answering quickly \u2014 your first instinct is usually more honest than your second.',
+  v:['And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers; For the perfecting of the saints, for the work of the ministry.','Ephesians 4:11\u201312']},
+ {t:'The end of it',
+  l:'Last fourteen.',
+  v:['Well done, thou good and faithful servant: thou hast been faithful over a few things, I will make thee ruler over many things.','Matthew 25:21']}
+];
+const GF_SECT_COUNT=Math.ceil(GF_TOTAL/GF_SECT_SIZE);
+const gfSectOf=i=>Math.floor(i/GF_SECT_SIZE);
+const gfReduced=()=>{
+  try{ return window.matchMedia('(prefers-reduced-motion: reduce)').matches; }catch(e){ return false; }
+};
+
+/* Older saved sessions stored a page number. Carry them across rather than
+   dropping somebody back to the first statement. */
+function gfIndex(){
+  if(typeof GFS.i==='number') return Math.max(0,Math.min(GF_TOTAL-1,GFS.i));
+  if(typeof GFS.page==='number'&&GFS.page>0) return Math.min(GF_TOTAL-1,GFS.page*GF_PER_PAGE);
+  return 0;
+}
+
 function gfRenderPage(h){
-  const p=Math.max(0,Math.min(GF_PAGES-1,GFS.page||0));
-  GFS.page=p;
-  const items=GF_ORDER.slice(p*GF_PER_PAGE,(p+1)*GF_PER_PAGE);
-  const ans=gfAnswered();
+  const i=gfIndex();
+  GFS.i=i;
+  if(i%GF_SECT_SIZE===0&&GFS.sect!==gfSectOf(i)) return gfRenderSection(h,gfSectOf(i));
+  h.innerHTML=gfChrome(i)+`<div class="gfstage" id="gfstage">${gfCardHTML(i)}</div>`;
+  gfWireCard(h,i);
+}
+
+function gfRenderSection(h,sec){
+  const S=GF_SECTS[sec]||GF_SECTS[0];
   h.innerHTML=`
-  <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
-  <p class="note gfcount">${ans} of ${GF_TOTAL} answered \u00b7 page ${p+1} of ${GF_PAGES}</p>
-  ${(p>0&&p%4===0)?gfVerse(p/4):''}
-  ${items.map((pair,i)=>{
-    const gi=pair[0],ei=pair[1],k=gfKeyOf(gi,ei);
-    const cur=GFS.a[k];
-    return `<div class="gfq" data-k="${k}">
-      <p class="gfst">${esc(GIFTS[gi].s[ei])}</p>
-      <div class="gfopts">${GF_SCALE.map(o=>
-        `<button type="button" class="gfopt${cur===o.v?' on':''}" data-k="${k}" data-v="${o.v}">${esc(o.l)}</button>`).join('')}</div>
-    </div>`;
-  }).join('')}
-  <div class="gfnav">
-    <button class="btn ghost" id="gfback"${p===0?' disabled':''}>Back</button>
-    <button class="btn" id="gfnext">${p===GF_PAGES-1?'See my result':'Next'}</button>
-  </div>
-  <p class="note gfnavnote" id="gfnavnote"></p>`;
-  h.querySelectorAll('.gfopt').forEach(b=>b.onclick=()=>{
-    const k=b.dataset.k, v=parseInt(b.dataset.v,10);
-    GFS.a[k]=v; gfSave();
-    h.querySelectorAll(`.gfopt[data-k="${k}"]`).forEach(x=>x.classList.toggle('on',x===b));
-    const a=gfAnswered();
-    h.querySelector('.gfbarfill').style.width=Math.round(a/GF_TOTAL*100)+'%';
-    h.querySelector('.gfcount').textContent=`${a} of ${GF_TOTAL} answered \u00b7 page ${p+1} of ${GF_PAGES}`;
-    const nn=document.getElementById('gfnavnote'); if(nn) nn.textContent='';
+   ${gfChrome(GFS.i||0)}
+   <div class="gfstage"><div class="gfcardq gfsect">
+     <p class="gfsecn">Section ${sec+1} of ${GF_SECT_COUNT}</p>
+     <h2 class="gfsect-t">${esc(S.t)}</h2>
+     <div class="gfverse gfsmall"><q>${esc(S.v[0])}</q><cite>${esc(S.v[1])} \u00b7 KJV</cite></div>
+     <p class="note">${esc(S.l)}</p>
+     <button class="btn gfbig" id="gfgo">${sec===0?'Start':'Carry on'}</button>
+   </div></div>`;
+  document.getElementById('gfgo').onclick=()=>{
+    GFS.sect=sec; gfSave();
+    const st=h.querySelector('.gfcardq');
+    const go=()=>{ h.innerHTML=gfChrome(GFS.i)+`<div class="gfstage" id="gfstage">${gfCardHTML(GFS.i,'in')}</div>`;
+      gfWireCard(h,GFS.i); gfSettle(h); };
+    if(gfReduced()) return go();
+    st.classList.add('gfout'); setTimeout(go,220);
+  };
+}
+
+/* progress: a bar, a count, and one dot per section */
+function gfChrome(i){
+  const ans=gfAnswered();
+  const sec=gfSectOf(i);
+  return `<div class="gftop-bar">
+    <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
+    <div class="gfmeta">
+      <span class="gfcount">${Math.min(i+1,GF_TOTAL)} of ${GF_TOTAL}</span>
+      <span class="gfdots">${GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('')}</span>
+    </div>
+  </div>`;
+}
+
+function gfCardHTML(i,enter){
+  const gi=GF_ORDER[i][0], ei=GF_ORDER[i][1], k=gfKeyOf(gi,ei);
+  const cur=GFS.a[k];
+  return `<div class="gfcardq${enter?' gfin':''}" data-i="${i}">
+    <p class="gfqn">Statement ${i+1}</p>
+    <p class="gfst">${esc(GIFTS[gi].s[ei])}</p>
+    <div class="gfopts">${GF_SCALE.map((o,n)=>
+      `<button type="button" class="gfopt${cur===o.v?' on':''}" data-v="${o.v}">
+         <span class="gfk">${n+1}</span>${esc(o.l)}</button>`).join('')}</div>
+    <div class="gfnav">
+      ${i>0?`<button class="btn ghost gfsm" id="gfback">\u2190 Back</button>`:''}
+      ${cur!==undefined&&i<GF_TOTAL-1?`<button class="btn ghost gfsm" id="gffwd">Skip ahead \u2192</button>`:''}
+    </div>
+  </div>`;
+}
+
+/* remove the entry offset on the next frame so the card animates in */
+function gfSettle(h){
+  const c=h.querySelector('.gfcardq.gfin');
+  if(!c) return;
+  requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.remove('gfin')));
+}
+
+function gfWireCard(h,i){
+  const gi=GF_ORDER[i][0], ei=GF_ORDER[i][1], k=gfKeyOf(gi,ei);
+  const card=h.querySelector('.gfcardq');
+
+  const advance=(to)=>{
+    GFS.i=Math.max(0,Math.min(GF_TOTAL,to)); gfSave();
+    if(GFS.i>=GF_TOTAL){ GFS.done=true; gfSave(); gfRender(); window.scrollTo({top:0,behavior:'auto'}); return; }
+    if(GFS.i%GF_SECT_SIZE===0&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
+    h.innerHTML=gfChrome(GFS.i)+`<div class="gfstage" id="gfstage">${gfCardHTML(GFS.i,'in')}</div>`;
+    gfWireCard(h,GFS.i); gfSettle(h);
+  };
+  const leave=(to,back)=>{
+    if(gfReduced()) return advance(to);
+    card.classList.add(back?'gfoutdown':'gfout');
+    setTimeout(()=>advance(to),230);
+  };
+
+  card.querySelectorAll('.gfopt').forEach(b=>{
+    b.onclick=()=>{
+      if(card.dataset.locked) return;
+      card.dataset.locked='1';
+      GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
+      card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
+      b.classList.add('gfpulse');
+      const bar=h.querySelector('.gfbarfill');
+      if(bar) bar.style.width=Math.round(gfAnswered()/GF_TOTAL*100)+'%';
+      setTimeout(()=>leave(i+1,false),gfReduced()?0:200);
+    };
   });
   const back=document.getElementById('gfback');
-  if(back) back.onclick=()=>{ GFS.page=p-1; gfSave(); gfRenderPage(h); window.scrollTo({top:0,behavior:'auto'}); };
-  document.getElementById('gfnext').onclick=()=>{
-    const missing=items.filter(pair=>GFS.a[gfKeyOf(pair[0],pair[1])]===undefined);
-    if(missing.length){
-      document.getElementById('gfnavnote').textContent=
-        missing.length===1?'One statement on this page is still blank.':`${missing.length} statements on this page are still blank.`;
-      const first=h.querySelector(`.gfq[data-k="${gfKeyOf(missing[0][0],missing[0][1])}"]`);
-      if(first){ first.classList.add('gfmiss'); first.scrollIntoView({behavior:'smooth',block:'center'}); }
-      return;
-    }
-    if(p===GF_PAGES-1){ GFS.done=true; gfSave(); gfRender(); }
-    else { GFS.page=p+1; gfSave(); gfRenderPage(h); }
-    window.scrollTo({top:0,behavior:'auto'});
+  if(back) back.onclick=()=>{ if(!card.dataset.locked){ card.dataset.locked='1'; leave(i-1,true);} };
+  const fwd=document.getElementById('gffwd');
+  if(fwd) fwd.onclick=()=>{ if(!card.dataset.locked){ card.dataset.locked='1'; leave(i+1,false);} };
+
+  // 1-6 on a keyboard, for anyone taking this on a laptop
+  document.onkeydown=(e)=>{
+    if(!/^[1-6]$/.test(e.key)) return;
+    const b=card.querySelectorAll('.gfopt')[parseInt(e.key,10)-1];
+    if(b) b.click();
   };
 }
 
@@ -9024,6 +9164,7 @@ function gfBar(s){
 }
 
 function gfRenderResult(h,S,name,own){
+  document.onkeydown=null;   // the 1-6 shortcut belongs to the questions only
   const P=gfProfile(S);
   const fit=gfFit(S,P.core);
   const bypct=(a,b)=>b.pct-a.pct;
@@ -9085,7 +9226,7 @@ function gfRenderResult(h,S,name,own){
     document.getElementById('gfprint').onclick=()=>window.print();
     document.getElementById('gfredo').onclick=()=>{
       if(!confirm('Clear your answers and start the whole assessment again?')) return;
-      GFS={name:GFS.name,a:{},page:0,done:false,sent:false}; gfSave(); gfRender();
+      GFS={name:GFS.name,a:{},i:0,sect:0,done:false,sent:false}; gfSave(); gfRender();
     };
     gfRenderSend(document.getElementById('gfsendbox'));
   }
