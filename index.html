@@ -1066,6 +1066,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfdots i{width:7px;height:7px;border-radius:50%;background:var(--line2);display:block}
 .gfdots i.done{background:var(--acc)}
 .gfdots i.now{background:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
+.gfexit{height:32px;font-size:.78rem;margin-top:8px}
 .gfsect{text-align:center}
 .gfsecn{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--acc);font-weight:700}
 .gfsect-t{font-family:var(--disp);font-size:1.7rem;margin:6px 0 12px}
@@ -1236,13 +1237,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.82</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.83</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.82';
+const VERSION = 'v9.83';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9342,6 +9343,9 @@ const GF_PAGES=Math.ceil(GF_TOTAL/GF_PER_PAGE);
 
 /* ---- state --------------------------------------------------------------- */
 let GFS=null;
+/* Counts the member's gestures — taps, backs, skips. The watchdog below uses
+   it to tell "nothing happened" apart from "something else happened". */
+let GF_NAV=0;
 function gfLoad(){
   try{ GFS=JSON.parse(localStorage.getItem(GF_KEY)||'null'); }catch(e){ GFS=null; }
   if(!GFS||typeof GFS!=='object') GFS={name:'',a:{},i:0,sect:-1,done:false,sent:false};
@@ -9501,8 +9505,11 @@ function giftsOpen(){
   // roster with taking it himself one tap away — unless he was part-way
   // through taking it himself, in which case a refresh should not lose his
   // place.
+  // Recomputed on every entry, not just the first. Otherwise tapping "take it
+  // myself" once meant every later visit dropped the pastor into statement 1
+  // instead of his members' results.
   if(GF_PUB_TARGET!==null) GF_VIEW='take';
-  else if(GF_VIEW===null) GF_VIEW=(GFS.self&&!GFS.done)?'take':'roster';
+  else GF_VIEW=(GFS.self&&!GFS.done)?'take':'roster';
   gfRender(); window.scrollTo({top:0,behavior:'auto'});
 }
 function gfHost(){ return document.getElementById('giftbody'); }
@@ -9591,7 +9598,7 @@ function gfRenderPage(h){
   GFS.i=i;
   if(gfIsSectStart(i)&&GFS.sect!==gfSectOf(i)) return gfRenderSection(h,gfSectOf(i));
   h.innerHTML=gfChrome(i)+`<div class="gfstage" id="gfstage">${gfCardHTML(i)}</div>`;
-  gfWireCard(h,i);
+  gfWireCard(h,i); gfWireExit(h);
 }
 
 /* Swap only the card, leaving the progress strip alone.
@@ -9639,7 +9646,9 @@ function gfRenderSection(h,sec){
      <p class="note gfsectn">${(GF_SECT_ENDS[sec]-GF_SECT_STARTS[sec]+1)} statements \u00b7 answer what is true of you, not what a Christian is supposed to say. Nobody is marking this.</p>
      <button class="btn gfbig" id="gfgo">${sec===0?'Start':'Carry on'}</button>
    </div></div>`;
+  gfWireExit(h);
   document.getElementById('gfgo').onclick=()=>{
+    GF_NAV++;
     GFS.sect=sec; gfSave();
     const st=h.querySelector('.gfcardq');
     const go=()=>{ h.innerHTML=gfChrome(GFS.i)+`<div class="gfstage" id="gfstage">${gfCardHTML(GFS.i,'in')}</div>`;
@@ -9667,6 +9676,7 @@ function gfChrome(i){
       <span class="gfcount">${Math.min(i+1,GF_TOTAL)} of ${GF_TOTAL}</span>
       <span class="gfdots">${GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('')}</span>
     </div>
+    ${GF_PUB_TARGET===null?`<button class="btn ghost gfexit" id="gfexit">\u2190 Leave this and go to results</button>`:''}
   </div>`;
 }
 
@@ -9726,15 +9736,31 @@ function gfSettle(h){
   requestAnimationFrame(()=>requestAnimationFrame(()=>c.classList.remove('gfin')));
 }
 
+function gfWireExit(h){
+  const x=document.getElementById('gfexit');
+  if(x) x.onclick=()=>{
+    GFS.self=false; gfSave();          // and do not drop him back in next time
+    GF_VIEW='roster'; gfRender();
+    window.scrollTo({top:0,behavior:'auto'});
+  };
+}
+
 function gfWireCard(h,i){
   const gi=GF_ORDER[i][0], ei=GF_ORDER[i][1], k=gfKeyOf(gi,ei);
   const card=h.querySelector('.gfcardq');
 
   const advance=(to)=>{
     GFS.i=Math.max(0,Math.min(GF_TOTAL,to)); gfSave();
-    if(GFS.i>=GF_TOTAL){ GFS.done=true; gfSave(); gfRender(); window.scrollTo({top:0,behavior:'auto'}); return; }
-    if(gfIsSectStart(GFS.i)&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
-    gfSwapCard(h,GFS.i);
+    try{
+      if(GFS.i>=GF_TOTAL){ GFS.done=true; gfSave(); gfRender(); window.scrollTo({top:0,behavior:'auto'}); return; }
+      if(gfIsSectStart(GFS.i)&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
+      gfSwapCard(h,GFS.i);
+    }catch(err){
+      /* Whatever failed, the member's position is already saved. Rebuilding
+         the screen from that position is always recoverable; leaving them on a
+         lit button that does nothing is not. */
+      try{ gfRenderPage(h); }catch(e2){}
+    }
   };
   const leave=(to,back)=>{
     if(gfReduced()) return advance(to);
@@ -9746,6 +9772,7 @@ function gfWireCard(h,i){
     b.onclick=()=>{
       if(card.dataset.locked) return;
       card.dataset.locked='1';
+      GF_NAV++;
       try{
         GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
         card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
@@ -9760,12 +9787,28 @@ function gfWireCard(h,i){
            stuck, which is exactly what it looked like on screen. */
       }
       setTimeout(()=>leave(i+1,false),gfReduced()?0:150);
+      /* Belt and braces. If the statement has still not changed most of a
+         second after a tap — for any reason at all, including something we
+         have not diagnosed — force the move. An answered question that will
+         not move on is the one failure that ends the survey for that person. */
+      const navAt=GF_NAV;
+      setTimeout(()=>{
+        // Only act if nothing at all has moved since this tap. Without the
+        // counter, a member who answers and then deliberately taps Back inside
+        // a second would be shoved forwards again by their own watchdog.
+        if(GF_NAV!==navAt) return;
+        const still=h.querySelector('.gfcardq');
+        if(!still||+still.dataset.i!==i) return;
+        if(GFS.i<=i){ GFS.i=i+1; gfSave(); }
+        try{ gfRenderPage(h); }catch(e){}
+      },900);
     };
   });
   const back=document.getElementById('gfback');
   if(back) back.onclick=()=>{
     if(card.dataset.locked) return;
     card.dataset.locked='1';
+    GF_NAV++;
     // Retreat the bar on the element that is still on screen, so it animates
     // back rather than jumping when the next card replaces the markup.
     const bar=h.querySelector('.gfbarfill');
@@ -9776,6 +9819,7 @@ function gfWireCard(h,i){
   if(fwd) fwd.onclick=()=>{
     if(card.dataset.locked) return;
     card.dataset.locked='1';
+    GF_NAV++;
     const bar=h.querySelector('.gfbarfill');
     if(bar) bar.style.width=gfPct(i+1)+'%';
     leave(i+1,false);
