@@ -946,7 +946,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfverse cite{display:block;margin-top:6px;font-style:normal;font-size:.74rem;letter-spacing:.08em;
   text-transform:uppercase;color:var(--ink3);font-weight:700}
 .gfbar{height:8px;background:var(--panel2);border:1px solid var(--line);border-radius:999px;overflow:hidden;margin:10px 0 5px}
-.gfbarfill{height:100%;background:var(--acc);transition:width .25s}
+.gfbarfill{height:100%;background:var(--acc);transition:width .3s cubic-bezier(.4,0,.2,1)}
 .gfcount{margin-bottom:10px}
 .gfq{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
   box-shadow:var(--shadow);padding:14px 16px;margin:10px 0}
@@ -985,6 +985,30 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfrech{display:flex;align-items:baseline;gap:10px;margin-bottom:5px}
 .gfrech b{font-size:1.02rem}
 .gfpct{margin-left:auto;font-weight:700;color:var(--acc);white-space:nowrap}
+.gftabs{margin:0 0 4px}
+.gftabs .btn{height:34px;font-size:.8rem;flex:1 1 auto}
+.gftabs .btn.on{background:var(--acc);color:var(--btn-ink);border-color:var(--acc);font-weight:700}
+.gfwarn{border-color:var(--acc)}
+.gfforchurch{font-size:.74rem;letter-spacing:.09em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:6px}
+.gflocal{border-color:var(--acc)}
+.gfspan{background:var(--panel2);border-left:3px solid var(--acc);border-radius:0 10px 10px 0;
+  padding:11px 14px;margin:10px 0;font-size:.95rem;line-height:1.55}
+.gfspan b{color:var(--acc)}
+.gfopen{border-color:var(--acc)}
+.gfmore{margin-top:10px;font-style:italic}
+#gfminlist{display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.gfmin{display:flex;align-items:center;gap:10px;width:100%;text-align:left;
+  background:var(--panel2);border:1px solid var(--line2);border-radius:10px;
+  color:var(--ink2);font:inherit;font-size:.86rem;padding:9px 12px;cursor:pointer}
+.gfmin span{flex:1 1 auto}
+.gfmin i{font-style:normal;font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.gfmin.r{border-color:var(--acc);color:var(--ink)}
+.gfmin.r i{color:var(--acc);font-weight:700}
+.gfmin.s{border-color:var(--line2);color:var(--ink)}
+.gfmin.s i{color:var(--ink2);font-weight:700}
+.gfcov{border-top:1px solid var(--line);padding:9px 0}
+.gfcov:first-of-type{border-top:0}
+.gfcovn{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .gfrosterrow{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0}
 .gfrosterrow:first-of-type{border-top:0}
 .gfrosterrow b{flex:1 1 auto}
@@ -1212,13 +1236,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.5</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.8</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.5';
+const VERSION = 'v9.8';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5673,8 +5697,12 @@ const FLAT=new URLSearchParams(location.search).has('flat');
    sent to a congregation. The ID in the link is write-only: results can be sent
    in with it, nothing can be read out with it. */
 const GIFTS_LINK=(()=>{
-  const m=/^#gifts(?:=([A-Za-z0-9_-]+))?$/.exec(location.hash||'');
-  return m?{on:true,pub:m[1]||null}:{on:false,pub:null};
+  // #gifts                 — bare link, no server, no church stamp
+  // #gifts=PUB             — results come back to one pastor
+  // #gifts=PUB.CTX         — and the church, its building, and what it runs
+  // #gifts=.CTX            — church context with no server behind it
+  const m=/^#gifts(?:=([A-Za-z0-9_-]*)(?:\.([A-Za-z0-9_-]+))?)?$/.exec(location.hash||'');
+  return m?{on:true,pub:m[1]||null,ctx:m[2]||null}:{on:false,pub:null,ctx:null};
 })();
 
 /* The hub is the front door. A pastor picks a tool, works inside it, and comes
@@ -7449,6 +7477,7 @@ async function initAccess(){
     // Member view: no gate, no hub, no toolbar — one page, one job.
     ACCESS={required:false,ok:true,name:''}; ACCESS_CHECKED=true;
     GF_PUB_TARGET=GIFTS_LINK.pub;
+    if(GIFTS_LINK.ctx) GF_CTX=gfCtxDecode(GIFTS_LINK.ctx);
     hideGate();
     const g=$('gate'); if(g) g.hidden=true;
     ['hub','toolbar','secnav','changech'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
@@ -8399,19 +8428,19 @@ const GIFTS=[
 const GF_MIN=[
  {n:'Personal Bible studies',d:'Sitting down weekly with one person or one family and working through Scripture together, usually in their home, over several months.',g:{teach:3,evang:3,wisdom:1,shep:1},
   f:'Ask the pastor for one interest and one experienced partner, and give the first study together.'},
- {n:'Adult Sabbath School teaching',d:'Preparing and leading a weekly class discussion \u2014 the study is most of the work, the hour is the smaller part.',g:{teach:3,knowl:2,shep:1,wisdom:1},
+ {n:'Adult Sabbath School teaching',fac:'classrooms',d:'Preparing and leading a weekly class discussion \u2014 the study is most of the work, the hour is the smaller part.',g:{teach:3,knowl:2,shep:1,wisdom:1},
   f:'Sit in with a current teacher for a month, then take one lesson.'},
- {n:'Children\u2019s Sabbath School',d:'Weekly teaching for one age group, with craft, story and memory work prepared beforehand.',g:{teach:2,mercy:1,creative:2,shep:1,hosp:1},
+ {n:'Children\u2019s Sabbath School',fac:'classrooms',d:'Weekly teaching for one age group, with craft, story and memory work prepared beforehand.',g:{teach:2,mercy:1,creative:2,shep:1,hosp:1},
   f:'Assist an existing class for a quarter before leading one.'},
  {n:'Youth ministry',d:'Being consistently present with teenagers \u2014 programme nights, but mostly the conversations either side of them.',g:{shep:3,encour:2,teach:1,faith:1},
   f:'Show up to three consecutive youth gatherings before taking any role.'},
  {n:'Young-adult ministry',d:'Building a small community for the age group most likely to quietly disappear: meals, study, and follow-up when someone stops coming.',g:{shep:2,encour:2,evang:1,teach:1,hosp:1},
   f:'Host one meal for young adults and simply listen to what they need.'},
- {n:'Adventurers',d:'Weekly club work with younger children \u2014 honours, activities, and a lot of patient supervision.',g:{teach:2,serve:1,creative:1,mercy:1,admin:1},
+ {n:'Adventurers',fac:'classrooms',d:'Weekly club work with younger children \u2014 honours, activities, and a lot of patient supervision.',g:{teach:2,serve:1,creative:1,mercy:1,admin:1},
   f:'Join as a helper for one term, then train for a class role.'},
- {n:'Pathfinders',d:'Running a unit through drill, honours, camping and campouts across the year, with real safety responsibility.',g:{leader:2,teach:2,serve:1,shep:2},
+ {n:'Pathfinders',fac:'gym',d:'Running a unit through drill, honours, camping and campouts across the year, with real safety responsibility.',g:{leader:2,teach:2,serve:1,shep:2},
   f:'Attend a club night as an observer and talk with the director.'},
- {n:'Vacation Bible School',d:'One intensive week each year: a station, a class, or the logistics behind them, with weeks of preparation first.',g:{admin:2,creative:2,teach:1,hosp:1},
+ {n:'Vacation Bible School',fac:'classrooms',d:'One intensive week each year: a station, a class, or the logistics behind them, with weeks of preparation first.',g:{admin:2,creative:2,teach:1,hosp:1},
   f:'Take one station this coming summer rather than the whole programme.'},
  {n:'Public evangelism support',d:'One defined role across a series \u2014 visitation, follow-up, greeting, registration, or the platform itself.',g:{proclaim:3,evang:3,faith:1,admin:1},
   f:'Serve on the next series team in one defined role before preaching one.'},
@@ -8419,7 +8448,7 @@ const GF_MIN=[
   f:'Ask to be paired with one newly baptised member for six months.'},
  {n:'Community outreach',d:'Going out from the building regularly \u2014 door to door, at events, or into a specific neighbourhood \u2014 and building repeat contact.',g:{mission:2,serve:2,mercy:2,evang:1},
   f:'Join the next outreach as a walker before helping plan one.'},
- {n:'Community services and food distribution',d:'Sorting, stocking and handing out, plus knowing the regulars by name and noticing what they actually need.',g:{serve:3,mercy:2,admin:1,hosp:1},
+ {n:'Community services and food distribution',fac:'kitchen',d:'Sorting, stocking and handing out, plus knowing the regulars by name and noticing what they actually need.',g:{serve:3,mercy:2,admin:1,hosp:1},
   f:'Work two distribution days, then ask where the gaps are.'},
  {n:'Greeting and hospitality',d:'The first ninety seconds of a visitor\u2019s experience: the door, the name, the seat, and the follow-up afterwards.',g:{hosp:3,encour:1,mercy:1},
   f:'Greet with an experienced deacon for a month of Sabbaths.'},
@@ -8431,7 +8460,7 @@ const GF_MIN=[
   f:'Take five names from the prayer list and pray them daily for a month.'},
  {n:'Small groups',d:'Hosting six to twelve people regularly in a home for study, prayer and honest conversation.',g:{shep:2,teach:2,hosp:2,wisdom:1},
   f:'Co-host with an existing leader before starting a group in your home.'},
- {n:'Health ministry',d:'Cooking classes, health talks, screenings, and steady practical teaching on how to live well.',g:{healing:2,teach:2,serve:1,mercy:1},
+ {n:'Health ministry',fac:'kitchen',d:'Cooking classes, health talks, screenings, and steady practical teaching on how to live well.',g:{healing:2,teach:2,serve:1,mercy:1},
   f:'Run one health talk or cooking class with a partner.'},
  {n:'Family and marriage ministry',d:'Events, courses and quiet conversations supporting couples and parents through ordinary strain.',g:{wisdom:2,shep:2,teach:1,reconcile:1},
   f:'Help run one family event before taking on counsel-shaped work.'},
@@ -8449,19 +8478,19 @@ const GF_MIN=[
   f:'Take one committee\u2019s minutes and follow-up list for a quarter.'},
  {n:'Clerk and records assistance',d:'Membership records, transfers, reports and the paperwork the conference depends on.',g:{admin:3,helps:2,knowl:1},
   f:'Ask the clerk for one recurring task and carry it every month.'},
- {n:'Event coordination',d:'One event at a time, end to end: venue, volunteers, timing, food, and the things everyone forgets.',g:{admin:3,hosp:2,helps:1},
+ {n:'Event coordination',fac:'center',d:'One event at a time, end to end: venue, volunteers, timing, food, and the things everyone forgets.',g:{admin:3,hosp:2,helps:1},
   f:'Run one event end to end — small, and entirely yours.'},
  {n:'Treasury and stewardship',d:'Counting, recording, reporting and teaching \u2014 the trust of handling other people\u2019s offerings.',g:{giving:3,admin:2,knowl:1},
   f:'Assist the treasurer through one full quarter and audit.'},
- {n:'Worship and music',d:'Rehearsal, selection and leading \u2014 the preparation is most of it, the platform is the visible part.',g:{creative:3,proclaim:1,faith:1},
+ {n:'Worship and music',fac:'stage',d:'Rehearsal, selection and leading \u2014 the preparation is most of it, the platform is the visible part.',g:{creative:3,proclaim:1,faith:1},
   f:'Join one rehearsal cycle before being scheduled to lead.'},
- {n:'Sound, livestream and video',d:'Running the desk, the stream and the recording every week, plus the setup nobody sees.',g:{creative:3,helps:2,serve:1},
+ {n:'Sound, livestream and video',fac:'av',d:'Running the desk, the stream and the recording every week, plus the setup nobody sees.',g:{creative:3,helps:2,serve:1},
   f:'Sit at the desk with the operator for four Sabbaths.'},
  {n:'Social media and communication',d:'Keeping the church\u2019s public face accurate and alive, and answering the strangers who message it.',g:{creative:2,evang:2,knowl:1,admin:1},
   f:'Take one channel and post consistently for eight weeks.'},
- {n:'Transportation ministry',d:'Standing arrangements to bring members who otherwise cannot come, week after week.',g:{serve:3,helps:2,mercy:1},
+ {n:'Transportation ministry',fac:'vehicle',d:'Standing arrangements to bring members who otherwise cannot come, week after week.',g:{serve:3,helps:2,mercy:1},
   f:'Offer one standing ride each Sabbath to one member who needs it.'},
- {n:'Facilities and maintenance',d:'Keeping the building safe, working and cared for, with a list that never fully ends.',g:{serve:3,helps:2,giving:1},
+ {n:'Facilities and maintenance',fac:'grounds',d:'Keeping the building safe, working and cared for, with a list that never fully ends.',g:{serve:3,helps:2,giving:1},
   f:'Take responsibility for one part of the building for a quarter.'},
  {n:'Safety and security',d:'Trained presence during services and events, child-protection procedure, and emergency readiness.',g:{serve:2,discern:2,helps:1,leader:1},
   f:'Complete the safety training before any assignment.'},
@@ -8615,7 +8644,21 @@ const GF_COMBOS=[
  [['discern','knowl'],'You test things before they are taught. Guard this \u2014 it is easily mistaken for suspicion.'],
  [['mission','faith'],'The planting pattern: drawn to unreached ground and steady when the outcome is uncertain.'],
  [['shep','inter'],'You carry people in prayer and in person, over long stretches.'],
- [['healing','encour'],'You meet people at their lowest and help them take one step from there.']
+ [['healing','encour'],'You meet people at their lowest and help them take one step from there.'],
+ /* The awkward pairs. These are the profiles that get told to greet at the
+    door because nothing on the standard list fits them. */
+ [['creative','shep'],'You make things AND you keep people. That combination usually ends up running something nobody had thought of \u2014 a media team that disciples, not just produces.'],
+ [['discern','hosp'],'You can read a room and still make it warm. Unusual: most people who see clearly make others feel examined.'],
+ [['giving','mercy'],'You give where you have seen the need yourself, which is why your giving lands somewhere real.'],
+ [['admin','evang'],'Organisation aimed outward \u2014 the reason some churches run outreach that actually happens twice.'],
+ [['knowl','mercy'],'Rigour and tenderness together. You are who to send to a grieving person asking hard questions.'],
+ [['creative','evang'],'What you make is the way in. For a lot of people that is the only door they will walk through.'],
+ [['serve','teach'],'You teach by doing it beside someone. Apprenticeship rather than instruction.'],
+ [['faith','giving'],'You commit resources before the outcome is clear. Most things that got built started with somebody like this.'],
+ [['proclaim','mercy'],'You can say a hard thing without wounding, because people can tell you actually care about them.'],
+ [['inter','admin'],'Prayer that is organised \u2014 lists kept, requests followed up, nothing quietly dropped after week two.'],
+ [['mission','creative'],'You go where the church is not, and you speak in a language it does not usually use.'],
+ [['reconcile','hosp'],'You get people back to the same table, sometimes literally.']
 ];
 function gfCombo(core){
   if(core.length<2) return null;
@@ -8789,6 +8832,450 @@ function gfOverview(P,S){
   return out;
 }
 
+/* ---- the whole congregation, not one member at a time --------------------
+   An individual profile tells a member where they fit. This is the other half:
+   what the church as a body actually has, what it is missing, and which named
+   people could staff a given ministry tomorrow.
+
+   It runs off whatever results are in the roster, however they arrived — sent
+   in by the function, or pasted in as codes. No backend required for this
+   screen to work. */
+function gfEveryone(){
+  return gfRoster().map(r=>{
+    const d=gfDecode(r.code);
+    if(!d) return null;
+    const S=gfScores(d.a);
+    return {name:d.name||r.name||'(no name)',date:d.date||'',S,P:gfProfile(S)};
+  }).filter(Boolean);
+}
+
+/* Per gift, across everybody: who has proven it, who is emerging in it, and
+   who is nowhere near it. */
+function gfCoverage(people){
+  return GIFTS.map(g=>{
+    const dem=[],eme=[];
+    people.forEach(p=>{
+      const s=p.S.find(x=>x.id===g.id);
+      if(!s||s.score===null) return;
+      if(s.label==='demonstrated') dem.push({n:p.name,v:s.score});
+      else if(s.label==='emerging') eme.push({n:p.name,v:s.score});
+    });
+    dem.sort((a,b)=>b.v-a.v); eme.sort((a,b)=>b.v-a.v);
+    return {id:g.id,n:g.n,dem,eme,
+      state: dem.length?'strong' : eme.length?'untested' : 'gap'};
+  });
+}
+
+/* For each ministry, who in the congregation actually fits it.
+
+   Readiness is judged on the gifts the ministry cannot run without — not on a
+   flat percentage. A percentage cutoff quietly hid people: the one member with
+   proven reconciliation was ranked below seventy because the ministry also
+   wants wisdom and discernment, and she was average on those. She is still the
+   right person to call. So: if an essential gift is proven in someone, they
+   are ready; if it is emerging, they could grow into it; the percentage only
+   orders the list. */
+function gfStaffing(people){
+  return GF_MIN.map(m=>{
+    const top=Math.max.apply(null,Object.keys(m.g).map(k=>m.g[k]));
+    const ess=Object.keys(m.g).filter(k=>m.g[k]===top);
+    const ready=[],could=[];
+    let best=0;
+    people.forEach(p=>{
+      const f=gfFit(p.S,p.P.core).find(x=>x.n===m.n);
+      const pct=f?f.pct:0;
+      if(pct>best) best=pct;
+      // The gift test decides IF someone belongs here; the percentage still
+      // has to clear a real floor, or a member with one proven gift gets
+      // listed under a ministry that needs four things they do not have.
+      if(pct<60) return;
+      const labels=ess.map(id=>{
+        const s=p.S.find(x=>x.id===id);
+        return s?s.label:'latent';
+      });
+      const row={n:p.name,pct};
+      if(labels.includes('demonstrated')) ready.push(row);
+      else if(labels.includes('emerging')) could.push(row);
+    });
+    ready.sort((a,b)=>b.pct-a.pct); could.sort((a,b)=>b.pct-a.pct);
+    return {n:m.n,d:m.d,ess,ready,could,best};
+  }).sort((a,b)=>{
+    // strongest match first, not the ministry with the longest list — a broad
+    // ministry that half the church half-fits should not head the page
+    const A=a.ready[0]?a.ready[0].pct:0, B=b.ready[0]?b.ready[0].pct:0;
+    return (B-A)||(b.ready.length-a.ready.length)||(b.best-a.best);
+  });
+}
+
+function gfRenderChurch(h){
+  const people=gfEveryone();
+  if(!people.length){
+    h.innerHTML=`${gfChurchNav()}
+      <div class="card gfcard"><h3>Nothing to read yet</h3>
+      <p class="note">Once members start sending results in, this page shows what the congregation has as a body \u2014 which gifts are covered, which are missing, and who could staff each ministry.</p></div>`;
+    gfWireChurchNav(h); return;
+  }
+  const cov=gfCoverage(people);
+  const strong=cov.filter(c=>c.state==='strong').sort((a,b)=>b.dem.length-a.dem.length);
+  const untested=cov.filter(c=>c.state==='untested');
+  const gaps=cov.filter(c=>c.state==='gap');
+  const staff=gfStaffing(people);
+  const staffable=staff.filter(s=>s.ready.length);
+  const thin=staff.filter(s=>!s.ready.length&&s.could.length);
+  const none=staff.filter(s=>!s.ready.length&&!s.could.length);
+
+  h.innerHTML=`${gfChurchNav()}
+  <div class="gfhead">
+    <h2>Across the congregation</h2>
+    <p class="sub">${people.length} member${people.length===1?'':'s'} so far. ${strong.length} of the twenty-one gifts are proven somewhere in the body${gaps.length?`, and ${gaps.length} ${gaps.length===1?'is':'are'} missing entirely`:''}.</p>
+  </div>
+  ${people.length<6?`<div class="card gfcard"><p class="note">\u26a0 Only ${people.length} ${people.length===1?'result':'results'} in. Read the gaps below as "nobody who has taken this yet", not as "nobody in the church" \u2014 with a small sample the missing gifts are usually just members who have not filled it in.</p></div>`:''}
+
+  <div class="card gfcard">
+    <h3>What this church is strong in</h3>
+    ${strong.length?strong.slice(0,8).map(c=>`<div class="gfcov">
+      <div class="gfcovn"><b>${esc(c.n)}</b> <span class="gfb dem">${c.dem.length} proven</span></div>
+      <p class="note">${esc(c.dem.slice(0,5).map(x=>x.n).join(', '))}${c.dem.length>5?` and ${c.dem.length-5} more`:''}</p>
+    </div>`).join(''):'<p class="note">Nothing has come back proven yet.</p>'}
+  </div>
+
+  ${untested.length?`<div class="card gfcard">
+    <h3>Present but never tested</h3>
+    <p class="note">Members with the desire and the ability, who have never been given the chance to find out. This is usually the most useful list on the page \u2014 these are the people to ask.</p>
+    ${untested.map(c=>`<div class="gfcov">
+      <div class="gfcovn"><b>${esc(c.n)}</b> <span class="gfb eme">${c.eme.length} emerging</span></div>
+      <p class="note">${esc(c.eme.slice(0,5).map(x=>x.n).join(', '))}${c.eme.length>5?` and ${c.eme.length-5} more`:''}</p>
+    </div>`).join('')}
+  </div>`:''}
+
+  ${gaps.length?`<div class="card gfcard">
+    <h3>Missing from the body</h3>
+    <p class="note">Nobody who has taken this came back with these, in any form. Either the members who carry them have not filled it in, or the church genuinely does not have them \u2014 in which case these are what to pray for, recruit, or train.</p>
+    <p class="note"><b>${esc(gaps.map(c=>c.n).join(' \u00b7 '))}</b></p>
+  </div>`:''}
+
+  <div class="card gfcard">
+    <h3>Who could staff what</h3>
+    <p class="note">Ministries where somebody already has proven gifts for the work. Names are ordered by fit.</p>
+    ${staffable.length?staffable.slice(0,14).map(s=>`<div class="gfrec">
+      <div class="gfrech"><b>${esc(s.n)}</b><span class="gfpct">${s.ready.length} ready</span></div>
+      <p class="note gfdl"><b>Proven</b>${esc(s.ready.slice(0,6).map(x=>x.n+' ('+x.pct+'%)').join(', '))}</p>
+      ${s.could.length?`<p class="note gfdl"><b>Could grow into it</b>${esc(s.could.slice(0,6).map(x=>x.n).join(', '))}</p>`:''}
+    </div>`).join(''):'<p class="note">No ministry has a proven match yet.</p>'}
+  </div>
+
+  ${thin.length?`<div class="card gfcard">
+    <h3>Only untested people available</h3>
+    <p class="note">Somebody fits on paper but has never done it. Workable with a partner and ninety days \u2014 not workable if you hand it over and walk away.</p>
+    ${thin.slice(0,10).map(s=>`<div class="gfcov"><div class="gfcovn"><b>${esc(s.n)}</b></div>
+      <p class="note">${esc(s.could.slice(0,5).map(x=>x.n).join(', '))}</p></div>`).join('')}
+  </div>`:''}
+
+  ${none.length?`<div class="card gfcard">
+    <h3>Nobody fits these right now</h3>
+    <p class="note">Out of everyone who has taken the assessment, none came back suited to the ministries below. Worth knowing before one gets announced from the front.</p>
+    <p class="note">${esc(none.map(s=>s.n).join(' \u00b7 '))}</p>
+  </div>`:''}
+
+  <div class="card gfcard">
+    <h3>Using this with the rest of Terrain</h3>
+    <p class="note">The Where-to-look report tells you what your neighbourhood needs. This tells you who you have. Read them together: a move the area badly needs, with nobody proven to run it, is a recruiting and training decision \u2014 not a scheduling one.</p>
+    <button class="btn ghost" id="gfprintchurch">Print this page</button>
+  </div>`;
+  gfWireChurchNav(h);
+  const pr=document.getElementById('gfprintchurch');
+  if(pr) pr.onclick=()=>window.print();
+}
+
+function gfChurchNav(){
+  return `<div class="gfnav gftabs">
+    <button class="btn ghost${GF_VIEW==='roster'?' on':''}" data-gv="roster">Results</button>
+    <button class="btn ghost${GF_VIEW==='church'?' on':''}" data-gv="church">Across the church</button>
+    <button class="btn ghost" data-gv="take">Take it myself</button>
+  </div>`;
+}
+function gfWireChurchNav(h){
+  h.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>{
+    GF_VIEW=b.dataset.gv;
+    if(GF_VIEW==='take'){ GFS.self=true; gfSave(); }
+    gfRender(); window.scrollTo({top:0,behavior:'auto'});
+  });
+}
+
+/* ---- one link per church -------------------------------------------------
+   The pastor serves a two-church district, and a link that is not stamped with
+   a church produces one undifferentiated pile of results — at which point
+   "Across the church" is measuring nothing in particular. So a link cannot be
+   generated until a church is named, the name travels in the link, it comes
+   back inside every result, and the roster can be read one congregation at a
+   time.
+
+   The link also carries what that church actually offers: its building, and
+   which ministries are running or about to start. That is what turns the end
+   of the survey from "you have the gift of mercy" into "Bucks County is
+   starting a visitation team in September and you are who they need". */
+const GF_SHARE_KEY='terrain-gifts-share';
+
+function gfShareCfg(){
+  try{ const v=JSON.parse(localStorage.getItem(GF_SHARE_KEY)||'null');
+    if(v&&typeof v==='object') return {church:v.church||'',min:v.min||{}};
+  }catch(e){}
+  return {church:'',min:{}};
+}
+function gfShareSave(c){ try{ localStorage.setItem(GF_SHARE_KEY,JSON.stringify(c)); }catch(e){} }
+function gfFacs(){
+  try{ const c=capGet(); return (c&&Array.isArray(c.facilities))?c.facilities:[]; }catch(e){ return []; }
+}
+
+/* context → a short string that rides in the link */
+function gfCtxEncode(){
+  const cfg=gfShareCfg();
+  const states=GF_MIN.map(m=>cfg.min[m.n]==='r'?'r':(cfg.min[m.n]==='s'?'s':'.')).join('');
+  const raw=['1',(cfg.church||'').replace(/[|]/g,'-'),gfFacs().join(','),states].join('|');
+  return btoa(unescape(encodeURIComponent(raw))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function gfCtxDecode(str){
+  try{
+    const b=String(str||'').replace(/-/g,'+').replace(/_/g,'/');
+    const raw=decodeURIComponent(escape(atob(b)));
+    const p=raw.split('|');
+    if(p[0]!=='1') return null;
+    const states=p[3]||'';
+    const min={};
+    // If the ministry list has changed since the link was made, the states no
+    // longer line up. Better to ignore them than to mislabel a ministry.
+    if(states.length===GF_MIN.length){
+      GF_MIN.forEach((m,i)=>{ if(states[i]==='r'||states[i]==='s') min[m.n]=states[i]; });
+    }
+    return {church:p[1]||'',fac:(p[2]||'').split(',').filter(Boolean),min};
+  }catch(e){ return null; }
+}
+let GF_CTX=null;   // set from the link when a member opens it
+
+/* Ministries this church actually offers, ranked for this member. */
+function gfLocal(S,core){
+  if(!GF_CTX) return null;
+  const fitAll=gfFit(S,core);
+  const have=GF_CTX.fac||[];
+  const rows=[];
+  Object.keys(GF_CTX.min).forEach(name=>{
+    const f=fitAll.find(x=>x.n===name);
+    if(!f) return;
+    const missing=f.fac&&!have.includes(f.fac);
+    rows.push({...f,state:GF_CTX.min[name],missing});
+  });
+  rows.sort((a,b)=>(b.pct-a.pct));
+  return rows;
+}
+function gfFacName(k){ try{ const f=FACILITIES.find(x=>x.k===k); return f?f.n:k; }catch(e){ return k; } }
+
+/* ---- the pastor's setup screen ------------------------------------------ */
+function gfRenderSetup(h){
+  const cfg=gfShareCfg();
+  const facs=gfFacs();
+  const running=GF_MIN.filter(m=>cfg.min[m.n]==='r').length;
+  const starting=GF_MIN.filter(m=>cfg.min[m.n]==='s').length;
+  h.innerHTML=`${gfChurchNav()}
+  <div class="gfhead">
+    <h2>What members see</h2>
+    <p class="sub">Set this once per church. It decides what a member is offered at the end of the survey.</p>
+  </div>
+
+  <div class="card gfcard gfwarn">
+    <h3>\u26a0 One link per church</h3>
+    <p class="note">The link you hand out is <b>stamped with the church you name below</b>, and every result that comes back carries that stamp. Send it only to that congregation.</p>
+    <p class="note">If you serve more than one church, set this up and generate a link <b>once for each</b> \u2014 change the name here, generate the second link, and keep the two links apart. Sending one church's link to the other congregation files those members under the wrong church, and there is no way to tell them apart afterwards.</p>
+  </div>
+
+  <div class="card gfcard">
+    <h3>1. Which church is this link for?</h3>
+    <label class="gflab" for="gfchurch">Church name, as members would recognise it</label>
+    <input type="text" id="gfchurch" placeholder="e.g. Bucks County SDA Church, Warminster" value="${esc(cfg.church)}">
+    <p class="note">Members see this at the top of the survey, so they know they are answering for their own church.</p>
+  </div>
+
+  <div class="card gfcard">
+    <h3>2. What the building has</h3>
+    ${facs.length
+      ? `<p class="note">Taken from your church profile: <b>${esc(facs.map(gfFacName).join(', '))}</b>. Ministries that need something you do not have are still shown, but marked honestly.</p>`
+      : `<p class="note">No facilities recorded yet. Tick them in the church profile on the Where-to-look report and they will be carried into the link automatically \u2014 otherwise members may be pointed at a food ministry when there is no kitchen.</p>`}
+  </div>
+
+  <div class="card gfcard">
+    <h3>3. What this church runs, or is about to</h3>
+    <p class="note">Tap once for <b>running now</b>, twice for <b>starting soon</b>, three times to clear. Only what you mark here is offered to members as somewhere to actually join \u2014 everything else stays general advice.</p>
+    <p class="note"><b id="gfmincount">${running} running \u00b7 ${starting} starting</b></p>
+    <div id="gfminlist">${GF_MIN.map((m,i)=>{
+      const st=cfg.min[m.n]||'';
+      return `<button type="button" class="gfmin${st==='r'?' r':(st==='s'?' s':'')}" data-m="${i}">
+        <span>${esc(m.n)}</span><i>${st==='r'?'running':(st==='s'?'starting':'\u2014')}</i></button>`;
+    }).join('')}</div>
+  </div>
+
+  <div class="card gfcard">
+    <h3>4. The link</h3>
+    <div class="gfnav"><button class="btn" id="gflink2">Generate the link for this church</button></div>
+    <textarea class="gfcode" id="gflinkbox2" readonly rows="3" hidden></textarea>
+    <p class="note" id="gflinknote2"></p>
+  </div>`;
+  gfWireChurchNav(h);
+
+  const cnt=document.getElementById('gfmincount');
+  const save=()=>{
+    cfg.church=document.getElementById('gfchurch').value.trim();
+    gfShareSave(cfg);
+    cnt.textContent=`${GF_MIN.filter(m=>cfg.min[m.n]==='r').length} running \u00b7 ${GF_MIN.filter(m=>cfg.min[m.n]==='s').length} starting`;
+  };
+  document.getElementById('gfchurch').addEventListener('input',save);
+  h.querySelectorAll('.gfmin').forEach(b=>b.onclick=()=>{
+    const m=GF_MIN[+b.dataset.m].n;
+    const now=cfg.min[m]||'';
+    const next= now===''?'r' : now==='r'?'s' : '';
+    if(next) cfg.min[m]=next; else delete cfg.min[m];
+    b.classList.toggle('r',next==='r'); b.classList.toggle('s',next==='s');
+    b.querySelector('i').textContent = next==='r'?'running':(next==='s'?'starting':'\u2014');
+    save();
+  });
+
+  document.getElementById('gflink2').onclick=async()=>{
+    save();
+    const n=document.getElementById('gflinknote2'), box=document.getElementById('gflinkbox2');
+    if(!cfg.church){ n.textContent='Name the church first \u2014 a link without one cannot be told apart from the other congregation\u2019s.'; return; }
+    n.textContent='Building the link\u2026';
+    const ctx=gfCtxEncode();
+    let pub='';
+    try{ pub=await gfPubId(); }catch(e){ pub=''; }
+    box.value=location.origin+location.pathname+'#gifts='+(pub||'')+'.'+ctx;
+    box.hidden=false; box.select();
+    const where=`This link is for <b>${esc(cfg.church)}</b>. Send it only to that congregation.`;
+    try{ navigator.clipboard.writeText(box.value); n.innerHTML='Copied. '+where; }
+    catch(e){ n.innerHTML='Copy the link above. '+where; }
+    if(!pub) n.innerHTML+=' <br>The results function is not deployed, so members will finish with a code to send you rather than results arriving on their own.';
+  };
+}
+
+/* The part a member actually acts on: what their own church is offering. */
+function gfLocalHTML(S,P,own){
+  const rows=gfLocal(S,P.core);
+  if(!rows||!rows.length) return '';
+  const church=GF_CTX.church||'your church';
+  const you=own?'you':'they';
+  const pick=rows.filter(r=>r.pct>=55).slice(0,4);
+  const rest=rows.filter(r=>!pick.includes(r)).slice(0,6);
+  if(!pick.length) return `<div class="card gfcard"><h3>At ${esc(church)}</h3>
+    <p class="note">Nothing currently running at ${esc(church)} lines up strongly with these gifts. That is worth saying to a leader rather than ignoring \u2014 it usually means the church has a gap, not that ${you} ha${own?'ve':'s'} nothing to give.</p></div>`;
+  return `<div class="card gfcard gflocal">
+    <h3>Where ${own?'you':'they'} would fit at ${esc(church)}</h3>
+    <p class="note">These are ministries ${esc(church)} is actually running or about to start \u2014 not general advice. Ordered by how well they match these gifts.</p>
+    ${pick.map(r=>{
+      const badge = r.state==='r'
+        ? '<span class="gfb dem">running now</span>'
+        : '<span class="gfb eme">starting soon</span>';
+      const names=r.drivers.map(d=>d.n.toLowerCase());
+      const why=names.length?`Runs on ${names.length>1?names.slice(0,-1).join(', ')+' and '+names[names.length-1]:names[0]}.`:'';
+      return `<div class="gfrec">
+        <div class="gfrech"><b>${esc(r.n)}</b> ${badge}<span class="gfpct">${r.pct}%</span></div>
+        ${r.d?`<p class="note gfdl"><b>What the work actually is</b>${esc(r.d)}</p>`:''}
+        <p class="note gfdl"><b>Why ${own?'you':'them'}</b>${esc(why)}</p>
+        <p class="note gfdl"><b>First step</b>${esc(r.f)}</p>
+        ${r.missing?`<p class="note gfdl"><b>Worth knowing</b>${esc(church)} has not recorded ${esc(gfFacName(r.fac))}, which this normally needs \u2014 ask how they are handling that before committing.</p>`:''}
+      </div>`;
+    }).join('')}
+    ${rest.length?`<p class="note gfmore">Also on offer there, further down the match: ${esc(rest.map(r=>r.n).join(' \u00b7 '))}</p>`:''}
+  </div>`;
+}
+
+/* ---- the profiles that do not fit any existing job description -----------
+   A fixed list of forty ministries can only ever return one of forty answers,
+   and the same handful surface again and again because they are the ministries
+   that need the commonest gifts. That is exactly how an assessment ends up
+   telling half a congregation to greet at the door.
+
+   Two things push against it. First: reading which FAMILIES a member's gifts
+   span. Someone strong in one family is a specialist and the existing roles
+   fit them. Someone strong across two or three is the awkward case — no job
+   description covers them, and the honest answer is usually that they should
+   be making something rather than joining something. Second: offering
+   ministries the church does NOT yet have, when a member is genuinely equipped
+   to start one. A gap in the church plus a gift in a member is an opening, not
+   a dead end. */
+
+const GF_FAMPAIR={
+ 'word+people':'You can explain the truth and stay with the person while it lands. Teaching that pastors \u2014 most people do one or the other.',
+ 'lead+word'  :'Truth joined to direction: you can say what is right and then organise the church around actually doing it.',
+ 'out+word'   :'Doctrine that travels. You can explain the faith to people who do not share any of its vocabulary, which most good teachers cannot.',
+ 'hands+word' :'You turn understanding into something people can see, hold or watch. Ideas made concrete.',
+ 'lead+people':'Care joined to responsibility \u2014 leadership that does not lose people on the way. It is rare, and the people who have it are almost always overloaded.',
+ 'out+people' :'You reach outward and then stay with what you find. That is the whole difference between a contact and a disciple.',
+ 'hands+people':'Practical care. You show love in things that get done rather than things that get said, and it reaches people who distrust words.',
+ 'lead+out'   :'The pioneering shape: you can begin something outside the walls and still hold it together six months later.',
+ 'hands+lead' :'You build it and you run it. This is the pattern behind projects that actually finish.',
+ 'hands+out'  :'Skill aimed outward \u2014 what you make reaches people who would never walk into a meeting.'
+};
+function gfSpan(core){
+  const fams=[...new Set(core.map(s=>{
+    const g=GIFTS.find(x=>x.id===s.id); return g?g.fam:null;
+  }).filter(Boolean))];
+  if(fams.length<2) return null;
+  if(fams.length>=3){
+    const names=fams.map(f=>(GF_FAMS.find(x=>x.id===f)||{}).t).filter(Boolean);
+    return {n:fams.length,text:`Your strongest gifts run across ${fams.length} of the five families \u2014 ${names.join(', ').toLowerCase()}. That is genuinely unusual, and it normally means no existing job description fits you properly. Read the openings below before you settle for a role that only uses one part of you.`};
+  }
+  const key=fams.slice().sort().join('+');
+  const text=GF_FAMPAIR[key];
+  return text?{n:2,text}:null;
+}
+
+/* Ministries the church does NOT have, that this member could start.
+   Deliberately strict: an opening is only worth naming if the essential gift
+   is proven or clearly emerging AND the overall fit is strong, or the pastor
+   gets a queue of volunteers to found things they are not ready to found. */
+function gfOpenings(S,core){
+  const offered=GF_CTX?Object.keys(GF_CTX.min):[];
+  const have=(GF_CTX&&GF_CTX.fac)||[];
+  const byId={}; S.forEach(s=>byId[s.id]=s);
+  // starting anything needs some initiative behind it, not only the gift for
+  // the work itself
+  const drive=Math.max(byId.leader?byId.leader.score||0:0,
+                       byId.mission?byId.mission.score||0:0,
+                       byId.faith?byId.faith.score||0:0,
+                       byId.admin?byId.admin.score||0:0);
+  return gfFit(S,core).filter(m=>{
+    if(offered.includes(m.n)) return false;         // the church already has it
+    if(m.pct<70) return false;
+    const top=Math.max.apply(null,Object.keys(m.g).map(k=>m.g[k]));
+    const ess=Object.keys(m.g).filter(k=>m.g[k]===top);
+    return ess.some(id=>byId[id]&&(byId[id].label==='demonstrated'||byId[id].label==='emerging'));
+  }).sort((a,b)=>b.pct-a.pct).slice(0,3).map(m=>({...m,
+    facMissing:m.fac&&have.length&&!have.includes(m.fac),
+    drive}));
+}
+
+function gfOpeningsHTML(S,P,own){
+  const rows=gfOpenings(S,P.core);
+  if(!rows.length) return '';
+  const church=(GF_CTX&&GF_CTX.church)?GF_CTX.church:'your church';
+  const known=!!GF_CTX;
+  const drive=rows[0].drive;
+  const lead = drive>=70
+    ? `You also came back strong on the gifts that starting things requires \u2014 so this is not a polite suggestion.`
+    : drive>=50
+      ? `Starting something needs initiative as well as the gift for the work, and yours is moderate \u2014 so do this with somebody who has led before, not alone.`
+      : `Be honest about one thing: the gifts that get a new work off the ground are not your strongest. Bring this to a leader as something you would serve in, and let someone else carry the founding of it.`;
+  return `<div class="card gfcard gfopen">
+    <h3>${known?`Not yet at ${esc(church)} \u2014 and ${own?'you':'they'} could be why it starts`:'Ministries worth starting where none exists'}</h3>
+    <p class="note">${known?`These are not currently running or planned at ${esc(church)}, and ${own?'your':'their'} gifts fit them well. A gap in the church plus a gift in a member is an opening, not a dead end.`:'Nothing here depends on a ministry already existing.'} ${esc(lead)}</p>
+    ${rows.map(r=>`<div class="gfrec">
+      <div class="gfrech"><b>${esc(r.n)}</b><span class="gfb eme">nothing here yet</span><span class="gfpct">${r.pct}%</span></div>
+      ${r.d?`<p class="note gfdl"><b>What it would be</b>${esc(r.d)}</p>`:''}
+      <p class="note gfdl"><b>Why ${own?'you':'them'}</b>${esc(r.drivers.map(d=>d.n.toLowerCase()).join(', '))}.</p>
+      <p class="note gfdl"><b>First step</b>Ask the pastor for one conversation about it. Not a proposal \u2014 a conversation. ${esc(r.f)}</p>
+      ${r.facMissing?`<p class="note gfdl"><b>Worth knowing</b>This normally needs ${esc(gfFacName(r.fac))}, which the church has not recorded. Solve that before promising anything.</p>`:''}
+    </div>`).join('')}
+    <p class="note gfmore">A new ministry needs the church's blessing before it needs volunteers. Nothing here is permission \u2014 it is a reason to have the conversation.</p>
+  </div>`;
+}
+
 /* ---- deterministic interleave --------------------------------------------
    The statements must not appear grouped by gift, or a member can see what is
    being measured and answer toward the gift they want. The shuffle is seeded,
@@ -8931,7 +9418,10 @@ function gfEncode(){
     const v=GFS.a[g.id+'.'+i];
     return v===undefined?'.':(v===-1?'x':String(v));
   }).join('')).join('');
-  const raw=['1',new Date().toISOString().slice(0,10),chars,(GFS.name||'')].join('~');
+  // v2 adds the church, so results from a two-church district can be told
+  // apart. v1 codes still decode — they simply have no church on them.
+  const church=(GF_CTX&&GF_CTX.church?GF_CTX.church:(GFS.church||'')).replace(/~/g,'-');
+  const raw=['2',new Date().toISOString().slice(0,10),chars,church,(GFS.name||'')].join('~');
   return 'TG1-'+btoa(unescape(encodeURIComponent(raw))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 }
 function gfDecode(code){
@@ -8939,7 +9429,8 @@ function gfDecode(code){
     const b=String(code||'').trim().replace(/^TG1-/,'').replace(/-/g,'+').replace(/_/g,'/');
     const raw=decodeURIComponent(escape(atob(b)));
     const p=raw.split('~');
-    if(p[0]!=='1') return null;
+    if(p[0]!=='1'&&p[0]!=='2') return null;
+    const v2=p[0]==='2';
     const chars=p[2]||''; if(chars.length!==GIFTS.length*4) return null;
     const a={};
     GIFTS.forEach((g,gi)=>GF_EV.forEach((e,ei)=>{
@@ -8947,7 +9438,9 @@ function gfDecode(code){
       if(c==='.') return;
       a[g.id+'.'+ei]=(c==='x'?-1:parseInt(c,10));
     }));
-    return {date:p[1]||'',name:p.slice(3).join('~')||'(no name given)',a};
+    return {date:p[1]||'',
+      church:v2?(p[3]||''):'',
+      name:(v2?p.slice(4).join('~'):p.slice(3).join('~'))||'(no name given)',a};
   }catch(e){ return null; }
 }
 
@@ -8985,7 +9478,7 @@ function gfRosterAdd(code){
   const d=gfDecode(code); if(!d) return null;
   const list=gfRoster();
   if(list.some(x=>x.code===code)) return d;
-  list.unshift({code,name:d.name,date:d.date,ts:Date.now()});
+  list.unshift({code,name:d.name,date:d.date,church:d.church||'',ts:Date.now()});
   try{ localStorage.setItem(GF_ROSTER,JSON.stringify(list.slice(0,500))); }catch(e){}
   return d;
 }
@@ -9005,14 +9498,19 @@ function giftsOpen(){
   gfLoad();
   // A member arriving on the share link takes it. The pastor opening it from
   // his own hub is almost always there to read results, so he lands on the
-  // roster with taking it himself one tap away.
-  if(GF_PUB_TARGET===null&&GF_VIEW!=='take') GF_VIEW='roster';
+  // roster with taking it himself one tap away — unless he was part-way
+  // through taking it himself, in which case a refresh should not lose his
+  // place.
+  if(GF_PUB_TARGET!==null) GF_VIEW='take';
+  else if(GF_VIEW===null) GF_VIEW=(GFS.self&&!GFS.done)?'take':'roster';
   gfRender(); window.scrollTo({top:0,behavior:'auto'});
 }
 function gfHost(){ return document.getElementById('giftbody'); }
 
 function gfRender(){
   const h=gfHost(); if(!h) return;
+  if(GF_VIEW==='setup'){ gfRenderSetup(h); return; }
+  if(GF_VIEW==='church'){ gfRenderChurch(h); return; }
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GFS.done){ gfRenderResult(h,gfScores(GFS.a),GFS.name,true); return; }
   if(!GFS.i&&gfAnswered()===0){ gfRenderIntro(h); return; }
@@ -9024,6 +9522,7 @@ function gfRenderIntro(h){
   ${GF_PUB_TARGET===null?'<button class="btn ghost gfbackr" id="gfbackr">\u2190 Back to results</button>':''}
   <div class="gfhead">
     <h2>Discover Your Spiritual Gifts</h2>
+    ${GF_CTX&&GF_CTX.church?`<p class="gfforchurch">For members of ${esc(GF_CTX.church)}</p>`:''}
     <p class="sub">Every member of this church has been given something to do that nobody else can do in their place. This is a way of finding out what yours is \u2014 and what to do about it on Sabbath morning.</p>
   </div>
   ${gfVerse(0)}
@@ -9041,7 +9540,7 @@ function gfRenderIntro(h){
     <button class="btn gfbig" id="gfstart">Begin</button>
   </div>`;
   const br=document.getElementById('gfbackr');
-  if(br) br.onclick=()=>{ GF_VIEW='roster'; gfRender(); };
+  if(br) br.onclick=()=>{ GF_VIEW='roster'; GFS.self=false; gfSave(); gfRender(); };
   const nm=document.getElementById('gfname');
   const cons=document.getElementById('gfconsent');
   cons.innerHTML = GF_PUB_TARGET
@@ -9118,12 +9617,17 @@ function gfRenderSection(h,sec){
 }
 
 /* progress: a bar, a count, and one dot per section */
+/* The bar shows how far through you are, not how many answers are on file.
+   Counting answers meant that going back left the bar stuck where it was —
+   nothing had been un-answered, so nothing moved. Position is what a progress
+   bar means to the person looking at it: go back and it comes back with you,
+   all the way to empty at the first statement. */
+function gfPct(i){ return Math.round(Math.max(0,Math.min(i,GF_TOTAL))/GF_TOTAL*100); }
 function gfChrome(i){
-  const ans=gfAnswered();
   const sec=gfSectOf(i);
   return `<div class="gftop-bar">
     <div class="gfbarwrap">
-      <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(ans/GF_TOTAL*100)}%"></div></div>
+      <div class="gfbar"><div class="gfbarfill" style="width:${gfPct(i)}%"></div></div>
       <div class="gfsparks" id="gfsparks"></div>
     </div>
     <div class="gfmeta">
@@ -9213,7 +9717,7 @@ function gfWireCard(h,i){
       GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
       card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
       b.classList.add('gfpulse');
-      const pct=Math.round(gfAnswered()/GF_TOTAL*100);
+      const pct=gfPct(i+1);
       const bar=h.querySelector('.gfbarfill');
       if(bar) bar.style.width=pct+'%';
       // a section finished is worth more than a statement finished
@@ -9222,9 +9726,23 @@ function gfWireCard(h,i){
     };
   });
   const back=document.getElementById('gfback');
-  if(back) back.onclick=()=>{ if(!card.dataset.locked){ card.dataset.locked='1'; leave(i-1,true);} };
+  if(back) back.onclick=()=>{
+    if(card.dataset.locked) return;
+    card.dataset.locked='1';
+    // Retreat the bar on the element that is still on screen, so it animates
+    // back rather than jumping when the next card replaces the markup.
+    const bar=h.querySelector('.gfbarfill');
+    if(bar){ bar.classList.remove('flash'); bar.style.width=gfPct(i-1)+'%'; }
+    leave(i-1,true);
+  };
   const fwd=document.getElementById('gffwd');
-  if(fwd) fwd.onclick=()=>{ if(!card.dataset.locked){ card.dataset.locked='1'; leave(i+1,false);} };
+  if(fwd) fwd.onclick=()=>{
+    if(card.dataset.locked) return;
+    card.dataset.locked='1';
+    const bar=h.querySelector('.gfbarfill');
+    if(bar) bar.style.width=gfPct(i+1)+'%';
+    leave(i+1,false);
+  };
 
   // 1-6 on a keyboard, for anyone taking this on a laptop
   document.onkeydown=(e)=>{
@@ -9257,6 +9775,7 @@ function gfRenderResult(h,S,name,own){
   // Two gifts in the same report must not carry the identical sentence — that
   // is precisely what makes an assessment feel machine-written.
   const seen=new Set();
+  const span=gfSpan(P.core);
   const you=own?'you':esc((name||'').split(' ')[0]||'this member');
   const your=own?'your':'their';
 
@@ -9270,14 +9789,17 @@ function gfRenderResult(h,S,name,own){
     <h3>${P.core.length===1?'The gift, first':'In order, strongest first'}</h3>
     ${gfOverview(P,S).map(x=>`<p class="note">${x}</p>`).join('')}
     ${combo?`<p class="gfcombo">${esc(combo)}</p>`:''}
+    ${span?`<p class="gfspan"><b>Across the grain.</b> ${esc(span.text)}</p>`:''}
     ${P.core.map((s,i)=>gfGiftBlock(s,i,seen)).join('')}
   </div>
   ${P.support.length?`<div class="card gfcard"><h3>Close behind</h3>
     <p class="note">Not far enough back to ignore. These usually shape <em>how</em> ${you} carr${own?'y':'ies'} the ${P.core.length===1?'gift':'gifts'} above, rather than standing on their own.</p>
     ${P.support.map(s=>`<div class="gftop"><b>${esc(s.n)}</b> ${gfBadge(s.label)} <span class="gfsc">${s.score}</span>
       <p class="note">${esc(gfWhy(s,seen))}</p></div>`).join('')}</div>`:''}
+  ${gfLocalHTML(S,P,own)}
+  ${gfOpeningsHTML(S,P,own)}
   <div class="card gfcard">
-    <h3>Where this points \u2014 ministries to enter now</h3>
+    <h3>${GF_CTX&&GF_CTX.church?'Beyond your church \u2014 what these gifts point to generally':'Where this points \u2014 ministries to enter now'}</h3>
     <p class="note">Matched on gifts, weighted toward the ${P.core.length===1?'gift':'gifts'} ${you} actually lead${own?'':'s'} with. Each begins with a small first step and ninety days, not an appointment.</p>
     ${now.length?now.map(m=>gfRec(m,true,P)).join('')
       :`<p class="note">Nothing here has proven fruit behind it yet, so everything sits under <b>grow into</b> rather than <b>enter now</b>. For someone who has not been given much opportunity that is the expected result \u2014 it is a starting line, not a verdict.</p>`}
@@ -9390,7 +9912,7 @@ function gfRenderSend(box){
 }
 
 /* ---- the pastor's side ---------------------------------------------------- */
-let GF_VIEW='take';
+let GF_VIEW=null;   // null = not chosen yet; set to 'take' or 'roster' on open
 let GF_PUB_TARGET=null;   // set from the share link when a member opens it
 
 function gfRenderRoster(h){
@@ -9399,12 +9921,12 @@ function gfRenderRoster(h){
   <div class="gfhead">
     <h2>Spiritual gifts \u2014 your members</h2>
     <p class="sub">Send members the link below. Results arrive here.</p>
-    <button class="btn ghost" id="gfmine">Take the assessment myself</button>
   </div>
+  ${gfChurchNav()}
   <div class="card gfcard">
     <h3>Your share link</h3>
-    <p class="note">This link does <b>not</b> contain your access code. Members can send results in with it; nobody can read anything out with it.</p>
-    <div class="gfnav"><button class="btn" id="gflink">Get my share link</button>
+    <p class="note">Links are made on the <b>Share link</b> tab, because each one is stamped with a church and you serve more than one. The link never contains your access code \u2014 members can send results in with it, nobody can read anything out with it.</p>
+    <div class="gfnav"><button class="btn" id="gflink">Set up a link</button>
       <button class="btn ghost" id="gfpull">Check for new results</button></div>
     <textarea class="gfcode" id="gflinkbox" readonly rows="2" hidden></textarea>
     <p class="note" id="gflinknote"></p>
@@ -9419,26 +9941,13 @@ function gfRenderRoster(h){
   <div class="card gfcard">
     <h3>${list.length} result${list.length===1?'':'s'}</h3>
     ${list.length?list.map((r,i)=>`<div class="gfrosterrow"><b>${esc(r.name)}</b>
-      <span class="note">${esc(r.date||'')}</span>
+      <span class="note">${esc(r.church||'church not recorded')}${r.date?' \u00b7 '+esc(r.date):''}</span>
       <button class="btn ghost gfopen" data-i="${i}">Open</button></div>`).join('')
       :'<p class="note">Nothing yet. Send the link to a few members and check back.</p>'}
   </div>`;
 
-  document.getElementById('gfmine').onclick=()=>{ GF_VIEW='take'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); };
-  document.getElementById('gflink').onclick=async()=>{
-    const n=document.getElementById('gflinknote'), b=document.getElementById('gflinkbox');
-    n.textContent='Getting your link\u2026';
-    try{
-      const pub=await gfPubId();
-      b.value=location.origin+location.pathname+'#gifts='+pub;
-      b.hidden=false; b.select();
-      try{ navigator.clipboard.writeText(b.value); n.textContent='Copied. Send it to your members.'; }
-      catch(e){ n.textContent='Copy this and send it to your members.'; }
-    }catch(e){
-      b.hidden=false; b.value=location.origin+location.pathname+'#gifts';
-      n.innerHTML='The results function is not deployed yet, so results cannot arrive automatically. The link above still works \u2014 members will finish with a code to send you, and you paste it in below.';
-    }
-  };
+  gfWireChurchNav(h);
+  document.getElementById('gflink').onclick=()=>{ GF_VIEW='setup'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); };
   document.getElementById('gfpull').onclick=async()=>{
     const n=document.getElementById('gflinknote');
     n.textContent='Checking\u2026';
@@ -9516,6 +10025,24 @@ $('ver').textContent=VERSION;
     let tries=0;
     const wait=setInterval(()=>{
       if(ACCESS_CHECKED||++tries>40){ clearInterval(wait); runPermalink(); }
+    },100);
+  } else {
+    /* No address in the URL — but the Planner and the Gifts assessment do not
+       need one, and before this a refresh inside either of them dropped the
+       user back on the hub. The whole restore used to hang off the address
+       permalink, so tools that never ask for an address were never restored.
+       Only standalone tools are reopened here: anything address-driven has
+       nothing to show until a church has been looked up. */
+    let tries=0;
+    const wait=setInterval(()=>{
+      if(!(ACCESS_CHECKED||++tries>40)) return;
+      clearInterval(wait);
+      if(ACCESS.required && !ACCESS.ok) return;   // never reopen over the gate
+      if(TOOL||FLAT||GIFTS_LINK.on) return;       // already placed somewhere
+      try{
+        const t=sessionStorage.getItem('terrain-tool');
+        if(t&&TOOLS[t]&&TOOLS[t].standalone) openTool(t);
+      }catch(e){}
     },100);
   }
 })();
