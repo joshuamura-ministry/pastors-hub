@@ -1022,15 +1022,15 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfbarfill::after{content:'';position:absolute;inset:0;
   background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
   transform:translateX(-100%);opacity:0}
-.gfbarfill.flash::after{animation:gfshimmer .5s ease-out}
-@keyframes gfshimmer{0%{transform:translateX(-100%);opacity:.9}100%{transform:translateX(100%);opacity:0}}
+.gfbarfill.flash::after{animation:gfshimmer .55s ease-out}
+@keyframes gfshimmer{0%{transform:translateX(-100%);opacity:1}60%{opacity:.9}100%{transform:translateX(100%);opacity:0}}
 .gfbarfill.flash{box-shadow:0 0 9px var(--acc)}
-.gfsparks{position:absolute;inset:0;pointer-events:none;overflow:visible}
+.gfsparks{position:absolute;inset:-14px 0;pointer-events:none;overflow:visible;z-index:4}
 .gfburst{position:absolute;top:50%;width:0;height:0}
-.gfburst i{position:absolute;left:0;top:0;width:3px;height:3px;border-radius:50%;
+.gfburst i{position:absolute;left:0;top:0;width:4px;height:4px;border-radius:50%;
   background:var(--acc);box-shadow:0 0 5px var(--acc);
   animation:gfspark .6s cubic-bezier(.2,.6,.3,1) forwards}
-.gfburst.big i{width:4px;height:4px;animation-duration:.85s}
+.gfburst.big i{width:5px;height:5px;animation-duration:.9s}
 .gfburst u{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;
   border:2px solid var(--acc);animation:gfring .8s ease-out forwards}
 @keyframes gfspark{0%{transform:translate(0,0) scale(1);opacity:1}
@@ -1044,7 +1044,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfstage{position:relative;min-height:60vh;display:flex;align-items:center}
 .gfcardq{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
   box-shadow:var(--shadow);padding:24px 22px 18px;
-  transition:transform .23s cubic-bezier(.4,0,.2,1),opacity .23s ease}
+  transition:transform .19s cubic-bezier(.4,0,.2,1),opacity .19s ease}
 .gfcardq.gfin{transform:translateY(22px);opacity:0}
 .gfcardq.gfout{transform:translateY(-26px);opacity:0}
 .gfcardq.gfoutdown{transform:translateY(26px);opacity:0}
@@ -1058,7 +1058,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   background:var(--panel);border:1px solid var(--line2);font-size:.72rem;font-weight:700;color:var(--ink3)}
 .gfcardq .gfopt.on .gfk{background:var(--btn-ink);color:var(--acc);border-color:transparent}
 @keyframes gfpulse{0%{transform:scale(1)}45%{transform:scale(1.025)}100%{transform:scale(1)}}
-.gfopt.gfpulse{animation:gfpulse .2s ease}
+.gfopt.gfpulse{animation:gfpulse .18s ease}
 .gftop-bar{position:sticky;top:0;z-index:3;background:var(--bg);padding:10px 0 8px}
 .gfmeta{display:flex;align-items:center;gap:10px;margin-top:6px}
 .gfmeta .gfcount{font-size:.76rem;color:var(--ink3);font-weight:700}
@@ -1142,6 +1142,11 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
         <b>Community Survey</b>
         <span class="td">Who lives around your church — income, languages, children, seniors, housing — with the blocks to reach first and how to mobilize members.</span>
       </button>
+      <button class="tool" data-tool="gifts">
+        <span class="tico">🕊️</span>
+        <b>Spiritual Gifts</b>
+        <span class="td">Send your members a link. They answer eighty-four statements about desire, ability, fruit, and what others have seen in them — and their gifts, and the ministries that fit, come back to you here.</span>
+      </button>
       <button class="tool" data-tool="case">
         <span class="tico">📋</span>
         <b>Make the Case</b>
@@ -1151,11 +1156,6 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
         <span class="tico">📅</span>
         <b>Evangelism Planner</b>
         <span class="td">Set opening night and the size of your church. Terrain counts backward eighteen months — revival, training, outreach, the meetings, and the nurture after — with a benchmark for every phase.</span>
-      </button>
-      <button class="tool" data-tool="gifts">
-        <span class="tico">🕊️</span>
-        <b>Spiritual Gifts</b>
-        <span class="td">Send your members a link. They answer eighty-four statements about desire, ability, fruit, and what others have seen in them — and their gifts, and the ministries that fit, come back to you here.</span>
       </button>
     </div>
   </div>
@@ -1236,13 +1236,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.8</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.82</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.8';
+const VERSION = 'v9.82';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5710,11 +5710,11 @@ const GIFTS_LINK=(()=>{
    the bottom of one long page. */
 const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
+  // standalone: needs no church address or Census data; it has its own panel.
+  // Listed second, matching its place on the hub.
+  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'},
   case:   {name:'Make the Case',     tabs:['case']},
-  // standalone: does not need a church address or Census data; it has its own panel
-  planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner'},
-  // member-facing, and the only tool reachable without a conference code
-  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'}
+  planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner'}
 };
 function showHub(){
   const dc=document.getElementById('datacred'); if(dc&&!FLAT) dc.hidden=true;
@@ -9594,6 +9594,39 @@ function gfRenderPage(h){
   gfWireCard(h,i);
 }
 
+/* Swap only the card, leaving the progress strip alone.
+
+   This was the bug behind "no sparkle": the whole top strip was being rebuilt
+   on every answer, so the spark burst and the shimmer were deleted from the
+   page about 200ms into a 600ms animation, and the bar jumped to its new width
+   instead of sliding because the element it was animating had been replaced.
+   The strip now persists for the whole section and is updated in place. */
+function gfUpdateChrome(h,i){
+  const bar=h.querySelector('.gfbarfill');
+  if(bar) bar.style.width=gfPct(i)+'%';
+  const c=h.querySelector('.gfcount');
+  if(c) c.textContent=Math.min(i+1,GF_TOTAL)+' of '+GF_TOTAL;
+  const dots=h.querySelector('.gfdots');
+  if(dots){
+    const sec=gfSectOf(i);
+    dots.innerHTML=GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('');
+  }
+}
+function gfSwapCard(h,i){
+  const stage=h.querySelector('#gfstage');
+  if(!stage){ gfRenderPage(h); return; }
+  stage.innerHTML=gfCardHTML(i,'in');
+  const c=h.querySelector('.gfcount');
+  if(c) c.textContent=Math.min(i+1,GF_TOTAL)+' of '+GF_TOTAL;
+  const dots=h.querySelector('.gfdots');
+  if(dots){
+    const sec=gfSectOf(i);
+    dots.innerHTML=GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('');
+  }
+  gfWireCard(h,i);
+  gfSettle(h);
+}
+
 function gfRenderSection(h,sec){
   const S=GF_SECTS[sec]||GF_SECTS[0];
   h.innerHTML=`
@@ -9701,28 +9734,32 @@ function gfWireCard(h,i){
     GFS.i=Math.max(0,Math.min(GF_TOTAL,to)); gfSave();
     if(GFS.i>=GF_TOTAL){ GFS.done=true; gfSave(); gfRender(); window.scrollTo({top:0,behavior:'auto'}); return; }
     if(gfIsSectStart(GFS.i)&&GFS.sect!==gfSectOf(GFS.i)) return gfRenderSection(h,gfSectOf(GFS.i));
-    h.innerHTML=gfChrome(GFS.i)+`<div class="gfstage" id="gfstage">${gfCardHTML(GFS.i,'in')}</div>`;
-    gfWireCard(h,GFS.i); gfSettle(h);
+    gfSwapCard(h,GFS.i);
   };
   const leave=(to,back)=>{
     if(gfReduced()) return advance(to);
     card.classList.add(back?'gfoutdown':'gfout');
-    setTimeout(()=>advance(to),230);
+    setTimeout(()=>advance(to),190);
   };
 
   card.querySelectorAll('.gfopt').forEach(b=>{
     b.onclick=()=>{
       if(card.dataset.locked) return;
       card.dataset.locked='1';
-      GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
-      card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
-      b.classList.add('gfpulse');
-      const pct=gfPct(i+1);
-      const bar=h.querySelector('.gfbarfill');
-      if(bar) bar.style.width=pct+'%';
-      // a section finished is worth more than a statement finished
-      gfSpark(h,pct,gfIsSectEnd(i)&&i+1<GF_TOTAL);
-      setTimeout(()=>leave(i+1,false),gfReduced()?0:200);
+      try{
+        GFS.a[k]=parseInt(b.dataset.v,10); gfSave();
+        card.querySelectorAll('.gfopt').forEach(x=>x.classList.toggle('on',x===b));
+        b.classList.add('gfpulse');
+        const bar=h.querySelector('.gfbarfill');
+        if(bar) bar.style.width=gfPct(i+1)+'%';
+        // a section finished is worth more than a statement finished
+        gfSpark(h,gfPct(i+1),gfIsSectEnd(i)&&i+1<GF_TOTAL);
+      }catch(err){
+        /* Whatever goes wrong in the flourish, the member must still move on.
+           Without this a thrown error leaves the button lit and the survey
+           stuck, which is exactly what it looked like on screen. */
+      }
+      setTimeout(()=>leave(i+1,false),gfReduced()?0:150);
     };
   });
   const back=document.getElementById('gfback');
