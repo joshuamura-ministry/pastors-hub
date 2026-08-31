@@ -1017,28 +1017,38 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
 /* --- the progress bar rewards you --- */
 .gfbarwrap{position:relative}
-.gfbar{position:relative;overflow:hidden}
-.gfbarfill{position:relative;overflow:hidden}
+.gfbar{position:relative;overflow:visible;transition:transform .18s ease}
+.gfbar.thump{transform:scaleY(1.7)}
+.gfbarfill{position:relative;overflow:hidden;border-radius:999px}
 .gfbarfill::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(90deg,transparent,rgba(255,255,255,.85),transparent);
+  background:linear-gradient(90deg,transparent,#fff,transparent);
   transform:translateX(-100%);opacity:0}
-.gfbarfill.flash::after{animation:gfshimmer .55s ease-out}
-@keyframes gfshimmer{0%{transform:translateX(-100%);opacity:1}60%{opacity:.9}100%{transform:translateX(100%);opacity:0}}
-.gfbarfill.flash{box-shadow:0 0 9px var(--acc)}
-.gfsparks{position:absolute;inset:-14px 0;pointer-events:none;overflow:visible;z-index:4}
+.gfbarfill.flash::after{animation:gfshimmer .6s ease-out}
+.gfbarfill.bigflash::after{animation:gfshimmer .85s ease-out}
+@keyframes gfshimmer{0%{transform:translateX(-100%);opacity:1}70%{opacity:.95}100%{transform:translateX(100%);opacity:0}}
+.gfbarfill.flash{box-shadow:0 0 14px var(--acc),0 0 4px #fff}
+.gfbarfill.bigflash{box-shadow:0 0 26px var(--acc),0 0 8px #fff;animation:gfglow .85s ease-out}
+@keyframes gfglow{0%{filter:brightness(2.1)}100%{filter:brightness(1)}}
+.gfsparks{position:absolute;inset:-40px 0;pointer-events:none;overflow:visible;z-index:6}
 .gfburst{position:absolute;top:50%;width:0;height:0}
-.gfburst i{position:absolute;left:0;top:0;width:4px;height:4px;border-radius:50%;
-  background:var(--acc);box-shadow:0 0 5px var(--acc);
-  animation:gfspark .6s cubic-bezier(.2,.6,.3,1) forwards}
-.gfburst.big i{width:5px;height:5px;animation-duration:.9s}
-.gfburst u{position:absolute;left:-9px;top:-9px;width:18px;height:18px;border-radius:50%;
-  border:2px solid var(--acc);animation:gfring .8s ease-out forwards}
-@keyframes gfspark{0%{transform:translate(0,0) scale(1);opacity:1}
-  100%{transform:translate(var(--dx),var(--dy)) scale(.25);opacity:0}}
-@keyframes gfring{0%{transform:scale(.35);opacity:.85}100%{transform:scale(2.8);opacity:0}}
+.gfburst i{position:absolute;left:0;top:0;width:var(--sz,4px);height:var(--sz,4px);border-radius:50%;
+  background:var(--acc);box-shadow:0 0 8px var(--acc),0 0 3px var(--acc);
+  animation:gfspark .8s cubic-bezier(.15,.7,.3,1) forwards}
+.gfburst i.w{background:#fff;box-shadow:0 0 10px #fff,0 0 18px var(--acc)}
+.gfburst.big i{animation-duration:1.15s}
+.gfburst u{position:absolute;left:-11px;top:-11px;width:22px;height:22px;border-radius:50%;
+  border:2px solid var(--acc);animation:gfring .75s ease-out forwards}
+.gfburst.big u{border-width:3px;animation-duration:1s}
+.gfburst u.late{animation-delay:.16s;border-color:#fff;opacity:0}
+@keyframes gfspark{
+  0%{transform:translate(0,0) scale(1);opacity:1}
+  65%{opacity:1}
+  100%{transform:translate(var(--dx),calc(var(--dy) + 14px)) scale(.15);opacity:0}}
+@keyframes gfring{0%{transform:scale(.3);opacity:1}100%{transform:scale(3.6);opacity:0}}
 @media (prefers-reduced-motion: reduce){
-  .gfbarfill.flash{box-shadow:none}
-  .gfbarfill.flash::after,.gfburst i,.gfburst u{animation:none;opacity:0}
+  .gfbar.thump{transform:none}
+  .gfbarfill.flash,.gfbarfill.bigflash{box-shadow:none;animation:none}
+  .gfbarfill.flash::after,.gfbarfill.bigflash::after,.gfburst i,.gfburst u{animation:none;opacity:0}
 }
 /* --- one statement at a time: the moving part --- */
 .gfstage{position:relative;min-height:60vh;display:flex;align-items:center}
@@ -1067,6 +1077,8 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfdots i.done{background:var(--acc)}
 .gfdots i.now{background:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
 .madeby{white-space:nowrap}
+.gfchromenav{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.gfdanger{border-color:#c0392b!important;color:#c0392b!important;font-weight:700}
 .gfexit{height:32px;font-size:.78rem;margin-top:8px}
 .gfsect{text-align:center}
 .gfsecn{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--acc);font-weight:700}
@@ -1238,13 +1250,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.86</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.87</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.86';
+const VERSION = 'v9.87';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9524,6 +9536,58 @@ function giftsOpen(){
 }
 function gfHost(){ return document.getElementById('giftbody'); }
 
+let GF_RESUMED=false;   // the resume screen shows once a visit, not on every redraw
+
+/* Wipes everything and starts from nothing. Used by the resume screen and by
+   "Start again" on the results page. */
+function gfWipe(keepName){
+  const nm=keepName?(GFS&&GFS.name)||'':'';
+  GFS={name:nm,a:{},i:0,sect:-1,done:false,sent:false,self:GFS&&GFS.self};
+  gfSave();
+}
+
+function gfRenderResume(h){
+  const done=gfAnswered();
+  h.innerHTML=`
+  <div class="gfhead">
+    <h2>Welcome back${GFS.name?', '+esc(GFS.name.split(' ')[0]):''}</h2>
+    <p class="sub">You have answers saved on this device from last time.</p>
+  </div>
+  <div class="card gfcard">
+    <div class="gfbar"><div class="gfbarfill" style="width:${Math.round(done/GF_TOTAL*100)}%"></div></div>
+    <p class="note" style="margin-top:8px"><b>${done} of ${GF_TOTAL} answered.</b> You can carry on where you left off, or clear everything and start from a blank sheet.</p>
+    <div class="gfnav">
+      <button class="btn" id="gfresume">Carry on from statement ${Math.min(gfIndex()+1,GF_TOTAL)}</button>
+      <button class="btn ghost" id="gfwipe">Clear all answers and start over</button>
+    </div>
+    <p class="note" id="gfwipenote"></p>
+  </div>`;
+  document.getElementById('gfresume').onclick=()=>{
+    GF_RESUMED=true; gfRender(); window.scrollTo({top:0,behavior:'auto'});
+  };
+  const wipe=document.getElementById('gfwipe');
+  wipe.onclick=()=>{
+    // Two taps, deliberately. Wiping eighty-four answers by accident is not a
+    // mistake anyone should be able to make with one stray finger.
+    if(wipe.dataset.armed!=='1'){
+      wipe.dataset.armed='1';
+      wipe.textContent='Tap again to erase all '+gfAnswered()+' answers';
+      wipe.classList.add('gfdanger');
+      document.getElementById('gfwipenote').textContent='This cannot be undone.';
+      setTimeout(()=>{
+        // The screen may well have been replaced by now — a disarm timer must
+        // never throw on an element that has since been rendered away.
+        if(wipe.dataset.armed!=='1') return;
+        wipe.dataset.armed=''; wipe.textContent='Clear all answers and start over';
+        wipe.classList.remove('gfdanger');
+        const nt=document.getElementById('gfwipenote'); if(nt) nt.textContent='';
+      },5000);
+      return;
+    }
+    gfWipe(true); GF_RESUMED=true; gfRender(); window.scrollTo({top:0,behavior:'auto'});
+  };
+}
+
 function gfRender(){
   const h=gfHost(); if(!h) return;
   if(GF_VIEW==='setup'){ gfRenderSetup(h); return; }
@@ -9531,6 +9595,10 @@ function gfRender(){
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GFS.done){ gfRenderResult(h,gfScores(GFS.a),GFS.name,true); return; }
   if(!GFS.i&&gfAnswered()===0){ gfRenderIntro(h); return; }
+  // Part-way through from a previous visit: offer to carry on or wipe, rather
+  // than silently dropping someone back into a half-finished survey with no
+  // way to start clean.
+  if(!GF_RESUMED&&gfAnswered()>0){ gfRenderResume(h); return; }
   gfRenderPage(h);
 }
 
@@ -9686,7 +9754,10 @@ function gfChrome(i){
       <span class="gfcount">${Math.min(i+1,GF_TOTAL)} of ${GF_TOTAL}</span>
       <span class="gfdots">${GF_SECTS.map((s,n)=>`<i class="${n<sec?'done':(n===sec?'now':'')}"></i>`).join('')}</span>
     </div>
-    ${GF_PUB_TARGET===null?`<button class="btn ghost gfexit" id="gfexit">\u2190 Leave this and go to results</button>`:''}
+    <div class="gfchromenav">
+      ${GF_PUB_TARGET===null?`<button class="btn ghost gfexit" id="gfexit">\u2190 Leave this and go to results</button>`:''}
+      <button class="btn ghost gfexit" id="gfstartover">Start over</button>
+    </div>
   </div>`;
 }
 
@@ -9717,27 +9788,39 @@ function gfSpark(h,pct,big){
   const fill=h.querySelector('.gfbarfill');
   const layer=h.querySelector('.gfsparks');
   if(fill){
-    fill.classList.remove('flash');
+    fill.classList.remove('flash','bigflash');
     void fill.offsetWidth;            // force a reflow so the animation restarts
-    fill.classList.add('flash');
+    fill.classList.add(big?'bigflash':'flash');
+  }
+  const track=h.querySelector('.gfbar');
+  if(track){
+    track.classList.remove('thump');
+    void track.offsetWidth;
+    track.classList.add('thump');
+    setTimeout(()=>track.classList.remove('thump'),420);
   }
   if(!layer) return;
   const burst=document.createElement('div');
   burst.className='gfburst'+(big?' big':'');
   burst.style.left=pct+'%';
-  const n=big?9:5;
+  const n=big?18:10;
   for(let i=0;i<n;i++){
     const d=document.createElement('i');
-    const ang=(-140+(280/(n-1))*i)*Math.PI/180;
-    const dist=(big?26:16)+Math.random()*(big?14:8);
+    // a full fan, thrown upward and outward, with the spread varied so it
+    // reads as a burst rather than a row of dots on a protractor
+    const ang=(-165+(330/(n-1))*i+(Math.random()*16-8))*Math.PI/180;
+    const dist=(big?44:26)+Math.random()*(big?30:16);
     d.style.setProperty('--dx',(Math.cos(ang)*dist).toFixed(1)+'px');
-    d.style.setProperty('--dy',(Math.sin(ang)*dist-(big?6:4)).toFixed(1)+'px');
-    d.style.animationDelay=(i*18)+'ms';
+    d.style.setProperty('--dy',(Math.sin(ang)*dist-(big?14:9)).toFixed(1)+'px');
+    d.style.setProperty('--sz',(big?3.5:2.5)+Math.random()*3+'px');
+    d.style.animationDelay=(i*14)+'ms';
+    if(i%3===0) d.className='w';           // every third spark burns white
     burst.appendChild(d);
   }
-  if(big){ const ring=document.createElement('u'); burst.appendChild(ring); }
+  const ring=document.createElement('u'); burst.appendChild(ring);
+  if(big){ const r2=document.createElement('u'); r2.className='late'; burst.appendChild(r2); }
   layer.appendChild(burst);
-  setTimeout(()=>burst.remove(),big?1100:750);
+  setTimeout(()=>burst.remove(),big?1500:1050);
 }
 
 function gfSettle(h){
@@ -9747,6 +9830,15 @@ function gfSettle(h){
 }
 
 function gfWireExit(h){
+  const so=document.getElementById('gfstartover');
+  if(so) so.onclick=()=>{
+    if(so.dataset.armed!=='1'){
+      so.dataset.armed='1'; so.textContent='Tap again to erase '+gfAnswered()+' answers'; so.classList.add('gfdanger');
+      setTimeout(()=>{ if(so.dataset.armed==='1'){ so.dataset.armed=''; so.textContent='Start over'; so.classList.remove('gfdanger'); } },5000);
+      return;
+    }
+    gfWipe(true); GF_RESUMED=true; gfRender(); window.scrollTo({top:0,behavior:'auto'});
+  };
   const x=document.getElementById('gfexit');
   if(x) x.onclick=()=>{
     GFS.self=false; gfSave();          // and do not drop him back in next time
