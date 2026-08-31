@@ -1066,6 +1066,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfdots i{width:7px;height:7px;border-radius:50%;background:var(--line2);display:block}
 .gfdots i.done{background:var(--acc)}
 .gfdots i.now{background:var(--acc);box-shadow:0 0 0 3px var(--acc-dim)}
+.madeby{white-space:nowrap}
 .gfexit{height:32px;font-size:.78rem;margin-top:8px}
 .gfsect{text-align:center}
 .gfsecn{font-size:.7rem;letter-spacing:.11em;text-transform:uppercase;color:var(--acc);font-weight:700}
@@ -1236,14 +1237,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
-    <div><b>TERRAIN</b> · Pastors Hub</div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.83</span></div>
+    <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.86</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.83';
+const VERSION = 'v9.86';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5256,7 +5257,7 @@ const ES={
    'Quién vive alrededor de su iglesia: ingresos, idiomas, niños, adultos mayores y vivienda, con las manzanas por donde empezar y cómo movilizar a los miembros.',
  'Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.':
    'Convierta los hallazgos en una propuesta escrita para la sala en la que va a entrar: junta, ancianos, diáconos o cualquiera de doce ministerios.',
- '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Pastors Hub':'Pastors Hub',
+ '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Pastors Hub':'Pastors Hub','Created by Joshua Mura':'Creado por Joshua Mura',
  'Community Analytics':'Análisis comunitario','Who lives here':'Quién vive aquí',
  'Strategy':'Estrategia','Where to begin':'Por dónde empezar',
  'Mobilize':'Movilizar','Getting members out':'Poner a los miembros en marcha',
@@ -5697,6 +5698,14 @@ const FLAT=new URLSearchParams(location.search).has('flat');
    questions about themselves, and the code must never travel in a link that is
    sent to a congregation. The ID in the link is write-only: results can be sent
    in with it, nothing can be read out with it. */
+/* Read once, immediately, and hold on to it.
+
+   showHub() writes '' to this key — that is how it records "he was on the hub".
+   But showHub() also runs during boot, before the restore below gets to look,
+   so the memory of where the pastor actually was had already been wiped by the
+   time anything read it. Capturing it here, at the top of the script, is the
+   whole fix. */
+const BOOT_TOOL=(()=>{ try{ return sessionStorage.getItem('terrain-tool'); }catch(e){ return null; } })();
 const GIFTS_LINK=(()=>{
   // #gifts                 — bare link, no server, no church stamp
   // #gifts=PUB             — results come back to one pastor
@@ -8992,6 +9001,7 @@ function gfChurchNav(){
   return `<div class="gfnav gftabs">
     <button class="btn ghost${GF_VIEW==='roster'?' on':''}" data-gv="roster">Results</button>
     <button class="btn ghost${GF_VIEW==='church'?' on':''}" data-gv="church">Across the church</button>
+    <button class="btn ghost${GF_VIEW==='setup'?' on':''}" data-gv="setup">Share link</button>
     <button class="btn ghost" data-gv="take">Take it myself</button>
   </div>`;
 }
@@ -9809,6 +9819,12 @@ function gfWireCard(h,i){
     if(card.dataset.locked) return;
     card.dataset.locked='1';
     GF_NAV++;
+    /* Going back clears the answer you are going back to, so the statement
+       comes up blank and is genuinely re-answered. Showing the old choice
+       still lit made it look as though Back had not worked. */
+    const prev=GF_ORDER[i-1];
+    if(prev) delete GFS.a[gfKeyOf(prev[0],prev[1])];
+    gfSave();
     // Retreat the bar on the element that is still on screen, so it animates
     // back rather than jumping when the next card replaces the markup.
     const bar=h.querySelector('.gfbarfill');
@@ -10082,7 +10098,9 @@ $('ver').textContent=VERSION;
     //   key = ''    → our own reload from the hub: stay on the hub, open nothing
     let want='survey', hadKey=false;
     try{
-      const t=sessionStorage.getItem('terrain-tool');
+      // Captured at the top of the script: by now showHub() has already
+      // blanked the live value during boot.
+      const t=BOOT_TOOL;
       hadKey = t!==null;
       if(t&&TOOLS[t]) want=t; else if(hadKey) want=null;
       // Deliberately left in place: it is rewritten on every navigation, so
@@ -10120,10 +10138,8 @@ $('ver').textContent=VERSION;
       clearInterval(wait);
       if(ACCESS.required && !ACCESS.ok) return;   // never reopen over the gate
       if(TOOL||FLAT||GIFTS_LINK.on) return;       // already placed somewhere
-      try{
-        const t=sessionStorage.getItem('terrain-tool');
-        if(t&&TOOLS[t]&&TOOLS[t].standalone) openTool(t);
-      }catch(e){}
+      const t=BOOT_TOOL;
+      if(t&&TOOLS[t]&&TOOLS[t].standalone) openTool(t);
     },100);
   }
 })();
