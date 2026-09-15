@@ -36,7 +36,7 @@ const reply = (body, status = 200) =>
     headers: { 'content-type': 'application/json', 'cache-control': NO_STORE }
   });
 
-const SYSTEM = `You are helping a Seventh-day Adventist pastor in Pennsylvania who serves a two-church district. He has just run a census report on the neighbourhood around one of his churches and wants practical ministry planning.
+const SYSTEM = `You are helping a Seventh-day Adventist pastor. He has just run a census report on the neighbourhood around one of his churches and wants practical ministry planning.
 
 You will receive: the geography, the key figures for the neighbourhood with county comparisons, and the prompts an automated rule engine already produced.
 

@@ -1250,13 +1250,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.87</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.88</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.87';
+const VERSION = 'v9.88';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -2192,8 +2192,10 @@ function capMerged(){
   // If the pastor has counted his own volunteers, plan around his number.
   // Only fall back to the one-third rule when he has not.
   const facils=(c.facilities&&typeof c.facilities==='object')?c.facilities:{};
-  return {members, leaders, volunteers, facilities:facils,
+  const skls=(c.skills&&typeof c.skills==='object')?c.skills:{};
+  return {members, leaders, volunteers, facilities:facils, skills:skls,
     hasFacility:k=>!!facils[k],
+    hasSkill:k=>!!skls[k],
     hands: volunteers!=null?Math.max(1,volunteers)
          : members!=null?Math.max(1,Math.round(members*WILLING_SHARE)):null,
     estimated: volunteers==null,
@@ -5624,7 +5626,29 @@ function aiSummary(M,levels,scope,geo){
   L.push('THE CAMPAIGN THE TOOL ALREADY SEQUENCED FOR THIS PROFILE (stage 1 opens a door, 4 invites a decision) \u2014 build on these, reorder them, or argue against them:');
   S.moves.forEach(x=>L.push('- ['+(x.tier===2?'creative extra':'proven playbook')+' \u00b7 stage '+(STAGE[x.stage]?STAGE[x.stage].n:'?')+' '+(STAGE[x.stage]?STAGE[x.stage].label:'')+'] '+x.n+' \u2014 '+x.reason));
   L.push('');
-  L.push('STRENGTHS AVAILABLE TO HIM: medical and nursing members (screenings, blood pressure clinics, health expos, CHIP and lifestyle courses, plant-based cooking schools); Bible and prophecy teaching (Daniel and Revelation series, archaeology, questions nights); literature ministry; and church property that sits unused six days a week (car park, sanctuary, fellowship hall, land). Use these where the data supports them.');
+  /* What this congregation actually has. Previously this paragraph asserted
+     nurses, literature ministry and spare property for every church on earth,
+     which handed the model invented facts in the same breath as the system
+     prompt forbids inventing them. Now it reports what the pastor ticked, and
+     admits it when he has ticked nothing. */
+  (function(){
+    const cap=capGet()||{};
+    const sk=(cap.skills&&typeof cap.skills==='object')?cap.skills:{};
+    const fc=(cap.facilities&&typeof cap.facilities==='object')?cap.facilities:{};
+    const people=CAP_SKILLS.filter(s=>sk[s.k]).map(s=>s.n.toLowerCase());
+    const rooms=FACILITIES.filter(f=>fc[f.k]).map(f=>f.n.toLowerCase());
+    if(people.length||rooms.length){
+      L.push('WHAT THIS CONGREGATION ACTUALLY HAS (the pastor ticked these himself \u2014 treat the list as complete, and do not assume anything not on it):');
+      L.push(people.length?'- People: '+people.join('; ')
+                          :'- People: he has not recorded any member skills. Do not assume he has nurses, teachers, musicians or bilingual members.');
+      L.push(rooms.length?'- Building: '+rooms.join('; ')
+                         :'- Building: he has not recorded any facilities. Do not build a plan that needs a kitchen, a gym or a hall.');
+      L.push('Build on these. If the figures point hard at something he has nobody and nothing for, say so plainly and treat it as a recruiting or training decision rather than pretending the capacity exists.');
+    } else {
+      L.push('WHAT THIS CONGREGATION HAS: not recorded. He has filled in no member skills and no facilities. Do NOT assume any \u2014 no nurses, no kitchen, no classrooms, no van. Keep every suggestion to something a few volunteers could do with no special skill and no special room, and tell him near the end that filling in the church profile would let you plan far more specifically.');
+    }
+    L.push('');
+  })();
   L.push('');
   L.push('WHAT THE RULE ENGINE ALREADY FLAGGED (do not simply repeat these — build on them, prioritise between them, and say where you disagree):');
   S.hits.filter(h=>!cats.size||cats.has(h.cat)).forEach(h=>{
@@ -7672,6 +7696,13 @@ function capRender(){
             return `<button type="button" class="facchip${on?' on':''}" data-fac="${f.k}" title="${esc(f.d)}"><i></i>${esc(f.n)}</button>`;}).join('')}
         </div>
       </div>
+      <div class="facblock">
+        <div class="capl" style="margin-bottom:8px">Who you have — tick only what is really true of your members. Terrain will not suggest a health clinic if nobody can run one, and the AI planner is told exactly this and nothing more.</div>
+        <div class="facgrid">
+          ${CAP_SKILLS.map(s=>{const on=!!((capGet()||{}).skills||{})[s.k];
+            return `<button type="button" class="facchip${on?' on':''}" data-skill="${s.k}"><i></i>${esc(s.n)}</button>`;}).join('')}
+        </div>
+      </div>
       <div class="caprow" style="margin-top:14px;flex-wrap:wrap;gap:10px;align-items:center">
         <button class="btn ${CAP_DONE?'capdone':''}" id="cap-done">${CAP_DONE?'\u2713 All set':'Done \u2014 I\u2019ve entered my church'}</button>
         ${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
@@ -7686,12 +7717,21 @@ function capRender(){
     el.addEventListener('change',()=>set(k,el.value));
     el.addEventListener('keydown',e=>{ if(e.key==='Enter') el.blur(); }); };
   wire('cap-m','members'); wire('cap-l','leaders'); wire('cap-v','volunteers');
-  host.querySelectorAll('.facchip').forEach(chip=>{
+  host.querySelectorAll('.facchip[data-fac]').forEach(chip=>{
     chip.addEventListener('click',()=>{
       const c=capGet()||{}; const f=c.facilities&&typeof c.facilities==='object'?c.facilities:{};
       const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
       c.facilities=f; CAP_DONE=false; capSave(c);
       capReRender();               // keep the pastor's place — no jump
+      requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
+    });
+  });
+  host.querySelectorAll('.facchip[data-skill]').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const c=capGet()||{}; const s=c.skills&&typeof c.skills==='object'?c.skills:{};
+      const k=chip.dataset.skill; if(s[k]) delete s[k]; else s[k]=true;
+      c.skills=s; CAP_DONE=false; capSave(c);
+      capReRender();
       requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
     });
   });
@@ -9047,7 +9087,15 @@ function gfShareCfg(){
 }
 function gfShareSave(c){ try{ localStorage.setItem(GF_SHARE_KEY,JSON.stringify(c)); }catch(e){} }
 function gfFacs(){
-  try{ const c=capGet(); return (c&&Array.isArray(c.facilities))?c.facilities:[]; }catch(e){ return []; }
+  // Stored as an object keyed by facility code ({kitchen:true}), not an array.
+  // The old Array.isArray test never passed, so no facility ever reached the
+  // share link and every member report claimed the church had none.
+  try{
+    const c=capGet(); if(!c) return [];
+    if(Array.isArray(c.facilities)) return c.facilities;          // tolerate old saves
+    if(c.facilities&&typeof c.facilities==='object') return Object.keys(c.facilities).filter(k=>c.facilities[k]);
+    return [];
+  }catch(e){ return []; }
 }
 
 /* context → a short string that rides in the link */
