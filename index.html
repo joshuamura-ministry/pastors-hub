@@ -22,7 +22,8 @@
   --ink:#0E1726; --ink2:#4A5768; --ink3:#78879B;
   --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
   --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
-  --shadow:0 1px 2px rgba(15,23,42,.05),0 8px 24px -14px rgba(15,23,42,.22);
+  --shadow:0 1px 2px rgba(15,23,42,.06),0 10px 30px -18px rgba(15,23,42,.28);
+  --shadow-lift:0 2px 4px rgba(15,23,42,.07),0 18px 44px -22px rgba(15,23,42,.34);
   --font:'Manrope',system-ui,-apple-system,'Segoe UI',sans-serif;
   --disp:'Space Grotesk','Manrope',system-ui,sans-serif;
   --r:14px;
@@ -33,7 +34,11 @@
   --ink:#EDF1F6; --ink2:#A3AEBC; --ink3:#68737F;
   --acc:#4C9AFF; --acc-soft:#8FC2FF; --acc-dim:rgba(76,154,255,.13);
   --acc-glow:rgba(76,154,255,.30); --btn-ink:#05192F;
-  --shadow:none;
+  /* The dark theme had no shadows at all, so every panel sat flat on the
+     background with nothing but a hairline to separate it. Depth in the dark
+     comes from a darker shadow plus a faint light edge on top. */
+  --shadow:0 1px 0 rgba(255,255,255,.035) inset,0 2px 6px rgba(0,0,0,.5),0 16px 40px -24px rgba(0,0,0,.9);
+  --shadow-lift:0 1px 0 rgba(255,255,255,.06) inset,0 4px 12px rgba(0,0,0,.55),0 26px 60px -26px rgba(0,0,0,.95);
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
@@ -95,13 +100,26 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;
   padding:11px 4px 11px 10px;min-height:44px}
 .offtab{display:none !important}
-  .partswitch{display:flex;gap:10px;margin:0 0 14px;flex-wrap:wrap}
-  .partbtn{flex:1 1 210px;text-align:left;padding:11px 15px;border-radius:12px;
-    border:1.5px solid var(--line);background:var(--panel);color:var(--ink2);cursor:pointer;font:inherit}
-  .partbtn b{display:block;font-size:1.02rem;color:var(--ink)}
-  .partbtn span{display:block;font-size:.83rem;margin-top:1px}
-  .partbtn.on{border-color:var(--acc);background:var(--acc-dim)}
-  .partbtn.on b{color:var(--acc)}
+/* Borrowed from Slide Preach: the one control that still needs the pastor
+   breathes gently until he uses it, then stops. Motion that carries meaning —
+   nothing else on the page animates by itself. */
+@keyframes needsYou{
+  0%,100%{box-shadow:0 8px 22px -10px var(--acc-glow),0 0 0 0 var(--acc-dim)}
+  50%    {box-shadow:0 8px 22px -10px var(--acc-glow),0 0 0 7px var(--acc-dim)}
+}
+.btn.breathe{animation:needsYou 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){
+  .btn.breathe{animation:none}
+  .card,.facchip{transition:none}
+}
+@media print{ .btn.breathe{animation:none} }
+  .partswitch{display:inline-flex;gap:3px;margin:0 0 10px;padding:3px;border-radius:11px;
+    background:var(--panel2);border:1px solid var(--line)}
+  .partbtn{padding:7px 16px;border-radius:9px;border:0;background:transparent;
+    color:var(--ink2);cursor:pointer;font:inherit;white-space:nowrap}
+  .partbtn b{font-size:.93rem;font-weight:600}
+  .partbtn.on{background:var(--acc);}
+  .partbtn.on b{color:var(--btn-ink,#fff)}
   @media print{.partswitch{display:none}}
 /* Quotations. Ellen White in the script face, Scripture in the display face,
    both with the citation beneath. Restrained: a hairline rule and a small
@@ -183,7 +201,11 @@ section.blk,#brief,#propslot,#report{scroll-margin-top:calc(var(--topH,58px) + 7
 @media(max-width:520px){
   .wrap{padding:16px 14px 90px}
   .grid{gap:9px}
-  .card{min-height:108px;padding:13px 13px 11px}
+  .card{min-height:108px;padding:13px 13px 11px;
+  transition:transform .16s cubic-bezier(.2,.7,.3,1),box-shadow .2s ease,border-color .2s ease}
+@media (hover:hover){
+  .card:hover{transform:translateY(-2px);box-shadow:var(--shadow-lift);border-color:var(--line2)}
+}
   .brief{padding:19px 16px 16px}
   .field input{padding:15px 14px;font-size:1.02rem}
   .brief .acts{gap:7px}
@@ -192,14 +214,15 @@ section.blk,#brief,#propslot,#report{scroll-margin-top:calc(var(--topH,58px) + 7
 
 /* ---- ask ---- */
 .ask{padding:28px 0 14px}
-.ask h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.6rem,5.2vw,2.5rem);line-height:1.12;letter-spacing:-.01em;max-width:18ch}
+.ask h1{font-family:var(--disp);font-weight:800;font-size:clamp(1.8rem,5.8vw,2.9rem);line-height:1.04;letter-spacing:-.035em;max-width:18ch}
 .ask p.lead{color:var(--ink2);margin:10px 0 20px;max-width:52ch}
 .field{display:flex;gap:8px}
 .field input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:14px 14px;font-size:1rem}
 .field input::placeholder{color:var(--ink3)}
 .field input:focus{border-color:var(--acc);outline:none}
 .btn{background:var(--acc);color:var(--btn-ink);border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap;
-  min-height:46px;letter-spacing:-.01em;box-shadow:0 6px 18px -8px var(--acc-glow);
+  min-height:46px;letter-spacing:-.015em;font-weight:750;
+  box-shadow:0 8px 22px -10px var(--acc-glow),0 1px 2px rgba(15,23,42,.18);
   transition:transform .12s ease,box-shadow .2s ease,background .2s ease}
 .btn:hover{background:var(--acc-soft)}
 .btn:active{transform:translateY(1px) scale(.99)}
@@ -245,8 +268,12 @@ section.blk,#brief,#propslot,#report{scroll-margin-top:calc(var(--topH,58px) + 7
 
 section.blk{margin-top:46px;padding-top:26px;border-top:1px solid var(--line2)}
 section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
-.blk h2{font-family:var(--disp);font-weight:600;font-size:clamp(1.35rem,4.6vw,1.7rem);letter-spacing:-.02em;color:var(--ink);
-  text-transform:none;margin-bottom:14px;display:flex;align-items:center;gap:11px;line-height:1.15}
+.blk h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.5rem,5vw,2rem);letter-spacing:-.033em;color:var(--ink);
+  text-transform:none;margin-bottom:16px;display:flex;align-items:center;gap:12px;line-height:1.08}
+/* A rule that runs to the edge, so a heading reads as the start of something
+   rather than a line of text that happens to be larger. */
+.blk h2::after{content:"";flex:1;height:2px;border-radius:2px;
+  background:linear-gradient(90deg,var(--acc-dim),transparent)}
 .blk h2::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--acc);flex:none;box-shadow:0 0 10px var(--acc-glow)}
 .blk h2::after{content:"";flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
 .grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
@@ -322,7 +349,7 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .askpanel{background:var(--panel);border:1px solid var(--acc);border-radius:var(--r);padding:14px 15px;margin-bottom:10px;box-shadow:var(--shadow)}
 .askjoin{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0;border-bottom:none;padding-bottom:8px}
 .askpanel:not(.askjoin){border-top-left-radius:0;border-top-right-radius:0}
-.asktitle{font-family:var(--disp);font-size:clamp(1.06rem,3.4vw,1.2rem);font-weight:700;color:var(--acc);
+.asktitle{font-family:var(--disp);font-size:clamp(1.12rem,3.6vw,1.32rem);font-weight:800;letter-spacing:-.02em;color:var(--acc);
   margin-bottom:10px;padding-top:10px;border-top:1px solid var(--line);display:flex;align-items:center;gap:10px}
 .asktitle::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--acc);flex:none}
 .coachhead{margin:34px 0 4px;padding-top:16px;border-top:1px solid var(--line);
@@ -353,7 +380,11 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .capsaved.show{opacity:1;transform:none}
 .btn.capdone{background:var(--ok,#1a9e6a);border-color:var(--ok,#1a9e6a);color:#fff}
 .facgrid{display:flex;flex-wrap:wrap;gap:8px}
-.facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px}
+.facchip{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:.85rem;font-weight:600;color:var(--ink2);background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:40px;
+  transition:transform .13s cubic-bezier(.2,.7,.3,1),box-shadow .18s ease,border-color .18s ease,color .18s ease}
+@media (hover:hover){ .facchip:hover{transform:translateY(-1px);border-color:var(--acc);color:var(--ink);box-shadow:0 6px 16px -10px var(--acc-glow)} }
+.facchip:active{transform:translateY(0) scale(.97)}
+.facchip.on{box-shadow:0 0 0 1px var(--acc) inset,0 8px 20px -12px var(--acc-glow)}
 .facchip i{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--line2);flex:none;transition:.12s}
 .facchip.on{color:var(--ink);border-color:var(--acc);background:var(--acc-dim)}
 .facchip.on i{background:var(--acc);border-color:var(--acc);box-shadow:inset 0 0 0 2px var(--panel)}
@@ -687,7 +718,7 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
    Everything else (form, cards) reuses the hub's own tokens. */
 .planner{padding-top:10px}
 .planner[hidden]{display:none}
-.pintro h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.6rem,5.2vw,2.5rem);line-height:1.12;letter-spacing:-.01em;max-width:18ch}
+.pintro h1{font-family:var(--disp);font-weight:800;font-size:clamp(1.8rem,5.8vw,2.9rem);line-height:1.04;letter-spacing:-.035em;max-width:18ch}
 .pintro p.lead{color:var(--ink2);margin:10px 0 20px;max-width:56ch}
 .pform{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 12px;background:var(--panel);border:1px solid var(--line2);
   border-radius:var(--r);padding:18px;box-shadow:var(--shadow)}
@@ -749,7 +780,7 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 .phase li.plain{padding-left:0}
 .phase li.plain::before{display:none}
 .enlist{max-width:640px;margin:0 auto;padding:8px 0 60px}
-.enlist h1{font-family:var(--disp);font-weight:600;font-size:clamp(1.5rem,5vw,2.2rem);line-height:1.15;letter-spacing:-.01em}
+.enlist h1{font-family:var(--disp);font-weight:800;font-size:clamp(1.65rem,5.4vw,2.5rem);line-height:1.08;letter-spacing:-.03em}
 .enlist .lead{color:var(--ink2);margin:10px 0 18px;line-height:1.6}
 .enlist .card2{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:16px;box-shadow:var(--shadow);margin-bottom:12px}
 .enlist label.fl{display:flex;flex-direction:column;gap:4px;margin-bottom:10px}
@@ -939,7 +970,7 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 @media(max-width:420px){.phase{grid-template-columns:56px 1fr;gap:0 10px}.rail::before{left:27px}.phase .mo b{font-size:1.35rem}}
 footer{margin-top:60px;padding-top:18px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.76rem;color:var(--ink3)}
 footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacing:.08em}
-@media print{:root{--bg:#fff;--panel:#fff;--ink:#111;--ink2:#333;--ink3:#666;--shadow:none}body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
+@media print{:root{--bg:#fff;--panel:#fff;--ink:#111;--ink2:#333;--ink3:#666;--shadow:none;--shadow-lift:none}body{background:#fff;color:#111}.top,.ask,.brief .acts,.diag{display:none}.card,.brief,.chip{border-color:#ccc;background:#fff}.card .n,.brief p b{color:#111}.brow .bb i{background:#333}}
 
 /* ===== Discover Your Spiritual Gifts (the member-facing tool) ===== */
 .gifts{max-width:760px;margin:0 auto;padding:0 14px 60px}
@@ -1259,13 +1290,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.91</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.93</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.91';
+const VERSION = 'v9.93';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7411,7 +7442,7 @@ function renderPartSwitch(){
   host.hidden=!show;
   if(!show){ host.innerHTML=''; return; }
   host.innerHTML=Object.keys(PARTS).map(k=>`<button class="partbtn${PART===k?' on':''}" data-p="${k}">
-      <b>${esc(PARTS[k].n)}</b><span>${esc(PARTS[k].sub)}</span></button>`).join('');
+      <b>${esc(PARTS[k].n)}</b></button>`).join('');
   host.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
     if(PART===b.dataset.p) return;
     PART=b.dataset.p;
@@ -7432,7 +7463,10 @@ function buildSecNav(){
   if(!DATA||!secs.length){ nav.hidden=true; return; }
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
-  nav.innerHTML=((TOOL==='survey'||FLAT)?`<button data-t="brief">Brief</button>`:'')+
+  // The Brief is hidden in the action plan, so its jump chip must go with it —
+  // otherwise the chip scrolls to nothing.
+  const briefShown=(FLAT||(TOOL==='survey'&&(PART==='survey'||PART==='all')));
+  nav.innerHTML=(briefShown?`<button data-t="brief">Brief</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.querySelector('h2').textContent)}</button>`).join('');
   nav.scrollLeft=0;      // always start at the first section, not wherever it was
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
@@ -7781,7 +7815,7 @@ function capRender(){
         </div>
       </div>
       <div class="caprow" style="margin-top:14px;flex-wrap:wrap;gap:10px;align-items:center">
-        <button class="btn ${CAP_DONE?'capdone':''}" id="cap-done">${CAP_DONE?'\u2713 All set':'Done \u2014 I\u2019ve entered my church'}</button>
+        <button class="btn ${CAP_DONE?'capdone':'breathe'}" id="cap-done">${CAP_DONE?'\u2713 All set':'Done \u2014 I\u2019ve entered my church'}</button>
         ${any?`<button class="btn ghost" id="cap-clear">Clear these</button>`:''}
         <span class="capsaved" id="cap-saved" aria-live="polite"></span>
         <span class="caphint" style="margin:0;align-self:center">Saved on this device. Shared with nobody.</span>
@@ -8027,7 +8061,7 @@ function render(){
   </section>`);
 
   const SEC_WHERE=(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
-    <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
+    <p class="note" style="margin-bottom:12px">The blocks around <b>${esc(levels[S].short)}</b>, shaded by whichever measure you pick. Start where the need is thickest and closest — then go and ask, because a map shows where people are, never what they want.</p>
     <div id="zoneslot"></div>
   </section>`);
 
@@ -8207,9 +8241,9 @@ const VIEWS={
   need:{label:'Greatest need', key:z=>z.need,
     blurb:'Hardship alone, ignoring distance. Some of these may be a drive away.',
     unit:z=>fmtPct(z.m.poverty)+' in poverty'},
-  children:{label:'Children', key:z=>z.m.kidsShare||0,
-    blurb:'Share of residents under 18 \u2014 where the families are.',
-    unit:z=>fmtPct(z.m.kidsShare)+' children'},
+  children:{label:'Young families', key:z=>z.m.kidsShare||0,
+    blurb:'Blocks with the most children at home \u2014 where the young families are.',
+    unit:z=>fmtPct(z.m.kidsShare)+' under 18'},
   seniors:{label:'Seniors alone', key:z=>z.m.seniorsAlone||0,
     blurb:'Households that are one person over 65 living alone \u2014 where isolation concentrates.',
     unit:z=>fmtPct(z.m.seniorsAlone)+' seniors alone'},
@@ -8275,7 +8309,9 @@ function drawZones(){
   host.innerHTML=`<div class="zones">
     <div class="movehead"><b>Hotspots</b>
       <span>${esc(V.blurb)} Every block is shaded on the measure you choose; the four strongest are numbered. Showing about ${ZONES.radius} miles around the church \u2014 switch the reach below and the map, radius and blocks all widen.</span></div>
-    <div class="zscope" id="zscope">${Object.keys(levels).filter(l=>levels[l]&&levels[l].kind).map(l=>`<button data-zs="${l}" class="${l===SCOPE?'on':''}">${levels[l].kind}<small>${esc(levels[l].short)}</small></button>`).join('')}</div>
+    <!-- The scope switcher at the top of the report already governs this map.
+         Two identical controls on one screen only invite the question of
+         whether they do different things. -->
     <div class="zviews">${Object.keys(VIEWS).map(k=>`<button data-v="${k}" class="${k===ZVIEW?'on':''}">${esc(VIEWS[k].label)}</button>`).join('')}</div>
     ${zoneMap(church,top,all,1.8,ZONES.scored,ZVIEW)}
     <div class="zscale"><span>less</span><i></i><span>more</span></div>
