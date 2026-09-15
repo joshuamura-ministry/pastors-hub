@@ -95,6 +95,14 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .whoami button{background:none;border:none;color:var(--ink3);font:inherit;text-decoration:underline;cursor:pointer;
   padding:11px 4px 11px 10px;min-height:44px}
 .offtab{display:none !important}
+  .partswitch{display:flex;gap:10px;margin:0 0 14px;flex-wrap:wrap}
+  .partbtn{flex:1 1 210px;text-align:left;padding:11px 15px;border-radius:12px;
+    border:1.5px solid var(--line);background:var(--panel);color:var(--ink2);cursor:pointer;font:inherit}
+  .partbtn b{display:block;font-size:1.02rem;color:var(--ink)}
+  .partbtn span{display:block;font-size:.83rem;margin-top:1px}
+  .partbtn.on{border-color:var(--acc);background:var(--acc-dim)}
+  .partbtn.on b{color:var(--acc)}
+  @media print{.partswitch{display:none}}
 /* Quotations. Ellen White in the script face, Scripture in the display face,
    both with the citation beneath. Restrained: a hairline rule and a small
    diamond rather than anything ornamental. */
@@ -1225,6 +1233,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <span class="toolname" id="toolname"></span>
     <button class="backtools changech" id="changech" hidden>Change church</button>
   </div>
+  <div class="partswitch" id="partswitch" hidden></div>
   <div class="secnav" id="secnav" hidden></div>
   <div class="gate" id="gate" hidden>
     <h2>Find your conference</h2>
@@ -1250,13 +1259,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.88</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.89</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.88';
+const VERSION = 'v9.89';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1936,10 +1945,10 @@ const LOAD={0:'Set it and top it up',1:'A few times a year',2:'Monthly',3:'Weekl
    ordinary week this permanently occupies. */
 const BANDS=[
  {k:0,n:'Light lift',      d:'One or two people, now and then. Nothing here needs a rota, a budget or a meeting to begin — a willing member could start most of these before next Sabbath.'},
- {k:1,n:'A monthly rhythm',d:'One date a month that somebody owns and protects. More than a gesture, less than a commitment that eats every week. This is where most churches should be living.'},
- {k:2,n:'A standing commitment',d:'Every week, and somebody has to actually be there each time — unlocking, staying, locking up. Worth doing, but count the cost first: one of these done faithfully beats three abandoned by March.'}
+ {k:1,n:'Moderate lift',   d:'One date a month that somebody owns and protects. More than a gesture, less than a commitment that eats every week. This is where most churches should be living.'},
+ {k:2,n:'Heavy lift',      d:'Every week, and somebody has to actually be there each time — unlocking, staying, locking up. Worth doing, but count the cost first: one of these done faithfully beats three abandoned by March.'}
 ];
-function bandOf(load){ return load<=0?0:load===1?1:2; }   // 0 light · 1 monthly · 2 standing
+function bandOf(load){ return load<=0?0:load===1?1:2; }   // 0 light · 1 moderate · 2 heavy
 /* Two shelves, proven first. The pastor asked for the recognizable playbook at
    the top and the inventive material clearly labeled underneath it, and he is
    right: a board says yes to a food pantry it has seen work in five other
@@ -5742,6 +5751,7 @@ const FLAT=new URLSearchParams(location.search).has('flat');
    time anything read it. Capturing it here, at the top of the script, is the
    whole fix. */
 const BOOT_TOOL=(()=>{ try{ return sessionStorage.getItem('terrain-tool'); }catch(e){ return null; } })();
+const BOOT_PART=(()=>{ try{ return sessionStorage.getItem('terrain-part'); }catch(e){ return null; } })();
 const GIFTS_LINK=(()=>{
   // #gifts                 — bare link, no server, no church stamp
   // #gifts=PUB             — results come back to one pastor
@@ -5754,6 +5764,15 @@ const GIFTS_LINK=(()=>{
 /* The hub is the front door. A pastor picks a tool, works inside it, and comes
    back out. New tools become new tiles here rather than more sections bolted to
    the bottom of one long page. */
+/* The survey report is two documents in one: what the neighbourhood IS, and
+   what the church DOES about it. PART decides which is on screen. 'all' is
+   used by print and by the flat view, where everything must be present. */
+let PART=(BOOT_PART==='plan'||BOOT_PART==='survey')?BOOT_PART:'survey';
+const PARTS={
+  survey:{n:'The survey',      sub:'Who lives here',            tabs:['analytics']},
+  plan:  {n:'The action plan', sub:'What your church does',     tabs:['strategy','mobilize']}
+};
+const partTabs=()=> PART==='all' ? ['analytics','strategy','mobilize'] : PARTS[PART].tabs;
 const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
   // standalone: needs no church address or Census data; it has its own panel.
@@ -5861,10 +5880,14 @@ function applyTool(){
     const hub=$('hub'); if(hub) hub.hidden=true;
     return;
   }
-  const allow=(TOOLS[TOOL]||{tabs:[]}).tabs;
+  let allow=(TOOLS[TOOL]||{tabs:[]}).tabs;
+  // Inside the survey the two parts narrow it further. Other tools are
+  // untouched — Make the case still gets its single 'case' section.
+  if(TOOL==='survey') allow=allow.filter(t=>partTabs().includes(t));
   document.querySelectorAll('#sections section.blk').forEach(sec=>{
     sec.classList.toggle('offtab', !allow.includes(sec.dataset.tab||'analytics'));
   });
+  renderPartSwitch();
   const single=(TOOLS[TOOL]||{tabs:[]}).tabs.length===1;
   // One section means the tool bar already names it: no chip bar, no repeated heading
   const nav=document.getElementById('secnav'); if(nav&&single) nav.hidden=true;
@@ -7360,6 +7383,28 @@ function wireHub(){
   const brand=$('brandlink');
   if(brand) brand.onclick=e=>{ e.preventDefault(); if(ACCESS.ok!==false) showHub(); };
 }
+/* Two buttons, not ten tabs. The pastor asked for the survey and the action
+   plan to be separate passes; anything finer buries the church profile again. */
+function renderPartSwitch(){
+  const host=document.getElementById('partswitch'); if(!host) return;
+  const show = (TOOL==='survey') && !FLAT && !!DATA;
+  host.hidden=!show;
+  if(!show){ host.innerHTML=''; return; }
+  host.innerHTML=Object.keys(PARTS).map(k=>`<button class="partbtn${PART===k?' on':''}" data-p="${k}">
+      <b>${esc(PARTS[k].n)}</b><span>${esc(PARTS[k].sub)}</span></button>`).join('');
+  host.querySelectorAll('[data-p]').forEach(b=>b.onclick=()=>{
+    if(PART===b.dataset.p) return;
+    PART=b.dataset.p;
+    try{ sessionStorage.setItem('terrain-part',PART); }catch(e){}
+    applyTool();
+    // The switch itself must never depend on the scroll landing.
+    try{
+      const sections=document.getElementById('sections');
+      if(sections&&sections.scrollIntoView) sections.scrollIntoView({behavior:'auto',block:'start'});
+      else window.scrollTo(0,0);
+    }catch(e){}
+  });
+}
 function buildSecNav(){
   const nav=document.getElementById('secnav'); if(!nav) return;
   const secs=[...document.querySelectorAll('#sections section.blk')]
@@ -7636,17 +7681,22 @@ function wireProposals(M,levels,SG){
 // so an absolute scroll restore clamps wrong (the jump). Anchoring to the panel and
 // correcting by how far it moved survives the collapse. Used by every setup input.
 let CAP_DONE=false;     // pastor clicked 'Done' — shows the All-set confirmation
+/* Ticking one chip used to rebuild the entire 14,000px report and then try to
+   put the scroll position back by measuring across two animation frames. The
+   report cannot lay out that fast, so it measured a half-built page and
+   corrected by the wrong amount — every tap threw the pastor about 3,600px
+   down, twenty-three times over while filling the profile in.
+
+   The panel is self-contained, so it redraws alone and nothing moves. What the
+   chips feed — the moves and Mobilization — refreshes when he presses
+   "Done", which is what that button is for. */
 function capReRender(){
-  const p1=document.getElementById('capslot');
-  const anchor1=p1?(p1.closest('.askpanel')||p1):null;
-  const before=anchor1?anchor1.getBoundingClientRect().top:0;
+  capRender();
+}
+function capCommit(){
+  const y=window.scrollY;
   render();
-  const restore=()=>{
-    const p2=document.getElementById('capslot');
-    const anchor2=p2?(p2.closest('.askpanel')||p2):null;
-    if(anchor2){ const after=anchor2.getBoundingClientRect().top; window.scrollBy(0, after-before); }
-  };
-  requestAnimationFrame(()=>{ restore(); requestAnimationFrame(restore); });
+  requestAnimationFrame(()=>window.scrollTo(0,y));
 }
 // Change scope (Neighbourhood/Town/County) and reload the map, keeping the pastor
 // anchored to the Hotspots block they were looking at — no jump to the bottom.
@@ -7735,6 +7785,8 @@ function capRender(){
       requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
     });
   });
+  const dn=$('cap-done');
+  if(dn) dn.onclick=e=>{ e.preventDefault(); CAP_DONE=true; capCommit(); };
   const cl=$('cap-clear'); if(cl) cl.onclick=e=>{ e.preventDefault(); CAP_DONE=false; capSave({}); capReRender(); };
   // Live 'saved' flash — reassures each entry landed, without a re-render.
   const flashSaved=()=>{ const s=$('cap-saved'); if(!s) return;
@@ -7927,7 +7979,7 @@ function render(){
     ${card('Families with children',me.famWithKids,fmtPct,pick('famWithKids'),S,'of all families')}
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
   </div></section>`);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Help already nearby</h2>
+  const SEC_HELP=(`<section class="blk" data-tab="strategy" data-theme="faith"><h2>Help already nearby</h2>
     <p class="note" style="margin-bottom:12px">Who is already serving this community — food, housing, recovery, and fellow ministers — so outreach starts with a phone call, not from scratch. The directory links are live and cover every county; the mapped results are whatever OpenStreetMap happens to hold nearby (real, but incomplete).</p>
     <div id="helpslot"></div>
   </section>`);
@@ -7939,18 +7991,26 @@ function render(){
     <div id="congslot"></div>
   </section>`);
 
-  secs.push(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
+  const SEC_WHERE=(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Where to look</h2>
     <p class="note" style="margin-bottom:12px">${SG.hits.length} prompt${SG.hits.length===1?'':'s'} drawn from the numbers above for <b>${esc(levels[S].short)}</b>. Each names the figure behind it. These are places to start asking — not conclusions about people.</p>
     <div id="zoneslot"></div>
+  </section>`);
+
+  /* The church profile used to sit two thirds of the way down, inside the
+     moves. It is the one input that decides whether everything after it is any
+     good, so it is now its own section, ahead of them. */
+  const SEC_CHURCH=(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Your church</h2>
+    <p class="note" style="margin-bottom:12px">Fill this in once. Everything after it — the moves, Mobilization and the Evangelism Planner — is shaped by what you enter here. Nothing leaves this device.</p>
     <div class="askpanel askjoin" style="margin:14px 0">
-      <div class="asktitle">Set up your church — counts &amp; facilities</div>
-      <p class="note" style="margin:0 0 4px">Fill this in once. Everything below — the moves, Mobilization and the Evangelism Planner — is shaped by what you enter here.</p>
       <div id="capslot"></div>
     </div>
+  </section>`);
+
+  const SEC_MOVES=(`<section class="blk" data-tab="mobilize" data-theme="prompts"><h2>Signature moves</h2>
     ${SG.moves.length?`<div class="moves">
       <div class="movehead"><b>Signature moves for this neighbourhood</b>
-        <span>Matched to this tract's numbers and grouped by what each one asks of the church. Open the group that fits where your congregation is — start with the easy ways in, move to a monthly rhythm, take on a weekly commitment only when you are ready. Inside each group the proven playbook comes first, then creative extras. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Tell Terrain how big your church is under <b>Mobilization</b> to have these marked for what you can actually staff.`}</span></div>
-      ${IMM.length?`<details class="stage immgroup" open>
+        <span>Matched to this tract's numbers and grouped by what each one asks of the church. Open the group that fits where your congregation is — start with the easy ways in, move to a monthly rhythm, take on a weekly commitment only when you are ready. Inside each group the proven playbook comes first, then creative extras. Every card carries its campaign stage — open a door, build trust, go deeper, invite a decision.${capMerged().ready?` Sized to a congregation of ${capMerged().members}.`:` Fill in <b>Your church</b> above to have these marked for what you can actually staff.`}</span></div>
+      ${false?`<details class="stage immgroup" open>
         <summary class="stagehead"><span class="stagenum imm">\u2691</span><b>Reaching ${esc(IMMNAME)}</b><span class="stagen">${IMM.length} idea${IMM.length===1?'':'s'}</span><i class="chev"></i></summary>
         <div class="stagebody">
         <p class="stageblurb">Ministry to immigrant and newcomer families, gathered in one place and matched to who actually lives here. The guiding rule throughout: welcome first, help freely, and never ask about anyone\u2019s papers or status.</p>
@@ -7966,6 +8026,9 @@ function render(){
         </div>
       </details>`:''}
       ${BANDS.map((B,bi)=>{
+        // Everything lands in a lift band now, including the newcomer moves
+        // that used to be pulled out under their own heading. Each card still
+        // carries its own "why here", so the tie back to the data survives.
         const set=SG.moves.filter(x=>bandOf(x.load)===bi);
         if(!set.length) return '';
         // Proven first inside each effort group, best fit first.
@@ -8016,9 +8079,16 @@ function render(){
     <div id="aislot"></div>
   </section>`);
 
+  /* The action plan, in the order it is actually worked:
+       look at the map, see who is already helping, know your own church,
+       count your people, then choose what to do. */
+  secs.push(SEC_WHERE);
+  secs.push(SEC_HELP);
+  secs.push(SEC_CHURCH);
+
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
-    <p class="note" style="margin-bottom:14px">Everything above needs people to do it. Using the counts and facilities you set up under <b>Signature moves</b>, this turns the survey into workers: what the neighbourhood asks of your congregation, then how to hand out the jobs by name.</p>
+    <p class="note" style="margin-bottom:14px">Everything above needs people to do it. Using the counts and facilities you set up under <b>Your church</b>, this turns the survey into workers: what the neighbourhood asks of your congregation, then how to hand out the jobs by name.</p>
 
     <div class="askpanel">
       <div class="asktitle">What this neighbourhood asks of your congregation</div>
@@ -8086,12 +8156,17 @@ function render(){
 
   </section>`);
 
+  // Choose what to do last, once the map, the neighbours, the church and the
+  // people are all on the table.
+  secs.push(SEC_MOVES);
+
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2>${verseHTML('case')}${egwHTML('case')}
     <p class="note" style="margin-bottom:12px">The same findings, argued to the group that has to act on them. Choose who you are speaking to — the figures stay the same, the emphasis, the ask and the objections change.</p>
     <div class="audgrid">${AUD.map(a=>`<button class="audbtn" data-aud="${a.id}"><span>${a.icon}</span>${esc(a.label)}</button>`).join('')}</div>
     <div id="propslot"></div>
   </section>`);
   $('sections').innerHTML=secs.join('');
+  renderPartSwitch();
   aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
