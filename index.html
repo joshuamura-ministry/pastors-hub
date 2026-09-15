@@ -1359,13 +1359,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.97</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.98</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.97';
+const VERSION = 'v9.98';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7626,12 +7626,20 @@ function goPart(next){
     PART=b.dataset.p;
     try{ sessionStorage.setItem('terrain-part',PART); }catch(e){}
     applyTool();
-    // The switch itself must never depend on the scroll landing.
-    try{
-      const sections=document.getElementById('sections');
-      if(sections&&sections.scrollIntoView) sections.scrollIntoView({behavior:'auto',block:'start'});
-      else window.scrollTo(0,0);
-    }catch(e){}
+    /* Switching parts hides thousands of pixels and shows thousands more, so
+       the page height changes under us. Scrolling immediately aims at a layout
+       that has not happened yet, and the browser then restores the old offset
+       — which is why tapping "Open the action plan" from the foot of the
+       survey landed at the foot of the plan. Put it at the top, then hold it
+       there across the next two frames while layout settles. The switch itself
+       never depends on any of this working. */
+    const toTop=()=>{ try{
+      const top=document.getElementById('partswitch')||document.getElementById('sections');
+      const y=top?Math.max(0,top.getBoundingClientRect().top+window.scrollY-12):0;
+      window.scrollTo(0,y);
+    }catch(e){ try{ window.scrollTo(0,0); }catch(_){} } };
+    toTop();
+    requestAnimationFrame(()=>{ toTop(); requestAnimationFrame(toTop); });
   })({dataset:{p:next}});
 }
 document.addEventListener('click',e=>{
