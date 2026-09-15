@@ -1259,13 +1259,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.89</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.91</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.89';
+const VERSION = 'v9.91';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1347,9 +1347,9 @@ function initTheme(){
 /* Focus filters. Empty set = show everything. Each focus names the data sections
    it keeps (by theme) and which outreach categories stay visible. */
 const FOCUS_DEFS=[
- {k:'families', label:'Families & youth', themes:['families'],            cats:['Children & youth']},
+ {k:'families', label:'Families', themes:['families'],            cats:['Families with children']},
  {k:'seniors',  label:'Seniors',          themes:['seniors'],             cats:['Seniors & isolation']},
- {k:'hardship', label:'Hardship & work',  themes:['hardship','work'],     cats:['Hardship & work','Two neighbourhoods at once']},
+ {k:'hardship', label:'Hardship & work',  themes:['hardship','work'],     cats:['Hardship & work','A divided neighbourhood']},
  {k:'housing',  label:'Housing',          themes:['housing'],             cats:['Housing pressure']},
  {k:'language', label:'Language & newcomers', themes:['language'],        cats:['Language & newcomers']},
  {k:'change',   label:'Change over time', themes:['change','people'],     cats:['A changing community']},
@@ -1628,12 +1628,12 @@ const KIND={serve:'Serve',equip:'Equip',belong:'Belong',invite:'Invite'};
 const EFFORT={solo:'One person, this week',team:'Small team, about a month',budget:'Needs a budget line',partner:'Needs an outside partner'};
 
 const STRATEGY={
- 'Children & youth':'Serve the parents, not only the children. A holiday club fills a gap for a week; a parenting course, a strengthened marriage, and a monthly family night change what happens in that home all year. Reach the child through a programme, reach the family through the parent, and the whole household moves together.',
+ 'Families with children':'Serve the parents, not only the children. A holiday club fills a gap for a week; a parenting course, a strengthened marriage, and a monthly family night change what happens in that home all year. Reach the child through a programme, reach the family through the parent, and the whole household moves together.',
  'Language & newcomers':'Language is the door, not the ministry. Help with the paperwork that frightens people, teach the English and citizenship that free them, then give them a room where their culture is honoured rather than tolerated. Spiritual conversation follows in the language people pray in.',
  'Seniors & isolation':'Isolation is not solved by an event — it is solved by somebody expected. Build the reliable rhythm first (a call, a lift, a Tuesday), teach what this stage of life actually asks about, and pair generations so being needed is part of the cure.',
  'Hardship & work':'Relieve the emergency, then attack what caused it. A food parcel meets today; budgeting, job skills, and cooking on a low income change next year. Do both under one roof, at a table rather than a queue, and dignity survives the help.',
  'Housing pressure':'Housing stress runs on a clock — arrears, notice, eviction. Be fast and small early, know the process before anyone needs it, and teach tenants what they are entitled to. In a neighbourhood that turns over, welcoming new arrivals beats any advertising.',
- 'Two neighbourhoods at once':'One programme will fit one half and quietly exclude the other. Plan two front doors, then do the harder work of getting both groups into the same room. Affluence is not the absence of need; it is a different poverty, and it can fund the ministry the other half needs.',
+ 'A divided neighbourhood':'One programme will fit one half and quietly exclude the other. Plan two front doors, then do the harder work of getting both groups into the same room. Affluence is not the absence of need; it is a different poverty, and it can fund the ministry the other half needs.',
  'A changing community':'Listen for a year before launching anything. A congregation that stopped changing when its neighbourhood did will feel like a mismatch no welcome sign can fix. Leadership that reflects the street, and partnership rather than absorption, is the whole strategy.'
 };
 
@@ -2155,6 +2155,20 @@ const MOVE_FACILITY={
   'garden':'grounds','lift-rota':'vehicle','senior-day':'vehicle',
   'newcomer-circle':'kitchen','rights-clinic':'classrooms','welcome-table':'parking'
 };
+/* Who the congregation itself is. Not a judgement and never displayed to
+   anyone else. It matters because the distance between the church and the
+   streets around it is frequently the real pastoral question, and the planner
+   should be told rather than left to assume they look alike. */
+const CAP_WHO=[
+  {k:'mixed',    n:'Mixed / several backgrounds'},
+  {k:'oneethnic',n:'Mainly one ethnic group'},
+  {k:'intl',     n:'International / many nationalities'},
+  {k:'otherlang',n:'We worship in another language'},
+  {k:'older',    n:'Mostly older members'},
+  {k:'young',    n:'Mostly young adults'},
+  {k:'families', n:'Mostly families with children'},
+  {k:'newcomers',n:'Many immigrants or newcomers'}
+];
 const CAP_SKILLS=[
   {k:'lead',n:'Can lead a group or give a study'},
   {k:'medical',n:'Nurses or health professionals'},
@@ -2202,9 +2216,11 @@ function capMerged(){
   // Only fall back to the one-third rule when he has not.
   const facils=(c.facilities&&typeof c.facilities==='object')?c.facilities:{};
   const skls=(c.skills&&typeof c.skills==='object')?c.skills:{};
-  return {members, leaders, volunteers, facilities:facils, skills:skls,
+  const whos=(c.who&&typeof c.who==='object')?c.who:{};
+  return {members, leaders, volunteers, facilities:facils, skills:skls, who:whos,
     hasFacility:k=>!!facils[k],
     hasSkill:k=>!!skls[k],
+    isWho:k=>!!whos[k],
     hands: volunteers!=null?Math.max(1,volunteers)
          : members!=null?Math.max(1,Math.round(members*WILLING_SHARE)):null,
     estimated: volunteers==null,
@@ -2998,7 +3014,7 @@ const RULES=[
           `A welcome dinner for new neighbours costs little and surfaces needs you would not guess.`],
   ask:()=>`What was hardest in your first year here? Ask someone who arrived recently and let the answer set the agenda.`},
 
- {id:'kids',cat:'Children & youth',w:9,
+ {id:'kids',cat:'Families with children',w:9,
   on:m=>m.kidsShare>=24,
   ev:m=>`${fmtPct(m.kidsShare)} of residents are under 18 — about ${fmtNum(m.kids)} children.`,
   t:()=>`This is a children's neighbourhood`,
@@ -3006,7 +3022,7 @@ const RULES=[
           `School-holiday cover is the scarcest thing working parents need.`,
           `Safe-space policy, background checks, and trained volunteers before you advertise — get this right first.`],
   ask:()=>`What do parents here do during school holidays? The gap in that answer is your opening.`},
- {id:'single-parent',cat:'Children & youth',w:8,
+ {id:'single-parent',cat:'Families with children',w:8,
   on:m=>m.singleParent>=30,
   ev:m=>`${fmtPct(m.singleParent)} of families with children are headed by a single parent.`,
   t:()=>`Design around one adult, not two`,
@@ -3014,7 +3030,7 @@ const RULES=[
           `Practical help — a repaired car, a cooked meal, an hour of quiet — outranks another evening event.`,
           `Watch the language from the front: "bring your husband" quietly closes the door.`],
   ask:()=>`What time of day is hardest for a parent doing this alone? Build around that hour.`},
- {id:'schools',cat:'Children & youth',w:7,
+ {id:'schools',cat:'Families with children',w:7,
   on:m=>m.k12>=400,
   ev:m=>`About ${fmtNum(m.k12)} children here are enrolled in K-12.`,
   t:()=>`The schools are the biggest door in the neighbourhood`,
@@ -3022,7 +3038,7 @@ const RULES=[
           `Teacher appreciation is unglamorous, cheap, and remembered for years.`,
           `Offer space or volunteers before offering a message.`],
   ask:()=>`Which school here has the fewest volunteers? That is where you are most needed and least duplicated.`},
- {id:'college',cat:'Children & youth',w:5,
+ {id:'college',cat:'Families with children',w:5,
   on:m=>m.college>=150,
   ev:m=>`About ${fmtNum(m.college)} residents are enrolled in college.`,
   t:()=>`A student population is within reach`,
@@ -3149,7 +3165,7 @@ const RULES=[
           `A lift rota, or meeting closer to where people live, beats better advertising.`],
   ask:()=>`Walk from the nearest bus stop to your door. How long did it take, and would you do it in the rain?`},
 
- {id:'divided',cat:'Two neighbourhoods at once',w:10,
+ {id:'divided',cat:'A divided neighbourhood',w:10,
   on:m=>m.incLow>=20&&m.incHigh>=20,
   ev:m=>`${fmtPct(m.incLow)} of households earn under $35k while ${fmtPct(m.incHigh)} earn over $150k.`,
   t:()=>`You are serving two very different neighbourhoods`,
@@ -3157,13 +3173,13 @@ const RULES=[
           `Cost, timing, transport, and dress code all sort people without anyone intending it.`,
           `The harder work is getting both groups into the same room and keeping it comfortable for the poorer one.`],
   ask:()=>`When both groups are present, who does the talking? That answer is the real measure.`},
- {id:'gini',cat:'Two neighbourhoods at once',w:5,
+ {id:'gini',cat:'A divided neighbourhood',w:5,
   on:m=>m.gini>=0.48,
   ev:m=>`Income inequality here scores ${m.gini==null?'—':m.gini.toFixed(2)} on the Gini index — high.`,
   t:()=>`Averages will mislead you here`,
   do:()=>[`Median income hides the spread; do not plan for the middle, because fewer people live there than you think.`],
   ask:()=>`Which street feels different from the next one over? Walk the boundary.`},
- {id:'affluent',cat:'Two neighbourhoods at once',w:5,
+ {id:'affluent',cat:'A divided neighbourhood',w:5,
   on:m=>m.incHigh>=35&&m.incLow<20,
   ev:m=>`${fmtPct(m.incHigh)} of households earn over $150k; only ${fmtPct(m.incLow)} under $35k.`,
   t:()=>`Comfortable, and not therefore reached`,
@@ -4206,9 +4222,7 @@ function congregationsHTML(list,radiusMi,county){
   ${ordered.map(g=>Object.keys(groups).find(k=>groups[k]===g))
      .filter(k=>DOCTRINE[k]&&!vague(k))
      .map(k=>doctrineCard(k,groups[k].items.length)).join('')}
-  <details class="ideas" style="margin-top:10px"><summary>Traditions not on the map nearby — including the largest group of all</summary>
-    ${Object.keys(DOCTRINE).filter(k=>!groups[k]&&k!=='christian-other').map(k=>doctrineCard(k,0)).join('')}
-  </details>
+  
 
   <div class="card wide note" style="min-height:0;line-height:1.6">
     <b style="color:var(--ink)">Read this before drawing conclusions.</b> These points come from OpenStreetMap, which volunteers maintain. Storefront churches, congregations renting school halls, and new plants are routinely missing, so treat the count as a floor rather than a total \u2014 and a denomination shown here may be a building rather than a living congregation.
@@ -5644,6 +5658,9 @@ function aiSummary(M,levels,scope,geo){
     const cap=capGet()||{};
     const sk=(cap.skills&&typeof cap.skills==='object')?cap.skills:{};
     const fc=(cap.facilities&&typeof cap.facilities==='object')?cap.facilities:{};
+    const wh=(cap.who&&typeof cap.who==='object')?cap.who:{};
+    const who=CAP_WHO.filter(x=>wh[x.k]).map(x=>x.n.toLowerCase());
+    if(who.length) L.push('WHO THE CONGREGATION ITSELF IS (the pastor\u2019s own description): '+who.join('; ')+'. Where this differs from the neighbourhood profile above, name the gap as a question worth facing rather than a deficiency, and never assume the members share the language, income or background of the streets around them.');
     const people=CAP_SKILLS.filter(s=>sk[s.k]).map(s=>s.n.toLowerCase());
     const rooms=FACILITIES.filter(f=>fc[f.k]).map(f=>f.n.toLowerCase());
     if(people.length||rooms.length){
@@ -5896,7 +5913,10 @@ function applyTool(){
   });
   const sc=document.getElementById('scope'); if(sc) sc.classList.toggle('offtab', single&&!FLAT);
   if(DATA) try{ renderPlace(DATA.levels,DATA.geo); }catch(e){}
-  const inSurvey = TOOL==='survey';
+  // The brief reads the neighbourhood, so it belongs to the survey half only.
+  // In the action plan the page should open on the map, not on a summary the
+  // pastor has already read.
+  const inSurvey = TOOL==='survey' && (PART==='survey' || PART==='all' || FLAT);
   ['brief','focusbar','focusnote'].forEach(id=>{
     const e=document.getElementById(id); if(e) e.classList.toggle('offtab', !inSurvey);
   });
@@ -7747,6 +7767,13 @@ function capRender(){
         </div>
       </div>
       <div class="facblock">
+        <div class="capl" style="margin-bottom:8px">Who your congregation is — not a judgement, and never shown to anyone. It matters because Terrain should not assume your members look like the streets around them.</div>
+        <div class="facgrid">
+          ${CAP_WHO.map(s=>{const on=!!((capGet()||{}).who||{})[s.k];
+            return `<button type="button" class="facchip${on?' on':''}" data-who="${s.k}"><i></i>${esc(s.n)}</button>`;}).join('')}
+        </div>
+      </div>
+      <div class="facblock">
         <div class="capl" style="margin-bottom:8px">Who you have — tick only what is really true of your members. Terrain will not suggest a health clinic if nobody can run one, and the AI planner is told exactly this and nothing more.</div>
         <div class="facgrid">
           ${CAP_SKILLS.map(s=>{const on=!!((capGet()||{}).skills||{})[s.k];
@@ -7773,6 +7800,15 @@ function capRender(){
       const k=chip.dataset.fac; if(f[k]) delete f[k]; else f[k]=true;
       c.facilities=f; CAP_DONE=false; capSave(c);
       capReRender();               // keep the pastor's place — no jump
+      requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
+    });
+  });
+  host.querySelectorAll('.facchip[data-who]').forEach(chip=>{
+    chip.addEventListener('click',()=>{
+      const c=capGet()||{}; const wv=c.who&&typeof c.who==='object'?c.who:{};
+      const k=chip.dataset.who; if(wv[k]) delete wv[k]; else wv[k]=true;
+      c.who=wv; CAP_DONE=false; capSave(c);
+      capReRender();
       requestAnimationFrame(()=>{ if(window.__capFlash) window.__capFlash(); });
     });
   });
@@ -7920,7 +7956,7 @@ function render(){
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
-  secs.push(`<section class="blk" data-theme="hardship"><h2>Wealth &amp; hardship</h2>${verseHTML('wealth')}<div class="grid">
+  secs.push(`<section class="blk" data-theme="hardship housing"><h2>Wealth &amp; hardship</h2>${verseHTML('wealth')}<div class="grid">
     ${card('Households under $35k',me.incLow,fmtPct,pick('incLow'),S)}
     ${card('Households over $150k',me.incHigh,fmtPct,pick('incHigh'),S)}
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
@@ -7931,6 +7967,18 @@ function render(){
       ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
         {name:levels[S].short,vals:[me.inc.lt25,me.inc.b25_50,me.inc.b50_100,me.inc.b100_150,me.inc.gt150]},
         cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null)}</div>
+    <div class="card wide" style="min-height:0"><div class="l">Housing &amp; distress</div><p class="note" style="margin-top:6px">Rent burden, overcrowding and no car are hardship measured a different way — so they sit here rather than in a section of their own.</p></div>
+    ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
+    ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
+    ${card('Severely rent-burdened',me.rent50,fmtPct,pick('rent50'),S,'renters paying 50%+ of income')}
+    ${card('Overcrowded homes',me.overcrowd,fmtPct,pick('overcrowd'),S,'more than 1 person per room')}
+    ${card('No vehicle',me.noCar,fmtPct,pick('noCar'),S,'of households')}
+    <div class="card wide"><div class="l">Homelessness and evictions are only published at county level</div>
+      <p class="note" style="margin-top:6px">HUD counts people experiencing homelessness once a year by <b>Continuum of Care</b> (usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighbourhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:</p>
+      <div class="ext">
+        <a href="https://www.hudexchange.info/programs/coc/coc-homeless-populations-and-subpopulations-reports/" target="_blank" rel="noopener">HUD Point-in-Time count · ${esc(levels.county.name)}<span>Choose the year, then the CoC that covers ${esc(levels.county.short)}. Sheltered and unsheltered counts, by household type.</span></a>
+        <a href="https://evictionlab.org/eviction-tracking/${esc(STATE_INFO.slug||'')}/" target="_blank" rel="noopener">Eviction Lab${STATE_INFO.name?' · '+esc(STATE_INFO.name):''}<span>${STATE_INFO.name?'Eviction filing trends for '+esc(STATE_INFO.name)+'. Not every state has tracked data — the page will say if '+esc(STATE_INFO.name)+' is covered.':'Eviction filing trends by state and metro.'}</span></a>
+      </div></div>
   </div></section>`);
   let shift='';
   if(shiftSrc){ const now=Object.fromEntries(shiftSrc.race), then=Object.fromEntries(shiftSrc.past.race);
@@ -7952,25 +8000,6 @@ function render(){
     ${shift}
   </div></section>`);
   const topL=me.langs.slice(0,6);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2>${verseHTML('language')}<div class="grid">
-    ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
-    ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
-    <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
-    ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
-  </div></section>`);
-  secs.push(`<section class="blk" data-tab="analytics" data-theme="housing"><h2>Housing &amp; distress</h2>${verseHTML('housing')}<div class="grid">
-    ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
-    ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
-    ${card('Severely rent-burdened',me.rent50,fmtPct,pick('rent50'),S,'renters paying 50%+ of income')}
-    ${card('Overcrowded homes',me.overcrowd,fmtPct,pick('overcrowd'),S,'more than 1 person per room')}
-    ${card('No vehicle',me.noCar,fmtPct,pick('noCar'),S,'of households')}
-    <div class="card wide"><div class="l">Homelessness and evictions are only published at county level</div>
-      <p class="note" style="margin-top:6px">HUD counts people experiencing homelessness once a year by <b>Continuum of Care</b> (usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighbourhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:</p>
-      <div class="ext">
-        <a href="https://www.hudexchange.info/programs/coc/coc-homeless-populations-and-subpopulations-reports/" target="_blank" rel="noopener">HUD Point-in-Time count · ${esc(levels.county.name)}<span>Choose the year, then the CoC that covers ${esc(levels.county.short)}. Sheltered and unsheltered counts, by household type.</span></a>
-        <a href="https://evictionlab.org/eviction-tracking/${esc(STATE_INFO.slug||'')}/" target="_blank" rel="noopener">Eviction Lab${STATE_INFO.name?' · '+esc(STATE_INFO.name):''}<span>${STATE_INFO.name?'Eviction filing trends for '+esc(STATE_INFO.name)+'. Not every state has tracked data — the page will say if '+esc(STATE_INFO.name)+' is covered.':'Eviction filing trends by state and metro.'}</span></a>
-      </div></div>
-  </div></section>`);
   secs.push(`<section class="blk" data-theme="families seniors"><h2>Families &amp; age</h2>${verseHTML('families')}<div class="grid">
     ${card('Median age',me.medAge,x=>x==null?'—':x.toFixed(1),pick('medAge'),S,null,70)}
     ${card('Children',me.kidsShare,fmtPct,pick('kidsShare'),S,`${fmtNum(me.kids)} under 18 · ${me.kidsPerHH!=null?me.kidsPerHH.toFixed(2)+' per household':''}`)}
@@ -7978,6 +8007,12 @@ function render(){
     ${card('Seniors living alone',me.seniorsAlone,fmtPct,pick('seniorsAlone'),S,`${fmtNum(me.seniorsAloneN)} households, 65+`)}
     ${card('Families with children',me.famWithKids,fmtPct,pick('famWithKids'),S,'of all families')}
     ${card('In school',me.students,fmtPct,pick('students'),S,`${fmtNum(me.k12)} in K–12 · ${fmtNum(me.college)} in college`)}
+  </div></section>`);
+  secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2>${verseHTML('language')}<div class="grid">
+    ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
+    ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
+    <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
+    ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
   </div></section>`);
   const SEC_HELP=(`<section class="blk" data-tab="strategy" data-theme="faith"><h2>Help already nearby</h2>
     <p class="note" style="margin-bottom:12px">Who is already serving this community — food, housing, recovery, and fellow ministers — so outreach starts with a phone call, not from scratch. The directory links are live and cover every county; the mapped results are whatever OpenStreetMap happens to hold nearby (real, but incomplete).</p>
@@ -8056,24 +8091,7 @@ function render(){
       }).join('')}
       <div class="profiletags">This neighbourhood reads as: ${displayTags(SG.tags).map(t=>`<span>${esc(t)}</span>`).join('')}</div>
     </div>`:''}
-    ${SG.cats.length?`<div class="coachhead">Where the needs cluster<span>The survey’s findings sorted into ${SG.cats.length} area${SG.cats.length===1?'':'s'} of need — figures, first steps, ministry ideas, and a question to ask on the doorstep. Tap one to open it.</span></div>`:''}
-    ${SG.cats.map(g=>`<details class="suggroup" data-cat="${esc(g.cat)}">
-      <summary class="sugcat"><span class="sgt">${esc(g.cat)}</span><span class="sgn">${g.items.length} area${g.items.length===1?'':'s'}</span><i class="chev"></i></summary>
-      <div class="sgbody">
-      ${STRATEGY[g.cat]?`<div class="strat"><b>The approach</b>${esc(STRATEGY[g.cat])}</div>`:''}`+g.items.map(h=>`<div class="sug">
-        <h3>${esc(h.title)}</h3>
-        <div class="ev">${esc(h.evidence)}</div>
-        <ul>${h.steps.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>
-        ${h.ideas.length?`<details class="ideas"><summary>${h.ideas.length} ministry idea${h.ideas.length===1?'':'s'} — serve, equip, belong, invite</summary>
-          ${['Serve','Equip','Belong','Invite'].map(kind=>{
-            const set=h.ideas.filter(i=>i.k===kind); if(!set.length) return '';
-            return `<div class="kindrow"><span class="kind k-${kind.toLowerCase()}">${kind}</span></div>`+
-              set.map(i=>`<div class="idea"><h4>${esc(i.n)}</h4><p>${esc(i.d)}</p><div class="tags"><span>${esc(i.c)}</span><span>With: ${esc(i.p)}</span></div></div>`).join('');
-          }).join('')}
-          ${h.ideas.filter(i=>!i.k).map(i=>`<div class="idea"><h4>${esc(i.n)}</h4><p>${esc(i.d)}</p><div class="tags"><span>${esc(i.c)}</span><span>With: ${esc(i.p)}</span></div></div>`).join('')}
-        </details>`:''}
-        <div class="q"><b>ASK LOCALLY</b>${esc(h.question)}</div>
-      </div>`).join('')+`</div></details>`).join('')}
+    
     <div class="caveat"><b>What this cannot tell you</b>
       Whether people want what these numbers suggest they might need. What neighbours, schools, and other congregations already do well. Anything about faith, trust, history, or hurt on these streets. Small-area figures are estimates — treat small gaps as noise and large ones as signal, then go and ask.</div>
     <div id="aislot"></div>
@@ -8088,7 +8106,7 @@ function render(){
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
-    <p class="note" style="margin-bottom:14px">Everything above needs people to do it. Using the counts and facilities you set up under <b>Your church</b>, this turns the survey into workers: what the neighbourhood asks of your congregation, then how to hand out the jobs by name.</p>
+    <p class="note" style="margin-bottom:14px">Two questions, in this order. What is this neighbourhood actually asking of a church &mdash; in homes, in people, and in need? And is that within reach of the congregation you described under <b>Your church</b>? The answer to "so what do we do" comes after, under <b>Signature moves</b>.</p>
 
     <div class="askpanel">
       <div class="asktitle">What this neighbourhood asks of your congregation</div>
@@ -8105,56 +8123,18 @@ function render(){
     </div>
 
     <div class="askpanel">
-      <div class="asktitle">Hand out the jobs — what your people can actually do</div>
+      <div class="asktitle">What this neighbourhood needs from a church</div>
       <div id="planprog"></div>
-      <div class="strat"><b>The principle</b>Ask for a named, bounded job, never for "help". The ${RL.length} roles below are what this neighbourhood asks of your congregation, ranked against this tract's profile — drivers matter where cars are scarce, bilingual members where two languages are spoken, medical members where people are uninsured.${FIT.known?` You counted about ${FIT.workers} willing hands${FIT.leaders!=null?` and ${FIT.leaders} leader${FIT.leaders===1?'':'s'}`:''} — these are the jobs to fill with them, one person and one job at a time.`:''}</div>
-    ${RL.map((r,ri)=>`<div class="role" data-role="${ri}"><h4>${esc(r.n)}</h4>
-      <div class="rw"><b>Who</b>${esc(r.who)}</div>
-      <div class="rw"><b>First step</b>${esc(r.first)}</div>
-      <div class="rw"><b>Training</b>${esc(r.train)}</div>
-    </div>`).join('')}
+      <div class="strat"><b>Read this before you filter it</b>This is the ask, not the answer. Every line below is a rule that fired against <b>this tract's own figures</b>, and the number that triggered it is printed with it. Nothing here has been cut down to what your congregation can currently manage &mdash; that comes afterwards, under the lifts. A need your church cannot meet is still a need, and worth knowing before you decide it is not yours.</div>
+    ${SG.hits.length?SG.hits.map(h=>`<div class="role"><h4>${esc(h.title)}</h4>
+      <div class="rw"><b>Because</b>${esc(h.evidence)}</div>
+      ${h.ideas&&h.ideas.length?`<div class="rw"><b>Looks like</b>${esc(h.ideas.slice(0,4).map(i=>i.n).join(' \u00b7 '))}</div>`:''}
+      <div class="rw"><b>Ask locally</b>${esc(h.question)}</div>
+    </div>`).join('')
+    :`<p class="note">Nothing fired against this tract's figures. That is unusual &mdash; check the neighbourhood, town and county views above, since a need may show at one level and not another.</p>`}
     </div>
 
-    <div class="coachhead">Coaching corner<span>Open when members hesitate</span></div>
-    <p class="note" style="margin:0 0 12px">The step-by-step path off the pew, the six-week ladder from watching to leading, answers to what members will say, and plain words for talking to neighbours.</p>
-
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">Getting members off the pew — step by step</span><span class="sgn">the sequence</span><i class="chev"></i></summary>
-      <div class="sgbody">
-    <div class="strat"><b>The principle</b>Most members are not unwilling; they are unasked and untrained. This is the path from a congregation that watches to one that works. Tap through the steps — each has what to do, the words that work, and what comes next.</div>
-    <div class="stepper" id="stepper"></div>
-      </div>
-    </details>
-
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">The ladder: from watching to leading in six weeks</span><span class="sgn">${LADDER.length} rungs</span><i class="chev"></i></summary>
-      <div class="sgbody">
-    <div class="strat"><b>The principle</b>Nobody needs to know all the lessons. They need to be one lesson ahead of the person they are studying with. The pastor’s job is not to give every study — it is to take somebody with them to every study.</div>
-    <div class="card wide" style="min-height:0"><ol class="ladder">${LADDER.map(l=>`<li><b>${esc(l.n)}</b><span>${esc(l.d)}</span></li>`).join('')}</ol></div>
-      </div>
-    </details>
-
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">What members will say, and what to answer</span><span class="sgn">${OBJECTIONS.length} objections</span><i class="chev"></i></summary>
-      <div class="sgbody">
-    ${OBJECTIONS.map(o=>`<div class="obj"><b>${esc(o.q)}</b><span>${esc(o.a)}</span></div>`).join('')}
-      </div>
-    </details>
-    <details class="suggroup mgroup">
-      <summary class="sugcat"><span class="sgt">Talking to people who are not Adventists</span><span class="sgn">${SPEAK.length} phrases · ${HONESTY.length} rules</span><i class="chev"></i></summary>
-      <div class="sgbody">
-    <div class="strat"><b>The principle</b>Say plainly who you are, early and in the open — and say it without insider vocabulary. Hiding the name until the last night of a series costs more than it ever gains. Using words only members understand quietly tells a visitor they are outside.</div>
-    <div class="card wide" style="min-height:0">
-      <table class="speak"><thead><tr><th>Instead of</th><th>Say</th></tr></thead><tbody>
-      ${SPEAK.map(x=>`<tr><td class="si">${esc(x.i)}</td><td><b>${esc(x.o)}</b><span>${esc(x.w)}</span></td></tr>`).join('')}
-      </tbody></table>
-    </div>
-    <div class="card wide" style="min-height:0"><div class="l" style="margin-bottom:8px">Six rules for public communication</div>
-      <ul class="plain">${HONESTY.map(h=>`<li>${esc(h)}</li>`).join('')}</ul></div>
-      </div>
-    </details>
-
-  </section>`);
+    </section>`);
 
   // Choose what to do last, once the map, the neighbours, the church and the
   // people are all on the table.
