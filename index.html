@@ -1353,13 +1353,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.101</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v9.102</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v9.101';
+const VERSION = 'v9.102';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5912,44 +5912,6 @@ function mdToHtml(t){
   if(inList)out.push('</ul>');
   return out.join('');
 }
-async function aiMount(M,levels,geo){
-  const info=await aiProbe();
-  if(!info.enabled) return;
-  // Private: no button, no hint, nothing at all unless this device is unlocked.
-  if(info.locked && !aiPass()) return;
-  const host=document.getElementById('aislot'); if(!host) return;
-  host.innerHTML=`<div class="aibox">
-    <h3>Go deeper with Claude</h3>
-    <div class="sub2">Sends the figures above — never your address book, never anything about individuals — and asks for a sequenced plan: what to do first, what it costs, and what would prove it wrong. Costs a few cents per plan, billed to your own Anthropic account.${info.locked?' <b style="color:var(--acc)">Private to you</b> — other people do not see this panel.':''}</div>
-    <button class="btn" id="aigo">Write a ministry plan</button>
-    <div class="aiout" id="aiout"></div>
-  </div>`;
-  document.getElementById('aigo').onclick=async()=>{
-    const btn=document.getElementById('aigo'), out=document.getElementById('aiout');
-    btn.disabled=true; btn.textContent='Thinking… (20–40 seconds)'; out.innerHTML='';
-    try{
-      const r=await fetch('/.netlify/functions/advise',{method:'POST',
-        headers:{'content-type':'application/json','x-terrain-pass':aiPass()},
-        body:JSON.stringify({summary:aiSummary(M,levels,SCOPE,geo)})});
-      const j=await r.json();
-      if(j&&j.code==='locked'){
-        // A stale or wrong passphrase — forget it and hide the panel again.
-        localStorage.removeItem('terrain-ai-pass');
-        host.innerHTML=`<p class="note">The ministry planner is locked. Reopen the site with your private link to unlock it on this device.</p>`;
-        return;
-      }
-      if(!r.ok||j.error) throw new Error(j.error||('HTTP '+r.status));
-      // Tolerate either the function's shape or the raw API's, and never print NaN.
-      const u=j.usage||{}, ti=+(u.in??u.input_tokens), to=+(u.out??u.output_tokens);
-      const cost=(isFinite(ti)&&isFinite(to))?((ti/1e6*3)+(to/1e6*15)):null;
-      out.innerHTML=mdToHtml(j.text)+`<div class="meta">Written by ${esc(j.model||'Claude')} from the figures above${cost!=null?` · about ${cost<0.01?'under a cent':'$'+cost.toFixed(2)} for this plan`:''} · check it against what you know before acting on it.</div>`;
-      btn.textContent='Write another';
-    }catch(e){
-      out.innerHTML=`<p style="color:#F0857A">${esc(e.message)}</p>`;
-      btn.textContent='Try again';
-    }finally{ btn.disabled=false; }
-  };
-}
 /* The report is long. This bar lets a pastor jump straight to the part he wants,
    and it only lists sections that are actually visible under the current focus. */
 let TOOL=null;              // null = the hub; 'survey' | 'case' = inside a tool
@@ -8268,7 +8230,6 @@ function render(){
     
     <div class="caveat"><b>What this cannot tell you</b>
       Whether people want what these numbers suggest they might need. What neighbours, schools, and other congregations already do well. Anything about faith, trust, history, or hurt on these streets. Small-area figures are estimates — treat small gaps as noise and large ones as signal, then go and ask.</div>
-    <div id="aislot"></div>
   </section>`);
 
   /* The action plan, in the order it is actually worked:
@@ -8325,7 +8286,6 @@ function render(){
     b.onclick=e=>{ e.preventDefault(); generateMoves(bi,BANDS[bi],SG,M,levels,S); };
     drawGen(bi);
   });
-  aiMount(M,levels,geo);
   applyFocus();
   drawZones();   // the zone map lives inside the section we just rebuilt
   drawCongregations();
