@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.2.0
+     TERRAIN  v10.3.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.2.0">
+<html lang="en" data-version="v10.3.0">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="terrain-version" content="v10.2.0">
-<title>Community Map — Terrain v10.2.0</title>
+<meta name="terrain-version" content="v10.3.0">
+<title>Community Map — Terrain v10.3.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -87,21 +87,6 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
   line-height:1.15;letter-spacing:-.02em;margin:0 0 10px}
 .hinge p{color:var(--ink2);line-height:1.6;max-width:62ch}
 .hinge .hingenote{margin-top:10px;font-size:.9rem;color:var(--ink3)}
-
-/* ---- jump bar ---- */
-.jump{position:sticky;top:0;z-index:18;background:color-mix(in srgb,var(--bg) 92%,transparent);
-  backdrop-filter:blur(14px) saturate(140%);-webkit-backdrop-filter:blur(14px) saturate(140%);
-  border-bottom:1px solid var(--line)}
-.jumpin{max-width:1040px;margin:0 auto;padding:8px 14px;display:flex;gap:6px;
-  overflow-x:auto;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-.jumpin::-webkit-scrollbar{display:none}
-.jump button{flex:none;background:transparent;border:1px solid transparent;border-radius:999px;
-  color:var(--ink2);font-size:.82rem;font-weight:600;padding:6px 12px;cursor:pointer;white-space:nowrap}
-.jump button:hover{color:var(--ink);border-color:var(--line2)}
-.jump button.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink);font-weight:700}
-.u-more{margin:14px 0;text-align:center}
-.u-more .hint{display:block;margin-top:7px;font-size:.82rem;color:var(--ink3)}
-@media print{.jump{display:none}.hinge{break-inside:avoid;background:none}}
 
 /* ---- shell ---- */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 86%, transparent);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
@@ -1400,7 +1385,6 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
     <div class="chosen" id="chosen" hidden></div>
     <p class="note" id="ghelp" style="margin-top:14px">Codes are issued per person, so one can be withdrawn without disturbing anyone else. If your conference is not yet enrolled, the screen will tell you who to ask.</p>
   </div>
-  <nav class="jump" id="jumpbar" hidden aria-label="Jump to a section"></nav>
   <div class="report" id="report">
     <div class="place" id="place"></div>
     <div class="scope" id="scope" role="tablist" aria-label="Which area to read"></div>
@@ -1417,13 +1401,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.2.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.3.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.2.0';
+const VERSION = 'v10.3.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7802,7 +7786,6 @@ function render(){
   wireStepper();
   wireProposals(M,levels,SG);
   uWireMinistries();
-  try{ mountJump(); }catch(e){}   // navigation must never break the report
   if(TOOL) applyTool();
   translateDOM();
   const wantR=SCOPE_RADIUS[SCOPE]||1.8;
@@ -10110,12 +10093,27 @@ function uMinistriesHTML(SG){
   const fit=SG.moves.filter(x=>uCheck(x).ok).length, active=uActiveFilter(SG.moves),ready=capMerged().ready;
   return `<div id="u-ministry-list"><p class="note">Explore ministries grounded in the community survey and checked against your church.</p>
     ${!ready||!fit?`<div class="u-empty"><p>${!ready?'You can explore ministry ideas now. Review and save your church resources to see which ones your church can support.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn" data-u-profile="true">Review church resources</button></div>`:''}
-    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Commitment level<select id="u-band"><option value="">All levels</option>${BANDS.map((b,i)=>`<option value="${i}" ${U_BAND===String(i)?'selected':''}>${esc(b.n)}</option>`).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div id="u-generate"></div><div id="u-cards">${uCardsHTML(SG.moves)}</div><div id="u-compare"></div></div>`;
+    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Commitment level<select id="u-band"><option value="">All levels</option>${BANDS.map((b,i)=>`<option value="${i}" ${U_BAND===String(i)?'selected':''}>${esc(b.n)}</option>`).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div id="u-generate"></div><div id="u-cards">${uCardsHTML(SG.moves)}</div><div id="u-compare"></div></div>`;
 }
 let U_SHOW=6;   // open ministry cards; "Show more" raises it, filters reset it
+let U_CAT='';   // '' = every area. Otherwise Serve | Equip | Belong | Invite
+
+/* Every ministry already carries a 'k' — Serve, Equip, Belong or Invite. It
+   was in the data and styled in the stylesheet, but never used to organise
+   anything, so a pastor met one undifferentiated column of sixty-odd cards.
+   These are the four things a church does, so they are the right shelves. */
+const U_CATS=[
+  ['Serve','Meeting a practical need in the community'],
+  ['Equip','Training and preparing your own members'],
+  ['Belong','Drawing people into the life of the church'],
+  ['Invite','Reaching people who are not here yet']
+];
+function uCatCounts(moves){
+  const a={};moves.forEach(x=>{const k=x.k||'Other';a[k]=(a[k]||0)+1;});return a;
+}
 
 function uCardsHTML(moves){
-  const active=uActiveFilter(moves),list=moves.filter(x=>(active==='fit'?uCheck(x).ok:!uCheck(x).ok)&&(U_BAND===''||String(x.load??1)===U_BAND)&&(`${x.n} ${x.d||''}`).toLowerCase().includes(U_QUERY.toLowerCase()));
+  const active=uActiveFilter(moves),list=moves.filter(x=>(active==='fit'?uCheck(x).ok:!uCheck(x).ok)&&(U_CAT===''||(x.k||'')===U_CAT)&&(U_BAND===''||String(x.load??1)===U_BAND)&&(`${x.n} ${x.d||''}`).toLowerCase().includes(U_QUERY.toLowerCase()));
   if(list.length>U_SHOW){
     /* Every ministry stays on the page — the pastor asked for breadth, not a
        capped list, and the regression test enforces it. What changes is how
@@ -10149,8 +10147,11 @@ function uWireMinistries(){
     if(b.dataset.uPropose)uOpenProposal(b.dataset.uPropose);
   };
   h.onchange=e=>{if(e.target.dataset.uCompare){const id=e.target.dataset.uCompare;if(e.target.checked&&U_COMPARE.length>=3){e.target.checked=false;return;}U_COMPARE=e.target.checked?[...U_COMPARE,id]:U_COMPARE.filter(k=>k!==id);uCompare();}};
-  $('u-band').onchange=e=>{U_BAND=e.target.value;uRefresh();};
-  $('u-search').oninput=e=>{U_QUERY=e.target.value;$('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);};uCompare();uGenerateMount();
+  // Changing any filter starts the card count again, so a narrowed list is
+  // never hidden underneath an earlier expansion.
+  const cat=$('u-cat'); if(cat) cat.onchange=e=>{U_CAT=e.target.value;U_SHOW=6;uRefresh();};
+  $('u-band').onchange=e=>{U_BAND=e.target.value;U_SHOW=6;uRefresh();};
+  $('u-search').oninput=e=>{U_QUERY=e.target.value;U_SHOW=6;$('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);};uCompare();uGenerateMount();
 }
 function uDialog(title,body){let d=$('u-dialog');if(d)d.remove();d=document.createElement('dialog');d.id='u-dialog';d.className='u-dialog';d.setAttribute('aria-labelledby','u-dialog-title');d.innerHTML=`<div class="u-heading"><h2 id="u-dialog-title">${esc(title)}</h2><button type="button" class="btn ghost" id="u-close">Close</button></div>${body}`;document.body.append(d);$('u-close').onclick=()=>d.close();d.showModal();return d;}
 function uEditMinistry(id){
@@ -10315,40 +10316,6 @@ function ringsHTML(me,cty){
       <div class="lab">${esc(label)}</div>${cmp?`<div class="cmp">${esc(cmp)}</div>`:''}</div>`;
   }).filter(Boolean);
   return cards.length ? `<div class="rings">${cards.join('')}</div>` : '';
-}
-
-/* ---- jump bar ---------------------------------------------------------
-   The report stays one continuous page: it is a reference document, and a
-   pastor reads it by moving around inside it. This is navigation, not
-   pagination. Built from the headings that actually rendered, so it can never
-   offer a link to a section that is not on the page. */
-function mountJump(){
-  const host=document.getElementById('jumpbar');
-  if(!host) return;
-  const secs=[...document.querySelectorAll('section.blk')].filter(b=>b.querySelector('h2'));
-  if(secs.length<4){ host.innerHTML=''; host.hidden=true; return; }
-  host.hidden=false;
-  const short={'Wealth & hardship':'Hardship','Families & age':'Families',
-    'Churches nearby':'Churches','Community resources':'Help nearby',
-    'Ministries your church could offer':'Ministries','Make the case':'Proposal'};
-  host.innerHTML='<div class="jumpin">'+secs.map((b,i)=>{
-    const h=b.querySelector('h2').textContent.trim();
-    if(!b.id) b.id='sec-'+i;
-    return `<button type="button" data-jump="${b.id}">${esc(short[h]||h)}</button>`;
-  }).join('')+'</div>';
-  host.onclick=e=>{
-    const b=e.target.closest('[data-jump]');
-    if(!b) return;
-    const el=document.getElementById(b.dataset.jump);
-    if(el&&el.scrollIntoView) el.scrollIntoView({behavior:'smooth',block:'start'});
-  };
-  const mark=()=>{
-    let cur=null;
-    secs.forEach(b=>{ if(b.getBoundingClientRect().top<=140) cur=b.id; });
-    host.querySelectorAll('[data-jump]').forEach(x=>x.classList.toggle('on',x.dataset.jump===cur));
-  };
-  mark();
-  if(!host.dataset.wired){ host.dataset.wired='1'; window.addEventListener('scroll',mark,{passive:true}); }
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
