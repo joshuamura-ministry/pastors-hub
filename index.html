@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.8.2
+     TERRAIN  v10.9.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.8.2" data-theme="dark">
+<html lang="en" data-version="v10.9.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.8.2">
-<title>Community Map — Terrain v10.8.2</title>
+<meta name="terrain-version" content="v10.9.0">
+<title>Community Map — Terrain v10.9.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -85,9 +85,16 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
    taller than step one — which left a screen and a half of empty space below
    the first step. align-items stops the stretch; the measured height stops the
    container reserving room for the tallest panel anyway. */
-.u-track{overflow:hidden;transition:height .42s cubic-bezier(.4,0,.2,1)}
+.u-track{overflow:hidden;max-width:100%;transition:height .42s cubic-bezier(.4,0,.2,1)}
 .u-slide{display:flex;width:400%;align-items:flex-start;transition:transform .42s cubic-bezier(.4,0,.2,1)}
-.u-panel{width:25%;flex:none;padding:4px 2px 2px}
+/* min-width:0 is the whole fix for the overflow. A flex item will not shrink
+   below the natural width of its content, and step three holds a grid of 221
+   fields — so the panel pushed itself wider than the screen and dragged the
+   track, the frame and the page with it. */
+.u-panel{width:25%;flex:none;min-width:0;padding:4px 2px 2px}
+.u-panel>*{max-width:100%}
+.u-panel .u-grid,.u-panel .u-checks,.u-panel .u-facilities{min-width:0}
+.u-panel input,.u-panel textarea,.u-panel select{max-width:100%;box-sizing:border-box}
 .u-panel h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 4px}
 .u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .u-wiznav .btn{min-height:44px}
@@ -107,7 +114,28 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .blk[data-theme~="language"]{--sec:var(--m-language)}
 .blk[data-theme~="families"],.blk[data-theme~="seniors"]{--sec:var(--m-children)}
 .blk[data-theme~="faith"]{--sec:var(--acc)}
-.blk[data-theme~="prompts"],.blk[data-theme~="mobilize"],.blk[data-theme~="case"]{--sec:var(--acc)}
+/* These four were all tagged "prompts" and so all came out mint — four
+   sections running together with no rhythm, in exactly the stretch of the
+   report a pastor works in. Each gets its own. */
+.blk[data-theme~="prompts"]{--sec:var(--acc)}
+.blk[data-theme~="sec-church"]{--sec:var(--m-housing)}
+.blk[data-theme~="sec-moves"]{--sec:var(--m-children)}
+.blk[data-theme~="mobilize"]{--sec:var(--m-people)}
+.blk[data-theme~="case"]{--sec:var(--m-hardship)}
+
+/* Each wizard step carries its own colour, so the form tells you where you
+   are by more than a number. */
+.u-steps-nav li:nth-child(1){--k:var(--acc)}
+.u-steps-nav li:nth-child(2){--k:var(--m-hardship)}
+.u-steps-nav li:nth-child(3){--k:var(--m-housing)}
+.u-steps-nav li:nth-child(4){--k:var(--m-children)}
+.u-steps-nav li.on{border-color:var(--k);color:var(--ink);background:color-mix(in srgb,var(--k) 14%,transparent)}
+.u-steps-nav li.on b{background:var(--k);color:var(--btn-ink)}
+.u-steps-nav li.done b{background:color-mix(in srgb,var(--k) 70%,transparent);color:var(--btn-ink)}
+.u-panel[data-panel="0"] h4{color:var(--acc)}
+.u-panel[data-panel="1"] h4{color:var(--m-hardship)}
+.u-panel[data-panel="2"] h4{color:var(--m-housing)}
+.u-panel[data-panel="3"] h4{color:var(--m-children)}
 .blk h2::before{background:var(--sec)!important;box-shadow:0 0 12px var(--sec)}
 .blk h2::after{background:linear-gradient(90deg,color-mix(in srgb,var(--sec) 45%,transparent),transparent)}
 .blk .verse .vmark{color:var(--sec)}
@@ -1503,13 +1531,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.8.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.9.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.8.2';
+const VERSION = 'v10.9.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -7812,14 +7840,14 @@ function render(){
   /* The church profile used to sit two thirds of the way down, inside the
      moves. It is the one input that decides whether everything after it is any
      good, so it is now its own section, ahead of them. */
-  const SEC_CHURCH=(`<section class="blk" data-tab="strategy" data-theme="prompts"><h2>Your church</h2>
+  const SEC_CHURCH=(`<section class="blk" data-tab="strategy" data-theme="prompts sec-church"><h2>Your church</h2>
     <p class="note" style="margin-bottom:12px">Review the resources available for this church. Saving updates the ministry matches and proposals. Member details stay on this device unless you choose to share a result; optional fresh ideas use aggregate information.</p>
     <div class="askpanel" style="margin:14px 0">
       <div id="capslot"></div>
     </div>
   </section>`);
 
-  const SEC_MOVES=('<section class="blk" data-tab="mobilize" data-theme="prompts"><h2>Ministries your church could offer</h2>'+uMinistriesHTML(SG)+'</section>');
+  const SEC_MOVES=('<section class="blk" data-tab="mobilize" data-theme="prompts sec-moves"><h2>Ministries your church could offer</h2>'+uMinistriesHTML(SG)+'</section>');
 
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
@@ -10161,7 +10189,7 @@ function capRender(){
 <div class="u-heading"><div><h3>Your church’s working capacity</h3><p class="note">One profile for ${esc(ch.name)}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.</p></div><span class="u-badge">${c.confirmed?'Profile reviewed':'Review needed'}</span></div>
     ${ch.legacy?'<p class="u-warning">Your earlier church details were preserved. Confirm the congregation and review the new fields before using these recommendations.</p>':''}
     <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}" class="${i===U_STEP_I?'on':(i<U_STEP_I?'done':'')}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}</ol>
-    <div class="u-track"><div class="u-slide" style="transform:translateX(-${U_STEP_I*100}%)">
+    <div class="u-track"><div class="u-slide" style="transform:translateX(-${U_STEP_I*25}%)">
       <section class="u-panel" data-panel="0">
         <h4>Step 1 of 4 — Your church</h4>
         <p class="note">Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.</p>
@@ -10204,7 +10232,7 @@ function capRender(){
   const slide=form.querySelector('.u-slide');
   const go=i=>{
     U_STEP_I=Math.max(0,Math.min(3,i));
-    if(slide) slide.style.transform='translateX(-'+(U_STEP_I*100)+'%)';
+    if(slide) slide.style.transform='translateX(-'+(U_STEP_I*25)+'%)';
     const nav=$('u-steps-nav');
     if(nav) [...nav.children].forEach((li,n)=>{ li.className = n===U_STEP_I?'on':(n<U_STEP_I?'done':''); });
     const back=$('u-back'); if(back) back.disabled=U_STEP_I===0;
