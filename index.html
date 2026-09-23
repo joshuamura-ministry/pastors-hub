@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.10.0
+     TERRAIN  v10.10.2
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.10.0" data-theme="dark">
+<html lang="en" data-version="v10.10.2" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.10.0">
-<title>Community Map — Terrain v10.10.0</title>
+<meta name="terrain-version" content="v10.10.2">
+<title>Community Map — Terrain v10.10.2</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,6 +103,14 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-panel[data-panel="3"] h4{color:var(--m-children)}
 .u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .u-wiznav .btn{min-height:44px}
+/* Step three is thirteen facilities in a row and they all looked the same, so
+   it read as one undivided wall. Each gets a mint edge and a mint name. */
+.u-facilities{display:grid;gap:12px}
+.u-facilities>fieldset{border:1px solid var(--line);border-left:3px solid var(--m-language);
+  border-radius:10px;padding:12px 14px;background:var(--panel2)}
+.u-facilities>fieldset>legend{color:var(--m-language);font-weight:700;font-size:.92rem;padding:0 6px}
+.u-facilities>fieldset>legend label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
+.u-facilities>fieldset .u-checks{margin-top:8px}
 @media (prefers-reduced-motion:reduce){.u-panel.on{animation:none}}
 @media print{.u-panel{display:block!important;animation:none}.u-steps-nav,.u-wiznav{display:none}}
 
@@ -1536,13 +1544,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.10.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.10.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.10.0';
+const VERSION = 'v10.10.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10235,7 +10243,7 @@ function capRender(){
      All four panels stay in the DOM, so nothing typed is ever lost. */
   const panels=[...form.querySelectorAll('.u-panel')];
   const nav=$('u-steps-nav');
-  const show=(i,back)=>{
+  const show=(i,back,moved)=>{
     U_STEP_I=Math.max(0,Math.min(panels.length-1,i));
     panels.forEach((p,n)=>{
       const on=n===U_STEP_I;
@@ -10243,6 +10251,13 @@ function capRender(){
       if(on){ p.classList.remove('fromL','fromR'); void p.offsetWidth; p.classList.add(back?'fromL':'fromR'); }
     });
     if(nav) [...nav.children].forEach((li,n)=>{ li.className = n===U_STEP_I?'on':(n<U_STEP_I?'done':''); });
+    if(moved){
+      // Every step lands at the top of the section — heading, markers, then
+      // the panel — rather than wherever the previous, much taller panel left
+      // the page. Same place every time, so it never feels like a jump.
+      const top=(form.closest&&form.closest('section.blk'))||nav||form;
+      if(top&&top.scrollIntoView) top.scrollIntoView({block:'start',behavior:'smooth'});
+    }
     const last=U_STEP_I===panels.length-1;
     const bk=$('u-back'), nx=$('u-next'), dn=$('cap-done');
     if(bk) bk.disabled=U_STEP_I===0;
@@ -10252,16 +10267,16 @@ function capRender(){
   const nx=$('u-next'); if(nx) nx.onclick=()=>{
     const nb=form.querySelector('[name="churchName"]');
     if(U_STEP_I===0&&nb&&!nb.value.trim()){ nb.focus(); return; }
-    show(U_STEP_I+1,false);
+    show(U_STEP_I+1,false,true);
   };
-  const bk=$('u-back'); if(bk) bk.onclick=()=>show(U_STEP_I-1,true);
+  const bk=$('u-back'); if(bk) bk.onclick=()=>show(U_STEP_I-1,true,true);
   const sk=$('u-skip'); if(sk) sk.onclick=()=>{
     // Writes nothing: a skipped step records absence of information, never a zero.
-    if(U_STEP_I<panels.length-1) show(U_STEP_I+1,false);
+    if(U_STEP_I<panels.length-1) show(U_STEP_I+1,false,true);
     else form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit'));
   };
-  if(nav) nav.onclick=e=>{ const li=e.target.closest('[data-goto]'); if(li) show(+li.dataset.goto, +li.dataset.goto<U_STEP_I); };
-  show(U_STEP_I,false);
+  if(nav) nav.onclick=e=>{ const li=e.target.closest('[data-goto]'); if(li) show(+li.dataset.goto, +li.dataset.goto<U_STEP_I, true); };
+  show(U_STEP_I,false,false);   // first paint must not yank the page
 
   $('u-team-link').onclick=()=>openTool('gifts');
   form.onsubmit=e=>{
