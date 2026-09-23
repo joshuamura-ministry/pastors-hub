@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.10.2
+     TERRAIN  v10.10.3
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.10.2" data-theme="dark">
+<html lang="en" data-version="v10.10.3" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.10.2">
-<title>Community Map — Terrain v10.10.2</title>
+<meta name="terrain-version" content="v10.10.3">
+<title>Community Map — Terrain v10.10.3</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,10 +79,10 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-panel>*{max-width:100%}
 .u-panel input,.u-panel textarea,.u-panel select{max-width:100%;box-sizing:border-box}
 .u-panel h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 4px}
-@keyframes uInR{from{transform:translateX(26px);opacity:0}to{transform:none;opacity:1}}
-@keyframes uInL{from{transform:translateX(-26px);opacity:0}to{transform:none;opacity:1}}
-.u-panel.on.fromR{animation:uInR .3s cubic-bezier(.4,0,.2,1)}
-.u-panel.on.fromL{animation:uInL .3s cubic-bezier(.4,0,.2,1)}
+@keyframes uInR{from{transform:translateX(100%);opacity:.2}to{transform:none;opacity:1}}
+@keyframes uInL{from{transform:translateX(-100%);opacity:.2}to{transform:none;opacity:1}}
+.u-panel.on.fromR{animation:uInR .42s cubic-bezier(.22,.8,.3,1)}
+.u-panel.on.fromL{animation:uInL .42s cubic-bezier(.22,.8,.3,1)}
 .u-steps-nav{display:flex;gap:6px;list-style:none;margin:14px 0 6px;padding:0;overflow-x:auto}
 .u-steps-nav li{flex:1 1 0;display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 10px;
   border-radius:10px;border:1px solid var(--line);background:var(--panel2);font-size:.8rem;
@@ -1544,13 +1544,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.10.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.10.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.10.2';
+const VERSION = 'v10.10.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10256,7 +10256,7 @@ function capRender(){
       // the panel — rather than wherever the previous, much taller panel left
       // the page. Same place every time, so it never feels like a jump.
       const top=(form.closest&&form.closest('section.blk'))||nav||form;
-      if(top&&top.scrollIntoView) top.scrollIntoView({block:'start',behavior:'smooth'});
+      if(top&&top.scrollIntoView) top.scrollIntoView({block:'start',behavior:'auto'});
     }
     const last=U_STEP_I===panels.length-1;
     const bk=$('u-back'), nx=$('u-next'), dn=$('cap-done');
