@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.5.0
+     TERRAIN  v10.8.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.5.0">
+<html lang="en" data-version="v10.8.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="color-scheme" content="light dark">
-<meta name="terrain-version" content="v10.5.0">
-<title>Community Map — Terrain v10.5.0</title>
+<meta name="color-scheme" content="dark">
+<meta name="terrain-version" content="v10.8.0">
+<title>Community Map — Terrain v10.8.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,6 +68,65 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
+
+/* ---- the church profile, as four steps ---- */
+.u-steps-nav{display:flex;gap:6px;list-style:none;margin:14px 0 6px;padding:0;overflow-x:auto}
+.u-steps-nav li{flex:1 1 0;display:flex;align-items:center;gap:8px;cursor:pointer;
+  padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--panel2);
+  font-size:.8rem;color:var(--ink3);white-space:nowrap;min-width:0}
+.u-steps-nav li b{flex:none;width:22px;height:22px;border-radius:50%;background:var(--line);
+  color:var(--ink2);display:flex;align-items:center;justify-content:center;font-size:.72rem}
+.u-steps-nav li span{overflow:hidden;text-overflow:ellipsis}
+.u-steps-nav li.on{border-color:var(--acc);color:var(--ink);background:var(--acc-dim)}
+.u-steps-nav li.on b{background:var(--acc);color:var(--btn-ink)}
+.u-steps-nav li.done b{background:var(--acc-soft);color:var(--btn-ink)}
+.u-track{overflow:hidden}
+.u-slide{display:flex;width:400%;transition:transform .42s cubic-bezier(.4,0,.2,1)}
+.u-panel{width:25%;flex:none;padding:4px 2px 2px}
+.u-panel h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 4px}
+.u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
+.u-wiznav .btn{min-height:44px}
+@media (prefers-reduced-motion:reduce){.u-slide{transition:none}}
+@media print{.u-slide{display:block;width:auto;transform:none!important}.u-panel{width:auto}.u-steps-nav,.u-wiznav{display:none}}
+
+/* ---- colour with a job to do -------------------------------------------
+   Every section already declares what it is about (data-theme="hardship work",
+   "families seniors" and so on). Those attributes were only ever used for
+   filtering; here they also set a hue, so each section has its own identity
+   and the page stops being one blue column. Nothing is coloured for
+   decoration: the hue says what kind of thing you are looking at. */
+.blk{--sec:var(--acc)}
+.blk[data-theme~="work"],.blk[data-theme~="hardship"]{--sec:var(--m-hardship)}
+.blk[data-theme~="housing"]{--sec:var(--m-housing)}
+.blk[data-theme~="people"],.blk[data-theme~="change"]{--sec:var(--m-people)}
+.blk[data-theme~="language"]{--sec:var(--m-language)}
+.blk[data-theme~="families"],.blk[data-theme~="seniors"]{--sec:var(--m-children)}
+.blk[data-theme~="faith"]{--sec:var(--acc)}
+.blk[data-theme~="prompts"],.blk[data-theme~="mobilize"],.blk[data-theme~="case"]{--sec:var(--acc)}
+.blk h2::before{background:var(--sec)!important;box-shadow:0 0 12px var(--sec)}
+.blk h2::after{background:linear-gradient(90deg,color-mix(in srgb,var(--sec) 45%,transparent),transparent)}
+.blk .verse .vmark{color:var(--sec)}
+
+/* An ordered list of one measurement gets a ramp, not a carnival. Five shades
+   of the section's own hue: the rows stay obviously the same quantity, and
+   the eye can still tell them apart. */
+.brow:nth-of-type(1) .bar>i,.brow:nth-of-type(1) .bar{--step:100%}
+.brow:nth-of-type(2) .bar>i,.brow:nth-of-type(2) .bar{--step:82%}
+.brow:nth-of-type(3) .bar>i,.brow:nth-of-type(3) .bar{--step:64%}
+.brow:nth-of-type(4) .bar>i,.brow:nth-of-type(4) .bar{--step:48%}
+.brow:nth-of-type(5) .bar>i,.brow:nth-of-type(5) .bar{--step:34%}
+.brow .bar>i,.brow .bar>span,.brow .bar>b{background:color-mix(in srgb,var(--sec) var(--step,100%),transparent)!important}
+
+/* The four things a church does, each with its own colour, on the ministry
+   rows. These class names existed in the stylesheet and had never been used. */
+.u-row[data-k="Serve"]{--k:var(--m-hardship)}
+.u-row[data-k="Equip"]{--k:var(--m-children)}
+.u-row[data-k="Belong"]{--k:var(--m-people)}
+.u-row[data-k="Invite"]{--k:var(--m-language)}
+.u-row{--k:var(--acc)}
+.u-row::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--k);opacity:.85}
+.u-rowadd:hover:not([disabled]){border-color:var(--k);color:var(--k)}
+.u-row.open{border-color:var(--k)}
 
 /* ---- headline statistics ---- */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:16px 0 4px}
@@ -1296,7 +1355,6 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <div class="wordmark"><i></i>TERRAIN</div>
   <nav class="tools"><a class="on" href="#" id="brandlink">Pastors Hub</a></nav>
   <button class="themebtn" id="langbtn" aria-label="English / Español">ES</button>
-  <button class="themebtn" id="themebtn" aria-label="Switch between light and dark"></button>
 </div></header>
 
 <main class="wrap">
@@ -1440,13 +1498,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.5.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.8.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.5.0';
+const VERSION = 'v10.8.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1489,8 +1547,6 @@ const DEBUG=(()=>{ try{ return new URLSearchParams(location.search).get('debug')
    changes. The toggle still works and a stored choice still wins. */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');
-  const b=document.getElementById('themebtn');
-  if(b){ b.textContent = t==='dark' ? '\u2600' : '\u263D'; b.title = t==='dark' ? 'Switch to light' : 'Switch to dark'; }
 }
 function initLang(){
   const b=document.getElementById('langbtn');
@@ -1520,15 +1576,11 @@ function initPrintExpand(){
     if(mq.addEventListener) mq.addEventListener('change',e=>e.matches?open():close()); }
 }
 function initTheme(){
-  // Dark by default. A pastor who has already chosen keeps his choice.
-  const saved=localStorage.getItem('terrain-theme')||'dark';
-  applyTheme(saved);
-  const b=document.getElementById('themebtn');
-  if(b) b.onclick=()=>{
-    const next=document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark';
-    localStorage.setItem('terrain-theme',next); applyTheme(next);
-    if(DATA){ render(); drawZones(); }   // redraw charts and the map in the new palette
-  };
+  /* Dark only. The toggle is gone at the pastor's request — one look, decided
+     once, rather than a setting every user has to have an opinion about. The
+     light token block stays as the base layer that dark overrides, and the
+     print styles still force white paper, so nothing a board receives changes. */
+  applyTheme('dark');
 }
 /* Focus filters. Empty set = show everything. Each focus names the data sections
    it keeps (by theme) and which outreach categories stay visible. */
@@ -4064,12 +4116,22 @@ async function fetchCongregations(centre,radiusMi){
   const m=Math.round(radiusMi*1609);
   const q=`[out:json][timeout:8];nwr["amenity"="place_of_worship"](around:${m},${centre.lat},${centre.lon});out center tags;`;
   let j=null, lastErr=null;
-  for(const host of OVERPASS_HOSTS){
+  /* Overpass is a free public service and is regularly busy. One pass over
+     three mirrors was giving up in well under a minute and leaving the section
+     looking broken. Two passes, with a pause between them and a longer window
+     on the second, catches most of the transient failures — a pastor scrolling
+     back up finds it filled in rather than empty. */
+  const hosts=[...OVERPASS_HOSTS,...OVERPASS_HOSTS];
+  let attempt=0;
+  for(const host of hosts){
+    attempt++;
+    const second=attempt>OVERPASS_HOSTS.length;
+    if(second&&attempt===OVERPASS_HOSTS.length+1) await new Promise(r=>setTimeout(r,2500));
     try{
       // Overpass is public and needs no key, so call it directly rather than
       // routing it through the Census proxy (which only knows the Census API).
       const ctrl=new AbortController();
-      const timer=setTimeout(()=>ctrl.abort(),12000);
+      const timer=setTimeout(()=>ctrl.abort(),second?20000:12000);
       const r=await fetch(host+'?data='+encodeURIComponent(q),{signal:ctrl.signal});
       clearTimeout(timer);
       if(!r.ok) throw new Error('HTTP '+r.status);
@@ -10078,22 +10140,90 @@ const U_FIELDS=[
 ];
 function uChecks(values,selected,name){return values.map(v=>`<label class="u-check"><input type="checkbox" name="${name}" value="${esc(v)}" ${(selected||[]).includes(v)?'checked':''}>${esc(v)}</label>`).join('');}
 function uValues(form,name){return [...form.querySelectorAll(`[name="${name}"]:checked`)].map(e=>e.value);}
+/* The church profile is a task with an end, so it is a stepper, not a wall of
+   fields. One panel at a time, sliding left. Nothing here writes a value: a
+   skipped step stays BLANK, and blank is not zero — capMerged() reads a blank
+   people or money box as "not told yet" and falls back to the confirmed
+   roster, while an explicit 0 means "we have none". Collapsing that difference
+   would tell a church with money it never entered that it cannot afford
+   anything. */
+let U_STEP_I=0;
+const U_WIZ=['Your church','Money','Your building','Skills'];
+
 function capRender(){
   const host=$('capslot');if(!host)return;const ch=uChurch(),c=capGet(),m=capMerged();
   host.innerHTML=`<form id="u-cap-form" class="u-profile">
-    <div class="u-heading"><div><h3>Your church’s working capacity</h3><p class="note">One profile for ${esc(ch.name)}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.</p></div><span class="u-badge">${c.confirmed?'Profile reviewed':'Review needed'}</span></div>
+<div class="u-heading"><div><h3>Your church’s working capacity</h3><p class="note">One profile for ${esc(ch.name)}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.</p></div><span class="u-badge">${c.confirmed?'Profile reviewed':'Review needed'}</span></div>
     ${ch.legacy?'<p class="u-warning">Your earlier church details were preserved. Confirm the congregation and review the new fields before using these recommendations.</p>':''}
-    <label class="u-field">Church name<input name="churchName" required maxlength="160" value="${esc(ch.name)}"></label>
-    <div class="u-grid">${U_FIELDS.map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':'Not recorded'}"></label>`).join('')}</div>
-    <p class="note">Funding awaiting approval is shown in proposals but never counted as available. Available funding should already exclude spending on existing ministries.</p>
-    <fieldset><legend>When can the team serve?</legend><div class="u-checks">${uChecks(U_SLOTS,c.slots,'teamSlot')}</div></fieldset>
-    <details class="u-details"><summary>Facilities, equipment and confirmed partners</summary><p class="note">Check resources you can actually use. For rooms, enter participant capacity and available times. For a van, enter seats. For AV, enter the audience size the equipment supports.</p>
-    <div class="u-facilities">${U_FAC.map(f=>{const v=c.facilities?.[f.k]||{};return `<fieldset><legend><label><input type="checkbox" name="fac-${f.k}" ${v.available||v===true?'checked':''}> ${esc(f.n)}</label></legend><div class="u-grid"><label class="u-field">Capacity<input type="number" name="room-${f.k}" min="0" value="${v.capacity??''}"></label><label class="u-field">Confirmed partner or host, if provided elsewhere<input name="partner-${f.k}" maxlength="160" value="${esc(v.partner||'')}"></label></div><div class="u-checks">${uChecks(U_SLOTS,v.slots,'slot-'+f.k)}</div></fieldset>`;}).join('')}</div></details>
-    <details class="u-details"><summary>Practical skills available</summary><p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn ghost" id="u-team-link">Review members in Spiritual Gifts</button></details>
-    <details class="u-details"><summary>Notes about your congregation and current commitments</summary><div class="u-checks">${CAP_WHO.map(w=>`<label class="u-check"><input name="who" type="checkbox" value="${w.k}" ${c.who?.[w.k]?'checked':''}>${esc(w.n)}</label>`).join('')}</div><label class="u-field">Current commitments and limits<textarea name="commitments" rows="3" maxlength="3000">${esc(c.commitments||'')}</textarea></label></details>
-    <div class="u-actions"><button class="btn" id="cap-done" type="submit">Save church & update ministries</button><span id="u-cap-status" role="status">${c.confirmed?'Saved for this church.':'Review the profile to see ministries that fit.'}</span></div>
+    <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}" class="${i===U_STEP_I?'on':(i<U_STEP_I?'done':'')}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}</ol>
+    <div class="u-track"><div class="u-slide" style="transform:translateX(-${U_STEP_I*100}%)">
+      <section class="u-panel" data-panel="0">
+        <h4>Step 1 of 4 — Your church</h4>
+        <p class="note">Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.</p>
+<label class="u-field">Church name<input name="churchName" required maxlength="160" value="${esc(ch.name)}"></label>
+<div class="u-grid">${U_FIELDS.filter(([k])=>!/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':'Not recorded'}"></label>`).join('')}</div>
+<fieldset><legend>When can the team serve?</legend><div class="u-checks">${uChecks(U_SLOTS,c.slots,'teamSlot')}</div></fieldset>
+      </section>
+      <section class="u-panel" data-panel="1">
+        <h4>Step 2 of 4 — Money</h4>
+        <p class="note">What the church has actually approved. Money still awaiting a vote goes in the pending box and is never counted as available.</p>
+<div class="u-grid">${U_FIELDS.filter(([k])=>/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':'Not recorded'}"></label>`).join('')}</div>
+<p class="note">Funding awaiting approval is shown in proposals but never counted as available. Available funding should already exclude spending on existing ministries.</p>
+      </section>
+      <section class="u-panel" data-panel="2">
+        <h4>Step 3 of 4 — Your building</h4>
+        <p class="note">What you can actually use, and when. A room you cannot get on a Wednesday is not a room for a Wednesday ministry.</p>
+<p class="note">Check resources you can actually use. For rooms, enter participant capacity and available times. For a van, enter seats. For AV, enter the audience size the equipment supports.</p>
+    <div class="u-facilities">${U_FAC.map(f=>{const v=c.facilities?.[f.k]||{};return `<fieldset><legend><label><input type="checkbox" name="fac-${f.k}" ${v.available||v===true?'checked':''}> ${esc(f.n)}</label></legend><div class="u-grid"><label class="u-field">Capacity<input type="number" name="room-${f.k}" min="0" value="${v.capacity??''}"></label><label class="u-field">Confirmed partner or host, if provided elsewhere<input name="partner-${f.k}" maxlength="160" value="${esc(v.partner||'')}"></label></div><div class="u-checks">${uChecks(U_SLOTS,v.slots,'slot-'+f.k)}</div></fieldset>`;}).join('')}</div>
+      </section>
+      <section class="u-panel" data-panel="3">
+        <h4>Step 4 of 4 — Your people’s skills</h4>
+        <p class="note">Skills, languages and what your congregation is carrying already.</p>
+<p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn ghost" id="u-team-link">Review members in Spiritual Gifts</button>
+<div class="u-checks">${CAP_WHO.map(w=>`<label class="u-check"><input name="who" type="checkbox" value="${w.k}" ${c.who?.[w.k]?'checked':''}>${esc(w.n)}</label>`).join('')}</div><label class="u-field">Current commitments and limits<textarea name="commitments" rows="3" maxlength="3000">${esc(c.commitments||'')}</textarea></label>
+      </section>
+    </div></div>
+    <div class="u-wiznav">
+      <button class="btn ghost" type="button" id="u-back" ${U_STEP_I===0?'disabled':''}>&larr; Back</button>
+      <button class="btn ghost" type="button" id="u-skip">Nothing to add here</button>
+      ${U_STEP_I<3
+        ? `<button class="btn" type="button" id="u-next">Next step &rarr;</button>`
+        : `<button class="btn" id="cap-done" type="submit">Save church &amp; update ministries</button>`}
+    </div>
+    <span id="u-cap-status" role="status">${c.confirmed?'Saved for this church.':'Finish the four steps to see ministries that fit.'}</span>
   </form>`;
   const form=$('u-cap-form');form.addEventListener('input',()=>{$('u-cap-status').textContent='Unsaved changes — save to update the plan.';});
+  /* Navigation. Re-rendering the whole form on every step would lose anything
+     typed and not yet saved, so the panels move by transform and only the
+     chrome is updated in place. */
+  const slide=form.querySelector('.u-slide');
+  const go=i=>{
+    U_STEP_I=Math.max(0,Math.min(3,i));
+    if(slide) slide.style.transform='translateX(-'+(U_STEP_I*100)+'%)';
+    const nav=$('u-steps-nav');
+    if(nav) [...nav.children].forEach((li,n)=>{ li.className = n===U_STEP_I?'on':(n<U_STEP_I?'done':''); });
+    const back=$('u-back'); if(back) back.disabled=U_STEP_I===0;
+    const nx=$('u-next'), done=$('cap-done');
+    if(nx) nx.hidden=U_STEP_I===3;
+    if(done) done.hidden=U_STEP_I!==3;
+    const p=form.querySelector('.u-panel[data-panel="'+U_STEP_I+'"]');
+    if(p&&p.scrollIntoView) p.scrollIntoView({block:'nearest',behavior:'smooth'});
+  };
+  const nx=$('u-next'); if(nx) nx.onclick=()=>{
+    // Only step one has a required field; do not let a blank church name past.
+    const nameBox=form.querySelector('[name="churchName"]');
+    if(U_STEP_I===0&&nameBox&&!nameBox.value.trim()){ nameBox.focus(); return; }
+    go(U_STEP_I+1);
+  };
+  const bk=$('u-back'); if(bk) bk.onclick=()=>go(U_STEP_I-1);
+  const sk=$('u-skip'); if(sk) sk.onclick=()=>{
+    // Deliberately writes nothing. Skipping records absence of information,
+    // never a zero.
+    if(U_STEP_I<3) go(U_STEP_I+1); else form.requestSubmit?form.requestSubmit():form.onsubmit(new Event('submit'));
+  };
+  const nav=$('u-steps-nav');
+  if(nav) nav.onclick=e=>{ const li=e.target.closest('[data-goto]'); if(li) go(+li.dataset.goto); };
+  go(U_STEP_I);
   $('u-team-link').onclick=()=>openTool('gifts');
   form.onsubmit=e=>{
     e.preventDefault();if(!form.reportValidity())return;
@@ -10222,7 +10352,7 @@ function uRow(x){
   const startup=lines.reduce((t,l)=>t+(l.startup||0),0);
   const monthly=lines.reduce((t,l)=>t+(l.monthly||0),0);
   const steps=Array.isArray(x.how)?x.how:(x.how?[x.how]:[]);
-  return `<div class="u-row u-ministry${open?' open':''}${f.ok?'':' u-row-gap'}" data-row="${esc(x.id)}">
+  return `<div class="u-row u-ministry${open?' open':''}${f.ok?'':' u-row-gap'}" data-row="${esc(x.id)}" data-k="${esc(x.k||'')}">
     <button type="button" class="u-rowhead" data-open="${esc(x.id)}" aria-expanded="${open}">
       <span class="u-rowname">${esc(x.n)}</span>
       <span class="u-rowmeta">${r.people||0} vol \u00b7 ${hours} hrs \u00b7 ${startup||monthly?fmtMoney(startup):'no cost'}</span>
