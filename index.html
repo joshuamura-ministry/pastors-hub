@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.4.0
+     TERRAIN  v10.5.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.4.0">
+<html lang="en" data-version="v10.5.0">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="terrain-version" content="v10.4.0">
-<title>Community Map — Terrain v10.4.0</title>
+<meta name="terrain-version" content="v10.5.0">
+<title>Community Map — Terrain v10.5.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -29,6 +29,8 @@
   /* light is the default; dark lives in the [data-theme="dark"] block below */
   --bg:#F6F8FB; --panel:#FFFFFF; --panel2:#F0F4F9; --line:#E3E9F0; --line2:#CBD5E1;
   --ink:#0E1726; --ink2:#4A5768; --ink3:#78879B;
+  --m-housing:#2563EB; --m-children:#7C3AED; --m-hardship:#C2760B;
+  --m-language:#0E8F6E; --m-people:#BE3E68;
   --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
   --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
   --shadow:0 1px 2px rgba(15,23,42,.06),0 10px 30px -18px rgba(15,23,42,.28);
@@ -41,8 +43,14 @@
 :root[data-theme="dark"]{
   --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
   --ink:#EDF1F6; --ink2:#A3AEBC; --ink3:#68737F;
-  --acc:#4C9AFF; --acc-soft:#8FC2FF; --acc-dim:rgba(76,154,255,.13);
-  --acc-glow:rgba(76,154,255,.30); --btn-ink:#05192F;
+  --acc:#5EE9B5; --acc-soft:#9BF3D3; --acc-dim:rgba(94,233,181,.12);
+  --acc-glow:rgba(94,233,181,.28); --btn-ink:#04211A;
+  /* Hue carries meaning on the data, never on the shell. Five families of
+     figure, five colours, so a row of statistics is readable before it is
+     read. Defined per theme because mint that sings on near-black goes pale
+     and weak on a white card. */
+  --m-housing:#6FB4FF; --m-children:#A78BFA; --m-hardship:#FBBF77;
+  --m-language:#5EE9B5; --m-people:#F09AB8;
   /* The dark theme had no shadows at all, so every panel sat flat on the
      background with nothing but a hairline to separate it. Depth in the dark
      comes from a darker shadow plus a faint light edge on top. */
@@ -61,32 +69,20 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
 
-/* ---- circular readouts ---- */
-.rings{display:grid;grid-template-columns:repeat(auto-fit,minmax(132px,1fr));gap:10px;margin:14px 0 4px}
-.ring{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
-  box-shadow:var(--shadow);padding:14px 10px 12px;text-align:center}
-.ring svg{display:block;margin:0 auto 8px;width:86px;height:86px}
-.ring .track{fill:none;stroke:var(--panel2);stroke-width:10}
-.ring .bar{fill:none;stroke:var(--acc);stroke-width:10;stroke-linecap:round;
-  transform:rotate(-90deg);transform-origin:50% 50%;
-  transition:stroke-dasharray .6s cubic-bezier(.4,0,.2,1)}
-.ring .val{font-family:var(--disp);font-weight:700;font-size:15px;fill:var(--ink)}
-.ring .lab{font-size:.78rem;font-weight:600;color:var(--ink2);line-height:1.3}
-.ring .cmp{font-size:.7rem;color:var(--ink3);margin-top:3px}
-.ring.hi .bar{stroke:var(--acc)}
-@media (prefers-reduced-motion:reduce){.ring .bar{transition:none}}
-@media print{.ring{break-inside:avoid;box-shadow:none}}
-
-/* ---- the shift, between the neighborhood and the church ---- */
-.hinge{margin:34px 0 22px;padding:24px 20px;border-radius:var(--r);
-  background:linear-gradient(180deg,var(--acc-dim),transparent 70%);
-  border:1px solid var(--line);border-top:3px solid var(--acc)}
-.hingek{font-family:var(--disp);font-size:.72rem;font-weight:700;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--acc);margin-bottom:8px}
-.hinge h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.4rem,4.6vw,1.95rem);
-  line-height:1.15;letter-spacing:-.02em;margin:0 0 10px}
-.hinge p{color:var(--ink2);line-height:1.6;max-width:62ch}
-.hinge .hingenote{margin-top:10px;font-size:.9rem;color:var(--ink3)}
+/* ---- headline statistics ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:16px 0 4px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);
+  box-shadow:var(--shadow);padding:15px 15px 13px;position:relative;overflow:hidden}
+.stat::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;background:var(--hue);opacity:.9}
+.statval{font-family:var(--disp);font-weight:800;font-size:1.65rem;line-height:1;letter-spacing:-.02em;color:var(--ink)}
+.statlab{font-size:.86rem;font-weight:600;color:var(--ink2);margin-top:4px}
+.statbar{height:5px;border-radius:999px;background:var(--panel2);margin:11px 0 10px;overflow:hidden}
+.statbar i{display:block;height:100%;border-radius:999px;
+  background:linear-gradient(90deg,color-mix(in srgb,var(--hue) 45%,transparent),var(--hue))}
+.statrows{font-size:.76rem;color:var(--ink3);display:grid;gap:3px}
+.statrows div{display:flex;justify-content:space-between;gap:10px}
+.statrows b{color:var(--ink2);font-weight:700}
+@media print{.stat{break-inside:avoid;box-shadow:none}.stat::before{background:#999}}
 
 /* ---- shell ---- */
 .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb, var(--bg) 86%, transparent);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
@@ -1444,13 +1440,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.4.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.5.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.4.0';
+const VERSION = 'v10.5.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -1488,6 +1484,9 @@ const $=id=>document.getElementById(id);
 let LOG=[]; let DATA=null; let SCOPE='tract';
 const DEBUG=(()=>{ try{ return new URLSearchParams(location.search).get('debug')==='1'; }catch(e){ return false; } })();
 /* Light by default. The choice is remembered per device. */
+/* Dark is the default now: it is what the app was designed to look like, and
+   the printed report is forced light regardless, so nothing a board receives
+   changes. The toggle still works and a stored choice still wins. */
 function applyTheme(t){
   document.documentElement.setAttribute('data-theme',t==='dark'?'dark':'light');
   const b=document.getElementById('themebtn');
@@ -1521,7 +1520,8 @@ function initPrintExpand(){
     if(mq.addEventListener) mq.addEventListener('change',e=>e.matches?open():close()); }
 }
 function initTheme(){
-  const saved=localStorage.getItem('terrain-theme')||'light';
+  // Dark by default. A pastor who has already chosen keeps his choice.
+  const saved=localStorage.getItem('terrain-theme')||'dark';
   applyTheme(saved);
   const b=document.getElementById('themebtn');
   if(b) b.onclick=()=>{
@@ -7636,7 +7636,7 @@ function render(){
   $('scope').querySelectorAll('button').forEach(b=>b.onclick=()=>{ SCOPE=b.dataset.s; scopeReRenderTop(); });
   renderFocus();
   $('brief').innerHTML=`<div class="k">${LANG==='es'?'EL RESUMEN':'THE BRIEF'}</div><p>${LANG==='es'?briefES(M,levels,SCOPE):brief(M,levels,SCOPE)}</p>
-    ${ringsHTML(M[SCOPE],M.county)}
+    ${ringsHTML(M[SCOPE],M.county,M.cousub)}
     <div class="acts"><button class="btn ghost" id="copy">Copy the brief</button><button class="btn ghost" id="dlcsv">Download data (CSV)</button><button class="btn ghost" id="dlrep">Download report</button><button class="btn ghost" id="share">Share</button><button class="btn ghost" onclick="window.print()">Print</button></div>`;
   $('copy').onclick=async()=>{const t=$('brief').querySelector('p').innerText;try{await navigator.clipboard.writeText(t);$('copy').textContent='Copied';setTimeout(()=>$('copy').textContent='Copy the brief',1500)}catch(e){prompt('Copy this:',t)}};
   const stamp=(levels[SCOPE].short||'area').replace(/[^A-Za-z0-9]+/g,'-').toLowerCase();
@@ -10135,7 +10135,7 @@ function uActiveFilter(moves){return U_FILTER==='auto'?(moves.some(x=>uCheck(x).
 function uMinistriesHTML(SG){
   const fit=SG.moves.filter(x=>uCheck(x).ok).length, active=uActiveFilter(SG.moves),ready=capMerged().ready;
   return `<div id="u-ministry-list"><p class="note">Explore ministries grounded in the community survey and checked against your church.</p>
-    ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn" data-u-profile="true">Review church resources</button></div>`:''}
+    ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn breathe" data-u-profile="true">Review church resources</button></div>`:''}
     ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
       <div class="u-ladderhead">
         <label for="u-step">How much can your church take on?</label>
@@ -10476,7 +10476,7 @@ function aiSummary(M,levels,scope){
    Each ring carries the county figure underneath, because a percentage on
    its own tells a pastor nothing — 40% renters only means something next to
    the county's 33%. */
-function ringSVG(pct){
+function ringSVG(pct){   // kept: the proposal print path still calls it
   const p=Math.max(0,Math.min(100,pct||0)), r=34, c=2*Math.PI*r;
   return `<svg viewBox="0 0 86 86" role="img" aria-label="${fmtPct(pct)}">
     <circle class="track" cx="43" cy="43" r="${r}"></circle>
@@ -10484,27 +10484,38 @@ function ringSVG(pct){
     <text class="val" x="43" y="48" text-anchor="middle">${fmtPct(pct)}</text>
   </svg>`;
 }
-function ringsHTML(me,cty){
+
+/* ---- headline statistics ------------------------------------------------
+   One card per figure: the number, what it is, and the same figure at
+   neighborhood, town and county so the comparison is on the card rather than
+   in a phrase like "about the county average". The coloured bar is scaled to
+   the value and coloured by what KIND of figure it is, so a row of eight reads
+   at a glance before any of it is read. */
+const U_STATS=[
+  ['renters','Renters','housing'],
+  ['kidsShare','Children','children'],
+  ['poverty','Below poverty','hardship'],
+  ['limEng','Limited English','language'],
+  ['singleParent','Single-parent families','people'],
+  ['seniorsAlone','Seniors living alone','people'],
+  ['foreign','Born outside the U.S.','language'],
+  ['noCar','No vehicle','housing']
+];
+function ringsHTML(me,cty,town){
   if(!me) return '';
-  // Keys must match SPEC exactly. My first attempt invented 'rent' and
-  // 'sixtyFive', which do not exist, so five of six rings silently vanished.
-  const picks=[
-    ['renters','Renters'],['kidsShare','Children'],['poverty','Below poverty'],
-    ['limEng','Limited English'],['singleParent','Single-parent families'],
-    ['seniorsAlone','Seniors living alone'],['foreign','Born outside the U.S.'],
-    ['noCar','No vehicle']
-  ];
-  const cards=picks.map(([k,label])=>{
+  const cards=U_STATS.map(([k,label,hue])=>{
     const v=me[k];
-    if(v==null||!Number.isFinite(v)) return '';   // never draw an empty ring
-    const county=cty&&Number.isFinite(cty[k])?cty[k]:null;
-    const cmp=county==null?''
-      : Math.abs(v-county)<2 ? 'about the county average'
-      : `county ${fmtPct(county)}`;
-    return `<div class="ring"><div>${ringSVG(v)}</div>
-      <div class="lab">${esc(label)}</div>${cmp?`<div class="cmp">${esc(cmp)}</div>`:''}</div>`;
+    if(v==null||!Number.isFinite(v)) return '';   // never draw an empty card
+    const rows=[['Neighborhood',v],['Town',town&&town[k]],['County',cty&&cty[k]]]
+      .filter(r=>r[1]!=null&&Number.isFinite(r[1]));
+    return `<div class="stat" style="--hue:var(--m-${hue})">
+      <div class="statval">${fmtPct(v)}</div>
+      <div class="statlab">${esc(label)}</div>
+      <div class="statbar"><i style="width:${Math.max(2,Math.min(100,v))}%"></i></div>
+      <div class="statrows">${rows.map(r=>`<div><span>${esc(r[0])}</span><b>${fmtPct(r[1])}</b></div>`).join('')}</div>
+    </div>`;
   }).filter(Boolean);
-  return cards.length ? `<div class="rings">${cards.join('')}</div>` : '';
+  return cards.length?`<div class="stats">${cards.join('')}</div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
