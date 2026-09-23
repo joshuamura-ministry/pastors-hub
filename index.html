@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.8.0
+     TERRAIN  v10.8.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.8.0" data-theme="dark">
+<html lang="en" data-version="v10.8.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.8.0">
-<title>Community Map — Terrain v10.8.0</title>
+<meta name="terrain-version" content="v10.8.1">
+<title>Community Map — Terrain v10.8.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -80,8 +80,13 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-steps-nav li.on{border-color:var(--acc);color:var(--ink);background:var(--acc-dim)}
 .u-steps-nav li.on b{background:var(--acc);color:var(--btn-ink)}
 .u-steps-nav li.done b{background:var(--acc-soft);color:var(--btn-ink)}
-.u-track{overflow:hidden}
-.u-slide{display:flex;width:400%;transition:transform .42s cubic-bezier(.4,0,.2,1)}
+/* The track takes the height of the panel you are ON. Flex children stretch to
+   the tallest sibling by default, and step three (the facilities list) is far
+   taller than step one — which left a screen and a half of empty space below
+   the first step. align-items stops the stretch; the measured height stops the
+   container reserving room for the tallest panel anyway. */
+.u-track{overflow:hidden;transition:height .42s cubic-bezier(.4,0,.2,1)}
+.u-slide{display:flex;width:400%;align-items:flex-start;transition:transform .42s cubic-bezier(.4,0,.2,1)}
 .u-panel{width:25%;flex:none;padding:4px 2px 2px}
 .u-panel h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 4px}
 .u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
@@ -1498,13 +1503,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.8.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.8.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.8.0';
+const VERSION = 'v10.8.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10207,6 +10212,17 @@ function capRender(){
     if(nx) nx.hidden=U_STEP_I===3;
     if(done) done.hidden=U_STEP_I!==3;
     const p=form.querySelector('.u-panel[data-panel="'+U_STEP_I+'"]');
+    const track=form.querySelector('.u-track');
+    const fit=()=>{ if(track&&p) track.style.height=(p.scrollHeight||p.offsetHeight||0)+'px'; };
+    fit();
+    // Re-measure once the panel has settled: checkboxes wrapping to a second
+    // row, or a <details> opening, change the height after the first pass.
+    setTimeout(fit,60); setTimeout(fit,460);
+    if(!form.dataset.fitWired){
+      form.dataset.fitWired='1';
+      form.addEventListener('click',()=>setTimeout(fit,40));   // details toggles
+      if(window.addEventListener) window.addEventListener('resize',fit);
+    }
     if(p&&p.scrollIntoView) p.scrollIntoView({block:'nearest',behavior:'smooth'});
   };
   const nx=$('u-next'); if(nx) nx.onclick=()=>{
