@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.10.3
+     TERRAIN  v10.11.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.10.3" data-theme="dark">
+<html lang="en" data-version="v10.11.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.10.3">
-<title>Community Map — Terrain v10.10.3</title>
+<meta name="terrain-version" content="v10.11.1">
+<title>Community Map — Terrain v10.11.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -103,12 +103,17 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-panel[data-panel="3"] h4{color:var(--m-children)}
 .u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .u-wiznav .btn{min-height:44px}
-/* Step three is thirteen facilities in a row and they all looked the same, so
-   it read as one undivided wall. Each gets a mint edge and a mint name. */
-.u-facilities{display:grid;gap:12px}
-.u-facilities>fieldset{border:1px solid var(--line);border-left:3px solid var(--m-language);
-  border-radius:10px;padding:12px 14px;background:var(--panel2)}
-.u-facilities>fieldset>legend{color:var(--m-language);font-weight:700;font-size:.92rem;padding:0 6px}
+/* Step three: thirteen facilities as a list of rose titles, one row each,
+   closed until opened. All thirteen open at once was a wall to scroll past. */
+.u-facilities{display:grid;gap:8px}
+.u-facilities>fieldset{border:1px solid var(--line);border-left:3px solid var(--m-people);
+  border-radius:10px;padding:6px 14px;background:var(--panel2)}
+.u-facilities>fieldset.open{padding:6px 14px 12px}
+.u-facilities>fieldset>legend{color:var(--m-people);font-weight:700;font-size:.95rem;padding:0 6px;
+  cursor:pointer;display:flex;align-items:center;gap:8px;width:100%}
+.u-facilities>fieldset>legend::after{content:'+';margin-left:auto;color:var(--ink3);font-weight:700}
+.u-facilities>fieldset.open>legend::after{content:'\2212'}
+.u-facilities>fieldset:not(.open)>*:not(legend){display:none}
 .u-facilities>fieldset>legend label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .u-facilities>fieldset .u-checks{margin-top:8px}
 @media (prefers-reduced-motion:reduce){.u-panel.on{animation:none}}
@@ -1347,7 +1352,11 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .u-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin:14px 0}.u-field{display:flex;flex-direction:column;gap:6px;font-size:.83rem;font-weight:600;min-width:0;flex:1 1 190px}
 .u-field select,.u-field input{height:44px;width:100%}
 .u-actions{align-items:flex-end}
-.u-actions .btn{flex:1 1 190px;min-height:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.u-seg{display:flex;height:44px;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel2)}
+.u-seg button{flex:1 1 0;background:transparent;border:0;color:var(--ink2);font:inherit;font-size:.86rem;
+  font-weight:600;cursor:pointer;padding:0 10px;white-space:nowrap}
+.u-seg button+button{border-left:1px solid var(--line2)}
+.u-seg button.on{background:var(--acc);color:var(--btn-ink);font-weight:700}
 /* the effort ladder */
 .u-ladder{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin:14px 0}
 .u-ladderhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
@@ -1544,13 +1553,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.10.3</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.11.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.10.3';
+const VERSION = 'v10.11.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10241,6 +10250,20 @@ function capRender(){
      the previous version slid a 400%-wide track and tried to compute its
      height on timers, which is what kept cutting panels off and leaving voids.
      All four panels stay in the DOM, so nothing typed is ever lost. */
+  /* Facilities open one at a time. Ticking a facility's box opens it, since
+     you are about to fill in its capacity and times; clicking the title
+     toggles it without changing whether the church has it. */
+  form.querySelectorAll('.u-facilities>fieldset').forEach(fs=>{
+    const box=fs.querySelector('legend input[type="checkbox"]');
+    if(box&&box.checked) fs.classList.add('open');
+    const lg=fs.querySelector('legend');
+    if(lg) lg.addEventListener('click',e=>{
+      if(e.target===box) return;              // the checkbox handles itself below
+      if(e.target.closest('label')&&box){ return; } // label click toggles the box; let that path open it
+      fs.classList.toggle('open');
+    });
+    if(box) box.addEventListener('change',()=>{ fs.classList.toggle('open',box.checked); });
+  });
   const panels=[...form.querySelectorAll('.u-panel')];
   const nav=$('u-steps-nav');
   const show=(i,back,moved)=>{
@@ -10320,7 +10343,7 @@ function uMinistriesHTML(SG){
   const fit=SG.moves.filter(x=>uCheck(x).ok).length, active=uActiveFilter(SG.moves),ready=capMerged().ready;
   return `<div id="u-ministry-list"><p class="note">Explore ministries grounded in the community survey and checked against your church.</p>
     ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn breathe" data-u-profile="true">Review church resources</button></div>`:''}
-    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
+    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><div class="u-field">Show<div class="u-seg"><button type="button" class="${active==='fit'?'on':''}" data-u-filter="fit">Fits now (${fit})</button><button type="button" class="${active==='needs'?'on':''}" data-u-filter="needs">Needs prep (${SG.moves.length-fit})</button></div></div><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
       <div class="u-ladderhead">
         <label for="u-step">How much can your church take on?</label>
         <span class="u-rung">Step <b id="u-stepn">${U_STEP}</b> of ${U_STEPS}</span>
