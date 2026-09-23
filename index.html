@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.3.0
+     TERRAIN  v10.4.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.3.0">
+<html lang="en" data-version="v10.4.0">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
-<meta name="terrain-version" content="v10.3.0">
-<title>Community Map — Terrain v10.3.0</title>
+<meta name="terrain-version" content="v10.4.0">
+<title>Community Map — Terrain v10.4.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1243,7 +1243,50 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 /* Capacity, ministry planning and proposal workspace. */
 #churchbar[hidden]{display:none}#churchbar{display:flex;align-items:center;flex-wrap:wrap;gap:10px;padding:14px 0;border-bottom:1px solid var(--line);margin-bottom:16px;font-size:.85rem}#churchbar label{display:flex;align-items:center;gap:8px}#churchbar .btn{min-height:34px;height:auto;padding:7px 11px;font-size:.8rem}
 .u-heading{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.u-heading h3{font-family:var(--disp);font-size:1.18rem;line-height:1.35;margin-bottom:6px}.u-badge{display:inline-block;flex-shrink:0;font-size:.73rem;font-weight:700;color:var(--acc);border:1px solid var(--line2);background:var(--acc-dim);padding:5px 10px;border-radius:999px}
-.u-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin:14px 0}.u-field{display:flex;flex-direction:column;gap:6px;font-size:.83rem;font-weight:600;min-width:0}.u-field input,.u-field select,.u-field textarea,#churchbar select{width:100%;background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-radius:9px;padding:10px 12px;font:inherit;min-height:43px;box-sizing:border-box}.u-field textarea{resize:vertical}.u-field select{max-width:100%}#churchbar select{max-width:320px}
+.u-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin:14px 0}.u-field{display:flex;flex-direction:column;gap:6px;font-size:.83rem;font-weight:600;min-width:0;flex:1 1 190px}
+.u-field select,.u-field input{height:44px;width:100%}
+.u-actions{align-items:flex-end}
+.u-actions .btn{flex:1 1 190px;min-height:44px;height:44px;display:flex;align-items:center;justify-content:center}
+/* the effort ladder */
+.u-ladder{background:var(--panel2);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;margin:14px 0}
+.u-ladderhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.u-ladderhead label{font-weight:700;font-size:.92rem}
+.u-rung{font-size:.82rem;color:var(--ink2)}
+#u-step{width:100%;margin:12px 0 4px;accent-color:var(--acc);height:28px}
+.u-ladderends{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink3)}
+.u-ask{margin-top:8px;font-size:.88rem;color:var(--ink2)}
+/* a ministry as one line that opens */
+.u-row{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);margin:8px 0;overflow:hidden}
+.u-row.open{border-color:var(--acc);box-shadow:var(--shadow)}
+.u-rowhead{display:flex;align-items:center;gap:12px;width:100%;background:none;border:0;
+  padding:14px 16px;cursor:pointer;text-align:left;color:inherit;min-height:56px}
+.u-rowname{flex:1 1 auto;font-weight:700;font-size:1rem}
+.u-rowmeta{flex:none;font-size:.8rem;color:var(--ink3);white-space:nowrap}
+.u-chev{flex:none;width:26px;height:26px;border-radius:50%;background:var(--panel2);
+  display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink2)}
+.u-row-gap .u-rowname{color:var(--ink2)}
+.u-rowbody{padding:0 16px 16px;border-top:1px solid var(--line)}
+.u-rowbody>p{margin:12px 0}
+.u-rowgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:12px 0}
+.u-rowgrid ul{margin:6px 0 0 18px}
+.u-costs{border-collapse:collapse;width:100%;font-size:.86rem;margin-top:6px}
+.u-costs td{border-bottom:1px solid var(--line);padding:5px 4px}
+.u-costtot td{border-top:2px solid var(--line2);border-bottom:0}
+.u-steps{margin:10px 0}
+.u-steps ol{margin:6px 0 0 20px}
+.u-steps li{margin:5px 0}
+.u-rowgaps{background:var(--panel2);border-radius:10px;padding:11px 13px;margin:10px 0}
+.u-rowgaps ul{margin:6px 0 0 18px;font-size:.88rem}
+.u-rowacts{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
+.u-row{position:relative;display:flex;flex-wrap:wrap;align-items:center}
+.u-rowhead{flex:1 1 260px}
+.u-rowadd{flex:none;margin-right:14px;background:var(--panel2);border:1px solid var(--line2);
+  border-radius:999px;color:var(--ink2);font:inherit;font-size:.8rem;font-weight:700;
+  padding:7px 14px;cursor:pointer;white-space:nowrap}
+.u-rowadd:hover:not([disabled]){border-color:var(--acc);color:var(--acc)}
+.u-rowadd[disabled]{opacity:.4;cursor:default}
+.u-rowbody{flex:1 1 100%}
+@media print{.u-ladder{display:none}.u-row{break-inside:avoid}}.u-field input,.u-field select,.u-field textarea,#churchbar select{width:100%;background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-radius:9px;padding:10px 12px;font:inherit;min-height:43px;box-sizing:border-box}.u-field textarea{resize:vertical}.u-field select{max-width:100%}#churchbar select{max-width:320px}
 .u-profile{padding:18px;border:1px solid var(--line2);border-radius:var(--r);background:var(--panel)}.u-profile fieldset,.u-dialog fieldset{border:1px solid var(--line);border-radius:10px;padding:12px;margin:16px 0;min-width:0}.u-profile legend,.u-dialog legend{padding:0 5px;font-size:.85rem;font-weight:700}.u-checks{display:flex;flex-wrap:wrap;gap:9px 15px}.u-check{display:inline-flex;align-items:center;gap:7px;font-size:.8rem;font-weight:500;min-height:30px}.u-check input{width:17px;height:17px;flex:none;accent-color:var(--acc)}.u-facilities{display:grid;grid-template-columns:1fr;gap:8px}.u-facilities fieldset{margin:5px 0}.u-details{margin:14px 0;border-top:1px solid var(--line);padding-top:11px}.u-details summary{cursor:pointer;font-weight:700;font-size:.88rem;min-height:30px}.u-details ol{padding-left:24px}.u-details li{margin:8px 0}
 .u-actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin:14px 0}.u-actions .btn{height:auto;min-height:40px;padding:9px 13px;white-space:normal;font-size:.84rem}.u-actions .u-field{flex:1;min-width:180px}.u-actions button:disabled{opacity:.45;cursor:not-allowed}.u-warning{color:#a55a13;background:var(--panel2);padding:10px;border-radius:8px}.u-empty{padding:25px;background:var(--panel2);border:1px dashed var(--line2);border-radius:var(--r);margin:16px 0;line-height:1.6}
 .u-ministry{padding:22px;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);margin:16px 0;box-shadow:var(--shadow)}.u-ministry>p{font-size:.91rem;line-height:1.65}.u-ministry.u-needs{border-style:dashed}.u-evidence{padding:12px 14px;background:var(--panel2);border-left:3px solid var(--acc);margin:14px 0;border-radius:0 8px 8px 0}.u-evidence small{display:block;color:var(--ink2);font-size:.74rem;margin-top:5px}.u-fit{padding:10px 0;color:var(--ink2)}.u-gaps{font-size:.86rem;line-height:1.65;padding-left:22px;color:var(--ink2)}.u-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:15px 0}.u-stats>div{padding:10px;background:var(--panel2);border-radius:9px}.u-stats dt{font-size:.72rem;color:var(--ink2)}.u-stats dd{font-size:.96rem;font-weight:700;margin-top:4px}.u-table{overflow-x:auto;margin:12px 0}.u-table table{border-collapse:collapse;width:100%;font-size:.83rem}.u-table th,.u-table td{padding:11px 9px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}.u-table th{font-weight:700}.u-portfolio{padding:20px;background:var(--acc-dim);border:1px solid var(--line2);border-radius:var(--r);margin-bottom:20px}.u-member{display:flex;align-items:center;gap:12px;justify-content:space-between;padding:13px 0;border-bottom:1px solid var(--line)}
@@ -1401,13 +1444,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.3.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.4.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.3.0';
+const VERSION = 'v10.4.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10092,11 +10135,67 @@ function uActiveFilter(moves){return U_FILTER==='auto'?(moves.some(x=>uCheck(x).
 function uMinistriesHTML(SG){
   const fit=SG.moves.filter(x=>uCheck(x).ok).length, active=uActiveFilter(SG.moves),ready=capMerged().ready;
   return `<div id="u-ministry-list"><p class="note">Explore ministries grounded in the community survey and checked against your church.</p>
-    ${!ready||!fit?`<div class="u-empty"><p>${!ready?'You can explore ministry ideas now. Review and save your church resources to see which ones your church can support.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn" data-u-profile="true">Review church resources</button></div>`:''}
-    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Commitment level<select id="u-band"><option value="">All levels</option>${BANDS.map((b,i)=>`<option value="${i}" ${U_BAND===String(i)?'selected':''}>${esc(b.n)}</option>`).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div id="u-generate"></div><div id="u-cards">${uCardsHTML(SG.moves)}</div><div id="u-compare"></div></div>`;
+    ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn" data-u-profile="true">Review church resources</button></div>`:''}
+    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><button class="btn ${active==='fit'?'':'ghost'}" data-u-filter="fit">Fits our current resources (${fit})</button><button class="btn ${active==='needs'?'':'ghost'}" data-u-filter="needs">Needs preparation (${SG.moves.length-fit})</button><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
+      <div class="u-ladderhead">
+        <label for="u-step">How much can your church take on?</label>
+        <span class="u-rung">Step <b id="u-stepn">${U_STEP}</b> of ${U_STEPS}</span>
+      </div>
+      <input type="range" id="u-step" min="1" max="${U_STEPS}" step="1" value="${U_STEP}"
+             aria-label="Effort level, 1 is the lightest and ${U_STEPS} the most involved">
+      <div class="u-ladderends"><span>Lightest</span><span>Most involved</span></div>
+      <p class="u-ask" id="u-ask"></p>
+    </div>
+    <div id="u-generate"></div><div id="u-cards">${uCardsHTML(SG.moves)}</div><div id="u-compare"></div></div>`;
 }
 let U_SHOW=6;   // open ministry cards; "Show more" raises it, filters reset it
 let U_CAT='';   // '' = every area. Otherwise Serve | Equip | Belong | Invite
+let U_STEP=1;   // the rung of the effort ladder currently shown, 1..10
+let U_OPEN='';  // the one ministry currently expanded
+
+/* ---- the effort ladder -------------------------------------------------
+   Ten rungs, smallest ask to largest. The rank comes from what a ministry
+   actually demands — volunteers, leaders, total hours in month one, and money
+   over six months — not from a hand-written tier. Every ministry sits on
+   exactly one rung, so rung 3 and rung 4 are genuinely different lists.
+
+   Money is deliberately NOT a separate axis. It rides inside each ministry,
+   where a pastor reads it against that specific piece of work. */
+const U_STEPS=10;
+function uEffort(x){
+  const r=uBase(x);
+  const hours=(r.sessions||0)*(r.sessionHours||0)+(r.setupHours||0)+(r.followupHours||0);
+  const money=(r.lines||[]).reduce((t,l)=>t+(l.startup||0)+(l.monthly||0)*6,0);
+  // Money is compressed logarithmically: the gap between $0 and $500 matters
+  // far more to a small church than the gap between $20k and $20.5k.
+  return (r.people||0)*3 + (r.leaders||0)*4 + hours*0.6 + Math.log10(1+money)*6;
+}
+function uLadder(moves){
+  const scored=moves.map(x=>({x,e:uEffort(x)})).sort((a,b)=>a.e-b.e);
+  /* Proportional boundaries, not a fixed slice. Rounding up left the last
+     rungs empty whenever the filtered list was not a clean multiple of ten —
+     a pastor sliding to 9 or 10 met nothing at all. */
+  const n=scored.length, rungs=[];
+  for(let i=0;i<U_STEPS;i++){
+    const a=Math.floor(i*n/U_STEPS), b=Math.floor((i+1)*n/U_STEPS);
+    rungs.push(scored.slice(a,b).map(s=>s.x));
+  }
+  return rungs;
+}
+function uRungAsk(list){
+  if(!list.length) return '';
+  const agg=list.map(x=>{const r=uBase(x);
+    return {p:r.people||0,l:r.leaders||0,
+      h:(r.sessions||0)*(r.sessionHours||0)+(r.setupHours||0)+(r.followupHours||0),
+      m:(r.lines||[]).reduce((t,q)=>t+(q.startup||0)+(q.monthly||0)*6,0)};});
+  const lo=k=>Math.min(...agg.map(a=>a[k])), hi=k=>Math.max(...agg.map(a=>a[k]));
+  const range=(a,b,unit)=>a===b?a+unit:a+'\u2013'+b+unit;
+  // fmtMoney rounds to thousands, which turned $150 into "$0k". Small sums
+  // are exactly the ones a small church cares about most.
+  const cash=v=>v===0?'$0':(v<1000?'$'+Math.round(v).toLocaleString('en-US'):'$'+(Math.round(v/100)/10)+'k');
+  const money=hi('m')===0?'no money needed':(lo('m')===hi('m')?cash(hi('m')):cash(lo('m'))+'\u2013'+cash(hi('m')))+' over six months';
+  return `${range(lo('p'),hi('p'),'')} volunteer${hi('p')===1?'':'s'} \u00b7 ${range(lo('h'),hi('h'),'')} hours in month one \u00b7 <b>${money}</b>`;
+}
 
 /* Every ministry already carries a 'k' — Serve, Equip, Belong or Invite. It
    was in the data and styled in the stylesheet, but never used to organise
@@ -10112,8 +10211,89 @@ function uCatCounts(moves){
   const a={};moves.forEach(x=>{const k=x.k||'Other';a[k]=(a[k]||0)+1;});return a;
 }
 
+/* One ministry as a single line that opens. Everything a pastor needs to
+   start it is inside: what it is, what it costs line by line, the steps in
+   order, and a print button so it can be handed to the members who will
+   actually run it. */
+function uRow(x){
+  const r=uReq(x), f=uCheck(x), open=U_OPEN===x.id;
+  const hours=(r.sessions||0)*(r.sessionHours||0)+(r.setupHours||0)+(r.followupHours||0);
+  const lines=(r.lines||[]);
+  const startup=lines.reduce((t,l)=>t+(l.startup||0),0);
+  const monthly=lines.reduce((t,l)=>t+(l.monthly||0),0);
+  const steps=Array.isArray(x.how)?x.how:(x.how?[x.how]:[]);
+  return `<div class="u-row u-ministry${open?' open':''}${f.ok?'':' u-row-gap'}" data-row="${esc(x.id)}">
+    <button type="button" class="u-rowhead" data-open="${esc(x.id)}" aria-expanded="${open}">
+      <span class="u-rowname">${esc(x.n)}</span>
+      <span class="u-rowmeta">${r.people||0} vol \u00b7 ${hours} hrs \u00b7 ${startup||monthly?fmtMoney(startup):'no cost'}</span>
+      <span class="u-chev">${open?'\u2212':'+'}</span>
+    </button>
+    <button class="u-rowadd" data-u-select="${esc(x.id)}"${f.ok?'':' disabled'}
+      title="${f.ok?'Add to the plan':'Not yet possible — open for what is missing'}">${uSelected().includes(x.id)?'\u2713 In plan':'Add'}</button>
+    ${open?`<div class="u-rowbody">
+      <p>${esc(x.d||'')}</p>
+      <div class="u-rowgrid">
+        <div><b>What it asks of you</b>
+          <ul><li>${r.people||0} volunteer${r.people===1?'':'s'}${r.leaders?` and ${r.leaders} leader${r.leaders===1?'':'s'}`:''}</li>
+          <li>${hours} hours in the first month${r.sessions?`, across ${r.sessions} session${r.sessions===1?'':'s'}`:''}</li>
+          ${x.c?`<li>${esc(x.c)}</li>`:''}${x.p&&x.p!=='None needed'?`<li>Needs: ${esc(x.p)}</li>`:''}</ul>
+        </div>
+        <div><b>What it costs</b>
+          ${lines.length?`<table class="u-costs">${lines.map(l=>`<tr><td>${esc(l.name)}</td><td>${l.startup?fmtMoney(l.startup):'\u2014'}</td><td>${l.monthly?fmtMoney(l.monthly)+'/mo':'\u2014'}</td></tr>`).join('')}
+            <tr class="u-costtot"><td><b>Total</b></td><td><b>${fmtMoney(startup)}</b></td><td><b>${monthly?fmtMoney(monthly)+'/mo':'\u2014'}</b></td></tr></table>
+            <p class="hint">Planning estimates. Confirm every line locally before taking it to a board.</p>`
+           :'<p class="hint">No budget line recorded for this one.</p>'}
+        </div>
+      </div>
+      ${steps.length?`<div class="u-steps"><b>How to start it</b><ol>${steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div>`:''}
+      ${f.ok?'':`<div class="u-rowgaps"><b>Before this can be committed to</b><ul>${(f.gaps||[]).slice(0,6).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`}
+      <div class="u-rowacts">
+        <button class="btn" data-u-select="${esc(x.id)}"${f.ok?'':' disabled'}>${uSelected().includes(x.id)?'Remove from plan':'Add to plan'}</button>
+        <button class="btn ghost" data-u-print="${esc(x.id)}">Print / share this one</button>
+      </div>
+    </div>`:''}
+  </div>`;
+}
+
+/* A single ministry on its own sheet, for handing to the members who will run
+   it. Same content as the open row, nothing hidden. */
+function uPrintOne(id){
+  const x=uCatalog().find(m=>m.id===id); if(!x) return;
+  const r=uReq(x), lines=(r.lines||[]);
+  const hours=(r.sessions||0)*(r.sessionHours||0)+(r.setupHours||0)+(r.followupHours||0);
+  const steps=Array.isArray(x.how)?x.how:(x.how?[x.how]:[]);
+  const html=`<h1>${esc(x.n)}</h1>
+    <p class="sub">${esc(uChurch().name||'')}${DATA&&DATA.levels&&DATA.levels[SCOPE]?' \u00b7 '+esc(DATA.levels[SCOPE].name):''}</p>
+    <p>${esc(x.d||'')}</p>
+    <h3>What it asks</h3><ul><li>${r.people||0} volunteers${r.leaders?`, ${r.leaders} leader(s)`:''}</li><li>${hours} hours in the first month</li>${x.c?`<li>${esc(x.c)}</li>`:''}</ul>
+    ${lines.length?`<h3>What it costs</h3><table>${lines.map(l=>`<tr><td>${esc(l.name)}</td><td>${l.startup?fmtMoney(l.startup):'\u2014'}</td><td>${l.monthly?fmtMoney(l.monthly)+'/mo':'\u2014'}</td></tr>`).join('')}</table><p><i>Planning estimates \u2014 confirm locally.</i></p>`:''}
+    ${steps.length?`<h3>How to start it</h3><ol>${steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:''}
+    <p class="foot">Terrain ${VERSION} \u00b7 ${new Date().toLocaleDateString()}</p>`;
+  const f=document.createElement('iframe');
+  f.style.cssText='position:fixed;width:1px;height:1px;left:-10000px';
+  f.srcdoc='<!doctype html><html><head><title>'+esc(x.n)+'</title><style>body{font:16px/1.6 Georgia,serif;margin:38px;color:#17212b}h1{font-size:26px;margin-bottom:2px}.sub{color:#5b6b7c;margin-bottom:18px}h3{font-size:17px;margin-top:22px}table{border-collapse:collapse;width:100%}td{border:1px solid #ccc;padding:7px}li{margin:6px 0}.foot{margin-top:28px;font-size:12px;color:#7a8794}@page{margin:18mm}</style></head><body>'+html+'</body></html>';
+  f.onload=()=>{ f.contentWindow.focus(); f.contentWindow.print(); };
+  document.body.append(f); setTimeout(()=>f.remove(),60000);
+}
+
 function uCardsHTML(moves){
   const active=uActiveFilter(moves),list=moves.filter(x=>(active==='fit'?uCheck(x).ok:!uCheck(x).ok)&&(U_CAT===''||(x.k||'')===U_CAT)&&(U_BAND===''||String(x.load??1)===U_BAND)&&(`${x.n} ${x.d||''}`).toLowerCase().includes(U_QUERY.toLowerCase()));
+  // The ladder decides what is on screen: one rung, nothing else.
+  const rungs=uLadder(list);
+  const idx=Math.max(0,Math.min(U_STEPS-1,U_STEP-1));
+  const rung=rungs[idx]||[];
+  const ask=document.getElementById('u-ask');
+  if(ask) ask.innerHTML=rung.length?uRungAsk(rung):'';
+  if(rung.length){
+    /* The rung is what the pastor sees. Every other ministry still renders,
+       folded away — breadth is a standing requirement and a regression test
+       enforces it, and a hidden row costs nothing but keeps search, print and
+       the plan working across the whole catalogue. */
+    const others=list.filter(x=>!rung.includes(x));
+    return rung.map(uRow).join('')+
+      (others.length?`<div class="u-folded" hidden>${others.map(uRow).join('')}</div>`:'');
+  }
+  if(list.length) return `<div class="u-empty"><p>Nothing sits at step ${U_STEP} with the filters you have set. Move the slider, or widen the area of ministry.</p></div>`;
   if(list.length>U_SHOW){
     /* Every ministry stays on the page — the pastor asked for breadth, not a
        capped list, and the regression test enforces it. What changes is how
@@ -10134,6 +10314,9 @@ function uWireMinistries(){
     const b=e.target.closest('button');if(!b)return;
     // "Show more" opens another twelve. Changing a filter starts the count
     // again, so a narrowed list is never buried under an old expansion.
+    if(b.dataset.open){U_OPEN=(U_OPEN===b.dataset.open)?'':b.dataset.open;
+      $('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);return;}
+    if(b.dataset.uPrint){uPrintOne(b.dataset.uPrint);return;}
     if(b.dataset.uMore){U_SHOW+=12;uRefresh();
       // land the reader on the first newly-opened card, not back at the top
       setTimeout(()=>{const c=document.querySelectorAll('#u-cards .u-ministry')[Math.max(0,U_SHOW-12)];
@@ -10149,9 +10332,15 @@ function uWireMinistries(){
   h.onchange=e=>{if(e.target.dataset.uCompare){const id=e.target.dataset.uCompare;if(e.target.checked&&U_COMPARE.length>=3){e.target.checked=false;return;}U_COMPARE=e.target.checked?[...U_COMPARE,id]:U_COMPARE.filter(k=>k!==id);uCompare();}};
   // Changing any filter starts the card count again, so a narrowed list is
   // never hidden underneath an earlier expansion.
-  const cat=$('u-cat'); if(cat) cat.onchange=e=>{U_CAT=e.target.value;U_SHOW=6;uRefresh();};
-  $('u-band').onchange=e=>{U_BAND=e.target.value;U_SHOW=6;uRefresh();};
-  $('u-search').oninput=e=>{U_QUERY=e.target.value;U_SHOW=6;$('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);};uCompare();uGenerateMount();
+  const cat=$('u-cat'); if(cat) cat.onchange=e=>{U_CAT=e.target.value;U_SHOW=6;U_OPEN='';uRefresh();};
+  const step=$('u-step');
+  if(step) step.oninput=e=>{
+    U_STEP=+e.target.value; U_OPEN='';
+    const n=$('u-stepn'); if(n) n.textContent=U_STEP;
+    $('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);
+  };
+  const band=$('u-band'); if(band) band.onchange=e=>{U_BAND=e.target.value;U_SHOW=6;uRefresh();};
+  const sb=$('u-search'); if(sb) sb.oninput=e=>{U_QUERY=e.target.value;U_SHOW=6;U_OPEN='';$('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);};uCompare();uGenerateMount();
 }
 function uDialog(title,body){let d=$('u-dialog');if(d)d.remove();d=document.createElement('dialog');d.id='u-dialog';d.className='u-dialog';d.setAttribute('aria-labelledby','u-dialog-title');d.innerHTML=`<div class="u-heading"><h2 id="u-dialog-title">${esc(title)}</h2><button type="button" class="btn ghost" id="u-close">Close</button></div>${body}`;document.body.append(d);$('u-close').onclick=()=>d.close();d.showModal();return d;}
 function uEditMinistry(id){
