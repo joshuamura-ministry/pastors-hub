@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.14.0
+     TERRAIN  v10.19.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.14.0" data-theme="dark">
+<html lang="en" data-version="v10.19.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.14.0">
-<title>Community Map — Terrain v10.14.0</title>
+<meta name="terrain-version" content="v10.19.0">
+<title>Community Map — Terrain v10.19.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -39,6 +39,7 @@
   --disp:'Space Grotesk','Manrope',system-ui,sans-serif;
   --r:14px;
   --script:'Cormorant Garamond',Georgia,serif;
+  --contour:rgba(31,111,235,.055);
 }
 :root[data-theme="dark"]{
   --bg:#06080C; --panel:#0D1117; --panel2:#12181F; --line:#1B222C; --line2:#28313D;
@@ -51,6 +52,7 @@
      and weak on a white card. */
   --m-housing:#6FB4FF; --m-children:#A78BFA; --m-hardship:#FBBF77;
   --m-language:#5EE9B5; --m-people:#F09AB8;
+  --contour:rgba(94,233,181,.05);
   /* The dark theme had no shadows at all, so every panel sat flat on the
      background with nothing but a hairline to separate it. Depth in the dark
      comes from a darker shadow plus a faint light edge on top. */
@@ -59,6 +61,14 @@
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html{background:var(--bg)}
+/* Faint contour lines behind everything — the reason the tool is called Terrain,
+   and the one decorative element on the page. Pure CSS, no image to load, and
+   it sits at the very back so nothing has to fight it. */
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:.55;
+  background-image:
+    repeating-radial-gradient(ellipse 120% 62% at 12% 8%, transparent 0 58px, var(--contour) 58px 59px),
+    repeating-radial-gradient(ellipse 100% 70% at 92% 86%, transparent 0 66px, var(--contour) 66px 67px);}
+@media print{body::before{display:none}}
 html,body{transition:background .25s ease,color .25s ease}
 body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.55;min-height:100dvh;
   -webkit-font-smoothing:antialiased;font-feature-settings:"tnum" 1,"cv11" 1}
@@ -364,8 +374,13 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .verse q{quotes:none;font-family:var(--script);font-style:italic;font-size:1.06rem;line-height:1.55;color:var(--ink2)}
 .verse cite{display:block;font-style:normal;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--ink3);font-weight:700;margin-top:5px}
-.hubwelcome{text-align:center;padding:6px 0 2px}
-.hubwelcome h2{font-family:var(--disp);font-size:clamp(1.9rem,6.5vw,2.6rem)}
+.hubwelcome{text-align:center;padding:26px 0 6px}
+.hubk{font-family:var(--disp);font-size:.72rem;font-weight:700;letter-spacing:.34em;
+  text-transform:uppercase;color:var(--acc);margin-bottom:14px}
+.hubwelcome h2{font-family:var(--disp);font-weight:700;letter-spacing:-.03em;
+  font-size:clamp(2.1rem,7vw,3.4rem);line-height:1.05;
+  text-shadow:0 0 46px var(--acc-glow)}
+.hubwelcome .sub{font-size:clamp(1rem,2.4vw,1.15rem);color:var(--ink2);margin:10px 0 0}
 .rule{display:flex;align-items:center;gap:12px;margin:22px 0;color:var(--line2)}
 .rule::before,.rule::after{content:"";flex:1;height:1px;background:var(--line2)}
 .rule span{color:var(--acc);opacity:.55;font-size:.75rem}
@@ -373,12 +388,49 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .hub[hidden]{display:none}
 .hub h2{font-family:var(--disp);font-size:clamp(1.5rem,5vw,2rem);font-weight:600;color:var(--ink);margin-bottom:4px}
 .hub .sub{margin-bottom:18px}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.tool{display:flex;flex-direction:column;align-items:flex-start;gap:6px;background:var(--panel);
-  border:1px solid var(--line2);border-radius:var(--r);padding:20px 18px;cursor:pointer;text-align:left;
-  box-shadow:var(--shadow);transition:border-color .15s,transform .15s}
-.tool:hover{border-color:var(--acc);transform:translateY(-2px)}
-.tool .tico{font-size:1.7rem;line-height:1}
+.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:34px}
+/* No card chrome. A panel and a border around each tool made four boxes
+   competing with the icons inside them; without it the icon is the control and
+   the page breathes. The whole tile is still the button. */
+.tool{display:flex;flex-direction:column;align-items:center;gap:0;background:none;
+  border:0;border-radius:var(--r);padding:16px 10px 12px;cursor:pointer;text-align:center;
+  box-shadow:none;position:relative;
+  transition:transform .18s cubic-bezier(.2,.7,.3,1)}
+.tool::before{content:"";position:absolute;left:50%;top:6px;width:186px;height:186px;margin-left:-93px;
+  border-radius:50%;background:radial-gradient(circle,var(--acc-dim),transparent 66%);
+  opacity:.55;transition:opacity .22s;pointer-events:none}
+@media (hover:hover){
+  .tool:hover{transform:translateY(-4px)}
+  .tool:hover::before{opacity:1}
+  .tool:hover .tsvg{filter:drop-shadow(0 0 20px var(--acc-glow)) brightness(1.12);
+    transform:scale(1.045)}
+  .tool:hover .tgo{color:var(--acc-soft)}
+  .tool:hover .tgo i{transform:translateX(5px)}
+}
+.tool:active{transform:translateY(-1px) scale(.985)}
+.tool:focus-visible{outline:2px solid var(--acc);outline-offset:6px;border-radius:18px}
+.tool .tico{line-height:0;position:relative;margin-bottom:20px}
+/* Drawn, not typed. Emoji render differently on every device and cannot take
+   the theme colour, which is exactly why they looked out of place. */
+.tool .tsvg{width:clamp(96px,11.5vw,128px);height:clamp(96px,11.5vw,128px);display:block;
+  overflow:visible;color:var(--acc);
+  /* No drop-shadow at rest. The artwork carries its own two-pass glow, and
+     stacking a CSS one on top is exactly what made these look muddy before.
+     CSS only adds the extra light on hover. */
+  transition:filter .22s,transform .22s}
+.tool b{font-size:clamp(1.15rem,2.6vw,1.4rem);font-weight:700;letter-spacing:-.02em}
+.tool .td{max-width:23ch;margin:8px auto 0}
+.tool .tgo{margin-top:18px;font-size:.88rem;font-weight:700;letter-spacing:.01em;color:var(--acc);
+  display:inline-flex;align-items:center;gap:8px;transition:color .18s}
+.tool .tgo i{width:15px;height:2px;background:currentColor;border-radius:2px;position:relative;
+  transition:transform .18s}
+.tool .tgo i::after{content:"";position:absolute;right:-1px;top:-3px;width:8px;height:8px;
+  border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg);border-radius:1px}
+@media print{
+  .tool::before{display:none}
+  .tool .tsvg{filter:none;color:#111}
+  .tool .tgo{display:none}
+}
 .tool b{font-family:var(--disp);font-size:1.15rem;font-weight:600;color:var(--ink)}
 .tool .td{font-size:.85rem;color:var(--ink2);line-height:1.6}
 .toolbar{display:flex;align-items:center;gap:10px;margin:18px 0 2px}
@@ -1397,6 +1449,11 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .u-chev{flex:none;width:26px;height:26px;border-radius:50%;background:var(--panel2);
   display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--ink2)}
 .u-row-gap .u-rowname{color:var(--ink2)}
+/* The one label in the ministry list allowed a colour: a ministry a single
+   recruit or a single room away is the most actionable thing on the page, and
+   it used to look identical to one needing a whole building. */
+.u-rowmeta .u-near{color:var(--m-hardship);font-weight:700}
+@media print{.u-rowmeta .u-near{color:#111}}
 .u-rowbody{padding:0 16px 16px;border-top:1px solid var(--line)}
 .u-rowbody>p{margin:12px 0}
 .u-rowgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:12px 0}
@@ -1464,35 +1521,40 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 
   <div class="hub" id="hub" hidden>
     <div class="hubwelcome">
-      <h2>Welcome</h2>
-      <p class="sub">Choose what you need. More will appear here as they are built.</p>
+      <p class="hubk">Pastors Hub</p>
+      <h2>Welcome to Terrain</h2>
+      <p class="sub">Choose a tool to begin.</p>
     </div>
-    <div class="egw">
-      <q>Christ's method alone will give true success in reaching the people. The Saviour mingled with men as one who desired their good. He showed His sympathy for them, ministered to their needs, and won their confidence. Then He bade them, &ldquo;Follow Me.&rdquo;</q>
-      <cite>Ellen G. White &middot; The Ministry of Healing, p. 143</cite>
-    </div>
-    <div class="rule"><span>&#10022;</span></div>
     <div class="tools">
       <button class="tool" data-tool="survey">
-        <span class="tico">🗺️</span>
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-survey" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-survey" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-survey)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-survey)"><path d="M28 111 82 86 104 96M152 96l22-10 54 25v114l-54-23-46 23-46-23-54 23V111"/><path d="M82 86v37m0 69v10m92-116v37m0 69v10"/><path d="M128 119c-8-15-33-41-33-63a33 33 0 0 1 66 0c0 22-25 48-33 63Z"/><circle cx="128" cy="56" r="12"/><path d="m46 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="m164 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="M28 191c26-13 45-15 68-10m64 0c22-6 46-3 68 10M28 211c16-8 30-11 44-10m111 0c17 0 31 4 45 10"/><path d="M121 154c-7 7-13 14-8 21-10 17 1 25 20 31l26 10m-33-31c-5 8 8 11 20 15l28 11"/><path d="M120 143c-2 8-9 11-9 19a10 10 0 0 0 20 0c0-8-8-14-11-19Zm1 29v9"/></g></svg></span>
         <b>Community Survey</b>
-        <span class="td">Who lives around your church — income, languages, children, seniors, housing — with the blocks to reach first and how to mobilize members.</span>
+        <span class="td">Understand who lives around your church and where to reach first.</span>
+        <span class="tgo">Explore survey <i></i></span>
       </button>
       <button class="tool" data-tool="gifts">
-        <span class="tico">🕊️</span>
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-gifts" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-gifts" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-gifts)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-gifts)"><path d="M143 128c-14-20-32-28-47-48-14-18-17-39-21-51-9 5-4 34 3 49-11-9-18-23-21-33-8 8 0 31 11 43-15-8-31-26-42-37-4 20 11 43 31 57-15-4-27-13-38-22 3 18 17 34 35 43-13-1-23-6-32-11 6 15 21 26 37 32-12 1-21-1-30-4 10 13 21 19 36 22-9 4-18 4-25 4 13 9 29 12 43 11-10 14-29 23-50 23-7 0-13-1-19-2 6 11 17 16 30 17-8 5-14 7-24 8 10 8 22 7 35 2-7 7-13 12-21 14 13 4 27-2 40-12 C110 225 151 203 165 173C172 159 169 145 181 138L193 132 181 125C179 114 170 105 159 107C151 108 146 119 143 128Z"/><path d="M79 183c19-1 33-8 46-22m-76 64c10-3 18-8 26-15"/><circle cx="169" cy="116" r="2.8" fill="url(#mint-gifts)" stroke="none"/><path d="M187 127c14-12 24-34 34-68m-21 75 8-44m-5 16 18-15"/><path d="M214 81c-10-4-16-14-12-24 11 3 17 11 12 24Zm8-20c-5-11-3-21 5-27 5 12 3 20-5 27Zm-16 46c-11-1-19-8-19-18 12-1 20 6 19 18Zm10-17c1-12 9-19 19-17-1 11-8 18-19 17Zm-15 34c2-12 10-17 20-14-2 10-9 16-20 14Z" fill="url(#mint-gifts)" stroke="none"/></g></svg></span>
         <b>Spiritual Gifts</b>
-        <span class="td">Send your members a link. They answer eighty-four statements about desire, ability, fruit, and what others have seen in them — and their gifts, and the ministries that fit, come back to you here.</span>
+        <span class="td">Help members discover their gifts and find a place to serve.</span>
+        <span class="tgo">Discover gifts <i></i></span>
       </button>
       <button class="tool" data-tool="case">
-        <span class="tico">📋</span>
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-case" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-case" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-case)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-case)"><path d="M57 28h107l43 43v145a12 12 0 0 1-12 12H57a12 12 0 0 1-12-12V40a12 12 0 0 1 12-12Z"/><path d="M164 28v32a11 11 0 0 0 11 11h32M73 67h54M73 91h77M73 115h34"/><g fill="url(#mint-case)" stroke="none"><rect x="73" y="180" width="16" height="28" rx="2"/><rect x="102" y="164" width="16" height="44" rx="2"/><rect x="131" y="146" width="16" height="62" rx="2"/><rect x="160" y="128" width="16" height="80" rx="2"/></g></g></svg></span>
         <b>Make the Case</b>
-        <span class="td">Turn the findings into a proposal written for the room you are walking into — board, elders, deacons, or any of twelve ministries.</span>
+        <span class="td">Turn community insights into a proposal for your ministry.</span>
+        <span class="tgo">Build a proposal <i></i></span>
       </button>
       <button class="tool" data-tool="planner">
-        <span class="tico">📅</span>
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-planner" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-planner" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-planner)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-planner)"><path d="M67 49H46a17 17 0 0 0-17 17v143a17 17 0 0 0 17 17h164a17 17 0 0 0 17-17V66a17 17 0 0 0-17-17h-21M83 49h90M29 95h198"/><rect x="67" y="28" width="16" height="44" rx="8"/><rect x="173" y="28" width="16" height="44" rx="8"/><circle cx="65" cy="128" r="8"/><circle cx="97" cy="128" r="8"/><circle cx="129" cy="128" r="8"/><path d="M36 216c24-12 28-42 57-47 25-4 40 18 63 4 9-5 14-12 20-23"/><path d="m185 113 5.9 13 14.1 1.5-10.5 9.7 2.8 13.9-12.3-7.1-12.3 7.1 2.8-13.9-10.5-9.7 14.1-1.5Z" fill="url(#mint-planner)" stroke-width="2"/></g></svg></span>
         <b>Evangelism Planner</b>
-        <span class="td">Set opening night and the size of your church. Terrain counts backward eighteen months — revival, training, outreach, the meetings, and the nurture after — with a benchmark for every phase.</span>
+        <span class="td">Plan your outreach journey, from preparation to follow-up.</span>
+        <span class="tgo">Start planning <i></i></span>
       </button>
+    </div>
+    <div class="rule"><span>&#10022;</span></div>
+    <div class="egw">
+      <q>In order to lead souls to Jesus there must be a knowledge of human nature and a study of the human mind. Much careful thought and fervent prayer are required to know how to approach men and women upon the great subject of truth.</q>
+      <cite>Ellen G. White &middot; Testimonies for the Church, vol. 4, p. 67</cite>
     </div>
   </div>
 
@@ -1575,13 +1637,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.14.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.19.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.14.0';
+const VERSION = 'v10.19.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5462,7 +5524,13 @@ const ES={
  'Getting members off the pew — step by step':'Cómo movilizar a los miembros, paso a paso',
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
- 'Welcome':'Bienvenido','Your tools':'Sus herramientas',
+ 'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
+ 'Pastors Hub':'Pastors Hub','Choose a tool to begin.':'Elija una herramienta para comenzar.',
+ 'Understand who lives around your church and where to reach first.':'Conozca quién vive alrededor de su iglesia y por dónde empezar.',
+ 'Help members discover their gifts and find a place to serve.':'Ayude a los miembros a descubrir sus dones y dónde servir.',
+ 'Turn community insights into a proposal for your ministry.':'Convierta los hallazgos en una propuesta para su ministerio.',
+ 'Plan your outreach journey, from preparation to follow-up.':'Planifique su campaña, desde la preparación hasta el seguimiento.',
+ 'Your tools':'Sus herramientas',
  'Choose what you need. More will appear here as they are built.':
    'Elija lo que necesita. Aquí irán apareciendo más a medida que se construyan.',
  'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso',
@@ -10278,8 +10346,13 @@ function moveFeasible(x){return uCheck(x);}
 function signatureMoves(m,c,tags,limit){
   return uCatalog().filter(x=>x.generated?x.evidenceArea===DATA?.levels?.[SCOPE]?.name:x.need?.some(t=>tags.has(t))).map(x=>{
     const hits=x.need?.filter(t=>tags.has(t)).length||1;const evidence=uEvidence(x),F=uCheck(x);
-    return {...x,stage:x.st||'trust',fit:(x.w||5)+hits*2+(F.ok?10:0),reason:evidence.reason,feas:F,load:x.load??1};
-  }).sort((a,b)=>Number(b.feas.ok)-Number(a.feas.ok)||b.fit-a.fit||a.n.localeCompare(b.n));
+    return {...x,stage:x.st||'trust',fit:(x.w||5)+hits*2+(F.ok?10:0),reason:evidence.reason,feas:F,
+      load:x.load??1, blocks:F.ok?0:F.gaps.length};
+  }).sort((a,b)=>
+    /* Within reach first, as before. But the blocked ones are no longer one
+       undifferentiated pile: fewest obstacles first, so the things one recruit
+       or one room away sit at the top where a pastor will actually see them. */
+    Number(b.feas.ok)-Number(a.feas.ok) || a.blocks-b.blocks || b.fit-a.fit || a.n.localeCompare(b.n));
 }
 function uRefresh(){
   const anchor=document.getElementById('u-ministry-list')||document.getElementById('capslot');const top=anchor?.getBoundingClientRect().top;
@@ -10451,14 +10524,18 @@ function uCard(x){
 let U_COMPARE=[], U_BAND='', U_GEN_NOTICE='';
 function uPortfolioHTML(){
   const use=uUsage(),c=capMerged();if(!use.items.length&&!use.unknown.length)return '<p class="note">Choose ministries below to build a plan. Each selection reserves a separate team, first-month hours, and funding. Existing commitments are already deducted.</p>';
-  return `<div class="u-portfolio"><h3>Your selected plan</h3><p class="note">Resources are reserved conservatively across ministries. Time slots are broad planning blocks; confirm exact dates with each team. A profile change can make a selected ministry need preparation.</p><div class="u-table"><table><thead><tr><th>Resource</th><th>Selected</th><th>Available before this plan</th><th>Remaining</th></tr></thead><tbody>${[['Volunteers',use.people,c.hands],['Leaders',use.leaders,c.concurrent],['First-month hours',use.hours,c.hours],['Startup funding ($)',use.startup,c.startup],['Monthly funding ($)',use.monthly,c.monthly]].map(([label,n,total])=>`<tr><th>${label}</th><td>${n}</td><td>${total??'Not recorded'}</td><td class="${total!==null&&total-n<0?'u-warning':''}">${total===null?'Unknown':total-n}</td></tr>`).join('')}</tbody></table></div>${use.items.map(({x})=>`<p><b>${esc(x.n)}</b> · ${uCheck(x).ok?'Fits this combined plan':'Needs preparation'} <button class="btn ghost" data-u-select="${esc(x.id)}">Remove</button> <button class="btn ghost" data-u-propose="${esc(x.id)}">Proposal</button></p>`).join('')}${use.unknown.map(id=>`<p class="u-warning">A selected ministry is unavailable. <button class="btn ghost" data-u-select="${esc(id)}">Remove</button></p>`).join('')}</div>`;
+  return `<div class="u-portfolio"><h3>Your selected plan</h3><p class="note">This is the part that is really possible together. Each ministry above is judged alone; these are judged as a set, and the remaining column is what is genuinely left after all of them. Time slots are broad planning blocks \u2014 confirm exact dates with each team. Changing the church profile can push a selected ministry back out of reach.</p><div class="u-table"><table><thead><tr><th>Resource</th><th>Selected</th><th>Available before this plan</th><th>Remaining</th></tr></thead><tbody>${[['Volunteers',use.people,c.hands],['Leaders',use.leaders,c.concurrent],['First-month hours',use.hours,c.hours],['Startup funding ($)',use.startup,c.startup],['Monthly funding ($)',use.monthly,c.monthly]].map(([label,n,total])=>`<tr><th>${label}</th><td>${n}</td><td>${total??'Not recorded'}</td><td class="${total!==null&&total-n<0?'u-warning':''}">${total===null?'Unknown':total-n}</td></tr>`).join('')}</tbody></table></div>${use.items.map(({x})=>`<p><b>${esc(x.n)}</b> · ${uCheck(x).ok?'Fits this combined plan':'Needs preparation'} <button class="btn ghost" data-u-select="${esc(x.id)}">Remove</button> <button class="btn ghost" data-u-propose="${esc(x.id)}">Proposal</button></p>`).join('')}${use.unknown.map(id=>`<p class="u-warning">A selected ministry is unavailable. <button class="btn ghost" data-u-select="${esc(id)}">Remove</button></p>`).join('')}</div>`;
 }
 function uActiveFilter(moves){return U_FILTER==='auto'?(moves.some(x=>uCheck(x).ok)?'fit':'needs'):U_FILTER;}
 function uMinistriesHTML(SG){
   const fit=SG.moves.filter(x=>uCheck(x).ok).length, active=uActiveFilter(SG.moves),ready=capMerged().ready;
-  return `<div id="u-ministry-list"><p class="note">Explore ministries grounded in the community survey and checked against your church.</p>
+  const cap=capMerged(), used=uUsage();
+  const reach = cap.ready
+    ? `Each of these was checked <b>on its own</b> against what you have left \u2014 ${Math.max(0,cap.hands-used.people)} volunteers, ${Math.max(0,cap.concurrent-used.leaders)} leaders, ${Math.max(0,cap.hours-used.hours)} hours a month. They are not all possible at once: adding one to the plan reserves its people and money and takes them out of the count for the rest.`
+    : 'Nothing has been checked against your church yet \u2014 fill in the profile above and every ministry below gets measured against what you actually have.';
+  return `<div id="u-ministry-list"><p class="note">Ministries drawn from the community survey and measured against your church. ${reach}</p>
     ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn breathe" data-u-profile="true">Review church resources</button></div>`:''}
-    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><div class="u-field">Show<div class="u-seg"><button type="button" class="${active==='fit'?'on':''}" data-u-filter="fit">Fits now (${fit})</button><button type="button" class="${active==='needs'?'on':''}" data-u-filter="needs">Needs prep (${SG.moves.length-fit})</button></div></div><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
+    ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><div class="u-field">Show<div class="u-seg"><button type="button" class="${active==='fit'?'on':''}" data-u-filter="fit">Within reach (${fit})</button><button type="button" class="${active==='needs'?'on':''}" data-u-filter="needs">Not yet (${SG.moves.length-fit})</button></div></div><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
       <div class="u-ladderhead">
         <label for="u-step">How much can your church take on?</label>
         <span class="u-rung">Step <b id="u-stepn">${U_STEP}</b> of ${U_STEPS}</span>
@@ -10547,7 +10624,7 @@ function uRow(x){
   return `<div class="u-row u-ministry${open?' open':''}${f.ok?'':' u-row-gap'}" data-row="${esc(x.id)}" data-k="${esc(x.k||'')}">
     <button type="button" class="u-rowhead" data-open="${esc(x.id)}" aria-expanded="${open}">
       <span class="u-rowname">${esc(x.n)}</span>
-      <span class="u-rowmeta">${r.people||0} vol \u00b7 ${hours} hrs \u00b7 ${startup||monthly?fmtMoney(startup):'no cost'}</span>
+      <span class="u-rowmeta">${!f.ok&&f.gaps.length===1?'<b class="u-near">one thing away</b> \u00b7 ':''}${r.people||0} vol \u00b7 ${hours} hrs \u00b7 ${startup||monthly?fmtMoney(startup):'no cost'}</span>
       <span class="u-chev">${open?'\u2212':'+'}</span>
     </button>
     <button class="u-rowadd" data-u-select="${esc(x.id)}"${f.ok?'':' disabled'}
@@ -10568,7 +10645,7 @@ function uRow(x){
         </div>
       </div>
       ${steps.length?`<div class="u-steps"><b>How to start it</b><ol>${steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div>`:''}
-      ${f.ok?'':`<div class="u-rowgaps"><b>Before this can be committed to</b><ul>${(f.gaps||[]).slice(0,6).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`}
+      ${f.ok?'':`<div class="u-rowgaps"><b>${f.gaps.length===1?'The one thing standing in the way':'Before this can be committed to'}</b><ul>${(f.gaps||[]).slice(0,6).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`}
       <div class="u-rowacts">
         <button class="btn" data-u-select="${esc(x.id)}"${f.ok?'':' disabled'}>${uSelected().includes(x.id)?'Remove from plan':'Add to plan'}</button>
         <button class="btn ghost" data-u-print="${esc(x.id)}">Print / share this one</button>
@@ -10627,7 +10704,7 @@ function uCardsHTML(moves){
        <span class="hint">Showing ${U_SHOW} of ${list.length}. Use the filters above to narrow instead.</span></div>
        <div class="u-folded" hidden>${rest.map(uCard).join('')}</div>`;
   }
-  return list.length?list.map(uCard).join(''):`<div class="u-empty"><p>${U_QUERY||U_BAND!==''?'No ministries match these filters.':active==='fit'?'No ministries currently meet every requirement. You can still explore ideas and see what each one needs.':'No ministries need preparation under this filter.'}</p><button class="btn ghost" data-u-reset="true">Show available ideas</button><button class="btn ghost" data-u-profile="true">Review church resources</button></div>`;
+  return list.length?list.map(uCard).join(''):`<div class="u-empty"><p>${U_QUERY||U_BAND!==''?'No ministries match these filters.':active==='fit'?'Nothing here is within reach on the resources recorded so far. Switch to <b>Not yet</b> \u2014 the list is ordered by how close each one is, and the top of it is usually one recruit or one room away.':'Everything matched here is already within reach.'}</p><button class="btn ghost" data-u-reset="true">Show available ideas</button><button class="btn ghost" data-u-profile="true">Review church resources</button></div>`;
 }
 function uCompare(){const h=$('u-compare');if(!h)return;const items=U_COMPARE.map(id=>uCatalog().find(x=>x.id===id)).filter(Boolean);h.innerHTML=items.length?`<h3>Compare ministries</h3><div class="u-table"><table><thead><tr><th>Ministry</th><th>Team</th><th>First-month hours</th><th>Startup / monthly</th><th>Ready?</th></tr></thead><tbody>${items.map(x=>{const f=uCheck(x),r=f.r;return `<tr><th>${esc(x.n)}</th><td>${r.people} volunteers / ${r.leaders} leaders</td><td>${r.firstMonthHours}</td><td>${fmtMoney(r.startup)} / ${fmtMoney(r.monthly)}</td><td>${f.ok?'Fits':esc(f.gaps.join(' '))}</td></tr>`;}).join('')}</tbody></table></div>`:'';}
 function uWireMinistries(){
@@ -10844,6 +10921,17 @@ function statRing(v,cmp,label){
 }
 function ringsHTML(me,cty,town){
   if(!me) return '';
+  /* On a genuinely hard neighborhood six of these eight clear the threshold,
+     and six amber rings is a wall rather than a signal — the eye stops going
+     anywhere in particular. So the threshold decides what COULD light, and
+     then only the three largest gaps actually do. Three is always a sprinkle,
+     and they are always the three worth talking about first. */
+  const lit=new Set(U_STATS
+    .map(([k])=>({k,v:me[k],c:cty&&cty[k]}))
+    .filter(x=>standsOut(x.v,x.c))
+    .map(x=>({...x,gap:(x.c>=1?x.v/x.c:1)*((x.v-x.c)||0)}))   // rank on margin and multiple together
+    .sort((a,b)=>b.gap-a.gap)
+    .slice(0,3).map(x=>x.k));
   const cards=U_STATS.map(([k,label,hue])=>{
     const v=me[k];
     if(v==null||!Number.isFinite(v)) return '';   // never draw an empty card
@@ -10855,7 +10943,7 @@ function ringsHTML(me,cty,town){
       : (gap>0?'+':'\u2212')+fmtPct(Math.abs(gap))+' vs county';
     /* Mint unless this figure stands out against the county. Two or three
        amber rings on a page, and those are the ones worth a conversation. */
-    const out=standsOut(v,c);
+    const out=lit.has(k);
     return `<div class="stat${out?' out':''}" style="--hue:${out?'var(--m-hardship)':'var(--acc)'}">
       ${statRing(v,c,label)}
       <div class="statwrap">
@@ -10867,7 +10955,7 @@ function ringsHTML(me,cty,town){
     </div>`;
   }).filter(Boolean);
   return cards.length?`<div class="stats">${cards.join('')}
-    <p class="statkey">The ring is this neighborhood; the notch on it is the county. ${cards.filter(x=>/class="stat out"/.test(x)).length?'The amber rings are where this neighborhood is clearly above the county \u2014 those are the ones worth a conversation.':'Nothing here is far from the county average.'}</p></div>`:'';
+    <p class="statkey">The ring is this neighborhood; the notch on it is the county. ${lit.size?'The amber rings are the '+(lit.size===1?'one figure':lit.size+' figures')+' furthest above the county \u2014 start the conversation there.':'Nothing here is far from the county average.'}</p></div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
