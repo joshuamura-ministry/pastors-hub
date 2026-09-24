@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.12.0
+     TERRAIN  v10.13.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.12.0" data-theme="dark">
+<html lang="en" data-version="v10.13.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.12.0">
-<title>Community Map — Terrain v10.12.0</title>
+<meta name="terrain-version" content="v10.13.0">
+<title>Community Map — Terrain v10.13.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -169,7 +169,19 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .brow:nth-of-type(3) .bar>i,.brow:nth-of-type(3) .bar{--step:64%}
 .brow:nth-of-type(4) .bar>i,.brow:nth-of-type(4) .bar{--step:48%}
 .brow:nth-of-type(5) .bar>i,.brow:nth-of-type(5) .bar{--step:34%}
-.brow .bar>i,.brow .bar>span,.brow .bar>b{background:color-mix(in srgb,var(--sec) var(--step,100%),transparent)!important}
+.brow .bb>i{background:color-mix(in srgb,var(--sec) var(--step,100%),transparent)!important}
+/* The comparison figure beside each bar, and the tick under every card, belong
+   to the section as well — they were the last two mint details in a row that
+   had otherwise taken its colour. */
+.brow .bv{color:var(--sec)}
+.brow .bv small{color:var(--ink3)}
+.tick .bar i.me{background:var(--sec)}
+.chip.up b{color:var(--sec)}
+.card{position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:var(--sec);opacity:.5}
+.card.wide::after{opacity:.35}
+@media print{.card::after{background:#999}}
 
 /* The four things a church does, each with its own colour, on the ministry
    rows. These class names existed in the stylesheet and had never been used. */
@@ -1567,13 +1579,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.12.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.13.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.12.0';
+const VERSION = 'v10.13.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3510,12 +3522,39 @@ function suggestions(M,scope){
 const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 // Charts pick their colours up from the active theme rather than hard-coded hex,
 // so the same code draws correctly on white or on near-black.
-const svgc=()=>({gold:cssVar('--acc')||'#1F6FEB',dim:cssVar('--ink3')||'#78879B',ink:cssVar('--ink2')||'#4A5768',line:cssVar('--line2')||'#CBD5E1'});
+/* Every section already says what it is about. This turns that into the colour
+   its charts are drawn in, so a reader can tell hardship from language from
+   housing before reading a single label. Falls back to the accent when a
+   caller does not name one. */
+/* In PRIORITY order, most specific first. data-theme carries two jobs — the
+   section's subject, and the extra themes the Focus filter needs it to answer
+   to — so neither "first token" nor "last rule" gets it right on its own.
+   Explicit sec-* overrides win, then the subject, then the filter-only tags. */
+const SEC_TOKEN=[
+  ['sec-church','--m-housing'],['sec-moves','--m-children'],
+  ['mobilize','--m-people'],['case','--m-hardship'],
+  ['hardship','--m-hardship'],['work','--m-hardship'],
+  ['people','--m-people'],['families','--m-children'],['seniors','--m-children'],
+  ['housing','--m-housing'],['language','--m-language'],
+  ['change','--m-people'],['faith','--acc'],['prompts','--acc']];
+function secHue(theme){
+  /* The FIRST token wins, because data-theme lists the section's own subject
+     first and then the extra themes the Focus filter needs it to answer to.
+     People is "people change language" so Focus can keep it when someone
+     filters on Language — but the section is about people, and it should be
+     the people colour. Reading the last match instead handed People the
+     language mint and Wealth & hardship the housing blue, which is most of
+     why the report below the brief came out one shade. */
+  const t=String(theme||'').split(/\s+/);
+  for(const [k,v] of SEC_TOKEN) if(t.includes(k)) return cssVar(v)||cssVar('--acc')||'#1F6FEB';
+  return cssVar('--acc')||'#1F6FEB';
+}
+const svgc=(hue)=>({gold:hue||cssVar('--acc')||'#1F6FEB',dim:cssVar('--ink3')||'#78879B',ink:cssVar('--ink2')||'#4A5768',line:cssVar('--line2')||'#CBD5E1'});
 /* Part-of-a-whole data only. Anything that is not a share of one total gets a
    bar or a line instead, because a donut of things that do not sum to a whole
    is a lie told attractively. Slices under 2% are folded into "other" — a
    sliver nobody can see or click is noise, not information. */
-function donutOf(title,rows,centre,unit){
+function donutOf(title,rows,centre,unit,theme){
   const clean=(rows||[])
     .map(r=>Array.isArray(r)?{n:r[0],v:r[1]}:r)
     .filter(r=>r&&r.n&&Number.isFinite(r.v)&&r.v>0);
@@ -3526,10 +3565,10 @@ function donutOf(title,rows,centre,unit){
   const restV=big.slice(5).reduce((n,r)=>n+r.v,0)+small.reduce((n,r)=>n+r.v,0);
   if(restV>=0.5) parts.push({n:'Everything else',v:restV});
   if(parts.length<2) return '';
-  return `<div class="donuts">${donut(title,parts,unit||'',centre)}</div>`;
+  return `<div class="donuts">${donut(title,parts,unit||'',centre,theme?secHue(theme):null)}</div>`;
 }
-function chartGrouped(cats,a,b){
-  const SVGC=svgc();
+function chartGrouped(cats,a,b,hue){
+  const SVGC=svgc(hue);
   const W=460,H=200,PL=44,PB=44,PT=10,PR=8, n=cats.length;
   const max=Math.max(...a.vals.concat(b?b.vals:[]),1)*1.15;
   const gw=(W-PL-PR)/n, bw=b?gw*0.30:gw*0.45;
@@ -3550,8 +3589,8 @@ function chartGrouped(cats,a,b){
   const key=`<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(a.name)}</span>${b?`<span><i style="background:${SVGC.dim};opacity:.55"></i>${esc(b.name)}</span>`:''}</div>`;
   return key+s;
 }
-function chartLollipop(rows,aName,bName){
-  const SVGC=svgc();
+function chartLollipop(rows,aName,bName,hue){
+  const SVGC=svgc(hue);
   const W=440,rowH=34,PL=152,PR=50,H=rows.length*rowH+18;
   const max=Math.max(...rows.map(r=>Math.max(r.me??0,r.cty??0)),1)*1.2;
   const x=v=>PL+(W-PL-PR)*(v/max);
@@ -3588,8 +3627,15 @@ function declutter(ys,gap,top,bottom){
   }
   return out;
 }
+/* The chart he named. It drew one gold line and five grey ones, which is why
+   it read as a single mint smear: the five smaller populations were literally
+   the same colour as each other. Each series now carries its own hue, held
+   across both ends of the chart and into its label, so a line can be followed
+   by colour rather than by squinting at where it lands. */
+const SLOPE_HUES=['--m-people','--m-language','--m-children','--m-hardship','--m-housing','--acc'];
 function chartSlope(items,thenLabel,nowLabel){
   const SVGC=svgc();
+  const hues=items.map((_,i)=>cssVar(SLOPE_HUES[i%SLOPE_HUES.length])||SVGC.gold);
   const W=490,H=284,PT=18,PB=42,PL=54,PR=176;
   const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
@@ -3604,14 +3650,17 @@ function chartSlope(items,thenLabel,nowLabel){
   // long names would run off the edge of the card, so shorten them here only
   const shortName=n=>({'Hispanic / Latino':'Hispanic','Two or more':'2+ races','Born abroad':'Born abroad'}[n])||(n.length>13?n.slice(0,12)+'…':n);
   items.forEach((it,i)=>{
-    const col=Math.abs(it.now-it.then)>=3?SVGC.gold:SVGC.dim;
-    s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="2" opacity="${col===SVGC.gold?1:.5}"/>`;
+    // A real shift keeps its full colour; a flat line is the same hue, faded,
+    // so movement still reads at a glance without losing which line is which.
+    const moved=Math.abs(it.now-it.then)>=3;
+    const col=hues[i];
+    s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="${moved?2.6:1.8}" opacity="${moved?1:.45}"/>`;
     s+=`<circle cx="${PL}" cy="${y(it.then)}" r="3.5" fill="${col}"/><circle cx="${W-PR}" cy="${y(it.now)}" r="3.5" fill="${col}"/>`;
     // leader lines, drawn only where a label had to move off its dot
     if(Math.abs(yL[i]-y(it.then))>1.5) s+=`<line x1="${PL-5}" y1="${y(it.then)}" x2="${PL-11}" y2="${yL[i]}" stroke="${SVGC.line2||SVGC.dim}" stroke-width="1" opacity=".5"/>`;
     if(Math.abs(yR[i]-y(it.now))>1.5) s+=`<line x1="${W-PR+4}" y1="${y(it.now)}" x2="${W-PR+10}" y2="${yR[i]}" stroke="${col}" stroke-width="1" opacity=".5"/>`;
     s+=`<text x="${PL-13}" y="${yL[i]+4}" fill="${SVGC.dim}" font-size="14" text-anchor="end">${fmtPct(it.then)}</text>`;
-    s+=`<text x="${W-PR+12}" y="${yR[i]+4}" fill="${col}" font-size="15.5" font-weight="600">${esc(shortName(it.name))} ${fmtPct(it.now)}</text>`;
+    s+=`<text x="${W-PR+12}" y="${yR[i]+4}" fill="${col}" font-size="15.5" font-weight="${moved?700:600}" opacity="${moved?1:.75}">${esc(shortName(it.name))} ${fmtPct(it.now)}</text>`;
   });
   s+=`</svg>`; return s;
 }
@@ -5191,7 +5240,7 @@ function donut(title, parts, note, centre){
      the section colour entirely. A donut now shades one hue — the section's
      own — from full strength down, so the slices stay obviously the same
      quantity while remaining tellable apart. */
-  const hue=cssVar('--sec-hue')||cssVar('--acc')||'#1F6FEB';
+  const hue=(typeof arguments[4]==='string'&&arguments[4])||cssVar('--sec-hue')||cssVar('--acc')||'#1F6FEB';
   const mix=p=>`color-mix(in srgb, ${hue} ${p}%, transparent)`;
   const cols=[mix(100),mix(78),mix(58),mix(42),mix(28),mix(18)];
   let off=0;
@@ -7826,7 +7875,7 @@ function render(){
     ${card('No health insurance',me.uninsured,fmtPct,pick('uninsured'),S)}
     ${card('Households',me.hh,fmtNum,null,S,`${fmtNum(me.pop)} people`)}
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>
-      ${donutOf('Employed residents',me.occ,me.pop,'people')}
+      ${donutOf('Employed residents',me.occ,me.pop,'people','hardship work')}
       ${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
@@ -7836,11 +7885,11 @@ function render(){
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
     <div class="card"><div class="n" style="font-size:1.2rem;line-height:1.25;padding-top:4px">${divided?'Sharply divided':me.incHigh>=35?'Mostly affluent':me.incLow>=35?'Mostly struggling':'Mixed incomes'}</div><div class="l">How this reads</div><div class="sub">${divided?'Both ends of the income scale are large here.':'Based on the share of households at each end of the income scale.'}</div></div>
     <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Blue dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
-      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short)}</div>
+      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short,secHue('hardship'))}</div>
     <div class="card wide chart"><h3>Household income spread</h3><div class="cs">Share of households in each bracket${cmpName?', against the county':''}</div>
       ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
         {name:levels[S].short,vals:[me.inc.lt25,me.inc.b25_50,me.inc.b50_100,me.inc.b100_150,me.inc.gt150]},
-        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null)}</div>
+        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null,secHue('hardship'))}</div>
     <div class="card wide" style="min-height:0"><div class="l">Housing &amp; distress</div><p class="note" style="margin-top:6px">Rent burden, overcrowding and no car are hardship measured a different way — so they sit here rather than in a section of their own.</p></div>
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
@@ -7865,7 +7914,7 @@ function render(){
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>
-      ${donutOf('Who lives here',me.race,me.pop,'people')}
+      ${donutOf('Who lives here',me.race,me.pop,'people','people change')}
       ${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
     ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
@@ -7981,6 +8030,13 @@ function render(){
     <div id="propslot"></div>
   </section>`);
   $('sections').innerHTML=secs.join('');
+  /* Set the hue on each section directly. The stylesheet's ~= rules are
+     order-dependent and were quietly disagreeing with the charts; one
+     assignment here makes the heading, the bars, the ticks, the cards and the
+     charts all read from the same decision. */
+  document.querySelectorAll('#sections section.blk').forEach(sec=>{
+    try{ sec.style.setProperty('--sec', secHue(sec.dataset.theme)); }catch(e){}
+  });
   document.querySelectorAll('[data-gen]').forEach(b=>{
     const bi=+b.dataset.gen;
     b.onclick=e=>{ e.preventDefault(); generateMoves(bi,BANDS[bi],SG,M,levels,S); };
