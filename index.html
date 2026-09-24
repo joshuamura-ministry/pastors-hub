@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.13.0
+     TERRAIN  v10.14.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.13.0" data-theme="dark">
+<html lang="en" data-version="v10.14.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.13.0">
-<title>Community Map — Terrain v10.13.0</title>
+<meta name="terrain-version" content="v10.14.0">
+<title>Community Map — Terrain v10.14.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -126,20 +126,14 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
    and the page stops being one blue column. Nothing is coloured for
    decoration: the hue says what kind of thing you are looking at. */
 .blk{--sec:var(--acc)}
-.blk[data-theme~="work"],.blk[data-theme~="hardship"]{--sec:var(--m-hardship)}
-.blk[data-theme~="housing"]{--sec:var(--m-housing)}
-.blk[data-theme~="people"],.blk[data-theme~="change"]{--sec:var(--m-people)}
-.blk[data-theme~="language"]{--sec:var(--m-language)}
-.blk[data-theme~="families"],.blk[data-theme~="seniors"]{--sec:var(--m-children)}
-.blk[data-theme~="faith"]{--sec:var(--acc)}
+/* Every section is mint. Colouring them individually made one report look like
+   five products stapled together; the accent is the identity and it should run
+   the whole way down. Where colour appears below, it is carrying information —
+   not labelling a section. */
 /* These four were all tagged "prompts" and so all came out mint — four
    sections running together with no rhythm, in exactly the stretch of the
    report a pastor works in. Each gets its own. */
-.blk[data-theme~="prompts"]{--sec:var(--acc)}
-.blk[data-theme~="sec-church"]{--sec:var(--m-housing)}
-.blk[data-theme~="sec-moves"]{--sec:var(--m-children)}
-.blk[data-theme~="mobilize"]{--sec:var(--m-people)}
-.blk[data-theme~="case"]{--sec:var(--m-hardship)}
+/* (the four action-plan sections are mint as well) */
 /* cssVar() reads from :root, so the section's own hue is published there by
    the renderer before a donut is drawn. Declared here for the default. */
 :root{--sec-hue:var(--acc)}
@@ -210,6 +204,8 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .statcmp{font-size:.74rem;color:var(--ink3);margin-top:3px;font-variant-numeric:tabular-nums}
 .stattown{font-size:.72rem;color:var(--ink3);opacity:.8;font-variant-numeric:tabular-nums}
 .statkey{grid-column:1/-1;font-size:.76rem;color:var(--ink3);line-height:1.5;margin:2px 0 0}
+.stat.out{border-color:color-mix(in srgb,var(--m-hardship) 45%,var(--line))}
+.stat.out .statcmp{color:var(--m-hardship);font-weight:700}
 @media print{.stat .ring .arc{stroke:#333}.stat .ring .trk{stroke:#ddd}.stat .ring .cmp{stroke:#111}}
 @media print{.stat{break-inside:avoid;box-shadow:none}.stat::before{background:#999}}
 
@@ -1579,13 +1575,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.13.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.14.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.13.0';
+const VERSION = 'v10.14.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3550,6 +3546,16 @@ function secHue(theme){
   return cssVar('--acc')||'#1F6FEB';
 }
 const svgc=(hue)=>({gold:hue||cssVar('--acc')||'#1F6FEB',dim:cssVar('--ink3')||'#78879B',ink:cssVar('--ink2')||'#4A5768',line:cssVar('--line2')||'#CBD5E1'});
+/* Amber is the one signal colour in the report: it means this figure stands
+   out from the county. Nothing else uses it, so nothing else competes with it. */
+const HL=()=>cssVar('--m-hardship')||'#FBBF77';
+/* "Notably different" has to be a stated number, not a feeling. Eight points,
+   or half again the county's own figure on the small percentages where eight
+   points is impossible. */
+function standsOut(v,c){
+  if(v==null||c==null||!Number.isFinite(v)||!Number.isFinite(c)) return false;
+  return (v-c)>=8 || (c>=1 && v/c>=1.5 && (v-c)>=3);
+}
 /* Part-of-a-whole data only. Anything that is not a share of one total gets a
    bar or a line instead, because a donut of things that do not sum to a whole
    is a lie told attractively. Slices under 2% are folded into "other" — a
@@ -3632,10 +3638,18 @@ function declutter(ys,gap,top,bottom){
    the same colour as each other. Each series now carries its own hue, held
    across both ends of the chart and into its label, so a line can be followed
    by colour rather than by squinting at where it lands. */
-const SLOPE_HUES=['--m-people','--m-language','--m-children','--m-hardship','--m-housing','--acc'];
+/* The one place several colours are unavoidable: six lines that are the same
+   colour cannot be followed. But the colour marks MOVEMENT, not category — a
+   line that did not shift goes grey, so the coloured lines are exactly the
+   story. Mint leads, because mint is the report; amber is the second, because
+   amber already means "look here" everywhere else on the page. */
+const SLOPE_HUES=['--acc','--m-hardship','--m-people','--m-children','--m-housing','--m-language'];
 function chartSlope(items,thenLabel,nowLabel){
   const SVGC=svgc();
-  const hues=items.map((_,i)=>cssVar(SLOPE_HUES[i%SLOPE_HUES.length])||SVGC.gold);
+  let moverN=0;
+  const hues=items.map(it=>Math.abs(it.now-it.then)>=3
+    ? (cssVar(SLOPE_HUES[(moverN++)%SLOPE_HUES.length])||SVGC.gold)
+    : SVGC.dim);
   const W=490,H=284,PT=18,PB=42,PL=54,PR=176;
   const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
@@ -5240,7 +5254,9 @@ function donut(title, parts, note, centre){
      the section colour entirely. A donut now shades one hue — the section's
      own — from full strength down, so the slices stay obviously the same
      quantity while remaining tellable apart. */
-  const hue=(typeof arguments[4]==='string'&&arguments[4])||cssVar('--sec-hue')||cssVar('--acc')||'#1F6FEB';
+  /* One hue, six strengths. A donut needs its slices tellable apart; it does
+     not need a second palette to do it. */
+  const hue=(typeof arguments[4]==='string'&&arguments[4])||cssVar('--acc')||'#1F6FEB';
   const mix=p=>`color-mix(in srgb, ${hue} ${p}%, transparent)`;
   const cols=[mix(100),mix(78),mix(58),mix(42),mix(28),mix(18)];
   let off=0;
@@ -7875,7 +7891,7 @@ function render(){
     ${card('No health insurance',me.uninsured,fmtPct,pick('uninsured'),S)}
     ${card('Households',me.hh,fmtNum,null,S,`${fmtNum(me.pop)} people`)}
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>
-      ${donutOf('Employed residents',me.occ,me.pop,'people','hardship work')}
+      ${donutOf('Employed residents',me.occ,me.pop,'people')}
       ${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
@@ -7885,11 +7901,11 @@ function render(){
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
     <div class="card"><div class="n" style="font-size:1.2rem;line-height:1.25;padding-top:4px">${divided?'Sharply divided':me.incHigh>=35?'Mostly affluent':me.incLow>=35?'Mostly struggling':'Mixed incomes'}</div><div class="l">How this reads</div><div class="sub">${divided?'Both ends of the income scale are large here.':'Based on the share of households at each end of the income scale.'}</div></div>
     <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Blue dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
-      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short,secHue('hardship'))}</div>
+      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short)}</div>
     <div class="card wide chart"><h3>Household income spread</h3><div class="cs">Share of households in each bracket${cmpName?', against the county':''}</div>
       ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
         {name:levels[S].short,vals:[me.inc.lt25,me.inc.b25_50,me.inc.b50_100,me.inc.b100_150,me.inc.gt150]},
-        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null,secHue('hardship'))}</div>
+        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null)}</div>
     <div class="card wide" style="min-height:0"><div class="l">Housing &amp; distress</div><p class="note" style="margin-top:6px">Rent burden, overcrowding and no car are hardship measured a different way — so they sit here rather than in a section of their own.</p></div>
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
@@ -7914,7 +7930,7 @@ function render(){
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>
-      ${donutOf('Who lives here',me.race,me.pop,'people','people change')}
+      ${donutOf('Who lives here',me.race,me.pop,'people')}
       ${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
     ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
@@ -8030,13 +8046,8 @@ function render(){
     <div id="propslot"></div>
   </section>`);
   $('sections').innerHTML=secs.join('');
-  /* Set the hue on each section directly. The stylesheet's ~= rules are
-     order-dependent and were quietly disagreeing with the charts; one
-     assignment here makes the heading, the bars, the ticks, the cards and the
-     charts all read from the same decision. */
-  document.querySelectorAll('#sections section.blk').forEach(sec=>{
-    try{ sec.style.setProperty('--sec', secHue(sec.dataset.theme)); }catch(e){}
-  });
+  /* No per-section hue any more. --sec stays mint for the whole report, which
+     is what makes the two or three amber rings in the brief mean something. */
   document.querySelectorAll('[data-gen]').forEach(b=>{
     const bi=+b.dataset.gen;
     b.onclick=e=>{ e.preventDefault(); generateMoves(bi,BANDS[bi],SG,M,levels,S); };
@@ -10842,18 +10853,21 @@ function ringsHTML(me,cty,town){
     const read = gap==null ? ''
       : Math.abs(gap)<2 ? 'about the county'
       : (gap>0?'+':'\u2212')+fmtPct(Math.abs(gap))+' vs county';
-    return `<div class="stat" style="--hue:var(--m-${hue})">
+    /* Mint unless this figure stands out against the county. Two or three
+       amber rings on a page, and those are the ones worth a conversation. */
+    const out=standsOut(v,c);
+    return `<div class="stat${out?' out':''}" style="--hue:${out?'var(--m-hardship)':'var(--acc)'}">
       ${statRing(v,c,label)}
       <div class="statwrap">
         <div class="statval">${fmtPct(v)}</div>
         <div class="statlab">${esc(label)}</div>
-        <div class="statcmp">${esc(read)}</div>
+        <div class="statcmp">${esc(read)}${out?' \u00b7 stands out':''}</div>
         ${t!=null?`<div class="stattown">Town ${fmtPct(t)}</div>`:''}
       </div>
     </div>`;
   }).filter(Boolean);
   return cards.length?`<div class="stats">${cards.join('')}
-    <p class="statkey">The ring is this neighborhood. The notch on it is the county, so a ring that runs past its notch is above the county and one that stops short is below.</p></div>`:'';
+    <p class="statkey">The ring is this neighborhood; the notch on it is the county. ${cards.filter(x=>/class="stat out"/.test(x)).length?'The amber rings are where this neighborhood is clearly above the county \u2014 those are the ones worth a conversation.':'Nothing here is far from the county average.'}</p></div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
