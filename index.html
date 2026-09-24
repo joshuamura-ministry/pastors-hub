@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.19.0
+     TERRAIN  v10.20.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.19.0" data-theme="dark">
+<html lang="en" data-version="v10.20.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.19.0">
-<title>Community Map — Terrain v10.19.0</title>
+<meta name="terrain-version" content="v10.20.0">
+<title>Community Map — Terrain v10.20.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -394,7 +394,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
    the page breathes. The whole tile is still the button. */
 .tool{display:flex;flex-direction:column;align-items:center;gap:0;background:none;
   border:0;border-radius:var(--r);padding:16px 10px 12px;cursor:pointer;text-align:center;
-  box-shadow:none;position:relative;
+  box-shadow:none;position:relative;height:100%;justify-content:flex-start;
   transition:transform .18s cubic-bezier(.2,.7,.3,1)}
 .tool::before{content:"";position:absolute;left:50%;top:6px;width:186px;height:186px;margin-left:-93px;
   border-radius:50%;background:radial-gradient(circle,var(--acc-dim),transparent 66%);
@@ -420,8 +420,14 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
   transition:filter .22s,transform .22s}
 .tool b{font-size:clamp(1.15rem,2.6vw,1.4rem);font-weight:700;letter-spacing:-.02em}
 .tool .td{max-width:23ch;margin:8px auto 0}
-.tool .tgo{margin-top:18px;font-size:.88rem;font-weight:700;letter-spacing:.01em;color:var(--acc);
-  display:inline-flex;align-items:center;gap:8px;transition:color .18s}
+/* margin-top:auto, not a fixed gap. The four blurbs are different lengths —
+   "Understand who lives around your church and where to reach first." wraps to
+   three lines where the others wrap to two — so a fixed gap drops that one
+   card's link a line below its neighbours. Pushing the link to the bottom of a
+   full-height card keeps all four on one line whatever the copy does, which
+   also survives Spanish, where every one of these strings is longer. */
+.tool .tgo{margin-top:auto;padding-top:18px;font-size:.88rem;font-weight:700;letter-spacing:.01em;
+  color:var(--acc);display:inline-flex;align-items:center;gap:8px;transition:color .18s}
 .tool .tgo i{width:15px;height:2px;background:currentColor;border-radius:2px;position:relative;
   transition:transform .18s}
 .tool .tgo i::after{content:"";position:absolute;right:-1px;top:-3px;width:8px;height:8px;
@@ -1525,6 +1531,11 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
       <h2>Welcome to Terrain</h2>
       <p class="sub">Choose a tool to begin.</p>
     </div>
+    <div class="egw">
+      <q>In order to lead souls to Jesus there must be a knowledge of human nature and a study of the human mind. Much careful thought and fervent prayer are required to know how to approach men and women upon the great subject of truth.</q>
+      <cite>Ellen G. White &middot; Testimonies for the Church, vol. 4, p. 67</cite>
+    </div>
+    <div class="rule"><span>&#10022;</span></div>
     <div class="tools">
       <button class="tool" data-tool="survey">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-survey" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-survey" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-survey)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-survey)"><path d="M28 111 82 86 104 96M152 96l22-10 54 25v114l-54-23-46 23-46-23-54 23V111"/><path d="M82 86v37m0 69v10m92-116v37m0 69v10"/><path d="M128 119c-8-15-33-41-33-63a33 33 0 0 1 66 0c0 22-25 48-33 63Z"/><circle cx="128" cy="56" r="12"/><path d="m46 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="m164 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="M28 191c26-13 45-15 68-10m64 0c22-6 46-3 68 10M28 211c16-8 30-11 44-10m111 0c17 0 31 4 45 10"/><path d="M121 154c-7 7-13 14-8 21-10 17 1 25 20 31l26 10m-33-31c-5 8 8 11 20 15l28 11"/><path d="M120 143c-2 8-9 11-9 19a10 10 0 0 0 20 0c0-8-8-14-11-19Zm1 29v9"/></g></svg></span>
@@ -1550,11 +1561,6 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
         <span class="td">Plan your outreach journey, from preparation to follow-up.</span>
         <span class="tgo">Start planning <i></i></span>
       </button>
-    </div>
-    <div class="rule"><span>&#10022;</span></div>
-    <div class="egw">
-      <q>In order to lead souls to Jesus there must be a knowledge of human nature and a study of the human mind. Much careful thought and fervent prayer are required to know how to approach men and women upon the great subject of truth.</q>
-      <cite>Ellen G. White &middot; Testimonies for the Church, vol. 4, p. 67</cite>
     </div>
   </div>
 
@@ -1637,13 +1643,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.19.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.20.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.19.0';
+const VERSION = 'v10.20.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
