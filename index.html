@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.21.0
+     TERRAIN  v10.23.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.21.0" data-theme="dark">
+<html lang="en" data-version="v10.23.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.21.0">
-<title>Community Map — Terrain v10.21.0</title>
+<meta name="terrain-version" content="v10.23.0">
+<title>Community Map — Terrain v10.23.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -173,17 +173,17 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .brow:nth-of-type(3) .bar>i,.brow:nth-of-type(3) .bar{--step:64%}
 .brow:nth-of-type(4) .bar>i,.brow:nth-of-type(4) .bar{--step:48%}
 .brow:nth-of-type(5) .bar>i,.brow:nth-of-type(5) .bar{--step:34%}
-.brow .bb>i{background:color-mix(in srgb,var(--sec) var(--step,100%),transparent)!important}
+.brow .bb>i{background:color-mix(in srgb,var(--hue,var(--sec)) var(--step,100%),transparent)!important}
 /* The comparison figure beside each bar, and the tick under every card, belong
    to the section as well — they were the last two mint details in a row that
    had otherwise taken its colour. */
-.brow .bv{color:var(--sec)}
+.brow .bv{color:var(--hue,var(--sec))}
 .brow .bv small{color:var(--ink3)}
-.tick .bar i.me{background:var(--sec)}
+.tick .bar i.me{background:var(--hue,var(--sec))}
 .chip.up b{color:var(--sec)}
 .card{position:relative;overflow:hidden}
 .card::after{content:"";position:absolute;left:0;top:0;bottom:0;width:2px;
-  background:var(--sec);opacity:.5}
+  background:var(--hue,var(--sec));opacity:.55}
 .card.wide::after{opacity:.35}
 @media print{.card::after{background:#999}}
 
@@ -214,8 +214,10 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .statcmp{font-size:.74rem;color:var(--ink3);margin-top:3px;font-variant-numeric:tabular-nums}
 .stattown{font-size:.72rem;color:var(--ink3);opacity:.8;font-variant-numeric:tabular-nums}
 .statkey{grid-column:1/-1;font-size:.76rem;color:var(--ink3);line-height:1.5;margin:2px 0 0}
-.stat.out{border-color:color-mix(in srgb,var(--m-hardship) 45%,var(--line))}
-.stat.out .statcmp{color:var(--m-hardship);font-weight:700}
+.stat.out{border-color:color-mix(in srgb,var(--hue) 55%,var(--line));
+  box-shadow:var(--shadow),0 0 0 1px color-mix(in srgb,var(--hue) 25%,transparent),0 10px 30px -18px var(--hue)}
+.stat.out .ring .arc{filter:drop-shadow(0 0 5px var(--hue))}
+.stat.out .statcmp{color:var(--hue);font-weight:700}
 @media print{.stat .ring .arc{stroke:#333}.stat .ring .trk{stroke:#ddd}.stat .ring .cmp{stroke:#111}}
 @media print{.stat{break-inside:avoid;box-shadow:none}.stat::before{background:#999}}
 
@@ -568,6 +570,9 @@ section.blk:first-child{margin-top:26px;padding-top:0;border-top:none}
 .card:hover{border-color:var(--line2)}
 .card.wide{grid-column:1/-1}
 .card .n{font-family:var(--disp);font-size:clamp(1.75rem,5.4vw,2.15rem);font-weight:600;line-height:1;letter-spacing:-.03em;color:var(--ink);
+  /* the number itself stays ink — the kind colours the edge, the tick and the
+     bar, which is enough to read at a glance without turning every figure
+     into a coloured headline */
   font-variant-numeric:tabular-nums}
 .card .n small{font-size:.55em;color:var(--ink2);font-weight:500;margin-left:2px}
 .card .n.na{color:var(--ink3);font-size:1.1rem;line-height:1.3;font-weight:500;padding-top:6px}
@@ -1540,7 +1545,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
       <button class="tool" data-tool="survey">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="mint-survey" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-survey" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#mint-survey)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-survey)"><path d="M28 111 82 86 104 96M152 96l22-10 54 25v114l-54-23-46 23-46-23-54 23V111"/><path d="M82 86v37m0 69v10m92-116v37m0 69v10"/><path d="M128 119c-8-15-33-41-33-63a33 33 0 0 1 66 0c0 22-25 48-33 63Z"/><circle cx="128" cy="56" r="12"/><path d="m46 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="m164 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="M28 191c26-13 45-15 68-10m64 0c22-6 46-3 68 10M28 211c16-8 30-11 44-10m111 0c17 0 31 4 45 10"/><path d="M121 154c-7 7-13 14-8 21-10 17 1 25 20 31l26 10m-33-31c-5 8 8 11 20 15l28 11"/><path d="M120 143c-2 8-9 11-9 19a10 10 0 0 0 20 0c0-8-8-14-11-19Zm1 29v9"/></g></svg></span>
         <b>Community Survey</b>
-        <span class="td">Understand your neighborhood and where to reach first.</span>
+        <span class="td">Know who lives nearby and where to reach first.</span>
         <span class="tgo">Explore survey <i></i></span>
       </button>
       <button class="tool" data-tool="gifts">
@@ -1643,13 +1648,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.21.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.23.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.21.0';
+const VERSION = 'v10.23.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3665,6 +3670,8 @@ function chartGrouped(cats,a,b,hue){
 }
 function chartLollipop(rows,aName,bName,hue){
   const SVGC=svgc(hue);
+  // each row may name its own kind; the dot and the figure take that colour
+  const rowHue=r=>r.kind?(cssVar('--m-'+r.kind)||SVGC.gold):SVGC.gold;
   const W=440,rowH=34,PL=152,PR=50,H=rows.length*rowH+18;
   const max=Math.max(...rows.map(r=>Math.max(r.me??0,r.cty??0)),1)*1.2;
   const x=v=>PL+(W-PL-PR)*(v/max);
@@ -3673,13 +3680,14 @@ function chartLollipop(rows,aName,bName,hue){
     const yy=14+i*rowH;
     s+=`<text x="${PL-10}" y="${yy+4}" fill="${SVGC.ink}" font-size="14" text-anchor="end">${esc(r.label)}</text>`;
     s+=`<line x1="${PL}" x2="${W-PR}" y1="${yy}" y2="${yy}" stroke="${SVGC.line}" stroke-width="1"/>`;
-    if(r.cty!=null&&r.me!=null) s+=`<line x1="${x(Math.min(r.me,r.cty))}" x2="${x(Math.max(r.me,r.cty))}" y1="${yy}" y2="${yy}" stroke="${SVGC.gold}" stroke-width="2" opacity=".45"/>`;
+    const col=rowHue(r);
+    if(r.cty!=null&&r.me!=null) s+=`<line x1="${x(Math.min(r.me,r.cty))}" x2="${x(Math.max(r.me,r.cty))}" y1="${yy}" y2="${yy}" stroke="${col}" stroke-width="2" opacity=".45"/>`;
     if(r.cty!=null) s+=`<circle cx="${x(r.cty)}" cy="${yy}" r="4" fill="${SVGC.dim}"/>`;
-    if(r.me!=null) s+=`<circle cx="${x(r.me)}" cy="${yy}" r="5.5" fill="${SVGC.gold}"/>`;
-    if(r.me!=null) s+=`<text x="${W-PR+6}" y="${yy+4}" fill="${SVGC.gold}" font-size="14" font-weight="600">${fmtPct(r.me)}</text>`;
+    if(r.me!=null) s+=`<circle cx="${x(r.me)}" cy="${yy}" r="5.5" fill="${col}"/>`;
+    if(r.me!=null) s+=`<text x="${W-PR+6}" y="${yy+4}" fill="${col}" font-size="14" font-weight="600">${fmtPct(r.me)}</text>`;
   });
   s+=`</svg>`;
-  return `<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(aName)}</span><span><i style="background:${SVGC.dim}"></i>${esc(bName)}</span></div>`+s;
+  return `<div class="ckey"><span><i style="background:${SVGC.gold}"></i>${esc(aName)}</span><span><i style="background:${SVGC.dim}"></i>${esc(bName)}</span><span class="note" style="margin-left:auto">amber = money &amp; hardship &middot; blue = housing</span></div>`+s;
 }
 // Nudge labels apart so text never overlaps. Two passes: push down from the top,
 // then, if the last one has run past the bottom, push back up from the bottom.
@@ -5532,7 +5540,7 @@ const ES={
  'Brief':'Resumen',
  'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
  'Pastors Hub':'Pastors Hub','Choose a tool to begin.':'Elija una herramienta para comenzar.',
- 'Understand your neighborhood and where to reach first.':'Conozca su vecindario y por dónde empezar.',
+ 'Know who lives nearby and where to reach first.':'Conozca su vecindario y por dónde empezar.',
  'Help members discover their gifts and find a place to serve.':'Ayude a los miembros a descubrir sus dones y dónde servir.',
  'Turn community insights into a proposal for your ministry.':'Convierta los hallazgos en una propuesta ministerial.',
  'Plan your outreach journey, from preparation to follow-up.':'Planifique su campaña, de la preparación al seguimiento.',
@@ -5838,12 +5846,27 @@ function tick(vals,scope,fmt=fmtPct,max){
   return `<div class="tick"><div class="bar">${ks.map(k=>`<i class="${k===scope?'me':''}" style="left:${pos(vals[k])}%"></i>`).join('')}</div>
    <div class="lg">${ks.map(k=>`<span>${lab[k]} <b>${fmt(vals[k])}</b></span>`).join('')}</div></div>`;
 }
+/* What kind of figure each label is. One table; everything below reads it.
+   Add a label here and it is coloured everywhere at once. */
+const KIND_OF={
+  'Median household income':'hardship','Below the poverty line':'hardship','Children in poverty':'hardship',
+  'Unemployed':'hardship','Households on SNAP':'hardship','Households on public assistance':'hardship',
+  'No health insurance':'hardship','Households under $35k':'hardship','Households over $150k':'hardship',
+  'Income inequality':'hardship',
+  'Renters':'housing','Rent-burdened':'housing','Severely rent-burdened':'housing',
+  'Overcrowded homes':'housing','No vehicle':'housing',
+  'Households':'people','Born outside the U.S.':'people','Arrived 2010 or later':'people',
+  'Median age':'children','Children':'children','Single-parent families':'children',
+  'Seniors living alone':'children','Families with children':'children','In school':'children',
+  'Only English at home':'language','Limited-English households':'language'
+};
+const kindHue=label=>{ const k=KIND_OF[label]; return k?`var(--m-${k})`:'var(--acc)'; };
 function card(label,val,fmt,vals,scope,sub,max){
   const na=val==null;
-  return `<div class="card"><div class="n ${na?'na':''}">${na?'Not published for this area':fmt(val)}</div><div class="l">${label}</div>${sub?`<div class="sub">${sub}</div>`:''}${vals?tick(vals,scope,fmt,max):''}</div>`;
+  return `<div class="card" style="--hue:${kindHue(label)}"><div class="n ${na?'na':''}">${na?'Not published for this area':fmt(val)}</div><div class="l">${label}</div>${sub?`<div class="sub">${sub}</div>`:''}${vals?tick(vals,scope,fmt,max):''}</div>`;
 }
-function bars(rows,fmt=fmtPct){ // rows: [[label,val,cmpVal?]]
-  return `<div class="bars">${rows.map(([l,v,c])=>`<div class="brow"><div class="bl">${esc(l)}</div><div class="bb"><i style="width:${Math.max(0,Math.min(100,v||0))}%"></i></div><div class="bv">${fmt(v)}${c!=null?`<small>${fmt(c)}</small>`:''}</div></div>`).join('')}</div>`;
+function bars(rows,fmt=fmtPct,kind){ // rows: [[label,val,cmpVal?]]
+  return `<div class="bars"${kind?` style="--hue:var(--m-${kind})"`:''}>${rows.map(([l,v,c])=>`<div class="brow"><div class="bl">${esc(l)}</div><div class="bb"><i style="width:${Math.max(0,Math.min(100,v||0))}%"></i></div><div class="bv">${fmt(v)}${c!=null?`<small>${fmt(c)}</small>`:''}</div></div>`).join('')}</div>`;
 }
 /* ---- generated moves -------------------------------------------------
    The fixed playbook is a floor, not a ceiling. These are invented for this
@@ -7965,8 +7988,8 @@ function render(){
     ${card('No health insurance',me.uninsured,fmtPct,pick('uninsured'),S)}
     ${card('Households',me.hh,fmtNum,null,S,`${fmtNum(me.pop)} people`)}
     <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>
-      ${donutOf('Employed residents',me.occ,me.pop,'people')}
-      ${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
+      ${donutOf('Employed residents',me.occ,me.pop,'people','hardship')}
+      ${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]),fmtPct,'hardship')}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
   secs.push(`<section class="blk" data-theme="hardship housing"><h2>Wealth &amp; hardship</h2>${verseHTML('wealth')}<div class="grid">
@@ -7975,11 +7998,11 @@ function render(){
     ${card('Income inequality',me.gini,x=>x==null?'—':x.toFixed(2),pick('gini'),S,'Gini index · 0 equal, 1 unequal',1)}
     <div class="card"><div class="n" style="font-size:1.2rem;line-height:1.25;padding-top:4px">${divided?'Sharply divided':me.incHigh>=35?'Mostly affluent':me.incLow>=35?'Mostly struggling':'Mixed incomes'}</div><div class="l">How this reads</div><div class="sub">${divided?'Both ends of the income scale are large here.':'Based on the share of households at each end of the income scale.'}</div></div>
     <div class="card wide chart"><h3>How this area compares</h3><div class="cs">Blue dot = ${esc(levels[S].short)}, grey = ${esc(levels.county.short)} county</div>
-      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty},{label:'Unemployment',me:me.unemp,cty:cty.unemp},{label:'SNAP',me:me.snap,cty:cty.snap},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50},{label:'No vehicle',me:me.noCar,cty:cty.noCar}],levels[S].short,levels.county.short)}</div>
+      ${chartLollipop([{label:'Poverty',me:me.poverty,cty:cty.poverty,kind:'hardship'},{label:'Child poverty',me:me.childPoverty,cty:cty.childPoverty,kind:'hardship'},{label:'Unemployment',me:me.unemp,cty:cty.unemp,kind:'hardship'},{label:'SNAP',me:me.snap,cty:cty.snap,kind:'hardship'},{label:'Uninsured',me:me.uninsured,cty:cty.uninsured,kind:'hardship'},{label:'Severe rent burden',me:me.rent50,cty:cty.rent50,kind:'housing'},{label:'No vehicle',me:me.noCar,cty:cty.noCar,kind:'housing'}],levels[S].short,levels.county.short)}</div>
     <div class="card wide chart"><h3>Household income spread</h3><div class="cs">Share of households in each bracket${cmpName?', against the county':''}</div>
       ${chartGrouped(['Under\n$25k','$25–\n50k','$50–\n100k','$100–\n150k','Over\n$150k'],
         {name:levels[S].short,vals:[me.inc.lt25,me.inc.b25_50,me.inc.b50_100,me.inc.b100_150,me.inc.gt150]},
-        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null)}</div>
+        cmpName?{name:levels.county.short+' county',vals:[cty.inc.lt25,cty.inc.b25_50,cty.inc.b50_100,cty.inc.b100_150,cty.inc.gt150]}:null,cssVar('--m-hardship'))}</div>
     <div class="card wide" style="min-height:0"><div class="l">Housing &amp; distress</div><p class="note" style="margin-top:6px">Rent burden, overcrowding and no car are hardship measured a different way — so they sit here rather than in a section of their own.</p></div>
     ${card('Renters',me.renters,fmtPct,pick('renters'),S,'of households')}
     ${card('Rent-burdened',me.rent30,fmtPct,pick('rent30'),S,'renters paying 30%+ of income')}
@@ -8004,14 +8027,14 @@ function render(){
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
     <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>
-      ${donutOf('Who lives here',me.race,me.pop,'people')}
-      ${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
+      ${donutOf('Who lives here',me.race,me.pop,'people','people')}
+      ${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]),fmtPct,'people')}</div>
     ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
         (ACS_PAST-4)+'–'+ACS_PAST,(ACS_YEAR-4)+'–'+ACS_YEAR)}</div>`:''}
     ${card('Born outside the U.S.',me.foreign,fmtPct,pick('foreign'),S)}
     ${card('Arrived 2010 or later',me.recentOfForeign,fmtPct,pick('recentOfForeign'),S,'share of the foreign-born')}
-    <div class="card wide"><div class="l">Where the foreign-born were born <span class="sub">· top countries, share of all foreign-born</span></div>${me.origins&&me.origins.length?bars(me.origins.map(o=>[o.name,o.share])):'<div class="sub" style="margin-top:8px">Too few to publish for this area.</div>'}</div>
+    <div class="card wide"><div class="l">Where the foreign-born were born <span class="sub">· top countries, share of all foreign-born</span></div>${me.origins&&me.origins.length?bars(me.origins.map(o=>[o.name,o.share]),fmtPct,'people'):'<div class="sub" style="margin-top:8px">Too few to publish for this area.</div>'}</div>
     ${shift}
   </div></section>`);
   const topL=me.langs.slice(0,6);
@@ -8026,7 +8049,7 @@ function render(){
   secs.push(`<section class="blk" data-tab="analytics" data-theme="language"><h2>Language</h2>${verseHTML('language')}<div class="grid">
     ${card('Only English at home',me.englishOnly,fmtPct,pick('englishOnly'),S,'people age 5+')}
     ${card('Limited-English households',me.limEng,fmtPct,pick('limEng'),S,'no one 14+ speaks English well')}
-    <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null])):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
+    <div class="card wide"><div class="l">Other languages spoken at home <span class="sub">· share of people 5+ · small figure = of those, speak English less than "very well"</span></div>${topL.length?bars(topL.map(x=>[x.name,x.share,x.count?x.ltvw/x.count*100:null]),fmtPct,'language'):'<div class="sub" style="margin-top:8px">Essentially none reported.</div>'}
     ${topL.length?`<div class="note" style="margin-top:12px">${topL[0].share>=5?`Materials in <b>${esc(topL[0].name)}</b> would reach about <b>${fmtNum(topL[0].count)}</b> people here.`:'English materials will reach nearly everyone here.'}</div>`:''}</div>
   </div></section>`);
   const SEC_HELP=(`<section class="blk" data-tab="strategy" data-theme="faith"><h2>Community resources</h2>
@@ -10950,7 +10973,11 @@ function ringsHTML(me,cty,town){
     /* Mint unless this figure stands out against the county. Two or three
        amber rings on a page, and those are the ones worth a conversation. */
     const out=lit.has(k);
-    return `<div class="stat${out?' out':''}" style="--hue:${out?'var(--m-hardship)':'var(--acc)'}">
+    /* The ring is its kind's colour, always — amber for poverty, blue for
+       renters, purple for children — so the brief reads the same way as the
+       report beneath it. Standing out from the county is a separate signal:
+       the ring glows and the card says so in words. */
+    return `<div class="stat${out?' out':''}" style="--hue:var(--m-${hue})">
       ${statRing(v,c,label)}
       <div class="statwrap">
         <div class="statval">${fmtPct(v)}</div>
@@ -10961,7 +10988,7 @@ function ringsHTML(me,cty,town){
     </div>`;
   }).filter(Boolean);
   return cards.length?`<div class="stats">${cards.join('')}
-    <p class="statkey">The ring is this neighborhood; the notch on it is the county. ${lit.size?'The amber rings are the '+(lit.size===1?'one figure':lit.size+' figures')+' furthest above the county \u2014 start the conversation there.':'Nothing here is far from the county average.'}</p></div>`:'';
+    <p class="statkey">The ring is this neighborhood; the notch on it is the county. Colour is the kind of figure: amber money and hardship, blue housing, purple children and families, pink people. ${lit.size?'The '+(lit.size===1?'glowing ring is the one figure':lit.size+' glowing rings are the figures')+' furthest above the county \u2014 start the conversation there.':'Nothing here is far from the county average.'}</p></div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
