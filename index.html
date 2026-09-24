@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.11.1
+     TERRAIN  v10.12.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.11.1" data-theme="dark">
+<html lang="en" data-version="v10.12.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.11.1">
-<title>Community Map — Terrain v10.11.1</title>
+<meta name="terrain-version" content="v10.12.0">
+<title>Community Map — Terrain v10.12.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -140,6 +140,9 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .blk[data-theme~="sec-moves"]{--sec:var(--m-children)}
 .blk[data-theme~="mobilize"]{--sec:var(--m-people)}
 .blk[data-theme~="case"]{--sec:var(--m-hardship)}
+/* cssVar() reads from :root, so the section's own hue is published there by
+   the renderer before a donut is drawn. Declared here for the default. */
+:root{--sec-hue:var(--acc)}
 
 /* Each wizard step carries its own colour, so the form tells you where you
    are by more than a number. */
@@ -186,12 +189,16 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .stat::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;background:var(--hue);opacity:.9}
 .statval{font-family:var(--disp);font-weight:800;font-size:1.65rem;line-height:1;letter-spacing:-.02em;color:var(--ink)}
 .statlab{font-size:.86rem;font-weight:600;color:var(--ink2);margin-top:4px}
-.statbar{height:5px;border-radius:999px;background:var(--panel2);margin:11px 0 10px;overflow:hidden}
-.statbar i{display:block;height:100%;border-radius:999px;
-  background:linear-gradient(90deg,color-mix(in srgb,var(--hue) 45%,transparent),var(--hue))}
-.statrows{font-size:.76rem;color:var(--ink3);display:grid;gap:3px}
-.statrows div{display:flex;justify-content:space-between;gap:10px}
-.statrows b{color:var(--ink2);font-weight:700}
+.stat{display:flex;align-items:center;gap:13px}
+.stat .ring{flex:none;width:62px;height:62px}
+.stat .ring .trk{fill:none;stroke:var(--panel2);stroke-width:8}
+.stat .ring .arc{fill:none;stroke:var(--hue);stroke-width:8;stroke-linecap:round}
+.stat .ring .cmp{stroke:var(--ink3);stroke-width:2.5;opacity:.85;stroke-linecap:round}
+.statwrap{min-width:0}
+.statcmp{font-size:.74rem;color:var(--ink3);margin-top:3px;font-variant-numeric:tabular-nums}
+.stattown{font-size:.72rem;color:var(--ink3);opacity:.8;font-variant-numeric:tabular-nums}
+.statkey{grid-column:1/-1;font-size:.76rem;color:var(--ink3);line-height:1.5;margin:2px 0 0}
+@media print{.stat .ring .arc{stroke:#333}.stat .ring .trk{stroke:#ddd}.stat .ring .cmp{stroke:#111}}
 @media print{.stat{break-inside:avoid;box-shadow:none}.stat::before{background:#999}}
 
 /* ---- shell ---- */
@@ -203,6 +210,13 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .wordmark{font-family:var(--disp);font-weight:700;letter-spacing:.22em;font-size:.78rem;color:var(--ink)}
 .wordmark i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--acc);margin-right:9px;vertical-align:1px;
   box-shadow:0 0 0 3px var(--acc-dim),0 0 12px var(--acc-glow)}
+/* Which file am I actually looking at? Small, permanent, on every screen and
+   in every tool — so a stale copy is obvious in one second instead of after
+   an hour of debugging the wrong version. */
+.wordmark .vtag{margin-left:9px;padding:2px 7px;border-radius:999px;letter-spacing:.04em;
+  font-size:.62rem;font-weight:700;color:var(--acc);background:var(--acc-dim);
+  border:1px solid color-mix(in srgb,var(--acc) 35%,transparent);vertical-align:1px}
+@media print{.wordmark .vtag{color:#111;background:none;border-color:#999}}
 nav.tools{display:flex;gap:4px;margin-left:auto}
 .top .in{gap:10px}
 nav.tools a{min-height:40px;display:flex;align-items:center;font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
@@ -1407,7 +1421,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 </head>
 <body>
 <header class="top"><div class="in">
-  <div class="wordmark"><i></i>TERRAIN</div>
+  <div class="wordmark"><i></i>TERRAIN<span class="vtag" id="vtag"></span></div>
   <nav class="tools"><a class="on" href="#" id="brandlink">Pastors Hub</a></nav>
   <button class="themebtn" id="langbtn" aria-label="English / Español">ES</button>
 </div></header>
@@ -1553,13 +1567,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.11.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.12.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.11.1';
+const VERSION = 'v10.12.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3497,6 +3511,23 @@ const cssVar=n=>getComputedStyle(document.documentElement).getPropertyValue(n).t
 // Charts pick their colours up from the active theme rather than hard-coded hex,
 // so the same code draws correctly on white or on near-black.
 const svgc=()=>({gold:cssVar('--acc')||'#1F6FEB',dim:cssVar('--ink3')||'#78879B',ink:cssVar('--ink2')||'#4A5768',line:cssVar('--line2')||'#CBD5E1'});
+/* Part-of-a-whole data only. Anything that is not a share of one total gets a
+   bar or a line instead, because a donut of things that do not sum to a whole
+   is a lie told attractively. Slices under 2% are folded into "other" — a
+   sliver nobody can see or click is noise, not information. */
+function donutOf(title,rows,centre,unit){
+  const clean=(rows||[])
+    .map(r=>Array.isArray(r)?{n:r[0],v:r[1]}:r)
+    .filter(r=>r&&r.n&&Number.isFinite(r.v)&&r.v>0);
+  if(clean.length<2) return '';
+  clean.sort((a,b)=>b.v-a.v);
+  const big=clean.filter(r=>r.v>=2), small=clean.filter(r=>r.v<2);
+  const parts=big.slice(0,5);
+  const restV=big.slice(5).reduce((n,r)=>n+r.v,0)+small.reduce((n,r)=>n+r.v,0);
+  if(restV>=0.5) parts.push({n:'Everything else',v:restV});
+  if(parts.length<2) return '';
+  return `<div class="donuts">${donut(title,parts,unit||'',centre)}</div>`;
+}
 function chartGrouped(cats,a,b){
   const SVGC=svgc();
   const W=460,H=200,PL=44,PB=44,PT=10,PR=8, n=cats.length;
@@ -5156,7 +5187,13 @@ function donut(title, parts, note, centre){
   const total=parts.reduce((n,p)=>n+p.v,0)||1;
   const mid=(centre!=null&&isFinite(centre))?centre:total;
   const R=54, C=2*Math.PI*R, cx=70, cy=70;
-  const cols=['#1F6FEB','#4C9AFF','#8FC2FF','#C7DCFF','#E4EEFF','#B9C6D6'];
+  /* Was six hard-coded blues, which went muddy on the dark theme and ignored
+     the section colour entirely. A donut now shades one hue — the section's
+     own — from full strength down, so the slices stay obviously the same
+     quantity while remaining tellable apart. */
+  const hue=cssVar('--sec-hue')||cssVar('--acc')||'#1F6FEB';
+  const mix=p=>`color-mix(in srgb, ${hue} ${p}%, transparent)`;
+  const cols=[mix(100),mix(78),mix(58),mix(42),mix(28),mix(18)];
   let off=0;
   const arcs=parts.map((p,i)=>{
     const frac=p.v/total, len=C*frac;
@@ -7722,17 +7759,24 @@ function applyFocus(){
   });
   // Only the strategy groups carry data-cat; the mobilize panels share the
   // class for styling but are not categories and must never be filtered out.
-  document.querySelectorAll('#sections .suggroup[data-cat]').forEach(g=>{
+  /* The needs themselves carry the category now, not a wrapper that no longer
+     exists. Counting what is actually on screen is the whole fix: the old
+     selector matched nothing, so every report opened by announcing it had
+     found nothing. */
+  document.querySelectorAll('#sections [data-cat]').forEach(g=>{
     const keep = !on || cats.has(g.dataset.cat);
     g.classList.toggle('hidden',!keep);
-    const n=g.querySelectorAll('.sug').length;
-    keep?shownP+=n:hiddenP+=n;
+    keep?shownP++:hiddenP++;
   });
   buildSecNav();
   const note=$('focusnote');
-  if(!on){ note.innerHTML = LANG==='es'
-      ? `Mostrando todo — ${shownP} indicacion${shownP===1?'':'es'} en todos los temas. Use Enfoque para filtrar.`
-      : `Showing everything — ${shownP} prompt${shownP===1?'':'s'} across every theme. Use Focus to narrow it.`; }
+  if(!on){ note.innerHTML = shownP
+      ? (LANG==='es'
+        ? `Mostrando todo — ${shownP} necesidad${shownP===1?'':'es'} detectada${shownP===1?'':'s'} en este vecindario. Use Enfoque para filtrar.`
+        : `Showing everything — ${shownP} need${shownP===1?'':'s'} found in this neighborhood. Use Focus to narrow it.`)
+      : (LANG==='es'
+        ? 'Mostrando todo. Use Enfoque para limitar el informe a un tema.'
+        : 'Showing everything. Use Focus to narrow the report to one theme.'); }
   else{
     note.innerHTML = LANG==='es'
       ? `Filtrado por <b style="color:var(--ink2)">${esc(focusLabel())}</b> — mostrando ${shownP} de ${shownP+hiddenP} indicaciones`+
@@ -7781,7 +7825,9 @@ function render(){
     ${card('Households on public assistance',me.pubAssist,fmtPct,pick('pubAssist'),S,'cash assistance income')}
     ${card('No health insurance',me.uninsured,fmtPct,pick('uninsured'),S)}
     ${card('Households',me.hh,fmtNum,null,S,`${fmtNum(me.pop)} people`)}
-    <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
+    <div class="card wide"><div class="l">What people do for work <span class="sub">· share of employed residents${cmpName?' · small figure = county':''}</span></div>
+      ${donutOf('Employed residents',me.occ,me.pop,'people')}
+      ${bars(me.occ.map(([n,p],i)=>[n,p,cmpName?cty.occ[i][1]:null]))}</div>
   </div></section>`);
   const divided=(me.incLow>=20&&me.incHigh>=20);
   secs.push(`<section class="blk" data-theme="hardship housing"><h2>Wealth &amp; hardship</h2>${verseHTML('wealth')}<div class="grid">
@@ -7818,7 +7864,9 @@ function render(){
       ${shiftSrc.past.pop&&shiftSrc.pop?`<span class="chip">Population <b>${shiftSrc.pop>=shiftSrc.past.pop?'+':'−'}${fmtNum(Math.abs(shiftSrc.pop-shiftSrc.past.pop))}</b></span>`:''}</div></div>`;
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
-    <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
+    <div class="card wide"><div class="l">Ethnic makeup${cmpName?' <span class="sub">· small figure = county</span>':''}</div>
+      ${donutOf('Who lives here',me.race,me.pop,'people')}
+      ${bars(me.race.map(([n,p],i)=>[n,p,cmpName?cty.race[i][1]:null]))}</div>
     ${shiftSrc?`<div class="card wide chart"><h3>Ten years of change</h3><div class="cs">${esc(S==='tract'?(levels.cousub?levels.cousub.short:'town'):levels[S].short)} · ${ACS_PAST-4}–${ACS_PAST} compared with ${ACS_YEAR-4}–${ACS_YEAR} · blue marks a shift of 3 points or more</div>
       ${chartSlope(shiftSrc.race.map((r,i)=>({name:r[0],then:shiftSrc.past.race[i][1]??0,now:r[1]??0})).concat(shiftSrc.foreign!=null&&shiftSrc.past.foreign!=null?[{name:'Born abroad',then:shiftSrc.past.foreign,now:shiftSrc.foreign}]:[]).filter(x=>x.then>=1||x.now>=1),
         (ACS_PAST-4)+'–'+ACS_PAST,(ACS_YEAR-4)+'–'+ACS_YEAR)}</div>`:''}
@@ -7913,7 +7961,7 @@ function render(){
       <div class="asktitle">What this neighborhood needs from a church</div>
       <div id="planprog"></div>
       <div class="strat"><b>Read this before you filter it</b>This is the ask, not the answer. Every line below is a rule that fired against <b>this tract's own figures</b>, and the number that triggered it is printed with it. Nothing here has been cut down to what your congregation can currently manage &mdash; that comes afterwards, under the lifts. A need your church cannot meet is still a need, and worth knowing before you decide it is not yours.</div>
-    ${SG.hits.length?SG.hits.map(h=>`<div class="role"><h4>${esc(h.title)}</h4>
+    ${SG.hits.length?SG.hits.map(h=>`<div class="role sug" data-cat="${esc(h.cat)}"><h4>${esc(h.title)}</h4>
       <div class="rw"><b>Because</b>${esc(h.evidence)}</div>
       
       <div class="rw"><b>Ask locally</b>${esc(h.question)}</div>
@@ -10708,21 +10756,48 @@ const U_STATS=[
   ['foreign','Born outside the U.S.','language'],
   ['noCar','No vehicle','housing']
 ];
+/* A ring per headline figure, with the county drawn on the SAME ring as a
+   faint marker. A bare percentage tells a pastor nothing — 40% renters only
+   means something beside the county's 33% — and that comparison used to sit
+   underneath as three lines of cramped text. Putting it on the ring is the
+   whole point of going circular here: one glance answers "is this high?". */
+function statRing(v,cmp,label){
+  const p=Math.max(0,Math.min(100,v)), r=30, C=2*Math.PI*r;
+  const arc=(C*p/100).toFixed(1);
+  const mark=(cmp!=null&&Number.isFinite(cmp))
+    ? (()=>{ const a=(Math.max(0,Math.min(100,cmp))/100)*360-90, rad=a*Math.PI/180;
+        const x1=38+Math.cos(rad)*(r-9), y1=38+Math.sin(rad)*(r-9);
+        const x2=38+Math.cos(rad)*(r+9), y2=38+Math.sin(rad)*(r+9);
+        return `<line class="cmp" x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}"/>`; })()
+    : '';
+  return `<svg class="ring" viewBox="0 0 76 76" role="img" aria-label="${esc(label)}: ${fmtPct(v)}${cmp!=null?', county '+fmtPct(cmp):''}">
+    <circle class="trk" cx="38" cy="38" r="${r}"/>
+    <circle class="arc" cx="38" cy="38" r="${r}" stroke-dasharray="${arc} ${C.toFixed(1)}" transform="rotate(-90 38 38)"/>
+    ${mark}</svg>`;
+}
 function ringsHTML(me,cty,town){
   if(!me) return '';
   const cards=U_STATS.map(([k,label,hue])=>{
     const v=me[k];
     if(v==null||!Number.isFinite(v)) return '';   // never draw an empty card
-    const rows=[['Neighborhood',v],['Town',town&&town[k]],['County',cty&&cty[k]]]
-      .filter(r=>r[1]!=null&&Number.isFinite(r[1]));
+    const c=(cty&&Number.isFinite(cty[k]))?cty[k]:null;
+    const t=(town&&Number.isFinite(town[k]))?town[k]:null;
+    const gap=(c!=null)?v-c:null;
+    const read = gap==null ? ''
+      : Math.abs(gap)<2 ? 'about the county'
+      : (gap>0?'+':'\u2212')+fmtPct(Math.abs(gap))+' vs county';
     return `<div class="stat" style="--hue:var(--m-${hue})">
-      <div class="statval">${fmtPct(v)}</div>
-      <div class="statlab">${esc(label)}</div>
-      <div class="statbar"><i style="width:${Math.max(2,Math.min(100,v))}%"></i></div>
-      <div class="statrows">${rows.map(r=>`<div><span>${esc(r[0])}</span><b>${fmtPct(r[1])}</b></div>`).join('')}</div>
+      ${statRing(v,c,label)}
+      <div class="statwrap">
+        <div class="statval">${fmtPct(v)}</div>
+        <div class="statlab">${esc(label)}</div>
+        <div class="statcmp">${esc(read)}</div>
+        ${t!=null?`<div class="stattown">Town ${fmtPct(t)}</div>`:''}
+      </div>
     </div>`;
   }).filter(Boolean);
-  return cards.length?`<div class="stats">${cards.join('')}</div>`:'';
+  return cards.length?`<div class="stats">${cards.join('')}
+    <p class="statkey">The ring is this neighborhood. The notch on it is the county, so a ring that runs past its notch is above the county and one that stops short is below.</p></div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
@@ -10795,6 +10870,7 @@ function uGiftSessionKey(){return GF_KEY+':'+(GF_CTX?.churchId||GIFTS_LINK.ctx||
 function gfEveryone(){return uPeople().filter(p=>p.gifts?.length).map(p=>({...p,S:p.gifts,P:gfProfile(p.gifts)}));}
 
 $('ver').textContent=VERSION;
+  { const vt=$('vtag'); if(vt) vt.textContent=VERSION; }
   /* Guard against the stale-file trap: if the hand-edited HTML copies and the
      JavaScript constant have drifted apart, somebody updated one and forgot
      the rest. Say so loudly in the console rather than letting a pastor
