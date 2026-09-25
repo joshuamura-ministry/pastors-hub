@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.23.0
+     TERRAIN  v10.31.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.23.0" data-theme="dark">
+<html lang="en" data-version="v10.31.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.23.0">
-<title>Community Map — Terrain v10.23.0</title>
+<meta name="terrain-version" content="v10.31.0">
+<title>Community Map — Terrain v10.31.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -83,16 +83,24 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 /* ---- the church profile, as four steps ----
    One panel shown, three hidden. The container takes the height of whatever is
    displayed, automatically — no track, no percentage widths, no measuring. */
-.u-stage{overflow-x:hidden}
-.u-panel{display:none;min-width:0;padding:4px 0 2px}
-.u-panel.on{display:block}
+/* One fixed height for all four steps, so the page under it never moves.
+   The panels sit side by side on a track and "Next" slides the track; a panel
+   taller than the stage scrolls inside it. Nothing is measured, so nothing
+   can be clipped by a measurement that came back wrong. */
+.u-stage{position:relative;overflow:hidden;height:clamp(380px,58vh,600px);
+  border:1px solid var(--line);border-radius:12px;background:var(--panel)}
+.u-track{display:flex;width:400%;height:100%;
+  transition:transform .48s cubic-bezier(.22,.8,.3,1);will-change:transform}
+.u-panel{display:block;flex:0 0 25%;width:25%;min-width:0;height:100%;overflow-y:auto;
+  overscroll-behavior:contain;padding:16px 18px 20px;box-sizing:border-box;scrollbar-width:thin}
+.u-panel[inert]{pointer-events:none}
+/* a soft fade at the foot of a panel, so it is obvious there is more below */
+.u-stage::after{content:"";position:absolute;left:0;right:0;bottom:0;height:34px;pointer-events:none;
+  background:linear-gradient(to bottom,transparent,var(--panel))}
 .u-panel>*{max-width:100%}
 .u-panel input,.u-panel textarea,.u-panel select{max-width:100%;box-sizing:border-box}
 .u-panel h4{font-family:var(--disp);font-size:1.05rem;margin:0 0 4px}
-@keyframes uInR{from{transform:translateX(100%);opacity:.2}to{transform:none;opacity:1}}
-@keyframes uInL{from{transform:translateX(-100%);opacity:.2}to{transform:none;opacity:1}}
-.u-panel.on.fromR{animation:uInR .42s cubic-bezier(.22,.8,.3,1)}
-.u-panel.on.fromL{animation:uInL .42s cubic-bezier(.22,.8,.3,1)}
+@media (prefers-reduced-motion:reduce){.u-track{transition:none}}
 .u-steps-nav{display:flex;gap:6px;list-style:none;margin:14px 0 6px;padding:0;overflow-x:auto}
 .u-steps-nav li{flex:1 1 0;display:flex;align-items:center;gap:8px;cursor:pointer;padding:8px 10px;
   border-radius:10px;border:1px solid var(--line);background:var(--panel2);font-size:.8rem;
@@ -126,8 +134,13 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-facilities>fieldset:not(.open)>*:not(legend){display:none}
 .u-facilities>fieldset>legend label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .u-facilities>fieldset .u-checks{margin-top:8px}
-@media (prefers-reduced-motion:reduce){.u-panel.on{animation:none}}
-@media print{.u-panel{display:block!important;animation:none}.u-steps-nav,.u-wiznav{display:none}}
+@media print{
+  .u-stage{height:auto;overflow:visible;border:0;background:none}
+  .u-stage::after{display:none}
+  .u-track{display:block;width:auto;height:auto;transform:none!important}
+  .u-panel{width:auto;height:auto;overflow:visible;padding:0 0 18px;break-inside:avoid}
+  .u-steps-nav,.u-wiznav{display:none}
+}
 
 /* ---- colour with a job to do -------------------------------------------
    Every section already declares what it is about (data-theme="hardship work",
@@ -458,6 +471,38 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 @media print{.hub,.toolbar{display:none} .offtab{display:block !important}}
 .secnav[hidden]{display:none}
 #datacred[hidden]{display:none}
+/* A locked feature. One design, used everywhere a paid feature would be, so
+   the free tier is consistent and the upgrade path is obvious without being
+   loud. No dead button: until sign-up exists there is nothing to press. */
+#locked[hidden]{display:none}
+.lock{background:linear-gradient(160deg,var(--acc-dim),transparent 70%),var(--panel);
+  border:1px solid var(--acc);border-radius:var(--r);padding:22px 22px 18px;margin:18px 0;box-shadow:var(--shadow)}
+.lockk{font-size:.68rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:var(--acc);margin-bottom:8px}
+.lock h3{font-family:var(--disp);font-size:clamp(1.15rem,3.6vw,1.4rem);font-weight:700;letter-spacing:-.02em;margin-bottom:8px}
+.lock p{font-size:.92rem;color:var(--ink2);line-height:1.6;margin-bottom:8px}
+/* The inputs, itemised, above the outputs. Four groups in the four step
+   colours, so a reader can tie each figure back to where it was entered. */
+.capsum{background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:16px 18px 12px;
+  margin:0 0 20px;box-shadow:var(--shadow)}
+.capsum.demo{border-color:color-mix(in srgb,var(--m-hardship) 45%,var(--line2))}
+.capsumk{font-size:.68rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--ink3);margin-bottom:12px}
+.capsum.demo .capsumk{color:var(--m-hardship)}
+.capsumgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.capsumg{border-left:3px solid var(--k);padding-left:12px;min-width:0}
+.capsumg h4{font-family:var(--disp);font-size:.78rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--k);margin:0 0 6px}
+.capsumg ul{list-style:none;margin:0;padding:0;display:grid;gap:3px}
+.capsumg li{font-size:.84rem;color:var(--ink2);line-height:1.45;overflow-wrap:anywhere}
+.capsumg li b{color:var(--ink);font-weight:700;margin-right:6px}
+.capsumleft{font-size:.8rem;color:var(--ink2);margin:8px 0 0;padding-top:7px;border-top:1px dashed var(--line)}
+.capsumleft b{color:var(--acc)}
+.capsumfoot{margin:12px 0 0;font-size:.8rem}
+@media print{.capsum{box-shadow:none;break-inside:avoid}.capsumg{border-left-color:#999}.capsumg h4{color:#333}}
+.u-quick{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:6px 0 14px}
+.u-quick .note{flex:1 1 260px;font-size:.8rem}
+.u-badge-demo{color:var(--m-hardship);border-color:color-mix(in srgb,var(--m-hardship) 45%,transparent);background:color-mix(in srgb,var(--m-hardship) 12%,transparent)}
+.btn.ghost.u-danger{color:var(--m-hardship);border-color:var(--m-hardship);font-weight:700}
+.tool .tlock{display:inline-block;margin:6px 0 0;font-size:.64rem;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:3px 9px}
 .secnav{position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 -18px;padding-left:18px;padding-right:18px;
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
@@ -913,8 +958,19 @@ ol.ladder li span{font-size:.83rem;color:var(--ink2);line-height:1.55}
 .doct summary b{font-family:var(--disp);font-size:.97rem;font-weight:600;color:var(--ink)}
 .doct .dn{margin-left:auto;font-size:.72rem;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 9px;white-space:nowrap}
 .dshare{font-size:.8rem;color:var(--ink3);margin:0 0 10px;line-height:1.5}
-.dsec{margin-bottom:12px}
-.dsec>b{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink3);font-weight:700;margin-bottom:6px}
+.dsec{margin-bottom:12px;padding-left:11px;border-left:2px solid var(--dk,var(--line2))}
+.dsec>b{display:block;font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dk,var(--ink3));font-weight:700;margin-bottom:6px}
+/* Three different kinds of thing, coloured so a pastor can tell at a glance
+   which part he is reading. Pink for who they are and what they hold; amber
+   for where it differs — the same "attention" amber the rest of the report
+   uses; mint for the ground we already share, because mint is us. */
+.dsec.d-teach{--dk:var(--m-people)}
+.dsec.d-diff{--dk:var(--m-hardship)}
+.dsec.d-common{--dk:var(--acc)}
+.dsec ul.plain li::before{background:var(--dk,var(--acc));opacity:.75}
+.dsec.d-diff .diff{border-left-color:var(--dk)}
+.dsec.d-diff .diff span{color:var(--dk)}
+@media print{.dsec{border-left-color:#999}.dsec>b{color:#333}.dsec.d-diff .diff span{color:#111}}
 .diffs{display:flex;flex-direction:column;gap:7px}
 .diff{font-size:.83rem;color:var(--ink2);line-height:1.55;padding-left:11px;border-left:2px solid var(--acc)}
 .diff span{display:block;font-weight:600;color:var(--ink);font-size:.8rem}
@@ -1464,6 +1520,11 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
    recruit or a single room away is the most actionable thing on the page, and
    it used to look identical to one needing a whole building. */
 .u-rowmeta .u-near{color:var(--m-hardship);font-weight:700}
+.u-ai{font-style:normal;font-size:.62rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:2px 7px;margin-left:7px;vertical-align:2px}
+.u-unlike{margin:10px 0 0;font-size:.86rem;color:var(--ink2);line-height:1.55;padding:9px 12px;
+  border-radius:10px;background:var(--acc-dim);border:1px solid color-mix(in srgb,var(--acc) 30%,transparent)}
+.u-unlike b{display:block;font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc);margin-bottom:3px}
 @media print{.u-rowmeta .u-near{color:#111}}
 .u-rowbody{padding:0 16px 16px;border-top:1px solid var(--line)}
 .u-rowbody>p{margin:12px 0}
@@ -1648,13 +1709,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.23.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.31.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.23.0';
+const VERSION = 'v10.31.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -3719,13 +3780,24 @@ function declutter(ys,gap,top,bottom){
    line that did not shift goes grey, so the coloured lines are exactly the
    story. Mint leads, because mint is the report; amber is the second, because
    amber already means "look here" everywhere else on the page. */
-const SLOPE_HUES=['--acc','--m-hardship','--m-people','--m-children','--m-housing','--m-language'];
+/* The largest population leads in the theme colour; every other line has a
+   colour of its own so it can be followed across the chart. Movement is shown
+   by weight and brightness, never by taking a line's colour away — a flat line
+   is still a population, and it still needs to be tellable from its neighbour.
+   (v10.14 greyed the flat lines out. That read as a mint smear with grey
+   under it, which is what was asked to be undone.) */
+const SLOPE_HUES=['--m-people','--m-hardship','--m-children','--m-housing'];
 function chartSlope(items,thenLabel,nowLabel){
   const SVGC=svgc();
-  let moverN=0;
-  const hues=items.map(it=>Math.abs(it.now-it.then)>=3
-    ? (cssVar(SLOPE_HUES[(moverN++)%SLOPE_HUES.length])||SVGC.gold)
-    : SVGC.dim);
+  /* Colours go to the lines by size, largest first, so when there are more
+     lines than colours it is the 1% slice that goes grey — not "Born abroad"
+     because it happened to be appended last. */
+  const rank=items.map((it,i)=>i).sort((a,b)=>(items[b].now||0)-(items[a].now||0));
+  const hues=new Array(items.length).fill(SVGC.dim);
+  rank.forEach((idx,r)=>{
+    if(r===0) hues[idx]=SVGC.gold;
+    else if(r-1<SLOPE_HUES.length) hues[idx]=cssVar(SLOPE_HUES[r-1])||SVGC.gold;
+  });
   const W=490,H=284,PT=18,PB=42,PL=54,PR=176;
   const max=Math.max(...items.flatMap(i=>[i.then,i.now]),1)*1.15;
   const y=v=>PT+(H-PT-PB)*(1-v/max);
@@ -3744,7 +3816,7 @@ function chartSlope(items,thenLabel,nowLabel){
     // so movement still reads at a glance without losing which line is which.
     const moved=Math.abs(it.now-it.then)>=3;
     const col=hues[i];
-    s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="${moved?2.6:1.8}" opacity="${moved?1:.45}"/>`;
+    s+=`<line x1="${PL}" y1="${y(it.then)}" x2="${W-PR}" y2="${y(it.now)}" stroke="${col}" stroke-width="${moved?2.8:1.9}" opacity="${moved?1:.62}"/>`;
     s+=`<circle cx="${PL}" cy="${y(it.then)}" r="3.5" fill="${col}"/><circle cx="${W-PR}" cy="${y(it.now)}" r="3.5" fill="${col}"/>`;
     // leader lines, drawn only where a label had to move off its dot
     if(Math.abs(yL[i]-y(it.then))>1.5) s+=`<line x1="${PL-5}" y1="${y(it.then)}" x2="${PL-11}" y2="${yL[i]}" stroke="${SVGC.line2||SVGC.dim}" stroke-width="1" opacity=".5"/>`;
@@ -4538,9 +4610,9 @@ function doctrineRow(key,count,pct,label,kind){
       ${bar}<div class="tnum">${count}</div>
     </summary><div class="tbody">
     ${d.share?`<p class="dshare">${esc(d.share)}</p>`:''}
-    ${d.teach.length?`<div class="dsec"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
-    ${d.differs.length?`<div class="dsec"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
-    ${d.common.length?`<div class="dsec"><b>Common ground</b><ul class="plain">${d.common.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.teach.length?`<div class="dsec d-teach"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.differs.length?`<div class="dsec d-diff"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
+    ${d.common.length?`<div class="dsec d-common"><b>Common ground</b><ul class="plain">${d.common.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
     ${d.open?`<div class="dopen"><b>Where to start</b>${esc(d.open)}</div>`:''}
     ${d.caution?`<div class="dcaution"><b>Do not</b>${esc(d.caution)}</div>`:''}
   </div></details>`;
@@ -4549,9 +4621,9 @@ function doctrineCard(key,count){
   const d=DOCTRINE[key]; if(!d) return '';
   return `<details class="doct"><summary><b>${esc(d.label)}</b>${count?`<span class="dn">${count} nearby</span>`:''}<span class="reach" aria-hidden="true"></span></summary>
     ${d.share?`<p class="dshare">${esc(d.share)}</p>`:''}
-    ${d.teach.length?`<div class="dsec"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
-    ${d.differs.length?`<div class="dsec"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
-    ${d.common.length?`<div class="dsec"><b>Common ground</b><ul class="plain">${d.common.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.teach.length?`<div class="dsec d-teach"><b>What they teach</b><ul class="plain">${d.teach.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
+    ${d.differs.length?`<div class="dsec d-diff"><b>Where it differs</b><div class="diffs">${d.differs.map(([h,t])=>`<div class="diff"><span>${esc(h)}</span>${esc(t)}</div>`).join('')}</div></div>`:''}
+    ${d.common.length?`<div class="dsec d-common"><b>Common ground</b><ul class="plain">${d.common.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>`:''}
     ${d.open?`<div class="dopen"><b>Where to start</b>${esc(d.open)}</div>`:''}
     ${d.caution?`<div class="dcaution"><b>Do not</b>${esc(d.caution)}</div>`:''}
   </details>`;
@@ -5970,16 +6042,50 @@ const GIFTS_LINK=(()=>{
    the bottom of one long page. */
 /* Community findings and the ministry action plan share one continuous report.
    Section shortcuts scroll within it; they never switch or hide its parts. */
+/* ================= ENTITLEMENT =================
+   One table says which tier each feature belongs to. One function says which
+   tier this person is on. One function answers "may this render". One
+   function draws a locked feature. Every paid feature asks entitled(); nothing
+   else in the app knows or cares how the answer was reached.
+
+   TODAY  currentTier() returns 'full' for everyone who is past the gate.
+   LATER  it reads the signed-in user's plan (Firebase custom claim, as in
+          Slide Preach). That is the only line that changes. */
+const FEATURES={
+  survey:  {tier:'free', name:'Community Survey'},
+  plan:    {tier:'full', name:'the action plan',        blurb:'Where to look, community resources, your church profile, mobilization and the ministries your church could offer.'},
+  case:    {tier:'full', name:'Make the Case',          blurb:'A proposal written for the room you are walking into.'},
+  planner: {tier:'full', name:'the Evangelism Planner', blurb:'Eighteen months counted back from opening night, with a benchmark for every phase.'},
+  gifts:   {tier:'full', name:'Spiritual Gifts',        blurb:'Send members a link; their gifts and the ministries that fit come back to you.'},
+  ideas:   {tier:'full', name:'fresh ministry ideas',   blurb:'Ideas invented for this neighborhood and this church, with the steps to start each one.'}
+};
+function currentTier(){
+  // ?tier=free lets the pastor preview the free experience before it exists.
+  // Harmless in public: it can only ever REMOVE features from the viewer.
+  try{ const t=new URLSearchParams(location.search).get('tier'); if(t==='free') return 'free'; }catch(e){}
+  return 'full';   // ← the one line the paid version replaces
+}
+function entitled(f){ const d=FEATURES[f]; return !d || d.tier==='free' || currentTier()==='full'; }
+function lockHTML(f){
+  const d=FEATURES[f]||{name:f,blurb:''};
+  return `<div class="lock" data-lock="${esc(f)}">
+    <div class="lockk">Full version</div>
+    <h3>${esc(d.name.charAt(0).toUpperCase()+d.name.slice(1))} is part of the full version</h3>
+    <p>${esc(d.blurb)}</p>
+    <p class="note">The free version includes the community survey. Everything that turns the survey into a plan is in the full version.</p>
+  </div>`;
+}
 const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
   // standalone: needs no church address or Census data; it has its own panel.
   // Listed second, matching its place on the hub.
-  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'},
-  case:   {name:'Make the Case',     tabs:['case']},
-  planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner'}
+  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts', feature:'gifts'},
+  case:   {name:'Make the Case',     tabs:['case'], feature:'case'},
+  planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner', feature:'planner'}
 };
 function showHub(){
   uChrome();
+  { const L=$('locked'); if(L) L.hidden=true; }
   const dc=document.getElementById('datacred'); if(dc&&!FLAT) dc.hidden=true;
   const pl=$('planner'); if(pl) pl.hidden=true;
   const gp=$('gifts'); if(gp) gp.hidden=true;
@@ -5996,6 +6102,21 @@ function showHub(){
 }
 function openTool(id){
   uChrome();
+  const feat=(TOOLS[id]||{}).feature;
+  if(feat&&!entitled(feat)){
+    // the tool bar and hub behave as normal; the tool's own space shows the lock
+    TOOL=id;
+    const hub=$('hub'); if(hub) hub.hidden=true;
+    const bar=$('toolbar'); if(bar){ bar.hidden=false; $('toolname').textContent=TOOLS[id].name; }
+    const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
+    $('report').classList.remove('show');
+    ['planner','gifts','secnav','changech'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
+    let L=$('locked'); if(!L){ L=document.createElement('div'); L.id='locked'; $('toolbar').after(L); }
+    L.hidden=false; L.innerHTML=lockHTML(feat);
+    window.scrollTo({top:0,behavior:'auto'});
+    return;
+  }
+  { const L=$('locked'); if(L) L.hidden=true; }
   const dg=document.getElementById('diag'); if(dg){ dg.hidden=!DEBUG; if(id!=='survey') dg.open=false; }
   // Remember where he is, so a browser refresh puts him back here rather than
   // in the survey. sessionStorage is per-tab and dies with the tab, so a
@@ -6080,7 +6201,8 @@ function applyTool(){
     const hub=$('hub'); if(hub) hub.hidden=true;
     return;
   }
-  const allow=(TOOLS[TOOL]||{tabs:[]}).tabs;
+  // the free tier sees the survey's analytics only; the action plan is full-tier
+  const allow=(TOOLS[TOOL]||{tabs:[]}).tabs.filter(t=>t==='analytics'||entitled('plan'));
   document.querySelectorAll('#sections section.blk').forEach(sec=>{
     sec.classList.toggle('offtab', !allow.includes(sec.dataset.tab||'analytics'));
   });
@@ -7574,7 +7696,13 @@ function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName){
 }
 
 function wireHub(){
-  document.querySelectorAll('.tool').forEach(b=>b.onclick=()=>openTool(b.dataset.tool));
+  document.querySelectorAll('.tool').forEach(b=>{
+    b.onclick=()=>openTool(b.dataset.tool);
+    const feat=(TOOLS[b.dataset.tool]||{}).feature;
+    if(feat&&!entitled(feat)&&!b.querySelector('.tlock')){
+      const t=document.createElement('span'); t.className='tlock'; t.textContent='Full version'; b.querySelector('b').after(t);
+    }
+  });
   const back=$('backtools'); if(back) back.onclick=showHub;
   const ch=$('changech'); if(ch) ch.onclick=showAddressForm;
   const brand=$('brandlink');
@@ -8084,6 +8212,10 @@ function render(){
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
        count your people, then choose what to do. */
+  if(!entitled('plan')){
+    // The free tier: the survey ends here, and says plainly what is beyond it.
+    secs.push(`<section class="blk" data-tab="analytics" data-theme="faith"><h2>Beyond the survey</h2>${lockHTML('plan')}</section>`);
+  }
   secs.push(SEC_WHERE);
   secs.push(SEC_HELP);
   /* Everything above this is the neighborhood. Everything below is this
@@ -8103,6 +8235,7 @@ function render(){
 
   const RL=mobilizeRoles(SG.tags), MM=mobilizeMath(M,ZONES), FIT=congregationFit(MM);
   secs.push(`<section class="blk" data-tab="mobilize" data-theme="mobilize"><h2>Mobilization</h2>
+    ${capSummaryHTML()}
     <p class="note" style="margin-bottom:14px">Two questions, in this order. What is this neighborhood actually asking of a church &mdash; in homes, in people, and in need? And is that within reach of the congregation you described under <b>Your church</b>? The answer to "so what do we do" comes after, under <b>Ministries your church could offer</b>.</p>
 
     <div class="askpanel">
@@ -8345,6 +8478,7 @@ async function run(getGeo){
     recentAdd((geo.matched||document.getElementById('addr').value||'').trim());
     const ch=document.getElementById('changech'); if(ch&&TOOL) ch.hidden=false;
     render();
+    setTimeout(autoIdeas,50);               // ideas for a church already on file
     loadZones(geo,M,SCOPE_RADIUS[SCOPE]);   // runs after the report is already on screen
     loadCongregations(geo);
     loadHelp(geo);
@@ -10416,13 +10550,118 @@ function uValues(form,name){return [...form.querySelectorAll(`[name="${name}"]:c
 let U_STEP_I=0;
 const U_WIZ=['Your church','Money','Your building','Skills'];
 
+/* A plausible mid-sized church. Deliberately not tiny and not large: enough to
+   make most of the light and moderate ministries fit, not so much that the
+   heavy ones all fit too — so the demo shows the tool SORTING, which is the
+   point. Every number is the kind a pastor could confirm from memory. */
+const DEMO_CHURCH={
+  confirmed:true, demo:true,
+  members:135, volunteers:46, leaders:9, hours:320,
+  busyVolunteers:11, busyLeaders:2, busyHours:70,
+  startupBudget:2500, monthlyBudget:450, pendingBudget:0,
+  languages:'Spanish \u2014 two fluent, one conversational',
+  slots:['Tue evening','Wed evening','Thu evening','Sat afternoon','Sat evening','Sun daytime'],
+  skillCounts:{lead:7,medical:3,teach:5,kids:6,cook:8,music:4,lang:3,trade:5,vehicle:3,weekday:6,admin:3,av:2,support:1},
+  facilities:{
+    kitchen:   {available:true,capacity:90, partner:'',slots:['Tue evening','Wed evening','Sat afternoon','Sun daytime']},
+    classrooms:{available:true,capacity:45, partner:'',slots:['Tue evening','Wed evening','Thu evening','Sat afternoon']},
+    center:    {available:true,capacity:180,partner:'',slots:['Sat afternoon','Sat evening','Sun daytime']},
+    av:        {available:true,capacity:180,partner:'',slots:['Sat afternoon','Sat evening','Sun daytime']},
+    nursery:   {available:true,capacity:22, partner:'',slots:['Tue evening','Wed evening','Sat afternoon']},
+    library:   {available:true,capacity:18, partner:'',slots:['Tue evening','Thu evening']},
+    parking:   {available:true,capacity:220,partner:'',slots:['Sat afternoon','Sun daytime']},
+    vehicle:   {available:true,capacity:14, partner:'',slots:['Tue evening','Sat afternoon','Sun daytime']},
+    stage:     {available:true,capacity:180,partner:'',slots:['Sat evening','Sun daytime']},
+    home:      {available:true,capacity:12, partner:'',slots:['Tue evening','Wed evening','Thu evening']}
+  },
+  who:{mixed:true,newcomers:true,families:true},
+  commitments:'Sabbath School and divine service; Wednesday prayer meeting; Pathfinders on alternate Sundays.'
+};
+function capFillDemo(){
+  capSave(JSON.parse(JSON.stringify(DEMO_CHURCH)));
+  CAP_DONE=true; U_FILTER='auto'; U_STEP_I=0;
+  uRefresh();
+  setTimeout(autoIdeas,50);
+}
+/* Clears the church's working data and nothing that is not the church's to
+   clear: the name and address stay, and the members' own gift results stay. */
+function capClearAll(){
+  const ch=uChurch();
+  ch.capacity={}; ch.selected=[]; ch.overrides={}; ch.drafts=[]; ch.autoKey='';
+  ch.proposalText={}; ch.proposalPrefs={}; 
+  CAP=null; CAP_DONE=false; U_FILTER='auto'; U_STEP_I=0; U_PROP=null; U_COMPARE=[]; U_BAND=''; U_QUERY=''; U_GEN_NOTICE='';
+  uPersist(); uRefresh();
+}
+/* Two taps, and the first says what the second will do. Disarms itself if the
+   second tap does not come, so a stray touch never clears anything. */
+function armThen(btn,label,armedLabel,fn){
+  if(!btn) return;
+  btn.onclick=()=>{
+    if(btn.dataset.armed!=='1'){
+      btn.dataset.armed='1'; btn.textContent=armedLabel; btn.classList.add('u-danger');
+      btn.setAttribute('aria-live','polite');
+      setTimeout(()=>{ if(btn.dataset.armed==='1'&&btn.isConnected){ btn.dataset.armed=''; btn.textContent=label; btn.classList.remove('u-danger'); } },5000);
+      return;
+    }
+    btn.dataset.armed=''; fn();
+  };
+}
+/* Everything the profile holds, itemised, in the four groups of the four
+   steps. Reads the merged capacity — the exact numbers the plan below uses. */
+function capSummaryHTML(){
+  const c=capMerged(); if(!c.ready) return '';
+  const raw=capGet();
+  const n=v=>v==null?null:Number(v).toLocaleString('en-US');
+  const item=(label,val)=>val==null||val===''?'':`<li><b>${esc(label)}</b>${esc(String(val))}</li>`;
+  // people
+  const people=[
+    item('Attending', n(c.members)),
+    item('Volunteers', c.volunteers!=null?`${n(c.volunteers)}${raw.busyVolunteers?` (${n(raw.busyVolunteers)} already committed)`:''}`:null),
+    item('Leaders', c.leaders!=null?`${n(c.leaders)}${raw.busyLeaders?` (${n(raw.busyLeaders)} already committed)`:''}`:null),
+    item('Hours a month', raw.hours!=null?`${n(raw.hours)}${raw.busyHours?` (${n(raw.busyHours)} already committed)`:''}`:null),
+    item('Free to serve', (c.slots||[]).length?c.slots.join(', '):null),
+    item('Congregation', Object.keys(c.who||{}).filter(k=>c.who[k]).map(k=>(CAP_WHO.find(w=>w.k===k)||{}).n||k).join(', ')||null)
+  ].join('');
+  const left=`${n(c.hands)} volunteers, ${n(c.concurrent)} leaders, ${n(c.hours)} hours a month`;
+  // money
+  const money=[
+    item('Startup funds', c.startup!=null?'$'+n(c.startup):'not recorded'),
+    item('Monthly funds', c.monthly!=null?'$'+n(c.monthly):'not recorded'),
+    item('Awaiting approval', raw.pendingBudget?'$'+n(raw.pendingBudget)+' (not counted)':null)
+  ].join('');
+  // building
+  const rooms=U_FAC.filter(f=>c.hasFacility(f.k)).map(f=>{
+    const v=c.facilities[f.k]||{};
+    return `<li><b>${esc(f.n)}</b>${v.capacity?esc(n(v.capacity))+' people':''}${v.partner?' · '+esc(v.partner):''}</li>`;
+  }).join('');
+  // skills and languages
+  const skills=U_SKILLS.filter(k=>c.skills[k.k]>0).map(k=>`<li><b>${esc(String(c.skills[k.k]))}</b>${esc(k.n.toLowerCase())}</li>`).join('');
+  const langs=c.languages?`<li><b>Languages</b>${esc(c.languages)}</li>`:'';
+  const commit=raw.commitments?`<li><b>Already carrying</b>${esc(raw.commitments)}</li>`:'';
+  return `<div class="capsum${raw.demo?' demo':''}">
+    <div class="capsumk">${raw.demo?'The sample church, as filled in':'Your church, as you entered it'}</div>
+    <div class="capsumgrid">
+      <div class="capsumg" style="--k:var(--acc)"><h4>People</h4><ul>${people}</ul><p class="capsumleft">Left to give: <b>${esc(left)}</b></p></div>
+      <div class="capsumg" style="--k:var(--m-hardship)"><h4>Money</h4><ul>${money}</ul></div>
+      <div class="capsumg" style="--k:var(--m-housing)"><h4>Building</h4>${rooms?`<ul>${rooms}</ul>`:'<p class="note">No rooms recorded.</p>'}</div>
+      <div class="capsumg" style="--k:var(--m-children)"><h4>Skills</h4>${skills||langs||commit?`<ul>${skills}${langs}${commit}</ul>`:'<p class="note">No skills recorded.</p>'}</div>
+    </div>
+    <p class="note capsumfoot">Everything below is measured against these numbers. ${raw.demo?'Press <b>Clear all</b> under Your church when you are done with the sample.':'Change them under <b>Your church</b> and the plan updates.'}</p>
+  </div>`;
+}
 function capRender(){
   const host=$('capslot');if(!host)return;const ch=uChurch(),c=capGet(),m=capMerged();
-  host.innerHTML=`<form id="u-cap-form" class="u-profile">
-<div class="u-heading"><div><h3>Your church’s working capacity</h3><p class="note">One profile for ${esc(ch.name)}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.</p></div><span class="u-badge">${c.confirmed?'Profile reviewed':'Review needed'}</span></div>
+  host.innerHTML=`<form id="u-cap-form" class="u-profile" novalidate>
+<div class="u-heading"><div><h3>Your church’s working capacity</h3><p class="note">One profile for ${esc(ch.name)}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.</p></div><span class="u-badge${c.demo?' u-badge-demo':''}">${c.demo?'Demo data \u2014 clear when done':c.confirmed?'Profile reviewed':'Review needed'}</span></div>
+    <div class="u-quick">
+      <button type="button" class="btn ghost" id="u-demo">${c.demo?'Refill the demo church':'Fill in a demo church'}</button>
+      <button type="button" class="btn ghost" id="u-clear">Clear all</button>
+      <span class="note">Demo fills every step with a sample congregation so you can see what the tool does. Clear all removes this church\u2019s profile, plan and drafts \u2014 it keeps the name, the address and your members\u2019 gift results.</span>
+    </div>
     ${ch.legacy?'<p class="u-warning">Your earlier church details were preserved. Confirm the congregation and review the new fields before using these recommendations.</p>':''}
     <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}</ol>
     <div class="u-stage">
+     <div class="u-track" id="u-track">
       <section class="u-panel" data-panel="0"><h4>Step 1 of 4 — Your church</h4>
         <p class="note">Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.</p>
 <label class="u-field">Church name<input name="churchName" required maxlength="160" value="${esc(ch.name)}"></label>
@@ -10452,6 +10691,7 @@ function capRender(){
 <div class="u-checks">${CAP_WHO.map(w=>`<label class="u-check"><input name="who" type="checkbox" value="${w.k}" ${c.who?.[w.k]?'checked':''}>${esc(w.n)}</label>`).join('')}</div><label class="u-field">Current commitments and limits<textarea name="commitments" rows="3" maxlength="3000">${esc(c.commitments||'')}</textarea></label>
       
       </section>
+     </div>
     </div>
     <div class="u-wiznav">
       <button class="btn ghost" type="button" id="u-back">&larr; Back</button>
@@ -10462,6 +10702,11 @@ function capRender(){
     <span id="u-cap-status" role="status">${c.confirmed?'Saved for this church.':'Finish the four steps to see ministries that fit.'}</span>
   </form>`;
   const form=$('u-cap-form');form.addEventListener('input',()=>{$('u-cap-status').textContent='Unsaved changes — save to update the plan.';});
+  // Demo: one tap if the profile is empty; two if it would replace real entries.
+  { const b=$('u-demo');
+    if(c.confirmed&&!c.demo) armThen(b,b.textContent,'Tap again to replace what you entered',capFillDemo);
+    else if(b) b.onclick=capFillDemo; }
+  armThen($('u-clear'),'Clear all','Tap again to clear this church\u2019s profile, plan and drafts',capClearAll);
   /* Only one panel is displayed at a time, so the browser sizes the box to
      that panel's own content. There is nothing to measure and nothing to clip:
      the previous version slid a 400%-wide track and tried to compute its
@@ -10483,21 +10728,20 @@ function capRender(){
   });
   const panels=[...form.querySelectorAll('.u-panel')];
   const nav=$('u-steps-nav');
+  const track=$('u-track');
   const show=(i,back,moved)=>{
     U_STEP_I=Math.max(0,Math.min(panels.length-1,i));
+    // Slide the track. The stage is a fixed height, so the page does not move
+    // and nothing needs scrolling back into place. The only scroll is inside
+    // the new panel, which starts at its top.
+    if(track) track.style.transform='translateX(-'+(U_STEP_I*25)+'%)';
     panels.forEach((p,n)=>{
       const on=n===U_STEP_I;
       p.classList.toggle('on',on);
-      if(on){ p.classList.remove('fromL','fromR'); void p.offsetWidth; p.classList.add(back?'fromL':'fromR'); }
+      if(on){ p.removeAttribute('inert'); p.setAttribute('aria-hidden','false'); if(moved) p.scrollTop=0; }
+      else { p.setAttribute('inert',''); p.setAttribute('aria-hidden','true'); }
     });
     if(nav) [...nav.children].forEach((li,n)=>{ li.className = n===U_STEP_I?'on':(n<U_STEP_I?'done':''); });
-    if(moved){
-      // Every step lands at the top of the section — heading, markers, then
-      // the panel — rather than wherever the previous, much taller panel left
-      // the page. Same place every time, so it never feels like a jump.
-      const top=(form.closest&&form.closest('section.blk'))||nav||form;
-      if(top&&top.scrollIntoView) top.scrollIntoView({block:'start',behavior:'auto'});
-    }
     const last=U_STEP_I===panels.length-1;
     const bk=$('u-back'), nx=$('u-next'), dn=$('cap-done');
     if(bk) bk.disabled=U_STEP_I===0;
@@ -10520,7 +10764,16 @@ function capRender(){
 
   $('u-team-link').onclick=()=>openTool('gifts');
   form.onsubmit=e=>{
-    e.preventDefault();if(!form.reportValidity())return;
+    e.preventDefault();
+    /* A required field on a step that is slid out of view cannot be focused,
+       so the browser's own validation just fails silently. Find the first
+       invalid field, slide to its step, and only then show the message. */
+    const bad=form.querySelector(':invalid');
+    if(bad){
+      const p=bad.closest('.u-panel');
+      if(p&&+p.dataset.panel!==U_STEP_I){ show(+p.dataset.panel,+p.dataset.panel<U_STEP_I,true); setTimeout(()=>form.reportValidity(),520); return; }
+      form.reportValidity(); return;
+    }
     const d=new FormData(form),next={...c,skillCounts:{},facilities:{},who:{}};
     U_FIELDS.forEach(([k])=>{next[k]=uNum(d.get(k));});
     if(next.members!==null&&next.volunteers!==null&&next.volunteers>next.members){$('u-cap-status').textContent='Volunteer count exceeds attendance. Include regular outside volunteers in the attendance total, or correct the count.';return;}
@@ -10529,7 +10782,7 @@ function capRender(){
     next.slots=uValues(form,'teamSlot');next.languages=String(d.get('languages')||'').trim();next.commitments=String(d.get('commitments')||'');
     U_SKILLS.forEach(s=>{const n=uNum(d.get('skill-'+s.k));if(n!==null)next.skillCounts[s.k]=n;});
     U_FAC.forEach(f=>{if(d.has('fac-'+f.k))next.facilities[f.k]={available:true,capacity:uNum(d.get('room-'+f.k)),partner:String(d.get('partner-'+f.k)||'').trim(),slots:uValues(form,'slot-'+f.k)};});
-    uValues(form,'who').forEach(k=>next.who[k]=true);next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
+    uValues(form,'who').forEach(k=>next.who[k]=true);next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';setTimeout(autoIdeas,50);
     const top=host.getBoundingClientRect().top;if(DATA)render();else capRender();uChrome();const now=$('capslot');if(now)window.scrollBy(0,now.getBoundingClientRect().top-top);
   };
 }
@@ -10652,7 +10905,7 @@ function uRow(x){
   const steps=Array.isArray(x.how)?x.how:(x.how?[x.how]:[]);
   return `<div class="u-row u-ministry${open?' open':''}${f.ok?'':' u-row-gap'}" data-row="${esc(x.id)}" data-k="${esc(x.k||'')}">
     <button type="button" class="u-rowhead" data-open="${esc(x.id)}" aria-expanded="${open}">
-      <span class="u-rowname">${esc(x.n)}</span>
+      <span class="u-rowname">${esc(x.n)}${x.generated?' <i class="u-ai">AI draft</i>':''}</span>
       <span class="u-rowmeta">${!f.ok&&f.gaps.length===1?'<b class="u-near">one thing away</b> \u00b7 ':''}${r.people||0} vol \u00b7 ${hours} hrs \u00b7 ${startup||monthly?fmtMoney(startup):'no cost'}</span>
       <span class="u-chev">${open?'\u2212':'+'}</span>
     </button>
@@ -10674,6 +10927,7 @@ function uRow(x){
         </div>
       </div>
       ${steps.length?`<div class="u-steps"><b>How to start it</b><ol>${steps.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></div>`:''}
+      ${x.unlike?`<p class="u-unlike"><b>Why it is not on the standard list</b>${esc(x.unlike)}</p>`:''}
       ${f.ok?'':`<div class="u-rowgaps"><b>${f.gaps.length===1?'The one thing standing in the way':'Before this can be committed to'}</b><ul>${(f.gaps||[]).slice(0,6).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`}
       <div class="u-rowacts">
         <button class="btn" data-u-select="${esc(x.id)}"${f.ok?'':' disabled'}>${uSelected().includes(x.id)?'Remove from plan':'Add to plan'}</button>
@@ -10845,33 +11099,138 @@ async function uGenerateMount(){
   h.innerHTML=`<p id="u-gen-status" role="status">${esc(GEN_BUSY===uChurch().id?'Preparing draft ideas…':U_GEN_NOTICE)}</p><div id="u-generate-controls"></div>`;
   const info=await aiProbe();if(!h.isConnected)return;
   if(!info.enabled)return;
-  h.querySelector('#u-generate-controls').innerHTML=`<details class="u-details"><summary>Explore fresh ministry ideas</summary><p class="note">Generate additional drafts with the online service. The ministry ideas below are available without it. Review every draft’s requirements and community evidence before adding it to your plan.</p><div class="u-actions">${BANDS.map((b,i)=>`<button class="btn ghost" data-u-generate="${i}">${esc(b.n)} ideas</button>`).join('')}</div></details>`;
+  if(!entitled('ideas')){ h.querySelector('#u-generate-controls').innerHTML=lockHTML('ideas'); return; }
+  h.querySelector('#u-generate-controls').innerHTML=`<details class="u-details"><summary>Fresh ideas for this church</summary><p class="note">Twenty ideas per level are generated in the background the moment a church profile is saved with a survey on screen \u2014 invented for this neighborhood and this church, not from the standard list, each with the steps to begin and what it needs. They are saved with the church, so this happens once. Want a different set for a level? Press it here; that level\u2019s unselected drafts are replaced.</p><div class="u-actions">${BANDS.map((b,i)=>`<button class="btn ghost" data-u-generate="${i}">Different ${esc(b.n.toLowerCase())} ideas</button>`).join('')}</div></details>`;
   h.querySelectorAll('[data-u-generate]').forEach(b=>b.onclick=()=>generateMoves(+b.dataset.uGenerate,BANDS[+b.dataset.uGenerate],suggestions(DATA.M,SCOPE),DATA.M,DATA.levels,SCOPE));uGenerateBusy();
 }
+/* How many fresh ideas each load gets, and how they are split across the
+   four kinds of ministry. Light lifts are cheap and plentiful, so there are
+   many; a heavy lift is weekly-with-someone-present or a campaign, and a small
+   church can only ever run a couple, so there are few. Each batch thinks about
+   one kind, so the batches do not overlap each other. */
+/* Twenty per level, split across the four kinds of ministry so the batches
+   look in different directions and do not overlap. */
+const GEN_PLAN=[
+  {total:20, batches:[['Serve',5],['Equip',5],['Belong',5],['Invite',5]]},   // light lift
+  {total:20, batches:[['Serve',5],['Equip',5],['Belong',5],['Invite',5]]},   // moderate
+  {total:20, batches:[['Serve',5],['Equip',5],['Belong',5],['Invite',5]]}    // heavy
+];
+/* What a room name from the model means to the capacity check. */
+function roomReq(room){
+  const r=String(room||'').toLowerCase().trim();
+  if(!r||r==='none'||r==='outside'||r==='doorstep') return [];
+  if(r==='outdoor') return [['field','parking','grounds']];
+  if(r==='any') return [['classrooms','center','stage','home','kitchen','library']];
+  return U_FAC.some(f=>f.k===r) ? [[r]] : [['classrooms','center','stage','home']];
+}
+/* One draft from one idea. Returns null if the idea is unusable. */
+function draftFrom(idea,kind,bi,area){
+  if(!idea||typeof idea.name!=='string'||!idea.name.trim()||typeof idea.why!=='string'||!idea.why.trim())return null;
+  const steps=Array.isArray(idea.first)?idea.first.filter(t=>typeof t==='string'&&t.trim()).slice(0,6):[];
+  if(idea.week1)steps.push('This week, to find out if it will work: '+idea.week1);
+  if(idea.watch)steps.push('Watch for: '+idea.watch);
+  // The figure the idea rests on must really exist for this tract, or the
+  // evidence stays unverified and the draft says so.
+  const metric=(typeof idea.metric==='string'&&SPEC.some(([k])=>k===idea.metric)&&DATA&&Number.isFinite(DATA.M[SCOPE][idea.metric]))?idea.metric:null;
+  const d={id:'draft-'+uId(),generated:true,n:idea.name.trim().slice(0,120),
+    why:String(idea.why).slice(0,3000),d:String(idea.what||'').slice(0,1200),how:steps,
+    unlike:String(idea.unlike||'').slice(0,300),k:kind||KIND.serve,
+    evidenceArea:area,metric,reviewedEvidence:!!metric,load:bi,st:'trust',
+    ppl:Number.isInteger(idea.ppl)?idea.ppl:2,cost:[0,1,2].includes(idea.cost)?idea.cost:1,
+    skill:Array.isArray(idea.skills)?idea.skills.filter(k=>typeof k==='string'):[],need:[]};
+  // The model stated its own needs, so the draft is checked like a built-in.
+  d.requirements={...uBase(d),facilities:roomReq(idea.room),reviewed:true};
+  return d;
+}
+/* Ask for one level. silent=true is the background path: no page re-render,
+   no scrolling, only the status line and the cards updated in place. */
+async function genBand(bi,{silent=false,replace=false}={}){
+  if(!DATA)return {added:0,failed:0};
+  const band=BANDS[bi], ch=uChurch(), churchId=ch.id, S=SCOPE, levels=DATA.levels, area=levels[S].name;
+  const plan=GEN_PLAN[Math.max(0,Math.min(GEN_PLAN.length-1,bi))];
+  const status=t=>{ const el=$('u-gen-status'); if(el) el.textContent=t; };
+  status(`Thinking about ${band.n.toLowerCase()} ideas for this neighborhood \u2014 ${plan.total} of them, in ${plan.batches.length} directions\u2026`);
+  const c=capMerged(), SG=suggestions(DATA.M,S);
+  const summary=aiSummary(DATA.M,levels,S,DATA.geo)+'\nAVAILABLE CAPACITY: '+JSON.stringify({volunteers:c.hands,leaders:c.concurrent,monthlyHours:c.hours,startupBudget:c.startup,monthlyBudget:c.monthly,skills:c.skills,slots:c.slots,facilities:Object.keys(c.facilities||{}).filter(k=>c.facilities[k]&&c.facilities[k].available),languages:c.languages||'',selected:uUsage().items.map(i=>i.x.n)})+'\nCOMMITMENT LEVEL: '+band.n+' \u2014 '+band.d;
+  if(replace){ ch.drafts=(ch.drafts||[]).filter(d=>!(d.generated&&d.load===bi&&!uSelected().includes(d.id))); }
+  const avoid=[...new Set([...SG.moves.map(x=>x.n),...(ch.drafts||[]).map(x=>x.n)])];
+  let done=0;
+  const calls=plan.batches.map(([kind,count])=>
+    fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass()},
+      body:JSON.stringify({mode:'moves',summary,count,kind,avoid}),signal:AbortSignal.timeout(58000)})
+    .then(r=>r.json().then(j=>({ok:r.ok,j,kind})).catch(()=>({ok:false,j:null,kind})))
+    .catch(()=>({ok:false,j:null,kind}))
+    .then(res=>{ done++; status(`${band.n}: ${done} of ${plan.batches.length} directions back\u2026`); return res; }));
+  const results=await Promise.all(calls);
+  const good=results.filter(r=>r.ok&&Array.isArray(r.j?.ideas));
+  if(uChurch().id!==churchId) return {added:0,failed:results.length};   // he switched church meanwhile
+  ch.drafts=ch.drafts||[]; let added=0;
+  const seen=new Set([...SIGNATURE,...ch.drafts].map(x=>x.n.toLowerCase()));
+  for(const r of good) for(const idea of r.j.ideas){
+    const d=draftFrom(idea,r.kind,bi,area); if(!d)continue;
+    const key=d.n.toLowerCase(); if(seen.has(key))continue; seen.add(key);
+    ch.drafts.push(d); added++;
+  }
+  uPersist();
+  if(!silent&&DATA?.levels?.[SCOPE]?.name===area){ U_FILTER='auto';U_BAND=String(bi);U_QUERY=''; }
+  return {added,failed:results.length-good.length,error:results.map(r=>r.j&&r.j.error).find(Boolean)||''};
+}
+/* Update only what a returning batch touches. Never re-render the report:
+   a form mid-edit would lose what was typed. */
+function genRepaint(){
+  const cards=$('u-cards'); if(cards&&DATA) cards.innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);
+}
+/* The background path. Runs once per church-and-neighborhood-and-profile;
+   a later save with the same numbers does nothing. */
+function autoKey(){ const c=capGet(); return JSON.stringify([uChurch().id,DATA&&DATA.levels[SCOPE].name,c.members,c.volunteers,c.leaders,c.hours,c.startupBudget,c.monthlyBudget,Object.keys(c.facilities||{}).sort(),c.skillCounts]); }
+let AUTO_RUNNING=false;
+async function autoIdeas(){
+  if(AUTO_RUNNING||GEN_BUSY||!DATA||!capMerged().ready||!entitled('ideas'))return;
+  const ch=uChurch(), key=autoKey();
+  if(ch.autoKey===key&&(ch.drafts||[]).some(d=>d.generated))return;
+  /* Guard BEFORE the first await. Finishing a survey and saving a profile can
+     fire this within milliseconds of each other; without a synchronous guard
+     both get past the check and the whole set is generated twice — and paid
+     for twice. */
+  AUTO_RUNNING=true;
+  let info=null;
+  try{ info=await aiProbe(); }catch(e){ info=null; }
+  if(!info||!info.enabled){ AUTO_RUNNING=false; return; }
+  GEN_BUSY=ch.id; uGenerateBusy();
+  const churchId=ch.id; let total=0, failed=0, err='';
+  try{
+    for(const bi of [0,1,2]){
+      if(uChurch().id!==churchId)break;
+      const r=await genBand(bi,{silent:true});
+      total+=r.added; failed+=r.failed; err=err||r.error;
+      genRepaint();
+    }
+    if(uChurch().id===churchId){
+      ch.autoKey=key; uPersist();
+      U_GEN_NOTICE= total
+        ? `${total} fresh ideas were generated for this church and neighborhood and saved with it${failed?` (${failed} directions did not come back)`:''}. They are AI drafts \u2014 marked as such \u2014 and are checked against your church like everything else.`
+        : (err||'The online service could not provide ideas just now. The built-in ministries are unaffected.');
+      const el=$('u-gen-status'); if(el) el.textContent=U_GEN_NOTICE;
+    }
+  }finally{ GEN_BUSY=null; AUTO_RUNNING=false; uGenerateBusy(); genRepaint(); }
+}
+/* The manual path, from the button on a level: replaces that level's
+   unselected drafts with a different set. */
 async function generateMoves(bi,band,SG,M,levels,S){
   if(GEN_BUSY||!DATA)return;
   const ch=uChurch(),churchId=ch.id,area=levels[S].name;GEN_BUSY=churchId;U_GEN_NOTICE='';uGenerateBusy();
-  if($('u-gen-status'))$('u-gen-status').textContent='Preparing draft ideas…';
   try{
-    const c=capMerged();
-    const summary=aiSummary(M,levels,S,DATA.geo)+'\nAVAILABLE CAPACITY: '+JSON.stringify({volunteers:c.hands,leaders:c.concurrent,monthlyHours:c.hours,startupBudget:c.startup,monthlyBudget:c.monthly,skills:c.skills,slots:c.slots,selected:uUsage().items.map(i=>i.x.n)})+'\nCOMMITMENT: '+band.n+'\nDo not repeat: '+SG.moves.map(x=>x.n).join('; ')+'\nReturn four ideas. These will be reviewed as drafts before being recommended.';
-    const response=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass()},body:JSON.stringify({mode:'moves',summary}),signal:AbortSignal.timeout(65000)});
-    const j=await response.json().catch(()=>null);
-    if(!response.ok||!Array.isArray(j?.ideas))throw Error('Ideas unavailable');
-    const ideas=j.ideas.filter(x=>x&&typeof x.name==='string'&&x.name.trim()&&typeof x.why==='string'&&x.why.trim()).slice(0,4);
-    if(!ideas.length)throw Error('No usable ideas');
-    ch.drafts=ch.drafts||[];let added=0;
-    for(const idea of ideas){const name=idea.name.trim().slice(0,200);if([...SIGNATURE,...ch.drafts].some(x=>x.n.toLowerCase()===name.toLowerCase()))continue;ch.drafts.push({id:'draft-'+uId(),generated:true,n:name,why:idea.why.slice(0,3000),d:String(idea.people||'').slice(0,1000),how:Array.isArray(idea.first)?idea.first.filter(s=>typeof s==='string').slice(0,8):[],evidenceArea:area,reviewedEvidence:false,load:bi,st:'trust',ppl:4,cost:1,skill:[],need:[]});added++;}
-    if(!added)throw Error('No new ideas');
-    uPersist();
-    if(uChurch().id===churchId&&DATA?.levels?.[SCOPE]?.name===area){U_FILTER='needs';U_BAND=String(bi);U_QUERY='';U_GEN_NOTICE=`${added} new draft idea${added===1?'':'s'} added. Review the requirements and local evidence before making a commitment.`;}
+    const r=await genBand(bi,{silent:false,replace:true});
+    if(uChurch().id===churchId&&DATA?.levels?.[SCOPE]?.name===area){
+      if(!r.added) throw Error(r.error||'Ideas unavailable');
+      U_GEN_NOTICE=`${r.added} fresh ${band.n.toLowerCase()} idea${r.added===1?'':'s'} \u2014 a different set${r.failed?` (${r.failed} of ${GEN_PLAN[bi].batches.length} directions did not come back)`:''}. AI drafts, checked against your church like everything else.`;
+    }
   }catch(e){
     if(uChurch().id===churchId&&DATA?.levels?.[SCOPE]?.name===area){
       const moves=suggestions(DATA.M,SCOPE).moves, matching=moves.filter(x=>!x.generated&&String(x.load??1)===String(bi));
       U_FILTER='auto';U_BAND=matching.length?String(bi):'';U_QUERY='';
-      // Choose the readiness filter within the requested band, so a failed request never hides the fallback ideas.
       const shown=matching.length?matching:moves;U_FILTER=shown.some(x=>uCheck(x).ok)?'fit':'needs';
-      U_GEN_NOTICE='The online service couldn’t provide new ideas. Showing '+(matching.length?band.n.toLowerCase()+' ideas':'ideas')+' from the existing ministry collection instead. These use the same community and church-resource checks. You can try generating fresh ideas again.';
+      U_GEN_NOTICE=(e&&e.message&&!/Ideas unavailable/.test(e.message)?e.message+' ':'The online service couldn\u2019t provide new ideas. ')+'Showing '+(matching.length?band.n.toLowerCase()+' ideas':'ideas')+' from the built-in collection instead.';
     }
   }finally{
     GEN_BUSY=null;
@@ -10890,7 +11249,8 @@ function aiSummary(M,levels,scope){
             : t==='d1' ? (Math.round(n*10)/10).toFixed(1)
             : t==='d2' ? (Math.round(n*100)/100).toFixed(2)
             : fmtNum(n);
-    lines.push(label+': '+v+'; table '+table);});
+    lines.push(k+' | '+label+': '+v+' (table '+table+')');});
+  lines.push('When you name the figure an idea rests on, use the key before the bar, e.g. "metric":"poverty".');
   lines.push('CONFIRMED CHURCH CAPACITY: '+JSON.stringify({profileReviewed:c.ready,volunteers:c.hands,leaders:c.concurrent,monthlyHours:c.hours,startupFunds:c.startup,monthlyFunds:c.monthly,skills:c.skills,languages:c.languages||'',facilities:Object.fromEntries(Object.entries(c.facilities).map(([k,v])=>[k,{available:v.available,capacity:v.capacity,slots:v.slots}])),teamSlots:c.slots}));
   lines.push('OTHER SELECTED COMMITMENTS: '+JSON.stringify(uUsage().items.map(({x,r})=>({name:x.n,people:r.people,leaders:r.leaders,firstMonthHours:r.firstMonthHours,startup:r.startup,monthly:r.monthly}))));
   lines.push('Respect every limit, including zero. Treat missing resources as unknown. Statistics suggest needs to discuss with residents; they do not prove demand. Do not invent partners, qualifications, members, local quotes, or guarantees. Return ideas as drafts with an honest first step.');
