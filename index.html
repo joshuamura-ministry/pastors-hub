@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.33.0
+     TERRAIN  v10.34.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.33.0" data-theme="dark">
+<html lang="en" data-version="v10.34.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.33.0">
-<title>Community Map — Terrain v10.33.0</title>
+<meta name="terrain-version" content="v10.34.0">
+<title>Community Map — Terrain v10.34.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -1720,13 +1720,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.33.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.34.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.33.0';
+const VERSION = 'v10.34.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10596,10 +10596,15 @@ function capFillDemo(){
   setTimeout(autoIdeas,50);
 }
 function goToMobilization(){
-  const sec=[...document.querySelectorAll('#sections section.blk')].find(x=>{const h=x.querySelector('h2');return h&&/^Mobilization/.test(h.textContent);});
-  const target=sec||$('capslot'); if(!target) return;
-  target.scrollIntoView({behavior:'smooth',block:'start'});
-  setTimeout(markSection,450);
+  const find=()=>[...document.querySelectorAll('#sections section.blk')].find(x=>{const h=x.querySelector('h2');return h&&/^Mobilization/.test(h.textContent);})||$('capslot');
+  /* Instant, not smooth. After a re-render the browser has already put the
+     page somewhere arbitrary — usually low — and a smooth scroll from there
+     animates up past everything, which reads as "it starts at the bottom".
+     Jump now, then jump again on the next frame once layout has settled, so
+     Mobilization is simply at the top the moment the page is visible. */
+  const jump=()=>{ const t=find(); if(t) t.scrollIntoView({behavior:'auto',block:'start'}); };
+  jump();
+  requestAnimationFrame(()=>{ jump(); requestAnimationFrame(()=>{ jump(); markSection(); }); });
 }
 /* Clears the church's working data and nothing that is not the church's to
    clear: the name and address stay, and the members' own gift results stay. */
