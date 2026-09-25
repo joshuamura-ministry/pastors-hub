@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.31.0
+     TERRAIN  v10.33.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.31.0" data-theme="dark">
+<html lang="en" data-version="v10.33.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.31.0">
-<title>Community Map — Terrain v10.31.0</title>
+<meta name="terrain-version" content="v10.33.0">
+<title>Community Map — Terrain v10.33.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -252,7 +252,8 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 @media print{.wordmark .vtag{color:#111;background:none;border-color:#999}}
 nav.tools{display:flex;gap:4px;margin-left:auto}
 .top .in{gap:10px}
-nav.tools a{min-height:40px;display:flex;align-items:center;font-size:.8rem;font-weight:600;color:var(--ink2);padding:6px 10px;border-radius:8px}
+nav.tools{margin-top:0;align-items:center}
+nav.tools a{height:40px;display:flex;align-items:center;font-size:.8rem;font-weight:600;color:var(--ink2);padding:0 12px;border-radius:10px}
 nav.tools a.on{color:var(--ink);background:var(--panel2)}
 /* Fixed 38px tiles rather than fluid ones: at 11 columns a fluid grid collapses
    to ~26px on a phone, which is below a reliable tap target. The map scrolls
@@ -403,7 +404,7 @@ nav.tools a.on{color:var(--ink);background:var(--panel2)}
 .hub[hidden]{display:none}
 .hub h2{font-family:var(--disp);font-size:clamp(1.5rem,5vw,2rem);font-weight:600;color:var(--ink);margin-bottom:4px}
 .hub .sub{margin-bottom:18px}
-.tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:34px}
+.hub .tools{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:34px}
 /* No card chrome. A panel and a border around each tool made four boxes
    competing with the icons inside them; without it the icon is the control and
    the page breathes. The whole tile is still the button. */
@@ -1503,6 +1504,16 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .u-ladderhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .u-ladderhead label{font-weight:700;font-size:.92rem}
 .u-rung{font-size:.82rem;color:var(--ink2)}
+.u-levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:12px 0 6px}
+.u-level{background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:11px 12px;text-align:left;
+  cursor:pointer;font:inherit;color:var(--ink2);display:flex;flex-direction:column;gap:3px;min-height:64px;
+  transition:border-color .15s,background .15s}
+.u-level b{font-family:var(--disp);font-size:.95rem;color:var(--ink)}
+.u-level span{font-size:.76rem;line-height:1.4}
+.u-level.on{border-color:var(--acc);background:var(--acc-dim)}
+.u-level.on b{color:var(--acc)}
+@media(max-width:560px){.u-levels{grid-template-columns:1fr}.u-level{min-height:0}}
+.u-more{margin:8px 0 12px}
 #u-step{width:100%;margin:12px 0 4px;accent-color:var(--acc);height:28px}
 .u-ladderends{display:flex;justify-content:space-between;font-size:.75rem;color:var(--ink3)}
 .u-ask{margin-top:8px;font-size:.88rem;color:var(--ink2)}
@@ -1709,13 +1720,13 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.31.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.33.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.31.0';
+const VERSION = 'v10.33.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10580,8 +10591,15 @@ const DEMO_CHURCH={
 function capFillDemo(){
   capSave(JSON.parse(JSON.stringify(DEMO_CHURCH)));
   CAP_DONE=true; U_FILTER='auto'; U_STEP_I=0;
-  uRefresh();
+  if(DATA)render();else capRender();uChrome();
+  goToMobilization();
   setTimeout(autoIdeas,50);
+}
+function goToMobilization(){
+  const sec=[...document.querySelectorAll('#sections section.blk')].find(x=>{const h=x.querySelector('h2');return h&&/^Mobilization/.test(h.textContent);});
+  const target=sec||$('capslot'); if(!target) return;
+  target.scrollIntoView({behavior:'smooth',block:'start'});
+  setTimeout(markSection,450);
 }
 /* Clears the church's working data and nothing that is not the church's to
    clear: the name and address stay, and the members' own gift results stay. */
@@ -10783,7 +10801,11 @@ function capRender(){
     U_SKILLS.forEach(s=>{const n=uNum(d.get('skill-'+s.k));if(n!==null)next.skillCounts[s.k]=n;});
     U_FAC.forEach(f=>{if(d.has('fac-'+f.k))next.facilities[f.k]={available:true,capacity:uNum(d.get('room-'+f.k)),partner:String(d.get('partner-'+f.k)||'').trim(),slots:uValues(form,'slot-'+f.k)};});
     uValues(form,'who').forEach(k=>next.who[k]=true);next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';setTimeout(autoIdeas,50);
-    const top=host.getBoundingClientRect().top;if(DATA)render();else capRender();uChrome();const now=$('capslot');if(now)window.scrollBy(0,now.getBoundingClientRect().top-top);
+    if(DATA)render();else capRender();uChrome();
+    // Finish where the result is: the top of Mobilization, where the summary
+    // of what was just entered sits above what follows from it. The nav bar
+    // and the screen then agree.
+    goToMobilization();
   };
 }
 function uReqHTML(r){return `<dl class="u-stats"><div><dt>Volunteers / leaders</dt><dd>${r.people} / ${r.leaders}</dd></div><div><dt>Hours in first month</dt><dd>${r.firstMonthHours}</dd></div><div><dt>Startup / monthly</dt><dd>${fmtMoney(r.startup)} / ${fmtMoney(r.monthly)}</dd></div><div><dt>Initial trial</dt><dd>${r.weeks} weeks · ${r.participants} people served</dd></div></dl>`;}
@@ -10803,7 +10825,7 @@ function uCard(x){
     <div class="u-actions"><button class="btn ${selected?'ghost':''}" data-u-select="${esc(x.id)}" ${!selected&&!f.ok?'disabled':''}>${selected?'Remove from plan':'Add to plan'}</button><button class="btn ghost" data-u-edit="${esc(x.id)}">Adjust scope & costs</button><button class="btn ghost" data-u-propose="${esc(x.id)}">Build proposal</button><label class="u-check"><input type="checkbox" data-u-compare="${esc(x.id)}" ${U_COMPARE.includes(x.id)?'checked':''}> Compare</label></div>
   </article>`;
 }
-let U_COMPARE=[], U_BAND='', U_GEN_NOTICE='';
+let U_COMPARE=[], U_BAND='0', U_GEN_NOTICE='';   // light lift is the default level
 function uPortfolioHTML(){
   const use=uUsage(),c=capMerged();if(!use.items.length&&!use.unknown.length)return '<p class="note">Choose ministries below to build a plan. Each selection reserves a separate team, first-month hours, and funding. Existing commitments are already deducted.</p>';
   return `<div class="u-portfolio"><h3>Your selected plan</h3><p class="note">This is the part that is really possible together. Each ministry above is judged alone; these are judged as a set, and the remaining column is what is genuinely left after all of them. Time slots are broad planning blocks \u2014 confirm exact dates with each team. Changing the church profile can push a selected ministry back out of reach.</p><div class="u-table"><table><thead><tr><th>Resource</th><th>Selected</th><th>Available before this plan</th><th>Remaining</th></tr></thead><tbody>${[['Volunteers',use.people,c.hands],['Leaders',use.leaders,c.concurrent],['First-month hours',use.hours,c.hours],['Startup funding ($)',use.startup,c.startup],['Monthly funding ($)',use.monthly,c.monthly]].map(([label,n,total])=>`<tr><th>${label}</th><td>${n}</td><td>${total??'Not recorded'}</td><td class="${total!==null&&total-n<0?'u-warning':''}">${total===null?'Unknown':total-n}</td></tr>`).join('')}</tbody></table></div>${use.items.map(({x})=>`<p><b>${esc(x.n)}</b> · ${uCheck(x).ok?'Fits this combined plan':'Needs preparation'} <button class="btn ghost" data-u-select="${esc(x.id)}">Remove</button> <button class="btn ghost" data-u-propose="${esc(x.id)}">Proposal</button></p>`).join('')}${use.unknown.map(id=>`<p class="u-warning">A selected ministry is unavailable. <button class="btn ghost" data-u-select="${esc(id)}">Remove</button></p>`).join('')}</div>`;
@@ -10819,19 +10841,18 @@ function uMinistriesHTML(SG){
     ${!ready||!fit?`<div class="u-empty"><p>${!ready?'Nothing can be matched to your church yet. Tell Terrain what you have \u2014 people, hours, facilities, money \u2014 and every ministry below gets checked against it. It takes a few minutes and it is the one thing everything else depends on.':'No ministries fit all the resources currently recorded. Explore the ideas below and review each requirement before making a commitment.'}</p><button class="btn breathe" data-u-profile="true">Review church resources</button></div>`:''}
     ${uPortfolioHTML()}<div class="u-actions" role="group" aria-label="Ministry filter"><div class="u-field">Show<div class="u-seg"><button type="button" class="${active==='fit'?'on':''}" data-u-filter="fit">Within reach (${fit})</button><button type="button" class="${active==='needs'?'on':''}" data-u-filter="needs">Not yet (${SG.moves.length-fit})</button></div></div><label class="u-field">Area of ministry<select id="u-cat"><option value="">All areas (${SG.moves.length})</option>${U_CATS.map(([k,d])=>{const n=uCatCounts(SG.moves)[k]||0;return n?`<option value="${k}" ${U_CAT===k?'selected':''}>${esc(k)} — ${esc(d)} (${n})</option>`:'';}).join('')}</select></label><label class="u-field">Find a ministry<input id="u-search" value="${esc(U_QUERY)}" type="search" placeholder="Search ministries"></label></div><div class="u-ladder">
       <div class="u-ladderhead">
-        <label for="u-step">How much can your church take on?</label>
-        <span class="u-rung">Step <b id="u-stepn">${U_STEP}</b> of ${U_STEPS}</span>
+        <label>How much can your church take on?</label>
+        <span class="u-rung" id="u-levelcount"></span>
       </div>
-      <input type="range" id="u-step" min="1" max="${U_STEPS}" step="1" value="${U_STEP}"
-             aria-label="Effort level, 1 is the lightest and ${U_STEPS} the most involved">
-      <div class="u-ladderends"><span>Lightest</span><span>Most involved</span></div>
+      <div class="u-levels" role="group" aria-label="Level of commitment">${BANDS.map(b=>`<button type="button" class="u-level${String(b.k)===U_BAND?' on':''}" data-u-level="${b.k}"><b>${esc(b.n)}</b><span>${esc(b.d.split('.')[0])}.</span></button>`).join('')}</div>
       <p class="u-ask" id="u-ask"></p>
     </div>
     <div id="u-generate"></div><div id="u-cards">${uCardsHTML(SG.moves)}</div><div id="u-compare"></div></div>`;
 }
 let U_SHOW=6;   // open ministry cards; "Show more" raises it, filters reset it
 let U_CAT='';   // '' = every area. Otherwise Serve | Equip | Belong | Invite
-let U_STEP=1;   // the rung of the effort ladder currently shown, 1..10
+let U_STEP=1;   // (kept for older saved state; the ladder is gone)
+const U_TOP=20; // how many of a level are open before "show more"
 let U_OPEN='';  // the one ministry currently expanded
 
 /* ---- the effort ladder -------------------------------------------------
@@ -10960,22 +10981,32 @@ function uPrintOne(id){
 
 function uCardsHTML(moves){
   const active=uActiveFilter(moves),list=moves.filter(x=>(active==='fit'?uCheck(x).ok:!uCheck(x).ok)&&(U_CAT===''||(x.k||'')===U_CAT)&&(U_BAND===''||String(x.load??1)===U_BAND)&&(`${x.n} ${x.d||''}`).toLowerCase().includes(U_QUERY.toLowerCase()));
-  // The ladder decides what is on screen: one rung, nothing else.
-  const rungs=uLadder(list);
-  const idx=Math.max(0,Math.min(U_STEPS-1,U_STEP-1));
-  const rung=rungs[idx]||[];
+  /* Priority, top to bottom: within reach before not; fewer obstacles before
+     more; then fit. A fresh idea written for this exact tract, with a census
+     figure behind it that the client has verified, carries a bonus — it was
+     made for here, and without the bonus the cheapest built-ins always win
+     and the list never changes. */
+  const prio=x=>{ const f=uCheck(x); return (f.ok?1000:0) - (f.ok?0:f.gaps.length*20) + (x.fit||0); };
+  list.sort((a,b)=>prio(b)-prio(a)||a.n.localeCompare(b.n));
+  /* Fresh ideas and the standard list take turns. Ranking alone never puts a
+     fresh idea in the twenty — a built-in with three matching tags outscores
+     anything written for one tract — so the twenty would be the same twenty
+     every time, which is the thing being fixed. Alternating guarantees the
+     fresh ones a seat; each side still arrives in its own priority order. */
+  { const fresh=list.filter(x=>x.generated), std=list.filter(x=>!x.generated), merged=[];
+    let i=0,j=0; while(i<fresh.length||j<std.length){ if(j<std.length) merged.push(std[j++]); if(i<fresh.length) merged.push(fresh[i++]); }
+    list.length=0; list.push(...merged); }
   const ask=document.getElementById('u-ask');
-  if(ask) ask.innerHTML=rung.length?uRungAsk(rung):'';
-  if(rung.length){
-    /* The rung is what the pastor sees. Every other ministry still renders,
-       folded away — breadth is a standing requirement and a regression test
-       enforces it, and a hidden row costs nothing but keeps search, print and
-       the plan working across the whole catalogue. */
-    const others=list.filter(x=>!rung.includes(x));
-    return rung.map(uRow).join('')+
-      (others.length?`<div class="u-folded" hidden>${others.map(uRow).join('')}</div>`:'');
+  if(ask) ask.innerHTML=list.length?uRungAsk(list.slice(0,U_TOP)):'';
+  const cnt=document.getElementById('u-levelcount');
+  if(cnt){ const b=BANDS.find(x=>String(x.k)===U_BAND); cnt.textContent=b?`${list.length} ${b.n.toLowerCase()} ${list.length===1?'ministry':'ministries'}`:`${list.length} ministries`; }
+  if(list.length){
+    /* Twenty open, the rest folded. Every ministry still renders, so search,
+       print and the plan keep working across the whole catalogue. */
+    const shown=list.slice(0,U_TOP), others=list.slice(U_TOP);
+    return shown.map(uRow).join('')+
+      (others.length?`<div class="u-more"><button class="btn ghost" data-u-unfold="1">Show the other ${others.length}</button></div><div class="u-folded" id="u-folded" hidden>${others.map(uRow).join('')}</div>`:'');
   }
-  if(list.length) return `<div class="u-empty"><p>Nothing sits at step ${U_STEP} with the filters you have set. Move the slider, or widen the area of ministry.</p></div>`;
   if(list.length>U_SHOW){
     /* Every ministry stays on the page — the pastor asked for breadth, not a
        capped list, and the regression test enforces it. What changes is how
@@ -10999,6 +11030,7 @@ function uWireMinistries(){
     if(b.dataset.open){U_OPEN=(U_OPEN===b.dataset.open)?'':b.dataset.open;
       $('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);return;}
     if(b.dataset.uPrint){uPrintOne(b.dataset.uPrint);return;}
+    if(b.dataset.uUnfold){const f=$('u-folded');if(f){f.hidden=false;}b.remove();return;}
     if(b.dataset.uMore){U_SHOW+=12;uRefresh();
       // land the reader on the first newly-opened card, not back at the top
       setTimeout(()=>{const c=document.querySelectorAll('#u-cards .u-ministry')[Math.max(0,U_SHOW-12)];
@@ -11015,13 +11047,11 @@ function uWireMinistries(){
   // Changing any filter starts the card count again, so a narrowed list is
   // never hidden underneath an earlier expansion.
   const cat=$('u-cat'); if(cat) cat.onchange=e=>{U_CAT=e.target.value;U_SHOW=6;U_OPEN='';uRefresh();};
-  const step=$('u-step');
-  if(step) step.oninput=e=>{
-    U_STEP=+e.target.value; U_OPEN='';
-    const n=$('u-stepn'); if(n) n.textContent=U_STEP;
+  h.querySelectorAll('[data-u-level]').forEach(b=>b.onclick=()=>{
+    U_BAND=String(b.dataset.uLevel); U_OPEN='';
+    h.querySelectorAll('[data-u-level]').forEach(x=>x.classList.toggle('on',x===b));
     $('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);
-  };
-  const band=$('u-band'); if(band) band.onchange=e=>{U_BAND=e.target.value;U_SHOW=6;uRefresh();};
+  });
   const sb=$('u-search'); if(sb) sb.oninput=e=>{U_QUERY=e.target.value;U_SHOW=6;U_OPEN='';$('u-cards').innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);};uCompare();uGenerateMount();
 }
 function uDialog(title,body){let d=$('u-dialog');if(d)d.remove();d=document.createElement('dialog');d.id='u-dialog';d.className='u-dialog';d.setAttribute('aria-labelledby','u-dialog-title');d.innerHTML=`<div class="u-heading"><h2 id="u-dialog-title">${esc(title)}</h2><button type="button" class="btn ghost" id="u-close">Close</button></div>${body}`;document.body.append(d);$('u-close').onclick=()=>d.close();d.showModal();return d;}
@@ -11179,6 +11209,7 @@ async function genBand(bi,{silent=false,replace=false}={}){
    a form mid-edit would lose what was typed. */
 function genRepaint(){
   const cards=$('u-cards'); if(cards&&DATA) cards.innerHTML=uCardsHTML(suggestions(DATA.M,SCOPE).moves);
+  const st=$('u-gen-status'); if(st&&U_GEN_NOTICE) st.textContent=U_GEN_NOTICE;
 }
 /* The background path. Runs once per church-and-neighborhood-and-profile;
    a later save with the same numbers does nothing. */
