@@ -285,33 +285,12 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .chosen[hidden]{display:none}
 .chosen b{display:block;font-family:var(--disp);font-size:1.05rem;margin-bottom:2px}
 .chosen .cu{font-size:.76rem;color:var(--ink2);margin-bottom:10px}
-/* Registration (v10.38.0): two by two on a wide screen, one column on a phone,
-   and every control the same height so the rows line up. */
-.regform{display:grid;grid-template-columns:1fr;gap:14px 16px;margin-top:4px}
-@media(min-width:720px){.regform{grid-template-columns:1fr 1fr}}
-.regf{display:flex;flex-direction:column;gap:6px;min-width:0}
-.regf>label,.regf>.reglab{font-size:.8rem;font-weight:700;color:var(--ink2)}
-.regf input{width:100%;min-width:0;height:50px;background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-radius:12px;padding:0 14px;font-size:1rem}
-.regf input::placeholder{color:var(--ink3)}
-.regf input:focus{border-color:var(--acc);outline:none}
-.regf input[aria-invalid="true"]{border-color:#F0857A}
-.regrole{height:50px;background:var(--panel)}
-.regrole button{flex:1 1 auto;min-height:0;height:100%;padding:0 8px;line-height:1.15;font-size:.86rem}
-.regnews,.regpriv,.regfoot{grid-column:1/-1}
-.regnews{font-size:.86rem;color:var(--ink2)}
-.regpriv{margin:0}
-.regfoot{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap}
-.regfoot .btn{min-width:160px}
-.regfoot .status{margin-top:0;flex:1 1 220px}
-.status.ok{color:var(--acc)}
 .gate{display:none;background:var(--panel);border:1px solid var(--line2);border-radius:var(--r);padding:22px 20px;margin-top:20px;box-shadow:var(--shadow)}
 .gate[hidden]{display:none}
 .gate.show{display:block}
 .gate h2{font-family:var(--disp);font-size:1.35rem;margin-bottom:6px}
 .whoami{font-size:.74rem;color:var(--ink3);margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px}
-.whoami .whotxt{min-width:0;overflow:hidden;text-overflow:ellipsis}
-.whoami .whoname{color:var(--ink2);font-weight:600}
-.whoami #signout,.whoami #regchange{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
+.whoami #signout{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
 @media(max-width:520px){
   .top .in{gap:10px 12px}
   .whoami{margin-left:0;flex-basis:100%;justify-content:flex-end;order:9}
@@ -1999,15 +1978,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
   </div>
   <div class="gate" id="gate" hidden>
     <h2>Find your conference</h2>
-    <p class="sub" id="gsub">Tap your state on the map, or search the list. Then register with your name, email and church.</p>
-    <p class="status err" id="gmsg" role="alert" hidden></p>
+    <p class="sub">Tap your state on the map, or search the list. Then enter the access code for your conference.</p>
     <div class="usmapwrap"><div id="usmap"></div></div>
     <div class="field" style="margin-top:16px">
       <input id="csearch" type="text" autocomplete="off" placeholder="Or search: Pennsylvania, Allegheny East, Texico…" aria-label="Search conferences">
     </div>
     <div id="clist"></div>
     <div class="chosen" id="chosen" hidden></div>
-    <p class="note" id="ghelp" style="margin-top:14px">There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.</p>
+    <p class="note" id="ghelp" style="margin-top:14px">Codes are issued per person, so one can be withdrawn without disturbing anyone else. If your conference is not yet enrolled, the screen will tell you who to ask.</p>
   </div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
@@ -6303,10 +6281,8 @@ const ES={
  'less':'menos','more':'más',
  // gate
  'Find your conference':'Encuentre su asociación',
- 'Tap your state on the map, or search the list. Then register with your name, email and church.':
-   'Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.',
- 'There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.':
-   'No hay contraseña: Terrain le recuerda en este dispositivo. En otro teléfono o computadora, regístrese de nuevo con el mismo correo electrónico.',
+ 'Tap your state on the map, or search the list. Then enter the access code for your conference.':
+   'Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.',
  'Access code':'Código de acceso','Enter':'Entrar',
  // common labels
  'Median household income':'Ingreso medio del hogar','Below the poverty line':'Bajo el umbral de pobreza',
@@ -6980,7 +6956,7 @@ function showHub(){
   if(FLAT){ const a=document.querySelector('.ask'); if(a) a.style.display=''; return; }
   TOOL=null;
   try{ sessionStorage.setItem('terrain-tool',''); }catch(e){}
-  const hub=$('hub'); if(hub) hub.hidden=FLAT?true:gated();
+  const hub=$('hub'); if(hub) hub.hidden=FLAT?true:!(ACCESS.ok!==false);
   const bar=$('toolbar'); if(bar) bar.hidden=true;
   const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
   $('report').classList.remove('show');
@@ -8594,7 +8570,7 @@ function wireHub(){
   const back=$('backtools'); if(back) back.onclick=showHub;
   const ch=$('changech'); if(ch) ch.onclick=showAddressForm;
   const brand=$('brandlink');
-  if(brand) brand.onclick=e=>{ e.preventDefault(); if(GIFTS_LINK.on) return; if(!gated()) showHub(); };
+  if(brand) brand.onclick=e=>{ e.preventDefault(); if(GIFTS_LINK.on) return; if(ACCESS.ok!==false) showHub(); };
 }
 function buildSecNav(){
   try{ buildSecNavInner(); }catch(e){ log('secnav: '+e.message); }
@@ -8637,14 +8613,6 @@ function markSection(){
   });
 }
 let PICKED=null;
-/* ---- the first page ----
-   GATE is what the first page is asking for: null (nothing: the pastor is in),
-   'register' (v10.38.0: name, email, church and role, once per device) or
-   'code' (the conference access code, only while the server says codes are
-   required, i.e. TERRAIN_REQUIRE_CODE=1). Member, observer and emailed-report
-   links never see either. gated() is the one question every screen asks. */
-let GATE=null, GATE_WIRED=false;
-function gated(){ return !!GATE||(ACCESS.required&&!ACCESS.ok); }
 function unionColour(u,strong){ return `hsl(${u.hue} ${strong?68:46}% ${strong?46:58}%)`; }
 function drawUSMap(){
   const host=document.getElementById('usmap'); if(!host) return;
@@ -8657,7 +8625,7 @@ function drawUSMap(){
   }).join('');
   const used=[...new Set(Object.values(STATE_UNION))];
   const wrap=host.parentElement;
-  wrap.insertAdjacentHTML('afterend',`<p class="note" style="margin:6px 0 0;font-size:.74rem">${L('Swipe the map sideways to reach the east and west coasts — or use the search box below.','Deslice el mapa hacia los lados para llegar a las costas este y oeste, o use el buscador de abajo.')}</p><div class="ulegend">${used.map(id=>{const u=unionById(id);
+  wrap.insertAdjacentHTML('afterend',`<p class="note" style="margin:6px 0 0;font-size:.74rem">Swipe the map sideways to reach the east and west coasts \u2014 or use the search box below.</p><div class="ulegend">${used.map(id=>{const u=unionById(id);
     return `<span><i style="background:${unionColour(u)}"></i>${esc(u.name.replace(' Union',''))}</span>`}).join('')}</div>`);
   // start centred, so neither coast is hidden off the edge on a phone
   wrap.scrollLeft=Math.max(0,(host.scrollWidth-wrap.clientWidth)/2);
@@ -8671,8 +8639,8 @@ function drawUSMap(){
 function listConferences(unions,forState){
   const host=document.getElementById('clist'); if(!host) return;
   host.className='clist';
-  if(!unions.length){ host.innerHTML=`<p class="note">${L('No conference found for that search.','No se encontró ninguna asociación con esa búsqueda.')}</p>`; return; }
-  host.innerHTML=(forState?`<p class="note" style="margin-top:10px">${L(`${esc(forState)} is served by the ${esc(unions[0].name)}. Regional conferences overlap the same territory — choose the one that employs you.`,`${esc(forState)} pertenece a la ${esc(unions[0].name)}. Las asociaciones regionales comparten el mismo territorio: elija la que le emplea.`)}</p>`:'')
+  if(!unions.length){ host.innerHTML=`<p class="note">No conference found for that search.</p>`; return; }
+  host.innerHTML=(forState?`<p class="note" style="margin-top:10px">${esc(forState)} is served by the ${esc(unions[0].name)}. Regional conferences overlap the same territory \u2014 choose the one that employs you.</p>`:'')
     +unions.map(u=>`<div class="cgroup">${esc(u.name)}</div>`+
       u.confs.map(c=>`<button class="crow" data-c="${esc(c)}" data-u="${u.id}">${esc(c)} Conference<small>${esc(u.name)}</small></button>`).join('')
     ).join('');
@@ -8682,17 +8650,11 @@ function choose(conf,u){
   PICKED={conf,union:u?u.name:''};
   const box=document.getElementById('chosen'); if(!box) return;
   box.hidden=false;
-  const head=`<b>${esc(conf)} Conference</b><div class="cu">${esc(u?u.name:'')}</div>`;
-  if(GATE==='code'){
-    box.innerHTML=head+`
-    <div class="field"><input id="gcode" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="${L('Access code','Código de acceso')}" aria-label="${L('Access code','Código de acceso')}"><button class="btn" id="gbtn">${L('Enter','Entrar')}</button></div>
+  box.innerHTML=`<b>${esc(conf)} Conference</b><div class="cu">${esc(u?u.name:'')}</div>
+    <div class="field"><input id="gcode" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="Access code" aria-label="Access code"><button class="btn" id="gbtn">Enter</button></div>
     <div class="status" id="gerr"></div>
-    <p class="note" style="margin-top:8px">${L(`No code for ${esc(conf)} yet? Ask your conference ministerial director, or contact Pastor Josh to have your conference added.`,`¿Todavía no tiene un código para ${esc(conf)}? Pídalo al director ministerial de su asociación, o comuníquese con el pastor Josh para que agregue su asociación.`)}</p>`;
-    wireCode();
-  } else {
-    box.innerHTML=head+regFormHTML();
-    wireReg();
-  }
+    <p class="note" style="margin-top:8px">No code for ${esc(conf)} yet? Ask your conference ministerial director, or contact Pastor Josh to have your conference added.</p>`;
+  wireCode();
   box.scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 function wireCode(){
@@ -8701,18 +8663,16 @@ function wireCode(){
   const go=async()=>{
     const code=(i.value||'').trim();
     const err=document.getElementById('gerr');
-    if(!code){ err.className='status err'; err.textContent=L('Enter the code you were given.','Escriba el código que le dieron.'); return; }
-    b.disabled=true; b.textContent=L('Checking…','Comprobando…');
+    if(!code){ err.className='status err'; err.textContent='Enter the code you were given.'; return; }
+    b.disabled=true; b.textContent='Checking\u2026';
     const res=await checkAccess(code, PICKED?PICKED.conf:'');
-    b.disabled=false; b.textContent=L('Enter','Entrar');
+    b.disabled=false; b.textContent='Enter';
     // A code tied to one conference should not admit someone who picked another.
     if(res.ok && res.conf && res.conf!=='*' && PICKED &&
        res.conf.toLowerCase()!==PICKED.conf.toLowerCase()){
       err.className='status err';
-      err.innerHTML=L(`That code belongs to the <b>${esc(res.conf)} Conference</b>, not ${esc(PICKED.conf)}. `+
-        `<a href="#" id="switchconf">Switch to ${esc(res.conf)}</a> or use your own conference’s code.`,
-        `Ese código pertenece a la <b>${esc(res.conf)} Conference</b>, no a ${esc(PICKED.conf)}. `+
-        `<a href="#" id="switchconf">Cambie a ${esc(res.conf)}</a> o use el código de su propia asociación.`);
+      err.innerHTML=`That code belongs to the <b>${esc(res.conf)} Conference</b>, not ${esc(PICKED.conf)}. `+
+        `<a href="#" id="switchconf">Switch to ${esc(res.conf)}</a> or use your own conference\u2019s code.`;
       const sw=document.getElementById('switchconf');
       if(sw) sw.onclick=ev=>{ ev.preventDefault();
         const u=UNIONS.find(x=>x.confs.includes(res.conf));
@@ -8722,203 +8682,14 @@ function wireCode(){
     if(res.ok){
       localStorage.setItem('terrain-code',code);
       localStorage.setItem('terrain-conf', (res.conf&&res.conf!=='*')?res.conf:(PICKED?PICKED.conf:''));
-      ACCESS=res; GATE=null; hideGate(); showWho(); showHub();
+      ACCESS=res; hideGate(); showWho(); showHub();
     }else{
       err.className='status err';
-      err.textContent=L('That code was not recognised. Check for a typo, or ask whoever gave it to you.','No se reconoció ese código. Revise si tiene un error, o consulte a quien se lo dio.');
+      err.textContent='That code was not recognised. Check for a typo, or ask whoever gave it to you.';
     }
   };
   b.onclick=go;
   i.addEventListener('keydown',e=>{ if(e.key==='Enter') go(); });
-}
-/* ---- registration (v10.38.0) ----
-   Instead of a code, the pastor registers once per device: name, email,
-   church and role, under the conference chosen above. It is kept here as
-   terrain-reg and sent to register.mjs, which keeps one record per email so
-   there is a real list of who uses Terrain. Nothing is emailed and there is
-   no password. The server never stands in the way: offline, busy or missing,
-   the pastor is let in on this device and the record is sent again, quietly,
-   on a later visit (synced:false until it has been). */
-const REG_KEY='terrain-reg', REG_FN='/.netlify/functions/register';
-const REG_ROLES=['pastor','leader','other'];
-let REG_PREV=null, REG_BUSY=false;   // REG_PREV: after "Change", what they typed last time
-/* One @ with something either side, a dot inside the part after it, no spaces
-   or angle brackets, 254 characters at most; trimmed and lower-cased. '' when
-   it is not an address. The server's check is stricter still. */
-function regEmail(v){
-  const e=String(v==null?'':v).trim().toLowerCase();
-  if(!e||e.length>254||/[\s<>,;:"()[\]\\]/.test(e)) return '';
-  const p=e.split('@');
-  if(p.length!==2||!p[0]||!/^[^.]+(\.[^.]+)+$/.test(p[1])) return '';
-  return e;
-}
-function regValid(r){
-  return !!(r&&typeof r==='object'&&!Array.isArray(r)
-    &&typeof r.name==='string'&&r.name.trim()
-    &&typeof r.email==='string'&&regEmail(r.email)===r.email
-    &&typeof r.church==='string'&&r.church.trim()
-    &&typeof r.conf==='string'&&r.conf.trim());
-}
-function regGet(){ try{ const r=JSON.parse(localStorage.getItem(REG_KEY)||'null'); return regValid(r)?r:null; }catch(e){ return null; } }
-function regSave(r){ try{ localStorage.setItem(REG_KEY,JSON.stringify(r)); return true; }catch(e){ return false; } }
-function regLocalId(){
-  try{ const a=new Uint8Array(9); crypto.getRandomValues(a); return 'local-'+[...a].map(x=>x.toString(16).padStart(2,'0')).join(''); }
-  catch(e){ return 'local-'+Date.now().toString(36)+Math.random().toString(36).slice(2,8); }
-}
-/* {ok,id,returning} when the server kept the record; {bad:'bad-email'|
-   'bad-name'|'bad-church'} when it refused something the pastor can fix;
-   {down:true} for anything else (offline, no function yet, busy, too many
-   registrations from this address), which never blocks anyone. */
-async function regPost(r){
-  try{
-    const res=await Promise.race([
-      fetch(REG_FN,{method:'POST',headers:{'content-type':'application/json'},
-        body:JSON.stringify({op:'register',name:r.name,email:r.email,church:r.church,role:r.role,
-          conf:r.conf,union:r.union||'',news:r.news===true,lang:LANG==='es'?'es':'en'})}),
-      new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),8000))]);
-    let j=null; try{ j=await res.json(); }catch(e){}
-    if(res&&res.ok&&j&&j.ok===true&&typeof j.id==='string'&&j.id) return {ok:true,id:j.id,returning:j.returning===true};
-    if(res&&res.status===400&&j&&/^bad-(email|name|church)$/.test(String(j.error||''))) return {bad:j.error};
-    return {down:true};
-  }catch(e){ return {down:true}; }
-}
-function regFormHTML(){
-  const p=REG_PREV||{};
-  const role=REG_ROLES.includes(p.role)?p.role:'pastor';
-  const roles=[['pastor',L('Pastor','Pastor')],['leader',L('Elder or church leader','Anciano o líder de iglesia')],['other',L('Other','Otro')]];
-  return `<form class="regform" id="regform" novalidate>
-    <div class="regf"><label for="rname">${L('Your name','Su nombre')}</label>
-      <input id="rname" type="text" autocomplete="name" maxlength="80" required aria-required="true" placeholder="${L('First and last name','Nombre y apellido')}" value="${esc(p.name||'')}"></div>
-    <div class="regf"><label for="remail">${L('Your email','Su correo electrónico')}</label>
-      <input id="remail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" required aria-required="true" placeholder="${L('name@example.com','nombre@ejemplo.com')}" value="${esc(p.email||'')}"></div>
-    <div class="regf"><label for="rchurch">${L('Your church','Su iglesia')}</label>
-      <input id="rchurch" type="text" autocomplete="organization" maxlength="120" required aria-required="true" placeholder="${L('The church you serve','La iglesia donde sirve')}" value="${esc(p.church||'')}"></div>
-    <div class="regf"><span class="reglab" id="rrolelab">${L('Your role','Su cargo')}</span>
-      <div class="seg regrole" id="rrole" role="radiogroup" aria-labelledby="rrolelab">${roles.map(([k,t])=>
-        `<button type="button" data-r="${k}" role="radio" aria-checked="${k===role}"${k===role?' class="on"':''}>${t}</button>`).join('')}</div></div>
-    <label class="u-check regnews"><input type="checkbox" id="rnews"${p.news===true?' checked':''}>${L('Send me occasional news about Terrain','Envíenme noticias ocasionales sobre Terrain')}</label>
-    <p class="note regpriv">${L('We keep your name, email, church and conference so we know who is using Terrain and can reach you about your account. We never share or sell it.','Guardamos su nombre, su correo electrónico, su iglesia y su asociación para saber quién usa Terrain y poder comunicarnos con usted sobre su cuenta. Nunca los compartimos ni los vendemos.')}</p>
-    <div class="regfoot"><button class="btn" id="rbtn" type="submit">${L('Register','Registrarse')}</button><div class="status" id="gerr" role="alert"></div></div>
-  </form>`;
-}
-function wireReg(){
-  const f=document.getElementById('regform'); if(!f) return;
-  const roles=[...f.querySelectorAll('#rrole button')];
-  roles.forEach(b=>b.onclick=()=>roles.forEach(x=>{ const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-checked',String(on)); }));
-  f.addEventListener('submit',e=>{ e.preventDefault(); regSubmit(); });
-  f.querySelectorAll('input[type="text"],input[type="email"]').forEach(i=>i.addEventListener('input',()=>i.removeAttribute('aria-invalid')));
-}
-async function regSubmit(){
-  if(REG_BUSY) return;
-  const $$=id=>document.getElementById(id);
-  const nm=$$('rname'), em=$$('remail'), ch=$$('rchurch'), err=$$('gerr'), btn=$$('rbtn');
-  if(!nm||!em||!ch||!err||!btn) return;
-  [nm,em,ch].forEach(i=>i.removeAttribute('aria-invalid'));
-  err.className='status'; err.textContent='';
-  const say=(msg,el)=>{ err.className='status err'; err.textContent=msg; if(el){ el.setAttribute('aria-invalid','true'); el.focus(); } };
-  const name=nm.value.replace(/\s+/g,' ').trim().slice(0,80), church=ch.value.replace(/\s+/g,' ').trim().slice(0,120);
-  const typed=em.value.trim(), email=regEmail(typed);
-  const BAD_EMAIL=L('That email address does not look right. Check it for a typo.','Esa dirección de correo no parece correcta. Revise si tiene algún error.');
-  if(!name) return say(L('Type your name.','Escriba su nombre.'),nm);
-  if(!typed) return say(L('Type your email address.','Escriba su correo electrónico.'),em);
-  if(!email) return say(BAD_EMAIL,em);
-  if(!church) return say(L('Type the name of your church.','Escriba el nombre de su iglesia.'),ch);
-  const on=$$('rrole')&&$$('rrole').querySelector('button.on');
-  const role=on&&REG_ROLES.includes(on.dataset.r)?on.dataset.r:'pastor';
-  const rec={id:'',name,email,church,role,conf:PICKED?PICKED.conf:'',union:PICKED?PICKED.union:'',
-    news:!!($$('rnews')&&$$('rnews').checked),ts:Date.now(),synced:false};
-  REG_BUSY=true; btn.disabled=true; btn.textContent=L('Registering…','Registrando…');
-  const res=await regPost(rec);
-  REG_BUSY=false; btn.disabled=false; btn.textContent=L('Register','Registrarse');
-  if(res.bad){
-    if(res.bad==='bad-name') return say(L('Check your name and try again.','Revise su nombre e inténtelo de nuevo.'),nm);
-    if(res.bad==='bad-church') return say(L('Check the name of your church and try again.','Revise el nombre de su iglesia e inténtelo de nuevo.'),ch);
-    return say(BAD_EMAIL,em);
-  }
-  if(res.ok){ rec.id=res.id; rec.synced=true; } else rec.id=regLocalId();
-  regSave(rec);
-  regNameChurch(rec.church);
-  if(res.returning){
-    const first=name.split(' ')[0];
-    err.className='status ok'; err.textContent=L(`Welcome back, ${first}.`,`Le damos la bienvenida de nuevo, ${first}.`);
-    btn.disabled=true;
-    setTimeout(regEnter,1200);
-    return;
-  }
-  regEnter();
-}
-/* "This is how they find their church": the church typed here names the
-   church profile on this device, unless it already has a name of its own. */
-function regNameChurch(name){
-  try{
-    const c=uChurch(), n=String(c.name||'').trim();
-    if(name&&(!n||/^my church$/i.test(n))){ c.name=name; uPersist(); }
-  }catch(e){}
-}
-function regEnter(){
-  GATE=null; REG_PREV=null;
-  hideGate(); showWho(); showHub();
-}
-/* A record that could not reach the server is sent again on a later visit,
-   in the background. Nothing on screen changes either way. */
-async function regResync(){
-  const r=regGet(); if(!r||r.synced===true) return;
-  const res=await regPost(r);
-  if(!res.ok) return;
-  const cur=regGet();
-  if(cur&&cur.email===r.email){ cur.id=res.id; cur.synced=true; regSave(cur); }
-}
-/* "Change": forget the registration on this device and show the first page
-   again, with what they typed last time filled in. Only the registration
-   goes: church profiles, members and results stay exactly as they were. */
-function regChange(){
-  const r=regGet();
-  REG_PREV=r?{name:r.name,email:r.email,church:r.church,role:r.role,news:r.news===true}:null;
-  try{ localStorage.removeItem(REG_KEY); }catch(e){}
-  try{ sessionStorage.removeItem('terrain-tool'); }catch(e){}
-  const w=document.getElementById('whoami'); if(w) w.remove();
-  openGate('register');
-  window.scrollTo({top:0,behavior:'auto'});
-}
-/* Show the first page, asking for a registration or a code. */
-function openGate(mode,msg){
-  GATE=mode==='code'?'code':'register';
-  showGate(msg||'');
-  const code=GATE==='code';
-  const sub=$('gsub');
-  if(sub) sub.textContent=code
-    ?L('Tap your state on the map, or search the list. Then enter the access code for your conference.','Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.')
-    :L('Tap your state on the map, or search the list. Then register with your name, email and church.','Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.');
-  const help=$('ghelp');
-  if(help) help.textContent=code
-    ?L('Codes are issued per person, so one can be withdrawn without disturbing anyone else. If your conference is not yet enrolled, the screen will tell you who to ask.','Los códigos se entregan a cada persona, así que uno puede retirarse sin afectar a nadie más. Si su asociación todavía no está inscrita, la pantalla le dirá a quién pedírselo.')
-    :L('There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.','No hay contraseña: Terrain le recuerda en este dispositivo. En otro teléfono o computadora, regístrese de nuevo con el mismo correo electrónico.');
-  const box=$('chosen'); if(box){ box.hidden=true; box.innerHTML=''; }
-  const s=$('csearch');
-  if(s){
-    s.value='';
-    s.placeholder=L('Or search: Pennsylvania, Allegheny East, Texico…','O busque: Pennsylvania, Allegheny East, Texico…');
-    s.setAttribute('aria-label',L('Search conferences','Buscar asociaciones'));
-  }
-  if(!GATE_WIRED){
-    GATE_WIRED=true;
-    drawUSMap();
-    if(s) s.addEventListener('input',()=>{
-      const q=s.value.trim().toLowerCase();
-      if(!q){ listConferences(UNIONS,''); return; }
-      const hit=UNIONS.map(u=>{
-        const confs=u.confs.filter(c=>c.toLowerCase().includes(q));
-        const byState=u.states.some(st=>(STATE_NAMES[st]||'').toLowerCase().includes(q)||st.toLowerCase()===q);
-        const byUnion=u.name.toLowerCase().includes(q);
-        return (confs.length||byState||byUnion)?{...u,confs:(confs.length?confs:u.confs)}:null;
-      }).filter(Boolean);
-      listConferences(hit,'');
-    });
-  } else {
-    const m=$('usmap'); if(m) m.querySelectorAll('button.sel').forEach(x=>x.classList.remove('sel'));
-  }
-  listConferences(UNIONS,'');
-  uChrome();
 }
 function showGate(msg){
   const g=$('gate'); if(!g) return;
@@ -8935,45 +8706,34 @@ function showGate(msg){
   const db=$('diagbody'); if(db) db.innerHTML='';
   const pl=$('place'); if(pl) pl.innerHTML='';
   const br=$('brief'); if(br) br.innerHTML='';
-  ['hub','toolbar','secnav','planner','gifts','locked'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
+  ['hub','toolbar','secnav'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
   ['focusbar','focusnote','scope'].forEach(id=>{ const e=$(id); if(e) e.innerHTML=''; });
   $('report').classList.remove('show');
-  const gm=$('gmsg'); if(gm){ gm.textContent=msg||''; gm.hidden=!msg; }
+  const e=$('gerr'); if(e){ e.className='status'+(msg?' err':''); e.textContent=msg||''; }
 }
 function hideGate(){
   const g=$('gate'); if(g){ g.hidden=true; g.classList.remove('show'); }
-  const gm=$('gmsg'); if(gm){ gm.textContent=''; gm.hidden=true; }
   const a=document.querySelector('.ask');
   if(a) a.style.display = (FLAT||TOOL||DATA) ? '' : 'none';
 }
-/* The chip in the header: who is in, under which conference, and the way out. */
 function showWho(){
-  const nav=document.querySelector('.top .in'); if(!nav) return;
-  const old=document.getElementById('whoami'); if(old) old.remove();
-  const byCode=ACCESS.required&&ACCESS.ok;
-  const reg=byCode?null:regGet();
-  if(!byCode&&!reg) return;
+  if(!ACCESS.required||!ACCESS.ok) return;
+  const nav=document.querySelector('.top .in');
+  if(!nav||document.getElementById('whoami')) return;
   const d=document.createElement('div');
   d.className='whoami'; d.id='whoami';
-  if(byCode){
-    const conf=localStorage.getItem('terrain-conf');
-    d.innerHTML=`<span class="whotxt">${esc(ACCESS.name||'Verified')}${conf?' · '+esc(conf):''}</span><button type="button" id="signout">${L('sign out','cerrar sesión')}</button>`;
-    nav.appendChild(d);
-    document.getElementById('signout').onclick=()=>{
-      localStorage.removeItem('terrain-code');
-      localStorage.removeItem('terrain-conf');
-      ACCESS={required:true,ok:false,name:''};
-      try{ sessionStorage.removeItem('terrain-tool'); }catch(e){}
-      openGate('code');        // clear on the spot, so nothing lingers if the reload is slow
-      try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
-      try{ location.reload(); }catch(e){}
-    };
-  } else {
-    d.innerHTML=`<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>`;
-    nav.appendChild(d);
-    document.getElementById('regchange').onclick=regChange;
-  }
-  measureTop();
+  const conf=localStorage.getItem('terrain-conf');
+  d.innerHTML=`${esc(ACCESS.name||'Verified')}${conf?' \u00b7 '+esc(conf):''}<button id="signout">sign out</button>`;
+  nav.appendChild(d);
+  document.getElementById('signout').onclick=()=>{
+    localStorage.removeItem('terrain-code');
+    localStorage.removeItem('terrain-conf');
+    ACCESS={required:true,ok:false,name:''};
+    try{ sessionStorage.removeItem('terrain-tool'); }catch(e){}
+    showGate('');            // clear on the spot, so nothing lingers if the reload is slow
+    try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+    try{ location.reload(); }catch(e){}
+  };
 }
 async function initAccess(){
   if(GIFTS_LINK.on){
@@ -9007,16 +8767,27 @@ async function initAccess(){
   }
   ACCESS=await checkAccess();
   ACCESS_CHECKED=true;
-  // Codes switched back on (TERRAIN_REQUIRE_CODE=1) and none held: the code flow.
-  if(ACCESS.required&&!ACCESS.ok){ openGate('code'); return; }
-  // Otherwise a pastor registers once per device. The server's answer does
-  // not matter here: offline, or an older server, still means "register".
-  if(!ACCESS.required&&!regGet()){ openGate('register'); return; }
-  GATE=null;
-  hideGate(); showWho();
-  // A returning pastor lands on the hub, not a blank page.
-  if(!FLAT&&!DATA) showHub();
-  if(!ACCESS.required) regResync();
+  if(ACCESS.required&&!ACCESS.ok){
+    showGate('');
+    drawUSMap();
+    listConferences(UNIONS,'');
+    const s=document.getElementById('csearch');
+    if(s) s.addEventListener('input',()=>{
+      const q=s.value.trim().toLowerCase();
+      if(!q){ listConferences(UNIONS,''); return; }
+      const hit=UNIONS.map(u=>{
+        const confs=u.confs.filter(c=>c.toLowerCase().includes(q));
+        const byState=u.states.some(st=>(STATE_NAMES[st]||'').toLowerCase().includes(q)||st.toLowerCase()===q);
+        const byUnion=u.name.toLowerCase().includes(q);
+        return (confs.length||byState||byUnion)?{...u,confs:(confs.length?confs:u.confs)}:null;
+      }).filter(Boolean);
+      listConferences(hit,'');
+    });
+  } else {
+    hideGate(); showWho();
+    // A returning pastor with a stored code lands on the hub, not a blank page.
+    if(!FLAT&&!DATA) showHub();
+  }
 }
 function measureTop(){
   const t=document.querySelector('.top');
@@ -9618,14 +9389,7 @@ async function run(getGeo){
     loadHelp(geo);
     $('report').scrollIntoView({behavior:'smooth',block:'start'});
   }catch(e){
-    if(e.message==='NOCODE'){
-      // The server has switched codes back on (TERRAIN_REQUIRE_CODE=1).
-      const had=!!accessCode();
-      try{ localStorage.removeItem('terrain-code'); }catch(e2){}
-      ACCESS={required:true,ok:false,name:''};
-      openGate('code',had?L('That code is no longer valid. Ask Pastor Josh for a current one.','Ese código ya no es válido. Pida uno vigente al pastor Josh.')
-        :L('Terrain now needs an access code for your conference.','Terrain ahora necesita un código de acceso de su asociación.'));
-      return; }
+    if(e.message==='NOCODE'){ localStorage.removeItem('terrain-code'); showGate('That code is no longer valid. Ask Pastor Josh for a current one.'); return; }
     const msg = e.message==='KEYBAD'
       ? 'The Census rejected the API key. If it is new, click the activation link in the Census Bureau email, wait a minute, and try again.'
       : e.message;
@@ -10509,9 +10273,7 @@ function gfRenderChurch(h){
     <div style="--k:var(--m-hardship)"><b>${allHigh}</b><span>${L('answered high almost everywhere',allHigh===1?'respondió alto en casi todo':'respondieron alto en casi todo')}</span></div>
   </div>
   ${minors||allHigh?`<p class="note gfr-statnote">${[
-    minors?(GF_EMAIL_ENABLED
-      ?L(`${minors===1?'One result comes':minors+' results come'} from under-18s: kept for one year and never emailed.`,`${minors===1?'Un resultado es':minors+' resultados son'} de menores de 18 años: se guardan un año y nunca se envían por correo.`)
-      :L(`${minors===1?'One result comes':minors+' results come'} from under-18s: kept for one year.`,`${minors===1?'Un resultado es':minors+' resultados son'} de menores de 18 años: se guardan un año.`)):'',
+    minors?L(`${minors===1?'One result comes':minors+' results come'} from under-18s: kept for one year and never emailed.`,`${minors===1?'Un resultado es':minors+' resultados son'} de menores de 18 años: se guardan un año y nunca se envían por correo.`):'',
     allHigh?L(`${allHigh===1?'One member':allHigh+' members'} rated nearly every statement “often” or “consistently”, so read the order of ${allHigh===1?'that member’s':'their'} gifts with care.`,`${allHigh===1?'Un miembro calificó':allHigh+' miembros calificaron'} casi todas las afirmaciones con «a menudo» o «de manera constante»; lea con cuidado el orden de sus dones.`):''].filter(Boolean).join(' ')}</p>`:''}
   ${n<6?`<div class="card gfcard"><p class="note">⚠ ${L(`Only ${n} ${n===1?'result':'results'} in. Read the gaps below as “nobody who has taken this yet”, not as “nobody in the church” — with a small sample the missing gifts are usually just members who have not filled it in.`,`Solo ${n===1?'hay 1 resultado':'hay '+n+' resultados'}. Lea las brechas de abajo como «nadie de quienes la han hecho», no como «nadie en la iglesia»: con una muestra pequeña, los dones que faltan suelen ser de miembros que todavía no la han completado.`)}</p></div>`:''}
 
@@ -10836,9 +10598,7 @@ function gfRenderSetup(h){
       n.innerHTML+=' <br>'+L('Results come straight back to you here: open <b>Results</b> and tap <b>Check for new results</b>.','Los resultados le llegan directamente aquí: abra <b>Resultados</b> y toque <b>Buscar resultados nuevos</b>.');
       // Whether members will be offered "Email me my report" (the server says
       // so), so a site without the mail service set up is not a silent gap.
-      n.innerHTML+=' <span class="gfemailstate">'+(!GF_EMAIL_ENABLED
-        ?L('Members can download their report as a PDF.','Los miembros pueden descargar su informe en PDF.')
-        :gfEmailOn()
+      n.innerHTML+=' <span class="gfemailstate">'+(GF_SERVER&&GF_SERVER.email
         ?L('Adult members can also have their report emailed to them.','Los miembros adultos también pueden recibir su informe por correo electrónico.')
         :L('Emailed reports are not switched on for this site yet, so members download their PDF instead.','El envío de informes por correo todavía no está activado en este sitio, así que los miembros descargan su PDF.'))+'</span>';
     }
@@ -11314,15 +11074,6 @@ function gfFit(S,core){
    paste-in code, so nothing here can break a live site that has not had the
    function added yet. */
 const GF_FN='/.netlify/functions/gifts';
-/* Email is off for now (v10.38.0): the site sends no email of any kind. While
-   this is false the gifts tool behaves as if the server had no mail service,
-   even if it reports email:true: no address or consent on the first screen,
-   no "Email me my report", and no email wording where a member or the pastor
-   would read it. Download PDF is unaffected. Switch it to true once Resend is
-   set up (RESEND_API_KEY and GIFTS_FROM); the tests switch it on to keep the
-   email paths covered. */
-let GF_EMAIL_ENABLED=false;
-const gfEmailOn=()=>GF_EMAIL_ENABLED===true&&!!(GF_SERVER&&GF_SERVER.ok&&GF_SERVER.email);
 /* Feature detection, once per open of the tool: {ok, email}. Offline, a 404 or
    anything unexpected reads as {ok:false}, and every screen falls back to the
    copy-a-code flow that works with no server at all. */
@@ -11472,7 +11223,7 @@ async function gfMemberLink(){
    refuses anything else); email only for an adult who ticked consent. */
 async function gfSubmit(pub,code){
   const body={pub,code,name:GFS.name||'',minor:GFS.minor===true,lang:LANG==='es'?'es':'en'};
-  if(GF_EMAIL_ENABLED&&GFS.minor!==true&&GFS.emailOk===true&&GFS.email){ body.email=String(GFS.email).trim(); body.emailOk=true; }
+  if(GFS.minor!==true&&GFS.emailOk===true&&GFS.email){ body.email=String(GFS.email).trim(); body.emailOk=true; }
   const j=await gfCall('submit',body);
   if(j.rid&&j.token){ GFS.pub=pub; GFS.rid=j.rid; GFS.token=j.token; GFS.hasEmail=!!j.hasEmail; gfSave(); }
   return j;
@@ -11485,7 +11236,7 @@ async function gfSubmit(pub,code){
    reaches it. */
 async function gfUpdate(pub,code){
   const body={pub,rid:GFS.rid,token:GFS.token,code,name:GFS.name||'',minor:GFS.minor===true,lang:LANG==='es'?'es':'en'};
-  if(GF_EMAIL_ENABLED&&GFS.minor!==true&&GFS.emailOk===true&&GFS.email){ body.email=String(GFS.email).trim(); body.emailOk=true; }
+  if(GFS.minor!==true&&GFS.emailOk===true&&GFS.email){ body.email=String(GFS.email).trim(); body.emailOk=true; }
   const j=await gfCall('update',body);
   GFS.hasEmail=!!j.hasEmail; gfSave();
   return j;
@@ -11812,7 +11563,7 @@ function gfRenderIntro(h){
      server can actually send email. Never shown to an under-18. */
   const emailSlot=()=>{
     const slot=document.getElementById('gfemailslot'); if(!slot) return;
-    const show=GFS.minor===false&&!!GF_PUB_TARGET&&gfEmailOn();
+    const show=GFS.minor===false&&!!GF_PUB_TARGET&&!!(GF_SERVER&&GF_SERVER.ok&&GF_SERVER.email);
     if(!show){ slot.innerHTML=''; return; }
     if(slot.querySelector('#gfemail')) return;
     slot.innerHTML=`<div class="gfemail">
@@ -11857,9 +11608,8 @@ function gfRenderIntro(h){
         em.focus(); return;
       }
       GFS.email=ok.checked?v:''; GFS.emailOk=ok.checked&&!!v;
-    } else if(GFS.minor===true||GF_SERVER||!GF_EMAIL_ENABLED){
-      // Under 18, email off on this site, or the server has said it cannot
-      // email: no address is kept.
+    } else if(GFS.minor===true||GF_SERVER){
+      // Under 18, or the server has said it cannot email: no address is kept.
       GFS.email=''; GFS.emailOk=false;
     }
     GFS.name=nm.value.trim(); GFS.i=0; GFS.sect=-1; GFS.ov=GF_TOTAL; gfSave(); gfRenderPage(gfHost());
@@ -15085,7 +14835,7 @@ function gfMaskEmail(e){
    result the server holds with that address, while the server can send. */
 function gfEmailEligible(){
   return !!(GFS&&GFS.email&&GFS.emailOk===true&&GFS.minor!==true&&GFS.pub&&GFS.rid&&GFS.token&&GFS.hasEmail!==false
-    &&gfEmailOn());
+    &&GF_SERVER&&GF_SERVER.ok&&GF_SERVER.email);
 }
 /* Email me my report (gifts-1.1): the server emails the member a private
    link to the report, with nothing attached. Opening it, on this phone or any
@@ -15325,7 +15075,7 @@ async function gfDeleteAllMine(){
    answers, not again every time the member saves their skills. */
 function gfSig(){ const t=JSON.stringify([GFS.a||{},GFS.h||{},GFS.name||'']); let x=5381; for(let i=0;i<t.length;i++) x=((x<<5)+x+t.charCodeAt(i))|0; return String(x>>>0); }
 /* Will the report be emailed when it is sent? (Consent given on the first screen.) */
-function gfWillEmail(){ return !!(GFS&&GFS.email&&GFS.emailOk===true&&GFS.minor!==true&&GF_PUB_TARGET&&gfEmailOn()); }
+function gfWillEmail(){ return !!(GFS&&GFS.email&&GFS.emailOk===true&&GFS.minor!==true&&GF_PUB_TARGET&&GF_SERVER&&GF_SERVER.ok&&GF_SERVER.email); }
 let GF_EMAIL_BUSY=false, GF_EMAIL_PENDING=false;
 /* Right after sending (and only then: reopening the page never emails): an
    adult who ticked "Email me my report" is emailed without having to find a
@@ -15898,7 +15648,7 @@ function uSwitch(id){
 }
 function uChrome(){
   const host=document.getElementById('churchbar');if(!host)return;
-  host.hidden=GIFTS_LINK.on||gated();
+  host.hidden=GIFTS_LINK.on||(ACCESS.required&&!ACCESS.ok);
   if(host.hidden)return;
   const ch=uChurch();
   host.innerHTML=`<label>Church <select id="u-church">${Object.values(uStore().churches).map(c=>`<option value="${esc(c.id)}" ${c.id===ch.id?'selected':''}>${esc(c.name)}</option>`).join('')}</select></label><button class="btn ghost" id="u-addchurch">Add church</button><button class="btn ghost" id="u-backup">Backup</button><label class="btn ghost">Restore<input id="u-restore" type="file" accept="application/json" hidden></label><span id="u-status" role="status"></span>`;
@@ -17102,7 +16852,7 @@ $('ver').textContent=VERSION;
   // lookup, and the report reappeared underneath the gate.
   const h=new URLSearchParams(location.hash.slice(1));
   const runPermalink=()=>{
-    if(gated()) return;
+    if(ACCESS.required && !ACCESS.ok) return;
     // Three cases, and they are different:
     //   key absent  → a fresh visit or a shared permalink: open the survey
     //   key = 'case'→ he was in a tool when the page reloaded: reopen it
@@ -17147,7 +16897,7 @@ $('ver').textContent=VERSION;
     const wait=setInterval(()=>{
       if(!(ACCESS_CHECKED||++tries>40)) return;
       clearInterval(wait);
-      if(gated()) return;   // never reopen over the gate (a code or a registration)
+      if(ACCESS.required && !ACCESS.ok) return;   // never reopen over the gate
       if(TOOL||FLAT||GIFTS_LINK.on) return;       // already placed somewhere
       const t=BOOT_TOOL;
       if(t&&TOOLS[t]&&TOOLS[t].standalone) openTool(t);
