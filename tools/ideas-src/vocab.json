@@ -1,0 +1,606 @@
+{
+ "source": "terrain-v10.40.0/index.html",
+ "version": "v10.40.0",
+ "tags": [
+  "affluent",
+  "car-dependent",
+  "changing",
+  "child-poverty",
+  "crowded",
+  "dense",
+  "divided",
+  "families",
+  "family-heavy",
+  "food-insecure",
+  "growing",
+  "homeowners",
+  "immigrant",
+  "jobless",
+  "k12",
+  "limited-english",
+  "low-income",
+  "many-kids",
+  "multilingual",
+  "newcomers",
+  "no-car",
+  "older",
+  "poor",
+  "professional",
+  "recent-arrivals",
+  "rent-burdened",
+  "renters",
+  "schools-near",
+  "seniors-alone",
+  "service-work",
+  "settled",
+  "single-parents",
+  "snap",
+  "spanish",
+  "students",
+  "unemp",
+  "uninsured",
+  "very-immigrant",
+  "very-old",
+  "very-poor",
+  "very-uninsured",
+  "veterans",
+  "young"
+ ],
+ "skills": [
+  "lead",
+  "medical",
+  "teach",
+  "kids",
+  "cook",
+  "music",
+  "lang",
+  "trade",
+  "vehicle",
+  "weekday",
+  "admin",
+  "av",
+  "support"
+ ],
+ "facilities": [
+  "kitchen",
+  "classrooms",
+  "gym",
+  "field",
+  "center",
+  "parking",
+  "stage",
+  "av",
+  "nursery",
+  "library",
+  "vehicle",
+  "grounds",
+  "home"
+ ],
+ "rules": [
+  "lang-primary",
+  "lang-second",
+  "limeng",
+  "foreign",
+  "recent",
+  "kids",
+  "single-parent",
+  "schools",
+  "college",
+  "seniors-alone",
+  "older-area",
+  "seniors-nocar",
+  "poverty",
+  "child-poverty",
+  "snap",
+  "unemp",
+  "uninsured",
+  "shiftwork",
+  "professional",
+  "rent50",
+  "rent30",
+  "renters",
+  "overcrowd",
+  "nocar",
+  "divided",
+  "gini",
+  "affluent",
+  "shift-race",
+  "growth",
+  "foreign-shift",
+  "grandparents",
+  "veterans",
+  "grief",
+  "debt",
+  "newborn",
+  "isolationyoung",
+  "commuters",
+  "foodaccess"
+ ],
+ "signature": [
+  {
+   "id": "welcome-table",
+   "n": "A no-questions welcome table",
+   "es": "Mesa de bienvenida sin preguntas"
+  },
+  {
+   "id": "interpreter-bank",
+   "n": "A volunteer interpreter bank",
+   "es": "Banco de intérpretes voluntarios"
+  },
+  {
+   "id": "rights-clinic",
+   "n": "Know-your-rights & legal-aid referral night",
+   "es": "Noche sobre sus derechos, con derivación a asistencia legal"
+  },
+  {
+   "id": "newcomer-circle",
+   "n": "A newcomer welcome circle",
+   "es": "Círculo de bienvenida para recién llegados"
+  },
+  {
+   "id": "vbs",
+   "n": "Vacation Bible School",
+   "es": "Escuela Bíblica de Vacaciones"
+  },
+  {
+   "id": "food-pantry",
+   "n": "A real food pantry, on a schedule",
+   "es": "Una despensa de alimentos de verdad, con horario fijo"
+  },
+  {
+   "id": "clothing-closet",
+   "n": "Community Services clothing closet",
+   "es": "Ropero comunitario de Servicios a la Comunidad"
+  },
+  {
+   "id": "community-dinner",
+   "n": "Free community dinner",
+   "es": "Cena comunitaria gratuita"
+  },
+  {
+   "id": "backpack-giveaway",
+   "n": "Back-to-school backpack giveaway",
+   "es": "Entrega de mochilas para el regreso a clases"
+  },
+  {
+   "id": "fall-festival",
+   "n": "Fall festival on the church grounds",
+   "es": "Festival de otoño en el terreno de la iglesia"
+  },
+  {
+   "id": "pathfinders",
+   "n": "Pathfinder & Adventurer club, open to the neighborhood",
+   "es": "Club de Conquistadores y Aventureros, abierto al vecindario"
+  },
+  {
+   "id": "stop-smoking",
+   "n": "Stop-smoking program (Breathe-Free)",
+   "es": "Programa para dejar de fumar (Respira Libre)"
+  },
+  {
+   "id": "moms-group",
+   "n": "Moms' morning group with childcare",
+   "es": "Grupo matutino de mamás con cuidado de niños"
+  },
+  {
+   "id": "sports-camp",
+   "n": "Summer sports camp week",
+   "es": "Semana de campamento deportivo de verano"
+  },
+  {
+   "id": "car-care",
+   "n": "Car care day for single parents and seniors",
+   "es": "Día de cuidado del auto para padres solos y adultos mayores"
+  },
+  {
+   "id": "christmas-store",
+   "n": "Christmas toy store for parents",
+   "es": "Tienda navideña de juguetes para los padres"
+  },
+  {
+   "id": "bp-clinic",
+   "n": "Monthly blood pressure and wellness check",
+   "es": "Control mensual de presión arterial y bienestar"
+  },
+  {
+   "id": "health-expo",
+   "n": "Full health expo — screenings with a referral pathway",
+   "es": "Feria de salud completa, con pruebas y una ruta de derivación"
+  },
+  {
+   "id": "chip",
+   "n": "CHIP or a lifestyle medicine course",
+   "es": "CHIP o un curso de medicina del estilo de vida"
+  },
+  {
+   "id": "cooking-school",
+   "n": "Plant-based cooking school",
+   "es": "Escuela de cocina a base de plantas"
+  },
+  {
+   "id": "mental-health",
+   "n": "Stress, anxiety, and burnout evenings",
+   "es": "Noches sobre estrés, ansiedad y agotamiento"
+  },
+  {
+   "id": "grief",
+   "n": "Grief recovery group",
+   "es": "Grupo de recuperación del duelo"
+  },
+  {
+   "id": "kids-health",
+   "n": "Sports physicals and vision screening before term",
+   "es": "Exámenes deportivos y de la vista antes del inicio de clases"
+  },
+  {
+   "id": "walking-club",
+   "n": "Neighborhood walking club from the church door",
+   "es": "Club de caminata del vecindario desde la puerta de la iglesia"
+  },
+  {
+   "id": "proph-news",
+   "n": "Prophecy in the headlines — four nights",
+   "es": "La profecía en las noticias: cuatro noches"
+  },
+  {
+   "id": "proph-language",
+   "n": "Prophecy seminar in the community's language",
+   "es": "Seminario de profecía en el idioma de la comunidad"
+  },
+  {
+   "id": "questions-night",
+   "n": "Hard questions night — no sermon, just answers",
+   "es": "Noche de preguntas difíciles: sin sermón, solo respuestas"
+  },
+  {
+   "id": "archaeology",
+   "n": "Archaeology and the Bible",
+   "es": "La arqueología y la Biblia"
+  },
+  {
+   "id": "bible-by-post",
+   "n": "Bible school by post and by phone",
+   "es": "Escuela bíblica por correo y por teléfono"
+  },
+  {
+   "id": "family-life-series",
+   "n": "Family life series as the front door",
+   "es": "Serie sobre la vida familiar como puerta de entrada"
+  },
+  {
+   "id": "glow-racks",
+   "n": "Literature racks where people actually wait",
+   "es": "Exhibidores de literatura donde la gente espera"
+  },
+  {
+   "id": "lit-doors",
+   "n": "Book drop on settled streets",
+   "es": "Reparto de libros en calles de vecinos de toda la vida"
+  },
+  {
+   "id": "lit-multilingual",
+   "n": "Literature in the languages spoken here",
+   "es": "Literatura en los idiomas que se hablan aquí"
+  },
+  {
+   "id": "kids-books",
+   "n": "Children's story books through the school",
+   "es": "Libros de cuentos para niños a través de la escuela"
+  },
+  {
+   "id": "lot-market",
+   "n": "Open the parking lot — market or food-truck night",
+   "es": "Abrir el estacionamiento: mercado o noche de camiones de comida"
+  },
+  {
+   "id": "lot-sport",
+   "n": "Turn the lot into a court",
+   "es": "Convertir el estacionamiento en una cancha"
+  },
+  {
+   "id": "sanctuary-music",
+   "n": "Lend the sanctuary as a recital hall",
+   "es": "Prestar el templo como sala de conciertos"
+  },
+  {
+   "id": "study-hall",
+   "n": "Free study hall and co-working",
+   "es": "Sala gratuita de estudio y de trabajo"
+  },
+  {
+   "id": "warming",
+   "n": "Warming and cooling station",
+   "es": "Refugio contra el frío y el calor"
+  },
+  {
+   "id": "free-venue",
+   "n": "Free room for recovery and support groups",
+   "es": "Sala gratuita para grupos de recuperación y de apoyo"
+  },
+  {
+   "id": "garden",
+   "n": "Community garden on church land",
+   "es": "Huerto comunitario en el terreno de la iglesia"
+  },
+  {
+   "id": "drive-in",
+   "n": "Outdoor film night on the lot",
+   "es": "Noche de cine al aire libre en el estacionamiento"
+  },
+  {
+   "id": "esl-center",
+   "n": "Make the building a language and citizenship center",
+   "es": "Convertir el edificio en un centro de idiomas y ciudadanía"
+  },
+  {
+   "id": "skills-center",
+   "n": "Weekday skills center",
+   "es": "Centro de habilidades entre semana"
+  },
+  {
+   "id": "disaster",
+   "n": "Register as a disaster response site",
+   "es": "Registrarse como centro de respuesta ante desastres"
+  },
+  {
+   "id": "blood-drive",
+   "n": "Standing blood drive",
+   "es": "Colecta de sangre periódica"
+  },
+  {
+   "id": "senior-day",
+   "n": "Weekday senior day program",
+   "es": "Programa de día para adultos mayores entre semana"
+  },
+  {
+   "id": "music-academy",
+   "n": "Neighborhood music academy",
+   "es": "Academia de música del vecindario"
+  },
+  {
+   "id": "prayer-box",
+   "n": "A prayer request box where people wait",
+   "es": "Buzón de peticiones de oración donde la gente espera"
+  },
+  {
+   "id": "pantry-box",
+   "n": "A pantry and book box on the sidewalk",
+   "es": "Caja de alimentos y libros en la acera"
+  },
+  {
+   "id": "wifi-porch",
+   "n": "Open the wifi and put out a charging bench",
+   "es": "Abrir el wifi y poner un banco para cargar el teléfono"
+  },
+  {
+   "id": "blessing-bags",
+   "n": "Blessing bags for people working the awkward shifts",
+   "es": "Bolsas de bendición para quienes trabajan en turnos difíciles"
+  },
+  {
+   "id": "noticeboard",
+   "n": "Give your noticeboard to the neighborhood",
+   "es": "Ceder el tablero de anuncios al vecindario"
+  },
+  {
+   "id": "lift-rota",
+   "n": "A standing lifts schedule to appointments",
+   "es": "Calendario fijo de traslados a citas"
+  },
+  {
+   "id": "homework-club",
+   "n": "Weekly homework club",
+   "es": "Club semanal de tareas escolares"
+  },
+  {
+   "id": "repair-cafe",
+   "n": "Fix-it Saturday",
+   "es": "Sábado de reparaciones"
+  },
+  {
+   "id": "job-club",
+   "n": "Job club — CVs, applications, practice interviews",
+   "es": "Club de empleo: currículums, solicitudes y entrevistas de práctica"
+  },
+  {
+   "id": "money-course",
+   "n": "Budgeting and debt evenings",
+   "es": "Noches sobre presupuesto y deudas"
+  },
+  {
+   "id": "conversation-cafe",
+   "n": "English conversation café",
+   "es": "Café de conversación en inglés"
+  },
+  {
+   "id": "toy-swap",
+   "n": "Seasonal toy, coat and uniform swap",
+   "es": "Intercambio de temporada de juguetes, abrigos y uniformes"
+  },
+  {
+   "id": "digital-help",
+   "n": "Digital help desk for older neighbors",
+   "es": "Mesa de ayuda digital para vecinos mayores"
+  },
+  {
+   "id": "meal-train",
+   "n": "A meal schedule for new babies, illness and bereavement",
+   "es": "Calendario de comidas para recién nacidos, enfermedad y duelo"
+  },
+  {
+   "id": "bereavement-visits",
+   "n": "A bereavement visiting rota",
+   "es": "Turnos de visitas a personas en duelo"
+  },
+  {
+   "id": "kitchen-study",
+   "n": "One study, at one kitchen table",
+   "es": "Un estudio, en la mesa de una cocina"
+  },
+  {
+   "id": "walk-study",
+   "n": "Walk-and-talk study",
+   "es": "Estudio caminando y conversando"
+  },
+  {
+   "id": "supper-study",
+   "n": "Supper club that opens a Bible at the end",
+   "es": "Cena de amigos que termina abriendo la Biblia"
+  },
+  {
+   "id": "text-thread",
+   "n": "One question a week, by message",
+   "es": "Una pregunta por semana, por mensaje"
+  },
+  {
+   "id": "workplace-study",
+   "n": "Break-room study where members already work",
+   "es": "Estudio en la sala de descanso donde ya trabajan los miembros"
+  },
+  {
+   "id": "health-to-why",
+   "n": "From the health course to why we live this way",
+   "es": "Del curso de salud a por qué vivimos así"
+  },
+  {
+   "id": "grief-to-hope",
+   "n": "From grief group into the hope study",
+   "es": "Del grupo de duelo al estudio sobre la esperanza"
+  },
+  {
+   "id": "parents-study",
+   "n": "Parenting group that becomes family worship",
+   "es": "Grupo de crianza que se convierte en culto familiar"
+  },
+  {
+   "id": "esl-to-scripture",
+   "n": "Reading the Bible as the English text",
+   "es": "Leer la Biblia como texto para aprender inglés"
+  },
+  {
+   "id": "late-room",
+   "n": "A late room for young adults",
+   "es": "Un espacio por la noche para jóvenes adultos"
+  },
+  {
+   "id": "mens-breakfast",
+   "n": "Men’s breakfast, one chapter",
+   "es": "Desayuno de hombres, un capítulo"
+  },
+  {
+   "id": "doorstep-prayer",
+   "n": "Prayer walk that knocks",
+   "es": "Caminata de oración que toca a la puerta"
+  },
+  {
+   "id": "recovery-study",
+   "n": "A step group that opens the Bible",
+   "es": "Grupo de pasos que abre la Biblia"
+  },
+  {
+   "id": "seniors-scripture",
+   "n": "Memory and Scripture hour",
+   "es": "Hora de recuerdos y Escrituras"
+  },
+  {
+   "id": "neighbor-table",
+   "n": "Ask-me-anything table at somebody else’s event",
+   "es": "Mesa de preguntas abiertas en el evento de otros"
+  },
+  {
+   "id": "come-and-see",
+   "n": "A come-and-see Sabbath",
+   "es": "Sábado de puertas abiertas"
+  },
+  {
+   "id": "four-nights",
+   "n": "Four nights, not four weeks",
+   "es": "Cuatro noches, no cuatro semanas"
+  },
+  {
+   "id": "open-baptism-class",
+   "n": "An open enquiry class, not a closed baptismal one",
+   "es": "Clase abierta de preguntas, no una clase bautismal cerrada"
+  },
+  {
+   "id": "decision-visit",
+   "n": "The visit after the course ends",
+   "es": "La visita después de que termina el curso"
+  },
+  {
+   "id": "thank-you-run",
+   "n": "Thank the people nobody thanks",
+   "es": "Agradecer a quienes nadie agradece"
+  },
+  {
+   "id": "seed-swap",
+   "n": "A seed and cutting swap on the wall",
+   "es": "Intercambio de semillas y esquejes junto al muro"
+  },
+  {
+   "id": "phone-check",
+   "n": "A standing phone round for people on their own",
+   "es": "Ronda telefónica fija para personas que viven solas"
+  },
+  {
+   "id": "school-supplies",
+   "n": "Fill the school’s quiet cupboard",
+   "es": "Llenar el armario de útiles de la escuela"
+  },
+  {
+   "id": "bench",
+   "n": "Put a bench where people already stop",
+   "es": "Poner una banca donde la gente ya se detiene"
+  },
+  {
+   "id": "funeral-teas",
+   "n": "Offer the hall for funeral teas, free",
+   "es": "Ofrecer el salón, gratis, para la reunión después de un funeral"
+  },
+  {
+   "id": "translate-help",
+   "n": "Sit with someone through the hard paperwork",
+   "es": "Acompañar a alguien con el papeleo difícil"
+  },
+  {
+   "id": "jar-of-prayer",
+   "n": "Take the prayer list back to the street",
+   "es": "Llevar la lista de oración de vuelta a la calle"
+  },
+  {
+   "id": "winter-check",
+   "n": "The cold-snap knock",
+   "es": "Visita en la ola de frío"
+  },
+  {
+   "id": "noticeboard-jobs",
+   "n": "A jobs and small-work board",
+   "es": "Tablero de empleos y trabajos pequeños"
+  },
+  {
+   "id": "lending-shelf",
+   "n": "A lending shelf of tools and equipment",
+   "es": "Estante de préstamo de herramientas y equipo"
+  },
+  {
+   "id": "welcome-newcomers",
+   "n": "A welcome note for people who just moved in",
+   "es": "Nota de bienvenida para quienes acaban de mudarse"
+  },
+  {
+   "id": "exam-packs",
+   "n": "Exam-season packs for teenagers",
+   "es": "Paquetes para adolescentes en época de exámenes"
+  },
+  {
+   "id": "trash-cans",
+   "n": "Take the trash cans out",
+   "es": "Sacar los botes de basura"
+  },
+  {
+   "id": "story-corner",
+   "n": "Half an hour of stories at the library",
+   "es": "Media hora de cuentos en la biblioteca"
+  }
+ ]
+}
