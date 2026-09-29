@@ -98,9 +98,10 @@ const open=(d=deck(),extra={},headers={},ctx={})=>post({op:'open',deck:d,...extr
 
 console.log('-- status and the envelope --');
 let r=await get('');
-c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.0',false,'unset',false,false]);
+// v10.40: present-1.1 (a verse on every content slide, and the "Here in" place slide)
+c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.1',false,'unset',false,false]);
 r=await post({op:'status'});
-c('POST op:status too', [r.status,r.j.fn], [200,'present-1.0']);
+c('POST op:status too', [r.status,r.j.fn], [200,'present-1.1']);
 fbOn(); r=await get('');
 c('live:true once both Firebase variables are set', r.j.live, true);
 for(const [u,want] of [[FB+'/',true],['https://terrain-live-default-rtdb.europe-west1.firebasedatabase.app',true],
@@ -223,7 +224,9 @@ console.log('\n-- registration (TERRAIN_REG_SECRET) --');
   const REGROOM=r.j;
   r=await open(deck(),{},{'x-terrain-reg':tok('another-secret-0123456789-abcdefghij')}); c('a token signed with another secret → 401', [r.status,r.j.error], [401,'noreg']);
   r=await open(deck(),{},{'x-terrain-reg':tok(SECRET,Date.now()-181*864e5)}); c('a token over 180 days old → 401', r.status, 401);
-  r=await open(deck(),{},{'x-terrain-reg':tok().slice(0,-1)+'A'}); c('a tampered token → 401', r.status, 401);
+  // v10.40 integration: the last character is always changed (it was set to 'A', which was already
+  // 'A' about 1 run in 64, and the token then was not tampered at all: a flaky pass/fail).
+  r=await open(deck(),{},{'x-terrain-reg':(t=>t.slice(0,-1)+(t.slice(-1)==='A'?'B':'A'))(tok())}); c('a tampered token → 401', r.status, 401);
   r=await open(deck(),{token:tok()}); c('a token in the body is not enough', r.status, 401);
   r=await get('op=deck&room='+REGROOM.room); c('members need none: deck', r.status, 200);
   r=await get('op=state&room='+REGROOM.room); c('…state', r.status, 200);
@@ -304,6 +307,45 @@ await badDeck('markup: checked after cleaning (a control character before the ta
   c('a "<" that starts no tag is fine', [r.status,S.peek('d/'+r.j.room).deck.slides[1].headline], [200,'Children <5 and adults < 18, a <-> b, 3<4']); }
 { const d=deck(); d.slides[1].headline='javascript:alert(1)'; r=await open(d);
   c('a javascript: text is only text: no field of a deck is ever a link', [r.status,S.peek('d/'+r.j.room).deck.slides.filter(x=>'qrUrl' in x).map(x=>x.qrUrl.startsWith('https://x.test/#watch='))], [200,[true]]); }
+
+// ---- present-1.1 (v10.40): a verse at the foot of every content slide, and the place slide ----
+console.log('\n-- present-1.1: verses on every slide, "Here in {town}" --');
+const V11={text:'And seek the peace of the city… and pray unto the LORD for it: for in the peace thereof shall ye have peace.',ref:'Jeremiah 29:7 · KJV'};
+const PLACE={type:'place',kicker:'Here in Warminster',headline:'In Warminster, about 1 in 6 children is growing up below the poverty line',
+  where:'Families with children: look first 0.6 mi north-east of our church',
+  facts:[{value:'23%',label:'Children, share of residents, across all of Warminster. County: 20%.',hue:'children'},{value:'1 in 3',label:'Single-parent families. County: nearly 1 in 5.',hue:'children'}],
+  partners:[{name:'Sample Community Food Pantry',kind:'Food bank or pantry',dist:'0.8 mi'}],bring:['9 members whose gifts fit this work','Classrooms for 45 · Tuesday evening'],
+  source:'U.S. Census ACS 2020–2024 · Census Tract 2041.02 and Warminster · blocks: Census TIGERweb · places: OpenStreetMap',verse:V11};
+{ const names=['join','motion','stat','place','capacity','ability','ask','risks','timeline','roles','yes','close'];
+  const d=clone({...deck({},names.map(n=>n==='place'?'motion':n))}); d.slides[3]=clone(PLACE);
+  d.slides.forEach(sl=>{ if(!['join','verse','close','place'].includes(sl.type)) sl.verse=clone(V11); });
+  r=await open(d); const got=S.peek('d/'+r.j.room).deck;
+  c('the place slide is stored exactly as sent', [r.status,canon(got.slides[3])], [200,canon(PLACE)]);
+  c('a verse on every content type is kept (motion, stat, capacity, ability, ask, risks, timeline, roles, yes)', got.slides.filter(x=>x.verse).map(x=>x.type), ['motion','stat','place','capacity','ability','ask','risks','timeline','roles','yes']);
+  c('…exactly as sent', got.slides.filter(x=>x.verse).every(x=>canon(x.verse)===canon(V11)), true);
+  c('…and never added to join or close', ['join','close'].map(t=>'verse' in got.slides.find(x=>x.type===t)), [false,false]);
+  const tr=clone(deck()); tr.slides[3].verse=clone(V11); r=await open(tr);
+  c('a trio (the fallback) takes a verse too', canon(S.peek('d/'+r.j.room).deck.slides[3].verse), canon(V11)); }
+{ const d=deck(); r=await open(d); const got=S.peek('d/'+r.j.room).deck;
+  c('a present-1.0 deck (no verses but the ask\'s) is stored exactly as before', got.slides.slice(1).map(canon), d.slides.slice(1).map(canon)); }
+const badPlace=async(name,mut,where)=>{ const d=deck(); d.slides[3]=clone(PLACE); mut(d.slides[3],d); const x=await open(d);
+  c('refused: '+name, [x.status,x.j.error,x.j.where], [400,'bad-deck',where]); };
+await badPlace('place: four facts', p=>{ p.facts=Array(4).fill(PLACE.facts[0]); }, 'slides[3].facts');
+await badPlace('place: four partners', p=>{ p.partners=Array(4).fill(PLACE.partners[0]); }, 'slides[3].partners');
+await badPlace('place: four things we bring', p=>{ p.bring=['a','b','c','d']; }, 'slides[3].bring');
+await badPlace('place: a fact colour that is not a kind', p=>{ p.facts[0].hue='red'; }, 'slides[3].facts[0].hue');
+await badPlace('place: a partner that is text', p=>{ p.partners[0]='Pantry'; }, 'slides[3].partners[0]');
+await badPlace('place: markup in a partner name', p=>{ p.partners[0].name='<img src=x onerror=alert(1)>'; }, 'slides[3].partners[0].name');
+await badPlace('place: markup in "where"', p=>{ p.where='<a href="javascript:1">here</a>'; }, 'slides[3].where');
+await badPlace('place: "where" over 400', p=>{ p.where='x'.repeat(401); }, 'slides[3].where');
+await badPlace('place: a verse that is text', p=>{ p.verse='Jeremiah 29:7'; }, 'slides[3].verse');
+await badPlace('motion: a verse whose words are a list', (p,d)=>{ d.slides[1].verse={text:['a'],ref:'x'}; }, 'slides[1].verse.text');
+await badPlace('stat: markup in a verse reference', (p,d)=>{ d.slides[2].verse={text:'a',ref:'<b>x</b>'}; }, 'slides[2].verse.ref');
+{ const d=deck(); d.slides[3]=clone(PLACE); Object.assign(d.slides[3],{show:['where'],html:'<b>x</b>'}); d.slides[3].partners[0].url='https://evil.example'; d.slides[1].verse={...V11,extra:'<x>'};
+  r=await open(d); const got=S.peek('d/'+r.j.room).deck;
+  c('place: unknown fields are dropped, not refused', [r.status,'show' in got.slides[3],'html' in got.slides[3],'url' in got.slides[3].partners[0],'extra' in got.slides[1].verse,JSON.stringify(got).includes('evil.example')], [200,false,false,false,false,false]); }
+{ const d=deck(); d.slides[3]={type:'place',kicker:'Here in our neighbourhood',headline:'Here, God has placed us among these neighbours'}; r=await open(d);
+  c('place: every group may be missing (left out, never padded)', [r.status,canon(S.peek('d/'+r.j.room).deck.slides[3])], [200,canon({type:'place',kicker:'Here in our neighbourhood',headline:'Here, God has placed us among these neighbours',where:'',facts:[],partners:[],bring:[],source:''})]); }
 r=await post({op:'open',deck:[deck()]});          c('refused: a deck that is a list', [r.status,r.j.where], [400,'deck']);
 r=await post({op:'open'});                        c('refused: no deck', [r.status,r.j.where], [400,'deck']);
 { const raw=JSON.stringify({op:'open',deck:deck()}).replace('"value":27,','"value":1e400,');

@@ -291,11 +291,210 @@ const txt=el=>el?el.textContent.replace(/ /g,' '):null;
     c('report() shape', Object.keys(w.tdeckRender(decks.board.en,host(),{keys:false}).report()).sort(), ['fit','following','h','index','k','n','overflow','presenter','slides','w']);
   }
 
+  // ---- sideways (v10.40.0) ------------------------------------------------------------------------
+  // The pastor: "I would prefer having the slides swipe left, that's more natural and easier to
+  // control." The slides sit in one row: swipe left = next, right = previous. jsdom does no layout,
+  // so the row is given a width here (360) and each slide its place (i × 360); Chrome checks the
+  // real swipe (scratchpad v40/B/shots).
+  {
+    const wait=ms=>new Promise(r=>setTimeout(r,ms));
+    const sized=(h,W=360)=>{ const sc=h.querySelector('.td-scroller');
+      Object.defineProperty(sc,'clientWidth',{value:W,configurable:true});
+      [...h.querySelectorAll('section.td-slide')].forEach((s,i)=>Object.defineProperty(s,'offsetLeft',{value:i*W,configurable:true}));
+      return sc; };
+    const ev=(el,type,o={})=>{ const e=new w.Event(type,{bubbles:true,cancelable:true}); Object.assign(e,o); el.dispatchEvent(e); return e; };
+    const ptr=(el,type,x,y,pt='mouse')=>{ const e=new w.MouseEvent(type,{bubbles:true,cancelable:true,clientX:x,clientY:y,button:0}); Object.defineProperty(e,'pointerType',{value:pt}); el.dispatchEvent(e); return e; };
+    const wheel=(el,o)=>{ const e=new w.WheelEvent('wheel',Object.assign({bubbles:true,cancelable:true},o)); el.dispatchEvent(e); return e; };
+    const pips=h=>[...h.querySelectorAll('.td-pager i')];
+    const onAt=h=>pips(h).map((d,k)=>d.classList.contains('on')?k:-1).filter(k=>k>=0);
+    const ringAt=h=>pips(h).map((d,k)=>d.classList.contains('p')?k:-1).filter(k=>k>=0);
+
+    // a move is a sideways scroll to the slide's place, instant
+    { const h=host(), seen=[], ctl=w.tdeckRender(decks.board.en,h,{mode:'present',keys:false,onIndex:i=>seen.push(i)}), sc=sized(h);
+      ctl.go(3);
+      c('sideways: going to slide 4 puts the row at 4 slide-widths (scrollLeft), never scrollTop', [sc.scrollLeft,sc.scrollTop,ctl.index()], [1080,0,3]);
+      ctl.next(); ctl.prev(); ctl.prev();
+      c('sideways: next / prev move one slide-width each', [sc.scrollLeft,ctl.index()], [720,2]);
+      // a swipe: the browser scrolls the row and snaps; the slide is read from scrollLeft
+      sc.scrollLeft=1440; ev(sc,'scrollend');
+      c('sideways: a swipe that settles at 4 slide-widths is slide 5 (scrollend), and the presenter’s phones are told', [ctl.index(),seen.slice(-1)[0]], [4,4]);
+      sc.scrollLeft=1800; ev(sc,'scroll'); await wait(60);
+      c('…without scrollend (iOS), not while it is still moving', ctl.index(), 4);
+      await wait(140);
+      c('…but once it has been still for 140 ms', ctl.index(), 5);
+      sc.scrollLeft=1082; ev(sc,'scrollend');
+      c('sideways: a row a pixel or two off still reads the nearest slide', ctl.index(), 3);
+      // a finger held on the slides: nothing is decided until it lets go
+      const before=seen.length;
+      ev(sc,'touchstart'); sc.scrollLeft=1300; ev(sc,'scroll'); await wait(200);
+      c('presenter’s finger still on a half-swiped slide: the phones are not told anything', [seen.length-before,ctl.index()], [0,3]);
+      sc.scrollLeft=1440; ev(sc,'touchend'); await wait(200);
+      c('…it lets go and the row settles on slide 5: the phones are told once', [seen.slice(before),ctl.index()], [[4],4]);
+      ctl.destroy(); }
+
+    // a short deliberate swipe is finished to the next slide: a slide is as wide as the screen, and on a
+    // tablet or a phone on its side the snap alone sent a thumb's swipe back (Chrome, 1280 x 800 and 844 x 390)
+    { const h=host(), ctl=w.tdeckRender(decks.board.en,h,{mode:'browse',keys:false,start:2}), sc=sized(h), calls=[];
+      sc.scrollTo=o=>{ calls.push(o); sc.scrollLeft=o.left; };
+      ctl.go(2);
+      const swipe=async(x0,y0,x1,y1,o={})=>{ calls.length=0;
+        ev(sc,'touchstart',{touches:o.two?[{clientX:x0,clientY:y0},{clientX:x0+80,clientY:y0}]:[{clientX:x0,clientY:y0}]});
+        if(o.moved!=null) sc.scrollLeft=o.moved;
+        ev(sc,'touchend',{touches:[],changedTouches:[{clientX:x1,clientY:y1}]}); await wait(200); return calls.slice(); };
+      let got=await swipe(300,400,220,408,{moved:760});
+      c('swipe: an 80 px swipe to the left that the snap would send back is finished to the next slide, gliding like the swipe', [got,ctl.index(),sc.scrollLeft], [[{left:1080,behavior:'smooth'}],3,1080]);
+      got=await swipe(120,400,210,395,{moved:1060});
+      c('swipe: …and to the right, to the previous one', [got.map(o=>o.left),ctl.index()], [[720],2]);
+      got=await swipe(300,400,270,400,{moved:735});
+      c('swipe: a 30 px nudge springs back (nothing finished)', [got,ctl.index(),sc.scrollLeft], [[],2,720]);
+      got=await swipe(300,400,220,560,{moved:740});
+      c('swipe: mostly up and down: not a swipe', [got,ctl.index()], [[],2]);
+      got=await swipe(300,400,200,400,{two:true,moved:740});
+      c('swipe: two fingers (a pinch): not a swipe', [got,ctl.index()], [[],2]);
+      got=await swipe(300,400,120,400,{moved:900});
+      c('swipe: past half a slide the snap itself goes on; nothing added (no double move)', [got,ctl.index()], [[],3]);
+      ctl.go(decks.board.en.slides.length-1); got=await swipe(300,400,200,400,{moved:ctl.index()*360+20});
+      c('swipe: at the last slide there is no next', [got,ctl.index()], [[],decks.board.en.slides.length-1]);
+      sc.scrollLeft=1000; ev(sc,'scrollend');
+      c('settle: a row left part-way is put exactly on the slide it reads (never half of two slides)', [ctl.index(),sc.scrollLeft], [3,1080]);
+      ctl.destroy(); }
+
+    // keys: → ← PageDown PageUp Space Shift+Space (a clicker), on the window (present)
+    { const h=host(), seen=[], ctl=w.tdeckRender(decks.board.en,h,{mode:'present',onIndex:i=>seen.push(i)});
+      key('ArrowRight'); key('ArrowRight'); key('ArrowLeft'); key('PageDown'); key('PageDown'); key('PageUp'); key(' '); key(' ',{shiftKey:true});
+      c('present keys: → → ← PageDown PageDown PageUp Space Shift+Space', seen, [0,1,2,1,2,3,2,3,2]);
+      const e=new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true,cancelable:true}); w.dispatchEvent(e);
+      c('…a handled key is taken (defaultPrevented), so the page itself never scrolls', e.defaultPrevented, true);
+      ctl.destroy(); }
+    // keys with no window keys (the builder's preview, the sample): while focus is inside the slides
+    { const h=host(), ctl=w.tdeckRender(decks.board.en,h,{mode:'browse',contained:true}), sc=h.querySelector('.td-scroller');
+      const k2=(k,o={})=>{ const e=new w.KeyboardEvent('keydown',Object.assign({key:k,bubbles:true,cancelable:true},o)); sc.dispatchEvent(e); return e; };
+      c('contained: the row is a Tab stop', sc.tabIndex, 0);
+      const e1=k2('ArrowRight'); k2('PageDown'); k2(' ');
+      c('contained: → PageDown Space move on while focus is in the slides, and the key is taken (no double move by the page)', [ctl.index(),e1.defaultPrevented], [3,true]);
+      k2('ArrowLeft'); k2('PageUp');
+      c('contained: ← PageUp move back', ctl.index(), 1);
+      key('ArrowRight');
+      c('contained: a key elsewhere on the page does not move the preview', ctl.index(), 1);
+      k2('End'); c('contained: End → the last slide', ctl.index(), decks.board.en.slides.length-1);
+      k2('Home'); c('contained: Home → the first', ctl.index(), 0);
+      ctl.destroy(); }
+
+    // the position dots
+    { const h=host(), deck=decks.board.en, ctl=w.tdeckRender(deck,h,{mode:'browse',keys:false,start:2});
+      c('dots: one per slide, in a row at the top, hidden from screen readers (the "3 / 10" speaks)', [pips(h).length,h.querySelector('.td-pager').getAttribute('aria-hidden'),h.querySelector('.td-pager').hidden], [deck.slides.length,'true',false]);
+      c('dots: the slide on screen is marked', onAt(h), [2]);
+      ctl.go(6); c('dots: follow every move', onAt(h), [6]);
+      c('dots: sit outside the slides (a slide’s words are unchanged)', h.querySelectorAll('.td-slide .td-pager').length, 0);
+      ctl.destroy();
+      const one=host(); w.tdeckRender({slides:[{type:'verse',text:'x',ref:'y'}]},one,{keys:false});
+      const many=host(); w.tdeckRender({slides:Array(25).fill({type:'verse',text:'x',ref:'y'})},many,{keys:false});
+      c('dots: none for a single slide, none past 20 slides (the numbers alone)', [one.querySelector('.td-pager').hidden,pips(one).length,many.querySelector('.td-pager').hidden,pips(many).length], [true,0,true,0]); }
+
+    // follow: a member swipes away, the presenter moves, Back to live
+    { const h=host(), deck=decks.board.en, ctl=w.tdeckRender(deck,h,{mode:'follow',presenter:3,keys:false}), sc=sized(h), pill=h.querySelector('.td-pill');
+      ctl.go(3);
+      c('follow: on the presenter’s slide, dots on 4, no ring, no pill', [ctl.index(),onAt(h),ringAt(h),pill.hidden], [3,[3],[],true]);
+      sc.scrollLeft=360; ev(sc,'scrollend');
+      c('follow: the member swipes right twice (to slide 2): browsing, "Back to live", the presenter’s dot ringed', [ctl.index(),ctl.following(),pill.hidden,h.querySelector('.td-ptx').textContent,onAt(h),ringAt(h)], [1,false,false,'You: 2 · Presenter: 4',[1],[3]]);
+      ctl.setIndex(5);
+      c('…the presenter moves on: the member stays, the pill and the ring move', [ctl.index(),h.querySelector('.td-ptx').textContent,ringAt(h)], [1,'You: 2 · Presenter: 6',[5]]);
+      pill.querySelector('.td-pback').click();
+      c('…Back to live: the row goes to the presenter’s slide, following again', [ctl.index(),sc.scrollLeft,ctl.following(),pill.hidden,ringAt(h)], [5,1800,true,true,[]]);
+      // the presenter moves while the member's finger rests on the slides
+      ev(sc,'touchstart'); ctl.setIndex(6);
+      c('follow: the presenter moves while a finger rests on the slides: nothing moves under it', [ctl.index(),sc.scrollLeft,ctl.following()], [5,1800,true]);
+      ev(sc,'touchend'); await wait(200);
+      c('…the finger lifts without swiping: still following, so on to the presenter’s slide', [ctl.index(),sc.scrollLeft,ctl.following(),pill.hidden], [6,2160,true,true]);
+      ev(sc,'touchstart'); ctl.setIndex(7); sc.scrollLeft=1800; ev(sc,'scroll'); ev(sc,'touchend'); await wait(200);
+      c('…but a finger that swipes away while the presenter moves stays where it swiped, with the pill', [ctl.index(),ctl.following(),pill.hidden,h.querySelector('.td-ptx').textContent], [5,false,false,'You: 6 · Presenter: 8']);
+      ctl.setEnded(true);
+      c('follow: ended → no ring, no pill', [ringAt(h),pill.hidden], [[],true]);
+      ctl.destroy(); }
+
+    // a mouse drag sideways (a laptop has no swipe)
+    { const h=host(), ctl=w.tdeckRender(decks.team.en,h,{mode:'browse',keys:false,start:3}), sc=h.querySelector('.td-scroller'), sec=h.querySelectorAll('section')[3];
+      ptr(sec,'pointerdown',300,300); ptr(sec,'pointerup',200,310);
+      c('mouse: a drag to the left = next', ctl.index(), 4);
+      ptr(sc,'pointerdown',100,300); ptr(sc,'pointerup',220,290);
+      c('mouse: a drag to the right = previous', ctl.index(), 3);
+      ptr(sc,'pointerdown',100,300); ptr(sc,'pointerup',130,300);
+      ptr(sc,'pointerdown',100,300); ptr(sc,'pointerup',160,360);
+      c('mouse: a short or mostly up-and-down drag moves nothing (a click stays a click)', ctl.index(), 3);
+      ptr(sc,'pointerdown',300,300,'touch'); ptr(sc,'pointerup',100,300,'touch');
+      c('touch: left to the browser’s own swipe (no double move)', ctl.index(), 3);
+      ctl.destroy();
+      const hy=host(), cy=w.tdeckRender(decks.team.en,hy,{mode:'follow',presenter:8,keys:false,onRespond:()=>Promise.resolve()});
+      const ys=hy.querySelectorAll('section')[8]; ys.querySelector('button.td-opt').click(); ys.querySelectorAll('.td-agebtn')[0].click();
+      const nm=ys.querySelector('.td-name'); ptr(nm,'pointerdown',300,300); ptr(nm,'pointerup',100,300);
+      c('mouse: selecting text in the name field never moves the slide', cy.index(), 8);
+      cy.destroy(); }
+
+    // a mouse wheel or trackpad on the presenter's screen and a member's phone: one slide per turn
+    { const h=host(), seen=[], ctl=w.tdeckRender(decks.board.en,h,{mode:'present',keys:false,onIndex:i=>seen.push(i)}), sc=h.querySelector('.td-scroller');
+      const e1=wheel(sc,{deltaY:100});
+      c('wheel (present): a turn down = next, and the page does not scroll', [ctl.index(),e1.defaultPrevented], [1,true]);
+      wheel(sc,{deltaY:100}); wheel(sc,{deltaY:60});
+      c('…the rest of the same turn (or a trackpad’s glide) moves nothing more', ctl.index(), 1);
+      await wait(280); wheel(sc,{deltaY:-120});
+      c('…once it has rested, a turn up = previous', ctl.index(), 0);
+      await wait(280); wheel(sc,{deltaY:10}); wheel(sc,{deltaY:12}); wheel(sc,{deltaY:25});
+      c('…small trackpad steps add up to one move', ctl.index(), 1);
+      await wait(280); const e2=wheel(sc,{deltaX:120,deltaY:8});
+      c('…two fingers to the left on a trackpad (sideways) = next, one slide however wide the screen (Chrome: half a laptop stage was too far to push)', [ctl.index(),e2.defaultPrevented], [2,true]);
+      wheel(sc,{deltaX:90}); wheel(sc,{deltaX:70});
+      c('…its glide moves nothing more', ctl.index(), 2);
+      await wait(280); wheel(sc,{deltaX:-80,deltaY:5});
+      c('…two fingers to the right = previous', ctl.index(), 1);
+      await wait(280); const e3=wheel(sc,{deltaY:100,ctrlKey:true});
+      c('…ctrl + wheel (a pinch) is zoom, not a move', [ctl.index(),e3.defaultPrevented], [1,false]);
+      ctl.destroy();
+      const hb=host(), cb=w.tdeckRender(decks.board.en,hb,{mode:'browse',keys:false}), sb=hb.querySelector('.td-scroller'), eb=wheel(sb,{deltaY:100});
+      c('wheel (browse, on a page): up and down scrolls the page; the slides stay', [cb.index(),eb.defaultPrevented], [0,false]);
+      const es=wheel(sb,{deltaX:100});
+      c('wheel (browse): sideways moves one slide', [cb.index(),es.defaultPrevented], [1,true]);
+      cb.destroy();
+      const hf=host(), cf=w.tdeckRender(decks.board.en,hf,{mode:'follow',presenter:2,keys:false}); wheel(hf.querySelector('.td-scroller'),{deltaY:100});
+      c('wheel (a member): moves them, and they are then away from the presenter', [cf.index(),cf.following()], [3,false]);
+      cf.destroy(); }
+  }
+
+  // ---- v10.40: the place slide and the verse foot, from the renderer block alone ----------------------
+  {
+    const V={text:'And seek the peace of the city… and pray unto the LORD for it: for in the peace thereof shall ye have peace.',ref:'Jeremiah 29:7 · KJV'};
+    const deck={lang:'es',church:'X',slides:[
+      {type:'place',kicker:'Aquí en Warminster',headline:'En Warminster, otros ya sirven, y podemos sumarnos a ellos',where:'Vecinos con dificultades: busque primero a 0.9 mi al noreste de la iglesia',
+       facts:[{value:'1 de cada 5',label:'personas de nuestro entorno vive por debajo del umbral de pobreza. Condado: 1 de cada 14.',hue:'hardship'}],
+       partners:[{name:'Warminster Community Food Bank',kind:'Banco o despensa de alimentos',dist:'0.6 mi'},{name:'<img src=x onerror="window.__pwned=9">',kind:'x',dist:'1 mi'}],
+       bring:['Aulas para 45 · martes por la noche'],source:'Censo de EE. UU. ACS 2020–2024 · lugares: OpenStreetMap',verse:V},
+      {type:'place',headline:'x',facts:'nope',partners:[null,7,{name:''}],bring:[{}],where:{}},
+      {type:'motion',headline:'m',rows:[['a','b']],by:'x',verse:{text:'',ref:'y'}},
+      {type:'close',headline:'c',text:'t',verse:V},{type:'join',verse:V},{type:'verse',text:'v',ref:'r',version:'KJV',verse:V}]};
+    const h=host(); w.tdeckRender(deck,h,{keys:false}); const S=[...h.querySelectorAll('section')];
+    c('place (renderer alone): where, one figure, two names under the Spanish heading, what we bring', [txt(S[0].querySelector('.td-where')),S[0].querySelectorAll('.td-tcard').length,txt(S[0].querySelector('.td-plh')),S[0].querySelectorAll('.td-prow').length,txt(S[0].querySelector('.td-pbring .td-plh')),S[0].querySelectorAll('.td-brow').length],
+      ['Vecinos con dificultades: busque primero a 0.9 mi al noreste de la iglesia',1,'Ya sirven aquí · nos sumamos, no competimos',2,'Lo que solo nosotros aportamos',1]);
+    c('place: a name that is markup stays text, and nothing fires', [S[0].textContent.includes('<img src=x onerror="window.__pwned=9">'),S[0].querySelectorAll('img').length,w.__pwned||0], [true,0,0]);
+    c('place: a slide with broken groups draws what it can and never throws', [S[1].classList.contains('td-t-place'),S[1].querySelectorAll('.td-tcard,.td-prow,.td-brow,.td-where').length], [true,0]);
+    c('the verse foot sits after the body and before the source, in the pin’s place of no other', (()=>{ const k=[...S[0].querySelector('.td-main').children].map(e=>e.className.split(' ')[0]); return [k.indexOf('td-vfoot')-k.indexOf('td-body'),k.indexOf('td-src')-k.indexOf('td-vfoot')]; })(), [1,1]);
+    c('a verse with no words draws no foot; join, verse and close never draw one', [S[2].querySelector('.td-vfoot'),S[3].querySelector('.td-vfoot'),S[4].querySelector('.td-vfoot'),S[5].querySelector('.td-vfoot')], [null,null,null,null]);
+    c('the foot’s words and reference', [txt(S[0].querySelector('.td-vft')),txt(S[0].querySelector('.td-vfr'))], [V.text,V.ref]);
+  }
+
   // ---- the CSS ----------------------------------------------------------------------------------------
   {
     const flat=CSS.replace(/\/\*[\s\S]*?\*\//g,'');
     const rm=flat.split('@media (prefers-reduced-motion: reduce)');
-    c('css: y mandatory snap, stop always, instant scroll', [/scroll-snap-type:y mandatory/.test(flat),/scroll-snap-stop:always/.test(flat),/scroll-behavior:auto/.test(flat)], [true,true,true]);
+    // v10.40.0, the pastor's request ("I would prefer having the slides swipe left, that's more natural
+    // and easier to control"): the slides moved from an upright (y) snap to a sideways (x) one. This test
+    // said "y mandatory" and is updated to the new intent.
+    c('css: x mandatory snap (sideways, v10.40), stop always, instant scroll', [/scroll-snap-type:x mandatory/.test(flat),/scroll-snap-type:y/.test(flat),/scroll-snap-stop:always/.test(flat),/scroll-behavior:auto/.test(flat)], [true,false,true,true]);
+    const scr=(flat.match(/\.td-scroller\{[^}]*\}/)||[''])[0], sl=(flat.match(/\.td-slide\{[^}]*\}/)||[''])[0];
+    c('css: the row: one line of slides (flex), sideways only, never up or down', [/display:flex/.test(scr),/overflow-x:auto/.test(scr),/overflow-y:hidden/.test(scr),/overflow-y:auto|overflow:auto/.test(scr)], [true,true,true,false]);
+    c('css: each slide is exactly one view wide, and snaps at its start', [/flex:0 0 100%/.test(sl),/width:100%/.test(sl),/scroll-snap-align:start/.test(sl)], [true,true,true]);
+    c('css: on a page an up-and-down drag still scrolls the page; the presenter’s screen and a member’s phone take sideways moves only (no pull-to-refresh), pinch-zoom kept',
+      [/touch-action:pan-x pan-y pinch-zoom/.test(scr),/\.td-m-present \.td-scroller,\.td-m-follow \.td-scroller\{touch-action:pan-x pinch-zoom;overscroll-behavior:contain\}/.test(flat),/overscroll-behavior-x:contain/.test(scr)], [true,true,true]);
+    c('css: the position dots: a row at the top, for the eye only (no taps), the current one a longer mint bar',
+      [/\.td-pager\{[^}]*top:0[^}]*display:flex[^}]*pointer-events:none/.test(flat),/\.td-pager i\.on\{[^}]*background:var\(--td-acc\)/.test(flat)], [true,true]);
     c('css: slides are one screen tall (100dvh root, 100% sections)', [/height:100dvh/.test(flat),/\.td-slide\{[^}]*height:100%/.test(flat)], [true,true]);
     c('css: nothing animates (no keyframes, animation or transition outside the reduced-motion reset)', /@keyframes|animation:|transition:/.test(rm[0]), false);
     c('css: reduced-motion block present', rm.length, 2);

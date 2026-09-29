@@ -66,14 +66,17 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('the ordinary case is unchanged: a share leads', r[1], 'pct'); }
 
   console.log('\n-- F3: "why here" cards never drop the qualifier --');
+  // v10.40: the board's "why here" figures are the "Here in {town}" slide's facts now, worded by the
+  // same caseTrioItem(); these read the words from it (trio: the model's three, as the cards were).
+  const TRIO=`(M=>{ const d=caseDeck(M); const t=d.slides.find(s=>s.type==='trio'); return t?t.items:M.need.trio.map((f,i,a)=>caseTrioItem(f,a.map(g=>caseTrioItem(g,false)).reduce((n,x)=>n+x.label.length,0)>(CASE_TRIO_BUDGET[M.lang]||250))); })`;
   { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'board'},{ctx:${ctx(`(m,k)=>{ m.kidsShare=28; m.moe.kidsShare=1.5; k.kidsShare=26; k.moe.kidsShare=0.3; }`)},now:${NOW}});
-      const f=M.need.trio.find(f=>f.key==='kidsShare'); const t=caseDeck(M).slides.find(s=>s.type==='trio'); return {cmp:f&&f.cmp.dir,card:t&&t.items[M.need.trio.indexOf(f)]}; })()`);
+      const f=M.need.trio.find(f=>f.key==='kidsShare'); const t={items:(${TRIO})(M)}; return {cmp:f&&f.cmp.dir,card:t&&t.items[M.need.trio.indexOf(f)]}; })()`);
     c('28% (significantly higher) against 26%: percentages both sides, never "1 in 4 … County: more than 1 in 4"', [r.cmp,r.card&&r.card.value,r.card&&/County: 26%\./.test(r.card.label),r.card&&/1 in 4/.test(r.card.label)], ['higher','28%',true,false]); }
-  { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'elders'},{ctx:${ctx(`(m,k)=>{ m.singleParent=62; m.moe.singleParent=8; }`)},now:${NOW}}); const t=caseDeck(M).slides.find(s=>s.type==='trio'); return t?t.items.filter(i=>/single parent|Single/.test(i.label)):[]; })()`);
+  { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'elders'},{ctx:${ctx(`(m,k)=>{ m.singleParent=62; m.moe.singleParent=8; }`)},now:${NOW}}); const t={items:(${TRIO})(M)}; return t?t.items.filter(i=>/single parent|Single/.test(i.label)):[]; })()`);
     c('62% single-parent families read 62%, never a bare "1 in 2"', r.map(i=>i.value), ['62%']); }
-  { const r=P.J(`(()=>{ const M=caseModel('prayer-box',{type:'board',group:'deacons'},{ctx:${ctx(`(m,k)=>{ m.renters=65; m.moe.renters=4; }`)},now:${NOW},lang:'es'}); const t=caseDeck(M).slides.find(s=>s.type==='trio'); return t?t.items.filter(i=>/alquil|Inquilin|Hogares que alquilan/i.test(i.label)).map(i=>i.value):[]; })()`);
+  { const r=P.J(`(()=>{ const M=caseModel('prayer-box',{type:'board',group:'deacons'},{ctx:${ctx(`(m,k)=>{ m.renters=65; m.moe.renters=4; }`)},now:${NOW},lang:'es'}); const t={items:(()=>{ const p=LANG; LANG='es'; try{ return (${TRIO})(M); }finally{ LANG=p; } })()}; return t?t.items.filter(i=>/alquil|Inquilin|Hogares que alquilan/i.test(i.label)).map(i=>i.value):[]; })()`);
     c('ES: 65% renters read 65%, never "1 de cada 2"', r.every(v=>v==='65%')&&r.length>0, true); }
-  { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); const t=caseDeck(M).slides.find(s=>s.type==='trio');
+  { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); const t={items:(${TRIO})(M)};
       return M.need.trio.map((f,i)=>({w:f.freqWord,d:f.den,cd:f.countyDen,v:t.items[i].value})); })()`);
     c('"1 in N" stays exactly where it is "about 1 in N" here and a different N in the county', r.every(x=>/ in /.test(x.v)===(x.w==='about'&&x.d!==x.cd)), true); }
 
@@ -84,7 +87,10 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('(the SMALL church, three costly ministries chosen: start-up and monthly already overdrawn)', r.free.map(v=>v<0), [true,true]);
     c('capacity: this ministry’s own shortfall, in one money line', r.gaps, ['Short by $75 of the start-up budget · $25 a month']);
     c('ask: the same shortfall (the slide’s short form), and the earlier overdraft on a line of its own', r.ask, [['Left after this','Short by $75 to start · $25 a month'],['Already over budget',`$${(-r.free[0]).toLocaleString('en-US')} to start · $${-r.free[1]} a month`]]);
-    c('an earlier overdraft takes the verse’s place on the ask slide (seven rows fit a phone; measured in Chrome)', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='ask').verse`), null);
+    // v10.40 (the pastor asked for a verse on every slide): beside the overdraft row the ask keeps
+    // a short verse (100 characters at most in either language; seven rows and it fit a phone, measured in Chrome)
+    { const v=P.J(`(()=>{ const d=caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})); const s=d.slides.find(s=>s.type==='ask'); const id=s.verse&&CASE_VERSES.find(x=>x.en.ref+' · KJV'===s.verse.ref).id; const L=CASE_VERSES.find(x=>x.id===id); return {rows:s.rows.length,max:L?Math.max(L.en.text.length,L.es.text.length):null}; })()`);
+      c('an earlier overdraft row still leaves room for a short verse on the ask slide', [v.rows,v.max!=null&&v.max<=100], [7,true]); }
     c('the treasurer hears the shortfall, never "$0 … remains"', [/\$0 of the start-up budget/.test(r.cost),/the budget is short by \$1,875 of the start-up budget and \$65 a month/.test(r.cost)], [false,true]); }
   { const r=P.J(`caseDeck(caseModel('vbs',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='capacity').gaps`);
     c('a ministry that needs nothing a month is never "Short by $0 a month"', r.some(g=>/\$0\b/.test(g)), false); }
@@ -96,10 +102,11 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   own(FX.MEDIUM,[]);
   { const r=P.J(`caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}).questions.find(q=>q.id==='board.cost').a`);
     c('with money to spare the answer still says what remains', /After it, \$[\d,]+ of the start-up budget and \$[\d,]+ a month remains in the budget\./.test(r), true);
-    c('…and the ask slide keeps Luke 14:28', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='ask').verse.ref`), 'Luke 14:28 · KJV'); }
+    // v10.40: the board's Luke 14:28 counts the cost on the capacity slide (the ask carries its own verse)
+    c('…and Luke 14:28 is on the capacity slide', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='capacity').verse.ref`), 'Luke 14:28 · KJV'); }
 
   console.log('\n-- F7: punctuation on shared slides --');
-  { const r=P.J(`caseDeck(caseModel('interpreter-bank',{type:'board',group:'elders'},{now:${NOW},lang:'es'})).slides.find(s=>s.type==='trio').items.map(i=>i.label)`);
+  { const r=P.J(`(()=>{ const M=caseModel('interpreter-bank',{type:'board',group:'elders'},{now:${NOW},lang:'es'}); const p=LANG; LANG='es'; try{ return (${TRIO})(M).map(i=>i.label).concat(M.place.facts.map(f=>f.label)); }finally{ LANG=p; } })()`);
     c('ES: "Nacidos fuera de EE. UU." takes no second full stop', r.some(l=>/\.\./.test(l)), false); }
   own(FX.SMALL,[]);
   { const r=P.J(`caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}).capacity`);
@@ -282,7 +289,9 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   console.log('\n-- the builder: tests F2, V4 --');
   { const L=page(); await sleep(1100);
     L.E(`openTool('case');`);
-    c('(before a survey: the landing and its sample card show)', [L.q('#casep').hidden,/Type the church address above to begin/.test(L.txt('#casep')||'')], [false,true]);
+    // Updated in v10.40.0 (the pastor: "why would there be two places to put your address?"):
+    // with no church mapped yet the landing is the first-time card, not "type the address above".
+    c('(before a survey: the landing and its sample card show)', [L.q('#casep').hidden,/First, map your church’s neighbourhood/.test(L.txt('#casep')||'')], [false,true]);
     L.E(`DATA=${JSON.stringify(D)};SCOPE="tract"; CAP=null; capSave(${JSON.stringify(FX.MEDIUM)}); document.querySelector('.ask').style.display='none'; render();`);
     c('the survey loads: the landing goes, one sample card, the builder shows', [L.q('#casep').hidden,L.txt('#casep'),L.qa('[data-cs-sample]').length,!!L.q('#cs-s1')], [true,'',1,true]);
     c('V4: an empty live-link line is hidden (display:none beats the author rule)', /\.cs-room\[hidden\]\{display:none\}/.test(html), true);

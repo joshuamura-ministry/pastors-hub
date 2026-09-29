@@ -1,0 +1,1121 @@
+{
+ "_about": "Bible Gateway, fetched 29 Sep 2026 (v10.40.0): the printed text of every passage Terrain quotes, KJV and Reina-Valera Antigua 1909 (RVA), verse numbers, footnotes and headings left out, verses of a range joined by one space. tests/v40-accuracy.test.js holds every Scripture string in index.html, and every quoted verse in the Idea Library source (tools/ideas-src), to these (Numbers 6:24, Psalm 46:1 and Proverbs 17:22 fetched for the library in the v10.40.0 review pass). Public domain texts.",
+ "passages": {
+  "1 Corinthians 12:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A18&version=KJV",
+    "heading": "1 Corinthians 12:18",
+    "text": "But now hath God set the members every one of them in the body, as it hath pleased him."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A18&version=RVA",
+    "heading": "1 Corintios 12:18",
+    "text": "Mas ahora Dios ha colocado los miembros cada uno de ellos en el cuerpo, como quiso."
+   }
+  },
+  "1 Corinthians 12:27": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A27&version=KJV",
+    "heading": "1 Corinthians 12:27",
+    "text": "Now ye are the body of Christ, and members in particular."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A27&version=RVA",
+    "heading": "1 Corintios 12:27",
+    "text": "Pues vosotros sois el cuerpo de Cristo, y miembros en parte."
+   }
+  },
+  "1 Corinthians 12:28": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A28&version=KJV",
+    "heading": "1 Corinthians 12:28",
+    "text": "And God hath set some in the church, first apostles, secondarily prophets, thirdly teachers, after that miracles, then gifts of healings, helps, governments, diversities of tongues."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A28&version=RVA",
+    "heading": "1 Corintios 12:28",
+    "text": "Y á unos puso Dios en la iglesia, primeramente apóstoles, luego profetas, lo tercero doctores; luego facultades; luego dones de sanidades, ayudas, gobernaciones, géneros de lenguas."
+   }
+  },
+  "1 Corinthians 12:4-5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A4-5&version=KJV",
+    "heading": "1 Corinthians 12:4-5",
+    "text": "Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A4-5&version=RVA",
+    "heading": "1 Corintios 12:4-5",
+    "text": "Empero hay repartimiento de dones; mas el mismo Espíritu es. Y hay repartimiento de ministerios; mas el mismo Señor es."
+   }
+  },
+  "1 Corinthians 12:4-7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A4-7&version=KJV",
+    "heading": "1 Corinthians 12:4-7",
+    "text": "Now there are diversities of gifts, but the same Spirit. And there are differences of administrations, but the same Lord. And there are diversities of operations, but it is the same God which worketh all in all. But the manifestation of the Spirit is given to every man to profit withal."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A4-7&version=RVA",
+    "heading": "1 Corintios 12:4-7",
+    "text": "Empero hay repartimiento de dones; mas el mismo Espíritu es. Y hay repartimiento de ministerios; mas el mismo Señor es. Y hay repartimiento de operaciones; mas el mismo Dios es el que obra todas las cosas en todos. Empero á cada uno le es dada manifestación del Espíritu para provecho."
+   }
+  },
+  "1 Corinthians 14:40": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=KJV",
+    "heading": "1 Corinthians 14:40",
+    "text": "Let all things be done decently and in order."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=RVA",
+    "heading": "1 Corintios 14:40",
+    "text": "Empero hagáse todo decentemente y con orden."
+   }
+  },
+  "1 Corinthians 3:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+3%3A6&version=KJV",
+    "heading": "1 Corinthians 3:6",
+    "text": "I have planted, Apollos watered; but God gave the increase."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+3%3A6&version=RVA",
+    "heading": "1 Corintios 3:6",
+    "text": "Yo planté, Apolos regó: mas Dios ha dado el crecimiento."
+   }
+  },
+  "1 Corinthians 4:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+4%3A2&version=KJV",
+    "heading": "1 Corinthians 4:2",
+    "text": "Moreover it is required in stewards, that a man be found faithful."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Corinthians+4%3A2&version=RVA",
+    "heading": "1 Corintios 4:2",
+    "text": "Mas ahora se requiere en los dispensadores, que cada uno sea hallado fiel."
+   }
+  },
+  "1 John 4:1": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+John+4%3A1&version=KJV",
+    "heading": "1 John 4:1",
+    "text": "Beloved, believe not every spirit, but try the spirits whether they are of God: because many false prophets are gone out into the world."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+John+4%3A1&version=RVA",
+    "heading": "1 Juan 4:1",
+    "text": "AMADOS, no creáis á todo espíritu, sino probad los espíritus si son de Dios; porque muchos falsos profetas son salidos en el mundo."
+   }
+  },
+  "1 Peter 4:10": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A10&version=KJV",
+    "heading": "1 Peter 4:10",
+    "text": "As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A10&version=RVA",
+    "heading": "1 Pedro 4:10",
+    "text": "Cada uno según el don que ha recibido, adminístrelo á los otros, como buenos dispensadores de las diferentes gracias de Dios."
+   }
+  },
+  "1 Peter 4:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A9&version=KJV",
+    "heading": "1 Peter 4:9",
+    "text": "Use hospitality one to another without grudging."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A9&version=RVA",
+    "heading": "1 Pedro 4:9",
+    "text": "Hospedaos los unos á los otros sin murmuraciones."
+   }
+  },
+  "1 Peter 5:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+5%3A2&version=KJV",
+    "heading": "1 Peter 5:2",
+    "text": "Feed the flock of God which is among you, taking the oversight thereof, not by constraint, but willingly; not for filthy lucre, but of a ready mind;"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Peter+5%3A2&version=RVA",
+    "heading": "1 Pedro 5:2",
+    "text": "Apacentad la grey de Dios que está entre vosotros, teniendo cuidado de ella, no por fuerza, sino voluntariamente; no por ganancia deshonesta, sino de un ánimo pronto;"
+   }
+  },
+  "1 Thessalonians 5:21": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Thessalonians+5%3A21&version=KJV",
+    "heading": "1 Thessalonians 5:21",
+    "text": "Prove all things; hold fast that which is good."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Thessalonians+5%3A21&version=RVA",
+    "heading": "1 Tesalonicenses 5:21",
+    "text": "Examinadlo todo; retened lo bueno."
+   }
+  },
+  "1 Timothy 2:1": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Timothy+2%3A1&version=KJV",
+    "heading": "1 Timothy 2:1",
+    "text": "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men;"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Timothy+2%3A1&version=RVA",
+    "heading": "1 Timoteo 2:1",
+    "text": "AMONESTO pues, ante todas cosas, que se hagan rogativas, oraciones, peticiones, hacimientos de gracias, por todos los hombres;"
+   }
+  },
+  "1 Timothy 4:12": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Timothy+4%3A12&version=KJV",
+    "heading": "1 Timothy 4:12",
+    "text": "Let no man despise thy youth; but be thou an example of the believers, in word, in conversation, in charity, in spirit, in faith, in purity."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Timothy+4%3A12&version=RVA",
+    "heading": "1 Timoteo 4:12",
+    "text": "Ninguno tenga en poco tu juventud; pero sé ejemplo de los fieles en palabra, en conversación, en caridad, en espíritu, en fe, en limpieza."
+   }
+  },
+  "2 Corinthians 8:21": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Corinthians+8%3A21&version=KJV",
+    "heading": "2 Corinthians 8:21",
+    "text": "Providing for honest things, not only in the sight of the Lord, but also in the sight of men."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Corinthians+8%3A21&version=RVA",
+    "heading": "2 Corintios 8:21",
+    "text": "Procurando las cosas honestas, no sólo delante del Señor, mas aun delante de los hombres."
+   }
+  },
+  "2 Corinthians 9:7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=KJV",
+    "heading": "2 Corinthians 9:7",
+    "text": "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=RVA",
+    "heading": "2 Corintios 9:7",
+    "text": "Cada uno dé como propuso en su corazón: no con tristeza, ó por necesidad; porque Dios ama el dador alegre."
+   }
+  },
+  "2 Timothy 1:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+1%3A5&version=KJV",
+    "heading": "2 Timothy 1:5",
+    "text": "When I call to remembrance the unfeigned faith that is in thee, which dwelt first in thy grandmother Lois, and thy mother Eunice; and I am persuaded that in thee also."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+1%3A5&version=RVA",
+    "heading": "2 Timoteo 1:5",
+    "text": "Trayendo á la memoria la fe no fingida que hay en ti, la cual residió primero en tu abuela Loida, y en tu madre Eunice; y estoy cierto que en ti también."
+   }
+  },
+  "2 Timothy 2:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+2%3A2&version=KJV",
+    "heading": "2 Timothy 2:2",
+    "text": "And the things that thou hast heard of me among many witnesses, the same commit thou to faithful men, who shall be able to teach others also."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+2%3A2&version=RVA",
+    "heading": "2 Timoteo 2:2",
+    "text": "Y lo que has oído de mí entre muchos testigos, esto encarga á los hombres fieles que serán idóneos para enseñar también á otros."
+   }
+  },
+  "2 Timothy 4:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A2&version=KJV",
+    "heading": "2 Timothy 4:2",
+    "text": "Preach the word; be instant in season, out of season; reprove, rebuke, exhort with all long suffering and doctrine."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A2&version=RVA",
+    "heading": "2 Timoteo 4:2",
+    "text": "Que prediques la palabra; que instes á tiempo y fuera de tiempo; redarguye, reprende; exhorta con toda paciencia y doctrina."
+   }
+  },
+  "2 Timothy 4:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A5&version=KJV",
+    "heading": "2 Timothy 4:5",
+    "text": "But watch thou in all things, endure afflictions, do the work of an evangelist, make full proof of thy ministry."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A5&version=RVA",
+    "heading": "2 Timoteo 4:5",
+    "text": "Pero tú vela en todo, soporta las aflicciones, haz la obra de evangelista, cumple tu ministerio."
+   }
+  },
+  "3 John 1:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=3+John+1%3A2&version=KJV",
+    "heading": "3 John 2",
+    "text": "Beloved, I wish above all things that thou mayest prosper and be in health, even as thy soul prospereth."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=3+John+1%3A2&version=RVA",
+    "heading": "3 Juan 2",
+    "text": "Amado, yo deseo que tú seas prosperado en todas cosas, y que tengas salud, así como tu alma está en prosperidad."
+   }
+  },
+  "Acts 17:26": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+17%3A26&version=KJV",
+    "heading": "Acts 17:26",
+    "text": "And hath made of one blood all nations of men for to dwell on all the face of the earth, and hath determined the times before appointed, and the bounds of their habitation;"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+17%3A26&version=RVA",
+    "heading": "Hechos 17:26",
+    "text": "Y de una sangre ha hecho todo el linaje de los hombres, para que habitasen sobre toda la faz de la tierra; y les ha prefijado el orden de los tiempos, y los términos de los habitación de ellos;"
+   }
+  },
+  "Acts 2:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+2%3A8&version=KJV",
+    "heading": "Acts 2:8",
+    "text": "And how hear we every man in our own tongue, wherein we were born?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+2%3A8&version=RVA",
+    "heading": "Hechos 2:8",
+    "text": "¿Cómo, pues, les oímos nosotros hablar cada uno en nuestra lengua en que somos nacidos?"
+   }
+  },
+  "Acts 6:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+6%3A3&version=KJV",
+    "heading": "Acts 6:3",
+    "text": "Wherefore, brethren, look ye out among you seven men of honest report, full of the Holy Ghost and wisdom, whom we may appoint over this business."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+6%3A3&version=RVA",
+    "heading": "Hechos 6:3",
+    "text": "Buscad pues, hermanos, siete varones de vosotros de buen testimonio, llenos de Espíritu Santo y de sabiduría, los cuales pongamos en esta obra."
+   }
+  },
+  "Acts 6:7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+6%3A7&version=KJV",
+    "heading": "Acts 6:7",
+    "text": "And the word of God increased; and the number of the disciples multiplied in Jerusalem greatly; and a great company of the priests were obedient to the faith."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+6%3A7&version=RVA",
+    "heading": "Hechos 6:7",
+    "text": "Y crecía la palabra del Señor, y el número de los discípulos se multiplicaba mucho en Jerusalem: también una gran multitud de los sacerdotes obedecía á la fe."
+   }
+  },
+  "Acts 8:31": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+8%3A31&version=KJV",
+    "heading": "Acts 8:31",
+    "text": "And he said, How can I, except some man should guide me? And he desired Philip that he would come up and sit with him."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Acts+8%3A31&version=RVA",
+    "heading": "Hechos 8:31",
+    "text": "Y dijo: ¿Y cómo podré, si alguno no me enseñare? Y rogó á Felipe que subiese, y se sentase con él."
+   }
+  },
+  "Deuteronomy 10:19": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+10%3A19&version=KJV",
+    "heading": "Deuteronomy 10:19",
+    "text": "Love ye therefore the stranger: for ye were strangers in the land of Egypt."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+10%3A19&version=RVA",
+    "heading": "Deuteronomio 10:19",
+    "text": "Amaréis pues al extranjero: porque extranjeros fuisteis vosotros en tierra de Egipto."
+   }
+  },
+  "Deuteronomy 15:11": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+15%3A11&version=KJV",
+    "heading": "Deuteronomy 15:11",
+    "text": "For the poor shall never cease out of the land: therefore I command thee, saying, Thou shalt open thine hand wide unto thy brother, to thy poor, and to thy needy, in thy land."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+15%3A11&version=RVA",
+    "heading": "Deuteronomio 15:11",
+    "text": "Porque no faltarán menesterosos de en medio de la tierra; por eso yo te mando, diciendo: Abrirás tu mano á tu hermano, á tu pobre, y á tu menesteroso en tu tierra."
+   }
+  },
+  "Deuteronomy 31:12": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+31%3A12&version=KJV",
+    "heading": "Deuteronomy 31:12",
+    "text": "Gather the people together, men and women, and children, and thy stranger that is within thy gates, that they may hear, and that they may learn, and fear the LORD your God, and observe to do all the words of this law:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Deuteronomy+31%3A12&version=RVA",
+    "heading": "Deuteronomio 31:12",
+    "text": "Harás congregar el pueblo, varones y mujeres y niños, y tus extranjeros que estuvieren en tus ciudades, para que oigan y aprendan, y teman á Jehová vuestro Dios, y cuiden de poner por obra todas las palabras de esta ley:"
+   }
+  },
+  "Ecclesiastes 11:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Ecclesiastes+11%3A6&version=KJV",
+    "heading": "Ecclesiastes 11:6",
+    "text": "In the morning sow thy seed, and in the evening withhold not thine hand: for thou knowest not whether shall prosper, either this or that, or whether they both shall be alike good."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Ecclesiastes+11%3A6&version=RVA",
+    "heading": "Eclesiastés 11:6",
+    "text": "Por la mañana siembra tu simiente, y á la tarde no dejes reposar tu mano: porque tú no sabes cuál es lo mejor, si esto ó lo otro, ó si ambas á dos cosas son buenas."
+   }
+  },
+  "Ecclesiastes 4:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Ecclesiastes+4%3A9&version=KJV",
+    "heading": "Ecclesiastes 4:9",
+    "text": "Two are better than one; because they have a good reward for their labour."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Ecclesiastes+4%3A9&version=RVA",
+    "heading": "Eclesiastés 4:9",
+    "text": "Mejores son dos que uno; porque tienen mejor paga de su trabajo."
+   }
+  },
+  "Ephesians 4:11-12": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Ephesians+4%3A11-12&version=KJV",
+    "heading": "Ephesians 4:11-12",
+    "text": "And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers; For the perfecting of the saints, for the work of the ministry, for the edifying of the body of Christ:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Ephesians+4%3A11-12&version=RVA",
+    "heading": "Efesios 4:11-12",
+    "text": "Y él mismo dió unos, ciertamente apóstoles; y otros, profetas; y otros, evangelistas; y otros, pastores y doctores; Para perfección de los santos, para la obra del ministerio, para edificación del cuerpo de Cristo;"
+   }
+  },
+  "Exodus 18:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+18%3A18&version=KJV",
+    "heading": "Exodus 18:18",
+    "text": "Thou wilt surely wear away, both thou, and this people that is with thee: for this thing is too heavy for thee; thou art not able to perform it thyself alone."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+18%3A18&version=RVA",
+    "heading": "Éxodo 18:18",
+    "text": "Desfallecerás del todo, tú, y también este pueblo que está contigo; porque el negocio es demasiado pesado para ti; no podrás hacerlo tú solo."
+   }
+  },
+  "Exodus 31:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+31%3A3&version=KJV",
+    "heading": "Exodus 31:3",
+    "text": "And I have filled him with the spirit of God, in wisdom, and in understanding, and in knowledge, and in all manner of workmanship,"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+31%3A3&version=RVA",
+    "heading": "Éxodo 31:3",
+    "text": "Y lo he henchido de espíritu de Dios, en sabiduría, y en inteligencia, y en ciencia, y en todo artificio,"
+   }
+  },
+  "Ezra 7:10": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Ezra+7%3A10&version=KJV",
+    "heading": "Ezra 7:10",
+    "text": "For Ezra had prepared his heart to seek the law of the LORD, and to do it, and to teach in Israel statutes and judgments."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Ezra+7%3A10&version=RVA",
+    "heading": "Esdras 7:10",
+    "text": "Porque Esdras había preparado su corazón para inquirir la ley de Jehová, y para hacer y enseñar á Israel mandamientos y juicios."
+   }
+  },
+  "Galatians 6:10": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Galatians+6%3A10&version=KJV",
+    "heading": "Galatians 6:10",
+    "text": "As we have therefore opportunity, let us do good unto all men, especially unto them who are of the household of faith."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Galatians+6%3A10&version=RVA",
+    "heading": "Gálatas 6:10",
+    "text": "Así que, entre tanto que tenemos tiempo, hagamos bien á todos, y mayormente á los domésticos de la fe."
+   }
+  },
+  "Galatians 6:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Galatians+6%3A9&version=KJV",
+    "heading": "Galatians 6:9",
+    "text": "And let us not be weary in well doing: for in due season we shall reap, if we faint not."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Galatians+6%3A9&version=RVA",
+    "heading": "Gálatas 6:9",
+    "text": "No nos cansemos, pues, de hacer bien; que á su tiempo segaremos, si no hubiéremos desmayado."
+   }
+  },
+  "Habakkuk 2:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Habakkuk+2%3A2&version=KJV",
+    "heading": "Habakkuk 2:2",
+    "text": "And the LORD answered me, and said, Write the vision, and make it plain upon tables, that he may run that readeth it."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Habakkuk+2%3A2&version=RVA",
+    "heading": "Habacuc 2:2",
+    "text": "Y Jehová me respondió, y dijo: Escribe la visión, y declárala en tablas, para que corra el que leyere en ella."
+   }
+  },
+  "Hebrews 11:1": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+11%3A1&version=KJV",
+    "heading": "Hebrews 11:1",
+    "text": "Now faith is the substance of things hoped for, the evidence of things not seen."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+11%3A1&version=RVA",
+    "heading": "Hebreos 11:1",
+    "text": "ES pues la fe la sustancia de las cosas que se esperan, la demostración de las cosas que no se ven."
+   }
+  },
+  "Hebrews 13:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+13%3A2&version=KJV",
+    "heading": "Hebrews 13:2",
+    "text": "Be not forgetful to entertain strangers: for thereby some have entertained angels unawares."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+13%3A2&version=RVA",
+    "heading": "Hebreos 13:2",
+    "text": "No olvidéis la hospitalidad, porque por ésta algunos, sin saberlo, hospedaron ángeles."
+   }
+  },
+  "Hebrews 3:13": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+3%3A13&version=KJV",
+    "heading": "Hebrews 3:13",
+    "text": "But exhort one another daily, while it is called To day; lest any of you be hardened through the deceitfulness of sin."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Hebrews+3%3A13&version=RVA",
+    "heading": "Hebreos 3:13",
+    "text": "Antes exhortaos los unos á los otros cada día, entre tanto que se dice Hoy; porque ninguno de vosotros se endurezca con engaño de pecado:"
+   }
+  },
+  "Isaiah 58:12": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+58%3A12&version=KJV",
+    "heading": "Isaiah 58:12",
+    "text": "And they that shall be of thee shall build the old waste places: thou shalt raise up the foundations of many generations; and thou shalt be called, The repairer of the breach, The restorer of paths to dwell in."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+58%3A12&version=RVA",
+    "heading": "Isaías 58:12",
+    "text": "Y edificarán los de ti los desiertos antiguos; los cimientos de generación y generación levantarás: y serás llamado reparador de portillos, restaurador de calzadas para habitar."
+   }
+  },
+  "Isaiah 58:7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+58%3A7&version=KJV",
+    "heading": "Isaiah 58:7",
+    "text": "Is it not to deal thy bread to the hungry, and that thou bring the poor that are cast out to thy house? when thou seest the naked, that thou cover him; and that thou hide not thyself from thine own flesh?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+58%3A7&version=RVA",
+    "heading": "Isaías 58:7",
+    "text": "¿No es que partas tu pan con el hambriento, y á los pobres errantes metas en casa; que cuando vieres al desnudo, lo cubras, y no te escondas de tu carne?"
+   }
+  },
+  "Isaiah 65:21": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+65%3A21&version=KJV",
+    "heading": "Isaiah 65:21",
+    "text": "And they shall build houses, and inhabit them; and they shall plant vineyards, and eat the fruit of them."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+65%3A21&version=RVA",
+    "heading": "Isaías 65:21",
+    "text": "Y edificarán casas, y morarán en ellas; plantarán viñas, y comerán el fruto de ellas."
+   }
+  },
+  "Isaiah 6:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+6%3A8&version=KJV",
+    "heading": "Isaiah 6:8",
+    "text": "Also I heard the voice of the Lord, saying, Whom shall I send, and who will go for us? Then said I, Here am I; send me."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Isaiah+6%3A8&version=RVA",
+    "heading": "Isaías 6:8",
+    "text": "Después oí la voz del Señor, que decía: ¿A quién enviaré, y quién nos irá? Entonces respondí yo: Heme aquí, envíame á mí."
+   }
+  },
+  "James 1:27": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=James+1%3A27&version=KJV",
+    "heading": "James 1:27",
+    "text": "Pure religion and undefiled before God and the Father is this, To visit the fatherless and widows in their affliction, and to keep himself unspotted from the world."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=James+1%3A27&version=RVA",
+    "heading": "Santiago 1:27",
+    "text": "La religión pura y sin mácula delante de Dios y Padre es esta: Visitar los huérfanos y las viudas en sus tribulaciones, y guardarse sin mancha de este mundo."
+   }
+  },
+  "James 1:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=James+1%3A5&version=KJV",
+    "heading": "James 1:5",
+    "text": "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=James+1%3A5&version=RVA",
+    "heading": "Santiago 1:5",
+    "text": "Y si alguno de vosotros tiene falta de sabiduría, demándela á Dios, el cual da á todos abundantemente, y no zahiere; y le será dada."
+   }
+  },
+  "James 5:14": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=James+5%3A14&version=KJV",
+    "heading": "James 5:14",
+    "text": "Is any sick among you? let him call for the elders of the church; and let them pray over him, anointing him with oil in the name of the Lord:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=James+5%3A14&version=RVA",
+    "heading": "Santiago 5:14",
+    "text": "¿Está alguno enfermo entre vosotros? llame á los ancianos de la iglesia, y oren por él, ungiéndole con aceite en el nombre del Señor."
+   }
+  },
+  "Jeremiah 29:7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Jeremiah+29%3A7&version=KJV",
+    "heading": "Jeremiah 29:7",
+    "text": "And seek the peace of the city whither I have caused you to be carried away captives, and pray unto the LORD for it: for in the peace thereof shall ye have peace."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Jeremiah+29%3A7&version=RVA",
+    "heading": "Jeremías 29:7",
+    "text": "Y procurad la paz de la ciudad á la cual os hice traspasar, y rogad por ella á Jehová; porque en su paz tendréis vosotros paz."
+   }
+  },
+  "Job 29:15": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Job+29%3A15&version=KJV",
+    "heading": "Job 29:15",
+    "text": "I was eyes to the blind, and feet was I to the lame."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Job+29%3A15&version=RVA",
+    "heading": "Job 29:15",
+    "text": "Yo era ojos al ciego, Y pies al cojo."
+   }
+  },
+  "Joel 2:28": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Joel+2%3A28&version=KJV",
+    "heading": "Joel 2:28",
+    "text": "And it shall come to pass afterward, that I will pour out my spirit upon all flesh; and your sons and your daughters shall prophesy, your old men shall dream dreams, your young men shall see visions:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Joel+2%3A28&version=RVA",
+    "heading": "Joel 2:28",
+    "text": "Y será que después de esto, derramaré mi Espíritu sobre toda carne, y profetizarán vuestros hijos y vuestras hijas; vuestros viejos soñarán sueños, y vuestros mancebos verán visiones."
+   }
+  },
+  "John 15:13": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=John+15%3A13&version=KJV",
+    "heading": "John 15:13",
+    "text": "Greater love hath no man than this, that a man lay down his life for his friends."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=John+15%3A13&version=RVA",
+    "heading": "Juan 15:13",
+    "text": "Nadie tiene mayor amor que este, que ponga alguno su vida por sus amigos."
+   }
+  },
+  "John 4:35": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=John+4%3A35&version=KJV",
+    "heading": "John 4:35",
+    "text": "Say not ye, There are yet four months, and then cometh harvest? behold, I say unto you, Lift up your eyes, and look on the fields; for they are white already to harvest."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=John+4%3A35&version=RVA",
+    "heading": "Juan 4:35",
+    "text": "¿No decís vosotros: Aun hay cuatro meses hasta que llegue la siega? He aquí os digo: Alzad vuestros ojos, y mirad las regiones, porque ya están blancas para la siega."
+   }
+  },
+  "John 6:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=John+6%3A9&version=KJV",
+    "heading": "John 6:9",
+    "text": "There is a lad here, which hath five barley loaves, and two small fishes: but what are they among so many?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=John+6%3A9&version=RVA",
+    "heading": "Juan 6:9",
+    "text": "Un muchacho está aquí que tiene cinco panes de cebada y dos pececillos; ¿mas qué es esto entre tantos?"
+   }
+  },
+  "Leviticus 19:32": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Leviticus+19%3A32&version=KJV",
+    "heading": "Leviticus 19:32",
+    "text": "Thou shalt rise up before the hoary head, and honour the face of the old man, and fear thy God: I am the LORD."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Leviticus+19%3A32&version=RVA",
+    "heading": "Levítico 19:32",
+    "text": "Delante de las canas te levantarás, y honrarás el rostro del anciano, y de tu Dios tendrás temor: Yo Jehová."
+   }
+  },
+  "Luke 10:37": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+10%3A37&version=KJV",
+    "heading": "Luke 10:37",
+    "text": "And he said, He that shewed mercy on him. Then said Jesus unto him, Go, and do thou likewise."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+10%3A37&version=RVA",
+    "heading": "Lucas 10:37",
+    "text": "Y él dijo: El que usó con él de misericordia. Entonces Jesús le dijo: Ve, y haz tú lo mismo."
+   }
+  },
+  "Luke 14:13": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+14%3A13&version=KJV",
+    "heading": "Luke 14:13",
+    "text": "But when thou makest a feast, call the poor, the maimed, the lame, the blind:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+14%3A13&version=RVA",
+    "heading": "Lucas 14:13",
+    "text": "Mas cuando haces banquete, llama á los pobres, los mancos, los cojos, los ciegos;"
+   }
+  },
+  "Luke 14:28": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+14%3A28&version=KJV",
+    "heading": "Luke 14:28",
+    "text": "For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+14%3A28&version=RVA",
+    "heading": "Lucas 14:28",
+    "text": "Porque ¿cuál de vosotros, queriendo edificar una torre, no cuenta primero sentado los gastos, si tiene lo que necesita para acabarla?"
+   }
+  },
+  "Luke 4:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+4%3A18&version=KJV",
+    "heading": "Luke 4:18",
+    "text": "The Spirit of the Lord is upon me, because he hath anointed me to preach the gospel to the poor; he hath sent me to heal the brokenhearted, to preach deliverance to the captives, and recovering of sight to the blind, to set at liberty them that are bruised,"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+4%3A18&version=RVA",
+    "heading": "Lucas 4:18",
+    "text": "El Espíritu del Señor es sobre mí, Por cuanto me ha ungido para dar buenas nuevas á los pobres: Me ha enviado para sanar á los quebrantados de corazón; Para pregonar á los cautivos libertad, Y á los ciegos vista; Para poner en libertad á los quebrantados:"
+   }
+  },
+  "Luke 9:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+9%3A2&version=KJV",
+    "heading": "Luke 9:2",
+    "text": "And he sent them to preach the kingdom of God, and to heal the sick."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Luke+9%3A2&version=RVA",
+    "heading": "Lucas 9:2",
+    "text": "Y los envió á que predicasen el reino de Dios, y que sanasen á los enfermos."
+   }
+  },
+  "Mark 10:14": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Mark+10%3A14&version=KJV",
+    "heading": "Mark 10:14",
+    "text": "But when Jesus saw it, he was much displeased, and said unto them, Suffer the little children to come unto me, and forbid them not: for of such is the kingdom of God."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Mark+10%3A14&version=RVA",
+    "heading": "Marcos 10:14",
+    "text": "Y viéndolo Jesús, se enojó, y les dijo: Dejad los niños venir, y no se lo estorbéis; porque de los tales es el reino de Dios."
+   }
+  },
+  "Matthew 25:40": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+25%3A40&version=KJV",
+    "heading": "Matthew 25:40",
+    "text": "And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+25%3A40&version=RVA",
+    "heading": "Mateo 25:40",
+    "text": "Y respondiendo el Rey, les dirá: De cierto os digo que en cuanto lo hicisteis á uno de estos mis hermanos pequeñitos, á mí lo hicisteis."
+   }
+  },
+  "Matthew 5:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+5%3A9&version=KJV",
+    "heading": "Matthew 5:9",
+    "text": "Blessed are the peacemakers: for they shall be called the children of God."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+5%3A9&version=RVA",
+    "heading": "Mateo 5:9",
+    "text": "Bienaventurados los pacificadores: porque ellos serán llamados hijos de Dios."
+   }
+  },
+  "Matthew 9:36": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+9%3A36&version=KJV",
+    "heading": "Matthew 9:36",
+    "text": "But when he saw the multitudes, he was moved with compassion on them, because they fainted, and were scattered abroad, as sheep having no shepherd."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+9%3A36&version=RVA",
+    "heading": "Mateo 9:36",
+    "text": "Y viendo las gentes, tuvo compasión de ellas; porque estaban derramadas y esparcidas como ovejas que no tienen pastor."
+   }
+  },
+  "Matthew 9:37-38": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+9%3A37-38&version=KJV",
+    "heading": "Matthew 9:37-38",
+    "text": "Then saith he unto his disciples, The harvest truly is plenteous, but the labourers are few; Pray ye therefore the Lord of the harvest, that he will send forth labourers into his harvest."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+9%3A37-38&version=RVA",
+    "heading": "Mateo 9:37-38",
+    "text": "Entonces dice á sus discípulos: A la verdad la mies es mucha, mas los obreros pocos. Rogad, pues, al Señor de la mies, que envíe obreros á su mies."
+   }
+  },
+  "Micah 6:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Micah+6%3A8&version=KJV",
+    "heading": "Micah 6:8",
+    "text": "He hath shewed thee, O man, what is good; and what doth the LORD require of thee, but to do justly, and to love mercy, and to walk humbly with thy God?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Micah+6%3A8&version=RVA",
+    "heading": "Miqueas 6:8",
+    "text": "Oh hombre, él te ha declarado qué sea lo bueno, y qué pida de ti Jehová: solamente hacer juicio, y amar misericordia, y humillarte para andar con tu Dios."
+   }
+  },
+  "Nehemiah 2:17": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A17&version=KJV",
+    "heading": "Nehemiah 2:17",
+    "text": "Then said I unto them, Ye see the distress that we are in, how Jerusalem lieth waste, and the gates thereof are burned with fire: come, and let us build up the wall of Jerusalem, that we be no more a reproach."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A17&version=RVA",
+    "heading": "Nehemías 2:17",
+    "text": "Díjeles pues: Vosotros veis el mal en que estamos, que Jerusalem está desierta, y sus puertas consumidas del fuego: venid, y edifiquemos el muro de Jerusalem, y no seamos más en oprobio."
+   }
+  },
+  "Nehemiah 2:17-18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A17-18&version=KJV",
+    "heading": "Nehemiah 2:17-18",
+    "text": "Then said I unto them, Ye see the distress that we are in, how Jerusalem lieth waste, and the gates thereof are burned with fire: come, and let us build up the wall of Jerusalem, that we be no more a reproach. Then I told them of the hand of my God which was good upon me; as also the king's words that he had spoken unto me. And they said, Let us rise up and build. So they strengthened their hands for this good work."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A17-18&version=RVA",
+    "heading": "Nehemías 2:17-18",
+    "text": "Díjeles pues: Vosotros veis el mal en que estamos, que Jerusalem está desierta, y sus puertas consumidas del fuego: venid, y edifiquemos el muro de Jerusalem, y no seamos más en oprobio. Entonces les declaré cómo la mano de mi Dios era buena sobre mí, y asimismo las palabras del rey, que me había dicho. Y dijeron: Levantémonos, y edifiquemos. Así esforzaron sus manos para bien."
+   }
+  },
+  "Nehemiah 2:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A18&version=KJV",
+    "heading": "Nehemiah 2:18",
+    "text": "Then I told them of the hand of my God which was good upon me; as also the king's words that he had spoken unto me. And they said, Let us rise up and build. So they strengthened their hands for this good work."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A18&version=RVA",
+    "heading": "Nehemías 2:18",
+    "text": "Entonces les declaré cómo la mano de mi Dios era buena sobre mí, y asimismo las palabras del rey, que me había dicho. Y dijeron: Levantémonos, y edifiquemos. Así esforzaron sus manos para bien."
+   }
+  },
+  "Proverbs 15:22": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+15%3A22&version=KJV",
+    "heading": "Proverbs 15:22",
+    "text": "Without counsel purposes are disappointed: but in the multitude of counsellors they are established."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+15%3A22&version=RVA",
+    "heading": "Proverbios 15:22",
+    "text": "Los pensamientos son frustrados donde no hay consejo; Mas en la multitud de consejeros se afirman."
+   }
+  },
+  "Proverbs 16:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+16%3A3&version=KJV",
+    "heading": "Proverbs 16:3",
+    "text": "Commit thy works unto the LORD, and thy thoughts shall be established."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+16%3A3&version=RVA",
+    "heading": "Proverbios 16:3",
+    "text": "Encomienda á Jehová tus obras, Y tus pensamientos serán afirmados."
+   }
+  },
+  "Proverbs 19:17": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+19%3A17&version=KJV",
+    "heading": "Proverbs 19:17",
+    "text": "He that hath pity upon the poor lendeth unto the LORD; and that which he hath given will he pay him again."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+19%3A17&version=RVA",
+    "heading": "Proverbios 19:17",
+    "text": "A Jehová empresta el que da al pobre, Y él le dará su paga."
+   }
+  },
+  "Proverbs 22:2": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+22%3A2&version=KJV",
+    "heading": "Proverbs 22:2",
+    "text": "The rich and poor meet together: the LORD is the maker of them all."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+22%3A2&version=RVA",
+    "heading": "Proverbios 22:2",
+    "text": "El rico y el pobre se encontraron: A todos ellos hizo Jehová."
+   }
+  },
+  "Proverbs 22:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+22%3A6&version=KJV",
+    "heading": "Proverbs 22:6",
+    "text": "Train up a child in the way he should go: and when he is old, he will not depart from it."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+22%3A6&version=RVA",
+    "heading": "Proverbios 22:6",
+    "text": "Instruye al niño en su carrera: Aun cuando fuere viejo no se apartará de ella."
+   }
+  },
+  "Proverbs 27:17": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+27%3A17&version=KJV",
+    "heading": "Proverbs 27:17",
+    "text": "Iron sharpeneth iron; so a man sharpeneth the countenance of his friend."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+27%3A17&version=RVA",
+    "heading": "Proverbios 27:17",
+    "text": "Hierro con hierro se aguza; Y el hombre aguza el rostro de su amigo."
+   }
+  },
+  "Proverbs 27:23": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+27%3A23&version=KJV",
+    "heading": "Proverbs 27:23",
+    "text": "Be thou diligent to know the state of thy flocks, and look well to thy herds."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+27%3A23&version=RVA",
+    "heading": "Proverbios 27:23",
+    "text": "Considera atentamente el aspecto de tus ovejas; Pon tu corazón á tus rebaños:"
+   }
+  },
+  "Proverbs 31:20": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+31%3A20&version=KJV",
+    "heading": "Proverbs 31:20",
+    "text": "She stretcheth out her hand to the poor; yea, she reacheth forth her hands to the needy."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+31%3A20&version=RVA",
+    "heading": "Proverbios 31:20",
+    "text": "Alargó su mano al pobre, Y extendió sus manos al menesteroso."
+   }
+  },
+  "Proverbs 31:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+31%3A9&version=KJV",
+    "heading": "Proverbs 31:9",
+    "text": "Open thy mouth, judge righteously, and plead the cause of the poor and needy."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs+31%3A9&version=RVA",
+    "heading": "Proverbios 31:9",
+    "text": "Abre tu boca, juzga justicia, Y el derecho del pobre y del menesteroso."
+   }
+  },
+  "Psalm 147:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+147%3A3&version=KJV",
+    "heading": "Psalm 147:3",
+    "text": "He healeth the broken in heart, and bindeth up their wounds."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+147%3A3&version=RVA",
+    "heading": "Salmos 147:3",
+    "text": "El sana á los quebrantados de corazón, Y liga sus heridas."
+   }
+  },
+  "Psalm 68:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+68%3A6&version=KJV",
+    "heading": "Psalm 68:6",
+    "text": "God setteth the solitary in families: he bringeth out those which are bound with chains: but the rebellious dwell in a dry land."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+68%3A6&version=RVA",
+    "heading": "Salmos 68:6",
+    "text": "El Dios que hace habitar en familia los solos; Que saca á los aprisionados con grillos: Mas los rebeldes habitan en sequedad."
+   }
+  },
+  "Psalm 71:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+71%3A18&version=KJV",
+    "heading": "Psalm 71:18",
+    "text": "Now also when I am old and greyheaded, O God, forsake me not; until I have shewed thy strength unto this generation, and thy power to every one that is to come."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+71%3A18&version=RVA",
+    "heading": "Salmos 71:18",
+    "text": "Y aun hasta la vejez y las canas; oh Dios, no me desampares, Hasta que denuncie tu brazo á la posteridad, Tus valentías á todos los que han de venir."
+   }
+  },
+  "Psalm 82:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+82%3A3&version=KJV",
+    "heading": "Psalm 82:3",
+    "text": "Defend the poor and fatherless: do justice to the afflicted and needy."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+82%3A3&version=RVA",
+    "heading": "Salmos 82:3",
+    "text": "Defended al pobre y al huérfano: Haced justicia al afligido y al menesteroso."
+   }
+  },
+  "Psalm 90:17": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+90%3A17&version=KJV",
+    "heading": "Psalm 90:17",
+    "text": "And let the beauty of the LORD our God be upon us: and establish thou the work of our hands upon us; yea, the work of our hands establish thou it."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+90%3A17&version=RVA",
+    "heading": "Salmos 90:17",
+    "text": "Y sea la luz de Jehová nuestro Dios sobre nosotros: Y ordena en nosotros la obra de nuestras manos, La obra de nuestras manos confirma."
+   }
+  },
+  "Revelation 14:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Revelation+14%3A6&version=KJV",
+    "heading": "Revelation 14:6",
+    "text": "And I saw another angel fly in the midst of heaven, having the everlasting gospel to preach unto them that dwell on the earth, and to every nation, and kindred, and tongue, and people,"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Revelation+14%3A6&version=RVA",
+    "heading": "Apocalipsis 14:6",
+    "text": "Y vi otro ángel volar por en medio del cielo, que tenía el evangelio eterno para predicarlo á los que moran en la tierra, y á toda nación y tribu y lengua y pueblo,"
+   }
+  },
+  "Romans 12:6": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A6&version=KJV",
+    "heading": "Romans 12:6",
+    "text": "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith;"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A6&version=RVA",
+    "heading": "Romanos 12:6",
+    "text": "De manera que, teniendo diferentes dones según la gracia que nos es dada, si el de profecía, úsese conforme á la medida de la fe;"
+   }
+  },
+  "Romans 12:6-7": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A6-7&version=KJV",
+    "heading": "Romans 12:6-7",
+    "text": "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith; Or ministry, let us wait on our ministering: or he that teacheth, on teaching;"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A6-7&version=RVA",
+    "heading": "Romanos 12:6-7",
+    "text": "De manera que, teniendo diferentes dones según la gracia que nos es dada, si el de profecía, úsese conforme á la medida de la fe; si ministerio, en servir; ó el que enseña, en doctrina;"
+   }
+  },
+  "Romans 12:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A8&version=KJV",
+    "heading": "Romans 12:8",
+    "text": "Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+12%3A8&version=RVA",
+    "heading": "Romanos 12:8",
+    "text": "El que exhorta, en exhortar; el que reparte, hágalo en simplicidad; el que preside, con solicitud; el que hace misericordia, con alegría."
+   }
+  },
+  "Romans 15:20": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+15%3A20&version=KJV",
+    "heading": "Romans 15:20",
+    "text": "Yea, so have I strived to preach the gospel, not where Christ was named, lest I should build upon another man's foundation:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+15%3A20&version=RVA",
+    "heading": "Romanos 15:20",
+    "text": "Y de esta manera me esforcé á predicar el evangelio, no donde antes Cristo fuese nombrado, por no edificar sobre ajeno fundamento:"
+   }
+  },
+  "Romans 16:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+16%3A5&version=KJV",
+    "heading": "Romans 16:5",
+    "text": "Likewise greet the church that is in their house. Salute my well-beloved Epaenetus, who is the firstfruits of Achaia unto Christ."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+16%3A5&version=RVA",
+    "heading": "Romanos 16:5",
+    "text": "Asimismo á la iglesia de su casa. Saludad á Epeneto, amado mío, que es las primicias de Acaya en Cristo."
+   }
+  },
+  "Numbers 6:24": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Numbers%206%3A24&version=KJV",
+    "heading": "Numbers 6:24",
+    "text": "The LORD bless thee, and keep thee:"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Numbers%206%3A24&version=RVA",
+    "heading": "Números 6:24",
+    "text": "Jehová te bendiga, y te guarde:"
+   }
+  },
+  "Psalm 46:1": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm%2046%3A1&version=KJV",
+    "heading": "Psalm 46:1",
+    "text": "God is our refuge and strength, a very present help in trouble."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm%2046%3A1&version=RVA",
+    "heading": "Salmos 46:1",
+    "text": "Al Músico principal: de los hijos de Coré: Salmo sobre Alamoth. DIOS es nuestro amparo y fortaleza, Nuestro pronto auxilio en las tribulaciones."
+   }
+  },
+  "Proverbs 17:22": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs%2017%3A22&version=KJV",
+    "heading": "Proverbs 17:22",
+    "text": "A merry heart doeth good like a medicine: but a broken spirit drieth the bones."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Proverbs%2017%3A22&version=RVA",
+    "heading": "Proverbios 17:22",
+    "text": "El corazón alegre produce buena disposición: Mas el espíritu triste seca los huesos."
+   }
+  }
+ }
+}

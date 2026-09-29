@@ -138,5 +138,26 @@ console.log('\n-- S4: op state at the edge --');
   r=await post({op:'state',room:o.j.room});
   c('op state by POST: no edge header', [r.status,r.h.get('netlify-cdn-cache-control')], [200,null]); }
 
+console.log('\n-- present-1.1 (v10.40): the verses and the place slide keep every limit --');
+{ const S=makeStore(); globalThis.__terrainPresentStore=S;
+  const long=n=>'Porque ¿cuál de vosotros, queriendo edificar una torre… '.repeat(20).slice(0,n);
+  const v={text:long(400),ref:long(400)};
+  const place={type:'place',kicker:long(400),headline:long(400),where:long(400),facts:[1,2,3].map(()=>({value:long(400),label:long(400),hue:'hardship'})),
+    partners:[1,2,3].map(()=>({name:long(400),kind:long(400),dist:long(400)})),bring:[1,2,3].map(()=>long(400)),source:long(400),verse:v};
+  const big=deck(); big.slides=[big.slides[0],...Array(10).fill(0).map(()=>JSON.parse(JSON.stringify(place))),big.slides[2]];
+  let r=await post({op:'open',deck:big},{},{ip:'203.0.113.40'});
+  c('twelve slides of the fullest place slide, every string at 400: over 64 KB → 413 too-large', [r.status,r.j.error], [413,'too-large']);
+  const ok=deck(); ok.slides.splice(1,0,{...place,facts:place.facts.slice(0,1),partners:[],bring:[],kicker:'Here in Warminster',headline:'In Warminster, God has placed us among these neighbours',where:'',source:''});
+  r=await post({op:'open',deck:ok},{},{ip:'203.0.113.41'});
+  c('one place slide with 400-character figures and verse: stored (every string ≤ 400)', [r.status,S.peek('d/'+r.j.room).deck.slides[1].verse.text.length], [200,400]);
+  const over=deck(); over.slides.splice(1,0,{...place,where:long(400)+'x'}); r=await post({op:'open',deck:over},{},{ip:'203.0.113.42'});
+  c('a place string over 400 → 400 bad-deck, with where', [r.status,r.j.where], [400,'slides[1].where']);
+  const tag=deck(); tag.slides[1].verse={text:'Go, and do thou likewise.</script><script>alert(1)</script>',ref:'Luke 10:37 · KJV'};
+  r=await post({op:'open',deck:tag},{},{ip:'203.0.113.43'});
+  c('markup in a verse on the yes slide → refused', [r.status,r.j.where], [400,'slides[1].verse.text']);
+  const thirteen=deck(); thirteen.slides=[thirteen.slides[0],...Array(12).fill(0).map(()=>({type:'place',kicker:'k',headline:'h'}))];
+  r=await post({op:'open',deck:thirteen},{},{ip:'203.0.113.44'});
+  c('still twelve slides at most (a join slide and twelve place slides → refused)', [r.status,r.j.where], [400,'slides']); }
+
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0);

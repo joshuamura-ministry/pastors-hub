@@ -212,6 +212,22 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
   c('keep-alive and a patch without i change nothing', M.J('WA.ctl.index()'), 4);
   es.emit('put',{path:'/i',data:2});
   c('a put on /i sets the slide', M.J('WA.ctl.index()'), 2);
+  // v10.40.0 (the pastor: "I would prefer having the slides swipe left"): the slides move sideways.
+  // A member's real swipe (the row scrolled sideways and settled, not ctl.go) and the presenter's
+  // clicker (PageDown / PageUp), end to end. jsdom has no layout: the row is given a width (390).
+  { const sc=M.q('#watchp .td-scroller'); Object.defineProperty(sc,'clientWidth',{value:390,configurable:true});
+    M.qa('#watchp .td-slide').forEach((s,i)=>Object.defineProperty(s,'offsetLeft',{value:i*390,configurable:true}));
+    sc.scrollLeft=390; sc.dispatchEvent(new M.w.Event('scrollend'));
+    c('v10.40: the member swipes right (the row settles on slide 2): away, with "Back to live"', [M.J('WA.ctl.index()'),M.J('WA.ctl.following()'),M.q('#watchp .td-pill').hidden], [1,false,false]);
+    P.w.dispatchEvent(new P.w.KeyboardEvent('keydown',{key:'PageDown',bubbles:true,cancelable:true}));
+    await until(()=>M.E('WA.ctl.presenter()')===5);
+    c('v10.40: the presenter’s clicker (PageDown) moves the pointer (op go); the member who swiped away stays, the pill says where the presenter is',
+      [P.J('PR_ST.ctl.index()'),RTDB[room.room].i,M.J('WA.ctl.index()'),M.txt('#watchp .td-ptx')], [5,5,1,'You: 2 · Presenter: 6']);
+    click(M,'#watchp .td-pback');
+    c('v10.40: Back to live puts the row on the presenter’s slide (5 slide-widths along)', [M.J('WA.ctl.index()'),sc.scrollLeft,M.J('WA.ctl.following()')], [5,1950,true]);
+    P.w.dispatchEvent(new P.w.KeyboardEvent('keydown',{key:'PageUp',bubbles:true,cancelable:true}));
+    await until(()=>M.E('WA.ctl.index()')===4);
+    c('v10.40: PageUp on the presenter: the following phone goes back with it, sideways', [P.J('PR_ST.ctl.index()'),M.J('WA.ctl.index()'),sc.scrollLeft,RTDB[room.room].i], [4,4,1560,4]); }
   c('the deck is cached for offline, with its expiry', (()=>{ const j=JSON.parse(M.w.localStorage.getItem('terrain-watch-'+room.room)); return [j.v,j.deck.slides.length,j.expires===room.expires]; })(), [1,base.slides.length,true]);
   c('a member’s phone writes no church, no registration, only the slides and its own id',
     Object.keys(M.w.localStorage).filter(k=>!/^terrain-watch-/.test(k)).sort(), []);

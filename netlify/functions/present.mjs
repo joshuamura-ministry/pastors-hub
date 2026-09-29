@@ -1,4 +1,4 @@
-// Terrain · Make the Case live slides server.                       present-1.0
+// Terrain · Make the Case live slides server.                       present-1.1
 //
 // The pastor presents a Make the Case slideshow; members open the same slides
 // on their own phones, by QR code or a six-character code, and (once Firebase
@@ -158,6 +158,8 @@
 //   capacity {kicker, headline, rows:[{label,need,have,unit}]≤4, gaps:[text]≤6, source}
 //   ability  {kicker, headline, value, label, gifts:[text]≤12, lead, source}
 //   ask      {kicker, headline, rows:[[label,value]]≤7, verse:{text,ref}|null}
+//   place    {kicker, headline, where, facts:[{value,label,hue}]≤3,
+//             partners:[{name,kind,dist}]≤3, bring:[text]≤3, source}      (present-1.1)
 //   risks    {kicker, headline, items:[text]≤6, source}
 //   timeline {kicker, headline, steps:[{date,title,text}]×3, quote:{text,ref}|null}
 //   roles    {kicker, headline, roles:[{title,hours,text}]≤4}
@@ -165,6 +167,9 @@
 //             respond:true|false}
 //   verse    {text, ref, version:'KJV'|'RVA'}
 //   close    {headline, text, quote:{text,ref}|null}
+//   present-1.1: every slide but join, verse and close may also carry
+//   verse:{text,ref} (the verse at its foot); a slide without one is stored as before, so a
+//   present-1.0 deck is kept exactly and a phone holding one draws it unchanged.
 //   Text is one line, at most 400 characters, with no markup (see NO MARKUP);
 //   a value is a finite number or text; hues are kind tokens: hardship,
 //   housing, children, people, language, acc.
@@ -172,7 +177,7 @@
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, createSign, createPrivateKey, timingSafeEqual } from 'node:crypto';
 
-const FN_VERSION = 'present-1.0';
+const FN_VERSION = 'present-1.1';
 const STORE_NAME = 'terrain-present';
 
 const MAX_BODY = 128 * 1024;               // whole request
@@ -715,10 +720,13 @@ function dRows(v, where, max) {
   });
 }
 const heads = (s, w) => ({ kicker: dText(own(s, 'kicker'), w + '.kicker'), headline: dText(own(s, 'headline'), w + '.headline') });
+// present-1.1: every content slide may carry one verse at its foot ({text, ref}). Kept only
+// when sent, so a present-1.0 deck is stored exactly as before (the ask's verse is its own field).
+const foot = (s, w) => { const v = own(s, 'verse'); return v == null ? {} : { verse: dQuote(v, w + '.verse') }; };
 
 const SLIDES = {
   join: (s, w) => ({ note: dText(own(s, 'note'), w + '.note') }),
-  motion: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 5), by: dText(own(s, 'by'), w + '.by') }),
+  motion: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 5), by: dText(own(s, 'by'), w + '.by'), ...foot(s, w) }),
   stat: (s, w) => {
     const dots = own(s, 'dots');
     let d = null;
@@ -741,7 +749,7 @@ const SLIDES = {
     return {
       ...heads(s, w), value: dVal(own(s, 'value'), w + '.value'), unit: dText(own(s, 'unit'), w + '.unit'),
       hue: dHue(own(s, 'hue'), w + '.hue'), freq: dText(own(s, 'freq'), w + '.freq'),
-      count: dText(own(s, 'count'), w + '.count'), dots: d, compare: c, source: dText(own(s, 'source'), w + '.source')
+      count: dText(own(s, 'count'), w + '.count'), dots: d, compare: c, source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
     };
   },
   trio: (s, w) => ({
@@ -750,7 +758,22 @@ const SLIDES = {
       const x = `${w}.items[${i}]`, o = dObj(it, x);
       return { value: dVal(own(o, 'value'), x + '.value'), label: dText(own(o, 'label'), x + '.label'), hue: dHue(own(o, 'hue'), x + '.hue') };
     }),
-    source: dText(own(s, 'source'), w + '.source')
+    source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
+  }),
+  // present-1.1: "Here in {town}": where to look first, up to three figures, up to three
+  // neighbours already serving nearby (names from OpenStreetMap), what only this church brings.
+  place: (s, w) => ({
+    ...heads(s, w), where: dText(own(s, 'where'), w + '.where'),
+    facts: dList(own(s, 'facts'), w + '.facts', { max: 3 }).map((it, i) => {
+      const x = `${w}.facts[${i}]`, o = dObj(it, x);
+      return { value: dVal(own(o, 'value'), x + '.value'), label: dText(own(o, 'label'), x + '.label'), hue: dHue(own(o, 'hue'), x + '.hue') };
+    }),
+    partners: dList(own(s, 'partners'), w + '.partners', { max: 3 }).map((it, i) => {
+      const x = `${w}.partners[${i}]`, o = dObj(it, x);
+      return { name: dText(own(o, 'name'), x + '.name'), kind: dText(own(o, 'kind'), x + '.kind'), dist: dText(own(o, 'dist'), x + '.dist') };
+    }),
+    bring: dList(own(s, 'bring'), w + '.bring', { max: 3 }).map((t, i) => dText(t, `${w}.bring[${i}]`)),
+    source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
   }),
   capacity: (s, w) => ({
     ...heads(s, w),
@@ -762,18 +785,18 @@ const SLIDES = {
       };
     }),
     gaps: dList(own(s, 'gaps'), w + '.gaps', { max: 6 }).map((g, i) => dText(g, `${w}.gaps[${i}]`)),
-    source: dText(own(s, 'source'), w + '.source')
+    source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
   }),
   ability: (s, w) => ({
     ...heads(s, w), value: dVal(own(s, 'value'), w + '.value'), label: dText(own(s, 'label'), w + '.label'),
     gifts: dList(own(s, 'gifts'), w + '.gifts', { max: 12 }).map((g, i) => dText(g, `${w}.gifts[${i}]`)),
-    lead: dText(own(s, 'lead'), w + '.lead'), source: dText(own(s, 'source'), w + '.source')
+    lead: dText(own(s, 'lead'), w + '.lead'), source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
   }),
-  ask: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 7), verse: dQuote(own(s, 'verse'), w + '.verse') }),
+  ask: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 7), verse: dQuote(own(s, 'verse'), w + '.verse') }),   // always kept, as in present-1.0
   risks: (s, w) => ({
     ...heads(s, w),
     items: dList(own(s, 'items'), w + '.items', { max: 6 }).map((t, i) => dText(t, `${w}.items[${i}]`)),
-    source: dText(own(s, 'source'), w + '.source')
+    source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
   }),
   timeline: (s, w) => ({
     ...heads(s, w),
@@ -781,14 +804,15 @@ const SLIDES = {
       const x = `${w}.steps[${i}]`, o = dObj(it, x);
       return { date: dText(own(o, 'date'), x + '.date'), title: dText(own(o, 'title'), x + '.title'), text: dText(own(o, 'text'), x + '.text') };
     }),
-    quote: dQuote(own(s, 'quote'), w + '.quote')
+    quote: dQuote(own(s, 'quote'), w + '.quote'), ...foot(s, w)
   }),
   roles: (s, w) => ({
     ...heads(s, w),
     roles: dList(own(s, 'roles'), w + '.roles', { max: 4 }).map((it, i) => {
       const x = `${w}.roles[${i}]`, o = dObj(it, x);
       return { title: dText(own(o, 'title'), x + '.title'), hours: dVal(own(o, 'hours'), x + '.hours'), text: dText(own(o, 'text'), x + '.text') };
-    })
+    }),
+    ...foot(s, w)
   }),
   yes: (s, w) => {
     const seen = new Set();
@@ -798,7 +822,7 @@ const SLIDES = {
       seen.add(k);
       return { k, label: dText(own(o, 'label'), x + '.label'), text: dText(own(o, 'text'), x + '.text') };
     });
-    return { ...heads(s, w), options, respond: dBool(own(s, 'respond'), w + '.respond') };
+    return { ...heads(s, w), options, respond: dBool(own(s, 'respond'), w + '.respond'), ...foot(s, w) };
   },
   verse: (s, w) => {
     const version = own(s, 'version');

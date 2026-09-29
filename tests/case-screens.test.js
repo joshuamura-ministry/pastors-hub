@@ -81,35 +81,44 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   type(P,'#cs-q','pantry');
   c('search finds by name ("pantry"), in rank order', [shown().length>=2,shown().every(id=>/pantry/i.test(P.E(`uCatalog().find(x=>x.id==='${id}').n`))),
     JSON.stringify(shown())===JSON.stringify(rank.map(r=>r.id).filter(id=>shown().includes(id)))], [true,true,true]);
+  // v10.40 final: on a phone the department tiles sit below the ministry list, so step 1 links down to them.
+  c('a link down to the 23 departments shows before a ministry is chosen', P.txt('#cs-s1 [data-cs-deptjump]'), 'Who is it for? See all 23 departments ↓');
   type(P,'#cs-q','zzqq');
   c('…and says so when nothing matches', P.txt('#cs-grid'), 'No ministry matches “zzqq”.');
   type(P,'#cs-q','Pathfinder');
   click(P,'[data-cs-min="pathfinders"]');
   c('choosing one saves it for this church', P.J(`uChurch().proposalPrefs.ministry`), 'pathfinders');
   c('…the list folds to the chosen card, with Change', [P.qa('#cs-s1 .cs-min').length,P.q('#cs-s1 .cs-min').getAttribute('aria-pressed'),!!P.q('[data-cs-change]')], [1,'true',true]);
+  c('…the department link goes once a ministry is chosen', !!P.q('#cs-s1 [data-cs-deptjump]'), false);
   c('…step 2 opens; no slides until a group is chosen', [P.q('#cs-s2').hidden,P.q('#cs-s3').hidden], [false,true]);
   c('…and the sample door waits below', !!P.q('#cs-door [data-cs-sample]'), true);
   c('nothing in Make the Case is contenteditable', P.qa('#casebody [contenteditable]').length, 0);
 
-  console.log('\n-- step 2: who are you asking? --');
-  c('three kinds of slideshow, as three equal cards, none chosen yet', [P.qa('.cs-type').map(b=>b.querySelector('b').textContent),P.qa('.cs-type[aria-pressed="true"]').length],
-    [['Board decision','Ministry-team invitation','Sabbath congregation'],0]);
-  click(P,'[data-cs-type="team"]');
-  const teams=P.J(`CASE_GROUPS.filter(g=>g.type==='team').map(g=>g.id)`);
-  c('team: the groups of that kind as chips, the youth staff first for a children’s ministry', [P.qa('[data-cs-group]').map(b=>b.dataset.csGroup),P.J('casePrefs()')], [teams,{ministry:'pathfinders',type:'team',group:'youth'}]);
+  // Updated in v10.40.0 (the pastor: "before it had all the different departments, and now I
+  // don't see any departments"): the three kind cards, and the chips that appeared only after
+  // one was tapped, are replaced by all 23 groups at once, as tiles under three headings.
+  // One tap chooses the group and its kind. tests/home-church.test.js covers it further.
+  console.log('\n-- step 2: who are you making the case to? --');
+  const boards=P.J(`CASE_GROUPS.filter(g=>g.type==='board').map(g=>g.id)`), teams=P.J(`CASE_GROUPS.filter(g=>g.type==='team').map(g=>g.id)`);
+  c('all 23 groups at once, none chosen yet', [P.qa('#cs-s2 [data-cs-group]').length,P.qa('#cs-s2 [data-cs-group][aria-pressed="true"]').length], [23,0]);
+  c('…under three headings', P.qa('#cs-s2 .cs-aud h4').map(h=>h.textContent), ['Board & officers','Ministry teams & departments','The whole church']);
+  c('…5, 17 and 1 tiles, in order', P.qa('#cs-s2 .cs-aud').map(s=>[...s.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup)), [boards,teams,['congregation']]);
+  c('…no kind cards and no chips any more', P.qa('[data-cs-type],.cs-type,.cs-chip').length, 0);
+  click(P,'[data-cs-group="youth"]');
+  c('one tap on the youth staff chooses the group and its kind, saved', [P.J('casePrefs()'),P.q('[data-cs-group="youth"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'youth'},'true']);
   c('…what is asked of them, and when', /You are asking them to:.*When:/.test(P.txt('.cs-gmeta')), true);
   click(P,'[data-cs-group="health"]');
-  c('a chip chooses the group, saved', [P.J(`uChurch().proposalPrefs`),P.q('[data-cs-group="health"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'health'},'true']);
+  c('a tile chooses the group, saved', [P.J(`uChurch().proposalPrefs`),P.q('[data-cs-group="health"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'health'},'true']);
   c('…and the slides are built for it', P.J(`caseCurrentDeck().audience`), {type:'team',group:'health'});
-  click(P,'[data-cs-type="board"]');
-  c('board: five groups, the church board first', [P.qa('[data-cs-group]').length,P.J('casePrefs().group')], [5,'board']);
-  click(P,'[data-cs-type="congregation"]');
-  c('congregation: the whole church, one group', [P.qa('[data-cs-group]').map(b=>b.dataset.csGroup),P.J('casePrefs().group')], [['congregation'],'congregation']);
+  click(P,'[data-cs-group="board"]');
+  c('board: the church board tile gives the board kind', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s2 [aria-pressed="true"]').length], ['board','board',1]);
+  click(P,'[data-cs-group="congregation"]');
+  c('congregation: the whole church', [P.J('casePrefs().type'),P.J('casePrefs().group')], ['congregation','congregation']);
 
   console.log('\n-- step 3: the slides --');
   const types=new Set();
   for(const [t,g] of [['board','board'],['team','youth'],['congregation','congregation']]){
-    click(P,`[data-cs-type="${t}"]`); if(g!==P.J('casePrefs().group')) click(P,`[data-cs-group="${g}"]`);
+    click(P,`[data-cs-group="${g}"]`);   // v10.40.0: one tap, group and kind
     const deck=P.J('caseCurrentDeck()'), secs=P.qa('#cs-pv .td-slide');
     c(`${t}: one slide on screen per slide in the deck (${deck.slides.length})`, secs.length, deck.slides.length);
     // Built with "I'm in" as the presenter's setup starts it (on), so the preview is the deck presented (v10.39 review E2E-12).
@@ -118,13 +127,24 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     secs.forEach(s=>types.add([...s.classList].find(k=>/^td-t-/.test(k)).slice(5)));
     c(`${t}: nothing reads "undefined", "NaN" or "null"`, /undefined|NaN|\bnull\b/.test(P.txt('#cs-pv')), false);
   }
-  c('the three kinds together draw every slide type', [...types].sort(), ['ability','ask','capacity','close','join','motion','risks','roles','stat','timeline','trio','verse','yes']);
-  click(P,'[data-cs-type="board"]');
+  // v10.40 (the pastor asked for it): "Here in {town}" (place) in every deck; the "why here" trio
+  // is drawn only when a deck has no place data at all
+  c('the three kinds together draw every slide type', [...types].sort(), ['ability','ask','capacity','close','join','motion','place','risks','roles','stat','timeline','verse','yes']);
+  click(P,'[data-cs-group="board"]');
   c('the position reads "1 / 9"; Previous is off', [P.txt('.cs-pos'),P.q('[data-cs-prev]').disabled], ['1 / 9',true]);
   click(P,'[data-cs-next]');
   c('Next moves one slide', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['2 / 9',1,'1']);
   P.q('[data-cs-phone]').dispatchEvent(new P.w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
   c('the arrow keys move it too', P.txt('.cs-pos'), '3 / 9');
+  // v10.40.0: the slides move sideways; inside the slides the keys, the swipe and a mouse drag are the
+  // renderer's own. One key press = one slide (the preview's frame must not move it a second time).
+  { const sc=P.q('#cs-pv .td-scroller'), k=(key,o={})=>sc.dispatchEvent(new P.w.KeyboardEvent('keydown',Object.assign({key,bubbles:true,cancelable:true},o)));
+    k('ArrowRight'); c('v10.40: → with focus in the slides moves exactly one slide, and the position, list and buttons follow', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['4 / 9',3,'3']);
+    k('PageUp'); k(' ',{shiftKey:true}); c('v10.40: PageUp and Shift+Space (a clicker) move back one each', P.txt('.cs-pos'), '2 / 9');
+    const pd=(t,x)=>{ const e=new P.w.MouseEvent(t,{bubbles:true,cancelable:true,clientX:x,clientY:200,button:0}); Object.defineProperty(e,'pointerType',{value:'mouse'}); sc.dispatchEvent(e); };
+    pd('pointerdown',300); pd('pointerup',150);
+    c('v10.40: a mouse drag to the left in the preview = next, once', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()')], ['3 / 9',2]);
+    c('v10.40: the preview’s dots follow', [...P.qa('#cs-pv .td-pager i')].map((d,i)=>d.classList.contains('on')?i:-1).filter(i=>i>=0), [2]); }
   click(P,'.cs-outline [data-cs-go="8"]');
   c('the list of slides jumps to one; Next is off at the last', [P.txt('.cs-pos'),P.q('[data-cs-next]').disabled], ['9 / 9',true]);
   click(P,'.cs-outline [data-cs-go="0"]');
@@ -228,7 +248,9 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   console.log('\n-- Make the Case before a survey --');
   { const N=page(); await sleep(1500);
     N.E(`openTool('case');`);
-    c('the address form, and the sample below it', [N.q('.ask').style.display,N.q('#casep').hidden,!!N.q('#casep [data-cs-sample]'),/Type the church address above to begin/.test(N.txt('#casep'))], ['',false,true,true]);
+    // Updated in v10.40.0 ("why would there be two places to put your address?"): no address
+    // box inside Make the Case; a church never mapped gets one card to the Community Survey.
+    c('no address box: the first-time card, and the sample below it', [N.q('.ask').style.display,N.q('#casep').hidden,!!N.q('#casep [data-cs-sample]'),/First, map your church’s neighbourhood/.test(N.txt('#casep'))], ['none',false,true,true]);
     const before=JSON.stringify(Object.entries(N.w.localStorage));
     click(N,'#casep [data-cs-sample]');
     c('the sample: a made-up church and neighbourhood, and it says so', [/every figure are made up/.test(N.txt('#casep .gfsampbar')),N.q('.ask').style.display], [true,'none']);
@@ -237,7 +259,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     c('…SAMPLE on every slide', N.qa('#cs-spv .td-slide').every(s=>/SAMPLE/.test(s.textContent)), true);
     c('…nothing written', JSON.stringify(Object.entries(N.w.localStorage)), before);
     click(N,'#casep [data-cs-back]');
-    c('Back: the address form and the door again', [N.q('.ask').style.display,!!N.q('#casep [data-cs-sample]')], ['',true]);
+    c('Back: the first-time card and the door again, still no address box', [N.q('.ask').style.display,!!N.q('#casep [data-cs-sample]'),!!N.q('#casep .home-first')], ['none',true,true]);
     N.E('showHub()');
     c('leaving for the hub hides it', N.q('#casep').hidden, true);
     N.E(`openTool('gifts')`);
@@ -260,8 +282,9 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     type(S,'#cs-q','Cocina');
     c('…without case or accents mattering', S.qa('#cs-grid .cs-mh b').some(b=>/cocina/i.test(b.textContent)), true);
     S.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'team',group:'youth'}; caseMount(true);`);
-    c('who you are asking', [S.q('#cs-s2 h3').textContent,S.qa('.cs-type b').map(b=>b.textContent)], ['¿A quién se lo pide?',['Decisión de la junta','Invitación a un equipo de ministerio','Congregación en sábado']]);
-    c('…the groups', S.qa('[data-cs-group]').slice(0,3).map(b=>b.textContent), ['Ministerio Joven y Conquistadores','Ministerios de Salud','Servicios Comunitarios Adventistas (Dorcas)']);
+    // Updated in v10.40.0: the groups as tiles under three headings (see step 2 above).
+    c('who you are making the case to', [S.q('#cs-s2 h3').textContent,S.qa('#cs-s2 .cs-aud h4').map(b=>b.textContent)], ['¿A quién le presenta el caso?',['Junta y oficiales de la iglesia','Equipos de ministerio y departamentos','Toda la iglesia']]);
+    c('…the groups', S.qa('[data-cs-kind="team"] [data-cs-group]').slice(0,3).map(b=>b.textContent), ['Ministerio Joven y Conquistadores','Ministerios de Salud','Servicios Comunitarios Adventistas (Dorcas)']);
     c('the slides are Spanish', [S.J('caseCurrentDeck().lang'),S.q('#cs-s3 h3').textContent], ['es','Revise las diapositivas']);
     S.E('CASE_ST.pv.go(1)');
     c('the edit panel', S.qa('.cs-edit label').map(l=>l.firstChild.textContent.trim()), ['Etiqueta sobre el titular','Titular']);
@@ -269,7 +292,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     c('the navigation', [S.q('[data-cs-prev]').textContent,S.q('[data-cs-next]').textContent], ['‹ Anterior','Siguiente ›']);
     click(S,'[data-cs-act="ask"]');
     c('the ask list', [/Su lista privada para invitar/.test(S.txt('#cs-ask')),/Solo en este dispositivo/.test(S.txt('#cs-ask'))], [true,true]);
-    const en=['Step ','What are you proposing','Who are you asking','Show all','Change','Need','Staffing','Gifts','Present live','Share link','Download PDF','private ask list','See a sample','Previous','Next','Edit slide','Headline','Restore the original','Questions you may hear','County ','Clearly higher','can staff','gifted and drawn','This device only','Ready to lead','Label above'];
+    const en=['Step ','What are you proposing','Who are you asking','Who are you making','Board & officers','Ministry teams','The whole church','Tap the group','Show all','Change','Need','Staffing','Gifts','Present live','Share link','Download PDF','private ask list','See a sample','Previous','Next','Edit slide','Headline','Restore the original','Questions you may hear','County ','Clearly higher','can staff','gifted and drawn','This device only','Ready to lead','Label above'];
     c('no English left in the Spanish builder', en.filter(t=>body().includes(t)), []);
     click(S,'[data-cs-act="sample"]');
     c('the sample: MUESTRA on the banner and every slide', [S.txt('#casep .gfsamptag'),S.qa('#cs-spv .td-slide').every(s=>/MUESTRA/.test(s.textContent)),/Una presentación de ejemplo/.test(S.txt('#casep'))], ['MUESTRA',true,true]);

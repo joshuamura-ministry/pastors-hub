@@ -23,7 +23,8 @@ const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.lo
 const J=x=>JSON.parse(JSON.stringify(x));
 
 /* ---- the server's deck rules: present.mjs cleanDeck(), field by field ----------------
-   Kept in step with netlify/functions/present.mjs (present-1.0). A deck that passes here
+   Kept in step with netlify/functions/present.mjs (present-1.1: an optional verse at the foot
+   of every content slide, and the "Here in {town}" place slide). A deck that passes here
    is stored by the server exactly as built (the join slide's link and code excepted). */
 const RULES=(()=>{
   const MAX_DECK=64*1024, MAX_SLIDES=12, MAX_STR=400, MAX_NUM=1e12;
@@ -48,34 +49,39 @@ const RULES=(()=>{
   function dQuote(v,where){ if(v==null) return null; const q=dObj(v,where); return {text:dText(own(q,'text'),where+'.text'),ref:dText(own(q,'ref'),where+'.ref')}; }
   function dRows(v,where,max){ return dList(v,where,{max}).map((row,i)=>{ const w=`${where}[${i}]`; if(!Array.isArray(row)||row.length!==2) throw bad(w); return [dText(row[0],w+'[0]'),dVal(row[1],w+'[1]')]; }); }
   const heads=(s,w)=>({kicker:dText(own(s,'kicker'),w+'.kicker'),headline:dText(own(s,'headline'),w+'.headline')});
+  const foot=(s,w)=>{ const v=own(s,'verse'); return v==null?{}:{verse:dQuote(v,w+'.verse')}; };
   const SLIDES={
     join:(s,w)=>({note:dText(own(s,'note'),w+'.note')}),
-    motion:(s,w)=>({...heads(s,w),rows:dRows(own(s,'rows'),w+'.rows',5),by:dText(own(s,'by'),w+'.by')}),
+    motion:(s,w)=>({...heads(s,w),rows:dRows(own(s,'rows'),w+'.rows',5),by:dText(own(s,'by'),w+'.by'),...foot(s,w)}),
     stat:(s,w)=>{ const dots=own(s,'dots'); let d=null;
       if(dots!=null){ const o=dObj(dots,w+'.dots'); const n=dNum(own(o,'n'),w+'.dots.n',{int:true,min:1,max:1000}); d={n,on:dNum(own(o,'on'),w+'.dots.on',{int:true,min:0,max:n}),hue:dHue(own(o,'hue'),w+'.dots.hue')}; }
       const cmp=own(s,'compare'); let cc=null;
       if(cmp!=null){ const o=dObj(cmp,w+'.compare'); const moe=own(o,'moe');
         cc={here:dVal(own(o,'here'),w+'.compare.here'),county:dVal(own(o,'county'),w+'.compare.county'),label:dText(own(o,'label'),w+'.compare.label'),sig:dBool(own(o,'sig'),w+'.compare.sig'),moe:moe==null?null:dVal(moe,w+'.compare.moe')}; }
       return {...heads(s,w),value:dVal(own(s,'value'),w+'.value'),unit:dText(own(s,'unit'),w+'.unit'),hue:dHue(own(s,'hue'),w+'.hue'),freq:dText(own(s,'freq'),w+'.freq'),
-        count:dText(own(s,'count'),w+'.count'),dots:d,compare:cc,source:dText(own(s,'source'),w+'.source')}; },
+        count:dText(own(s,'count'),w+'.count'),dots:d,compare:cc,source:dText(own(s,'source'),w+'.source'),...foot(s,w)}; },
     trio:(s,w)=>({...heads(s,w),items:dList(own(s,'items'),w+'.items',{min:3,max:3}).map((it,i)=>{ const x=`${w}.items[${i}]`, o=dObj(it,x);
-      return {value:dVal(own(o,'value'),x+'.value'),label:dText(own(o,'label'),x+'.label'),hue:dHue(own(o,'hue'),x+'.hue')}; }),source:dText(own(s,'source'),w+'.source')}),
+      return {value:dVal(own(o,'value'),x+'.value'),label:dText(own(o,'label'),x+'.label'),hue:dHue(own(o,'hue'),x+'.hue')}; }),source:dText(own(s,'source'),w+'.source'),...foot(s,w)}),
+    place:(s,w)=>({...heads(s,w),where:dText(own(s,'where'),w+'.where'),
+      facts:dList(own(s,'facts'),w+'.facts',{max:3}).map((it,i)=>{ const x=`${w}.facts[${i}]`, o=dObj(it,x); return {value:dVal(own(o,'value'),x+'.value'),label:dText(own(o,'label'),x+'.label'),hue:dHue(own(o,'hue'),x+'.hue')}; }),
+      partners:dList(own(s,'partners'),w+'.partners',{max:3}).map((it,i)=>{ const x=`${w}.partners[${i}]`, o=dObj(it,x); return {name:dText(own(o,'name'),x+'.name'),kind:dText(own(o,'kind'),x+'.kind'),dist:dText(own(o,'dist'),x+'.dist')}; }),
+      bring:dList(own(s,'bring'),w+'.bring',{max:3}).map((t,i)=>dText(t,`${w}.bring[${i}]`)),source:dText(own(s,'source'),w+'.source'),...foot(s,w)}),
     capacity:(s,w)=>({...heads(s,w),rows:dList(own(s,'rows'),w+'.rows',{max:4}).map((it,i)=>{ const x=`${w}.rows[${i}]`, o=dObj(it,x);
       return {label:dText(own(o,'label'),x+'.label'),need:dNumOrNull(own(o,'need'),x+'.need'),have:dNumOrNull(own(o,'have'),x+'.have'),unit:dText(own(o,'unit'),x+'.unit')}; }),
-      gaps:dList(own(s,'gaps'),w+'.gaps',{max:6}).map((g,i)=>dText(g,`${w}.gaps[${i}]`)),source:dText(own(s,'source'),w+'.source')}),
+      gaps:dList(own(s,'gaps'),w+'.gaps',{max:6}).map((g,i)=>dText(g,`${w}.gaps[${i}]`)),source:dText(own(s,'source'),w+'.source'),...foot(s,w)}),
     ability:(s,w)=>({...heads(s,w),value:dVal(own(s,'value'),w+'.value'),label:dText(own(s,'label'),w+'.label'),
-      gifts:dList(own(s,'gifts'),w+'.gifts',{max:12}).map((g,i)=>dText(g,`${w}.gifts[${i}]`)),lead:dText(own(s,'lead'),w+'.lead'),source:dText(own(s,'source'),w+'.source')}),
+      gifts:dList(own(s,'gifts'),w+'.gifts',{max:12}).map((g,i)=>dText(g,`${w}.gifts[${i}]`)),lead:dText(own(s,'lead'),w+'.lead'),source:dText(own(s,'source'),w+'.source'),...foot(s,w)}),
     ask:(s,w)=>({...heads(s,w),rows:dRows(own(s,'rows'),w+'.rows',7),verse:dQuote(own(s,'verse'),w+'.verse')}),
-    risks:(s,w)=>({...heads(s,w),items:dList(own(s,'items'),w+'.items',{max:6}).map((t,i)=>dText(t,`${w}.items[${i}]`)),source:dText(own(s,'source'),w+'.source')}),
+    risks:(s,w)=>({...heads(s,w),items:dList(own(s,'items'),w+'.items',{max:6}).map((t,i)=>dText(t,`${w}.items[${i}]`)),source:dText(own(s,'source'),w+'.source'),...foot(s,w)}),
     timeline:(s,w)=>({...heads(s,w),steps:dList(own(s,'steps'),w+'.steps',{min:3,max:3}).map((it,i)=>{ const x=`${w}.steps[${i}]`, o=dObj(it,x);
-      return {date:dText(own(o,'date'),x+'.date'),title:dText(own(o,'title'),x+'.title'),text:dText(own(o,'text'),x+'.text')}; }),quote:dQuote(own(s,'quote'),w+'.quote')}),
+      return {date:dText(own(o,'date'),x+'.date'),title:dText(own(o,'title'),x+'.title'),text:dText(own(o,'text'),x+'.text')}; }),quote:dQuote(own(s,'quote'),w+'.quote'),...foot(s,w)}),
     roles:(s,w)=>({...heads(s,w),roles:dList(own(s,'roles'),w+'.roles',{max:4}).map((it,i)=>{ const x=`${w}.roles[${i}]`, o=dObj(it,x);
-      return {title:dText(own(o,'title'),x+'.title'),hours:dVal(own(o,'hours'),x+'.hours'),text:dText(own(o,'text'),x+'.text')}; })}),
+      return {title:dText(own(o,'title'),x+'.title'),hours:dVal(own(o,'hours'),x+'.hours'),text:dText(own(o,'text'),x+'.text')}; }),...foot(s,w)}),
     yes:(s,w)=>{ const seen=new Set();
       const options=dList(own(s,'options'),w+'.options',{min:3,max:3}).map((it,i)=>{ const x=`${w}.options[${i}]`, o=dObj(it,x), k=own(o,'k');
         if(typeof k!=='string'||!ANSWER_KEYS.includes(k)||seen.has(k)) throw bad(x+'.k'); seen.add(k);
         return {k,label:dText(own(o,'label'),x+'.label'),text:dText(own(o,'text'),x+'.text')}; });
-      return {...heads(s,w),options,respond:dBool(own(s,'respond'),w+'.respond')}; },
+      return {...heads(s,w),options,respond:dBool(own(s,'respond'),w+'.respond'),...foot(s,w)}; },
     verse:(s,w)=>{ const version=own(s,'version'); if(version!=='KJV'&&version!=='RVA') throw bad(w+'.version');
       return {text:dText(own(s,'text'),w+'.text'),ref:dText(own(s,'ref'),w+'.ref'),version}; },
     close:(s,w)=>({headline:dText(own(s,'headline'),w+'.headline'),text:dText(own(s,'text'),w+'.text'),quote:dQuote(own(s,'quote'),w+'.quote')})
@@ -156,9 +162,12 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     E('CAP=null; capSave('+JSON.stringify(FX.MEDIUM)+'); U_PEOPLE_CACHE=null;'); }
 
   console.log('\n-- 2. every deck passes the server, both languages, all three kinds --');
-  const ORDER={board:['join','motion','stat','trio','capacity','ability','ask','risks','timeline'],
-    team:['join','motion','stat','trio','ability','roles','risks','timeline','yes'],
-    congregation:['join','verse','stat','stat','ability','motion','yes','close']};
+  // v10.40 (the pastor asked for it): "Here in {town}" in every deck. For a board it takes the
+  // "why here" figures' place, for a team the design trio's (their figures become its facts);
+  // the congregation gains one slide. Still about eight content slides.
+  const ORDER={board:['join','motion','stat','place','capacity','ability','ask','risks','timeline'],
+    team:['join','motion','stat','place','ability','roles','risks','timeline','yes'],
+    congregation:['join','verse','stat','stat','place','ability','motion','yes','close']};
   // Every group the pastor can name (v10.39 review: 14 of 23 were never built by a test).
   const GROUPS=JE('CASE_GROUPS.map(g=>[g.id,g.type])');
   const MINS=['pathfinders','food-pantry','bp-clinic','interpreter-bank','lift-rota'];
@@ -173,7 +182,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('every deck passes the server’s deck rules', svr.filter(x=>!x.r.ok).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}: ${x.r.where}`), []);
   c('…and loses nothing on the way through (the server stores exactly what was built)', svr.filter(x=>x.r.ok&&JSON.stringify(sansJoin(x.r.deck))!==JSON.stringify(sansJoin(x.b.d))).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}`), []);
   c('every slide has `type`, 12 at most, under 64 KB', built.filter(b=>!b.d.slides.every(s=>typeof s.type==='string')||b.d.slides.length>12||Buffer.byteLength(JSON.stringify(b.d))>64*1024).map(b=>b.id), []);
-  c('slide order per kind: board 8 + join, team 8 + join, congregation 7 + join',
+  c('slide order per kind: board 8 + join, team 8 + join, congregation 8 + join',
     built.filter(b=>JSON.stringify(b.d.slides.map(s=>s.type))!==JSON.stringify(ORDER[b.t])).map(b=>`${b.lang}/${b.g}/${b.id}: ${b.d.slides.map(s=>s.type).join(',')}`), []);
   c('audience and ministry carried on the deck', built.every(b=>b.d.audience.type===b.t&&b.d.audience.group===b.g&&b.d.ministry.id===b.id&&b.d.lang===b.lang&&b.d.church==='Bucks County SDA'), true);
   { const bad=[];
@@ -200,50 +209,59 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('…and with the pastor registered: "Prepared by Pastor …", in Spanish "el pastor …"', [
     JE(`(()=>{ localStorage.setItem('terrain-reg',JSON.stringify({name:'Joshua Mura',email:'jm@example.org',church:'Bucks County SDA',conf:'Allegheny East',role:'pastor'})); const b=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}).motion.by; return b; })()`),
     JE(`caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang:'es'}).motion.by`),
-    JE(`caseDeck(caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW},respond:true})).slides[7].text`),
+    JE(`caseDeck(caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW},respond:true})).slides.find(s=>s.type==='close').text`),
     JE(`(()=>{ localStorage.removeItem('terrain-reg'); return caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},presenter:'Elder Ruth Park'}).motion.by; })()`)],
     ['To: Church board · Prepared by Pastor Joshua Mura · 28 Sep 2026','Para: Junta directiva de la iglesia · Preparado por el pastor Joshua Mura · 28 sep 2026',
      'Tap “I’m in” on your phone, or speak to Pastor Joshua Mura afterwards.','To: Church board · Prepared by Elder Ruth Park · 28 Sep 2026']);
   c('the need: children, the share of residents', [S('stat').headline,S('stat').value,S('stat').unit,S('stat').hue], ['About 1 in 4 people around us is a child','27','%','children']);
   c('…with the count, the 100-dot picture and the county beside it', [S('stat').count,S('stat').dots,S('stat').compare], ['about 1,490 children',{n:100,on:27,hue:'children'},{here:27.2,county:20.4,label:'Bucks County',sig:true,moe:3.1}]);
   c('…and the source says the margin and the verdict', S('stat').source, 'U.S. Census ACS 2020–2024 · Census Tract 2041.02 · margin of error ±3.1 points · higher than the county');
-  c('why here: three figures, significant ones first, each against the county', S('trio').items.map(i=>i.value), ['1 in 5','1 in 4','1 in 3']);
+  // v10.40 (the pastor asked for it): "Here in {town}" takes the "why here" cards' place; their
+  // figures that differ from the county become its facts (the model keeps all three, the phone two).
+  c('here in Warminster: the "why here" figures, significant ones first, each against the county', [S('place').kicker,BM.place.facts.map(f=>f.value),S('place').facts.map(f=>f.value)], ['Here in Warminster',['1 in 5','1 in 4','1 in 3'],['1 in 5','1 in 4']]);
   c('…the board’s emphasis leads the supports (poverty, then child poverty)', BM.need.supports.map(f=>f.key), ['poverty','childPoverty']);
-  c('…each says what the county is, in the same words (about / nearly / more than 1 in N)', S('trio').items.map(i=>i.label.replace(/^.*\. County: /,'')), ['1 in 14.','1 in 12.','nearly 1 in 5.']);
+  c('…each says what the county is, in the same words (about / nearly / more than 1 in N)', BM.place.facts.map(i=>i.label.replace(/^.*\. County: /,'')), ['1 in 14.','1 in 12.','nearly 1 in 5.']);
   c('capacity: volunteers, leaders, hours, start-up budget', S('capacity').rows.map(r=>[r.label,r.need,r.have,r.unit]),
     [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h'],['Start-up budget',75,2500,'$']]);
   c('…nothing missing, so no gaps and the headline says so', [S('capacity').gaps,S('capacity').headline], [[],'We have the people and hours to staff it']);
   c('who is able: a count, the gifts it needs, and no names', [S('ability').value,S('ability').label,S('ability').gifts], ['3','Members with gifts that fit this work; 2 of them said they are drawn to it.',['Teaching','Shepherding and pastoral care','Creative communication and craftsmanship','Helps']]);
   c('…the source counts adults only', S('ability').source, 'Spiritual Gifts results from 6 members · adults only · counts only, no names');
   c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['To start · each month','$75 · $25'],['Ceiling','$125'],['Source','Local budget, not tithe'],['Left after this','$2,425 · $425 a month']]);
-  c('…with Luke 14:28, KJV', S('ask').verse, {text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'});
-  c('risks: the two most serious for children, then never tithe, then the conference, then the open door', S('risks').items.map(t=>t.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge','Counsel sought from the conferen','Open door, and no private one-to']);
-  c('…as many as fit the slide (five at most)', built.every(b=>{ const r=b.d.slides.find(s=>s.type==='risks'); return !r||(r.items.length<=5||b.t==='team')&&r.items.length<=6; }), true);
-  c('…and the source names the Church Manual pages and ASV', S('risks').source, 'Church Manual 2022, pp. 181, 142, 134 · NAD Adventist Screening Verification');
+  // v10.40: a verse on every slide. The board's own verse, Luke 14:28, counts the cost on the
+  // capacity slide; the ask carries Nehemiah 2:18 (both verbatim from the verified library).
+  c('…with Nehemiah 2:18, KJV, and Luke 14:28 on the capacity slide', [S('ask').verse,S('capacity').verse], [{text:'…And they said, Let us rise up and build. So they strengthened their hands for this good work.',ref:'Nehemiah 2:18 · KJV'},
+    {text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'}]);
+  c('risks: the two most serious for children, then never tithe (the slide keeps what fits beside its verse)', S('risks').items.map(t=>t.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge']);
+  c('…and the handout keeps all five', BM.risks.items.map(t=>t.text.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge','Counsel sought from the conferen','Open door, and no private one-to']);
+  c('…as many as fit the slide beside its verse (four at most, 270 characters in either language)', built.every(b=>{ const r=b.d.slides.find(s=>s.type==='risks'); return !r||r.items.length<=4; }), true);
+  c('…and the source names the Church Manual pages and ASV of the rows it shows', S('risks').source, 'Church Manual 2022, pp. 181, 142 · NAD Adventist Screening Verification');
   c('the three "why here" cards are alike in every deck: all in the sentence form, or all naming the figure', built.filter(b=>{ const t=b.d.slides.find(s=>s.type==='trio'&&b.t==='board'); if(!t) return false;
     const up=t.items.map(i=>/^[A-ZÁÉÍÓÚÑ]/.test(i.label)); return !(up.every(x=>x)||up.every(x=>!x)); }).map(b=>b.lang+'/'+b.g+'/'+b.id), []);
   c('every board deck, both languages, says never tithe among its risks when the trial costs anything', built.filter(b=>b.t==='board'&&b.m.ask.ceiling>0&&!b.d.slides.find(s=>s.type==='risks').items.some(t=>/never tithe|nunca con el diezmo/.test(t))).map(b=>b.lang+'/'+b.g+'/'+b.id), []);
   c('the timeline: start, midpoint, board review, three weeks apart', S('timeline').steps.map(s=>s.date.replace(/^\d+ \w+ · /,'')), ['start','midpoint','review']);
   c('…the dates follow the church’s Tuesday evening slot, two weeks out', [BM.dates.start,BM.dates.mid,BM.dates.review], ['2026-10-13','2026-11-03','2026-11-24']);
-  c('…and closes on PK 638.1', S('timeline').quote, {text:'Nehemiah asked the people directly whether they would take advantage of this opportunity and arise and build the wall.',ref:'Ellen G. White · Prophets and Kings, p. 638'});
+  // v10.40: the timeline carries a verse; an Ellen White line beside it does not fit a phone
+  // (measured in Chrome), so the board's goes to the handout and "What to say".
+  c('…and closes on Galatians 6:9 (no Ellen White line on this slide now)', [S('timeline').verse.ref,S('timeline').quote], ['Galatians 6:9 · KJV',null]);
 
   console.log('\n-- the same deck in Spanish --');
   const BS=built.find(b=>b.lang==='es'&&b.g==='board'&&b.id==='pathfinders').d;
   const SS=t=>BS.slides.find(s=>s.type===t);
   c('usted and the Spanish catalogue name after a colon', SS('motion').headline, 'Aprobar una prueba de 6 semanas: Club de Conquistadores y Aventureros, abierto al vecindario');
-  c('the need in Spanish, with its county said in Spanish', [SS('stat').headline,SS('stat').count,SS('stat').compare.label,SS('trio').source], ['Alrededor de 1 de cada 4 personas de nuestro entorno es menor de 18 años','unos 1,490 menores de 18 años','Condado de Bucks','ACS 2020–2024 · Sección censal 2041.02 comparado con el condado de Bucks']);
+  c('the need in Spanish, with its county said in Spanish', [SS('stat').headline,SS('stat').count,SS('stat').compare.label,SS('place').kicker,SS('place').source], ['Alrededor de 1 de cada 4 personas de nuestro entorno es menor de 18 años','unos 1,490 menores de 18 años','Condado de Bucks','Aquí en Warminster','Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02']);
   c('…the source in Spanish', SS('stat').source, 'Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02 · margen de error ±3.1 puntos · por encima del condado');
-  c('the ask in Spanish, and the verse from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref], ['Personas','Presupuesto local, no el diezmo','Lucas 14:28 · RVA']);
+  c('the ask in Spanish, and the verses from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref,SS('capacity').verse.ref], ['Personas','Presupuesto local, no el diezmo','Nehemías 2:18 · RVA','Lucas 14:28 · RVA']);
   c('the dates in Spanish', SS('timeline').steps[0].date, '13 oct · inicio');
-  c('Ellen White in the official Spanish (PR 471.2)', SS('timeline').quote, {text:'Nehemías preguntó directamente al pueblo si quería aprovechar esta oportunidad y levantarse para edificar la muralla.',ref:'Elena G. de White · Profetas y Reyes, p. 471'});
+  c('the same verses as the English deck, slide for slide (v10.40)', BS.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.es.ref===${JSON.stringify(r)})||{}).id`)),
+    BD.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.en.ref===${JSON.stringify(r)})||{}).id`)));
   { // Every sentence-length string differs between the two languages, except names and references.
     const en=new Map(strings(BD)), same=[];
     strings(BS).forEach(([p,s])=>{ const e=en.get(p); if(e===s&&/[a-z]{3,}.*\s.*[a-z]{3,}/i.test(s)&&!/Bucks County SDA|Census Tract|Bucks County|^[A-Z][A-Za-z ]+ · /.test(s)) same.push(p+': '+s); });
     c('nothing left in English in the Spanish deck', same, []); }
   c('every catalogue ministry has a Spanish name for the Spanish decks', JE(`(()=>{ const p=LANG; LANG='es'; const r=SIGNATURE.filter(x=>caseMinName(x)===x.n).map(x=>x.id); LANG=p; return r; })()`), []);
   c('…with no leading article clash: none starts with «, and none is empty', JE(`(()=>{ const p=LANG; LANG='es'; const r=SIGNATURE.map(x=>caseMinName(x)).filter(n=>!n||/^[«"]/.test(n)); LANG=p; return r; })()`), []);
-  { const long=[]; built.forEach(b=>b.d.slides.filter(s=>s.type==='trio').forEach(s=>s.items.forEach(i=>{ if(i.label.length>140||String(i.value).length>12) long.push(b.lang+'/'+b.g+'/'+b.id+': '+i.label); })));
-    c('trio cards stay short enough for a phone: labels ≤ 140 characters, values ≤ 12', long.slice(0,4), []); }
+  { const long=[]; built.forEach(b=>b.d.slides.filter(s=>s.type==='trio'||s.type==='place').forEach(s=>(s.items||s.facts||[]).forEach(i=>{ if(i.label.length>(s.type==='place'?105:140)||String(i.value).length>12) long.push(b.lang+'/'+b.g+'/'+b.id+': '+i.label); })));
+    c('trio cards and place figures stay short enough for a phone: labels ≤ 140 (place ≤ 105) characters, values ≤ 12', long.slice(0,4), []); }
   for(const t of ['team','congregation']){
     const en=built.find(b=>b.lang==='en'&&b.t===t&&b.id==='food-pantry').d, es=built.find(b=>b.lang==='es'&&b.t===t&&b.id==='food-pantry').d;
     const E1=new Map(strings(en)), same=[];
@@ -256,24 +274,29 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   const T=t=>TD.slides.find(s=>s.type===t);
   c('the invitation: “You are the people this needs”, with when and where', [T('motion').headline,T('motion').rows.map(r=>r[0])], ['You are the people this needs',['When','Runs','Places','Review']]);
   c('the people we would serve: children of club age, from the Census age bands', [T('stat').headline,T('stat').value,T('stat').unit], ['About 815 children aged 5 to 14 live around us','815','children aged 5 to 14']);
-  c('why the plan looks this way: three figures that shape it', [T('trio').items.length,T('trio').items.every(i=>i.label.length>30)], [3,true]);
+  // v10.40: the design figures ("why the plan looks this way") are the place applied: they are
+  // the "Here in" slide's facts now. Three roles and four support rows at most beside the verse.
+  c('why the plan looks this way: the figures that shape it, on the "Here in" slide', [T('place').facts.length,T('place').facts.every(i=>i.label.length>30),TY.m.need.design.length], [2,true,3]);
   c('roles with hours a month, and a youth lead for the youth team', T('roles').roles.map(r=>[r.title,r.hours]), [['Coordinator','9 h a month'],['Team member × 4','8 h a month'],['Youth lead','8 h a month'],['Prayer partner','A few minutes a day']]);
   c('support, youth team: the child-safety rows and the young people’s own part come first in the choosing', T('risks').items.map(t=>t.slice(0,30)),
-    ['Training before the first sessi','One part planned and run by th','Every adult screened through A','Two adults in every room and a'].map(t=>t.slice(0,30)));
+    ['One part planned and run by th','Every adult screened through A','Two adults in every room and a'].map(t=>t.slice(0,30)));
   c('“I’m in” is off for the youth team, even when asked for', T('yes').respond, false);
   const TH=built.find(b=>b.lang==='en'&&b.g==='health'&&b.id==='bp-clinic');
   c('…and on for the health team when asked for', TH.d.slides.find(s=>s.type==='yes').respond, true);
   c('the health team’s support includes the health rules: no diagnosis, licensed people only', TH.d.slides.find(s=>s.type==='risks').items.filter(t=>/diagnosis|licensed/.test(t)).length, 2);
   const CG=built.find(b=>b.lang==='en'&&b.g==='congregation'&&b.id==='pathfinders').d;
   const cs=CG.slides;
-  c('congregation: one verse (Nehemiah 2:18, KJV) first', [cs[1].type,cs[1].ref,cs[1].version], ['verse','Nehemiah 2:18','KJV']);
+  // v10.40: the congregation's verse speaks to the ministry's own need (children: Mark 10:14)
+  c('congregation: one verse (Mark 10:14, KJV) first', [cs[1].type,cs[1].ref,cs[1].version], ['verse','Mark 10:14','KJV']);
   c('…our neighbours, as a number, in homes, with the children shown as dots', [cs[2].headline,cs[2].value,cs[2].unit,cs[2].freq,cs[2].count,cs[2].dots], ['About 5,480 neighbours live in 1,980 homes around us','5,480','neighbours','in 1,980 homes','27 in every 100 are children',{n:100,on:27,hue:'children'}]);
-  c('…one thing we learned, then what God has put in this room', [cs[3].kicker,cs[4].kicker,cs[4].headline], ['One thing we learned','What God has put in this room','Look what God has already put in this room']);
+  c('…one thing we learned, here in Warminster (v10.40), then what God has put in this room', [cs[3].kicker,cs[4].kicker,cs[5].kicker,cs[5].headline], ['One thing we learned','Here in Warminster','What God has put in this room','Look what God has already put in this room']);
   c('…and the thing learned is not the children again (just shown as dots): single parents instead', [cs[3].headline,cs[3].compare.sig], ['About 1 in 3 families with children around us is led by a single parent',true]);
   c('…while a ministry led by another figure keeps it (the pantry: SNAP)', built.find(b=>b.lang==='en'&&b.g==='congregation'&&b.id==='food-pantry').d.slides[3].headline, 'About 1 in 6 households around us receives SNAP food assistance');
-  c('…the plan, three sizes of yes smallest first, and the promise to report back', [cs[5].headline,cs[6].options.map(o=>o.k),/^We will report back on \d+ \w{3}$/.test(cs[7].headline)], ['A trial of 6 weeks: Pathfinder & Adventurer club, open to the neighborhood',['pray','help','lead'],true]);
-  c('…leading work with children says screening is required', cs[6].options[2].text, 'Lead or teach (screening required).');
-  c('…and the close carries PK 638.3', cs[7].quote.ref, 'Ellen G. White · Prophets and Kings, p. 638');
+  c('…then here in Warminster (v10.40)', [cs[4].type,cs[4].kicker], ['place','Here in Warminster']);
+  c('…the plan, three sizes of yes smallest first, and the promise to report back', [cs[6].headline,cs[7].options.map(o=>o.k),/^We will report back on \d+ \w{3}$/.test(cs[8].headline)], ['A trial of 6 weeks: Pathfinder & Adventurer club, open to the neighborhood',['pray','help','lead'],true]);
+  c('…leading work with children says screening is required', cs[7].options[2].text, 'Lead or teach (screening required).');
+  // v10.40: "Christ's method alone…" (MH 143, verified with its Spanish MC 102) closes the congregation's deck
+  c('…and the close carries MH 143.3', cs[8].quote.ref, 'Ellen G. White · The Ministry of Healing, p. 143');
   c('the board-approved line appears only when it was approved', [JE(`caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW}}).motion.by`),JE(`caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW},approved:'2026-10-06'}).motion.by`)], ['','Approved by the church board on 6 Oct']);
 
   c('with no language given, the model follows the page (LANG), and puts it back', JE(`(()=>{ const p=LANG; LANG='es'; const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); const after=LANG; LANG=p; return [m.lang,m.motion.headline.slice(0,7),after]; })()`), ['es','Aprobar','es']);
@@ -284,8 +307,11 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     c('…with no county bars, no "higher than the county", no "why here" cards against itself', [out.some(d=>d.slides.some(s=>s.compare)),out.some(d=>strings(d).some(([p,x])=>/than the county|County:/.test(x))),out[0].slides.some(s=>s.type==='trio')], [false,false,false]); }
   console.log('\n-- the group changes the case --');
   const one=(g,t,id,lang='en')=>built.find(b=>b.g===g&&b.t===t&&b.id===id&&b.lang===lang);
-  c('elders: their own role in the motion, their verse, their question set', [one('elders','board','food-pantry').d.slides[1].headline,one('elders','board','food-pantry').d.slides.find(s=>s.type==='ask').verse.ref,one('elders','board','food-pantry').m.questions.map(q=>q.id)],
-    ['Support the coordinator: a real food pantry, on a schedule',"1 Peter 5:2 · KJV",['elders.gospel','elders.load','elders.trained','elders.fruit']]);
+  // v10.40: slides carry only the verified library's verses; the need slide follows the need (the
+  // pantry: Proverbs 31:9). Updated for the pastor's wish that the groups' own verses reach the
+  // slides again: 1 Peter 5:2 is now in the library (verified KJV / RVA) and is the elders' motion verse.
+  c('elders: their own role in the motion, their verses, their question set', [one('elders','board','food-pantry').d.slides[1].headline,one('elders','board','food-pantry').d.slides.find(s=>s.type==='stat').verse.ref,one('elders','board','food-pantry').d.slides[1].verse.ref,one('elders','board','food-pantry').m.questions.map(q=>q.id)],
+    ['Support the coordinator: a real food pantry, on a schedule',"Proverbs 31:9 · KJV","1 Peter 5:2 · KJV",['elders.gospel','elders.load','elders.trained','elders.fruit']]);
   c('finance and board decks differ, from the same figures', JSON.stringify(one('finance','board','food-pantry').d)!==JSON.stringify(one('board','board','food-pantry').d), true);
   { const qs=built.flatMap(b=>b.m.questions.map(q=>[b.lang,b.g,b.id,q]));
     c('every question answered with real figures: no placeholder left, none empty', qs.filter(([l,g,id,q])=>/\{/.test(q.q+q.a)||!q.q||!q.a).length, 0);
@@ -309,7 +335,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   // A made-up neighbourhood whose figures the test sets (caseSampleCtx() is a fresh copy each time).
   const hero=(id,set,g='board',t='board')=>JE(`(()=>{ const ctx=caseSampleCtx(); const m=ctx.M.tract, k=ctx.M.county; (${set})(m,k); ctx.hits=caseHits(ctx.M,'tract');
     const M=caseModel(${JSON.stringify(id)},{type:'${t}',group:'${g}'},{ctx,now:${NOW}}); const d=caseDeck(M);
-    return {key:M.need.hero.key,dir:M.need.hero.cmp&&M.need.hero.cmp.dir,sig:M.need.hero.sig,supports:M.need.supports.map(f=>f.key),stat:d.slides.find(s=>s.type==='stat'),trio:(d.slides.find(s=>s.type==='trio')||{}).items}; })()`);
+    return {key:M.need.hero.key,dir:M.need.hero.cmp&&M.need.hero.cmp.dir,sig:M.need.hero.sig,supports:M.need.supports.map(f=>f.key),stat:d.slides.find(s=>s.type==='stat'),trio:M.need.trio.map(f=>caseTrioItem(f,false))}; })()`);   // v10.40: the "why here" figures feed the place slide; their words, as the trio's
   let h=hero('pathfinders','(m,k)=>{ m.uninsured=40; m.moe.uninsured=2; }');
   c('a huge, significant figure the ministry does not answer (uninsured, 40%) never leads a Pathfinder case', h.key, 'kidsShare');
   h=hero('pathfinders','(m,k)=>{ m.kidsShare=21; m.moe.kidsShare=6; m.k12Share=24; m.moe.k12Share=2; k.k12Share=15.5; k.moe.k12Share=0.2; }');

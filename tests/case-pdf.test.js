@@ -80,7 +80,14 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
       c(`${tag}: margins of error beside them (ours · county)`, m.sources.filter(s=>s.moe).every(s=>back.includes(s.moe.replace(/\s*(points|puntos)$/,'')+' · '+s.countyMoe)), true);
       c(`${tag}: the itemised budget, paid from the local budget, never tithe`, [m.ask.lines.length>0,lang==='es'?/no el diezmo/.test(back):/not tithe/.test(back)], [true,true]);
       c(`${tag}: every risk, with its source`, m.risks.items.every(r=>back.includes(r.text.split(' ').slice(0,4).join(' '))), true);
-      c(`${tag}: the verse and its version (the reference in small capitals)`, [back.toUpperCase().includes(m.verse.ref.toUpperCase()),back.includes(m.verse.version),back.includes(m.verse.text.split(' ').slice(0,4).join(' '))], [true,true,true]);
+      // v10.40: "Scripture in this case": every verse the slides carry, with its reference and
+      // version (the words in full, except at the tightest level, where the references stand alone)
+      { const vs=P.J(`caseHandoutVerses(caseDeck(caseModel('${mid}',{type:'${type}',group:'${group}'}))).map(v=>({ref:gfPdfClean(v.ref),text:gfPdfClean(v.text)}))`), B=back.replace(/\s+/g,' ').toUpperCase();   // as the PDF's fonts print them (… as ...)
+        c(`${tag}: every slide's verse and its version on the back (${vs.length}; the reference in small capitals)`, [vs.length>=7,vs.every(v=>B.includes(v.ref.toUpperCase())),doc.__caseLevel>=3||vs.every(v=>B.includes(v.text.split(' ').slice(0,3).join(' ').toUpperCase()))], [true,true,true]); }
+      // v10.40: "Here in {town}" on the front; the deck's Ellen White line (verified, with its credit) after the verses
+      { const eg=P.J(`caseModel('${mid}',{type:'${type}',group:'${group}'}).egw`);
+        c(`${tag}: "${lang==='es'?'Aquí en':'Here in'} Warminster" on the front, "${lang==='es'?'La Escritura en este caso':'Scripture in this case'}" and the Ellen White line on the back`,
+          [F.perPage[0].includes(lang==='es'?'AQUÍ EN WARMINSTER':'HERE IN WARMINSTER'),F.perPage[1].includes(lang==='es'?'LA ESCRITURA EN ESTE CASO':'SCRIPTURE IN THIS CASE'),back.replace(/\s+/g,' ').toUpperCase().includes(P.E(`gfPdfClean(${JSON.stringify(eg.ref)})`).toUpperCase())], [true,true,true]); }
       c(`${tag}: counts only, and the under-18 note`, [back.includes(P.E('caseT(CASE_COPY.notes.counts)').split(' ')[0]),back.includes(P.E('caseT(CASE_COPY.notes.minors)').slice(0,20))], [true,true]);
       if(lang==='es'){
         c(`${tag}: accents kept, cost lines in Spanish, no English budget words`, [/Revisi[óo]n|Petici[óo]n|Página/.test(F.text),/Materials and preparation|Replacement supplies|allowance/.test(F.text)], [true,false]);
@@ -94,7 +101,8 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
       c(`${lang} sample: ${mark} on every page (head and foot)`, F.perPage.map(p=>p.filter(t=>t===mark||t.startsWith(mark+' ·')).length>=2), Array(F.n).fill(true));
       c(`${lang} sample: two pages, every line in place, no names`, [F.n,F.outside.length,NAMES.filter(nm=>F.raw.includes(nm)).length], [2,0,0]);
       const mu=P.E('caseT(CASE_X.sampleFigures)');
-      c(`${lang} sample: from his own survey the figures are real, so never called made up`, [S.own,F.perPage[1].includes(mu),F.perPage.some(p=>p.some(t=>t.includes(mark+' · '+mu))),/American Community Survey|Encuesta sobre la Comunidad/.test(F.text)], [true,false,false,true]);
+      // (v10.40: the words are matched across line breaks; the handout's density level can wrap them anywhere)
+      c(`${lang} sample: from his own survey the figures are real, so never called made up`, [S.own,F.perPage[1].includes(mu),F.perPage.some(p=>p.some(t=>t.includes(mark+' · '+mu))),/American Community Survey|Encuesta sobre la Comunidad/.test(F.text.replace(/\s+/g,' '))], [true,false,false,true]);
       c(`${lang} sample: the file name starts ${mark}`, P.E(`casePdfName(caseHandout(caseSample({ministry:'pathfinders'}).model,null,{sample:true}))`).startsWith(mark+'-Bucks-County-SDA-'), true); }
     P.w.close();
   }
@@ -113,7 +121,8 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
     P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; uPersist(); openTool('case'); render();`);
     saved.length=0; P.q('[data-cs-act="pdf"]').click();
     for(let i=0;i<100&&!saved.length;i++) await sleep(20);
-    c('Download PDF handout saves Bucks-County-SDA-Pathfinder-Adventurer-club-<date>.pdf', [saved.length,saved[0]&&saved[0].name], [1,'Bucks-County-SDA-Pathfinder-Adventurer-club-'+P.E(`caseISO(new Date())`)+'.pdf']);
+    // Updated (v10.40 review): the audience is in the name, so the board's and the congregation's handouts no longer overwrite each other.
+    c('Download PDF handout saves Bucks-County-SDA-Pathfinder-Adventurer-club-board-<date>.pdf', [saved.length,saved[0]&&saved[0].name], [1,'Bucks-County-SDA-Pathfinder-Adventurer-club-board-'+P.E(`caseISO(new Date())`)+'.pdf']);
     await sleep(20);
     c('…with no live link yet, no QR code, and the status says how to add one', [/no QR code yet: use Share link & QR first/.test(P.q('#cs-status').textContent),saved[0]&&saved[0].bytes.toString('latin1').startsWith('%PDF-')], [true,true]);
     c('the handout reads the model, never its private ask list', /Ana Lopez|Ben Carter/.test(saved[0].bytes.toString('latin1')), false);
@@ -140,7 +149,8 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
   console.log('\n-- the file name --');
   { const P=page('es'); await sleep(1300); P.setup();
     const nm=P.E(`casePdfName(caseHandout(caseModel('food-pantry',{type:'board',group:'board'}),null,{}),new Date(2026,8,28))`);
-    c('Spanish: church, the ministry’s name up to its comma without its article, the date; ASCII only', [nm,/^[A-Za-z0-9-]+\.pdf$/.test(nm)], ['Bucks-County-SDA-despensa-de-alimentos-de-verdad-2026-09-28.pdf',true]);
+    // Updated (v10.40 review): the audience ("junta") before the date.
+    c('Spanish: church, the ministry’s name up to its comma without its article, the audience, the date; ASCII only', [nm,/^[A-Za-z0-9-]+\.pdf$/.test(nm)], ['Bucks-County-SDA-despensa-de-alimentos-de-verdad-junta-2026-09-28.pdf',true]);
     c('accented names lose only their accents', P.E(`casePdfName({church:'Iglesia Adventista de Peñuelas',ministry:'Clínica de presión arterial',labels:{sample:'MUESTRA'},sample:true},new Date(2026,0,5))`), 'MUESTRA-Iglesia-Adventista-de-Penuelas-Clinica-de-presion-arterial-2026-01-05.pdf');
     P.w.close(); }
 

@@ -96,8 +96,14 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
   { const h=P.J(H('pathfinders','deacons'));
     c('H.win is the group’s measure; H.reach the reach line', [h.win,h.reach], ['The room ready every time, the rota kept, and returning visitors greeted by name.','16 places would be about 1 in 93 of the children around us: a first step.']);
     const doc=docFor(H('pathfinders','deacons')), log=doc.__caseLog, p1=log.filter(l=>l.p===1).map(l=>l.t);
-    c('deacons (room left): both on the front, after the review line', [p1.includes('WHAT COUNTS AS SUCCESS'),p1.some(t=>/returning visitors greeted by name/.test(t)),p1.some(t=>/1 in 93 of the children around us: a first step\./.test(t)),
-      p1.findIndex(t=>/^Review on /.test(t))<p1.indexOf('WHAT COUNTS AS SUCCESS')], [true,true,true,true]);
+    // v10.40: "Here in {town}" joined the front (the pastor asked for the place in the handout), so
+    // at the level the handout is drawn there is no room left for these two; they are still "room
+    // allowing": drawn one level tighter, where room is left, after the review line.
+    c('deacons: "Here in Warminster" is on the front', p1.includes('HERE IN WARMINSTER'), true);
+    { const lvOf=l=>P.E(`(()=>{ window.__d1=casePdfDocAt(${H('pathfinders','deacons')},{jsPDF:window.jspdf.jsPDF,compress:false},${l}); return true; })()`)&&P.w.__d1;
+      const d1=[1,2,3].map(lvOf).find(d=>d.__caseLog.some(l=>l.p===1&&/a first step\.$/.test(l.t)))||lvOf(3), q1=d1.__caseLog.filter(l=>l.p===1).map(l=>l.t);
+      c('deacons (room left): both on the front, after the review line', [q1.includes('WHAT COUNTS AS SUCCESS'),q1.some(t=>/returning visitors greeted by name/.test(t)),q1.some(t=>/1 in 93 of the children around us: a first step\./.test(t)),
+        q1.findIndex(t=>/^Review on /.test(t))<q1.indexOf('WHAT COUNTS AS SUCCESS'),d1.__caseFront], [true,true,true,true,1]); }
     c('…two pages, the front one page, every line in its box and above the footer', [doc.getNumberOfPages(),doc.__caseFront,log.filter(l=>l.x0<l.bx0-0.6||l.x1>l.bx1+0.6||l.y>780).length], [2,1,0]); }
   { const r=P.E(`(()=>{ const out=[]; for(const id of ['pathfinders','food-pantry','vbs','bp-clinic','community-dinner','welcome-table']) for(const g of ['board','elders','deacons','finance','nominating']){
       const h=caseHandout(caseModel(id,{type:'board',group:g},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,'${URL}'),url:'${URL}',code:'K7M2QX'});
@@ -106,7 +112,9 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
       return JSON.stringify(out); })()`);
     const o=JSON.parse(r);
     c(`30 board handouts: the new lines never change the level chosen, the pages, or push the front over`, [o.length,o.filter(x=>!x.every(Boolean)).length], [30,0]); }
-  { const r=P.J(`(()=>{ const h=caseHandout(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}),null,{}); h.win='x '.repeat(900); const d=casePdfDoc(h,{jsPDF:window.jspdf.jsPDF,compress:false});
+  // v10.40: the front carries "Here in {town}" too and is drawn one level tighter, which leaves more
+  // room at the foot: the line that cannot fit is longer now (the intent is unchanged)
+  { const r=P.J(`(()=>{ const h=caseHandout(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}),null,{}); h.win='x '.repeat(3000); const d=casePdfDoc(h,{jsPDF:window.jspdf.jsPDF,compress:false});
       return [d.getNumberOfPages(),d.__caseFront,d.__caseLog.some(l=>l.t==='WHAT COUNTS AS SUCCESS')]; })()`);
     c('a success line too long for the room left is left out, never drawn onto a new page', r, [2,1,false]); }
   { const r=P.J(`['team','congregation'].map(t=>{ const h=caseHandout(caseModel('pathfinders',{type:t,group:t==='team'?'youth':'congregation'},{now:${NOW}}),null,{}); return [h.win||'',h.reach||'']; })`);
@@ -116,8 +124,11 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
     c('ES builder: "Qué decir · Comisión de nombramientos" with its five labels', [s2&&s2.sum,s2&&s2.rows.map(r=>r[0])], ['Qué decir · Comisión de nombramientos',['Para empezar','Una cita de Elena G. de White','A cuántos alcanza','Qué se considerará un éxito','Para cerrar']]);
     c('ES: the note says it is for him', /Para usted, no para las diapositivas/.test(P2.q('#cs-s3 .cs-say').textContent), true);
     const doc=P2.E(`(()=>{ const U='${URL}'; window.__d=casePdfDoc(caseHandout(caseModel('food-pantry',{type:'board',group:'nominating'},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,U),url:U,code:'K7M2QX'}),{jsPDF:window.jspdf.jsPDF,compress:false}); return true; })()`)&&P2.w.__d;
-    const p1=doc.__caseLog.filter(l=>l.p===1).map(l=>l.t);
-    c('ES handout: "QUÉ SE CONSIDERARÁ UN ÉXITO" and "…un primer paso."', [p1.includes('QUÉ SE CONSIDERARÁ UN ÉXITO'),p1.some(t=>/un primer paso\.$/.test(t)),doc.getNumberOfPages()], [true,true,2]);
+    // v10.40: the lines are room allowing (the front carries "Aquí en {town}" now): the first level
+    // with room left for them draws them, in Spanish
+    const lvs=[0,1,2,3].map(l=>P2.E(`(()=>{ const U='${URL}'; const d=casePdfDocAt(caseHandout(caseModel('food-pantry',{type:'board',group:'nominating'},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,U),url:U,code:'K7M2QX'}),{jsPDF:window.jspdf.jsPDF,compress:false},${l});
+      return JSON.stringify({front:d.__caseFront,p1:d.__caseLog.filter(l=>l.p===1).map(l=>l.t)}); })()`)).map(x=>JSON.parse(x)).filter(x=>x.front===1&&x.p1.includes('QUÉ SE CONSIDERARÁ UN ÉXITO'));
+    c('ES handout: "QUÉ SE CONSIDERARÁ UN ÉXITO" and "…un primer paso." (where there is room), two pages', [lvs.length>0,lvs.length>0&&lvs[0].p1.some(t=>/un primer paso\.$/.test(t)),doc.getNumberOfPages(),doc.__caseLog.some(l=>l.p===1&&/^AQUÍ EN /.test(l.t))], [true,true,2,true]);
     c('ES: no errors', P2.errs, []);
     P2.w.close(); }
 
