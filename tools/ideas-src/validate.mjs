@@ -8,7 +8,15 @@
    add --no-review to hide REVIEW lines (they never fail a file)
 
    Prints "OK <file> <n> ideas" or "ERROR <file> <id>: …" lines and "FAIL <file> …".
-   Exit code 0 only when nothing failed. */
+   Exit code 0 only when nothing failed.
+
+   Themes marked "inside": true in themes.json (the seven INSIDE THE CHURCH themes and four Adventist department
+   themes, WRITERS.md) serve the church family itself and may set digitalMin 10. "inside": false (or no flag) is an
+   outward or both-ways theme. Every idea has a reach: its optional "reach" field ("in" = for God's people, "out" =
+   for the community, "both"), else its entry in reach.json beside this file (if there is one), else the theme's
+   default ("in" when the theme is inside, "out" otherwise). An in-reach idea is rightly at the church, so it skips
+   the two "waits at the building" REVIEWs; every other rule applies to it. The love-without-pressure checks (guilt
+   phrasing, public lists of attendance, giving or sins) run on every theme. */
 import fs from 'node:fs';
 import path from 'node:path';
 import {fileURLToPath} from 'node:url';
@@ -74,14 +82,26 @@ const SIG_IDS = new Set(VOCAB.signature.map(s => s.id));
 let THEMES = [];
 try { THEMES = JSON.parse(fs.readFileSync(path.join(HERE, 'themes.json'), 'utf8')).themes || []; } catch (e) { THEMES = []; }
 const THEME = new Map(THEMES.map(t => [t.id, t]));
+// Optional reach.json ({ideaId: "in"|"out"|"both"}) beside this file: the reach of ideas written before the field
+// existed. It is checked in full by --all; here it only feeds each idea's effective reach.
+let REACH_FILE = null, REACH_MAP = {};
+if (fs.existsSync(path.join(HERE, 'reach.json'))) {
+  try { REACH_FILE = JSON.parse(fs.readFileSync(path.join(HERE, 'reach.json'), 'utf8')); } catch (e) { REACH_FILE = {error: e.message}; }
+  if (REACH_FILE && typeof REACH_FILE === 'object' && !Array.isArray(REACH_FILE) && !REACH_FILE.error) REACH_MAP = REACH_FILE;
+}
 
 /* ------------------------------------------------------------------ constants */
 const KINDS = ['serve', 'equip', 'belong', 'invite'];
 const AGES = ['all', 'children', 'youth', 'adults', 'seniors', 'families'];
 const WHERE = ['church', 'streets', 'homes', 'online', 'schools', 'parks', 'community', 'workplaces'];
 const STAGES = ['open', 'trust', 'deeper', 'decide'];
+const REACHES = ['in', 'out', 'both'];   // in = for God's people (members, officers, services); out = for the community; both
 const REQUIRED = ['id', 'theme', 'tier', 'k', 'ages', 'where', 'sabbath', 'minors', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'partner', 'en', 'es'];
-const OPTIONAL = ['also', 'st', 'fac'];
+const OPTIONAL = ['also', 'st', 'fac', 'reach'];
+const themeReach = id => ((THEME.get(id) || {}).inside === true ? 'in' : 'out');
+// The reach an idea is shown under: its own field, else reach.json, else the theme's default.
+const reachOf = x => (x && REACHES.includes(x.reach)) ? x.reach
+  : (x && typeof x.id === 'string' && REACHES.includes(REACH_MAP[x.id])) ? REACH_MAP[x.id] : themeReach(x && x.theme);
 const LIM = {n: [6, 60], d: [100, 420], step: [20, 140], partner: [3, 120]};
 const TIER = {
   1: {ppl: [1, 4], leaders: [0, 1], hrs: [1, 10], cost: 150, costMo: 50},
@@ -190,12 +210,34 @@ const REVIEWS = [
   ['"bar": make sure this is not a drinking venue', /(?<!(granola|snack|protein|salad|juice|cereal|candy|chocolate|grab|soap|energy|breakfast|fruit|oat|smoothie|coffee|espresso|tea|bar) )\bbars?\b(?! (codes?|exam|graph|chart))/, /\bbares\b|\bun bar\b|\bel bar\b/],
   ['photos: no photos of people served for publicity; children never without written parental consent', /\b(photos?|photograph\w*|pictures?|selfies?)\b/, /\b(fotos?|fotografias?|selfies?)\b/,
     /\b(no|never|without|nor) (photos?|photograph\w*|pictures?|selfies?|cameras?)|consent|permission/, /\b(sin|ninguna|nunca|no) (fotos?|fotografias?)|consentimiento|permiso/],
-  ['dignity wording (say who they are: neighbors, families, guests)', /\b(the needy|the less fortunate|less fortunate|handouts?|charity cases?|underprivileged|the unchurched|the lost)\b/, /\b(los necesitados|los menos afortunados|los inconversos|los perdidos|limosnas?)\b/],
+  ['dignity wording (say who they are: neighbors, families, guests, members)', /\b(the needy|the less fortunate|less fortunate|handouts?|charity cases?|underprivileged|the unchurched|the lost|backsliders?|backslidden|apostates?|delinquent (members|givers|tithers))\b/, /\b(los necesitados|los menos afortunados|los inconversos|los perdidos|limosnas?|apostatas)\b/],
   ['knocking: homes get a card, not a knock, unless invited', /\bknock\w*/, /\b(toc(ar|a|an|amos|ando) (a |la )?puerta|golpe\w* (a |la )?puerta)/,
     /\b(no|never|without|nobody|not|nor) (knock|knocking)\b|\bunless (invited|someone|somebody|they)|\bby appointment|\binvited\b|\bno knocking\b/, /\bsin toc\w*|\bno toc\w*|\bnunca toc\w*|\bsolo si (le|lo|la|los|las)? ?invit\w*|con cita/],
   ['prayer requests: offer an anonymous/private option', /\bprayer requests?\b/, /\b(pedidos?|peticiones?|motivos?) de oracion\b/,
     /anonym|privat|confidential|no name|first name only|without (a|their) name|optional/, /anonim|privad|confidencial|sin nombre|solo (el|su) (primer )?nombre|opcional/]
 ];
+// Love without pressure (WRITERS.md, INSIDE THE CHURCH). Run on every theme, in both languages.
+// A mention inside a clear safeguard ("never ask 'why weren't you here'", "nunca publique la asistencia") is a REVIEW.
+const PRESSURE = [
+  ['guilt or pressure (say "we missed you, we hope you are well"; never ask why, never keep score)',
+    /\bwhy (weren't|werent|were not|wasn't|wasnt|was not|haven't|havent|have not|hadn't|hadnt|had not|didn't|didnt|did not) (you|he|she|they)\b|\bwhy (have|had) (you|they) been (absent|away|missing|gone)\b|\bwhere (have you been|were you)( (last (week|sabbath|month)|on sabbath|all this time|lately|hiding))?\s*\?|\b(you've|youve|you have|they've|they have) been (missing|absent|gone)\b|\bwe (noticed|saw|see|have noticed|'ve noticed|could tell) (that )?you ((weren't|werent|were not|haven't been|havent been|have not been) (here|in church|at church|around)|(were|have been) (missing|absent|away|gone))\b|\bno excuses?\b|\bguilt[- ]?trip\w*|\bguilt (them|people|members|him|her)\b|\b(make|makes|making|made) (them|him|her|people|members|someone|anyone) feel (guilty|ashamed)\b|\bname and shame\b|\bshame (them|people|members) into\b|\byou (should|must|ought to|need to) (have been|be) (here|in church|at church)\b/,
+    /\bpor que no (vino|vinieron|viniste|ha venido|han venido|has venido|estuvo|estuvieron|estuviste|ha estado|han estado|has estado|asistio|asistieron|asististe|ha asistido|han asistido|volvio|volvieron|ha vuelto|han vuelto)\b|\b(ha|has|han) estado (faltando|ausentes?|desaparecid[oa]s?)\b|\bsin excusas?\b|¿\s*donde (estaba|estabas|estaban|estuvo|estuviste|estuvieron|ha estado|has estado|han estado)( (usted|ustedes|el sabado|la semana pasada|todo este tiempo))?\s*\?|\bnotamos (que (usted |ustedes )?(no (ha|han) (venido|estado|asistido)|(ha|han) faltado|falto|faltaron|no vino|no vinieron)|su ausencia)\b|\bhacerl[oa]s? sentir (culpables?|avergonzad[oa]s?)\b|\bculpabiliz\w*|\bavergonzarl[oa]s?\b|\b(deberia|deberian|debe|deben) (haber venido|haber estado|estar (aqui|en la iglesia))\b/],
+  ['public listing of attendance or absence (care lists stay private: never on a screen, a board or in a group)',
+    /\b(post|posts|posted|posting|publish|publishes|published|publishing|display|displays|displayed|displaying|announce|announces|announced|announcing|project|projects|projected|projecting|read out|reads out|read aloud|reads aloud|put up|puts up|pin up|pins up|call out|calls out) (the |a |an |each |every |this week's |last week's |weekly |monthly |quarterly |sabbath |class |our )?(attendance|attendees'? names|absentees?|absences|names of (the )?(absent|missing|absentees))\b|\b(attendance|absence) (boards?|charts?|walls?|leaderboards?|rankings?|contests?|competitions?|awards?|prizes?|trophy|trophies|stars?)\b|\bperfect attendance\b/,
+    /\b(publicar|publique|publiquen|publicamos|anunciar|anuncie|anuncien|anunciamos|exhibir|exhiba|exhiban|proyectar|proyecte|proyecten|leer en voz alta|lea en voz alta|lean en voz alta|colgar|cuelgue|cuelguen|pegar|pegue|peguen|mostrar|muestre|muestren) (en (la |las )?pantallas? |en el tablero |en el boletin )?(la |las |el |los |una |un )?(lista de )?(asistencia|ausentes|ausencias|nombres de (los )?ausentes|quienes faltaron|quienes no vinieron)\b|\b(tableros?|cuadros?|graficas?|concursos?|premios?|competencias?|estrellas|trofeos?) (de|por) (la )?asistencia\b|\basistencia perfecta\b/],
+  ['public listing of giving (thank givers without naming them or their amounts; the treasurer keeps giving records confidential)',
+    /\blists? of (who|those who|people who|members who|everyone who|the people who|families who|the members who) (gave|give|gives|tithed|tithe|tithes|donated|donate|donates|pledged|pledge|pledges|contributed|contribute|contributes)\b|\bwho (gave|gives|tithed|tithes|donated|pledged) (what|how much)\b|\bhow much (each|every|individual) (member|family|person|donor|giver|one)s? (gave|gives|give|tithed|tithes|pledged|donated)\b|\b(names of|naming) (the |our |all )?(donors|givers|tithers|tithe payers|contributors|pledgers)\b|\b(top|biggest|largest) (givers|donors|tithers|contributors)\b|\bdonor (walls?|boards?|plaques?|rolls?)\b|\bhonor rolls? of (donors|givers)\b|\b(donors|givers|tithers|contributors|pledgers) by name\b[^.!?;]{0,40}\b(bulletin|screens?|pulpit|platform|newsletter|publicly|during (the )?(service|worship))\b|\b(bulletin|screens?|pulpit|platform|newsletter|publicly)\b[^.!?;]{0,40}\b(donors|givers|tithers|contributors|pledgers) by name\b/,
+    /\blistas? de (quienes|los que|las personas que|los miembros que|las familias que|quien) (dieron|dan|diezmaron|diezman|ofrendaron|ofrendan|donaron|donan|contribuyeron|contribuyen|prometieron)\b|\bquien (dio|da|diezmo|diezma|dono|dona|ofrendo|ofrenda) (que|cuanto)\b|\bcuanto (dio|da|diezmo|diezma|dono|dona|ofrendo|ofrenda) cada (miembro|familia|persona|uno|donante|hermano|hermana)\b|\bnombres? de (los )?(donantes|dadores|diezmadores|contribuyentes|ofrendantes)\b|\b(mayores|principales) (donantes|dadores|diezmadores|contribuyentes|ofrendantes)\b|\b(muro|placa|cuadro) de (honor de )?(los )?(donantes|dadores|diezmadores)\b|\b(donantes|dadores|diezmadores|contribuyentes) por (su )?nombre\b[^.!?;]{0,40}\b(boletin|pantallas?|pulpito|tablero|publicamente|en publico)\b|\b(boletin|pantallas?|pulpito|tablero|publicamente|en publico)\b[^.!?;]{0,40}\b(donantes|dadores|diezmadores|contribuyentes) por (su )?nombre\b/],
+  ['public exposure of sins or struggles (spiritual care is confidential)',
+    /\bpublic confessions?\b(?! of (faith|christ|jesus))|\bconfess\w* (publicly|in public|before the (church|congregation|class)|in front of (the )?(church|congregation|class))\b|\bpublicly (rebuk|shame|shaming|expos|confront)\w*|\b(rebuk|expos|confront)\w* (them |him |her |members |people |someone )?(publicly|in public|in front of (the )?(church|congregation|class))\b|\blists? of (their |members'? |people's |our )?sins\b/,
+    /\bconfesion(es)? publicas?\b(?! de (fe|cristo|jesus))|\bconfes\w* (publicamente|en publico|delante de (la |toda la )?(iglesia|congregacion|clase))\b|\bpublicamente (reprend|expon|avergonz|confront)\w*|\b(reprend|expon|avergonz|confront)\w* (publicamente|en publico|delante de (la |toda la )?(iglesia|congregacion|clase))\b|\blistas? de (sus |los )?pecados\b/]
+];
+// Stricter than NEG: only a clear safeguard ("never", "don't", "instead of", "nunca", "no diga…") softens these.
+const NEG_SAFEGUARD = {
+  en: /(\b(never|don't|dont|do not|does not|doesn't|avoid|avoids|instead of|rather than|without|won't|nor|no one|nobody|not (ask|say|write|post|publish|announce|display|read|print|put|use|keep|give|call))\b[^.!?;]{0,40}|\bno "?)$/,
+  es: /(\b(nunca|jamas|evite\w*|en lugar de|en vez de|sin|ni|nadie|no (se |le |les |lo |la |los |las )?(diga\w*|decir|pregunt\w*|escrib\w*|publi\w*|anunci\w*|exhib\w*|muestr\w*|mostrar|lea\w*|leer|pegu\w*|pegar|cuelg\w*|colgar|use\w*|usar|hag\w*|hacer|pong\w*|poner|entreg\w*|llame\w*|llamar))\b[^.!?;]{0,40}|\bno "?)$/
+};
+const safeguarded = (txt, re, lang) => { const m = txt.match(re); return !!m && NEG_SAFEGUARD[lang].test(txt.slice(Math.max(0, m.index - 50), m.index)); };
 const SABBATH_REVIEW = /\b(sell|selling|sale|sales|buy|buying|purchas\w*|fundrais\w*|tournaments?|competition|competitive|leagues?|admission|tickets?|shopping)\b/;
 const USTED_REVIEW = /\b(tu|tus|tienes|puedes|quieres|necesitas|contigo|tuyo|tuya|haz)\b/;
 const ES_ENGLISH_REVIEW = /\b(pathfinders?|adventurers?|sabbath|community services|sunday school|escuela dominical|church)\b/;
@@ -238,6 +280,7 @@ function checkIdea(x, ctx) {
   if (typeof x.sabbath !== 'boolean') err('sabbath must be true or false');
   if (typeof x.minors !== 'boolean') err('minors must be true or false');
   if ('st' in x && !STAGES.includes(x.st)) err(`st must be one of ${STAGES.join('|')} (or omitted)`);
+  if ('reach' in x && !REACHES.includes(x.reach)) err(`reach must be one of ${REACHES.join('|')}, or omitted for the theme's default ("${themeReach(x.theme)}" here)`);
 
   // census tags and skills
   const tagList = (v, name, lo, hi) => {
@@ -324,6 +367,13 @@ function checkIdea(x, ctx) {
     if (COUNSEL.en.test(en) && !COUNSEL.cueEn.test(en)) err(`counselling/therapy beyond competence: name a professional partner or say how people are referred — "${en.match(COUNSEL.en)[0]}"`);
     if (COUNSEL.es.test(es) && !COUNSEL.cueEs.test(es)) err(`consejería/terapia sin profesional: nombre un socio profesional o diga cómo se deriva — "${es.match(COUNSEL.es)[0]}"`);
   }
+  for (const [label, reEn, reEs] of PRESSURE) {
+    for (const [lang, txt, re] of [['en', en, reEn], ['es', es, reEs]]) {
+      if (!re.test(txt)) continue;
+      const msg = `love without pressure (${lang.toUpperCase()}): ${label} — "${txt.match(re)[0]}"`;
+      if (safeguarded(txt, re, lang)) rev(`${msg} appears in a safeguard; make sure it reads as one`); else err(msg);
+    }
+  }
   if (x.theme === 'abuse-survivors' && x.partner === null && !/\b(hotline|shelter|advocate\w*|professional\w*|988|911)\b/.test(en))
     err('abuse-survivors: every idea works through a professional partner (shelter, hotline, advocates); name one in partner or in the text');
   if (['addiction', 'mental-health'].includes(x.theme) && x.partner === null && x.tier > 1 && ['equip', 'belong'].includes(x.k))
@@ -356,7 +406,8 @@ function checkIdea(x, ctx) {
 
   // reach and digital
   const digital = DIGITAL.test(en), printDigital = digital && PRINTWALK.test(en);
-  if ((x.tier === 1 || x.tier === 2) && x.where === 'church' && !REACH.test(en))
+  const reach = reachOf(x);   // an in-reach idea serves the church family, so it is rightly at the church
+  if (reach !== 'in' && (x.tier === 1 || x.tier === 2) && x.where === 'church' && !REACH.test(en))
     rev('where "church" with no reach words: how will neighbors come across it? (an idea that only waits at the building fails the bar)');
 
   // softer checks
@@ -410,6 +461,8 @@ function checkFile(file, {ideasOnly = false} = {}) {
   const seen = new Set();
   let digital = 0, printDigital = 0;
   const tier = {1: 0, 2: 0, 3: 0}, kind = {serve: 0, equip: 0, belong: 0, invite: 0}, where = {}, ages = {};
+  const reach = {in: 0, out: 0, both: 0};
+  let churchNotIn = 0, notIn = 0;   // "go where people are" is measured on ideas neighbors meet (reach out or both)
   j.ideas.forEach((x, i) => {
     const id = (x && typeof x.id === 'string') ? x.id : `#${i}`;
     if (seen.has(id)) bad(`${id}: duplicate id`); seen.add(id);
@@ -420,10 +473,11 @@ function checkFile(file, {ideasOnly = false} = {}) {
     if (x && kind[x.k] !== undefined) kind[x.k]++;
     if (x && typeof x.where === 'string') where[x.where] = (where[x.where] || 0) + 1;
     if (x && typeof x.ages === 'string') ages[x.ages] = (ages[x.ages] || 0) + 1;
+    if (x && typeof x === 'object') { const r = reachOf(x); reach[r]++; if (r !== 'in') { notIn++; if (x.where === 'church') churchNotIn++; } }
   });
   for (const lang of ['en', 'es']) for (const [a, b, s] of nearDupes(j.ideas, lang))
     bad(`${a.id} / ${b.id}: names too close (${lang}, Jaccard ${s.toFixed(2)}): "${a[lang].n}" ~ "${b[lang].n}"`);
-  res.stats = {tier, kind, where, ages, digital, printDigital};
+  res.stats = {tier, kind, where, ages, digital, printDigital, reach};
   if (ideasOnly) return res;
   const n = j.ideas.length, T = THEME.get(theme) || {};
   const digitalMin = T.digitalMin || QUOTA.digital;
@@ -438,7 +492,7 @@ function checkFile(file, {ideasOnly = false} = {}) {
   if (Object.keys(where).length < QUOTA.where) bad(`only ${Object.keys(where).length} different "where" values; at least ${QUOTA.where}`);
   if (digital < digitalMin) bad(`${digital} ideas with a digital/social-media component; at least ${digitalMin}`);
   if (printDigital < QUOTA.printDigital) bad(`${printDigital} ideas combine printed cards or walking with a digital follow-up; at least ${QUOTA.printDigital}`);
-  if (n && (where.church || 0) / n > 0.35) res.reviews.push(`(theme) ${where.church} of ${n} ideas are at the church building; go where people are`);
+  if (notIn && churchNotIn / notIn > 0.35) res.reviews.push(`(theme) ${churchNotIn} of ${notIn} ideas for neighbors (reach out or both) are at the church building; go where people are`);
   if (Object.keys(ages).length < 3) res.reviews.push(`(theme) only ${Object.keys(ages).length} age groups; vary ages`);
   return res;
 }
@@ -465,7 +519,10 @@ function checkThemes() {
     if (!Array.isArray(t.tags) || !t.tags.length) errs.push(`themes.json ${id}: tags missing`);
     else for (const g of t.tags) if (!TAGS.has(g)) errs.push(`themes.json ${id}: "${g}" is not a profile() tag`);
     if (!Array.isArray(t.not)) errs.push(`themes.json ${id}: "not" must be an array of [what, themeId]`);
-    if (t.digitalMin != null && !(Number.isInteger(t.digitalMin) && t.digitalMin >= 12)) errs.push(`themes.json ${id}: digitalMin must be an integer >= 12`);
+    if ('inside' in t && typeof t.inside !== 'boolean') errs.push(`themes.json ${id}: "inside" must be true or false, or left out`);
+    for (const k of Object.keys(t)) if (!['id', 'inside', 'en', 'es', 'scope', 'not', 'syn', 'tags', 'digitalMin'].includes(k)) errs.push(`themes.json ${id}: unknown field "${k}"`);
+    const dMin = t.inside === true ? 10 : 12;   // INSIDE THE CHURCH themes: at least 10 digital ideas
+    if (t.digitalMin != null && !(Number.isInteger(t.digitalMin) && t.digitalMin >= dMin)) errs.push(`themes.json ${id}: digitalMin must be an integer >= ${dMin}`);
   }
   for (const t of j.themes) for (const p of (t.not || [])) {
     if (!Array.isArray(p) || p.length !== 2 || typeof p[0] !== 'string' || !ids.has(p[1])) errs.push(`themes.json ${t.id}: bad "not" entry ${JSON.stringify(p)}`);
@@ -500,6 +557,22 @@ if (argv[0] === '--all') {
   const all = results.flatMap(r => r.ideas.filter(x => x && typeof x.id === 'string').map(x => ({x, theme: r.theme})));
   const idOwner = new Map();
   for (const {x, theme} of all) { if (idOwner.has(x.id)) { console.log(`ERROR duplicate id ${x.id} in ${idOwner.get(x.id)} and ${theme}`); failed = true; } idOwner.set(x.id, theme); }
+  // reach.json (optional): {ideaId: "in"|"out"|"both"} for ideas written before the "reach" field
+  if (REACH_FILE) {
+    const rBad = [];
+    if (REACH_FILE.error) rBad.push(`cannot read JSON: ${REACH_FILE.error}`);
+    else if (typeof REACH_FILE !== 'object' || Array.isArray(REACH_FILE)) rBad.push('must be an object {"<idea id>": "in"|"out"|"both"}');
+    else {
+      const byId = new Map(all.map(({x}) => [x.id, x]));
+      for (const [id, v] of Object.entries(REACH_FILE)) {
+        if (!REACHES.includes(v)) rBad.push(`${id}: reach must be one of ${REACHES.join('|')} (is ${JSON.stringify(v)})`);
+        if (!byId.has(id)) rBad.push(`${id}: no idea with this id in the written themes`);
+        else if ('reach' in byId.get(id) && byId.get(id).reach !== v) rBad.push(`${id}: reach.json says "${v}" but the idea says "${byId.get(id).reach}"; keep one`);
+      }
+    }
+    rBad.forEach(m => console.log(`ERROR reach.json ${m}`));
+    if (rBad.length) failed = true; else console.log(`OK reach.json ${Object.keys(REACH_FILE).length} ideas`);
+  }
   for (const lang of ['en', 'es']) {
     const toks = all.map(({x}) => (x[lang] && typeof x[lang].n === 'string') ? tokens(x[lang].n) : new Set());
     for (let i = 0; i < all.length; i++) for (let k = i + 1; k < all.length; k++) {
@@ -510,13 +583,15 @@ if (argv[0] === '--all') {
   }
   // counts
   const pad = (s, n) => String(s).padEnd(n), num = (s, n) => String(s).padStart(n);
-  console.log('\n' + pad('theme', 22) + num('ideas', 6) + num('t1', 5) + num('t2', 5) + num('t3', 5) + num('serve', 7) + num('equip', 7) + num('belong', 7) + num('invite', 7) + num('digital', 8) + num('card+dig', 9) + num('where', 6) + num('review', 7) + num('errors', 7));
-  let tot = 0, dig = 0;
+  console.log('\n' + pad('theme', 22) + num('ideas', 6) + num('t1', 5) + num('t2', 5) + num('t3', 5) + num('serve', 7) + num('equip', 7) + num('belong', 7) + num('invite', 7) + num('digital', 8) + num('card+dig', 9) + num('where', 6) + num('in/out/both', 12) + num('review', 7) + num('errors', 7));
+  let tot = 0, dig = 0; const rTot = {in: 0, out: 0, both: 0};
   for (const r of results) {
-    const s = r.stats; tot += r.n; dig += s.digital;
-    console.log(pad(r.theme, 22) + num(r.n, 6) + num(s.tier[1], 5) + num(s.tier[2], 5) + num(s.tier[3], 5) + num(s.kind.serve, 7) + num(s.kind.equip, 7) + num(s.kind.belong, 7) + num(s.kind.invite, 7) + num(s.digital, 8) + num(s.printDigital, 9) + num(Object.keys(s.where).length, 6) + num(r.reviews.length, 7) + num(r.errors.length, 7));
+    const s = r.stats; tot += r.n; dig += s.digital; for (const k of REACHES) rTot[k] += s.reach[k];
+    console.log(pad(r.theme + ((THEME.get(r.theme) || {}).inside === true ? ' *' : ''), 22) + num(r.n, 6) + num(s.tier[1], 5) + num(s.tier[2], 5) + num(s.tier[3], 5) + num(s.kind.serve, 7) + num(s.kind.equip, 7) + num(s.kind.belong, 7) + num(s.kind.invite, 7) + num(s.digital, 8) + num(s.printDigital, 9) + num(Object.keys(s.where).length, 6) + num(`${s.reach.in}/${s.reach.out}/${s.reach.both}`, 12) + num(r.reviews.length, 7) + num(r.errors.length, 7));
   }
-  console.log(`TOTAL ${tot} ideas in ${results.length} of ${THEMES.length} themes, ${dig} with a digital component`);
+  console.log(`TOTAL ${tot} ideas in ${results.length} of ${THEMES.length} themes, ${dig} with a digital component; reach in ${rTot.in}, out ${rTot.out}, both ${rTot.both}`);
+  const insideN = THEMES.filter(t => t.inside === true).length;
+  if (insideN) console.log(`* inside the church: ${insideN} themes (WRITERS.md, INSIDE THE CHURCH and ADVENTIST DEPARTMENTS); their ideas default to reach "in"`);
 } else {
   const ideasOnly = flag('--ideas-only');
   if (!argv.length) { console.log('usage: node validate.mjs <themes/id.json…> | --ideas-only <file> | --all | --vocab <index.html>  [--no-review]'); process.exit(2); }

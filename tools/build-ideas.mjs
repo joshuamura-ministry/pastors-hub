@@ -16,6 +16,14 @@
  *                              theme or a search result from it is shown
  *        ideas/words.json      the words of every description (EN + ES, folded), in index order,
  *                              fetched only when a search names no theme (the full-text fallback)
+ *   4. (v10.41) ships each idea's reach in the index: "in" (for God's people: members, the church
+ *      family, its officers and services), "out" (for the community, guests who visit included) or
+ *      "both". An idea's own "reach" field comes first, then <library folder>/reach.json
+ *      ({id: "in"|"out"|"both"}, the classifier's file for ideas written before reach existed);
+ *      an idea with neither ships its theme's default (the theme's "reach", else "in" for an
+ *      "inside": true theme, else "out"), so every row carries in, out or both. The index's themes
+ *      carry "inside" and "reach" too. A reach that is not one of the three stops the build like
+ *      any other error.
  *
  * By default nothing is written unless the validator passes: a half-valid library never
  * ships. --skip-invalid (for a library still being written) leaves out each idea the
@@ -83,21 +91,35 @@ function appCheck(x) {
   for (const s of x.skill || []) if (!SKILLS.has(s)) e.push('unknown skill ' + s);
   for (const g of x.fac || []) for (const k of String(g).split('|')) if (!FACS.has(k)) e.push('unknown facility ' + k);
   if (!Array.isArray(x.need) || !x.need.length) e.push('no need tag');
+  if ('reach' in x && !REACH_OK.has(x.reach)) e.push('reach must be in, out or both');
   return e;
 }
 
 /* ---------------------------------------------------------------- 3. read, filter, pack */
 const THEMES = JSON.parse(fs.readFileSync(path.join(SRC, 'themes.json'), 'utf8')).themes;
 const TIDX = new Map(THEMES.map((t, i) => [t.id, i]));
+/* In-reach and outreach (v10.41): reach.json beside themes.json, if the classifier has written it. */
+const REACH_OK = new Set(['in', 'out', 'both']);
+const reachFile = path.join(SRC, 'reach.json');
+let REACH = {};
+if (fs.existsSync(reachFile)) {
+  let j = null; try { j = JSON.parse(fs.readFileSync(reachFile, 'utf8')); } catch (e) { console.log('reach.json is not valid JSON: nothing written.'); process.exit(1); }
+  const o = j && typeof j === 'object' && j.reach && typeof j.reach === 'object' && !Array.isArray(j.reach) ? j.reach : j;
+  if (!o || typeof o !== 'object' || Array.isArray(o)) { console.log('reach.json must be {"<idea id>": "in" | "out" | "both"}: nothing written.'); process.exit(1); }
+  const wrong = Object.entries(o).filter(([, v]) => !REACH_OK.has(v));
+  if (wrong.length && !SKIP) { wrong.slice(0, 20).forEach(([k, v]) => console.log(`REACH ${k}: "${v}" is not in, out or both`)); console.log('reach.json has values that are not in, out or both: nothing written. Add --skip-invalid to leave them out.'); process.exit(1); }
+  REACH = Object.fromEntries(Object.entries(o).filter(([, v]) => REACH_OK.has(v)));
+}
+const themeReach = t => REACH_OK.has(t.reach) ? t.reach : t.inside === true ? 'in' : 'out';
 /* The colour of a theme's tile follows the app's colour by kind of figure (CLAUDE.md):
    amber money & hardship, blue housing, purple children & families (and age), pink people,
    mint language and the theme itself (prayer, Scripture, worship, media). */
 const HUE = {
-  hardship: 'hunger jobs-money clothing-practical health disaster-relief addiction prison abuse-survivors',
+  hardship: 'hunger jobs-money clothing-practical health disaster-relief addiction prison abuse-survivors stewardship deacons',
   housing: 'homeless transport neighbors creation-care',
-  children: 'children youth young-adults seniors families marriage single-parents grief education schools foster-care',
-  people: 'mental-health veterans disability women men hospitality music-arts sports-outdoors first-responders holidays workplaces',
-  language: 'prayer immigrants personal-evangelism public-evangelism media literature small-groups sabbath-rest'
+  children: 'children youth young-adults seniors families marriage single-parents grief education schools foster-care childrens-ministries pathfinders adventurers ay-youth',
+  people: 'mental-health veterans disability women men hospitality music-arts sports-outdoors first-responders holidays workplaces member-care fellowship involvement worship-music religious-liberty',
+  language: 'prayer immigrants personal-evangelism public-evangelism media literature small-groups sabbath-rest spiritual-care sabbath-school interests global-mission'
 };
 const hueOf = id => Object.keys(HUE).find(k => HUE[k].split(' ').includes(id)) || 'language';
 const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[’']/g, "'");
@@ -129,7 +151,8 @@ if (appBad.length && !SKIP) {
 }
 
 /* index row: the column order is ideas/index.json's "cols"; the page reads it by name */
-const COLS = ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne'];
+const COLS = ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne', 'reach'];
+const reachStats = {in: 0, out: 0, both: 0, theme: 0};
 const rows = [], kws = [], counts = {};
 for (const t of THEMES) {
   for (const x of byTheme.get(t.id)) {
@@ -138,7 +161,11 @@ for (const t of THEMES) {
     const en = fold([x.en.n, x.en.d, ...x.en.how].join(' \n '));
     rows.push([x.id, TIDX.get(x.theme), (x.also || []).map(a => TIDX.get(a)).filter(v => v != null), x.tier, x.k, x.ages, x.where,
       x.sabbath ? 1 : 0, x.minors ? 1 : 0, x.need, x.boost, x.ppl, x.leaders, x.hrs, x.cost, x.costMo, x.skill, x.fac || 0, x.st || 0,
-      x.partner ? 1 : 0, DIGITAL.test(en) ? 1 : 0, x.en.n, x.es.n]);
+      x.partner ? 1 : 0, DIGITAL.test(en) ? 1 : 0, x.en.n, x.es.n, (() => {
+        // the idea's own reach, else the classifier's, else its theme's default: every row says in, out or both
+        const own = REACH_OK.has(x.reach) ? x.reach : REACH_OK.has(REACH[x.id]) ? REACH[x.id] : null;
+        const r = own || themeReach(t);
+        reachStats[r]++; if (!own) reachStats.theme++; return r; })()]);
     kws.push(kw);
     counts[t.id] = (counts[t.id] || 0) + 1;
   }
@@ -147,7 +174,9 @@ const themeFiles = THEMES.filter(t => counts[t.id]).map(t => [t.id, JSON.stringi
 // The hash stands for everything the page loads (v10.40 fix): the theme files, and the index and the
 // search words too, so a change to themes.json alone (a synonym, a theme's name) also replaces an index
 // a browser kept from an earlier deploy.
-const idxThemes = THEMES.map(t => ({id: t.id, en: t.en, es: t.es, hue: hueOf(t.id), n: counts[t.id] || 0, syn: t.syn, tags: t.tags}));
+const idxThemes = THEMES.map(t => ({id: t.id, en: t.en, es: t.es, hue: hueOf(t.id), n: counts[t.id] || 0, syn: t.syn, tags: t.tags,
+  ...(t.inside === true ? {inside: true} : {}), ...(REACH_OK.has(t.reach) ? {reach: t.reach} : {})}));
+const unknownReach = Object.keys(REACH).filter(id => !seen.has(id));
 const hash = crypto.createHash('sha256').update(themeFiles.map(([, s]) => s).join('\n'))
   .update('\n' + JSON.stringify({cols: COLS, themes: idxThemes, ideas: rows})).update('\n' + kws.join('\n')).digest('hex').slice(0, 12);
 const index = {
@@ -170,4 +199,5 @@ console.log(`validator: ${val.status === 0 ? 'passed' : 'FAILED (—skip-invalid
 for (const t of THEMES) console.log(`${t.id.padEnd(22)} ${String(counts[t.id] || 0).padStart(4)} ideas${counts[t.id] ? '' : '   (not shipped)'}`);
 if (skipped.length) { console.log(`\nleft out: ${skipped.length} ideas`); skipped.slice(0, 40).forEach(([t, id, w]) => console.log(`  ${t} ${id}: ${String(w).slice(0, 140)}`)); if (skipped.length > 40) console.log('  …'); }
 if (themeProblems.length) { console.log('\ntheme problems (the theme ships its valid ideas):'); themeProblems.forEach(l => console.log('  ' + l)); }
+console.log(`\nreach: ${reachStats.in} in, ${reachStats.out} out, ${reachStats.both} both (${reachStats.theme} of them their theme's default) (${fs.existsSync(reachFile) ? 'reach.json read' : 'no reach.json'})${unknownReach.length ? `; reach.json names ${unknownReach.length} ideas not shipped (${unknownReach.slice(0, 5).join(', ')}${unknownReach.length > 5 ? '…' : ''})` : ''}`);
 console.log(`\nwrote ${path.relative(ROOT, OUT)}/index.json (${kb(idxText.length)}, ${rows.length} ideas in ${themeFiles.length} themes, hash ${hash}), words.json (${kb(wordsText.length)}) and ${themeFiles.length} theme files (${kb(total)})`);

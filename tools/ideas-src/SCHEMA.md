@@ -1,7 +1,9 @@
 # Terrain Idea Library: schema
 
 Pastor Joshua Mura asked for "50 different things for prayer that a church can do". The Idea Library has
-**42 themes with at least 50 ideas each, in English and Spanish**. Search finds them ("prayer", "prayer ministry",
+**57 themes with at least 50 ideas each, in English and Spanish**: 42 that face the community, 7 marked `"inside": true`
+that serve the church family itself, and 8 that follow the Adventist departments (4 of them inside). Every idea is
+shown under in-reach ("For God's people"), outreach ("For our community"), or both, by its `reach`. Search finds them ("prayer", "prayer ministry",
 "oración" each return all 50+). They rank against the census and are checked against the church's capacity like the
 97 built-in ministries (`SIGNATURE`), and any of them can be proposed in Make the Case.
 
@@ -11,13 +13,14 @@ Code reference: pristine v10.39.0 `index.html` (line numbers below refer to it).
 
 | File | What it is |
 |---|---|
-| `themes.json` | The 42 themes in display order: id, EN/ES names, scope, what belongs elsewhere, search synonyms, related census tags |
+| `themes.json` | The 57 themes in display order (the 42 outward themes, the 7 INSIDE THE CHURCH themes, then the 8 Adventist department themes): id, EN/ES names, scope, what belongs elsewhere, search synonyms, related census tags, `inside` |
 | `themes/<themeId>.json` | `{"theme":"<id>","ideas":[…]}`: one file per theme, 50+ ideas |
+| `reach.json` | `{"<idea id>":"in"\|"out"\|"both"}`: the reach of the 2,249 ideas written before the `reach` field (kept by the in-reach/outreach classification). Optional; `--all` checks it |
 | `examples.json` | Three finished prayer ideas (tier 1, 2 and 3). The validator runs idea checks only on this file |
 | `vocab.json` | A snapshot of the app's real vocabularies: 43 `profile()` tags, 13 skills, 13 facilities, 38 RULES ids, and 97 SIGNATURE ids with EN/ES names. Rebuild it with `node validate.mjs --vocab <index.html>` |
 | `validate.mjs` | The validator (see the end of this file) |
-| `selftest.mjs` | 63 cases showing each rule fires, and does not misfire, in both languages. Run `node selftest.mjs` |
-| `WRITERS.md` | The quality bar, the pastor's own words, and the rules for children, safety and "go where people are" |
+| `selftest.mjs` | 121 cases showing each rule fires, and does not misfire, in both languages (including `reach`, `reach.json` and the themes.json checks). Run `node selftest.mjs` |
+| `WRITERS.md` | The quality bar, the pastor's own words, and the rules for children, safety and "go where people are"; IN-REACH AND OUTREACH explains `reach`; INSIDE THE CHURCH gives the rules for the inside themes; ADVENTIST DEPARTMENTS gives the checked Adventist facts, club and youth safety, and Sabbath rules for the eight department themes |
 
 ## Theme ids (in order)
 
@@ -26,6 +29,12 @@ mental-health, addiction, grief, immigrants, jobs-money, education, prison, vete
 personal-evangelism, public-evangelism, hospitality, neighbors, music-arts, sports-outdoors, clothing-practical,
 disaster-relief, creation-care, media, literature, schools, first-responders, foster-care, abuse-survivors,
 transport, holidays, small-groups, sabbath-rest, workplaces
+
+Inside the church (`"inside": true`): member-care, spiritual-care, deacons, stewardship, involvement, sabbath-school,
+fellowship
+
+Adventist departments: worship-music, childrens-ministries, ay-youth, global-mission (`"inside": true`); pathfinders,
+adventurers, interests, religious-liberty (`"inside": false`: both-ways themes whose ideas default to reach `"out"`)
 
 These are the 42 themes of the brief, kept as given. Changes, with reasons:
 - Ids use US spelling (`neighbors`), because the app's English is American ("neighborhood", "program").
@@ -38,13 +47,31 @@ These are the 42 themes of the brief, kept as given. Changes, with reasons:
   "asilo" means asylum (`immigrants`), not a nursing home. "campamento" means camping (`sports-outdoors`).
   "nextdoor" goes to `neighbors`. "steps to christ" and "camino a cristo" go to `literature`.
 - `media` needs 35 digital ideas instead of 12 (`digitalMin`), as the brief asks ("more in Media & online").
+- The seven INSIDE THE CHURCH themes (added after the pastor asked for ideas for greeters, deacons and every
+  department) carry `"inside": true` and `digitalMin` 10. Their ideas default to reach `"in"` and are rightly at the
+  church, so the validator skips its two "waits at the building" REVIEWs for in-reach ideas; every other rule applies. Some words they would want
+  already belong to an outward theme and stay there ("greeters", "potluck", "comida compartida", "ujieres" and
+  "diaconado" open `hospitality`; "visitation" and "shut-ins" open `seniors`; "discipleship" and "bible study" open
+  `personal-evangelism`; "ancianos" opens `seniors`). Inside ideas are cross-listed with `also` so those searches still find them.
+- The eight Adventist department themes (added after the pastor asked for "all the things we would have as a
+  denomination") took the search words that name them, so one word still opens one theme: "pathfinders", "pathfinder
+  club", "conquistadores" and "club de conquistadores" (from `youth`); "adventurers", "aventureros", "sabbath school for
+  kids" and "escuela sabática de niños" (from `children`); "sociedad de jóvenes" (from `youth`); "cradle roll",
+  "children's divisions", "divisiones infantiles", "mission story", "mission emphasis" and "informe misionero" (from
+  `sabbath-school`); "reclaiming", "reclaiming members", "reclamation" and "rescate de miembros" (from `member-care`).
+  The six older ideas about the clubs gained `also:["pathfinders"]` or `also:["adventurers"]`. General words stay where
+  they were ("children's ministry" and "vbs" open `children`; "youth ministry" opens `youth`; "music" and "choir" open
+  `music-arts`; "evangelism" opens `personal-evangelism`), and department ideas cross-list with `also`.
+- Theme id `pathfinders` is also the id of a built-in SIGNATURE ministry ("Pathfinder & Adventurer club, open to the
+  neighborhood"). The id was fixed by the build spec. Library idea ids are `pathfinders-<slug>` and never equal a
+  SIGNATURE id, but code must never look a theme id up in SIGNATURE (the reason `disaster-relief` is not `disaster`).
 
-`themes.json` shape: `{"version":1,"themes":[{"id","en","es","scope","not":[[what,themeId]…],"syn":{"en":[…],"es":[…]},"tags":[profile tags],"digitalMin"?}]}`.
+`themes.json` shape: `{"version":1,"themes":[{"id","en","es","scope","not":[[what,themeId]…],"syn":{"en":[…],"es":[…]},"tags":[profile tags],"inside"?:boolean,"digitalMin"?}]}`, with no other fields. `digitalMin` is at least 12, or at least 10 when `inside` is true. `inside` true: the theme serves the church family and its ideas default to reach `"in"`; false or absent: its ideas default to `"out"`.
 
 ## One idea
 
-The shape is compact: about 2.2 KB per idea with both languages. That is about 4.6 MB raw for 2,100 ideas, so see
-"Loading" below.
+The shape is compact: about 2.2 KB per idea with both languages. That is about 6.3 MB raw for 2,850 ideas (57 themes),
+so see "Loading" below.
 
 ```json
 {"id":"prayer-door-cards-mile","theme":"prayer","also":["neighbors"],
@@ -77,6 +104,7 @@ The shape is compact: about 2.2 KB per idea with both languages. That is about 4
 | `partner` | `null` or `{"en","es"}` (3–120 characters each) | tier 3 needs a partner, or `cost` ≥ 300, or `costMo` ≥ 100 | The outside partner (becomes `p`) |
 | `st` | open, trust, deeper, decide | **optional** (added, see below) | The four-stage arc (`STAGE`, line 3560) |
 | `fac` | 1–3 strings such as `"kitchen"` or `"classrooms\|center"` | **optional** (added, see below). Keys: kitchen, classrooms, gym, field, center, parking, stage, av, nursery, library, vehicle, grounds, home | Facilities the idea needs; `\|` separates alternatives |
+| `reach` | `"in"`, `"out"` or `"both"` | **optional** (added, see below). Any other value fails. Set it only when the idea differs from its theme's default | Who it is for: `in` = God's people (members, the church family, its officers, classes and services); `out` = the community, including guests who visit; `both` = members and neighbors meet in it on purpose |
 | `en`, `es` | `{"n","d","how"}` | `n` 6–60 characters, no final full stop. `d` 100–420 characters, 2–3 sentences. `how` exactly 4 steps of 20–140 characters. The ES text must be translated, not copied | Name, what it is and why it works, and the first four steps. Spanish is natural Latin-American Spanish and addresses the reader as usted |
 
 Tier limits (they keep sizes honest, and the capacity check depends on these numbers):
@@ -108,11 +136,16 @@ Tier limits (they keep sizes honest, and the capacity check depends on these num
 6. **Money and hours are whole numbers, and there are no extra fields.** `uReq` scales these numbers, and unknown
    fields fail validation so typos cannot slip through.
 7. **Ids must not collide with built-in ids** (see `id` above).
+8. **Optional `reach`** (the pastor asked to see "what can I do for God's people, but also what can I do for the
+   community"). The reach an idea is shown under is, in order: its own `reach`; else its line in `reach.json` (the
+   classification of the ideas written before the field); else the theme's default, `"in"` when the theme has
+   `"inside": true` and `"out"` otherwise. An idea's own `reach` and its `reach.json` line must agree. The packager
+   (tools/build-ideas.mjs) should ship this effective reach with every idea, so the page never has to work it out.
 
 ## How a library idea becomes a first-class ministry
 
 The app already treats `uCatalog()` items (SIGNATURE plus AI drafts) as ministries. A library idea joins through
-one adapter. **Do not put all 2,100 in `uCatalog()`.** Make the Case runs `uCheck` on every catalogue item
+one adapter. **Do not put all 2,850 in `uCatalog()`.** Make the Case runs `uCheck` on every catalogue item
 (line 19910), and its picker lists them all. Instead:
 - The **library view** searches and ranks the whole library itself.
 - When the pastor presses "Add to our list" or "Build proposal" on an idea, its raw JSON is saved with the church
@@ -140,6 +173,7 @@ one adapter. **Do not put all 2,100 in `uCatalog()`.** Make the Case runs `uChec
 | `why` | `libWhy(x)` (below) | `uEvidence` requires `why(m,tags)` to return a sentence with a figure |
 | `requirements` | built below | `uReq` uses `x.requirements` whenever it is present, so `uBase`'s id regexes never run on library ids (for example `grief-…` would otherwise gain `support`, and `…-meal` would gain `cook` and a kitchen) |
 | `sabbath`, `minors`, `ages`, `where`, `theme`, `also` | same | Filters and badges |
+| `reach` | the effective reach (change 8 above) | The "For God's people" / "For our community" split; `both` shows in each |
 
 ```js
 const LIB_FAC_BY_WHERE={church:[['classrooms','center','stage','kitchen','library']],streets:[],homes:[],online:[],
@@ -152,7 +186,8 @@ function libToCatalog(L){
     ppl:L.ppl,cost:(L.cost===0&&L.costMo===0)?0:L.tier<3?1:2,skill:L.skill,
     c:L.tier===1?EFFORT.solo:L.tier===2?EFFORT.team:(L.partner?EFFORT.partner:EFFORT.budget),
     p:L.partner?L.partner[lang]:'None needed',partner:L.partner,
-    theme:L.theme,also:L.also||[],ages:L.ages,where:L.where,sabbath:L.sabbath,minors:L.minors};
+    theme:L.theme,also:L.also||[],ages:L.ages,where:L.where,sabbath:L.sabbath,minors:L.minors,
+    reach:L.reach||'out'};   // the effective reach, which the packager fills in (change 8)
   x.why=libWhy(x);
   const facilities=L.fac?L.fac.map(g=>g.split('|')):LIB_FAC_BY_WHERE[L.where];
   const sessions=L.tier===1?1:2, sessionHours=Math.max(.5,Math.round(L.hrs/sessions*2)/2);
@@ -265,10 +300,10 @@ prefers `LANG==='es' ? x.nEs : x.n` works as well.
 
 ### Loading
 
-The whole library is about 4.6 MB of raw JSON. Ship `themes.json` (about 50 KB, about 12 KB gzipped) with the app. Load
+The whole library is about 6.3 MB of raw JSON. Ship `themes.json` (about 80 KB, about 18 KB gzipped) with the app. Load
 `themes/<id>.json` (about 110 KB raw each) when a theme is opened or searched. For full-text search across
-everything, generate a small index at build time: `[id, theme, also, tier, k, en.n, es.n, need]`, about 270 bytes
-per idea, or about 570 KB for 2,100.
+everything, generate a small index at build time: `[id, theme, also, tier, k, reach, en.n, es.n, need]`, about 275 bytes
+per idea, or about 780 KB for 2,850.
 
 ## Search
 
@@ -304,16 +339,17 @@ filters: tier, kind, where, ages, sabbath, "has a digital part", minors.
 ```
 node validate.mjs themes/prayer.json [more…]   # every idea, plus the theme quotas; prints "OK <file> <n> ideas"
 node validate.mjs examples.json                # idea checks only (also: --ideas-only <file>)
-node validate.mjs --all                        # themes.json + all 42 files + cross-theme checks + a count table
+node validate.mjs --all                        # themes.json + all 57 files + reach.json + cross-theme checks + a count table
 node validate.mjs --vocab <index.html>         # rebuild vocab.json from the app source
-node selftest.mjs                              # 63 cases: every rule fires and none misfires
+node selftest.mjs                              # 121 cases: every rule fires and none misfires
 ```
 `ERROR` lines fail the file (exit 1). `REVIEW` lines never fail; they tell the writer to re-read the idea.
 Add `--no-review` to hide them. `--all` reports `MISSING themes/<id>.json` for themes not yet written and fails
-until all 42 exist.
+until all 57 exist. The count table shows each theme's in/out/both split (inside themes are starred).
 
 **Per idea (ERROR):**
-- JSON shape; no unknown fields; every field, enum and limit in the table above; tier limits.
+- JSON shape; no unknown fields; every field, enum and limit in the table above; tier limits; `reach`, when present,
+  is exactly `"in"`, `"out"` or `"both"`.
 - Tags, skills and facilities only from `vocab.json`. Ids prefixed, unique, not a SIGNATURE id, and without the
   reserved `draft-`/`sg-` prefixes.
 - Names differ from SIGNATURE names (EN and ES), and ES differs from EN.
@@ -331,29 +367,38 @@ until all 42 exist.
   school bus stops, skate parks and youth hang-outs ("puerta de la escuela", "parque infantil", "parada del autobús
   escolar"); "reach kids", "get kids in", "atraer/captar niños"; approaching children directly; lists of children.
   `ages` children or youth ⇒ `minors:true`. `minors:true` ⇒ the `kids` skill, and screening named in both `how` lists.
+- Love without pressure (every theme, both languages; WRITERS.md, INSIDE THE CHURCH): guilt or pressure ("why
+  weren't you here", "where have you been?", "you've been missing", "no excuses", "make them feel guilty"; "¿por qué
+  no vino?", "ha estado faltando", "sin excusas"); public listing of attendance ("post the attendance", attendance
+  boards and awards, "perfect attendance"; "publicar la asistencia"); public listing of giving ("list of who gave",
+  "who gave what", "top givers", donor walls, donors named from the pulpit or in the bulletin; "lista de quienes
+  diezmaron", "mayores donantes"); public confession or rebuke and lists of sins. A mention inside a clear
+  safeguard ("never ask…", "nunca publique…") is a REVIEW instead.
 
 **Per theme file (ERROR):** at least 50 ideas; at least 15 tier-1, 15 tier-2 and 8 tier-3 ideas; all four kinds,
-none above 45%; at least 4 `where` values; at least 12 ideas with a digital or social component (35 for `media`),
+none above 45%; at least 4 `where` values; at least 12 ideas with a digital or social component (35 for `media`, 10 for the inside themes),
 found by the brief's regex over the English text (facebook, instagram, social media, online, website, text
 message, texting, whatsapp, nextdoor, youtube, tiktok, reels, livestream, qr, ad(s), video, podcast, email, google;
 plus plurals, "text line", "text us", zoom, canva, messenger); at least 3 ideas that combine printed cards or
 walking with a digital follow-up; no two names in the file (EN, or ES) with a normalized-token Jaccard above 0.6.
 
-**`--all` (ERROR):** themes.json is valid (unique ids; `not` entries point at real themes; synonyms lowercase and
+**`--all` (ERROR):** themes.json is valid (unique ids; no unknown fields; `inside` is true, false or absent; `digitalMin` ≥ 12, or ≥ 10 when inside; `not` entries point at real themes; synonyms lowercase and
 unambiguous; tags real); every theme has a file and every file has a theme; ids are unique across the library;
-no cross-theme near-duplicate names (same Jaccard rule, EN and ES). It then prints the count table.
+no cross-theme near-duplicate names (same Jaccard rule, EN and ES); `reach.json`, when present, is an object whose
+keys are written idea ids and whose values are `in`, `out` or `both`, and agrees with any idea's own `reach`. It then
+prints the count table.
 
 **REVIEW (never fails):** a banned or children phrase that sits inside a negation ("we never ask for student
 names", "no raffles"), so a safeguard sentence is not punished; praying about "their children" without a request
 (fine for members praying for their own children); any idea with `ages` children or youth, or `minors:true` (re-read it with the outsider
-test); tier-1 and tier-2 `where:"church"` ideas with no reach words (walk, door, card, street, neighbo…, market,
+test); tier-1 and tier-2 `where:"church"` ideas with no reach words (not for ideas whose reach is `in`) (walk, door, card, street, neighbo…, market,
 library, park, online, social, post, ad, invite, flyer, text, event, partner, business, school's invitation…);
 meat on the menu; bingo; "bar" that may be a drinking venue; photos with no consent or "no photos" wording;
-dignity words ("the needy", "the less fortunate", "the lost"); knocking with no invitation or "no knock" wording;
+dignity words ("the needy", "the less fortunate", "the lost", "backsliders", "delinquent members"); knocking with no invitation or "no knock" wording;
 prayer requests with no private or anonymous option; `sabbath:true` alongside selling, buying, fundraising,
 tournaments or tickets; `tú` forms in Spanish; English programme names in Spanish; British spelling in English;
-a name close to a built-in ministry's; a `d` that reads as one sentence; more than 35% of a theme at the church
-building; fewer than 3 age groups in a theme; addiction and mental-health tier 2/3 Equip or Belong ideas with no
+a name close to a built-in ministry's; a `d` that reads as one sentence; more than 35% of a theme's out and both ideas at the church
+building (in-reach ideas are not counted); fewer than 3 age groups in a theme; addiction and mental-health tier 2/3 Equip or Belong ideas with no
 partner.
 
 Name similarity: lowercase, fold accents, split on non-letters, drop stop words (a, the, of, for, and, your, our…;
