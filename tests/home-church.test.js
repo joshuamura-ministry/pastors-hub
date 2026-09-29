@@ -90,7 +90,7 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     c('the survey’s address box never shows inside Make the Case', [A.q('.ask').style.display,A.q('#addr').value], ['none','']);
     c('one slim line: church · address · Change church', A.txt('#homeline'), 'Bucks County SDA · 10 Greene Rd, Warminster, PA 18974 · Change church');
     c('…the tool bar’s own Change church and the report’s address line step aside for it', [A.q('#changech').hidden,A.q('#place').classList.contains('offtab')], [true,true]);
-    c('the builder, and the sample below', [!!A.q('#cs-s1'),A.q('#casep').hidden,!!A.q('#cs-door [data-cs-sample]')], [true,true,true]);
+    c('the builder, and the sample below', [!!A.q('#cs-s1'),A.q('#casep').hidden,!!A.q('#cs-s3 [data-cs-sample]')], [true,true,true]);   // v10.41: the sample door sits in step 3 until an idea is chosen
     c('nothing scrolled the page to the report', A.net.scrolls, 0);
     c('the Community Survey still knows the church (Recent)', A.J(`recentGet()[0]`), ADDR);
     c('no errors', A.errs, []);
@@ -245,48 +245,54 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     Fr.w.close(); }
 
   console.log('\n-- who you are making the case to: every department --');
+  // Updated v10.41 (the pastor: "'Who are you making the case to?' should be first… The sections are meshed
+  // together — Board & officers should be a different colour"): the groups are step 1, in coloured sections with
+  // a dot and the name (the approved mockup), one short line under the title; tests/case-steps.test.js covers the
+  // sections, sub-headings and the groups builder D adds.
   const P=page({store:store(ADDR),session:'case'});
-  await until(()=>!!P.q('#cs-s2'));
+  await until(()=>!!P.q('#cs-s1 .cs-atile'));
   const G=P.J(`CASE_GROUPS.map(g=>({id:g.id,type:g.type,en:g.en}))`);
-  c('23 groups in CASE_GROUPS: 5 board, 17 team, 1 congregation', [G.length,G.filter(g=>g.type==='board').length,G.filter(g=>g.type==='team').length,G.filter(g=>g.type==='congregation').length], [23,5,17,1]);
-  c('step 2 shows before a ministry is chosen: no department behind another choice', [P.J('casePrefs().ministry'),P.q('#cs-s2').hidden], [null,false]);
-  c('…“Who are you making the case to?”', P.q('#cs-s2 h3').textContent, 'Who are you making the case to?');
-  c('…all 23 as tiles, in CASE_GROUPS order', P.qa('#cs-s2 .cs-atile').map(b=>b.dataset.csGroup), G.map(g=>g.id));
-  c('…each an icon and the group’s name', P.qa('#cs-s2 .cs-atile').map(b=>[!!b.querySelector('.cs-aico svg path, .cs-aico svg rect, .cs-aico svg circle'),b.querySelector('b').textContent]), G.map(g=>[true,g.en]));
-  c('…every icon its own drawing', new Set(P.qa('#cs-s2 .cs-aico svg').map(s=>s.innerHTML)).size, 23);
-  c('…under three headings, each with one line on what it does', P.qa('#cs-s2 .cs-aud').map(s=>[s.querySelector('h4').textContent,s.querySelector('.cs-ah .note').textContent.length>30,s.querySelectorAll('.cs-atile').length]),
-    [['Board & officers',true,5],['Ministry teams & departments',true,17],['The whole church',true,1]]);
-  c('…buttons, none chosen yet, and no emoji', [P.qa('#cs-s2 .cs-atile').every(b=>b.tagName==='BUTTON'&&b.type==='button'&&b.getAttribute('aria-pressed')==='false'),/[\u{1F300}-\u{1FAFF}⚖]/u.test(P.txt('#cs-s2'))], [true,false]);
-  // Updated (v10.40 review): the floor is now the tallest tile of all three groups (--atile-h, set by caseAudEqual), 66px before it is measured.
-  c('…tiles share one height rule (equal rows, a floor for the shortest)', [/\.cs-agrid\{[^}]*grid-auto-rows:1fr/.test(html),/\.cs-atile\{[^}]*min-height:var\(--atile-h,66px\)/.test(html)], [true,true]);
+  // v10.41 integration: builder D's eleven groups are real now (the pastor: "all the things we would have as a
+  // denomination … We also have an evangelism team" and "we can appeal to the conference leaders for an EVANGELISM
+  // proposal"): 34 groups, and the conference in its own section.
+  c('34 groups in CASE_GROUPS: 6 board, 26 team, 1 congregation, 1 conference', [G.length,G.filter(g=>g.type==='board').length,G.filter(g=>g.type==='team').length,G.filter(g=>g.type==='congregation').length,G.filter(g=>g.type==='conference').length], [34,6,26,1,1]);
+  c('step 1 shows before anything is chosen: no department behind another choice', [P.J('casePrefs().ministry'),P.q('#cs-s1').hidden], [null,false]);
+  c('…“Who is it for?”', P.q('#cs-s1 h3').lastChild.textContent, 'Who is it for?');
+  c('…all 23 as tiles', P.qa('#cs-s1 .cs-atile').map(b=>b.dataset.csGroup).sort(), G.map(g=>g.id).sort());
+  c('…each a coloured dot and the group’s name', P.qa('#cs-s1 .cs-atile').map(b=>[!!b.querySelector('.cs-adot'),b.querySelector('b').textContent]).sort(), G.map(g=>[true,g.en]).sort());
+  c('…in sections, each in its own colour', P.qa('#cs-s1 .cs-aud').map(s=>[s.querySelector('h4').textContent,s.getAttribute('style'),s.querySelectorAll('.cs-atile').length]),
+    [['Decide','--g:var(--m-hardship)',6],['Ministry teams','--g:var(--m-children)',26],['On Sabbath','--g:var(--m-language)',1],['The conference','--g:var(--m-housing)',1]]);   // v10.41 integration, see above
+  c('…buttons, none chosen yet, and no emoji', [P.qa('#cs-s1 .cs-atile').every(b=>b.tagName==='BUTTON'&&b.type==='button'&&b.getAttribute('aria-pressed')==='false'),/[\u{1F300}-\u{1FAFF}⚖]/u.test(P.txt('#cs-s1'))], [true,false]);
+  // the floor is the tallest tile of all (--atile-h, set by caseAudEqual), 54px before it is measured
+  c('…tiles share one height rule (a floor for the shortest, measured)', [/\.cs-atile\{[^}]*min-height:var\(--atile-h,54px\)/.test(html),P.E('typeof caseAudEqual')], [true,'function']);
   click(P,'[data-cs-group="deacons"]');
-  c('one tap on Deacons & deaconesses chooses the group and its kind', P.J('casePrefs()'), {ministry:null,type:'board',group:'deacons'});
-  c('…one tile pressed', P.qa('#cs-s2 [aria-pressed="true"]').map(b=>b.dataset.csGroup), ['deacons']);
-  c('…what is asked of them, and when, under their heading', [!!P.q('[data-cs-kind="board"] .cs-gmeta'),/You are asking them to:.*When:/.test(P.txt('[data-cs-kind="board"] .cs-gmeta'))], [true,true]);
-  c('…and, with no ministry yet, where to go next', P.txt('#cs-s2 .cs-apick'), 'Now choose the ministry above, and the slides appear below.');
+  c('one tap on Deacons & deaconesses chooses the group and its kind', P.J('casePrefs()'), {ministry:null,type:'board',group:'deacons',plan:false});
+  c('…one tile pressed', P.qa('#cs-s1 [aria-pressed="true"]').map(b=>b.dataset.csGroup), ['deacons']);
+  c('…step 2 names them, and the step bar moves on', [P.txt('#cs-s2 .cs-sh .note'),P.qa('#cs-bar .cs-st').map(b=>b.className.replace('cs-st ',''))], ['Ideas for the deacons and deaconesses. Best fit for Warminster first.',['done','now','next']]);   // v10.41.1: English articles, as the Spanish
   c('…saved for this church', JSON.parse(P.w.localStorage.getItem('terrain-churches-v1')).churches['church-1'].proposalPrefs, {type:'board',group:'deacons'});
   click(P,'[data-cs-group="smallgroups"]');
-  c('another tap moves it across headings: small group leaders, a ministry team', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s2 [aria-pressed="true"]').length,P.qa('#cs-s2 .cs-gmeta').length], ['team','smallgroups',1,1]);
-  click(P,'#cs-grid [data-cs-min]');
-  c('choosing a ministry then shows the slides for that group', [P.q('#cs-s3').hidden,P.J('caseCurrentDeck().audience'),!P.q('#cs-s2 .cs-apick')], [false,{type:'team',group:'smallgroups'},true]);
+  c('another tap moves it across sections: small group leaders, a ministry team', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s1 [aria-pressed="true"]').length], ['team','smallgroups',1]);
+  P.E(`caseChoose('food-pantry')`);
+  c('choosing a ministry then shows the slides for that group', [P.q('#cs-s3').hidden,P.J('caseCurrentDeck().audience'),!!P.q('#cs-s3 [data-cs-act="sample"]')], [false,{type:'team',group:'smallgroups'},true]);
   { const R=page({store:P.w.localStorage.getItem('terrain-churches-v1'),session:'case'});
-    await until(()=>!!R.q('#cs-s3')&&!R.q('#cs-s3').hidden);
-    c('after a reload the same tile is pressed and the slides are back', [R.qa('#cs-s2 [aria-pressed="true"]').map(b=>b.dataset.csGroup),R.J('caseCurrentDeck().audience')], [['smallgroups'],{type:'team',group:'smallgroups'}]);
+    await until(()=>!!R.q('#cs-s3 .cs-pv'));
+    c('after a reload the same tile is pressed and the slides are back', [R.qa('#cs-s1 [aria-pressed="true"]').map(b=>b.dataset.csGroup),R.J('caseCurrentDeck().audience')], [['smallgroups'],{type:'team',group:'smallgroups'}]);
     R.w.close(); }
   c('no errors', P.errs, []);
   P.w.close();
 
   console.log('\n-- in Spanish --');
   { const S=page({store:store(ADDR),session:'case',lang:'es'});
-    await until(()=>!!S.q('#cs-s2'));
+    await until(()=>!!S.q('#cs-s1 .cs-atile'));
     const es=S.J(`CASE_GROUPS.map(g=>g.es)`);
-    c('the heading, the three kinds and every tile', [S.q('#cs-s2 h3').textContent,S.qa('#cs-s2 .cs-aud h4').map(h=>h.textContent),S.qa('#cs-s2 .cs-atile b').map(b=>b.textContent)],
-      ['¿A quién le presenta el caso?',['Junta y oficiales de la iglesia','Equipos de ministerio y departamentos','Toda la iglesia'],es]);
+    c('the heading, the sections and every tile', [S.q('#cs-s1 h3').lastChild.textContent,S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent),S.qa('#cs-s1 .cs-atile b').map(b=>b.textContent).sort()],
+      ['¿Para quién es?',['Quienes deciden','Equipos de ministerio','En sábado','La asociación'],es.slice().sort()]);   // v10.41 integration: the conference section
     c('…the church line', S.txt('#homeline'), 'Bucks County SDA · 10 Greene Rd, Warminster, PA 18974 · Cambiar de iglesia');
-    const txt=S.txt('#cs-s2')+' '+S.txt('#homeline');
-    c('…no English left in step 2 or the line', ['Who ','Board &','Ministry teams','The whole church','Tap the group','A decision','An invitation','On Sabbath','Change church'].filter(t=>txt.includes(t)), []);
+    const txt=S.txt('#cs-s1')+' '+S.txt('#homeline');
+    c('…no English left in step 1 or the line', ['Who ','Board &','Ministry teams','The whole church','Tap the group','A decision','An invitation','On Sabbath','Change church','Decide'].filter(t=>txt.includes(t)), []);
     click(S,'[data-cs-group="community"]');
-    c('…one tap there too', [S.J('casePrefs().group'),/Les pide:.*Cuándo:/.test(S.txt('[data-cs-kind="team"] .cs-gmeta'))], ['community',true]);
+    // v10.41 final review: after "para" a Spanish group name takes its article ("Ideas para Club de Conquistadores" read wrong)
+    c('…one tap there too', [S.J('casePrefs().group'),S.txt('#cs-s2 .cs-sh .note')], ['community','Ideas para los Servicios Comunitarios Adventistas (Dorcas). Primero, lo que mejor encaja en Warminster.']);
     c('no errors in Spanish', S.errs, []);
     S.w.close(); }
   { const S=page({store:store(''),lang:'es',recent:['10 Greene Rd, Warminster, PA']});
@@ -303,8 +309,9 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
 
   console.log('\n-- every new string has its Spanish --');
   { const S=page(); await sleep(900);
-    const miss=S.J(`[...Object.entries(HOME_UI),...Object.entries(CASE_AUD_UI).flatMap(([k,v])=>v.en!==undefined?[[k,v]]:Object.entries(v).map(([k2,v2])=>[k+'.'+k2,v2]))].filter(([k,v])=>!v.en||!v.es||v.en===v.es&&!/^Toda/.test(v.es)).map(([k])=>k)`);
-    c('HOME_UI and CASE_AUD_UI: English and Spanish for each', miss, []);
+    // v10.41: CASE_AUD_UI gave way to the step tables (CASE_STEP_UI, CASE_AUD_SECTIONS, CASE_AUD_SUBS, CASE_AUD_NOTE)
+    const miss=S.J(`[...Object.entries(HOME_UI),...Object.entries(CASE_STEP_UI),...CASE_AUD_SECTIONS.map(v=>[v.id,v]),...Object.entries(CASE_AUD_SUBS),...Object.entries(CASE_AUD_NOTE)].filter(([k,v])=>!v.en||!v.es||v.en===v.es&&!/^Toda/.test(v.es)).map(([k])=>k)`);
+    c('HOME_UI and the step tables: English and Spanish for each', miss, []);
     c('Census addresses read as words', S.J(`[homeAddr('10 GREENE RD, WARMINSTER, PA, 18974'),homeAddr('1250 N MAIN ST NE, NORRISTOWN, PA, 19401-1234'),homeAddr('10 Greene Rd, Warminster, PA'),homeAddr('Coordinates -75.1,40.2')]`),
       ['10 Greene Rd, Warminster, PA 18974','1250 N Main St NE, Norristown, PA 19401-1234','10 Greene Rd, Warminster, PA','the place you mapped']);
     S.w.close(); }

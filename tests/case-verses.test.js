@@ -93,28 +93,37 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       if(JSON.stringify(a)!==JSON.stringify(z)) bad.push(`${b.src}/${b.g}/${b.id}: ${a.join(',')} | ${z.join(',')}`); });
     c('an English and a Spanish deck carry the same verses, slide for slide', bad.slice(0,4), []); }
   { const bad=[], counts={};
-    decks.forEach(b=>{ const q=b.d.slides.map(s=>s.type==='close'||s.type==='timeline'?s.quote:null).filter(x=>x&&x.text);
+    // v10.41 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference
+    // proposal's close quotes Scripture (a library verse, with its version), never Ellen White
+    const isVerse=x=>/ · (KJV|RVA)$/.test(String(x.ref||''));
+    decks.forEach(b=>{ b.d.slides.forEach(s=>{ if(s.type==='close'&&s.quote&&isVerse(s.quote)){ const id=idOf(b.lang,s.quote.ref); if(!id||VL[id][b.lang].text!==s.quote.text) bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: close verse ${s.quote.ref}`); } }); });
+    decks.forEach(b=>{ const q=b.d.slides.map(s=>s.type==='close'||s.type==='timeline'?s.quote:null).filter(x=>x&&x.text&&!isVerse(x));
       counts[b.t]=Math.max(counts[b.t]||0,q.length);
       q.forEach(x=>{ const L=LIB.egw.find(e=>e[b.lang].text===x.text&&e[b.lang].ref===x.ref); if(!L) bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: ${x.ref}`); });
       if(q.length>1) bad.push('two lines: '+b.g+'/'+b.id); });
     c('at most one Ellen White line on the slides, and only a verified one (with its credit)', bad.slice(0,4), []);
-    c('…the congregation closes on "Christ’s method alone…" (MH 143 / MC 102); boards and teams hear theirs in the handout', [counts.congregation,counts.board||0,counts.team||0], [1,0,0]);
+    c('…the congregation closes on "Christ’s method alone…" (MH 143 / MC 102); boards, teams and the conference hear theirs in the handout', [counts.congregation,counts.board||0,counts.team||0,counts.conference||0], [1,0,0,0]);
     const cl=decks.find(b=>b.src==='own'&&b.lang==='es'&&b.g==='congregation').d.slides.find(s=>s.type==='close').quote;
     c('…in the published Spanish, with its Spanish credit', [cl.text.startsWith('Sólo el método de Cristo'),cl.ref], [true,'Elena G. de White · El Ministerio de Curación, p. 102']); }
+  const placeOf=b=>{ const ps=b.d.slides.filter(s=>s.type==='place'); return b.t==='conference'?ps[ps.length-1]:ps[0]; };
   { const bad=[];
-    decks.forEach(b=>{ const p=b.d.slides.find(s=>s.type==='place');
+    // v10.41: a conference proposal may show its churches first (a place slide too); its "Here in" is the last place slide
+    decks.forEach(b=>{ const p=placeOf(b);
       const town=b.src==='own'?'Warminster':(b.lang==='es'?'Municipio de ejemplo':'Sample town');
       if(!p){ bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: no place slide`); return; }
       if(!p.headline.startsWith((b.lang==='es'?'En ':'In ')+town+',')) bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: ${p.headline}`);
       if(b.src==='own'&&p.kicker!==(b.lang==='es'?'Aquí en ':'Here in ')+town) bad.push(`${b.g}/${b.id}: kicker ${p.kicker}`);
       if(b.d.slides.length>12) bad.push('over 12'); });
     c('"Here in {town}" in every deck, its headline naming the place ("In Warminster, …" / "En Warminster, …")', bad.slice(0,6), []); }
-  { const n={board:new Set(),team:new Set(),congregation:new Set()};
+  { const n={board:new Set(),team:new Set(),congregation:new Set(),conference:new Set()};
     decks.forEach(b=>n[b.t].add(b.d.slides.map(s=>s.type).join(',')));
-    c('about eight content slides: board and team 8 + join, the congregation 8 + join (the verse slide among them)', Object.fromEntries(Object.entries(n).map(([k,v])=>[k,[...v]])),
-      {board:['join,motion,stat,place,capacity,ability,ask,risks,timeline'],team:['join,motion,stat,place,ability,roles,risks,timeline,yes'],congregation:['join,verse,stat,stat,place,ability,motion,yes,close']}); }
+    // v10.41: the conference proposal (the pastor: "It would definitely be a different proposal"): 11 slides and the join, or
+    // 12 with "the churches we serve" when Terrain holds two or more (the sample's two made-up churches)
+    c('about eight content slides: board and team 8 + join, the congregation 8 + join (the verse slide among them); the conference 10–11 + join', Object.fromEntries(Object.entries(n).map(([k,v])=>[k,[...v].sort()])),
+      {board:['join,motion,stat,place,capacity,ability,ask,risks,timeline'],team:['join,motion,stat,place,ability,roles,risks,timeline,yes'],congregation:['join,verse,stat,stat,place,ability,motion,yes,close'],
+       conference:['join,motion,place,stat,place,capacity,ability,timeline,ask,risks,risks,close','join,motion,stat,place,capacity,ability,timeline,ask,risks,risks,close']}); }
   { const bad=[];
-    decks.forEach(b=>{ const p=b.d.slides.find(s=>s.type==='place'); if(!p) return;
+    decks.forEach(b=>{ const p=placeOf(b); if(!p) return;
       if(p.facts.length>2||p.partners.length>3||p.bring.length>3) bad.push('too many: '+b.g+'/'+b.id);
       if(p.facts.some(f=>String(f.label).length>105)||p.bring.some(t=>t.length>50)||p.headline.length>90||(p.where||'').length>80||p.source.length>110) bad.push(`${b.lang}/${b.g}/${b.id}: long`); });
     c('the place slide holds what one phone slide can (two figures, three names, three lines; the headline ≤ 90)', bad.slice(0,4), []); }

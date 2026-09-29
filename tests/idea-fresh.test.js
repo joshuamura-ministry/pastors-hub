@@ -1,9 +1,9 @@
-// "More ideas for {town}" (AI) beside the Idea Library (v10.40.0): after a search or inside a
+// "More ideas for {town}" beside the Idea Library (v10.40.0; never labelled AI since v10.41): after a search or inside a
 // theme, a button asks advise.mjs (mode 'topic') for six fresh ideas on that topic for this
 // neighborhood and church, in the library's shape and the page's language. Saved once per church
 // and topic, as autoIdeas() does: a second tap while one is running asks nothing (the guard is set
 // before any await), a reload shows the saved ones and asks nothing, a new tap asks for six that
-// are not already on the screen, at most thirty per topic. Marked "Fresh idea (AI)". Locked on
+// are not already on the screen, at most thirty per topic. Marked "New idea" (v10.41). Locked on
 // this device: one line on how it is unlocked. No key on the server: no button. The advise
 // function is stubbed here; tests/advise-topic.test.mjs checks the function itself.
 const {JSDOM,VirtualConsole}=require('jsdom');
@@ -52,7 +52,8 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
   console.log('-- the button: after a search, for this town --');
   const P=page(); await sleep(1300); setup(P,'survey');
   type(P,'#u-search','prayer'); await until(()=>P.q('#u-lib [data-lib-ai]'));
-  c('"More ideas for Warminster (AI)" after the search', P.txt('#u-lib [data-lib-ai]'), 'More ideas for Warminster (AI)');
+  // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): the button no longer says (AI).
+  c('"More ideas for Warminster" after the search', P.txt('#u-lib [data-lib-ai]'), 'More ideas for Warminster');
   c('…with one line saying what it does', /Six at a time.*checked by the library’s rules/.test(P.txt('#u-lib .lib-aibar .note')), true);
   c('nothing asked yet', P.posts.length, 0);
 
@@ -61,9 +62,12 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
   c('a second tap while it runs asks nothing (the guard is set before any await)', P.posts.length<=1, true);
   P.E(`libAiMore('survey')`);
   c('…and neither does a third, from code', await until(()=>P.posts.length===1,1000)&&P.posts.length, 1);
-  c('the button says it is working', /Asking for six fresh ideas for Warminster/.test(P.txt('#u-lib .lib-ai')), true);
+  c('the button says it is working', /Asking for six new ideas for Warminster/.test(P.txt('#u-lib .lib-ai')), true);
   await until(()=>fresh(P).length===6);
-  c('six fresh ideas at the top, marked "Fresh idea (AI)"', [fresh(P).length,P.qa('#u-lib .lib-card').slice(0,6).every(e=>e.querySelector('.u-ai')),P.txt('#u-lib .lib-card .u-ai')], [6,true,'Fresh idea (AI)']);
+  // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): marked "New idea".
+  // v10.41 integration: the list has two sections now (the 57 themes put cross-listed in-reach ideas under "For God's
+  // people"); prayer's new ideas are for the community, so they lead that section
+  c('six fresh ideas at the top of their section, marked "New idea"', [fresh(P).length,P.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card').slice(0,6).every(e=>e.querySelector('.u-ai')),P.txt('#u-lib .lib-card .u-ai')], [6,true,'New idea']);
   c('in the library\'s card: name, text, steps, facts', fresh(P).map(e=>e.querySelector('h4').textContent), TI.en.map(x=>x.en.n));
   const B=P.posts[0].b;
   c('the request: topic mode, the topic and theme, English, six', [B.mode,B.topic,B.theme,B.lang,B.count], ['topic','Prayer & intercession','prayer','en',6]);
@@ -86,7 +90,7 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
   P.q(`#u-lib [data-lib-id="${f0.id}"] [data-lib-case]`).click(); await sleep(250);
   P.E(`caseSetPrefs({type:'board',group:'board'}); caseDraw2(); caseDraw3();`); await sleep(300);
   c('"Make the case for this" builds its deck', [P.J('casePrefs()').ministry,P.J('caseCurrentDeck()').title], [f0.id,TI.en[0].en.n]);
-  c('the survey\'s list marks it too', P.E(`uRow(uCatalog().find(x=>x.id===${JSON.stringify(f0.id)}))`).includes('Fresh idea (AI)'), true);
+  c('the survey\'s list marks it too', P.E(`uRow(uCatalog().find(x=>x.id===${JSON.stringify(f0.id)}))`).includes('New idea'), true);
 
   console.log('\n-- a reload: the saved ideas, nothing asked --');
   const store=P.w.localStorage.getItem('terrain-churches-v1');
@@ -103,9 +107,10 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
 
   console.log('\n-- in Make the Case, inside a theme --');
   { const R=page(); await sleep(1300); setup(R,'case');
-    R.q('#cs-lib [data-lib-browse]').click(); await until(()=>R.q('#cs-lib [data-lib-theme="hunger"]'));
+    // v10.41: the themes open from step 2's "All themes" button, beside the search
+    R.q('#cs-s2 [data-cs-browse]').click(); await until(()=>R.q('#cs-lib [data-lib-theme="hunger"]'));
     R.q('#cs-lib [data-lib-theme="hunger"]').click(); await until(()=>R.q('#cs-lib [data-lib-ai]'));
-    c('inside a theme the button is there too', R.txt('#cs-lib [data-lib-ai]'), 'More ideas for Warminster (AI)');
+    c('inside a theme the button is there too', R.txt('#cs-lib [data-lib-ai]'), 'More ideas for Warminster');
     R.q('#cs-lib [data-lib-ai]').click(); await until(()=>fresh(R,'#cs-lib').length===6);
     c('the topic is the theme', [R.posts[0].b.theme,Object.keys(R.J('uChurch().fresh'))], ['hunger',['theme:hunger']]); }
 
@@ -113,19 +118,20 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
   { const L=page({locked:true}); await sleep(1300); setup(L,'survey');
     type(L,'#u-search','prayer'); await until(()=>L.q('#u-lib .lib-ai .note'));
     c('locked on this device: no button, one line on how it is unlocked', [!!L.q('#u-lib [data-lib-ai]'),L.txt('#u-lib .lib-ai')],
-      [false,'Fresh AI ideas are locked on this device. To unlock them, open this site once on this device with ?ai= and your passphrase at the end of the address.']);
+      [false,'More ideas are locked on this device. To unlock them, open this site once on this device with ?ideas= and your passphrase at the end of the address.']);   // v10.41: ?ideas= (?ai= still works), no "AI"
     c('…and nothing is asked', L.posts.length, 0); }
   { const L=page({locked:true,pass:'wrong'}); await sleep(1300); setup(L,'survey');
     type(L,'#u-search','prayer'); await until(()=>L.q('#u-lib [data-lib-ai]'));
     L.q('#u-lib [data-lib-ai]').click(); await until(()=>L.q('#u-lib .lib-aimsg.err'));
     c('a passphrase the server refuses: said plainly, nothing saved', [/was not accepted/.test(L.txt('#u-lib .lib-aimsg')),L.J('uChurch().fresh||null')], [true,null]); }
   { const L=page({enabled:false}); await sleep(1300); setup(L,'survey');
-    type(L,'#u-search','prayer'); await until(()=>L.qa('#u-lib .lib-card').length===12); await sleep(80);
+    type(L,'#u-search','prayer'); await until(()=>L.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card').length===12); await sleep(80);   // v10.41: the community section
     c('no key on the server: no button at all (as elsewhere)', [!!L.q('#u-lib [data-lib-ai]'),L.txt('#u-lib .lib-ai')||''], [false,'']); }
   { const L=page({fail:true}); await sleep(1300); setup(L,'survey');
     type(L,'#u-search','prayer'); await until(()=>L.q('#u-lib [data-lib-ai]'));
     L.q('#u-lib [data-lib-ai]').click(); await until(()=>L.q('#u-lib .lib-aimsg.err'));
-    c('a failure: the server\'s sentence and the library untouched', [/took too long/.test(L.txt('#u-lib .lib-aimsg')),L.qa('#u-lib .lib-card').length], [true,12]); }
+    // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): the server's own words name the service, so the page says it in its own sentence.
+    c('a failure: the page\'s sentence (never the server\'s) and the library untouched', [L.txt('#u-lib .lib-aimsg'),/took too long/.test(L.txt('#u-lib')),L.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card').length], ['More ideas are not available just now. The library is unaffected.',false,12]); }
   { const bad=[{tier:9,k:'serve',en:{n:'x'}},{tier:1,k:'serve',ages:'all',where:'streets',need:['nonsense'],en:TI.en[0].en},'nope',null];
     const L=page({extra:bad}); await sleep(1300); setup(L,'survey');
     type(L,'#u-search','prayer'); await until(()=>L.q('#u-lib [data-lib-ai]'));
@@ -140,9 +146,10 @@ const fresh=(P,host='#u-lib')=>P.qa(host+' .lib-card').filter(e=>e.querySelector
   console.log('\n-- Spanish --');
   { const S=page({lang:'es'}); await sleep(1300); setup(S,'survey');
     type(S,'#u-search','oración'); await until(()=>S.q('#u-lib [data-lib-ai]'));
-    c('the button in Spanish', S.txt('#u-lib [data-lib-ai]'), 'Más ideas para Warminster (IA)');
+    // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere"): no "(IA)" in Spanish either.
+    c('the button in Spanish', S.txt('#u-lib [data-lib-ai]'), 'Más ideas para Warminster');
     S.q('#u-lib [data-lib-ai]').click(); await until(()=>fresh(S).length===6);
-    c('asked in Spanish, written in Spanish, marked in Spanish', [S.posts[0].b.lang,fresh(S).map(e=>e.querySelector('h4').textContent),S.txt('#u-lib .lib-card .u-ai')], ['es',TI.es.map(x=>x.es.n),'Idea nueva (IA)']);
+    c('asked in Spanish, written in Spanish, marked in Spanish', [S.posts[0].b.lang,fresh(S).map(e=>e.querySelector('h4').textContent),S.txt('#u-lib .lib-card .u-ai')], ['es',TI.es.map(x=>x.es.n),'Idea nueva']);
     c('the message in Spanish', /^6 ideas nuevas para Warminster, guardadas con la iglesia/.test(S.txt('#u-lib .lib-aimsg')), true);
     c('no errors', [P.errs,Q.errs,S.errs], [[],[],[]]); }
 } catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }

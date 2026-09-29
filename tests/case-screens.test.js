@@ -12,6 +12,7 @@ const FX=require('./fixtures.json');
 let pass=0,fail=0;
 const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.log((ok?'  PASS  ':'  FAIL  ')+n);if(!ok){console.log('    got:',JSON.stringify(g).slice(0,500));console.log('    want:',JSON.stringify(e).slice(0,300));fail++}else pass++};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+async function until(f,ms=8000){ const t=Date.now(); while(Date.now()-t<ms){ try{ if(f()) return true; }catch(e){} await sleep(25); } return false; }
 const REG={name:'Joshua Mura',email:'jm@example.org',church:'Bucks County SDA',conf:'Allegheny East',role:'pastor'};
 function page(lang,store){
   const errs=[]; const vc=new VirtualConsole(); vc.on('jsdomError',e=>errs.push(e.message));
@@ -20,7 +21,10 @@ function page(lang,store){
       if(lang) w.localStorage.setItem('terrain-lang',lang);
       w.localStorage.setItem('terrain-reg',JSON.stringify(REG));
       if(store) Object.entries(store).forEach(([k,v])=>w.localStorage.setItem(k,v));
-      w.fetch=async(u)=>{ if(/advise/.test(u)) return {ok:true,json:async()=>({enabled:false})}; return new Promise(()=>{}); }; }});
+      // v10.41: step 2 is the Idea Library's list, so the shipped ideas/ files are served
+      w.fetch=async(u)=>{ u=String(u); const m=/^\/ideas\/([a-z-]+)\.json$/.exec(u);
+        if(m){ const f=path.resolve(__dirname,'..','ideas',m[1]+'.json'); if(!fs.existsSync(f)) return {ok:false,status:404,json:async()=>null}; const t=fs.readFileSync(f,'utf8'); return {ok:true,status:200,json:async()=>JSON.parse(t)}; }
+        if(/advise/.test(u)) return {ok:true,json:async()=>({enabled:false})}; return new Promise(()=>{}); }; }});
   const w=dom.window;
   return {w,D:w.document,E:s=>w.eval(s),J:s=>JSON.parse(w.eval(`JSON.stringify(${s})`)),errs,
     q:s=>w.document.querySelector(s),qa:s=>[...w.document.querySelectorAll(s)],txt:s=>{ const e=w.document.querySelector(s); return e?e.textContent.replace(/\s+/g,' ').trim():null; }};
@@ -58,62 +62,47 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   setup(P);
   c('no emoji audience buttons, no #propslot', P.qa('.audbtn,.audgrid,#propslot').length, 0);
 
-  console.log('\n-- step 1: what are you proposing? --');
-  const rank=P.J(`caseRankAll(uCatalog(),caseRankCtx()).map(o=>({id:o.x.id,ok:o.r.ok,lead:o.r.lead}))`);
-  const shown=()=>P.qa('#cs-grid [data-cs-min]').map(b=>b.dataset.csMin);
-  c('the top six, in CASE_RANK order', shown(), rank.slice(0,6).map(r=>r.id));
-  c('…numbered 1 to 6', P.qa('#cs-grid .gfrank').map(e=>e.textContent), ['1','2','3','4','5','6']);
-  c('each card says why: the need, whether the church can staff it, and the gifts', P.qa('#cs-grid .cs-min').every(b=>['Need','People','Gifts'].every(k=>[...b.querySelectorAll('.cs-wr i')].map(i=>i.textContent).includes(k))), true);
-  { const first=rank[0]; const want=P.E(`(()=>{ const N=GF_NEEDS['${first.lead}']; return gfFigBig('${first.lead}',N.fig(DATA.M.tract)).text; })()`);
-    c('…with the lead figure large, in the colour of its kind', [P.q('#cs-grid .cs-fig b').textContent,P.q('#cs-grid .cs-min').getAttribute('style')], [want,'--k:var(--m-'+P.E(`GF_NEED_KIND['${first.lead}']`)+')']); }
-  c('…and the county beside it, with the Census test ("Clearly higher" / "Similar")', /County \d+%/.test(P.txt('#cs-grid .cs-fig'))&&/Clearly higher|Similar/.test(P.txt('#cs-grid .cs-fig')), true);
-  c('gifts counted on the card (adults only)', /gifted and drawn to it|could help, if asked|ready to lead/.test(P.txt('#cs-grid')), true);
-  click(P,'[data-cs-all]');
-  c('"Show all" lists all 103, the rest in order', shown(), rank.map(r=>r.id));
-  c('…and the button offers the top six again', [P.q('[data-cs-all]').textContent,P.q('[data-cs-all]').getAttribute('aria-expanded')], ['Show the top 6 only','true']);
-  click(P,'[data-cs-all]');
-  c('…back to six', shown().length, 6);
-  { const ok=rank.filter(r=>r.ok===true).map(r=>r.id);
-    click(P,'[data-cs-filter="ready"]');
-    c('filter "Can staff now": only ministries the church can staff, in rank order', shown(), ok.slice(0,6));
-    c('…its count in the label', P.q('[data-cs-filter="ready"]').textContent, `Can staff now (${ok.length})`);
-    click(P,'[data-cs-filter="all"]'); }
-  type(P,'#cs-q','pantry');
-  c('search finds by name ("pantry"), in rank order', [shown().length>=2,shown().every(id=>/pantry/i.test(P.E(`uCatalog().find(x=>x.id==='${id}').n`))),
-    JSON.stringify(shown())===JSON.stringify(rank.map(r=>r.id).filter(id=>shown().includes(id)))], [true,true,true]);
-  // v10.40 final: on a phone the department tiles sit below the ministry list, so step 1 links down to them.
-  c('a link down to the 23 departments shows before a ministry is chosen', P.txt('#cs-s1 [data-cs-deptjump]'), 'Who is it for? See all 23 departments ↓');
-  type(P,'#cs-q','zzqq');
-  c('…and says so when nothing matches', P.txt('#cs-grid'), 'No ministry matches “zzqq”.');
-  type(P,'#cs-q','Pathfinder');
-  click(P,'[data-cs-min="pathfinders"]');
-  c('choosing one saves it for this church', P.J(`uChurch().proposalPrefs.ministry`), 'pathfinders');
-  c('…the list folds to the chosen card, with Change', [P.qa('#cs-s1 .cs-min').length,P.q('#cs-s1 .cs-min').getAttribute('aria-pressed'),!!P.q('[data-cs-change]')], [1,'true',true]);
-  c('…the department link goes once a ministry is chosen', !!P.q('#cs-s1 [data-cs-deptjump]'), false);
-  c('…step 2 opens; no slides until a group is chosen', [P.q('#cs-s2').hidden,P.q('#cs-s3').hidden], [false,true]);
-  c('…and the sample door waits below', !!P.q('#cs-door [data-cs-sample]'), true);
-  c('nothing in Make the Case is contenteditable', P.qa('#casebody [contenteditable]').length, 0);
-
-  // Updated in v10.40.0 (the pastor: "before it had all the different departments, and now I
-  // don't see any departments"): the three kind cards, and the chips that appeared only after
-  // one was tapped, are replaced by all 23 groups at once, as tiles under three headings.
-  // One tap chooses the group and its kind. tests/home-church.test.js covers it further.
-  console.log('\n-- step 2: who are you making the case to? --');
+  // Updated v10.41 (the pastor: "'Who are you making the case to?' should be first. The three steps must be
+  // definable… Why do I type Prayer under 'What are you proposing?' and get four things, then 84 things
+  // underneath? Out of order."): step 1 is who it is for (the groups), step 2 ONE list of ideas tailored to the
+  // group, built-ins as cards in it (tests/case-steps.test.js covers both in full). The ranked built-in cards with
+  // their figures, the "Can staff now" filter and the link down to the departments are gone.
+  console.log('\n-- step 1: who is it for? --');
   const boards=P.J(`CASE_GROUPS.filter(g=>g.type==='board').map(g=>g.id)`), teams=P.J(`CASE_GROUPS.filter(g=>g.type==='team').map(g=>g.id)`);
-  c('all 23 groups at once, none chosen yet', [P.qa('#cs-s2 [data-cs-group]').length,P.qa('#cs-s2 [data-cs-group][aria-pressed="true"]').length], [23,0]);
-  c('…under three headings', P.qa('#cs-s2 .cs-aud h4').map(h=>h.textContent), ['Board & officers','Ministry teams & departments','The whole church']);
-  c('…5, 17 and 1 tiles, in order', P.qa('#cs-s2 .cs-aud').map(s=>[...s.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup)), [boards,teams,['congregation']]);
+  // v10.41 integration: builder D's eleven groups are real now (the pastor: "all the things we would have as a
+  // denomination … We also have an evangelism team" and "we can appeal to the conference leaders for an EVANGELISM
+  // proposal"): 34 groups, and the conference in its own section.
+  c('all 34 groups at once, none chosen yet', [P.qa('#cs-s1 [data-cs-group]').length,P.qa('#cs-s1 [data-cs-group][aria-pressed="true"]').length], [34,0]);
+  c('…in coloured sections', P.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Decide','Ministry teams','On Sabbath','The conference']);
+  c('…the board groups under Decide, the teams under Ministry teams, the whole church and the conference on their own', P.qa('#cs-s1 .cs-aud').map(s=>[...s.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup).sort()), [boards.slice().sort(),teams.slice().sort(),['congregation'],['conference']]);
   c('…no kind cards and no chips any more', P.qa('[data-cs-type],.cs-type,.cs-chip').length, 0);
+  c('no ranked ministry cards, no "Can staff now", no department link', [!!P.q('#cs-grid'),!!P.q('[data-cs-filter]'),!!P.q('[data-cs-deptjump]')], [false,false,false]);
   click(P,'[data-cs-group="youth"]');
-  c('one tap on the youth staff chooses the group and its kind, saved', [P.J('casePrefs()'),P.q('[data-cs-group="youth"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'youth'},'true']);
-  c('…what is asked of them, and when', /You are asking them to:.*When:/.test(P.txt('.cs-gmeta')), true);
+  c('one tap on the youth staff chooses the group and its kind, saved', [P.J('casePrefs()'),P.q('[data-cs-group="youth"]').getAttribute('aria-pressed')], [{ministry:null,type:'team',group:'youth',plan:false},'true']);
+
+  console.log('\n-- step 2: what will you propose? --');
+  await until(()=>P.qa('#cs-lib .lib-card').length>0);
+  c('one list, in the Idea Library\'s card style', [P.qa('#cs-lib .lib-card').length>0,!!P.q('#cs-lib .lib-sec[data-lib-sec="out"]')], [true,true]);
+  type(P,'#cs-q','pantry'); await until(()=>P.q('#cs-lib .lib-head h3'),8000); await until(()=>P.q('#cs-lib .lib-sig'),8000);
+  c('search finds built-ins by name ("pantry"), as cards', P.qa('#cs-lib .lib-sig').map(e=>e.dataset.libId).filter(id=>/pantry/.test(id)).sort(), ['food-pantry','pantry-box']);
+  type(P,'#cs-q','zzqq'); await until(()=>/zzqq/.test(P.txt('#cs-lib')||''),8000);
+  c('…and says so when nothing matches', /No library ideas match “zzqq”/.test(P.txt('#cs-lib')), true);
+  type(P,'#cs-q','Pathfinder'); await until(()=>P.q('#cs-lib .lib-sig[data-lib-id="pathfinders"]'),8000);
+  click(P,'#cs-lib .lib-sig[data-lib-id="pathfinders"] [data-lib-case]');
+  c('choosing one saves it for this church', P.J(`uChurch().proposalPrefs.ministry`), 'pathfinders');
+  c('…the list folds to the chosen card, with Change', [P.qa('#cs-s2 .lib-card').length,P.q('#cs-s2 .lib-card').dataset.libId,!!P.q('[data-cs-change]')], [1,'pathfinders',true]);
+  c('…and the slides are there for the youth staff', [P.q('#cs-s3').hidden,P.J(`caseCurrentDeck().audience`)], [false,{type:'team',group:'youth'}]);
+  c('nothing in Make the Case is contenteditable', P.qa('#casebody [contenteditable]').length, 0);
   click(P,'[data-cs-group="health"]');
-  c('a tile chooses the group, saved', [P.J(`uChurch().proposalPrefs`),P.q('[data-cs-group="health"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'health'},'true']);
+  c('a tile chooses the group, saved', [P.J(`casePrefs()`),P.J(`uChurch().proposalPrefs.group`),P.q('[data-cs-group="health"]').getAttribute('aria-pressed')], [{ministry:'pathfinders',type:'team',group:'health',plan:false},'health','true']);
   c('…and the slides are built for it', P.J(`caseCurrentDeck().audience`), {type:'team',group:'health'});
+  c('…while step 2 opens the health list, keeping the idea until another is chosen', [!!P.q('#cs-s2 [data-cs-keep]'),P.J('casePrefs().ministry')], [true,'pathfinders']);
+  click(P,'#cs-s2 [data-cs-keep]');
   click(P,'[data-cs-group="board"]');
-  c('board: the church board tile gives the board kind', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s2 [aria-pressed="true"]').length], ['board','board',1]);
+  c('board: the church board tile gives the board kind', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s1 [aria-pressed="true"]').length], ['board','board',1]);
   click(P,'[data-cs-group="congregation"]');
   c('congregation: the whole church', [P.J('casePrefs().type'),P.J('casePrefs().group')], ['congregation','congregation']);
+  P.E('CASE_ST.pick=false; caseDraw2();');
 
   console.log('\n-- step 3: the slides --');
   const types=new Set();
@@ -231,7 +220,8 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   { const secs=P.qa('#cs-spv .td-slide');
     c('every slide on screen says SAMPLE', [secs.length>=7,secs.every(s=>/SAMPLE/.test(s.textContent))], [true,true]);
     c('…and so do the deck’s title and church', [P.J('CASE_ST.sample.deck.title').startsWith('SAMPLE · '),P.J('CASE_ST.sample.deck.church').startsWith('SAMPLE · ')], [true,true]); }
-  c('three kinds to show, the one he chose first', [P.qa('[data-cs-stype]').map(b=>b.textContent),P.q('[data-cs-stype][aria-pressed="true"]').dataset.csStype], [['Board','Team','Sabbath'],'board']);
+  // v10.41 integration: the sample offers the conference slideshow too, now that the group exists
+  c('four kinds to show, the one he chose first', [P.qa('[data-cs-stype]').map(b=>b.textContent),P.q('[data-cs-stype][aria-pressed="true"]').dataset.csStype], [['Board','Team','Sabbath','Conference'],'board']);
   click(P,'[data-cs-stype="team"]');
   c('Team switches the sample to the ministry-team invitation', [P.J('CASE_ST.sample.deck.audience.type'),P.qa('#cs-spv .td-slide').every(s=>/SAMPLE/.test(s.textContent))], ['team',true]);
   c('no edit panel and no ask list in the sample', P.qa('#casep [data-cs-edit],#casep [data-cs-act="ask"]').length, 0);
@@ -243,7 +233,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     c('the PDF handout of the sample is marked too', got, [[true,true,true]]); }
   c('the sample wrote nothing to the device', JSON.stringify(Object.entries(P.w.localStorage)), before);
   click(P,'#casep [data-cs-back]');
-  c('Back returns to the builder, where he was', [P.q('#casep').hidden,P.q('#report').classList.contains('show'),P.E('CASE_ST.view'),P.J('casePrefs()')], [true,true,'build',{ministry:'pathfinders',type:'board',group:'board'}]);
+  c('Back returns to the builder, where he was', [P.q('#casep').hidden,P.q('#report').classList.contains('show'),P.E('CASE_ST.view'),P.J('casePrefs()')], [true,true,'build',{ministry:'pathfinders',type:'board',group:'board',plan:false}]);
 
   console.log('\n-- Make the Case before a survey --');
   { const N=page(); await sleep(1500);
@@ -273,30 +263,30 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   console.log('\n-- Spanish --');
   { const S=page('es'); await sleep(1500); setup(S);
     const body=()=>S.txt('#casebody').split('Bucks County SDA').join('');   // the church's own name is not English UI
-    c('the step in Spanish', S.q('#cs-s1 h3').textContent, '¿Qué propone?');
-    c('the cards: Necesidad, Personas, Dones', S.qa('#cs-grid .cs-min')[0]&&[...S.qa('#cs-grid .cs-min')[0].querySelectorAll('.cs-wr i')].map(i=>i.textContent), ['Necesidad','Personas','Dones']);
-    c('…ministry names in Spanish', S.qa('#cs-grid .cs-mh b').map(b=>b.textContent), S.J(`caseRankAll(uCatalog(),caseRankCtx()).slice(0,6).map(o=>gfCap(caseMinName(o.x)))`));
-    c('…show all, the filter', [S.q('[data-cs-all]').textContent,S.q('[data-cs-filter="all"]').textContent.replace(/\d+/,'n')], ['Mostrar los 103','Todos (n)']);
-    type(S,'#cs-q','despensa');
-    c('search in Spanish names', S.qa('#cs-grid .cs-mh b').some(b=>/despensa/i.test(b.textContent)), true);
-    type(S,'#cs-q','Cocina');
-    c('…without case or accents mattering', S.qa('#cs-grid .cs-mh b').some(b=>/cocina/i.test(b.textContent)), true);
-    S.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'team',group:'youth'}; caseMount(true);`);
-    // Updated in v10.40.0: the groups as tiles under three headings (see step 2 above).
-    c('who you are making the case to', [S.q('#cs-s2 h3').textContent,S.qa('#cs-s2 .cs-aud h4').map(b=>b.textContent)], ['¿A quién le presenta el caso?',['Junta y oficiales de la iglesia','Equipos de ministerio y departamentos','Toda la iglesia']]);
-    c('…the groups', S.qa('[data-cs-kind="team"] [data-cs-group]').slice(0,3).map(b=>b.textContent), ['Ministerio Joven y Conquistadores','Ministerios de Salud','Servicios Comunitarios Adventistas (Dorcas)']);
-    c('the slides are Spanish', [S.J('caseCurrentDeck().lang'),S.q('#cs-s3 h3').textContent], ['es','Revise las diapositivas']);
+    // Updated v10.41 (the three steps: who it is for, then what, then the slides; the ranked cards are gone).
+    c('the steps in Spanish', S.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['¿Para quién es?','¿Qué va a proponer?','Sus diapositivas']);
+    // v10.41 integration: the conference section, and "Worship & learning" opens with the new Worship & music and children's tiles
+    c('who it is for: the sections', S.qa('#cs-s1 .cs-aud h4').map(b=>b.textContent), ['Quienes deciden','Equipos de ministerio','En sábado','La asociación']);
+    c('…the groups', S.qa('[data-cs-sec="teams"] [data-cs-group] b').slice(0,3).map(b=>b.textContent), ['Adoración y música','Consejo de Escuela Sabática','Escuela Sabática de Niños y Ministerios Infantiles']);
+    click(S,'[data-cs-group="community"]'); await until(()=>S.q('#cs-lib .lib-card'),8000);
+    type(S,'#cs-q','despensa'); await until(()=>S.qa('#cs-lib .lib-sig h4').some(b=>/despensa/i.test(b.textContent)),8000);
+    c('search in Spanish names', S.qa('#cs-lib .lib-sig h4').some(b=>/despensa/i.test(b.textContent)), true);
+    type(S,'#cs-q','Cocina'); await until(()=>S.qa('#cs-lib .lib-sig h4').some(b=>/cocina/i.test(b.textContent)),8000);
+    c('…without case or accents mattering', S.qa('#cs-lib .lib-sig h4').some(b=>/cocina/i.test(b.textContent)), true);
+    type(S,'#cs-q',''); await sleep(300);
+    S.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'team',group:'youth'}; CASE_ST.pick=false; caseMount(true);`);
+    c('the slides are Spanish', [S.J('caseCurrentDeck().lang'),S.q('#cs-s3 h3').lastChild.textContent], ['es','Sus diapositivas']);
     S.E('CASE_ST.pv.go(1)');
     c('the edit panel', S.qa('.cs-edit label').map(l=>l.firstChild.textContent.trim()), ['Etiqueta sobre el titular','Titular']);
     c('the actions', S.qa('[data-cs-act]').map(b=>b.textContent), ['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Su lista privada para invitar','Ver una presentación de ejemplo']);
     c('the navigation', [S.q('[data-cs-prev]').textContent,S.q('[data-cs-next]').textContent], ['‹ Anterior','Siguiente ›']);
     click(S,'[data-cs-act="ask"]');
     c('the ask list', [/Su lista privada para invitar/.test(S.txt('#cs-ask')),/Solo en este dispositivo/.test(S.txt('#cs-ask'))], [true,true]);
-    const en=['Step ','What are you proposing','Who are you asking','Who are you making','Board & officers','Ministry teams','The whole church','Tap the group','Show all','Change','Need','Staffing','Gifts','Present live','Share link','Download PDF','private ask list','See a sample','Previous','Next','Edit slide','Headline','Restore the original','Questions you may hear','County ','Clearly higher','can staff','gifted and drawn','This device only','Ready to lead','Label above'];
+    const en=['Step ','What are you proposing','What will you propose','Who is it for','Who are you asking','Who are you making','Board & officers','Ministry teams','The whole church','Tap the group','For God','For our community','Choose this','Your slides','Search every','Show all','Change','Need','Staffing','Gifts','Present live','Share link','Download PDF','private ask list','See a sample','Previous','Next','Edit slide','Headline','Restore the original','Questions you may hear','County ','Clearly higher','can staff','gifted and drawn','This device only','Ready to lead','Label above'];
     c('no English left in the Spanish builder', en.filter(t=>body().includes(t)), []);
     click(S,'[data-cs-act="sample"]');
     c('the sample: MUESTRA on the banner and every slide', [S.txt('#casep .gfsamptag'),S.qa('#cs-spv .td-slide').every(s=>/MUESTRA/.test(s.textContent)),/Una presentación de ejemplo/.test(S.txt('#casep'))], ['MUESTRA',true,true]);
-    c('…its kinds and buttons in Spanish', [S.qa('[data-cs-stype]').map(b=>b.textContent),S.qa('#casep [data-cs-act]').map(b=>b.textContent)], [['Junta','Equipo','Sábado'],['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF']]);
+    c('…its kinds and buttons in Spanish', [S.qa('[data-cs-stype]').map(b=>b.textContent),S.qa('#casep [data-cs-act]').map(b=>b.textContent)], [['Junta','Equipo','Sábado','Asociación'],['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF']]);   // v10.41: the conference kind too
     // v10.39.0, the presenting step: Share opens its setup (it was a "not switched on" stub).
     c('…Share opens its setup in Spanish, marked MUESTRA', (()=>{ click(S,'#casep [data-cs-act="share"]'); return [S.txt('#casepres [data-pr-start]'),S.txt('#casepres .cp-k .gfsamptag'),/un día/.test(S.txt('#casepres'))]; })(), ['Crear el enlace','MUESTRA',true]);
     click(S,'#casepres [data-pr-cancel]');

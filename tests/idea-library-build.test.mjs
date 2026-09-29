@@ -27,8 +27,11 @@ const FACS = new Set([...slice('const FACILITIES=[', '\n];').matchAll(/\{k:'([a-
 console.log('-- the shipped files --');
 const D = path.join(ROOT, 'ideas'), I = read(path.join(D, 'index.json')), W = read(path.join(D, 'words.json'));
 const col = k => I.cols.indexOf(k);
-c('index: version 1, the columns the page reads', [I.v, ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne'].every(k => I.cols.includes(k))], [1, true]);
-c('42 themes, each with names in both languages, synonyms and a colour of the app', [I.themes.length, I.themes.every(t => t.en && t.es && t.syn.en.length >= 5 && t.syn.es.length >= 5 && ['hardship', 'housing', 'children', 'people', 'language'].includes(t.hue))], [42, true]);
+c('index: version 1, the columns the page reads', [I.v, ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne', 'reach'].every(k => I.cols.includes(k))], [1, true]);
+// v10.41: the seven inside-the-church themes and the eight Adventist departments' themes joined the 42 (57)
+c('57 themes, each with names in both languages, synonyms and a colour of the app', [I.themes.length, I.themes.every(t => t.en && t.es && t.syn.en.length >= 5 && t.syn.es.length >= 5 && ['hardship', 'housing', 'children', 'people', 'language'].includes(t.hue))], [57, true]);
+// v10.41 integration: every idea ships its reach (its own, else reach.json's, else its theme's default), never 0
+c('every idea has a reach: in, out or both', I.ideas.every(r => ['in', 'out', 'both'].includes(r[col('reach')])), true);
 c('the count is the rows, and each theme\'s count its rows', [I.count === I.ideas.length, I.themes.every((t, i) => t.n === I.ideas.filter(r => r[col('t')] === i).length)], [true, true]);
 const shipped = I.themes.filter(t => t.n > 0);
 c('every shipped theme has at least 50 ideas (the pastor: "50 different things for prayer")', shipped.filter(t => t.n < 50).map(t => t.id + ':' + t.n), []);
@@ -93,6 +96,27 @@ try {
   c('an id that is a built-in, or a tag profile() never emits: refused even when the validator passes', [r.status, /APP hunger food-pantry: id is a built-in/.test(r.stdout), /APP hunger hunger-b: unknown tag not-a-tag/.test(r.stdout)], [1, true, true]);
   r = run('--skip-invalid');
   c('…and left out with --skip-invalid; stale theme files removed', [r.status, read(path.join(OUT, 'index.json')).ideas.map(x => x[0]), fs.existsSync(path.join(OUT, 'hunger.json'))], [0, ['prayer-a', 'prayer-b', 'prayer-c'], false]);
+  // v10.41: in-reach and outreach. The pastor: "we can separate ministry ideas by in-reach or outreach for each
+  // one, so they can see: what can I do for God's people, but also what can I do for the community?"
+  fs.writeFileSync(path.join(src, 'themes', 'hunger.json'), JSON.stringify({theme: 'hunger', ideas: [idea('hunger-a', 'hunger', {need: ['poor', 'settled']}), idea('hunger-b', 'hunger', {reach: 'both'})]}));
+  themes.themes[1].inside = true; themes.themes[0].reach = 'out';
+  fs.writeFileSync(path.join(src, 'themes.json'), JSON.stringify(themes));
+  fs.writeFileSync(path.join(src, 'reach.json'), JSON.stringify({'prayer-a': 'in', 'hunger-b': 'out', 'gone-idea': 'in'}));
+  r = run();
+  const i3 = read(path.join(OUT, 'index.json')), rc = i3.cols.indexOf('reach'), reachOf = id => i3.ideas.find(x => x[0] === id)[rc];
+  // v10.41 integration: an idea with no reach of its own or in reach.json ships its theme's default, so every row says one
+  c('reach ships in the index: the idea\'s own first, then reach.json\'s, else the theme\'s (its reach; inside → in)', [r.status, reachOf('prayer-a'), reachOf('prayer-b'), reachOf('hunger-a'), reachOf('hunger-b')], [0, 'in', 'out', 'in', 'both']);
+  c('…the themes carry "inside" and their own reach for that default', i3.themes.map(t => [t.id, t.inside || false, t.reach || null]), [['prayer', false, 'out'], ['hunger', true, null]]);
+  c('…and it says what it did, and names reach.json ids that did not ship', [/reach: 2 in, 2 out, 1 both \(3 of them their theme's default\) \(reach\.json read\)/.test(r.stdout), /names 1 ideas not shipped \(gone-idea\)/.test(r.stdout)], [true, true]);
+  fs.writeFileSync(path.join(src, 'reach.json'), JSON.stringify({'prayer-a': 'inside'}));
+  fs.rmSync(OUT, {recursive: true, force: true}); r = run();
+  c('a reach that is not in, out or both: nothing written', [r.status, fs.existsSync(OUT), /REACH prayer-a: "inside" is not in, out or both/.test(r.stdout)], [1, false, true]);
+  r = run('--skip-invalid');
+  c('…or left out with --skip-invalid (the theme\'s default then)', [r.status, read(path.join(OUT, 'index.json')).ideas.find(x => x[0] === 'prayer-a')[rc]], [0, 'out']);
+  fs.writeFileSync(path.join(src, 'reach.json'), '{}');
+  fs.writeFileSync(path.join(src, 'themes', 'hunger.json'), JSON.stringify({theme: 'hunger', ideas: [idea('hunger-a', 'hunger', {reach: 'sideways'})]}));
+  r = run();
+  c('an idea\'s own reach must be in, out or both too', [r.status, /APP hunger hunger-a: reach must be in, out or both/.test(r.stdout)], [1, true]);
   r = spawnSync(process.execPath, [path.join(ROOT, 'tools', 'build-ideas.mjs')], {cwd: ROOT, encoding: 'utf8', env: {...process.env, TERRAIN_IDEAS_SRC: ''}});
   c('no source given: usage, exit 2', [r.status, /usage/.test(r.stdout)], [2, true]);
   fs.rmSync(OUT, {recursive: true, force: true});

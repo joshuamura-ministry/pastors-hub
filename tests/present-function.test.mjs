@@ -99,9 +99,10 @@ const open=(d=deck(),extra={},headers={},ctx={})=>post({op:'open',deck:d,...extr
 console.log('-- status and the envelope --');
 let r=await get('');
 // v10.40: present-1.1 (a verse on every content slide, and the "Here in" place slide)
-c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.1',false,'unset',false,false]);
+// v10.41: present-1.2 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference audience
+c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.2',false,'unset',false,false]);
 r=await post({op:'status'});
-c('POST op:status too', [r.status,r.j.fn], [200,'present-1.1']);
+c('POST op:status too', [r.status,r.j.fn], [200,'present-1.2']);
 fbOn(); r=await get('');
 c('live:true once both Firebase variables are set', r.j.live, true);
 for(const [u,want] of [[FB+'/',true],['https://terrain-live-default-rtdb.europe-west1.firebasedatabase.app',true],
@@ -346,6 +347,30 @@ await badPlace('stat: markup in a verse reference', (p,d)=>{ d.slides[2].verse={
   c('place: unknown fields are dropped, not refused', [r.status,'show' in got.slides[3],'html' in got.slides[3],'url' in got.slides[3].partners[0],'extra' in got.slides[1].verse,JSON.stringify(got).includes('evil.example')], [200,false,false,false,false,false]); }
 { const d=deck(); d.slides[3]={type:'place',kicker:'Here in our neighbourhood',headline:'Here, God has placed us among these neighbours'}; r=await open(d);
   c('place: every group may be missing (left out, never padded)', [r.status,canon(S.peek('d/'+r.j.room).deck.slides[3])], [200,canon({type:'place',kicker:'Here in our neighbourhood',headline:'Here, God has placed us among these neighbours',where:'',facts:[],partners:[],bring:[],source:''})]); }
+// ---- present-1.2 (v10.41): the conference proposal ----
+console.log('\n-- present-1.2: an evangelism proposal to the conference --');
+{ const V12={text:'How beautiful upon the mountains are the feet of him that bringeth good tidings, that publisheth peace…',ref:'Isaiah 52:7 · KJV'};
+  const CH={type:'place',kicker:'The churches we serve',headline:'2 churches, one district',where:'Bucks County SDA · Fairview Village SDA',
+    facts:[{value:'135',label:'Bucks County SDA: members',hue:'people'},{value:'48',label:'Fairview Village SDA: members',hue:'people'}],partners:[],bring:[],source:'Church profiles in Terrain · counts only',verse:V11};
+  const REP={type:'risks',kicker:'Reporting back',headline:'How we will report back',items:['A written report to the conference after the meetings: attendance, decisions and baptisms','Every dollar receipted by the church treasurer'],source:'Church Manual 2022, pp. 89–90 · Our commitment',verse:V11};
+  const AIM={type:'risks',kicker:'The mission',headline:'It serves what our Church has set out to do',items:['OneVoice27: the gospel proclaimed worldwide, building to September 2027'],source:'OneVoice27, Ministry, Jan 2026',verse:V11};
+  const CL={type:'close',headline:'Will you partner with us?',text:'We will report back in writing.',quote:V12};
+  const d=clone({...deck({audience:{type:'conference',group:'conference'},ministry:{id:'plan-series',name:'Evangelism series'},title:'Evangelism series'},['join','motion','motion','stat','motion','capacity','ability','timeline','ask','risks','risks','close'])});
+  d.slides[2]=clone(CH); d.slides[4]=clone(PLACE); d.slides[9]=clone(REP); d.slides[10]=clone(AIM); d.slides[11]=clone(CL);
+  r=await open(d); const got=S.peek('d/'+r.j.room).deck;
+  c('a conference deck (12 slides: its churches, the place, reporting back, the aims, a close that quotes Scripture) is stored', [r.status,got.audience,got.slides.length], [200,{type:'conference',group:'conference'},12]);
+  c('…exactly as sent (the join slide’s link and code excepted)', got.slides.slice(1).map(canon), d.slides.slice(1).map(canon));
+  c('…its close keeps the verse as its quote', canon(got.slides[11].quote), canon(V12));
+  c('…the conference takes no "I’m in" answers (it has no yes slide)', [r.j.respond,S.peek('r/'+r.j.room).respond], [false,false]);
+  const u=await post({op:'update',room:r.j.room,key:r.j.key,deck:deck({audience:{type:'conference',group:'conference'}})});
+  c('…and may be updated like any other', [u.status,S.peek('d/'+r.j.room).deck.audience.type], [200,'conference']); }
+for(const t of ['council','Conference','conference ','executive']){
+  const x=await open(deck({audience:{type:t,group:'conference'}}));
+  c('refused: audience type '+JSON.stringify(t)+' (only board, team, congregation, conference)', [x.status,x.j.error,x.j.where], [400,'bad-deck','audience.type']); }
+{ const x=await open(deck({audience:{type:'conference',group:'Conference Leaders'}}));
+  c('refused: a conference group that is not a slug', [x.status,x.j.where], [400,'audience.group']); }
+{ const d=deck(); r=await open(d); const got=S.peek('d/'+r.j.room).deck;
+  c('a board deck is stored exactly as in present-1.1', [r.status,got.slides.slice(1).map(canon)], [200,d.slides.slice(1).map(canon)]); }
 r=await post({op:'open',deck:[deck()]});          c('refused: a deck that is a list', [r.status,r.j.where], [400,'deck']);
 r=await post({op:'open'});                        c('refused: no deck', [r.status,r.j.where], [400,'deck']);
 { const raw=JSON.stringify({op:'open',deck:deck()}).replace('"value":27,','"value":1e400,');

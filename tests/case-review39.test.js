@@ -60,7 +60,13 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('a count (Population) is never tested against the county’s count', r, ['count',null,null,null]); }
   { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'finance'},{ctx:${ctx(ALL_CV_OVER_40)},now:${NOW}}); const s=caseDeck(M).slides.find(s=>s.type==='stat'); return [M.need.hero&&M.need.hero.key,s?s.headline:null]; })()`);
     c('the treasurer’s food-pantry deck never leads "The need" with median household income', r, [null,null]); }
+  // v10.41.1: here the only reliable share left was the children's, and it led the treasurer's food-pantry deck. The pastor:
+  // children framing on ideas that are not about children "sounds a little bit weird"; a food pantry is not about children
+  // (its child poverty is a ranking boost only), so with its own shares unreliable it now has no need slide at all…
   { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'finance'},{ctx:${ctx(`(m,k)=>{ ['snap','noCar','poverty','childPoverty','foodInsecure'].forEach(x=>{ if(typeof m[x]==='number') m.moe[x]=m[x]*0.9; }); }`)},now:${NOW}}); return M.need.hero&&[M.need.hero.key,M.need.hero.kind]; })()`);
+    c('…nor does the children\'s share lead a food pantry (v10.41.1: it is not about children)', r, null); }
+  // …and when one of its own shares is reliable (poverty), that share leads: a share, never money or a count
+  { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'finance'},{ctx:${ctx(`(m,k)=>{ ['snap','noCar','childPoverty','foodInsecure'].forEach(x=>{ if(typeof m[x]==='number') m.moe[x]=m[x]*0.9; }); }`)},now:${NOW}}); return M.need.hero&&[M.need.hero.key,M.need.hero.kind]; })()`);
     c('…when a share is reliable it leads instead (a share, never money or a count)', r&&r[1], 'pct'); }
   { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); return [M.need.hero.key,M.need.hero.kind]; })()`);
     c('the ordinary case is unchanged: a share leads', r[1], 'pct'); }
@@ -69,7 +75,9 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   // v10.40: the board's "why here" figures are the "Here in {town}" slide's facts now, worded by the
   // same caseTrioItem(); these read the words from it (trio: the model's three, as the cards were).
   const TRIO=`(M=>{ const d=caseDeck(M); const t=d.slides.find(s=>s.type==='trio'); return t?t.items:M.need.trio.map((f,i,a)=>caseTrioItem(f,a.map(g=>caseTrioItem(g,false)).reduce((n,x)=>n+x.label.length,0)>(CASE_TRIO_BUDGET[M.lang]||250))); })`;
-  { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'board'},{ctx:${ctx(`(m,k)=>{ m.kidsShare=28; m.moe.kidsShare=1.5; k.kidsShare=26; k.moe.kidsShare=0.3; }`)},now:${NOW}});
+  // v10.41.1: read on a children's built-in (sports physicals before term). The food pantry's board deck no longer carries the
+  // children's share: the pastor, children framing on ideas that are not about children "sounds a little bit weird".
+  { const r=P.J(`(()=>{ const M=caseModel('kids-health',{type:'board',group:'board'},{ctx:${ctx(`(m,k)=>{ m.kidsShare=28; m.moe.kidsShare=1.5; k.kidsShare=26; k.moe.kidsShare=0.3; }`)},now:${NOW}});
       const f=M.need.trio.find(f=>f.key==='kidsShare'); const t={items:(${TRIO})(M)}; return {cmp:f&&f.cmp.dir,card:t&&t.items[M.need.trio.indexOf(f)]}; })()`);
     c('28% (significantly higher) against 26%: percentages both sides, never "1 in 4 … County: more than 1 in 4"', [r.cmp,r.card&&r.card.value,r.card&&/County: 26%\./.test(r.card.label),r.card&&/1 in 4/.test(r.card.label)], ['higher','28%',true,false]); }
   { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'elders'},{ctx:${ctx(`(m,k)=>{ m.singleParent=62; m.moe.singleParent=8; }`)},now:${NOW}}); const t={items:(${TRIO})(M)}; return t?t.items.filter(i=>/single parent|Single/.test(i.label)):[]; })()`);
@@ -296,7 +304,9 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('the survey loads: the landing goes, one sample card, the builder shows', [L.q('#casep').hidden,L.txt('#casep'),L.qa('[data-cs-sample]').length,!!L.q('#cs-s1')], [true,'',1,true]);
     c('V4: an empty live-link line is hidden (display:none beats the author rule)', /\.cs-room\[hidden\]\{display:none\}/.test(html), true);
     c('V1: the ask list’s name never collapses (8rem at least; one column on a phone)', [/\.cs-arow\{display:grid;grid-template-columns:minmax\(8rem,1fr\) minmax\(0,auto\)/.test(html),/\.cs-arow\{grid-template-columns:minmax\(0,1fr\)\}/.test(html)], [true,true]);
-    c('V6: a ministry’s whole name on a phone card', /@media\(max-width:700px\)\{\n  \.cs-grid,\.cs-types\{[^\n]*\n  \.cs-grid\{grid-auto-rows:auto\}\n[^\n]*\n  \.cs-mh b\{-webkit-line-clamp:unset;display:block\}/.test(html), true);
+    // Updated v10.41: the ranked ministry cards are gone ("four things, then 84 things underneath… Out of order");
+    // ideas and built-ins are library cards now, whose names are never cut, and the group tiles' names neither.
+    c('V6: a ministry’s whole name on a phone card', [/\.lib-card h4\{[^}]*line-clamp/.test(html),/\.cs-atile b\{[^}]*line-clamp/.test(html),/\.lib-card h4\{margin:0;font-size:1rem;line-height:1.3;color:var\(--ink\)\}/.test(html)], [false,false,true]);
     c('V3: the room code never shrinks; Exit keeps its arrow only below 400 px', [/\.cp-code\{flex:none;/.test(html),/@media \(max-width:400px\)\{[^\n]*\.cp-xw\{display:none\}/.test(html)], [true,true]);
     L.w.close(); }
 

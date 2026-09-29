@@ -47,7 +47,8 @@ setTimeout(async()=>{
   c('skills come through', drafts.some(d=>d.skill.includes('lang')));
   c('the "why it is fresh" line is kept', drafts.every(d=>/Nothing on the list/.test(d.unlike)));
   c('load recorded as light', drafts.every(d=>d.load===0));
-  c('the notice says twenty, a different set', /20 fresh light lift ideas/.test(w.eval('U_GEN_NOTICE')));
+  // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): "new" ideas, "Draft ideas".
+  c('the notice says twenty, a different set', /20 new light lift ideas/.test(w.eval('U_GEN_NOTICE'))&&!/\bAI\b/.test(w.eval('U_GEN_NOTICE')));
 
   console.log('\n-- moderate and heavy scale down --');
   w.eval('uChurch().drafts=[]; uPersist();');

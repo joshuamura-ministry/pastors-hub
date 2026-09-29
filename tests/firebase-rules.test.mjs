@@ -137,7 +137,8 @@ const sweep = fs.readFileSync(path.join(dir, 'netlify', 'functions', 'present-sw
 ok((fn.match(/process\.env\.PRESENT_FB_(URL|SECRET)/g) || []).sort().join() === 'process.env.PRESENT_FB_SECRET,process.env.PRESENT_FB_URL', 'present.mjs reads exactly the two names the guide gives');
 ok(/process\.env\.PRESENT_FB_URL/.test(sweep) && /process\.env\.PRESENT_FB_SECRET/.test(sweep), 'the sweep reads the same two names');
 // v10.40: present-1.1 (a verse at the foot of every content slide, the place slide)
-ok(md.includes("present-1.1") && /FN_VERSION = 'present-1\.1'/.test(fn), 'the guide and the function agree on present-1.1');
+// v10.41: present-1.2 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference audience
+ok(md.includes("present-1.2") && /FN_VERSION = 'present-1\.2'/.test(fn), 'the guide and the function agree on present-1.2');
 for (const st of ['ok', 'bad-key', 'unreachable', 'unset']) ok(md.includes(`"fb":"${st}"`) && fn.includes(`'${st}'`), `status answer fb:${st} is in the guide and the function`);
 ok(/\/live\/\$\{room\}\.json/.test(fn) && /RE_ROOM = \/\^\[A-Za-z0-9_-\]\{22\}\$\//.test(fn), 'the function writes only live/<22-character room>, the path the rules open');
 ok(/firebaseio\\\.com\|firebasedatabase\\\.app/.test(fn) && md.includes('.firebasedatabase.app'), 'both database hosts the guide allows are accepted');

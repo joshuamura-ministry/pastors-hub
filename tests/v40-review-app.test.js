@@ -184,8 +184,11 @@ function setup(P,tool){ P.E(`(()=>{ DATA=${JSON.stringify(FX.DATA)}; SCOPE='trac
     c('…also when the Planner opens before the survey has reloaded (it took the Recent address in capitals)', G2.q('#pl-church').value, 'Bucks County SDA');
     G2.w.close(); }
   { const G=page(); await sleep(1300); setup(G,'case');
-    c('one spelling on the Make the Case screen: "neighborhood" beside the library\'s "neighborhood"', [/neighbourhood/.test(G.E(`caseU('proposingNote')`)),/neighborhood/.test(G.E(`caseU('proposingNote')`))], [false,true]);
-    c('the department tiles share one height across the three groups (measured, set on the step)', [/\.cs-atile\{[^}]*min-height:var\(--atile-h,66px\)/.test(html),/min-height:var\(--atile-h,78px\)/.test(html),G.E('typeof caseAudEqual')], [true,true,'function']);
+    // Updated v10.41: the long note under step 1 is gone ("titles and descriptions should be short"); the new steps'
+    // words keep the one spelling of the library ("neighbors"), never "neighbour".
+    c('one spelling on the Make the Case screen: "neighborhood" beside the library\'s "neighborhood"', [/neighbour/i.test(G.E(`JSON.stringify([CASE_STEP_UI,CASE_AUD_SECTIONS,CASE_AUD_SUBS,CASE_AUD_NOTE])`)),/neighbors/.test(G.E(`libT('secOutSub')`))], [false,true]);
+    // Updated v10.41 (the approved mockup: a dot and the name, 54 px tiles, the same on a phone): one floor, still measured.
+    c('the department tiles share one height across the three groups (measured, set on the step)', [/\.cs-atile\{[^}]*min-height:var\(--atile-h,54px\)/.test(html),/min-height:var\(--atile-h,78px\)/.test(html),G.E('typeof caseAudEqual')], [true,false,'function']);
     G.w.close(); }
 
   console.log(`\n${pass} passed, ${fail} failed`);

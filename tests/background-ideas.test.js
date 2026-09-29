@@ -55,7 +55,8 @@ setTimeout(async()=>{
   c('room "kitchen" needs a kitchen', drafts.some(d=>JSON.stringify(d.requirements.facilities)==='[["kitchen"]]'));
   c('requirements are marked reviewed, so drafts get a real check', drafts.every(d=>d.requirements.reviewed===true));
   c('the once-only key is set', w.eval('uChurch().autoKey').length>10);
-  c('the notice says sixty', /60 fresh ideas were generated/.test(w.eval('U_GEN_NOTICE')));
+  // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): new ideas, marked as drafts.
+  c('the notice says sixty', /60 new ideas were written/.test(w.eval('U_GEN_NOTICE'))&&!/\bAI\b/.test(w.eval('U_GEN_NOTICE')));
 
   console.log('\n-- the race: two triggers at once generate once --');
   { let bb=D.getElementById('u-clear'); bb.click(); bb=D.getElementById('u-clear'); bb.click();
@@ -68,7 +69,8 @@ setTimeout(async()=>{
   const verified=w.eval(`(function(){const x=uCatalog().find(d=>d.generated&&d.reviewedEvidence&&d.requirements.facilities.length===0&&d.ppl===1&&d.cost===0);return x?uCheck(x):null;})()`);
   c('a cheap, verified, roomless draft fits the demo church', verified&&verified.ok, true);
   const row=w.eval(`(function(){const x=uCatalog().find(d=>d.generated);return uRow(x);})()`);
-  c('the row carries the AI draft label', /class="u-ai">AI draft</.test(row));
+  // Updated v10.41 (the pastor: "I don't want AI to be seen anywhere, because people are scared of it sometimes"): "Draft idea", not "AI draft".
+  c('the row carries the draft label', /class="u-ai">Draft idea</.test(row));
 
   console.log('\n-- saving the same profile again does nothing --');
   const before=calls.length;

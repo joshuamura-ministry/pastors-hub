@@ -440,7 +440,8 @@
    },
    "jobs": [
     "need",
-    "verse"
+    "verse",
+    "mission"
    ],
    "needs": [
     "language",
@@ -1100,7 +1101,8 @@
    },
    "jobs": [
     "risks",
-    "ask"
+    "ask",
+    "report"
    ],
    "needs": [
     "general"
@@ -1580,6 +1582,1319 @@
     "en": "https://www.biblegateway.com/passage/?search=Romans+16%3A5&version=KJV",
     "es": "https://www.biblegateway.com/passage/?search=Romans+16%3A5&version=RVA"
    }
+  },
+  {
+   "id": "john13_34",
+   "en": {
+    "text": "A new commandment I give unto you, That ye love one another… By this shall all men know that ye are my disciples, if ye have love one to another.",
+    "ref": "John 13:34–35"
+   },
+   "es": {
+    "text": "Un mandamiento nuevo os doy: Que os améis unos á otros… En esto conocerán todos que sois mis discípulos, si tuviereis amor los unos con los otros.",
+    "ref": "Juan 13:34–35"
+   },
+   "jobs": [
+    "family",
+    "verse",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 145,
+    "es": 146
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=John+13%3A34-35&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=John+13%3A34-35&version=RVA"
+   }
+  },
+  {
+   "id": "gal6_2",
+   "en": {
+    "text": "Bear ye one another's burdens, and so fulfil the law of Christ.",
+    "ref": "Galatians 6:2"
+   },
+   "es": {
+    "text": "Sobrellevad los unos las cargas de los otros; y cumplid así la ley de Cristo.",
+    "ref": "Gálatas 6:2"
+   },
+   "jobs": [
+    "family",
+    "roles",
+    "yes"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 63,
+    "es": 77
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Galatians+6%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Galatians+6%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "heb10_24",
+   "en": {
+    "text": "And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together, as the manner of some is…",
+    "ref": "Hebrews 10:24–25"
+   },
+   "es": {
+    "text": "Y considerémonos los unos á los otros para provocarnos al amor y á las buenas obras; No dejando nuestra congregación, como algunos tienen por costumbre…",
+    "ref": "Hebreos 10:24–25"
+   },
+   "jobs": [
+    "family",
+    "motion",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 149,
+    "es": 152
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Hebrews+10%3A24-25&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Hebrews+10%3A24-25&version=RVA"
+   }
+  },
+  {
+   "id": "1thess5_11",
+   "en": {
+    "text": "Wherefore comfort yourselves together, and edify one another, even as also ye do.",
+    "ref": "1 Thessalonians 5:11"
+   },
+   "es": {
+    "text": "Por lo cual, consolaos los unos á los otros, y edificaos los unos á los otros, así como lo hacéis.",
+    "ref": "1 Tesalonicenses 5:11"
+   },
+   "jobs": [
+    "family",
+    "roles",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 81,
+    "es": 98
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Thessalonians+5%3A11&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Thessalonians+5%3A11&version=RVA"
+   }
+  },
+  {
+   "id": "rom12_10",
+   "en": {
+    "text": "Be kindly affectioned one to another with brotherly love; in honour preferring one another…",
+    "ref": "Romans 12:10"
+   },
+   "es": {
+    "text": "Amándoos los unos á los otros con caridad fraternal; previniéndoos con honra los unos á los otros…",
+    "ref": "Romanos 12:10"
+   },
+   "jobs": [
+    "family",
+    "ability",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 91,
+    "es": 98
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Romans+12%3A10&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Romans+12%3A10&version=RVA"
+   }
+  },
+  {
+   "id": "1pet4_9",
+   "en": {
+    "text": "Use hospitality one to another without grudging.",
+    "ref": "1 Peter 4:9"
+   },
+   "es": {
+    "text": "Hospedaos los unos á los otros sin murmuraciones.",
+    "ref": "1 Pedro 4:9"
+   },
+   "jobs": [
+    "family",
+    "roles",
+    "yes"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 48,
+    "es": 49
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A9&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Peter+4%3A9&version=RVA"
+   }
+  },
+  {
+   "id": "luke15_4",
+   "en": {
+    "text": "What man of you, having an hundred sheep, if he lose one of them, doth not leave the ninety and nine… and go after that which is lost, until he find it?",
+    "ref": "Luke 15:4"
+   },
+   "es": {
+    "text": "¿Qué hombre de vosotros, teniendo cien ovejas, si perdiere una de ellas, no deja las noventa y nueve… y va á la que se perdió, hasta que la halle?",
+    "ref": "Lucas 15:4"
+   },
+   "jobs": [
+    "family",
+    "need",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 152,
+    "es": 146
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Luke+15%3A4&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Luke+15%3A4&version=RVA"
+   }
+  },
+  {
+   "id": "ezek34_16",
+   "en": {
+    "text": "I will seek that which was lost, and bring again that which was driven away, and will bind up that which was broken, and will strengthen that which was sick…",
+    "ref": "Ezekiel 34:16"
+   },
+   "es": {
+    "text": "Yo buscaré la perdida, y tornaré la amontada, y ligaré la perniquebrada, y corroboraré la enferma…",
+    "ref": "Ezequiel 34:16"
+   },
+   "jobs": [
+    "family",
+    "need",
+    "ability"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 157,
+    "es": 98
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Ezekiel+34%3A16&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Ezekiel+34%3A16&version=RVA"
+   }
+  },
+  {
+   "id": "acts2_46",
+   "en": {
+    "text": "…breaking bread from house to house, did eat their meat with gladness and singleness of heart… And the Lord added to the church daily such as should be saved.",
+    "ref": "Acts 2:46–47"
+   },
+   "es": {
+    "text": "…partiendo el pan en las casas, comían juntos con alegría y con sencillez de corazón… Y el Señor añadía cada día á la iglesia los que habían de ser salvos.",
+    "ref": "Hechos 2:46–47"
+   },
+   "jobs": [
+    "family",
+    "timeline",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 158,
+    "es": 155
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+2%3A46-47&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+2%3A46-47&version=RVA"
+   }
+  },
+  {
+   "id": "jas5_14",
+   "en": {
+    "text": "Is any sick among you? let him call for the elders of the church; and let them pray over him, anointing him with oil in the name of the Lord…",
+    "ref": "James 5:14"
+   },
+   "es": {
+    "text": "¿Está alguno enfermo entre vosotros? llame á los ancianos de la iglesia, y oren por él, ungiéndole con aceite en el nombre del Señor.",
+    "ref": "Santiago 5:14"
+   },
+   "jobs": [
+    "family",
+    "roles",
+    "ask"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 141,
+    "es": 133
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=James+5%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=James+5%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "col3_14",
+   "en": {
+    "text": "And above all these things put on charity, which is the bond of perfectness.",
+    "ref": "Colossians 3:14"
+   },
+   "es": {
+    "text": "Y sobre todas estas cosas vestíos de caridad, la cual es el vínculo de la perfección.",
+    "ref": "Colosenses 3:14"
+   },
+   "jobs": [
+    "family",
+    "close",
+    "verse"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 76,
+    "es": 85
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Colossians+3%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Colossians+3%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "1john3_18",
+   "en": {
+    "text": "My little children, let us not love in word, neither in tongue; but in deed and in truth.",
+    "ref": "1 John 3:18"
+   },
+   "es": {
+    "text": "Hijitos míos, no amemos de palabra ni de lengua, sino de obra y en verdad.",
+    "ref": "1 Juan 3:18"
+   },
+   "jobs": [
+    "family",
+    "yes",
+    "close",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 89,
+    "es": 74
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+John+3%3A18&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+John+3%3A18&version=RVA"
+   }
+  },
+  {
+   "id": "eccl4_10",
+   "en": {
+    "text": "For if they fall, the one will lift up his fellow…",
+    "ref": "Ecclesiastes 4:10"
+   },
+   "es": {
+    "text": "Porque si cayeren, el uno levantará á su compañero…",
+    "ref": "Eclesiastés 4:10"
+   },
+   "jobs": [
+    "family",
+    "roles",
+    "capacity"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 50,
+    "es": 51
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Ecclesiastes+4%3A10&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Ecclesiastes+4%3A10&version=RVA"
+   }
+  },
+  {
+   "id": "rom12_13",
+   "en": {
+    "text": "Distributing to the necessity of saints; given to hospitality.",
+    "ref": "Romans 12:13"
+   },
+   "es": {
+    "text": "Comunicando á las necesidades de los santos; siguiendo la hospitalidad.",
+    "ref": "Romanos 12:13"
+   },
+   "jobs": [
+    "family",
+    "ask",
+    "capacity"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 62,
+    "es": 71
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Romans+12%3A13&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Romans+12%3A13&version=RVA"
+   }
+  },
+  {
+   "id": "1cor12_26",
+   "en": {
+    "text": "And whether one member suffer, all the members suffer with it; or one member be honoured, all the members rejoice with it.",
+    "ref": "1 Corinthians 12:26"
+   },
+   "es": {
+    "text": "Por manera que si un miembro padece, todos los miembros á una se duelen; y si un miembro es honrado, todos los miembros á una se gozan.",
+    "ref": "1 Corintios 12:26"
+   },
+   "jobs": [
+    "family",
+    "need",
+    "ability"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 122,
+    "es": 135
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A26&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A26&version=RVA"
+   }
+  },
+  {
+   "id": "phil2_4",
+   "en": {
+    "text": "Look not every man on his own things, but every man also on the things of others.",
+    "ref": "Philippians 2:4"
+   },
+   "es": {
+    "text": "No mirando cada uno á lo suyo propio, sino cada cual también á lo de los otros.",
+    "ref": "Filipenses 2:4"
+   },
+   "jobs": [
+    "family",
+    "motion",
+    "ask"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 81,
+    "es": 79
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Philippians+2%3A4&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Philippians+2%3A4&version=RVA"
+   }
+  },
+  {
+   "id": "prov11_13",
+   "en": {
+    "text": "A talebearer revealeth secrets: but he that is of a faithful spirit concealeth the matter.",
+    "ref": "Proverbs 11:13"
+   },
+   "es": {
+    "text": "El que anda en chismes, descubre el secreto: Mas el de espíritu fiel encubre la cosa.",
+    "ref": "Proverbios 11:13"
+   },
+   "jobs": [
+    "risks"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 90,
+    "es": 85
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Proverbs+11%3A13&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Proverbs+11%3A13&version=RVA"
+   }
+  },
+  {
+   "id": "matt28_19",
+   "en": {
+    "text": "Go ye therefore, and teach all nations… and, lo, I am with you always, even unto the end of the world. Amen.",
+    "ref": "Matthew 28:19–20"
+   },
+   "es": {
+    "text": "Por tanto, id, y doctrinad á todos los Gentiles… y he aquí, yo estoy con vosotros todos los días, hasta el fin del mundo. Amén.",
+    "ref": "Mateo 28:19–20"
+   },
+   "jobs": [
+    "mission",
+    "motion",
+    "verse"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 108,
+    "es": 127
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Matthew+28%3A19-20&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Matthew+28%3A19-20&version=RVA"
+   }
+  },
+  {
+   "id": "rom10_14",
+   "en": {
+    "text": "…how shall they believe in him of whom they have not heard? and how shall they hear without a preacher? And how shall they preach, except they be sent?…",
+    "ref": "Romans 10:14–15"
+   },
+   "es": {
+    "text": "…¿y cómo creerán á aquel de quien no han oído? ¿y cómo oirán sin haber quien les predique? ¿Y cómo predicarán si no fueren enviados?…",
+    "ref": "Romanos 10:14–15"
+   },
+   "jobs": [
+    "ask",
+    "need",
+    "mission"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 152,
+    "es": 133
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Romans+10%3A14-15&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Romans+10%3A14-15&version=RVA"
+   }
+  },
+  {
+   "id": "isa52_7",
+   "en": {
+    "text": "How beautiful upon the mountains are the feet of him that bringeth good tidings, that publisheth peace…",
+    "ref": "Isaiah 52:7"
+   },
+   "es": {
+    "text": "Cuán hermosos son sobre los montes los pies del que trae alegres nuevas, del que publica la paz…",
+    "ref": "Isaías 52:7"
+   },
+   "jobs": [
+    "yes",
+    "close",
+    "verse"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 103,
+    "es": 96
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Isaiah+52%3A7&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Isaiah+52%3A7&version=RVA"
+   }
+  },
+  {
+   "id": "luke10_2",
+   "en": {
+    "text": "…The harvest truly is great, but the labourers are few: pray ye therefore the Lord of the harvest, that he would send forth labourers into his harvest.",
+    "ref": "Luke 10:2"
+   },
+   "es": {
+    "text": "…La mies á la verdad es mucha, mas los obreros pocos; por tanto, rogad al Señor de la mies que envíe obreros á su mies.",
+    "ref": "Lucas 10:2"
+   },
+   "jobs": [
+    "ask",
+    "need",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 151,
+    "es": 119
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Luke+10%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Luke+10%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "mark16_15",
+   "en": {
+    "text": "And he said unto them, Go ye into all the world, and preach the gospel to every creature.",
+    "ref": "Mark 16:15"
+   },
+   "es": {
+    "text": "Y les dijo: Id por todo el mundo; predicad el evangelio á toda criatura.",
+    "ref": "Marcos 16:15"
+   },
+   "jobs": [
+    "mission",
+    "motion",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 89,
+    "es": 72
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Mark+16%3A15&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Mark+16%3A15&version=RVA"
+   }
+  },
+  {
+   "id": "2tim4_2",
+   "en": {
+    "text": "Preach the word; be instant in season, out of season…",
+    "ref": "2 Timothy 4:2"
+   },
+   "es": {
+    "text": "Que prediques la palabra; que instes á tiempo y fuera de tiempo…",
+    "ref": "2 Timoteo 4:2"
+   },
+   "jobs": [
+    "timeline",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 53,
+    "es": 64
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Timothy+4%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "1cor3_6",
+   "en": {
+    "text": "I have planted, Apollos watered; but God gave the increase… For we are labourers together with God: ye are God's husbandry, ye are God's building.",
+    "ref": "1 Corinthians 3:6–9"
+   },
+   "es": {
+    "text": "Yo planté, Apolos regó: mas Dios ha dado el crecimiento… Porque nosotros, coadjutores somos de Dios; y vosotros labranza de Dios sois, edificio de Dios sois.",
+    "ref": "1 Corintios 3:6–9"
+   },
+   "jobs": [
+    "report",
+    "roles",
+    "capacity"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 146,
+    "es": 157
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Corinthians+3%3A6-9&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Corinthians+3%3A6-9&version=RVA"
+   }
+  },
+  {
+   "id": "acts14_27",
+   "en": {
+    "text": "And when they were come, and had gathered the church together, they rehearsed all that God had done with them…",
+    "ref": "Acts 14:27"
+   },
+   "es": {
+    "text": "Y habiendo llegado, y reunido la iglesia, relataron cuán grandes cosas había Dios hecho con ellos…",
+    "ref": "Hechos 14:27"
+   },
+   "jobs": [
+    "report",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 110,
+    "es": 98
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+14%3A27&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+14%3A27&version=RVA"
+   }
+  },
+  {
+   "id": "phil1_5",
+   "en": {
+    "text": "For your fellowship in the gospel from the first day until now…",
+    "ref": "Philippians 1:5"
+   },
+   "es": {
+    "text": "Por vuestra comunión en el evangelio, desde el primer día hasta ahora…",
+    "ref": "Filipenses 1:5"
+   },
+   "jobs": [
+    "ask",
+    "report",
+    "yes"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 63,
+    "es": 70
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Philippians+1%3A5&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Philippians+1%3A5&version=RVA"
+   }
+  },
+  {
+   "id": "acts13_2",
+   "en": {
+    "text": "…Separate me Barnabas and Saul for the work whereunto I have called them… and laid their hands on them, they sent them away.",
+    "ref": "Acts 13:2–3"
+   },
+   "es": {
+    "text": "…Apartadme á Bernabé y á Saulo para la obra para la cual los he llamado… y puesto las manos encima de ellos, despidiéronlos.",
+    "ref": "Hechos 13:2–3"
+   },
+   "jobs": [
+    "ask",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 124,
+    "es": 124
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+13%3A2-3&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+13%3A2-3&version=RVA"
+   }
+  },
+  {
+   "id": "matt24_14",
+   "en": {
+    "text": "And this gospel of the kingdom shall be preached in all the world for a witness unto all nations; and then shall the end come.",
+    "ref": "Matthew 24:14"
+   },
+   "es": {
+    "text": "Y será predicado este evangelio del reino en todo el mundo, por testimonio á todos los Gentiles; y entonces vendrá el fin.",
+    "ref": "Mateo 24:14"
+   },
+   "jobs": [
+    "mission",
+    "verse",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 126,
+    "es": 122
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Matthew+24%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Matthew+24%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "ps95_1",
+   "en": {
+    "text": "O come, let us sing unto the LORD: let us make a joyful noise to the rock of our salvation. Let us come before his presence with thanksgiving…",
+    "ref": "Psalm 95:1–2"
+   },
+   "es": {
+    "text": "Venid, celebremos alegremente á Jehová: Cantemos con júbilo á la roca de nuestra salud. Lleguemos ante su acatamiento con alabanza…",
+    "ref": "Salmos 95:1–2"
+   },
+   "jobs": [
+    "motion",
+    "yes",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 142,
+    "es": 131
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+95%3A1-2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+95%3A1-2&version=RVA"
+   }
+  },
+  {
+   "id": "col3_16",
+   "en": {
+    "text": "…teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord.",
+    "ref": "Colossians 3:16"
+   },
+   "es": {
+    "text": "…enseñándoos y exhortándoos los unos á los otros con salmos é himnos y canciones espirituales, con gracia cantando en vuestros corazones al Señor.",
+    "ref": "Colosenses 3:16"
+   },
+   "jobs": [
+    "roles",
+    "ability",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 125,
+    "es": 146
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Colossians+3%3A16&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Colossians+3%3A16&version=RVA"
+   }
+  },
+  {
+   "id": "ps100_2",
+   "en": {
+    "text": "Serve the LORD with gladness: come before his presence with singing.",
+    "ref": "Psalm 100:2"
+   },
+   "es": {
+    "text": "Servid á Jehová con alegría: Venid ante su acatamiento con regocijo.",
+    "ref": "Salmos 100:2"
+   },
+   "jobs": [
+    "yes",
+    "motion",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 68,
+    "es": 68
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+100%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+100%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "ps34_11",
+   "en": {
+    "text": "Come, ye children, hearken unto me: I will teach you the fear of the LORD.",
+    "ref": "Psalm 34:11"
+   },
+   "es": {
+    "text": "Venid, hijos, oidme; El temor de Jehová os enseñaré.",
+    "ref": "Salmos 34:11"
+   },
+   "jobs": [
+    "need",
+    "yes",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 74,
+    "es": 52
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+34%3A11&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+34%3A11&version=RVA"
+   }
+  },
+  {
+   "id": "deut6_6",
+   "en": {
+    "text": "And these words, which I command thee this day, shall be in thine heart: And thou shalt teach them diligently unto thy children…",
+    "ref": "Deuteronomy 6:6–7"
+   },
+   "es": {
+    "text": "Y estas palabras que yo te mando hoy, estarán sobre tu corazón: Y las repetirás á tus hijos…",
+    "ref": "Deuteronomio 6:6–7"
+   },
+   "jobs": [
+    "motion",
+    "need",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 128,
+    "es": 92
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Deuteronomy+6%3A6-7&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Deuteronomy+6%3A6-7&version=RVA"
+   }
+  },
+  {
+   "id": "ps78_4",
+   "en": {
+    "text": "We will not hide them from their children, shewing to the generation to come the praises of the LORD…",
+    "ref": "Psalm 78:4"
+   },
+   "es": {
+    "text": "No las encubriremos á sus hijos, Contando á la generación venidera las alabanzas de Jehová…",
+    "ref": "Salmos 78:4"
+   },
+   "jobs": [
+    "motion",
+    "need",
+    "verse"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 101,
+    "es": 91
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+78%3A4&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+78%3A4&version=RVA"
+   }
+  },
+  {
+   "id": "isa54_13",
+   "en": {
+    "text": "And all thy children shall be taught of the LORD; and great shall be the peace of thy children.",
+    "ref": "Isaiah 54:13"
+   },
+   "es": {
+    "text": "Y todos tus hijos serán enseñados de Jehová; y multiplicará la paz de tus hijos.",
+    "ref": "Isaías 54:13"
+   },
+   "jobs": [
+    "need",
+    "close",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 95,
+    "es": 80
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Isaiah+54%3A13&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Isaiah+54%3A13&version=RVA"
+   }
+  },
+  {
+   "id": "luke2_52",
+   "en": {
+    "text": "And Jesus increased in wisdom and stature, and in favour with God and man.",
+    "ref": "Luke 2:52"
+   },
+   "es": {
+    "text": "Y Jesús crecía en sabiduría, y en edad, y en gracia para con Dios y los hombres.",
+    "ref": "Lucas 2:52"
+   },
+   "jobs": [
+    "need",
+    "ability",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 74,
+    "es": 80
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Luke+2%3A52&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Luke+2%3A52&version=RVA"
+   }
+  },
+  {
+   "id": "2cor5_14",
+   "en": {
+    "text": "For the love of Christ constraineth us…",
+    "ref": "2 Corinthians 5:14"
+   },
+   "es": {
+    "text": "Porque el amor de Cristo nos constriñe…",
+    "ref": "2 Corintios 5:14"
+   },
+   "jobs": [
+    "motion",
+    "yes",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 39,
+    "es": 39
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Corinthians+5%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "job12_7",
+   "en": {
+    "text": "But ask now the beasts, and they shall teach thee… Or speak to the earth, and it shall teach thee…",
+    "ref": "Job 12:7–8"
+   },
+   "es": {
+    "text": "Y en efecto, pregunta ahora á las bestias, que ellas te enseñarán… O habla á la tierra, que ella te enseñará…",
+    "ref": "Job 12:7–8"
+   },
+   "jobs": [
+    "roles",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 98,
+    "es": 109
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Job+12%3A7-8&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Job+12%3A7-8&version=RVA"
+   }
+  },
+  {
+   "id": "ps119_9",
+   "en": {
+    "text": "Wherewithal shall a young man cleanse his way? by taking heed thereto according to thy word.",
+    "ref": "Psalm 119:9"
+   },
+   "es": {
+    "text": "¿Con qué limpiará el joven su camino? Con guardar tu palabra.",
+    "ref": "Salmos 119:9"
+   },
+   "jobs": [
+    "need",
+    "ability"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 92,
+    "es": 61
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+119%3A9&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+119%3A9&version=RVA"
+   }
+  },
+  {
+   "id": "acts5_29",
+   "en": {
+    "text": "Then Peter and the other apostles answered and said, We ought to obey God rather than men.",
+    "ref": "Acts 5:29"
+   },
+   "es": {
+    "text": "Y respondiendo Pedro y los apóstoles, dijeron: Es menester obedecer á Dios antes que á los hombres.",
+    "ref": "Hechos 5:29"
+   },
+   "jobs": [
+    "need",
+    "risks"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 90,
+    "es": 99
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+5%3A29&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+5%3A29&version=RVA"
+   }
+  },
+  {
+   "id": "gal5_1",
+   "en": {
+    "text": "Stand fast therefore in the liberty wherewith Christ hath made us free, and be not entangled again with the yoke of bondage.",
+    "ref": "Galatians 5:1"
+   },
+   "es": {
+    "text": "Estad, pues, firmes en la libertad con que Cristo nos hizo libres, y no volváis otra vez á ser presos en el yugo de servidumbre.",
+    "ref": "Gálatas 5:1"
+   },
+   "jobs": [
+    "motion",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 124,
+    "es": 128
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Galatians+5%3A1&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Galatians+5%3A1&version=RVA"
+   }
+  },
+  {
+   "id": "1tim2_2",
+   "en": {
+    "text": "For kings, and for all that are in authority; that we may lead a quiet and peaceable life in all godliness and honesty.",
+    "ref": "1 Timothy 2:2"
+   },
+   "es": {
+    "text": "Por los reyes y por todos los que están en eminencia, para que vivamos quieta y reposadamente en toda piedad y honestidad.",
+    "ref": "1 Timoteo 2:2"
+   },
+   "jobs": [
+    "motion",
+    "ask",
+    "risks"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 119,
+    "es": 122
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Timothy+2%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Timothy+2%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "heb13_3",
+   "en": {
+    "text": "Remember them that are in bonds, as bound with them; and them which suffer adversity, as being yourselves also in the body.",
+    "ref": "Hebrews 13:3"
+   },
+   "es": {
+    "text": "Acordaos de los presos, como presos juntamente con ellos; y de los afligidos, como que también vosotros mismos sois del cuerpo.",
+    "ref": "Hebreos 13:3"
+   },
+   "jobs": [
+    "motion",
+    "need",
+    "yes"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 123,
+    "es": 127
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Hebrews+13%3A3&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Hebrews+13%3A3&version=RVA"
+   }
+  },
+  {
+   "id": "matt25_36",
+   "en": {
+    "text": "Naked, and ye clothed me: I was sick, and ye visited me: I was in prison, and ye came unto me.",
+    "ref": "Matthew 25:36"
+   },
+   "es": {
+    "text": "Desnudo, y me cubristeis; enfermo, y me visitasteis; estuve en la cárcel, y vinisteis á mí.",
+    "ref": "Mateo 25:36"
+   },
+   "jobs": [
+    "need",
+    "yes",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 94,
+    "es": 91
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Matthew+25%3A36&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Matthew+25%3A36&version=RVA"
+   }
+  },
+  {
+   "id": "1cor12_22",
+   "en": {
+    "text": "Nay, much more those members of the body, which seem to be more feeble, are necessary…",
+    "ref": "1 Corinthians 12:22"
+   },
+   "es": {
+    "text": "Antes, mucho más los miembros del cuerpo que parecen más flacos, son necesarios…",
+    "ref": "1 Corintios 12:22"
+   },
+   "jobs": [
+    "ability",
+    "roles",
+    "need"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 86,
+    "es": 80
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A22&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Corinthians+12%3A22&version=RVA"
+   }
+  },
+  {
+   "id": "1chr29_14",
+   "en": {
+    "text": "…for all things come of thee, and of thine own have we given thee.",
+    "ref": "1 Chronicles 29:14"
+   },
+   "es": {
+    "text": "…porque todo es tuyo, y lo recibido de tu mano te damos.",
+    "ref": "1 Crónicas 29:14"
+   },
+   "jobs": [
+    "ask",
+    "capacity",
+    "close"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 66,
+    "es": 56
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "mal3_10",
+   "en": {
+    "text": "Bring ye all the tithes into the storehouse… prove me now herewith, saith the LORD of hosts, if I will not open you the windows of heaven…",
+    "ref": "Malachi 3:10"
+   },
+   "es": {
+    "text": "Traed todos los diezmos al alfolí… probadme ahora en esto, dice Jehová de los ejércitos, si no os abriré las ventanas de los cielos…",
+    "ref": "Malaquías 3:10"
+   },
+   "jobs": [
+    "ask",
+    "motion"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 138,
+    "es": 132
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Malachi+3%3A10&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Malachi+3%3A10&version=RVA"
+   }
+  },
+  {
+   "id": "2cor9_7",
+   "en": {
+    "text": "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver.",
+    "ref": "2 Corinthians 9:7"
+   },
+   "es": {
+    "text": "Cada uno dé como propuso en su corazón: no con tristeza, ó por necesidad; porque Dios ama el dador alegre.",
+    "ref": "2 Corintios 9:7"
+   },
+   "jobs": [
+    "ask",
+    "capacity"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 132,
+    "es": 106
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=RVA"
+   }
+  },
+  {
+   "id": "acts6_5",
+   "en": {
+    "text": "And the saying pleased the whole multitude: and they chose Stephen, a man full of faith and of the Holy Ghost…",
+    "ref": "Acts 6:5"
+   },
+   "es": {
+    "text": "Y plugo el parecer á toda la multitud; y eligieron á Esteban, varón lleno de fe y de Espíritu Santo…",
+    "ref": "Hechos 6:5"
+   },
+   "jobs": [
+    "motion",
+    "yes",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 110,
+    "es": 100
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+6%3A5&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+6%3A5&version=RVA"
+   }
+  },
+  {
+   "id": "acts15_28",
+   "en": {
+    "text": "For it seemed good to the Holy Ghost, and to us…",
+    "ref": "Acts 15:28"
+   },
+   "es": {
+    "text": "Que ha parecido bien al Espíritu Santo, y á nosotros…",
+    "ref": "Hechos 15:28"
+   },
+   "jobs": [
+    "motion",
+    "yes"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 48,
+    "es": 53
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+15%3A28&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+15%3A28&version=RVA"
+   }
+  },
+  {
+   "id": "1cor14_40",
+   "en": {
+    "text": "Let all things be done decently and in order.",
+    "ref": "1 Corinthians 14:40"
+   },
+   "es": {
+    "text": "Empero hagáse todo decentemente y con orden.",
+    "ref": "1 Corintios 14:40"
+   },
+   "jobs": [
+    "risks",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 45,
+    "es": 44
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=RVA"
+   }
+  },
+  {
+   "id": "acts2_42",
+   "en": {
+    "text": "And they continued stedfastly in the apostles' doctrine and fellowship, and in breaking of bread, and in prayers.",
+    "ref": "Acts 2:42"
+   },
+   "es": {
+    "text": "Y perseveraban en la doctrina de los apóstoles, y en la comunión, y en el partimiento del pan, y en las oraciones.",
+    "ref": "Hechos 2:42"
+   },
+   "jobs": [
+    "family",
+    "timeline",
+    "roles"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 113,
+    "es": 114
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+2%3A42&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+2%3A42&version=RVA"
+   }
+  },
+  {
+   "id": "1pet2_2",
+   "en": {
+    "text": "As newborn babes, desire the sincere milk of the word, that ye may grow thereby…",
+    "ref": "1 Peter 2:2"
+   },
+   "es": {
+    "text": "Desead, como niños recién nacidos, la leche espiritual, sin engaño, para que por ella crezcáis en salud…",
+    "ref": "1 Pedro 2:2"
+   },
+   "jobs": [
+    "family",
+    "need",
+    "timeline"
+   ],
+   "needs": [],
+   "chars": {
+    "en": 80,
+    "es": 104
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Peter+2%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Peter+2%3A2&version=RVA"
+   }
   }
  ],
  "egw": [
@@ -1733,7 +3048,7 @@
    "id": "9t116_4",
    "en": {
     "text": "The leaders in God’s cause, as wise generals, are to lay plans for advance moves all along the line. In their planning they are to give special study to the work that can be done by the laity for their friends and neighbors.",
-    "ref": "Ellen G. White · Testimonies for the Church, vol. 9, p. 116"
+    "ref": "Ellen G. White · Testimonies for the Church, vol. 9, pp. 116–117"
    },
    "es": {
     "text": "Los dirigentes de la causa de Dios, como sabios generales, deben trazar planes para llevar a cabo acciones de avanzada a lo largo de toda la línea. En sus planes deben tomar en cuenta especialmente la obra que los laicos pueden llevar a cabo en beneficio de sus amigos y vecinos.",
@@ -1747,6 +3062,59 @@
    "needs": [
     "general"
    ],
+   "src": "https://m.egwwritings.org/en/book/115.639"
+  },
+  {
+   "id": "mh470_1",
+   "en": {
+    "text": "The strongest argument in favor of the gospel is a loving and lovable Christian.",
+    "ref": "Ellen G. White · The Ministry of Healing, p. 470"
+   },
+   "es": {
+    "text": "El argumento más poderoso en favor del Evangelio es un cristiano amante y amable.",
+    "ref": "Elena G. de White · El Ministerio de Curación, p. 373"
+   },
+   "jobs": [
+    "family",
+    "close",
+    "verse"
+   ],
+   "needs": [],
+   "src": "https://m.egwwritings.org/en/book/135.2470"
+  },
+  {
+   "id": "da678_1",
+   "en": {
+    "text": "When men are bound together, not by force or self-interest, but by love, they show the working of an influence that is above every human influence.",
+    "ref": "Ellen G. White · The Desire of Ages, p. 678"
+   },
+   "es": {
+    "text": "Cuando los hombres no están vinculados por la fuerza o los intereses propios, sino por el amor, manifiestan la obra de una influencia que está por encima de toda influencia humana.",
+    "ref": "Elena G. de White · El Deseado de Todas las Gentes, p. 632"
+   },
+   "jobs": [
+    "family",
+    "close"
+   ],
+   "needs": [],
+   "src": "https://m.egwwritings.org/en/book/130.3340"
+  },
+  {
+   "id": "9t117_1",
+   "en": {
+    "text": "The work of God in this earth can never be finished until the men and women comprising our church membership rally to the work and unite their efforts with those of ministers and church officers.",
+    "ref": "Ellen G. White · Testimonies for the Church, vol. 9, p. 117"
+   },
+   "es": {
+    "text": "La obra de Dios en este mundo no podrá terminarse hasta que los hombres y las mujeres que componen la feligresía de nuestra iglesia se interesen en la obra y unan sus esfuerzos con los de los ministros y dirigentes de la iglesia.",
+    "ref": "Elena G. de White · Testimonios para la Iglesia, tomo 9, p. 95"
+   },
+   "jobs": [
+    "mission",
+    "capacity",
+    "close"
+   ],
+   "needs": [],
    "src": "https://m.egwwritings.org/en/book/115.639"
   }
  ],
@@ -1939,6 +3307,153 @@
    "general": [
     "matt25_40",
     "matt9_36"
+   ]
+  }
+ },
+ "plans": {
+  "inreach": {
+   "family": [
+    "john13_34",
+    "gal6_2",
+    "1cor12_26",
+    "heb10_24",
+    "luke15_4",
+    "phil2_4",
+    "col3_14"
+   ],
+   "motion": [
+    "phil2_4",
+    "1john3_18",
+    "luke15_4",
+    "acts2_46",
+    "heb10_24"
+   ],
+   "need": [
+    "luke15_4",
+    "1cor12_26",
+    "ezek34_16"
+   ],
+   "capacity": [
+    "eccl4_10",
+    "rom12_13",
+    "luke14_28"
+   ],
+   "ability": [
+    "rom12_10",
+    "1cor12_26",
+    "ezek34_16",
+    "1pet4_10"
+   ],
+   "roles": [
+    "gal6_2",
+    "1thess5_11",
+    "eccl4_10",
+    "jas5_14",
+    "1pet4_9",
+    "rom12_10"
+   ],
+   "ask": [
+    "phil2_4",
+    "rom12_13",
+    "jas5_14"
+   ],
+   "risks": [
+    "prov11_13",
+    "prov15_22",
+    "1thess5_21"
+   ],
+   "timeline": [
+    "acts2_46",
+    "gal6_9",
+    "heb10_24"
+   ],
+   "yes": [
+    "1john3_18",
+    "1pet4_9",
+    "gal6_2"
+   ],
+   "verse": [
+    "john13_34",
+    "col3_14"
+   ],
+   "close": [
+    "col3_14",
+    "1john3_18",
+    "1thess5_11",
+    "john13_34"
+   ]
+  },
+  "conference": {
+   "place": [
+    "john4_35",
+    "jer29_7"
+   ],
+   "need": [
+    "rom10_14",
+    "luke10_2",
+    "matt9_36"
+   ],
+   "capacity": [
+    "1cor3_6",
+    "luke14_28",
+    "ex18_18"
+   ],
+   "ability": [
+    "1pet4_10",
+    "1cor12_27"
+   ],
+   "timeline": [
+    "2tim4_2",
+    "matt24_14",
+    "gal6_9"
+   ],
+   "ask": [
+    "luke10_2",
+    "rom10_14",
+    "acts13_2",
+    "phil1_5"
+   ],
+   "report": [
+    "acts14_27",
+    "1cor3_6",
+    "phil1_5",
+    "2cor8_21"
+   ],
+   "mission": [
+    "matt28_19",
+    "mark16_15",
+    "matt24_14",
+    "rev14_6"
+   ],
+   "risks": [
+    "2cor8_21",
+    "prov15_22",
+    "luke14_28"
+   ],
+   "yes": [
+    "isa52_7",
+    "phil1_5",
+    "isa6_8"
+   ],
+   "close": [
+    "isa52_7",
+    "acts14_27",
+    "mark16_15"
+   ],
+   "verse": [
+    "matt28_19",
+    "isa52_7",
+    "matt24_14"
+   ],
+   "motion": [
+    "matt28_19",
+    "mark16_15",
+    "isa52_7"
+   ],
+   "district": [
+    "1cor3_6",
+    "phil1_5",
+    "1cor12_27"
    ]
   }
  }

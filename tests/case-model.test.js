@@ -24,7 +24,7 @@ const J=x=>JSON.parse(JSON.stringify(x));
 
 /* ---- the server's deck rules: present.mjs cleanDeck(), field by field ----------------
    Kept in step with netlify/functions/present.mjs (present-1.1: an optional verse at the foot
-   of every content slide, and the "Here in {town}" place slide). A deck that passes here
+   of every content slide, and the "Here in {town}" place slide; present-1.2: the conference proposal). A deck that passes here
    is stored by the server exactly as built (the join slide's link and code excepted). */
 const RULES=(()=>{
   const MAX_DECK=64*1024, MAX_SLIDES=12, MAX_STR=400, MAX_NUM=1e12;
@@ -92,7 +92,8 @@ const RULES=(()=>{
     if(own(raw,'kind')!=='tdeck') throw bad('kind'); if(own(raw,'ver')!==1) throw bad('ver');
     const lang=own(raw,'lang'); if(lang!=='en'&&lang!=='es') throw bad('lang');
     const au=dObj(own(raw,'audience'),'audience'), type=own(au,'type');
-    if(type!=='board'&&type!=='team'&&type!=='congregation') throw bad('audience.type');
+    // v10.41 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): present-1.2 adds 'conference'
+    if(type!=='board'&&type!=='team'&&type!=='congregation'&&type!=='conference') throw bad('audience.type');
     const group=own(au,'group'); if(typeof group!=='string'||!RE_SLUG.test(group)) throw bad('audience.group');
     let ministry=null; const mi=own(raw,'ministry');
     if(mi!=null){ const o=dObj(mi,'ministry'), id=own(o,'id'); if(typeof id!=='string'||!RE_SLUG.test(id)) throw bad('ministry.id'); ministry={id,name:dText(own(o,'name'),'ministry.name')}; }
@@ -167,7 +168,10 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   // the congregation gains one slide. Still about eight content slides.
   const ORDER={board:['join','motion','stat','place','capacity','ability','ask','risks','timeline'],
     team:['join','motion','stat','place','ability','roles','risks','timeline','yes'],
-    congregation:['join','verse','stat','stat','place','ability','motion','yes','close']};
+    congregation:['join','verse','stat','stat','place','ability','motion','yes','close'],
+    // v10.41 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal. This has to be done
+    // differently"): the proposal, the need, the place, capacity, gifts, the plan, the ask, reporting back, the aims, the close
+    conference:['join','motion','stat','place','capacity','ability','timeline','ask','risks','risks','close']};
   // Every group the pastor can name (v10.39 review: 14 of 23 were never built by a test).
   const GROUPS=JE('CASE_GROUPS.map(g=>[g.id,g.type])');
   const MINS=['pathfinders','food-pantry','bp-clinic','interpreter-bank','lift-rota'];
@@ -177,7 +181,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     built.push({lang,g,t,id,...out});
   }
   const allOk=built.every(b=>b.m.ok);
-  c(`${built.length} models built (EN/ES × ${GROUPS.length} groups × ${MINS.length} ministries)`, [allOk,built.length,GROUPS.length], [true,2*GROUPS.length*MINS.length,23]);
+  c(`${built.length} models built (EN/ES × ${GROUPS.length} groups × ${MINS.length} ministries)`, [allOk,built.length,GROUPS.length], [true,2*GROUPS.length*MINS.length,34]);   // v10.41: 34 (the pastor: "worship and music for sure, children's Sabbath School, Pathfinders, Adventurers … all the things we would have as a denomination. We also have an evangelism team"; the business meeting; the conference)
   const svr=built.map(b=>({b,r:serverCheck(b.d)}));
   c('every deck passes the server’s deck rules', svr.filter(x=>!x.r.ok).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}: ${x.r.where}`), []);
   c('…and loses nothing on the way through (the server stores exactly what was built)', svr.filter(x=>x.r.ok&&JSON.stringify(sansJoin(x.r.deck))!==JSON.stringify(sansJoin(x.b.d))).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}`), []);

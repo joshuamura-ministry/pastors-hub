@@ -426,13 +426,15 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
 
   console.log('\n-- in Spanish --');
   { const S=page('https://pastorshub.org/',{lang:'es',reg:REG}); await sleep(1200);
-    setup(S,{ministry:'pathfinders',type:'team',group:'youth'});
+    // v10.41: Pathfinders have their own group now ("Pathfinders, Adventurers … all the things we would have as a
+    // denomination"); a Pathfinder deck saved under youth moves there (caseMigrateYouth). Still a youth team: no answers.
+    setup(S,{ministry:'pathfinders',type:'team',group:'pathfinders'});
     click(S,'[data-cs-act="present"]');
     c('the setup in Spanish; a youth team takes no answers', [S.txt('#casepres .cp-k'),S.txt('[data-pr-start]'),/quedan desactivadas para los grupos de jóvenes/.test(S.txt('#casepres')),!!S.q('[data-pr-respond]'),S.qa('[data-pr-days]').map(b=>b.textContent)],
       ['Presentar en vivo','Empezar a presentar',true,false,['1 día','7 días','30 días']]);
     c('…and who can see it', /Cualquier persona con este enlace podrá ver estas diapositivas hasta el \d+ \w+ \d{4}\. Los nombres nunca aparecen/.test(S.txt('[data-pr-warn]')), true);
     click(S,'[data-pr-start]'); await until(()=>S.q('#casepres .td-root'));
-    const sp=S.J(`uChurch().caseRooms['pathfinders|team|youth|es']`);
+    const sp=S.J(`uChurch().caseRooms['pathfinders|team|pathfinders|es']`);
     c('the presenter view in Spanish: En vivo, Terminar, Salir, Enlace; the link opens in Spanish', [S.txt('#casepres .td-blive'),S.txt('#casepres .td-bend'),S.txt('[data-pr-exit]'),S.txt('[data-pr-link]'),sp.url.endsWith('~es'),sp.respond],
       ['En vivo','Terminar','← Salir','Enlace',true,false]);
     const SM=page(sp.url,{fast:true}); await until(()=>SM.q('#watchp .td-root'));

@@ -54,7 +54,8 @@ function setup(P,tool,cap){
 }
 const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Event('input',{bubbles:true})); };
 const choose=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Event('change',{bubbles:true})); };
-const cards=(P,host='#u-lib')=>P.qa(host+' .lib-card');
+// v10.41 integration: a list has two sections now; by default read "For our community" (sec '' = both)
+const cards=(P,host='#u-lib',sec='out')=>P.qa(host+(sec?` .lib-sec[data-lib-sec="${sec}"]`:'')+' .lib-card');
 // what the index says a theme search must return: the theme's own ideas, then those cross-listed to it
 const TI=Object.fromEntries(IDX.themes.map((t,i)=>[t.id,i]));
 const col=k=>IDX.cols.indexOf(k);
@@ -96,15 +97,21 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('the index is fetched once', P.ideasFetched().filter(u=>u==='/ideas/index.json').length, 1);
 
   console.log('\n-- the survey\'s ministries: search, rank, pages, filters --');
+  // v10.41 integration: with the 57 themes the library is split for real ("what can I do for God's people, but also
+  // what can I do for the community?"): a "prayer" search shows the cross-listed in-reach ideas (children's
+  // ministries, global mission…) under "For God's people" first, then the prayer ideas under "For our community".
+  // The checks below that meant "the prayer list" read the community section; the rest say which section they read.
   type(P,'#u-search','prayer');
   c('typing "prayer" shows twelve library ideas under the built-ins', await until(()=>cards(P).length===12), true);
   const N=expectOf(['prayer']);
   c('the heading counts them all', P.txt('#u-lib .lib-head h3'), `${N} ideas from the library for “prayer”`);
   c('the built-ins that are about prayer are there too', P.qa('#u-cards .u-rowname').map(e=>e.textContent).filter(t=>/pray/i.test(t)).length>=2, true);
-  c('only the prayer theme\'s file was fetched for the first page', P.ideasFetched().filter(u=>!/index|words/.test(u)), ['/ideas/prayer.json']);
+  { const firstPage=[...new Set(cards(P,'#u-lib','').map(e=>'/ideas/'+P.J(`LIB.byId.get(${JSON.stringify(e.dataset.libId)}).theme`)+'.json'))].sort();
+    c('only the theme files of the ideas on the first page were fetched (prayer first)', [P.ideasFetched().filter(u=>!/index|words/.test(u)).sort(),P.ideasFetched().filter(u=>!/index|words/.test(u))[0]], [firstPage,'/ideas/prayer.json']); }
   const shown=()=>cards(P).map(e=>e.dataset.libId);
-  const R=P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows,S).map(o=>({id:o.r.id,score:o.score,cross:o.cross,tier:o.r.tier,k:o.r.k,nh:o.nh,ok:o.ok,base:o.base})); })()`);
-  c('the cards are the ranking\'s first twelve, in order', shown(), R.slice(0,12).map(o=>o.id));
+  const R=P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows.filter(r=>libOut(libReach(r))),S).map(o=>({id:o.r.id,score:o.score,cross:o.cross,tier:o.r.tier,k:o.r.k,nh:o.nh,ok:o.ok,base:o.base})); })()`);
+  c('the community section\'s cards are its ranking\'s first twelve, in order', shown(), R.slice(0,12).map(o=>o.id));
+  c('…and God\'s people\'s are its own ranking\'s first twelve', cards(P,'#u-lib','in').map(e=>e.dataset.libId), P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows.filter(r=>libIn(libReach(r))),S).slice(0,12).map(o=>o.r.id); })()`));
   c('the theme\'s own ideas first, then the cross-listed', R.findIndex(o=>o.cross)>=homeOf('prayer')&&R.slice(homeOf('prayer')).every(o=>o.cross), true);
   c('in each, never a lower score above a higher one', R.every((o,i)=>i===0||o.cross!==R[i-1].cross||o.score<=R[i-1].score), true);
   const tags=P.J('[...profile(DATA.M[SCOPE],DATA.M.county,trendOf(DATA.M,SCOPE))]');
@@ -120,19 +127,19 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('an idea with no figure behind it here can still fit and be added', R.some(o=>o.nh===0&&o.ok), true);
   c('some do not fit (the check is real: costly homeless-theme programmes)', P.E(`(()=>{ const S=libSearch('homeless'); const X=libRank(S.rows,S); return X.some(o=>o.ok)&&X.some(o=>!o.ok); })()`), true);
   { const top=R.slice(0,12); c('a page is not twelve of one kind or one size', [new Set(top.map(o=>o.k)).size>=2,new Set(top.map(o=>o.tier)).size>=2], [true,true]); }
-  P.q('#u-lib [data-lib-more]').click(); await until(()=>cards(P).length===24);
+  P.q('#u-lib [data-lib-more="out"]').click(); await until(()=>cards(P).length===24);
   c('"Show 12 more" adds twelve', shown(), R.slice(0,24).map(o=>o.id));
   choose(P,'#u-lib select[data-lib-f="size"]','1'); await until(()=>cards(P).length===12);
-  c('size "This week": every card is a size-1 idea and says so', cards(P).every(e=>byId[e.dataset.libId][col('tier')]===1&&e.querySelector('.lib-facts li').textContent==='This week'), true);
+  c('size "This week": every card is a size-1 idea and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('tier')]===1&&e.querySelector('.lib-facts li').textContent==='This week'), true);
   choose(P,'#u-lib select[data-lib-f="kind"]','invite'); await sleep(60);
-  c('kind "Invite" as well: only invite ideas', cards(P).length>0&&cards(P).every(e=>byId[e.dataset.libId][col('k')]==='invite'&&/invite/i.test(e.querySelector('.lib-kind').textContent)), true);
+  c('kind "Invite" as well: only invite ideas', cards(P).length>0&&cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('k')]==='invite'&&/invite/i.test(e.querySelector('.lib-kind').textContent)), true);
   choose(P,'#u-lib select[data-lib-f="size"]',''); choose(P,'#u-lib select[data-lib-f="kind"]',''); await sleep(60);
   P.q('#u-lib [data-lib-tog="sab"]').click(); await until(()=>P.q('#u-lib [data-lib-tog="sab"]').getAttribute('aria-pressed')==='true'&&cards(P).length>0);
-  c('"Fits the Sabbath": every card fits it, and says so', cards(P).every(e=>byId[e.dataset.libId][col('sab')]===1&&e.querySelector('.lib-facts .sab')), true);
+  c('"Fits the Sabbath": every card fits it, and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('sab')]===1&&e.querySelector('.lib-facts .sab')), true);
   P.q('#u-lib [data-lib-tog="sab"]').click(); await sleep(40); P.q('#u-lib [data-lib-tog="online"]').click(); await until(()=>cards(P).length>0);
-  c('"Online or social media": every card has a digital part', cards(P).every(e=>byId[e.dataset.libId][col('dig')]===1||byId[e.dataset.libId][col('where')]==='online'), true);
+  c('"Online or social media": every card has a digital part', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('dig')]===1||byId[e.dataset.libId][col('where')]==='online'), true);
   choose(P,'#u-lib select[data-lib-f="ages"]','children'); await sleep(80);
-  const kidsCards=cards(P);
+  const kidsCards=cards(P,'#u-lib','');
   c('ages "Children" (and online): children\'s ideas only', kidsCards.every(e=>byId[e.dataset.libId][col('ages')]==='children'), true);
   P.q('#u-lib [data-lib-tog="online"]').click(); await sleep(60);
   choose(P,'#u-lib select[data-lib-f="ages"]',''); await sleep(60);
@@ -145,8 +152,9 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('the four steps, folded until opened', [card.querySelector('details.lib-how').open,[...card.querySelectorAll('.lib-how li')].map(e=>e.textContent)], [false,raw.en.how]);
   c('two actions: Add to our plan · Make the case for this', [...card.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Add to our plan','Make the case for this']);
   const whyOk=P.E(`(()=>{ const env=libEnv(); return [...document.querySelectorAll('#u-lib .lib-card')].every(e=>{ const x=libToCatalog(libFull(e.dataset.libId)), w=e.querySelector('.lib-why');
+    if(libReach(LIB.byId.get(e.dataset.libId))==='in') return !w;   // v10.41: an idea for God's people argues from the church family, never the census
     const fired=x.need.some(t=>env.tags.has(t)); return w?(fired&&/\\d/.test(w.textContent)&&w.textContent.endsWith(libWhyText(x,env.m,env.tags))):!libWhyText(x,env.m,env.tags); }); })()`);
-  c('"Why here" only when a need tag fired, always with a figure', whyOk, true);
+  c('"Why here" only when a need tag fired, always with a figure (and never on an idea for God\'s people)', whyOk, true);
   c('…the survey\'s own words for that need (poverty: the report\'s sentence)', P.E(`(()=>{ const x=libToCatalog({...libFull(${JSON.stringify(raw.id)}),need:['poor']}); const h=suggestions(DATA.M,SCOPE).hits.find(h=>h.id==='poverty'); return !!h&&libWhyText(x,DATA.M[SCOPE],libEnv().tags)===h.evidence; })()`), true);
   c('…and nothing at all when no need tag fires here (never invented)', P.E(`(()=>{ const env=libEnv(); const off=LIB.rows.find(r=>r.need.every(t=>!env.tags.has(t))); if(!off) return 'none'; return libWhyText(libLite(off),env.m,env.tags); })()`), '');
   { const kid=IDX.ideas.find(r=>r[col('min')]===1&&IDX.themes[r[col('t')]].id==='children');
@@ -154,7 +162,7 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
     const has=P.E(`(()=>{ const r=LIB.byId.get(${JSON.stringify(kid[0])}); return new Promise(res=>libLoadTheme(r.theme).then(()=>{ const x=libToCatalog(libFull(r.id)); res(libCardHTML('survey',libFull(r.id),x,libEnv(),null)); })); })()`);
     const h=await has;
     c('an idea with children keeps the safeguarding line in view', /lib-kids/.test(h)&&/screened adults/.test(h), true);
-    c('…on every children\'s card on the page', cards(P).filter(e=>byId[e.dataset.libId][col('min')]===1).every(e=>e.querySelector('.lib-kids')), true); }
+    c('…on every children\'s card on the page', cards(P,'#u-lib','').filter(e=>byId[e.dataset.libId][col('min')]===1).every(e=>e.querySelector('.lib-kids')), true); }
 
   console.log('\n-- "Add to our plan": joins the plan like a built-in --');
   type(P,'#u-search','prayer'); await until(()=>cards(P).length===12&&/prayer/.test(P.txt('#u-lib .lib-head h3')));
@@ -194,30 +202,37 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
     const kinds=await P.E(`(()=>{ const r=LIB.byId.get(${JSON.stringify(kid[0])}); return libLoadTheme(r.theme).then(()=>{ libSave(libFull(r.id)); const m=caseModel(r.id,{type:'board',group:'board'}); return JSON.stringify(m.risks); }); })()`);
     c('an idea with children brings the children\'s risk table (screening, two adults)', /"children"/.test(kinds), true); }
 
-  console.log('\n-- Make the Case step 1: the same library --');
-  P.E(`CASE_ST.pick=true; caseDraw1();`); await sleep(50);
-  c('an invitation under the ranked ministries', !!P.q('#cs-lib .lib-invite'), true);
+  console.log('\n-- Make the Case step 2: the same library --');
+  // Updated v10.41 (the pastor: "'Who are you making the case to?' should be first… Why do I type Prayer under
+  // 'What are you proposing?' and get four things, then 84 things underneath? Out of order."): the library is
+  // step 2's ONE list, built-ins as cards in it; the search box above it reaches every idea.
+  P.E(`CASE_ST.pick=true; caseDraw2();`); await sleep(50);
+  c('no invitation box: step 2 is the list itself, under one search box', [!!P.q('#cs-lib .lib-invite'),!!P.q('#cs-s2 #cs-q')], [false,true]);
   type(P,'#cs-q','oración'); await until(()=>cards(P,'#cs-lib').length===12);
   c('"oración" in the English page: every prayer idea', P.txt('#cs-lib .lib-head h3'), `${N} ideas from the library for “oración”`);
-  c('…and the built-in prayer ministries by their names', P.qa('#cs-grid .cs-min b').map(e=>e.textContent).filter(t=>/pray/i.test(t)).length>=2, true);
-  c('here the first action is "Make the case for this"', cards(P,'#cs-lib')[0].querySelector('.lib-acts button').textContent, 'Make the case for this');
-  const pid=cards(P,'#cs-lib')[2].dataset.libId;
-  cards(P,'#cs-lib')[2].querySelector('[data-lib-case]').click(); await sleep(200);
-  c('choosing one closes the picker and shows it chosen', [P.J('casePrefs()').ministry,!P.q('#cs-lib'),P.txt('#cs-s1 .cs-min .cs-mh b')], [pid,true,THEME('prayer').ideas.find(x=>x.id===pid).en.n]);
+  c('…and the built-in prayer ministries by their names, as cards of the same kind', P.qa('#cs-lib .lib-sig h4').map(e=>e.textContent).filter(t=>/pray/i.test(t)).length>=2, true);
+  c('here the first action is "Choose this"', cards(P,'#cs-lib')[0].querySelector('.lib-acts button').textContent, 'Choose this');
+  const pc=cards(P,'#cs-lib').filter(e=>!e.classList.contains('lib-sig'))[2], pid=pc.dataset.libId;
+  pc.querySelector('[data-lib-case]').click(); await sleep(200);
+  c('choosing one closes the list and shows it chosen', [P.J('casePrefs()').ministry,!P.q('#cs-lib'),P.txt('#cs-s2 .cs-chosen h4')], [pid,true,THEME('prayer').ideas.find(x=>x.id===pid).en.n]);
 
   console.log('\n-- browse: the themes as tiles --');
-  P.E(`CASE_ST.pick=true; CASE_ST.q=''; caseDraw1();`); await sleep(40);
-  P.q('#cs-lib [data-lib-browse]').click(); await until(()=>P.qa('#cs-lib .lib-tile').length>0);
+  P.E(`CASE_ST.pick=true; CASE_ST.q=''; caseDraw2();`); await sleep(40);
+  P.q('#cs-s2 [data-cs-browse]').click(); await until(()=>P.qa('#cs-lib .lib-tile').length>0);
   const tiles=P.qa('#cs-lib .lib-tile');
-  c('one tile per theme with ideas', tiles.length, IDX.themes.filter(t=>t.n>0).length);
-  c('each says how many ideas it opens ("Prayer & intercession · N ideas")', tiles.every(t=>{ const id=t.dataset.libTheme; return t.querySelector('span').textContent===`${expectOf([id])} ideas`&&t.querySelector('b').textContent===IDX.themes[TI[id]].en; }), true);
+  // v10.41 integration: the tiles are grouped under the two headings (a theme under its own side, and under the
+  // other too when ten or more of its ideas face that way), each counting the ideas that face its section's way
+  c('every theme with ideas has a tile, under "For God\'s people" and "For our community"', [new Set(tiles.map(t=>t.dataset.libTheme)).size,P.qa('#cs-lib .lib-sec').map(s=>s.dataset.libSec)], [IDX.themes.filter(t=>t.n>0).length,['in','out']]);
+  { const RC=col('reach'), way=(r,sec)=>sec==='in'?['in','both'].includes(r[RC]):['out','both'].includes(r[RC]);
+    const nOf=(id,sec)=>IDX.ideas.filter(r=>(r[col('t')]===TI[id]||r[col('also')].includes(TI[id]))&&way(r,sec)).length;
+    c('each says how many of its ideas face that way ("Prayer & intercession · N ideas")', tiles.every(t=>{ const id=t.dataset.libTheme, sec=t.dataset.libTsec; return t.querySelector('span').textContent===`${nOf(id,sec)} ideas`&&t.querySelector('b').textContent===IDX.themes[TI[id]].en; }), true); }
   c('each tile coloured by its kind of figure', tiles.every(t=>/--k:var\(--m-(hardship|housing|children|people|language)\)/.test(t.getAttribute('style'))), true);
   P.q('#cs-lib [data-lib-theme="hunger"]').click(); await until(()=>cards(P,'#cs-lib').length===12);
   c('a theme opens its ideas, ranked', P.txt('#cs-lib .lib-head h3'), `Feeding the hungry · ${expectOf(['hunger'])} ideas`);
   P.q('#cs-lib [data-lib-alltheme]').click(); await until(()=>P.qa('#cs-lib .lib-tile').length>0);
   c('"All themes" goes back to the tiles', P.qa('#cs-lib .lib-tile').length, tiles.length);
   P.q('#cs-lib [data-lib-close]').click(); await sleep(30);
-  c('"Close the library" leaves the invitation', !!P.q('#cs-lib .lib-invite'), true);
+  c('"Close the library" goes back to step 2\'s own list', [P.J('LIB_UI.case.mode'),P.qa('#cs-lib .lib-tile').length], [P.J('casePrefs().group')?'group':'none',0]);
   c('no errors on this page', P.errs, []);
 
   console.log('\n-- offline, a missing file, the session cache --');
@@ -234,7 +249,7 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
     c('the index is kept for the session', !!kept&&JSON.parse(kept).hash===IDX.hash, true);
     const Q=page({session:{'terrain-lib-idx':kept}}); await sleep(1300); setup(Q,'survey');
     type(Q,'#u-search','prayer'); await until(()=>cards(Q).length===12);
-    c('a reload in the same session searches without fetching the index again', Q.ideasFetched(), ['/ideas/prayer.json']); }
+    c('a reload in the same session searches without fetching the index again', [Q.ideasFetched().includes('/ideas/index.json'),Q.ideasFetched()[0]], [false,'/ideas/prayer.json']); }
   { const old=JSON.parse(P.w.sessionStorage.getItem('terrain-lib-idx')); old.hash='000000000000';
     const Q=page({session:{'terrain-lib-idx':JSON.stringify(old)}}); await sleep(1300); setup(Q,'survey');
     type(Q,'#u-search','prayer'); await until(()=>cards(Q).length===12);

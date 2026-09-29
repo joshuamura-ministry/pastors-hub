@@ -63,7 +63,7 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   await P.E(`Promise.all(${JSON.stringify([...THEMES,'hunger','children'])}.map(libLoadTheme))`);
   const R=P.J(`(()=>{ const out=[]; const ch=uChurch(), keep=ch.lib;
     for(const r of LIB.rows.filter(r=>${JSON.stringify(THEMES)}.includes(r.theme))){ const raw=libFull(r.id); ch.lib={[raw.id]:raw}; const x=libToCatalog(raw); CASE_ST.rank=null;
-      const row={id:x.id,theme:x.theme,childOk:caseChildOk(x),ages:x.ages};
+      const row={id:x.id,theme:x.theme,childOk:caseChildOk(x),ages:x.ages,sp:(x.need||[]).includes('single-parents')};
       for(const g of [['congregation','congregation'],['board','board'],['team','prayer']]){ const m=caseModel(x.id,{type:g[0],group:g[1]}); const d=caseDeck(m);
         row[g[0]]={lead:m.need.lead,hero:m.need.hero&&m.need.hero.key,verses:d.slides.map(s=>s.type==='verse'?s.ref:(s.verse&&s.verse.ref)).filter(Boolean).map(v=>v.replace(/ · .*/,'')),
           first:(d.slides.find(s=>s.type==='verse')||{}).ref||null,kidsDots:d.slides.some(s=>s.type==='stat'&&/in every 100 are children/.test(s.count||'')),n:d.slides.length,bring:((d.slides.find(s=>s.type==='place')||{}).bring||[]),keys:m.sources.map(z=>z.key)}; }
@@ -78,7 +78,10 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   // around us is a child" beside Mark 10:14. "families" moved to boost (ranking only) in the source.
   c('…and no prayer idea for everyone or for adults counts as about children', R.filter(r=>r.theme==='prayer'&&!['children','youth','families'].includes(r.ages)&&r.childOk).map(r=>r.id), []);
   c('…and none borrows a children\'s or poverty figure it does not carry (no hero kidsShare or childPoverty)', free.filter(r=>['congregation','board','team'].some(g=>['kidsShare','childPoverty'].includes(r[g].hero))).map(r=>r.id), []);
-  c('…nor lists a children\'s figure among its reasons, on the slides or the handout (children\'s share, child poverty, school-age share, single parents)', free.filter(r=>['congregation','board','team'].some(g=>r[g].keys.some(k=>['kidsShare','childPoverty','k12Share','singleParent'].includes(k)))).map(r=>r.id), []);
+  c('…nor lists a children\'s figure among its reasons, on the slides or the handout (children\'s share, child poverty, school-age share, single parents)', free.filter(r=>['congregation','board','team'].some(g=>r[g].keys.some(k=>['kidsShare','childPoverty','k12Share'].includes(k)||(k==='singleParent'&&!r.sp)))).map(r=>r.id), []);
+  // v10.41 final review: caseChildOk no longer counts a census tag (a "families" tag gave a Sunday picnic "About 1 in 4 people
+  // around us is a child" beside Mark 10:14, "weird", the pastor said), so more ideas are checked here; single parents stay a
+  // figure an idea may carry when it is tagged for single parents itself (a caregivers' retreat day), as caseBuild has always allowed
   c('the place slide never says "1 members"', R.flatMap(r=>['congregation','board','team'].flatMap(g=>r[g].bring)).filter(t=>/^1 members/.test(t)), []);
   const firstBy=t=>[...new Set(R.filter(r=>r.theme===t).map(r=>r.congregation.first))];
   c('the congregation\'s verse slide speaks to the theme: prayer Jeremiah 29:7, rest Matthew 9:36, small groups Romans 16:5, literature Habakkuk 2:2, personal evangelism Isaiah 6:8',
@@ -128,12 +131,15 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   c('…and goes when the box is cleared', P.q('#u-libjump').children.length, 0);
   setup(P,'case'); await sleep(100);
   type(P,'#cs-q','prayer'); await until(()=>P.q('#cs-lib .lib-card'),8000); await sleep(100);
-  const cs=P.qa('#cs-grid [data-cs-min]').map(b=>b.querySelector('.cs-mh b').textContent);
+  // Updated v10.41 (the pastor: "Why do I type Prayer under 'What are you proposing?' and get four things, then 84
+  // things underneath? Out of order."): Make the Case shows ONE list, the built-ins that match are cards in it
+  // (libBuiltinsFor), so the separate built-in grid, its counts beside the box and the jump line are gone.
+  const cs=P.J(`libBuiltinsFor(libSearch('prayer'),null).map(x=>x.n)`);
   c('Make the Case: the built-ins for "prayer" are those named for prayer, never the backpack giveaway', [cs.length>0,cs.some(n=>/backpack/i.test(n)),cs.every(byName)], [true,false,true]);
-  c('…the counts beside the box are the matches, not all 100-odd', P.txt('#cs-s1 [data-cs-filter="all"]'), `All (${cs.length})`);
-  c('…and the jump line says how many library ideas are below', P.txt('#cs-libjump .lib-jump'), `${inQuery(['prayer'])} ideas in the Idea Library for “prayer” ↓`);
-  type(P,'#cs-q','backpack'); await sleep(400);
-  c('a word that is not a theme still finds a built-in by its description', P.qa('#cs-grid [data-cs-min]').length>0, true);
+  c('…shown as cards in the one list, beside the library\'s ideas', P.qa('#cs-lib .lib-sig').map(e=>e.querySelector('h4').textContent).every(byName)&&P.qa('#cs-lib .lib-sig').length>0, true);
+  c('…and no second list, no counts beside the box, no jump line', [!!P.q('#cs-grid'),!!P.q('[data-cs-filter]'),!!P.q('#cs-libjump')], [false,false,false]);
+  type(P,'#cs-q','backpack'); await until(()=>P.q('#cs-lib .lib-sig'),6000);
+  c('a word that is not a theme still finds a built-in by its description', P.qa('#cs-lib .lib-sig').length>0, true);
   c('the built-in prayer box goes where people already wait, with the owner\'s permission', P.J(`(()=>{ const x=SIGNATURE.find(s=>s.id==='prayer-box'); return [x.n,/laundromat/.test(x.d)&&/permission/.test(x.d),/fence|gate/.test(x.d+x.n),HOW['prayer-box'].some(h=>/fence/.test(h))]; })()`),
     ['A prayer request box where people wait',true,false,false]);
 
@@ -156,7 +162,8 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
     c('…fifteen new ideas that feed neighbors without a home where they are, cross-listed to hunger, among them', top.filter(o=>/^homeless-/.test(o.id)&&o.also.includes('hunger')).length>=12, true); }
   c('the homeless theme now has 20 or more ideas cross-listed to hunger', IDX.ideas.filter(r=>r[col('t')]===TI.homeless&&r[col('also')].includes(TI.hunger)).length>=15, true);
   { P.E(`libMount('survey')`); type(P,'#u-search','feeding the homeless'); await until(()=>P.qa('#u-lib .lib-card').length>=12,8000);
-    const first=P.qa('#u-lib .lib-card h4').slice(0,6).map(e=>e.textContent);
+    // v10.41 integration: the community section (feeding neighbours without a home is outreach; the list has two sections now)
+    const first=P.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card h4').slice(0,6).map(e=>e.textContent);
     c('on the screen too: the first cards are about feeding people without a home', first.filter(n=>/lunch|supper|breakfast|meal|brunch|food|oatmeal|groceries|kitchen|diner|rescue|dinner/i.test(n)).length>=4, true); }
 
   console.log('\n-- 6. the handout\'s Spanish budget lines; no made-up places; the file name --');

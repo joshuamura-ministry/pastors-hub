@@ -12,7 +12,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 
 ## Read this first
 
-1. **One file.** The whole app is `index.html` (~2.2 MB). No build step, no
+1. **One file.** The whole app is `index.html` (~2.4 MB). No build step, no
    framework, no bundler. Two `<script>` blocks. Edit it in place. The one
    exception is data: the Idea Library's `ideas/` is **generated** from
    `tools/ideas-src/` by `tools/build-ideas.mjs` — never edit `ideas/` by hand
@@ -20,7 +20,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 64 suites, 5191 assertions, all green at v10.40.0 (after the review pass and the final check).
+   `npm test`. 71 suites, 5588 assertions, all green at v10.41.1 (about 6 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -61,22 +61,23 @@ the gospel is the picture. Neighbours are neighbours, never targets.
 ```
 index.html                     the entire app
 netlify/functions/census.mjs   Census API proxy + conference access-code gate
-netlify/functions/advise.mjs   AI: prose plan + fresh ministry ideas + "More ideas for {town}" on one topic (advise-2.2)
+netlify/functions/advise.mjs   the model behind the prose plan, new ministry ideas and "More ideas for {town}" (advise-2.2; never called "AI" on screen)
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
-tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the ideas, EN + ES), themes.json (42 themes, synonyms),
+tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the ideas, EN + ES), themes.json (57 themes, synonyms),
+                               reach.json (in / out / both for the 2,249 ideas written before `reach` existed),
                                vocab.json, validate.mjs, selftest.mjs, examples.json, SCHEMA.md (fields, search), WRITERS.md (quality bar)
 netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.2, Netlify Blobs)
 netlify/functions/gifts-sweep.mjs  daily scheduled purge of expired gifts results
 netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.1
-netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.1: a verse on every slide, the "place" slide)
+netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
 netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms
 FIREBASE-RULES-TERRAIN.txt     rules for the separate Firebase project `terrain-live` (no client writes)
 FIREBASE-SETUP.md              click-by-click setup of that project for the pastor
 README.md                      (in the GitHub repo; not part of this hand-over folder)
 CLAUDE.md                      this file
 package.json                   @netlify/blobs (functions); jsdom + jspdf (tests)
-tests/                         64 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; scripture-bg.json: Bible Gateway's
+tests/                         71 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
@@ -95,7 +96,7 @@ values are never in the repo):
 | Variable | Used by | Purpose |
 |---|---|---|
 | `ANTHROPIC_API_KEY` | advise.mjs | Anthropic **platform** key (console.anthropic.com), billed per use. Not a claude.ai subscription. |
-| `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ai=PASSPHRASE`. |
+| `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `TERRAIN_CODES` | census.mjs, gifts.mjs | Conference access codes. **Only enforced when `TERRAIN_REQUIRE_CODE` is on** (v10.38: registration replaced codes on the first page). |
 | `TERRAIN_REQUIRE_CODE` | census.mjs, gifts.mjs | `1`/`true`/`yes`/`on` brings the old access-code gate back. Unset = registration only. |
@@ -111,13 +112,13 @@ values are never in the repo):
 
 ## Current state (29 Sep 2026)
 
-| | Live on pastorshub.org (verified 29 Sep 2026) | Handed over |
+| | Live on pastorshub.org (29 Sep 2026) | Handed over |
 |---|---|---|
-| `index.html` | **v10.39.0** | **v10.40.0** — commit the whole folder (see Open work 1) |
-| `present.mjs` | **present-1.0**, `live:true`, `fb:ok` | **present-1.1** (optional verse on every slide, the new `place` slide; a v10.39 deck is stored exactly as before) |
+| `index.html` | **v10.40.0** (commit 43306de) | **v10.41.1** (v10.41.0 and three follow-ups) — commit the whole folder (see Open work 1) |
+| `present.mjs` | **present-1.1** (with v10.40.0) | **present-1.2** (`conference` audience type; no new slide type; every limit and every older deck unchanged) |
 | `register.mjs` / `gifts.mjs` | **register-1.1** / **gifts-1.2**, census registration gate on | same |
-| `advise.mjs` | **advise-2.1** ✓ | **advise-2.2** (topic mode for the Idea Library; no `temperature`; every mode leaves room for thinking and asks for effort `low`) |
-| `ideas/` | — | **2,249 ideas in 42 themes**, EN + ES (build hash `e677d04959f8`), from `tools/ideas-src` |
+| `advise.mjs` | **advise-2.2** | same (its error strings still say "AI", but the page never shows them) |
+| `ideas/` | **2,249 ideas in 42 themes** (`e677d04959f8`) | **3,050 ideas in 57 themes**, every one with a reach (634 in · 2,163 out · 253 both), EN + ES (build hash `f2cc1121c190`), from `tools/ideas-src` |
 
 The session that produced this handover took Terrain from **v10.11.1 to
 v10.35.0**. Highlights, so you recognise them in the code:
@@ -161,6 +162,284 @@ fixed these, each pinned by `tests/survey-audit.test.js`:
   `SCRIPTURE_ES` (Reina-Valera Antigua 1909, public domain, text from Bible
   Gateway "RVA"), `briefES()` rewritten to mirror `brief()`, `L(en,es)` for
   strings with figures in them, ~125 new `ES` keys, 18 dead keys removed.
+
+**v10.41.0 — Make the Case in three clear steps, ideas tailored to each group, in-reach and outreach, the Adventist
+departments and the conference, no "AI" wording.** The pastor, after using v10.40.0 live (voice-to-text, 29 Sep 2026):
+*"I don't want AI to be seen anywhere, because people are scared of it sometimes… When I choose, say, Prayer Ministry or
+another ministry, the answer should be tailored to that ministry's focus… the greeters have their own ideas. Greeters can
+keep names and information so that when people are missing… they send a card or call… The page is hard to take in: a lot of
+words, almost overwhelming. 'Who are you making the case to?' should be first. The three steps must be definable… Board &
+officers should be a different colour… Why do I type Prayer under 'What are you proposing?' and get four things, then 84
+things underneath? Out of order."* He approved a clickable mockup, then added: *"we can separate ministry ideas by in-reach
+or outreach for each one, so they can see: what can I do for God's people, but also what can I do for the community?"*,
+*"worship and music for sure, children's Sabbath School, Pathfinders, Adventurers… all the things we would have as a
+denomination. We also have an evangelism team"*, and *"we can appeal to the conference leaders for an EVANGELISM proposal.
+This has to be done differently, because these are the administrators of the conference, who oversee all the pastors."*
+Built by two builders in parallel (page side U, deck side D) and merged; the ideas by a separate writers' workflow;
+integration notes in the build session's scratchpad `v42/INTEGRATION.md`.
+- *Three framed steps* (`caseMount`): a step bar (`#cs-bar`, `caseStepBar`: done / now / next, a tap jumps) over
+  **1 Who is it for?** (`caseDraw1`) → **2 What will you propose?** (`caseDraw2`) → **3 Your slides** (`caseDraw3`); each
+  frame a big number, a title and ONE short line (`CASE_STEP_UI`). The lead paragraph, the ranked built-in cards, the
+  department link and the "All / Can staff now" toggle are gone; step 3's notes fold under "About these slides".
+- *Step 1, the groups in coloured sections* (`CASE_AUD_LAYOUT`, `CASE_AUD_SECTIONS`, `CASE_AUD_SUBS`, `CASE_AUD_NOTE`,
+  `caseAudSections`): **Decide** (gold) · **Ministry teams** (violet: Worship & learning · Children & youth · Outreach &
+  evangelism · Care & family) · **On Sabbath** (mint) · **The conference** (blue). Tiles are a coloured dot and the name
+  (no icons any more), 4 a row / 2 on a phone, equal heights, never hyphenated. A group not in the layout is placed by its
+  type ("More teams" for a team). 34 groups (table below).
+- *Step 2, one list tailored to the group* (`CASE_GROUP_THEMES` → `caseGroupList` → `libMount('case')` group mode): the
+  Idea Library's cards (built-ins as the same cards, `libSigCardHTML`, filed by `LIB_BUILTIN_THEMES`) in two sections,
+  **For God's people** / **For our community** ("Para la familia de la iglesia" / "Para la comunidad"), by each idea's reach
+  ("both" in both); theme chips; a search box above that still reaches every idea; "Show more"; "More ideas for {town}" per
+  section; the card's first button "Choose this". Integration additions: an idea that also belongs to the group's themes on
+  the other side ranks first in its section (+100 a theme; +10 for a second theme on its own side; review pass: +50 for the
+  group's first-listed theme, and none of it on an "every theme" side; final review: replaced by a fixed order, below), so Prayer ministry opens
+  with "Anointing before surgery" and "A phone prayer the night before a member's surgery", and Pathfinder Club with
+  Pathfinder ideas on both sides; and where one side is "every theme" (Nominating committee, The whole church) the other
+  side keeps to the group's own themes (`G.limit`), not every in-reach idea in the library. (Review pass, below: one
+  section at a time behind a two-part switch, lighter cards, church-fit ranking on the board's in-reach side.)
+- *In-reach and outreach on every idea:* `reach` = "in" (for God's people: members, the church family, its officers and
+  services), "out" (for the community, guests included) or "both". Per idea in the source, else
+  `tools/ideas-src/reach.json` (the classifier's file for the 2,249 older ideas: 8 in, 158 both, 2,083 out), else the
+  theme's default (an `inside: true` theme → "in", else "out"); `tools/build-ideas.mjs` resolves it and ships it in the
+  index for every idea (a bad value stops the build). The page reads it with `libReach` (lists) and `caseReachOf`
+  (decks) — tested to agree on every idea and built-in. Built-ins: `LIB_BUILTIN_REACH` / `CASE_REACH_BUILTIN` — all "out"
+  but the Pathfinder club ("both"). The survey's library and theme browse are split the same way (a theme tile under its
+  own side, and under the other when 10 or more of its ideas face that way).
+- *15 new library themes* (writers' workflow, 50+ ideas each, EN + ES): seven inside the church (member-care,
+  spiritual-care, deacons, stewardship, involvement, sabbath-school, fellowship) and eight for the Adventist departments
+  (worship-music, childrens-ministries, pathfinders, adventurers, ay-youth, interests "Evangelism follow-up & new
+  believers", religious-liberty, global-mission) — 57 themes, 3,050 ideas; tile colours by kind in `build-ideas.mjs` `HUE`.
+- *In-reach decks argue from the church family* (reach "in", any group but the conference): no Census slide or word; an
+  **"Our church family"** slide (drawn as a `place` slide: members from the confirmed profile, volunteers and hours still
+  free, gifts that fit — counts only, adults only, anything missing left out); in-reach Scripture on every content slide
+  (`CASE_VERSE_PLANS.inreach`); risks led by care-list privacy, consent and confidentiality (`CASE_RISKS.care`); in-reach
+  words for groups whose own words speak of neighbours (`CASE_GROUP_IN`); Ellen White MH 470 on the congregation's close,
+  DA 678 in the board handout (`CASE_EGW_IN`). "both" and "out" keep the community deck. Handout: "Our church family"
+  instead of the need and the place.
+- *New groups* (D; Church Manual 2022 pages from research): business (board, "the whole church votes"), worship, childrens,
+  adventurers, pathfinders, evangelism, prison, liberty, possibility, stewardship (teams), conference (type `conference`);
+  `youth` renamed "Youth ministries (AY)" / "Ministerio Juvenil (JA)"; `congregation` now reads "The whole church" / "Toda la
+  iglesia" (the mockup's name). Each with its own cares, fears, frame, role, ask, win, close, questions and verse, EN + ES.
+  `CASE_YOUTH_GROUPS` and present.mjs `YOUTH_GROUPS` unchanged and equal (no "I'm in" for under-18 groups). A saved
+  Pathfinder choice under `youth` moves to the Pathfinder Club once, with its slide edits and live link (`caseMigrateYouth`).
+- *The conference evangelism proposal* (`caseConfBuild`, `CASE_CONF`, `CASE_CONF_SRC`): up to 12 slides — the proposal ·
+  "The churches we serve" (only with 2+ churches on the device; members from confirmed profiles) · the need · "Here in
+  {town}" · capacity · who is able · the plan and its dates · what we ask · reporting back · the aims it serves · the close
+  ("Will you partner with us?", Isaiah 52:7). Scripture on every slide but the join; the 9T 116 line to leaders in the
+  handout only. Step 2 for Conference leaders shows evangelism themes only and, when the Evangelism Planner has a plan, **his
+  series first** ("Your evangelism series: opening night {date}"). Choosing it chooses the ministry `plan-series`
+  (`CASE_PLAN_ID`, `casePlanItem()`: the planner's opening night, nights, workers, leaders, seats, budget; `caseItemOf(id)`
+  resolves it), so the timeline is the planner's own 18-month countdown; "Adjust" then opens the Planner. The ask shows only
+  what he ticks, amounts only as he types them (edit panel of the ask slide, `uChurch().confAsk`). Aims: only verified ones
+  (OneVoice27, All Things New, I Will Go goal 4.1, Church Manual pp. 137–138), each cited in full in the handout;
+  Pennsylvania-only facts (faith goal, subsidy policy, report form, "How the subsidy works") only when his registration's
+  conference is the Pennsylvania Conference (never guessed from the address). Handout up to 3 pages.
+- *Scripture and Ellen White:* `CASE_VERSES` 113 (+53, generated from the verified research file, KJV / RVA 1909 word for
+  word, all in `tests/scripture-bg.json`), `CASE_EGW` 11 (+ MH 470 / MC 373, DA 678 / DTG 632, 9T 117 / 9TPI 95); every older
+  community deck is byte-for-byte unchanged (`CASE_VERSE_BASE` 60; checked on 9,476 decks). 9T 116 credited pp. 116–117.
+- *No "AI" or "IA" anywhere a person can see:* every visible string, tooltip, aria-label, placeholder and PDF text, EN and
+  ES — "New idea" / "Idea nueva", "Draft idea", "More ideas for {town}", "More ideas are not available just now…"; the
+  server's error words (which name "the AI service") are never shown (`ideasServerNote` logs them). `?ideas=PASSPHRASE`
+  unlocks (the old `?ai=` still works). `tests/no-ai-words.test.js` renders every tool in EN and ES and scans the page's code
+  outside comments; the only exemption is Iowa's "IA" on the conference map. Code identifiers may keep "ai".
+- *The church line* names the church: the profile's name, else the registration's church, only while the device holds one church.
+- *Spanish:* the Evangelism Planner is "Plan de evangelismo" everywhere (the hub's name).
+- *Integration:* the two plan models were joined on D's (`plan-series`, not U's `proph-news` + flag); U's stand-in counts in
+  tests updated to the real 34 groups and 57 themes, each with a comment quoting the pastor; `tests/v41-integration.test.js`
+  joins everything against the real library (every idea has a reach and it is its own / reach.json's / its theme's; every
+  group's step 2 has a full first page on both sides; the two reach readers agree; a real in-reach deck; the conference
+  flow). Checked in headless Chrome (390×844 and 1280×800, EN, ES once): no sideways overflow, no clipped text, no "AI",
+  every slide fits (0.9 or better). **Not checked on a real iPhone, nor in the light theme.**
+
+**v10.41.0 (review pass, 29 Sep 2026) — what the independent reviewers found, fixed before delivery.** Record: the build
+session's scratchpad `v42/FIXES.md`. Pinned by `tests/v41-review.test.js` (51 checks; it fails on the pre-review page) and the
+updated `v41-decks`, `case-steps`, `no-ai-words`.
+- *Child safeguarding on the slide (the blocker):* in-reach decks put the care-list rows first and the slide's room cut
+  Adventist Screening Verification and the two-adult rule from the children's, Pathfinder, Adventurer and AY decks. Now an
+  in-reach idea with children (its kinds, `minors`, or a youth group's deck: `kidsFirst` in `caseBuild`) leads with them
+  (board risks and team support), a care-list row after if room remains. Held for all 142 in-reach ideas with minors.
+- *Step 2 where he looks first:* the focus bonus never applies on an "every theme" side, and the group's first-listed theme
+  gets +50 (final review: it now leads outright, below) (Greeters' page 1: the card after two missed Sabbaths, the greeters' notebook, "Welcome back without a
+  spotlight"; Deacons: rides, communion at home). An "every theme" side leads with the themes that face its way (inside
+  themes for God's people, outward for the community: the whole church's community list no longer opens with members'
+  meals). The board's and business meeting's "For God's people" is ranked by church fit (`libRankIn`: inside themes, "in"
+  before "both", `uCheck`, size; the best of each theme first), not the Census. No card sits on page 1 of both sections
+  (it keeps the side its theme faces). The meal train and the bereavement rota ("out") are filed under families / grief /
+  seniors, no longer wearing "Caring for our members". In Spanish, built-ins (no Spanish description yet) rank after the
+  library's cards.
+- *Step 2 lighter* (phone: 1,900 px, was 6,300–7,600): a two-part switch (`.cs-tabs`, `data-lib-tab`, `LIB_UI.case.tab`,
+  `caseDefaultTab` / `CASE_TAB_OUT`), both sections drawn, one shown; cards in Make the Case clamp the description to three
+  lines, fold "Why here", the fit, partner and steps under "More about this idea" (`.lib-more`), and have one button,
+  "Choose this" ("Add to our plan" stays in the survey); four cards a page on a phone (`CASE_LIST_PAGE_PHONE`).
+- *In-reach decks speak of the church family:* an in-reach library idea with no class, meal or group in its name and no
+  rooms of its own seats nobody and books no room (`libBuild`: `x.seats=false`, facilities `[]`), so no "Places", "When",
+  room row or host; the first step is "Start · The team begins, as planned", the check-in "What was done, and hours against
+  plan", support "Training before it starts"; `CASE_GROUP_IN` gained hospitality, deacons, small groups, prayer, literature,
+  worship, health, community, personal, school, nominating and adventurers, and men's / media were rewritten (no "every
+  session of", no visitors); success lines count totals, never who came back. "Our church family" says "{n} in worship on an
+  average Sabbath" (the profile's field is attendance) and the conference's churches "average Sabbath attendance". The
+  in-reach motion verse no longer opens with Hebrews 10:24–25 ("as the manner of some is"), and a group's outward verse
+  (Hebrews 13:2, Jeremiah 29:7…: `CASE_VERSE_OUTWARD`) is left off in-reach decks.
+- *The business meeting* is a "Church vote" (`CASE_BUSINESS`): its handout kicker, "Review · business meeting", "Business
+  meeting review".
+- *The conference:* the ask ticks only counsel by default, plus a share of the cost when his Planner series has a budget or
+  the church is short of money (`ask.defaults` resolved in `caseConfBuild`, used by the edit panel too); a proposal that is
+  not his series reports "after the trial" (no Evangelistic Report Form, no follow-up of new believers); in Pennsylvania the
+  third timeline step is the report form at the close of the meetings (a follow-up report three months later in its text).
+  Spanish says "evangelismo" throughout (the step-1 tile, the plan card, the Planner, now the deck and handout too).
+- *Found in review:* the board's and the deacons' ask vanished for any idea with no room or no leader (a street or online
+  idea): `{room}` / `{leaders}` left empty. Now the group's room-free words, then plain ones (`CASE_ASK_PLAIN`).
+- *Spanish:* a name that opens with an article is lowered mid-sentence ("Aprobar una prueba de 6 semanas: una tarjeta…");
+  the background ideas' notice (`U_GEN_NOTICE`) is Spanish on a Spanish page.
+- *Data:* the Thirteenth Sabbath jar (global-mission) no longer calls the offering "overflow"; a quarter of it goes to the
+  quarter's projects (re-packaged, hash `f2cc1121c190`).
+- *Tests:* `tests/reach-builtins.json` (the classifier's file) is always checked; `no-ai-words` also scans the presenter's
+  setup, the presenter view, the share panel, the conference step 2 and the conference proposal's slides and handout.
+- *Checked in headless Chrome* (390×844 EN and ES, 1280×800): step 2 for Greeters and the board, the switch, a card's fold;
+  the Greeters, business meeting, Pathfinder and children's in-reach decks and the conference deck: every slide fits (0.9 or
+  better, 0 overflow), no sideways overflow, no "AI". **Not checked on a real iPhone, nor in the light theme.**
+
+**v10.41.0 (final review, 29 Sep 2026) — four things the last critic found would disappoint the pastor, fixed before
+delivery.** Record: the build session's scratchpad `v42/FIXES-2.md` (with a table of page 1 of both sections for all 34
+groups). Pinned by the new `tests/v41-final.test.js` (38 checks; 26 fail on the page before this pass) and the updated `v41-review`,
+`v41-integration`, `v41-decks`, `v40-review-lib`, `case-slides`, `case-fixes` and `home-church`, each with a comment.
+- *Step 2 opens where he looks* (`libDrawList`). The Greeters' "For God's people" opened with "A Sunday picnic where every
+  household brings a neighbor" (reach "both": two themes shared with the community side, +200, beat +50 for the first
+  theme), and his own example came third (*"send a card if they're missing, or if they don't come one Sabbath… call and say
+  we missed you"*). Now every side of every group is ordered: ideas that face only that way ("in" for God's people, "out"
+  for the community) before "both" ones; then the group's first-listed theme for that side (filed under it, then
+  cross-listed to it); then the earlier tie-breaks; and only then +100 for each theme shared with the other side and +10
+  for a second theme of its own side, so a shared theme never outranks the first theme. Greeters: the two-Sabbath card,
+  the door notebook, "Welcome back without a spotlight". Because the first theme now leads outright, six groups whose own
+  focus is a community theme list it first for God's people too (`CASE_GROUP_THEMES`, every SPEC theme kept): Prayer
+  ministry (prayer: anointing before surgery, a phone prayer the night before), Possibility ministries (disability: braille
+  hymnals, a ramp to the platform), Personal ministries (personal-evangelism), Young adults, Media, Literature. No "both"
+  idea is on page 1 of any of the 68 sides on a phone. In Spanish, built-ins still rank after the library's cards.
+- *Children only when the idea is about children* (`caseChildOk(x,gid)`, `CASE_CHILD_THEMES`): its ages children or youth,
+  `minors`, a children's or youth theme of its own or cross-listed (children, youth, childrens-ministries, adventurers,
+  pathfinders, ay-youth, education, schools, foster-care), or a children's or youth group's deck (`CASE_YOUTH_GROUPS` and
+  `childrens`). A census tag never counts, nor ages "families": the picnic's "families" tag gave it "About 1 in 4 people
+  around us is a child" beside Mark 10:14, which he called weird. Such an idea also drops the children's needs its tags lend
+  (`kids`, `schools`, `child-poverty`) from its lead need, its "where to look first" and the ministries whose gifts fit
+  (the picnic was counted against Children's Sabbath School, Adventurers and Pathfinders). Proved on all 3,050 ideas, a
+  board and a congregation deck each (EN): the 581 about children keep the children's share; the other 2,469 show no
+  children's figure, no children dots and no child verse.
+- *Capacity reads what we have first, then what is needed* (`tdCapWords`, `TD_STR` `capShort` / `capOk`; the handout the
+  same). It read "Leaders 17 of 7" and "Series budget $12,000 of $2,500" to the conference's administrators. Now each row is
+  the label with what we have in bold, then the meter with the words beside it: "Leaders **7** · of the 17 needed",
+  "Volunteers **35** · free · 6 needed"; Spanish "de los 17 necesarios", hours feminine ("de las 50 h necesarias"). The meter
+  fills with what we have against what is needed; the words share one column (a CSS subgrid), so the meters are equal. On a
+  single line the words pushed labels into three or four lines ("Presup/uesto") and Spanish board slides overflowed; the
+  two-line row measures fit 0.9 or better with 0 overflow on every board and conference capacity slide, EN and ES (before
+  this pass eight Spanish ones drew at 0.85). In the handout the figure shrinks to fit its line, never the row.
+- *The conference is asked, not told:* when the gifts results show nobody ready to lead, the conference's ability slide says
+  "A coordinator will be named and trained." / "Se nombrará y capacitará a un coordinador." (`CASE_COPY.ability.ready0Conf`),
+  not "pair and train"; the other decks keep their words to the pastor.
+- *Spanish articles:* after "para" every group takes its article, common nouns in lower case (`CASE_GROUP_ES_FOR`,
+  `caseGroupFor`): "Ideas para el Club de Conquistadores", "para los ancianos", "para toda la iglesia"; also "Elegida para…"
+  and step 3's "… diapositivas para …". English lowers only a leading "The" ("Ideas for the whole church").
+- *Checked in headless Chrome* (390×844 EN and ES, 1280×800): the Greeters' step 2, the picnic's board and congregation
+  decks, the conference's capacity and ability slides in both languages, the Spanish step-2 line for all 34 groups; no
+  sideways overflow, no page errors. **Not checked on a real iPhone, nor in the light theme.**
+
+**v10.41.1 (29 Sep 2026) — three follow-ups after v10.41.0 was handed over.** Record: the build session's scratchpad
+`v42/FIXES-3.md` (with the full 103-row table). Pinned by the new `tests/v41-1.test.js` (37 checks; 14 fail on v10.41.0, and 6 of the 11 that fix 4 added fail without it) and
+the updated `case-review39`, `case-steps`, `home-church`, `v41-final`, each with a comment.
+- *Children only when the idea is about children, the built-ins too* (`caseIsBuiltin`, `caseBuiltinKids`, `CASE_CHILD_TAGS`,
+  `CASE_CHILD_BUILTINS`). The pastor: children framing on ideas that are not about children "sounds a little bit weird".
+  v10.41.0 applied the rule to the library only, so every built-in's congregation deck showed "27 in every 100 are children"
+  (a grief group, a blood drive, a senior day program); small groups in homes, the recital hall, come-and-see and the film
+  night opened with "More than 1 in 4 people around us is a child" beside Mark 10:14, and the meal schedule and the lot market
+  carried John 6:9 or Proverbs 22:6. A built-in is about children when it
+  is a children's or youth ministry by id, has the kids skill or the CASE_BRIDGE kind "children", or two or more of its own
+  need tags count children (many-kids, family-heavy, child-poverty, k12, schools-near; "families" never counts); a children's
+  or youth group's deck still may. Such a built-in also drops the children's needs (`kids`, `schools`, `child-poverty`) and
+  never falls back to the child share for its need slide; it keeps its own staffing. Proved on all 103 × board, team and
+  congregation decks (EN): the 84 not about children show no children's figure, dots or child verse; the 19 keep them.
+  | about children (19) | why |
+  |---|---|
+  | vbs, pathfinders, sports-camp, kids-books, homework-club, story-corner | by id, the kids skill, and children's needs |
+  | backpack-giveaway, kids-health, school-supplies, exam-packs | by id, and children's needs |
+  | moms-group, parents-study | the kids skill (childcare; parenting), and children's needs |
+  | lot-sport, music-academy, sg-parents | kind "children" (a court for the neighbourhood's children; lessons; a crèche next door) |
+  | fall-festival, christmas-store, toy-swap, family-life-series | two or more children's needs (a children's evening; toys and uniforms for their children; a parenting series) |
+
+  | not about children (84) | why |
+  |---|---|
+  | clothing-closet, drive-in, meal-train, sg-homes | one children's tag only (`child-poverty`, `many-kids`, `family-heavy`), each drops it from its needs |
+  | lot-market, sanctuary-music, come-and-see (drop `kids`), cooking-school, walking-club, kitchen-study, neighbor-table, open-baptism-class, decision-visit, jar-of-prayer | "families" only |
+  | food-pantry, pantry-box (drop `child-poverty`), money-course | child poverty only as a ranking boost |
+  | the other 67 | no children's need, skill or kind |
+- *A capacity row that needs nothing is left out* (`caseBuild` capRows; the slide, the handout and present.mjs follow): it read
+  "$2,500 free · $0 needed". A deck saved before says only what is free (`TD_STR` `capFree`: "$2,500 free" / "$2,500
+  disponibles"). Of 3,256 decks checked (the built-ins' board and congregation decks, every library idea's board deck) 659
+  carried such a row; now none, and every deck keeps two or more rows.
+- *English takes its article too* (`CASE_GROUP_EN_FOR`, `caseGroupFor`): "Ideas for the Pathfinder Club", "for the elders",
+  "for the church board", "for the deacons and deaconesses", "for the worship and music team"…; "Community Services (Dorcas)"
+  and "Possibility Ministries" keep their own names. Also "Chosen for…" and step 3's "… slides for …".
+- *Fix 4: the "Here in" slide beside a figure* (`CASE_PLACE_MAX.nameLineFact` 28, `caseDeck`'s `placeSlide`; record:
+  `v42/FIXES-4.md`). The independent check found that dropping the children's figure let a longer one in: 20 of the
+  Nominating committee's Spanish "Aquí en Warminster" slides (car-care, glow-racks, lot-market, study-hall, garden,
+  skills-center, noticeboard, job-club, meal-train, supper-study, late-room, mens-breakfast, neighbor-table, four-nights,
+  open-baptism-class, bench, funeral-teas, noticeboard-jobs, lending-shelf, welcome-newcomers) put "1 de cada 9 hogares …
+  tiene un dominio limitado del inglés. Condado: 1 de cada 32." (five lines) beside two food-bank partners, Jeremiah 29:7
+  and the sources, and ran 10 px past 360 × 640 at the smallest type (the meal schedule's already did on v10.41.0). Beside a
+  figure the partner's name column holds about 28 characters at every type size (its type never goes below 15 px), so there
+  a longer name counts as two rows: two partners only when both names fit on one line; the first partner still shows when
+  its name is 40 or less, as before. In the survey's data (food bank 30 characters, pantry 39) every board and conference
+  "Here in" slide with a figure now names one partner (1,366 decks in each language; the handout lists them all) and draws
+  at fit 0.9 or better (0.95 for the 20); nothing else on any place slide changed, and English and Spanish name the same
+  partners. Jeremiah 29:7 stays.
+- *Checked in headless Chrome* (390×844, EN and ES): small groups in homes (board) and the grief group (congregation) with no
+  children's words, VBS keeping its dots, the grief group's capacity slide EN and ES, the English step-2 line for all 34. Every
+  slide of 1,410 decks measured at 360×640 (all 103 built-ins × board / team / congregation, all 33 groups × three built-ins,
+  the conference series, every 10th library idea's board deck; EN and ES): 0 overflow. Fix 4 then measured every slide of
+  25,306 decks at 360×640 (216,972 slides: all 103 built-ins × all 34 groups, the Planner's series for the conference, all
+  3,050 library ideas × board / Community Services / congregation; EN and ES): **0 overflow** (v10.41.0: 1; before fix 4:
+  20). Fit EN 1 ×82,131 · 0.95 ×20,389 · 0.9 ×5,903 · 0.85 ×4 · 0.8 ×59; ES 1 ×61,356 · 0.95 ×30,482 · 0.9 ×11,521 ·
+  0.85 ×4,763 · 0.8 ×212 · 0.75 ×152. The 152 below 0.8 are Spanish and older than this release: 148 dense capacity slides
+  (two gap lines: 30 in five built-ins' board and conference decks, 118 in library ideas' board decks) and the motion slides
+  of 4 long-named fellowship ideas (v10.41.0: 160, the same kinds and that place slide). Every "Here in" slide draws at 0.8
+  or better. **Not checked on a real iPhone, nor in the light theme.**
+
+Groups, sections and their themes (**For God's people** · **For our community**; `*` = every theme, best fit first):
+
+| id | kind | step 1 section | EN · ES | CM 2022 | themes |
+|---|---|---|---|---|---|
+| board | board | Decide | Church board · Junta directiva de la iglesia | pp. 134–138 | * · * |
+| business | board | Decide | Business meeting · Reunión administrativa | pp. 134, 145 | * · * |
+| elders | board | Decide | Elders · Ancianos | pp. 77–79 | spiritual-care, member-care, sabbath-school · prayer, personal-evangelism, grief, small-groups |
+| deacons | board | Decide | Deacons & deaconesses · Diáconos y diaconisas | pp. 84–86 | deacons, member-care, fellowship · hunger, clothing-practical, seniors, disaster-relief, transport |
+| finance | board | Decide | Treasurer & finance committee · Tesorería y comisión de finanzas | pp. 89–90, 138–145 | stewardship, involvement · jobs-money |
+| nominating | board | Decide | Nominating committee · Comisión de nombramientos | pp. 116–120 | involvement, spiritual-care, member-care · * |
+| worship | team | Worship & learning | Worship & music · Adoración y música | pp. 101, 124, 127–128 | worship-music, fellowship · music-arts |
+| sabbathschool | team | Worship & learning | Sabbath School council · Consejo de Escuela Sabática | p. 103 | sabbath-school, member-care, fellowship, global-mission · small-groups, personal-evangelism |
+| childrens | team | Worship & learning | Children's Sabbath School & children's ministries · Escuela Sabática de Niños y Ministerios Infantiles | pp. 93–95, 103–105 | childrens-ministries, sabbath-school · children, families |
+| school | team | Worship & learning | Church school & education · Escuela de iglesia y educación | pp. 96–97 | sabbath-school · education, schools, children |
+| adventurers | team | Children & youth | Adventurer Club · Club de Aventureros | pp. 114, 140 | adventurers · children, families |
+| pathfinders | team | Children & youth | Pathfinder Club · Club de Conquistadores | pp. 113, 140 | pathfinders · youth, sports-outdoors, creation-care |
+| youth | team | Children & youth | Youth ministries (AY) · Ministerio Juvenil (JA) | pp. 110–115 | ay-youth, fellowship · youth |
+| youngadults | team | Children & youth | Young adults · Jóvenes adultos | p. 110 | young-adults, fellowship, involvement · young-adults |
+| personal | team | Outreach & evangelism | Personal ministries council · Consejo de Ministerios Personales | pp. 106–107 | personal-evangelism, involvement, spiritual-care, interests · personal-evangelism, public-evangelism, literature, neighbors |
+| evangelism | team | Outreach & evangelism | Evangelism team · Equipo de evangelismo | pp. 91, 106–107, 137–138 | interests, spiritual-care · public-evangelism, personal-evangelism, media |
+| bibleworkers | team | Outreach & evangelism | Bible workers · Instructores bíblicos | p. 107 | spiritual-care · personal-evangelism, public-evangelism |
+| literature | team | Outreach & evangelism | Literature ministry · Ministerio de Publicaciones | p. 102 | literature, involvement · literature |
+| community | team | Outreach & evangelism | Community Services (Dorcas) · Servicios Comunitarios Adventistas (Dorcas) | pp. 107–108 | member-care, deacons · hunger, clothing-practical, homeless, disaster-relief |
+| health | team | Outreach & evangelism | Health ministries · Ministerios de Salud | p. 100 | member-care · health, mental-health, addiction |
+| media | team | Outreach & evangelism | Media & communication · Comunicación y medios | pp. 95–96 | media, fellowship, member-care · media |
+| prison | team | Outreach & evangelism | Prison ministry · Ministerio carcelario | p. 107 | member-care · prison |
+| liberty | team | Outreach & evangelism | Religious liberty · Libertad religiosa | pp. 101–102 | religious-liberty · religious-liberty |
+| possibility | team | Outreach & evangelism | Possibility ministries · Ministerio de las Posibilidades | pp. 92–93 | disability, member-care, worship-music · disability |
+| prayer | team | Care & family | Prayer ministry · Ministerio de Oración | p. 79 | prayer, member-care, spiritual-care · prayer |
+| hospitality | team | Care & family | Greeters & hospitality · Recepción y hospitalidad | p. 123 | member-care, fellowship · hospitality, neighbors |
+| family | team | Care & family | Family ministries · Ministerio de la Familia | p. 98 | fellowship, member-care · families, marriage, single-parents, foster-care |
+| womens | team | Care & family | Women's ministries · Ministerio de la Mujer | p. 109 | member-care, fellowship · women, single-parents, abuse-survivors |
+| mens | team | Care & family | Men's ministries · Ministerio del Hombre | p. 107 | fellowship, involvement · men, veterans, workplaces |
+| seniors | team | Care & family | Senior members · Adultos mayores | — | member-care, fellowship · seniors, grief |
+| smallgroups | team | Care & family | Small group leaders · Líderes de grupos pequeños | p. 107 | fellowship, spiritual-care · small-groups, neighbors |
+| stewardship | team | Care & family | Stewardship ministries · Ministerio de Mayordomía | pp. 108–109, 142–143 | stewardship · jobs-money |
+| congregation | congregation | On Sabbath | The whole church · Toda la iglesia | pp. 127–128 | member-care, fellowship, involvement · * (size "This week" first) |
+| conference | conference | The conference | Conference leaders · Dirigentes de la asociación | pp. 32–35, 120–121, 134 | interests, involvement · public-evangelism, personal-evangelism, health, media (evangelism only; his Planner series first) |
 
 **v10.40.0 — Make the Case: remembers the church, shows the departments, swipes sideways, persuades with Scripture and the place.**
 The pastor (voice-to-text, 29 Sep 2026), after presenting the v10.39 sample with live follow working on his phone:
@@ -421,7 +700,7 @@ Claude Code's own edit tool gives the same guarantee for single edits. For
 multi-part changes, keep the all-or-nothing discipline.
 
 After editing, always run `npm test`. It syntax-checks both inline script
-blocks and every function first, then runs all 64 suites.
+blocks and every function first, then runs all 71 suites.
 
 ### Versioning
 
@@ -439,7 +718,7 @@ version: `v10.36.0 — what changed`.
 
 ### Tests
 
-`tests/` holds 64 suites and `run-all.js`. They load `../index.html`
+`tests/` holds 71 suites and `run-all.js`. They load `../index.html`
 and `../netlify/functions/*.mjs` directly, stub `fetch`, and never call a
 real API or spend credit. `fixtures.json` is a fabricated high-need tract plus
 a small and a medium church.
@@ -488,7 +767,7 @@ Search for these by name in `index.html`.
 - `capSummaryHTML()` — the itemised box above the action plan
 - `goToMobilization()` — instant jump after Save/Demo (never `smooth` — it animated from the bottom)
 
-**Fresh ideas (AI)**
+**Fresh ideas (the model; shown as "New idea" / "Draft idea", never "AI")**
 - `GEN_PLAN` — 20 per level, four parallel batches (Serve / Equip / Belong / Invite)
 - `autoIdeas()` — background run after a profile save or survey completes; **synchronous `AUTO_RUNNING` guard before any await** (without it, two triggers generated and billed twice)
 - `genBand()`, `draftFrom()`, `roomReq()` — one level; a draft's cited `metric` is verified against the tract before it counts as evidence
@@ -501,20 +780,25 @@ Search for these by name in `index.html`.
 - `?tier=free` on the address previews the free experience
 
 **Make the Case** (v10.39–v10.40)
-- `caseModel(ministry,{type,group})` → `caseDeck(model)` (typed slide JSON) → `tdeckRender(deck,host,{mode})` (present / follow / browse; sideways row)
-- Screens: `caseMount`, `caseDraw1` (ministry), `caseDraw2` (the 23 group tiles), `caseDraw3` (preview + edit + actions), `casePvMount`, `caseAct`
+- `caseModel(ministry,{type,group})` → `caseDeck(model)` (typed slide JSON) → `tdeckRender(deck,host,{mode})` (present / follow / browse; sideways row); capacity rows `tdCapWords` (have, then need; final review; v10.41.1: a row that needs nothing is left out, `capFree` for older decks)
+- Screens (v10.41): `caseMount` → step bar `caseStepBar` + `caseStepHead`; `caseDraw1` (who: `CASE_GROUPS` placed by `CASE_AUD_LAYOUT` / `CASE_AUD_SECTIONS` / `CASE_AUD_SUBS` / `CASE_AUD_NOTE`, `caseAudSections`, `caseChooseGroup`, `caseAudEqual`), `caseDraw2` (what: `CASE_GROUP_THEMES` → `caseGroupList` (`limit`, `focus`) → `libMount('case')` group mode; the chosen card `caseChosenCardHTML`; the conference's series `casePlanOffer` / `casePlanCardHTML` / `caseChoosePlan`), `caseDraw3` (preview + edit + actions), `caseChoose(id,{plan})`, `caseItemOf(id)`, `caseMigrateYouth`, `casePvMount`, `caseAct`
+- Groups: `CASE_GROUPS` (34: 6 board, 26 team, 1 congregation, 1 conference; see the table in the v10.41.0 notes), `CASE_YOUTH_GROUPS` (= present.mjs `YOUTH_GROUPS`)
+- In-reach decks (v10.41): `caseReachOf(x)`, `CASE_THEME_REACH`, `CASE_REACH_BUILTIN`, `CASE_THEME_MIN` (the gifts an in-reach theme needs), `CASE_GROUP_IN`, `CASE_RISKS.care`, `CASE_EGW_IN`; the "Our church family" slide is a `place` slide (`CASE_FAMILY`: its words, the neutral start and check-in); review pass: `kidsFirst` (children's safeguarding first), `CASE_VERSE_OUTWARD`, `CASE_ASK_PLAIN` (an ask with no room or leader), `CASE_BUSINESS` (the church vote)
+- Step 2's switch and page (v10.41 review): the group after "para" / "for" `caseGroupFor` / `CASE_GROUP_ES_FOR` (final review) / `CASE_GROUP_EN_FOR` (v10.41.1), `caseDefaultTab` / `CASE_TAB_OUT`, `LIB_UI.case.tab`, `CASE_LIST_PAGE` (6) / `CASE_LIST_PAGE_PHONE` (4), `libNarrow`; `caseGroupList().star` (the every-theme sides)
+- The conference (v10.41): `caseConfBuild`, `CASE_CONF`, `CASE_CONF_SRC`, `caseDistrict()`, `caseConfOf()` (registration's conference; `pa`), `CASE_PLAN_ID` / `casePlanItem()`, the ask fields `caseConfAskHTML` / `caseConfAskWire` / `caseConfRebuild`
 - The church remembered: `homeEnsure()` → `run(getGeo,{quiet:true})` → `homeAfterRun()`; `homeLine()`, `HOME_ST`
-- Scripture and the place: `CASE_VERSES` (60) / `CASE_EGW` / `CASE_VERSE_PLAN` (= `tests/case-quotes.json`), `CASE_VERSE_HOME` (each group's slides, in order of preference), `caseVersePlan()`, `casePlaceBuild()` (partners: `CASE_PLACE_CAT`, `CASE_PLACE_KIND`, relevance then distance), `casePlaceArrived()`
+- Scripture and the place: `CASE_VERSES` (113; `CASE_VERSE_BASE` 60 = the v10.40 set every community deck still draws on, `CASE_VERSE_SETS`) / `CASE_EGW` (11) / `CASE_VERSE_PLAN` + `CASE_VERSE_PLANS` {inreach, conference} (= `tests/case-quotes.json`), `CASE_VERSE_HOME` (each group's slides, in order of preference), `caseVersePlan()`, `casePlaceBuild()` (partners: `CASE_PLACE_CAT`, `CASE_PLACE_KIND`, relevance then distance), the slide's budget `CASE_PLACE_LAYOUTS` / `CASE_PLACE_ORDER` / `CASE_PLACE_MAX` (v10.41.1 fix 4: `nameLineFact`), `casePlaceArrived()`
 - Who already serves (survey + place slide): `HELP_CATS` / `HELP_ES` (12 groups), `helpCatOf(tags)` (one classifier, most specific first), `fetchHelp()` (one Overpass request, 3 miles, 15 s); Ellen White outside the slides: `EGW` / `EGW_ES` / `egwHTML(k)`
 - Leave-behind: `caseHandout()` → `casePdfDoc()`; live: `caseOpenPresenter`, `#watch=` (`watchRender`), `present.mjs`
 
 **Idea Library** (v10.40.0; block "THE IDEA LIBRARY" beside `uCatalog`)
 - Data: `LIB` (`libLoadIndex`, `libLoadTheme`, `libLoadWords`; `/ideas/`, generated from `tools/ideas-src`), `libAdopt` (index rows → objects)
-- `libFold` / `libCore` (the query and every synonym folded alike), `libSearch(q)` (SCHEMA.md "Search"), `libThemeQuery` + `libQueryMatch` (built-ins by name for a theme query), `libRank` (words mode: themes covered, then words, then score; home first, variety), `libFilter`, `libJump` (the line under the box), `libRenew` (a kept index from an earlier deploy)
+- `libFold` / `libCore` (the query and every synonym folded alike), `libSearch(q)` (SCHEMA.md "Search"), `libThemeQuery` + `libQueryMatch` (built-ins by name for a theme query), `libRank` (words mode: themes covered, then words, then score; home first, variety), `libRankIn` (v10.41 review: an every-theme "For God's people" side by church fit), `libFilter`, `libJump` (the line under the box), `libRenew` (a kept index from an earlier deploy)
 - `libToCatalog(raw)` / `libLite(row)` / `libCatalog(ch)` / `libSave(raw)`; `libWhyText` + `LIB_TAG_EV` ("Why here"; the ten-year tags never use RULES, `changing-any`); `x.seats` (`LIB_SEAT_WORDS`)
-- In Make the Case: `caseChildOk(x)`, `CASE_CHILD_VERSES`, `CASE_LIB_THEME_VERSE` (a library idea's theme verses, tag `lib:<theme>` in `caseVersePlan`)
-- Screens: `libMount('survey'|'case')` into `#u-lib` / `#cs-lib`, `libDrawTiles`, `libDrawList`, `libCardHTML`, `libWire`; `LIB_UI`
-- AI: `libAiMore` → advise.mjs `mode:'topic'` (`libCheckIdea`, `TOPIC_SYSTEM` there), `libFreshAccept`, `uChurch().fresh[topic]`
+- In Make the Case: `caseChildOk(x,gid)` (final review: `CASE_CHILD_THEMES`, no census tag; v10.41.1: the built-ins by `caseBuiltinKids`, `CASE_CHILD_TAGS`, `CASE_CHILD_BUILTINS`), `CASE_CHILD_VERSES`, `CASE_LIB_THEME_VERSE` (a library idea's theme verses, tag `lib:<theme>` in `caseVersePlan`)
+- Screens: `libMount('survey'|'case')` into `#u-lib` / `#cs-lib`, `libDrawTiles` (grouped under the two headings), `libDrawList` (every list in two sections, `.lib-sec`), `libCardHTML`, `libSigCardHTML` (a built-in as a library card), `libWire`; `LIB_UI`
+- Reach (v10.41): `libReach` / `libThemeReach` (the index's `reach`; a theme's `inside` / `reach`), `libIn` / `libOut`, `LIB_BUILTIN_THEMES`, `LIB_BUILTIN_REACH`, `libBuiltinsFor`, `libOrder`
+- "More ideas for {town}" (never labelled AI on screen): `libAiMore` → advise.mjs `mode:'topic'` (`libCheckIdea`, `TOPIC_SYSTEM` there), `libFreshAccept`, `uChurch().fresh[topic]`; in Make the Case one per section (topic `group:<id>:in|out`); `ideasServerNote` logs the server's words, the page shows its own sentence; unlock `aiClaimPass` (`?ideas=` / `?ai=`)
 
 **Spiritual Gifts**
 - `GIFTS` (21, 5 statements each; ES in `GIFTS_ES`), `GF_ORDER` (105 interleaved statements), `gfScores(a, obs)`, `gfProfile()`, `gfFlags()`
@@ -534,14 +818,21 @@ rules), `WRITERS.md` the quality bar, the pastor's own words, the children's rul
 children", no school gates or playgrounds, screened adults and the two-adult rule) and "go where people are" (not the
 church porch; cards, prayer walking, social media done as a neighbour).
 1. Edit or add ideas in `tools/ideas-src/themes/<theme>.json` (ids `<theme>-<slug>`, never a built-in id). A new theme
-   also needs an entry in `themes.json` (id, EN/ES names, scope, `not`, synonyms, tags) and 50+ ideas.
+   also needs an entry in `themes.json` (id, EN/ES names, scope, `not`, synonyms, tags; `inside: true` for a theme about
+   the church's own life), 50+ ideas, and a colour of its kind in `tools/build-ideas.mjs` `HUE`.
+   **Reach (v10.41):** every idea is "in" (for God's people), "out" (for the community, guests included) or "both" — its
+   own `reach` field, else its line in `tools/ideas-src/reach.json`, else its theme's default (inside → "in"). The build
+   ships the resolved value for every idea; `tests/v41-integration.test.js` holds every row to that rule. A new idea in an
+   outward theme that is really for the church family must say `"reach": "in"` (or "both").
 2. `cd tools/ideas-src && node validate.mjs themes/<theme>.json` (read the REVIEW lines too), then
    `node validate.mjs --all` (unique ids, no near-duplicate names across themes, unambiguous synonyms).
    (The review pass kept the writers' working copy in the build session's scratchpad `ideas/` and packaged it with
    `v41/fix-work/package.sh`: vocab refresh, selftest, `--all`, copy into `tools/ideas-src`, build. Editing
    `tools/ideas-src` directly and running steps 2-4 is the same thing.)
 3. From the repo root: `node tools/build-ideas.mjs --src tools/ideas-src` — it writes nothing if anything fails.
-4. `npm test`: `idea-library-build.test.mjs` rebuilds from `tools/ideas-src` and fails if `ideas/` differs by one byte;
+4. `npm test`: `idea-library-build.test.mjs` rebuilds from `tools/ideas-src` and fails if `ideas/` differs by one byte
+   (and holds `ideas/index.json` under 900 KB: it is 892 KB at 57 themes, so the next themes need the index slimmed or the
+   limit reconsidered);
    `v40-review-lib.test.js` types every synonym as a query (each must open its own theme, and only it); `v40-accuracy` holds
    every quoted verse near a reference to `scripture-bg.json` (add the passage there, fetched, before quoting it).
 5. If `profile()` tags, `U_SKILLS` or `U_FAC` change in `index.html`, refresh the validator's copy:
@@ -593,7 +884,25 @@ Don't relitigate them without a reason he'd accept.
   "…" ("..." in the gifts tables), held by `tests/v40-accuracy.test.js` against `tests/scripture-bg.json`. Add a new
   passage to that file (fetched, never typed) before quoting it.
 - **A library idea's deck speaks to its own theme** (v10.40 review): its own figures only, its theme's verse first, and never
-  children's figures or children's verses when the idea is not about children ("with the kids… it sounds weird").
+  children's figures or children's verses when the idea is not about children ("with the kids… it sounds weird"). v10.41.1: the
+  103 built-ins by the same rule (their own needs, skills and kind; "families" never counts).
+- **Make the Case is three framed steps** (his request, v10.41, the approved mockup): Who is it for? → What will you
+  propose? → Your slides; a step bar; one short line per step; nothing else to read unless he opens it.
+- **Step 1's sections each have their own colour** (his request, v10.41: "Board & officers should be a different colour"):
+  Decide gold, Ministry teams violet (four sub-headings), On Sabbath mint, The conference blue — another exception to
+  "headings stay mint", like the hub tiles and the gifts sections.
+- **No "AI" (or "IA") anywhere a person can see** (his request, v10.41: "people are scared of it"): "New idea", "Draft
+  idea", "More ideas for {town}"; `?ideas=` to unlock; `tests/no-ai-words.test.js` fails on any hit (code identifiers may
+  keep "ai"; Iowa's "IA" on the map is the only exemption).
+- **Every idea is for God's people, for the community, or both** (his request, v10.41), and every list shows the two apart;
+  an in-reach idea argues from the church family (counts only, adults only), never the Census.
+- **Step 2 is tailored to the group** (his request, v10.41: "the prayer ministry focuses on prayer"): one list from the
+  group's themes (the table in the v10.41.0 notes), the group's own cross-over ideas first, its first-listed theme next; an
+  "every theme" side leads with the themes that face its way; the two sections never open with the same card.
+- **Step 2 shows one section at a time** (v10.41 review, his "a lot of words, almost overwhelming"): a two-part switch
+  ("For God's people 153 | For our community 227"), cards of kind, title, a three-line description, facts and one "Choose
+  this"; "Why here", the fit and the steps under one small "More about this idea". The children's safeguarding line stays
+  visible on a card.
 - **Many ideas, creative and specific** (his request, v10.40): a search for a topic shows 50+ ideas, never a thin list.
   Ideas go where people are (not the church porch), use social media as a neighbour, never ask for or pray about
   people's children by name, and are data in `tools/ideas-src`, not code.
@@ -602,18 +911,20 @@ Don't relitigate them without a reason he'd accept.
 
 ## Open work, prioritised
 
-1. **Commit v10.40.0 — the whole folder, not just index.html** (`index.html`, `netlify/functions/present.mjs` and
-   `advise.mjs`, `FIREBASE-SETUP.md`, `ideas/`, `tools/` with `ideas-src/`, `tests/` including `case-quotes.json` and
-   `scripture-bg.json`, `CLAUDE.md`; never `node_modules/`). The folder is **179 files**; GitHub's web upload takes at
-   most 100 at a time, so upload `ideas/` + `tools/` (94) first and the rest (85) second, or use GitHub Desktop. Then
-   confirm the badge **v10.40.0**, `/.netlify/functions/present` → `"fn":"present-1.1"`, `"live":true`, `"fb":"ok"`,
-   `/.netlify/functions/advise` → `"fn":"advise-2.2"`, and that `https://pastorshub.org/ideas/index.json` loads. Type
-   "prayer" in the survey's "Find a ministry" (84 ideas) and open one theme. Map a church with "Use my location", reload
-   inside Make the Case (the church line names the township). Look at the survey's Community resources and a deck's
-   "Here in {town}" slide with the live Overpass (the query is larger now; time it once). On his phone: open Make the Case
-   after a reload (the church line, no address box; the departments grid), present the sample and swipe left /
-   right on a real iPhone (iOS has no `scrollend`; settle relies on touchend + 140 ms — only checked in headless
-   Chrome), and look at a real deck's "Here in {town}" slide with the live Census and Overpass.
+1. **Commit v10.41.1 — the whole folder, not just index.html** (v10.41.0 was handed over but not deployed; v10.41.1 replaces it) (`index.html`, `netlify/functions/present.mjs`,
+   `FIREBASE-SETUP.md`, `ideas/`, `tools/` with `ideas-src/` and `reach.json`, `tests/` including `case-quotes.json` and
+   `scripture-bg.json`, `CLAUDE.md`; never `node_modules/`). The folder is **218 files**; GitHub's web upload takes at
+   most 100 at a time, so upload `ideas/` (59) first, `tools/` (66) second and the rest (93) third, or use GitHub Desktop.
+   Delete from the repo any `ideas/*.json` the new build no longer makes (none expected: all 42 older files are rebuilt).
+   Then confirm the badge **v10.41.1**, `/.netlify/functions/present` → `"fn":"present-1.2"`, `"live":true`, `"fb":"ok"`,
+   and that `https://pastorshub.org/ideas/index.json` says `"hash":"f2cc1121c190"` and 3,050 ideas. On his phone: Make the
+   Case shows the three steps; tap Greeters & hospitality (both sections), Prayer ministry, Pathfinder Club; choose an idea;
+   the slides appear in step 3. Conference leaders with a Planner plan: his series first; its slides and handout. Nothing
+   says "AI" anywhere (unlock with `?ideas=`). **Not yet checked on a real iPhone, nor in the light theme.**
+   Earlier (v10.40.0) checks still worth doing live: "Use my location" then reload inside Make the Case; a deck's "Here in
+   {town}" slide with the live Census and Overpass; the sideways swipe on a real iPhone (iOS has no `scrollend`).
+   **Pennsylvania Conference evangelism subsidy requests are due 30 September** (the research found the March 2026
+   policy: up to half the cost, board support, the online form) — tell him on 29 Sep 2026.
    Done and verified live on 29 Sep 2026: v10.39.0, present-1.0 with Firebase (`live:true fb:ok`, phones follow),
    register-1.1, gifts-1.2, `TERRAIN_REG_SECRET` set (census gate on). Spark plan caps Firebase at 100
    simultaneous phones across all churches; move to Blaze with a budget alert before wider use. Email stays OFF by the pastor's choice (`GF_EMAIL_ENABLED`);
@@ -660,8 +971,8 @@ Don't relitigate them without a reason he'd accept.
    needs an access code.
 10. **Make the Case follow-ups (v10.40).** Done in part 2: the nine groups' verses, more kinds of partner, the yes
     slide's note row. Still open: no Ellen White line on board / team slides (no room beside a verse; the handout has
-    it). On the place slide a partner whose name is over 40 characters takes two rows, so a nearer long-named partner
-    can give way to a farther one (the handout lists both). Partners are ranked by relevance before distance, so the
+    it). On the place slide a partner whose name is over 40 characters (over 28 beside a figure, v10.41.1 fix 4) takes two
+    rows, so a nearer long-named partner can give way to a farther one (the handout lists both). Partners are ranked by relevance before distance, so the
     rows do not always read nearest first (deliberate). Nursing homes and assisted living count as "Senior centre or
     care"; he may want centres only. Only `EGW.faith` has Spanish in the old `EGW` table.
 11. **Idea Library follow-ups (v10.40).** Watch the first real "More ideas for {town}" run (item 2). The survey's gap
@@ -682,6 +993,30 @@ Don't relitigate them without a reason he'd accept.
     a narrow column (a long name wraps to five or six lines); the ministerial-councils note in Community resources
     draws "Churches nearby" as a heading in mid-sentence; Spanish pages still show the built-in ministry names in
     English in the survey's list (item 8).
+13. **v10.41 follow-ups (the pastor decides).** Church Manual: the app cites the 2022 edition (the SPEC's choice); the
+    21st edition (2025) is current and its pages shift by up to 7 (the research file `CHURCH-AND-CONFERENCE.md` in the build
+    session has both). Spanish slides give English Manual pages. Spanish names to confirm: "Ministerio Juvenil (JA)" (the
+    2015 Manual's term) or "Ministerio Joven"; "Ministerio de las Posibilidades" (unverified for the current edition).
+    advise.mjs error strings still say "AI" (never shown; reword with the next advise bump). The 103 built-in ministries have
+    no Spanish description: in Spanish step 2 they rank after the library's cards until they are translated. In English a
+    library idea's name keeps its capital mid-sentence ("…: Tear-off prayer flyers…"); only "A"/"An" are lowered (Spanish:
+    un/una/el/la/los/las…). Which section step 2 opens on is a table (`CASE_TAB_OUT`: the board, the business meeting, the
+    outreach and evangelism teams, the conference open on the community); he may want it otherwise. Media and Music & the arts have no in-reach ideas of their own;
+    their groups' "For God's people" come from fellowship / member-care. The `index.json` size limit (item 4 of "Adding
+    or changing ideas"). Pathfinder motto: not confirmed that it is 2 Corinthians 5:14 — no slide calls it the motto.
+14. **v10.41.1 follow-ups (the pastor decides).** Which built-ins are about children is a judgement per ministry (the table in
+    the v10.41.1 notes; one id in `CASE_CHILD_BUILTINS` or one tag changes it): the fall festival, the toy swap, the Christmas
+    toy store, the parenting series and the music academy count; the film night, the meal schedule, the clothing closet and
+    small groups in homes do not. A built-in whose own needs do not fire here still borrows the group's emphasis for its need
+    slide, as built-ins always did (the film night's board deck now leads with poverty, small groups in homes with "The median
+    age around us is 34.8"); library ideas have no need slide then. A ministry that costs nothing still shows "To start $0" and
+    "Ceiling $0" on the ask slide. English group words: five take "team" to read naturally ("the worship and music team"…),
+    two keep their names with no article ("Community Services (Dorcas)", "Possibility Ministries"). Fix 4: beside a figure
+    the "Here in" slide now names one partner whenever the first name is over 28 characters (every such board deck in the
+    survey's data); if he misses the second, one wrapped name beside a one-line one also fits (fit 0.8, measured). Character
+    counts only estimate width: two names of 28 characters or less that still wrap (in capitals, or wide letters) beside the
+    longest Spanish figure and Jeremiah 29:7 would run 10–29 px over (made-up names, measured; none in the survey's data).
+    152 Spanish slides (148 capacity, 4 motion) draw at fit 0.75, as before this release.
 
 ---
 

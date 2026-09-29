@@ -1,4 +1,4 @@
-// Terrain · Make the Case live slides server.                       present-1.1
+// Terrain · Make the Case live slides server.                       present-1.2
 //
 // The pastor presents a Make the Case slideshow; members open the same slides
 // on their own phones, by QR code or a six-character code, and (once Firebase
@@ -145,7 +145,7 @@
 // oversized value is refused (400 bad-deck, with `where`); more than 64 KB of
 // JSON is 413 too-large.
 //   {kind:'tdeck', ver:1, lang:'en'|'es', title, church,
-//    audience:{type:'board'|'team'|'congregation', group:<slug>},
+//    audience:{type:'board'|'team'|'congregation'|'conference', group:<slug>},
 //    ministry:{id:<slug>, name}|null, created:<number|short text>,
 //    slides:[1–12 slides]}
 //   Every slide has `type`, one of:
@@ -170,6 +170,10 @@
 //   present-1.1: every slide but join, verse and close may also carry
 //   verse:{text,ref} (the verse at its foot); a slide without one is stored as before, so a
 //   present-1.0 deck is kept exactly and a phone holding one draws it unchanged.
+//   present-1.2 (v10.41): audience.type may also be 'conference' (a pastor's evangelism proposal to
+//   his conference's leaders). No new slide type: its "churches we serve" slide is a place slide, its
+//   reporting and aims are risks slides, and its close quotes Scripture in the close's own quote. Every
+//   limit is as before, and a present-1.0 or 1.1 deck is stored exactly as before.
 //   Text is one line, at most 400 characters, with no markup (see NO MARKUP);
 //   a value is a finite number or text; hues are kind tokens: hardship,
 //   housing, children, people, language, acc.
@@ -177,7 +181,7 @@
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, createSign, createPrivateKey, timingSafeEqual } from 'node:crypto';
 
-const FN_VERSION = 'present-1.1';
+const FN_VERSION = 'present-1.2';
 const STORE_NAME = 'terrain-present';
 
 const MAX_BODY = 128 * 1024;               // whole request
@@ -219,6 +223,8 @@ const ANSWER_KEYS = ['lead', 'help', 'pray'];
 // The same set as the page's CASE_YOUTH_GROUPS (a church-school deck is shown
 // where pupils may be in the room).
 const YOUTH_GROUPS = new Set(['youth', 'pathfinders', 'adventurers', 'school']);
+// The kinds of slideshow (present-1.2 adds the conference proposal).
+const AUDIENCE_TYPES = new Set(['board', 'team', 'congregation', 'conference']);
 // The start of an HTML tag (see NO MARKUP).
 const RE_TAG = /<[A-Za-z!/?]/;
 
@@ -844,7 +850,7 @@ function cleanDeck(raw, { room, code, base }) {
   if (lang !== 'en' && lang !== 'es') throw bad('lang');
   const au = dObj(own(raw, 'audience'), 'audience');
   const type = own(au, 'type');
-  if (type !== 'board' && type !== 'team' && type !== 'congregation') throw bad('audience.type');
+  if (!AUDIENCE_TYPES.has(type)) throw bad('audience.type');
   const group = own(au, 'group');
   if (typeof group !== 'string' || !RE_SLUG.test(group)) throw bad('audience.group');
   let ministry = null;

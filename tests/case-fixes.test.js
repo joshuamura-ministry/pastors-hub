@@ -55,7 +55,9 @@ function page(lang){
     const slides=()=>[...body().querySelectorAll('.td-slide')];
     const ask=()=>slides().find(s=>s.classList.contains('td-t-ask')), cap=()=>slides().find(s=>s.classList.contains('td-t-capacity'));
     c('the ask slide’s money in dollars: $75 to start, $125 ceiling, never $0k or $3k', [/\$75/.test(ask().textContent),/Ceiling\s*\$125/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
-    c('…and what is available, to the dollar ($2,500 start-up; $2,425 and $425 a month left)', [/\$75\s*of \$2,500/.test(cap().textContent),/\$2,425\s·\s\$425\sa\smonth/.test(ask().textContent)], [true,true]);
+    // v10.41 final review: capacity reads what we have first, then what is needed ("$75 of $2,500" read backwards to the
+    // conference's administrators as "$12,000 of $2,500"): "$2,500 free · $75 needed". The intent is unchanged: to the dollar.
+    c('…and what is available, to the dollar ($2,500 start-up; $2,425 and $425 a month left)', [/\$2,500\s*free · \$75\s*needed/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$2,425\s·\s\$425\sa\smonth/.test(ask().textContent)], [true,true]);
 
     console.log('\n-- the old proposal is not editable --');
     c('nothing in Make the Case is contenteditable (tapping it opened the phone keyboard)', [body().querySelectorAll('[contenteditable]').length,[...body().querySelectorAll('*')].some(e=>e.isContentEditable===true)], [0,false]);

@@ -267,7 +267,10 @@ const txt=el=>el?el.textContent.replace(/ /g,' '):null;
     const S=[...h.querySelectorAll('section')];
     c('limits: motion ≤ 5 rows, ask ≤ 7, risks ≤ 6, trio 3, roles ≤ 4, capacity ≤ 4, timeline 3',
       [S[0].querySelectorAll('.td-lrow').length,S[1].querySelectorAll('.td-lrow').length,S[2].querySelectorAll('li').length,S[3].querySelectorAll('.td-tcard').length,S[4].querySelectorAll('.td-role').length,S[5].querySelectorAll('.td-crow').length,S[8].querySelectorAll('li').length],[5,7,6,3,4,4,3]);
-    c('capacity: "$125 of $2,500", "50 h of 250 h", short row amber', [txt(S[5].querySelectorAll('.td-cfig')[0]),txt(S[5].querySelectorAll('.td-cfig')[1]),S[5].querySelectorAll('.td-crow')[2].classList.contains('gap')], ['$125 of $2,500','50 h of 250 h',true]);
+    // v10.41 final review: what we have first, then what is needed, the same way in every deck ("Leaders 17 of 7" and
+    // "Series budget $12,000 of $2,500" read backwards to the conference's administrators): "$2,500 free · $125 needed",
+    // and a short row "5 of the 8 needed"
+    c('capacity: "$2,500 free · $125 needed", "250 h free · 50 h needed", short row "5 of the 8 needed", amber', [0,1,2].map(i=>txt(S[5].querySelectorAll('.td-cfig')[i])+' '+txt(S[5].querySelectorAll('.td-cneed')[i])).concat([S[5].querySelectorAll('.td-crow')[2].classList.contains('gap')]).map(v=>typeof v==='string'?v.replace(/\u00a0/g,' '):v), ['$2,500 free · $125 needed','250 h free · 50 h needed','5 of the 8 needed',true]);
     c('capacity: gaps listed under "Still to settle"', txt(S[5].querySelector('.td-note.warn')), 'Still to settleShort by 3 volunteers');
     c('stat: not significant → "Similar to the county", with the margin', [txt(S[6].querySelector('.td-vchip')),txt(S[6].querySelector('.td-moe')),S[6].querySelector('.td-verdict.sig')], ['Similar to the county','±4 pts',null]);
     c('stat: significant and lower → "Lower than the county"', txt(S[7].querySelector('.td-vchip')), 'Lower than the county');
