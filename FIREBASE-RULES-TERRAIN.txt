@@ -1,0 +1,156 @@
+================================================================
+FIREBASE RULES TO PASTE   (project: terrain-live)
+For Terrain v10.39.0 - Make the Case, phones follow the presenter
+Paste part 1, then run the six checks in part 2.
+Step-by-step setup: FIREBASE-SETUP.md
+================================================================
+
+WHAT THESE RULES DO, IN PLAIN WORDS
+  - No phone or browser can write anything to this database, ever.
+    Only Terrain's own Netlify function (present.mjs) moves the slide
+    pointer. It uses the Database secret (or the service-account key
+    file), and that key skips these rules entirely.
+  - Anyone who has one room's link (the 22-character id inside the QR
+    code) can read that one room: which slide the presenter is on.
+    That is all a room holds, about 100 bytes: slide number, deck
+    version, live or ended, and a time. No names, no answers, no keys.
+  - Nobody can list the rooms or read the whole database.
+
+----------------------------------------------------------------
+1) REALTIME DATABASE RULES
+   Firebase console -> Databases & Storage (older screens: Build)
+   -> Realtime Database -> Rules tab
+   Click in the editor, select all (Cmd+A), delete, paste everything
+   from the first { to the last }, then press Publish.
+----------------------------------------------------------------
+
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "live": {
+      "$room": {
+        ".read": "$room.length === 22",
+        ".write": false
+      }
+    }
+  }
+}
+
+  (The ".write": false inside the room changes nothing, because the
+  top-level false already shuts all writing. It is there to say so.)
+
+----------------------------------------------------------------
+2) CHECK IT WORKED - Rules Playground (5 minutes, no code)
+   Same Rules tab -> "Rules Playground" button (right-hand side)
+----------------------------------------------------------------
+  For each check: choose the Simulation type, type the Location, type
+  the Data if there is one, set Authenticated as shown, press Run.
+  The result appears as a banner at the top of the rules. You want the
+  result in brackets.
+
+  The long room id below is 22 capital A's. Copy it from here rather
+  than counting. Check b) has 21, one short.
+
+  a) read  /live/AAAAAAAAAAAAAAAAAAAAAA               Authenticated OFF  [Allowed]
+     A phone with the link can see which slide you are on.
+
+  b) read  /live/AAAAAAAAAAAAAAAAAAAAA                Authenticated OFF  [Denied]
+     A made-up or shortened id gets nothing.
+
+  c) read  /live                                      Authenticated OFF  [Denied]
+     Nobody can list the rooms.
+
+  d) read  /                                          Authenticated OFF  [Denied]
+     Nobody can read the whole database.
+
+  e) set   /live/AAAAAAAAAAAAAAAAAAAAAA/i   Data: 3   Authenticated OFF  [Denied]
+     A phone cannot move the slides.
+
+  f) set   /live/AAAAAAAAAAAAAAAAAAAAAA/i   Data: 3   Authenticated ON   [Denied]
+     (Provider: any, e.g. Google or Anonymous. UID: test-user)
+     Even a signed-in account cannot move the slides.
+
+  If any result differs from the brackets, stop. Go back to the Rules
+  tab, select all, delete, paste part 1 again, Publish, and run the
+  checks again. If it still differs, send Claude a screenshot of that
+  check (the screenshot is safe: the rules hold no secret).
+
+----------------------------------------------------------------
+3) THE CASCADE WARNING - read this before ever changing these rules
+----------------------------------------------------------------
+  Firebase reads rules from the top down, and a YES cannot be taken
+  back lower down.
+
+  - Once any level allows ".read" or ".write", everything beneath it
+    is allowed too. A "false" further down is simply ignored.
+    So never add a ".write" at "live" or at "$room" (for example "so
+    the presenter can write") and trust a "false" underneath to guard
+    anything. It will not. The presenter needs no write rule at all:
+    slide moves go through Netlify, which uses the secret.
+
+  - Everything inside a room can be read by whoever has that room's
+    link. Never store a key, a join code, a name or an "I'm in" answer
+    under live/. Those stay in Netlify Blobs, where only the function
+    can reach them.
+
+  - ".validate" rules only check the shape of data being written.
+    They never let anyone in, and they never keep anyone out of
+    reading.
+
+  - Rules are not filters. Allowing each room does not allow the
+    list of rooms. That is why check c) is Denied, and it must stay
+    Denied.
+
+  This is the same trap that caught Slide Preach's meta/ rules before
+  v59.7. These rules avoid it by allowing no writes anywhere.
+
+----------------------------------------------------------------
+4) THE DATABASE SECRET IS A MASTER KEY
+----------------------------------------------------------------
+  - The Database secret (or the service-account key file, if you used
+    that instead) opens the whole terrain-live database and skips every
+    rule above. It goes in ONE place: Netlify -> Project configuration
+    -> Environment variables -> PRESENT_FB_SECRET.
+    Never in the repository (it is public), an email, a chat message,
+    a screenshot, or this file.
+
+  - If it ever leaks: Firebase -> Project settings -> Service accounts
+    -> Database secrets -> Add secret. Put the new secret in Netlify,
+    redeploy, then delete the old secret. Add the new one first, so
+    the slides keep following while you switch.
+    (Key file instead: delete that key in Google Cloud -> IAM & Admin
+    -> Service accounts -> the firebase-adminsdk account -> Keys, then
+    make a new key and put it in Netlify.)
+
+  - This is why Terrain has its own Firebase project. The secret opens
+    terrain-live only, never Slide Preach (voice-preach) or your
+    ministry site (joshuamura).
+
+----------------------------------------------------------------
+5) PLAN
+----------------------------------------------------------------
+  The free Spark plan allows 100 phones following at once, counted
+  across every room of every church presenting with Terrain at that
+  moment. A phone past that cannot open the live stream; it asks
+  Terrain for the slide every 3 seconds instead (answered from
+  Netlify's cache, so a room full of phones costs about one call every
+  2 seconds), and is expected to still follow, a few seconds behind the
+  presenter. (Not yet tested against a live database.)
+  Once more than one church may present in the same hour, move
+  terrain-live to the Blaze plan and set a budget alert of about $5:
+  at this size it costs cents a month, and it lifts the limit to
+  200,000 phones. It needs a payment card on the Google account, so it
+  is your decision. Until then, stay on Spark and leave billing off.
+
+----------------------------------------------------------------
+6) HOW TO SEE THAT TERRAIN CAN USE THE DATABASE
+----------------------------------------------------------------
+  Open  pastorshub.org/.netlify/functions/present  in a browser.
+  "live":true and "fb":"ok" mean Terrain reached the database with
+  the key just now (it checks at most once a minute).
+    "fb":"unset"        a setting is missing, misspelled, or the
+                        address is not a Firebase database address
+    "fb":"bad-key"      Firebase refused the key: copy it again
+    "fb":"unreachable"  Firebase did not answer; wait a minute
+  Nothing else is shown: never the key, never the address with it.

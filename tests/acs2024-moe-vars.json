@@ -1,0 +1,402 @@
+{
+ "source": "https://api.census.gov/data/2024/acs/acs5/variables.json (each _M id is listed in the attributes of its _E twin)",
+ "fetched": "2026-09-28",
+ "count": 79,
+ "variables": {
+  "B09001_001M": {
+   "estimate": "B09001_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Population Under 18 Years by Age"
+  },
+  "B01003_001M": {
+   "estimate": "B01003_001E",
+   "label": "Estimate!!Total",
+   "concept": "Total Population"
+  },
+  "B17001_002M": {
+   "estimate": "B17001_002E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_001M": {
+   "estimate": "B17001_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_004M": {
+   "estimate": "B17001_004E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!Under 5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_005M": {
+   "estimate": "B17001_005E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_006M": {
+   "estimate": "B17001_006E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!6 to 11 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_007M": {
+   "estimate": "B17001_007E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!12 to 14 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_008M": {
+   "estimate": "B17001_008E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!15 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_009M": {
+   "estimate": "B17001_009E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Male:!!16 and 17 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_018M": {
+   "estimate": "B17001_018E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!Under 5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_019M": {
+   "estimate": "B17001_019E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_020M": {
+   "estimate": "B17001_020E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!6 to 11 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_021M": {
+   "estimate": "B17001_021E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!12 to 14 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_022M": {
+   "estimate": "B17001_022E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!15 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_023M": {
+   "estimate": "B17001_023E",
+   "label": "Estimate!!Total:!!Income in the past 12 months below poverty level:!!Female:!!16 and 17 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_033M": {
+   "estimate": "B17001_033E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!Under 5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_034M": {
+   "estimate": "B17001_034E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_035M": {
+   "estimate": "B17001_035E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!6 to 11 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_036M": {
+   "estimate": "B17001_036E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!12 to 14 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_037M": {
+   "estimate": "B17001_037E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!15 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_038M": {
+   "estimate": "B17001_038E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Male:!!16 and 17 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_047M": {
+   "estimate": "B17001_047E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!Under 5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_048M": {
+   "estimate": "B17001_048E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!5 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_049M": {
+   "estimate": "B17001_049E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!6 to 11 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_050M": {
+   "estimate": "B17001_050E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!12 to 14 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_051M": {
+   "estimate": "B17001_051E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!15 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B17001_052M": {
+   "estimate": "B17001_052E",
+   "label": "Estimate!!Total:!!Income in the past 12 months at or above poverty level:!!Female:!!16 and 17 years",
+   "concept": "Poverty Status in the Past 12 Months by Sex by Age"
+  },
+  "B22010_002M": {
+   "estimate": "B22010_002E",
+   "label": "Estimate!!Total:!!Household received Food Stamps/SNAP in the past 12 months:",
+   "concept": "Receipt of Food Stamps/SNAP in the Past 12 Months by Disability Status for Households"
+  },
+  "B22010_001M": {
+   "estimate": "B22010_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Receipt of Food Stamps/SNAP in the Past 12 Months by Disability Status for Households"
+  },
+  "B27010_017M": {
+   "estimate": "B27010_017E",
+   "label": "Estimate!!Total:!!Under 19 years:!!No health insurance coverage",
+   "concept": "Types of Health Insurance Coverage by Age"
+  },
+  "B27010_033M": {
+   "estimate": "B27010_033E",
+   "label": "Estimate!!Total:!!19 to 34 years:!!No health insurance coverage",
+   "concept": "Types of Health Insurance Coverage by Age"
+  },
+  "B27010_050M": {
+   "estimate": "B27010_050E",
+   "label": "Estimate!!Total:!!35 to 64 years:!!No health insurance coverage",
+   "concept": "Types of Health Insurance Coverage by Age"
+  },
+  "B27010_066M": {
+   "estimate": "B27010_066E",
+   "label": "Estimate!!Total:!!65 years and over:!!No health insurance coverage",
+   "concept": "Types of Health Insurance Coverage by Age"
+  },
+  "B27010_001M": {
+   "estimate": "B27010_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Types of Health Insurance Coverage by Age"
+  },
+  "B25003_003M": {
+   "estimate": "B25003_003E",
+   "label": "Estimate!!Total:!!Renter occupied",
+   "concept": "Tenure"
+  },
+  "B25003_001M": {
+   "estimate": "B25003_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Tenure"
+  },
+  "B25070_010M": {
+   "estimate": "B25070_010E",
+   "label": "Estimate!!Total:!!50.0 percent or more",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25070_001M": {
+   "estimate": "B25070_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25070_011M": {
+   "estimate": "B25070_011E",
+   "label": "Estimate!!Total:!!Not computed",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25070_007M": {
+   "estimate": "B25070_007E",
+   "label": "Estimate!!Total:!!30.0 to 34.9 percent",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25070_008M": {
+   "estimate": "B25070_008E",
+   "label": "Estimate!!Total:!!35.0 to 39.9 percent",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25070_009M": {
+   "estimate": "B25070_009E",
+   "label": "Estimate!!Total:!!40.0 to 49.9 percent",
+   "concept": "Gross Rent as a Percentage of Household Income in the Past 12 Months"
+  },
+  "B25014_005M": {
+   "estimate": "B25014_005E",
+   "label": "Estimate!!Total:!!Owner occupied:!!1.01 to 1.50 occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_006M": {
+   "estimate": "B25014_006E",
+   "label": "Estimate!!Total:!!Owner occupied:!!1.51 to 2.00 occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_007M": {
+   "estimate": "B25014_007E",
+   "label": "Estimate!!Total:!!Owner occupied:!!2.01 or more occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_011M": {
+   "estimate": "B25014_011E",
+   "label": "Estimate!!Total:!!Renter occupied:!!1.01 to 1.50 occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_012M": {
+   "estimate": "B25014_012E",
+   "label": "Estimate!!Total:!!Renter occupied:!!1.51 to 2.00 occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_013M": {
+   "estimate": "B25014_013E",
+   "label": "Estimate!!Total:!!Renter occupied:!!2.01 or more occupants per room",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25014_001M": {
+   "estimate": "B25014_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Tenure by Occupants per Room"
+  },
+  "B25044_003M": {
+   "estimate": "B25044_003E",
+   "label": "Estimate!!Total:!!Owner occupied:!!No vehicle available",
+   "concept": "Tenure by Vehicles Available"
+  },
+  "B25044_010M": {
+   "estimate": "B25044_010E",
+   "label": "Estimate!!Total:!!Renter occupied:!!No vehicle available",
+   "concept": "Tenure by Vehicles Available"
+  },
+  "B25044_001M": {
+   "estimate": "B25044_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Tenure by Vehicles Available"
+  },
+  "B11003_010M": {
+   "estimate": "B11003_010E",
+   "label": "Estimate!!Total:!!Other family:!!Male householder, no spouse present:!!With own children of the householder under 18 years:",
+   "concept": "Family Type by Presence and Age of Own Children Under 18 Years"
+  },
+  "B11003_016M": {
+   "estimate": "B11003_016E",
+   "label": "Estimate!!Total:!!Other family:!!Female householder, no spouse present:!!With own children of the householder under 18 years:",
+   "concept": "Family Type by Presence and Age of Own Children Under 18 Years"
+  },
+  "B11003_003M": {
+   "estimate": "B11003_003E",
+   "label": "Estimate!!Total:!!Married-couple family:!!With own children of the householder under 18 years:",
+   "concept": "Family Type by Presence and Age of Own Children Under 18 Years"
+  },
+  "B11010_005M": {
+   "estimate": "B11010_005E",
+   "label": "Estimate!!Total:!!Male householder:!!Living alone:!!Householder 65 years and over",
+   "concept": "Nonfamily Households by Sex of Householder by Living Alone by Age of Householder"
+  },
+  "B11010_012M": {
+   "estimate": "B11010_012E",
+   "label": "Estimate!!Total:!!Female householder:!!Living alone:!!Householder 65 years and over",
+   "concept": "Nonfamily Households by Sex of Householder by Living Alone by Age of Householder"
+  },
+  "B05002_013M": {
+   "estimate": "B05002_013E",
+   "label": "Estimate!!Total:!!Foreign-born:",
+   "concept": "Place of Birth by Nativity and Citizenship Status"
+  },
+  "B05002_001M": {
+   "estimate": "B05002_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Place of Birth by Nativity and Citizenship Status"
+  },
+  "C16002_004M": {
+   "estimate": "C16002_004E",
+   "label": "Estimate!!Total:!!Spanish:!!Limited English speaking household",
+   "concept": "Household Language by Household Limited English Speaking Status"
+  },
+  "C16002_007M": {
+   "estimate": "C16002_007E",
+   "label": "Estimate!!Total:!!Other Indo-European languages:!!Limited English speaking household",
+   "concept": "Household Language by Household Limited English Speaking Status"
+  },
+  "C16002_010M": {
+   "estimate": "C16002_010E",
+   "label": "Estimate!!Total:!!Asian and Pacific Island languages:!!Limited English speaking household",
+   "concept": "Household Language by Household Limited English Speaking Status"
+  },
+  "C16002_013M": {
+   "estimate": "C16002_013E",
+   "label": "Estimate!!Total:!!Other languages:!!Limited English speaking household",
+   "concept": "Household Language by Household Limited English Speaking Status"
+  },
+  "C16002_001M": {
+   "estimate": "C16002_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Household Language by Household Limited English Speaking Status"
+  },
+  "B23025_005M": {
+   "estimate": "B23025_005E",
+   "label": "Estimate!!Total:!!In labor force:!!Civilian labor force:!!Unemployed",
+   "concept": "Employment Status for the Population 16 Years and Over"
+  },
+  "B23025_003M": {
+   "estimate": "B23025_003E",
+   "label": "Estimate!!Total:!!In labor force:!!Civilian labor force:",
+   "concept": "Employment Status for the Population 16 Years and Over"
+  },
+  "B19001_002M": {
+   "estimate": "B19001_002E",
+   "label": "Estimate!!Total:!!Less than $10,000",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_003M": {
+   "estimate": "B19001_003E",
+   "label": "Estimate!!Total:!!$10,000 to $14,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_004M": {
+   "estimate": "B19001_004E",
+   "label": "Estimate!!Total:!!$15,000 to $19,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_005M": {
+   "estimate": "B19001_005E",
+   "label": "Estimate!!Total:!!$20,000 to $24,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_006M": {
+   "estimate": "B19001_006E",
+   "label": "Estimate!!Total:!!$25,000 to $29,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_007M": {
+   "estimate": "B19001_007E",
+   "label": "Estimate!!Total:!!$30,000 to $34,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_001M": {
+   "estimate": "B19001_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_016M": {
+   "estimate": "B19001_016E",
+   "label": "Estimate!!Total:!!$150,000 to $199,999",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B19001_017M": {
+   "estimate": "B19001_017E",
+   "label": "Estimate!!Total:!!$200,000 or more",
+   "concept": "Household Income in the Past 12 Months (in 2024 Inflation-Adjusted Dollars)"
+  },
+  "B21001_002M": {
+   "estimate": "B21001_002E",
+   "label": "Estimate!!Total:!!Veteran",
+   "concept": "Sex by Age by Veteran Status for the Civilian Population 18 Years and Over"
+  },
+  "B21001_001M": {
+   "estimate": "B21001_001E",
+   "label": "Estimate!!Total:",
+   "concept": "Sex by Age by Veteran Status for the Civilian Population 18 Years and Over"
+  },
+  "B10002_002M": {
+   "estimate": "B10002_002E",
+   "label": "Estimate!!Total:!!Grandparent householder responsible for own grandchildren under 18 years:",
+   "concept": "Grandchildren Under 18 Years Living With a Grandparent Householder by Grandparent Responsibility and Presence of Parent"
+  }
+ }
+}
