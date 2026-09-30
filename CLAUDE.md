@@ -20,7 +20,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 71 suites, 5588 assertions, all green at v10.41.1 (about 6 minutes).
+   `npm test`. 86 suites, 7,596 assertions, all green at v10.42.0 (presenter + timing parts, then part 3: the focus, locked phones and the handout on them, decisions, Gifts first, the survey-to-Make-the-Case flow, then the fixes after review; about 10 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -67,17 +67,17 @@ tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the write
 tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the ideas, EN + ES), themes.json (57 themes, synonyms),
                                reach.json (in / out / both for the 2,249 ideas written before `reach` existed),
                                vocab.json, validate.mjs, selftest.mjs, examples.json, SCHEMA.md (fields, search), WRITERS.md (quality bar)
-netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.2, Netlify Blobs)
+netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.3: 200 results an hour from one address; Netlify Blobs)
 netlify/functions/gifts-sweep.mjs  daily scheduled purge of expired gifts results
 netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.1
-netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
-netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms
+netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.4: his handout and the proposal to vote on as PDFs for phones, op putpdf / GET op=pdf, the `how` slide, the gifts deck; 1.3: how phones move, `mode` follow|free, and `pdf`; 1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
+netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms and their PDFs (present-sweep-1.1)
 FIREBASE-RULES-TERRAIN.txt     rules for the separate Firebase project `terrain-live` (no client writes)
 FIREBASE-SETUP.md              click-by-click setup of that project for the pastor
 README.md                      (in the GitHub repo; not part of this hand-over folder)
 CLAUDE.md                      this file
 package.json                   @netlify/blobs (functions); jsdom + jspdf (tests)
-tests/                         71 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
+tests/                         86 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
@@ -114,9 +114,9 @@ values are never in the repo):
 
 | | Live on pastorshub.org (29 Sep 2026) | Handed over |
 |---|---|---|
-| `index.html` | **v10.40.0** (commit 43306de) | **v10.41.1** (v10.41.0 and three follow-ups) — commit the whole folder (see Open work 1) |
-| `present.mjs` | **present-1.1** (with v10.40.0) | **present-1.2** (`conference` audience type; no new slide type; every limit and every older deck unchanged) |
-| `register.mjs` / `gifts.mjs` | **register-1.1** / **gifts-1.2**, census registration gate on | same |
+| `index.html` | **v10.41.1** (29 Sep 2026) | **v10.42.0** (phones locked while he presents; his handout and the proposal to vote on on phones; timing options instead of dictated dates; part 3: the focus — a goal, one arc, the relevance rule, the Proposal to vote on, Record what we decided, Gifts first; section F: the survey chooses, Make the Case wins support) — commit the folder (see Open work 1) |
+| `present.mjs` | **present-1.2** (with v10.41.1) | **present-1.4** (the handout and proposal PDFs for phones: op putpdf, GET op=pdf, `pv` / `qv`; the `how` slide; the gifts deck; 1.3: a room's `mode` and `pdf`; every older deck and room unchanged) |
+| `register.mjs` / `gifts.mjs` | **register-1.1** / **gifts-1.2**, census registration gate on | register-1.1 / **gifts-1.3** (200 results an hour from one address) |
 | `advise.mjs` | **advise-2.2** | same (its error strings still say "AI", but the page never shows them) |
 | `ideas/` | **2,249 ideas in 42 themes** (`e677d04959f8`) | **3,050 ideas in 57 themes**, every one with a reach (634 in · 2,163 out · 253 both), EN + ES (build hash `f2cc1121c190`), from `tools/ideas-src` |
 
@@ -162,6 +162,375 @@ fixed these, each pinned by `tests/survey-audit.test.js`:
   `SCRIPTURE_ES` (Reina-Valera Antigua 1909, public domain, text from Bible
   Gateway "RVA"), `briefES()` rewritten to mirror `brief()`, `L(en,es)` for
   strings with figures in them, ~125 new `ES` keys, 18 dead keys removed.
+
+**v10.42.0 (29 Sep 2026) — the presenter controls the phones, and the proposal on phones.** The pastor, after presenting
+v10.41.1 live (voice-to-text): *"It's pretty good, but I'm able to change the slides on my phone and I don't want that. I
+want only the presenter to have the ability to control the slides. We could do both: the presenter can choose — do I want
+them to be able to do the slides whenever they want, or do they have to follow my slides. And at the end, on the phone or
+whatever device, they should be able to download the proposal right there."* Record: the build session's scratchpad
+`v43/BUILD.md`. Pinned by the new `tests/v42-phones.test.js` (86), `tests/v42-handout.test.js` (282) and
+`tests/present-phones.test.mjs` (49), and the updated `present-client`, `present-function`, `present-review39`,
+`firebase-rules` and `v41-1`, each with a comment.
+- *His choice, in the setup* (Present live and Share link & QR share one setup, `prSetup`): **On phones** · "Phones follow my
+  slides" (the default) / "Members can swipe through the slides", and "Offer the PDF on phones" (on); Spanish "Los teléfonos
+  siguen mis diapositivas" / "Los miembros pueden pasar las diapositivas" / "Ofrecer el PDF en los teléfonos" (`PR_UI`
+  `ph*`, `prPhonesHTML`). Kept per church as his last choice (`uChurch().casePhones`, `prPhonesGet` / `prPhonesSave`; the
+  sample and a control device never write it). A link already open shows its own way; one opened before v10.42 shows his
+  choice and is brought to it on Start (`prPhonesSync` → op mode).
+- *Changeable without restarting:* a **Phones** button in the presenter view's strip (a phone icon; the word hides under
+  480 px) opens a sheet with the same choice; each change goes at once (op mode, with the key), becomes his last choice, and
+  says "Saved. Phones change within a few seconds." (`prPhonesInto`, `prPhonesMark`); the same choice sits on the link
+  panel. After the end the sheet keeps the PDF switch alone, and closing it brings the end card back.
+- *Follow mode on a phone* (`tdeckRender` `lock` / `ctl.setLock` / `ctl.locked`, `watchLocked`, `watchPhonesApply`): the
+  phone shows exactly the presenter's slide; a touch swipe, a drag, the wheel, keys, `ctl.go` and the dots do nothing (the
+  row is `overflow-x:hidden` while locked, and the renderer refuses every own move); no pill, no "Back to live". The
+  footer says quietly where the church's name was: "Following the presenter" / "Siguiendo al presentador" ("Waiting for the
+  presenter" before he starts). Late joiners land on his slide; a failed stream falls back to op state and stays in step; a
+  stream silent for 75 s is left for op state (`watchWatchdog`, follow only); 20 s of failed asks unlocks the phone with
+  "No connection. Swipe to move through the slides." until it is in touch again. An "I'm in" answer being written holds its
+  slide (`holdHere`) until it is sent, then the phone goes to his slide; while held the phone shows "You: 8 · Presenter: 9 |
+  Back to live" in place of the footer line, and a hold with nothing touched for a minute lets go by itself (fix after
+  verification, below). End lifts the lock: members may look back.
+- *Swipe mode* is the behaviour before v10.42, unchanged (swipe away, the pill, "Back to live"). A room with no mode (older)
+  is swipe with the PDF on. Without live follow set up, phones swipe whatever the choice (nothing to follow).
+- *The proposal on phones* ("Download the proposal (PDF)" / "Descargar la propuesta (PDF)", `CASE_COPY.viewer.downloadPdf`,
+  was "the handout"): at the presenter's last slide (it stays once seen) and after End, in both ways, unless he switched it
+  off (after End too; a phone hears that on its once-a-minute check). Made ahead as a link to tap (`watchPdfPrep` →
+  `casePdfMake` → a blob link with `download`: iPhone Safari, Android Chrome and a desktop all save from a tapped link); if a
+  browser cannot make one, the button makes it on the tap (`casePdf`), as before. Always in the deck's own language
+  (`casePdfDoc` now draws with `LANG` set to the handout's: a Spanish phone following an English presentation read
+  "Preparado el…" and "margen de error" in an English proposal).
+- *A member's copy is the whole proposal* (`caseHandout` from the deck alone): it now also has who it is for ("For the
+  whole church", `caseGroupFor`) and the ministry, the roles with their hours, the closing words ("To close"), every place
+  slide with its figures (the church family, a conference proposal's churches, "Here in {town}"), every risks slide (a
+  conference proposal's aims), the capacity, ability, risks and timeline slides' own headlines, the ask's sentence and the
+  older "why here" trio. Checked on six decks × EN/ES: every slide's kicker, headline and words and every verse are in it,
+  two pages, every line in its box, SAMPLE / MUESTRA on every page of the sample, never a member's name, no key, no answer.
+  The pastor's own handout (from the case model) gains none of these parts.
+- *Fixed after verification (same version):* (1) **a phone stuck on "I'm in"**: in follow mode a member who tapped an answer
+  ("Pray") and went no further stayed on that slide for the rest of the talk, still labelled "Following the presenter", with
+  no way back but sending a name or answering "No" to the age question. Now an answer holds the phone only while the member
+  is at it (touched within `TD_HOLD_IDLE_MS` = 60 s: a tap, a key, a letter, a field focused, heard by the yes slide's `act`
+  and the renderer's `holdOn`); a held phone shows the pill "You: 8 · Presenter: 9 | Back to live" (Spanish "Usted: 8 ·
+  Presentador: 9 | Seguir en vivo") and no "Following the presenter"; "Back to live" or a minute untouched takes it to his
+  slide (`unhold`, which puts a field's keyboard down only when leaving the slide), and an answer left untouched since then
+  never holds it again. The lock itself is unchanged (swipes, keys, wheel and drags still do nothing while held). Swipe mode
+  is unchanged. (2) **the phone's PDF left out lines the slides show**: the "who is able" slide's coordinator line
+  ("Coordinator: one member is ready. Names stay with the pastor."), a figure slide's count and frequency lines beside its
+  headline in the table of figures (the sample's "27 in every 100 are children"), a unit said in words ("34.8" / "years"
+  under the number; "5,480 neighbours" in the table), and the capacity slide's "Every need is covered". The "who is able"
+  line no longer reads "6 the church profile lists 6 members…" (a label that says its number is not led by it).
+  `tests/v42-handout.test.js` now renders each deck's slides and checks that every text a member's slide shows is in the
+  PDF (the slide's short "±4.1 pts" is "±4.1" and "margin of error ±4.1 points" there), with and without Spiritual Gifts
+  results (39 fails on the page before the fix); `tests/v42-phones.test.js` covers the held phone, "Back to live" and the
+  minute (7 fails before). Checked in Chrome too: the verifier's case (Pray tapped, left; presenter to 9, 3, 9), a Spanish
+  member writing a name, the minute, a keyboard up at "Back to live", and every slide's text in the PDF of six decks × EN/ES.
+- *Server, present-1.3:* the room keeps `mode` ('follow' | 'free') and `pdf` (boolean), set by op open (absent: free, PDF
+  on, what an older page gets) and changed by the new **op mode** `{room, key, mode?, pdf?}` (key-checked, POST only, 60 an
+  hour per room, not in a room's last minute, allowed after the end); op deck and op state return them (op state the
+  room's own, beside the pointer's copy); the pointer carries `{mode, pdf}` so stream phones switch at once. Phones can
+  never set them (no op a phone sends reads them). Every limit, every older deck and room unchanged.
+  `FIREBASE-SETUP.md` says present-1.3; `FIREBASE-RULES-TERRAIN.txt`'s plain words mention the two new pointer fields (the
+  rules themselves are unchanged: no client writes).
+- *Checked in headless Chrome* (the harness with the real present.mjs and a Firebase stream stand-in; presenter 1280×800,
+  two phones 390×844 as separate devices, EN and ES): follow by default; a late joiner on slide 4; eleven real attempts to
+  move the English phone (touch gestures both ways, a finger drag, → PageDown Space End Home, the wheel sideways and down, a
+  mouse drag) left it on slide 4, the Spanish phone likewise; switching to swipe mid-presentation (a swipe then showed "You:
+  4 · Presenter: 5 · Back to live") and back (both phones snapped to his slide); the last slide showed the proposal link on
+  both; both downloads captured and opened with pdf.js (2 pages, English throughout, the church, "for the whole church", the
+  verses, no name, no key); End lifted the lock (a swipe and ← moved back); a second presentation in swipe mode from the
+  start; the presenter at 390×844 in Spanish (setup, strip, sheet: no sideways overflow, nothing clipped). **Not checked on
+  a real iPhone or Android phone** (the lock uses `overflow-x:hidden` and `touch-action:pinch-zoom`; the download is a
+  tapped blob link), **nor in the light theme.**
+
+**v10.42.0 (timing part, 29 Sep 2026; merged with the presenter part above into the one v10.42.0) — Make the Case: firm on the what, flexible on the when.** The pastor, of the slides'
+"Runs 6 Oct – 18 Nov" and "Review 18 Nov · board meeting": *"it's mandating the dates, which we still have to figure out… a proposal
+should give them options; we'll have some discussion about when… they'll come back with 'I don't know if Tuesday evening is good, we
+have this going on'… I don't know how long we want to run it, but there has to be a level of authority and a solid plan… instead of
+dictating dates which might be conflicting with other things the church does."* No church calendar in Terrain (*"I don't want it to get
+too complicated"*). Built beside the presenter part (another builder) and merged; record: the build session's scratchpad `v43/T/NOTES.md`.
+Pinned by the new `tests/timing-options.test.js` (94 checks; fails on v10.41.1) and the updated `case-screens`, `case-fixes`,
+`idea-library`, `v40-integration` (the board's deck is ten slides by default), each with a comment.
+- *The setting* (`CASE_TIMING_DEFAULT`, `caseTimingOf` / `caseTimingSet` / `caseTimingKey`, `caseTimingHTML` / `caseTimingWire`): at the
+  top of step 3's edit panel, "Dates: **Suggest options** | I already know the dates" ("Fechas: Sugerir opciones | Ya sé las fechas"),
+  saved per church, ministry and group (`uChurch().caseTiming`, only "fixed" stored; not per language). The screens build with it
+  (`caseDraw3`, `caseConfRebuild`; the sample slideshow shows the default). `caseModel(…,{timing})`: 'options', or 'fixed'/none =
+  today's decks exactly (25,306 decks, their models and handouts compared with v10.41.1 byte for byte).
+- *With options* (`caseBuild`: `OPT` / `FLEX` / `PROP`, `timingM` → `model.timing`): no slide names a day of the month. The motion's rows
+  (`timingM.motionRows`): When "3 options · to agree together", Starts "{month}, after a calendar check" (`caseMonth`, the year when not
+  this year), Length "A {weeks}-week trial or a 4-week pilot" (the pilot only when longer than four weeks; not on the Sabbath deck),
+  places, ceiling and funds as before, Review "First board meeting after the trial" (team: team meeting; business meeting: business
+  meeting). A board's motion holds five rows (present.mjs): ceiling and funds share one, then When and Starts (also beside a headline
+  over 80 characters), with a short verse (`CASE_VERSE_ROOM.motionOpt` / `motionOptLong`, job `motionOpt`: `CASE_VERSE_MOTION_OPT`
+  Proverbs 16:3, 1 Corinthians 14:40). The first steps count weeks ("Week 1 · start", "After week 6 · review"); the ask slide's room
+  says "day to be agreed"; "Here in {town}" names the room without a day (`CASE_TIMING.bringRoom`); the Sabbath deck's When is
+  "Starting soon; we'll announce the day" and its close "We will report back after the trial"; "Prepared by … · September 2026".
+  Every template with {start}, {mid} or {review} has date-free words (`CASE_TIMING_ALT`, `caseTimingAlt`: risks, the treasurer's ask,
+  the questions, the wins and closes); one that has none is left out (its dates are empty), never shown with a date.
+- *"Let's decide together"* (`caseTimingOptions`, `caseDeck` `decideSlide`): an **ask** slide (rows; `part:'decide'`, which
+  `caseSlotKeys` keys as "decide:0" so the pastor's words stay on their slide; present.mjs drops the field like any unknown one) before
+  the ask on board, business-meeting and officers' decks and before "Will you try it?" on every team's; never the Sabbath deck or the
+  conference. Up to three times from the church profile (`cap.slots` in its order, a room of each needed kind free then and big enough,
+  the skilled people as `caseCheckWith`): his own time first, then those with no clash, a different weekday each; never Friday evening
+  or Saturday afternoon for an idea that does not fit the Sabbath (`CASE_SAB_SLOTS`; library `sabbath`, `CASE_SAB_BUILTINS`
+  pathfinders and come-and-see), Saturday evening said "after sunset". A clash only when Terrain knows it: a ministry of the plan
+  (`uSelected`) set to that time (Adjust → Time slot), or an evening of his Evangelism Planner series in the weeks this could run (the
+  start to a full season after). Rows: "Option 1…3" (the room when the options differ; a long name gives way to "another ministry",
+  then the room, within `CASE_TIMING_ROW_MAX` / `ROWS_MAX`), Length "4-week pilot · 6-week trial · a full season", "Check first:
+  communion Sabbath, Week of Prayer, camp meeting, holidays, school breaks"; Proverbs 15:22 at its foot (`CASE_VERSE_DECIDE`; Acts
+  15:28 when two or more times clash, `CASE_VERSE_ROOM.decide` / `decideClash`; `caseVersePlan`'s `opt.more`).
+- *The ask* (`motion.ask`): the board "Tonight we approve the plan, {coordinator} and a ceiling of {ceiling}. The team sets the day and
+  start date with the church calendar within two weeks and reports them to the board." (the coordinator he typed under Adjust, else
+  "a named coordinator"); the business meeting "Today the church votes on the plan…"; the officers their own ask and that sentence; a
+  team its own and "We'll choose the day together tonight."
+- *The handout* (`caseHandout` `H.timing`, `casePdfDocAt`): "Timing options" in the first steps' place on the front (both pages were
+  full): a box per time with its room and any clash in full ("no known clash"), "Length: …", the calendar sentence, "Agreed day and
+  start: ______", then the review ("Review at the first board meeting after the trial: continue, change or stop."). Every options
+  handout stays two pages (1,030: every built-in's board, business-meeting, two teams' and Sabbath handouts, EN and ES; about a level tighter than before). A phone's handout (the deck
+  alone) takes the ask from the last ask slide and the timing from the one before it (a team's only ask slide is the decide slide).
+- *The conference* (`caseConfBuild` `a.timing`): his Planner's dates stay, each labelled proposed ("An evangelism series in {town}:
+  proposed opening night {date}", "Proposed {date}, open to adjustment · {nights} nights", "Proposed opening night…: {months} to
+  prepare", steps "Now" / "Proposed {date}"); an idea's trial for the conference: Starts and Length, no date. His series on a board's
+  deck: "11 Sep – 16 Oct (proposed)".
+- *Checked in headless Chrome*, 360 × 640, EN and ES: every slide of 25,306 decks with options (235,764 slides: all 103 built-ins × all
+  34 groups, the Planner's series, all 3,050 library ideas × board / Community Services / congregation), with an empty plan, one
+  ministry at a time of its own, and three ministries on the weekday evenings with his series on the others: **0 overflow** of any
+  motion or decide slide (decide fit 0.8 or better; 208 motion slides draw at 0.75, most Spanish with long library names). The
+  only slides naming a day of the month are the conference's proposed dates and eight library ideas named for an observance ("…on
+  August 31", "el 4 de julio"). Screens at 390 × 844. **Not checked on a real iPhone, nor in the light theme.** Older and not changed:
+  a church with ministries already in its plan draws some Spanish capacity slides 15–34 px past the frame (the gap lines; the
+  same in both modes; the v10.41.1 sweep had an empty plan).
+
+**v10.42.0 (the two parts merged, 29 Sep 2026).** The presenter part (this folder) and the timing part were merged file by file
+(`git merge-file --diff3` against v10.41.1; record: the build session's scratchpad `v44/MERGE0.md`). Two conflicts, both in the
+member's copy of the proposal (`caseHandout`'s deck path and `casePdfDocAt`'s first-steps block); both intents kept. With "Suggest
+options" a board's or team's deck has "Let's decide together" *and* its dates slide, and the member's copy (a phone's PDF, the deck
+alone) must still hold every slide's words (the presenter part's rule), so:
+- the options take the steps' place on the front (the timing part's rule) under the decide slide's own headline (`H.timing.head`);
+  the dates slide's headline and steps go on the back, before the risks (only a member's copy has `stepsHead`);
+- a member's copy has no "Agreed day and start: ____" line (`H.timing.agreed` empty; `casePdfDocAt` draws the line only when set):
+  with it, and the QR code a live deck's join slide gives, copies with Spiritual Gifts results reached the tightest level, where
+  the verses lose their words (measured); the pastor's own handout keeps the line;
+- when the front is drawn tighter (level 2 and up) and leaves out the ask slide's headline, it is said on the back above the ask's
+  rows (`H.askHead`, deck path only; this also closes the same gap for Spanish board decks without options).
+The pastor's own handout (the model path) is unchanged by the merge. Pinned by `tests/v42-handout.test.js` (+328: six decks with
+options × EN/ES × both fixtures, as present.mjs stores them, with the QR code; fails 82 times on the plain conflict resolution).
+Checked in headless Chrome with the real present.mjs: the food pantry to the board with options, two phones (EN, ES) locked on
+every slide incl. "Let's decide together" (fit 1, no overflow), both downloaded the two-page proposal (options, calendar check,
+the steps, the ask), End frees them, "I already know the dates" drops the decide slide; no page errors. Also added:
+`tests/v42-average-church.test.js` + `tests/average-church/` (the made-up average church for part 3; its 170 v10.42 checks print
+PENDING until part 3 sets `REQUIRE_V42=1` for it in `run-all.js`). Full suite after the merge: **76 suites · 6,754 passed · 0
+failed** (presenter part 74 · 6,008; timing part +1 suite · 94; average church +1 · 324; the member's copy with options +328).
+
+**v10.42.0 (part 3, builder B2, 29 Sep 2026) — phones locked while he presents, his handout on their phones, "Record what we decided", Gifts first.**
+The pastor (SPEC-FOCUS A): *"Maybe just have it where it's locked until the presentation is complete; then they can scroll whichever
+slide they want and download it as well — a really nice PDF. Will they be able to decide dates and times and have it in the download
+as well?"* (E): *"Before, the Spiritual Gifts initiative has to be done for the whole church membership; every member needs to do
+it… Easy to understand, easy to work through."* His answers (29 Sep 2026): Q2 phones offer "Download the handout (PDF)" and, for the
+finance committee, the church board and the business meeting, also "Download the proposal to vote on (PDF)"; Q5 phones unlock after
+30 minutes with no word from the presenter. Design: the build session's scratchpad `v43/design/DESIGN.md` (+ `PROPOSAL.md`,
+`GIFTS.md`); builder notes `v44/B2/NOTES.md`. Section A's records (`caseDecisions`, `caseApproval`, `gfReadiness`: B1's core) are
+used here, never redefined.
+- *No swipe choice any more* (`prPhonesHTML` / `prPhonesGet` / `prPhonesSave` / `prSetup` / `prPhonesInto` / `prPhonesMark`):
+  **Present live** always follows (`mode:'follow'`), **Share link & QR** always browses (`free`); a link first shared and then
+  presented (its panel's Present live, or his control link) is brought to follow before the first slide change (`prPresent`). The
+  setup and the Phones sheet keep only "Offer the PDF on phones" under one line ("Phones follow your slides until you end." /
+  "Members look through the slides at their own pace." / after the end "Phones may look through the slides."). Only the PDF switch
+  is kept per church (`uChurch().casePhones = {pdf}`; an old `{mode:'free'}` is not read).
+- *Exit while phones follow* asks (`prExitAsk`): "Phones are still following your slides." — **End the presentation** (op end, then
+  close) · **Leave it running** (as Exit always did; Escape). Not for the sample or a control device.
+- *Heartbeat* (`prBeat`, `PR_BEAT_MS` 5 min): with no slide change for five minutes the same slide goes again, straight to op go.
+  *Release* on phones (`watchStale`, `WA_STALE_MS` 30 min, `WA.atSeen`: when the pointer's `at` was set, on the phone's clock, from
+  the server's `now` (fix after review: before, the phone's own clock when it first saw `at`, so a late phone was locked a fresh 30
+  minutes); the 5-second watchdog applies it): unlocked with "The presenter has paused. You may look through the slides." and locked
+  again at his next move.
+- *His handout on phones* (`prPdfSync` → `prPdfSend` → `prPdfPut`): made as "Download PDF handout" makes it (`caseHandout` of his
+  model, counts only), sent in the background with op putpdf when he presents or shares and again when it changes (a copy with the
+  same words, `prHash`, is not sent again); for the three bodies that vote also the proposal to vote on (`caseProposal` /
+  `caseProposalDoc`, section B's; kind `vote`). Tried again after 5 s and 30 s; a room gone or an older function stops. Never from a
+  control device, never for the gifts deck. The Link sheet and link panel say "Handout on phones: ready (N KB)." (`prPdfLine`).
+  Phones (`watchPdfPrep`, `watchVotePrep`, `watchPdfGet`): the server's bytes when `WA.pv > 0` (GET op=pdf), else the copy made from
+  the slides (the fallback); "Download the handout (PDF)" · "Updated" when a newer one arrives after the member saw it; "Download
+  the proposal to vote on (PDF)" beside it when `WA.qv > 0`.
+- *Record what we decided* (`CASE_DEC_UI`, `caseDecFormHTML` / `caseDecFormWire`): who decided (the path's bodies, the deck's, any
+  recorded; the conference for a conference deck), the date (today, never ahead), the outcome chips of that body (section A's
+  `caseDecOutcomes`), the vote (optional), and for a yes the day and start agreed (Not settled yet · the timing builder's options ·
+  Something else: day, time, start, length). No note field (the design, X8). "Amended" shows "If the amount changed, change it with
+  “Adjust scope and budget”." In the presenter view: the strip's **Decision** button and the end card's first row (never the
+  sample, a control device or the gifts deck); saving there rebuilds his slides for the room (op update, then op putpdf), on the slide
+  he is on, and every other open link of the ministry (`caseDecPush`: this ministry's rooms only, never the sample's, at most six,
+  each in its own audience and language). In step 3 (`caseDecCardMount` into section C's `#cs-dec`): "How it is being decided", the
+  path ("In {church}: Ministry team › Finance committee › Church board" · Change), a row per body (check, dot or ring; the deck's
+  own row bold, "these slides"), one hint with at most one button ("In {church}, the finance committee sees it first." · Make it for
+  …; or "{status}. Next: the church board."), Record what we decided; a recorded row opens its record (Remove, two taps). The path
+  editor (`casePathEdit`): the four bodies, always in order, at least one; "The Proposal to vote on opens with" Motion first /
+  Explanation first.
+- *Gifts first* (`GF_FIRST_UI`, `GF_MINUTES` 15, `gfFirstCardHTML` / `gfFirstWire` / `gfFirstHub` / `gfFirstRefresh`): one card,
+  one number ("18 of 46 adults have discovered their gifts", the denominator said on the line under it), one button (**Invite the
+  whole church**, `gfInviteChurch`: the setup's share panel, the church's one campaign made only when there is none). On the hub
+  below the four tools (`#hubgifts`, once the church is his), on the Spiritual Gifts landing and first in the church profile. A
+  quiet sync brings results in when a card is drawn (at most every ten minutes; `gfSync` is now one at a time, `GF_SYNC_P`). Make
+  the Case: one line above the step bar below half of the adults (`caseGiftsBanner`, `#cs-gff`; × hides it for two weeks,
+  `uChurch().giftsFirst.hideUntil`). Step 3: "Your church, ready to serve" (`gfReadyPanelMount` into section C's folded
+  `#cs-ready`). The share panel: "Ready-made announcements" for the bulletin, a text message, WhatsApp and the pulpit, EN + ES
+  (`gfAnnounce`; the kind kept per church in `giftsFirst.kind`; `gfInviteMsg` is the WhatsApp one); "about 15 minutes" everywhere.
+- *"Discover your gifts"* (`gfdDeck`, `gfdVerse`, `gfRenderSabbath` (`GF_VIEW='sabbath'`), `gfdEnsure`, `gfOpenSabbath`): nine slides
+  for the whole church, every verse from the verified tables by id or reference (1 Corinthians 12:27, 1 Peter 4:10, 1 Corinthians
+  12:18, Romans 12:6, 1 Peter 5:2, Proverbs 11:13; the close Ellen White's "The church of Christ is organized for service"); slide 8
+  "Take it now" (`join` + `gifts:true`) shows the assessment's own QR on the big screen and a **Begin · about 15 minutes** link on
+  phones (a new tab; the slides stay locked); phones offer Begin at the end instead of a PDF. No handout, no decision.
+- *Server:* **present-1.4** (op putpdf, GET ?op=pdf, `pv`/`pname`/`qv`/`qname` in op deck and op state and `pv`/`qv` in the pointer,
+  256 KB a PDF, 400 KB a putpdf body, 60 uploads a room an hour, 600 downloads an address and room an hour (fix after review: was
+  120 an address), the server's `now` in op deck and op state and the pointer's `age` in op state, the gifts active-content rule,
+  `p/<room>` and `q/<room>` deleted with the room; the `how` slide, `goal` on motion / yes / close, a verse slide's kicker and headline,
+  the gifts deck's `gifts {pub}` and its "Take it now" join; every present-1.3 deck stored exactly as before). **present-sweep-1.1**
+  deletes the PDFs. **gifts-1.3**: 200 results an hour from one address (one church on one Wi-Fi taking it together).
+- Pinned by the new `tests/present-pdf.test.mjs`, `v42-lock.test.js`, `v42-decide-ui.test.js`, `gifts-first-ui.test.js` (each fails
+  on the start folder), and the updated `present-function`, `present-phones`, `firebase-rules`, `gifts-function`, `present-client`,
+  `present-review39`, `v42-phones`, `gifts-shortlink`, `gifts-engine`, `gifts-journeys`, `hub-alignment`, `hub-copy-and-quote`,
+  `case-steps`, `email-off`, each changed assertion with a comment quoting him. Full suite in B2's own copy: 80 suites · 7,059 passed (merged: below).
+
+**v10.42.0 (part 3, builder B1, 29 Sep 2026) — the focus: a goal, one arc from the goal to the appeal, only the facts that
+serve it, and a Proposal to vote on.** The pastor (SPEC-FOCUS C): *"What does that have to do with why we want to do a prayer
+ministry — a prayer calendar? It's detached from what's going on. The main focus is the specific ministry, and everything should
+tie into that, not random analytics… From the beginning to the end it has to have a focus, a beginning and an appeal at the end,
+and everything has to line up with what was chosen and what the leader or the pastor would like to see accomplished."* (B):
+*"There needs to be a clear proposal that is submitted to the board or the church business meeting. It says exactly what they
+want — the motion first and then the explanation, or the explanation first and then the motion… In some churches it has to be
+presented to the finance committee first, and then to the board."* His answers (29 Sep 2026): Q1 the suggested goal names the
+idea — "{Idea name}, so that {outcome}" (ES "…, para que" + subjunctive); Q3 "Fill in a demo church" is the average church; Q4
+keep Acuerdo tomado, Con enmiendas, Remitido, No aprobado, Secretario(a) de la iglesia, Salvaguardas. Design: the build
+session's scratchpad `v43/design/DESIGN.md` (+ `NARRATIVE.md`, `relevance.json`, `PROPOSAL.md`, `GIFTS.md`); builder notes
+`v44/B1/NOTES.md`.
+- *The records* ("THE RECORDS" block, handed to B2 first): `caseDecisions` (one record per body: team, finance, board, business,
+  conference; body, date, outcome, vote, agreed timing; no note), `caseApproval` (the path he ticks, "Motion first" /
+  "Explanation first"), `caseGoals` (his own words per ministry + group, per language), `gfReadiness`; the profile's two new
+  fields (members on the books, adults in worship; "adults > attendance" is refused). Clear all clears the three records.
+- *The goal* (step 3's `#cs-goal`, "What would you like this to accomplish?"): suggested from the idea (`CASE_GOAL_THEME`, 58
+  themes), editable, saved 600 ms after typing and before every action; a group with none takes the words saved for the same
+  ministry for another group (X5). "Our goal" opens and closes every deck, the handout, the Proposal and "What to say".
+- *One arc for every audience* (`caseDeck`): opening (the proposal and the goal) → why (a figure only where the purpose allows it,
+  else the verse slide "Why {aim}?") → [where, only when place is part of the idea] → **How it works** (the idea's own steps; the
+  built-ins' Spanish steps are `CASE_HOW_BUILTIN`, written for this build, 97 built-ins + both languages for the six small groups)
+  → who and what it takes → safeguards → exactly one timing slide (Agreed › decide › dates; X3) → the ask → an appeal back to the
+  goal ("Will you approve…", "Will you join us to…", "Will you partner with us…"; after the deck's own body said yes: "Approved on
+  {date}", X10). The finance committee's deck is finance-first ("The cost" second). 8–11 slides, never padded.
+- *The relevance rule* (`CASE_PURPOSES`, `casePurposeOf` → `model.purpose.allowed`, from `relevance.json`): a census figure, a
+  "where to look" direction or a partner appears only when it bears on the idea's own purpose; prayer, worship, fellowship and
+  other devotional ideas get none. Audit: 0 of 9,459 decks break it (v10.41.1: 7,292).
+- *The handout* follows the slides' order (N8), with the status line under "Prepared by", the trail "How it is being decided" and
+  the Gifts first box. *The Proposal to vote on (PDF)* (`caseProposal` → `caseProposalDoc`): heading (church, to, from, date,
+  subject, the earlier body's status line, the path), THE MOTION in a box, WHY (our goal, the deck's own facts, capacity,
+  Scripture), THE PLAN (how it works, who, where, when), BUDGET (never tithe), SAFEGUARDS, REVIEW, the motion again beside **Action
+  taken** (filled once his body's decision is recorded). Finance: budget first, "Finance committee recommendation". 1–2 pages.
+- *Gifts on proposals* (`caseGiftsSlide`): below half of the adults "The church-wide Spiritual Gifts initiative comes first" (with
+  the coverage and the link); at half the whole church counted (fit, free time, leaders; counts only). The private ask list shows
+  "Has time" / "Can lead", 30 rows at most.
+- *The slide fit* (`caseFitDeck`, `CASE_FIT`, measured in Chrome): the goal-bearing slides, What it takes, How it works and Roles
+  are sized for 360 × 640 in both languages together.
+- Pinned by `case-focus`, `v42-core`, `v42-proposal`, `gifts-first-decks` (new) and twenty updated suites, each changed
+  assertion with a comment quoting him or the design.
+
+**v10.42.0 (section F, builder B3, 29 Sep 2026) — one flow from the survey to Make the Case.** The pastor: *"On the Community
+Survey it gives you ideas — ministries your church could offer. Why is there another section in Make the Case giving us another
+option for more ministries to do? Is this redundant or necessary?"* (He approved the answer: "YES".) The survey's ministries are
+for the neighbourhood (first line "For our community. This is where your church chooses what to do."). An in-reach idea never
+shows there (`uForCommunity`; the index loads once when the church keeps library ideas, `uMinistriesAgain`). Make the Case
+step 2's line: "This is where you win support for what your church will do." It opens with **From your plan** (the plan, and the
+idea already chosen, that fit the group: `casePlanItems` / `casePlanFits`; board, business meeting and finance committee take
+all of it: `CASE_PLAN_ANY`; the conference's Planner series first). Then **More ideas for {group}** (the v10.41 list without
+what the plan shows). An empty plan: "Choose what your church will do in the Community Survey first, or pick an idea below." +
+Open the Community Survey. The board and business meeting's list opens on God's people. Builder notes `v44/B3/NOTES.md`. Pinned
+by `tests/v42-plan-first.test.js` (59).
+
+**v10.42.0 (part 3 integrated, 30 Sep 2026).** B1, then B2, then B3 merged into this folder with `git merge-file --diff3` against
+the start folder (record: the build session's scratchpad `v44/INTEGRATION.md`). One conflict in `index.html` (`caseDecStatusFor`:
+B1's later version kept, as both builders asked), one in `tests/present-client.test.js` (both kept: Present live follows, and the
+whole church's close may give up its line of text) and one row of this file. B1's exchange patch (the records) and B2's (the
+present-1.4 slide shapes) were already in both copies; `present.mjs` is B2's; the writer's `builtin-how.json` is
+`CASE_HOW_BUILTIN` byte for byte. `run-all.js` now runs every suite with `REQUIRE_V42=1`. **Full suite (at integration): 85 suites · 7,486
+passed · 0 failed** (after the fixes below and the final check: 86 suites · 7,596 passed · 0 failed). Merge gate: the relevance audit 0 of 9,459 decks; the 360 × 640 sweep of every built-in and every library idea
+× board, finance, prayer team, the whole church, the conference × EN + ES, with an empty plan and with three ministries and his
+series in the plan: 603,864 slides, 0 over the frame, none below fit 0.8 (and a 200-character goal, the average church's two
+seeds, the Agreed slide: 0); the gifts deck 12 × 9 slides, 0 over; live with the real present.mjs: phones locked through eight
+attempts to move, both downloads (handout and the proposal to vote on) the server's exact bytes, End frees them, the dates switch
+gives one timing slide either way, a recorded decision gives the Agreed slide and "Approved on …", a team deck offers the handout
+only; no page errors. Samples for the pastor: `~/Downloads/Terrain-v10.42-samples/` (before and after gifts, one set in Spanish;
+the audits 520 pass, 0 fail).
+
+**v10.42.0 (Sabbath wording, 30 Sep 2026).** Five older built-ins set ordinary work or events on Saturday, the Sabbath (the fall festival, the car care clinic, "Fix-it Saturday", the men's breakfast, "Respite Saturday"). The pastor: "yes move them" — all five now say Sunday, EN + ES ("Fix-it Sunday" / "Domingo de reparaciones"), and the Saturday-night supper says "after sundown". The check is `v42-sunday.test.js` (12), kept in the build folder and committed with the next version, so this upload's tests folder stays at the 100 files a GitHub web upload takes. Deployed from the reviewed samples build; the team-length change (a ministry team chooses the length too) follows as v10.42.1.
+
+**v10.42.0 (fixes after review, 30 Sep 2026).** Reviewers read the integrated build's samples against his rule (*"everything
+has to line up with what was chosen"*) and the phones' code: 25 findings (1 blocker, 11 major, 13 minor), each verified, all
+fixed (record: the build session's scratchpad `v44/FIXES.md`).
+- *A library idea that is made and handed out* (a calendar, cards, flyers, a newsletter, letters: `LIB_MADE_WORDS` / `libMadeName`,
+  never a name that also says an event, `LIB_MADE_EVENT`; `x.made`, set in `libBuild`): timed by its own
+  milestones (`caseMilestones`, from its own description and steps, "October · December · Each Monday" under "When each step
+  happens"); no places, sessions, host, trial of weeks or pilot; the opening says Starts and Review; its own ask (`CASE_ASK_OWN`:
+  "Run … as a team: 5 volunteers, each taking a share of its steps…"); roles without "serves at each session" or Host
+  (`RC.member.textMade`); "Training before it starts"; the appeal's Help "Give a few hours to one of its steps." (`textMade`); the
+  handout's timing boxes are its milestones ("Agreed start:"); the Proposal "starting in October", WHERE "No room needed". The
+  prayer calendar was the case he raised.
+- *A group supporting another ministry* keeps the ask written for that ("carry in prayer the team of…"); the group's own idea
+  (`caseOwnIdea`: the idea's first theme is the group's) gets its own ask.
+- *The finance committee, the board and the business meeting choose the day, never the length:* "Choose the day together" / "Elijamos
+  juntos el día", three days and Check first; the Length on the opening and the handout is the motion's own.
+- *Steps that named another schedule are reworded:* the food pantry "Set fixed hours and never miss them." (no "first and third
+  Sunday", no "every other week"), the Pathfinder club "Set the club's meeting times with the church calendar…". A club that runs by
+  term (`CASE_TERM_BUILTINS`: the Pathfinder club) is proposed for "The first term" (13 weeks), unless he set the weeks in Adjust.
+- *After the vote* the Proposal prints the motion as moved, word for word (`m.moved`: the model built without this body's record),
+  THE PLAN as moved too (WHERE never names the agreed day beside WHEN's options), and the agreed timing on its own line under Action
+  taken ("Timing agreed: …" / "Horario acordado: jueves por la noche · …"; `action.timing`; in running Spanish the weekday and the
+  length are lower case, `caseDecTimingText(...).line`, the table rows keep their capitals). The run is from the first to the last session; the review is "First
+  board meeting after {last session}". `CASE_HOLIDAYS` / `caseHolidays(year)`: six US holidays a church seldom meets on (New Year's
+  Day, Memorial Day, Independence Day, Labor Day, Thanksgiving, Christmas); an option or an agreed run with a session on one says so
+  (a Note row; the slide names no date; an option is never dropped for it).
+- *The finance committee's handout* is headed "Finance committee recommendation · To: Treasurer & finance committee"
+  (`CASE_FIN_KIND`); one status line ("To: … · Agreed by Community Services (Dorcas) on … (6 for · 0 against)"); on paper the trail
+  says "· this meeting" / "· esta reunión" (never "these slides"), and nothing "still to come" before the body deciding now.
+- *The conference:* the motion names the amount ("by granting up to $3,000 (half of the $6,000 cost), with training and counsel");
+  the budget is a table that adds up (Total cost · From the church budget · Asked of the conference · Meeting offerings, or still to
+  raise; then one "Also asked" row; `CASE_CONF_BUDGET`); "Still to settle" is no longer a reason under WHY; the trail shows the board
+  ("Supported") then "Conference · this proposal". The conference's counsel appears only for a series, a proposal to the conference
+  or a cost of $2,500 or more (`CASE_CONF_COUNSEL_MIN`), worded as what we will do.
+- *After the gifts results:* one denominator (the results counted); the church family's item says "can lead", as the handout's box
+  does; none who fit can lead yet is said with the profile's leaders ("3 leaders in the church; none yet among those whose gifts
+  fit: pair and train."). Before any result the church family's slide says "0 of 46 adults have discovered their gifts".
+- *The food pantry hands out groceries* (`caseGrocery`, `CASE_RISKS.grocery`): the food bank's partner-agency rules, dates checked,
+  dignity at sign-in, never a kitchen; its budget says where the food comes from ("Food: from the food bank at partner prices; the
+  coordinator costs it before the finance meeting", no invented figure; the $125 ceiling unchanged). "Help never depends on
+  attending church" only for ideas that give material help (`CASE_HELP_PURPOSES`). The calendar safeguard says what we do: "Checked
+  against the church calendar before a date is set" (it said "with no clash" before any day was chosen).
+- *Figures:* the Pathfinder club's handout leads with its own ages, as its deck does (and the Proposal says it once, without
+  "(815)"); the "Here in" slide never repeats the lead figure at the town's level; a club's partners are youth organisations only.
+- *Smaller:* WHEN "One of: … (chosen together)"; the one-page Proposal keeps CHURCH and the path; "Short by 13 leaders"; "a separate
+  budget line" / "una partida aparte"; "Opening night, proposed for …"; the sources "Map: OpenStreetMap", "Census blocks: U.S.
+  Census"; Spanish "o un piloto de 4 semanas", "en un plazo de dos semanas", "buscar primero", no time broken across lines.
+- *Phones:* the 30-minute release is measured by the server's clock (present-1.4 sends `now` in op deck and op state, and `age` of
+  the pointer in op state; `watchSkew` / `watchAtLocal`), so a phone that opens the link late, or reloads, is free at once when he
+  has been gone 30 minutes. **Share link & QR** on a link left following frees its phones (op mode free; `prShareStale` /
+  `prShareStaleNow`) and says "own pace". PDF downloads are counted per address **and room**, 600 an hour (`MAX_IP_PDFS`; one
+  church's Wi-Fi is one address); the phone's copy of a document is keyed by its number only (`room|s<pv>`), so a new deck version
+  fetches nothing again; a refused download (429) is tried again after 20 s, 1, 3 and 5 minutes (`WA_PDF_WAIT`, `watchPdfLater`),
+  the button waits under the document's own name, and the copy made from the slides is used only when the server has none.
+  "· Updated" on the proposal to vote on as on the handout. The sample presented live ends its room at Exit (no question), so a
+  phone that joined the demo is freed. `FIREBASE-RULES-TERRAIN.txt`: the pointer's `pv` and `qv` described as two numbers (words
+  only; nothing to republish).
+- *Final check (30 Sep 2026):* an outreach idea nobody sits at (`x.seats` false: prayer walking every street, an online idea)
+  had the session words the made idea lost: "Team member: Serves at each session and welcomes people by name", "Host: Sits with
+  anyone who arrives alone", "Training before the first session" (the samples' prayer walking deck). Now it gets the made idea's
+  words (`RC.member.textMade`, no Host, "Training before it starts"); an idea people sit at keeps its Host. Measured in Chrome:
+  every such library idea (739) × four team groups × EN + ES, 55,290 slides, 0 over the frame, none below fit 0.8.
+- Samples regenerated with the same runner (`~/Downloads/Terrain-v10.42-samples/`): now with "0 Discover your gifts", the prayer
+  calendar's v10.41.1 slides beside the new ones, prayer walking, and a church with its Spiritual Gifts campaign (the short link and
+  QR on the "Gifts first" slides, reading pastorshub.org; the sample's link is made up and opens nothing on the live site).
+- Pinned by the new `tests/v42-fixes.test.js` (84) and the updated `present-function`, `present-pdf`, `firebase-rules`,
+  `v42-lock`, `v42-phones`, `timing-options`, `v42-proposal`, `case-model`, `case-fixes`, `case-verses`, `gifts-first-decks`,
+  `v41-decks`, `v40-accuracy`, `v40-integration` (each changed assertion commented "v10.42.0 fix after review"). **Full suite: 86
+  suites · 7,596 passed · 0 failed.** Gates: the relevance audit 0 of 9,459 decks; the 360 × 640 sweep of every built-in (empty plan,
+  both average-church seeds, a 200-character goal: 10,322 slides each) and every library idea (291,610 slides): 0 over the frame,
+  none below fit 0.8; live with the real present.mjs: the fixes' scenario 12 of 12 (a late phone free at once, Share frees the
+  room, "· Updated" on both documents, four 429s then the server's own copies, the sample's Exit), the integration scenario 16 of 16.
 
 **v10.41.0 — Make the Case in three clear steps, ideas tailored to each group, in-reach and outreach, the Adventist
 departments and the conference, no "AI" wording.** The pastor, after using v10.40.0 live (voice-to-text, 29 Sep 2026):
@@ -700,7 +1069,7 @@ Claude Code's own edit tool gives the same guarantee for single edits. For
 multi-part changes, keep the all-or-nothing discipline.
 
 After editing, always run `npm test`. It syntax-checks both inline script
-blocks and every function first, then runs all 71 suites.
+blocks and every function first, then runs all 86 suites.
 
 ### Versioning
 
@@ -718,11 +1087,28 @@ version: `v10.36.0 — what changed`.
 
 ### Tests
 
-`tests/` holds 71 suites and `run-all.js`. They load `../index.html`
+`tests/` holds 86 suites and `run-all.js`. They load `../index.html`
 and `../netlify/functions/*.mjs` directly, stub `fetch`, and never call a
 real API or spend credit. `fixtures.json` is a fabricated high-need tract plus
-a small and a medium church.
+a small and a medium church. `average-church/` (v10.42) is a made-up average
+church (Sampleton SDA (SAMPLE): 80 members, 55 attending, no / 18 / 40 Spiritual
+Gifts results) as the app keeps it in localStorage, read by
+`v42-average-church.test.js`; it is generated by the part-3 design's
+`build-fixture.mjs` (never edit it by hand). `run-all.js` runs every suite with
+`REQUIRE_V42=1` (v10.42.0), so none of that suite's part-3 checks may be PENDING: they all count.
 
+- v10.42 part 3 added `case-focus.test.js` (the goal, the arc, the relevance rule: NARRATIVE T1–T10, T12),
+  `v42-core.test.js` (the decision records, the approval path, the goal store, `gfReadiness`, the profile's two new
+  fields, the average demo church), `v42-proposal.test.js` (the Proposal to vote on) and `gifts-first-decks.test.js`
+  (Gifts first on the decks and the ask list, on `average-church/`). The slide fit itself (0 overflow, fit ≥ 0.8) is a
+  Chrome check, not a jsdom one: see `caseFitDeck` below.
+- v10.42 part 3 also added `present-pdf.test.mjs` (present-1.4: op putpdf / GET op=pdf, the `how` slide, the gifts deck),
+  `v42-lock.test.js` (phones locked while he presents), `v42-decide-ui.test.js` (Record what we decided, the step-3 card, the
+  path editor), `gifts-first-ui.test.js` (the Gifts first card, announcements, the Sabbath deck) and, for section F,
+  `v42-plan-first.test.js` (the survey's list is for the community; step 2 opens with "From your plan").
+- The fixes after review (30 Sep 2026) added `v42-fixes.test.js` (on `average-church/`: an idea made and handed out, a group's
+  own ask, the day but never the length for the bodies that vote, the motion as moved after the vote, the finance handout, the
+  conference's amount and budget, one denominator after the gifts results, the club's term and lead figure, smaller words).
 - A test that fails because the pastor **changed his mind** is stale — update
   it to the new intent and say so in a comment. Several were updated this way
   in the last session (e.g. the quote moved back under the welcome).
@@ -785,11 +1171,39 @@ Search for these by name in `index.html`.
 - Groups: `CASE_GROUPS` (34: 6 board, 26 team, 1 congregation, 1 conference; see the table in the v10.41.0 notes), `CASE_YOUTH_GROUPS` (= present.mjs `YOUTH_GROUPS`)
 - In-reach decks (v10.41): `caseReachOf(x)`, `CASE_THEME_REACH`, `CASE_REACH_BUILTIN`, `CASE_THEME_MIN` (the gifts an in-reach theme needs), `CASE_GROUP_IN`, `CASE_RISKS.care`, `CASE_EGW_IN`; the "Our church family" slide is a `place` slide (`CASE_FAMILY`: its words, the neutral start and check-in); review pass: `kidsFirst` (children's safeguarding first), `CASE_VERSE_OUTWARD`, `CASE_ASK_PLAIN` (an ask with no room or leader), `CASE_BUSINESS` (the church vote)
 - Step 2's switch and page (v10.41 review): the group after "para" / "for" `caseGroupFor` / `CASE_GROUP_ES_FOR` (final review) / `CASE_GROUP_EN_FOR` (v10.41.1), `caseDefaultTab` / `CASE_TAB_OUT`, `LIB_UI.case.tab`, `CASE_LIST_PAGE` (6) / `CASE_LIST_PAGE_PHONE` (4), `libNarrow`; `caseGroupList().star` (the every-theme sides)
+- Step 2 from the plan (v10.42 section F): `#cs-plan` "From your plan" (`casePlanItems`, `casePlanFits`, `CASE_PLAN_ANY`, `casePlanHTML` /
+  `casePlanDraw` / `casePlanWire`, `caseToSurvey`), then `#cs-more` "More ideas for {group}" (`libDrawList` leaves out `casePlanShownIds`);
+  the survey's list: `uForCommunity`, `uMinistriesAgain`, the first line `.u-choose`
 - The conference (v10.41): `caseConfBuild`, `CASE_CONF`, `CASE_CONF_SRC`, `caseDistrict()`, `caseConfOf()` (registration's conference; `pa`), `CASE_PLAN_ID` / `casePlanItem()`, the ask fields `caseConfAskHTML` / `caseConfAskWire` / `caseConfRebuild`
 - The church remembered: `homeEnsure()` → `run(getGeo,{quiet:true})` → `homeAfterRun()`; `homeLine()`, `HOME_ST`
 - Scripture and the place: `CASE_VERSES` (113; `CASE_VERSE_BASE` 60 = the v10.40 set every community deck still draws on, `CASE_VERSE_SETS`) / `CASE_EGW` (11) / `CASE_VERSE_PLAN` + `CASE_VERSE_PLANS` {inreach, conference} (= `tests/case-quotes.json`), `CASE_VERSE_HOME` (each group's slides, in order of preference), `caseVersePlan()`, `casePlaceBuild()` (partners: `CASE_PLACE_CAT`, `CASE_PLACE_KIND`, relevance then distance), the slide's budget `CASE_PLACE_LAYOUTS` / `CASE_PLACE_ORDER` / `CASE_PLACE_MAX` (v10.41.1 fix 4: `nameLineFact`), `casePlaceArrived()`
 - Who already serves (survey + place slide): `HELP_CATS` / `HELP_ES` (12 groups), `helpCatOf(tags)` (one classifier, most specific first), `fetchHelp()` (one Overpass request, 3 miles, 15 s); Ellen White outside the slides: `EGW` / `EGW_ES` / `egwHTML(k)`
-- Leave-behind: `caseHandout()` → `casePdfDoc()`; live: `caseOpenPresenter`, `#watch=` (`watchRender`), `present.mjs`
+- Leave-behind: `caseHandout()` → `casePdfDoc()` (`casePdfMake` makes it, `casePdf` saves it); live: `caseOpenPresenter`, `#watch=` (`watchRender`), `present.mjs`
+- How phones move (v10.42, present-1.3): `prPhonesGet` / `prPhonesSave` (`uChurch().casePhones`), `prRoomPhones`, `prPhonesHTML` / `prPhonesWire`, `prPhonesSync` (open link → op mode), `prPhonesInto` (the Phones sheet, the link panel), `prPhonesMark`; on a phone `WA.pmode` / `WA.pdf`, `watchLocked`, `watchPhonesFrom`, `watchPhonesApply`, `watchWatchdog`, `watchBannerPaint`, `watchPdfPrep` / `watchPdfBtn`; the renderer's `lock`, `setLock`, `locked`, `holdHere` / `holdOn` / `unhold` (`TD_HOLD_IDLE_MS`, the yes slide's `act`); a member's copy of the proposal: `caseHandout(null, deck)` (the deck path: `unitW`, `gifts.lead`, `capacity.okLine`; with options `H.timing` from the decide slide, `timing.head`, no write-in line, the dates slide's steps on the back, `askHead`)
+- Phones locked, his handout on phones (v10.42 part 3, present-1.4): `prPhonesLine`, `prExitAsk`, `prBeat` (`PR_BEAT_MS`), `prPdfSync` → `prPdfSend` → `prPdfPut` (`PR_PDF_ST`, `PR_VOTE_GROUPS`, `prVoteDeck`, `prGiftsDeck`), `prPdfLine`; on a phone `watchStale` (`WA_STALE_MS`, `WA.atSeen`), `watchPdfGet`, `watchPdfPrep` / `watchVotePrep` / `watchPdfBtns` (`WA.pv` / `WA.qv`), `watchGiftsBtn`, `tdGiftsHref`
+- Record what we decided (v10.42 part 3; the records are section A's `caseDecisions` / `caseApproval`): `CASE_DEC_UI` / `cdU`, `caseDecFormHTML` / `caseDecFormWire`, `caseDecCardMount` (step 3's `#cs-dec`), `casePathEdit`, `prDecideOk` / `prDecideInto` / `prDecideSaved`, `caseDecPush`
+- Gifts first (v10.42 part 3): `GF_FIRST_UI` / `gfU`, `GF_MINUTES`, `gfFirstCardHTML` / `gfFirstWire` / `gfFirstHub` / `gfFirstRefresh` / `gfFirstQuietSync`, `gfInviteChurch`, `gfAnnounce` (`GF_ANN_KINDS`), `gfFirstPrefs` (`uChurch().giftsFirst`), `caseGiftsBanner` (`#cs-gff`), `gfReadyPanelMount` (`#cs-ready`), `gfSync` one at a time (`GF_SYNC_P`); the Sabbath deck `gfdDeck` / `gfdVerse` / `gfdEnsure` / `gfOpenSabbath` / `gfRenderSabbath` (`GF_VIEW='sabbath'`), `gfdLink`
+- Timing (v10.42): `CASE_TIMING` (every word, EN + ES), `CASE_TIMING_ALT` / `caseTimingAlt`, `caseTimingOf` / `caseTimingSet` (per church,
+  ministry, group), `caseTimingOptions` (the three times), `caseBuild`'s `OPT` / `FLEX` / `PROP` and `timingM` (`model.timing`), the
+  decide slide in `caseDeck` (an ask slide, `part:'decide'`), `caseMonth`, `CASE_SAB_SLOTS` / `CASE_SAB_BUILTINS`, `CASE_VERSE_DECIDE` /
+  `CASE_VERSE_MOTION_OPT`; `caseCtx().series` (his Planner series, for its evenings)
+
+- The focus (v10.42 part 3; the pastor: "everything should tie into that… a focus, a beginning and an appeal at the end"):
+  the records block "THE RECORDS" (`CASE_BODIES`, `CASE_DEC`, `caseDecClean` / `caseDecSave` / `caseDecDrop` / `caseDecTrail` /
+  `caseDecAgreed` / `caseDecStatus…`, `caseApproval` / `caseApprovalSet`, the goal: `CASE_GOAL`, `CASE_GOAL_THEME`,
+  `caseGoalSuggest` / `caseGoalOf` / `caseGoalSet`, `gfReadiness`, `gfShortLink`); the relevance rule (`CASE_PURPOSES`,
+  `CASE_THEME_PURPOSE`, `CASE_PURPOSE_BUILTIN`, `casePurposeOf` → `model.purpose.allowed`: a figure, a direction or a partner
+  appears only when the idea's purpose allows it); the arc (`CASE_ARC`, `caseHowOf` + `CASE_HOW_BUILTIN` (Spanish steps of the
+  built-ins), `caseAppealOf`, `caseGiftsSlide`, the `how` slide, the goal callout `tdGoal`); step 3's goal box `#cs-goal`
+  (`caseGoalHTML` / `caseGoalWire`); the Proposal (`caseProposal` → `caseProposalDoc` / `caseProposalPdf`, `caseProposalName`)
+- The slide fit (v10.42 part 3): `caseFitDeck(slides, jobs, twin, lang, {g0, g1})` sizes the slides that carry the goal (the
+  opening's rows, the answers' words, the close's line), What it takes (the headline without the aim, the shared-room gap's
+  short form), How it works and the roles, from `CASE_FIT` (heights and line widths measured in Chrome at 360 × 640, --fit .8;
+  `caseWrapN` / `caseWrapW`). It estimates both languages (`model.twin()`, the other language's model) so an English and a
+  Spanish deck keep the same rows and verses, and the verse rooms follow the suggested goal, so a goal he types changes the
+  opening and the appeal only. After any change to slide copy or the renderer's type, re-run the Chrome sweep (every slide of
+  every built-in and every 4th library idea, EN and ES, with a 200-character goal and with ministries in the plan) before
+  touching `CASE_FIT`.
 
 **Idea Library** (v10.40.0; block "THE IDEA LIBRARY" beside `uCatalog`)
 - Data: `LIB` (`libLoadIndex`, `libLoadTheme`, `libLoadWords`; `/ideas/`, generated from `tools/ideas-src`), `libAdopt` (index rows → objects)
@@ -903,6 +1317,19 @@ Don't relitigate them without a reason he'd accept.
   ("For God's people 153 | For our community 227"), cards of kind, title, a three-line description, facts and one "Choose
   this"; "Why here", the fit and the steps under one small "More about this idea". The children's safeguarding line stays
   visible on a card.
+- **The presenter moves the phones** (his request, v10.42: "I want only the presenter to have the ability to control the
+  slides"; part 3: "Maybe just have it where it's locked until the presentation is complete"): Present live always locks the
+  phones to his slide, with no swipe choice; Share link & QR always lets members look through at their own pace. Phones are
+  free after the end, and after 30 minutes with no word from him (locked again at his next move). His handout (and, for the
+  finance committee, the church board and the business meeting, the proposal to vote on) is offered on phones at the last
+  slide and after the end unless he switches it off.
+- **Firm on the what, flexible on the when** (his request, v10.42): a proposal gives options for the day, the start and the length
+  ("Suggest options", the default); places, coordinator, ceiling and funds are decided; the team reports the day and start within
+  two weeks. The bodies that vote (finance, board, business meeting) choose the day only: the length is the motion's (fix after
+  review). An idea that is made and handed out is timed by its own milestones; a club that runs by term, by "the first term". No church calendar in Terrain; the slides say what to check ("communion Sabbath, Week of Prayer, camp meeting, holidays,
+  school breaks"). A clash is shown only when Terrain knows it, never invented. "I already know the dates" keeps the dates.
+- **The survey chooses, Make the Case wins support** (his approval, v10.42 section F): the survey's list is for our community;
+  step 2 opens with the plan, then more ideas for the group; a card is never shown twice.
 - **Many ideas, creative and specific** (his request, v10.40): a search for a topic shows 50+ ideas, never a thin list.
   Ideas go where people are (not the church porch), use social media as a neighbour, never ask for or pray about
   people's children by name, and are data in `tools/ideas-src`, not code.
@@ -911,13 +1338,30 @@ Don't relitigate them without a reason he'd accept.
 
 ## Open work, prioritised
 
-1. **Commit v10.41.1 — the whole folder, not just index.html** (v10.41.0 was handed over but not deployed; v10.41.1 replaces it) (`index.html`, `netlify/functions/present.mjs`,
-   `FIREBASE-SETUP.md`, `ideas/`, `tools/` with `ideas-src/` and `reach.json`, `tests/` including `case-quotes.json` and
-   `scripture-bg.json`, `CLAUDE.md`; never `node_modules/`). The folder is **218 files**; GitHub's web upload takes at
-   most 100 at a time, so upload `ideas/` (59) first, `tools/` (66) second and the rest (93) third, or use GitHub Desktop.
-   Delete from the repo any `ideas/*.json` the new build no longer makes (none expected: all 42 older files are rebuilt).
-   Then confirm the badge **v10.41.1**, `/.netlify/functions/present` → `"fn":"present-1.2"`, `"live":true`, `"fb":"ok"`,
-   and that `https://pastorshub.org/ideas/index.json` says `"hash":"f2cc1121c190"` and 3,050 ideas. On his phone: Make the
+0. **v10.42 part 3 is integrated and the review's 25 findings are fixed** (B1 the focus, B2 phones / decisions / Gifts first, B3
+   section F; 30 Sep 2026; gates passed, see Current state and "fixes after review"). Waiting on the pastor: his look at the
+   regenerated `~/Downloads/Terrain-v10.42-samples/` (README.txt there). Things he may want to decide: in the build session's
+   `v44/INTEGRATION.md` (Saturday wording in three built-ins, coffee in some built-ins, the Spanish survey list's English lines)
+   and `v44/FIXES.md` (the six holidays, US only; "the first term" as 13 weeks; the pantry's food cost left to the coordinator;
+   which idea names count as "made").
+
+1. **Commit v10.42.0** (v10.41.1 is live). Changed since v10.41.1: `index.html`, `netlify/functions/present.mjs`
+   (present-1.4), `netlify/functions/present-sweep.mjs` (present-sweep-1.1), `netlify/functions/gifts.mjs` (gifts-1.3), `FIREBASE-SETUP.md`, `FIREBASE-RULES-TERRAIN.txt` (words only; the rules to paste are unchanged, nothing to
+   republish in Firebase), `CLAUDE.md`, and `tests/` (fifteen new suites, with `v42-fixes`, and `tests/average-church/`, `run-all.js` with
+   `REQUIRE_V42=1`, and the suites each part updated); `ideas/` and `tools/` are unchanged.
+   Deploy the page and the functions together (a v10.42 page against an older present.mjs still presents, but phones swipe and
+   no handout is uploaded; phones then make their copy from the slides). Then confirm the badge **v10.42.0**,
+   `/.netlify/functions/present` → `"fn":"present-1.4"`, `"live":true`, `"fb":"ok"`, and `/.netlify/functions/gifts` →
+   `gifts-1.3`. On his phone and a second phone: Present live (the setup shows "On phones": "Phones follow your slides until you
+   end."); the second phone cannot be swiped and says "Following the presenter"; the Link sheet says "Handout on phones: ready
+   (N KB)"; on "I'm in" the second phone taps Pray and stops while he moves on: it shows "Back to live"; at the last slide the
+   phone offers "Download the handout (PDF)" (a board deck also "Download the proposal to vote on (PDF)"); Exit asks "End the
+   presentation" or "Leave it running"; End lets it look through. Record a decision from the strip's Decision button: the
+   phone's slides and PDF say it. The hub's Gifts first card and "Invite the whole church"; the Sabbath slides' "Take it now"
+   opens the assessment on the phone. After the fixes: leave a presentation running for over 30 minutes, then open its link
+   on a phone: it is free at once ("The presenter has paused…"); Share link & QR on that deck: phones browse.
+   **Check the lock and the download on a real iPhone (Safari) and an Android phone** (not done: headless Chrome only).
+   Earlier, for v10.41.1 (live since 29 Sep 2026): `https://pastorshub.org/ideas/index.json` says `"hash":"f2cc1121c190"` and 3,050 ideas. On his phone: Make the
    Case shows the three steps; tap Greeters & hospitality (both sections), Prayer ministry, Pathfinder Club; choose an idea;
    the slides appear in step 3. Conference leaders with a Planner plan: his series first; its slides and handout. Nothing
    says "AI" anywhere (unlock with `?ideas=`). **Not yet checked on a real iPhone, nor in the light theme.**
@@ -1017,6 +1461,23 @@ Don't relitigate them without a reason he'd accept.
     counts only estimate width: two names of 28 characters or less that still wrap (in capitals, or wide letters) beside the
     longest Spanish figure and Jeremiah 29:7 would run 10–29 px over (made-up names, measured; none in the survey's data).
     152 Spanish slides (148 capacity, 4 motion) draw at fit 0.75, as before this release.
+15. **v10.42.0 follow-ups (the pastor decides, or a real phone shows).** A link shared ahead in follow mode (Share link &
+    QR, then never presented) keeps members on slide 1 ("Waiting for the presenter") until he presents or ends; he can pick
+    swipe for such a link. The proposal button stays on a phone once the presenter has reached the last slide, even if he
+    steps back. A phone shows the PDF in the presentation's language (a Spanish phone following an English presentation gets
+    the English proposal, as its slides are English). A following phone that hears nothing from the stream for 75 s asks the
+    server every 3–6 s instead (this assumes Firebase's stream sends a keep-alive well inside 75 s; its REST streaming sends
+    keep-alive events, but the interval was not measured here: if they are rarer, following phones poll more, and still
+    follow). The lock and the tapped download link are proven in headless Chrome only. A following phone waits on an "I'm
+    in" answer for up to a minute after the member last touched it (`TD_HOLD_IDLE_MS`); if members find that too short
+    (a slow typist) or too long, that one number changes it.
+16. **v10.42 timing follow-ups (the pastor decides).** Which built-ins fit the Sabbath is a judgement (`CASE_SAB_BUILTINS`: the
+    Pathfinder club and a come-and-see Sabbath; the library's ideas carry their own). Saturday evening is offered "after sunset" to
+    ideas that do not fit the Sabbath. A ministry of the plan clashes only when it has a time of its own (Adjust → Time slot); the
+    series' evenings only in the weeks the trial could run (to a full season). "A full season" is not given in weeks. In options mode
+    the handout's first steps give way to the timing options, and the handouts run about one level tighter (10 Spanish youth-team
+    handouts reach the tightest level: verse references only). The Spanish words ("Santa Cena", "campestre", "choca con") are the
+    builder's; he may prefer others.
 
 ---
 

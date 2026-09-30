@@ -13,7 +13,10 @@ WHAT THESE RULES DO, IN PLAIN WORDS
   - Anyone who has one room's link (the 22-character id inside the QR
     code) can read that one room: which slide the presenter is on.
     That is all a room holds, about 100 bytes: slide number, deck
-    version, live or ended, and a time. No names, no answers, no keys.
+    version, live or ended, whether phones follow the presenter or
+    swipe freely, whether phones offer the PDF (Terrain v10.42), the
+    version numbers of the handout and of the proposal to vote on (two
+    numbers), and a time. No names, no answers, no keys.
   - Nobody can list the rooms or read the whole database.
 
 ----------------------------------------------------------------
