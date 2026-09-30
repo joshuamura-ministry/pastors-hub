@@ -100,9 +100,11 @@ console.log('-- status and the envelope --');
 let r=await get('');
 // v10.40: present-1.1 (a verse on every content slide, and the "Here in" place slide)
 // v10.41: present-1.2 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference audience
-c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.2',false,'unset',false,false]);
+// v10.42: present-1.3 (the pastor: "I want only the presenter to have the ability to control the slides… the presenter can choose")
+// v10.42 part 3: present-1.4 (the pastor, SPEC-FOCUS A: "the download on phones is THE SAME FULL HANDOUT the presenter downloads")
+c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.live,r.j.fb,r.j.codeRequired,r.j.regRequired], [200,true,'present-1.4',false,'unset',false,false]);
 r=await post({op:'status'});
-c('POST op:status too', [r.status,r.j.fn], [200,'present-1.2']);
+c('POST op:status too', [r.status,r.j.fn], [200,'present-1.4']);
 fbOn(); r=await get('');
 c('live:true once both Firebase variables are set', r.j.live, true);
 for(const [u,want] of [[FB+'/',true],['https://terrain-live-default-rtdb.europe-west1.firebasedatabase.app',true],
@@ -156,7 +158,8 @@ c('expires in seven days by default', Math.abs(r.j.expires-(Date.now()+7*864e5))
 c('v 1, n 12, live true', [r.j.v,r.j.n,r.j.live], [1,12,true]);
 c('the watch link uses the request origin outside Netlify', r.j.url, 'https://x.test/#watch='+ROOM);
 let rec=S.peek('r/'+ROOM);
-c('room record fields', Object.keys(rec).sort(), ['church','code','created','ended','expires','keyHash','lang','n','opts','respond','room','salt','title','upd','v']);
+// v10.42 (present-1.3): the room keeps how phones move (mode) and whether they offer the PDF (pdf)
+c('room record fields', Object.keys(rec).sort(), ['church','code','created','ended','expires','keyHash','lang','mode','n','opts','pdf','respond','room','salt','title','upd','v']);
 c('…the salt (for the answers’ address tags) is random, never a key', [/^[A-Za-z0-9_-]{16}$/.test(rec.salt),rec.salt!==rec.keyHash], [true,true]);
 c('the key is stored only as a SHA-256', [/^[0-9a-f]{64}$/.test(rec.keyHash), [...S.m.values()].some(v=>v.data.includes(KEY))], [true,false]);
 c('respond and its options come from the yes slide', [rec.respond,rec.opts], [true,['lead','help','pray']]);
@@ -165,7 +168,8 @@ c('expiry marker on the day it expires', S.peek(`x/${utcDay(rec.expires)}/${ROOM
 let dk=S.peek('d/'+ROOM);
 c('deck stored as v1', dk.v, 1);
 c('Firebase pointer created: one PATCH to live/<room> with the secret', [calls.length,calls[0].method,calls[0].url], [1,'PATCH',fbUrl(ROOM)]);
-c('…holding only the pointer', calls[0].body, {i:0,v:1,on:false,end:false,at:{'.sv':'timestamp'}});
+// v10.42 (present-1.3): the pointer carries the room's way too (an older page sends none: free, PDF on)
+c('…holding only the pointer', calls[0].body, {i:0,v:1,on:false,end:false,mode:'free',pdf:true,at:{'.sv':'timestamp'}});
 // A clean deck comes back exactly as sent, except the join slide.
 { const sent=deck(); const got=dk.deck;
   c('a clean deck is kept exactly (top level)', canon({...got,slides:null}), canon({...sent,slides:null}));
@@ -459,7 +463,9 @@ calls=[];
 r=await post({op:'update',room:Q,key:QK,deck:deck({title:'Pathfinder club, revised'},['join','stat','ask','yes','close'])});
 c('update → v2, n5', [r.status,r.j.v,r.j.n,r.j.pointer], [200,2,5,true]);
 c('the new deck is stored as v2', [S.peek('d/'+Q).v, S.peek('d/'+Q).deck.title, S.peek('r/'+Q).v, S.peek('r/'+Q).n], [2,'Pathfinder club, revised',2,5]);
-c('PATCH {v} so phones fetch again', [last().method,last().url,last().body], ['PATCH',fbUrl(Q),{v:2,at:{'.sv':'timestamp'}}]);
+// fix after review (v10.42.0): new words are not the presenter's move, so update no longer writes the pointer's time (a
+// decision recorded in step 3 days later locked every phone that opened the link in the next 30 minutes)
+c('PATCH {v} so phones fetch again (and no time: not the presenter’s move)', [last().method,last().url,last().body], ['PATCH',fbUrl(Q),{v:2}]);
 c('the join slide keeps the room’s code and link', [S.peek('d/'+Q).deck.slides[0].code6, S.peek('d/'+Q).deck.slides[0].qrUrl], [QC,'https://x.test/#watch='+Q]);
 r=await post({op:'go',room:Q,key:QK,i:5});  c('go checks the new slide count at once', [r.status,r.j.error], [400,'bad-i']);
 r=await post({op:'go',room:Q,key:QK,i:4});  c('…and allows its last slide', r.status, 200);
@@ -507,10 +513,16 @@ c('no client address is ever stored', [...S.m.values()].some(v=>/203\.0\.113|198
 console.log('\n-- state (the pointer, for networks that block Firebase) --');
 calls=[]; fbData={i:3,v:2,on:true,end:false,at:1790000000000,evil:'<script>',keyHash:'x'};
 r=await get('op=state&room='+Q);
-c('state → only i, v, on, end, at', [r.status,r.j.state], [200,{i:3,v:2,on:true,end:false,at:1790000000000}]);
+// v10.42 (present-1.3): and mode / pdf, null when the pointer has none (a room made before)
+// v10.42 part 3 (present-1.4): and pv / qv, the numbers of the handout and the proposal to vote on the phones may download
+// (SPEC-FOCUS A: "the presenter's device builds it and uploads it to the room… phones download that file"), null when none
+// fix after review: op state also says the pointer's age (from the server's clock, now), so a phone opened late knows at once
+// how long the presenter has been silent
+{ const {age,...rest}=r.j.state||{}; const want=Math.max(0,Date.now()-1790000000000);
+  c('state → only i, v, on, end, mode, pdf, pv, qv, at, age', [r.status,rest,Math.abs(age-want)<5000,typeof r.j.now], [200,{i:3,v:2,on:true,end:false,mode:null,pdf:null,pv:null,qv:null,at:1790000000000},true,'number']); }
 c('read with the secret, from the server', [last().method,last().url], ['GET',fbUrl(Q,false)]);
 fbData={i:'3',v:-1,on:'yes',end:1,at:'now'}; r=await post({op:'state',room:Q});
-c('odd values are made safe', r.j.state, {i:0,v:1,on:false,end:false,at:null});
+c('odd values are made safe', r.j.state, {i:0,v:1,on:false,end:false,mode:null,pdf:null,pv:null,qv:null,at:null,age:null});
 fbData=null; r=await get('op=state&room='+Q); c('no pointer yet → null', r.j.state, null);
 fbOk=false; r=await get('op=state&room='+Q); fbOk=true; c('Firebase down → 502', [r.status,r.j.error], [502,'live-failed']);
 fbOff(); calls=[]; r=await get('op=state&room='+Q); c('no Firebase → null, no network call', [r.status,r.j.state,calls.length], [200,null,0]); fbOn();

@@ -192,7 +192,11 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('Make the Case opens with the idea chosen, step 2 next', [P.E('TOOL'),P.J('casePrefs()').ministry,P.q('#cs-s2')&&!P.q('#cs-s2').hidden], ['case',cid,true]);
   P.E(`caseSetPrefs({type:'board',group:'board'}); caseDraw2(); caseDraw3();`); await sleep(400);
   const deck=P.J('caseCurrentDeck()');
-  c('the board deck is built for it: nine slides with the place', deck&&deck.slides.map(s=>s.type), ['join','motion','stat','place','capacity','ability','ask','risks','timeline']);
+  // v10.42: with "Suggest options" (the default) "Let's decide together", an ask slide, comes before the ask (ten slides)
+  // v10.42 part 3 (the pastor: "a focus, a beginning and an appeal at the end"; DESIGN.md §5): one arc: the opening and the goal, why,
+  // where, how it works (the idea's own steps), what it takes, who is able, safeguards, one timing slide ("Let's decide together"), the
+  // ask, and the appeal back to the goal
+  c('the board deck is built for it: the arc, with the place and "Let\'s decide together"', deck&&deck.slides.map(s=>s.type+(s.part?'/'+s.part:'')), ['join','motion','stat','place','how','capacity','ability','risks','ask/decide','ask','close']);
   c('its name is the deck\'s title (the join slide)', deck.title, craw.en.n);
   const m=P.J(`caseModel(${JSON.stringify(cid)},{type:'board',group:'board'})`);
   c('the model: the library idea\'s name, needs from its census tags', [m.ok,m.ministry.name===craw.en.n,m.ministry.needs.length>0,m.ministry.draft], [true,true,true,false]);

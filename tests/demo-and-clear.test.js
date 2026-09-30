@@ -23,24 +23,26 @@ setTimeout(async()=>{
   console.log('\n-- Demo church: one tap on an empty profile --');
   D.getElementById('u-demo').click();
   c('profile is confirmed and marked demo', w.eval('capGet().confirmed && capGet().demo===true'));
-  c('the numbers are plausible', w.eval('capGet().members===135 && capGet().volunteers===46 && capGet().leaders===9'));
-  c('rooms, skills, languages all filled', w.eval('Object.keys(capGet().facilities).length>=8 && capGet().skillCounts.lang===3 && /Spanish/.test(capGet().languages)'));
+  // v10.42 part 3 (the pastor, 29 Sep 2026, Q3: "Fill in a demo church" uses the realistic average church, about 80 members and 55
+  // attending, D-AVERAGE-CHURCH.md): 55 in worship, 46 adults, 12 volunteers, 3 leaders, a kitchen and classrooms, one Spanish speaker
+  c('the numbers are plausible (the average church)', w.eval('capGet().membership===80 && capGet().members===55 && capGet().adults===46 && capGet().volunteers===12 && capGet().leaders===3'));
+  c('rooms, skills, languages all filled', w.eval('Object.keys(capGet().facilities).length>=2 && capGet().skillCounts.lang===1 && /Spanish/.test(capGet().languages)'));
   c('the badge says so', D.querySelector('.u-badge').textContent, 'Demo data — clear when done');
   c('and is coloured as a warning, not a tick', D.querySelector('.u-badge').classList.contains('u-badge-demo'));
   const n=fits(); console.log('    ministries within reach with the demo:',n);
   c('ministries light up immediately', n>40);
   c('but not all of them — the tool is visibly sorting', n<w.eval('suggestions(DATA.M,SCOPE).moves.length'));
   c('the button now offers to refill', D.getElementById('u-demo').textContent, 'Refill the demo church');
-  c('the form shows the demo values on step one', D.querySelector('[name="members"]').value, '135');
+  c('the form shows the demo values on step one', D.querySelector('[name="members"]').value, '55');
 
   console.log('\n-- Clear all: two taps, and it disarms --');
   let b=D.getElementById('u-clear');
   b.click();
   c('first tap arms it and says what it will do', /Tap again to clear/.test(b.textContent) && b.classList.contains('u-danger'));
-  c('nothing cleared yet', w.eval('capGet().members'), 135);
+  c('nothing cleared yet', w.eval('capGet().members'), 55);
   await new Promise(r=>setTimeout(r,5100));
   c('it disarms after five seconds', b.textContent==='Clear all' && !b.classList.contains('u-danger'));
-  c('still nothing cleared', w.eval('capGet().members'), 135);
+  c('still nothing cleared', w.eval('capGet().members'), 55);
   w.eval('uChurch().selected=[suggestions(DATA.M,SCOPE).moves.find(x=>uCheck(x).ok).id]; uChurch().drafts=[{id:"d1",generated:true,n:"x",why:"y"}]; uPersist();');
   b.click(); b=D.getElementById('u-clear'); b.click();
   c('second tap clears the profile', w.eval('Object.keys(capGet()).length'), 0);
@@ -55,7 +57,7 @@ setTimeout(async()=>{
   d.click();
   c('first tap on real data only warns', /Tap again to replace/.test(d.textContent) && w.eval('capGet().members'), 60);
   d.click();
-  c('second tap replaces it', w.eval('capGet().members'), 135);
+  c('second tap replaces it', w.eval('capGet().members'), 55);
 
   console.log('\n-- members\u2019 own results survive Clear all --');
   w.eval('uChurch().members=[{id:"m1",name:"Ana",skills:["lang"],confirmed:true,willing:true,hours:10}]; uPersist();');

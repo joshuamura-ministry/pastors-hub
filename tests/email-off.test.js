@@ -71,8 +71,12 @@ const EMAILY=/e-?mail|correo/i;
   await until(()=>P.D.getElementById('gfmsg')&&P.D.getElementById('gfmsg').value);
   c('the invitation message says nothing about email', EMAILY.test(P.D.getElementById('gfmsg').value), false);
   // Added in the v10.38.0 review (P6): the help above the message named "a church email".
+  // v10.42 part 3 (SPEC-FOCUS E: "ready announcement text EN + ES for the bulletin, text message, WhatsApp and the pulpit"): the
+  // help line follows the kind chosen (WhatsApp first); none of the four speaks of email
   c('the help above the message says nothing about email either', [P.D.querySelector('.gfmsghelp').textContent,EMAILY.test(P.D.querySelector('.gfmsghelp').textContent)],
-    ['Paste it into WhatsApp, a text message or the church bulletin. Change anything you like first.',false]);
+    ['For WhatsApp: words between *stars* show in bold.',false]);
+  c('…nor any of the four announcements or their help lines', ['bulletin','text','whatsapp','pulpit'].some(k=>{ P.D.querySelector(`[data-mk="${k}"]`).click(); return EMAILY.test(P.D.getElementById('gfmsg').value+' '+P.D.querySelector('.gfmsghelp').textContent); }), false);
+  P.D.querySelector('[data-mk="whatsapp"]').click();
   c('nothing on the whole setup screen mentions email', EMAILY.test(P.D.getElementById('gifts').textContent.replace(/\S+@\S+/g,'')), false);
   const link=P.D.getElementById('gflinkbox2').value, pub=P.E('uChurch().share.pub');
 

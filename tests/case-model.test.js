@@ -24,7 +24,8 @@ const J=x=>JSON.parse(JSON.stringify(x));
 
 /* ---- the server's deck rules: present.mjs cleanDeck(), field by field ----------------
    Kept in step with netlify/functions/present.mjs (present-1.1: an optional verse at the foot
-   of every content slide, and the "Here in {town}" place slide; present-1.2: the conference proposal). A deck that passes here
+   of every content slide, and the "Here in {town}" place slide; present-1.2: the conference proposal; present-1.4: the How it
+   works slide, the goal, a verse slide's own kicker and headline, a slide's part dropped). A deck that passes here
    is stored by the server exactly as built (the join slide's link and code excepted). */
 const RULES=(()=>{
   const MAX_DECK=64*1024, MAX_SLIDES=12, MAX_STR=400, MAX_NUM=1e12;
@@ -50,6 +51,8 @@ const RULES=(()=>{
   function dRows(v,where,max){ return dList(v,where,{max}).map((row,i)=>{ const w=`${where}[${i}]`; if(!Array.isArray(row)||row.length!==2) throw bad(w); return [dText(row[0],w+'[0]'),dVal(row[1],w+'[1]')]; }); }
   const heads=(s,w)=>({kicker:dText(own(s,'kicker'),w+'.kicker'),headline:dText(own(s,'headline'),w+'.headline')});
   const foot=(s,w)=>{ const v=own(s,'verse'); return v==null?{}:{verse:dQuote(v,w+'.verse')}; };
+  const goal=(s,w)=>{ const g=own(s,'goal'); return g==null?{}:{goal:dText(g,w+'.goal')}; };
+  const sent=(s,w,k)=>{ const v=own(s,k); return v==null?{}:{[k]:dText(v,w+'.'+k)}; };
   const SLIDES={
     join:(s,w)=>({note:dText(own(s,'note'),w+'.note')}),
     motion:(s,w)=>({...heads(s,w),rows:dRows(own(s,'rows'),w+'.rows',5),by:dText(own(s,'by'),w+'.by'),...foot(s,w)}),
@@ -84,8 +87,14 @@ const RULES=(()=>{
       return {...heads(s,w),options,respond:dBool(own(s,'respond'),w+'.respond'),...foot(s,w)}; },
     verse:(s,w)=>{ const version=own(s,'version'); if(version!=='KJV'&&version!=='RVA') throw bad(w+'.version');
       return {text:dText(own(s,'text'),w+'.text'),ref:dText(own(s,'ref'),w+'.ref'),version}; },
-    close:(s,w)=>({headline:dText(own(s,'headline'),w+'.headline'),text:dText(own(s,'text'),w+'.text'),quote:dQuote(own(s,'quote'),w+'.quote')})
+    close:(s,w)=>({headline:dText(own(s,'headline'),w+'.headline'),text:dText(own(s,'text'),w+'.text'),quote:dQuote(own(s,'quote'),w+'.quote'),...goal(s,w)}),
+    // present-1.4 (v10.42 part 3, the pastor: "a focus, a beginning and an appeal at the end"): the idea's own steps
+    how:(s,w)=>({...heads(s,w),steps:dList(own(s,'steps'),w+'.steps',{min:2,max:6}).map((t,i)=>{ if(typeof t!=='string') throw bad(`${w}.steps[${i}]`); return dText(t,`${w}.steps[${i}]`); }),source:dText(own(s,'source'),w+'.source'),...foot(s,w)})
   };
+  // present-1.4: the goal on the opening, the yes and the close; a verse slide's own kicker and headline (kept only when sent)
+  SLIDES.motion=(f=>(s,w)=>{ const o=f(s,w); const v=o.verse; delete o.verse; return {...o,...goal(s,w),...(v!==undefined?{verse:v}:{})}; })(SLIDES.motion);
+  SLIDES.yes=(f=>(s,w)=>{ const o=f(s,w); const v=o.verse; delete o.verse; return {...o,...goal(s,w),...(v!==undefined?{verse:v}:{})}; })(SLIDES.yes);
+  SLIDES.verse=(f=>(s,w)=>({...f(s,w),...sent(s,w,'kicker'),...sent(s,w,'headline')}))(SLIDES.verse);
   function cleanDeck(raw){
     if(!isPlain(raw)) throw bad('deck');
     if(Buffer.byteLength(JSON.stringify(raw),'utf8')>MAX_DECK) throw bad('too-large');
@@ -112,7 +121,8 @@ const serverCheck=d=>{ try{ return {ok:true,deck:RULES.cleanDeck(d)}; }catch(e){
 /* Every string anywhere in a value, with its path. */
 function strings(v,p='',out=[]){ if(typeof v==='string') out.push([p,v]); else if(Array.isArray(v)) v.forEach((x,i)=>strings(x,p+'['+i+']',out)); else if(v&&typeof v==='object') Object.keys(v).forEach(k=>strings(v[k],p+'.'+k,out)); return out; }
 /* The deck as the server stores it, minus the join slide's own link and code: must equal what was built. */
-const sansJoin=d=>{ const x=J(d); x.slides.forEach(s=>{ if(s.type==='join'){ delete s.qrUrl; delete s.code6; } }); return x; };
+// (v10.42 part 3: and a slide's `part`, the page's own name for its place in the story, which present.mjs drops as any unknown field)
+const sansJoin=d=>{ const x=J(d); x.slides.forEach(s=>{ delete s.part; if(s.type==='join'){ delete s.qrUrl; delete s.code6; } }); return x; };
 
 const errs=[]; const vc=new VirtualConsole(); vc.on('jsdomError',e=>errs.push(e.message));
 const dom=new JSDOM(html,{runScripts:'dangerously',url:'https://pastorshub.org/',pretendToBeVisual:true,virtualConsole:vc,
@@ -166,12 +176,17 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   // v10.40 (the pastor asked for it): "Here in {town}" in every deck. For a board it takes the
   // "why here" figures' place, for a team the design trio's (their figures become its facts);
   // the congregation gains one slide. Still about eight content slides.
-  const ORDER={board:['join','motion','stat','place','capacity','ability','ask','risks','timeline'],
-    team:['join','motion','stat','place','ability','roles','risks','timeline','yes'],
-    congregation:['join','verse','stat','stat','place','ability','motion','yes','close'],
+  /* v10.42 part 3 (the pastor: "From the beginning to the end it has to have a focus, a beginning and an appeal at the end"): one
+     arc for every audience (DESIGN.md §5): the opening and the goal → why → [where] → how it works → who and what it takes → one
+     timing slide → the ask → the appeal. A slide in [brackets] only when the idea's purpose allows it and there is data. */
+  const ORDER={board:['join','motion','stat','[place]','how','capacity','ability','risks','timeline','ask','close'],
+    finance:['join','motion','ask','stat','[place]','how','capacity','ability','risks','timeline','close'],
+    team:['join','motion','stat','[place]','how','ability','roles','risks','timeline','yes'],
+    congregation:['join','motion','verse','stat','[place]','how','ability','yes','close'],
     // v10.41 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal. This has to be done
-    // differently"): the proposal, the need, the place, capacity, gifts, the plan, the ask, reporting back, the aims, the close
-    conference:['join','motion','stat','place','capacity','ability','timeline','ask','risks','risks','close']};
+    // differently"); part 3: the mission moved up, the field, how it works, the appeal to partner
+    conference:['join','motion','risks','[place]','how','capacity','ability','timeline','ask','risks','close']};
+  const orderOk=(types,want)=>{ let i=0; for(const w of want){ const opt=/^\[/.test(w), t=w.replace(/[\[\]]/g,''); if(types[i]===t) i++; else if(!opt) return false; } return i===types.length; };
   // Every group the pastor can name (v10.39 review: 14 of 23 were never built by a test).
   const GROUPS=JE('CASE_GROUPS.map(g=>[g.id,g.type])');
   const MINS=['pathfinders','food-pantry','bp-clinic','interpreter-bank','lift-rota'];
@@ -186,8 +201,8 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('every deck passes the server’s deck rules', svr.filter(x=>!x.r.ok).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}: ${x.r.where}`), []);
   c('…and loses nothing on the way through (the server stores exactly what was built)', svr.filter(x=>x.r.ok&&JSON.stringify(sansJoin(x.r.deck))!==JSON.stringify(sansJoin(x.b.d))).map(x=>`${x.b.lang}/${x.b.g}/${x.b.id}`), []);
   c('every slide has `type`, 12 at most, under 64 KB', built.filter(b=>!b.d.slides.every(s=>typeof s.type==='string')||b.d.slides.length>12||Buffer.byteLength(JSON.stringify(b.d))>64*1024).map(b=>b.id), []);
-  c('slide order per kind: board 8 + join, team 8 + join, congregation 8 + join',
-    built.filter(b=>JSON.stringify(b.d.slides.map(s=>s.type))!==JSON.stringify(ORDER[b.t])).map(b=>`${b.lang}/${b.g}/${b.id}: ${b.d.slides.map(s=>s.type).join(',')}`), []);
+  c('slide order per kind: the one story (board 9–10 + join, finance the cost first, team 8–9, the whole church 7–8, the conference)',
+    built.filter(b=>!orderOk(b.d.slides.map(s=>s.type),ORDER[b.g==='finance'?'finance':b.t])).map(b=>`${b.lang}/${b.g}/${b.id}: ${b.d.slides.map(s=>s.type).join(',')}`), []);
   c('audience and ministry carried on the deck', built.every(b=>b.d.audience.type===b.t&&b.d.audience.group===b.g&&b.d.ministry.id===b.id&&b.d.lang===b.lang&&b.d.church==='Bucks County SDA'), true);
   { const bad=[];
     built.forEach(b=>strings(b.d).forEach(([p,s])=>{ if(/\{[A-Za-z]+\}|undefined|NaN|\bnull\b|\[object/.test(s)) bad.push(`${b.lang}/${b.g}/${b.id}${p}: ${s}`); if(s.length>400) bad.push('long '+p); }));
@@ -206,14 +221,20 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   const BE=built.find(b=>b.lang==='en'&&b.g==='board'&&b.id==='pathfinders'), BD=BE.d, BM=BE.m;
   const S=t=>BD.slides.find(s=>s.type===t);
   c('the motion first: approve a trial, the ministry named', S('motion').headline, 'Approve a trial of 6 weeks: Pathfinder & Adventurer club, open to the neighborhood');
-  c('motion rows: runs, places, ceiling, funds (not tithe), review', S('motion').rows.map(r=>r[0]), ['Runs','Places','Spending ceiling','Funds','Review']);
-  c('…funds: the local church budget, not tithe', S('motion').rows[3][1], 'The local church budget, not tithe');
-  c('…the review is a board meeting on the review date', /^\d{1,2} [A-Z][a-z]{2} · board meeting$/.test(S('motion').rows[4][1]), true);
+  // v10.42 part 3: beside the goal ("Our goal", the thesis of the deck) the opening keeps four rows at most: Places moves to the ask,
+  // the ceiling says where its money comes from (NARRATIVE.md §5.1)
+  // …and a phone shows the rows that fit beside the goal and a verse in the longer language (caseFitDeck, measured in Chrome): here
+  // the Spanish headline takes five lines, so Review gives way on the slide (the model, the handout and the Proposal keep it)
+  c('motion rows: runs, the ceiling with its funds (not tithe), review; the goal beside them', [S('motion').rows.map(r=>r[0]),BM.motion.rows.map(r=>r[0]),!!S('motion').goal], [['Runs','Spending ceiling'],['Runs','Spending ceiling','Review'],true]);
+  c('…funds: the local church budget, not tithe', S('motion').rows[1][1], '$125 · local budget, not tithe');
+  c('…the review is a board meeting on the review date', /^\d{1,2} [A-Z][a-z]{2} · board meeting$/.test(BM.motion.rows[2][1]), true);
   c('…to whom and the date (no one registered on this device: no "Prepared by")', S('motion').by, 'To: Church board · 28 Sep 2026');
   c('…and with the pastor registered: "Prepared by Pastor …", in Spanish "el pastor …"', [
     JE(`(()=>{ localStorage.setItem('terrain-reg',JSON.stringify({name:'Joshua Mura',email:'jm@example.org',church:'Bucks County SDA',conf:'Allegheny East',role:'pastor'})); const b=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}).motion.by; return b; })()`),
     JE(`caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang:'es'}).motion.by`),
-    JE(`caseDeck(caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW},respond:true})).slides.find(s=>s.type==='close').text`),
+    // v10.42 part 3: the whole church's close carries the goal and the Ellen White line (NARRATIVE.md §5.3); its one line of text gives
+    // way when they leave a phone no room (caseFitDeck, measured in Chrome), so the words are read as the deck writes them
+    JE(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW},respond:true}); return caseInLang(m.lang,()=>caseF(CASE_COPY.respond.text,m.vals)); })()`),
     JE(`(()=>{ localStorage.removeItem('terrain-reg'); return caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},presenter:'Elder Ruth Park'}).motion.by; })()`)],
     ['To: Church board · Prepared by Pastor Joshua Mura · 28 Sep 2026','Para: Junta directiva de la iglesia · Preparado por el pastor Joshua Mura · 28 sep 2026',
      'Tap “I’m in” on your phone, or speak to Pastor Joshua Mura afterwards.','To: Church board · Prepared by Elder Ruth Park · 28 Sep 2026']);
@@ -222,21 +243,38 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('…and the source says the margin and the verdict', S('stat').source, 'U.S. Census ACS 2020–2024 · Census Tract 2041.02 · margin of error ±3.1 points · higher than the county');
   // v10.40 (the pastor asked for it): "Here in {town}" takes the "why here" cards' place; their
   // figures that differ from the county become its facts (the model keeps all three, the phone two).
-  c('here in Warminster: the "why here" figures, significant ones first, each against the county', [S('place').kicker,BM.place.facts.map(f=>f.value),S('place').facts.map(f=>f.value)], ['Here in Warminster',['1 in 5','1 in 4','1 in 3'],['1 in 5','1 in 4']]);
-  c('…the board’s emphasis leads the supports (poverty, then child poverty)', BM.need.supports.map(f=>f.key), ['poverty','childPoverty']);
-  c('…each says what the county is, in the same words (about / nearly / more than 1 in N)', BM.place.facts.map(i=>i.label.replace(/^.*\. County: /,'')), ['1 in 14.','1 in 12.','nearly 1 in 5.']);
+  // v10.42 part 3 (the relevance rule; the pastor: "not random analytics… everything should tie into that"): "Here in {town}" carries
+  // only what bears on the idea's own purpose. The Pathfinder club is for young people: the children of club age, never the board's
+  // emphasis (poverty, child poverty, single parents), which no longer adds a figure to any deck.
+  c('here in Warminster: only the figures the idea’s purpose allows (the club: children of its ages)', [S('place').kicker,BM.place.facts.map(f=>f.value),S('place').facts.map(f=>f.value)], ['Here in Warminster',['815'],['815']]);
+  c('…the board’s emphasis adds no support (the purpose allows none that differs here)', BM.need.supports.map(f=>f.key), []);
+  c('…each says what it counts, in plain words', BM.place.facts.map(i=>i.label), ['Children aged 5 to 14 live around us.']);
   c('capacity: volunteers, leaders, hours, start-up budget', S('capacity').rows.map(r=>[r.label,r.need,r.have,r.unit]),
     [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h'],['Start-up budget',75,2500,'$']]);
-  c('…nothing missing, so no gaps and the headline says so', [S('capacity').gaps,S('capacity').headline], [[],'We have the people and hours to staff it']);
-  c('who is able: a count, the gifts it needs, and no names', [S('ability').value,S('ability').label,S('ability').gifts], ['3','Members with gifts that fit this work; 2 of them said they are drawn to it.',['Teaching','Shepherding and pastoral care','Creative communication and craftsmanship','Helps']]);
-  c('…the source counts adults only', S('ability').source, 'Spiritual Gifts results from 6 members · adults only · counts only, no names');
-  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['To start · each month','$75 · $25'],['Ceiling','$125'],['Source','Local budget, not tithe'],['Left after this','$2,425 · $425 a month']]);
-  // v10.40: a verse on every slide. The board's own verse, Luke 14:28, counts the cost on the
-  // capacity slide; the ask carries Nehemiah 2:18 (both verbatim from the verified library).
-  c('…with Nehemiah 2:18, KJV, and Luke 14:28 on the capacity slide', [S('ask').verse,S('capacity').verse], [{text:'…And they said, Let us rise up and build. So they strengthened their hands for this good work.',ref:'Nehemiah 2:18 · KJV'},
-    {text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'}]);
+  // v10.42 part 3: every headline serves the goal ("{aim}": the theme's own words)
+  c('…nothing missing, so no gaps and the headline says so, in the aim\'s words', [S('capacity').gaps,S('capacity').headline], [[],'We have the people and hours to grow our Pathfinder Club']);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "the Spiritual Gifts initiative has to be done for the whole church membership"): six
+  // results in a church of 135 in worship is below half, so the slide says the church-wide initiative comes first, with the coverage
+  c('who is able: below half, the church-wide initiative first, the coverage, the gifts it needs, and no names', [S('ability').headline,S('ability').value,S('ability').label,S('ability').gifts],
+    ['The church-wide Spiritual Gifts initiative comes first','6','of the 135 in worship have discovered their gifts so far',['Teaching','Shepherding and pastoral care','Creative communication and craftsmanship','Helps']]);
+  c('…counts only', S('ability').source, 'Counts only, no names');
+  { // …and at half or more of the adults (12 adults in worship: 6 took it), the whole church counted (GIFTS.md §6.3)
+    const hv=JE(`(()=>{ const c=capGet(); capSave({...c,adults:12}); U_PEOPLE_CACHE=null; const s=caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='ability'); capSave(c); U_PEOPLE_CACHE=null; return s; })()`);
+    c('…at half or more: members whose gifts fit, of those who took it, who has time and who can lead', [hv.headline,hv.value,hv.label,hv.lead,hv.source],
+      // v10.42.0 fix after review: one denominator (the results counted), and when none who fit can lead yet, the profile's leaders are
+      // said with it ("Leaders 3 free" on one slide, "Nobody is ready to coordinate yet" on the next read as a contradiction)
+      ['God has already put people for this in our church','3','Members whose gifts fit this work, of 6 results counted','3 of them have time to give. 7 leaders in the church; none yet among those whose gifts fit: pair and train.','Spiritual Gifts results from 6 members · adults only · counts only, no names']); }
+  // v10.42 part 3: Places moves from the opening to the ask (the opening keeps four rows beside the goal)
+  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['Places','16'],['To start · each month','$75 · $25'],['Ceiling','$125'],['Source','Local budget, not tithe'],['Left after this','$2,425 · $425 a month']]);
+  // v10.40: a verse on every slide (verbatim from the verified library). v10.42 part 3: Nehemiah 2:18 is the appeal's verse now
+  // (NARRATIVE.md §6.1, the close job), so the ask counts the cost with Luke 14:28; What it takes, whose headline now names the aim,
+  // holds one line of verse beside its four rows (measured at 360 × 640): Acts 15:28, "no greater burden than these necessary things".
+  c('…with Luke 14:28, KJV, and Acts 15:28 on the capacity slide', [S('ask').verse,S('capacity').verse,S('close').quote.ref], [{text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'},
+    {text:'For it seemed good to the Holy Ghost, and to us…',ref:'Acts 15:28 · KJV'},'Nehemiah 2:18 · KJV']);
   c('risks: the two most serious for children, then never tithe (the slide keeps what fits beside its verse)', S('risks').items.map(t=>t.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge']);
-  c('…and the handout keeps all five', BM.risks.items.map(t=>t.text.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge','Counsel sought from the conferen','Open door, and no private one-to']);
+  // v10.42.0 fix after review: the conference's counsel is a safeguard on a major matter only (a series, a proposal to the
+  // conference, $2,500 or more), said as what we will do; this $125 trial has the board's approval before anything is announced
+  c('…and the handout keeps all five', BM.risks.items.map(t=>t.text.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge','Plans approved by the board befo','Open door, and no private one-to']);
   c('…as many as fit the slide beside its verse (four at most, 270 characters in either language)', built.every(b=>{ const r=b.d.slides.find(s=>s.type==='risks'); return !r||r.items.length<=4; }), true);
   c('…and the source names the Church Manual pages and ASV of the rows it shows', S('risks').source, 'Church Manual 2022, pp. 181, 142 · NAD Adventist Screening Verification');
   c('the three "why here" cards are alike in every deck: all in the sentence form, or all naming the figure', built.filter(b=>{ const t=b.d.slides.find(s=>s.type==='trio'&&b.t==='board'); if(!t) return false;
@@ -254,7 +292,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('usted and the Spanish catalogue name after a colon', SS('motion').headline, 'Aprobar una prueba de 6 semanas: Club de Conquistadores y Aventureros, abierto al vecindario');
   c('the need in Spanish, with its county said in Spanish', [SS('stat').headline,SS('stat').count,SS('stat').compare.label,SS('place').kicker,SS('place').source], ['Alrededor de 1 de cada 4 personas de nuestro entorno es menor de 18 años','unos 1,490 menores de 18 años','Condado de Bucks','Aquí en Warminster','Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02']);
   c('…the source in Spanish', SS('stat').source, 'Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02 · margen de error ±3.1 puntos · por encima del condado');
-  c('the ask in Spanish, and the verses from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref,SS('capacity').verse.ref], ['Personas','Presupuesto local, no el diezmo','Nehemías 2:18 · RVA','Lucas 14:28 · RVA']);
+  c('the ask in Spanish, and the verses from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref,SS('capacity').verse.ref], ['Personas','Presupuesto local, no el diezmo','Lucas 14:28 · RVA','Hechos 15:28 · RVA']);
   c('the dates in Spanish', SS('timeline').steps[0].date, '13 oct · inicio');
   c('the same verses as the English deck, slide for slide (v10.40)', BS.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.es.ref===${JSON.stringify(r)})||{}).id`)),
     BD.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.en.ref===${JSON.stringify(r)})||{}).id`)));
@@ -276,11 +314,14 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   console.log('\n-- the team deck and the congregation deck --');
   const TY=built.find(b=>b.lang==='en'&&b.g==='youth'&&b.id==='pathfinders'), TD=TY.d;
   const T=t=>TD.slides.find(s=>s.type===t);
-  c('the invitation: “You are the people this needs”, with when and where', [T('motion').headline,T('motion').rows.map(r=>r[0])], ['You are the people this needs',['When','Runs','Places','Review']]);
+  // v10.42 part 3: the invitation says the aim ("Help us {aim}", NARRATIVE.md §5.2)
+  c('the invitation: “Help us grow our Pathfinder Club”, with when and where', [T('motion').headline,T('motion').rows.map(r=>r[0])], ['Help us grow our Pathfinder Club',['When','Runs','Places','Review']]);
   c('the people we would serve: children of club age, from the Census age bands', [T('stat').headline,T('stat').value,T('stat').unit], ['About 815 children aged 5 to 14 live around us','815','children aged 5 to 14']);
   // v10.40: the design figures ("why the plan looks this way") are the place applied: they are
   // the "Here in" slide's facts now. Three roles and four support rows at most beside the verse.
-  c('why the plan looks this way: the figures that shape it, on the "Here in" slide', [T('place').facts.length,T('place').facts.every(i=>i.label.length>30),TY.m.need.design.length], [2,true,3]);
+  // v10.42 part 3 (the pastor: "Older neighbours living alone… below the poverty line… What does that have to do with why we want to
+  // do [it]?"): no design card ("why the plan looks this way") on any slide; the club's team deck has no "Here in" slide at all here
+  c('no design cards on any slide, and no "Here in" slide the purpose does not carry', [TD.slides.some(s=>s.type==='trio'),TD.slides.some(s=>s.type==='place')], [false,false]);
   c('roles with hours a month, and a youth lead for the youth team', T('roles').roles.map(r=>[r.title,r.hours]), [['Coordinator','9 h a month'],['Team member × 4','8 h a month'],['Youth lead','8 h a month'],['Prayer partner','A few minutes a day']]);
   c('support, youth team: the child-safety rows and the young people’s own part come first in the choosing', T('risks').items.map(t=>t.slice(0,30)),
     ['One part planned and run by th','Every adult screened through A','Two adults in every room and a'].map(t=>t.slice(0,30)));
@@ -290,14 +331,19 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('the health team’s support includes the health rules: no diagnosis, licensed people only', TH.d.slides.find(s=>s.type==='risks').items.filter(t=>/diagnosis|licensed/.test(t)).length, 2);
   const CG=built.find(b=>b.lang==='en'&&b.g==='congregation'&&b.id==='pathfinders').d;
   const cs=CG.slides;
-  // v10.40: the congregation's verse speaks to the ministry's own need (children: Mark 10:14)
-  c('congregation: one verse (Mark 10:14, KJV) first', [cs[1].type,cs[1].ref,cs[1].version], ['verse','Mark 10:14','KJV']);
-  c('…our neighbours, as a number, in homes, with the children shown as dots', [cs[2].headline,cs[2].value,cs[2].unit,cs[2].freq,cs[2].count,cs[2].dots], ['About 5,480 neighbours live in 1,980 homes around us','5,480','neighbours','in 1,980 homes','27 in every 100 are children',{n:100,on:27,hue:'children'}]);
-  c('…one thing we learned, here in Warminster (v10.40), then what God has put in this room', [cs[3].kicker,cs[4].kicker,cs[5].kicker,cs[5].headline], ['One thing we learned','Here in Warminster','What God has put in this room','Look what God has already put in this room']);
-  c('…and the thing learned is not the children again (just shown as dots): single parents instead', [cs[3].headline,cs[3].compare.sig], ['About 1 in 3 families with children around us is led by a single parent',true]);
+  /* v10.42 part 3 (the pastor: "a focus, a beginning and an appeal at the end"; NARRATIVE.md §5.3): the whole church's deck opens with
+     the plan and the goal, then WHY: Scripture under "Why {aim}?" (the idea's theme verse first: Pathfinders' 2 Corinthians 5:14),
+     then its one fact (the children, with Mark 10:14), "Here in", How it works, what God has put in this room, three sizes of yes, the
+     appeal. The relevance rule ("not random analytics… everything should tie into that"): "our neighbours" is for place and field
+     ideas only, and the board's emphasis (single parents) adds no figure to a club's deck. */
+  c('congregation: the plan and the goal, then why: a verse under its own headline', [cs[1].type,cs[1].kicker,!!cs[1].goal,cs[2].type,cs[2].kicker,cs[2].headline,cs[2].ref,cs[2].version], ['motion','The plan',true,'verse','Why','Why grow our Pathfinder Club?','2 Corinthians 5:14','KJV']);
+  c('…then its one fact: the children, with Mark 10:14; no "our neighbours" slide (not a place idea)', [cs[3].type,cs[3].headline,cs[3].verse.ref,cs.some(s=>s.part==='neighbours')], ['stat','About 1 in 4 people around us is a child','Mark 10:14 · KJV',false]);
+  c('…here in Warminster, how it works (the idea’s own steps), then what God has put in this room', [cs[4].kicker,cs[5].kicker,cs[5].headline,cs[6].kicker], ['Here in Warminster','How it works','Three steps to grow our Pathfinder Club','What God has put in this room']);
+  c('…and no single parents anywhere (the club’s purpose does not allow the figure)', strings(CG).some(([p,t])=>/single parent/i.test(t)), false);
   c('…while a ministry led by another figure keeps it (the pantry: SNAP)', built.find(b=>b.lang==='en'&&b.g==='congregation'&&b.id==='food-pantry').d.slides[3].headline, 'About 1 in 6 households around us receives SNAP food assistance');
   c('…then here in Warminster (v10.40)', [cs[4].type,cs[4].kicker], ['place','Here in Warminster']);
-  c('…the plan, three sizes of yes smallest first, and the promise to report back', [cs[6].headline,cs[7].options.map(o=>o.k),/^We will report back on \d+ \w{3}$/.test(cs[8].headline)], ['A trial of 6 weeks: Pathfinder & Adventurer club, open to the neighborhood',['pray','help','lead'],true]);
+  // v10.42 part 3: the appeal goes back to the goal ("Will you join us to {aim}?", NARRATIVE.md §5.3) where "We will report back" was
+  c('…the plan, three sizes of yes smallest first, and the appeal back to the goal', [cs[1].headline,cs[7].options.map(o=>o.k),cs[8].headline,!!cs[8].goal], ['A trial of 6 weeks: Pathfinder & Adventurer club, open to the neighborhood',['pray','help','lead'],'Will you join us to grow our Pathfinder Club?',true]);
   c('…leading work with children says screening is required', cs[7].options[2].text, 'Lead or teach (screening required).');
   // v10.40: "Christ's method alone…" (MH 143, verified with its Spanish MC 102) closes the congregation's deck
   c('…and the close carries MH 143.3', cs[8].quote.ref, 'Ellen G. White · The Ministry of Healing, p. 143');
@@ -314,8 +360,10 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   // v10.40: slides carry only the verified library's verses; the need slide follows the need (the
   // pantry: Proverbs 31:9). Updated for the pastor's wish that the groups' own verses reach the
   // slides again: 1 Peter 5:2 is now in the library (verified KJV / RVA) and is the elders' motion verse.
-  c('elders: their own role in the motion, their verses, their question set', [one('elders','board','food-pantry').d.slides[1].headline,one('elders','board','food-pantry').d.slides.find(s=>s.type==='stat').verse.ref,one('elders','board','food-pantry').d.slides[1].verse.ref,one('elders','board','food-pantry').m.questions.map(q=>q.id)],
-    ['Support the coordinator: a real food pantry, on a schedule',"Proverbs 31:9 · KJV","1 Peter 5:2 · KJV",['elders.gospel','elders.load','elders.trained','elders.fruit']]);
+  // v10.42 part 3: the opening carries the goal now; beside it (and its rows) a phone holds a verse of two lines at most (measured in
+  // Chrome, the longer language), so 1 Peter 5:2 gives way there to Proverbs 16:3 and goes on the first slide that holds it (who is able)
+  c('elders: their own role in the motion, their verses, their question set', [one('elders','board','food-pantry').d.slides[1].headline,one('elders','board','food-pantry').d.slides.find(s=>s.type==='stat').verse.ref,one('elders','board','food-pantry').d.slides[1].verse.ref,one('elders','board','food-pantry').d.slides.find(s=>s.type==='ability').verse.ref,one('elders','board','food-pantry').m.questions.map(q=>q.id)],
+    ['Support the coordinator: a real food pantry, on a schedule',"Proverbs 31:9 · KJV","Proverbs 16:3 · KJV","1 Peter 5:2 · KJV",['elders.gospel','elders.load','elders.trained','elders.fruit']]);
   c('finance and board decks differ, from the same figures', JSON.stringify(one('finance','board','food-pantry').d)!==JSON.stringify(one('board','board','food-pantry').d), true);
   { const qs=built.flatMap(b=>b.m.questions.map(q=>[b.lang,b.g,b.id,q]));
     c('every question answered with real figures: no placeholder left, none empty', qs.filter(([l,g,id,q])=>/\{/.test(q.q+q.a)||!q.q||!q.a).length, 0);
@@ -360,9 +408,11 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('a survey without margins: no verdict, compare.moe null, no margin words in the source', [h.stat.compare.sig,h.stat.compare.moe,/margin|similar|higher/.test(h.stat.source)], [false,null,false]);
   h=hero('pathfinders','(m,k)=>{ m.poverty=7.3; m.moe.poverty=4; m.childPoverty=9; m.moe.childPoverty=9; }');
   c('supports are significant ones only: similar poverty figures are not supports', h.supports.includes('poverty')||h.supports.includes('childPoverty'), false);
-  c('…and the trio fills with figures that do differ before any that are the same', [(h.trio||[]).length,(h.trio||[]).every(i=>!/About the same/.test(i.label))], [3,true]);
+  // v10.42 part 3 (the relevance rule, relevance.json): the trio and the supports take only the figures the idea's purpose allows (the
+  // club: children of its ages), so the trio may hold fewer than three and the whole church's emphasis adds none
+  c('…and the trio holds only figures the purpose allows, none "about the same"', [(h.trio||[]).length,(h.trio||[]).every(i=>!/About the same/.test(i.label))], [1,true]);
   h=hero('pathfinders','(m,k)=>{}','congregation','congregation');
-  c('the congregation’s supports follow its own emphasis (single parents before poverty)', h.supports, ['singleParent','poverty']);
+  c('the congregation’s emphasis (single parents, poverty) adds no support to a club’s deck', h.supports, []);
 
   console.log('\n-- 5. money in real amounts; never tithe --');
   c('fmtMoney: $0, $75, $450, $2,500, $9,999, then thousands', JE(`[0,75,450,2500,9999,10000,12400,52000,-40].map(fmtMoney)`), ['$0','$75','$450','$2,500','$9,999','$10k','$12k','$52k','-$40']);
@@ -371,7 +421,8 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   { E('CAP=null; capSave('+JSON.stringify(FX.SMALL)+'); U_PEOPLE_CACHE=null;');
     const m=JE(`caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}})`), d=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}}))`);
     const cap=d.slides.find(s=>s.type==='capacity');
-    c('a small church short of money: the gap is said in dollars, not "$0k"', [m.capacity.ok,cap.headline,cap.gaps.filter(g=>/\$/.test(g))], [false,'What we have, and what is still missing',['Short by $45 a month']]);
+    // v10.42 part 3: What it takes names the aim ("What we have to {aim}, and what is still missing")
+    c('a small church short of money: the gap is said in dollars, not "$0k"', [m.capacity.ok,cap.headline,cap.gaps.filter(g=>/\$/.test(g))], [false,'What we have to feed neighbours who are hungry, and what is still missing',['Short by $45 a month']]);
     c('…and the ask says what is short, not a negative balance', d.slides.find(s=>s.type==='ask').rows.find(r=>r[0]==='Left after this')[1], 'Short by $45 a month');
     const es=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW},lang:'es'}))`).slides.find(s=>s.type==='capacity');
     c('…in Spanish too', es.gaps.filter(g=>/\$/.test(g)), ['Por cubrir: $45 al mes']);
@@ -381,7 +432,9 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   { E(`window.__keep=uChurch().members; uChurch().members=[]; uPersist(); U_PEOPLE_CACHE=null;`);
     const m=JE(`caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}})`), d=JE(`caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}))`);
     const ab=d.slides.find(s=>s.type==='ability');
-    c('the ability slide says what is known, and claims nobody', [ab.headline,ab.value,ab.label,ab.lead], ['Who could do this: what we know so far','6','The Spiritual Gifts assessment has not been run yet. The church profile lists 6 members with the skills this needs.','']);
+    // v10.42 part 3 (the pastor, SPEC-FOCUS E: "the Spiritual Gifts initiative has to be done for the whole church membership; every
+    // member needs to do it"): with no results the slide says the church-wide initiative comes first, with the coverage (GIFTS.md §6.3)
+    c('the ability slide says what is known, and claims nobody', [ab.headline,ab.value,ab.label,ab.lead], ['The church-wide Spiritual Gifts initiative comes first','0','of the 135 in worship have discovered their gifts so far','Every member is invited: about 15 minutes on their phone.']);
     c('questions that need gifts results are left out', m.questions.filter(q=>/gifts/i.test(q.a)).length, 0);
     E(`uChurch().members=window.__keep; uPersist(); U_PEOPLE_CACHE=null;`); }
 
@@ -391,12 +444,13 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     const own=JE(`caseSample({now:${NOW}})`);
     JE(`caseDeck(caseModel('food-pantry',{type:'team',group:'community'},{now:${NOW}}))`); JE(`caseRankAll(uCatalog(),caseRankCtx()).length`);
     c('with a survey on screen, the sample is built from it, and his church’s name carries SAMPLE on every slide’s footer', [own.ok,own.own,own.deck.church,own.keepDays], [true,true,'SAMPLE · Bucks County SDA',1]);
-    c('…the figures are his survey’s, so they cite the Census', /^U\.S\. Census ACS 2020–2024/.test(own.deck.slides[2].source), true);
+    c('…the figures are his survey’s, so they cite the Census', /^U\.S\. Census ACS 2020–2024/.test(own.deck.slides.find(s=>s.type==='stat').source), true);   // v10.42 part 3: the why verse comes before it
     c('…and names nobody: no ask list', own.model.askList, []);
     const dd=JE(`(()=>{ DATA=null; return caseSample({now:${NOW}}); })()`);
     c('without one, a made-up church and neighbourhood', [dd.ok,dd.own,dd.deck.church,dd.model.area.name,dd.model.area.county], [true,false,'Sample Church','Sample neighborhood','Sample County']);
     c('…the Pathfinder club, to the whole congregation', [dd.deck.ministry.id,dd.deck.audience.type], ['pathfinders','congregation']);
-    const marked=dd.deck.slides.map(s=>s.type==='join'?s.note:s.type==='verse'?s.ref:s.type==='close'?s.text:s.kicker);
+    // v10.42 part 3: the why verse slide has its own kicker ("Why"), which carries the mark
+    const marked=dd.deck.slides.map(s=>s.type==='join'?s.note:s.type==='verse'?(s.headline?s.kicker:s.ref):s.type==='close'?s.text:s.kicker);
     c('SAMPLE on every slide (the join note, the verse reference, the close text, every kicker)', marked.every(t=>/^SAMPLE( · |$)/.test(t)), true);
     c('…a kicker that would not fit one line with the mark keeps the mark alone', [marked.filter(t=>t==='SAMPLE').length>0,dd.deck.slides.every(s=>!s.kicker||s.kicker.length<=34)], [true,true]);
     c('made-up figures never cite the Census, and the made-up gifts and profile say so', [strings(dd.deck).some(([p,s])=>/Census|Censo/.test(s)),dd.deck.slides.find(s=>s.type==='ability').source,
@@ -404,11 +458,12 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       [false,'Made-up sample Spiritual Gifts counts · counts only, no names','Made-up sample church profile']);
     c('…and in the title', dd.deck.title, 'SAMPLE · Pathfinder & Adventurer club, open to the neighborhood');
     c('the sample deck passes the server and loses nothing', [serverCheck(dd.deck).ok,JSON.stringify(sansJoin(serverCheck(dd.deck).deck))===JSON.stringify(sansJoin(dd.deck))], [true,true]);
-    c('the made-up figures still show the county test', dd.deck.slides.find((s,i)=>s.type==='stat'&&i>2).compare, {here:34.5,county:19,label:'Sample County',sig:true,moe:9.8});
+    // v10.42 part 3: the club's one figure is its children (the relevance rule); it still shows the county test
+    c('the made-up figures still show the county test', dd.deck.slides.find(s=>s.type==='stat').compare, {here:27.2,county:20.4,label:'Sample County',sig:true,moe:3.1});
     const es=JE(`caseSample({now:${NOW},lang:'es'})`);
-    c('in Spanish: MUESTRA on every slide, the made-up names in Spanish', [es.deck.slides.every(s=>/^MUESTRA( · |$)/.test(s.type==='join'?s.note:s.type==='verse'?s.ref:s.type==='close'?s.text:s.kicker)),es.deck.church,es.model.area.name,es.deck.slides[2].source], [true,'Iglesia de ejemplo','Vecindario de ejemplo','Cifras de ejemplo inventadas · Vecindario de ejemplo']);
+    c('in Spanish: MUESTRA on every slide, the made-up names in Spanish', [es.deck.slides.every(s=>/^MUESTRA( · |$)/.test(s.type==='join'?s.note:s.type==='verse'?(s.headline?s.kicker:s.ref):s.type==='close'?s.text:s.kicker)),es.deck.church,es.model.area.name,es.deck.slides.find(s=>s.type==='stat').source], [true,'Iglesia de ejemplo','Vecindario de ejemplo','Cifras de ejemplo inventadas · Vecindario de ejemplo · margen de error ±3.1 puntos · por encima del condado']);   // v10.42 part 3: the lead figure (its margin and verdict), where the neighbours slide was
     const bd=JE(`caseSample({now:${NOW},audience:{type:'board',group:'board'},ministry:'food-pantry'})`);
-    c('any kind and ministry can be sampled', [bd.deck.audience.type,bd.deck.slides.map(s=>s.type).join(','),serverCheck(bd.deck).ok], ['board',ORDER.board.join(','),true]);
+    c('any kind and ministry can be sampled', [bd.deck.audience.type,orderOk(bd.deck.slides.map(s=>s.type),ORDER.board),serverCheck(bd.deck).ok], ['board',true,true]);
     c('nothing was written to the device while building samples and models', E('window.__writes'), 0);
     E(`Storage.prototype.setItem=window.__ls;`);
     E('DATA='+JSON.stringify(D)+';SCOPE="tract";');

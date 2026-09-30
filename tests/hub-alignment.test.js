@@ -14,7 +14,9 @@ setTimeout(()=>{
   console.log('\n-- the quote is back under the welcome --');
   const order=[...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]);
   console.log('    hub order:', order.join(' -> '));
-  c('sits between the welcome and the tools', order.join(','), 'hubwelcome,egw,rule,tools');
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "ONE 'Gifts first' card (hub tile area…) with ONE number and ONE button"): the card's
+  // place is last, below the four tools (the design, X13); the quote stays under the welcome
+  c('sits between the welcome and the tools', order.join(','), 'hubwelcome,egw,rule,tools,hubgifts');
   c('exactly one quote on the page', D.querySelectorAll('#hub .egw').length, 1);
   c('text intact', /Much careful thought and fervent prayer/.test(D.querySelector('.egw q').textContent));
   c('citation intact', /Testimonies for the Church, vol\. 4, p\. 67/.test(D.querySelector('.egw cite').textContent));

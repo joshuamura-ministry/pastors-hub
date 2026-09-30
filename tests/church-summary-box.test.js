@@ -25,13 +25,15 @@ setTimeout(()=>{
   const groups=[...box.querySelectorAll('.capsumg h4')].map(h=>h.textContent);
   c('four groups, matching the four steps', groups, ['People','Money','Building','Skills']);
   const txt=box.textContent;
-  c('people: attending, volunteers, leaders, hours', /Attending135/.test(txt)&&/Volunteers46 \(11 already committed\)/.test(txt)&&/Leaders9/.test(txt)&&/Hours a month320/.test(txt));
-  c('and what is left after commitments', /Left to give: 35 volunteers, 7 leaders, 250 hours a month/.test(txt));
-  c('money, both lines', /Startup funds\$2,500/.test(txt)&&/Monthly funds\$450/.test(txt));
-  c('every room with its capacity', /Kitchen \/ fellowship hall90 people/.test(txt)&&/Church van \/ bus14 people/.test(txt)&&/Confirmed host home12 people/.test(txt));
-  c('skills with counts', /3Nurses or health professionals/i.test(txt.replace(/\s+/g,''))||/3nurses or health professionals/.test(txt));
-  c('languages', /Spanish — two fluent, one conversational/.test(txt));
-  c('and what they are already carrying', /Already carrying/.test(txt)&&/Pathfinders/.test(txt));
+  // v10.42 part 3 (the pastor, 29 Sep 2026, Q3: the demo church is the realistic average church, about 80 members and 55 attending;
+  // D-AVERAGE-CHURCH.md): the box says its own numbers, the two new profile fields (members on the books, adults attending) first
+  c('people: members on the books, attending, adults, volunteers, leaders, hours', /Members on the books80/.test(txt)&&/Attending55/.test(txt)&&/Adults attending46/.test(txt)&&/Volunteers12/.test(txt)&&/Leaders3/.test(txt)&&/Hours a month160/.test(txt));
+  c('and what is left after commitments', /Left to give: 12 volunteers, 3 leaders, 160 hours a month/.test(txt));
+  c('money, both lines', /Startup funds\$1,500/.test(txt)&&/Monthly funds\$150/.test(txt));
+  c('every room with its capacity', /Kitchen \/ fellowship hall60 people/.test(txt)&&/Classrooms24 people/.test(txt));
+  c('skills with counts', /1nurses or health professionals/.test(txt.replace(/\s+/g,''))||/1nurses or health professionals/.test(txt));
+  c('languages', /Spanish — one fluent member/.test(txt));
+  c('and what they are already carrying', /Already carrying/.test(txt)&&/Wednesday prayer meeting/.test(txt));
   c('it tells the reader the plan rests on these', /Everything below is measured against these numbers/.test(txt));
   c('and how to leave the sample', /Clear all/.test(txt));
   c('the four groups carry the four step colours', [...box.querySelectorAll('.capsumg')].map(g=>g.getAttribute('style')), ['--k:var(--acc)','--k:var(--m-hardship)','--k:var(--m-housing)','--k:var(--m-children)']);

@@ -227,7 +227,8 @@ function makeStore(){
   c('the heart page is Spanish', /Mi corazón se inclina hacia los niños/.test(heT)&&/Ver mis resultados/.test(heT)&&/No mucho/.test(heT)&&!/See my results/.test(heT), true);
   es(`GFS={name:'',a:{},h:{},i:0,sect:-1,done:false,sent:false,ov:GF_TOTAL}; gfRenderIntro(gfHost());`);
   const inT=PS.w.document.getElementById('giftbody').textContent;
-  c('the first screen is Spanish', /Descubra sus dones espirituales/.test(inT)&&/Antes de comenzar/.test(inT)&&/unos doce minutos/.test(inT)&&!/Before you begin/.test(inT), true);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "ready announcement text EN + ES for the bulletin, text message, WhatsApp and the pulpit"; the approved spec: "about 15 minutes", the design X17): "unos 15 minutos"
+  c('the first screen is Spanish', /Descubra sus dones espirituales/.test(inT)&&/Antes de comenzar/.test(inT)&&/unos 15 minutos/.test(inT)&&!/Before you begin/.test(inT), true);
   c('Romans 12:6–7 in both languages marks the omitted clause', [es('GF_VERSES[3][0].includes("given to us... let us wait")'),es('GF_VERSE_SET[3][1]'),es('GF_VERSE_SET_ES[3][1]')], [true,'Romans 12:6–7','Romanos 12:6–7']);
   c('RVA chapter-opening capitals set in sentence case', [es('GF_DEEP_ES.discern.v[0].slice(0,6)'),es('GF_DEEP_ES.faith.v[0].slice(0,7)'),es('GF_DEEP_ES.inter.v[0].slice(0,13)')], ['Amados','Es pues','Amonesto pues']);
 

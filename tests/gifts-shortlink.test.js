@@ -227,13 +227,14 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   c('large enough to print (about 1200 px)', fills[0][2]>=1100&&fills[0][2]<=1250, true);
   // the message
   const msgEn=D.getElementById('gfmsg').value;
-  c('the message names the church, the time, and where results go', [/Bucks County SDA/.test(msgEn),/about twelve minutes/.test(msgEn),/your report opens straight away/.test(msgEn),/come back to your pastor/.test(msgEn),msgEn.endsWith('Start here: '+link1)], [true,true,true,true,true]);
-  c('two to four sentences before the link', msgEn.split('\n\n')[0].split(/(?<=[.!?])\s+/).length, 3);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "ready announcement text EN + ES for the bulletin, text message, WhatsApp and the pulpit"; the approved spec: "about 15 minutes", the design X17): the WhatsApp announcement, the default kind
+  c('the message names the church, the time, and where results go', [/Bucks County SDA/.test(msgEn),/about 15 minutes/.test(msgEn),/your report opens straight away/.test(msgEn),/come back to your pastor/.test(msgEn),msgEn.endsWith('Start here: '+link1)], [true,true,true,true,true]);
+  c('a bold title, the invitation, where the result goes, then the link (four lines)', [msgEn.split('\n').length,msgEn.split('\n')[0]], [4,'*Discover your spiritual gifts*']);
   D.querySelector('[data-ml="es"]').click();
   const msgEs=D.getElementById('gfmsg').value;
   // Updated (review V14/E2E-9): the Spanish message's link ends ~es, so it opens in
   // Spanish on a phone that has not chosen a language.
-  c('Español: the same message in Spanish, usted form, its link opening in Spanish', [/Una invitación de Bucks County SDA/.test(msgEs),/unos doce minutos/.test(msgEs),/verá su informe de inmediato/.test(msgEs),/le llegarán también a su pastor/.test(msgEs),msgEs.endsWith('Comience aquí: '+link1+'~es')], [true,true,true,true,true]);
+  c('Español: the same message in Spanish, usted form, its link opening in Spanish', [/Se invita a cada miembro de Bucks County SDA/.test(msgEs),/unos 15 minutos/.test(msgEs),/verá su informe de inmediato/.test(msgEs),/le llegarán también a su pastor/.test(msgEs),msgEs.endsWith('Comience aquí: '+link1+'~es')], [true,true,true,true,true]);
   c('the language switch shows which is chosen', [...D.querySelectorAll('[data-ml]')].map(b=>b.getAttribute('aria-checked')), ['false','true']);
   D.getElementById('gfmsgcopy').click(); await sleep(10);
   c('Copy message copies what is in the box', P.copied.pop(), msgEs);
@@ -308,8 +309,9 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   c('the setup survey card says "Sección censal", not "Census Tract"', [/Sección censal 2041\.02/.test(card),/Census Tract/.test(card)], [true,false]);
   await generate(S);
   const ready=S.w.document.getElementById('gfready').textContent;
-  c('the QR and message block is Spanish', [/Código QR/.test(ready),/Descargar el código QR/.test(ready),/Un mensaje listo para enviar/.test(ready),/Copiar el mensaje/.test(ready),/Copiar solo el enlace/.test(ready),/QR code|Copy message|Download/.test(ready)], [true,true,true,true,true,false]);
-  c('and the message starts in Spanish', /^Una invitación de Bucks County SDA/.test(S.w.document.getElementById('gfmsg').value), true);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "ready announcement text EN + ES for the bulletin, text message, WhatsApp and the pulpit"; the approved spec: "about 15 minutes", the design X17): "Anuncios listos"
+  c('the QR and message block is Spanish', [/Código QR/.test(ready),/Descargar el código QR/.test(ready),/Anuncios listos/.test(ready),/Copiar el mensaje/.test(ready),/Copiar solo el enlace/.test(ready),/QR code|Copy message|Download/.test(ready)], [true,true,true,true,true,false]);
+  c('and the message starts in Spanish', /^\*Descubra sus dones espirituales\*\nSe invita a cada miembro de Bucks County SDA/.test(S.w.document.getElementById('gfmsg').value), true);
   S.w.eval(`(()=>{ const ch=uChurch(); ch.members=[{id:'v1',name:'Rosa Díaz',hours:8,skills:['cook','kids'],slots:['Sat afternoon'],willing:true,confirmed:true},{id:'v2',name:'Luis',skills:[]}]; uPersist(); GF_VIEW='roster'; gfRender(); })()`);
   const team=S.w.document.getElementById('u-team').textContent;
   c('the volunteer panel is Spanish', [/Habilidades prácticas y disponibilidad · Bucks County SDA/.test(team),/1 miembro confirmado y dispuesto\./.test(team),/Agregar un voluntario/.test(team),/Recursos de la iglesia/.test(team),/Confirmado y dispuesto · 8 horas al mes · Puede cocinar para muchas personas, Buen trato con los niños/.test(team),/Falta revisar · Horas al mes sin indicar · Habilidades sin registrar/.test(team),/Revisar los datos/.test(team)], [true,true,true,true,true,true,true]);

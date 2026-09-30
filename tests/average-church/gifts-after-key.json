@@ -1,0 +1,1071 @@
+{
+ "_about": "Answer key for gifts-after.json (for tests and people, never for a slide): each made-up member’s strong / emerging / untested gifts as generated, heart 1-2, volunteer and leader. The app’s own labels (gfScores) may differ at the edges: that is the point of testing through the app.",
+ "members": [
+  {
+   "i": 1,
+   "name": "Ada (sample)",
+   "memberId": "sample-m01",
+   "date": "2026-09-13",
+   "volunteer": true,
+   "leader": true,
+   "flaggedAllHigh": false,
+   "strong": [
+    "leader",
+    "admin"
+   ],
+   "emerging": [
+    "encour",
+    "mercy",
+    "shep"
+   ],
+   "untested": [
+    "faith"
+   ],
+   "heart": {
+    "seniors": "2",
+    "lonely": "1",
+    "families": "2",
+    "sick": "1",
+    "grieving": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 2,
+   "name": "Bram (sample)",
+   "memberId": "sample-m02",
+   "date": "2026-09-20",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "creative",
+    "teach",
+    "helps"
+   ],
+   "emerging": [
+    "discern",
+    "serve",
+    "mercy"
+   ],
+   "untested": [
+    "admin",
+    "shep"
+   ],
+   "heart": {
+    "lonely": "2",
+    "grieving": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 3,
+   "name": "Cleo (sample)",
+   "memberId": "sample-m03",
+   "date": "2026-09-05",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "serve",
+    "teach",
+    "evang"
+   ],
+   "emerging": [
+    "wisdom"
+   ],
+   "untested": [
+    "faith"
+   ],
+   "heart": {
+    "children": "1",
+    "teens": "1",
+    "seniors": "2",
+    "families": "1"
+   }
+  },
+  {
+   "i": 4,
+   "name": "Dov (sample)",
+   "memberId": "sample-m04",
+   "date": "2026-09-13",
+   "volunteer": true,
+   "leader": true,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "shep",
+    "serve"
+   ],
+   "emerging": [
+    "faith"
+   ],
+   "untested": [],
+   "heart": {
+    "children": "1",
+    "seniors": "2",
+    "lonely": "2",
+    "recovery": "1"
+   }
+  },
+  {
+   "i": 5,
+   "name": "Esme (sample)",
+   "memberId": "sample-m05",
+   "date": "2026-09-24",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "hosp",
+    "faith"
+   ],
+   "emerging": [
+    "encour",
+    "helps"
+   ],
+   "untested": [
+    "discern"
+   ],
+   "heart": {
+    "children": "1",
+    "youngadults": "2",
+    "lonely": "1",
+    "newcomers": "2",
+    "sick": "2"
+   }
+  },
+  {
+   "i": 6,
+   "name": "Finn (sample)",
+   "memberId": "sample-m06",
+   "date": "2026-09-20",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "shep",
+    "inter"
+   ],
+   "emerging": [
+    "giving"
+   ],
+   "untested": [],
+   "heart": {
+    "children": "2",
+    "lonely": "1",
+    "newcomers": "1",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 7,
+   "name": "Greer (sample)",
+   "memberId": "sample-m07",
+   "date": "2026-09-26",
+   "volunteer": true,
+   "leader": true,
+   "flaggedAllHigh": false,
+   "strong": [
+    "admin",
+    "evang",
+    "inter"
+   ],
+   "emerging": [
+    "mercy"
+   ],
+   "untested": [
+    "helps"
+   ],
+   "heart": {
+    "children": "1",
+    "lonely": "2",
+    "sick": "2",
+    "grieving": "2"
+   }
+  },
+  {
+   "i": 8,
+   "name": "Hollis (sample)",
+   "memberId": "sample-m08",
+   "date": "2026-09-04",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "serve",
+    "discern",
+    "encour",
+    "reconcile"
+   ],
+   "emerging": [
+    "shep",
+    "hosp"
+   ],
+   "untested": [],
+   "heart": {
+    "lonely": "2",
+    "families": "1",
+    "grieving": "1",
+    "recovery": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 9,
+   "name": "Ines (sample)",
+   "memberId": "sample-m09",
+   "date": "2026-09-21",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "inter",
+    "mercy"
+   ],
+   "emerging": [
+    "leader",
+    "encour",
+    "serve"
+   ],
+   "untested": [
+    "creative",
+    "reconcile"
+   ],
+   "heart": {
+    "lonely": "2",
+    "sick": "2",
+    "grieving": "1"
+   }
+  },
+  {
+   "i": 10,
+   "name": "Jory (sample)",
+   "memberId": "sample-m10",
+   "date": "2026-09-20",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "shep",
+    "wisdom",
+    "admin"
+   ],
+   "emerging": [
+    "faith"
+   ],
+   "untested": [
+    "giving",
+    "mercy",
+    "creative"
+   ],
+   "heart": {
+    "seniors": "1",
+    "families": "2",
+    "poor": "2"
+   }
+  },
+  {
+   "i": 11,
+   "name": "Kit (sample)",
+   "memberId": "sample-m11",
+   "date": "2026-09-18",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "knowl"
+   ],
+   "emerging": [
+    "mercy",
+    "creative",
+    "discern"
+   ],
+   "untested": [
+    "leader"
+   ],
+   "heart": {
+    "children": "2",
+    "grieving": "1",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 12,
+   "name": "Lark (sample)",
+   "memberId": "sample-m12",
+   "date": "2026-09-03",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "faith",
+    "serve"
+   ],
+   "emerging": [
+    "creative",
+    "encour",
+    "hosp"
+   ],
+   "untested": [],
+   "heart": {
+    "seniors": "1",
+    "families": "2",
+    "sick": "2",
+    "poor": "2"
+   }
+  },
+  {
+   "i": 13,
+   "name": "Milo (sample)",
+   "memberId": "sample-m13",
+   "date": "2026-09-05",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "faith",
+    "serve"
+   ],
+   "emerging": [
+    "hosp"
+   ],
+   "untested": [
+    "encour",
+    "giving",
+    "helps"
+   ],
+   "heart": {
+    "children": "2",
+    "youngadults": "2",
+    "lonely": "2",
+    "families": "1"
+   }
+  },
+  {
+   "i": 14,
+   "name": "Nell (sample)",
+   "memberId": "sample-m14",
+   "date": "2026-09-26",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "faith",
+    "hosp",
+    "inter",
+    "knowl"
+   ],
+   "emerging": [
+    "healing"
+   ],
+   "untested": [
+    "serve"
+   ],
+   "heart": {
+    "youngadults": "1",
+    "lonely": "1",
+    "families": "1",
+    "recovery": "2"
+   }
+  },
+  {
+   "i": 15,
+   "name": "Oren (sample)",
+   "memberId": "sample-m15",
+   "date": "2026-09-13",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "helps",
+    "wisdom"
+   ],
+   "emerging": [
+    "mercy",
+    "hosp",
+    "faith"
+   ],
+   "untested": [
+    "serve",
+    "giving",
+    "shep"
+   ],
+   "heart": {
+    "seniors": "1",
+    "poor": "2"
+   }
+  },
+  {
+   "i": 16,
+   "name": "Pia (sample)",
+   "memberId": "sample-m16",
+   "date": "2026-09-20",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "giving"
+   ],
+   "emerging": [
+    "faith",
+    "hosp",
+    "helps"
+   ],
+   "untested": [],
+   "heart": {
+    "youngadults": "1",
+    "lonely": "2",
+    "grieving": "1",
+    "recovery": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 17,
+   "name": "Quill (sample)",
+   "memberId": "sample-m17",
+   "date": "2026-09-13",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "hosp",
+    "inter",
+    "leader",
+    "knowl"
+   ],
+   "emerging": [
+    "helps",
+    "shep"
+   ],
+   "untested": [
+    "admin"
+   ],
+   "heart": {
+    "children": "2",
+    "lonely": "2",
+    "families": "1",
+    "grieving": "2"
+   }
+  },
+  {
+   "i": 18,
+   "name": "Rhea (sample)",
+   "memberId": "sample-m18",
+   "date": "2026-09-03",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "mercy",
+    "knowl",
+    "shep"
+   ],
+   "emerging": [
+    "helps",
+    "leader",
+    "hosp"
+   ],
+   "untested": [
+    "giving"
+   ],
+   "heart": {
+    "seniors": "1",
+    "lonely": "2",
+    "newcomers": "1",
+    "sick": "2"
+   }
+  },
+  {
+   "i": 19,
+   "name": "Sol (sample)",
+   "memberId": "sample-m19",
+   "date": "2026-09-08",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "serve",
+    "shep"
+   ],
+   "emerging": [
+    "healing"
+   ],
+   "untested": [],
+   "heart": {
+    "children": "2",
+    "newcomers": "1",
+    "families": "1",
+    "sick": "1",
+    "poor": "2"
+   }
+  },
+  {
+   "i": 20,
+   "name": "Tamsin (sample)",
+   "memberId": "sample-m20",
+   "date": "2026-09-21",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "leader",
+    "reconcile",
+    "wisdom"
+   ],
+   "emerging": [
+    "shep",
+    "discern"
+   ],
+   "untested": [
+    "hosp",
+    "giving"
+   ],
+   "heart": {
+    "youngadults": "2",
+    "lonely": "2",
+    "families": "1",
+    "seekers": "1"
+   }
+  },
+  {
+   "i": 21,
+   "name": "Ulla (sample)",
+   "memberId": "sample-m21",
+   "date": "2026-09-23",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "shep",
+    "giving"
+   ],
+   "emerging": [
+    "serve"
+   ],
+   "untested": [
+    "mission"
+   ],
+   "heart": {
+    "children": "1",
+    "seniors": "2",
+    "lonely": "1",
+    "sick": "2",
+    "poor": "1",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 22,
+   "name": "Vale (sample)",
+   "memberId": "sample-m22",
+   "date": "2026-09-08",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "inter",
+    "mercy",
+    "discern",
+    "hosp"
+   ],
+   "emerging": [
+    "leader"
+   ],
+   "untested": [
+    "faith"
+   ],
+   "heart": {
+    "lonely": "2",
+    "newcomers": "1",
+    "poor": "2",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 23,
+   "name": "Wren (sample)",
+   "memberId": "sample-m23",
+   "date": "2026-09-09",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "mercy",
+    "hosp",
+    "giving"
+   ],
+   "emerging": [
+    "encour"
+   ],
+   "untested": [
+    "leader"
+   ],
+   "heart": {
+    "lonely": "2",
+    "newcomers": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 24,
+   "name": "Xan (sample)",
+   "memberId": "sample-m24",
+   "date": "2026-09-09",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "faith",
+    "healing",
+    "serve"
+   ],
+   "emerging": [
+    "proclaim",
+    "creative",
+    "discern"
+   ],
+   "untested": [
+    "inter",
+    "evang",
+    "encour"
+   ],
+   "heart": {
+    "teens": "1",
+    "seniors": "1",
+    "lonely": "1",
+    "families": "2"
+   }
+  },
+  {
+   "i": 25,
+   "name": "Yara (sample)",
+   "memberId": "sample-m25",
+   "date": "2026-09-11",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "shep",
+    "evang",
+    "healing"
+   ],
+   "emerging": [
+    "discern"
+   ],
+   "untested": [
+    "mercy",
+    "reconcile",
+    "faith"
+   ],
+   "heart": {
+    "youngadults": "2",
+    "newcomers": "1",
+    "grieving": "2"
+   }
+  },
+  {
+   "i": 26,
+   "name": "Zeb (sample)",
+   "memberId": "sample-m26",
+   "date": "2026-09-04",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "evang",
+    "admin",
+    "serve"
+   ],
+   "emerging": [
+    "mercy"
+   ],
+   "untested": [
+    "knowl"
+   ],
+   "heart": {
+    "teens": "1",
+    "sick": "1",
+    "grieving": "2",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 27,
+   "name": "Arlo (sample)",
+   "memberId": "sample-m27",
+   "date": "2026-09-18",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "helps",
+    "proclaim",
+    "mission"
+   ],
+   "emerging": [
+    "mercy",
+    "giving"
+   ],
+   "untested": [],
+   "heart": {
+    "seniors": "1",
+    "lonely": "2",
+    "families": "2",
+    "sick": "2",
+    "grieving": "1",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 28,
+   "name": "Bree (sample)",
+   "memberId": "sample-m28",
+   "date": "2026-09-23",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "helps",
+    "encour"
+   ],
+   "emerging": [
+    "shep",
+    "proclaim",
+    "knowl"
+   ],
+   "untested": [
+    "admin"
+   ],
+   "heart": {
+    "seniors": "2",
+    "lonely": "2",
+    "families": "1",
+    "sick": "1",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 29,
+   "name": "Cass (sample)",
+   "memberId": "sample-m29",
+   "date": "2026-09-10",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "leader",
+    "inter",
+    "helps",
+    "hosp"
+   ],
+   "emerging": [
+    "faith"
+   ],
+   "untested": [
+    "knowl"
+   ],
+   "heart": {
+    "children": "2",
+    "seniors": "1",
+    "seekers": "1"
+   }
+  },
+  {
+   "i": 30,
+   "name": "Dell (sample)",
+   "memberId": "sample-m30",
+   "date": "2026-09-17",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "mercy"
+   ],
+   "emerging": [
+    "serve"
+   ],
+   "untested": [],
+   "heart": {
+    "children": "1",
+    "lonely": "1",
+    "sick": "2"
+   }
+  },
+  {
+   "i": 31,
+   "name": "Edda (sample)",
+   "memberId": "sample-m31",
+   "date": "2026-09-23",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "giving"
+   ],
+   "emerging": [
+    "helps",
+    "wisdom",
+    "hosp"
+   ],
+   "untested": [
+    "inter"
+   ],
+   "heart": {
+    "families": "2",
+    "sick": "2",
+    "grieving": "1"
+   }
+  },
+  {
+   "i": 32,
+   "name": "Fitz (sample)",
+   "memberId": "sample-m32",
+   "date": "2026-09-09",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "serve",
+    "creative"
+   ],
+   "emerging": [
+    "knowl",
+    "helps",
+    "encour"
+   ],
+   "untested": [
+    "admin"
+   ],
+   "heart": {
+    "children": "2",
+    "seekers": "1"
+   }
+  },
+  {
+   "i": 33,
+   "name": "Gwen (sample)",
+   "memberId": "sample-m33",
+   "date": "2026-09-27",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "proclaim",
+    "shep",
+    "mercy"
+   ],
+   "emerging": [
+    "admin",
+    "hosp",
+    "creative"
+   ],
+   "untested": [],
+   "heart": {
+    "sick": "2",
+    "recovery": "1"
+   }
+  },
+  {
+   "i": 34,
+   "name": "Hale (sample)",
+   "memberId": "sample-m34",
+   "date": "2026-09-12",
+   "volunteer": true,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "teach",
+    "leader",
+    "creative"
+   ],
+   "emerging": [
+    "helps",
+    "inter"
+   ],
+   "untested": [
+    "serve",
+    "wisdom",
+    "hosp"
+   ],
+   "heart": {
+    "seniors": "1",
+    "families": "1",
+    "sick": "1",
+    "seekers": "2"
+   }
+  },
+  {
+   "i": 35,
+   "name": "Ivo (sample)",
+   "memberId": "sample-m35",
+   "date": "2026-09-07",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "hosp",
+    "teach"
+   ],
+   "emerging": [
+    "mission"
+   ],
+   "untested": [
+    "admin"
+   ],
+   "heart": {
+    "lonely": "2",
+    "sick": "1",
+    "seekers": "1"
+   }
+  },
+  {
+   "i": 36,
+   "name": "June (sample)",
+   "memberId": "sample-m36",
+   "date": "2026-09-02",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "creative",
+    "teach"
+   ],
+   "emerging": [
+    "knowl",
+    "encour",
+    "leader"
+   ],
+   "untested": [
+    "faith"
+   ],
+   "heart": {
+    "youngadults": "2",
+    "lonely": "2",
+    "sick": "2",
+    "grieving": "1"
+   }
+  },
+  {
+   "i": 37,
+   "name": "Kai (sample)",
+   "memberId": "sample-m37",
+   "date": "2026-09-05",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "proclaim",
+    "mercy",
+    "teach"
+   ],
+   "emerging": [
+    "serve",
+    "faith"
+   ],
+   "untested": [],
+   "heart": {
+    "sick": "2",
+    "grieving": "2",
+    "seekers": "1"
+   }
+  },
+  {
+   "i": 38,
+   "name": "Lulu (sample)",
+   "memberId": "sample-m38",
+   "date": "2026-09-23",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "mission",
+    "mercy",
+    "admin"
+   ],
+   "emerging": [
+    "hosp",
+    "proclaim",
+    "serve"
+   ],
+   "untested": [],
+   "heart": {
+    "youngadults": "1",
+    "seniors": "2",
+    "sick": "1"
+   }
+  },
+  {
+   "i": 39,
+   "name": "Mace (sample)",
+   "memberId": "sample-m39",
+   "date": "2026-09-12",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": true,
+   "strong": [
+    "admin",
+    "leader",
+    "teach",
+    "knowl",
+    "wisdom",
+    "discern",
+    "encour",
+    "shep",
+    "mercy",
+    "helps",
+    "serve",
+    "hosp",
+    "evang",
+    "mission",
+    "faith",
+    "inter",
+    "giving",
+    "proclaim",
+    "healing",
+    "reconcile",
+    "creative"
+   ],
+   "emerging": [],
+   "untested": [],
+   "heart": {
+    "teens": "1",
+    "youngadults": "2",
+    "seniors": "2",
+    "sick": "2",
+    "poor": "1"
+   }
+  },
+  {
+   "i": 40,
+   "name": "Nia (sample)",
+   "memberId": "sample-m40",
+   "date": "2026-09-27",
+   "volunteer": false,
+   "leader": false,
+   "flaggedAllHigh": false,
+   "strong": [
+    "inter",
+    "serve",
+    "hosp",
+    "encour"
+   ],
+   "emerging": [
+    "healing",
+    "mission",
+    "admin"
+   ],
+   "untested": [],
+   "heart": {
+    "families": "2",
+    "poor": "1"
+   }
+  }
+ ]
+}

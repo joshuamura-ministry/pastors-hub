@@ -138,7 +138,13 @@ ok((fn.match(/process\.env\.PRESENT_FB_(URL|SECRET)/g) || []).sort().join() === 
 ok(/process\.env\.PRESENT_FB_URL/.test(sweep) && /process\.env\.PRESENT_FB_SECRET/.test(sweep), 'the sweep reads the same two names');
 // v10.40: present-1.1 (a verse at the foot of every content slide, the place slide)
 // v10.41: present-1.2 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference audience
-ok(md.includes("present-1.2") && /FN_VERSION = 'present-1\.2'/.test(fn), 'the guide and the function agree on present-1.2');
+// v10.42: present-1.3 (the pastor: "I want only the presenter to have the ability to control the slides"): phone mode and PDF
+// v10.42 part 3: present-1.4 (SPEC-FOCUS A: "present.mjs gets key-checked upload + public download of that one PDF per room")
+ok(md.includes("present-1.4") && /FN_VERSION = 'present-1\.4'/.test(fn), 'the guide and the function agree on present-1.4');
+// fix after review: present-1.4 writes two numbers, pv (the handout) and qv (the proposal to vote on); the words said one
+ok(/version\s+numbers\s+of\s+the\s+handout\s+and\s+of\s+the\s+proposal\s+to\s+vote\s+on\s+\(two\s+numbers\)/.test(txt) && !/the\s+version\s+of\s+the\s+proposal\s+PDF\s+\(a\s+number\)/.test(txt),
+  'the rules file says the pointer carries the version numbers of the handout and of the proposal to vote on (two numbers)');
+ok(/whether phones follow/.test(txt), 'the rules file says the pointer now also says whether phones follow');
 for (const st of ['ok', 'bad-key', 'unreachable', 'unset']) ok(md.includes(`"fb":"${st}"`) && fn.includes(`'${st}'`), `status answer fb:${st} is in the guide and the function`);
 ok(/\/live\/\$\{room\}\.json/.test(fn) && /RE_ROOM = \/\^\[A-Za-z0-9_-\]\{22\}\$\//.test(fn), 'the function writes only live/<22-character room>, the path the rules open');
 ok(/firebaseio\\\.com\|firebasedatabase\\\.app/.test(fn) && md.includes('.firebasedatabase.app'), 'both database hosts the guide allows are accepted');

@@ -324,7 +324,8 @@ function makeStore(){
   c('a ministry marked after Generate reaches the server (one setctx, after a pause)', [calls.filter(x=>x.op==='setctx').length-nCtx,store.peek('c/'+pub2).ctx.min['Prayer ministry']], [1,'r']);
   const ch=P.D.getElementById('gfchurch'); ch.value='Bucks County SDA Church'; ch.dispatchEvent(new P.w.Event('input'));
   await until(()=>store.peek('c/'+pub2).ctx.church==='Bucks County SDA Church',3000);
-  c('a new church name reaches the server, and the ready message follows it', [store.peek('c/'+pub2).ctx.church,/^An invitation from Bucks County SDA Church/.test(P.D.getElementById('gfmsg').value)], ['Bucks County SDA Church',true]);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "ready announcement text EN + ES for the bulletin, text message, WhatsApp and the pulpit"; the approved spec: "about 15 minutes", the design X17): the WhatsApp announcement
+  c('a new church name reaches the server, and the ready message follows it', [store.peek('c/'+pub2).ctx.church,/Every member of Bucks County SDA Church is invited/.test(P.D.getElementById('gfmsg').value)], ['Bucks County SDA Church',true]);
   P.D.getElementById('gfmsg').value='My own words'; P.D.getElementById('gfmsg').dispatchEvent(new P.w.Event('input'));
   ch.value='Bucks County SDA'; ch.dispatchEvent(new P.w.Event('input'));
   c('a message the pastor rewrote is left alone', P.D.getElementById('gfmsg').value, 'My own words');

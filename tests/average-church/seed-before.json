@@ -1,0 +1,132 @@
+{
+ "_about": "Terrain AVERAGE CHURCH fixture (BEFORE): made-up church, made-up members. localStorage key → value.",
+ "terrain-reg": {
+  "name": "Sam Sample",
+  "email": "pastor@example.org",
+  "church": "Sampleton SDA (SAMPLE)",
+  "conf": "Pennsylvania",
+  "role": "pastor",
+  "synced": true,
+  "tok": "r1.SampleOnly00.lx2abc.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+ },
+ "terrain-churches-v1": {
+  "active": "sample-sampleton-sda",
+  "churches": {
+   "sample-sampleton-sda": {
+    "id": "sample-sampleton-sda",
+    "name": "Sampleton SDA (SAMPLE)",
+    "address": "100 SAMPLE RD, SAMPLETON, PA, 18999",
+    "capacity": {
+     "confirmed": true,
+     "demo": true,
+     "members": 55,
+     "volunteers": 12,
+     "leaders": 3,
+     "hours": 160,
+     "busyVolunteers": 0,
+     "busyLeaders": 0,
+     "busyHours": 0,
+     "startupBudget": 1500,
+     "monthlyBudget": 150,
+     "pendingBudget": 0,
+     "languages": "Spanish — one fluent member",
+     "slots": [
+      "Tue evening",
+      "Wed evening",
+      "Thu evening",
+      "Sat afternoon"
+     ],
+     "skillCounts": {
+      "lead": 3,
+      "medical": 1,
+      "teach": 2,
+      "kids": 2,
+      "cook": 3,
+      "music": 2,
+      "lang": 1,
+      "trade": 2,
+      "vehicle": 2,
+      "weekday": 3,
+      "admin": 1,
+      "av": 1,
+      "support": 0
+     },
+     "facilities": {
+      "kitchen": {
+       "available": true,
+       "capacity": 60,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      },
+      "classrooms": {
+       "available": true,
+       "capacity": 24,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      }
+     },
+     "who": {
+      "mixed": true,
+      "older": true
+     },
+     "commitments": "Sabbath School and the divine service; Wednesday prayer meeting; a fellowship lunch once a month. The same few people carry most of it.",
+     "membership": 80,
+     "adults": 46
+    },
+    "selected": [],
+    "overrides": {},
+    "members": [],
+    "linked": [],
+    "drafts": [],
+    "share": {
+     "church": "Sampleton SDA (SAMPLE)"
+    },
+    "plan": {
+     "church": "Sampleton SDA (SAMPLE)",
+     "members": 55,
+     "leaders": 3,
+     "workers": 12,
+     "nights": 12,
+     "perweek": 4,
+     "date": "2027-02-26",
+     "kind": "prophecy",
+     "seats": 120,
+     "file": 18,
+     "budget": 6000,
+     "built": 1790683200000,
+     "v": 3
+    },
+    "confAsk": {
+     "cost": true,
+     "worker": false,
+     "speaker": false,
+     "training": true,
+     "materials": false,
+     "counsel": true,
+     "total": 6000,
+     "share": 3000
+    },
+    "caseApproval": {
+     "v": 1,
+     "path": [
+      "team",
+      "finance",
+      "board"
+     ],
+     "order": "motion"
+    }
+   }
+  }
+ },
+ "terrain-gifts-roster": []
+}

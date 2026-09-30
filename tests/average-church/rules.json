@@ -1,0 +1,53 @@
+{
+ "_about": "THE AVERAGE CHURCH audit rules (design/D-AVERAGE-CHURCH.md §5 and §8), read by samples.mjs and v42-average-church.test.js. Every pattern is a JavaScript RegExp source compiled with the flag 'i', except 'ai' (case-sensitive). Purposes are section C's (NARRATIVE.md §7.1, relevance.json 'purposes'); 'forbid' lists the figure families a deck of that purpose may never show (headlines, kickers, rows, facts, sources: the slide JSON without its verse; the handout's text for the PDF check).",
+ "families": {
+  "poverty": "poverty|pobreza",
+  "snap": "\\bSNAP\\b|food assistance|asistencia (para|de) alimentos|asistencia alimentaria",
+  "alone": "lives? alone|living alone|vive(n)? sol[ao]s?",
+  "uninsured": "uninsured|health insurance|sin seguro",
+  "rent": "\\brent\\b|\\brent-burdened\\b|\\brenters?\\b|alquil",
+  "car": "no car|without a car|no vehicle|sin (auto|carro|coche|veh[ií]culo)",
+  "language": "limited English|born in another country|born abroad|ingl[eé]s limitado|nacid[oa]s? en otro pa[ií]s",
+  "jobs": "jobless|unemploy|desemple",
+  "children": "\\bchild(ren)?\\b|school-age|\\bkids\\b|ni[ñn][oa]s|edad escolar"
+ },
+ "purposes": {
+  "devotion": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": false },
+  "generic": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": false },
+  "family": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": false },
+  "place": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": true },
+  "field": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": true },
+  "food": { "forbid": ["alone", "uninsured", "rent", "language", "jobs", "children"], "stat": true, "hereIn": true },
+  "youth": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs"], "stat": true, "hereIn": true },
+  "gifts": { "forbid": ["poverty", "snap", "alone", "uninsured", "rent", "car", "language", "jobs", "children"], "stat": false, "hereIn": false }
+ },
+ "hereIn": "^(Here in|Aqu[ií] en)\\b",
+ "appeal": {
+  "team": "^Will you\\b",
+  "board": "^Will (you|the church) (approve|support|vote|adopt)",
+  "finance": "^Will you recommend",
+  "business": "^Will the church vote",
+  "conference": "^Will you partner",
+  "es": "^¿"
+ },
+ "ai": "\\bAI\\b|\\bIA\\b|artificial intelligence|inteligencia artificial",
+ "safeguarding": "Screening|two adults|dos adultos|Verificaci",
+ "gifts": {
+  "initiative": "Spiritual Gifts|Dones Espirituales|dones espirituales",
+  "churchWide": "church-wide|whole church|every member|toda la iglesia|cada miembro",
+  "motionStep": "assessment|evaluaci[oó]n"
+ },
+ "pdf": {
+  "motion": "\\bMOTION\\b|\\bMOCI[OÓ]N\\b",
+  "why": "\\bWHY\\b|POR QU[EÉ]",
+  "budget": "\\bBUDGET\\b|\\bPRESUPUESTO\\b",
+  "actionTaken": "ACTION TAKEN|ACUERDO TOMADO|ACCI[OÓ]N TOMADA",
+  "financeRec": "Finance committee recommendation|Recomendaci[oó]n de la comisi[oó]n de finanzas",
+  "recByFinance": "Recommended by the finance committee|Recomendad[oa] por la comisi[oó]n de finanzas",
+  "supportedByBoard": "Supported by the church board|Apoyad[oa] por la junta directiva",
+  "kicker": { "team": "PROPOSAL TO AGREE ON|PROPUESTA PARA ACORDAR", "finance": "PROPOSAL FOR RECOMMENDATION|PROPUESTA PARA RECOMENDAR", "other": "PROPOSAL TO VOTE ON|PROPUESTA PARA VOTAR" },
+  "maxPages": { "team": 1, "other": 2 },
+  "tithe": "\\btithe\\b|\\bdiezmo\\b",
+  "titheNegated": "\\b(never|not|no|nunca)\\s+(from\\s+|del\\s+|de\\s+)?(the\\s+|el\\s+)?(tithe|diezmo)\\b"
+ }
+}

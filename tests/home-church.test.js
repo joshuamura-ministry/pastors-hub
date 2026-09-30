@@ -268,7 +268,8 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
   click(P,'[data-cs-group="deacons"]');
   c('one tap on Deacons & deaconesses chooses the group and its kind', P.J('casePrefs()'), {ministry:null,type:'board',group:'deacons',plan:false});
   c('…one tile pressed', P.qa('#cs-s1 [aria-pressed="true"]').map(b=>b.dataset.csGroup), ['deacons']);
-  c('…step 2 names them, and the step bar moves on', [P.txt('#cs-s2 .cs-sh .note'),P.qa('#cs-bar .cs-st').map(b=>b.className.replace('cs-st ',''))], ['Ideas for the deacons and deaconesses. Best fit for Warminster first.',['done','now','next']]);   // v10.41.1: English articles, as the Spanish
+  // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The group is named by "More ideas for {group}" now (the step's line says where support is won)
+  c('…step 2 names them, and the step bar moves on', [P.txt('#cs-more h4'),P.qa('#cs-bar .cs-st').map(b=>b.className.replace('cs-st ',''))], ['More ideas for the deacons and deaconesses',['done','now','next']]);   // v10.41.1: English articles, as the Spanish
   c('…saved for this church', JSON.parse(P.w.localStorage.getItem('terrain-churches-v1')).churches['church-1'].proposalPrefs, {type:'board',group:'deacons'});
   click(P,'[data-cs-group="smallgroups"]');
   c('another tap moves it across sections: small group leaders, a ministry team', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s1 [aria-pressed="true"]').length], ['team','smallgroups',1]);
@@ -292,7 +293,8 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     c('…no English left in step 1 or the line', ['Who ','Board &','Ministry teams','The whole church','Tap the group','A decision','An invitation','On Sabbath','Change church','Decide'].filter(t=>txt.includes(t)), []);
     click(S,'[data-cs-group="community"]');
     // v10.41 final review: after "para" a Spanish group name takes its article ("Ideas para Club de Conquistadores" read wrong)
-    c('…one tap there too', [S.J('casePrefs().group'),S.txt('#cs-s2 .cs-sh .note')], ['community','Ideas para los Servicios Comunitarios Adventistas (Dorcas). Primero, lo que mejor encaja en Warminster.']);
+    // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" "Más ideas para {group}" carries the group and its article now
+    c('…one tap there too', [S.J('casePrefs().group'),S.txt('#cs-more h4')], ['community','Más ideas para los Servicios Comunitarios Adventistas (Dorcas)']);
     c('no errors in Spanish', S.errs, []);
     S.w.close(); }
   { const S=page({store:store(''),lang:'es',recent:['10 Greene Rd, Warminster, PA']});

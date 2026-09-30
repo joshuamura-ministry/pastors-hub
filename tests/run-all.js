@@ -17,9 +17,11 @@ const dir=__dirname;
   console.log(okSyntax?`  ok    syntax: ${blocks.length} script blocks + functions`:'  FAIL  syntax');
   if(!okSyntax) process.exit(1); }
 const files=fs.readdirSync(dir).filter(f=>/\.test\.(js|mjs)$/.test(f)).sort();
+// v10.42.0 (DESIGN §9.4 step 2): the average church counts every v10.42 check (relevance, the arc, gifts first) — none may be PENDING.
+const env={...process.env,REQUIRE_V42:'1'};
 let P=0,F=0; const bad=[];
 for(const f of files){
-  const r=spawnSync(process.execPath,[path.join(dir,f)],{encoding:'utf8',timeout:120000});
+  const r=spawnSync(process.execPath,[path.join(dir,f)],{encoding:'utf8',timeout:120000,env});
   const out=(r.stdout||'')+(r.stderr||'');
   const m=out.match(/(\d+) passed, (\d+) failed/);
   if(!m){ bad.push([f,'crashed or no total']); console.log('  CRASH  '+f); continue; }

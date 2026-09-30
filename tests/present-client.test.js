@@ -143,11 +143,20 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
   click(P,'[data-pr-days="30"]');
   c('30 days changes the date said', P.txt('[data-pr-warn]').includes(P.E(`caseDate(new Date(Date.now()+30*864e5),true)`)), true);
   click(P,'[data-pr-days="7"]');
+  // v10.42 part 3 (the pastor, SPEC-FOCUS A: "No 'members can swipe' choice any more: while a presentation is live every
+  // phone shows exactly the presenter's slide… 'Share link & QR' (no presenter) stays free browsing"): the setup no longer
+  // asks how phones move; Present live follows (tests/v42-lock.test.js). This journey's member part checks the free way,
+  // which a shared link's phones still have: the room is set to it directly below (op mode, with the key).
+  c('v10.42 part 3: the setup has no way to choose; it says phones follow, and offers the PDF on phones', [P.qa('[data-pr-phmode]').length,P.txt('[data-pr-phline]'),P.q('[data-pr-phpdf]').checked], [0,'Phones follow your slides until you end.',true]);
   click(P,'[data-pr-start]');
   await until(()=>P.q('#casepres .td-root'));
   const open=sent.find(x=>x.op==='open');
-  c('op open: keepDays 7, the pastor’s deck with answers switched on (yes slide and closing line)', [open.body.keepDays,open.body.deck.slides.find(s=>s.type==='yes').respond,
-    open.body.deck.slides.find(s=>s.type==='close').text], [7,true,P.E(`caseF(CASE_COPY.respond.text,caseModel('pathfinders',{type:'congregation',group:'congregation'}).vals)`)]);
+  c('op open says how phones move (follow: Present live) and offers the PDF', [open.body.mode,open.body.pdf], ['follow',true]);
+  // v10.42 part 3: the whole church's close carries the goal and the Ellen White line; its line of text ("Tap “I’m in”…") gives way when
+  // they leave a phone no room (caseFitDeck, measured in Chrome), as here; the answers themselves are switched on
+  { const t=open.body.deck.slides.find(s=>s.type==='close').text;
+    c('op open: keepDays 7, the pastor’s deck with answers switched on (yes slide; the closing line where it has room)', [open.body.keepDays,open.body.deck.slides.find(s=>s.type==='yes').respond,
+      !t||t===P.E(`caseF(CASE_COPY.respond.text,caseModel('pathfinders',{type:'congregation',group:'congregation'}).vals)`)], [7,true,true]); }
   c('…with the access code header, as the gifts tool sends it', 'x-terrain-code' in open.headers, true);
   const room=P.J(`uChurch().caseRooms['pathfinders|congregation|congregation|en']`);
   c('the room is kept per church on this device: room, key, code, link, expiry', [/^[A-Za-z0-9_-]{22}$/.test(room.room),/^[A-Za-z0-9_-]{43}$/.test(room.key),/^[A-Z2-9]{6}$/.test(room.code),room.url,room.keepDays,room.respond],
@@ -186,6 +195,8 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     c('…the next slide goes', lf, [2,3]); }
 
   console.log('\n-- a member follows --');
+  // (the free way, as a shared link's phones have it: see the setup above)
+  await P.E(`prCall('mode',{room:${JSON.stringify(room.room)},key:${JSON.stringify(room.key)},mode:'free'},{pastor:true}).then(j=>{ PR_ST.P.r.mode=j.mode; })`);
   // real timers here: the stream's first put arrives well inside its 10 s
   const M=page('https://pastorshub.org/#watch='+room.room);
   await until(()=>M.q('#watchp .td-root')&&FakeES.all.some(e=>e.url===`${FB}/live/${room.room}.json`));
@@ -352,7 +363,7 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     c('…the pointer says end', [RTDB[room.room].end,RTDB[room.room].on], [true,false]);
     await until(()=>M.q('#watchp .wa-banner:not([hidden])'));
     c('the member: "The presentation has ended. The slides stay here until …" and the PDF', [/The presentation has ended\. The slides stay here until \d+ \w+ \d{4}\./.test(M.txt('#watchp .wa-banner')),M.txt('#watchp .wa-bb')],
-      [true,'Download the handout (PDF)']);
+      [true,'Download the handout (PDF)']);   // v10.42 part 3, his answer (Q2): "phones offer 'Download the handout (PDF)' (the full handout)"
     c('…the slides stay, no longer following', [!!M.q('#watchp .td-ended'),M.J('WA.ctl.following()')], [true,false]);
     c('…and the ended state is cached with them', !!JSON.parse(M.w.localStorage.getItem('terrain-watch-'+room.room)).ended, true);
     c('the stored room remembers it ended', !!P.J(`uChurch().caseRooms['pathfinders|congregation|congregation|en'].ended`), true);

@@ -95,7 +95,7 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   { const r=P.J(`(()=>{ const out={}; const ch=uChurch(), keep=ch.lib;
       for(const id of ['hunger-fourth-week-pantry']){ const raw=libFull(id); ch.lib={[id]:raw}; CASE_ST.rank=null; const m=caseModel(id,{type:'board',group:'board'}); const d=caseDeck(m); out[id]={hero:m.need.hero&&m.need.hero.key,lead:m.need.lead,first:d.slides.find(s=>s.type==='stat').verse.ref}; }
       const kid=LIB.rows.find(r=>r.theme==='children'); const raw=libFull(kid.id); ch.lib={[kid.id]:raw}; CASE_ST.rank=null; const m=caseModel(kid.id,{type:'congregation',group:'congregation'}); const d=caseDeck(m);
-      out.kid={id:kid.id,lead:m.need.lead,first:(d.slides.find(s=>s.type==='verse')||{}).ref,dots:d.slides.some(s=>s.type==='stat'&&/in every 100 are children/.test(s.count||''))};
+      out.kid={id:kid.id,lead:m.need.lead,first:(d.slides.find(s=>s.type==='verse')||{}).ref,dots:d.slides.some(s=>s.type==='stat'&&!!s.dots&&s.dots.hue==='children')};   // v10.42 part 3: the children's own figure carries the dots ("our neighbours" is for place ideas only)
       ch.lib=keep; return out; })()`);
     c('an idea with its own figures still leads with them (the fourth-week pantry: SNAP)', [r['hunger-fourth-week-pantry'].hero,r['hunger-fourth-week-pantry'].lead], ['snap','snap']);
     c('a children\'s idea keeps "Suffer the little children" and the children dots', [r.kid.lead,r.kid.first,r.kid.dots], ['kids','Mark 10:14',true]); }
@@ -176,8 +176,9 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   { const r=P.J(`(()=>{ const raw=libFull(${JSON.stringify(flyer)}); const m=caseModel(raw.id,{type:'team',group:'community'}); return {ask:m.motion.ask,rows:m.motion.rows.map(r=>r[0]),seats:libToCatalog(raw).seats}; })()`);
     c('…and the team\'s ask still reads whole, without places', [r.seats,r.rows.includes('Places'),/^For .*run/.test(r.ask||''),/\{places\}|places/.test(r.ask||'')], [false,false,true,false]); }
   { const sup=P.J(`LIB.rows.find(r=>r.theme==='hunger'&&r.where!=='online'&&r.where!=='streets'&&/supper|lunch|breakfast/i.test(r.n)).id`);
-    const r=P.J(`(()=>{ const raw=libFull(${JSON.stringify(sup)}); libSave(raw); CASE_ST.rank=null; const m=caseModel(raw.id,{type:'board',group:'board'}); return {seats:libToCatalog(raw).seats,rows:m.motion.rows.map(r=>r[0])}; })()`);
-    c('a meal people sit down to keeps its places', [r.seats,r.rows.includes('Places')], [true,true]); }
+    const r=P.J(`(()=>{ const raw=libFull(${JSON.stringify(sup)}); libSave(raw); CASE_ST.rank=null; const m=caseModel(raw.id,{type:'board',group:'board'}); return {seats:libToCatalog(raw).seats,rows:m.ask.rows.map(r=>r[0])}; })()`);
+    // v10.42 part 3: beside the goal the board's opening keeps four rows; Places moves to the ask (NARRATIVE.md §5.1)
+    c('a meal people sit down to keeps its places (in the ask)', [r.seats,r.rows.includes('Places')], [true,true]); }
   { const nm=P.J(`(()=>{ const raw=libFull(${JSON.stringify(flyer)}); const b=caseModel(raw.id,{type:'board',group:'board'}), g=caseModel(raw.id,{type:'congregation',group:'congregation'});
       const d=new Date(2026,8,29); return [casePdfName(caseHandout(b,null,{}),d),casePdfName(caseHandout(g,null,{}),d)]; })()`);
     c('the board\'s and the congregation\'s handouts get different names; "Tear-off" keeps its hyphen; cut at a whole word',

@@ -113,8 +113,10 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('…VBS still opens with the children and "Suffer the little children"', [R.find(r=>r.id==='vbs').board.hero,R.find(r=>r.id==='vbs').board.cv.includes('Mark 10:14')], ['kidsShare',true]);
     c('…the Pathfinder club is still staffed from Pathfinders and Adventurers', R.find(r=>r.id==='pathfinders').board.min, ['Pathfinders','Adventurers']);
     // a children's or youth group's own deck may still speak of children, whatever the built-in
-    c('the outdoor film night as the Pathfinder Club\'s, the children\'s ministries\' and the church school\'s deck may speak of children',
-      ['pathfinders','childrens','school'].map(g=>P.J(`(()=>{ CASE_ST.rank=null; const m=caseModel('drive-in',{type:'team',group:${JSON.stringify(g)}},{lang:'en'}); return [m.ministry.childOk,m.neighbours.kidsOn!=null]; })()`)), [[true,true],[true,true],[true,true]]);
+    // v10.42 part 3 (the relevance rule; the pastor: "not random analytics… everything should tie into that"): the group may still speak
+    // of children (childOk), but a figure appears only when the idea's own purpose allows it, and the film night's allows no children's share
+    c('the outdoor film night as the Pathfinder Club\'s, the children\'s ministries\' and the church school\'s deck may speak of children (no children\'s figure: its purpose allows none)',
+      ['pathfinders','childrens','school'].map(g=>P.J(`(()=>{ CASE_ST.rank=null; const m=caseModel('drive-in',{type:'team',group:${JSON.stringify(g)}},{lang:'en'}); return [m.ministry.childOk,m.neighbours.kidsOn!=null]; })()`)), [[true,false],[true,false],[true,false]]);
     c('AI drafts and the Planner\'s series are judged as before (not built-ins)', P.J(`[caseChildOk({id:'draft-x',generated:true,need:[]}),caseChildOk({id:CASE_PLAN_ID,plan:true})]`), [true,true]);
     c('no errors', P.errs, []);
     P.w.close(); });
@@ -143,10 +145,12 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   await sec(async()=>{ const P=page(); await sleep(1300); setup(P);
     const ids=P.J('CASE_GROUPS.map(g=>g.id)'), FOR=P.J("typeof CASE_GROUP_EN_FOR==='object'?CASE_GROUP_EN_FOR:{}");
     c('all 34 groups have their English words after "for"', [ids.length,ids.filter(id=>FOR[id]!==EN_FOR[id])], [34,[]]);
-    const lines=[]; for(const g of ids){ await choose(P,g); lines.push([g,P.txt('#cs-s2 .cs-sh .note')]); }
-    c('step 2\'s line for all 34: "Ideas for {the …}. Best fit for Warminster first."', lines.filter(([g,t])=>t!==`Ideas for ${EN_FOR[g]}. Best fit for Warminster first.`), []);
+    // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The group, with its article, now heads "More ideas for {group}" (its line keeps "Best fit for Warminster
+    // first."); the step's own line says where support is won (tests/v42-plan-first.test.js holds both for all 34)
+    const lines=[]; for(const g of ids){ await choose(P,g); lines.push([g,P.txt('#cs-more h4')+'. '+P.txt('#cs-more .cs-parth .note')]); }
+    c('step 2\'s "More ideas" for all 34: "More ideas for {the …}. Best fit for Warminster first."', lines.filter(([g,t])=>t!==`More ideas for ${EN_FOR[g]}. Best fit for Warminster first.`), []);
     c('…the Pathfinder Club, the elders, the church board', ['pathfinders','elders','board'].map(g=>lines.find(l=>l[0]===g)[1]),
-      ['Ideas for the Pathfinder Club. Best fit for Warminster first.','Ideas for the elders. Best fit for Warminster first.','Ideas for the church board. Best fit for Warminster first.']);
+      ['More ideas for the Pathfinder Club. Best fit for Warminster first.','More ideas for the elders. Best fit for Warminster first.','More ideas for the church board. Best fit for Warminster first.']);
     await choose(P,'pathfinders');
     P.qa('#cs-lib .lib-sec:not([hidden]) .lib-card .lib-acts button')[0].click();
     await until(()=>!!P.q('#cs-s2 .cs-chosen')&&/slides for/.test(P.txt('#cs-s3 .cs-sh .note')||''));
@@ -156,7 +160,8 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     P.w.close(); });
   { const P=page({lang:'es'}); await sleep(1300); setup(P);
     await choose(P,'pathfinders');
-    c('Spanish unchanged: "Ideas para el Club de Conquistadores."', P.txt('#cs-s2 .cs-sh .note'), 'Ideas para el Club de Conquistadores. Primero, lo que mejor encaja en Warminster.');
+    // v10.42: the group now heads "Más ideas para {group}" (section F)
+    c('Spanish: "Más ideas para el Club de Conquistadores."', P.txt('#cs-more h4')+'. '+P.txt('#cs-more .cs-parth .note'), 'Más ideas para el Club de Conquistadores. Primero, lo que mejor encaja en Warminster.');
     P.w.close(); }
 
   console.log('\n-- 4. the place slide beside a figure: two partners only when both names fit on one line (fix 4) --');
@@ -170,11 +175,13 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
       const s=caseDeck(m).slides.find(x=>x.type==='place');
       return s?{facts:s.facts.map(f=>f.value),partners:s.partners.map(p=>p.name),verse:s.verse&&s.verse.ref,nearby:m.place.partners.map(p=>p.name)}:null; })()`);
     c('the Nominating committee\'s garden deck in Spanish: the figure, the nearest partner only, Jeremiah 29:7 (it drew both partners and ran 10 px past the frame)',
-      place('garden','nominating','es'), {facts:['1 de cada 9'],partners:['Warminster Community Food Bank'],verse:'Jeremías 29:7 · RVA',
+      place('garden','nominating','es'), {facts:['1 de cada 6'],   // v10.42 part 3: the figure the garden's purpose allows (relevance.json)
+        partners:['Warminster Community Food Bank'],verse:'Jeremías 29:7 · RVA',
         nearby:['Warminster Community Food Bank','Bucks County Opportunity Council Pantry']});
     c('…the English deck names the same partner (the choice is alike in both languages)', place('garden','nominating','en').partners, ['Warminster Community Food Bank']);
-    c('…and so do the meal schedule (over the frame already on v10.41.0) and the church board\'s garden deck',
-      [place('meal-train','nominating','es').partners,place('garden','board','es').partners], [['Warminster Community Food Bank'],['Warminster Community Food Bank']]);
+    // v10.42 part 3 (the relevance rule): the meal schedule serves the church family, so it has no "Here in" slide at all now
+    c('…and so does the church board\'s garden deck (the meal schedule, for the church family, has no place slide)',
+      [place('meal-train','nominating','es'),place('garden','board','es').partners], [null,['Warminster Community Food Bank']]);
     // the rule itself, on the same deck with its partners (and figure, headline) set by hand
     const pick=(names,o)=>P.J(`(()=>{ const o=${JSON.stringify(o||{})}, m=caseModel('garden',{type:'board',group:'board'},{lang:'en'});
       m.place=Object.assign({},m.place,{where:null,bring:[],nearBring:null,partners:${JSON.stringify(names)}.map((n,i)=>({name:n,kind:'Food bank or pantry',distText:(i+3)/10+' mi'}))},
@@ -192,8 +199,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     P.w.close(); });
 
   console.log('\n-- 5. the version --');
-  c('the six stamps say v10.41.1', [/TERRAIN {2}v10\.41\.1\b/.test(html.slice(0,400)),/data-version="v10\.41\.1"/.test(html),/<meta name="terrain-version" content="v10\.41\.1">/.test(html),
-    /<title>Community Map — Terrain v10\.41\.1<\/title>/.test(html),/<span id="ver">v10\.41\.1<\/span>/.test(html),/const VERSION = 'v10\.41\.1';/.test(html)], [true,true,true,true,true,true]);
+  // v10.42.0 (presenter controls the phones, the proposal on phones): the release moved on; the six stamps move together
+  c('the six stamps say v10.42.0', [/TERRAIN {2}v10\.42\.0\b/.test(html.slice(0,400)),/data-version="v10\.42\.0"/.test(html),/<meta name="terrain-version" content="v10\.42\.0">/.test(html),
+    /<title>Community Map — Terrain v10\.42\.0<\/title>/.test(html),/<span id="ver">v10\.42\.0<\/span>/.test(html),/const VERSION = 'v10\.42\.0';/.test(html)], [true,true,true,true,true,true]);
 }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0); })();

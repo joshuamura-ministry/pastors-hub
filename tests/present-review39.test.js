@@ -181,7 +181,7 @@ const fbOff=()=>{ delete process.env.PRESENT_FB_URL; delete process.env.PRESENT_
     c('(no Firebase: the phone has no stream)', [M.E('WA.live'),M.E('WA.mode')], [null,'idle']);
     P.q('#casepres .td-bend').click(); P.q('#casepres .td-bend').click(); await until(()=>P.q('.cp-endcard'));
     await until(()=>M.q('#watchp .wa-banner:not([hidden])'),3000);
-    c('the phone learns the end on its own within the minute, with the handout button', [/The presentation has ended/.test(M.txt('#watchp .wa-banner')||''),M.txt('#watchp .wa-bb')], [true,'Download the handout (PDF)']);
+    c('the phone learns the end on its own within the minute, with the handout button', [/The presentation has ended/.test(M.txt('#watchp .wa-banner')||''),M.txt('#watchp .wa-bb')], [true,'Download the handout (PDF)']);   // v10.42 part 3, his answer (Q2): "phones offer 'Download the handout (PDF)' (the full handout)"
     const rm=P.q('.cp-endcard [data-pr-remove]'); rm.click(); rm.click();
     await until(()=>/removed from Terrain/.test(P.txt('#casepres')||''));
     c('Remove now without live follow: the honest words', /removed from Terrain/.test(P.txt('#casepres')), true);

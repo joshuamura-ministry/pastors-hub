@@ -168,16 +168,20 @@ const GEO_ADDR={result:{addressMatches:[{matchedAddress:ADDR,coordinates:{x:-75.
       for(const G of CASE_GROUPS) for(const id of ['food-pantry','pathfinders','lift-rota','interpreter-bank']) for(const lang of ['en','es']){
         const m=caseModel(id,{type:G.type,group:G.id},{lang,now:${NOW},respond:true}); if(!m.ok) continue; const d=caseDeck(m);
         const ids=d.slides.map(s=>s.type==='verse'?V[s.text]:(s.verse?V[s.verse.text]:null));
+        // v10.42 part 3 (DESIGN.md N7): How it works draws on Ecclesiastes 11:6 first ("sow thy seed…"), the literature ministry's verse, for every deck
+        const own=ids.map((x,k)=>d.slides[k].type==='how'&&x==='eccl11_6'?null:x);
         const at=ids.indexOf(G.verse);
         out.push({g:G.id,id,lang,v:G.verse,at:at>=0?d.slides[at].type:null,dup:ids.filter(Boolean).length!==new Set(ids.filter(Boolean)).size,
-          foreign:ids.some(x=>${JSON.stringify(NINE)}.includes(x)&&x!==G.verse)}); }
+          foreign:own.some(x=>${JSON.stringify(NINE)}.includes(x)&&x!==G.verse)}); }
       return out; })()`);
     c(`every group’s own verse is on a slide of its deck (${R.length} decks, EN and ES)`, R.filter(r=>!r.at).map(r=>r.g+'/'+r.id+'/'+r.lang), []);
     c('…never twice in a deck, and one group’s new verse never on another group’s deck', [R.filter(r=>r.dup).length,R.filter(r=>r.foreign).length], [0,0]);
     const at=g=>[...new Set(R.filter(r=>r.g===g&&r.id==='food-pantry').map(r=>r.at))];
+    // v10.42 part 3: the opening carries the goal and holds a verse of a line or two beside it (measured in Chrome, the longer language),
+    // so a group's own verse too long for it goes on its next home, or the first slide that holds it (who is able, the answers)
     c('…each on its best slide: elders, finance, nominating, men, literature, small groups, hospitality', [at('elders'),at('finance'),at('nominating'),at('mens'),at('literature'),at('smallgroups'),at('hospitality')],
-      [['motion'],['capacity'],['ability'],['roles'],['timeline'],['motion'],['motion']]);
-    c('…and the two that had lost theirs (family, church school), and the congregation’s "Let us rise up and build" on the "I’m in" slide', [at('family'),at('school'),at('congregation')], [['motion'],['motion'],['yes']]);
+      [['ability'],['capacity'],['ability'],['roles'],['timeline'],['motion'],['yes']]);
+    c('…and the two that had lost theirs (family, church school), and the congregation’s "Let us rise up and build" on the "I’m in" slide', [at('family'),at('school'),at('congregation')], [['motion'],['ability'],['yes']]);
     c('…the same slide in English and in Spanish', R.filter(r=>r.lang==='en').every(r=>R.find(x=>x.lang==='es'&&x.g===r.g&&x.id===r.id).at===r.at), true); }
 
   console.log('\n-- 4. who already serves here --');
@@ -238,10 +242,13 @@ const GEO_ADDR={result:{addressMatches:[{matchedAddress:ADDR,coordinates:{x:-75.
     E(`LANG='en'; HELP_AT={lat:40.2,lon:-75.1};`);
     // the place slide: the most relevant places first, then the nearest
     const partners=(id,type,group,lang)=>JE(`(()=>{ const m=caseModel('${id}',{type:'${type}',group:'${group}'},{lang:'${lang||'en'}',now:${NOW}}); return m.place.partners.map(p=>[p.name,p.kind,p.distText]); })()`);
-    c('a children’s ministry (Pathfinders): the library, the community centre and the youth centre, nearest first; never the food bank', partners('pathfinders','team','youth'), [['Warminster Township Free Library','Public library','0.2 mi'],['Warminster Community Center','Community centre','0.4 mi'],['Warminster Youth Center','Youth or children’s group','1.1 mi']]);
-    c('…in Spanish, its kinds in Spanish', partners('pathfinders','team','youth','es').map(p=>p[1]), ['Biblioteca pública','Centro comunitario','Grupo para jóvenes o niños']);
+    // v10.42.0 fix after review ("ALREADY SERVING HERE · WE COME ALONGSIDE Sampleton Township Free Library · Public library… names
+    // partners that have nothing to do with a church club"): a children's club lists youth organisations only, nearest first
+    c('a children’s club (Pathfinders): youth organisations only, nearest first; never the library, the community centre or the food bank', partners('pathfinders','team','youth'), [['Warminster Youth Center','Youth or children’s group','1.1 mi'],['Central Bucks Family YMCA','Youth or children’s group','1.7 mi']]);
+    c('…in Spanish, its kinds in Spanish', partners('pathfinders','team','youth','es').map(p=>p[1]), ['Grupo para jóvenes o niños','Grupo para jóvenes o niños']);
     c('rides for older neighbours (lift rota): the senior centre first', partners('lift-rota','board','board')[0], ['Warminster Senior Center','Senior centre or care','0.6 mi']);
-    c('a blood-pressure clinic: the health centre, then the senior centre', partners('bp-clinic','board','board').map(p=>p[0]).slice(0,2), ['Bucks Community Health Center','Warminster Senior Center']);
+    // v10.42 part 3 (the relevance rule, relevance.json purposes.health.partners: health and recovery): a senior centre is not a health partner
+    c('a blood-pressure clinic: the health centre (no senior centre: not a partner of its purpose)', partners('bp-clinic','board','board').map(p=>p[0]).slice(0,2), ['Bucks Community Health Center']);
     c('an interpreter bank: help for newcomers and the library', partners('interpreter-bank','board','board').map(p=>[p[0],p[1]]), [['Warminster Township Free Library','Public library'],['Warminster Community Center','Community centre'],['Newcomer Welcome Center','Help for newcomers']]);
     c('a food pantry names the food bank first, though the children-and-youth office is nearer', partners('food-pantry','board','board').map(p=>p[0]), ['Warminster Community Food Bank','Bucks County Children and Youth']);
     { const strs=JE(`(()=>{ const out=[]; for(const id of ['pathfinders','lift-rota','bp-clinic','interpreter-bank','food-pantry']) for(const t of ['board','team','congregation']) for(const lang of ['en','es']){

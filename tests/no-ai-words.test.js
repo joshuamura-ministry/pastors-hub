@@ -154,7 +154,7 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     scan(P,'the share panel');
     P.E('prClose()');
     P.E(`uChurch().plan={church:'Bucks County SDA',date:'2027-09-11',nights:18,kind:'both',perweek:4,workers:30,budget:12000,v:3}; uPersist(); openTool('case'); caseMount(true);`);
-    P.q('[data-cs-group="conference"]').click(); await until(()=>P.q('#cs-lib .cs-plan'));
+    P.q('[data-cs-group="conference"]').click(); await until(()=>P.q('#cs-plan .cs-plan')&&P.q('#cs-lib .lib-card'));   // v10.42: his series opens "From your plan"
     scan(P,'Make the Case for the conference leaders');
     { const t=P.E(`(()=>{ try{ const m=caseModel('plan-series',{type:'conference',group:'conference'}); const d=caseDeck(m); return JSON.stringify(d)+' '+casePdfDoc(caseHandout(m,d,{}),{jsPDF:window.jspdf.jsPDF,compress:false}).__caseLog.map(l=>l.t).join(' '); }catch(e){ return 'ERR '+e.message; } })()`);
       c('the conference proposal: its slides and its handout PDF, no "AI"', [t.length>2000,hits(t)], [true,[]]); }

@@ -99,12 +99,15 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
   c('no Census slide: no need figure, no "why here" cards, no "Here in {town}"', IN.filter(b=>b.d.slides.some(s=>s.type==='stat'||s.type==='trio'||(s.type==='place'&&/Here in|Aquí en/.test(s.kicker)))).map(b=>b.g+'/'+b.lang), []);
   c('…and no Census figure or word anywhere in the deck', IN.filter(b=>/Census|Censo|ACS|margin of error|margen de error|the county|al condado|del condado/i.test(JSON.stringify(b.d.slides))).map(b=>b.g+'/'+b.lang), []);
   c('one "Our church family" slide in every deck', IN.map(b=>b.d.slides.filter(s=>s.type==='place'&&(s.kicker==='Our church family'||s.kicker==='Nuestra familia de la iglesia')).length), IN.map(()=>1));
-  c('slide order: board 7 (no need, place or ability), team 7, congregation 6', [...new Set(IN.map(b=>b.t+':'+b.d.slides.map(s=>s.type).join(',')))].sort(),
-    ['board:join,motion,place,capacity,ask,risks,timeline','congregation:join,verse,place,motion,yes,close','team:join,motion,place,roles,risks,timeline,yes']);
+  // v10.42 part 3 (the pastor: "a focus, a beginning and an appeal at the end"; DESIGN.md §5): the same arc, with the church family
+  // where the why was: the opening and the goal, the family, how it works, what it takes, safeguards, one timing slide, the ask, the appeal
+  c('slide order: board 9 (no need, place or ability), team 8, congregation 6', [...new Set(IN.map(b=>b.t+':'+b.d.slides.map(s=>s.type).join(',')))].sort(),
+    ['board:join,motion,place,how,capacity,risks,timeline,ask,close','congregation:join,motion,verse,place,how,yes,close','team:join,motion,place,how,roles,risks,timeline,yes']);
   { const b=IN.find(x=>x.g==='board'&&x.lang==='en'), f=b.d.slides.find(s=>s.type==='place'), m=b.m;
     c('the family slide: members from the profile, volunteers and hours still free, gifts that fit (counts only)', [f.headline,f.facts.map(x=>[x.value,x.label])],
       // v10.41 review: the profile's figure is average Sabbath attendance (U_FIELDS), so the slide calls it that, not "members"
-      ['135 in worship on an average Sabbath',[['135','In worship on an average Sabbath'],[String(m.capacity.free.volunteers),`Volunteers with time to give: ${Math.round(m.capacity.free.hours)} hours a month still free`],[String(m.gifts.fit),`Members whose gifts fit this work; ${m.gifts.ready} ready to lead`]]]);
+      // v10.42 part 3 (SPEC-FOCUS E, GIFTS.md §6.3): below half of the adults the third item is the church's coverage, not the fit
+      ['135 in worship on an average Sabbath',[['135','In worship on an average Sabbath'],[String(m.capacity.free.volunteers),`Volunteers with time to give: ${Math.round(m.capacity.free.hours)} hours a month still free`],[String(m.gifts.church.n),'of the 135 in worship have discovered their gifts']]]);
     c('…its gifts are adults only (the under-18 is never counted) and its source says so', [m.gifts.respondents,/adults only/.test(f.source),m.gifts.heart], [6,true,false]); }
   c('no member’s name on any in-reach slide', IN.filter(b=>NAMES.some(n=>JSON.stringify(b.d).includes(n))).map(b=>b.g), []);
   { const v=IN.map(b=>({b,ids:verseIds(b.d,b.lang)}));
@@ -134,10 +137,13 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
   { const r=deckOf(P,'member-care-missed-you-card','board','board','en');
     P.E(`libSave(${JSON.stringify({...IDEA,id:'member-care-both-idea',reach:'both'})})`);
     const both=deckOf(P,'member-care-both-idea','board','board','en');
-    c('"both" keeps the community deck (the need and "Here in {town}")', [r.m.inreach,both.m.inreach,both.d.slides.some(s=>s.type==='place'&&/Here in/.test(s.kicker))], [true,false,true]); }
+    // v10.42 part 3 (the relevance rule): "both" keeps the community deck (not "Our church family"), but a member-care idea's purpose
+    // (family) allows no Census figure and no "Here in {town}"
+    c('"both" keeps the community deck (no church family slide; its purpose allows no "Here in {town}")', [r.m.inreach,both.m.inreach,both.d.slides.some(s=>s.type==='place'&&/Here in/.test(s.kicker)),both.d.slides.some(s=>s.type==='place'&&s.kicker==='Our church family')], [true,false,false,false]); }
   { const Q=page({}); await ready(Q); setup(Q,{cap:{confirmed:false}});
     const r=deckOf(Q,'member-care-missed-you-card','board','board','en');
-    c('an unconfirmed church profile: its counts are left out, never estimated (gifts alone remain)', r.d.slides.find(s=>s.type==='place').facts.map(f=>f.label.replace(/\d+/g,'N')), ['Members whose gifts fit this work; N ready to lead']);
+    // v10.42 part 3: the gifts item says the church's coverage below half (GIFTS.md §6.3)
+    c('an unconfirmed church profile: its counts are left out, never estimated (gifts alone remain)', r.d.slides.find(s=>s.type==='place').facts.map(f=>f.label.replace(/\d+/g,'N')), ['of the N in worship have discovered their gifts']);
     c('…and the headline makes no count', r.d.slides.find(s=>s.type==='place').headline, 'God has given us one another'); }
 
   console.log('\n-- 4. the new groups --');
@@ -166,11 +172,15 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
   const CF=[]; for(const lang of ['en','es']){ const r=deckOf(P,'plan-series','conference','conference',lang); CF.push({lang,...r}); }
   const E0=CF[0], S0=CF[1];
   c('the Evangelism Planner’s series is a ministry the conference deck can argue', [E0.m.ok,E0.m.type,E0.m.ministry.plan,E0.m.ministry.name,S0.m.ministry.name], [true,'conference',true,'Evangelism series','Serie de evangelismo']);   // v10.41 review: "evangelismo", as the tile, the card and the Planner
-  c('the slides: proposal, churches, need, place, capacity, gifts, plan, ask, reporting, aims, close (12 with the join)', E0.d.slides.map(s=>s.type),
-    ['join','motion','place','stat','place','capacity','ability','timeline','ask','risks','risks','close']);
-  c('the proposal names the town, the opening night and the churches (by name on the next slide)', [E0.d.slides[1].headline,E0.d.slides[1].rows.slice(0,2)],
-    ['An evangelism series in Warminster, opening 11 Sep 2027',[['Churches','2 churches, one district'],['Opening night','11 Sep 2027 · 18 nights']]]);
-  c('the churches we serve: counts from confirmed profiles only', [E0.d.slides[2].kicker,E0.d.slides[2].headline,E0.d.slides[2].facts.map(f=>f.value+' '+f.label)],
+  // v10.42 part 3 (NARRATIVE.md §5.4): the proposal and the goal, the mission (moved up), the field (the churches we serve), how it works,
+  // what it takes, who is able, the plan and its dates, the ask, reporting back, the appeal; no hardship figure (field purpose)
+  c('the slides: proposal, aims, churches, how, capacity, gifts, plan, ask, reporting, close (11 with the join)', E0.d.slides.map(s=>s.type+(s.part?'/'+s.part:'')),
+    ['join','motion','risks/mission','place','how','capacity','ability','timeline','ask','risks/report','close']);
+  // v10.42 part 3: beside the goal the opening keeps the rows a phone holds in both languages (measured); the churches are named on
+  // their own slide, so their row gives way first
+  c('the proposal names the town and the opening night (the churches by name on their own slide)', [E0.d.slides[1].headline,E0.d.slides[1].rows.slice(0,2),!!E0.d.slides[1].goal],
+    ['An evangelism series in Warminster, opening 11 Sep 2027',[['Opening night','11 Sep 2027 · 18 nights'],['We ask for','A share of the cost and counsel']],true]);
+  c('the churches we serve: counts from confirmed profiles only', [E0.d.slides[3].kicker,E0.d.slides[3].headline,E0.d.slides[3].facts.map(f=>f.value+' '+f.label)],
     ['The churches we serve','2 churches, one district',['135 Bucks County SDA: average Sabbath attendance','48 Fairview Village SDA: average Sabbath attendance']]);   // v10.41 review: attendance, not membership (the clerks hold that)
   // v10.41 review: in Pennsylvania the Evangelistic Report Form goes in as the meetings close (the subsidy policy the deck cites), so the
   // third step is dated then and names the follow-up report three months later (a timeline slide holds three steps; present-1.2)
@@ -181,23 +191,23 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
   c('the ask by default: a share of the series budget from his planner (no share until he types one) and counsel, nothing else', E0.d.slides[8].rows,
     [['A share of the cost','Of $12,000 in all: the share to be agreed'],['Counsel','Your counsel on the plan and its dates']]);
   c('…the model and the handout keep every row, the Pennsylvania policy too', E0.m.conf.ask.rows.map(r=>r[0]), ['A share of the cost','Counsel','Conference policy']);
-  c('reporting back and the aims served (Pennsylvania’s own goals for his conference)', [E0.d.slides[9].items[0],E0.d.slides[10].items],
+  c('reporting back and the aims served (Pennsylvania’s own goals for his conference)', [E0.d.slides[9].items[0],E0.d.slides[2].items],
     ['A written report to the conference after the meetings: attendance, decisions and baptisms',['Our series opens in September 2027, when All Things New plans public events','Pennsylvania Conference faith goal: “Lead 2,800 people to Christ during the quinquennium.”']]);
-  c('…the slide shows what fits beside its verse (Matthew 28:19–20); the model and the handout keep every aim', [idOf('en',E0.d.slides[10].verse.ref),E0.m.conf.mission.map(x=>x.id)],
+  c('…the slide shows what fits beside its verse (Matthew 28:19–20); the model and the handout keep every aim', [idOf('en',E0.d.slides[2].verse.ref),E0.m.conf.mission.map(x=>x.id)],
     ['matt28_19',['m-sept27','m-pa2800','m-pa27','m-ov27','m-iwg','m-cm']]);
-  c('the close asks, and quotes Scripture (Isaiah 52:7)', [E0.d.slides[11].headline,E0.d.slides[11].quote.ref,S0.d.slides[11].quote.ref], ['Will you partner with us?','Isaiah 52:7 · KJV','Isaías 52:7 · RVA']);
+  c('the close asks, and quotes Scripture (Isaiah 52:7)', [E0.d.slides[10].headline,E0.d.slides[10].quote.ref,S0.d.slides[10].quote.ref], ['Will you partner with us?','Isaiah 52:7 · KJV','Isaías 52:7 · RVA']);
   { const ids=CF.map(b=>verseIds(b.d,b.lang));
     c('Scripture on every slide but the join, from the library, never twice, the same in both languages', [ids[0].filter((x,i)=>i>0&&!x).length,ids[0].filter(Boolean).length===new Set(ids[0].filter(Boolean)).size,JSON.stringify(ids[0])===JSON.stringify(ids[1])], [0,true,true]);
     c('…no Ellen White line on a slide; hers (9T 116, to leaders) is in the handout', [CF.some(b=>/White/.test(JSON.stringify(b.d))),E0.m.egw.ref], [false,'Ellen G. White · Testimonies for the Church, vol. 9, pp. 116–117']);
     c('…the group’s own verse, Romans 10:14–15, on the ask', ids[0][8], 'rom10_14'); }
-  c('the deck is a present-1.2 deck: audience conference, 12 slides, no answers asked', [E0.d.audience,E0.d.slides.length,E0.d.slides.some(s=>s.type==='yes')], [{type:'conference',group:'conference'},12,false]);
+  c('the deck is a present-1.2 deck: audience conference, 11 slides, no answers asked', [E0.d.audience,E0.d.slides.length,E0.d.slides.some(s=>s.type==='yes')], [{type:'conference',group:'conference'},11,false]);
   c('no member’s name, no {placeholder}', CF.filter(b=>NAMES.some(n=>JSON.stringify(b.d).includes(n))||/\{[A-Za-z]+\}|undefined|NaN/.test(JSON.stringify(b.d))).length, 0);
   // his amounts, as he types them
   P.E(`uChurch().confAsk={cost:true,worker:true,speaker:true,training:false,materials:false,counsel:false,total:15000,share:7500}; uPersist();`);
   { const r=deckOf(P,'plan-series','conference','conference','en');
     c('when he types amounts and ticks a speaker: exactly his figures, and only what he ticked', r.d.slides[8].rows,
       [['A share of the cost','$7,500 of $15,000'],['A Bible worker','For the series and the follow-up'],['An evangelist or speaker','Approved under the conference’s guidelines']]);
-    c('…the proposal lists them in words', r.d.slides[1].rows[2], ['We ask for','A share of the cost, a Bible worker and a speaker']); }
+    c('…the proposal lists them in words', r.d.slides[1].rows.find(x=>x[0]==='We ask for'), ['We ask for','A share of the cost, a Bible worker and a speaker']); }
   P.E(`uChurch().confAsk={cost:true,worker:true,speaker:true,training:true,materials:true,counsel:true,total:null,share:null}; uPersist();`);
   { const r=deckOf(P,'plan-series','conference','conference','es');
     c('all six ticked: four by name and one "Also" row on the slide (Spanish), all six in the handout', [r.d.slides[8].rows.length,r.d.slides[8].rows[4],r.m.conf.ask.rows.length],
@@ -211,15 +221,19 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
     c('…a series not in September 2027 claims no alignment with it', r.d.slides[9].items.some(t=>/Our series opens/.test(t)), false);
     c('…the aims: only the verified ones (OneVoice27, All Things New, I Will Go 4.1, the Church Manual)', r.m.conf.mission.map(x=>x.id), ['m-ov27','m-atn','m-iwg','m-cm']); }
   { const r=P.JE(`(()=>{ const keep=DATA; DATA=null; try{ return caseSample({lang:'en',audience:{type:'conference',group:'conference'},now:${NOW}}); }finally{ DATA=keep; } })()`);
-    c('the sample conference deck: the prophecy seminar, made-up churches, SAMPLE on every slide', [r.ok,r.deck.ministry.id,r.deck.slides[2].where,r.deck.slides.slice(1).every(s=>/^SAMPLE/.test(s.kicker||s.text||'')||s.type==='close')],
+    c('the sample conference deck: the prophecy seminar, made-up churches, SAMPLE on every slide', [r.ok,r.deck.ministry.id,r.deck.slides[3].where,r.deck.slides.slice(1).every(s=>/^SAMPLE/.test(s.kicker||s.text||'')||s.type==='close')],
       [true,'proph-news','Sample Church · Sample Hill Church',true]); }
   { const H=P.JE(`(()=>{ const m=caseModel('plan-series',{type:'conference',group:'conference'},{lang:'en',now:${NOW}}); const d=caseDeck(m); const H=caseHandout(m,d,{now:${NOW}});
       const doc=casePdfDoc(H,{jsPDF:window.__J}); const L=doc.__caseLog; return {H,pages:doc.getNumberOfPages(),front:doc.__caseFront,out:L.filter(z=>z.x0<z.bx0-0.5||z.x1>z.bx1+0.5).length,text:L.map(z=>z.t).join(' '),name:casePdfName(H,${NOW})}; })()`);
     c('the handout: at most three pages, the front on one, every line in its box', [H.pages<=3,H.front,H.out], [true,1,0]);
-    c('…what we ask, how we report back, the aims (each with its published source), how the subsidy works', [H.H.labels.budget,H.H.budgetRows.length,H.H.labels.risks,H.H.mission.items.every(i=>i.src),!!H.H.apply,/Pennsylvania Conference Evangelism Subsidy Policy/.test(H.text)],
-      ['What we ask of the conference',3,'How we will report back',true,true,true]);   // v10.41 review: cost, counsel and the Pennsylvania policy by default
+    // v10.42.0 fix after review ("the money does not add up… The BUDGET block also holds rows that are not money"): a table that adds
+    // up (the whole cost, the church's own, the rest), then what else is asked in one row, then the Pennsylvania policy
+    c('…what we ask, how we report back, the aims (each with its published source), how the subsidy works', [H.H.labels.budget,H.H.budgetRows.map(r=>r[0]),H.H.labels.risks,H.H.mission.items.every(i=>i.src),!!H.H.apply,/Pennsylvania Conference Evangelism Subsidy Policy/.test(H.text)],
+      ['What we ask of the conference',['Total cost','From the church budget','The conference’s share, and meeting offerings','Also asked','Conference policy'],'How we will report back',true,true,true]);   // v10.41 review: cost, counsel and the Pennsylvania policy by default
     c('…the churches on the front, the file named for the conference', [/THE CHURCHES WE SERVE/.test(H.text),H.name], [true,'Bucks-County-SDA-Evangelism-series-conference-2026-09-29.pdf']);
-    c('…"Here in Warminster" in its own words (not the churches slide’s), the series budget in full', [H.H.place.headline.startsWith('In Warminster,'),/\$2,500 of the \$12,000 needed/.test(H.text),/\$12k/.test(H.text)], [true,true,false]); }   // v10.41 final review: have first, then need (it read "$12,000 of $2,500")
+    // v10.42 part 3 (NARRATIVE.md §5.4, DESIGN N8): the field is one slide, the churches we serve (two churches), and the handout follows
+    // the deck, so it has the churches and no "Here in" section
+    c('…no "Here in" section beside the churches (the handout follows the deck), the series budget in full', [H.H.place,/\$2,500 of the \$12,000 needed/.test(H.text),/\$12k/.test(H.text)], [null,true,false]); }   // v10.41 final review: have first, then need (it read "$12,000 of $2,500")
 
   console.log('\n-- 5b. the pastor’s own ask, in the edit panel of the ask slide --');
   { P.E(`openTool('case'); render(); caseSetPrefs({ministry:'plan-series',type:'conference',group:'conference'}); caseDraw3();`);

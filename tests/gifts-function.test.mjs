@@ -57,10 +57,11 @@ const plainTag=x=>createHash('sha256').update(x).digest('base64url').slice(0,22)
 
 console.log('-- status --');
 let r=await call(new Request(URL0,{method:'GET'}));
-c('GET answers status', [r.status,r.j.ok,r.j.fn], [200,true,'gifts-1.2']);
+// v10.42 part 3 (gifts-1.3): the design, X14: "Take the assessment right there" on one church Wi-Fi must not refuse the 61st member
+c('GET answers status', [r.status,r.j.ok,r.j.fn], [200,true,'gifts-1.3']);
 c('email off when Resend is not configured', r.j.email, false);
 r=await post({op:'status'});
-c('POST op:status too', [r.j.ok,r.j.fn,r.j.email], [true,'gifts-1.2',false]);
+c('POST op:status too', [r.j.ok,r.j.fn,r.j.email], [true,'gifts-1.3',false]);
 r=await post({op:'nonsense'});
 c('unknown op → 400', [r.status,r.j.error], [400,'unknown-op']);
 r=await post({});
@@ -751,13 +752,15 @@ console.log('\n-- close, purge and rate limits (security review SEC-5) --');
   r=await post({op:'purge',pub:p,key:k,rids:[ids[1].rid,ids[2].rid,ids[1].rid,'ZZZZZZZZZZZZ']});
   c('purge deletes the listed results, with their markers', [r.status,r.j.deleted,!!st.peek('r/'+p+'/'+ids[1].rid),[...st.m.keys()].some(x=>x.startsWith('x/')&&x.endsWith(ids[2].rid))], [200,2,false,false]);
   c('…and leaves the rest', [!!st.peek('r/'+p+'/'+ids[0].rid),!!st.peek('r/'+p+'/'+ids[3].rid)], [true,true]);
-  // per client address: 60 new results an hour
-  const q2=await post({op:'id'}); const p2=q2.j.pub;
+  // per client address: 200 new results an hour (gifts-1.3, was 60). The pastor (SPEC-FOCUS E): a Sabbath presentation
+  // where "members take the assessment right there": one church on one Wi-Fi shares an address, so the 61st member must
+  // not be refused (the design, X14). Spread over two campaigns so the campaign's own 200 an hour does not answer first.
+  const q2=await post({op:'id'}); const p2=q2.j.pub; const q3=await post({op:'id'}); const p3=q3.j.pub;
   const ctx={ip:'203.0.113.9'}; const got=[];
-  for(let i=0;i<61;i++){ const x=await post({op:'submit',pub:p2,code:code(i),name:'Flood '+i},{},ctx); got.push(x.status); }
-  c('one client address: 60 an hour, then 429 slow-down', [got.slice(0,60).every(x=>x===200),got[60]], [true,429]);
+  for(let i=0;i<201;i++){ const x=await post({op:'submit',pub:i<150?p2:p3,code:code(i),name:'Flood '+i},{},ctx); got.push(x.status); }
+  c('one client address: 200 an hour (a whole church on one Wi-Fi), then 429 slow-down', [got.slice(0,200).every(x=>x===200),got[200]], [true,429]);
   r=await post({op:'submit',pub:p2,code:code(),name:'Someone else'},{},{ip:'198.51.100.7'});
-  c('another address is not held back, and the refusals used none of the campaign’s allowance', [r.status,st.peek('c/'+p2).subs.h], [200,61]);
+  c('another address is not held back, and the refusals used none of the campaign’s allowance', [r.status,st.peek('c/'+p2).subs.h,st.peek('c/'+p3).subs.h], [200,151,50]);
   c('the address is kept only as a salted hash', [JSON.stringify(st.peek('g/ip')).includes('203.0.113.9'),Object.keys(st.peek('g/ip').to).length], [false,2]);
   // per campaign: 200 an hour, 1000 a day
   { const cp=st.peek('c/'+p2); cp.subs={...cp.subs,h:200}; st.poke('c/'+p2,cp); }

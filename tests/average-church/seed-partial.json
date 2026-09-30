@@ -1,0 +1,409 @@
+{
+ "_about": "Terrain AVERAGE CHURCH fixture (PARTIAL): made-up church, made-up members. localStorage key → value.",
+ "terrain-reg": {
+  "name": "Sam Sample",
+  "email": "pastor@example.org",
+  "church": "Sampleton SDA (SAMPLE)",
+  "conf": "Pennsylvania",
+  "role": "pastor",
+  "synced": true,
+  "tok": "r1.SampleOnly00.lx2abc.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+ },
+ "terrain-churches-v1": {
+  "active": "sample-sampleton-sda",
+  "churches": {
+   "sample-sampleton-sda": {
+    "id": "sample-sampleton-sda",
+    "name": "Sampleton SDA (SAMPLE)",
+    "address": "100 SAMPLE RD, SAMPLETON, PA, 18999",
+    "capacity": {
+     "confirmed": true,
+     "demo": true,
+     "members": 55,
+     "volunteers": 12,
+     "leaders": 3,
+     "hours": 160,
+     "busyVolunteers": 0,
+     "busyLeaders": 0,
+     "busyHours": 0,
+     "startupBudget": 1500,
+     "monthlyBudget": 150,
+     "pendingBudget": 0,
+     "languages": "Spanish — one fluent member",
+     "slots": [
+      "Tue evening",
+      "Wed evening",
+      "Thu evening",
+      "Sat afternoon"
+     ],
+     "skillCounts": {
+      "lead": 3,
+      "medical": 1,
+      "teach": 2,
+      "kids": 2,
+      "cook": 3,
+      "music": 2,
+      "lang": 1,
+      "trade": 2,
+      "vehicle": 2,
+      "weekday": 3,
+      "admin": 1,
+      "av": 1,
+      "support": 0
+     },
+     "facilities": {
+      "kitchen": {
+       "available": true,
+       "capacity": 60,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      },
+      "classrooms": {
+       "available": true,
+       "capacity": 24,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      }
+     },
+     "who": {
+      "mixed": true,
+      "older": true
+     },
+     "commitments": "Sabbath School and the divine service; Wednesday prayer meeting; a fellowship lunch once a month. The same few people carry most of it.",
+     "membership": 80,
+     "adults": 46
+    },
+    "selected": [],
+    "overrides": {},
+    "members": [],
+    "linked": [],
+    "drafts": [],
+    "share": {
+     "church": "Sampleton SDA (SAMPLE)"
+    },
+    "plan": {
+     "church": "Sampleton SDA (SAMPLE)",
+     "members": 55,
+     "leaders": 3,
+     "workers": 12,
+     "nights": 12,
+     "perweek": 4,
+     "date": "2027-02-26",
+     "kind": "prophecy",
+     "seats": 120,
+     "file": 18,
+     "budget": 6000,
+     "built": 1790683200000,
+     "v": 3
+    },
+    "confAsk": {
+     "cost": true,
+     "worker": false,
+     "speaker": false,
+     "training": true,
+     "materials": false,
+     "counsel": true,
+     "total": 6000,
+     "share": 3000
+    },
+    "caseApproval": {
+     "v": 1,
+     "path": [
+      "team",
+      "finance",
+      "board"
+     ],
+     "order": "motion"
+    },
+    "memberReviews": {
+     "sample-m01": {
+      "name": "Ada (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "teach",
+       "admin"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m01"
+     },
+     "sample-m04": {
+      "name": "Dov (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "teach"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m04"
+     },
+     "sample-m07": {
+      "name": "Greer (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "vehicle"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m07"
+     },
+     "sample-m10": {
+      "name": "Jory (sample)",
+      "hours": 8,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "cook"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m10"
+     },
+     "sample-m13": {
+      "name": "Milo (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "cook",
+       "weekday"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m13"
+     },
+     "sample-m16": {
+      "name": "Pia (sample)",
+      "hours": 8,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "kids",
+       "teach"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m16"
+     }
+    }
+   }
+  }
+ },
+ "terrain-gifts-roster": [
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNiIsImNoYXJzIjoiMzQzMzMwMjEyMjIxMjAyMDEwMTAxMTIxMDExMjAwMTAxMTAwMTEwMjQyMTExMjJ4eDIyMTAwMDExMjEyNDM0M3gwMTIwMDAwMTIyNDM0NDQwMjExMDAxMTEyMTIyMTIxMjIwMDAxMDEwIiwiaGVhcnQiOiIxMDAwMjAwMjIwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkdyZWVyIChzYW1wbGUpIiwibWVtYmVySWQiOiJzYW1wbGUtbTA3IiwicmVzb3VyY2VzIjp7ImhvdXJzIjoxNiwid2lsbGluZyI6dHJ1ZSwibGVhZGVyIjp0cnVlLCJza2lsbHMiOlsibGVhZCIsInZlaGljbGUiXSwic2xvdHMiOlsiV2VkIGV2ZW5pbmciLCJUaHUgZXZlbmluZyJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Greer (sample)",
+   "date": "2026-09-26",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790434800000,
+   "minor": false,
+   "expires": 1853506800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNiIsImNoYXJzIjoiMTIyMTIxMDEwMDIwMTIyNDM0NDMyMTIwMjAwMTAxMDAwMTAwMTIwMDExMjEwMTIxMjIyMnh4eDM0NDQzMTIyMjAxMjAyMDQzNDR4MzM0NDQxMjAwMjAyMTAwNDIxMjIwMTIxMDIwMTExIiwiaGVhcnQiOiIwMDEuMTAxMC4yMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik5lbGwgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTQiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Nell (sample)",
+   "date": "2026-09-26",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790434800000,
+   "minor": false,
+   "expires": 1853506800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNCIsImNoYXJzIjoiMTExMjExMTIwMTExMS4yMjIwMjEyMDIwMTIxeHh4MzMxMTIxMjAyMDEyMTAyNDIxMTIuMjAyMDMzNDM0MTAxMDIwMDAwMTMzMzMzMDExMTEwMTIxMjExMDIxMjIxMjAyMTIxMjIxMDEwIiwiaGVhcnQiOiIxMDIwMTIwMjAwMC4iLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkVzbWUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDUiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Esme (sample)",
+   "date": "2026-09-24",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790262000000,
+   "minor": false,
+   "expires": 1853334000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMSIsImNoYXJzIjoiMTIyMjAzMjIxMTQzNDQzMTIxMTIwMjAxMjAyMTIwMzIxMTIwMjAyMTQ0MzN4MDEwMTIzMjIyMjIwMDEyMjEyMjEwMTExMjAwMDEyNDM0NDQwMDAwMTEuMDIxMDAwMTExMnh4MTEyeHh4IiwiaGVhcnQiOiIwMC4wMjAwMjEwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkluZXMgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDkiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Ines (sample)",
+   "date": "2026-09-21",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790002800000,
+   "minor": false,
+   "expires": 1853074800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMjF4eDExMTEwMjQzMzM0MTAxMTAyMjIxMTQzMTExMjEwMjAyMXh4MjQzMjEyMzQ0M3gzMzIyMjAwMDExMTIwMTAwMDIyMDEwMDIwMjExMTEwMjAyMTEwMjIyMTEyMjIxMTAyMDQ0MzQzIiwiaGVhcnQiOiIwMDAwMjAwMDIwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkJyYW0gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDIiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Bram (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMTAyMjAyMjAxMDAwMTAyMTEyMTEwMTEwMTAxMjEyMjIyMDEzNDMzNDAuMjAyMTIwMjIxMjIwMTExMjIxMDAyMTEwMDExMTEwMjEwNDQzNDM0MzExMTAwMDIxMDIyMDIxMjIyMjIwMTIxIiwiaGVhcnQiOiIyMDAwMTEwMDAwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkZpbm4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDYiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Finn (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiNDQ0NDMwMDAyMDAwMTEwMDAwMTA0NDMzeDIyMjAwMjIxMjIzNDM0NDIxeHgyMjAxMjIxMjEwMDIxMDIxMDIyMjAxMDExMDMyMjIxMDExMjAyMnh4eDIyMi4xMDEyMjIyMTAxMTIxeHh4IiwiaGVhcnQiOiIwMDAxMDAyMDAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkpvcnkgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTAiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjgsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6WyJjb29rIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiV2VkIGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Jory (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMjEwMjIyMTIxMDIxMjEwMDEyMDAyMTAwMTIyMjEyMjExMTExMTAxMTAwMDIyNDIxMjEyMTIyMDQzMTIyMTEwMDEyMDEyMDMzMTIyMDIxMDEzMzQzNDExMjAyMTIyMDIxMTIwMDExMjIyIiwiaGVhcnQiOiIuMDEwMjAwMDEyMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlBpYSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0xNiIsInJlc291cmNlcyI6eyJob3VycyI6OCwid2lsbGluZyI6dHJ1ZSwibGVhZGVyIjpmYWxzZSwic2tpbGxzIjpbImtpZHMiLCJ0ZWFjaCJdLCJzbG90cyI6WyJXZWQgZXZlbmluZyIsIlRodSBldmVuaW5nIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Pia (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xOCIsImNoYXJzIjoiMTIxMjIxMnh4MTQ0NDN4NDQzM3gxMDAwMDQzMTIxMTExMTAwMjAwMjMzMjIxMTAwMjExMjEyMDAyMTIwMDEyMDIwMjAwMDAwMDIxMDAxLjIyMDIyMDIxMTIyMTExMDAyMjExMDQyMTExIiwiaGVhcnQiOiIyMDAwMDAwMDEwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IktpdCAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0xMSIsInJlc291cmNlcyI6e319",
+   "name": "Kit (sample)",
+   "date": "2026-09-18",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789743600000,
+   "minor": false,
+   "expires": 1852815600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMzQzNDQzMzQ0NDAyMTAwMDIyMTAwMTAxMDIyMTIxNDIxMjE0MzIxMjQyMTEyMDIwMDExMTAyMTEwMDExMjIwMTAyMTIxMTIxeHgxMDIxMDIwMjAxMDIxMjAxMDIyMjEyMTAyMTAyMTIyIiwiaGVhcnQiOiIwMDAyMTAyMTIwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkFkYSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wMSIsInJlc291cmNlcyI6eyJob3VycyI6MTYsIndpbGxpbmciOnRydWUsImxlYWRlciI6dHJ1ZSwic2tpbGxzIjpbImxlYWQiLCJ0ZWFjaCIsImFkbWluIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiV2VkIGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Ada (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMDIwMDEwMTAwMDM0MzR4MjAwMDIwMDEwMTAyMjEyMjAxMDIzNDM0NDIxMTExMjExMDA0MzMzNDExMTIxMjIyMjIyMDAwMTMzMjEyMDAyMDIxMjIyMDEwMjAxMjIxMjAxMDIwMjAxMDAyIiwiaGVhcnQiOiIxMDAyMjAwLjAxMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkRvdiAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wNCIsInJlc291cmNlcyI6eyJob3VycyI6MTIsIndpbGxpbmciOnRydWUsImxlYWRlciI6dHJ1ZSwic2tpbGxzIjpbImxlYWQiLCJ0ZWFjaCJdLCJzbG90cyI6WyJUdWUgZXZlbmluZyIsIlRodSBldmVuaW5nIiwiU2F0IGFmdGVybm9vbiJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Dov (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMjAxMjEyMDAwMTIwMDIxMTEwMjEzMzM0MzAxMjExMjEyMjExMnh4MjQzMjIxNDQ0NHgxMnh4eDMyMjIyMDEwMDIwMTAyMjMzMTEyMjIxMDIxMnh4MTAxMDIxMjAyMDIxMDIyMTAyMDEyIiwiaGVhcnQiOiIwMDAxMDAwMDAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik9yZW4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTUiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Oren (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMjF4eDE0NDQ0MzIwMjExMzQ0NDMxMjEyMTEwMTIyMjIwMjI0MjEyMjEyMDEwMzIxMjExMjIwMTMzNDM0MjExMjExMjEwMTIyMDAwNDQzM3gwMjAwMTEyMjAwMTIyMjEyMjAxMDEwMDExIiwiaGVhcnQiOiIyMDAwMi4xMDIuMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlF1aWxsIChzYW1wbGUpIiwibWVtYmVySWQiOiJzYW1wbGUtbTE3IiwicmVzb3VyY2VzIjp7fX0",
+   "name": "Quill (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNSIsImNoYXJzIjoiMDIyMDIxMjIwMTQzMzMzMTEyMjE0MzExMTIyMjIyMjAwMjAxMTIyMjAyMDAyLjEyMDE0NDM0NDIyMTIyMzQzM3gxMDEwMjExeHh4MjIwMTExMjIxMDAwMDExMTAxMDEwMjExMDEwMTAxIiwiaGVhcnQiOiIxMTAyMDAxMDAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkNsZW8gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDMiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Cleo (sample)",
+   "date": "2026-09-05",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788620400000,
+   "minor": false,
+   "expires": 1851692400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNSIsImNoYXJzIjoiMDExMjExMTEwMTEwMTAxMTEwMTEyMDExMTIxMjIxMjJ4eHgwMDAwMDExMDAwMjF4eDEzNDMzNDMyMTExMTAyMDEwMjEyMDMzNDMzMDAyMTExMXh4eDIyMjEwMTIyMDIyMjIwMDAyMDIwIiwiaGVhcnQiOiIyMDIwMjAxMDAuMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik1pbG8gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTMiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjEyLCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsiY29vayIsIndlZWtkYXkiXSwic2xvdHMiOlsiVHVlIGV2ZW5pbmciLCJUaHUgZXZlbmluZyIsIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Milo (sample)",
+   "date": "2026-09-05",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788620400000,
+   "minor": false,
+   "expires": 1851692400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNCIsImNoYXJzIjoiMjEwMDAxMTEyMjExMTEwMDIxMTIyMDIxMTMzNDN4MzM0MzM0MjExMTIxMDAwMDIyMDIzMzMzNDQyMTExMTAyMDAwMjIxMTAyMTAxMTEyMjAxMjAyMjAwMTIxMTAxMDEzMzM0MzEwMDAxIiwiaGVhcnQiOiIwMDAwMjAxMDEyMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkhvbGxpcyAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wOCIsInJlc291cmNlcyI6e319",
+   "name": "Hollis (sample)",
+   "date": "2026-09-04",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788534000000,
+   "minor": false,
+   "expires": 1851606000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wMyIsImNoYXJzIjoiMjEwMjAyMDIyMTIyMjIxMjAyMjExMTIxMjIyMDIxNDIxMjIxMDEyMTAxMTAwMDIyMjA0NDM0NDMzMjEyMTEwMDAxMTEwMDQ0MzMzMTAyMTAyMjAyMTExMDIyMTExMjIyMjIyMTMzMTExIiwiaGVhcnQiOiIwMDAxMDAyMjAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkxhcmsgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTIiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Lark (sample)",
+   "date": "2026-09-03",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788447600000,
+   "minor": false,
+   "expires": 1851519600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wMyIsImNoYXJzIjoiMTAxMTAzMjEyMTEyMTEwMzQzNDQwMTExMTAxMDAxMTEyMjAzMzQzNDQ0NDM0NDMxMTExMDAyMTMyMjIxMDIyMTEyMTAyMjIxMjIxMTIwMTIxMXh4MTIwMTIwMTEwMDEyMDEyMDEwMjExIiwiaGVhcnQiOiIwMDAxMjEwMjAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlJoZWEgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTgiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Rhea (sample)",
+   "date": "2026-09-03",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788447600000,
+   "minor": false,
+   "expires": 1851519600000
+  }
+ ]
+}

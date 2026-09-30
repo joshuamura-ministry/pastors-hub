@@ -128,7 +128,11 @@ const deckOf=(P,id,group,type,lang)=>P.J(`(()=>{ const m=caseModel(${JSON.string
     P.q('#cs-lib [data-lib-tab="out"]').click();
     c('…a tap switches, nothing re-ranked', [tabs(),shown()], [[['in','false'],['out','true']],['out']]);
     P.E(`caseChooseGroup('board')`); await until(()=>listed(P));
-    c('…the board opens on the community (what the town needs most); a care team on God\'s people', [shown(),P.J(`['prayer','deacons','hospitality','childrens'].map(caseDefaultTab)`)], [['out'],['in','in','in','in']]);
+    // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" What the town needs is chosen in the Community Survey and reaches the board through "From your plan";
+    // the board's "More ideas" opens on God's people, mainly what the survey does not cover (it opened on the community).
+    // caseDefaultTab takes the group (it was handed bare ids, which always read "in")
+    c('…the board opens on God\'s people (the community is the survey\'s, through "From your plan"); a care team on God\'s people', [shown(),P.J(`['prayer','deacons','hospitality','childrens'].map(id=>caseDefaultTab({id}))`)], [['in'],['in','in','in','in']]);
+    P.q('#cs-lib [data-lib-tab="out"]').click();   // a community card, for its "Why here"
     const card=P.q('#cs-lib .lib-sec:not([hidden]) .lib-card');
     c('a card: one button, "Choose this"', [...card.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Choose this']);
     c('…"Why here", the fit and the steps folded under one small line', [card.querySelector('details.lib-more summary').textContent,card.querySelector('details.lib-more').open,!!card.querySelector('.lib-more .lib-why'),!!card.querySelector('.lib-more ol')], ['More about this idea',false,true,true]);

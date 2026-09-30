@@ -54,8 +54,10 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'congregation',group:'congregation'},{ctx:${ctx(ALL_CV_OVER_40)},now:${NOW}}); const d=caseDeck(M);
       return {hero:M.need.hero&&M.need.hero.key,stats:d.slides.filter(s=>s.type==='stat').map(s=>s.headline),pops:caseHandout(M,d,{}).figures.filter(f=>f.label==='Population').length,
         verdicts:caseHandout(M,d,{}).figures.filter(f=>f.label==='Population').map(f=>f.compare)}; })()`);
-    c('every figure too unreliable (CV > 40): no hero, so no "One thing we learned: About 5,480 people live around us"', [r.hero,r.stats.length,r.stats.some(h=>/people live around us/.test(h))], [null,1,false]);
-    c('…the handout lists Population once, with no verdict against the county', [r.pops,r.verdicts], [1,[null]]); }
+    // v10.42 part 3 (the relevance rule): "our neighbours" (Population) is for place and field ideas only, and the handout lists only the
+    // figures the deck shows, so a pantry with every figure unreliable shows none at all
+    c('every figure too unreliable (CV > 40): no hero, so no "One thing we learned: About 5,480 people live around us"', [r.hero,r.stats.length,r.stats.some(h=>/people live around us/.test(h))], [null,0,false]);
+    c('…the handout lists no Population either (the deck shows none)', [r.pops,r.verdicts], [0,[]]); }
   { const r=P.J(`(()=>{ const f=caseFig('pop',{m:CASE_SAMPLE.M.tract,c:CASE_SAMPLE.M.county,area:'A',acs:'ACS',hits:new Set()}); return [f.kind,f.cmp,f.compareWords,f.sig]; })()`);
     c('a count (Population) is never tested against the county’s count', r, ['count',null,null,null]); }
   { const r=P.J(`(()=>{ const M=caseModel('food-pantry',{type:'board',group:'finance'},{ctx:${ctx(ALL_CV_OVER_40)},now:${NOW}}); const s=caseDeck(M).slides.find(s=>s.type==='stat'); return [M.need.hero&&M.need.hero.key,s?s.headline:null]; })()`);
@@ -77,12 +79,14 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   const TRIO=`(M=>{ const d=caseDeck(M); const t=d.slides.find(s=>s.type==='trio'); return t?t.items:M.need.trio.map((f,i,a)=>caseTrioItem(f,a.map(g=>caseTrioItem(g,false)).reduce((n,x)=>n+x.label.length,0)>(CASE_TRIO_BUDGET[M.lang]||250))); })`;
   // v10.41.1: read on a children's built-in (sports physicals before term). The food pantry's board deck no longer carries the
   // children's share: the pastor, children framing on ideas that are not about children "sounds a little bit weird".
-  { const r=P.J(`(()=>{ const M=caseModel('kids-health',{type:'board',group:'board'},{ctx:${ctx(`(m,k)=>{ m.kidsShare=28; m.moe.kidsShare=1.5; k.kidsShare=26; k.moe.kidsShare=0.3; }`)},now:${NOW}});
-      const f=M.need.trio.find(f=>f.key==='kidsShare'); const t={items:(${TRIO})(M)}; return {cmp:f&&f.cmp.dir,card:t&&t.items[M.need.trio.indexOf(f)]}; })()`);
+  // v10.42 part 3 (the relevance rule): a figure reaches an idea's cards only when its purpose allows it, so the wording is read on the
+  // figure itself (caseFig → caseTrioItem, as the cards and the place facts word it)
+  const FIG=(set,key)=>`(()=>{ const x=${ctx(set)}; return caseFig('${key}',{m:x.M.tract,c:x.M.county,area:x.area&&x.area.name||'A',acs:x.acs||'ACS',hits:x.hits}); })()`;
+  { const r=P.J(`(()=>{ const f=${FIG(`(m,k)=>{ m.kidsShare=28; m.moe.kidsShare=1.5; k.kidsShare=26; k.moe.kidsShare=0.3; }`,'kidsShare')}; return {cmp:f&&f.cmp.dir,card:f&&caseTrioItem(f,false)}; })()`);
     c('28% (significantly higher) against 26%: percentages both sides, never "1 in 4 … County: more than 1 in 4"', [r.cmp,r.card&&r.card.value,r.card&&/County: 26%\./.test(r.card.label),r.card&&/1 in 4/.test(r.card.label)], ['higher','28%',true,false]); }
-  { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'elders'},{ctx:${ctx(`(m,k)=>{ m.singleParent=62; m.moe.singleParent=8; }`)},now:${NOW}}); const t={items:(${TRIO})(M)}; return t?t.items.filter(i=>/single parent|Single/.test(i.label)):[]; })()`);
+  { const r=P.J(`(()=>{ const f=${FIG(`(m,k)=>{ m.singleParent=62; m.moe.singleParent=8; }`,'singleParent')}; return [caseTrioItem(f,false)]; })()`);
     c('62% single-parent families read 62%, never a bare "1 in 2"', r.map(i=>i.value), ['62%']); }
-  { const r=P.J(`(()=>{ const M=caseModel('prayer-box',{type:'board',group:'deacons'},{ctx:${ctx(`(m,k)=>{ m.renters=65; m.moe.renters=4; }`)},now:${NOW},lang:'es'}); const t={items:(()=>{ const p=LANG; LANG='es'; try{ return (${TRIO})(M); }finally{ LANG=p; } })()}; return t?t.items.filter(i=>/alquil|Inquilin|Hogares que alquilan/i.test(i.label)).map(i=>i.value):[]; })()`);
+  { const r=P.J(`(()=>{ const p=LANG; LANG='es'; try{ const f=${FIG(`(m,k)=>{ m.renters=65; m.moe.renters=4; }`,'renters')}; return [caseTrioItem(f,false).value]; }finally{ LANG=p; } })()`);
     c('ES: 65% renters read 65%, never "1 de cada 2"', r.every(v=>v==='65%')&&r.length>0, true); }
   { const r=P.J(`(()=>{ const M=caseModel('pathfinders',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); const t={items:(${TRIO})(M)};
       return M.need.trio.map((f,i)=>({w:f.freqWord,d:f.den,cd:f.countyDen,v:t.items[i].value})); })()`);
@@ -111,7 +115,8 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   { const r=P.J(`caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}).questions.find(q=>q.id==='board.cost').a`);
     c('with money to spare the answer still says what remains', /After it, \$[\d,]+ of the start-up budget and \$[\d,]+ a month remains in the budget\./.test(r), true);
     // v10.40: the board's Luke 14:28 counts the cost on the capacity slide (the ask carries its own verse)
-    c('…and Luke 14:28 is on the capacity slide', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='capacity').verse.ref`), 'Luke 14:28 · KJV'); }
+    // v10.42 part 3: What it takes names the aim and holds a line of verse (measured), so Luke 14:28 counts the cost beside the budget
+    c('…and Luke 14:28 is on the ask', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='ask').verse.ref`), 'Luke 14:28 · KJV'); }
 
   console.log('\n-- F7: punctuation on shared slides --');
   { const r=P.J(`(()=>{ const M=caseModel('interpreter-bank',{type:'board',group:'elders'},{now:${NOW},lang:'es'}); const p=LANG; LANG='es'; try{ return (${TRIO})(M).map(i=>i.label).concat(M.place.facts.map(f=>f.label)); }finally{ LANG=p; } })()`);
@@ -138,8 +143,10 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('the builder shows him the shortfalls (and any to-dos) before he presents', [/Still to settle before you present/.test(P.txt('#casebody .cs-warn')||''),/A room for/.test(P.txt('#casebody .cs-warn')||'')], [true,true]);
     own(FX.MEDIUM,[]); }
   { own(FX.MEDIUM,[]);
-    const r=P.J(`(()=>{ const m=caseModel('food-pantry',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); return [m.capacity.rows.every(x=>x.need<=x.have),caseDeck(m).slides.find(s=>s.type==='capacity').headline,m.capacity.gaps]; })()`);
-    c('every row covered and no shared gap: "We can staff it" headline', [r[0],r[2].length===0?r[1]===P.E(`caseT(CASE_COPY.head.capacityOk)`):true], [true,true]); }
+    const r=P.J(`(()=>{ const m=caseModel('food-pantry',{type:'board',group:'board'},{ctx:caseSampleCtx(),now:${NOW}}); return [m.capacity.rows.every(x=>x.need<=x.have),caseDeck(m).slides.find(s=>s.type==='capacity').headline,m.capacity.gaps,caseF(CASE_ARC.head.capacityOk,{aim:m.aim})]; })()`);
+    // v10.42 part 3: the headline names the aim ("We have the people and hours to {aim}"), or says it without the aim when the aim's leaves
+    // the phone no line for its verse (caseFitDeck)
+    c('every row covered and no shared gap: "We can staff it" headline', [r[0],r[2].length===0?(r[1]===r[3]||r[1]===P.E(`caseT(CASE_COPY.head.capacityOk)`)):true], [true,true]); }
 
   console.log('\n-- F11: the team invitation without a church name --');
   { const r=P.J(`(()=>{ const n=uChurch().name; uChurch().name='My church'; const a=caseModel('food-pantry',{type:'team',group:'community'},{now:${NOW}}).motion.by, b=caseModel('food-pantry',{type:'team',group:'community'},{now:${NOW},lang:'es'}).motion.by; uChurch().name=n; return [a,b]; })()`);
@@ -164,23 +171,30 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   for(const n of [1,4]){ members(n);
     const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m); const a=d.slides.find(s=>s.type==='ability'); const H=caseHandout(m,d,{});
       return {has:m.gifts.has,few:m.gifts.few,label:a.label,src:a.source,lead:a.lead,h:H.gifts.text,hs:H.gifts.source,hn:[H.gifts.fit,H.gifts.respondents]}; })()`);
-    c(`${n} adult respondent${n>1?'s':''}: no gifts counts on the slide (the profile’s skills instead)`, [r.has,r.few,/gifts that fit|Member/.test(r.label),/Spiritual Gifts results/.test(r.src),r.lead], [false,true,false,false,'']);
+    // v10.42 part 3 (the pastor, SPEC-FOCUS E: "every member needs to do it"): below half of the adults the slide says the church-wide
+    // initiative comes first, with the coverage and the invitation (GIFTS.md §6.3); still no gifts counts and no fit
+    c(`${n} adult respondent${n>1?'s':''}: no gifts counts on the slide (the church-wide initiative first)`, [r.has,r.few,/gifts that fit|Member/.test(r.label),/Spiritual Gifts results/.test(r.src),r.lead], [false,true,false,false,'Every member is invited: about 15 minutes on their phone.']);
     c(`…nor in the handout, which never says "not taken yet"`, [/\d+ of \d+ members/.test(r.h),/No Spiritual Gifts results yet/.test(r.h),r.hs,r.hn], [false,false,'',[0,0]]); }
   members(1); P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; openTool('case'); render();`);
   c('…the builder tells the pastor why (five or more adults)', /once 5 or more adults have taken/.test(P.txt('#casebody')||''), true);
   members(6);
-  { const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); const a=caseDeck(m).slides.find(s=>s.type==='ability'); return {g:m.gifts,value:a.value,src:a.source}; })()`);
-    c('six respondents: the counts show', [r.g.has,r.value===String(r.g.fit),/from 6 members/.test(r.src)], [true,true,true]);
+  // v10.42 part 3 (GIFTS.md §6.3): the counts show once half of the adults have taken it (here 6 of 10 adults)
+  { const r=P.J(`(()=>{ const c0=capGet(); capSave({...c0,adults:10}); U_PEOPLE_CACHE=null; try{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); const a=caseDeck(m).slides.find(s=>s.type==='ability'); return {g:m.gifts,value:a.value,src:a.source}; } finally{ capSave(c0); U_PEOPLE_CACHE=null; } })()`);
+    c('six respondents, half of the adults: the counts show', [r.g.has,r.value===String(r.g.fit),/from 6 members/.test(r.src)], [true,true,true]);
     c('E2E-7: "ready to coordinate" never more than "fit this work"', [r.g.ready<=r.g.fit,r.g.couldLead<=r.g.fit], [true,true]); }
   { const bad=P.J(`(()=>{ const out=[]; SIGNATURE.forEach(x=>['board','team','congregation'].forEach(t=>{ const m=caseModel(x.id,{type:t},{now:${NOW}}); if(m.ok&&m.gifts.has&&(m.gifts.ready>m.gifts.fit||m.gifts.ready+m.gifts.couldLead>Math.max(m.gifts.fit,0)+m.gifts.couldLead)) out.push(x.id+'/'+t); })); return out; })()`);
     c('…across every ministry and kind', bad, []);
     const s=P.J(`(()=>{ const out=[]; SIGNATURE.slice(0,40).forEach(x=>{ const m=caseModel(x.id,{type:'board'},{ctx:caseSampleCtx(),now:${NOW}}); if(m.ok&&m.gifts.ready>m.gifts.fit) out.push(x.id); }); return out; })()`);
     c('…and in the sample’s made-up counts', s, []); }
-  { const H=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); m.gifts={...m.gifts,fit:1,drawn:1,ready:1}; const e=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang:'es'}); e.gifts={...e.gifts,fit:1,drawn:1,ready:1};
+  // v10.42 part 3: the words where the whole church is not counted (church: null); below half the handout's box says the church-wide
+  // initiative comes first (GIFTS.md §6.6)
+  { const H=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); m.gifts={...m.gifts,fit:1,drawn:1,ready:1,church:null}; const e=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang:'es'}); e.gifts={...e.gifts,fit:1,drawn:1,ready:1,church:null};
       return [caseHandout(m,null,{}).gifts.text,caseHandout(e,null,{}).gifts.text]; })()`);
     c('the handout agrees with its count: "1 of 6 members … fits this work; 1 says …"', /1 of 6 members who took the Spiritual Gifts assessment fits this work; 1 says they are drawn to it, and 1 could lead it\./.test(H[0]), true);
     c('…ES: "1 … encaja …; 1 dice que le atrae y 1 podría dirigirla"', /1 de los 6 miembros .* encaja con esta obra; 1 dice que le atrae y 1 podría dirigirla\./.test(H[1]), true); }
-  { const r=P.J(`(()=>{ const f=(fit,drawn,lang)=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang}); m.gifts={...m.gifts,has:true,fit,drawn,could:fit-drawn}; m.vals={...m.vals,fit:caseNoun(CASE_X.members,fit),drawn:String(drawn)}; return caseDeck(m).slides.find(s=>s.type==='ability'); };
+  // v10.42 part 3: these are the words where the whole church is not counted (church: null, as the sample); below half the slide says
+  // the church-wide initiative comes first, at half or more it counts the whole church (GIFTS.md §6.3)
+  { const r=P.J(`(()=>{ const f=(fit,drawn,lang)=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW},lang}); m.gifts={...m.gifts,has:true,fit,drawn,could:fit-drawn,church:null}; m.vals={...m.vals,fit:caseNoun(CASE_X.members,fit),drawn:String(drawn)}; return caseDeck(m).slides.find(s=>s.type==='ability'); };
       return [[1,1,'en'],[1,0,'en'],[2,0,'en'],[3,2,'en'],[1,1,'es'],[1,0,'es'],[2,0,'es']].map(([a,b,l])=>{ const s=f(a,b,l); return [s.value,s.label]; }); })()`);
     c('F8: one member, drawn', r[0], ['1','Member whose gifts fit this work, and who said they are drawn to it.']);
     c('F8: one member, not drawn', r[1], ['1','Member whose gifts fit this work.']);
@@ -201,8 +215,10 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
 
   console.log('\n-- E2E-12: the preview is the deck presented --');
   { P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'congregation',group:'congregation'}; uChurch().caseRooms={}; openTool('case'); render();`);
-    const a=P.J(`[CASE_ST.model.yes.respond,CASE_ST.deck.slides.find(s=>s.type==='close').text]`);
-    c('no link yet: "I’m in" on, as the setup starts it; the close slide says so', [a[0],/Tap “I’m in” on your phone/.test(a[1])], [true,true]);
+    const a=P.J(`[CASE_ST.model.yes.respond,CASE_ST.deck.slides.find(s=>s.type==='close').text,CASE_ST.deck.slides.find(s=>s.type==='yes').respond]`);
+    // v10.42 part 3: the whole church's close carries the goal and the Ellen White line; its line of text ("Tap “I’m in”…") gives way when
+    // they leave a phone no room (caseFitDeck, measured), and the answers themselves are on the slide before
+    c('no link yet: "I’m in" on, as the setup starts it; the answers ask for it (the close says so where it has room)', [a[0],a[2],!a[1]||/Tap “I’m in” on your phone/.test(a[1])], [true,true,true]);
     P.E(`uChurch().caseRooms={'pathfinders|congregation|congregation|en':{room:'A'.repeat(22),key:'k'.repeat(43),code:'K7M2QX',url:'https://pastorshub.org/#watch=${'A'.repeat(22)}',expires:Date.now()+864e5,respond:false,ended:null}}; caseMount(true);`);
     c('an open link with answers off: the preview has them off too', P.J(`CASE_ST.model.yes.respond`), false);
     P.E(`uChurch().caseRooms={}; uPersist();`);
@@ -274,7 +290,9 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     c('…the budget’s "Left after this" and the earlier overdraft, as on the ask slide', [H.budget.leftText,/ to start · \$40 a month$/.test(H.budget.overText||'')], ['Short by $75 to start · $25 a month',true]);
     own(FX.MEDIUM,[]);
     const src=P.E('casePdfDocAt.toString()');
-    c('the capacity heading switches with the gaps', src.includes('sub(c.gaps&&c.gaps.length&&Lb.staffGaps?Lb.staffGaps:Lb.staff,MX)'), true);
+    // v10.42 part 3 (DESIGN N8): the handout follows the slides, so the section is "What it takes" as the kicker says; without that label
+    // it still switches with the gaps
+    c('the capacity heading switches with the gaps', src.includes('sub(Lb.takes||(c.gaps&&c.gaps.length&&Lb.staffGaps?Lb.staffGaps:Lb.staff),MX)'), true);
     c('V10: the SAMPLE pill is mint, as every other SAMPLE mark', /fill\(C\.acc\); rrect\(X1-w,27/.test(src)&&!/fill\(AMB\); rrect\(X1-w,27/.test(src), true);
     c('V19: mint and amber text take darker inks (≥ 4.5:1 on white)', P.J(`(()=>{ const L=h=>{ const v=[1,3,5].map(i=>parseInt(h.slice(i,i+2),16)/255).map(c=>c<=0.03928?c/12.92:((c+0.055)/1.055)**2.4); return 0.2126*v[0]+0.7152*v[1]+0.0722*v[2]; };
       return Object.entries(GF_PDF_INK).map(([a,b])=>[a,Math.round(1.05/(L(b)+0.05)*100)/100>=4.5]); })()`), [['#0E8F6E',true],['#C2760B',true]]);
@@ -285,7 +303,7 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   { const e=page({lang:'es'}); await sleep(1100);
     e.E(`DATA=${JSON.stringify(D)};SCOPE="tract"; CAP=null; capSave(${JSON.stringify(FX.MEDIUM)});`);
     c('(the Spanish page builds)', e.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); return [m.ok,m.error||null]; })()`), [true,null]);
-    const r=e.J(`(()=>{ const d=caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}})); return {places:d.slides.find(s=>s.type==='motion').rows.find(r=>r[1]==='16'||/^\\d+$/.test(r[1]))[0],back:TD_STR.es.back,opened:TD_STR.es.opened(23),around:TD_STR.es.around,q:caseT(CASE_COPY.builder.questions),drivers:caseT(CASE_COPY.fig.noCar.design)}; })()`);
+    const r=e.J(`(()=>{ const d=caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}})); return {places:d.slides.find(s=>s.type==='ask').rows.find(r=>r[1]==='16'||/^\\d+$/.test(r[1]))[0],back:TD_STR.es.back,opened:TD_STR.es.opened(23),around:TD_STR.es.around,q:caseT(CASE_COPY.builder.questions),drivers:caseT(CASE_COPY.fig.noCar.design)}; })()`);
     c('V8: "Cupos 16", never "Lugares 16" (sixteen locations)', r.places, 'Cupos');
     c('V11: "Seguir en vivo", "23 teléfonos"', [r.back,r.opened], ['Seguir en vivo','23 teléfonos']);
     c('V17: "Nuestro entorno", as the headlines say', r.around, 'Nuestro entorno');

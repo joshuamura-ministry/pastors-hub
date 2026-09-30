@@ -105,7 +105,7 @@ const PICNIC='fellowship-bring-a-neighbor-picnic', CARD='member-care-two-sabbath
         const row={id:x.id,ok:caseChildOk(x),sp:(x.need||[]).includes('single-parents')};
         for(const g of ['board','congregation']){ const m=caseModel(x.id,{type:g,group:g},{lang:'en'}); const d=m&&m.ok?caseDeck(m):null; if(!d){ row[g]={err:1}; continue; }
           const figs=d.slides.filter(s=>['stat','trio','place'].includes(s.type));
-          row[g]={hero:m.need&&m.need.hero?m.need.hero.key:null,lead:m.need?m.need.lead:null,min:m.ministry.min,keys:(m.sources||[]).map(z=>z.key),kids:m.neighbours?m.neighbours.kidsOn:null,
+          row[g]={hero:m.need&&m.need.hero?m.need.hero.key:null,lead:m.need?m.need.lead:null,min:m.ministry.min,keys:(m.sources||[]).map(z=>z.key),kids:m.neighbours?m.neighbours.kidsOn:null,kidsOk:!!(m.purpose&&m.purpose.allowed.includes('kidsShare')),
             verses:d.slides.map(s=>s.type==='verse'?s.ref:(s.verse&&s.verse.ref)).filter(Boolean).map(v=>String(v).replace(/ · .*/,'')),
             dots:d.slides.some(s=>s.type==='stat'&&/in every 100 are children/.test(s.count||'')),
             words:(JSON.stringify(figs).match(/is a child|are children|children below|under 18/gi)||[]).length}; }
@@ -124,7 +124,9 @@ const PICNIC='fellowship-bring-a-neighbor-picnic', CARD='member-care-two-sabbath
     const pic=R.find(r=>r.id===PICNIC);
     c('…the picnic among them: no "1 in 4 people around us is a child", no Mark 10:14', [pic.ok,why(pic,'board'),why(pic,'congregation')], [false,[],[]]);
     c('…nor is it staffed as children\'s work (no Children\'s Sabbath School, Adventurers or Pathfinders among the gifts that fit)', ['board','congregation'].map(g=>pic[g].min.filter(n=>KIDMIN.includes(n))), [[],[]]);
-    c(`…while the ${yes.length} about children keep the children's share on the congregation's neighbours slide`, [yes.length>500,yes.filter(r=>r.congregation.kids==null).map(r=>r.id).slice(0,5)], [true,[]]);
+    // v10.42 part 3 (the relevance rule, relevance.json): a figure appears only when the idea's purpose allows it; a food idea for
+    // children (the weekend bags, the snow-day boxes) argues from hunger, so only the ideas whose purpose allows the share keep it
+    c(`…while the ${yes.length} about children keep the children's share on the congregation's neighbours slide (where their purpose allows it)`, [yes.length>500,yes.filter(r=>r.congregation.kids==null&&r.congregation.kidsOk).map(r=>r.id).slice(0,5),yes.filter(r=>r.congregation.kids!=null&&!r.congregation.kidsOk).length], [true,[],0]);
     const kid=R.find(r=>r.ok&&r.congregation.verses.includes('Mark 10:14'));
     c('…and "Suffer the little children" still comes to a children\'s idea', !!kid, true);
     // a families idea for everyone never borrows the children; one for the children's own groups still may
@@ -167,10 +169,12 @@ const PICNIC='fellowship-bring-a-neighbor-picnic', CARD='member-care-two-sabbath
       c(`the conference deck (${lang}): every capacity row, what we have first, then what is needed`, [r.cap.length>0,r.cap], [true,want]);
     }
     const lead=(type,group,ready,lang)=>P.J(`(()=>{ const m=caseModel(${type==='conference'?'CASE_PLAN_ID':"'food-pantry'"},{type:${JSON.stringify(type)},group:${JSON.stringify(group)}},{lang:${JSON.stringify(lang)}});
-      m.gifts={...m.gifts,has:true,fit:Math.max(3,m.gifts.fit||0),ready:${ready},names:m.gifts.names||[]}; const d=caseDeck(m); const s=d.slides.find(s=>s.type==='ability'); return s?s.lead:null; })()`);
+      m.gifts={...m.gifts,has:true,fit:Math.max(3,m.gifts.fit||0),ready:${ready},names:m.gifts.names||[],church:null}; const d=caseDeck(m); const s=d.slides.find(s=>s.type==='ability'); return s?s.lead:null; })()`);
+    // v10.42 part 3 (the pastor, SPEC-FOCUS E): below half of the adults the slide says the church-wide Spiritual Gifts initiative comes
+    // first (GIFTS.md §6.3); the words below are the ones said where the whole church is not counted (church: null, as the sample)
     c('conference, nobody ready to lead: "A coordinator will be named and trained." (EN and ES)', [lead('conference','conference',0,'en'),lead('conference','conference',0,'es')],
       ['A coordinator will be named and trained.','Se nombrará y capacitará a un coordinador.']);
-    c('…never "pair and train" to the administrators; said only when nobody is ready (one ready: "Coordinator: one member is ready.")', [/pair and train/.test(JSON.stringify(P.J(`caseDeck((()=>{ const m=caseModel(CASE_PLAN_ID,{type:'conference',group:'conference'},{lang:'en'}); m.gifts={...m.gifts,has:true,fit:3,ready:0,names:[]}; return m; })())`))),lead('conference','conference',1,'en')],
+    c('…never "pair and train" to the administrators; said only when nobody is ready (one ready: "Coordinator: one member is ready.")', [/pair and train/.test(JSON.stringify(P.J(`caseDeck((()=>{ const m=caseModel(CASE_PLAN_ID,{type:'conference',group:'conference'},{lang:'en'}); m.gifts={...m.gifts,has:true,fit:3,ready:0,names:[],church:null}; return m; })())`))),lead('conference','conference',1,'en')],
       [false,'Coordinator: one member is ready.']);
     c('…a board deck keeps its own words to the pastor ("pair and train")', lead('board','board',0,'en'), 'Nobody is ready to coordinate yet: pair and train.');
     P.w.close(); }
@@ -180,10 +184,12 @@ const PICNIC='fellowship-bring-a-neighbor-picnic', CARD='member-care-two-sabbath
     const ids=P.J('CASE_GROUPS.map(g=>g.id)'), FOR=P.J("typeof CASE_GROUP_ES_FOR==='object'?CASE_GROUP_ES_FOR:{}");
     c('all 34 groups have their Spanish words after "para", each with its article (or "toda la iglesia")',
       [ids.length,ids.filter(id=>!FOR[id]),Object.keys(FOR).filter(id=>!ids.includes(id)),ids.filter(id=>FOR[id]&&!/^(el|la|los|las) \S|^toda la iglesia$/.test(FOR[id]))], [34,[],[],[]]);
-    const lines=[]; for(const g of ids){ await choose(P,g); lines.push([g,P.txt('#cs-s2 .cs-sh .note')]); }
-    c('step 2\'s line for all 34: "Ideas para {el/la/los/las …}. Primero, lo que mejor encaja en Warminster."',
-      lines.filter(([g,t])=>t!==`Ideas para ${FOR[g]}. Primero, lo que mejor encaja en Warminster.`), []);
-    c('…the Pathfinder Club: "Ideas para el Club de Conquistadores."', lines.find(l=>l[0]==='pathfinders')[1], 'Ideas para el Club de Conquistadores. Primero, lo que mejor encaja en Warminster.');
+    // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The group, with its article, now heads "Más ideas para {group}" (its line keeps "Primero, lo que mejor
+    // encaja en Warminster."); the step's own line says where support is won
+    const lines=[]; for(const g of ids){ await choose(P,g); lines.push([g,P.txt('#cs-more h4')+'. '+P.txt('#cs-more .cs-parth .note')]); }
+    c('step 2\'s "Más ideas" for all 34: "Más ideas para {el/la/los/las …}. Primero, lo que mejor encaja en Warminster."',
+      lines.filter(([g,t])=>t!==`Más ideas para ${FOR[g]}. Primero, lo que mejor encaja en Warminster.`), []);
+    c('…the Pathfinder Club: "Más ideas para el Club de Conquistadores."', lines.find(l=>l[0]==='pathfinders')[1], 'Más ideas para el Club de Conquistadores. Primero, lo que mejor encaja en Warminster.');
     c('…no line reads "para" straight into a capitalised name (the old "Ideas para Club de Conquistadores")', lines.filter(([,t])=>/para (?!el |la |los |las |toda )/.test(t.split('.')[0])).map(l=>l[0]), []);
     await choose(P,'pathfinders');
     P.qa('#cs-lib .lib-sec:not([hidden]) .lib-card .lib-acts button')[0].click();
@@ -193,12 +199,13 @@ const PICNIC='fellowship-bring-a-neighbor-picnic', CARD='member-care-two-sabbath
     c('no errors in Spanish', P.errs, []);
     P.w.close(); }
   { const P=page(); await sleep(1300); setup(P);
-    await choose(P,'pathfinders'); const a=P.txt('#cs-s2 .cs-sh .note');
-    await choose(P,'congregation'); const b=P.txt('#cs-s2 .cs-sh .note');
+    // v10.42 (section F): the group heads "More ideas for {group}" now
+    await choose(P,'pathfinders'); const a=P.txt('#cs-more h4')+'. '+P.txt('#cs-more .cs-parth .note');
+    await choose(P,'congregation'); const b=P.txt('#cs-more h4')+'. '+P.txt('#cs-more .cs-parth .note');
     // v10.41.1: English now takes "the" where it reads naturally, as the Spanish articles above (it read "Ideas for Pathfinder
     // Club"); every group's English words are held in v41-1.test.js
     c('English takes its article too ("Ideas for the Pathfinder Club."), and "the whole church" is lower-cased mid-sentence as step 3 already did',
-      [a,b], ['Ideas for the Pathfinder Club. Best fit for Warminster first.','Ideas for the whole church. Best fit for Warminster first.']);
+      [a,b], ['More ideas for the Pathfinder Club. Best fit for Warminster first.','More ideas for the whole church. Best fit for Warminster first.']);
     P.w.close(); }
 }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`);

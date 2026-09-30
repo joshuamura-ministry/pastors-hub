@@ -53,8 +53,12 @@ function page(lang){
   { P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; openTool('case'); render();`);
     const body=()=>P.D.getElementById('casebody');
     const slides=()=>[...body().querySelectorAll('.td-slide')];
-    const ask=()=>slides().find(s=>s.classList.contains('td-t-ask')), cap=()=>slides().find(s=>s.classList.contains('td-t-capacity'));
-    c('the ask slide’s money in dollars: $75 to start, $125 ceiling, never $0k or $3k', [/\$75/.test(ask().textContent),/Ceiling\s*\$125/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
+    // v10.42: with "Suggest options" (the default; the pastor: "a proposal should give them options") "Let's decide together" is
+    // an ask slide just before the ask, so the ask is the last one
+    const ask=()=>slides().filter(s=>s.classList.contains('td-t-ask')).pop(), cap=()=>slides().find(s=>s.classList.contains('td-t-capacity'));
+    // v10.42.0 fix after review: the Pathfinder club runs by term ("offer 'the first term' instead of a 6-week or 4-week trial"):
+    // 13 weeks, so its ceiling is $75 + 4 × $25 = $175
+    c('the ask slide’s money in dollars: $75 to start, $175 ceiling (the first term), never $0k or $3k', [/\$75/.test(ask().textContent),/Ceiling\s*\$175/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
     // v10.41 final review: capacity reads what we have first, then what is needed ("$75 of $2,500" read backwards to the
     // conference's administrators as "$12,000 of $2,500"): "$2,500 free · $75 needed". The intent is unchanged: to the dollar.
     c('…and what is available, to the dollar ($2,500 start-up; $2,425 and $425 a month left)', [/\$2,500\s*free · \$75\s*needed/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$2,425\s·\s\$425\sa\smonth/.test(ask().textContent)], [true,true]);
@@ -62,7 +66,8 @@ function page(lang){
     console.log('\n-- the old proposal is not editable --');
     c('nothing in Make the Case is contenteditable (tapping it opened the phone keyboard)', [body().querySelectorAll('[contenteditable]').length,[...body().querySelectorAll('*')].some(e=>e.isContentEditable===true)], [0,false]);
     c('no "Save wording" button, and no line saying the wording can be edited', [!!P.D.getElementById('u-prop-save'),/edit the wording/.test(body().textContent)], [false,false]);
-    c('the actions: Present live, Share link & QR, Download PDF handout (and the ask list and the sample)', [...body().querySelectorAll('[data-cs-act]')].map(b=>b.textContent), ['Present live','Share link & QR','Download PDF handout','Your private ask list','See a sample slideshow']);
+    // v10.42 part 3 (the pastor asked for a proposal to vote on, PROPOSAL.md): a board's actions add "Proposal to vote on (PDF)"
+    c('the actions: Present live, Share link & QR, Download PDF handout, the Proposal to vote on (and the ask list and the sample)', [...body().querySelectorAll('[data-cs-act]')].map(b=>b.textContent), ['Present live','Share link & QR','Download PDF handout','Proposal to vote on (PDF)','Your private ask list','See a sample slideshow']);
     c('wording saved by an older version is no longer pasted over the slides as plain text',
       (()=>{ P.E(`uChurch().proposalText={'pathfinders|board':{signature:'x',text:'OLD WORDING'}}; caseMount(true);`); return [/OLD WORDING/.test(body().textContent),slides().length>=8]; })(), [false,true]);
 

@@ -143,20 +143,23 @@ const SPEC_MAP={
     await P.E(`libLoadTheme('member-care')`);
     P.E(`(()=>{ const raw=libFull(${JSON.stringify(pick)}); libSave(raw); caseChoose(${JSON.stringify(pick)}); })()`); await sleep(150);
     const m=P.J('({ok:CASE_ST.model&&CASE_ST.model.ok,inreach:CASE_ST.model&&CASE_ST.model.inreach,reach:CASE_ST.model&&CASE_ST.model.reach})');
-    const S=P.J('CASE_ST.deck.slides.map(s=>({type:s.type,kicker:s.kicker||"",verse:!!(s.verse&&s.verse.text)}))');
+    // v10.42 part 3: a close that asks carries its verse as a quote (the appeal's verse); How it works carries one only where its steps
+    // leave room (NARRATIVE.md §6.1, N7: a verse that does not fit is passed over, never cut)
+    const S=P.J('CASE_ST.deck.slides.map(s=>({type:s.type,kicker:s.kicker||"",verse:!!((s.verse&&s.verse.text)||(s.type==="close"&&s.quote&&s.quote.text))}))');
     c(`${pick} for the deacons: an in-reach deck`, [P.J('casePrefs().ministry'),m], [pick,{ok:true,inreach:true,reach:'in'}]);
     c('…"Our church family" once, no Census figure slide, no "Here in {town}"', [S.filter(s=>s.type==='place'&&s.kicker==='Our church family').length,S.filter(s=>s.type==='stat').length,S.some(s=>/^Here in/.test(s.kicker))], [1,0,false]);
-    c('…Scripture on every content slide', S.filter(s=>!['join'].includes(s.type)&&!s.verse).map(s=>s.type), []);
+    c('…Scripture on every content slide (How it works where its steps leave room)', S.filter(s=>!['join','how'].includes(s.type)&&!s.verse).map(s=>s.type), []);
     c('…the risks open with the privacy of care lists', /private|privacy|consent|confiden/i.test(P.J(`JSON.stringify(CASE_ST.deck.slides.find(s=>s.type==='risks')||CASE_ST.deck.slides.find(s=>s.type==='roles')||{})`)), true);
     c('…and step 2 shows it chosen, as its library card', [!!P.q('#cs-s2 .cs-chosen .lib-card'),P.q('#cs-s2 .cs-chosen .lib-card')&&P.q('#cs-s2 .cs-chosen .lib-card').dataset.libId], [true,pick]); }
 
   console.log('\n-- 5. the conference: evangelism only, his series first --');
   { P.E(`caseSetPrefs({ministry:null}); uChurch().plan={church:'Bucks County SDA',date:'2027-09-11',nights:16,kind:'prophecy',perweek:4,workers:18,budget:12000,v:3}; uPersist(); CASE_ST.pick=true; caseMount(true);`);
-    P.E(`caseChooseGroup('conference')`); await until(()=>listed(P)&&P.q('#cs-lib .cs-plan'));
-    c('his series is the first card, above both sections', [P.q('#cs-lib .lib-card').classList.contains('cs-plan'),P.txt('#cs-lib .cs-plan h4')], [true,'Your evangelism series: opening night September 11, 2027']);
+    // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" His series is his plan: it opens "From your plan", above the list
+    P.E(`caseChooseGroup('conference')`); await until(()=>listed(P)&&P.q('#cs-plan .cs-plan'));
+    c('his series is the first card, opening "From your plan" above both sections', [P.q('#cs-s2 .lib-card').classList.contains('cs-plan'),P.txt('#cs-plan .cs-plan h4')], [true,'Your evangelism series: opening night September 11, 2027']);
     const EV=SPEC_MAP.conference.join(' ').split(' ');
     c('every idea listed is evangelism (its themes, cross-listed, or built-ins filed under them)', P.J(`caseGroupList().rows().filter(r=>!(${JSON.stringify(EV)}.includes(r.theme)||r.alsoIds.some(t=>${JSON.stringify(EV)}.includes(t)))).length`), 0);
-    P.q('#cs-lib [data-cs-plan]').click(); await sleep(200);
+    P.q('#cs-plan [data-cs-plan]').click(); await sleep(200);
     c('choosing it: the plan-series ministry itself', P.J('casePrefs()'), {ministry:'plan-series',type:'conference',group:'conference',plan:true});
     c('…step 2 shows it chosen; the step bar names it', [P.txt('#cs-s2 .cs-chosen h4'),P.qa('#cs-bar .cs-st')[1].className.includes('done')], ['Your evangelism series: opening night September 11, 2027',true]);
     const D=P.J('CASE_ST.deck.slides.map(s=>s.type)');

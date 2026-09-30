@@ -111,31 +111,36 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     const deck=P.J('caseCurrentDeck()'), secs=P.qa('#cs-pv .td-slide');
     c(`${t}: one slide on screen per slide in the deck (${deck.slides.length})`, secs.length, deck.slides.length);
     // Built with "I'm in" as the presenter's setup starts it (on), so the preview is the deck presented (v10.39 review E2E-12).
-    c(`${t}: the deck is caseDeck(caseModel(…,{respond:true})) exactly (no edits yet)`, JSON.stringify(deck), JSON.stringify(P.J(`caseDeck(caseModel('pathfinders',{type:'${t}',group:'${g}'},{respond:true}))`)));
+    // v10.42: and with the timing setting, "Suggest options" by default (the pastor, 29 Sep 2026: "a proposal should give them
+    // options… instead of dictating dates"), so the board and team decks carry "Let's decide together" (10 slides, not 9)
+    c(`${t}: the deck is caseDeck(caseModel(…,{respond:true,timing:'options'})) exactly (no edits yet)`, JSON.stringify(deck), JSON.stringify(P.J(`caseDeck(caseModel('pathfinders',{type:'${t}',group:'${g}'},{respond:true,timing:'options'}))`)));
     c(`${t}: each slide is drawn as its type`, secs.map(s=>[...s.classList].find(k=>/^td-t-/.test(k))), deck.slides.map(s=>'td-t-'+s.type));
     secs.forEach(s=>types.add([...s.classList].find(k=>/^td-t-/.test(k)).slice(5)));
     c(`${t}: nothing reads "undefined", "NaN" or "null"`, /undefined|NaN|\bnull\b/.test(P.txt('#cs-pv')), false);
   }
   // v10.40 (the pastor asked for it): "Here in {town}" (place) in every deck; the "why here" trio
   // is drawn only when a deck has no place data at all
-  c('the three kinds together draw every slide type', [...types].sort(), ['ability','ask','capacity','close','join','motion','place','risks','roles','stat','timeline','verse','yes']);
+  // v10.42 part 3: How it works in every deck; one timing slide ("Let's decide together", an ask, with the screens' Suggest options)
+  c('the three kinds together draw every slide type', [...types].sort(), ['ability','ask','capacity','close','how','join','motion','place','risks','roles','stat','verse','yes']);
   click(P,'[data-cs-group="board"]');
-  c('the position reads "1 / 9"; Previous is off', [P.txt('.cs-pos'),P.q('[data-cs-prev]').disabled], ['1 / 9',true]);
+  // v10.42: ten slides on the board's deck ("Let's decide together" before the ask); the moves are the same
+  // v10.42 part 3: eleven (How it works, and the appeal back to the goal at the end: DESIGN.md §5)
+  c('the position reads "1 / 11"; Previous is off', [P.txt('.cs-pos'),P.q('[data-cs-prev]').disabled], ['1 / 11',true]);
   click(P,'[data-cs-next]');
-  c('Next moves one slide', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['2 / 9',1,'1']);
+  c('Next moves one slide', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['2 / 11',1,'1']);
   P.q('[data-cs-phone]').dispatchEvent(new P.w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
-  c('the arrow keys move it too', P.txt('.cs-pos'), '3 / 9');
+  c('the arrow keys move it too', P.txt('.cs-pos'), '3 / 11');
   // v10.40.0: the slides move sideways; inside the slides the keys, the swipe and a mouse drag are the
   // renderer's own. One key press = one slide (the preview's frame must not move it a second time).
   { const sc=P.q('#cs-pv .td-scroller'), k=(key,o={})=>sc.dispatchEvent(new P.w.KeyboardEvent('keydown',Object.assign({key,bubbles:true,cancelable:true},o)));
-    k('ArrowRight'); c('v10.40: → with focus in the slides moves exactly one slide, and the position, list and buttons follow', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['4 / 9',3,'3']);
-    k('PageUp'); k(' ',{shiftKey:true}); c('v10.40: PageUp and Shift+Space (a clicker) move back one each', P.txt('.cs-pos'), '2 / 9');
+    k('ArrowRight'); c('v10.40: → with focus in the slides moves exactly one slide, and the position, list and buttons follow', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()'),P.q('.cs-outline [aria-current="true"]').dataset.csGo], ['4 / 11',3,'3']);
+    k('PageUp'); k(' ',{shiftKey:true}); c('v10.40: PageUp and Shift+Space (a clicker) move back one each', P.txt('.cs-pos'), '2 / 11');
     const pd=(t,x)=>{ const e=new P.w.MouseEvent(t,{bubbles:true,cancelable:true,clientX:x,clientY:200,button:0}); Object.defineProperty(e,'pointerType',{value:'mouse'}); sc.dispatchEvent(e); };
     pd('pointerdown',300); pd('pointerup',150);
-    c('v10.40: a mouse drag to the left in the preview = next, once', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()')], ['3 / 9',2]);
+    c('v10.40: a mouse drag to the left in the preview = next, once', [P.txt('.cs-pos'),P.E('CASE_ST.pv.index()')], ['3 / 11',2]);
     c('v10.40: the preview’s dots follow', [...P.qa('#cs-pv .td-pager i')].map((d,i)=>d.classList.contains('on')?i:-1).filter(i=>i>=0), [2]); }
-  click(P,'.cs-outline [data-cs-go="8"]');
-  c('the list of slides jumps to one; Next is off at the last', [P.txt('.cs-pos'),P.q('[data-cs-next]').disabled], ['9 / 9',true]);
+  click(P,'.cs-outline [data-cs-go="10"]');
+  c('the list of slides jumps to one; Next is off at the last', [P.txt('.cs-pos'),P.q('[data-cs-next]').disabled], ['11 / 11',true]);
   click(P,'.cs-outline [data-cs-go="0"]');
   c('the join slide: nothing to reword, and it says why', [P.qa('.cs-edit [data-cs-f]').length,/QR code and the six-letter code/.test(P.txt('.cs-edit'))], [0,true]);
   c('…with the QR code’s place kept in the preview', [!!P.q('#cs-pv .td-t-join .cs-qrph'),P.qa('#cs-pv .cs-qrph span').map(s=>s.textContent)], [true,['QR code','when you present live']]);
@@ -153,7 +158,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   c('…the slide on screen', [P.txt('#cs-pv .td-slide[data-i="1"] .td-head'),P.txt('#cs-pv .td-slide[data-i="1"] .td-kick')], [H,K]);
   c('…the list marks it Edited', /Edited/.test(P.q('.cs-outline [data-cs-go="1"]').textContent), true);
   c('…and it is on the device', (P.w.localStorage.getItem('terrain-churches-v1')||'').includes(H), true);
-  c('the other slides are untouched', P.J('caseCurrentDeck().slides.filter((s,i)=>i!==1)'), P.J(`caseDeck(caseModel('pathfinders',{type:'board',group:'board'})).slides.filter((s,i)=>i!==1)`));
+  c('the other slides are untouched', P.J('caseCurrentDeck().slides.filter((s,i)=>i!==1)'), P.J(`caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{timing:'options'})).slides.filter((s,i)=>i!==1)`));   // v10.42: the default timing
   // v10.39.0, the presenting step: the stub that said "not switched on" is replaced by
   // the real setup (tests/present-client.test.js covers it); here, only that it opens.
   click(P,'[data-cs-act="present"]');
@@ -278,7 +283,8 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     c('the slides are Spanish', [S.J('caseCurrentDeck().lang'),S.q('#cs-s3 h3').lastChild.textContent], ['es','Sus diapositivas']);
     S.E('CASE_ST.pv.go(1)');
     c('the edit panel', S.qa('.cs-edit label').map(l=>l.firstChild.textContent.trim()), ['Etiqueta sobre el titular','Titular']);
-    c('the actions', S.qa('[data-cs-act]').map(b=>b.textContent), ['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Su lista privada para invitar','Ver una presentación de ejemplo']);
+    // v10.42 part 3 (the pastor: a proposal to vote on, PROPOSAL.md): the board's actions add "The Proposal to vote on (PDF)"
+    c('the actions', S.qa('[data-cs-act]').map(b=>b.textContent), ['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Propuesta para votar (PDF)','Su lista privada para invitar','Ver una presentación de ejemplo']);
     c('the navigation', [S.q('[data-cs-prev]').textContent,S.q('[data-cs-next]').textContent], ['‹ Anterior','Siguiente ›']);
     click(S,'[data-cs-act="ask"]');
     c('the ask list', [/Su lista privada para invitar/.test(S.txt('#cs-ask')),/Solo en este dispositivo/.test(S.txt('#cs-ask'))], [true,true]);
@@ -286,7 +292,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     c('no English left in the Spanish builder', en.filter(t=>body().includes(t)), []);
     click(S,'[data-cs-act="sample"]');
     c('the sample: MUESTRA on the banner and every slide', [S.txt('#casep .gfsamptag'),S.qa('#cs-spv .td-slide').every(s=>/MUESTRA/.test(s.textContent)),/Una presentación de ejemplo/.test(S.txt('#casep'))], ['MUESTRA',true,true]);
-    c('…its kinds and buttons in Spanish', [S.qa('[data-cs-stype]').map(b=>b.textContent),S.qa('#casep [data-cs-act]').map(b=>b.textContent)], [['Junta','Equipo','Sábado','Asociación'],['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF']]);   // v10.41: the conference kind too
+    c('…its kinds and buttons in Spanish', [S.qa('[data-cs-stype]').map(b=>b.textContent),S.qa('#casep [data-cs-act]').map(b=>b.textContent)], [['Junta','Equipo','Sábado','Asociación'],['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Propuesta para votar (PDF)']]);   // v10.41: the conference kind too; v10.42 part 3: the Proposal to vote on
     // v10.39.0, the presenting step: Share opens its setup (it was a "not switched on" stub).
     c('…Share opens its setup in Spanish, marked MUESTRA', (()=>{ click(S,'#casep [data-cs-act="share"]'); return [S.txt('#casepres [data-pr-start]'),S.txt('#casepres .cp-k .gfsamptag'),/un día/.test(S.txt('#casepres'))]; })(), ['Crear el enlace','MUESTRA',true]);
     click(S,'#casepres [data-pr-cancel]');

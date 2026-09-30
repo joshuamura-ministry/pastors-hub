@@ -108,20 +108,37 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   const placeOf=b=>{ const ps=b.d.slides.filter(s=>s.type==='place'); return b.t==='conference'?ps[ps.length-1]:ps[0]; };
   { const bad=[];
     // v10.41: a conference proposal may show its churches first (a place slide too); its "Here in" is the last place slide
+    const PLACE=JE(`(()=>{ const o={}; ${JSON.stringify(GROUPS)}.forEach(([g,t])=>${JSON.stringify(MINS)}.forEach(id=>{ const x=SIGNATURE.find(q=>q.id===id); o[g+'/'+id]=casePurposeOf(x,{type:t,group:g,reach:caseReachOf(x)}).place; })); return o; })()`);
+    // …and where the purpose places it but nothing it allows is there to say (no figure it allows, no partner of its kinds), no slide either
+    const HAS=JE(`(()=>{ const o={}, keep=DATA; for(const src of ['own','sample']) for(const [g,t] of ${JSON.stringify(GROUPS)}) for(const id of ${JSON.stringify(MINS)}){ let m=null;
+      try{ if(src==='sample'){ DATA=null; const r=caseSample({lang:'en',ministry:id,audience:{type:t,group:g},now:${NOW}}); m=r.ok?r.model:null; } else m=caseModel(id,{type:t,group:g},{now:${NOW}}); } finally{ DATA=keep; }
+      o[src+'/'+g+'/'+id]=!!(m&&m.place&&m.place.ok); } return o; })()`);
+    const DISTRICT=JE(`[CASE_CONF.kicker.district.en,CASE_CONF.kicker.district.es]`);
     decks.forEach(b=>{ const p=placeOf(b);
       const town=b.src==='own'?'Warminster':(b.lang==='es'?'Municipio de ejemplo':'Sample town');
-      if(!p){ bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: no place slide`); return; }
+      // v10.42 part 3 (the relevance rule): "Here in {town}" only for ideas whose purpose places them (need, place, field, partners)
+      if(!p){ if(PLACE[b.g+'/'+b.id]!=='none'&&HAS[b.src+'/'+b.g+'/'+b.id]) bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: no place slide`); return; }
+      // the conference's field is one slide: the churches we serve when there are two or more (NARRATIVE.md §5.4)
+      if(b.t==='conference'&&(DISTRICT.includes(String(p.kicker).replace(/^(SAMPLE|MUESTRA) · /,''))||/^\d+ (churches|iglesias)\b/.test(p.headline))) return;   // the kicker may be the mark alone
       if(!p.headline.startsWith((b.lang==='es'?'En ':'In ')+town+',')) bad.push(`${b.src}/${b.lang}/${b.g}/${b.id}: ${p.headline}`);
       if(b.src==='own'&&p.kicker!==(b.lang==='es'?'Aquí en ':'Here in ')+town) bad.push(`${b.g}/${b.id}: kicker ${p.kicker}`);
       if(b.d.slides.length>12) bad.push('over 12'); });
-    c('"Here in {town}" in every deck, its headline naming the place ("In Warminster, …" / "En Warminster, …")', bad.slice(0,6), []); }
+    c('"Here in {town}" in every deck whose purpose places it, its headline naming the place ("In Warminster, …" / "En Warminster, …")', bad.slice(0,6), []);
+    c('…and none where it does not (small groups in homes: its purpose places nothing)', decks.filter(b=>PLACE[b.g+'/'+b.id]==='none'&&placeOf(b)&&/Here in|Aquí en/.test(placeOf(b).kicker)).map(b=>b.g+'/'+b.id).slice(0,4), []); }
   { const n={board:new Set(),team:new Set(),congregation:new Set(),conference:new Set()};
     decks.forEach(b=>n[b.t].add(b.d.slides.map(s=>s.type).join(',')));
     // v10.41: the conference proposal (the pastor: "It would definitely be a different proposal"): 11 slides and the join, or
     // 12 with "the churches we serve" when Terrain holds two or more (the sample's two made-up churches)
-    c('about eight content slides: board and team 8 + join, the congregation 8 + join (the verse slide among them); the conference 10–11 + join', Object.fromEntries(Object.entries(n).map(([k,v])=>[k,[...v].sort()])),
-      {board:['join,motion,stat,place,capacity,ability,ask,risks,timeline'],team:['join,motion,stat,place,ability,roles,risks,timeline,yes'],congregation:['join,verse,stat,stat,place,ability,motion,yes,close'],
-       conference:['join,motion,place,stat,place,capacity,ability,timeline,ask,risks,risks,close','join,motion,stat,place,capacity,ability,timeline,ask,risks,risks,close']}); }
+    /* v10.42 part 3 (the pastor: "From the beginning to the end it has to have a focus, a beginning and an appeal at the end"; DESIGN.md
+       §5): one arc per kind. The opening and the goal; why (a figure the purpose allows, or Scripture); where (only when the purpose
+       places it); how it works; who and what it takes; safeguards; one timing slide; the ask; the appeal. The finance committee hears
+       the cost right after the opening (X12); the whole church has no timing slide; the conference's field and mission (§5.4). */
+    const ARC={board:/^join,motion,(ask,)?(stat|verse),(place,|trio,)?how,capacity,ability,risks,timeline,(ask,)?close$/,
+      team:/^join,motion,(stat|verse),(place,)?how,ability,roles,risks,timeline,yes$/,
+      congregation:/^join,motion,verse,(stat,)?(place,)?how,ability,yes,close$/,
+      conference:/^join,motion,risks,(place,)?how,capacity,ability,timeline,ask,risks,close$/};
+    c('about ten content slides, one arc per kind: board, team, the whole church, the conference', Object.fromEntries(Object.entries(n).map(([k,v])=>[k,[...v].filter(x=>!ARC[k].test(x))])),
+      {board:[],team:[],congregation:[],conference:[]}); }
   { const bad=[];
     decks.forEach(b=>{ const p=placeOf(b); if(!p) return;
       if(p.facts.length>2||p.partners.length>3||p.bring.length>3) bad.push('too many: '+b.g+'/'+b.id);
@@ -130,24 +147,33 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   { const NAMES=['Ana Lopez','Ben Carter','Cara Diaz','Dan Evans','Eve Fox','Gus Hill','Young Kid'];
     c('no member’s name on any place slide or verse', decks.filter(b=>NAMES.some(nm=>JSON.stringify(b.d).includes(nm))).map(b=>b.g+'/'+b.id).slice(0,3), []); }
   { const mono=decks.find(b=>b.src==='own'&&b.lang==='en'&&b.g==='board'&&b.id==='pathfinders').d;
-    c('the board’s own verse keeps a home: Luke 14:28 counts the cost on the capacity slide', mono.slides.find(s=>s.type==='capacity').verse.ref, 'Luke 14:28 · KJV');
+    // v10.42 part 3: What it takes names the aim and holds a line of verse beside its rows (measured), so Luke 14:28 counts the cost on
+    // the ask, beside the itemised budget
+    c('the board’s own verse keeps a home: Luke 14:28 counts the cost on the ask', mono.slides.find(s=>s.type==='ask').verse.ref, 'Luke 14:28 · KJV');
     c('the place slide opens with "seek the peace of the city" (Jeremiah 29:7)', mono.slides.find(s=>s.type==='place').verse.ref, 'Jeremiah 29:7 · KJV');
     c('the need slide’s verse speaks to its own figure (children: Mark 10:14)', mono.slides.find(s=>s.type==='stat').verse.ref, 'Mark 10:14 · KJV');
     const cg=decks.find(b=>b.src==='own'&&b.lang==='en'&&b.g==='congregation'&&b.id==='food-pantry').d;
-    c('the congregation’s verse slide carries the lead need’s own verse (the pantry: poverty, Proverbs 31:9)', [cg.slides[1].type,cg.slides[1].ref], ['verse','Proverbs 31:9']); }
+    // v10.42 part 3 (NARRATIVE.md §8, caseVerseTags: the idea's theme verses first): the why verse is the pantry's theme verse (Isaiah 58:7),
+    // and the lead need's own (Proverbs 31:9) is on its figure
+    c('the congregation’s why verse is the idea’s theme verse; the lead need’s own verse on its figure (the pantry: Proverbs 31:9)', [cg.slides[2].type,cg.slides[2].ref,cg.slides[3].type,cg.slides[3].verse.ref], ['verse','Isaiah 58:7','stat','Proverbs 31:9 · KJV']); }
 
   console.log('\n-- 3. the place is honest --');
   const sampleM=(fn)=>`(()=>{ const x=caseSampleCtx(); (${fn})(x.M.tract,x.M.cousub,x.M.county,x); return x; })()`;
   { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{ctx:${sampleM('(t,w,k)=>{}')},now:${NOW},sample:true}); return {h:m.place.headline,facts:m.place.facts}; })()`);
     c('sample town 23% ±1.1 against the county’s 20.4% ±0.1 (significant): the headline is the town’s figure', [r.h.key,r.h.text], ['town','In Sample town, nearly 1 in 4 people is a child']); }
-  { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{ctx:${sampleM('(t,w,k)=>{ w.kidsShare=20.6; w.moe.kidsShare=1.1; }')},now:${NOW},sample:true}); return {h:m.place.headline,s:JSON.stringify(m.place)}; })()`);
-    c('the town about the same as the county (20.6% ±1.1 against 20.4%): never the town headline, never "clearly"', [r.h.key!=='town',/clearly|claramente/.test(r.s)], [true,false]); }
+  { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{ctx:${sampleM('(t,w,k)=>{ w.kidsShare=20.6; w.moe.kidsShare=1.1; }')},now:${NOW},sample:true}); return {h:m.place.headline,s:JSON.stringify(m.place),town:m.place.facts.filter(f=>f.kind==='town').map(f=>f.compare)}; })()`);
+    // v10.42 part 3: the club's own figure (children) is its town fact now; "clearly" may still compare the tract with the town (tested), never the town with the county
+    c('the town about the same as the county (20.6% ±1.1 against 20.4%): never the town headline, never "clearly" against the county', [r.h.key!=='town',r.town.every(x=>x==='similar to the county'),/clearly (higher|lower) than the county|claramente (más alto|más bajo) que el condado/.test(r.s)], [true,true,false]); }
   { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:${sampleM('(t,w,k)=>{ t.moe.kidsShare=9; w.kidsShare=20.6; w.moe.kidsShare=1.1; }')},now:${NOW},sample:true}); return m.place.facts.filter(f=>f.kind==='town').map(f=>f.label); })()`);
-    c('…and its town figure says so: "about the same as the county" (the tract too wide to tell from the town)', r, ['Children, share of residents in Sample town: about the same as the county.']); }
+    // v10.42.0 fix after review: "One 'where' slide repeats the why figure with a different rounding… use a different allowed fact":
+    // beside the lead figure's own slide (this deck's stat slide shows the children's share), its town fact is not said again
+    c('…and its town figure is not said again beside the lead figure’s own slide (the tract too wide to tell from the town)', r, []); }
   { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:${sampleM('(t,w,k)=>{ w.kidsShare=20.6; w.moe.kidsShare=1.1; }')},now:${NOW},sample:true}); return {h:m.place.headline,f:m.place.facts.filter(f=>f.kind==='town').map(f=>f.label)}; })()`);
     // Updated (v10.40 review): the sample's where-to-look is 0.6 mi away, not the church's own blocks, so the headline no
     // longer says "right around our church" (it contradicted the where line and overstated a two-way test as "greatest").
-    c('…while the church’s own tract clearly above its town (27.2% ±3.1 against 20.6% ±1.1) is said, and only that', [r.h.text,r.f], ['In Sample town, the need is less than a mile from our door',['Children, share of residents in Sample town. Around our church: 27%, clearly higher.']]); }
+    // v10.42.0 fix after review: "One 'where' slide repeats the why figure with a different rounding… use a different allowed fact":
+    // beside the lead figure's own slide (this deck's stat slide shows the children's share), its town fact is not said again
+    c('…while the church’s own tract clearly above its town (27.2% ±3.1 against 20.6% ±1.1) is on the headline, the figure not again', [r.h.text,r.f], ['In Sample town, the need is less than a mile from our door',[]]); }
   { const r=JE(`(()=>{ const x=${sampleM('(t,w,k)=>{ w.kidsShare=20.6; w.moe.kidsShare=1.1; }')}; const zs=JSON.parse(JSON.stringify(x.place.zoneSummary)); zs.children={...zs.children,home:true,dist:0,dir:null}; x.place={...x.place,zoneSummary:zs};
       const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:x,now:${NOW},sample:true}); const e=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:x,now:${NOW},sample:true,lang:'es'});
       return {k:m.place.headline.key,t:m.place.headline.text,es:e.place.headline.text,w:m.place.where&&m.place.where.text}; })()`);
@@ -158,7 +184,9 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       return out; })()`);
     c('a significant tract-over-town test with where-to-look elsewhere: the headline is never "conc" (every audience, EN and ES)', r.every(([k,away])=>!(k==='conc'&&away)), true); }
   { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:${sampleM('(t,w,k)=>{ w.kidsShare=22; w.moe.kidsShare=0.5; k.kidsShare=18; }')},now:${NOW},sample:true}); return {h:m.place.headline.key,f:m.place.facts.filter(f=>f.kind==='town').map(f=>f.label)}; })()`);
-    c('the church’s own tract clearly above its town (27.2% ±3.1 against 22% ±0.5): "Around our church: 27%, clearly higher"', r.h==='town'||r.f.some(l=>/Around our church: 27%, clearly higher\./.test(l)), true); }
+    // v10.42.0 fix after review: "One 'where' slide repeats the why figure with a different rounding… use a different allowed fact":
+    // beside the lead figure's own slide (this deck's stat slide shows the children's share), its town fact is not said again
+    c('the church’s own tract clearly above its town (27.2% ±3.1 against 22% ±0.5): the town’s figure as the headline, never the tract’s again', [r.h==='town',r.f.some(l=>/Around our church: 27%/.test(l))], [true,false]); }
   { const r=JE(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{ctx:${sampleM('(t,w,k)=>{ t.moe.kidsShare=9; w.kidsShare=20.6; w.moe.kidsShare=1.1; }')},now:${NOW},sample:true}); return JSON.stringify(m.place); })()`);
     c('…never when the tract’s margin is too wide to tell (±9)', /Around our church: [\d.]+%, clearly higher/.test(r), false); }
   { const r=JE(`(()=>{ const x=${sampleM('(t,w,k)=>{}')}; x.place={...x.place,help:[],zoneSummary:{}}; const m=caseModel('food-pantry',{type:'board',group:'board'},{ctx:x,now:${NOW},sample:true}); const d=caseDeck(m); return {w:m.place.where,p:m.place.partners,h:m.place.headline.key,s:d.slides.find(s=>s.type==='place')}; })()`);
@@ -189,7 +217,9 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     E(`HELP=null; HELP_STATE='idle'; HELP_AT=null; ZONES=null; ZONES_STATE='idle';`); own(); }
   { const r=JE(`(()=>{ const out={}; for(const [t,g] of [['board','board'],['team','youth']]){ const m=caseModel('pathfinders',{type:t,group:g},{now:${NOW}}); m.place={ok:false}; const d=caseDeck(m); const s=d.slides[3];
       out[t]={type:s.type,n:(s.items||[]).length,v:s.verse?s.verse.ref:null}; } return out; })()`);
-    c('no place data at all: the "why here" cards come back (board), the design cards (team), each with a short verse', [r.board.type,r.board.n,!!r.board.v,r.team.type,r.team.n,!!r.team.v], ['trio',3,true,'trio',3,true]); }
+    // v10.42 part 3 (the relevance rule): the "why here" cards take only the figures the purpose allows (the club: one), so no cards; the
+    // team's design cards never reach a slide (NARRATIVE.md §8 (e)); the deck goes on to How it works
+    c('no place data at all: no "why here" cards for the club (its purpose allows one figure), no design cards; How it works follows', [r.board.type,r.team.type], ['how','how']); }
 
   { const r=await E(`(async()=>{ HELP_STATE='idle'; ZONES_STATE='idle'; const a=await casePlaceWait(300);
       HELP_STATE='loading'; setTimeout(()=>{ HELP_STATE='ready'; },120); const t0=Date.now(); const b=await casePlaceWait(2000); const tb=Date.now()-t0;

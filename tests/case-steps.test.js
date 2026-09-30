@@ -87,7 +87,9 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
 
   console.log('\n-- three framed steps, in order, with the step bar --');
   c('no lead paragraph any more ("a lot of words, almost overwhelming")', [!!P.q('.cs-intro'),!!P.q('.cs-lead')], [false,false]);
-  c('the step bar, then steps 1, 2, 3 in the page', P.qa('#casebody > *').map(e=>e.id||e.className).slice(0,4), ['cs-bar','cs-s1','cs-s2','cs-s3']);
+  // v10.42 part 3 (the pastor, SPEC-FOCUS E: "Make the Case shows a gentle one-line banner suggesting it — but never blocks"): the
+  // Gifts first line may sit above the step bar; the steps are as they were
+  c('the step bar, then steps 1, 2, 3 in the page', P.qa('#casebody > *').map(e=>e.id||e.className).filter(id=>id!=='cs-gff').slice(0,4), ['cs-bar','cs-s1','cs-s2','cs-s3']);
   c('titles: Who is it for? · What will you propose? · Your slides', P.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['Who is it for?','What will you propose?','Your slides']);
   c('…each with its big number', P.qa('.cs-step .cs-num').map(e=>e.textContent), ['1','2','3']);
   c('…and ONE short line under each (80 characters or fewer)', P.qa('.cs-step > .cs-sh').map(h=>h.querySelectorAll('.note').length===1&&h.querySelector('.note').textContent.length<=80), [true,true,true]);
@@ -124,7 +126,10 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   await until(()=>cards(P,'out').length>0); await sleep(100);
   c('the tile is pressed; the bar moves on', [P.q('[data-cs-group="prayer"]').getAttribute('aria-pressed'),bar().map(b=>b[0])], ['true',['done','now','next']]);
   // v10.41.1: English takes "the" where it reads naturally, as the Spanish articles do ("Ideas para el Ministerio de Oración")
-  c('the line under the title names the group and the town', P.txt('#cs-s2 .cs-sh .note'), 'Ideas for the prayer ministry. Best fit for Warminster first.');
+  // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The step's one line now says it is where support is won; the group and the town head "More ideas for
+  // {group}" (its heading and line), below "From your plan" (tests/v42-plan-first.test.js)
+  c('the line under the title says what step 2 is for; the group and the town head "More ideas"', [P.txt('#cs-s2 .cs-sh .note'),P.txt('#cs-more h4'),P.txt('#cs-more .cs-parth .note')],
+    ['This is where you win support for what your church will do.','More ideas for the prayer ministry','Best fit for Warminster first.']);
   c('two sections: For God\'s people, For our community', P.qa('#cs-lib .lib-sech h4').map(h=>h.firstChild.textContent.trim()), ['For God’s people','For our community']);
   const libIds=sec=>cards(P,sec).filter(e=>!e.classList.contains('lib-sig')).map(e=>e.dataset.libId);
   // v10.41 integration: SPEC's map gives the Prayer ministry member-care and spiritual-care for God's people and
@@ -172,7 +177,8 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   const pick=cards(P,'out')[0].dataset.libId;
   cards(P,'out')[0].querySelector('[data-lib-case]').click(); await sleep(200);
   c('step 2 shows it chosen, with Change', [P.J('casePrefs().ministry'),!!P.q('#cs-s2 [data-cs-change]'),P.q('#cs-s2 .cs-chosen .lib-card').dataset.libId], [pick,true,pick]);
-  c('step 3 has the slides and every action (present, share, handout, ask list, sample)', [P.J('CASE_ST.deck.slides.length')>=8,P.qa('#cs-s3 [data-cs-act]').map(b=>b.dataset.csAct)], [true,['present','share','pdf','ask','sample']]);
+  // v10.42 part 3 (PROPOSAL.md): the Proposal to vote on, after the handout
+  c('step 3 has the slides and every action (present, share, handout, proposal, ask list, sample)', [P.J('CASE_ST.deck.slides.length')>=8,P.qa('#cs-s3 [data-cs-act]').map(b=>b.dataset.csAct)], [true,['present','share','pdf','proposal','ask','sample']]);
   c('the bar: done, done, now, with the slide count', bar().map(b=>b[0]).concat([/\d+ slides/.test(bar()[2][1])]), ['done','done','now',true]);
   // v10.41.1: "slides for the deacons and deaconesses" (English articles, as the Spanish)
   c('one short line over the slides', P.txt('#cs-s3 .cs-sh .note'), `${P.J('CASE_ST.deck.slides.length')} slides for the deacons and deaconesses. Swipe to check them, then present.`);
@@ -193,18 +199,19 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   console.log('\n-- the conference: evangelism only, the Evangelism Planner series first --');
   P.E(`uChurch().plan={church:'Bucks County SDA',date:'2027-10-02',nights:20,kind:'prophecy',perweek:4,v:3}; uPersist();`);
   P.q('[data-cs-group="conference"]').click(); await until(()=>cards(P,'out').length>0); await sleep(60);
-  c('the first card of all is his series, above both sections, with the opening night', [P.q('#cs-lib .lib-card').classList.contains('cs-plan'),!!P.q('#cs-lib .cs-planrow + .lib-secs'),P.txt('#cs-lib .cs-plan h4')], [true,true,'Your evangelism series: opening night October 2, 2027']);
+  // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" His series is his plan: it opens "From your plan", above "More ideas" (it was the list's first row)
+  c('the first card of all is his series, opening "From your plan" above the list, with the opening night', [P.q('#cs-s2 .lib-card').classList.contains('cs-plan'),!!P.q('#cs-plan .cs-plan'),!!P.q('#cs-lib .cs-plan'),P.txt('#cs-plan .cs-plan h4')], [true,true,false,'Your evangelism series: opening night October 2, 2027']);
   const EV=['interests','involvement','public-evangelism','personal-evangelism','health','media'];
   c('every idea it lists is evangelism (its themes, or built-ins filed under them)', P.J(`caseGroupList().rows().every(r=>${JSON.stringify(EV)}.includes(r.theme)||r.alsoIds.some(t=>${JSON.stringify(EV)}.includes(t)))`), true);
   c('…the chips too', P.qa('#cs-lib .lib-chip').map(b=>b.dataset.libChip).filter(Boolean).every(t=>EV.includes(t)), true);
-  P.q('#cs-lib [data-cs-plan]').click(); await sleep(150);
+  P.q('#cs-plan [data-cs-plan]').click(); await sleep(150);   // v10.42: in "From your plan"
   // v10.41 integration: his series is its own ministry (builder D's casePlanItem, 'plan-series'), so the conference deck
   // argues from the planner's own opening night, nights, workers and budget
   c('choosing the series: his Evangelism Planner series itself, marked as the plan', P.J('casePrefs()'), {ministry:'plan-series',type:'conference',group:'conference',plan:true});
   c('…and step 3 builds the conference proposal from it', [P.J('CASE_ST.model&&CASE_ST.model.type'),P.J('CASE_ST.deck.slides.length')>=8], ['conference',true]);
   c('…shown chosen as his series', P.txt('#cs-s2 .cs-chosen h4'), 'Your evangelism series: opening night October 2, 2027');
   P.E(`uChurch().plan=null; uPersist();`); P.q('#cs-s2 [data-cs-change]').click(); await sleep(80);
-  c('no plan, no series card', !!P.q('#cs-lib .cs-plan'), false);
+  c('no plan, no series card', !!P.q('#cs-s2 .cs-plan'), false);   // v10.42: anywhere in step 2
 
   console.log('\n-- the church line names the church --');
   { const Q=page(); await sleep(1300); setup(Q);

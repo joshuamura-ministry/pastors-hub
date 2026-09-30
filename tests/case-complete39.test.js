@@ -54,7 +54,10 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
   await sleep(50);
   const s=sayOf(P);
   c('a "What to say · Elders" block sits in step 3, closed, beside "Questions you may hear"', [!!s,s&&s.sum,P.q('#cs-s3 .cs-say').open,!!P.q('#cs-s3 .cs-say + .cs-qs')], [true,'What to say · Elders',false,true]);
-  c('…with the five things, in order', s.rows.map(r=>r[0]), ['To open','A line from Ellen White','How many it reaches','What counts as success','To close']);
+  // v10.42 part 3 (the pastor: "everything has to line up with … what the leader or the pastor would like to see accomplished"): the
+  // goal comes first in "What to say" too (DESIGN X11); the five things follow it, in order
+  c('…with the goal, then the five things, in order', s.rows.map(r=>r[0]), ['Our goal','To open','A line from Ellen White','How many it reaches','What counts as success','To close']);
+  s.rows.shift();
   c('the elders’ own opening words (their frame)', s.rows[0][1], 'The people around us need the gospel as much as we do. Those who lead this church can go first, and show the rest of us the way.');
   c('their Ellen White line (9T 116.4), with its reference', [/^“?The work of God in this earth can never be finished until the men and women comprising our church membership rally to the work/.test(s.rows[1][1]),/Ellen G\. White · Testimonies for the Church, vol\. 9, p\. 117$/.test(s.rows[1][1])], [true,true]);   // v10.41: p. 117, the page this sentence is printed on (research VERSES.md: the page break falls inside 9T 116.4)
   c('how many it reaches against how many need it', s.rows[2][1], '16 places would be about 1 in 93 of the children around us: a first step.');
@@ -64,7 +67,7 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
   { const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'elders'},{now:${NOW}}); const d=JSON.stringify(caseDeck(m)); return [m.frame,m.close,m.quote.text,m.timeline.win].map(t=>d.includes(t)); })()`);
     c('none of the four is on a slide (the deck the phones get)', r, [false,false,false,false]); }
   { const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'board'},{now:${NOW}}); const d=document.createElement('div'); d.innerHTML=caseSayHTML(m); return [...d.querySelectorAll('dd')].map(x=>x.textContent); })()`);
-    c('the board gets its own words: PK 637.2 (not on a slide), and "approve, approve it smaller, or set a date"', [/accuracy and a minuteness that astonished his hearers/.test(r[1]),/approve it smaller, or set a date to decide/.test(r[4])], [true,true]); }
+    c('the board gets its own words: PK 637.2 (not on a slide), and "approve, approve it smaller, or set a date"', [/accuracy and a minuteness that astonished his hearers/.test(r[2]),/approve it smaller, or set a date to decide/.test(r[5])], [true,true]); }   // v10.42 part 3: after "Our goal"
   { const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{now:${NOW}}); const d=document.createElement('div'); d.innerHTML=caseSayHTML(m);
       return {dts:[...d.querySelectorAll('dt')].map(x=>x.textContent),closeQ:m.closeQuote.text,quote:m.quote.text,html:d.innerHTML}; })()`);
     c('an Ellen White line a slide already carries is not repeated (the congregation’s close quote)', [r.dts.includes('A line from Ellen White')===(r.quote!==r.closeQ),r.html.includes(r.closeQ)&&r.quote!==r.closeQ], [true,false]); }
@@ -82,8 +85,10 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
 
   console.log('\n-- the ask slide of a board-type deck --');
   { const r=P.J(`['board','elders','deacons','finance','nominating'].map(g=>caseDeck(caseModel('pathfinders',{type:'board',group:g},{now:${NOW}})).slides.find(s=>s.type==='ask').headline)`);
-    c('the board: "what we are asking the board for"; elders, deacons, finance, nominating: "what the trial needs"', r,
-      ['Exactly what we are asking the board for','Exactly what the trial needs','Exactly what the trial needs','Exactly what the trial needs','Exactly what the trial needs']); }
+    // v10.42 part 3 (the pastor: "in some churches it has to be presented to the finance committee first"): the finance committee's
+    // deck is finance first: its ask comes right after the opening, as the cost (PROPOSAL.md §7)
+    c('the board: "what we are asking the board for"; elders, deacons, nominating: "what the trial needs"; the finance committee: the cost', r,
+      ['Exactly what we are asking the board for','Exactly what the trial needs','Exactly what the trial needs','What it costs, and where the money comes from','Exactly what the trial needs']); }
   { const r=P.J(`['board','nominating'].map(g=>caseDeck(caseModel('pathfinders',{type:'board',group:g},{now:${NOW},lang:'es'})).slides.find(s=>s.type==='ask').headline)`);
     c('ES: "lo que pedimos a la junta" / "lo que necesita la prueba"', r, ['Exactamente lo que pedimos a la junta','Exactamente lo que necesita la prueba']); }
   { const r=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'board',group:'nominating'},{now:${NOW}}); return [m.motion.headline,caseDeck(m).slides.find(s=>s.type==='motion').headline]; })()`);
@@ -101,9 +106,11 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
     // allowing": drawn one level tighter, where room is left, after the review line.
     c('deacons: "Here in Warminster" is on the front', p1.includes('HERE IN WARMINSTER'), true);
     { const lvOf=l=>P.E(`(()=>{ window.__d1=casePdfDocAt(${H('pathfinders','deacons')},{jsPDF:window.jspdf.jsPDF,compress:false},${l}); return true; })()`)&&P.w.__d1;
-      const d1=[1,2,3].map(lvOf).find(d=>d.__caseLog.some(l=>l.p===1&&/a first step\.$/.test(l.t)))||lvOf(3), q1=d1.__caseLog.filter(l=>l.p===1).map(l=>l.t);
-      c('deacons (room left): both on the front, after the review line', [q1.includes('WHAT COUNTS AS SUCCESS'),q1.some(t=>/returning visitors greeted by name/.test(t)),q1.some(t=>/1 in 93 of the children around us: a first step\./.test(t)),
-        q1.findIndex(t=>/^Review on /.test(t))<q1.indexOf('WHAT COUNTS AS SUCCESS'),d1.__caseFront], [true,true,true,true,1]); }
+      // v10.42 part 3 (the pastor: "a beginning and an appeal at the end"): the handout now tells the slides' story, goal to appeal; the
+      // two lines are still room allowing, at the end of the last page (they never push anything onto another page)
+      const d1=[0,1,2,3].map(lvOf).find(d=>d.__caseLog.some(l=>/a first step\.$/.test(l.t)))||lvOf(3), q1=d1.__caseLog.map(l=>l.t), pl=d1.getNumberOfPages();
+      c('deacons (room left): both on the last page, after the review line and Scripture', [q1.includes('WHAT COUNTS AS SUCCESS'),q1.some(t=>/returning visitors greeted by name/.test(t)),q1.some(t=>/1 in 93 of the children around us: a first step\./.test(t)),
+        q1.findIndex(t=>/^Review on /.test(t))<q1.indexOf('WHAT COUNTS AS SUCCESS')&&q1.indexOf('SCRIPTURE IN THIS CASE')<q1.indexOf('WHAT COUNTS AS SUCCESS'),d1.__caseFront,d1.__caseLog.find(l=>l.t==='WHAT COUNTS AS SUCCESS').p===pl], [true,true,true,true,1,true]); }
     c('…two pages, the front one page, every line in its box and above the footer', [doc.getNumberOfPages(),doc.__caseFront,log.filter(l=>l.x0<l.bx0-0.6||l.x1>l.bx1+0.6||l.y>780).length], [2,1,0]); }
   { const r=P.E(`(()=>{ const out=[]; for(const id of ['pathfinders','food-pantry','vbs','bp-clinic','community-dinner','welcome-table']) for(const g of ['board','elders','deacons','finance','nominating']){
       const h=caseHandout(caseModel(id,{type:'board',group:g},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,'${URL}'),url:'${URL}',code:'K7M2QX'});
@@ -121,13 +128,13 @@ const sayOf=(P,sel)=>{ const d=P.q(sel||'#cs-s3 .cs-say'); if(!d) return null;
     c('team and congregation handouts: unchanged (their front ends with three sizes of yes)', r, [['',''],['','']]); }
   { const P2=page('es'); await sleep(1300); setup(P2,{prefs:{ministry:'food-pantry',type:'board',group:'nominating'}}); await sleep(50);
     const s2=sayOf(P2);
-    c('ES builder: "Qué decir · Comisión de nombramientos" with its five labels', [s2&&s2.sum,s2&&s2.rows.map(r=>r[0])], ['Qué decir · Comisión de nombramientos',['Para empezar','Una cita de Elena G. de White','A cuántos alcanza','Qué se considerará un éxito','Para cerrar']]);
+    c('ES builder: "Qué decir · Comisión de nombramientos" with the goal and its five labels', [s2&&s2.sum,s2&&s2.rows.map(r=>r[0])], ['Qué decir · Comisión de nombramientos',['Nuestro objetivo','Para empezar','Una cita de Elena G. de White','A cuántos alcanza','Qué se considerará un éxito','Para cerrar']]);   // v10.42 part 3
     c('ES: the note says it is for him', /Para usted, no para las diapositivas/.test(P2.q('#cs-s3 .cs-say').textContent), true);
     const doc=P2.E(`(()=>{ const U='${URL}'; window.__d=casePdfDoc(caseHandout(caseModel('food-pantry',{type:'board',group:'nominating'},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,U),url:U,code:'K7M2QX'}),{jsPDF:window.jspdf.jsPDF,compress:false}); return true; })()`)&&P2.w.__d;
     // v10.40: the lines are room allowing (the front carries "Aquí en {town}" now): the first level
     // with room left for them draws them, in Spanish
     const lvs=[0,1,2,3].map(l=>P2.E(`(()=>{ const U='${URL}'; const d=casePdfDocAt(caseHandout(caseModel('food-pantry',{type:'board',group:'nominating'},{now:${NOW}}),null,{qrRows:gfQRRows(window.qrcode,U),url:U,code:'K7M2QX'}),{jsPDF:window.jspdf.jsPDF,compress:false},${l});
-      return JSON.stringify({front:d.__caseFront,p1:d.__caseLog.filter(l=>l.p===1).map(l=>l.t)}); })()`)).map(x=>JSON.parse(x)).filter(x=>x.front===1&&x.p1.includes('QUÉ SE CONSIDERARÁ UN ÉXITO'));
+      return JSON.stringify({front:d.__caseFront,p1:d.__caseLog.map(l=>l.t)}); })()`)).map(x=>JSON.parse(x)).filter(x=>x.front===1&&x.p1.includes('QUÉ SE CONSIDERARÁ UN ÉXITO'));   // v10.42 part 3: on the last page
     c('ES handout: "QUÉ SE CONSIDERARÁ UN ÉXITO" and "…un primer paso." (where there is room), two pages', [lvs.length>0,lvs.length>0&&lvs[0].p1.some(t=>/un primer paso\.$/.test(t)),doc.getNumberOfPages(),doc.__caseLog.some(l=>l.p===1&&/^AQUÍ EN /.test(l.t))], [true,true,2,true]);
     c('ES: no errors', P2.errs, []);
     P2.w.close(); }

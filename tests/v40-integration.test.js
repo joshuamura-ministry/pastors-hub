@@ -84,7 +84,10 @@ const NOFOOT=['join','verse','close'];
     c(`${lang}: …and when they arrive the slides are built again with them`,
       await until(()=>{ const d=P.J('caseCurrentDeck()'), s=d&&d.slides.find(x=>x.type==='place'); return !!s&&(s.partners||[]).some(p=>p.name==='Warminster Community Food Bank'); }), true);
     const deck=P.J('caseCurrentDeck()');
-    c(`${lang}: the board deck: join · motion · need · place · capacity · ability · ask · risks · timeline`, deck.slides.map(s=>s.type), ['join','motion','stat','place','capacity','ability','ask','risks','timeline']);
+    // v10.42: "Suggest options" (the default) adds "Let's decide together", an ask slide, before the ask
+    // v10.42 part 3 (the pastor: "a focus, a beginning and an appeal at the end"; DESIGN.md §5): how it works after the place, the
+    // safeguards before the one timing slide, and the appeal back to the goal at the end
+    c(`${lang}: the board deck: join · motion · need · place · how · capacity · ability · risks · decide · ask · appeal`, deck.slides.map(s=>s.type+(s.part?'/'+s.part:'')), ['join','motion','stat','place','how','capacity','ability','risks','ask/decide','ask','close']);
     const place=deck.slides.find(s=>s.type==='place');
     c(`${lang}: the place slide names the town`, /Warminster/.test(place.kicker+' '+place.headline), true);
     c(`${lang}: …and the pantry beside our church, with its distance`, place.partners.map(p=>[p.name,/mi$/.test(p.dist)]), [['Warminster Community Food Bank',true]]);
@@ -176,7 +179,8 @@ const NOFOOT=['join','verse','close'];
         return {where:!!p.where,facts:p.facts.length,src:p.source}; })()`);
       c(`${lang}: interpreter bank, board: where to look and two figures on the place slide`, [r.where,r.facts], [true,2]);
       c(`${lang}: …its source line names the Census blocks in the short form (two lines, not three)`,
-        [r.src.length<=95,/TIGERweb/.test(r.src),(lang==='es'?/dónde buscar: cuadras del Censo$/:/where to look: Census blocks$/).test(r.src)], [true,false,true]);
+        // v10.42.0 fix after review: each source by what it gives ("who already serves: OpenStreetMap" read as if the map served the poor)
+        [r.src.length<=95,/TIGERweb/.test(r.src),(lang==='es'?/Cuadras del Censo: Censo de EE\. UU\.$/:/Census blocks: U\.S\. Census$/).test(r.src)], [true,false,true]);
     }
     c('no errors', errs, []);
     w.close(); }

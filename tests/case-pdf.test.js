@@ -74,20 +74,34 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
       // The county as the stat slide writes it: one decimal below 10 (8.4%), as the member's handout (v10.39 review E2E-5).
       const cty=m.need.hero.kind==='pct'?P.E(`tdFmt(caseRound(${m.need.hero.county},1),'%')`):m.need.hero.countyDisplay;
       c(`${tag}: the lead figure large, with the county beside it (${cty})`, [front.includes(m.need.hero.display),front.includes(cty),front.includes(m.area.countyLabel)], [true,true,true]);
-      c(`${tag}: capacity and gifts counts on the front`, [F.perPage[0].some(t=>/\d+ (of|de) \d+/.test(t)),/\d+ (of|de los) \d+ (members|miembros)/.test(front)], [true,true]);
-      c(`${tag}: the first step and the review`, m.timeline.steps.every(s=>front.includes(s.title)), true);
-      c(`${tag}: every figure on the back, with its table and years`, m.sources.every(s=>back.includes(s.table)&&back.includes(s.years)), true);
-      c(`${tag}: margins of error beside them (ours · county)`, m.sources.filter(s=>s.moe).every(s=>back.includes(s.moe.replace(/\s*(points|puntos)$/,'')+' · '+s.countyMoe)), true);
-      c(`${tag}: the itemised budget, paid from the local budget, never tithe`, [m.ask.lines.length>0,lang==='es'?/no el diezmo/.test(back):/not tithe/.test(back)], [true,true]);
+      /* v10.42 part 3: the handout tells the slides' story in their order (the pastor, SPEC-FOCUS C: "From the beginning to the end it
+         has to have a focus, a beginning and an appeal at the end"): the goal, why and how it works on the front; who and what it
+         takes, the budget, safeguards, timing and the appeal after it (NARRATIVE.md §9.1 as DESIGN N8 amends it). The five members
+         with results are below half of the 135 in worship, so the gifts box is "Gifts first" (SPEC-FOCUS E). And the figures are only
+         those the deck shows (the relevance rule), each with its table and years. */
+      const all=F.perPage.join(' ');
+      { const iHow=F.log.findIndex(l=>/^(HOW IT WORKS|CÓMO FUNCIONA)$/.test(l.t)), iCap=F.log.findIndex(l=>/\d+ (free|disponibles?) · /.test(l.t));
+        c(`${tag}: who and what it takes (the capacity counts) after how it works, then "Gifts first" with the church's coverage`, [iHow>=0&&iCap>iHow,/\d+ (of the|de los) 135 (in worship|que asisten)/.test(all.replace(/\s+/g,' '))], [true,true]); }
+      c(`${tag}: the first step and the review`, m.timeline.steps.every(s=>all.includes(s.title)), true);
+      const HF=P.J(`caseHandout(caseModel('${mid}',{type:'${type}',group:'${group}'}),null,{}).figures`);
+      c(`${tag}: every figure the deck shows (${HF.length}), with its table and years; none it does not`, [HF.length>=1,HF.every(s=>all.includes(s.table)&&all.includes(s.years)),HF.every(f=>m.sources.some(s=>s.table===f.table&&s.label===f.label))], [true,true,true]);
+      c(`${tag}: margins of error beside them (ours · county)`, HF.filter(s=>s.moe).every(s=>all.includes(s.moe.replace(/\s*(points|puntos)$/,'')+' · '+s.countyMoe)), true);
+      // v10.42 part 3: the handout follows the slides' story (NARRATIVE.md §9, DESIGN N8); at its tightest (a Spanish board handout,
+      // level 3 drawn in order) the budget can close the front, so it is looked for in the whole handout
+      c(`${tag}: the itemised budget, paid from the local budget, never tithe`, [m.ask.lines.length>0,lang==='es'?/no el diezmo/.test(F.perPage.join(' ')):/not tithe/.test(F.perPage.join(' '))], [true,true]);
       c(`${tag}: every risk, with its source`, m.risks.items.every(r=>back.includes(r.text.split(' ').slice(0,4).join(' '))), true);
       // v10.40: "Scripture in this case": every verse the slides carry, with its reference and
       // version (the words in full, except at the tightest level, where the references stand alone)
       { const vs=P.J(`caseHandoutVerses(caseDeck(caseModel('${mid}',{type:'${type}',group:'${group}'}))).map(v=>({ref:gfPdfClean(v.ref),text:gfPdfClean(v.text)}))`), B=back.replace(/\s+/g,' ').toUpperCase();   // as the PDF's fonts print them (… as ...)
-        c(`${tag}: every slide's verse and its version on the back (${vs.length}; the reference in small capitals)`, [vs.length>=7,vs.every(v=>B.includes(v.ref.toUpperCase())),doc.__caseLevel>=3||vs.every(v=>B.includes(v.text.split(' ').slice(0,3).join(' ').toUpperCase()))], [true,true,true]); }
+        // v10.42 part 3: a longer story; when the back's blocks follow straight on after the front's (flowing), the references alone, as at the tightest level
+        c(`${tag}: every slide's verse and its version on the back (${vs.length}; the reference in small capitals)`, [vs.length>=7,vs.every(v=>B.includes(v.ref.toUpperCase())),doc.__caseLevel>=3||(doc.__caseFlow&&doc.__caseLevel>=2)||vs.every(v=>B.includes(v.text.split(' ').slice(0,3).join(' ').toUpperCase()))], [true,true,true]); }
       // v10.40: "Here in {town}" on the front; the deck's Ellen White line (verified, with its credit) after the verses
       { const eg=P.J(`caseModel('${mid}',{type:'${type}',group:'${group}'}).egw`);
+        // v10.42 part 3 (the relevance rule): "Here in {town}" only when the deck has that slide (a team's deck of the club carries
+        // no place figure the idea's purpose does not allow, so, with no partner or direction mapped, it has none)
+        const hasHere=P.J(`caseDeck(caseModel('${mid}',{type:'${type}',group:'${group}'})).slides.some(s=>s.type==='place')`);
         c(`${tag}: "${lang==='es'?'Aquí en':'Here in'} Warminster" on the front, "${lang==='es'?'La Escritura en este caso':'Scripture in this case'}" and the Ellen White line on the back`,
-          [F.perPage[0].includes(lang==='es'?'AQUÍ EN WARMINSTER':'HERE IN WARMINSTER'),F.perPage[1].includes(lang==='es'?'LA ESCRITURA EN ESTE CASO':'SCRIPTURE IN THIS CASE'),back.replace(/\s+/g,' ').toUpperCase().includes(P.E(`gfPdfClean(${JSON.stringify(eg.ref)})`).toUpperCase())], [true,true,true]); }
+          [F.perPage[0].includes(lang==='es'?'AQUÍ EN WARMINSTER':'HERE IN WARMINSTER')===hasHere,F.perPage[1].includes(lang==='es'?'LA ESCRITURA EN ESTE CASO':'SCRIPTURE IN THIS CASE'),back.replace(/\s+/g,' ').toUpperCase().includes(P.E(`gfPdfClean(${JSON.stringify(eg.ref)})`).toUpperCase())], [true,true,true]); }
       c(`${tag}: counts only, and the under-18 note`, [back.includes(P.E('caseT(CASE_COPY.notes.counts)').split(' ')[0]),back.includes(P.E('caseT(CASE_COPY.notes.minors)').slice(0,20))], [true,true]);
       if(lang==='es'){
         c(`${tag}: accents kept, cost lines in Spanish, no English budget words`, [/Revisi[óo]n|Petici[óo]n|Página/.test(F.text),/Materials and preparation|Replacement supplies|allowance/.test(F.text)], [true,false]);
