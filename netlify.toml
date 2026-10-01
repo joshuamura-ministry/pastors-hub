@@ -1,0 +1,29 @@
+# Terrain on Netlify. This file overrides the same settings in the Netlify dashboard.
+# Never put a secret value here. Secrets stay in Netlify > Project configuration > Environment variables.
+
+[build]
+  # Make a clean folder holding only what visitors need: the app page and the idea library.
+  # If any copy fails, the deploy fails and the live site stays exactly as it was.
+  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/"
+  publish = "site"
+
+  # Skip a LIVE deploy only when every change since the last live build is inside tests/, tools/,
+  # .github/, .gitignore, a .md file, or FIREBASE-RULES-TERRAIN.txt. Anything else builds.
+  # It never skips pull-request previews, first or "Clear cache and deploy" builds, build hooks,
+  # or any case where git cannot answer. Exit 0 = skip; any other exit code = build.
+  ignore = '[ "$PULL_REQUEST" = "false" ] && [ -n "$CACHED_COMMIT_REF" ] && [ "$CACHED_COMMIT_REF" != "$COMMIT_REF" ] && git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- . ":(exclude)tests" ":(exclude)tools" ":(exclude)*.md" ":(exclude)FIREBASE-RULES-TERRAIN.txt" ":(exclude).github" ":(exclude).gitignore"'
+
+[functions]
+  # The server programs, same place as today: advise, census, gifts, present, register, and the two daily sweeps.
+  directory = "netlify/functions"
+
+# Safe browser headers for every page and file (they do not apply to function replies).
+# No script rules on purpose: the app's inline code and its map, census and font hosts keep working.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options = "SAMEORIGIN"
+    Content-Security-Policy = "frame-ancestors 'self'; base-uri 'self'; object-src 'none'"
+    Permissions-Policy = "camera=(), microphone=(), payment=(), usb=(), geolocation=(self)"
