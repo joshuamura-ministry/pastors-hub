@@ -107,7 +107,8 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
 
   console.log('\n-- 2. a group supporting another ministry keeps its own ask --');
   { const R = await run(P, 'food-pantry', 'prayer');
-    c('the prayer ministry, of the food pantry: "carry in prayer the team of…" (its ask was written for this)', /^For 6 weeks, carry in prayer the team of a real food pantry, on a schedule, each session/.test(R.m.ask.text), true);
+    // v10.42.0 fix after review (the length): a team chooses the length together, so its ask says "Throughout the trial" (was "For 6 weeks")
+    c('the prayer ministry, of the food pantry: "carry in prayer the team of…" (its ask was written for this)', /^Throughout the trial, carry in prayer the team of a real food pantry, on a schedule, each session/.test(R.m.ask.text), true);
     c('caseOwnIdea: the group\'s own first theme only', P.J(`[caseOwnIdea({lib:true,theme:'prayer'},'prayer'),caseOwnIdea({lib:true,theme:'hunger'},'prayer'),caseOwnIdea({lib:true,theme:'literature'},'literature'),caseOwnIdea({id:'food-pantry'},'prayer')]`), [true, false, true, false]); }
 
   console.log('\n-- 3. the finance committee, the board and the business meeting choose the day, never the length --');
@@ -141,7 +142,9 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     c('its steps name no meeting day', R.m.how.steps[1], 'Set the club\'s meeting times with the church calendar, and publish the year\'s calendar up front.');
     P.E(`uChurch().overrides={pathfinders:{weeks:8}}; uPersist();`);
     const A = await run(P, 'pathfinders', 'pathfinders');
-    c('…unless he set the weeks himself (Adjust): then his trial', A.m.motion.rows.find(r => r[0] === 'Length')[1], 'An 8-week trial or a 4-week pilot');
+    // v10.42.0 fix after review (the length): then his trial is one of the lengths the team chooses from (was "An 8-week trial or a 4-week pilot")
+    c('…unless he set the weeks himself (Adjust): then his trial, among the lengths to choose', [A.m.motion.rows.find(r => r[0] === 'Length')[1], A.Pz.motion.startsWith('To agree to a trial of the length we choose together (a 4-week pilot, an 8-week trial or a full season), on a day and start we agree together: ')],
+      ['4-week pilot · 8-week trial · a full season', true]);
     P.E(`uChurch().overrides={}; uPersist();`); }
 
   console.log('\n-- 6. after the vote --');
@@ -252,6 +255,84 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     // an idea people sit at keeps its Host and its sessions (the food pantry, the group's own words)
     const Q = await run(P, 'food-pantry', 'community');
     c('an idea people come to keeps its Host and "serves at each session"', [Q.m.roles.map(r => r.key).includes('host'), /each session/.test(Q.m.roles.find(r => r.key === 'member').text)], [true, true]); }
+
+  // v10.42.0 fix after review (the length, 30 Sep 2026): the samples' ministry-team motion still said "To agree to a trial of 6 weeks"
+  // while its slide offered "4-week pilot · 6-week trial · a full season". The pastor: "yes, they should be able to choose length." A
+  // ministry team chooses the length together, as it chooses the day; the Sabbath deck announces both. The finance committee, the board
+  // and the business meeting keep the length in their motion (§3); a made idea (§1) and a club that runs by term (§5) keep their own.
+  console.log('\n-- 13. a ministry team chooses the length together --');
+  { const R = await run(P, 'food-pantry', 'community'), E = await run(Pes, 'food-pantry', 'community');
+    c('the opening\'s Length: the three lengths to choose from, as the decide slide has them', [S(R, 'motion').rows.find(r => r[0] === 'Length')[1], S(R, 'ask', 'decide').rows.find(r => r[0] === 'Length')[1], R.m.motion.rows.find(r => r[0] === 'Length')[1]],
+      ['4-week pilot · 6-week trial · a full season', '4-week pilot · 6-week trial · a full season', '4-week pilot · 6-week trial · a full season']);
+    c('…Spanish', [S(E, 'motion').rows.find(r => r[0] === 'Duración')[1], S(E, 'ask', 'decide').rows.find(r => r[0] === 'Duración')[1]],
+      ['Piloto de 4 semanas · prueba de 6 semanas · una temporada', 'Piloto de 4 semanas · prueba de 6 semanas · una temporada']);
+    // (the headline sits under the kicker "Let's decide together": in English "together" once, measured at 360 × 640 with clashes)
+    c('the decide slide: "We’ll choose the day and the length tonight", EN and ES', [S(R, 'ask', 'decide').headline, S(R, 'ask', 'decide').kicker, S(E, 'ask', 'decide').headline],
+      ['We’ll choose the day and the length tonight', 'Let’s decide together', 'Elegiremos juntos el día y la duración esta noche']);
+    c('the ask names no length ("Throughout the trial"), and says the length is chosen tonight', R.m.ask.text,
+      'Throughout the trial, run a real food pantry, on a schedule, 4 sessions a month, for 16 places, and, with people’s permission, a way to stay in touch so nobody is met once and forgotten. We’ll choose the day and the length together tonight.');
+    c('…Spanish', E.m.ask.text,
+      'Durante la prueba, llevar a cabo la iniciativa «una despensa de alimentos de verdad, con horario fijo», 4 sesiones al mes, para 16 lugares, y, con el permiso de cada persona, una manera de mantener el contacto para que nadie sea atendido una vez y olvidado. Elegiremos juntos el día y la duración esta noche.');
+    c('the Proposal\'s motion: a trial of the length we choose together, the three named', R.Pz.motion,
+      'To agree to a trial of the length we choose together (a 4-week pilot, a 6-week trial or a full season), on a day and start we agree together: a real food pantry, on a schedule, with a named coordinator, and to bring it to the finance committee.');
+    c('…Spanish', E.Pz.motion,
+      'Acordar una prueba de la duración que elijamos juntos (un piloto de 4 semanas, una prueba de 6 semanas o una temporada), en el día y con la fecha de inicio que acordemos juntos: una despensa de alimentos de verdad, con horario fijo, con una persona coordinadora designada, y presentarla a la comisión de finanzas.');
+    // (WHEN keeps its Length line; on a page drawn tight it is left to the motion, which names the lengths: measured, it took many team
+    // Proposals onto a second page)
+    c('…its subject says the same; WHEN the days, the lengths and the calendar check, EN and ES', [R.Pz.memo.find(r => r[0] === 'Subject')[1], R.Pz.plan.find(p => p.k === 'when').lines.slice(1), E.Pz.memo.find(r => r[0] === 'Asunto')[1], E.Pz.plan.find(p => p.k === 'when').lines[1], R.Pz.plan.find(p => p.k === 'when').lenInMotion],
+      ['A real food pantry, on a schedule: a trial of the length we choose together', ['Length: 4-week pilot · 6-week trial · a full season', 'Before we choose, check the church calendar: communion Sabbath, Week of Prayer, camp meeting, holidays, school breaks.'],
+        'Una despensa de alimentos de verdad, con horario fijo: una prueba de la duración que elijamos juntos', 'Duración: piloto de 4 semanas · prueba de 6 semanas · una temporada', true]);
+    c('the handout: the lengths as options, a line to write the agreed day, start and length in, EN and ES', [R.H.timing.length, R.H.timing.agreed, E.H.timing.length, E.H.timing.agreed],
+      ['Length: 4-week pilot · 6-week trial · a full season.', 'Agreed day, start and length:', 'Duración: piloto de 4 semanas · prueba de 6 semanas · una temporada.', 'Día, inicio y duración acordados:']);
+    c('…drawn: the motion twice on the Proposal', text(R.pl).split('a trial of the length we choose together (a 4-week pilot, a 6-week trial or a full season)').length - 1, 2);
+    const words = all(R) + text(R.hl) + text(R.pl), palabras = all(E) + text(E.hl) + text(E.pl);
+    c('nowhere a length stated as settled: slides, handout, Proposal', ['a trial of 6 weeks', 'For 6 weeks', 'A 6-week trial or a 4-week pilot', 'choose the day together'].filter(w => words.includes(w)), []);
+    c('…nor in Spanish', ['una prueba de 6 semanas,', 'Durante 6 semanas', 'o un piloto de 4 semanas', 'Elegiremos el día juntos'].filter(w => palabras.includes(w)), []);
+    c('the handout two pages, the Proposal one (EN)', [R.hpages, R.ppages], [2, 1]); }
+  { const R = await run(P, 'member-care-two-sabbath-card', 'hospitality'), E = await run(Pes, 'member-care-two-sabbath-card', 'hospitality');
+    // the greeters' card has no day to choose (a card, the week someone is missed): its start and its length
+    c('greeters (the missed-member card): the start and the length, EN and ES', [S(R, 'ask', 'decide').headline, S(E, 'ask', 'decide').headline, R.H.timing.agreed, E.H.timing.agreed],
+      ['We’ll choose the start and the length tonight', 'Elegiremos juntos el inicio y la duración esta noche', 'Agreed start and length:', 'Inicio y duración acordados:']);
+    c('…its ask', R.m.ask.text, 'Throughout the trial, carry a handwritten card when a member misses two Sabbaths as greeters: two or three named people, any list of members kept private and only with their consent, and a warm word within the week for anyone we have missed. We’ll choose the start and the length together tonight.');
+    c('…its motion: a start, not a day, to agree', [R.Pz.motion, /^Acordar una prueba de la duración que elijamos juntos \(un piloto de 4 semanas, una prueba de 6 semanas o una temporada\), con la fecha de inicio que acordemos juntos: una tarjeta a mano/.test(E.Pz.motion)],
+      ['To agree to a trial of the length we choose together (a 4-week pilot, a 6-week trial or a full season), starting on a date we agree together: a handwritten card when a member misses two Sabbaths, with a named coordinator, and to bring it to the finance committee.', true]);
+    c('…the Proposal still one page (EN); the handout draws the line to write the start and the length in', [R.ppages, R.hl.includes('Agreed start and length:')], [1, true]); }
+  { // prayer walking every street (no room): its WHEN has no days' line (as before), so on a page drawn tight its Length line stays
+    // there (a tight page leaves the lengths to the motion only when WHEN has something else to say)
+    const R = await run(P, 'prayer-every-street-map', 'prayer'), F = await run(P, 'food-pantry', 'community');
+    const at = (X, i = X.pl.indexOf('WHEN')) => X.pl.slice(i + 1, i + 3).join(' ');
+    c('prayer walking: WHEN is never empty (its lengths); the food pantry\'s WHEN its days, the lengths in its motion; both one page', [/^Length: 4-week pilot · 6-week trial · a full season/.test(at(R)), /^One of: Tuesday evening/.test(at(F)), /Length:/.test(at(F)), R.ppages, F.ppages], [true, true, false, 1, 1]); }
+  { // every ministry team asks for no number of weeks (the groups' own asks: "For {weeks}, …", "Adopt a trial of {weeks} under this council")
+    const bad = l => P.J(`(()=>{ const out=[]; for(const g of CASE_GROUPS.filter(g=>g.type==='team')) for(const id of ['food-pantry','grief','prayer-walk']){ const m=caseModel(id,{type:'team',group:g.id},{timing:'options',lang:'${l}'});
+      if(m.ok&&(/\\b\\d+ (weeks|semanas)\\b/.test(m.ask.text)||!/(the day and the length|the start and the length|el día y la duración|el inicio y la duración) (together )?(tonight|esta noche)\\.$/.test(m.ask.text))) out.push(g.id+'/'+id+': '+m.ask.text.slice(0,90)); } return out; })()`);
+    c('every team group\'s ask, EN and ES: no number of weeks, the length chosen tonight', [bad('en'), bad('es')], [[], []]);
+    c('…Personal Ministries\' council', P.J(`caseModel('grief',{type:'team',group:'personal'},{timing:'options'}).ask.text`).startsWith('Adopt a trial of the length we choose together under this council: '), true); }
+  { // the Sabbath deck: the whole church is told the day and the length, as the day was ("we'll announce the day")
+    const R = await run(P, 'food-pantry', 'congregation'), E = await run(Pes, 'food-pantry', 'congregation');
+    c('the Sabbath deck: "A trial", the day and the length to be announced, EN and ES', [S(R, 'motion').headline, R.m.motion.rows, S(E, 'motion').headline, E.m.motion.rows],
+      ['A trial: a real food pantry, on a schedule', [['When', 'Starting soon; we’ll announce the day and the length'], ['Places', '16']],
+        'Una prueba: una despensa de alimentos de verdad, con horario fijo', [['Cuándo', 'Empieza pronto; anunciaremos el día y la duración'], ['Cupos', '16']]]);
+    c('…its ask and its first steps name no length', [R.m.ask.text, E.m.ask.text, R.H.steps.map(s => s.date), E.H.steps.map(s => s.date)],
+      ['Throughout the trial: pray for the people around us, give one evening a month, or lead one part of a real food pantry, on a schedule.',
+        'Durante la prueba: orar por las personas de nuestro entorno, dar una tarde al mes, o dirigir una parte de la iniciativa «una despensa de alimentos de verdad, con horario fijo».',
+        ['Week 1 · start', 'Halfway through', 'After the trial · review'], ['Semana 1 · inicio', 'A mitad de la prueba', 'Tras la prueba · revisión']]);
+    const words = all(R) + text(R.hl);
+    c('…nowhere 6 weeks', ['6 weeks', '6-week', 'WEEK 6', 'WEEK 3'].filter(w => words.includes(w)), []); }
+  { // when a decision is recorded, the length agreed fills in everywhere
+    const s = new Date(Date.now() + 14 * 864e5); while (s.getDay() !== 4) s.setDate(s.getDate() + 1);
+    const team = { v: 1, body: 'team', group: 'community', date: ago(3), outcome: 'agreed', vote: { for: 6, against: 0, abstain: null, consensus: false }, timing: { option: null, slot: 'Thu evening', time: '18:00', start: localISO(s), len: 'pilot', weeks: 4, room: 'kitchen' }, at: 1 };
+    const O = await run(P, 'food-pantry', 'community'), T = await run(P, 'food-pantry', 'community', { recs: { team } }), B = await run(P, 'food-pantry', 'board', { recs: { team } });
+    const member = P.J(`caseHandout(null,${JSON.stringify(T.d)},{}).agreed.rows`);
+    c('the team agreed a 4-week pilot: its slides, the handout and a phone\'s copy say so', [S(T, 'ask', 'agreed').rows.find(r => r[0] === 'Length')[1], T.H.agreed.rows.find(r => r[0] === 'Length')[1], member.find(r => r[0] === 'Length')[1], T.m.ask.text.startsWith('For 4 weeks, run a real food pantry')],
+      ['4-week pilot', '4-week pilot', '4-week pilot', true]);
+    c('…its Proposal: the motion as moved (the lengths it chose from), the pilot under Action taken', [T.Pz.motion === O.Pz.motion, T.Pz.action.timing.text.includes('4-week pilot'), T.Pz.memo.find(r => r[0] === 'Subject')[1]],
+      [true, true, 'A real food pantry, on a schedule: a trial of 4 weeks']);
+    c('…the board is asked to approve the 4 weeks agreed', [B.Pz.motion.startsWith('To approve a trial of 4 weeks, from '), S(B, 'ask', 'agreed').rows.find(r => r[0] === 'Length')[1]], [true, '4-week pilot']);
+    const F = await run(P, 'food-pantry', 'board', { recs: { team: { ...team, timing: { ...team.timing, len: 'season', weeks: 13 } } } });
+    c('…a full season: 13 weeks', F.Pz.motion.startsWith('To approve a trial of 13 weeks, from '), true); }
+  { // "I already know the dates" stays exactly as it was
+    const R = await run(P, 'food-pantry', 'community', { timing: 'fixed' });
+    c('"I already know the dates": the team\'s dates and weeks as before', [R.Pz.motion.startsWith('To agree to a trial of 6 weeks, from '), R.m.ask.text.startsWith('For 6 weeks, run a real food pantry'), R.m.motion.rows.map(r => r[0])], [true, true, ['When', 'Runs', 'Places', 'Review']]); }
 
   c('no page errors', [P.errs, Pes.errs].flat().filter(e => !/Not implemented/.test(e)), []);
   console.log(`\n${pass} passed, ${fail} failed`);
