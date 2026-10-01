@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.42.0
+     TERRAIN  v10.42.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.42.0" data-theme="dark">
+<html lang="en" data-version="v10.42.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.42.0">
-<title>Community Map — Terrain v10.42.0</title>
+<meta name="terrain-version" content="v10.42.1">
+<title>Community Map — Terrain v10.42.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -3168,13 +3168,13 @@ button.cd-rowb:hover{background:var(--panel2)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.42.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.42.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.42.0';
+const VERSION = 'v10.42.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -21936,6 +21936,37 @@ Object.assign(CASE_TIMING,{
   // a slide names no day of the month (Suggest options): the handout says which day
   holiday:{en:'includes {name}, {date}',es:'incluye {name}, {date}'}, holidayShort:{en:'includes {name}',es:'incluye {name}'}
 });
+/* ---- fix after review (v10.42.0, the length): a ministry team chooses the length together, as it chooses the day --------------
+   The samples' team motion said "To agree to a trial of 6 weeks" while its slide offered "4-week pilot · 6-week trial · a full
+   season". The pastor: "yes, they should be able to choose length." With Suggest options a ministry team's deck (not a made idea,
+   not a club that runs by term; caseBuild's LENC) names no length as settled: the opening shows the lengths as the decide slide does,
+   the ask says "Throughout the trial" and "We'll choose the day and the length together tonight", the Proposal "a trial of the
+   length we choose together (a 4-week pilot, a 6-week trial or a full season)". The Sabbath deck announces the length with the
+   day. The finance committee, the board and the business meeting keep the length in their motion. A recorded length (Record what
+   we decided) fills in everywhere, as the day does. */
+const CASE_TIMING_LEN={
+  // (the slide's headline under the kicker "Let's decide together": "together" once, measured: with three options and their clashes the
+  // longer English headline drew the slide at fit 0.75)
+  headTeam:{en:'We’ll choose the day and the length tonight',es:'Elegiremos juntos el día y la duración esta noche'},
+  headTeamNoDay:{en:'We’ll choose the start and the length tonight',es:'Elegiremos juntos el inicio y la duración esta noche'},
+  askTeam:{en:'We’ll choose the day and the length together tonight.',es:'Elegiremos juntos el día y la duración esta noche.'},
+  askTeamNoDay:{en:'We’ll choose the start and the length together tonight.',es:'Elegiremos juntos el inicio y la duración esta noche.'},
+  soon:{en:'Starting soon; we’ll announce the day and the length',es:'Empieza pronto; anunciaremos el día y la duración'},
+  planCongregation:{en:'A trial: {ministry}',es:'Una prueba: {ministry}'},
+  agreed:{en:'Agreed day, start and length:',es:'Día, inicio y duración acordados:'},
+  agreedStart:{en:'Agreed start and length:',es:'Inicio y duración acordados:'},
+  tl:{mid:{en:'Halfway through',es:'A mitad de la prueba'},review:{en:'After the trial · review',es:'Tras la prueba · revisión'}},
+  // the lengths in running text (the Proposal): "a 4-week pilot, a 6-week trial or a full season"
+  pilot:{en:'a 4-week pilot',es:'un piloto de 4 semanas'},trial:{en:'a {n}-week trial',es:'una prueba de {weeks}'},season:{en:'a full season',es:'una temporada'},
+  or:{en:' or ',es:' o '}};
+/* A team's or the whole church's ask without a number of weeks: "For {weeks}, …" → "Throughout the trial, …" ("Durante la prueba,
+   …"); "a trial of {weeks}" → "a trial of the length we choose together". Takes {en,es} or a group's own pair. */
+function caseLenFree(leaf){
+  if(!leaf||typeof leaf.en!=='string') return leaf;
+  const en=String(leaf.en).replace(/a trial of \{weeks\}/g,'a trial of the length we choose together').replace(/^For \{weeks\}([,:])/,'Throughout the trial$1').replace(/\{weeks\}/g,'the trial');
+  const es=typeof leaf.es==='string'?String(leaf.es).replace(/una prueba de \{weeks\}/g,'una prueba de la duración que elijamos juntos').replace(/^Durante \{weeks\}([,:])/,'Durante la prueba$1').replace(/\{weeks\}/g,'la prueba'):leaf.es;
+  return {en,es};
+}
 /* The idea's own milestones, from its description's first sentence and its steps, EN and ES side by side (the same months and days
    in both, so an English and a Spanish deck keep the same rows): [{key, month|null, en:[label,text], es:[label,text]}], at most
    three, months in the order of the year from the first one its steps name, then a weekday or "each week". A text that does not
@@ -25525,8 +25556,11 @@ function caseBuild(ctx,ministryId,audience,opts){
   /* -- v10.42: the day, the start and the length, to agree together (Suggest options) -- */
   const TM=CASE_TIMING, noDay=x.seats===false&&inreach;
   // fix after review: an idea made and handed out is timed by its own milestones (made, caseMilestones); a club by term (term, above)
+  // fix after review (the length): a ministry team chooses the length together as it chooses the day; the Sabbath deck announces both
+  // (LENC; the finance committee, the board, the business meeting and the officers keep the length in their motion: boardDay below)
+  const LENC=FLEX&&!made&&!term&&(type==='team'||type==='congregation'), TLN=CASE_TIMING_LEN, TAL=leaf=>LENC?caseLenFree(TA(leaf)):TA(leaf);
   const owner=typeof r.owner==='string'?caseClean(r.owner,60):'';
-  const timingM={mode:OPT?'options':'fixed',flex:FLEX,proposed:PROP,decide:false,noDay,made,term,owner:owner||null};
+  const timingM={mode:OPT?'options':'fixed',flex:FLEX,proposed:PROP,decide:false,noDay,made,term,owner:owner||null,lenChoose:LENC};
   if(FLEX){
     const sabOk=x.sabbath===true||CASE_SAB_BUILTINS.has(x.id);
     const found=(noDay||made)?[]:caseTimingOptions({cap,r,use,sabOk,roomKey,start,weeks,series:ctx.series||null});
@@ -25560,7 +25594,10 @@ function caseBuild(ctx,ministryId,audience,opts){
        season" beside a motion for 6 weeks and a ceiling of $125). A made idea has no length; a club runs by term. */
     const boardDay=type==='board';
     const lengths=made?[]:term?[caseT(TM.termLen)]:boardDay?[caseF(TM.trial,trialN)]:[weeks>4?caseT(TM.pilot):null,caseF(TM.trial,trialN),weeks<13?caseT(TM.season):null].filter(Boolean);
-    const lengthV=made?null:term?caseT(TM.termLen):String(caseF(TM.trialLen,trialN)||'').replace(/^A (8|11|18)-/,'An $1-')+(weeks>4&&type!=='congregation'&&!boardDay?caseT(TM.orPilot):'');
+    // (the length: a team's opening shows the lengths to choose from, as its decide slide; the Sabbath deck says it with the day)
+    const lengthV=made?null:term?caseT(TM.termLen):LENC?(type==='team'?gfCap(lengths.join(' · ')):null):String(caseF(TM.trialLen,trialN)||'').replace(/^A (8|11|18)-/,'An $1-')+(weeks>4&&type!=='congregation'&&!boardDay?caseT(TM.orPilot):'');
+    const runL=LENC?[weeks>4?caseT(TLN.pilot):null,String(caseF(TLN.trial,trialN)||'').replace(/^a (8|11|18)-/,'an $1-'),weeks<13?caseT(TLN.season):null].filter(Boolean):[];
+    const lengthsRun=runL.length>1?runL.slice(0,-1).join(', ')+caseT(TLN.or)+runL[runL.length-1]:runL[0]||'';
     const rows=options.map((o,i)=>[caseF(TM.option,{n:i+1}),o.text]);
     if(made&&MS.length) MS.forEach(z=>rows.push(z[caseLang()].slice()));
     else if(noDay||made) rows.push([caseT(TM.row.starts),startsV]);
@@ -25569,7 +25606,7 @@ function caseBuild(ctx,ministryId,audience,opts){
     rows.push([caseT(TM.calendarLabel),caseT(TM.calendarValue)]);
     /* the motion (the plan) slide: firm on places, ceiling, funds and the review; the when to agree (a board's five rows:
        ceiling and funds share one, then When and Starts, when the places are shown) */
-    const rWhen=type==='congregation'?[caseT(TM.row.when),caseT(TM.soon)]
+    const rWhen=type==='congregation'?[caseT(TM.row.when),caseT(LENC?TLN.soon:TM.soon)]
       :(noDay||made)?null:[caseT(TM.row.when),options.length>=2?caseF(TM.whenN,{n:options.length}):caseT(TM.when0)];
     const rStarts=type==='congregation'?null:[caseT(TM.row.starts),startsV];
     const rLen=lengthV?[caseT(TM.row.length),lengthV]:null;
@@ -25588,9 +25625,9 @@ function caseBuild(ctx,ministryId,audience,opts){
       timingM.whenMerge=rWhen?[rWhen[0],options.length>=2?caseF(TM.whenStarts,{n:options.length,month}):caseF(TM.whenStarts0,{month})]:null;
       mr=[rWhen?timingM.whenMerge:rStarts,rLen,rPlaces,rReview].filter(Boolean); }
     else mr=[rWhen,rLen,rPlaces].filter(Boolean);
-    Object.assign(timingM,{decide:type==='board'||type==='team',options,rows,lengths,lengthText:lengthV,starts:startsV,month,review:reviewW,motionRows:mr,
+    Object.assign(timingM,{decide:type==='board'||type==='team',options,rows,lengths,lengthText:lengthV,lengthsRun,starts:startsV,month,review:reviewW,motionRows:mr,
       reviewAt:caseT((made?TM.reviewAtMade:term?TM.reviewAtTerm:TM.reviewAt)[rk]),kicker:caseT(TM.kicker),
-      head:caseT(made&&MS.length?TM.headMade:type==='team'?((noDay||made)?TM.head.teamNoDay:TM.head.team):((noDay||made)?TM.headBoardMade:TM.headBoardDay)),
+      head:caseT(made&&MS.length?TM.headMade:type==='team'?(LENC?(noDay?TLN.headTeamNoDay:TLN.headTeam):(noDay||made)?TM.head.teamNoDay:TM.head.team):((noDay||made)?TM.headBoardMade:TM.headBoardDay)),
       calendar:caseT(TM.calendarLine),milestones:MS.map(z=>z[caseLang()].slice())});
   }
   const cm=(G.cm||'');
@@ -25601,13 +25638,13 @@ function caseBuild(ctx,ministryId,audience,opts){
   /* -- the motion -- */
   const motionHead=type==='board'
     ?(G.id==='board'?caseF(CASE_COPY.head.motionBoard,V):gfCap(caseT({en:G.roleEn,es:G.roleEs}))+': '+V.ministry)
-    :type==='team'?caseF(CASE_ARC.head.motionTeam,{aim:caseGoalAim(x,lang)}):caseF(CASE_COPY.head.planCongregation,V);   // v10.42 part 3: "Help us {aim}"
+    :type==='team'?caseF(CASE_ARC.head.motionTeam,{aim:caseGoalAim(x,lang)}):caseF(LENC?TLN.planCongregation:CASE_COPY.head.planCongregation,V);   // v10.42 part 3: "Help us {aim}" (the length: "A trial: {ministry}")
   const rowRuns=[caseT(CASE_COPY.motion.runs),caseF(CASE_COPY.motion.runsValue,V)];
   const rowPlaces=[caseT(CASE_COPY.motion.places),String(r.participants)];
   const rowWhen=[caseT(CASE_COPY.motion.when),gfCap(slotName)];
   const motionHeadIn=l=>caseInLang(l,()=>{ const VV={weeks:caseNoun(CASE_X.weeks,weeks),ministry:caseMinMid(x)};
     return String((type==='board'?(G.id==='board'?caseF(CASE_COPY.head.motionBoard,VV):gfCap(caseT({en:G.roleEn,es:G.roleEs}))+': '+VV.ministry)
-      :type==='team'?caseF(CASE_ARC.head.motionTeam,{aim:caseGoalAim(x,l)}):caseF(CASE_COPY.head.planCongregation,VV))||''); });
+      :type==='team'?caseF(CASE_ARC.head.motionTeam,{aim:caseGoalAim(x,l)}):caseF(LENC?TLN.planCongregation:CASE_COPY.head.planCongregation,VV))||''); });
   const byDate=OPT?caseMonth(now,now,true):V.date;
   const motion={
     headMax:conf?confM.motion.headMax:Math.max(motionHeadIn('en').length,motionHeadIn('es').length),   // v10.41
@@ -25624,13 +25661,15 @@ function caseBuild(ctx,ministryId,audience,opts){
       /* fix after review: a group that proposes its OWN kind of idea (the prayer ministry, a prayer calendar) is not asked to "carry in
          prayer the team of" it: that ask was written for a group supporting another ministry. It is asked to run it (caseOwnIdea). */
       const fromIn=!!(inreach&&CASE_GROUP_IN[G0.id]&&CASE_GROUP_IN[G0.id].askEn);
+      // (the length: a team says it chooses the length together tonight, with the day or the start)
+      const teamTail=LENC?(noDay?TLN.askTeamNoDay:TLN.askTeam):(noDay||made)?CASE_TIMING.ask.teamNoDay:CASE_TIMING.ask.team;
       if(type==='team'&&(fromIn?CASE_ASK_SUPPORT_IN:CASE_ASK_SUPPORT).has(G0.id)&&caseOwnIdea(x,G0.id)){
-        const OW=made||noDay?CASE_ASK_OWN.made:CASE_ASK_OWN.run, t=caseF(OW,{...V,people:gfCap(V.people)})||'';
-        return !FLEX?t:[t,caseT((noDay||made)?CASE_TIMING.ask.teamNoDay:CASE_TIMING.ask.team)].filter(Boolean).join(' '); }
+        const OW=made||noDay?CASE_ASK_OWN.made:CASE_ASK_OWN.run, t=caseF(LENC?caseLenFree(OW):OW,{...V,people:gfCap(V.people)})||'';
+        return !FLEX?t:[t,caseT(teamTail)].filter(Boolean).join(' '); }
       const first=x.seats===false&&no&&!fromIn?no:main;
       // v10.41 review: an idea with no room (or no leader) left {room} / {leaders} empty and the ask vanished from
       // the handout (board and deacons decks of a street or online idea); the room-free words, then plain ones
-      const own=caseF(TA(first),V)||(no&&caseF(TA(no),V))||caseF(TA(CASE_ASK_PLAIN[type]||CASE_ASK_PLAIN.team),V)||'';
+      const own=caseF(TAL(first),V)||(no&&caseF(TAL(no),V))||caseF(TAL(CASE_ASK_PLAIN[type]||CASE_ASK_PLAIN.team),V)||'';
       if(!FLEX) return own;
       // v10.42: a two-part motion that still decides: tonight the plan, the coordinator and the ceiling; the day and the start
       // within two weeks, with the church calendar (the board, the business meeting); the others add who sets the day
@@ -25639,7 +25678,7 @@ function caseBuild(ctx,ministryId,audience,opts){
       const TKd=(noDay||made)?CASE_TIMING.askMade:TK;
       if(type==='board'&&(G0.id==='board'||G0.id==='business')) return caseF(TKd[G0.id],{coordinator:coord,ceiling:V.ceiling})||own;
       if(type==='board') return [own,caseT(TKd.then)].filter(Boolean).join(' ');
-      if(type==='team') return [own,caseT((noDay||made)?TK.teamNoDay:TK.team)].filter(Boolean).join(' ');
+      if(type==='team') return [own,caseT(teamTail)].filter(Boolean).join(' ');
       return own; })()
   };
 
@@ -25816,7 +25855,8 @@ function caseBuild(ctx,ministryId,audience,opts){
   roles.splice(4);
   const TL=CASE_COPY.timeline;
   // v10.42: with options, the first steps count weeks, not dates (the Planner's series on the conference's slide: its own, proposed)
-  const tlD=OPT?{start:caseT(CASE_TIMING.tl.start),mid:caseF(CASE_TIMING.tl.mid,{n:Math.max(1,Math.round(weeks/2))}),review:caseF(CASE_TIMING.tl.review,{n:weeks})}
+  const tlD=LENC?{start:caseT(CASE_TIMING.tl.start),mid:caseT(TLN.tl.mid),review:caseT(TLN.tl.review)}   // (the length: chosen, so no week numbers)
+    :OPT?{start:caseT(CASE_TIMING.tl.start),mid:caseF(CASE_TIMING.tl.mid,{n:Math.max(1,Math.round(weeks/2))}),review:caseF(CASE_TIMING.tl.review,{n:weeks})}
     :{start:caseF(TL.startDate,V),mid:caseF(TL.midDate,V),review:caseF(TL.reviewDate,V)};
   const timeline=conf&&confM.timeline?{...confM.timeline,measures:caseT(TL.measures),options:caseT(TL.options),win:caseF(TA({en:G.winEn,es:G.winEs}),V)}:{headline:gfCap(caseF(CASE_COPY.head.timeline,V)),
     steps:[{date:tlD.start,title:caseT(inreach?CASE_FAMILY.startTitle:TL.startTitle),text:caseT(inreach?CASE_FAMILY.startText:TL.startText),iso:caseISO(start)},
@@ -29914,7 +29954,8 @@ function caseHandout(model,deck,o){
           boxes:TMh.options.length?TMh.options.map((o,i)=>({label:caseF(TX.option,{n:i+1}),title:gfCap(o.slotName),text:[o.roomName,...(o.clashes.length?o.clashes.map(c=>c.text):[T(TX.pdf.none)])].filter(Boolean).join(' · ')}))
             :msH?msH.map(r=>({label:r[0],title:r[1],text:''}))
             :[(TMh.noDay||TMh.made)?{label:T(TX.row.starts),title:TMh.starts,text:''}:{label:T(TX.days),title:T(TX.noTimes),text:''}],
-          length:TMh.lengths&&TMh.lengths.length?caseF(TX.pdf.length,{lengths:TMh.lengths.join(' · ')}):'',calendar:TMh.calendar,agreed:T((TMh.noDay||TMh.made)?CASE_TIMING_PDF_FIX.agreedStart:TX.pdf.agreed)}; }
+          length:TMh.lengths&&TMh.lengths.length?caseF(TX.pdf.length,{lengths:TMh.lengths.join(' · ')}):'',calendar:TMh.calendar,
+          agreed:T(TMh.lenChoose?(TMh.noDay?CASE_TIMING_LEN.agreedStart:CASE_TIMING_LEN.agreed):(TMh.noDay||TMh.made)?CASE_TIMING_PDF_FIX.agreedStart:TX.pdf.agreed)}; }   // (the length: "Agreed day, start and length:")
       // A board member's two other questions (the group's own measure of success, and how
       // many the trial reaches against how many need it): the board handout, room allowing.
       if(m.type==='board'){ H.win=m.timeline&&m.timeline.win||''; H.reach=m.vals&&m.vals.scale?gfCap(caseF(CASE_COPY.stat.scaleLine,m.vals)||''):''; }
@@ -30830,6 +30871,8 @@ function casePropMotion(m,body,path){
     if(ceiling<=0) return casePropFill(to?(made?PM.finance0Made:PM.finance0):(made?PM.finance0LastMade:PM.finance0Last),w);
     return casePropFill(to?(made?PM.financeToMade:PM.financeTo):(made?PM.financeLastMade:PM.financeLast),w);
   }
+  // (the length: a team agrees a trial of the length it chooses, the lengths named; a day and start, or only a start, to agree)
+  if(flex&&TMm.lenChoose&&!made&&!term) return casePropFill(TMm.noDay?PM.teamLenNoDay:PM.teamLen,{...v,lengths:TMm.lengthsRun||'',bring:T(X.bring[next||'none'])});
   return casePropFill(made?PM.teamMade:PM.team,{...v,when:flex?T(X.whenOpt):dates,bring:T(X.bring[next||'none'])});
 }
 /* Fix after review (v10.42.0): the motion's words with its pieces ({trial}: "a trial of 6 weeks" or "the first term"; {starting}: an
@@ -30873,6 +30916,13 @@ const CASE_PROP_FIX={
     half:{en:' (half of the {total} cost)',es:' (la mitad del costo de {total})'}, ofTotal:{en:' (of the {total} cost)',es:' (del costo de {total})'},
     withRest:{en:', with {rest}',es:', con {rest}'}}
 };
+/* Fix after review (v10.42.0, the length): a ministry team's motion when it chooses the length together (CASE_TIMING_LEN). */
+Object.assign(CASE_PROP_FIX,{subjectLen:{en:'{name}: a trial of the length we choose together',es:'{name}: una prueba de la duración que elijamos juntos'}});
+Object.assign(CASE_PROP_FIX.m,{
+  teamLen:{en:'To agree to a trial of the length we choose together ({lengths}), on a day and start we agree together: {ministry}, with a named coordinator, and {bring}.',
+    es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), en el día y con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'},
+  teamLenNoDay:{en:'To agree to a trial of the length we choose together ({lengths}), starting on a date we agree together: {ministry}, with a named coordinator, and {bring}.',
+    es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'}});
 /* The Proposal as one plain object, in the model's language (caseProposalDoc draws it; the tests read it). */
 function caseProposal(model,deck,o){
   o=o||{};
@@ -30895,6 +30945,7 @@ function caseProposal(model,deck,o){
     const subject=body==='conference'&&m.ministry.plan&&m.conf&&m.conf.plan?caseF(X.subjectConf,{opening:m.conf.plan.opening})
       :(m.timing&&m.timing.made&&m.timing.flex?caseF(CASE_PROP_FIX.subjectMade,{name:gfCap(m.ministry.name||''),month:m.timing.month||''})
         :m.timing&&m.timing.term?caseF(CASE_PROP_FIX.subjectTerm,{name:gfCap(m.ministry.name||'')})
+        :m.timing&&m.timing.lenChoose?caseF(CASE_PROP_FIX.subjectLen,{name:gfCap(m.ministry.name||'')})
         :caseF(X.subject,{name:gfCap(m.ministry.name||''),weeks:V.weeks||''}))+(!((m.ask&&m.ask.ceiling)>0)?T(X.free):'');
     Pz.memo=[[T(X.lab.church),Pz.church],[T(X.lab.to),to],[T(X.lab.from),from],[T(X.lab.date),Pz.prepared],[T(X.lab.subject),subject||'']].filter(r=>r[1]);
     // the status line: the body just before this one in the path (the conference: the church board); none before: no line
@@ -30969,7 +31020,8 @@ function caseProposal(model,deck,o){
         else if(TMp.starts) lines.push(caseF(PF.starts,{starts:TMp.starts}));
         if(TMp.lengths&&TMp.lengths.length) lines.push(caseF(P.length,{v:TMp.lengths.join(' · ')})); if(TMp.calendar) lines.push(TMp.calendar); }
       else if(mm.dates&&mm.dates.startText) lines.push(mm.dates.startText+' – '+mm.dates.reviewText+(V.slot?' · '+gfCap(V.slot):''));
-      if(lines.length) plan.push({k:'when',label:T(P.when),lines}); }
+      // (the length: a team's motion names the lengths it chooses from; a page drawn tight leaves WHEN's Length line to it: lenInMotion)
+      if(lines.length) plan.push({k:'when',label:T(P.when),lines,...(!AG&&TMp&&TMp.flex&&TMp.lenChoose&&TMp.lengthsRun?{lenInMotion:true}:{})}); }
     Pz.plan=plan;
     // BUDGET
     const Bx=X.budget, a=m.ask||{};
@@ -31111,7 +31163,10 @@ function caseProposalDocAt(Pz,opts,lv){
       lines.forEach(t=>{ y+=tb(t,MX+lw,y,CW-lw,o,true); }); y+=S(4); });
     gap(2); };
   const planBlock=()=>{ const rows=Pz.plan.map(p=>({label:p.label,lines:p.k==='what'&&(lv>=3||tight)?[p.lines[0].split('. ')[0].replace(/\.?$/,'.')]:p.k==='how'&&lv>=2?p.lines.slice(0,3)
-      :p.k==='when'&&tight&&p.lines.length>1?p.lines.filter(t=>!/^(Before we choose|Antes de elegir)/.test(t)).slice(0,lv>=3?2:3):p.lines}));
+      :p.k==='when'&&tight&&p.lines.length>1?p.lines.filter((t,i,a)=>!/^(Before we choose|Antes de elegir)/.test(t)&&!(p.lenInMotion&&/^(Length|Duración):/.test(t)&&a.some(u=>u&&u!==t&&!/^(Before we choose|Antes de elegir)/.test(u)))).slice(0,lv>=3?2:3):p.lines}));
+    // (never WHEN left empty: an idea with no room has no days' line here, caseF leaves it out, so its Length line stays)
+    // (fix after review, the length: measured on the built-ins' team Proposals, WHEN's Length line beside the motion's lengths took 78
+    // English and 546 Spanish onto a second page; left to the motion when the page is tight, every English one keeps one page)
     rowsBlock(Lb.plan,rows,100); };
   const budgetBlock=()=>{ const B=Pz.budget; if(!B) return; head(Lb.budget,50); const bo={size:S(8.8),color:C.ink};
     if(tight&&!(B.lines&&B.lines.length)){ const t=(B.rows||[]).map(([k,v])=>k+': '+v).join(' · '); y+=tb(t,MX,y,CW,{size:S(8.8),color:C.ink,lh:S(11.8)},true)+S(4); return; }

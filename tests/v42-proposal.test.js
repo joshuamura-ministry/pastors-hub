@@ -103,7 +103,8 @@ const make=(P,id,t,g,o)=>P.J(`(()=>{ const o=${JSON.stringify(o||{})}; const m=c
     // v10.42.0 fix after review: plain words ("a ring-fenced line" is jargon): "a separate budget line" / "una partida aparte"
     c('the finance committee recommends a separate budget line', m('board','finance',{}), 'To recommend to the church board a separate budget line of $125, paid from the local church budget, not tithe, for a trial of 6 weeks ($75 to start and $25 a month): a real food pantry, on a schedule, with receipts to the treasurer and an itemised account at the review.');
     c('the business meeting adopts it into the year’s plan', m('board','business',{}), 'To adopt a trial of 6 weeks as part of this year’s plan: a real food pantry, on a schedule, with a named coordinator and a spending ceiling of $125 ($75 to start and $25 a month), paid from the local church budget, not tithe; the team sets the day and the start date with the church calendar within two weeks and reports them to the church board; with a report at the next business meeting.');
-    c('a ministry team agrees, and brings it to the board', m('team','community',{}), 'To agree to a trial of 6 weeks, on a day and start we agree together: a real food pantry, on a schedule, with a named coordinator, and to bring it to the church board for approval.'); }
+    // v10.42.0 fix after review (the length): "yes, they should be able to choose length": a team agrees a trial of the length it chooses
+    c('a ministry team agrees, and brings it to the board', m('team','community',{}), 'To agree to a trial of the length we choose together (a 4-week pilot, a 6-week trial or a full season), on a day and start we agree together: a real food pantry, on a schedule, with a named coordinator, and to bring it to the church board for approval.'); }
 
   console.log('\n-- 4. the heading --');
   { const a=make(P,'food-pantry','board','board',{}).Pz;

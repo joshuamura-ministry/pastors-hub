@@ -1,4 +1,4 @@
-// Terrain · Make the Case live slides server.                       present-1.2
+// Terrain · Make the Case live slides server.                       present-1.4
 //
 // The pastor presents a Make the Case slideshow; members open the same slides
 // on their own phones, by QR code or a six-character code, and (once Firebase
@@ -10,7 +10,7 @@
 //   links, no pictures), rebuilt field by field against the fixed list of
 //   slide types below, so it can never carry anything but Terrain's slides.
 //   Only the slide pointer lives in Firebase Realtime Database, in its own
-//   project ("terrain-live"), at live/<room> = {i, v, on, end, at}. Phones
+//   project ("terrain-live"), at live/<room> = {i, v, on, end, mode, pdf, pv, qv, at}. Phones
 //   only read it (a plain EventSource on the REST stream); nobody but this
 //   function writes it, with the database secret, so the Firebase rules are
 //   write:false everywhere. Needs PRESENT_FB_URL (https://…firebaseio.com or
@@ -20,8 +20,13 @@
 //
 // STORAGE. Netlify Blobs, store "terrain-present", strong consistency.
 //   r/<room>        {room, keyHash, created, expires, v, n, lang, title, church,
-//                    ended, code, respond, opts, upd}
+//                    ended, code, respond, opts, upd, mode, pdf, mupd,
+//                    pv, pname, psize, plang, qv, qname, qsize, qlang, pput}
 //   d/<room>        {v, deck}         the latest deck, replaced on update
+//   p/<room>        {v, name, lang, size, sha, at, b64}   the handout PDF the
+//                                     presenter's device made (present-1.4)
+//   q/<room>        the same, for the proposal to vote on (present-1.4; the
+//                                     finance committee, the board, the business meeting)
 //   k/<CODE6>       {room, expires}   the typed join code → room
 //   o/<room>/<id>   {}                one per phone that fetched the deck
 //                                     ("23 phones opened the slides")
@@ -31,7 +36,7 @@
 //                                     address's answers can be counted by listing
 //   x/<day>/<room>  {}                expiry marker, day = UTC date of `expires`;
 //                                     present-sweep.mjs clears what is due daily
-//   g/open g/join g/resp              hourly per-client counters (below)
+//   g/open g/join g/resp g/pdf        hourly per-client counters (below)
 //
 // SECRETS. The room id is 16 random bytes (22 characters): whoever holds it
 // can see the slides, nothing more. The presenter key is 32 random bytes
@@ -46,8 +51,9 @@
 // "Remove now" (op remove) deletes at once. The expiry marker is only ever
 // deleted by the sweep, on the day, after one more pass over everything the
 // room could hold: a write still in flight when a room was removed or expired
-// on sight (an answer, a slide change re-creating the pointer) is caught
-// then. Nothing is written to a room in the last minute of its life
+// on sight (an answer, a slide change re-creating the pointer, a PDF) is caught
+// then. The room's PDFs (p/<room>, q/<room>, present-1.4) go with everything
+// else. Nothing is written to a room in the last minute of its life
 // (WRITE_MARGIN), so no write can land after the sweep's own pass.
 //
 // "I'M IN". Only when the deck's `yes` slide has respond:true. A member sends
@@ -72,6 +78,32 @@
 // may contain "<" followed by a letter, "/", "!" or "?": the start of an HTML
 // tag. "<5" and "< 18" are fine. The pages draw text as text anyway; this is
 // the second lock, for any page that one day forgets.
+//
+// PHONES (present-1.3, v10.42). The pastor, after presenting live: "I'm able to change the slides on
+// my phone and I don't want that… the presenter can choose." A room keeps how members' phones move:
+// mode "follow" (a phone shows exactly the presenter's slide; its own swipes, keys and wheel do nothing
+// until the presentation ends) or "free" (a phone may swipe away and come back, as before), and pdf
+// (true: phones offer the proposal as a PDF at the last slide and after the end). Set by op open and
+// changed by op mode, both with the presenter's key; no op a phone can send touches them. Each change
+// goes into the pointer too ({mode, pdf}), so a phone on the live stream switches at once and one that
+// polls hears it from op state. A room made before present-1.3 (or opened by an older page, which sends
+// neither) is "free" with pdf true: today's behaviour. op mode: 60 changes an hour per room (mupd).
+//
+// THE PROPOSAL ON PHONES (present-1.4, v10.42). The pastor: "locked until the presentation is
+// complete; then they can scroll whichever slide they want and download it as well — a really nice
+// PDF." The phones' PDF is the presenter's own full handout: his device builds it (every figure with
+// its source, the plan, the budget, the Scripture: counts only, never a name) and sends it here with
+// the key (op putpdf, base64 inside JSON like every other op) when a room opens and again whenever it
+// changes. For the bodies that vote (the finance committee, the church board, the business meeting)
+// it also sends the proposal to vote on (kind 'vote'). Phones download either with GET ?op=pdf (kind
+// 'handout', the default, or 'vote'), public like op deck: whoever holds the room id. Each upload is
+// checked before anything is kept: base64, 1 KB to 256 KB, "%PDF-" first and "%%EOF" last, and the
+// same active-content rule as gifts.mjs (no scripts, launch actions, embedded files, object streams,
+// links, annotations, forms, images, or opening action but jsPDF's page view). Every upload raises
+// the room's number for that document (pv, or qv), which op deck, op state and the pointer carry, so
+// a phone that already has the link hears of a newer copy (a decision recorded after the end). An
+// older upload that arrives late never replaces a newer one. The files go with the room (see
+// RETENTION). "Offer the PDF on phones" off (pdf false) closes both downloads (403 pdf-off).
 //
 // ACCESS CODES. Opening a room follows the same switch as census and gifts:
 // codes are enforced only while TERRAIN_REQUIRE_CODE is on (1, true, yes or
@@ -105,40 +137,60 @@
 // the whole site. A listed access code passes the day limits. A day limit
 // reached for the whole site answers 429 site-busy (not slow-down: it is not
 // this client's doing). go: 10 a second per room (best effort, per warm
-// instance). update: 60 an hour per room. join: 20 failed lookups an hour
+// instance). update: 60 an hour per room. mode: 60 an hour per room. join: 20 failed lookups an hour
 // from one client address (only failures count: a whole church shares one
 // Wi-Fi address). respond: 300 an hour from one client address across the
 // site (a counter that lets the answer through when it is too busy to
-// update), and the hard caps per room above. An IPv6 client
+// update), and the hard caps per room above. putpdf (present-1.4): 60 an hour
+// per room, the two documents together; one PDF 256 KB at most; a putpdf body
+// 400 KB at most (every other op keeps 128 KB). pdf: 600 downloads an hour from
+// one client address for one room (a whole church on one Wi-Fi: a phone takes the
+// handout and, for the bodies that vote, the proposal, again after a decision;
+// a counter that lets the download through when it is too busy to update). An IPv6 client
 // counts as its /64 network (one household or phone gets a whole /64 and can
 // pick any address in it). Client addresses are kept only as a keyed hash
 // whose key is replaced every hour.
 //
-// OPS (POST JSON {op, ...}; GET ?op=deck|state&room=… ; GET alone answers status).
+// OPS (POST JSON {op, ...}; GET ?op=deck|state|pdf&room=… ; GET alone answers status).
 // A POST must say content-type application/json (415 otherwise) and is refused
 // when the browser marks it Sec-Fetch-Site: cross-site (403), as register.mjs:
 // another website cannot make its visitors' browsers open rooms or answer.
 //   status                          → {ok, fn, live, fb, codeRequired, regRequired}
-//   open    {deck, keepDays?}  +code header when required, +x-terrain-reg while
-//                              registration is
-//                                   → {ok, room, key, code, expires, v, n, url, live}
-//   deck    {room, p?}              → {ok, v, deck, ended, expires, live}
+//   open    {deck, keepDays?, mode?, pdf?}  +code header when required, +x-terrain-reg while
+//                              registration is (mode 'follow'|'free', default 'free'; pdf, default true)
+//                                   → {ok, room, key, code, expires, v, n, url, live, mode, pdf}
+//   deck    {room, p?}              → {ok, v, deck, ended, expires, live, mode, pdf, now}
 //           (live is the stream URL, or null; p is an optional random id the
 //            phone keeps, so a phone that reloads is counted once)
 //   go      {room, key, i}          → {ok, i, opened, live}
 //   update  {room, key, deck}       → {ok, v, n, pointer}
 //   end     {room, key}             → {ok, ended, expires, pointer}
 //           (pointer: whether Firebase took the change; false without it)
+//   mode    {room, key, mode?, pdf?} → {ok, mode, pdf, pointer}   (present-1.3: see PHONES)
 //   remove  {room, key}             → {ok, liveCleared}
 //   join    {code}                  → {ok, room, lang}
-//   state   {room}                  → {ok, state:{i,v,on,end,at}|null, ended, v}
+//   state   {room}                  → {ok, state:{i,v,on,end,mode,pdf,at,age}|null, ended, v, mode, pdf, now}
+//           (fix after review: now is this server's clock and age how long ago the pointer's at was
+//            written, so a phone that opens late, or reloads, knows at once how long the presenter
+//            has been silent; op deck answers now too. The pointer's at is the presenter's word: op
+//            open, go, end and mode write it; update and putpdf do not (a decision recorded in step 3
+//            days later must not lock the phones on that room again))
+//           (mode and pdf: the room's own, which a phone trusts; the pointer's copy may be null)
 //           (the pointer read here, for networks that block firebaseio.com, and
 //            for phones without a live stream; a success may be kept 2 s at
 //            Netlify's edge, never in the browser)
 //   respond {room, k, name, note?, minor?}   → {ok}
 //   answers {room, key}             → {ok, items:[{id,k,name,note,ts}], counts, total}
 //   drop    {room, key, ids:[id]}   → {ok, deleted}     (the presenter deletes answers)
+//   putpdf  {room, key, pdf, name?, lang?, kind?}  → {ok, kind, pv|qv, size, pointer}
+//           (present-1.4: the handout, or with kind 'vote' the proposal to vote on, base64;
+//            see THE PROPOSAL ON PHONES; allowed after the end, never in the last minute)
+//   GET ?op=pdf&room=…[&kind=vote][&v=…]  → the PDF itself (application/pdf, attachment),
+//           or a JSON error (404 no-pdf, 403 pdf-off); v is ignored (it only defeats a
+//           stale copy in the phone's browser)
 //   open and update also answer `respond`: whether the room takes answers.
+//   present-1.4: deck and state also answer pv and qv (0: no PDF yet) and pname, qname
+//   (the file names); the pointer carries pv and qv.
 //
 // THE DECK (op open and update), rebuilt field by field. Unknown fields are
 // dropped; a wrong type, an unknown slide type, a non-finite number or an
@@ -174,6 +226,20 @@
 //   his conference's leaders). No new slide type: its "churches we serve" slide is a place slide, its
 //   reporting and aims are risks slides, and its close quotes Scripture in the close's own quote. Every
 //   limit is as before, and a present-1.0 or 1.1 deck is stored exactly as before.
+//   present-1.3 (v10.42): the deck is unchanged; the room keeps mode and pdf beside it (see PHONES).
+//   present-1.4 (v10.42, "one focused proposal, from the goal to the appeal"; every addition is kept
+//   only when sent, so a present-1.0 to 1.3 deck is stored exactly as before):
+//   how      {kicker, headline, steps:[text] 2–6, source}   the idea's own steps ("How it works"),
+//            with the foot verse like every content slide
+//   motion, yes, close  + goal: text   (the goal every deck opens and closes on)
+//   verse    + kicker, headline        ("Why carry our neighbours in prayer?")
+//   THE GIFTS DECK. The "Discover your gifts" Sabbath presentation carries gifts:{pub}, the church's
+//   Spiritual Gifts campaign (the public id, 12 characters), kept only for the whole church
+//   (audience congregation, not a young people's group) and dropped for every other audience; any
+//   other shape is refused (bad-deck, gifts.pub). A join slide with gifts:true in such a deck is its
+//   "Take it now" slide: qrUrl is set here to the assessment, <site>/#gifts=<pub> (~es for a Spanish
+//   deck), with no code; without a kept deck.gifts it is an ordinary join. Still no link the page chose.
+//   A slide's `part` (the page's own name for a slide's place in the story) is dropped, as any unknown field.
 //   Text is one line, at most 400 characters, with no markup (see NO MARKUP);
 //   a value is a finite number or text; hues are kind tokens: hardship,
 //   housing, children, people, language, acc.
@@ -181,10 +247,15 @@
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, createSign, createPrivateKey, timingSafeEqual } from 'node:crypto';
 
-const FN_VERSION = 'present-1.2';
+const FN_VERSION = 'present-1.4';
 const STORE_NAME = 'terrain-present';
 
-const MAX_BODY = 128 * 1024;               // whole request
+const MAX_BODY = 128 * 1024;               // whole request (every op but putpdf)
+const MAX_BODY_PDF = 400 * 1024;           // present-1.4: op putpdf (a PDF of 256 KB is 349,528 characters of base64)
+const MAX_PDF = 256 * 1024;                // present-1.4: one PDF, decoded (the largest handout measured is 16 KB)
+const MIN_PDF = 1024;                      // … and at least this (jsPDF's smallest page is larger)
+const MAX_PDF_PUTS = 60;                   // present-1.4: PDF uploads per room, per hour (the two documents together)
+const MAX_IP_PDFS = 600;                   // present-1.4: PDF downloads from one client address for one room, per hour (soft; fix after review: was 120 per address)
 const MAX_DECK = 64 * 1024;                // deck, bytes of JSON
 const MAX_SLIDES = 12;
 const MAX_STR = 400;                       // any text in a deck
@@ -209,6 +280,7 @@ const ROOM_TTL = 10 * 1000;                // a warm instance trusts its copy of
 const OPENED_TTL = 5 * 1000;               // … and its count of phones this long
 const WRITE_MARGIN = 60 * 1000;            // nothing is written to a room this close to its expiry
 const MAX_DROP = 600;                      // answers the presenter deletes in one call
+const MAX_MODES = 60;                      // present-1.3: op mode per room, per hour
 
 const RE_ROOM = /^[A-Za-z0-9_-]{22}$/;     // 16 random bytes
 const RE_KEY = /^[A-Za-z0-9_-]{43}$/;      // 32 random bytes
@@ -225,8 +297,19 @@ const ANSWER_KEYS = ['lead', 'help', 'pray'];
 const YOUTH_GROUPS = new Set(['youth', 'pathfinders', 'adventurers', 'school']);
 // The kinds of slideshow (present-1.2 adds the conference proposal).
 const AUDIENCE_TYPES = new Set(['board', 'team', 'congregation', 'conference']);
+// present-1.3: how members' phones move (see PHONES).
+const PHONE_MODES = new Set(['follow', 'free']);
 // The start of an HTML tag (see NO MARKUP).
 const RE_TAG = /<[A-Za-z!/?]/;
+// present-1.4: a Spiritual Gifts campaign's public id (the page's gfCampaign checks the same), and the
+// PDF file names the page makes (casePdfName); any other name is sent as Terrain-proposal.pdf.
+const RE_GPUB = /^[A-Za-z0-9_-]{12}$/;
+const RE_PDFNAME = /^[A-Za-z0-9][A-Za-z0-9-]{0,110}\.pdf$/;
+// present-1.4: the two PDFs a room may hold (see THE PROPOSAL ON PHONES): where each is kept, and its fields on the room.
+const PDF_KINDS = {
+  handout: { key: 'p/', v: 'pv', name: 'pname', size: 'psize', lang: 'plang' },
+  vote: { key: 'q/', v: 'qv', name: 'qname', size: 'qsize', lang: 'qlang' }
+};
 
 // ---------------------------------------------------------------- access codes
 // The same format as census.mjs and gifts.mjs (functions do not import one
@@ -380,11 +463,59 @@ const answerTag = (rec, ip) => createHmac('sha256', String(rec.salt || rec.keyHa
 const isExpired = (rec, now = Date.now()) => !rec || typeof rec.expires !== 'number' || rec.expires <= now;
 // Whether a room may still be written to (see RETENTION): not in its last minute.
 const writable = (rec, now = Date.now()) => !!rec && typeof rec.expires === 'number' && rec.expires - now > WRITE_MARGIN;
+// present-1.3: a room's phone mode and PDF offer. A room made before them is "free" with the PDF on.
+const roomMode = rec => (rec && rec.mode === 'follow' ? 'follow' : 'free');
+const roomPdf = rec => !(rec && rec.pdf === false);
+// present-1.4: which of the room's two PDFs (absent: the handout); anything else is refused.
+function pdfKind(k) {
+  if (k == null || k === '' || k === 'handout') return PDF_KINDS.handout;
+  if (k === 'vote') return PDF_KINDS.vote;
+  throw new Fail(400, 'bad-kind');
+}
+// A room's PDF number (0: none yet) and file name, as op deck and op state say them.
+const pdfNum = (rec, K) => (rec && Number.isInteger(rec[K.v]) && rec[K.v] > 0 ? rec[K.v] : 0);
+const pdfName = (rec, K) => (rec && typeof rec[K.name] === 'string' && RE_PDFNAME.test(rec[K.name]) ? rec[K.name] : '');
+const pdfFacts = rec => ({ pv: pdfNum(rec, PDF_KINDS.handout), pname: pdfName(rec, PDF_KINDS.handout), qv: pdfNum(rec, PDF_KINDS.vote), qname: pdfName(rec, PDF_KINDS.vote) });
+
+// present-1.4: copied from gifts.mjs (functions do not import one another), where it guards the
+// emailed report. Active content a proposal never needs. jsPDF writes none of these, so a PDF
+// carrying one did not come from Terrain and is refused: the phones can never download a script, a
+// launch action, an embedded file, a remote go-to or a form that submits. Object streams are refused
+// too, because they are the one place a PDF can hide a dictionary inside compressed bytes. Every name
+// token is read, #-escapes decoded (/Java#53cript), and compared exactly. Terrain's own proposals
+// carry no links, annotations, forms or images either, so those are refused as well: a clickable page
+// (a /Link or /URI, an /AA additional action, a form /Widget) or a picture would let a room carry a
+// phishing page under Terrain's name. The only opening action allowed is jsPDF's own page view, an
+// array ([3 0 R /FitH null]); a dictionary there (<</S /URI …>>) or a reference is refused.
+const PDF_BLOCK = new Set(['JavaScript', 'Launch', 'EmbeddedFile', 'EmbeddedFiles', 'RichMedia',
+  'XFA', 'ObjStm', 'GoToR', 'GoToE', 'SubmitForm', 'ImportData',
+  'URI', 'Annots', 'AA', 'Link', 'AcroForm', 'Widget', 'GoTo', 'Named', 'Rendition', 'Sound', 'Movie', 'Image']);
+function pdfActive(bytes) {
+  const s = bytes.toString('latin1');
+  const re = /\/([^\x00\x09\x0a\x0c\x0d\x20/[\]()<>{}%]{2,48})/g;
+  let m;
+  while ((m = re.exec(s))) {
+    let n = m[1];
+    if (n.includes('#')) n = n.replace(/#([0-9A-Fa-f]{2})/g, (_, h) => String.fromCharCode(parseInt(h, 16)));
+    if (PDF_BLOCK.has(n)) return true;
+    if (n === 'OpenAction' && !/^[\x00\x09\x0a\x0c\x0d\x20]*\[/.test(s.slice(re.lastIndex, re.lastIndex + 256))) return true;
+  }
+  return false;
+}
 
 function need(ok, status, error) { if (!ok) throw new Fail(status, error); }
 const str = v => (typeof v === 'string' ? v : '');
 const own = (o, k) => (o && Object.prototype.hasOwnProperty.call(o, k) ? o[k] : undefined);
 const isPlain = v => !!v && typeof v === 'object' && !Array.isArray(v);
+// present-1.3: {mode?, pdf?} as the presenter sent them. Absent is absent; any other type or word is
+// refused (400), never read as a default.
+function phonesIn(b) {
+  const out = {};
+  const m = own(b, 'mode'), p = own(b, 'pdf');
+  if (m !== undefined && m !== null) { need(typeof m === 'string' && PHONE_MODES.has(m), 400, 'bad-mode'); out.mode = m; }
+  if (p !== undefined && p !== null) { need(typeof p === 'boolean', 400, 'bad-pdf'); out.pdf = p; }
+  return out;
+}
 
 function theStore() {
   if (globalThis.__terrainPresentStore) return globalThis.__terrainPresentStore;
@@ -609,7 +740,7 @@ const GO_RATE = new Map();
 const OPENED = new Map();
 function remember(room, r) {
   if (!ROOMS.has(room) && ROOMS.size >= 500) ROOMS.delete(ROOMS.keys().next().value);
-  const c = { keyHash: r.keyHash, n: r.n, ended: r.ended || null, expires: r.expires, lang: r.lang, v: r.v, t: Date.now() };
+  const c = { keyHash: r.keyHash, n: r.n, ended: r.ended || null, expires: r.expires, lang: r.lang, v: r.v, mode: roomMode(r), pdf: roomPdf(r), ...pdfFacts(r), t: Date.now() };
   ROOMS.set(room, c);
   return c;
 }
@@ -625,6 +756,8 @@ async function dropRoom(store, room, rec) {
     const k = await store.get('k/' + rec.code, { type: 'json' });
     if (!k || k.room === room) await store.delete('k/' + rec.code);
   }
+  await store.delete('p/' + room);           // present-1.4: the handout and the proposal to vote on
+  await store.delete('q/' + room);
   await store.delete('d/' + room);
   await store.delete('r/' + room);
   return fbCall('DELETE', room);
@@ -729,10 +862,23 @@ const heads = (s, w) => ({ kicker: dText(own(s, 'kicker'), w + '.kicker'), headl
 // present-1.1: every content slide may carry one verse at its foot ({text, ref}). Kept only
 // when sent, so a present-1.0 deck is stored exactly as before (the ask's verse is its own field).
 const foot = (s, w) => { const v = own(s, 'verse'); return v == null ? {} : { verse: dQuote(v, w + '.verse') }; };
+// present-1.4: the goal (the opening, the yes, the close), and a verse slide's own kicker and headline:
+// kept only when sent, so an older deck is stored exactly as before.
+const goal = (s, w) => { const g = own(s, 'goal'); return g == null ? {} : { goal: dText(g, w + '.goal') }; };
+const sent = (s, w, k) => { const v = own(s, k); return v == null ? {} : { [k]: dText(v, w + '.' + k) }; };
 
 const SLIDES = {
   join: (s, w) => ({ note: dText(own(s, 'note'), w + '.note') }),
-  motion: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 5), by: dText(own(s, 'by'), w + '.by'), ...foot(s, w) }),
+  motion: (s, w) => ({ ...heads(s, w), rows: dRows(own(s, 'rows'), w + '.rows', 5), by: dText(own(s, 'by'), w + '.by'), ...goal(s, w), ...foot(s, w) }),
+  // present-1.4: "How it works", the idea's own steps (2 to 6), numbered by the renderer.
+  how: (s, w) => ({
+    ...heads(s, w),
+    steps: dList(own(s, 'steps'), w + '.steps', { min: 2, max: 6 }).map((t, i) => {
+      if (typeof t !== 'string') throw bad(`${w}.steps[${i}]`);
+      return dText(t, `${w}.steps[${i}]`);
+    }),
+    source: dText(own(s, 'source'), w + '.source'), ...foot(s, w)
+  }),
   stat: (s, w) => {
     const dots = own(s, 'dots');
     let d = null;
@@ -828,14 +974,14 @@ const SLIDES = {
       seen.add(k);
       return { k, label: dText(own(o, 'label'), x + '.label'), text: dText(own(o, 'text'), x + '.text') };
     });
-    return { ...heads(s, w), options, respond: dBool(own(s, 'respond'), w + '.respond'), ...foot(s, w) };
+    return { ...heads(s, w), options, respond: dBool(own(s, 'respond'), w + '.respond'), ...goal(s, w), ...foot(s, w) };
   },
   verse: (s, w) => {
     const version = own(s, 'version');
     if (version !== 'KJV' && version !== 'RVA') throw bad(w + '.version');
-    return { text: dText(own(s, 'text'), w + '.text'), ref: dText(own(s, 'ref'), w + '.ref'), version };
+    return { text: dText(own(s, 'text'), w + '.text'), ref: dText(own(s, 'ref'), w + '.ref'), version, ...sent(s, w, 'kicker'), ...sent(s, w, 'headline') };
   },
-  close: (s, w) => ({ headline: dText(own(s, 'headline'), w + '.headline'), text: dText(own(s, 'text'), w + '.text'), quote: dQuote(own(s, 'quote'), w + '.quote') })
+  close: (s, w) => ({ headline: dText(own(s, 'headline'), w + '.headline'), text: dText(own(s, 'text'), w + '.text'), quote: dQuote(own(s, 'quote'), w + '.quote'), ...goal(s, w) })
 };
 
 // The deck as stored and served. join slides get the room's own link and code.
@@ -862,19 +1008,32 @@ function cleanDeck(raw, { room, code, base }) {
   }
   const cr = own(raw, 'created');
   const created = cr == null ? null : (typeof cr === 'number' ? dNum(cr, 'created', { min: 0, max: 1e14 }) : dText(cr, 'created', { max: 40 }));
+  // present-1.4: the gifts deck's campaign (see THE GIFTS DECK): checked whenever sent, kept for the whole church only.
+  let gifts = null;
+  const gi = own(raw, 'gifts');
+  if (gi != null) {
+    const pub = own(dObj(gi, 'gifts'), 'pub');
+    if (typeof pub !== 'string' || !RE_GPUB.test(pub)) throw bad('gifts.pub');
+    if (type === 'congregation' && !YOUTH_GROUPS.has(group)) gifts = { pub };
+  }
   const slides = dList(own(raw, 'slides'), 'slides', { min: 1, max: MAX_SLIDES }).map((s, i) => {
     const w = `slides[${i}]`;
     const o = dObj(s, w), t = own(o, 'type');
     if (typeof t !== 'string' || !Object.prototype.hasOwnProperty.call(SLIDES, t)) throw bad(w + '.type');
     const out = { type: t, ...SLIDES[t](o, w) };
-    if (t === 'join') { out.qrUrl = watchUrl(base, room, lang); out.code6 = code; }
+    if (t === 'join') {
+      // present-1.4: "Take it now": the assessment's link, built here from a checked id, with no code
+      if (dBool(own(o, 'gifts'), w + '.gifts') && gifts) {
+        out.qrUrl = `${base}/#gifts=${gifts.pub}${lang === 'es' ? '~es' : ''}`; out.code6 = ''; out.gifts = true;
+      } else { out.qrUrl = watchUrl(base, room, lang); out.code6 = code; }
+    }
     // Young people are never asked for their names (see "I'M IN").
     if (t === 'yes' && YOUTH_GROUPS.has(group)) out.respond = false;
     return out;
   });
   const deck = {
     kind: 'tdeck', ver: 1, lang, title: dText(own(raw, 'title'), 'title'), church: dText(own(raw, 'church'), 'church'),
-    audience: { type, group }, ministry, created, slides
+    audience: { type, group }, ministry, created, slides, ...(gifts ? { gifts } : {})
   };
   need(Buffer.byteLength(JSON.stringify(deck), 'utf8') <= MAX_DECK, 413, 'too-large');
   return deck;
@@ -907,6 +1066,9 @@ const OPS = {
     const regId = regRequired() ? (RE_REGTOK.exec(String(request.headers.get('x-terrain-reg') || '').trim()) || [])[1] || null : null;
     const keepDays = b.keepDays == null ? 7 : b.keepDays;
     need(KEEP_DAYS.has(keepDays), 400, 'bad-days');
+    // present-1.3: how phones move, checked before anything is counted (an older page sends neither).
+    const ph = phonesIn(b);
+    const mode = ph.mode || 'free', pdf = ph.pdf !== false;
     const base = siteBase(request, context);
     // Checked once before anything is counted, so a page with a bad deck does
     // not use up the allowance; rebuilt again below with the room's own code.
@@ -954,16 +1116,16 @@ const OPS = {
       await store.setJSON('d/' + room, { v: 1, deck });
       const rec = {
         room, keyHash: shaHex(key), created, expires, v: 1, ...facts,
-        ended: null, code, upd: { hour: '', n: 0 }, salt: rand(12)
+        ended: null, code, upd: { hour: '', n: 0 }, salt: rand(12), mode, pdf
       };
       const w = await store.setJSON('r/' + room, rec, { onlyIfNew: true });
       if (w && w.modified === false) { await store.delete('k/' + code); continue; }
       remember(room, rec);
       if (fb()) {
-        const ptr = { i: 0, v: 1, on: false, end: false, at: { '.sv': 'timestamp' } };
+        const ptr = { i: 0, v: 1, on: false, end: false, mode, pdf, at: { '.sv': 'timestamp' } };
         if (!await fbCall('PATCH', room, ptr)) await fbCall('PATCH', room, ptr);
       }
-      return { ok: true, room, key, code, expires, v: 1, n: facts.n, respond: facts.respond, url: watchUrl(base, room, facts.lang), live: !!fb() };
+      return { ok: true, room, key, code, expires, v: 1, n: facts.n, respond: facts.respond, url: watchUrl(base, room, facts.lang), live: !!fb(), mode, pdf };
     }
     throw new Fail(503, 'busy');
   },
@@ -983,7 +1145,7 @@ const OPS = {
         if (c && !(w && w.modified === false)) c.n++;
       }
     } catch { /* not counted */ }
-    return { ok: true, v: d.v, deck: d.deck, ended: r.ended || null, expires: r.expires, live: liveUrl(b.room) };
+    return { ok: true, v: d.v, deck: d.deck, ended: r.ended || null, expires: r.expires, live: liveUrl(b.room), mode: roomMode(r), pdf: roomPdf(r), ...pdfFacts(r), now: Date.now() };
   },
 
   async go(b, { store }) {
@@ -1031,7 +1193,8 @@ const OPS = {
     // Never replaced by an older update that arrives late.
     await upsert(store, 'd/' + b.room, d => (d && Number.isInteger(d.v) && d.v >= v ? undefined : { v, deck }));
     ROOMS.delete(b.room);
-    const pointer = fb() ? await fbCall('PATCH', b.room, { v, at: { '.sv': 'timestamp' } }) : false;
+    // (no at: new words are not the presenter's move; a phone freed by his silence stays free, see OPS state)
+    const pointer = fb() ? await fbCall('PATCH', b.room, { v }) : false;
     return { ok: true, v, n: facts.n, respond: facts.respond, pointer };
   },
 
@@ -1048,6 +1211,94 @@ const OPS = {
     // the page may send end again (it changes nothing else).
     const pointer = fb() ? await fbCall('PATCH', b.room, { on: false, end: true, at: { '.sv': 'timestamp' } }) : false;
     return { ok: true, ...out, pointer };
+  },
+
+  // present-1.3: the presenter changes how phones move, or the PDF offer, without restarting
+  // (see PHONES). Key-checked like end; allowed after the end too (the PDF offer still matters then).
+  async mode(b, { store }) {
+    need(RE_ROOM.test(str(b.room)), 400, 'bad-room');
+    need(RE_KEY.test(str(b.key)), 403, 'bad-key');
+    const ph = phonesIn(b);
+    need(ph.mode !== undefined || ph.pdf !== undefined, 400, 'bad-mode');
+    await authRoom(store, b);
+    const hour = utcHour(Date.now());
+    const out = await mutate(store, 'r/' + b.room, r => {
+      need(secretOk(b.key, r.keyHash), 403, 'bad-key');
+      need(writable(r), 404, 'not-found');
+      const u = isPlain(r.mupd) && r.mupd.hour === hour ? r.mupd.n : 0;
+      need(u < MAX_MODES, 429, 'slow-down');
+      r.mupd = { hour, n: u + 1 };
+      if (ph.mode !== undefined) r.mode = ph.mode;
+      if (ph.pdf !== undefined) r.pdf = ph.pdf;
+      return { mode: roomMode(r), pdf: roomPdf(r) };
+    }, { onExpired: onExpiredRoom(store, b.room) });
+    ROOMS.delete(b.room);
+    // pointer:false with live follow set up: phones on the stream did not hear it (polling phones
+    // still do, from op state); the page may send it again (it changes nothing else).
+    const pointer = fb() ? await fbCall('PATCH', b.room, { ...out, at: { '.sv': 'timestamp' } }) : false;
+    return { ok: true, ...out, pointer };
+  },
+
+  // present-1.4: the presenter's device sends his handout (or, kind 'vote', the proposal to vote on) for the
+  // phones (see THE PROPOSAL ON PHONES). The file is checked before anything is counted or kept; the room's
+  // number for it goes up by one; an older upload arriving late never replaces a newer file.
+  async putpdf(b, { store }) {
+    need(RE_ROOM.test(str(b.room)), 400, 'bad-room');
+    need(RE_KEY.test(str(b.key)), 403, 'bad-key');
+    const K = pdfKind(own(b, 'kind'));
+    const pdf = str(b.pdf).replace(/^data:[^,]*,/, '').replace(/\s+/g, '');
+    need(pdf.length > 0 && /^[A-Za-z0-9+/_-]+={0,2}$/.test(pdf), 400, 'bad-pdf');
+    need(pdf.length <= Math.ceil(MAX_PDF / 3) * 4 + 4, 413, 'too-large');
+    const bytes = Buffer.from(pdf.replace(/-/g, '+').replace(/_/g, '/'), 'base64');
+    need(bytes.length <= MAX_PDF, 413, 'too-large');
+    need(bytes.length >= MIN_PDF, 400, 'bad-pdf');
+    need(bytes.subarray(0, 5).toString('latin1') === '%PDF-', 400, 'bad-pdf');
+    need(/%%EOF[\x00\x09\x0a\x0c\x0d\x20]*$/.test(bytes.subarray(bytes.length - 64).toString('latin1')), 400, 'bad-pdf');
+    need(!pdfActive(bytes), 400, 'bad-pdf');
+    const name = RE_PDFNAME.test(str(b.name)) ? b.name : 'Terrain-proposal.pdf';
+    const lang = b.lang === 'es' ? 'es' : 'en';
+    await authRoom(store, b);
+    const hour = utcHour(Date.now());
+    const v = await mutate(store, 'r/' + b.room, r => {
+      need(secretOk(b.key, r.keyHash), 403, 'bad-key');
+      need(writable(r), 404, 'not-found');
+      const u = isPlain(r.pput) && r.pput.hour === hour ? r.pput.n : 0;
+      need(u < MAX_PDF_PUTS, 429, 'slow-down');
+      r.pput = { hour, n: u + 1 };
+      r[K.v] = (Number.isInteger(r[K.v]) && r[K.v] > 0 ? r[K.v] : 0) + 1;
+      r[K.name] = name; r[K.size] = bytes.length; r[K.lang] = lang;
+      return r[K.v];
+    }, { onExpired: onExpiredRoom(store, b.room) });
+    const file = { v, name, lang, size: bytes.length, sha: createHash('sha256').update(bytes).digest('hex'), at: Date.now(), b64: bytes.toString('base64') };
+    await upsert(store, K.key + b.room, p => (p && Number.isInteger(p.v) && p.v >= v ? undefined : file));
+    ROOMS.delete(b.room);
+    // pointer:false with live follow set up: phones on the stream did not hear it (op state still says it)
+    const pointer = fb() ? await fbCall('PATCH', b.room, { [K.v]: v }) : false;   // (no at: see update)
+    return { ok: true, kind: K === PDF_KINDS.vote ? 'vote' : 'handout', [K.v]: v, size: bytes.length, pointer };
+  },
+
+  // present-1.4: public, like op deck (whoever holds the room id): the PDF itself, for a member's phone.
+  async pdf(b, { store, request, context }) {
+    const r = await loadRoom(store, b.room);
+    const K = pdfKind(own(b, 'kind'));
+    need(roomPdf(r), 403, 'pdf-off');
+    need(pdfNum(r, K) > 0, 404, 'no-pdf');
+    const p = await store.get(K.key + b.room, { type: 'json' });
+    need(isPlain(p) && typeof p.b64 === 'string' && p.b64.length > 0, 404, 'no-pdf');
+    // counted per client address AND room (fix after review: one church's Wi-Fi is one address, and every phone takes
+    // one or two documents, again after a decision; 120 an hour per address left the 61st phone of a vote deck with none)
+    const ip = clientIp(request, context);
+    await ipHit(store, 'g/pdf', ip ? ip + '|' + b.room : '', MAX_IP_PDFS, { soft: true });
+    const bytes = Buffer.from(p.b64, 'base64');
+    const name = RE_PDFNAME.test(str(p.name)) ? p.name : 'Terrain-proposal.pdf';
+    return new Response(bytes, {
+      status: 200,
+      headers: {
+        'content-type': 'application/pdf', 'content-disposition': `attachment; filename="${name}"`, 'content-length': String(bytes.length),
+        'cache-control': NO_STORE, 'x-content-type-options': 'nosniff', 'content-security-policy': "default-src 'none'; sandbox",
+        'cross-origin-resource-policy': 'same-origin', 'referrer-policy': 'no-referrer'
+      }
+    });
   },
 
   async remove(b, { store }) {
@@ -1083,17 +1334,24 @@ const OPS = {
   async state(b, { store }) {
     const r = await roomFor(store, b.room);
     const v = Number.isInteger(r.v) && r.v > 0 ? r.v : 1;
-    if (!fb()) return { ok: true, state: null, ended: r.ended || null, v };
+    const ph = { mode: r.mode === 'follow' ? 'follow' : 'free', pdf: r.pdf !== false };   // present-1.3
+    const pf = { pv: r.pv | 0, pname: str(r.pname), qv: r.qv | 0, qname: str(r.qname) };   // present-1.4
+    if (!fb()) return { ok: true, state: null, ended: r.ended || null, v, ...ph, ...pf, now: Date.now() };
     const got = await fbCall('GET', b.room);
     need(got, 502, 'live-failed');
     const d = got.data;
+    const num = x => (Number.isInteger(x) && x >= 0 ? x : null);
     const state = isPlain(d) ? {
       i: Number.isInteger(d.i) && d.i >= 0 && d.i < MAX_SLIDES ? d.i : 0,
       v: Number.isInteger(d.v) && d.v > 0 ? d.v : 1,
       on: d.on === true, end: d.end === true,
+      mode: PHONE_MODES.has(d.mode) ? d.mode : null, pdf: typeof d.pdf === 'boolean' ? d.pdf : null,
+      pv: num(d.pv), qv: num(d.qv),
       at: typeof d.at === 'number' && Number.isFinite(d.at) ? d.at : null
     } : null;
-    return { ok: true, state, ended: r.ended || null, v };
+    const now = Date.now();
+    if (state) state.age = state.at != null ? Math.max(0, now - state.at) : null;
+    return { ok: true, state, ended: r.ended || null, v, ...ph, ...pf, now };
   },
 
   // "I'm in": to the presenter alone.
@@ -1165,7 +1423,7 @@ const OPS = {
 };
 
 // Read with GET (?op=…&room=…); everything else is POST.
-const GET_OPS = new Set(['status', 'deck', 'state']);
+const GET_OPS = new Set(['status', 'deck', 'state', 'pdf']);
 
 // ---------------------------------------------------------------- handler
 export default async (request, context) => {
@@ -1177,27 +1435,32 @@ export default async (request, context) => {
       op = q.get('op') || 'status';
       if (!Object.prototype.hasOwnProperty.call(OPS, op)) return reply({ ok: false, error: 'unknown-op' }, 400);
       if (!GET_OPS.has(op)) return reply({ ok: false, error: 'method' }, 405);
-      b = { op, room: q.get('room') || '', p: q.get('p') || '' };
+      b = { op, room: q.get('room') || '', p: q.get('p') || '', kind: q.get('kind') || '' };
     } else if (request.method === 'POST') {
       // As register.mjs: JSON only (a form or text/plain "simple request" needs no preflight),
       // and never a request the browser marks as sent from another site.
       const type = (request.headers.get('content-type') || '').split(';')[0].trim().toLowerCase();
       if (type !== 'application/json') return reply({ ok: false, error: 'content-type' }, 415);
       if ((request.headers.get('sec-fetch-site') || '').trim().toLowerCase() === 'cross-site') return reply({ ok: false, error: 'cross-site' }, 403);
+      // present-1.4: a body up to MAX_BODY_PDF is read (op putpdf carries a PDF); every other op keeps MAX_BODY.
       const len = Number(request.headers.get('content-length') || 0);
-      if (len > MAX_BODY) return reply({ ok: false, error: 'too-large' }, 413);
+      if (len > MAX_BODY_PDF) return reply({ ok: false, error: 'too-large' }, 413);
       const raw = await request.text();
-      if (raw.length > MAX_BODY || Buffer.byteLength(raw, 'utf8') > MAX_BODY) return reply({ ok: false, error: 'too-large' }, 413);
-      try { b = JSON.parse(raw); } catch { return reply({ ok: false, error: 'bad-json' }, 400); }
-      if (!isPlain(b)) return reply({ ok: false, error: 'bad-json' }, 400);
+      const size = Math.max(raw.length, Buffer.byteLength(raw, 'utf8'));
+      if (size > MAX_BODY_PDF) return reply({ ok: false, error: 'too-large' }, 413);
+      try { b = JSON.parse(raw); } catch { return reply({ ok: false, error: size > MAX_BODY ? 'too-large' : 'bad-json' }, size > MAX_BODY ? 413 : 400); }
+      if (!isPlain(b)) return reply({ ok: false, error: size > MAX_BODY ? 'too-large' : 'bad-json' }, size > MAX_BODY ? 413 : 400);
       op = typeof b.op === 'string' ? b.op : '';
+      if (op !== 'putpdf' && size > MAX_BODY) return reply({ ok: false, error: 'too-large' }, 413);
       if (!Object.prototype.hasOwnProperty.call(OPS, op)) return reply({ ok: false, error: 'unknown-op' }, 400);
+      if (op === 'pdf') return reply({ ok: false, error: 'method' }, 405);     // a download is a GET
     } else {
       return reply({ ok: false, error: 'method' }, 405);
     }
     if (op === 'status') return reply(await OPS.status());
     const store = theStore();
     const out = await OPS[op](b, { request, store, context });
+    if (out instanceof Response) return out;                                  // present-1.4: op pdf, the file itself
     return reply(out, 200, op === 'state' && request.method === 'GET' ? EDGE_2S : null);
   } catch (e) {
     if (e instanceof Fail) return reply({ ...(e.extra || {}), ok: false, error: e.error }, e.status);

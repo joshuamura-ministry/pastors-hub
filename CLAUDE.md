@@ -20,7 +20,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 86 suites, 7,596 assertions, all green at v10.42.0 (presenter + timing parts, then part 3: the focus, locked phones and the handout on them, decisions, Gifts first, the survey-to-Make-the-Case flow, then the fixes after review; about 10 minutes).
+   `npm test`. 86 suites, 7,625 assertions, all green at v10.42.0 (presenter + timing parts, then part 3: the focus, locked phones and the handout on them, decisions, Gifts first, the survey-to-Make-the-Case flow, then the fixes after review and the length a team chooses; about 10 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -114,7 +114,7 @@ values are never in the repo):
 
 | | Live on pastorshub.org (29 Sep 2026) | Handed over |
 |---|---|---|
-| `index.html` | **v10.41.1** (29 Sep 2026) | **v10.42.0** (phones locked while he presents; his handout and the proposal to vote on on phones; timing options instead of dictated dates; part 3: the focus — a goal, one arc, the relevance rule, the Proposal to vote on, Record what we decided, Gifts first; section F: the survey chooses, Make the Case wins support) — commit the folder (see Open work 1) |
+| `index.html` | **v10.41.1** (29 Sep 2026) | **v10.42.0** (phones locked while he presents; his handout and the proposal to vote on on phones; timing options instead of dictated dates, a ministry team choosing the length too; part 3: the focus — a goal, one arc, the relevance rule, the Proposal to vote on, Record what we decided, Gifts first; section F: the survey chooses, Make the Case wins support) — commit the folder (see Open work 1) |
 | `present.mjs` | **present-1.2** (with v10.41.1) | **present-1.4** (the handout and proposal PDFs for phones: op putpdf, GET op=pdf, `pv` / `qv`; the `how` slide; the gifts deck; 1.3: a room's `mode` and `pdf`; every older deck and room unchanged) |
 | `register.mjs` / `gifts.mjs` | **register-1.1** / **gifts-1.2**, census registration gate on | register-1.1 / **gifts-1.3** (200 results an hour from one address) |
 | `advise.mjs` | **advise-2.2** | same (its error strings still say "AI", but the page never shows them) |
@@ -458,7 +458,9 @@ gives one timing slide either way, a recorded decision gives the Agreed slide an
 only; no page errors. Samples for the pastor: `~/Downloads/Terrain-v10.42-samples/` (before and after gifts, one set in Spanish;
 the audits 520 pass, 0 fail).
 
-**v10.42.0 (Sabbath wording, 30 Sep 2026).** Five older built-ins set ordinary work or events on Saturday, the Sabbath (the fall festival, the car care clinic, "Fix-it Saturday", the men's breakfast, "Respite Saturday"). The pastor: "yes move them" — all five now say Sunday, EN + ES ("Fix-it Sunday" / "Domingo de reparaciones"), and the Saturday-night supper says "after sundown". The check is `v42-sunday.test.js` (12), kept in the build folder and committed with the next version, so this upload's tests folder stays at the 100 files a GitHub web upload takes. Deployed from the reviewed samples build; the team-length change (a ministry team chooses the length too) follows as v10.42.1.
+**v10.42.1 (30 Sep 2026).** v10.42.0 plus the team length (a ministry team chooses the length together, as it chooses the day; section "the length" below) and the Sabbath wording (below), joined in one build; the six stamps say v10.42.1.
+
+**v10.42.0 (Sabbath wording, 30 Sep 2026).** Five older built-ins set ordinary work or events on Saturday, the Sabbath (the fall festival, the car care clinic, "Fix-it Saturday", the men's breakfast, "Respite Saturday"). The pastor: "yes move them" — all five now say Sunday, EN + ES ("Fix-it Sunday" / "Domingo de reparaciones"), and the Saturday-night supper says "after sundown". The check is `v42-sunday.test.js` (12). It went live with v10.42.0 (page only, 30 Sep 2026), built from the reviewed samples build; the test file comes into the repo with v10.42.1.
 
 **v10.42.0 (fixes after review, 30 Sep 2026).** Reviewers read the integrated build's samples against his rule (*"everything
 has to line up with what was chosen"*) and the phones' code: 25 findings (1 blocker, 11 major, 13 minor), each verified, all
@@ -531,6 +533,45 @@ fixed (record: the build session's scratchpad `v44/FIXES.md`).
   both average-church seeds, a 200-character goal: 10,322 slides each) and every library idea (291,610 slides): 0 over the frame,
   none below fit 0.8; live with the real present.mjs: the fixes' scenario 12 of 12 (a late phone free at once, Share frees the
   room, "· Updated" on both documents, four 429s then the server's own copies, the sample's Exit), the integration scenario 16 of 16.
+
+**v10.42.0 (fix after review: the length, 30 Sep 2026).** The pastor, reading the samples (a ministry team's motion said "a trial of 6
+weeks" while its slide offered "4-week pilot · 6-week trial · a full season"): *"yes, they should be able to choose length."* With
+Suggest options a ministry team's deck (`caseBuild`'s `LENC`: a team group, not an idea made and handed out, not a club that runs by
+term; `timingM.lenChoose`, `timingM.lengthsRun`; words in `CASE_TIMING_LEN`, `caseLenFree`) names no length as settled. Record: the
+build session's scratchpad `v44/FIX-LENGTH.md`.
+- *The slides:* the opening's Length is the three lengths, as the decide slide has them ("4-week pilot · 6-week trial · a full
+  season"); the decide slide "We'll choose the day and the length tonight" (under its kicker "Let's decide together"; "together" once:
+  the longer headline drew 236 English slides with three clashing options at fit 0.75, measured) / "Elegiremos juntos el día y la
+  duración esta noche"; an in-reach idea nobody sits at (the greeters' card): "the start and the length".
+- *The ask:* "Throughout the trial, …" / "Durante la prueba, …" (Personal Ministries: "Adopt a trial of the length we choose together
+  under this council"), then "We'll choose the day and the length together tonight." ("the start and the length").
+- *The Proposal:* "To agree to a trial of the length we choose together (a 4-week pilot, a 6-week trial or a full season), on a day and
+  start we agree together: …" / "Acordar una prueba de la duración que elijamos juntos (un piloto de 4 semanas, una prueba de 6 semanas
+  o una temporada), en el día y con la fecha de inicio que acordemos juntos: …" (the greeters' card: "starting on a date we agree
+  together" / "con la fecha de inicio que acordemos juntos"; `CASE_PROP_FIX.m.teamLen` / `teamLenNoDay`); the subject "…: a trial of
+  the length we choose together"; WHEN keeps "Length: 4-week pilot · …", left to the motion on a page drawn tight (`lenInMotion`:
+  with it, 78 English and 546 Spanish team Proposals of the built-ins went to a second page; now every English one keeps one page, and
+  858 Spanish take two, 884 before this fix).
+- *The handout:* "Length: 4-week pilot · 6-week trial · a full season." as before; the line to write in "Agreed day, start and length:"
+  / "Día, inicio y duración acordados:" ("Agreed start and length:").
+- *The Sabbath deck:* "A trial: {ministry}", When "Starting soon; we'll announce the day and the length" (no Length row), "Throughout
+  the trial: pray…", its first steps "Week 1 · start" · "Halfway through" · "After the trial · review".
+- *A recorded length* (Record what we decided: 4-week pilot, the trial, a full season or other weeks) fills in everywhere, as the day
+  does: the Agreed slide, the handout, a phone's copy, the team's ask ("For 4 weeks, …"), a later body's motion ("To approve a trial of
+  4 weeks, from …"), and under Action taken "Timing agreed: … · 4-week pilot" (the team's own motion printed as moved).
+- *Unchanged, byte for byte* (deck, handout, Proposal and a phone's copy, against the build before this fix): every built-in × all 34
+  groups × both modes × EN/ES (8,500 unchanged, 5,508 team and Sabbath decks with options changed) and every second library idea the
+  same way (128,560 unchanged, 78,840 changed): "I already know the dates", the finance committee, the board, the business meeting,
+  the officers, the conference, every idea made and handed out, the Pathfinder club's term; the samples' finance → board path with
+  and without its decisions, EN and ES.
+- *Measured at 360 × 640 in headless Chrome:* every built-in × the 26 team groups and the whole church × EN/ES (empty plan, three
+  ministries and his series in the plan, the average church after gifts) and every library idea × its own team group (empty plan and
+  the clashes) and the whole church: 314,840 slides, 0 over the frame, none below fit 0.8. Every built-in's team handout and phone copy
+  two pages, no line outside its box.
+- Pinned by `v42-fixes` §13 (28 checks; 21 fail on the build before this fix) and the updated `v42-fixes` §2 §5,
+  `timing-options`, `v42-proposal`, `v42-handout`, each commented "fix after review (the length)". **Full suite: 86 suites · 7,625 passed · 0 failed.**
+- Samples: the greeters' card, food pantry (Community Services) and prayer walking, before and after gifts, made again with the same
+  runner and settings (the same made-up campaign link); README.txt's list has one more line. The other samples are unchanged.
 
 **v10.41.0 — Make the Case in three clear steps, ideas tailored to each group, in-reach and outreach, the Adventist
 departments and the conference, no "AI" wording.** The pastor, after using v10.40.0 live (voice-to-text, 29 Sep 2026):
@@ -1108,7 +1149,8 @@ Gifts results) as the app keeps it in localStorage, read by
   `v42-plan-first.test.js` (the survey's list is for the community; step 2 opens with "From your plan").
 - The fixes after review (30 Sep 2026) added `v42-fixes.test.js` (on `average-church/`: an idea made and handed out, a group's
   own ask, the day but never the length for the bodies that vote, the motion as moved after the vote, the finance handout, the
-  conference's amount and budget, one denominator after the gifts results, the club's term and lead figure, smaller words).
+  conference's amount and budget, one denominator after the gifts results, the club's term and lead figure, smaller words; §13: a
+  ministry team chooses the length together, the Sabbath deck announces it, a recorded length fills in).
 - A test that fails because the pastor **changed his mind** is stale — update
   it to the new intent and say so in a comment. Several were updated this way
   in the last session (e.g. the quote moved back under the welcome).
@@ -1186,7 +1228,9 @@ Search for these by name in `index.html`.
 - Timing (v10.42): `CASE_TIMING` (every word, EN + ES), `CASE_TIMING_ALT` / `caseTimingAlt`, `caseTimingOf` / `caseTimingSet` (per church,
   ministry, group), `caseTimingOptions` (the three times), `caseBuild`'s `OPT` / `FLEX` / `PROP` and `timingM` (`model.timing`), the
   decide slide in `caseDeck` (an ask slide, `part:'decide'`), `caseMonth`, `CASE_SAB_SLOTS` / `CASE_SAB_BUILTINS`, `CASE_VERSE_DECIDE` /
-  `CASE_VERSE_MOTION_OPT`; `caseCtx().series` (his Planner series, for its evenings)
+  `CASE_VERSE_MOTION_OPT`; `caseCtx().series` (his Planner series, for its evenings); the length a team chooses (fix after review):
+  `CASE_TIMING_LEN`, `caseLenFree`, `caseBuild`'s `LENC` / `TAL` / `TLN`, `timingM.lenChoose` / `lengthsRun`, `CASE_PROP_FIX.subjectLen`
+  and `.m.teamLen` / `.m.teamLenNoDay`, the Proposal's WHEN `lenInMotion`
 
 - The focus (v10.42 part 3; the pastor: "everything should tie into that… a focus, a beginning and an appeal at the end"):
   the records block "THE RECORDS" (`CASE_BODIES`, `CASE_DEC`, `caseDecClean` / `caseDecSave` / `caseDecDrop` / `caseDecTrail` /
@@ -1326,7 +1370,8 @@ Don't relitigate them without a reason he'd accept.
 - **Firm on the what, flexible on the when** (his request, v10.42): a proposal gives options for the day, the start and the length
   ("Suggest options", the default); places, coordinator, ceiling and funds are decided; the team reports the day and start within
   two weeks. The bodies that vote (finance, board, business meeting) choose the day only: the length is the motion's (fix after
-  review). An idea that is made and handed out is timed by its own milestones; a club that runs by term, by "the first term". No church calendar in Terrain; the slides say what to check ("communion Sabbath, Week of Prayer, camp meeting, holidays,
+  review). A ministry team chooses the length together, as it chooses the day ("yes, they should be able to choose length"); the
+  Sabbath deck announces both. An idea that is made and handed out is timed by its own milestones; a club that runs by term, by "the first term". No church calendar in Terrain; the slides say what to check ("communion Sabbath, Week of Prayer, camp meeting, holidays,
   school breaks"). A clash is shown only when Terrain knows it, never invented. "I already know the dates" keeps the dates.
 - **The survey chooses, Make the Case wins support** (his approval, v10.42 section F): the survey's list is for our community;
   step 2 opens with the plan, then more ideas for the group; a card is never shown twice.
@@ -1343,7 +1388,9 @@ Don't relitigate them without a reason he'd accept.
    regenerated `~/Downloads/Terrain-v10.42-samples/` (README.txt there). Things he may want to decide: in the build session's
    `v44/INTEGRATION.md` (Saturday wording in three built-ins, coffee in some built-ins, the Spanish survey list's English lines)
    and `v44/FIXES.md` (the six holidays, US only; "the first term" as 13 weeks; the pantry's food cost left to the coordinator;
-   which idea names count as "made").
+   which idea names count as "made"). His answer on the length (a team chooses it) is built (`v44/FIX-LENGTH.md`); still open
+   from it: an idea with no room (prayer walking) has no days' line under the Proposal's WHEN, for any body (older: `caseF`
+   leaves the line out without a room).
 
 1. **Commit v10.42.0** (v10.41.1 is live). Changed since v10.41.1: `index.html`, `netlify/functions/present.mjs`
    (present-1.4), `netlify/functions/present-sweep.mjs` (present-sweep-1.1), `netlify/functions/gifts.mjs` (gifts-1.3), `FIREBASE-SETUP.md`, `FIREBASE-RULES-TERRAIN.txt` (words only; the rules to paste are unchanged, nothing to

@@ -14,9 +14,10 @@
  *     (never Sabbath hours for an idea that does not fit the Sabbath; Sabbath afternoon for one that does), each with any clash
  *     Terrain knows (a ministry of the plan at that time, his Planner series' evenings) and none invented; the lengths; the calendar
  *     check; a verified verse; present.mjs takes it as it is;
- *  4. the ask: a two-part motion that still decides; a team's "We'll choose the day together tonight"; the Sabbath deck "Starting
- *     soon; we'll announce the day";
- *  5. the handout: "Timing options" (on the front, in the first steps' place) and "Agreed day and start:" to write in;
+ *  4. the ask: a two-part motion that still decides; a team's "We'll choose the day and the length together tonight"; the Sabbath
+ *     deck "Starting soon; we'll announce the day and the length" (fix after review, the length);
+ *  5. the handout: "Timing options" (on the front, in the first steps' place) and "Agreed day and start:" to write in (a team's:
+ *     "Agreed day, start and length:");
  *  6. the conference keeps the Evangelism Planner's dates, labelled proposed;
  *  7. "I already know the dates" is exactly the deck, the handout and the model of before (the model API's default too);
  *  8. with options no slide of any deck names a day of the month, but the conference's proposed dates (and eight library ideas whose
@@ -128,14 +129,17 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   c('a board deck with fewer options says how many (small groups in homes: two times a host home and the kitchen are free)', sm[0], ['When','2 options · from October, after a calendar check']);
   c('the business meeting reviews at its own next meeting', rowsOf('pathfinders','board','business','en').pop(), ['Review','First business meeting after the trial']);
   c('the officers (the elders) review at the board', rowsOf('pathfinders','board','elders','en').pop(), ['Review','First board meeting after the trial']);
-  c('a team (pathfinders, youth): When (with Starts) · Length · Places · Review', rowsOf('pathfinders','team','youth','en'),
-    [['When','3 options · from October, after a calendar check'],['Length','A 6-week trial or a 4-week pilot'],['Places','16'],['Review','First team meeting after the trial']]);
+  // v10.42.0 fix after review (the length): the pastor, of a team's motion that said "a trial of 6 weeks" beside a slide offering three
+  // lengths: "yes, they should be able to choose length." A ministry team chooses the length together as it chooses the day; the Sabbath
+  // deck announces both.
+  c('a team (pathfinders, youth): When (with Starts) · Length (the three to choose from) · Places · Review', rowsOf('pathfinders','team','youth','en'),
+    [['When','3 options · from October, after a calendar check'],['Length','4-week pilot · 6-week trial · a full season'],['Places','16'],['Review','First team meeting after the trial']]);
   // v10.42.0 fix after review: "DURACIÓN Una prueba de 6 semanas o un piloto de 4" ("semanas" was missing)
   c('…Spanish', rowsOf('pathfinders','team','youth','es'),
-    [['Cuándo','3 opciones · desde octubre, tras revisar el calendario'],['Duración','Una prueba de 6 semanas o un piloto de 4 semanas'],['Cupos','16'],['Revisión','Primera reunión del equipo tras la prueba']]);
-  c('the Sabbath deck: no date, "Starting soon; we’ll announce the day", the trial’s length (no pilot to weigh)', rowsOf('pathfinders','congregation','congregation','en'),
-    [['When','Starting soon; we’ll announce the day'],['Length','A 6-week trial'],['Places','16']]);
-  c('…Spanish', rowsOf('pathfinders','congregation','congregation','es')[0], ['Cuándo','Empieza pronto; anunciaremos el día']);
+    [['Cuándo','3 opciones · desde octubre, tras revisar el calendario'],['Duración','Piloto de 4 semanas · prueba de 6 semanas · una temporada'],['Cupos','16'],['Revisión','Primera reunión del equipo tras la prueba']]);   // (the length)
+  c('the Sabbath deck: no date, "Starting soon; we’ll announce the day and the length" (the length, as the day)', rowsOf('pathfinders','congregation','congregation','en'),
+    [['When','Starting soon; we’ll announce the day and the length'],['Places','16']]);
+  c('…Spanish', rowsOf('pathfinders','congregation','congregation','es')[0], ['Cuándo','Empieza pronto; anunciaremos el día y la duración']);
   const hx=M(P,'health-expo','board','board',{timing:'options'});
   // v10.42.0 fix after review: the finance committee, the board and the business meeting are asked the day (and start), never the
   // length: "the length is set by the motion" (a board once read "Length 4-week pilot · 6-week trial · a full season" beside a motion for 6 weeks)
@@ -144,7 +148,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   c('the preparation line keeps its month, not its day ("September 2026")', D(P,'pathfinders','board','board',{timing:'options'}).slides[1].by, 'To: Church board · Prepared by Pastor Joshua Mura · September 2026');
   // v10.42 part 3 (X3): one timing slide, "Let's decide together" here; the first steps stay in the model and the handout
   c('the first steps count weeks', M(P,'pathfinders','board','board',{timing:'options'}).timeline.steps.map(s=>s.date), ['Week 1 · start','Week 3 · midpoint','After week 6 · review']);
-  c('…Spanish (30 characters at most on a step)', M(P,'pathfinders','team','youth',{timing:'options',lang:'es'}).timeline.steps.map(s=>s.date), ['Semana 1 · inicio','Semana 3 · mitad del camino','Tras la semana 6 · revisión']);
+  // v10.42.0 fix after review (the length): a team chooses the length, so its steps name no week number (a board's keep them, above)
+  c('…Spanish (30 characters at most on a step)', M(P,'pathfinders','team','youth',{timing:'options',lang:'es'}).timeline.steps.map(s=>s.date), ['Semana 1 · inicio','A mitad de la prueba','Tras la prueba · revisión']);
+  c('…the board\'s in Spanish count weeks', M(P,'pathfinders','board','board',{timing:'options',lang:'es'}).timeline.steps.map(s=>s.date), ['Semana 1 · inicio','Semana 3 · mitad del camino','Tras la semana 6 · revisión']);
   c('the ask slide’s room names no day', D(P,'pathfinders','board','board',{timing:'options'}).slides.filter(s=>s.type==='ask').pop().rows.find(r=>r[0]==='Room'), ['Room','Classrooms · day to be agreed']);
   // every board / business / officer / team deck of every built-in: at most five rows (present.mjs keeps five), places, ceiling and funds kept
   const bad=P.J(`(()=>{ const out=[]; for(const x of SIGNATURE) for(const g of CASE_GROUPS.filter(g=>g.type==='board'||g.type==='team')) for(const lang of ['en','es']){
@@ -180,8 +186,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
       [true,true,true,'Proverbs 15:22 · KJV']); }
   c('its verses are all in the verified library', P.J('CASE_VERSE_DECIDE').every(id=>V.has(id)), true);
   const t=D(P,'pathfinders','team','youth',{timing:'options'});
-  c('a team’s deck: before "Will you try it?", and "We’ll choose the day together tonight"', [t.slides.map(s=>s.type+(s.part?'/'+s.part:'')).slice(-3),t.slides.find(s=>s.part==='decide').headline],
-    [['risks','ask/decide','yes'],'We’ll choose the day together tonight']);   // v10.42 part 3 (X3): one timing slide
+  // v10.42.0 fix after review (the length): "yes, they should be able to choose length"
+  c('a team’s deck: before "Will you try it?", and "We’ll choose the day and the length tonight"', [t.slides.map(s=>s.type+(s.part?'/'+s.part:'')).slice(-3),t.slides.find(s=>s.part==='decide').headline],
+    [['risks','ask/decide','yes'],'We’ll choose the day and the length tonight']);   // v10.42 part 3 (X3): one timing slide
   const where=P.J(`(()=>{ const o={}; for(const g of CASE_GROUPS){ const d=caseDeck(caseModel('pathfinders',{type:g.type,group:g.id},{timing:'options',now:${NOW}}));
       o[g.id]=d.slides.filter(s=>s.part==='decide').length; } return o; })()`);
   c('in every board, business, officer and team deck; never the Sabbath deck or the conference', [Object.entries(where).filter(([g,n])=>n!==1).map(([g])=>g).sort()], [['conference','congregation']]);
@@ -254,8 +261,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   const el=M(P,'pathfinders','board','elders',{timing:'options'}).ask.text;
   c('the officers keep their own ask, then who sets the day', [el.startsWith(M(P,'pathfinders','board','elders').ask.text),/The team sets the day and start date with the church calendar within two weeks and reports them to the board\.$/.test(el)], [true,true]);
   c('the treasurer’s ask names no date (its account at the review after the trial)', /itemised account at the review after the trial\. The team sets the day/.test(M(P,'pathfinders','board','finance',{timing:'options'}).ask.text), true);
-  c('a team: "We’ll choose the day together tonight."', /We’ll choose the day together tonight\.$/.test(M(P,'pathfinders','team','youth',{timing:'options'}).ask.text), true);
-  c('…Spanish', /Elegiremos el día juntos esta noche\.$/.test(M(P,'pathfinders','team','youth',{timing:'options',lang:'es'}).ask.text), true);
+  // v10.42.0 fix after review (the length): a team chooses the day and the length ("yes, they should be able to choose length")
+  c('a team: "We’ll choose the day and the length together tonight."', /We’ll choose the day and the length together tonight\.$/.test(M(P,'pathfinders','team','youth',{timing:'options'}).ask.text), true);
+  c('…Spanish', /Elegiremos juntos el día y la duración esta noche\.$/.test(M(P,'pathfinders','team','youth',{timing:'options',lang:'es'}).ask.text), true);
   const cg=D(P,'pathfinders','congregation','congregation',{timing:'options'});
   // v10.42 part 3 (the pastor: "an appeal at the end"; NARRATIVE.md §5.3): the whole church's close appeals back to the goal, no date
   c('the Sabbath deck: the appeal back to the goal, no date', cg.slides.find(s=>s.type==='close').headline, 'Will you join us to grow our Pathfinder Club?');
@@ -285,7 +293,8 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   c('…the review line after it', log.some(l=>l.p===tp0&&/^Review at the first board meeting after the trial/.test(l.t)&&l.y>at('TIMING OPTIONS').y), true);
   c('…every line inside its box', log.filter(l=>l.x0<l.bx0-0.5||l.x1>l.bx1+0.5).map(l=>l.t).slice(0,3), []);
   const Pe=P.J(`(()=>{ const m=caseModel('pathfinders',{type:'team',group:'youth'},{timing:'options',lang:'es',now:${NOW}}); const H=caseHandout(m,caseDeck(m),{now:${NOW}}); const D=casePdfDoc(H,{jsPDF:window.__J}); return {t:H.timing.title,a:H.timing.agreed,n:D.getNumberOfPages(),out:D.__caseLog.filter(l=>l.x0<l.bx0-0.5||l.x1>l.bx1+0.5).length}; })()`);
-  c('…Spanish, a team’s handout too', Pe, {t:'Opciones de horario',a:'Día e inicio acordados:',n:2,out:0});
+  // v10.42.0 fix after review (the length): a team writes in the length it agreed too
+  c('…Spanish, a team’s handout too', Pe, {t:'Opciones de horario',a:'Día, inicio y duración acordados:',n:2,out:0});
   c('the Sabbath deck’s handout has no timing section (nothing to decide there)', P.J(`(()=>{ const m=caseModel('pathfinders',{type:'congregation',group:'congregation'},{timing:'options',now:${NOW}}); return caseHandout(m,caseDeck(m),{now:${NOW}}).timing||null; })()`), null);
   // a member's phone builds the handout from the deck alone (the server's copy has no "part"): the ask is the last ask slide
   const phone=JSON.parse(JSON.stringify(d)); phone.slides.forEach(s=>delete s.part);

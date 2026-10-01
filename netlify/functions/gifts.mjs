@@ -1,4 +1,4 @@
-// Terrain · Spiritual Gifts results server.                           gifts-1.2
+// Terrain · Spiritual Gifts results server.                           gifts-1.3
 //
 // Members take the assessment on their own phone. This function keeps their
 // result so the pastor who sent the link can collect it, lets two or three
@@ -73,8 +73,10 @@
 // including the name and answers whoever submitted the result chose.)
 //
 // FLOODS. A campaign's pub is public (bulletin QR codes), so new results are
-// rate-limited: 60 an hour from one client address, 200 an hour and 1000 a day
-// per campaign (429 slow-down). The pastor can close a link (op 'close': no new
+// rate-limited: 200 an hour from one client address (gifts-1.3, was 60: a whole
+// church taking the assessment on the spot during a Sabbath presentation shares
+// one Wi-Fi address, and the 61st member must not be refused), 200 an hour and
+// 1000 a day per campaign (429 slow-down). The pastor can close a link (op 'close': no new
 // results, 410 closed) and delete many results at once (op 'purge').
 //
 // ACCESS CODES. Same rules as census.mjs, and switched off the same way: they
@@ -133,7 +135,7 @@
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
-const FN_VERSION = 'gifts-1.2';
+const FN_VERSION = 'gifts-1.3';
 const STORE_NAME = 'terrain-gifts';
 
 const MAX_BODY = 5 * 1024 * 1024;          // whole request
@@ -153,7 +155,7 @@ const MAX_DAILY_SENDS = 100;                // per campaign, per UTC day (well b
 const MAX_GLOBAL_SENDS = 500;               // every campaign together, per UTC day
 const MAX_RECIPIENT_SENDS = 5;              // one address, every campaign, per UTC day
 const MAX_IP_SENDS = 30;                    // one client address, every campaign, per UTC day
-const MAX_IP_SUBMITS = 60;                  // new results from one client address, per hour
+const MAX_IP_SUBMITS = 200;                 // new results from one client address, per hour (gifts-1.3; was 60)
 const MAX_IP_CAMPAIGNS = 10;                // new campaigns from one client address, per UTC day
 const MAX_CAMP_SUBMITS_HOUR = 200;          // new results in one campaign, per hour
 const MAX_CAMP_SUBMITS_DAY = 1000;          // … and per UTC day

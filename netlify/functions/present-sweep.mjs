@@ -1,4 +1,4 @@
-// Terrain · Make the Case live slides retention sweep.             present-sweep-1.0
+// Terrain · Make the Case live slides retention sweep.             present-sweep-1.1
 //
 // Runs once a day on Netlify's scheduler (the `config` export below). No URL
 // reaches it in production. It keeps the promise made before a room goes
@@ -9,7 +9,9 @@
 // present.mjs writes an empty marker for every room:
 //   x/<YYYY-MM-DD>/<room>     the UTC day the room expires
 // This lists the markers and, for each whose day has passed, deletes
-//   a/<room>/*  o/<room>/*  k/<CODE6>  d/<room>  r/<room>
+//   a/<room>/*  o/<room>/*  k/<CODE6>  p/<room>  q/<room>  d/<room>  r/<room>
+// (p/<room> and q/<room>, present-sweep-1.1: the handout and the proposal to
+// vote on that the presenter's device sent for the phones, present-1.4)
 // (the members' answers first, many at a time, so a room with a thousand
 // phones cannot run the sweep out of time with names still kept) and the
 // pointer live/<room> in Firebase (REST DELETE with the server-only key,
@@ -136,6 +138,8 @@ async function sweep(store, now = Date.now()) {
         const k = await store.get('k/' + rec.code, { type: 'json' });
         if (!isPlain(k) || k.room === d.room) await store.delete('k/' + rec.code);
       }
+      await store.delete('p/' + d.room);        // present-sweep-1.1: the room's PDFs
+      await store.delete('q/' + d.room);
       await store.delete('d/' + d.room);
       await store.delete('r/' + d.room);
       if (await dropPointer(d.room)) { await store.delete(d.key); deleted++; }

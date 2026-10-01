@@ -199,9 +199,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     P.w.close(); });
 
   console.log('\n-- 5. the version --');
-  // v10.42.0 (presenter controls the phones, the proposal on phones): the release moved on; the six stamps move together
-  c('the six stamps say v10.42.0', [/TERRAIN {2}v10\.42\.0\b/.test(html.slice(0,400)),/data-version="v10\.42\.0"/.test(html),/<meta name="terrain-version" content="v10\.42\.0">/.test(html),
-    /<title>Community Map — Terrain v10\.42\.0<\/title>/.test(html),/<span id="ver">v10\.42\.0<\/span>/.test(html),/const VERSION = 'v10\.42\.0';/.test(html)], [true,true,true,true,true,true]);
+  // v10.42.1 (a team chooses the length; the Sabbath wording): the release moved on; the six stamps move together
+  c('the six stamps say v10.42.1', [/TERRAIN {2}v10\.42\.1\b/.test(html.slice(0,400)),/data-version="v10\.42\.1"/.test(html),/<meta name="terrain-version" content="v10\.42\.1">/.test(html),
+    /<title>Community Map — Terrain v10\.42\.1<\/title>/.test(html),/<span id="ver">v10\.42\.1<\/span>/.test(html),/const VERSION = 'v10\.42\.1';/.test(html)], [true,true,true,true,true,true]);
 }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0); })();

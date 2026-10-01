@@ -94,7 +94,8 @@ const NAMES=['Ana Lopez','Ben Carter','Cara Diaz','Dan Evans','Eve Fox','Finn Gr
       // "Let's decide together", and the dates slide's three steps stay in the handout (the pastor's own), not on a slide
       if(opt){ LV.push(R.lv); c(`${tag}: (the fixture) the deck has "Let's decide together", and no dates slide beside it (one timing slide)`, [R.parts.includes('decide'),R.d.slides.some(s=>s.type==='timeline')], [true,false]);
         c(`${tag}: no line to write the agreed day on (a member's copy); the calendar check is there (the rows: every text below)`,
-          [/Agreed day and start|D[ií]a e inicio acordados/i.test(R.text),/Communion Sabbath|Santa Cena/i.test(R.text)], [false,true]); }
+          // (fix after review, the length: a team's own handout says "Agreed day, start and length:"; a member's copy has none either)
+          [/Agreed day and start|Agreed day, start and length|Agreed start and length|D[ií]a e inicio acordados|D[ií]a, inicio y duraci[oó]n acordados|Inicio y duraci[oó]n acordados/i.test(R.text),/Communion Sabbath|Santa Cena/i.test(R.text)], [false,true]); }
       c(`${tag}: ${R.n} pages (two; a conference proposal may take three)`, R.n<=(type==='conference'?3:2)&&R.n>=2, true);
       c(`${tag}: the church, the ministry, and who it is for (“${aud}”)`, [has(d.church.replace(/^(SAMPLE|MUESTRA) · /,'')),has(d.ministry.name),has(aud)||has(w.eval(`caseT(CASE_GROUPS.find(g=>g.id==='${group}'))`))], [true,true,true]);
       c(`${tag}: every slide’s words (kickers, headlines, roles and hours, risks, figures, steps, the close)`, words.filter(([k,s])=>!has(s)).map(([k,s])=>k+': '+flat(s).slice(0,60)), []);
