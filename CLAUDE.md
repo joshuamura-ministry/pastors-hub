@@ -81,10 +81,15 @@ tests/                         86 suites + runner + fixtures (case-quotes.json: 
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
-There is **no `netlify.toml`** — Netlify uses its defaults (functions in
-`netlify/functions/`, publish the repo root).
+`netlify.toml` (added 1 Oct 2026) builds a `site/` folder holding only `index.html` and `ideas/`, so notes, tests,
+tools and function source are no longer served. Functions stay in `netlify/functions/`. **A new file the page must
+load has to be added to the copy command in `netlify.toml`.** Live deploys skip changes that touch only tests, tools,
+`.github/` or `.md` notes (the `ignore` rule; previews always build). Safe headers are set there too (no script CSP).
 
-**Deploy:** commit to `main` → Netlify builds → *Published* in the Deploys tab.
+**Deploy:** one release = one branch = one pull request = one Merge → Netlify builds → *Published* in the Deploys tab.
+Never upload to `main` directly: each commit there is a separate live deploy (15 credits on a credit plan), and a
+release split over several commits goes live half-done for minutes. `.github/workflows/test.yml` runs `npm test` on
+every pull request (free on a public repo).
 Verify both halves after any deploy:
 
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
