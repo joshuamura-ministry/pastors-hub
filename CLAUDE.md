@@ -21,7 +21,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 107 suites, 8,656 assertions, all green at v10.43.0 (v10.42's presenter, timing and part 3, then v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 15 minutes).
+   `npm test`. 109 suites, 8,709 assertions, all green at v10.43.0 with `fonts/` (1 Oct 2026; v10.42's presenter, timing and part 3, then v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 15 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -78,15 +78,18 @@ netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms a
 netlify/functions/connect.mjs   connection cards (v10.43, connect-1.0): a card per event or series (secret key for the pastor, public id), the phone's answers
                                (adults only, no markup), pulled by his device only; Netlify Blobs store `terrain-connect`
 netlify/functions/connect-sweep.mjs  daily purge of expired answers, tombstones and unused cards (connect-sweep-1.0)
-fonts/                         (to add, his OK needed to download) CormorantGaramond-SemiBoldItalic.ttf, SpaceGrotesk-SemiBold.ttf, OFL.txt for the printed card
-                               and the neighbour's phone page: fetched same-origin by cnPdfFontBytes when a card is printed, and by the card page's
-                               @font-face rules ("Terrain Card Script" / "Display"): when it lands it must be in the site's publish copy (below)
+fonts/                         (added 1 Oct 2026, with his OK) CormorantGaramond-SemiBoldItalic.ttf (Cormorant v4.002, CatharsisFonts/Cormorant),
+                               SpaceGrotesk-SemiBold.ttf (Space Grotesk 2.000, Google Fonts' static instance: the designer's repo has no static
+                               SemiBold), OFL.txt (both notices, each file's source URL, the SIL OFL 1.1; no Reserved Font Name): static TrueType,
+                               unmodified (SHA-256 pinned in v43-fonts), for the printed card and the neighbour's phone page: fetched same-origin by
+                               cnPdfFontBytes when a card is printed, and by the card page's @font-face rules ("Terrain Card Script" / "Display");
+                               it must be in the site's publish copy (below)
 FIREBASE-RULES-TERRAIN.txt     rules for the separate Firebase project `terrain-live` (no client writes)
 FIREBASE-SETUP.md              click-by-click setup of that project for the pastor
 README.md                      (in the GitHub repo; not part of this hand-over folder)
 CLAUDE.md                      this file
 package.json                   @netlify/blobs (functions); jsdom + jspdf (tests)
-tests/                         107 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
+tests/                         109 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
@@ -94,10 +97,10 @@ tests/                         107 suites + runner + fixtures (case-quotes.json:
 tools and function source are no longer served. Functions stay in `netlify/functions/`. **A new file the page must
 load has to be added to the copy command in `netlify.toml`.** Live deploys skip changes that touch only tests, tools,
 `.github/` or `.md` notes (the `ignore` rule; previews always build). Safe headers are set there too (no script CSP).
-v10.43.0 needs no other same-site static file today: the phone form is
-`index.html#connect=`, and everything else is a function. **When `fonts/` is added** (the card's two faces), add
-`fonts/` to that copy command too, or the printed card quietly prints in Times and Helvetica and the neighbour's phone page in the
-phone's own faces (each falls back by itself: a missing file is a same-origin 404, never a request to another site).
+v10.43.0 needs one other same-site static folder: `fonts/` (the card's two faces, added 1 Oct 2026). The phone form is
+`index.html#connect=`, and everything else is a function. **The copy command must include `fonts/`** (`cp -R fonts site/`),
+or the printed card quietly prints in Times and Helvetica and the neighbour's phone page in the phone's own faces (each falls back
+by itself: a missing file is a same-origin 404, never a request to another site).
 
 **Deploy:** one release = one branch = one pull request = one Merge → Netlify builds → *Published* in the Deploys tab.
 Never upload to `main` directly: each commit there is a separate live deploy (15 credits on a credit plan), and a
@@ -332,9 +335,9 @@ the builders' reports: `~/Downloads/Terrain-work/v53/builders.json`; the rebuilt
   card, 360 / 375 / 390 wide, light and dark (60 pages): 0 where the church line or heading touches the motif, 0 "SEVENTH-/DAY" breaks, 0 sideways scrolls, 0 requests to another site (before the fixes: 14, 20, 0, 60); the documents (every event/series built-in × 34 groups ×
   both timings, 2,040 a language): the privacy promise (and, for children's events, the children's line) in 2040 of 2040 English Proposals and 2040 handouts, 2040 of 2040 Spanish Proposals and 2040 handouts (before: Proposals 240 / 300, handouts 1079 / 1063); team Proposals on one page 1800 of 1800 English, 1740 of 1800 Spanish (before 1800, 1740); 0 documents with more pages than before; 0 handouts over two pages; 0 lines out of their box.
 - *Not checked on real phones* (printed QR from paper on an iPhone and an Android phone; `sms:` with a body; the abuse exit on
-  iOS Safari; `tel:` / `mailto:`; the form outdoors on a weak signal; a home black-and-white print). The two font files for the
-  card are not in the repo yet (`fonts/`, open work): cards print in Times Italic and Helvetica Bold until then, and the phone page
-  uses the phone's own serif italic and sans.
+  iOS Safari; `tel:` / `mailto:`; the form outdoors on a weak signal; a home black-and-white print). The card's two faces are in
+  `fonts/` (1 Oct 2026, with his OK): every printed card embeds both (jsPDF subsets them: about 70 KB a PDF), and the phone page
+  draws its heading, event line and buttons in them, same-origin (793,680 bytes more on a phone's first load, uncompressed; `font-display: swap`).
 
 The session that produced this handover took Terrain from **v10.11.1 to
 v10.35.0**. Highlights, so you recognise them in the code:
@@ -1326,7 +1329,7 @@ Claude Code's own edit tool gives the same guarantee for single edits. For
 multi-part changes, keep the all-or-nothing discipline.
 
 After editing, always run `npm test`. It syntax-checks both inline script
-blocks and every function first, then runs all 107 suites.
+blocks and every function first, then runs all 109 suites.
 
 ### Versioning
 
@@ -1344,7 +1347,7 @@ version: `v10.36.0 — what changed`.
 
 ### Tests
 
-`tests/` holds 107 suites and `run-all.js`. They load `../index.html`
+`tests/` holds 109 suites and `run-all.js`. They load `../index.html`
 and `../netlify/functions/*.mjs` directly, stub `fetch`, and never call a
 real API or spend credit. `fixtures.json` is a fabricated high-need tract plus
 a small and a medium church. `average-church/` (v10.42) is a made-up average
@@ -1375,7 +1378,13 @@ Gifts results) as the app keeps it in localStorage, read by
   one page with the follow-up plan: level 4), `v43-fixed-dates` (an event's or a series' own dates and words with dates set, and the
   one-day words), `v43-connect-keep` (the people stay when the server forgets a card; the tile's ring) and `v43-slide-words` (every
   word a deck writes is on its slide; the picker's "1 volunteer"). `run-all.js` sets `REQUIRE_V43=1` too.
-  `connect-look` prints a NOTE (not a failure) while `fonts/` lacks the two faces, and checks them once they exist.
+  `connect-look` checks the faces in `fonts/` (a NOTE, not a failure, if they are missing); `v43-fonts` (1 Oct 2026, with the fonts)
+  checks the folder (exactly the two files and OFL.txt), that index.html's two paths are those files, each file static TrueType, the
+  right face and weight, embeddable, unmodified (SHA-256), every character of the card's words and of the library's names in both
+  languages, OFL.txt, and that a printed card embeds both faces with every character it draws in them in the face (jsPDF 2.5.1
+  leaves out a character its face lacks: an emoji, or a letter outside the face's alphabets, in a typed event name prints as nothing and the rest of the
+  line still prints; only a character below U+0100 missing from the face would cut the line short, and Space Grotesk has every
+  printable Latin-1 character).
 - The review of v10.43 (1 Oct 2026) added `v43-privacy-docs` (the privacy promise and the children's line in every event/series Proposal
   and handout), `v43-cadence-words` (no monthly rhythm in an event's or a series' deck, handout or Proposal; ongoing keeps its words)
   and `v43-review-fixes` (S22's head script, the phone's band, the thank-you's prayer, the parents' line, the icons, the health fair's
@@ -1680,10 +1689,10 @@ Don't relitigate them without a reason he'd accept.
    `~/Downloads/Terrain-v10.43-samples/` (README.txt there). Then deploy the page and the two new functions together; verify the
    badge **v10.43.0**, `/.netlify/functions/connect` → `"fn":"connect-1.0"`, and `https://pastorshub.org/ideas/index.json` →
    `"hash":"13dfaf05d4e1"`. Still open:
-   - **Fonts for the card (paper and phone):** `fonts/CormorantGaramond-SemiBoldItalic.ttf`, `fonts/SpaceGrotesk-SemiBold.ttf`, `fonts/OFL.txt`
-     (Google Fonts, SIL Open Font License, static TTF). Downloading needs his OK; until then the card prints in Times Italic and
-     Helvetica Bold (tested; the sheet's preview shows the same), and the neighbour's phone page uses the phone's own faces (it no
-     longer loads Google Fonts). `connect-look` checks the files once they exist; then add `fonts/` to PR #2's copy command.
+   - **Fonts for the card (paper and phone): done 1 Oct 2026** with his OK (`fonts/`: Cormorant Garamond SemiBold Italic v4.002 from
+     the Cormorant project, Space Grotesk SemiBold 2.000 from Google Fonts' download of the family, OFL.txt; records in
+     `~/Downloads/Terrain-work/v55/`). The samples' cards, phone pictures and card sheet were made again with them. Still to do:
+     `fonts/` in PR #2's copy command (below).
    - **After the review (his to decide):** the two new icons (prayer: hands together; the next step: a signpost); the Christmas toy
      store keeps "For parents and guardians." (its name says "for parents"); the printed link is not grouped for reading (it would
      change the link's form); a one-day event's capacity row still says "Hours in the first month"; the samples' church has more
@@ -1709,7 +1718,7 @@ Don't relitigate them without a reason he'd accept.
      conference motions 17–21 px); its harness was lost, and the v53 re-run (seed-after, events and series, an ongoing sample) found
      none. Re-measure every ongoing deck × 34 groups with `v53/gates/slides.mjs` before a fit pass (ongoing decks must stay
      byte-identical: a fit pass needs a new golden).
-   - **Deploy (PR #2's `netlify.toml`):** `fonts/` must join `index.html` and `ideas/` in the build's copy command when the fonts land.
+   - **Deploy (PR #2's `netlify.toml`):** `fonts/` must join `index.html` and `ideas/` in the build's copy command (`cp -R fonts site/`).
    - A library idea saved before v10.43 has no `cad` / `nx` / `nocard` of its own: its cadence is guessed until the index loads.
    - With the survey in Spanish, "Show", "Within reach" and "Area of ministry" around the new filter are still English (as before).
    - The fixture generator `build-fixture.mjs` lived in the build session's scratchpad and was **lost** in the 1 Oct restart:

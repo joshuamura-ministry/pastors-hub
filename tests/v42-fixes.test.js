@@ -74,13 +74,16 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
 
   console.log('\n-- 1. the prayer calendar: an idea made and handed out --');
   { const R = await run(P, 'prayer-town-prayer-calendar', 'prayer'), E = await run(Pes, 'prayer-town-prayer-calendar', 'prayer');
+    // (2 Oct 2026: once October has passed, the app rightly says the NEXT October with its year — "starting in October 2027";
+    //  the expected words follow the clock, so this suite does not turn red every 1 Nov – 31 Dec)
+    const late = new Date().getMonth() > 9, OCT = late ? 'October ' + (new Date().getFullYear() + 1) : 'October', OCTES = late ? 'octubre de ' + (new Date().getFullYear() + 1) : 'octubre';
     c('it is "made" (a calendar), so nobody is seated at it', [R.m.timing.made, R.m.timing.options.length], [true, 0]);
     c('its own milestones time it: October, December, each Monday (from its own description and steps)', S(R, 'ask', 'decide').rows,
       [['October', 'Write the 365 lines with members'], ['December', 'The church prints 500 wall calendars'], ['Each Monday', 'Send the email on a free Mailchimp plan'],
         ['Check first', 'Communion Sabbath, Week of Prayer, camp meeting, holidays, school breaks']]);
     c('…the same months in Spanish', S(E, 'ask', 'decide').rows.slice(0, 3).map(r => r[0]), ['Octubre', 'Diciembre', 'Cada lunes']);
     c('…under "When each step happens"', [S(R, 'ask', 'decide').headline, S(E, 'ask', 'decide').headline], ['When each step happens', 'Cuándo se hace cada paso']);
-    c('the opening: when it starts and when it is reviewed; no Length, no Places', S(R, 'motion').rows, [['Starts', 'October, after a calendar check'], ['Review', 'First team meeting after the first round']]);
+    c('the opening: when it starts and when it is reviewed; no Length, no Places', S(R, 'motion').rows, [['Starts', OCT + ', after a calendar check'], ['Review', 'First team meeting after the first round']]);
     // the review: "carry in prayer the team of a free wall calendar of prayers for our town, each session…"
     c('its own ask: the prayer ministry runs it (not "carry in prayer the team of" it)', R.m.ask.text,
       'Run a free wall calendar of prayers for our town as a team: 5 volunteers, each taking a share of its steps, a coordinator who keeps it on track, and a short report at the review. We’ll choose the start together tonight.');
@@ -96,13 +99,13 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     c('no "Help never depends on attending church" (it gives no material help), no conference counsel on $900', [/Help never depends/.test(words), /conference/.test(text(R.hl.filter(t => /counsel/i.test(t))))], [false, false]);
     c('the handout: its milestones in the timing section, "Agreed start:"', [R.H.timing.title, R.H.timing.boxes.map(b => b.label), R.H.timing.length, R.H.timing.agreed], ['When each step happens', ['October', 'December', 'Each Monday'], '', 'Agreed start:']);
     c('the Proposal: "starting in October", no trial of weeks, no places, the milestones as WHEN', [R.Pz.memo.find(r => r[0] === 'Subject')[1], R.Pz.motion, R.Pz.plan.find(p => p.k === 'where').lines, R.Pz.plan.find(p => p.k === 'when').lines],
-      ['A free wall calendar of prayers for our town, starting in October', 'To agree to run a free wall calendar of prayers for our town, starting in October, with a named coordinator, and to bring it to the finance committee.',
+      ['A free wall calendar of prayers for our town, starting in ' + OCT, 'To agree to run a free wall calendar of prayers for our town, starting in ' + OCT + ', with a named coordinator, and to bring it to the finance committee.',
         ['No room needed'], ['October: Write the 365 lines with members', 'December: The church prints 500 wall calendars', 'Each Monday: Send the email on a free Mailchimp plan', 'Before we choose, check the church calendar: communion Sabbath, Week of Prayer, camp meeting, holidays, school breaks.']]);
-    c('…in Spanish', [E.Pz.memo.find(r => r[0] === 'Asunto')[1], /^Acordar llevar adelante un calendario de pared gratis con oraciones por la ciudad, a partir de octubre,/.test(E.Pz.motion)], ['Un calendario de pared gratis con oraciones por la ciudad, a partir de octubre', true]);
+    c('…in Spanish', [E.Pz.memo.find(r => r[0] === 'Asunto')[1], new RegExp('^Acordar llevar adelante un calendario de pared gratis con oraciones por la ciudad, a partir de ' + OCTES + ',').test(E.Pz.motion)], ['Un calendario de pared gratis con oraciones por la ciudad, a partir de ' + OCTES, true]);
     c('the handout, one page each side; the Proposal one page', [R.hpages, R.ppages], [2, 1]);
     const B = await run(P, 'prayer-town-prayer-calendar', 'board');
     c('to the board: "Choose the start together", and the team sets the start date (not the day)', [S(B, 'ask', 'decide').headline, /The team sets the start date with the church calendar within two weeks and reports it to the board\./.test(B.m.ask.text), B.Pz.motion],
-      ['When each step happens', true, 'To approve a free wall calendar of prayers for our town, starting in October, with a named coordinator and a spending ceiling of $900 ($900 to start), paid from the local church budget, not tithe; the team sets the start date with the church calendar within two weeks and reports it to the board; with a written report at the review.']);
+      ['When each step happens', true, 'To approve a free wall calendar of prayers for our town, starting in ' + OCT + ', with a named coordinator and a spending ceiling of $900 ($900 to start), paid from the local church budget, not tithe; the team sets the start date with the church calendar within two weeks and reports it to the board; with a written report at the review.']);
     c('a made library idea is found by its name (cards, flyers, a newsletter), never an event with a card', P.J(`['Tear-off prayer flyers on community boards','A handwritten note in the mail within two days','A New Year consecration Sabbath with a card you keep','A legacy-letter morning: a letter the family will keep','A free wall calendar of prayers for our town'].map(libMadeName)`), [true, true, false, false, true]); }
 
   console.log('\n-- 2. a group supporting another ministry keeps its own ask --');
@@ -152,6 +155,9 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
       finance: { v: 1, body: 'finance', date: ago(14), outcome: 'recommended', vote: { for: 5, against: 0, abstain: null, consensus: false }, timing: null, at: 2 } };
     const before = await run(P, 'food-pantry', 'board', { recs });
     const s = new Date(Date.now() + 14 * 864e5); while (s.getDay() !== 4) s.setDate(s.getDate() + 1);
+    // (v55 verify, 2 Oct 2026: a run with no holiday on a session, so the timing line has no holiday note: run from 2 Oct to
+    // 12 Nov, the 6 Thursdays from s took in Thanksgiving and these two checks failed on the date alone)
+    while (P.J(`caseRunHolidays(new Date('${localISO(s)}T12:00:00'),6).length`)) s.setDate(s.getDate() + 7);
     const board = { v: 1, body: 'board', date: ago(7), outcome: 'approved', vote: { for: 9, against: 0, abstain: 1, consensus: false }, timing: { option: null, slot: 'Thu evening', time: '18:00', start: localISO(s), len: 'trial', weeks: 6, room: 'kitchen' }, at: 3 };
     const after = await run(P, 'food-pantry', 'board', { recs: { ...recs, board } });
     // "Before the vote: '…the team sets the day and the start date…' After: 'To approve a trial of 6 weeks, from 15 Oct to 26 Nov…'"
@@ -159,7 +165,7 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     c('…the timing agreed on its own line under Action taken', after.Pz.action.timing, { label: 'Timing agreed:', text: `Thursday evening · 6:00 pm · ${P.J(`caseDate(new Date('${localISO(s)}T12:00:00'),true)`)} · 6-week trial · Fellowship hall` });
     c('…and THE PLAN as moved: WHERE names no agreed day beside WHEN\'s options', [after.Pz.plan.find(p => p.k === 'where').lines, before.Pz.plan.find(p => p.k === 'where').lines], [['Fellowship hall · 16 places'], ['Fellowship hall · 16 places']]);
     c('…and drawn there, the motion printed twice the same', [after.pl.some(t => /^Timing agreed: Thursday evening/.test(t)), text(after.pl).split('the team sets the day and the start date').length - 1], [true, 2]);
-    const last = new Date(+s + 35 * 864e5);
+    const last = new Date(s); last.setDate(last.getDate() + 35);   // (calendar days: 35 × 24 h across the end of summer time fell a day short after midnight)
     c('the run from its first to its last session, reviewed at the next board meeting after it', [S(after, 'motion').rows[0][1], S(after, 'motion').rows[2][1]],
       [P.J(`caseDate(new Date('${localISO(s)}T12:00:00'))`) + ' – ' + P.J(`caseDate(new Date('${localISO(last)}T12:00:00'))`), 'First board meeting after ' + P.J(`caseDate(new Date('${localISO(last)}T12:00:00'))`)]);
     // "26 Nov 2026 is the fourth Thursday of November (Thanksgiving)"
