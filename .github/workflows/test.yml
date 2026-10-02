@@ -9,9 +9,15 @@ concurrency:
   group: tests-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 jobs:
-  test:
+  # The suites run in 6 shards at the same time (tests/run-all.js, SHARD="k/6", balanced by tests/durations.json).
+  shard:
+    name: suites ${{ matrix.k }}/6
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 45
+    strategy:
+      fail-fast: false
+      matrix:
+        k: [1, 2, 3, 4, 5, 6]
     steps:
       - uses: actions/checkout@v7
         with:
@@ -23,4 +29,17 @@ jobs:
       - run: npm ci --ignore-scripts --no-audit --no-fund
       - run: npm test
         env:
+          SHARD: ${{ matrix.k }}/6
           SUITE_TIMEOUT_MS: "600000"
+  # The one check the "Protect main" rule requires: green only when every shard passed.
+  test:
+    needs: shard
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every shard passed
+        run: |
+          if [ "${{ needs.shard.result }}" != "success" ]; then
+            echo "A test shard did not pass (${{ needs.shard.result }})."; exit 1
+          fi
+          echo "All 6 shards passed."
