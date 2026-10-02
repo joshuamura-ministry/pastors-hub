@@ -24,6 +24,19 @@
  *      "inside": true theme, else "out"), so every row carries in, out or both. The index's themes
  *      carry "inside" and "reach" too. A reach that is not one of the three stops the build like
  *      any other error.
+ *   5. (v10.43) ships each idea's cadence (the pastor, 30 Sep 2026: "separate the things that are
+ *      weekly or monthly — ongoing ministry — and events, which are one-time, one day"): the index's
+ *      last column "cad" and the theme record's "cad", an integer: 0 ongoing, 1 a one-day event,
+ *      3–26 a series of that many sessions one a week, 103–126 that many on days in a row, 100 a
+ *      series whose idea states no count. The idea's own "cad" field ("ongoing" | "event" |
+ *      "series-N" | "series-N-row" | "series" | "series-row") comes first, then
+ *      <library folder>/cadence.json ({id: the same strings}); with cadence.json present every idea
+ *      must have one. <library folder>/next.json ({id: [ongoing id, ongoing id]}) gives each series
+ *      and event the two ongoing ideas it feeds (theme record "nx": [[id, name, nombre], …]);
+ *      <library folder>/nocard.json ({id: "reason"}) marks the events and series whose own words
+ *      promise no names (theme record "nocard": true; or the idea's own "nocard": true): no
+ *      connection card and no follow-up plan. Any fault in the three files stops the build like a
+ *      bad reach (--skip-invalid leaves the faulty entries out instead).
  *
  * By default nothing is written unless the validator passes: a half-valid library never
  * ships. --skip-invalid (for a library still being written) leaves out each idea the
@@ -111,6 +124,15 @@ if (fs.existsSync(reachFile)) {
   REACH = Object.fromEntries(Object.entries(o).filter(([, v]) => REACH_OK.has(v)));
 }
 const themeReach = t => REACH_OK.has(t.reach) ? t.reach : t.inside === true ? 'in' : 'out';
+/* v10.43: cadence, next steps and no-card ideas (header, step 5). Each file is optional, as reach.json is; present, it is
+   checked in full. */
+const CAD_RE = /^(ongoing|event|series(-([3-9]|1\d|2[0-6]))?(-row)?)$/;
+const cadInt = v => { if (v === 'ongoing') return 0; if (v === 'event') return 1; const m = /^series(?:-(\d+))?(-row)?$/.exec(v); const n = m && m[1] ? +m[1] : 0; return n ? (m[2] ? 100 + n : n) : 100; };
+const readSide = name => { const f = path.join(SRC, name); if (!fs.existsSync(f)) return null;
+  let j = null; try { j = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { console.log(name + ' is not valid JSON: nothing written.'); process.exit(1); }
+  if (!j || typeof j !== 'object' || Array.isArray(j)) { console.log(name + ' must be an object keyed by idea id: nothing written.'); process.exit(1); }
+  return j; };
+const CADENCE = readSide('cadence.json'), NEXT = readSide('next.json'), NOCARD = readSide('nocard.json');
 /* The colour of a theme's tile follows the app's colour by kind of figure (CLAUDE.md):
    amber money & hardship, blue housing, purple children & families (and age), pink people,
    mint language and the theme itself (prayer, Scripture, worship, media). */
@@ -143,6 +165,42 @@ for (const t of THEMES) {
   }
   byTheme.set(t.id, keep);
 }
+/* v10.43: the cadence of every idea that ships (its own, else cadence.json's), the next steps and the no-card ideas */
+const sideBad = [];
+const allSrcIds = new Set();
+for (const t of THEMES) { const f = path.join(SRC, 'themes', t.id + '.json'); if (fs.existsSync(f)) for (const x of JSON.parse(fs.readFileSync(f, 'utf8')).ideas || []) if (x && typeof x.id === 'string') allSrcIds.add(x.id); }
+const SHIPPED = new Map(); for (const t of THEMES) for (const x of byTheme.get(t.id)) SHIPPED.set(x.id, x);
+const CAD = new Map();
+if (CADENCE) for (const [id, v] of Object.entries(CADENCE)) {
+  if (!allSrcIds.has(id)) sideBad.push(`CADENCE ${id}: not an idea of this library`);
+  else if (typeof v !== 'string' || !CAD_RE.test(v)) sideBad.push(`CADENCE ${id}: "${v}" is not ongoing, event, series, series-N or series-N-row (N 3–26)`); }
+for (const [id, x] of SHIPPED) {
+  if ('cad' in x) { if (typeof x.cad === 'string' && CAD_RE.test(x.cad)) CAD.set(id, cadInt(x.cad)); else sideBad.push(`CADENCE ${id}: its own cad "${x.cad}" is not valid`); continue; }
+  const v = CADENCE ? CADENCE[id] : 'ongoing';
+  if (typeof v === 'string' && CAD_RE.test(v)) CAD.set(id, cadInt(v)); else if (CADENCE && v === undefined) sideBad.push(`CADENCE ${id}: no cadence (add it to cadence.json or give the idea a cad)`); }
+const NX = new Map();
+if (NEXT) for (const [id, v] of Object.entries(NEXT)) {
+  if (!allSrcIds.has(id)) { sideBad.push(`NEXT ${id}: not an idea of this library`); continue; }
+  if (!SHIPPED.has(id)) continue;   // left out (--skip-invalid): its next steps with it
+  const c = CAD.get(id);
+  if (c === 0) { sideBad.push(`NEXT ${id}: an ongoing idea has no next step (only a series or an event)`); continue; }
+  if (!Array.isArray(v) || v.length !== 2 || v[0] === v[1]) { sideBad.push(`NEXT ${id}: needs two different ids`); continue; }
+  const why = v.map(t => t === id ? `${t} is the idea itself` : !SHIPPED.has(t) ? `${t} is not an idea that ships` : CAD.get(t) !== 0 ? `${t} is not ongoing` : '').filter(Boolean);
+  if (why.length) { sideBad.push(`NEXT ${id}: ${why.join('; ')}`); continue; }
+  NX.set(id, v.map(t => { const y = SHIPPED.get(t); return [t, y.en.n, y.es.n]; })); }
+const NOC = new Set();
+for (const [id, x] of SHIPPED) if (x.nocard === true) NOC.add(id);
+if (NOCARD) for (const [id, v] of Object.entries(NOCARD)) {
+  if (!allSrcIds.has(id)) { sideBad.push(`NOCARD ${id}: not an idea of this library`); continue; }
+  if (typeof v !== 'string' || !v.trim() || v.length > 60) { sideBad.push(`NOCARD ${id}: the reason must be a short line (1–60 characters)`); continue; }
+  if (SHIPPED.has(id)) NOC.add(id); }
+for (const id of NOC) if (CAD.get(id) === 0) { sideBad.push(`NOCARD ${id}: only a series or an event can be marked "no card"`); NOC.delete(id); }
+if (sideBad.length && !SKIP) {
+  sideBad.slice(0, 40).forEach(l => console.log(l));
+  console.log(`\ncadence.json, next.json or nocard.json has ${sideBad.length} fault${sideBad.length === 1 ? '' : 's'}: nothing written. Fix the source, or add --skip-invalid to leave them out.`);
+  process.exit(1);
+}
+for (const [id] of SHIPPED) if (!CAD.has(id)) CAD.set(id, 0);   // --skip-invalid: a faulty cadence ships as ongoing
 const appBad = skipped.filter(([, id]) => !bad.has(id));
 if (appBad.length && !SKIP) {
   appBad.forEach(([t, id, w]) => console.log(`APP ${t} ${id}: ${w}`));
@@ -151,7 +209,7 @@ if (appBad.length && !SKIP) {
 }
 
 /* index row: the column order is ideas/index.json's "cols"; the page reads it by name */
-const COLS = ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne', 'reach'];
+const COLS = ['id', 't', 'also', 'tier', 'k', 'ages', 'where', 'sab', 'min', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'fac', 'st', 'partner', 'dig', 'n', 'ne', 'reach', 'cad'];
 const reachStats = {in: 0, out: 0, both: 0, theme: 0};
 const rows = [], kws = [], counts = {};
 for (const t of THEMES) {
@@ -165,12 +223,15 @@ for (const t of THEMES) {
         // the idea's own reach, else the classifier's, else its theme's default: every row says in, out or both
         const own = REACH_OK.has(x.reach) ? x.reach : REACH_OK.has(REACH[x.id]) ? REACH[x.id] : null;
         const r = own || themeReach(t);
-        reachStats[r]++; if (!own) reachStats.theme++; return r; })()]);
+        reachStats[r]++; if (!own) reachStats.theme++; return r; })(), CAD.get(x.id)]);
     kws.push(kw);
     counts[t.id] = (counts[t.id] || 0) + 1;
   }
 }
-const themeFiles = THEMES.filter(t => counts[t.id]).map(t => [t.id, JSON.stringify({theme: t.id, ideas: byTheme.get(t.id)})]);
+// v10.43: each record carries its cadence (the integer), its two next steps (names embedded, so a saved idea still names them)
+// and "nocard": true; an idea's own string "cad" is replaced by the integer
+const shipRec = x => { const o = {...x, cad: CAD.get(x.id)}; if (NX.has(x.id)) o.nx = NX.get(x.id); if (NOC.has(x.id)) o.nocard = true; else delete o.nocard; return o; };
+const themeFiles = THEMES.filter(t => counts[t.id]).map(t => [t.id, JSON.stringify({theme: t.id, ideas: byTheme.get(t.id).map(shipRec)})]);
 // The hash stands for everything the page loads (v10.40 fix): the theme files, and the index and the
 // search words too, so a change to themes.json alone (a synonym, a theme's name) also replaces an index
 // a browser kept from an earlier deploy.
@@ -200,4 +261,6 @@ for (const t of THEMES) console.log(`${t.id.padEnd(22)} ${String(counts[t.id] ||
 if (skipped.length) { console.log(`\nleft out: ${skipped.length} ideas`); skipped.slice(0, 40).forEach(([t, id, w]) => console.log(`  ${t} ${id}: ${String(w).slice(0, 140)}`)); if (skipped.length > 40) console.log('  …'); }
 if (themeProblems.length) { console.log('\ntheme problems (the theme ships its valid ideas):'); themeProblems.forEach(l => console.log('  ' + l)); }
 console.log(`\nreach: ${reachStats.in} in, ${reachStats.out} out, ${reachStats.both} both (${reachStats.theme} of them their theme's default) (${fs.existsSync(reachFile) ? 'reach.json read' : 'no reach.json'})${unknownReach.length ? `; reach.json names ${unknownReach.length} ideas not shipped (${unknownReach.slice(0, 5).join(', ')}${unknownReach.length > 5 ? '…' : ''})` : ''}`);
+{ const k = {ongoing: 0, event: 0, series: 0, row: 0, nocount: 0}; for (const v of CAD.values()) { if (v === 0) k.ongoing++; else if (v === 1) k.event++; else if (v === 100) k.nocount++; else if (v > 100) k.row++; else k.series++; }
+  console.log(`\ncadence: ${k.ongoing} ongoing, ${k.event} one-day events, ${k.series + k.row + k.nocount} series (${k.series} weekly, ${k.row} on days in a row, ${k.nocount} without a count) (${CADENCE ? 'cadence.json read' : 'no cadence.json: ideas without their own cad ship as ongoing'}); next steps for ${NX.size} series and events (${NEXT ? 'next.json read' : 'no next.json'}); ${NOC.size} with no card${sideBad.length ? `; ${sideBad.length} faults left out (--skip-invalid)` : ''}`); }
 console.log(`\nwrote ${path.relative(ROOT, OUT)}/index.json (${kb(idxText.length)}, ${rows.length} ideas in ${themeFiles.length} themes, hash ${hash}), words.json (${kb(wordsText.length)}) and ${themeFiles.length} theme files (${kb(total)})`);

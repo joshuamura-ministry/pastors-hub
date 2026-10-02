@@ -263,7 +263,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
 
   console.log('\n-- from the survey’s ministry cards --');
   setup(P); P.E(`openTool('survey'); render(); uOpenProposal('food-pantry');`);
-  c('"Build proposal" opens Make the Case with that ministry, at step 2', [P.E('TOOL'),P.J('casePrefs().ministry'),P.q('#cs-s2').hidden], ['case','food-pantry',false]);
+  c('"Make the case for this" (was "Build proposal", renamed v10.43) opens Make the Case with that ministry, at step 2', [P.E('TOOL'),P.J('casePrefs().ministry'),P.q('#cs-s2').hidden], ['case','food-pantry',false]);
 
   console.log('\n-- Spanish --');
   { const S=page('es'); await sleep(1500); setup(S);

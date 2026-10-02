@@ -183,7 +183,8 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
   { const recs = { board: { v: 1, body: 'board', date: ago(10), outcome: 'approved', vote: { for: 9, against: 0, abstain: 1, consensus: false }, timing: null, at: 1 } };
     const R = await run(P, '@plan', 'conference', { recs });
     // "The conference motion does not say how much is being asked, and the money does not add up"
-    c('the motion names the amount', /by granting up to \$3,000 \(half of the \$6,000 cost\), with training and counsel;/.test(R.Pz.motion), true);
+    // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): his series' motion carries its follow-up plan after the amount
+    c('the motion names the amount', /by granting up to \$3,000 \(half of the \$6,000 cost\), with training and counsel, with the follow-up plan \(an invitation to [^;]+ within two weeks, for those who ask\);/.test(R.Pz.motion), true);
     const B = R.Pz.budget.rows, num = v => +String(v).replace(/[$,]/g, '');
     c('the budget is a table that adds up, and what is not money is one "Also asked" row', [B.slice(0, 4).map(r => r[0]), num(B[1][1]) + num(B[2][1]) + num(B[3][1]) === num(B[0][1]), B[4][0]],
       [['Total cost', 'From the church budget', 'Asked of the conference', 'Meeting offerings, or still to raise'], true, 'Also asked']);
@@ -303,10 +304,13 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     const at = (X, i = X.pl.indexOf('WHEN')) => X.pl.slice(i + 1, i + 3).join(' ');
     c('prayer walking: WHEN is never empty (its lengths); the food pantry\'s WHEN its days, the lengths in its motion; both one page', [/^Length: 4-week pilot · 6-week trial · a full season/.test(at(R)), /^One of: Tuesday evening/.test(at(F)), /Length:/.test(at(F)), R.ppages, F.ppages], [true, true, false, 1, 1]); }
   { // every ministry team asks for no number of weeks (the groups' own asks: "For {weeks}, …", "Adopt a trial of {weeks} under this council")
-    const bad = l => P.J(`(()=>{ const out=[]; for(const g of CASE_GROUPS.filter(g=>g.type==='team')) for(const id of ['food-pantry','grief','prayer-walk']){ const m=caseModel(id,{type:'team',group:g.id},{timing:'options',lang:'${l}'});
+    // (v10.43: grief recovery is a series: its eight sessions are its length, below; the two ongoing ideas choose theirs tonight)
+    const bad = l => P.J(`(()=>{ const out=[]; for(const g of CASE_GROUPS.filter(g=>g.type==='team')) for(const id of ['food-pantry','prayer-walk']){ const m=caseModel(id,{type:'team',group:g.id},{timing:'options',lang:'${l}'});
       if(m.ok&&(/\\b\\d+ (weeks|semanas)\\b/.test(m.ask.text)||!/(the day and the length|the start and the length|el día y la duración|el inicio y la duración) (together )?(tonight|esta noche)\\.$/.test(m.ask.text))) out.push(g.id+'/'+id+': '+m.ask.text.slice(0,90)); } return out; })()`);
     c('every team group\'s ask, EN and ES: no number of weeks, the length chosen tonight', [bad('en'), bad('es')], [[], []]);
-    c('…Personal Ministries\' council', P.J(`caseModel('grief',{type:'team',group:'personal'},{timing:'options'}).ask.text`).startsWith('Adopt a trial of the length we choose together under this council: '), true); }
+    c('…Personal Ministries\' council', P.J(`caseModel('food-pantry',{type:'team',group:'personal'},{timing:'options'}).ask.text`).startsWith('Adopt a trial of the length we choose together under this council: '), true);
+    // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): a series' length is its sessions
+    c('…a series (grief recovery, eight sessions): "For the 8 sessions", "Adopt a series of 8 sessions", the day chosen tonight', [P.E(`caseModel('grief',{type:'team',group:'community'},{timing:'options'}).ask.text`).startsWith('For the 8 sessions, '),P.E(`caseModel('grief',{type:'team',group:'personal'},{timing:'options'}).ask.text`).startsWith('Adopt a series of 8 sessions under this council: '),/We’ll choose the day together tonight\.$/.test(P.E(`caseModel('grief',{type:'team',group:'community'},{timing:'options'}).ask.text`))], [true,true,true]); }
   { // the Sabbath deck: the whole church is told the day and the length, as the day was ("we'll announce the day")
     const R = await run(P, 'food-pantry', 'congregation'), E = await run(Pes, 'food-pantry', 'congregation');
     c('the Sabbath deck: "A trial", the day and the length to be announced, EN and ES', [S(R, 'motion').headline, R.m.motion.rows, S(E, 'motion').headline, E.m.motion.rows],

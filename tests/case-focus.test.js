@@ -136,10 +136,12 @@ const strs=v=>typeof v==='string'?[v]:Array.isArray(v)?v.flatMap(strs):v&&typeof
     c('…an English and a Spanish deck carry the same verses, slide for slide', bad.slice(0,5), []); }
 
   console.log('\n-- T7: the arc --');
-  { const ARC={board:/^join,motion,(ask,)?(stat,|verse,|place,)?(place,|trio,)?(how,)?capacity,(ability,)?risks,(timeline|ask),(ask,)?close$/,
-      team:/^join,motion,(stat,|verse,|place,)?(place,)?(how,)?(ability,)?roles,risks,(timeline|ask),yes$/,
-      congregation:/^join,motion,(verse,)?(place,)?(stat,)?(place,)?(how,)?(ability,)?yes,close$/,
-      conference:/^join,motion,risks,(place,)?(how,)?capacity,ability,timeline,ask,risks,close$/};
+  /* v10.43 (the pastor, 30 Sep 2026: "after one day there needs to be some kind of follow-up"): an outreach event or series adds "After
+     the day" (an ask slide) after its timing slide (the whole church: after How it works), FOLLOWUP.md §3.6 */
+  { const ARC={board:/^join,motion,(ask,)?(stat,|verse,|place,)?(place,|trio,)?(how,)?capacity,(ability,)?risks,(timeline|ask),(ask,)?(ask,)?close$/,
+      team:/^join,motion,(stat,|verse,|place,)?(place,)?(how,)?(ability,)?roles,risks,(timeline|ask),(ask,)?yes$/,
+      congregation:/^join,motion,(verse,)?(place,)?(stat,)?(place,)?(how,)?(ask,)?(ability,)?yes,close$/,
+      conference:/^join,motion,risks,(place,)?(how,)?capacity,ability,timeline,(ask,)?ask,risks,close$/};
     const D2=P.J(`(()=>{ const out=[]; for(const x of SIGNATURE) for(const [t,g] of [['board','board'],['board','finance'],['team','community'],['congregation','congregation']]) for(const opt of [{},{timing:'options'}]){
       const m=caseModel(x.id,{type:t,group:g},{lang:'en',now:${NOW},...opt}); if(!m.ok) continue; const d=caseDeck(m); const hw=caseHowOf(x,'en');
       out.push({id:x.id,t,g,types:d.slides.map(s=>s.type).join(','),parts:d.slides.map(s=>s.part||s.type),n:d.slides.length,size:JSON.stringify(d).length,

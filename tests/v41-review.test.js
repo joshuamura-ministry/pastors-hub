@@ -180,7 +180,7 @@ const deckOf=(P,id,group,type,lang)=>P.J(`(()=>{ const m=caseModel(${JSON.string
     await P.E(`libLoadTheme('interests')`); P.E(`libSave(libFull('interests-vegetarian-kitchen-afternoon'))`); P.E(`uChurch().confAsk=null; uPersist();`);
     const k=deckOf(P,'interests-vegetarian-kitchen-afternoon','conference','conference','en');
     c('conference, a library idea (not his series): counsel only by default', k.m.conf.ask.keys, ['counsel']);
-    c('…reported "after the trial", with no Evangelistic Report Form', [k.m.rows.find(r=>r[0]==='Report')[1],k.m.conf.report.some(q=>/Evangelistic Report Form|after the meetings/.test(q.text))], ['In writing, after the trial',false]);
+    c('…reported "after the trial", with no Evangelistic Report Form', [k.m.rows.find(r=>r[0]==='Report')[1],k.m.conf.report.some(q=>/Evangelistic Report Form|after the meetings/.test(q.text))], ['In writing, after the event',false]);   // v10.43 (the pastor: "separate the things that are weekly or monthly… and events"): the vegetarian kitchen afternoon is a one-day event
     P.E(`uChurch().plan={church:'Bucks County SDA',date:'2027-09-11',nights:18,kind:'both',perweek:4,workers:30,budget:12000,v:3}; uPersist();`);
     const s=deckOf(P,'plan-series','conference','conference','en');
     c('his Planner series with a budget: a share of the cost and counsel, nothing else ticked for him', s.m.conf.ask.keys, ['cost','counsel']);

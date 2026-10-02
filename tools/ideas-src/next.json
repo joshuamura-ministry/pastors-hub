@@ -1,0 +1,4454 @@
+{
+ "prayer-own-street-nextdoor": [
+  "prayer-every-street-map",
+  "neighbors-street-group-chat"
+ ],
+ "prayer-five-houses-fridge": [
+  "prayer-six-week-partners",
+  "prayer-learn-in-four-calls"
+ ],
+ "prayer-library-hope-tree": [
+  "prayer-cafe-prayer-journaling",
+  "prayer-seven-day-text-journey"
+ ],
+ "prayer-pray-with-stranger-training": [
+  "prayer-learn-in-four-calls",
+  "prayer-local-news-live"
+ ],
+ "prayer-reply-team-training": [
+  "prayer-callback-within-hour",
+  "prayer-learn-in-four-calls"
+ ],
+ "prayer-new-year-sunrise": [
+  "prayer-dawn-park-walk",
+  "prayer-home-blessing-invited"
+ ],
+ "prayer-election-week-calm": [
+  "prayer-local-news-live",
+  "prayer-late-night-text-line"
+ ],
+ "prayer-main-street-one-question": [
+  "prayer-pastor-coffee-hour",
+  "workplaces-main-street-chaplain"
+ ],
+ "prayer-lords-prayer-videos": [
+  "prayer-seven-day-text-journey",
+  "prayer-morning-call-in-line"
+ ],
+ "prayer-apartment-courtyard": [
+  "neighbors-clubhouse-coffee",
+  "prayer-cafe-prayer-journaling"
+ ],
+ "prayer-beginners-at-library": [
+  "prayer-cafe-prayer-journaling",
+  "prayer-seven-day-text-journey"
+ ],
+ "prayer-psalms-on-zoom": [
+  "sabbath-rest-friday-psalms-zoom",
+  "prayer-callback-within-hour"
+ ],
+ "prayer-answered-prayer-evening": [
+  "prayer-six-week-partners",
+  "prayer-home-blessing-invited"
+ ],
+ "prayer-town-prayer-relay": [
+  "prayer-six-week-partners",
+  "prayer-dawn-park-walk"
+ ],
+ "prayer-street-walks-itself": [
+  "prayer-dawn-park-walk",
+  "neighbors-street-group-chat"
+ ],
+ "prayer-digital-billboard-text": [
+  "prayer-seven-day-text-journey",
+  "prayer-drive-time-podcast"
+ ],
+ "prayer-county-fair-quiet-tent": [
+  "prayer-late-night-text-line",
+  "prayer-morning-call-in-line"
+ ],
+ "prayer-diner-prayer-breakfast": [
+  "prayer-dawn-park-walk",
+  "workplaces-owners-roundtable"
+ ],
+ "prayer-town-wide-prayer-month": [
+  "prayer-local-news-live",
+  "prayer-six-week-partners"
+ ],
+ "prayer-park-prayer-trail": [
+  "prayer-dawn-park-walk",
+  "prayer-seven-day-text-journey"
+ ],
+ "hunger-reverse-advent": [
+  "hunger-family-packing-night",
+  "hunger-extra-row"
+ ],
+ "hunger-canning-class": [
+  "hunger-grocery-tours",
+  "hunger-bulk-buying-club"
+ ],
+ "hunger-door-hanger-drive": [
+  "hunger-family-packing-night",
+  "hunger-extra-row"
+ ],
+ "hunger-gospel-meals-breakfast": [
+  "hunger-sabbath-lunch-card",
+  "hunger-guest-council"
+ ],
+ "hunger-why-we-feed-supper": [
+  "hunger-fruit-tree-pickers",
+  "hunger-food-rescue-drivers"
+ ],
+ "hunger-snow-day-boxes": [
+  "hunger-fourth-week-pantry",
+  "hunger-weekend-cupboard-line"
+ ],
+ "hunger-farm-gleaning-days": [
+  "hunger-extra-row",
+  "hunger-fruit-tree-pickers"
+ ],
+ "hunger-holiday-box-postcard": [
+  "hunger-text-ahead-pantry",
+  "hunger-sabbath-lunch-card"
+ ],
+ "homeless-street-count": [
+  "homeless-camp-coffee",
+  "homeless-learn-one-name"
+ ],
+ "homeless-members-orientation": [
+  "homeless-camp-coffee",
+  "homeless-shelter-hymn-sing"
+ ],
+ "homeless-rent-help-night": [
+  "homeless-volunteer-mediators",
+  "jobs-money-read-before-you-sign-table"
+ ],
+ "homeless-landlord-breakfast": [
+  "homeless-first-year-friend",
+  "homeless-volunteer-mediators"
+ ],
+ "homeless-longest-night-vigil": [
+  "homeless-sabbath-ride-lunch",
+  "homeless-shelter-birthdays"
+ ],
+ "homeless-ready-to-rent-course": [
+  "homeless-first-year-friend",
+  "homeless-move-in-day"
+ ],
+ "children-bike-safety-rodeo": [
+  "children-library-brick-club",
+  "children-family-kindness-crew"
+ ],
+ "children-christmas-shopping-childcare": [
+  "children-preschool-parent-club",
+  "families-parents-night-out"
+ ],
+ "children-concert-puppet-shows": [
+  "children-mailed-story-craft-box",
+  "children-toddler-parachute-mornings"
+ ],
+ "children-backyard-bible-club": [
+  "children-apartment-clubhouse-club",
+  "children-mailed-story-craft-box"
+ ],
+ "children-neighbor-family-pageant": [
+  "childrens-ministries-childrens-choir-no-auditions",
+  "children-apartment-clubhouse-club"
+ ],
+ "children-farm-pumpkin-painting": [
+  "children-junior-naturalist-walks",
+  "children-family-kindness-crew"
+ ],
+ "children-adventurer-patch-afternoons": [
+  "adventurers-three-family-club",
+  "children-preschool-parent-club"
+ ],
+ "children-home-alone-safety-class": [
+  "children-family-kindness-crew",
+  "children-library-brick-club"
+ ],
+ "children-kitchen-science-night": [
+  "children-library-brick-club",
+  "children-circus-skills-afternoons"
+ ],
+ "children-kids-gear-consignment": [
+  "children-free-fun-calendar",
+  "children-toddler-toy-library"
+ ],
+ "children-baby-sign-classes": [
+  "children-preschool-parent-club",
+  "children-toddler-parachute-mornings"
+ ],
+ "children-teddy-bear-clinic": [
+  "children-preschool-parent-club",
+  "children-toddler-parachute-mornings"
+ ],
+ "children-touch-a-truck-morning": [
+  "children-toddler-parachute-mornings",
+  "children-preschool-parent-club"
+ ],
+ "children-cardboard-boat-regatta": [
+  "children-family-kindness-crew",
+  "children-circus-skills-afternoons"
+ ],
+ "children-free-lemonade-stands": [
+  "neighbors-front-yard-thursdays",
+  "neighbors-front-yard-book-box"
+ ],
+ "children-grow-a-sunflower-cups": [
+  "children-seed-to-snack-garden",
+  "children-junior-naturalist-walks"
+ ],
+ "children-wildlife-rescue-show": [
+  "children-junior-naturalist-walks",
+  "children-library-brick-club"
+ ],
+ "children-play-street-sunday": [
+  "children-mobile-play-van",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "children-museum-free-family-day": [
+  "children-free-fun-calendar",
+  "children-seed-to-snack-garden"
+ ],
+ "children-portable-planetarium-night": [
+  "children-junior-naturalist-walks",
+  "children-circus-skills-afternoons"
+ ],
+ "children-autumn-lantern-walk": [
+  "children-junior-naturalist-walks",
+  "children-family-kindness-crew"
+ ],
+ "children-giant-bubble-afternoon": [
+  "children-toddler-parachute-mornings",
+  "children-seed-to-snack-garden"
+ ],
+ "children-town-green-pet-show": [
+  "neighbors-lost-pet-team",
+  "children-family-kindness-crew"
+ ],
+ "children-messy-mud-play-morning": [
+  "children-toddler-parachute-mornings",
+  "children-toddler-toy-library"
+ ],
+ "children-park-lawn-bible-play": [
+  "children-apartment-clubhouse-club",
+  "children-mailed-story-craft-box"
+ ],
+ "youth-booster-concession-stand": [
+  "youth-parent-teen-food-bank-night",
+  "youth-service-hours-sunday"
+ ],
+ "youth-volunteer-fair": [
+  "youth-service-hours-sunday",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-first-job-bootcamp": [
+  "jobs-money-practice-interviews-zoom",
+  "youth-service-hours-sunday"
+ ],
+ "youth-summer-jobs-fair": [
+  "youth-pantry-garden-crew",
+  "jobs-money-resume-review-by-email"
+ ],
+ "youth-babysitter-course": [
+  "youth-saturday-night-game-night",
+  "youth-service-hours-sunday"
+ ],
+ "youth-nonprofit-videos": [
+  "media-teen-video-crew",
+  "youth-sound-livestream-crew"
+ ],
+ "youth-kindness-scavenger-hunt": [
+  "youth-service-hours-sunday",
+  "youth-sabbath-living-room-group"
+ ],
+ "youth-free-prom-closet": [
+  "youth-thrift-flip-sewing",
+  "youth-saturday-night-game-night"
+ ],
+ "youth-graduate-launch-kits": [
+  "youth-service-hours-sunday",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-six-cheap-dinners": [
+  "youth-pantry-garden-crew",
+  "youth-saturday-night-game-night"
+ ],
+ "youth-public-speaking-club": [
+  "youth-elders-stories-podcast",
+  "youth-sound-livestream-crew"
+ ],
+ "youth-job-shadow-morning": [
+  "youth-service-hours-sunday",
+  "jobs-money-three-coffees-career-mentor"
+ ],
+ "youth-farmers-market-booth": [
+  "youth-thrift-flip-sewing",
+  "youth-service-hours-sunday"
+ ],
+ "youth-stay-home-mission-week": [
+  "youth-service-hours-sunday",
+  "youth-parent-teen-food-bank-night"
+ ],
+ "youth-try-an-honor-afternoon": [
+  "pathfinders-bilingual-club-night",
+  "youth-bible-experience-team"
+ ],
+ "youth-parade-drill-team": [
+  "pathfinders-bilingual-club-night",
+  "youth-bible-experience-team"
+ ],
+ "youth-coming-of-age-year": [
+  "youth-parent-teen-food-bank-night",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-park-worship-evening": [
+  "youth-sabbath-living-room-group",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-junior-leader-training": [
+  "youth-service-hours-sunday",
+  "youth-sabbath-living-room-group"
+ ],
+ "youth-teen-giving-circle": [
+  "youth-service-hours-sunday",
+  "youth-sabbath-living-room-group"
+ ],
+ "youth-college-visit-trips": [
+  "education-first-gen-college-mentors",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-graduates-blessing-sabbath": [
+  "youth-coffee-shop-bible-study",
+  "ay-youth-prayer-grandparents"
+ ],
+ "youth-civic-night-borough-council": [
+  "youth-coffee-shop-bible-study",
+  "youth-sabbath-living-room-group"
+ ],
+ "youth-post-prom-party-help": [
+  "youth-service-hours-sunday",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-phone-free-sabbath-challenge": [
+  "youth-sabbath-living-room-group",
+  "youth-saturday-night-game-night"
+ ],
+ "youth-after-high-school-paths-breakfast": [
+  "youth-service-hours-sunday",
+  "jobs-money-three-coffees-career-mentor"
+ ],
+ "youth-spot-the-fake-evening": [
+  "youth-coffee-shop-bible-study",
+  "youth-anonymous-questions-videos"
+ ],
+ "youth-walk-for-clean-water": [
+  "youth-sabbath-living-room-group",
+  "youth-service-hours-sunday"
+ ],
+ "youth-teen-designed-community-project": [
+  "youth-service-hours-sunday",
+  "youth-sabbath-living-room-group"
+ ],
+ "youth-peer-mediation-training": [
+  "youth-newcomer-teen-welcome-buddies",
+  "youth-coffee-shop-bible-study"
+ ],
+ "youth-summer-service-corps": [
+  "youth-service-hours-sunday",
+  "youth-pantry-garden-crew"
+ ],
+ "young-adults-move-in-muscle-crew": [
+  "young-adults-friday-supper-near-campus",
+  "young-adults-sabbath-lunch-far-from-home"
+ ],
+ "young-adults-move-out-rescue": [
+  "young-adults-sabbath-lunch-far-from-home",
+  "young-adults-friday-supper-near-campus"
+ ],
+ "young-adults-first-gen-grad-portraits": [
+  "young-adults-four-coffees-mentor",
+  "education-first-gen-college-mentors"
+ ],
+ "young-adults-finals-coffee-table": [
+  "young-adults-pastor-cafe-office-hours",
+  "young-adults-exam-morning-prayer-text"
+ ],
+ "young-adults-adulting-library-nights": [
+  "young-adults-supper-six-strangers",
+  "young-adults-cook-with-grandmothers"
+ ],
+ "young-adults-speed-friending-night": [
+  "young-adults-meetup-new-in-town",
+  "young-adults-supper-six-strangers"
+ ],
+ "young-adults-friendsgiving-cant-fly-home": [
+  "young-adults-birthday-dinner-far-from-home",
+  "young-adults-supper-six-strangers"
+ ],
+ "young-adults-reddit-ask-a-pastor": [
+  "young-adults-doubts-welcome-podcast",
+  "young-adults-local-discord-server"
+ ],
+ "young-adults-mark-by-voice-note": [
+  "young-adults-night-owl-zoom-bible",
+  "young-adults-doubts-welcome-podcast"
+ ],
+ "young-adults-six-dinners-big-questions": [
+  "young-adults-supper-six-strangers",
+  "personal-evangelism-cafe-office-hours"
+ ],
+ "young-adults-human-library-faith": [
+  "young-adults-doubts-welcome-podcast",
+  "young-adults-four-coffees-mentor"
+ ],
+ "young-adults-calling-purpose-evenings": [
+  "young-adults-monday-faith-work-coffee",
+  "young-adults-remote-workers-lunch"
+ ],
+ "young-adults-paid-summer-interns": [
+  "young-adults-sunday-service-crew",
+  "young-adults-four-coffees-mentor"
+ ],
+ "young-adults-club-fair-supper-cards": [
+  "young-adults-friday-supper-near-campus",
+  "young-adults-adventist-campus-club"
+ ],
+ "young-adults-nonprofit-website-day": [
+  "young-adults-sunday-service-crew",
+  "young-adults-library-maker-nights"
+ ],
+ "young-adults-cabin-weekend-no-phones": [
+  "young-adults-candles-questions-friday",
+  "young-adults-supper-six-strangers"
+ ],
+ "young-adults-apprentice-first-toolbox": [
+  "young-adults-first-year-at-work-zoom",
+  "religious-liberty-first-job-sabbath-mentor"
+ ],
+ "young-adults-houseplant-swap-night": [
+  "young-adults-board-game-cafe",
+  "young-adults-sabbath-park-picnic"
+ ],
+ "young-adults-pilgrimage-day-walk": [
+  "young-adults-sabbath-park-picnic",
+  "young-adults-candles-questions-friday"
+ ],
+ "seniors-elders-story-book": [
+  "seniors-family-history-afternoons",
+  "youth-elders-stories-podcast"
+ ],
+ "seniors-dementia-friendly-worship": [
+  "seniors-memory-cafe-library",
+  "music-arts-memory-choir"
+ ],
+ "seniors-fall-chore-sunday": [
+  "seniors-snow-shovel-squad",
+  "clothing-practical-adopt-a-lawn-summer"
+ ],
+ "seniors-medicare-open-season": [
+  "jobs-money-benefits-checkup-hour",
+  "seniors-diner-lunch-bunch"
+ ],
+ "seniors-advance-directive-evening": [
+  "seniors-diner-lunch-bunch",
+  "seniors-morning-devotion-line"
+ ],
+ "seniors-legacy-letter-morning": [
+  "seniors-family-history-afternoons",
+  "seniors-diner-lunch-bunch"
+ ],
+ "seniors-new-retirement-circle": [
+  "seniors-retirees-teach-at-library",
+  "small-groups-senior-center-retirees-circle"
+ ],
+ "seniors-dementia-visiting-zoom": [
+  "seniors-caregiver-night-zoom",
+  "seniors-dementia-caregiver-group"
+ ],
+ "seniors-care-home-spring-prom": [
+  "seniors-care-home-birthday-party",
+  "seniors-hymns-by-request"
+ ],
+ "seniors-caregiver-rest-day": [
+  "seniors-caregiver-four-hours",
+  "seniors-dementia-caregiver-group"
+ ],
+ "seniors-hope-later-life-series": [
+  "small-groups-senior-center-retirees-circle",
+  "seniors-memory-cafe-library"
+ ],
+ "seniors-caregivers-sabbath": [
+  "seniors-dementia-caregiver-group",
+  "seniors-caregiver-four-hours"
+ ],
+ "families-baby-sleep-evening": [
+  "families-forty-days-new-parent-texts",
+  "families-new-parent-help-hours"
+ ],
+ "families-first-phone-evening": [
+  "families-parents-book-club-cafe",
+  "families-lunch-break-parent-zoom"
+ ],
+ "families-friday-sundown-boxes": [
+  "families-family-worship-starter-visit",
+  "families-worship-plan-texts"
+ ],
+ "families-family-portraits-park": [
+  "families-family-service-hour",
+  "families-parents-night-out"
+ ],
+ "families-parenting-course-library": [
+  "families-parent-cafe-table-talks",
+  "families-home-visiting-family-nights"
+ ],
+ "families-screen-free-town-week": [
+  "families-unplugged-evening-boxes",
+  "families-parents-night-out"
+ ],
+ "families-family-build-night": [
+  "families-family-service-hour",
+  "families-parents-night-out"
+ ],
+ "families-baby-blessing-park": [
+  "families-worship-plan-texts",
+  "families-family-worship-starter-visit"
+ ],
+ "families-expecting-parents-evening": [
+  "families-seasoned-parent-buddy",
+  "families-forty-days-new-parent-texts"
+ ],
+ "families-allowance-money-evening": [
+  "families-parents-book-club-cafe",
+  "families-parenting-podcast-local"
+ ],
+ "families-raising-bilingual-evening": [
+  "families-spanish-parents-whatsapp",
+  "immigrants-language-exchange-pairs"
+ ],
+ "families-park-family-worship-hour": [
+  "families-family-worship-starter-visit",
+  "families-worship-plan-texts"
+ ],
+ "families-ask-the-grandparents-panel": [
+  "families-lunch-break-parent-zoom",
+  "families-parents-book-club-cafe"
+ ],
+ "families-talking-about-god-at-home": [
+  "families-parents-book-club-cafe",
+  "families-family-worship-starter-visit"
+ ],
+ "families-family-resource-day-park": [
+  "families-home-visiting-family-nights",
+  "families-parent-cafe-table-talks"
+ ],
+ "families-freezer-meal-party-expecting": [
+  "families-new-parent-help-hours",
+  "families-seasoned-parent-buddy"
+ ],
+ "families-adult-kids-move-back-evening": [
+  "families-parents-book-club-cafe",
+  "families-parenting-podcast-local"
+ ],
+ "families-weekly-family-meeting-zoom": [
+  "families-lunch-break-parent-zoom",
+  "families-worship-plan-texts"
+ ],
+ "families-grandparent-grandchild-camp": [
+  "families-worship-plan-texts",
+  "families-family-service-hour"
+ ],
+ "families-spanish-parenting-course": [
+  "families-spanish-parents-whatsapp",
+  "immigrants-whatsapp-help-channel"
+ ],
+ "marriage-engagement-photos-park": [
+  "marriage-certified-premarital-mentors",
+  "marriage-first-year-mentor-couple"
+ ],
+ "marriage-how-we-made-it": [
+  "marriage-first-five-years-cafe",
+  "marriage-forty-year-tip-reels"
+ ],
+ "marriage-paint-and-talk-night": [
+  "marriage-board-game-cafe-night",
+  "marriage-first-five-years-cafe"
+ ],
+ "marriage-love-letter-night": [
+  "marriage-first-five-years-cafe",
+  "marriage-board-game-cafe-night"
+ ],
+ "marriage-retreat-in-a-box": [
+  "marriage-local-couple-podcast",
+  "marriage-diner-couples-table"
+ ],
+ "marriage-gazebo-vow-renewals": [
+  "marriage-couples-serve-together",
+  "marriage-four-couple-supper-club"
+ ],
+ "marriage-money-dates-class": [
+  "marriage-first-year-mentor-couple",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "marriage-fighting-fair-class": [
+  "marriage-first-sessions-paid",
+  "marriage-thirty-day-text-challenge"
+ ],
+ "marriage-zoom-course-no-sitter": [
+  "marriage-first-sessions-paid",
+  "marriage-forty-year-tip-reels"
+ ],
+ "marriage-empty-nest-couples": [
+  "marriage-four-couple-supper-club",
+  "marriage-couples-serve-together"
+ ],
+ "marriage-dating-after-fifty": [
+  "small-groups-singles-over-40-table",
+  "seniors-diner-lunch-bunch"
+ ],
+ "marriage-marriage-after-baby": [
+  "marriage-diner-couples-table",
+  "marriage-first-year-mentor-couple"
+ ],
+ "marriage-spanish-couples-workshop": [
+  "marriage-whatsapp-couples-devotional",
+  "marriage-diner-couples-table"
+ ],
+ "marriage-parents-dinner-kids-room": [
+  "families-parents-night-out",
+  "marriage-diner-couples-table"
+ ],
+ "marriage-love-in-the-bible-study": [
+  "marriage-four-couple-supper-club",
+  "marriage-couples-serve-together"
+ ],
+ "marriage-couples-film-night": [
+  "marriage-thirty-day-text-challenge",
+  "marriage-diner-couples-table"
+ ],
+ "marriage-stargazing-for-couples": [
+  "marriage-couples-hike-prompts",
+  "marriage-four-couple-supper-club"
+ ],
+ "marriage-wedding-without-debt": [
+  "marriage-certified-premarital-mentors",
+  "marriage-anniversary-cards-we-married"
+ ],
+ "marriage-phones-in-the-basket": [
+  "marriage-first-five-years-cafe",
+  "marriage-thirty-day-text-challenge"
+ ],
+ "marriage-bridal-show-booth": [
+  "marriage-certified-premarital-mentors",
+  "marriage-thirty-day-text-challenge"
+ ],
+ "marriage-state-park-weekend": [
+  "marriage-diner-couples-table",
+  "marriage-couples-serve-together"
+ ],
+ "marriage-longest-married-luncheon": [
+  "marriage-coffee-with-seasoned-couple",
+  "marriage-first-five-years-cafe"
+ ],
+ "marriage-picnic-concert-park": [
+  "marriage-couples-serve-together",
+  "marriage-diner-couples-table"
+ ],
+ "marriage-one-day-conference": [
+  "marriage-diner-couples-table",
+  "marriage-stepcouple-circle"
+ ],
+ "marriage-fair-advice-booth": [
+  "marriage-local-couple-podcast",
+  "marriage-diner-couples-table"
+ ],
+ "single-parents-helping-without-fixing": [
+  "single-parents-been-there-mentors",
+  "single-parents-honorary-grandparents"
+ ],
+ "single-parents-family-portrait-day": [
+  "single-parents-park-picnic",
+  "single-parents-parents-night-off"
+ ],
+ "single-parents-salon-haircut-night": [
+  "single-parents-parents-night-off",
+  "single-parents-park-picnic"
+ ],
+ "single-parents-gift-workshop": [
+  "single-parents-parents-night-off",
+  "single-parents-park-picnic"
+ ],
+ "single-parents-wrapping-night": [
+  "single-parents-parents-night-off",
+  "single-parents-babysitting-swap-coop"
+ ],
+ "single-parents-freezer-dinner-afternoon": [
+  "single-parents-supper-swap",
+  "single-parents-hardest-night-dinner"
+ ],
+ "single-parents-fix-it-class": [
+  "single-parents-fix-it-visits",
+  "single-parents-lawn-snow-crew"
+ ],
+ "single-parents-sleep-stress-course": [
+  "single-parents-after-bedtime-zoom",
+  "single-parents-listening-circle"
+ ],
+ "single-parents-co-parenting-workshop": [
+  "single-parents-listening-circle",
+  "single-parents-been-there-mentors"
+ ],
+ "single-parents-will-guardianship-night": [
+  "single-parents-paperwork-night",
+  "jobs-money-notary-paperwork-hour"
+ ],
+ "single-parents-custody-legal-aid-night": [
+  "single-parents-paperwork-night",
+  "single-parents-listening-circle"
+ ],
+ "single-parents-divorce-recovery": [
+  "single-parents-listening-circle",
+  "single-parents-first-ninety-days"
+ ],
+ "single-parents-family-camping-weekend": [
+  "single-parents-park-picnic",
+  "single-parents-friday-supper-vespers"
+ ],
+ "single-parents-kids-emergency-plan-night": [
+  "single-parents-sick-day-line",
+  "single-parents-listening-circle"
+ ],
+ "single-parents-summer-activity-boxes": [
+  "single-parents-park-picnic",
+  "single-parents-parents-night-off"
+ ],
+ "health-beans-night": [
+  "health-cheap-meal-videos",
+  "health-grocery-store-tour"
+ ],
+ "health-stroke-sign-door-hangers": [
+  "health-chair-exercise",
+  "health-ask-a-nurse-live"
+ ],
+ "health-sleep-reset-evening": [
+  "health-local-health-podcast",
+  "health-sabbath-nature-walk"
+ ],
+ "health-balcony-salad-buckets": [
+  "health-home-supper-club",
+  "health-cheap-meal-videos"
+ ],
+ "health-daniel-ten-day-challenge": [
+  "health-zoom-cook-along",
+  "health-home-supper-club"
+ ],
+ "health-town-step-challenge": [
+  "health-walk-with-a-doctor",
+  "health-office-park-lunch-walk"
+ ],
+ "health-eight-remedies-whatsapp": [
+  "health-local-health-podcast",
+  "health-sabbath-nature-walk"
+ ],
+ "health-marrow-registry-table": [
+  "health-local-health-podcast",
+  "health-office-park-lunch-walk"
+ ],
+ "health-hands-only-cpr-market": [
+  "health-farmers-market-demo",
+  "health-walk-with-a-doctor"
+ ],
+ "health-couch-to-5k": [
+  "health-walk-with-a-doctor",
+  "sports-outdoors-coffee-shop-run-club"
+ ],
+ "health-drive-through-flu-shots": [
+  "health-free-clinic-night",
+  "health-ask-a-nurse-live"
+ ],
+ "health-library-hearing-checks": [
+  "health-chair-exercise",
+  "health-ask-a-nurse-live"
+ ],
+ "health-brown-bag-medicine-review": [
+  "health-diabetes-support-circle",
+  "health-chair-exercise"
+ ],
+ "health-insurance-signup-night": [
+  "health-free-clinic-night",
+  "jobs-money-benefits-checkup-hour"
+ ],
+ "health-fall-prevention-class": [
+  "health-chair-exercise",
+  "seniors-fall-prevention-visit"
+ ],
+ "health-zoom-weight-circle": [
+  "health-zoom-cook-along",
+  "health-cheap-meal-videos"
+ ],
+ "health-health-sabbath-potluck": [
+  "health-home-supper-club",
+  "health-parent-child-cooking-night"
+ ],
+ "health-diabetes-prevention-program": [
+  "health-diabetes-support-circle",
+  "health-barbershop-bp-checks"
+ ],
+ "health-mobile-dental-day": [
+  "health-free-clinic-night",
+  "health-barbershop-bp-checks"
+ ],
+ "health-produce-prescription": [
+  "health-farmers-market-demo",
+  "health-grocery-store-tour"
+ ],
+ "health-weekend-health-retreat": [
+  "health-home-supper-club",
+  "sabbath-rest-cook-ahead-class"
+ ],
+ "health-vision-and-glasses-day": [
+  "health-free-clinic-night",
+  "health-barbershop-bp-checks"
+ ],
+ "health-why-adventists-live-longer": [
+  "health-home-supper-club",
+  "health-ask-a-nurse-live"
+ ],
+ "health-night-shift-health-checks": [
+  "health-ask-a-nurse-live",
+  "workplaces-break-room-fruit"
+ ],
+ "mental-health-mhfa-course-for-town": [
+  "mental-health-happy-to-chat-table",
+  "mental-health-christian-peer-support-group"
+ ],
+ "mental-health-qpr-barbers-stylists": [
+  "mental-health-happy-to-chat-table",
+  "health-barbershop-bp-checks"
+ ],
+ "mental-health-faith-mental-health-sabbath": [
+  "mental-health-local-hope-health-podcast",
+  "mental-health-memoir-book-club"
+ ],
+ "mental-health-finals-therapy-dogs": [
+  "mental-health-daily-hope-texts",
+  "young-adults-pastor-cafe-office-hours"
+ ],
+ "mental-health-library-hope-bookmarks": [
+  "mental-health-memoir-book-club",
+  "literature-little-library-hope-shelf"
+ ],
+ "mental-health-parents-anxious-teens-night": [
+  "mental-health-host-nami-family-group",
+  "mental-health-therapist-search-navigator"
+ ],
+ "mental-health-mood-recovery-course": [
+  "mental-health-christian-peer-support-group",
+  "mental-health-local-hope-health-podcast"
+ ],
+ "mental-health-three-honest-stories": [
+  "mental-health-local-hope-health-podcast",
+  "mental-health-memoir-book-club"
+ ],
+ "mental-health-making-friends-class": [
+  "mental-health-happy-to-chat-table",
+  "mental-health-memoir-book-club"
+ ],
+ "mental-health-you-matter-yard-signs": [
+  "mental-health-daily-hope-texts",
+  "neighbors-front-yard-thursdays"
+ ],
+ "mental-health-bus-shelter-hope-posters": [
+  "mental-health-daily-hope-texts",
+  "mental-health-therapist-search-navigator"
+ ],
+ "mental-health-namiwalks-church-team": [
+  "mental-health-host-nami-family-group",
+  "mental-health-slow-nature-walks"
+ ],
+ "mental-health-january-wellbeing-postcard": [
+  "mental-health-slow-nature-walks",
+  "mental-health-daily-hope-texts"
+ ],
+ "mental-health-radio-hope-minute": [
+  "mental-health-daily-hope-texts",
+  "media-spanish-radio-half-hour"
+ ],
+ "mental-health-loneliness-town-forum": [
+  "mental-health-happy-to-chat-table",
+  "mental-health-library-pen-pals"
+ ],
+ "mental-health-forty-days-check-on-one": [
+  "mental-health-daily-hope-texts",
+  "mental-health-therapist-search-navigator"
+ ],
+ "mental-health-what-gives-you-hope-wall": [
+  "mental-health-daily-hope-texts",
+  "mental-health-slow-nature-walks"
+ ],
+ "mental-health-farm-stress-workshop": [
+  "mental-health-daily-hope-texts",
+  "mental-health-therapist-search-navigator"
+ ],
+ "mental-health-clergy-mental-health-breakfast": [
+  "mental-health-host-nami-family-group",
+  "mental-health-memoir-book-club"
+ ],
+ "mental-health-wellness-recovery-action-plan": [
+  "mental-health-christian-peer-support-group",
+  "mental-health-host-nami-family-group"
+ ],
+ "mental-health-clean-comedy-night": [
+  "mental-health-slow-nature-walks",
+  "mental-health-daily-hope-texts"
+ ],
+ "mental-health-ballpark-awareness-night": [
+  "mental-health-host-nami-family-group",
+  "mental-health-memoir-book-club"
+ ],
+ "addiction-naloxone-library-class": [
+  "addiction-naloxone-business-staff",
+  "addiction-public-naloxone-boxes"
+ ],
+ "addiction-recovery-walk-water-station": [
+  "addiction-morning-park-walk",
+  "addiction-meeting-coffee-welcome"
+ ],
+ "addiction-dry-january-text-club": [
+  "addiction-morning-park-walk",
+  "mental-health-daily-hope-texts"
+ ],
+ "addiction-purple-porch-lights": [
+  "addiction-family-prayer-text-line",
+  "addiction-meeting-coffee-welcome"
+ ],
+ "addiction-medicine-lockbox-table": [
+  "addiction-family-prayer-text-line",
+  "health-ask-a-nurse-live"
+ ],
+ "addiction-alcohol-free-new-years-eve": [
+  "addiction-recovery-open-mic",
+  "addiction-drop-in-recovery-cafe"
+ ],
+ "addiction-recovery-friendly-church-training": [
+  "addiction-meeting-coffee-welcome",
+  "addiction-rides-to-meetings"
+ ],
+ "addiction-overdose-vigil-park": [
+  "addiction-family-prayer-text-line",
+  "addiction-drop-in-recovery-cafe"
+ ],
+ "addiction-craft-family-workshop": [
+  "addiction-family-prayer-text-line",
+  "mental-health-therapist-search-navigator"
+ ],
+ "addiction-online-group-quitting-porn": [
+  "addiction-online-recovery-group",
+  "mental-health-stress-reset-email-course"
+ ],
+ "addiction-spouses-support-group": [
+  "marriage-first-sessions-paid",
+  "addiction-family-prayer-text-line"
+ ],
+ "addiction-parents-filters-evening": [
+  "families-parenting-podcast-local",
+  "families-parents-book-club-cafe"
+ ],
+ "addiction-hidden-bedroom-exhibit": [
+  "addiction-family-prayer-text-line",
+  "addiction-spanish-family-circle"
+ ],
+ "addiction-recovery-nutrition-class": [
+  "addiction-drop-in-recovery-cafe",
+  "addiction-morning-park-walk"
+ ],
+ "addiction-recovery-month-resource-fair": [
+  "addiction-drop-in-recovery-cafe",
+  "addiction-treatment-center-visits"
+ ],
+ "addiction-town-addiction-conversation": [
+  "addiction-drop-in-recovery-cafe",
+  "addiction-family-prayer-text-line"
+ ],
+ "addiction-recovery-sabbath-service": [
+  "addiction-drop-in-recovery-cafe",
+  "addiction-family-prayer-text-line"
+ ],
+ "addiction-sports-gambling-apps-night": [
+  "addiction-money-rebuild-after-gambling",
+  "addiction-family-prayer-text-line"
+ ],
+ "addiction-sunday-medicine-take-back": [
+  "addiction-family-prayer-text-line",
+  "addiction-morning-park-walk"
+ ],
+ "addiction-recovery-friendly-employers": [
+  "workplaces-owners-roundtable",
+  "addiction-drop-in-recovery-cafe"
+ ],
+ "addiction-pharmacist-pain-medicine-talk": [
+  "health-chair-exercise",
+  "seniors-diner-lunch-bunch"
+ ],
+ "addiction-where-was-god-evening": [
+  "addiction-drop-in-recovery-cafe",
+  "addiction-recovery-open-mic"
+ ],
+ "addiction-interview-honesty-workshop": [
+  "jobs-money-practice-interviews-zoom",
+  "addiction-drop-in-recovery-cafe"
+ ],
+ "addiction-safe-medicine-zip-postcard": [
+  "addiction-family-prayer-text-line",
+  "addiction-drop-in-recovery-cafe"
+ ],
+ "addiction-finding-treatment-evening": [
+  "addiction-family-prayer-text-line",
+  "addiction-spanish-family-circle"
+ ],
+ "addiction-quiet-sabbath-retreat": [
+  "addiction-morning-park-walk",
+  "addiction-recovery-softball-team"
+ ],
+ "grief-longest-night-service": [
+  "grief-hard-date-cards",
+  "grief-trail-walk-group"
+ ],
+ "grief-holiday-survival-evening": [
+  "grief-trail-walk-group",
+  "grief-hard-date-cards"
+ ],
+ "grief-skills-spouse-always-did": [
+  "grief-widowers-breakfast",
+  "women-widows-friday-supper"
+ ],
+ "grief-after-death-paperwork-night": [
+  "grief-hard-date-cards",
+  "grief-trail-walk-group"
+ ],
+ "grief-pet-remembrance-evening": [
+  "grief-memorial-garden-for-town",
+  "grief-listening-text-line"
+ ],
+ "grief-wave-of-light-infant-loss": [
+  "grief-hard-date-cards",
+  "grief-county-facebook-support-group"
+ ],
+ "grief-suicide-loss-day-gathering": [
+  "grief-listening-text-line",
+  "grief-county-suicide-loss-team"
+ ],
+ "grief-after-suicide-member-training": [
+  "grief-county-suicide-loss-team",
+  "grief-county-resource-page"
+ ],
+ "grief-how-children-grieve-evening": [
+  "grief-hard-date-cards",
+  "grief-local-stories-podcast"
+ ],
+ "grief-cemetery-flowers-mothers-day": [
+  "grief-trail-walk-group",
+  "grief-year-of-weekly-emails"
+ ],
+ "grief-library-remembrance-tree": [
+  "grief-trail-walk-group",
+  "grief-year-of-weekly-emails"
+ ],
+ "grief-memory-quilt-circle": [
+  "grief-trail-walk-group",
+  "grief-hard-date-cards"
+ ],
+ "grief-journaling-library-series": [
+  "grief-psalms-for-sleepless-nights",
+  "grief-year-of-weekly-emails"
+ ],
+ "grief-hospice-children-camp-support": [
+  "grief-hospice-bereavement-volunteers",
+  "grief-hard-date-cards"
+ ],
+ "grief-losses-no-one-names-circle": [
+  "grief-local-stories-podcast",
+  "grief-death-cafe-library"
+ ],
+ "grief-first-thanksgiving-table": [
+  "women-widows-friday-supper",
+  "grief-hard-date-cards"
+ ],
+ "grief-late-evening-zoom-group": [
+  "grief-listening-text-line",
+  "grief-county-facebook-support-group"
+ ],
+ "grief-one-day-nature-retreat": [
+  "grief-trail-walk-group",
+  "grief-county-facebook-support-group"
+ ],
+ "grief-woodshop-nights-for-men": [
+  "grief-widowers-breakfast",
+  "men-shed-workshop"
+ ],
+ "grief-what-to-say-evening": [
+  "grief-listening-text-line",
+  "grief-trail-walk-group"
+ ],
+ "grief-lament-psalms-study": [
+  "grief-psalms-for-sleepless-nights",
+  "grief-trail-walk-group"
+ ],
+ "grief-easter-sunrise-at-cemetery": [
+  "grief-memorial-garden-for-town",
+  "grief-hard-date-cards"
+ ],
+ "immigrants-notario-fraud-live": [
+  "immigrants-doj-recognized-site",
+  "immigrants-letter-photo-line"
+ ],
+ "immigrants-refugee-cosponsor-team": [
+  "immigrants-supper-swap",
+  "immigrants-retiree-video-partners"
+ ],
+ "immigrants-neighbor-teaches-phrases": [
+  "immigrants-language-exchange-pairs",
+  "immigrants-home-recipes-class"
+ ],
+ "immigrants-first-winter-night": [
+  "immigrants-supper-swap",
+  "immigrants-letter-photo-line"
+ ],
+ "immigrants-student-arrival-day": [
+  "immigrants-student-friendship-family",
+  "immigrants-language-exchange-pairs"
+ ],
+ "immigrants-welcoming-week-picnic": [
+  "immigrants-home-recipes-class",
+  "immigrants-supper-swap"
+ ],
+ "immigrants-refugee-day-sabbath": [
+  "immigrants-supper-swap",
+  "immigrants-retiree-video-partners"
+ ],
+ "immigrants-disaster-back-home-night": [
+  "immigrants-whatsapp-help-channel",
+  "immigrants-supper-swap"
+ ],
+ "immigrants-break-room-english": [
+  "immigrants-whatsapp-voice-english",
+  "immigrants-laundromat-english"
+ ],
+ "immigrants-banking-without-fees": [
+  "immigrants-whatsapp-help-channel",
+  "immigrants-letter-photo-line"
+ ],
+ "immigrants-many-languages-sabbath": [
+  "immigrants-heart-language-class",
+  "immigrants-language-exchange-pairs"
+ ],
+ "immigrants-mobile-consulate-day": [
+  "immigrants-letter-photo-line",
+  "immigrants-whatsapp-help-channel"
+ ],
+ "immigrants-family-papers-folder": [
+  "immigrants-letter-photo-line",
+  "immigrants-citizenship-interview-practice"
+ ],
+ "immigrants-clubhouse-english-classes": [
+  "immigrants-laundromat-english",
+  "immigrants-whatsapp-voice-english"
+ ],
+ "immigrants-citizenship-application-day": [
+  "immigrants-citizenship-interview-practice",
+  "immigrants-doj-recognized-site"
+ ],
+ "immigrants-newcomer-resource-fair": [
+  "immigrants-whatsapp-help-channel",
+  "immigrants-letter-photo-line"
+ ],
+ "immigrants-state-park-family-day": [
+  "immigrants-supper-swap",
+  "immigrants-home-vegetable-plots"
+ ],
+ "immigrants-town-history-walk": [
+  "immigrants-home-recipes-class",
+  "immigrants-supper-swap"
+ ],
+ "immigrants-listening-night": [
+  "immigrants-home-recipes-class",
+  "immigrants-retiree-video-partners"
+ ],
+ "jobs-money-savings-challenge-texts": [
+  "jobs-money-envelope-budget-kits",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-debt-free-christmas-course": [
+  "jobs-money-money-coaching-over-coffee",
+  "jobs-money-nonprofit-debt-clinic"
+ ],
+ "jobs-money-thirty-days-of-enough": [
+  "jobs-money-envelope-budget-kits",
+  "jobs-money-neighborhood-time-bank"
+ ],
+ "jobs-money-credit-report-night": [
+  "jobs-money-nonprofit-debt-clinic",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-side-hustle-score-evenings": [
+  "jobs-money-spanish-entrepreneurs-circle",
+  "workplaces-retiree-business-mentors"
+ ],
+ "jobs-money-licensing-exam-study-group": [
+  "first-responders-aides-to-nurses-study-group",
+  "education-clep-study-nights"
+ ],
+ "jobs-money-paid-apprenticeship-night": [
+  "jobs-money-resume-review-by-email",
+  "jobs-money-practice-interviews-zoom"
+ ],
+ "jobs-money-lower-your-bills-night": [
+  "jobs-money-benefits-checkup-hour",
+  "jobs-money-notary-paperwork-hour"
+ ],
+ "jobs-money-safe-bank-account-night": [
+  "jobs-money-envelope-budget-kits",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-rideshare-driver-tax-night": [
+  "jobs-money-evening-sunday-tax-site",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-home-kitchen-business-night": [
+  "jobs-money-spanish-entrepreneurs-circle",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-proverbs-and-your-paycheck": [
+  "jobs-money-money-coaching-over-coffee",
+  "jobs-money-envelope-budget-kits"
+ ],
+ "jobs-money-labor-day-blessing-of-work": [
+  "jobs-money-between-jobs-breakfast",
+  "workplaces-tradespeople-breakfast"
+ ],
+ "jobs-money-debt-and-grace-evening": [
+  "jobs-money-money-coaching-over-coffee",
+  "jobs-money-nonprofit-debt-clinic"
+ ],
+ "jobs-money-joseph-comeback-zoom-study": [
+  "jobs-money-between-jobs-breakfast",
+  "jobs-money-three-coffees-career-mentor"
+ ],
+ "jobs-money-pitch-night-microgrants": [
+  "jobs-money-spanish-entrepreneurs-circle",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-save-and-match-circle": [
+  "jobs-money-envelope-budget-kits",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "jobs-money-first-home-readiness-course": [
+  "jobs-money-money-coaching-over-coffee",
+  "jobs-money-nonprofit-debt-clinic"
+ ],
+ "jobs-money-ten-employer-hiring-day": [
+  "jobs-money-practice-interviews-zoom",
+  "jobs-money-resume-review-by-email"
+ ],
+ "education-library-cards-at-market": [
+  "education-science-cafe",
+  "education-all-ages-chess-club"
+ ],
+ "education-neighborhood-skill-swap": [
+  "education-all-ages-chess-club",
+  "jobs-money-neighborhood-time-bank"
+ ],
+ "education-grown-ups-spelling-bee": [
+  "education-speaking-up-club",
+  "education-science-cafe"
+ ],
+ "education-adult-graduates-celebration": [
+  "education-back-to-school-study-buddies",
+  "education-ged-study-nights"
+ ],
+ "education-read-the-bible-first-time": [
+  "education-mark-for-new-readers",
+  "personal-evangelism-bible-app-plan-friend"
+ ],
+ "education-college-textbook-swap": [
+  "education-first-gen-college-mentors",
+  "young-adults-exam-morning-prayer-text"
+ ],
+ "education-online-course-together": [
+  "education-science-cafe",
+  "education-speaking-up-club"
+ ],
+ "education-senior-center-history-class": [
+  "seniors-family-history-afternoons",
+  "seniors-retirees-teach-at-library"
+ ],
+ "education-tutor-training-safe": [
+  "education-ten-trained-reading-tutors",
+  "education-mark-for-new-readers"
+ ],
+ "education-digital-basics-working-age": [
+  "education-ged-study-nights",
+  "education-back-to-school-study-buddies"
+ ],
+ "education-math-for-the-trades": [
+  "education-ged-study-nights",
+  "education-clep-study-nights"
+ ],
+ "education-fafsa-nights": [
+  "education-first-gen-college-mentors",
+  "education-parents-homework-questions"
+ ],
+ "education-ready-for-kindergarten": [
+  "education-preschool-learning-texts",
+  "children-preschool-parent-club"
+ ],
+ "education-history-day-trips": [
+  "education-science-cafe",
+  "seniors-family-history-afternoons"
+ ],
+ "education-spanish-from-neighbors": [
+  "immigrants-language-exchange-pairs",
+  "education-science-cafe"
+ ],
+ "education-bible-world-on-zoom": [
+  "education-mark-for-new-readers",
+  "personal-evangelism-bible-app-plan-friend"
+ ],
+ "education-night-school-mini-courses": [
+  "education-science-cafe",
+  "education-speaking-up-club"
+ ],
+ "education-one-book-one-town": [
+  "education-science-cafe",
+  "literature-book-by-topic-text"
+ ],
+ "prison-christmas-card-every-cell": [
+  "prison-worship-inside",
+  "prison-pen-pal-letters"
+ ],
+ "prison-thank-jail-staff": [
+  "prison-worship-inside",
+  "prison-pen-pal-letters"
+ ],
+ "prison-volunteer-clearance": [
+  "prison-worship-inside",
+  "prison-book-club-inside"
+ ],
+ "prison-license-restoration": [
+  "prison-welcome-home-supper",
+  "prison-circle-of-four"
+ ],
+ "prison-teach-a-class-inside": [
+  "prison-book-club-inside",
+  "prison-worship-inside"
+ ],
+ "prison-recorded-bedtime-stories": [
+  "prison-caregiver-supper",
+  "prison-postcard-writing-night"
+ ],
+ "prison-christmas-gift-from-parent": [
+  "prison-caregiver-supper",
+  "prison-agency-mentors-children"
+ ],
+ "prison-baptism-class-inside": [
+  "prison-worship-inside",
+  "prison-bible-lesson-grading"
+ ],
+ "prison-art-from-inside": [
+  "prison-welcome-home-supper",
+  "prison-friend-in-the-pew"
+ ],
+ "prison-record-clearing-clinic": [
+  "prison-welcome-home-supper",
+  "prison-probation-lobby-coffee"
+ ],
+ "prison-fair-chance-breakfast": [
+  "prison-reentry-business-mentors",
+  "workplaces-owners-roundtable"
+ ],
+ "prison-first-paycheck-projects": [
+  "prison-welcome-home-supper",
+  "prison-reentry-business-mentors"
+ ],
+ "veterans-diner-coffee-tab": [
+  "veterans-buddy-check-calls",
+  "veterans-veterans-family-hike"
+ ],
+ "veterans-veterans-home-valentines": [
+  "veterans-va-chapel-escorts",
+  "veterans-oral-history-recordings"
+ ],
+ "veterans-headstone-cleaning": [
+  "veterans-oral-history-recordings",
+  "veterans-woodshop-flag-cases"
+ ],
+ "veterans-honor-flight-homecoming": [
+  "veterans-oral-history-recordings",
+  "veterans-va-van-drivers"
+ ],
+ "veterans-military-resume-night": [
+  "veterans-career-transition-mentors",
+  "jobs-money-resume-review-by-email"
+ ],
+ "veterans-save-training-night": [
+  "veterans-buddy-check-calls",
+  "veterans-crisis-line-cards"
+ ],
+ "veterans-welcome-veterans-training": [
+  "veterans-buddy-check-calls",
+  "veterans-veterans-writing-group"
+ ],
+ "veterans-psalms-for-veterans": [
+  "veterans-buddy-check-calls",
+  "veterans-veterans-writing-group"
+ ],
+ "veterans-memorial-day-prayer": [
+  "veterans-oral-history-recordings",
+  "veterans-veterans-family-hike"
+ ],
+ "veterans-guard-homecoming-help": [
+  "veterans-military-families-facebook-group",
+  "veterans-veterans-family-hike"
+ ],
+ "veterans-veterans-sabbath": [
+  "veterans-buddy-check-calls",
+  "veterans-veterans-writing-group"
+ ],
+ "veterans-bedtime-story-videos": [
+  "veterans-deployment-help-line",
+  "veterans-military-parents-night-out"
+ ],
+ "veterans-va-claims-night": [
+  "veterans-va-online-help",
+  "veterans-buddy-check-calls"
+ ],
+ "veterans-military-mental-health-first-aid": [
+  "veterans-buddy-check-calls",
+  "veterans-veteran-caregivers-circle"
+ ],
+ "veterans-gold-star-remembrance": [
+  "veterans-veterans-family-hike",
+  "veterans-military-families-facebook-group"
+ ],
+ "veterans-deployed-thanksgiving-table": [
+  "veterans-military-parents-night-out",
+  "veterans-military-families-facebook-group"
+ ],
+ "veterans-mobile-vet-center-visit": [
+  "veterans-buddy-check-calls",
+  "veterans-va-online-help"
+ ],
+ "veterans-veterans-stand-down": [
+  "veterans-transitional-house-adoption",
+  "veterans-va-van-drivers"
+ ],
+ "veterans-moral-injury-circle": [
+  "veterans-veterans-writing-group",
+  "veterans-veteran-caregivers-circle"
+ ],
+ "veterans-couples-retreat": [
+  "veterans-veterans-family-hike",
+  "veterans-military-spouses-brunch"
+ ],
+ "veterans-honor-flight-guardians": [
+  "veterans-oral-history-recordings",
+  "veterans-va-chapel-escorts"
+ ],
+ "veterans-discharge-upgrade-clinic": [
+  "veterans-va-online-help",
+  "veterans-buddy-check-calls"
+ ],
+ "veterans-veterans-hiring-fair": [
+  "veterans-career-transition-mentors",
+  "jobs-money-resume-review-by-email"
+ ],
+ "veterans-adaptive-kayak-day": [
+  "veterans-fly-tying-nights",
+  "veterans-veterans-family-hike"
+ ],
+ "disability-paid-accessibility-audit": [
+  "disability-accessible-sabbath-walks",
+  "disability-phone-accessibility-clinic"
+ ],
+ "disability-deaf-led-asl-class": [
+  "disability-asl-coffee-chat",
+  "disability-deaf-led-asl-zoom-study"
+ ],
+ "disability-adaptive-bike-day": [
+  "disability-accessible-sabbath-walks",
+  "disability-special-olympics-coaches"
+ ],
+ "disability-all-terrain-wheelchair-gift": [
+  "disability-accessible-sabbath-walks",
+  "sports-outdoors-loaner-binocular-bird-walks"
+ ],
+ "disability-special-needs-prom": [
+  "disability-idd-friendship-club",
+  "disability-respite-buddy-afternoon"
+ ],
+ "disability-siblings-club": [
+  "disability-respite-buddy-afternoon",
+  "disability-special-needs-parent-group"
+ ],
+ "disability-sensory-bags-town-events": [
+  "disability-sensory-swim-night",
+  "disability-special-needs-parent-group"
+ ],
+ "disability-iep-binder-night": [
+  "disability-parent-to-parent-mentors",
+  "disability-parents-zoom-circle"
+ ],
+ "disability-future-planning-night": [
+  "disability-special-needs-parent-group",
+  "disability-parents-zoom-circle"
+ ],
+ "disability-picture-recipe-cooking": [
+  "disability-idd-friendship-club",
+  "disability-idd-bible-study"
+ ],
+ "disability-wheelchair-tune-up-day": [
+  "disability-accessible-sabbath-walks",
+  "disability-phone-accessibility-clinic"
+ ],
+ "disability-disability-led-sabbath": [
+  "disability-asl-interpreted-worship",
+  "disability-deaf-led-asl-zoom-study"
+ ],
+ "disability-beeping-egg-hunt": [
+  "disability-guide-rail-bowling-nights",
+  "disability-sabbath-school-buddies"
+ ],
+ "disability-sensory-friendly-film": [
+  "disability-sensory-swim-night",
+  "disability-quiet-sensory-worship"
+ ],
+ "disability-wheelchair-basketball-game": [
+  "disability-special-olympics-coaches",
+  "disability-accessible-sabbath-walks"
+ ],
+ "disability-switch-adapted-toy-workshop": [
+  "disability-respite-buddy-afternoon",
+  "disability-parent-to-parent-mentors"
+ ],
+ "women-galentines-brunch": [
+  "women-coffee-shop-study-empty-chair",
+  "women-front-porch-coffee"
+ ],
+ "women-care-home-carnations": [
+  "women-care-home-hair-and-nails",
+  "seniors-hymns-by-request"
+ ],
+ "women-phone-safety-night": [
+  "jobs-money-scam-proof-phone-clinic",
+  "women-sandwich-generation-lunch"
+ ],
+ "women-friend-making-night": [
+  "women-front-porch-coffee",
+  "women-coffee-shop-study-empty-chair"
+ ],
+ "women-mobile-mammogram-day": [
+  "women-health-questions-live",
+  "women-chemo-companions"
+ ],
+ "women-menopause-evening": [
+  "women-health-questions-live",
+  "women-strength-class-over-50"
+ ],
+ "women-postpartum-recovery-class": [
+  "women-new-moms-text-line",
+  "women-breastfeeding-drop-in-circle"
+ ],
+ "women-self-defense-course": [
+  "women-strength-class-over-50",
+  "women-one-minute-morning-devotional"
+ ],
+ "women-money-evenings-over-50": [
+  "jobs-money-money-coaching-over-coffee",
+  "women-sandwich-generation-lunch"
+ ],
+ "women-try-a-trade-day": [
+  "women-hardware-store-tool-night",
+  "jobs-money-resume-review-by-email"
+ ],
+ "women-retreat-with-scholarships": [
+  "women-front-porch-coffee",
+  "women-kitchen-table-mentoring"
+ ],
+ "women-women-of-the-bible-library": [
+  "women-coffee-shop-study-empty-chair",
+  "women-walk-and-listen-book-club"
+ ],
+ "women-town-boards-evening": [
+  "women-women-business-owners-breakfast",
+  "women-kitchen-table-mentoring"
+ ],
+ "women-spanish-childbirth-class": [
+  "women-new-moms-text-line",
+  "families-spanish-parents-whatsapp"
+ ],
+ "women-back-to-work-workshop": [
+  "women-kitchen-table-mentoring",
+  "jobs-money-resume-review-by-email"
+ ],
+ "women-women-makers-market": [
+  "women-women-business-owners-breakfast",
+  "women-front-porch-coffee"
+ ],
+ "women-night-safety-walk": [
+  "women-front-porch-coffee",
+  "women-walk-and-listen-book-club"
+ ],
+ "women-tea-and-faith-stories": [
+  "women-coffee-shop-study-empty-chair",
+  "women-walk-and-listen-book-club"
+ ],
+ "women-womens-sabbath-with-guests": [
+  "women-coffee-shop-study-empty-chair",
+  "women-front-porch-coffee"
+ ],
+ "women-when-mothers-day-hurts": [
+  "women-front-porch-coffee",
+  "women-one-minute-morning-devotional"
+ ],
+ "women-career-mentoring-circles": [
+  "women-kitchen-table-mentoring",
+  "women-sandwich-generation-lunch"
+ ],
+ "women-questions-women-ask-god": [
+  "women-coffee-shop-study-empty-chair",
+  "women-one-minute-morning-devotional"
+ ],
+ "women-ask-for-the-raise-workshop": [
+  "women-kitchen-table-mentoring",
+  "women-women-business-owners-breakfast"
+ ],
+ "men-health-van-at-car-show": [
+  "men-sunday-cruise-in",
+  "health-barbershop-bp-checks"
+ ],
+ "men-pinewood-derby-library": [
+  "men-town-dads-facebook-group",
+  "single-parents-single-dads-pancakes"
+ ],
+ "men-rookie-dads-class": [
+  "men-new-dad-weekly-texts",
+  "men-town-dads-facebook-group"
+ ],
+ "men-hospice-patio-benches": [
+  "men-shed-workshop",
+  "men-care-home-men-visits"
+ ],
+ "men-canoe-campfire-trip": [
+  "men-fire-pit-honest-questions",
+  "men-ten-minute-commute-podcast"
+ ],
+ "men-sunday-welding-class": [
+  "men-shed-workshop",
+  "men-fire-pit-honest-questions"
+ ],
+ "men-fall-furnace-checks": [
+  "men-thursday-supper-living-alone",
+  "men-care-home-men-visits"
+ ],
+ "men-restore-town-basketball-court": [
+  "men-home-build-standing-crew",
+  "sports-outdoors-saturday-late-basketball"
+ ],
+ "men-after-retirement-purpose": [
+  "men-shed-workshop",
+  "men-twelve-breakfasts-mentoring"
+ ],
+ "men-work-stress-evenings": [
+  "men-talk-circle-trained-facilitators",
+  "men-twelve-breakfasts-mentoring"
+ ],
+ "men-overseas-build-trip": [
+  "men-home-build-standing-crew",
+  "men-fire-pit-honest-questions"
+ ],
+ "men-letters-to-my-kids-night": [
+  "men-town-dads-facebook-group",
+  "men-new-dad-weekly-texts"
+ ],
+ "men-dads-dinner-class": [
+  "men-town-dads-facebook-group",
+  "men-new-dad-weekly-texts"
+ ],
+ "men-december-toy-ride": [
+  "men-sunday-cruise-in",
+  "men-strava-club-monthly-walk"
+ ],
+ "men-true-story-night": [
+  "men-fire-pit-honest-questions",
+  "men-twelve-breakfasts-mentoring"
+ ],
+ "men-spring-mower-tune-up": [
+  "men-sunday-cruise-in",
+  "men-feed-store-monday-coffee"
+ ],
+ "men-walking-moai": [
+  "men-strava-club-monthly-walk",
+  "men-six-am-diner-table"
+ ],
+ "men-town-festival-setup-crew": [
+  "men-home-build-standing-crew",
+  "men-garage-game-nights"
+ ],
+ "men-anonymous-doctor-questions": [
+  "men-checkup-buddies",
+  "men-six-am-diner-table"
+ ],
+ "men-listening-breakfast": [
+  "men-six-am-diner-table",
+  "men-twelve-breakfasts-mentoring"
+ ],
+ "personal-evangelism-three-minute-story": [
+  "personal-evangelism-read-retell-ask",
+  "personal-evangelism-shadow-three-studies"
+ ],
+ "personal-evangelism-ask-dont-tell": [
+  "personal-evangelism-read-retell-ask",
+  "personal-evangelism-questions-round-table"
+ ],
+ "personal-evangelism-zoom-bible-101": [
+  "personal-evangelism-bible-app-plan-friend",
+  "personal-evangelism-bible-question-texts"
+ ],
+ "personal-evangelism-chosen-watch-circle": [
+  "personal-evangelism-doubters-cafe",
+  "personal-evangelism-steps-to-christ-pairs"
+ ],
+ "personal-evangelism-lakeside-baptism": [
+  "personal-evangelism-guests-class",
+  "small-groups-summer-sunday-park-picnic"
+ ],
+ "personal-evangelism-homecoming-sabbath": [
+  "personal-evangelism-former-members-coffee",
+  "interests-returning-online-circle"
+ ],
+ "personal-evangelism-bible-marking": [
+  "public-evangelism-bible-marking-workshop",
+  "personal-evangelism-read-retell-ask"
+ ],
+ "personal-evangelism-honest-answers": [
+  "personal-evangelism-questions-round-table",
+  "personal-evangelism-minute-video-answers"
+ ],
+ "personal-evangelism-christs-method-course": [
+  "personal-evangelism-read-retell-ask",
+  "personal-evangelism-steps-to-christ-pairs"
+ ],
+ "personal-evangelism-nextdoor-psalms-evening": [
+  "personal-evangelism-prayer-to-psalms",
+  "small-groups-front-porch-group-evenings"
+ ],
+ "personal-evangelism-kind-answers-at-work": [
+  "workplaces-coworker-breakfast",
+  "personal-evangelism-questions-round-table"
+ ],
+ "personal-evangelism-camp-meeting-friend": [
+  "personal-evangelism-guests-class",
+  "personal-evangelism-steps-to-christ-pairs"
+ ],
+ "personal-evangelism-heritage-weekend": [
+  "personal-evangelism-first-year-friend",
+  "personal-evangelism-guests-class"
+ ],
+ "personal-evangelism-district-study-school": [
+  "personal-evangelism-shadow-three-studies",
+  "personal-evangelism-read-retell-ask"
+ ],
+ "personal-evangelism-cinema-seats-chosen": [
+  "personal-evangelism-doubters-cafe",
+  "personal-evangelism-guests-class"
+ ],
+ "personal-evangelism-sharing-faith-retreat": [
+  "personal-evangelism-read-retell-ask",
+  "personal-evangelism-shadow-three-studies"
+ ],
+ "personal-evangelism-study-friends-supper": [
+  "personal-evangelism-guests-class",
+  "personal-evangelism-doubters-cafe"
+ ],
+ "personal-evangelism-bible-stories-aloud": [
+  "personal-evangelism-whatsapp-voice-study",
+  "personal-evangelism-dawn-diner-study"
+ ],
+ "personal-evangelism-faith-online-workshop": [
+  "personal-evangelism-minute-video-answers",
+  "personal-evangelism-faith-story-videos"
+ ],
+ "public-evangelism-door-hanger-invitation-walk": [
+  "interests-follow-up-pairs-three-each",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-honest-ads-messenger-signup": [
+  "public-evangelism-daniel-21-days-by-text",
+  "personal-evangelism-bible-question-texts"
+ ],
+ "public-evangelism-daniel-commute-podcast": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-thirty-revelation-videos": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "personal-evangelism-minute-video-answers"
+ ],
+ "public-evangelism-whatsapp-voice-prophecy-spanish": [
+  "interests-spanish-requests-pair",
+  "immigrants-heart-language-class"
+ ],
+ "public-evangelism-retirement-community-daniel": [
+  "sabbath-school-branch-school-senior-residence",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-daniel-statue-fair-booth": [
+  "public-evangelism-daniel-21-days-by-text",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-tabernacle-replica-weekend": [
+  "public-evangelism-bible-marking-workshop",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-revelation-art-exhibit": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-hymn-stories-concert": [
+  "music-arts-bandstand-hymn-sing",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-loma-linda-longevity-nights": [
+  "health-home-supper-club",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-creation-science-night": [
+  "small-groups-faith-and-science-circle",
+  "personal-evangelism-doubters-cafe"
+ ],
+ "public-evangelism-christmas-prophecies-evenings": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-bible-marking-workshop"
+ ],
+ "public-evangelism-jesus-last-week-evenings": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-bible-marking-workshop"
+ ],
+ "public-evangelism-two-church-district-simulcast": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-commuter-road-digital-billboard": [
+  "public-evangelism-daniel-21-days-by-text",
+  "personal-evangelism-bible-question-texts"
+ ],
+ "public-evangelism-summer-tent-on-town-green": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "small-groups-front-porch-group-evenings"
+ ],
+ "public-evangelism-honest-postcards-every-home": [
+  "public-evangelism-daniel-21-days-by-text",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-revelation-read-aloud-park": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-weekly-newspaper-bible-column"
+ ],
+ "public-evangelism-rides-to-every-night": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "transport-sabbath-ride-line"
+ ],
+ "public-evangelism-soup-supper-before-seminar": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "personal-evangelism-questions-round-table"
+ ],
+ "public-evangelism-missed-night-catch-up": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-anonymous-text-questions": [
+  "personal-evangelism-bible-question-texts",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-interpretation-headsets": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "immigrants-heart-language-class"
+ ],
+ "public-evangelism-morning-and-evening-sessions": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-listen-from-your-car-fm": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-invitation-practice-five-cards": [
+  "interests-follow-up-pairs-three-each",
+  "public-evangelism-seminar-in-a-box-kit"
+ ],
+ "public-evangelism-train-two-lay-speakers": [
+  "public-evangelism-seminar-in-a-box-kit",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-bible-apps-tools-night": [
+  "personal-evangelism-bible-art-evening",
+  "personal-evangelism-bible-app-plan-friend"
+ ],
+ "public-evangelism-two-phone-media-team": [
+  "public-evangelism-seminar-in-a-box-kit",
+  "personal-evangelism-minute-video-answers"
+ ],
+ "public-evangelism-honest-ad-workshop-zoom": [
+  "public-evangelism-seminar-in-a-box-kit",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-teen-led-daniel-nights": [
+  "youth-sabbath-living-room-group",
+  "youth-coffee-shop-bible-study"
+ ],
+ "public-evangelism-how-we-got-the-bible-evening": [
+  "public-evangelism-bible-marking-workshop",
+  "personal-evangelism-bible-question-texts"
+ ],
+ "public-evangelism-member-prophecy-refresher": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "interests-follow-up-pairs-three-each"
+ ],
+ "public-evangelism-living-room-watch-parties": [
+  "small-groups-midweek-sabbath-school-home",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-series-graduation-dinner": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "personal-evangelism-guests-class"
+ ],
+ "public-evangelism-six-week-community-choir": [
+  "music-arts-shape-note-singing",
+  "music-arts-bandstand-hymn-sing"
+ ],
+ "public-evangelism-revelation-discord-server": [
+  "young-adults-local-discord-server",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "public-evangelism-same-breakout-every-night": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "media-self-paced-course-with-mentor"
+ ],
+ "public-evangelism-one-year-reunion-picnic": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "small-groups-summer-sunday-park-picnic"
+ ],
+ "public-evangelism-same-table-same-host": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "personal-evangelism-questions-round-table"
+ ],
+ "public-evangelism-guests-on-the-team": [
+  "personal-evangelism-guests-class",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-walk-before-the-seminar": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "health-office-park-lunch-walk"
+ ],
+ "public-evangelism-hotel-conference-room-series": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-bible-marking-workshop"
+ ],
+ "public-evangelism-public-access-cable-series": [
+  "public-evangelism-weekly-newspaper-bible-column",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "public-evangelism-three-pastors-revelation-panel": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-weekly-newspaper-bible-column"
+ ],
+ "public-evangelism-draw-the-prophecy-timeline": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-bible-marking-workshop"
+ ],
+ "public-evangelism-lifelong-learning-daniel-course": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "seniors-retirees-teach-at-library"
+ ],
+ "public-evangelism-snow-night-online-backup": [
+  "public-evangelism-monthly-prophecy-cafe",
+  "public-evangelism-daniel-21-days-by-text"
+ ],
+ "hospitality-greeter-first-sixty-seconds": [
+  "hospitality-host-sits-with-guest",
+  "hospitality-late-arrival-host"
+ ],
+ "hospitality-pay-a-secret-guest": [
+  "hospitality-host-sits-with-guest",
+  "hospitality-weekday-walk-through"
+ ],
+ "hospitality-year-end-guest-cards": [
+  "hospitality-midweek-dinner-out",
+  "hospitality-newcomers-sabbath-school"
+ ],
+ "hospitality-newcomers-lunch-questions": [
+  "hospitality-newcomers-sabbath-school",
+  "hospitality-midweek-dinner-out"
+ ],
+ "hospitality-historic-tour-open-house": [
+  "hospitality-weekday-walk-through",
+  "hospitality-newcomers-sabbath-school"
+ ],
+ "hospitality-train-host-families": [
+  "hospitality-book-a-sabbath-lunch",
+  "hospitality-lunch-built-around-guests"
+ ],
+ "hospitality-guests-of-the-year-picnic": [
+  "hospitality-midweek-dinner-out",
+  "hospitality-lunch-built-around-guests"
+ ],
+ "neighbors-porch-concert": [
+  "neighbors-front-yard-thursdays",
+  "neighbors-street-group-chat"
+ ],
+ "neighbors-parking-thank-you": [
+  "neighbors-street-group-chat",
+  "neighbors-street-skills-list"
+ ],
+ "neighbors-first-winter-kit": [
+  "neighbors-street-group-chat",
+  "neighbors-block-hosts"
+ ],
+ "neighbors-patio-vespers": [
+  "neighbors-front-yard-thursdays",
+  "sabbath-rest-street-sunset-supper"
+ ],
+ "neighbors-newcomers-supper": [
+  "neighbors-street-group-chat",
+  "neighbors-block-hosts"
+ ],
+ "neighbors-history-night": [
+  "neighbors-street-group-chat",
+  "neighbors-neighbor-mini-grants"
+ ],
+ "neighbors-free-stuff-day": [
+  "neighbors-street-skills-list",
+  "neighbors-street-group-chat"
+ ],
+ "neighbors-one-question-card": [
+  "neighbors-street-group-chat",
+  "neighbors-neighbor-mini-grants"
+ ],
+ "neighbors-love-your-neighbor-study": [
+  "small-groups-front-porch-group-evenings",
+  "neighbors-porch-office-hours"
+ ],
+ "neighbors-church-open-house": [
+  "neighbors-porch-office-hours",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "neighbors-neighboring-course": [
+  "neighbors-block-hosts",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "neighbors-progressive-dinner": [
+  "neighbors-cul-de-sac-supper",
+  "neighbors-street-group-chat"
+ ],
+ "neighbors-neighbor-disputes-class": [
+  "neighbors-street-group-chat",
+  "neighbors-nextdoor-helper"
+ ],
+ "neighbors-new-development-welcome": [
+  "neighbors-street-group-chat",
+  "neighbors-block-hosts"
+ ],
+ "neighbors-gifts-map": [
+  "neighbors-neighbor-mini-grants",
+  "neighbors-block-hosts"
+ ],
+ "neighbors-apartment-welcome-week": [
+  "neighbors-clubhouse-coffee",
+  "neighbors-street-group-chat"
+ ],
+ "neighbors-neighborhood-trivia-night": [
+  "neighbors-street-group-chat",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "neighbors-kitchen-table-town-talks": [
+  "neighbors-nextdoor-helper",
+  "neighbors-neighbor-mini-grants"
+ ],
+ "music-arts-phone-photo-walk": [
+  "media-town-photo-calendar",
+  "music-arts-park-sketch-group"
+ ],
+ "music-arts-hymn-stories-evening": [
+  "music-arts-bandstand-hymn-sing",
+  "music-arts-shape-note-singing"
+ ],
+ "music-arts-psalm-sketch-challenge": [
+  "music-arts-park-sketch-group",
+  "media-town-photo-calendar"
+ ],
+ "music-arts-art-supply-swap": [
+  "music-arts-cocoa-paint-night",
+  "music-arts-park-sketch-group"
+ ],
+ "music-arts-write-your-own-psalm": [
+  "music-arts-songwriting-circle",
+  "music-arts-hand-lettering-class"
+ ],
+ "music-arts-no-audition-choir": [
+  "music-arts-bandstand-hymn-sing",
+  "music-arts-shape-note-singing"
+ ],
+ "music-arts-amateur-art-show": [
+  "music-arts-park-sketch-group",
+  "music-arts-cocoa-paint-night"
+ ],
+ "music-arts-town-short-film-contest": [
+  "music-arts-cafe-open-mic",
+  "media-town-photo-calendar"
+ ],
+ "music-arts-adult-keyboard-class": [
+  "music-arts-piano-practice-hours",
+  "music-arts-second-chance-band"
+ ],
+ "music-arts-psalm-23-art-exhibit": [
+  "music-arts-park-sketch-group",
+  "music-arts-cocoa-paint-night"
+ ],
+ "music-arts-parking-lot-chalk-festival": [
+  "music-arts-cocoa-paint-night",
+  "music-arts-park-sketch-group"
+ ],
+ "music-arts-learn-to-sew-nights": [
+  "music-arts-give-away-quilt-circle",
+  "clothing-practical-open-sewing-room"
+ ],
+ "music-arts-library-instrument-petting-zoo": [
+  "music-arts-library-ukuleles",
+  "music-arts-piano-practice-hours"
+ ],
+ "music-arts-town-history-documentary": [
+  "music-arts-library-film-club",
+  "seniors-family-history-afternoons"
+ ],
+ "music-arts-sensory-friendly-concert": [
+  "disability-sensory-swim-night",
+  "disability-quiet-sensory-worship"
+ ],
+ "music-arts-neighborhood-porchfest": [
+  "music-arts-park-bluegrass-jam",
+  "neighbors-front-yard-thursdays"
+ ],
+ "music-arts-community-mural": [
+  "music-arts-cocoa-paint-night",
+  "music-arts-park-sketch-group"
+ ],
+ "music-arts-all-ages-community-musical": [
+  "music-arts-second-chance-band",
+  "music-arts-clean-improv-workshop"
+ ],
+ "music-arts-summer-park-concerts": [
+  "music-arts-second-chance-band",
+  "music-arts-park-bluegrass-jam"
+ ],
+ "music-arts-gospel-choir-weekend": [
+  "music-arts-bandstand-hymn-sing",
+  "music-arts-shape-note-singing"
+ ],
+ "music-arts-two-sunday-folk-school": [
+  "music-arts-give-away-quilt-circle",
+  "music-arts-hand-lettering-class"
+ ],
+ "music-arts-latin-american-music-night": [
+  "music-arts-cafe-open-mic",
+  "music-arts-park-bluegrass-jam"
+ ],
+ "sports-outdoors-family-fishing-morning": [
+  "sports-outdoors-loaner-binocular-bird-walks",
+  "sports-outdoors-monthly-disc-golf"
+ ],
+ "sports-outdoors-adaptive-fishing-pier": [
+  "veterans-fly-tying-nights",
+  "disability-accessible-sabbath-walks"
+ ],
+ "sports-outdoors-church-lawn-first-campout": [
+  "sports-outdoors-campground-campfire-vespers",
+  "children-junior-naturalist-walks"
+ ],
+ "sports-outdoors-full-moon-snowshoe": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "sports-outdoors-loaner-binocular-bird-walks"
+ ],
+ "sports-outdoors-outfitter-paddle-day": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "sports-outdoors-climbing-gym-beginners"
+ ],
+ "sports-outdoors-beginner-geocaching": [
+  "sports-outdoors-monthly-disc-golf",
+  "sports-outdoors-hike-a-week-facebook-group"
+ ],
+ "sports-outdoors-thanksgiving-fun-run": [
+  "sports-outdoors-coffee-shop-run-club",
+  "sports-outdoors-hike-a-week-facebook-group"
+ ],
+ "sports-outdoors-spring-kite-day": [
+  "sports-outdoors-pavilion-cornhole-league",
+  "children-junior-naturalist-walks"
+ ],
+ "sports-outdoors-sledding-hill-cocoa": [
+  "children-snow-day-open-gym",
+  "sports-outdoors-hike-a-week-facebook-group"
+ ],
+ "sports-outdoors-free-community-skate": [
+  "sports-outdoors-beginner-pickleball-hour",
+  "youth-saturday-night-game-night"
+ ],
+ "sports-outdoors-old-fashioned-field-day": [
+  "sports-outdoors-pavilion-cornhole-league",
+  "sports-outdoors-beginner-pickleball-hour"
+ ],
+ "sports-outdoors-new-years-first-day-hike": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "sports-outdoors-loaner-binocular-bird-walks"
+ ],
+ "sports-outdoors-big-game-watch-party": [
+  "sports-outdoors-town-rec-league-team",
+  "sports-outdoors-beginner-pickleball-hour"
+ ],
+ "sports-outdoors-map-compass-evenings": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "sports-outdoors-loaner-binocular-bird-walks"
+ ],
+ "sports-outdoors-wilderness-first-aid-course": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "creation-care-monthly-trail-crew"
+ ],
+ "sports-outdoors-group-ski-day": [
+  "sports-outdoors-hike-a-week-facebook-group",
+  "sports-outdoors-climbing-gym-beginners"
+ ],
+ "sports-outdoors-hosted-trail-magic": [
+  "creation-care-monthly-trail-crew",
+  "sports-outdoors-hike-a-week-facebook-group"
+ ],
+ "sports-outdoors-athlete-faith-breakfast": [
+  "sports-outdoors-town-rec-league-team",
+  "sports-outdoors-over-40-dawn-basketball"
+ ],
+ "sports-outdoors-polar-plunge-team": [
+  "disability-special-olympics-coaches",
+  "sports-outdoors-town-rec-league-team"
+ ],
+ "sports-outdoors-beginner-archery-course": [
+  "sports-outdoors-beginner-pickleball-hour",
+  "sports-outdoors-climbing-gym-beginners"
+ ],
+ "sports-outdoors-minor-league-baseball-night": [
+  "sports-outdoors-town-rec-league-team",
+  "sports-outdoors-pavilion-cornhole-league"
+ ],
+ "sports-outdoors-mountain-bike-skills-clinic": [
+  "sports-outdoors-no-drop-sunday-ride",
+  "creation-care-monthly-trail-crew"
+ ],
+ "sports-outdoors-owl-prowl-night-walks": [
+  "sports-outdoors-loaner-binocular-bird-walks",
+  "children-junior-naturalist-walks"
+ ],
+ "sports-outdoors-first-bike-camping-overnight": [
+  "sports-outdoors-no-drop-sunday-ride",
+  "sports-outdoors-campground-campfire-vespers"
+ ],
+ "sports-outdoors-town-amazing-race": [
+  "sports-outdoors-pavilion-cornhole-league",
+  "sports-outdoors-town-rec-league-team"
+ ],
+ "sports-outdoors-gym-cafe-faith-fitness": [
+  "sports-outdoors-nordic-walking-group",
+  "sports-outdoors-coffee-shop-run-club"
+ ],
+ "sports-outdoors-bike-to-work-pit-stop": [
+  "sports-outdoors-no-drop-sunday-ride",
+  "transport-wednesday-commuter-rides"
+ ],
+ "clothing-practical-paint-a-house-sundays": [
+  "clothing-practical-tuesday-fix-it-crew",
+  "clothing-practical-adopt-a-lawn-summer"
+ ],
+ "clothing-practical-firewood-crew": [
+  "clothing-practical-snow-angels-matching",
+  "clothing-practical-adopt-a-lawn-summer"
+ ],
+ "clothing-practical-bra-fitting-day": [
+  "clothing-practical-closet-on-wheels",
+  "clothing-practical-closet-shoppers-as-volunteers"
+ ],
+ "clothing-practical-weatherize-it-yourself-kits": [
+  "clothing-practical-fix-it-video-answers",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-weatherization-aid-applications": [
+  "jobs-money-benefits-checkup-hour",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-home-maintenance-calendar-class": [
+  "clothing-practical-fix-it-video-answers",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-refinish-thrift-furniture": [
+  "clothing-practical-open-sewing-room",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-babyproofing-night": [
+  "clothing-practical-diaper-pantry-at-wic",
+  "families-new-parent-help-hours"
+ ],
+ "clothing-practical-safe-cleaners-class": [
+  "clothing-practical-fix-it-video-answers",
+  "clothing-practical-give-and-ask-group"
+ ],
+ "clothing-practical-renters-repair-request-evening": [
+  "homeless-volunteer-mediators",
+  "clothing-practical-fix-it-video-answers"
+ ],
+ "clothing-practical-chainsaw-safety-class": [
+  "disaster-relief-chainsaw-tarp-crew",
+  "disaster-relief-neighbors-join-response-team"
+ ],
+ "clothing-practical-aging-in-place-evening": [
+  "clothing-practical-tuesday-fix-it-crew",
+  "clothing-practical-snow-angels-matching"
+ ],
+ "clothing-practical-grown-up-clothing-swap": [
+  "clothing-practical-give-and-ask-group",
+  "clothing-practical-closet-on-wheels"
+ ],
+ "clothing-practical-street-fix-up-day": [
+  "neighbors-street-group-chat",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-volunteers-honor-sabbath": [
+  "clothing-practical-closet-shoppers-as-volunteers",
+  "clothing-practical-give-and-ask-group"
+ ],
+ "clothing-practical-harvest-supper-for-neighbors-helped": [
+  "clothing-practical-tuesday-fix-it-crew",
+  "clothing-practical-snow-angels-matching"
+ ],
+ "clothing-practical-forty-bags-before-easter": [
+  "clothing-practical-give-and-ask-group",
+  "clothing-practical-fix-it-video-answers"
+ ],
+ "clothing-practical-care-home-seasonal-wardrobe": [
+  "seniors-care-home-birthday-party",
+  "seniors-hand-care-hour"
+ ],
+ "clothing-practical-home-repair-apprentices": [
+  "clothing-practical-tuesday-fix-it-crew",
+  "clothing-practical-fix-it-video-answers"
+ ],
+ "clothing-practical-coat-shopping-night": [
+  "clothing-practical-thrift-store-tour",
+  "clothing-practical-closet-on-wheels"
+ ],
+ "clothing-practical-mobile-home-winter-protection": [
+  "neighbors-mobile-home-suppers",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "clothing-practical-thank-you-breakfast-for-trades": [
+  "workplaces-tradespeople-breakfast",
+  "clothing-practical-tuesday-fix-it-crew"
+ ],
+ "disaster-relief-go-bag-library-night": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-document-go-folder": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-generator-co-safety": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-cert-training-together": [
+  "disaster-relief-neighbors-join-response-team",
+  "disaster-relief-join-county-voad"
+ ],
+ "disaster-relief-flood-proof-basement": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-basement-muck-out-crew"
+ ],
+ "disaster-relief-psychological-first-aid": [
+  "disaster-relief-neighbors-join-response-team",
+  "disaster-relief-join-county-voad"
+ ],
+ "disaster-relief-pet-go-bags": [
+  "disaster-relief-street-storm-whatsapp",
+  "neighbors-lost-pet-team"
+ ],
+ "disaster-relief-laundromat-plans-spanish": [
+  "disaster-relief-street-storm-whatsapp",
+  "media-spanish-town-notices-channel"
+ ],
+ "disaster-relief-alert-signup-market-table": [
+  "disaster-relief-street-storm-whatsapp",
+  "disaster-relief-ready-neighbors-supper"
+ ],
+ "disaster-relief-emergency-manager-live": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-monthly-prep-videos": [
+  "disaster-relief-ready-neighbors-supper",
+  "media-nonprofit-leader-facebook-live"
+ ],
+ "disaster-relief-flood-map-night": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-mobile-home-storm-night": [
+  "neighbors-mobile-home-suppers",
+  "disaster-relief-window-ok-help-cards"
+ ],
+ "disaster-relief-box-fan-smoke-filters": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "disaster-relief-lost-home-circle": [
+  "disaster-relief-friend-family-after-fire",
+  "disaster-relief-rebuilding-families-suppers"
+ ],
+ "disaster-relief-open-doors-after-tragedy": [
+  "grief-listening-text-line",
+  "prayer-callback-within-hour"
+ ],
+ "disaster-relief-town-square-vigil": [
+  "grief-listening-text-line",
+  "disaster-relief-neighbors-join-response-team"
+ ],
+ "disaster-relief-one-year-later-evening": [
+  "disaster-relief-rebuilding-families-suppers",
+  "disaster-relief-ready-neighbors-supper"
+ ],
+ "disaster-relief-where-is-god-evening": [
+  "personal-evangelism-doubters-cafe",
+  "disaster-relief-neighbors-join-response-team"
+ ],
+ "disaster-relief-thank-you-sabbath": [
+  "disaster-relief-neighbors-join-response-team",
+  "disaster-relief-ready-neighbors-supper"
+ ],
+ "creation-care-state-spring-cleanup": [
+  "creation-care-adopt-a-highway",
+  "creation-care-pray-and-pick-up"
+ ],
+ "creation-care-watershed-creek-cleanup": [
+  "creation-care-creek-testing",
+  "creation-care-adopt-storm-drains"
+ ],
+ "creation-care-street-trees": [
+  "creation-care-adopt-a-young-tree",
+  "creation-care-adopt-storm-drains"
+ ],
+ "creation-care-native-seedling-giveaway": [
+  "creation-care-leave-the-leaves",
+  "creation-care-neighborhood-orchard"
+ ],
+ "creation-care-pollinator-pathway": [
+  "creation-care-leave-the-leaves",
+  "creation-care-adopt-a-highway"
+ ],
+ "creation-care-birdhouse-afternoon": [
+  "creation-care-bluebird-trail",
+  "creation-care-leave-the-leaves"
+ ],
+ "creation-care-park-bioblitz": [
+  "creation-care-creek-testing",
+  "creation-care-bluebird-trail"
+ ],
+ "creation-care-winter-bird-count": [
+  "creation-care-bluebird-trail",
+  "sports-outdoors-loaner-binocular-bird-walks"
+ ],
+ "creation-care-creation-sabbath-park": [
+  "creation-care-sabbath-nature-sketching",
+  "sabbath-rest-long-table-park-lunch"
+ ],
+ "creation-care-christmas-tree-habitat": [
+  "creation-care-adopt-a-young-tree",
+  "creation-care-monthly-trail-crew"
+ ],
+ "creation-care-pumpkin-compost-week": [
+  "creation-care-neighborhood-orchard",
+  "creation-care-leave-the-leaves"
+ ],
+ "creation-care-backyard-compost-class": [
+  "creation-care-neighborhood-orchard",
+  "creation-care-leave-the-leaves"
+ ],
+ "creation-care-rain-barrel-night": [
+  "creation-care-adopt-storm-drains",
+  "creation-care-creek-testing"
+ ],
+ "creation-care-e-waste-collection": [
+  "creation-care-buy-nothing-group",
+  "creation-care-adopt-a-highway"
+ ],
+ "creation-care-streamside-buffer": [
+  "creation-care-creek-testing",
+  "creation-care-monthly-trail-crew"
+ ],
+ "creation-care-free-swap-day": [
+  "creation-care-buy-nothing-group",
+  "creation-care-adopt-a-young-tree"
+ ],
+ "creation-care-festival-after-crew": [
+  "creation-care-plogging-club",
+  "creation-care-pray-and-pick-up"
+ ],
+ "creation-care-wildflower-seed-cards": [
+  "creation-care-adopt-storm-drains",
+  "creation-care-pray-and-pick-up"
+ ],
+ "creation-care-recycling-door-hanger": [
+  "creation-care-adopt-storm-drains",
+  "creation-care-plogging-club"
+ ],
+ "creation-care-pathfinder-creek-honor": [
+  "pathfinders-council-chooses-service",
+  "creation-care-creek-testing"
+ ],
+ "creation-care-family-nature-hunt": [
+  "creation-care-sabbath-nature-sketching",
+  "children-junior-naturalist-walks"
+ ],
+ "creation-care-balcony-garden-kits": [
+  "neighbors-clubhouse-coffee",
+  "creation-care-neighborhood-orchard"
+ ],
+ "creation-care-forgotten-cemetery": [
+  "creation-care-monthly-trail-crew",
+  "creation-care-adopt-a-highway"
+ ],
+ "creation-care-hazardous-waste-pickups": [
+  "creation-care-led-bulb-swap",
+  "clothing-practical-adopt-a-lawn-summer"
+ ],
+ "creation-care-waste-less-zoom": [
+  "creation-care-buy-nothing-group",
+  "clothing-practical-learn-to-mend-market-table"
+ ],
+ "media-aerial-town-film-gift": [
+  "media-town-photo-calendar",
+  "media-good-news-town-feed"
+ ],
+ "media-phone-video-workshop": [
+  "media-media-team-for-nonprofits",
+  "media-nonprofit-leader-facebook-live"
+ ],
+ "media-check-a-viral-post-evening": [
+  "media-good-news-town-feed",
+  "jobs-money-scam-of-the-week-video"
+ ],
+ "media-paid-college-media-intern": [
+  "media-media-team-for-nonprofits",
+  "media-teen-video-crew"
+ ],
+ "media-ask-the-town-one-question": [
+  "media-good-news-town-feed",
+  "media-nonprofit-leader-facebook-live"
+ ],
+ "media-christmas-lights-map": [
+  "media-good-news-town-feed",
+  "media-town-photo-calendar"
+ ],
+ "media-local-subreddit-ama": [
+  "media-seven-day-first-bible-emails",
+  "media-self-paced-course-with-mentor"
+ ],
+ "media-bible-in-a-year-podcast": [
+  "media-self-paced-course-with-mentor",
+  "media-lunchtime-bible-youtube-live"
+ ],
+ "media-advent-video-calendar": [
+  "media-seven-day-first-bible-emails",
+  "media-good-news-town-feed"
+ ],
+ "media-postcard-what-we-offer-online": [
+  "media-good-news-town-feed",
+  "media-lunchtime-bible-youtube-live"
+ ],
+ "media-local-history-wikipedia-edit-a-thon": [
+  "media-library-podcast-kit",
+  "media-canva-night-at-library"
+ ],
+ "media-november-online-gratitude-board": [
+  "media-good-news-town-feed",
+  "media-town-photo-calendar"
+ ],
+ "media-digital-legacy-night": [
+  "jobs-money-scam-proof-phone-clinic",
+  "media-good-news-town-feed"
+ ],
+ "media-what-ai-can-and-cannot-do": [
+  "jobs-money-scam-of-the-week-video",
+  "media-library-podcast-kit"
+ ],
+ "media-privacy-check-up-night": [
+  "jobs-money-scam-proof-phone-clinic",
+  "jobs-money-scam-of-the-week-video"
+ ],
+ "media-neighbors-virtual-choir": [
+  "media-friday-sundown-zoom-hymn-sing",
+  "music-arts-bandstand-hymn-sing"
+ ],
+ "literature-write-your-story-leaflet": [
+  "literature-neighbors-write-newsletter",
+  "literature-local-paper-book-reviews"
+ ],
+ "literature-free-ebook-local-ad": [
+  "literature-steps-thirteen-days-text",
+  "literature-book-by-topic-text"
+ ],
+ "literature-conference-lit-training": [
+  "literature-restock-and-pray-route",
+  "literature-door-hanger-book-offer"
+ ],
+ "literature-campus-finals-book-table": [
+  "literature-book-by-topic-text",
+  "young-adults-pastor-cafe-office-hours"
+ ],
+ "literature-cookbook-with-neighbors": [
+  "literature-neighbors-write-newsletter",
+  "literature-little-library-hope-shelf"
+ ],
+ "literature-steps-read-aloud-live": [
+  "literature-steps-thirteen-days-text",
+  "personal-evangelism-steps-to-christ-pairs"
+ ],
+ "literature-picture-book-story-trail": [
+  "literature-bedtime-bible-podcast",
+  "families-stroller-walk-trail"
+ ],
+ "literature-coffee-sleeve-audiobook": [
+  "literature-steps-thirteen-days-text",
+  "literature-volunteer-narrators-circle"
+ ],
+ "literature-festival-free-bookshop": [
+  "literature-book-by-topic-text",
+  "literature-little-library-hope-shelf"
+ ],
+ "literature-blue-zones-reading-season": [
+  "literature-local-paper-book-reviews",
+  "literature-signs-subscription-gift"
+ ],
+ "literature-student-le-summer-team": [
+  "literature-restock-and-pray-route",
+  "literature-door-hanger-book-offer"
+ ],
+ "literature-transit-shelter-poster": [
+  "literature-steps-thirteen-days-text",
+  "literature-spanish-audio-whatsapp"
+ ],
+ "literature-eddm-book-offer-postcard": [
+  "literature-book-by-topic-text",
+  "literature-signs-subscription-gift"
+ ],
+ "literature-newspaper-health-insert": [
+  "literature-quarterly-newsletter-1000-homes",
+  "literature-signs-subscription-gift"
+ ],
+ "schools-teacher-shout-outs": [
+  "schools-educator-prayer-line",
+  "schools-adopt-a-teacher"
+ ],
+ "schools-back-to-school-night-crew": [
+  "schools-standing-yes-team",
+  "schools-principal-listening-lunch"
+ ],
+ "schools-conference-night-dinner": [
+  "schools-lounge-coffee",
+  "schools-adopt-a-teacher"
+ ],
+ "schools-teacher-supply-store": [
+  "schools-adopt-a-teacher",
+  "schools-principal-help-menu"
+ ],
+ "schools-grounds-work-day": [
+  "schools-standing-yes-team",
+  "schools-principal-help-menu"
+ ],
+ "schools-field-day-crew": [
+  "schools-standing-yes-team",
+  "schools-join-the-pta"
+ ],
+ "schools-staff-kids-childcare": [
+  "schools-standing-yes-team",
+  "schools-adopt-a-teacher"
+ ],
+ "schools-lounge-makeover": [
+  "schools-lounge-coffee",
+  "schools-principal-help-menu"
+ ],
+ "schools-staff-softball-game": [
+  "schools-staff-walking-group",
+  "schools-principal-help-menu"
+ ],
+ "schools-staff-family-picnic": [
+  "schools-staff-walking-group",
+  "schools-adopt-a-teacher"
+ ],
+ "schools-family-night-dinners": [
+  "schools-standing-yes-team",
+  "schools-lunch-buddy-mentors"
+ ],
+ "schools-clearances-night": [
+  "schools-standing-yes-team",
+  "schools-adopt-a-teacher"
+ ],
+ "schools-career-day-experts": [
+  "schools-standing-yes-team",
+  "schools-lunch-buddy-mentors"
+ ],
+ "schools-staff-stress-sleep": [
+  "schools-staff-walking-group",
+  "schools-educator-prayer-line"
+ ],
+ "schools-survival-spanish-staff": [
+  "schools-staff-walking-group",
+  "schools-first-year-teacher-mentors"
+ ],
+ "schools-quick-dinners-class": [
+  "schools-staff-walking-group",
+  "schools-educators-book-club"
+ ],
+ "schools-support-staff-money-class": [
+  "jobs-money-money-coaching-over-coffee",
+  "schools-principal-listening-lunch"
+ ],
+ "schools-substitute-teacher-night": [
+  "schools-join-the-pta",
+  "schools-standing-yes-team"
+ ],
+ "schools-staff-mental-health-first-aid": [
+  "schools-staff-walking-group",
+  "schools-staff-crisis-support"
+ ],
+ "schools-start-of-year-card": [
+  "schools-adopt-a-teacher",
+  "schools-principal-listening-lunch"
+ ],
+ "schools-educators-zoom-study": [
+  "schools-educators-prayer-breakfast",
+  "schools-educator-prayer-line"
+ ],
+ "schools-educators-blessing-sabbath": [
+  "schools-educator-prayer-line",
+  "schools-educators-prayer-breakfast"
+ ],
+ "schools-teachers-quiet-afternoon": [
+  "schools-educators-book-club",
+  "schools-educators-prayer-breakfast"
+ ],
+ "first-responders-trash-can-thank-you-signs": [
+  "first-responders-department-thank-you-posts",
+  "first-responders-firehouse-dinner-with-crew"
+ ],
+ "first-responders-responder-car-wash": [
+  "first-responders-night-shift-coffee-cart",
+  "first-responders-night-shift-morning-group"
+ ],
+ "first-responders-coffee-with-officers": [
+  "first-responders-responder-spouses-circle",
+  "first-responders-night-shift-morning-group"
+ ],
+ "first-responders-citizens-academy": [
+  "first-responders-join-volunteer-fire-company",
+  "first-responders-volunteer-department-chaplains"
+ ],
+ "first-responders-stop-the-bleed-class": [
+  "first-responders-join-volunteer-fire-company",
+  "first-responders-firehouse-devotional"
+ ],
+ "first-responders-dispatcher-week-meals": [
+  "first-responders-night-shift-morning-group",
+  "first-responders-shift-change-prayer"
+ ],
+ "first-responders-holiday-shift-plates": [
+  "first-responders-shift-change-prayer",
+  "first-responders-firehouse-dinner-with-crew"
+ ],
+ "first-responders-national-night-out-party": [
+  "neighbors-street-group-chat",
+  "first-responders-responder-spouses-circle"
+ ],
+ "first-responders-smoke-alarm-install-days": [
+  "first-responders-join-volunteer-fire-company",
+  "first-responders-firehouse-dinner-with-crew"
+ ],
+ "first-responders-first-responders-sabbath": [
+  "first-responders-responder-spouses-circle",
+  "first-responders-department-thank-you-posts"
+ ],
+ "first-responders-responder-family-picnic": [
+  "first-responders-responder-spouses-circle",
+  "first-responders-retired-responders-breakfast"
+ ],
+ "first-responders-spanish-for-police-and-ems": [
+  "first-responders-night-shift-morning-group",
+  "first-responders-responder-spouses-circle"
+ ],
+ "first-responders-public-safety-mental-health-first-aid": [
+  "first-responders-responder-spouses-circle",
+  "first-responders-volunteer-department-chaplains"
+ ],
+ "first-responders-friendly-softball-game": [
+  "first-responders-responder-spouses-circle",
+  "first-responders-retired-responders-breakfast"
+ ],
+ "first-responders-blessing-of-the-hands": [
+  "first-responders-night-shift-coffee-cart",
+  "first-responders-night-shift-morning-group"
+ ],
+ "first-responders-september-11-remembrance": [
+  "first-responders-firehouse-dinner-with-crew",
+  "first-responders-join-volunteer-fire-company"
+ ],
+ "first-responders-fire-company-equipment-gift": [
+  "first-responders-firehouse-dinner-with-crew",
+  "first-responders-department-thank-you-posts"
+ ],
+ "first-responders-responder-couples-retreat": [
+  "first-responders-responder-spouses-circle",
+  "marriage-four-couple-supper-club"
+ ],
+ "first-responders-peer-support-team-training": [
+  "first-responders-volunteer-department-chaplains",
+  "first-responders-critical-incident-quiet-room"
+ ],
+ "foster-care-visit-room-makeover": [
+  "foster-care-careportal-requests",
+  "foster-care-approved-visit-drivers"
+ ],
+ "foster-care-library-foster-info-night": [
+  "foster-care-approved-respite-caregivers",
+  "foster-care-wraparound-care-team"
+ ],
+ "foster-care-tbri-parenting-training": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-approved-respite-caregivers"
+ ],
+ "foster-care-aged-out-holiday-dinners": [
+  "foster-care-independent-living-mentors",
+  "foster-care-driving-practice-young-adults"
+ ],
+ "foster-care-college-finals-care-packages": [
+  "foster-care-independent-living-mentors",
+  "foster-care-driving-practice-young-adults"
+ ],
+ "foster-care-budget-cooking-class": [
+  "foster-care-independent-living-mentors",
+  "foster-care-driving-practice-young-adults"
+ ],
+ "foster-care-kinship-help-night": [
+  "foster-care-kinship-caregivers-group",
+  "families-kinship-grandparents-circle"
+ ],
+ "foster-care-foster-adoption-sabbath": [
+  "foster-care-wraparound-care-team",
+  "foster-care-foster-adoptive-support-group"
+ ],
+ "foster-care-birth-parent-gift-room": [
+  "foster-care-reunification-parent-partners",
+  "foster-care-careportal-requests"
+ ],
+ "foster-care-hair-and-skin-care-class": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-foster-parents-night-out"
+ ],
+ "foster-care-agency-family-picnic": [
+  "foster-care-foster-parents-night-out",
+  "foster-care-foster-adoptive-support-group"
+ ],
+ "foster-care-host-foster-parent-training": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-approved-respite-caregivers"
+ ],
+ "foster-care-foster-moms-retreat": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-foster-parents-night-out"
+ ],
+ "foster-care-could-you-foster-postcard": [
+  "foster-care-approved-respite-caregivers",
+  "foster-care-wraparound-care-team"
+ ],
+ "foster-care-recruiter-facebook-live": [
+  "foster-care-approved-respite-caregivers",
+  "foster-care-wraparound-care-team"
+ ],
+ "foster-care-adoption-zoom-bible-study": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-foster-parents-night-out"
+ ],
+ "foster-care-may-farmers-market-table": [
+  "foster-care-approved-respite-caregivers",
+  "foster-care-wraparound-care-team"
+ ],
+ "foster-care-adulting-workshops": [
+  "foster-care-driving-practice-young-adults",
+  "foster-care-independent-living-mentors"
+ ],
+ "foster-care-foster-parent-appreciation-dinner": [
+  "foster-care-foster-adoptive-support-group",
+  "foster-care-foster-parents-night-out"
+ ],
+ "foster-care-caseworker-quiet-room-day": [
+  "foster-care-caseworker-thank-you-lunch",
+  "foster-care-careportal-requests"
+ ],
+ "abuse-survivors-hotline-soap-for-motels": [
+  "abuse-survivors-open-kit-packing-night",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-october-hotline-ads": [
+  "abuse-survivors-prayer-text-line-with-hotline",
+  "abuse-survivors-ask-an-advocate-live"
+ ],
+ "abuse-survivors-april-pinwheel-garden": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-open-kit-packing-night"
+ ],
+ "abuse-survivors-healthy-relationships-in-school": [
+  "abuse-survivors-open-kit-packing-night",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-responding-to-disclosure-training": [
+  "abuse-survivors-hotline-volunteer-training",
+  "abuse-survivors-court-companions"
+ ],
+ "abuse-survivors-elder-abuse-awareness-talk": [
+  "abuse-survivors-volunteer-bill-payers",
+  "jobs-money-scam-proof-phone-clinic"
+ ],
+ "abuse-survivors-october-awareness-posts": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-prayer-text-line-with-hotline"
+ ],
+ "abuse-survivors-teen-dating-violence-parents": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-financial-abuse-recovery-class": [
+  "jobs-money-money-coaching-over-coffee",
+  "abuse-survivors-survivors-book-club"
+ ],
+ "abuse-survivors-mens-breakfast-ending-violence": [
+  "abuse-survivors-open-kit-packing-night",
+  "men-six-am-diner-table"
+ ],
+ "abuse-survivors-digital-safety-clinic": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-prayer-text-line-with-hotline"
+ ],
+ "abuse-survivors-child-abuse-prevention-training": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-spanish-radio-spots": [
+  "media-spanish-radio-half-hour",
+  "immigrants-whatsapp-help-channel"
+ ],
+ "abuse-survivors-salon-and-barber-training": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-workplace-policy-to-hr": [
+  "abuse-survivors-hotline-volunteer-training",
+  "workplaces-employer-chaplain"
+ ],
+ "abuse-survivors-sabbath-school-abuse-and-scripture": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-prayer-text-line-with-hotline"
+ ],
+ "abuse-survivors-bystander-evening-next-door": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-break-the-silence-concert": [
+  "abuse-survivors-hotline-volunteer-training",
+  "abuse-survivors-open-kit-packing-night"
+ ],
+ "abuse-survivors-healing-art-group": [
+  "abuse-survivors-survivors-book-club",
+  "abuse-survivors-survivors-walking-group"
+ ],
+ "abuse-survivors-former-residents-brunch": [
+  "abuse-survivors-survivors-book-club",
+  "abuse-survivors-survivors-walking-group"
+ ],
+ "abuse-survivors-enditnow-sabbath": [
+  "abuse-survivors-ask-an-advocate-live",
+  "abuse-survivors-hotline-volunteer-training"
+ ],
+ "abuse-survivors-october-vigil-silent-witness": [
+  "abuse-survivors-prayer-text-line-with-hotline",
+  "abuse-survivors-open-kit-packing-night"
+ ],
+ "abuse-survivors-service-of-lament-and-hope": [
+  "abuse-survivors-prayer-text-line-with-hotline",
+  "abuse-survivors-survivors-book-club"
+ ],
+ "transport-lights-on-bulb-fixes": [
+  "transport-monday-wrench-night",
+  "transport-shift-carpool-whatsapp"
+ ],
+ "transport-bike-lights-late-shifts": [
+  "transport-community-bike-coop",
+  "transport-wednesday-commuter-rides"
+ ],
+ "transport-senior-driver-refresher": [
+  "transport-ride-app-lessons-seniors",
+  "transport-sunday-afternoon-drives"
+ ],
+ "transport-permit-test-study-spanish": [
+  "transport-adult-first-license-practice",
+  "immigrants-language-exchange-pairs"
+ ],
+ "transport-volunteer-driver-training": [
+  "transport-riders-and-drivers-breakfast",
+  "transport-sabbath-ride-line"
+ ],
+ "transport-carfit-checks-older-drivers": [
+  "transport-sunday-afternoon-drives",
+  "transport-ride-app-lessons-seniors"
+ ],
+ "transport-keys-conversation-evening": [
+  "transport-sunday-afternoon-drives",
+  "transport-ride-app-lessons-seniors"
+ ],
+ "transport-matched-savings-first-car": [
+  "transport-monday-wrench-night",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "transport-camp-meeting-van-seat": [
+  "transport-sabbath-ride-line",
+  "transport-state-park-van-trips"
+ ],
+ "transport-rides-to-evening-series": [
+  "transport-sabbath-ride-line",
+  "transport-riders-and-drivers-breakfast"
+ ],
+ "transport-spring-bike-blessing": [
+  "transport-wednesday-commuter-rides",
+  "sports-outdoors-no-drop-sunday-ride"
+ ],
+ "transport-snow-driving-for-newcomers": [
+  "transport-adult-first-license-practice",
+  "immigrants-supper-swap"
+ ],
+ "transport-used-car-buying-class": [
+  "transport-monday-wrench-night",
+  "transport-adult-first-license-practice"
+ ],
+ "holidays-new-year-blessing-card": [
+  "prayer-home-blessing-invited",
+  "neighbors-street-group-chat"
+ ],
+ "holidays-new-year-planning-morning": [
+  "prayer-cafe-prayer-journaling",
+  "music-arts-songwriting-circle"
+ ],
+ "holidays-mlk-day-of-service": [
+  "families-family-service-hour",
+  "neighbors-neighbor-mini-grants"
+ ],
+ "holidays-valentine-commuter-flowers": [
+  "workplaces-park-and-ride-coffee",
+  "prayer-morning-call-in-line"
+ ],
+ "holidays-easter-sidewalk-story": [
+  "children-mailed-story-craft-box",
+  "families-worship-plan-texts"
+ ],
+ "holidays-good-friday-open-sanctuary": [
+  "sabbath-rest-weekday-quiet-sanctuary",
+  "music-arts-sundown-vespers"
+ ],
+ "holidays-easter-sunrise-hilltop": [
+  "music-arts-bandstand-hymn-sing",
+  "prayer-dawn-park-walk"
+ ],
+ "holidays-resurrection-garden-kits": [
+  "children-seed-to-snack-garden",
+  "families-worship-plan-texts"
+ ],
+ "holidays-mothers-day-portraits": [
+  "families-stroller-walk-trail",
+  "women-front-porch-coffee"
+ ],
+ "holidays-fathers-day-car-wash": [
+  "men-town-dads-facebook-group",
+  "men-new-dad-weekly-texts"
+ ],
+ "holidays-parade-ice-water": [
+  "neighbors-cul-de-sac-supper",
+  "neighbors-front-yard-thursdays"
+ ],
+ "holidays-bill-of-rights-reading": [
+  "religious-liberty-liberty-podcast-circle",
+  "neighbors-front-yard-thursdays"
+ ],
+ "holidays-juneteenth-picnic": [
+  "neighbors-cul-de-sac-supper",
+  "neighbors-front-yard-thursdays"
+ ],
+ "holidays-first-school-day-breakfast": [
+  "families-parents-book-club-cafe",
+  "families-parent-cafe-table-talks"
+ ],
+ "holidays-grandparents-day-brunch": [
+  "families-kinship-grandparents-circle",
+  "seniors-family-history-afternoons"
+ ],
+ "holidays-apple-picking-sunday": [
+  "neighbors-front-yard-thursdays",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "holidays-october-driveway-cocoa": [
+  "neighbors-front-yard-thursdays",
+  "neighbors-cul-de-sac-supper"
+ ],
+ "holidays-library-gratitude-wall": [
+  "mental-health-daily-hope-texts",
+  "neighbors-front-yard-thursdays"
+ ],
+ "holidays-thanksgiving-open-table": [
+  "sabbath-rest-supper-for-those-alone",
+  "hunger-senior-building-lunch"
+ ],
+ "holidays-international-friendsgiving": [
+  "immigrants-student-friendship-family",
+  "young-adults-sabbath-lunch-far-from-home"
+ ],
+ "holidays-thanksgiving-worker-pies": [
+  "first-responders-night-shift-coffee-cart",
+  "first-responders-shift-change-prayer"
+ ],
+ "holidays-rest-stop-refreshments": [
+  "prayer-drive-time-podcast",
+  "prayer-morning-call-in-line"
+ ],
+ "holidays-advent-kindness-calendar": [
+  "children-family-kindness-crew",
+  "neighbors-nextdoor-helper"
+ ],
+ "holidays-christmas-story-texts": [
+  "families-worship-plan-texts",
+  "literature-steps-thirteen-days-text"
+ ],
+ "holidays-christmas-card-every-door": [
+  "literature-book-by-topic-text",
+  "neighbors-street-group-chat"
+ ],
+ "holidays-drive-through-bethlehem": [
+  "families-worship-plan-texts",
+  "children-mailed-story-craft-box"
+ ],
+ "holidays-station-carols": [
+  "music-arts-bandstand-hymn-sing",
+  "prayer-drive-time-podcast"
+ ],
+ "holidays-christmas-tree-fetch": [
+  "clothing-practical-snow-angels-matching",
+  "transport-groceries-prescriptions-door"
+ ],
+ "holidays-christmas-eve-candlelight": [
+  "music-arts-sundown-vespers",
+  "hospitality-newcomers-sabbath-school"
+ ],
+ "holidays-first-snow-cocoa": [
+  "clothing-practical-snow-angels-matching",
+  "neighbors-street-group-chat"
+ ],
+ "holidays-care-home-lights-tour": [
+  "seniors-care-home-birthday-party",
+  "seniors-hymns-by-request"
+ ],
+ "holidays-fresh-wreath-night": [
+  "music-arts-give-away-quilt-circle",
+  "music-arts-hand-lettering-class"
+ ],
+ "holidays-gingerbread-family-night": [
+  "families-family-service-hour",
+  "families-worship-plan-texts"
+ ],
+ "holidays-noon-years-eve": [
+  "children-preschool-parent-club",
+  "families-parents-night-out"
+ ],
+ "holidays-dia-de-reyes": [
+  "families-spanish-parents-whatsapp",
+  "children-bilingual-toddler-playgroup"
+ ],
+ "holidays-clock-change-alarm-card": [
+  "disaster-relief-ready-neighbors-supper",
+  "disaster-relief-street-storm-whatsapp"
+ ],
+ "holidays-carols-by-request": [
+  "music-arts-bandstand-hymn-sing",
+  "seniors-hymns-by-request"
+ ],
+ "holidays-hospital-christmas-carols": [
+  "music-arts-hospital-lobby-pianist",
+  "music-arts-bandstand-hymn-sing"
+ ],
+ "holidays-singing-valentines": [
+  "music-arts-bandstand-hymn-sing",
+  "music-arts-shape-note-singing"
+ ],
+ "holidays-christmas-eve-candle-walk": [
+  "neighbors-street-group-chat",
+  "music-arts-bandstand-hymn-sing"
+ ],
+ "holidays-town-tree-lighting": [
+  "neighbors-cul-de-sac-supper",
+  "families-family-service-hour"
+ ],
+ "holidays-town-egg-hunt": [
+  "children-family-kindness-crew",
+  "families-family-service-hour"
+ ],
+ "holidays-luminaria-kits": [
+  "neighbors-cul-de-sac-supper",
+  "neighbors-porch-office-hours"
+ ],
+ "holidays-community-thanksgiving-service": [
+  "music-arts-bandstand-hymn-sing",
+  "religious-liberty-join-interfaith-council"
+ ],
+ "holidays-county-senior-gift-tags": [
+  "seniors-phone-pals",
+  "seniors-morning-devotion-line"
+ ],
+ "holidays-harvest-farmers-sabbath": [
+  "prayer-farm-planting-blessing",
+  "workplaces-market-vendor-breakfast"
+ ],
+ "holidays-daffodil-bulbs-door": [
+  "creation-care-main-street-planters",
+  "creation-care-leave-the-leaves"
+ ],
+ "holidays-christmas-without-debt": [
+  "jobs-money-envelope-budget-kits",
+  "jobs-money-money-coaching-over-coffee"
+ ],
+ "holidays-vegetarian-centerpiece-class": [
+  "health-zoom-cook-along",
+  "health-home-supper-club"
+ ],
+ "holidays-advent-at-home-workshop": [
+  "families-worship-plan-texts",
+  "families-family-worship-starter-visit"
+ ],
+ "holidays-first-thanksgiving-host-class": [
+  "young-adults-supper-six-strangers",
+  "young-adults-cook-with-grandmothers"
+ ],
+ "holidays-homemade-gifts-night": [
+  "music-arts-laundromat-knitting-table",
+  "music-arts-give-away-quilt-circle"
+ ],
+ "small-groups-new-in-town-supper-group": [
+  "small-groups-world-kitchen-supper-group",
+  "small-groups-singles-over-40-table"
+ ],
+ "small-groups-twice-a-year-group-launch": [
+  "small-groups-midweek-sabbath-school-home",
+  "small-groups-group-serves-together-monthly"
+ ],
+ "small-groups-hosts-welcome-skeptics-training": [
+  "small-groups-big-questions-novel-club",
+  "small-groups-groups-of-three"
+ ],
+ "small-groups-house-church-planting-cohort": [
+  "small-groups-house-church-in-unchurched-town",
+  "small-groups-midweek-sabbath-school-home"
+ ],
+ "small-groups-honest-ad-to-fill-a-group": [
+  "small-groups-midweek-sabbath-school-home",
+  "small-groups-living-room-movie-night"
+ ],
+ "small-groups-dinner-and-questions-course": [
+  "small-groups-midweek-sabbath-school-home",
+  "small-groups-groups-of-three"
+ ],
+ "small-groups-steps-to-christ-reading-circle": [
+  "small-groups-groups-of-three",
+  "personal-evangelism-steps-to-christ-pairs"
+ ],
+ "small-groups-mark-aloud-in-one-evening": [
+  "small-groups-groups-of-three",
+  "small-groups-midweek-sabbath-school-home"
+ ],
+ "small-groups-reading-plan-together-app": [
+  "small-groups-groups-of-three",
+  "personal-evangelism-bible-app-plan-friend"
+ ],
+ "small-groups-six-weeks-in-john-one-street": [
+  "small-groups-front-porch-group-evenings",
+  "small-groups-midweek-sabbath-school-home"
+ ],
+ "small-groups-four-week-advent-group": [
+  "small-groups-front-porch-group-evenings",
+  "small-groups-midweek-sabbath-school-home"
+ ],
+ "small-groups-dinners-for-eight-rotation": [
+  "small-groups-singles-over-40-table",
+  "small-groups-backyard-garden-circle"
+ ],
+ "small-groups-taste-of-groups-dessert-night": [
+  "small-groups-world-kitchen-supper-group",
+  "small-groups-midweek-sabbath-school-home"
+ ],
+ "small-groups-questions-jesus-asked-group": [
+  "small-groups-quiet-reading-club-cafe",
+  "small-groups-groups-of-three"
+ ],
+ "sabbath-rest-sunset-to-sunset-unplug": [
+  "sabbath-rest-friday-sunset-text",
+  "sabbath-rest-friday-psalms-zoom"
+ ],
+ "sabbath-rest-rest-class-library": [
+  "sabbath-rest-online-course-bible-rest",
+  "sabbath-rest-cook-ahead-class"
+ ],
+ "sabbath-rest-market-sunset-candle-kits": [
+  "sabbath-rest-street-sunset-supper",
+  "sabbath-rest-friday-psalms-zoom"
+ ],
+ "sabbath-rest-day-of-rest-stories-video": [
+  "sabbath-rest-online-course-bible-rest",
+  "sabbath-rest-rest-habit-facebook-group"
+ ],
+ "sabbath-rest-what-rest-looks-like-show": [
+  "sabbath-rest-slow-walk-phones-off",
+  "sabbath-rest-online-course-bible-rest"
+ ],
+ "sabbath-rest-employers-days-off-breakfast": [
+  "sabbath-rest-workplace-rest-lunch-talk",
+  "workplaces-owners-roundtable"
+ ],
+ "sabbath-rest-public-garden-quiet-afternoon": [
+  "sabbath-rest-slow-walk-phones-off",
+  "sabbath-rest-silent-reading-hour"
+ ],
+ "sabbath-rest-winter-fireside-friday": [
+  "sabbath-rest-street-sunset-supper",
+  "sabbath-rest-open-porch-sabbath"
+ ],
+ "sabbath-rest-caregivers-retreat-day": [
+  "sabbath-rest-caregiver-sabbath-afternoons",
+  "sabbath-rest-supper-for-those-alone"
+ ],
+ "sabbath-rest-shift-worker-weekday-retreat": [
+  "sabbath-rest-shift-worker-rest-guide",
+  "workplaces-weekday-worship-hour"
+ ],
+ "sabbath-rest-silent-prayer-retreat-day": [
+  "sabbath-rest-silent-reading-hour",
+  "sabbath-rest-slow-walk-phones-off"
+ ],
+ "sabbath-rest-weekend-away-for-a-leader": [
+  "sabbath-rest-members-cabins-lent",
+  "sabbath-rest-slow-walk-phones-off"
+ ],
+ "sabbath-rest-town-wide-unplug-day": [
+  "sabbath-rest-slow-walk-phones-off",
+  "sabbath-rest-screen-free-game-night"
+ ],
+ "sabbath-rest-summer-sunset-vespers": [
+  "sabbath-rest-long-table-park-lunch",
+  "sabbath-rest-street-sunset-supper"
+ ],
+ "sabbath-rest-pastors-rest-day": [
+  "sabbath-rest-members-cabins-lent",
+  "religious-liberty-faith-leaders-coffee"
+ ],
+ "workplaces-main-street-window-wash": [
+  "workplaces-main-street-chaplain",
+  "workplaces-tradespeople-breakfast"
+ ],
+ "workplaces-cashier-thank-you-cards": [
+  "workplaces-weekday-worship-hour",
+  "workplaces-break-room-fruit"
+ ],
+ "workplaces-industrial-park-lunch": [
+  "workplaces-break-room-fruit",
+  "workplaces-office-park-quiet-room"
+ ],
+ "workplaces-cash-mob": [
+  "workplaces-owners-roundtable",
+  "workplaces-retiree-business-mentors"
+ ],
+ "workplaces-layoff-support-night": [
+  "jobs-money-between-jobs-breakfast",
+  "jobs-money-resume-review-by-email"
+ ],
+ "workplaces-shop-fix-up-day": [
+  "workplaces-retiree-business-mentors",
+  "workplaces-owner-prayer-partners"
+ ],
+ "workplaces-retail-shift-coffee": [
+  "workplaces-weekday-worship-hour",
+  "workplaces-restaurant-late-breakfast"
+ ],
+ "workplaces-faith-and-work-class": [
+  "workplaces-faith-employee-group",
+  "workplaces-coworker-breakfast"
+ ],
+ "workplaces-sabbath-accommodation-clinic": [
+  "religious-liberty-sabbath-friendly-jobs",
+  "religious-liberty-sabbath-pressure-supper"
+ ],
+ "workplaces-workplace-conflict-class": [
+  "workplaces-owners-roundtable",
+  "workplaces-pastor-owner-lunch"
+ ],
+ "workplaces-job-site-spanish": [
+  "workplaces-tradespeople-breakfast",
+  "workplaces-shop-spanish-signs"
+ ],
+ "workplaces-small-business-cyber": [
+  "workplaces-owners-roundtable",
+  "jobs-money-scam-of-the-week-video"
+ ],
+ "workplaces-workers-memorial-day": [
+  "workplaces-tradespeople-breakfast",
+  "prayer-late-night-text-line"
+ ],
+ "workplaces-business-prayer-breakfast": [
+  "workplaces-early-bird-owners-study",
+  "workplaces-owners-roundtable"
+ ],
+ "workplaces-tax-season-coffee": [
+  "workplaces-owner-prayer-partners",
+  "workplaces-owners-roundtable"
+ ],
+ "workplaces-owners-next-chapter-night": [
+  "workplaces-retiree-business-mentors",
+  "workplaces-owners-roundtable"
+ ],
+ "workplaces-january-staff-party": [
+  "workplaces-weekday-worship-hour",
+  "workplaces-main-street-chaplain"
+ ],
+ "member-care-hospital-visit-hour": [
+  "member-care-six-person-illness-team",
+  "member-care-treatment-day-companion"
+ ],
+ "member-care-welcome-back-no-spotlight": [
+  "member-care-greeters-door-notebook",
+  "member-care-chosen-friend-calls"
+ ],
+ "member-care-no-guilt-card-workshop": [
+  "member-care-two-sabbath-card",
+  "member-care-card-minutes-in-every-class"
+ ],
+ "member-care-former-member-christmas-card": [
+  "member-care-old-friend-lunch",
+  "personal-evangelism-former-members-coffee"
+ ],
+ "member-care-far-away-members-letter": [
+  "member-care-friday-happy-sabbath-text",
+  "member-care-sung-birthday-voicemail"
+ ],
+ "member-care-chaplain-visiting-course": [
+  "member-care-six-person-illness-team",
+  "member-care-treatment-day-companion"
+ ],
+ "member-care-mental-health-first-aid": [
+  "member-care-treatment-day-companion",
+  "member-care-six-person-illness-team"
+ ],
+ "member-care-christmas-box-for-the-absent": [
+  "member-care-friday-sundown-call",
+  "worship-music-homebound-choose-opening-hymn"
+ ],
+ "member-care-camp-meeting-day": [
+  "member-care-friday-sundown-call",
+  "worship-music-homebound-choose-opening-hymn"
+ ],
+ "member-care-care-team-retreat-day": [
+  "member-care-caregivers-lunch-table",
+  "member-care-old-friend-lunch"
+ ],
+ "spiritual-care-anointing-training": [
+  "spiritual-care-anointing-before-surgery",
+  "spiritual-care-elder-on-call"
+ ],
+ "spiritual-care-grandparents-video-worship": [
+  "spiritual-care-car-worship-audio",
+  "spiritual-care-sermon-comes-home"
+ ],
+ "spiritual-care-desire-of-ages-year": [
+  "spiritual-care-reading-start-texts",
+  "sabbath-school-daily-reading-whatsapp"
+ ],
+ "spiritual-care-suicide-prevention-elders": [
+  "spiritual-care-elder-on-call",
+  "spiritual-care-yearly-visit-questions"
+ ],
+ "spiritual-care-listening-training": [
+  "spiritual-care-cafe-open-hour",
+  "spiritual-care-yearly-visit-questions"
+ ],
+ "spiritual-care-practice-hard-visits": [
+  "spiritual-care-yearly-visit-questions",
+  "spiritual-care-new-member-joins-visits"
+ ],
+ "spiritual-care-elders-overnight-retreat": [
+  "spiritual-care-yearly-visit-questions",
+  "spiritual-care-new-member-joins-visits"
+ ],
+ "spiritual-care-family-worship-weekend": [
+  "spiritual-care-sermon-comes-home",
+  "spiritual-care-car-worship-audio"
+ ],
+ "spiritual-care-new-testament-aloud": [
+  "spiritual-care-reading-start-texts",
+  "spiritual-care-verse-a-month"
+ ],
+ "spiritual-care-new-year-blessing-call": [
+  "spiritual-care-yearly-visit-questions",
+  "spiritual-care-friday-voice-note"
+ ],
+ "spiritual-care-childrens-baptism-class": [
+  "spiritual-care-first-year-mentor",
+  "spiritual-care-sermon-comes-home"
+ ],
+ "spiritual-care-ellen-white-questions": [
+  "spiritual-care-beliefs-on-request",
+  "spiritual-care-next-steps-menu"
+ ],
+ "spiritual-care-sabbath-delight-afternoon": [
+  "spiritual-care-sermon-comes-home",
+  "spiritual-care-car-worship-audio"
+ ],
+ "spiritual-care-twenty-minutes-with-god": [
+  "spiritual-care-reading-start-texts",
+  "spiritual-care-car-worship-audio"
+ ],
+ "spiritual-care-remember-our-baptism": [
+  "spiritual-care-next-steps-menu",
+  "spiritual-care-first-year-mentor"
+ ],
+ "spiritual-care-shepherd-passages-study": [
+  "spiritual-care-yearly-visit-questions",
+  "spiritual-care-new-member-joins-visits"
+ ],
+ "deacons-usher-training-evening": [
+  "deacons-safety-host-rota",
+  "deacons-cross-training"
+ ],
+ "deacons-calm-voice-training": [
+  "deacons-safety-host-rota",
+  "deacons-pray-over-rows"
+ ],
+ "deacons-quarterly-work-morning": [
+  "deacons-one-job-invitations",
+  "deacons-monthly-repair-sunday"
+ ],
+ "deacons-benevolence-listening": [
+  "deacons-grocery-cards-same-day",
+  "deacons-communion-offering-poor"
+ ],
+ "deacons-ordination-towel-basin": [
+  "deacons-serve-one-communion",
+  "deacons-cross-training"
+ ],
+ "deacons-helping-without-harm": [
+  "deacons-sabbath-rides-roster",
+  "deacons-driver-who-waits"
+ ],
+ "deacons-regional-training-day": [
+  "deacons-cross-training",
+  "deacons-joint-board-monthly"
+ ],
+ "deacons-sabbath-retreat": [
+  "deacons-pray-over-rows",
+  "deacons-joint-board-monthly"
+ ],
+ "stewardship-budget-open-house": [
+  "stewardship-quarterly-impact-moment",
+  "stewardship-giving-plan-at-home"
+ ],
+ "stewardship-stewardship-sabbath-kit": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-stewardship-mentor"
+ ],
+ "stewardship-faith-and-finance-course": [
+  "stewardship-budget-companions",
+  "stewardship-debt-payoff-partners"
+ ],
+ "stewardship-tithe-questions-zoom": [
+  "stewardship-stewardship-mentor",
+  "stewardship-giving-plan-at-home"
+ ],
+ "stewardship-time-audit-week": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-stewardship-mentor"
+ ],
+ "stewardship-seven-ts-prayer-meeting": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-faithfulness-stories"
+ ],
+ "stewardship-counsels-reading-circle": [
+  "stewardship-stewpot-money-tip",
+  "stewardship-stewardship-mentor"
+ ],
+ "stewardship-forty-days-generosity": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-give-save-spend-jars"
+ ],
+ "stewardship-thank-every-household": [
+  "stewardship-quarterly-impact-moment",
+  "stewardship-faithfulness-stories"
+ ],
+ "stewardship-emergency-fund-challenge": [
+  "stewardship-budget-companions",
+  "stewardship-debt-payoff-partners"
+ ],
+ "stewardship-wills-trusts-evening": [
+  "stewardship-family-papers-folder",
+  "stewardship-stewardship-mentor"
+ ],
+ "stewardship-year-end-giving-guide": [
+  "stewardship-giving-help-appointments",
+  "stewardship-giving-plan-at-home"
+ ],
+ "stewardship-ministry-plans-budget-night": [
+  "stewardship-reimbursed-within-a-week",
+  "stewardship-quarterly-impact-moment"
+ ],
+ "stewardship-letter-to-yourself": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-stewardship-mentor"
+ ],
+ "stewardship-stewardship-week-of-prayer": [
+  "stewardship-giving-plan-at-home",
+  "stewardship-faithfulness-stories"
+ ],
+ "stewardship-story-of-our-giving-booklet": [
+  "stewardship-quarterly-impact-moment",
+  "stewardship-giving-plan-at-home"
+ ],
+ "stewardship-board-budget-retreat": [
+  "stewardship-money-procedures-manual",
+  "stewardship-quarterly-impact-moment"
+ ],
+ "stewardship-hundred-dollar-priorities": [
+  "stewardship-quarterly-impact-moment",
+  "stewardship-giving-plan-at-home"
+ ],
+ "involvement-committee-orientation": [
+  "involvement-standing-nominating-committee",
+  "involvement-free-role-courses"
+ ],
+ "involvement-gifts-assessment-together": [
+  "involvement-gifts-conversation",
+  "involvement-new-member-place"
+ ],
+ "involvement-gifts-zoom-evenings": [
+  "involvement-gifts-conversation",
+  "involvement-shadow-a-month"
+ ],
+ "involvement-ministry-fair-try-once": [
+  "involvement-serving-connector",
+  "involvement-shadow-a-month"
+ ],
+ "involvement-new-officers-night": [
+  "involvement-former-leader-guide",
+  "involvement-free-role-courses"
+ ],
+ "involvement-emerging-leaders-cohort": [
+  "involvement-former-leader-guide",
+  "involvement-shadow-a-month"
+ ],
+ "involvement-board-officers-retreat": [
+  "involvement-leaders-huddle",
+  "involvement-former-leader-guide"
+ ],
+ "involvement-handwritten-thanks": [
+  "involvement-fall-serving-card",
+  "involvement-serving-connector"
+ ],
+ "involvement-leaders-serve-volunteers": [
+  "involvement-fall-serving-card",
+  "involvement-serving-connector"
+ ],
+ "involvement-volunteer-rest-sabbath": [
+  "sabbath-school-class-for-those-who-serve",
+  "involvement-fall-serving-card"
+ ],
+ "involvement-team-suppers": [
+  "involvement-fall-serving-card",
+  "involvement-serving-connector"
+ ],
+ "involvement-nehemiah-reading-circle": [
+  "involvement-leaders-huddle",
+  "involvement-former-leader-guide"
+ ],
+ "involvement-volunteer-dinner-out": [
+  "involvement-fall-serving-card",
+  "involvement-family-serving-roles"
+ ],
+ "involvement-gifts-weekend": [
+  "involvement-gifts-conversation",
+  "involvement-new-member-place"
+ ],
+ "involvement-dedication-sabbath": [
+  "involvement-free-role-courses",
+  "involvement-former-leader-guide"
+ ],
+ "sabbath-school-teacher-training-evenings": [
+  "sabbath-school-teaching-team-of-four",
+  "sabbath-school-apprentice-teacher"
+ ],
+ "sabbath-school-ask-wait-listen": [
+  "sabbath-school-teachers-visit-classes",
+  "sabbath-school-teachers-meeting-zoom"
+ ],
+ "sabbath-school-mark-in-pairs": [
+  "sabbath-school-trail-lesson-walk",
+  "personal-evangelism-guests-class"
+ ],
+ "sabbath-school-community-guest-day": [
+  "personal-evangelism-guests-class",
+  "hospitality-book-a-sabbath-lunch"
+ ],
+ "sabbath-school-app-for-older-members": [
+  "sabbath-school-daily-reading-whatsapp",
+  "sabbath-school-hybrid-class-dial-in"
+ ],
+ "sabbath-school-fifth-sabbath-class-lunch": [
+  "sabbath-school-care-groups-in-class",
+  "sabbath-school-quarterly-prayer-partner"
+ ],
+ "sabbath-school-class-service-project": [
+  "sabbath-school-care-groups-in-class",
+  "sabbath-school-quarterly-prayer-partner"
+ ],
+ "sabbath-school-new-quarter-preview": [
+  "sabbath-school-teachers-meeting-zoom",
+  "sabbath-school-teaching-team-of-four"
+ ],
+ "sabbath-school-look-ask-apply": [
+  "sabbath-school-early-deep-dive",
+  "sabbath-school-daily-reading-whatsapp"
+ ],
+ "sabbath-school-sister-church-teacher-swap": [
+  "sabbath-school-teaching-team-of-four",
+  "sabbath-school-teachers-meeting-zoom"
+ ],
+ "sabbath-school-visiting-bible-teacher": [
+  "sabbath-school-early-deep-dive",
+  "sabbath-school-daily-reading-whatsapp"
+ ],
+ "sabbath-school-class-cabin-weekend": [
+  "sabbath-school-care-groups-in-class",
+  "sabbath-school-early-deep-dive"
+ ],
+ "sabbath-school-care-leader-training": [
+  "sabbath-school-care-groups-in-class",
+  "member-care-chosen-friend-calls"
+ ],
+ "fellowship-yearly-church-family-photo": [
+  "fellowship-photo-directory-for-names",
+  "fellowship-birth-month-tables"
+ ],
+ "fellowship-zoom-reunion-moved-away": [
+  "fellowship-whatsapp-church-community",
+  "hospitality-monthly-zoom-hangout"
+ ],
+ "fellowship-guess-who-fun-facts": [
+  "fellowship-hobby-matchmaking",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-secret-encouragers-month": [
+  "fellowship-church-mailbox-wall",
+  "fellowship-hobby-matchmaking"
+ ],
+ "fellowship-church-time-capsule": [
+  "fellowship-family-night-by-generation",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-college-students-home-lunch": [
+  "young-adults-sabbath-lunch-far-from-home",
+  "young-adults-exam-morning-prayer-text"
+ ],
+ "fellowship-cooking-for-sixty-class": [
+  "fellowship-each-class-hosts-a-month",
+  "hospitality-lunch-built-around-guests"
+ ],
+ "fellowship-before-you-hit-send": [
+  "fellowship-whatsapp-church-community",
+  "fellowship-trained-mediator-for-conflict"
+ ],
+ "fellowship-remember-my-name-workshop": [
+  "fellowship-photo-directory-for-names",
+  "fellowship-birth-month-tables"
+ ],
+ "fellowship-matthew-18-peacemaking-class": [
+  "fellowship-reconciliation-walk",
+  "fellowship-trained-mediator-for-conflict"
+ ],
+ "fellowship-state-park-nature-sabbath": [
+  "sabbath-rest-long-table-park-lunch",
+  "sabbath-rest-slow-walk-phones-off"
+ ],
+ "fellowship-bring-a-neighbor-picnic": [
+  "neighbors-cul-de-sac-supper",
+  "hospitality-book-a-sabbath-lunch"
+ ],
+ "fellowship-new-member-lunch-circles": [
+  "fellowship-no-one-eats-alone",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-talent-night-no-judges": [
+  "fellowship-family-night-by-generation",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-family-togetherness-supper": [
+  "fellowship-family-night-by-generation",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-all-ages-planning-evening": [
+  "fellowship-family-night-by-generation",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-friendship-quilt": [
+  "fellowship-table-hosts-three-generations",
+  "fellowship-birth-month-tables"
+ ],
+ "fellowship-farm-hayride-after-sundown": [
+  "fellowship-family-night-by-generation",
+  "fellowship-bring-nothing-sabbath"
+ ],
+ "fellowship-progressive-sabbath-afternoon": [
+  "fellowship-no-one-eats-alone",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-one-friday-half-hosts-half": [
+  "fellowship-no-one-eats-alone",
+  "fellowship-table-hosts-three-generations"
+ ],
+ "fellowship-church-birthday-memory-book": [
+  "fellowship-family-night-by-generation",
+  "fellowship-photo-directory-for-names"
+ ],
+ "fellowship-bilingual-sabbath-sister-church": [
+  "fellowship-ten-phrases-each-language",
+  "fellowship-heritage-lunch-each-quarter"
+ ],
+ "fellowship-church-family-campout": [
+  "fellowship-family-night-by-generation",
+  "sports-outdoors-campground-campfire-vespers"
+ ],
+ "fellowship-worship-music-listening-circles": [
+  "fellowship-table-hosts-three-generations",
+  "fellowship-family-night-by-generation"
+ ],
+ "worship-music-seasonal-choir": [
+  "worship-music-four-rotating-teams",
+  "worship-music-come-as-you-play-orchestra"
+ ],
+ "worship-music-song-leader-workshop": [
+  "worship-music-four-rotating-teams",
+  "worship-music-hymn-of-the-month"
+ ],
+ "worship-music-childrens-story-workshop": [
+  "childrens-ministries-childrens-church-twice-monthly",
+  "worship-music-families-sing-fifth-sabbath"
+ ],
+ "worship-music-week-of-prayer-evenings": [
+  "worship-music-elders-pray-after-service",
+  "worship-music-prayer-during-sermon"
+ ],
+ "worship-music-lay-preaching-class": [
+  "worship-music-scripture-reading-coaching",
+  "worship-music-prayer-during-sermon"
+ ],
+ "worship-music-hymn-course-young-pianists": [
+  "worship-music-piano-lesson-help",
+  "worship-music-come-as-you-play-orchestra"
+ ],
+ "worship-music-learn-your-part": [
+  "worship-music-hymn-of-the-month",
+  "worship-music-rehearsal-tracks"
+ ],
+ "worship-music-nine-readings-carols": [
+  "worship-music-friday-hymn-playlist",
+  "worship-music-hymn-of-the-month"
+ ],
+ "worship-music-music-team-retreat": [
+  "worship-music-four-rotating-teams",
+  "worship-music-plan-worship-quarterly"
+ ],
+ "worship-music-host-college-choir": [
+  "worship-music-friday-hymn-playlist",
+  "worship-music-hymn-of-the-month"
+ ],
+ "worship-music-guest-clinician-sunday": [
+  "worship-music-four-rotating-teams",
+  "worship-music-musicians-visit-smaller-church"
+ ],
+ "worship-music-new-year-consecration-card": [
+  "worship-music-elders-pray-after-service",
+  "worship-music-prayer-during-sermon"
+ ],
+ "worship-music-seasonal-scripture-banners": [
+  "worship-music-families-sing-fifth-sabbath",
+  "worship-music-come-as-you-play-orchestra"
+ ],
+ "worship-music-joint-district-worship": [
+  "worship-music-musicians-visit-smaller-church",
+  "worship-music-four-rotating-teams"
+ ],
+ "worship-music-twenty-hymns-new-members": [
+  "worship-music-friday-hymn-playlist",
+  "worship-music-hymn-of-the-month"
+ ],
+ "childrens-ministries-first-bible-at-seven": [
+  "childrens-ministries-bible-memory-no-rankings",
+  "childrens-ministries-parents-sabbath-in-class"
+ ],
+ "childrens-ministries-moving-up-blessing": [
+  "childrens-ministries-parents-sabbath-in-class",
+  "childrens-ministries-each-parent-helps-quarterly"
+ ],
+ "childrens-ministries-childrens-week-of-prayer-home": [
+  "childrens-ministries-parents-prayer-circle",
+  "childrens-ministries-class-prayer-journal"
+ ],
+ "childrens-ministries-safe-church-evening": [
+  "childrens-ministries-teachers-prep-night",
+  "childrens-ministries-each-parent-helps-quarterly"
+ ],
+ "childrens-ministries-alive-in-jesus-walkthrough": [
+  "childrens-ministries-teachers-prep-night",
+  "childrens-ministries-parents-class-same-stories"
+ ],
+ "childrens-ministries-childrens-sabbath-leading": [
+  "childrens-ministries-childrens-choir-no-auditions",
+  "worship-music-families-sing-fifth-sabbath"
+ ],
+ "childrens-ministries-christmas-program-chosen-parts": [
+  "childrens-ministries-childrens-choir-no-auditions",
+  "childrens-ministries-handchime-choir"
+ ],
+ "childrens-ministries-vbs-planned-from-january": [
+  "children-apartment-clubhouse-club",
+  "childrens-ministries-childrens-choir-no-auditions"
+ ],
+ "childrens-ministries-teachers-to-training-retreat": [
+  "childrens-ministries-teachers-prep-night",
+  "childrens-ministries-certification-track-yearly"
+ ],
+ "childrens-ministries-pediatric-first-aid-leaders": [
+  "childrens-ministries-teachers-prep-night",
+  "childrens-ministries-grandparent-helpers"
+ ],
+ "childrens-ministries-beliefs-for-ten-to-fourteen": [
+  "childrens-ministries-teen-class-mentor-couple",
+  "childrens-ministries-parents-class-same-stories"
+ ],
+ "childrens-ministries-parents-fall-orientation": [
+  "childrens-ministries-parents-class-same-stories",
+  "childrens-ministries-each-parent-helps-quarterly"
+ ],
+ "pathfinders-screening-night": [
+  "pathfinders-parent-helper-every-unit",
+  "pathfinders-counselor-certification"
+ ],
+ "pathfinders-master-guide-cohort": [
+  "pathfinders-district-joint-club",
+  "pathfinders-honor-instructors-pews"
+ ],
+ "pathfinders-staff-retreat": [
+  "pathfinders-honor-instructors-pews",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-investiture-every-family": [
+  "pathfinders-bible-reading-email-parents",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-world-pathfinder-day": [
+  "pathfinders-bible-reading-email-parents",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-pbe-parents-whatsapp": [
+  "youth-bible-experience-team",
+  "pathfinders-bible-reading-email-parents"
+ ],
+ "pathfinders-veteran-drill-coach": [
+  "pathfinders-district-joint-club",
+  "pathfinders-honor-instructors-pews"
+ ],
+ "pathfinders-baptism-class-parents-in-room": [
+  "pathfinders-bible-reading-email-parents",
+  "ay-youth-prayer-grandparents"
+ ],
+ "pathfinders-genealogy-grandparent-video": [
+  "pathfinders-christian-visitation-homebound",
+  "ay-youth-prayer-grandparents"
+ ],
+ "pathfinders-pioneer-heritage-trip": [
+  "pathfinders-tlt-real-jobs",
+  "pathfinders-council-chooses-service"
+ ],
+ "pathfinders-hymns-honor-older-singers": [
+  "pathfinders-christian-visitation-homebound",
+  "pathfinders-unit-adopted-in-prayer"
+ ],
+ "pathfinders-sanctuary-model-to-keep": [
+  "pathfinders-honor-instructors-pews",
+  "pathfinders-tlt-real-jobs"
+ ],
+ "pathfinders-bible-marking-elder": [
+  "pathfinders-bible-reading-email-parents",
+  "pathfinders-honor-instructors-pews"
+ ],
+ "pathfinders-cooking-honor-seniors-lunch": [
+  "pathfinders-christian-visitation-homebound",
+  "pathfinders-unit-adopted-in-prayer"
+ ],
+ "pathfinders-sash-sewing-night": [
+  "pathfinders-bible-reading-email-parents",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-stars-honor-astronomy-club": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-district-joint-club"
+ ],
+ "pathfinders-cultural-diversity-supper": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-bible-reading-email-parents"
+ ],
+ "pathfinders-cpr-honor-with-parents": [
+  "pathfinders-parent-helper-every-unit",
+  "pathfinders-bible-reading-email-parents"
+ ],
+ "pathfinders-dutch-oven-sunday": [
+  "pathfinders-bible-reading-email-parents",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-sign-language-deaf-instructor": [
+  "pathfinders-honor-instructors-pews",
+  "pathfinders-district-joint-club"
+ ],
+ "pathfinders-family-campout-parents-along": [
+  "pathfinders-camping-gear-lending-library",
+  "pathfinders-bible-reading-email-parents"
+ ],
+ "pathfinders-honors-day-camp-week": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-homeschool-weekday-club"
+ ],
+ "pathfinders-robotics-honor-library-lab": [
+  "youth-robotics-team",
+  "pathfinders-bilingual-club-night"
+ ],
+ "pathfinders-open-night-facebook-ad": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-library-parent-info-hour": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-hygiene-kits-acs": [
+  "pathfinders-council-chooses-service",
+  "pathfinders-snow-leaf-crew-older-neighbors"
+ ],
+ "pathfinders-feeding-honor-food-bank": [
+  "youth-parent-teen-food-bank-night",
+  "pathfinders-council-chooses-service"
+ ],
+ "pathfinders-refugee-welcome-kits": [
+  "pathfinders-council-chooses-service",
+  "pathfinders-snow-leaf-crew-older-neighbors"
+ ],
+ "pathfinders-baking-bread-fire-company": [
+  "pathfinders-christian-visitation-homebound",
+  "pathfinders-snow-leaf-crew-older-neighbors"
+ ],
+ "pathfinders-school-activity-night-table": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-parent-helper-every-unit"
+ ],
+ "pathfinders-nature-photo-show-library": [
+  "pathfinders-bilingual-club-night",
+  "pathfinders-no-faces-club-video"
+ ],
+ "adventurers-pinecone-feeders-homebound": [
+  "adventurers-bible-stories-for-seniors",
+  "adventurers-hospital-meal-tray-cards"
+ ],
+ "adventurers-bridge-night-to-pathfinders": [
+  "pathfinders-district-joint-club",
+  "pathfinders-bible-reading-email-parents"
+ ],
+ "adventurers-healthy-snack-family-hour": [
+  "adventurers-little-lambs-eager-beavers-room",
+  "health-parent-child-cooking-night"
+ ],
+ "adventurers-investiture-parents-present": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-ten-minute-home-activities"
+ ],
+ "adventurers-world-adventurer-day-families": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-family-worship-card-weekly"
+ ],
+ "adventurers-reading-award-library-summer": [
+  "adventurers-reading-to-dogs-library",
+  "adventurers-sabbath-activity-boxes"
+ ],
+ "adventurers-potato-buckets-at-home": [
+  "adventurers-parable-garden-front-walk",
+  "adventurers-town-professionals-teach-award"
+ ],
+ "adventurers-butterflies-raised-at-home": [
+  "adventurers-gods-world-walk-after-lunch",
+  "adventurers-family-worship-card-weekly"
+ ],
+ "adventurers-state-park-cabin-weekend": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-gods-world-walk-after-lunch"
+ ],
+ "adventurers-fire-safety-open-house": [
+  "adventurers-ten-minute-home-activities",
+  "adventurers-gods-world-walk-after-lunch"
+ ],
+ "adventurers-farm-morning-animals-chip": [
+  "adventurers-gods-world-walk-after-lunch",
+  "adventurers-little-lambs-eager-beavers-room"
+ ],
+ "adventurers-family-network-therapist-evenings": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-family-network-whatsapp-channel"
+ ],
+ "adventurers-grandparents-day-meeting": [
+  "adventurers-bible-stories-for-seniors",
+  "adventurers-family-network-parents-circle"
+ ],
+ "adventurers-area-family-day-nearby-clubs": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-buddy-family-for-newcomers"
+ ],
+ "adventurers-universe-award-planetarium": [
+  "adventurers-gods-world-walk-after-lunch",
+  "adventurers-sabbath-activity-boxes"
+ ],
+ "adventurers-body-safety-parents-teach": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-family-network-whatsapp-channel"
+ ],
+ "adventurers-friend-of-animals-shelter": [
+  "adventurers-gods-world-walk-after-lunch",
+  "adventurers-hospital-meal-tray-cards"
+ ],
+ "adventurers-car-seat-check-afternoon": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-family-network-whatsapp-channel"
+ ],
+ "adventurers-families-sing-care-home": [
+  "adventurers-bible-stories-for-seniors",
+  "adventurers-retired-members-teach-awards"
+ ],
+ "adventurers-sharing-bags-food-pantry": [
+  "adventurers-little-lambs-eager-beavers-room",
+  "hunger-family-packing-night"
+ ],
+ "adventurers-bread-of-life-loaf-neighbor": [
+  "adventurers-family-worship-card-weekly",
+  "adventurers-ten-minute-home-activities"
+ ],
+ "adventurers-toys-chip-family-shelter": [
+  "adventurers-hospital-meal-tray-cards",
+  "adventurers-little-lambs-eager-beavers-room"
+ ],
+ "adventurers-parents-post-start-night": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-buddy-family-for-newcomers"
+ ],
+ "adventurers-fall-festival-craft-table": [
+  "adventurers-family-network-parents-circle",
+  "adventurers-buddy-family-for-newcomers"
+ ],
+ "ay-youth-teacher-listening-training": [
+  "ay-youth-question-writers",
+  "sabbath-school-class-for-those-who-serve"
+ ],
+ "ay-youth-life-skills-sundays": [
+  "ay-youth-mentor-lunch-tables",
+  "ay-youth-tech-help-older-members"
+ ],
+ "ay-youth-week-of-prayer-teen-speakers": [
+  "ay-youth-platform-apprentices",
+  "ay-youth-vespers-four-formats"
+ ],
+ "ay-youth-global-youth-day-town": [
+  "ay-youth-care-home-worship-hour",
+  "ay-youth-letters-to-homebound-members"
+ ],
+ "ay-youth-invited-mission-trip": [
+  "ay-youth-care-home-worship-hour",
+  "ay-youth-quarterly-youth-sabbath"
+ ],
+ "ay-youth-city-church-mission-weekend": [
+  "ay-youth-care-home-worship-hour",
+  "ay-youth-quarterly-youth-sabbath"
+ ],
+ "ay-youth-pastors-baptism-class-teens": [
+  "ay-youth-prayer-grandparents",
+  "ay-youth-mentor-lunch-tables"
+ ],
+ "ay-youth-youth-alive-resilience": [
+  "ay-youth-mentor-lunch-tables",
+  "ay-youth-morning-verse-group"
+ ],
+ "ay-youth-parents-of-teens-evening": [
+  "ay-youth-mentor-lunch-tables",
+  "ay-youth-prayer-grandparents"
+ ],
+ "ay-youth-winter-retreat-weekend": [
+  "ay-youth-vespers-four-formats",
+  "ay-youth-quarterly-youth-sabbath"
+ ],
+ "ay-youth-elders-faith-story-archive": [
+  "ay-youth-letters-to-homebound-members",
+  "ay-youth-prayer-grandparents"
+ ],
+ "ay-youth-steps-to-christ-voice-notes": [
+  "ay-youth-morning-verse-group",
+  "ay-youth-question-writers"
+ ],
+ "ay-youth-bring-a-friend-vespers": [
+  "ay-youth-vespers-four-formats",
+  "ay-youth-visiting-teen-welcome-buddy"
+ ],
+ "ay-youth-teen-welcome-audit": [
+  "ay-youth-visiting-teen-welcome-buddy",
+  "ay-youth-question-writers"
+ ],
+ "ay-youth-teens-learn-one-bible-study": [
+  "youth-coffee-shop-bible-study",
+  "ay-youth-question-writers"
+ ],
+ "ay-youth-skating-rink-after-sundown": [
+  "youth-saturday-night-game-night",
+  "ay-youth-vespers-four-formats"
+ ],
+ "ay-youth-adventist-heritage-trip": [
+  "ay-youth-quarterly-youth-sabbath",
+  "ay-youth-platform-apprentices"
+ ],
+ "ay-youth-exchange-sabbath-congregations": [
+  "ay-youth-ay-hour-rotating-trio",
+  "ay-youth-quarterly-youth-sabbath"
+ ],
+ "ay-youth-leaders-training-institute": [
+  "ay-youth-council-board-proposal",
+  "ay-youth-ay-hour-rotating-trio"
+ ],
+ "ay-youth-career-brunch-six-tables": [
+  "ay-youth-mentor-lunch-tables",
+  "ay-youth-teens-host-fellowship-lunch"
+ ],
+ "ay-youth-prayer-stations-teens-build": [
+  "ay-youth-vespers-four-formats",
+  "ay-youth-prayer-grandparents"
+ ],
+ "interests-bible-instructor-after-series": [
+  "interests-follow-up-pairs-three-each",
+  "interests-life-stage-study-partner"
+ ],
+ "interests-baptismal-vow-evenings": [
+  "interests-first-year-circle",
+  "interests-sabbath-sunset-host-homes"
+ ],
+ "interests-quiet-return-class": [
+  "interests-returning-online-circle",
+  "interests-follow-up-pairs-three-each"
+ ],
+ "interests-former-members-listening-evening": [
+  "interests-returning-online-circle",
+  "interests-sorry-first-returning-member"
+ ],
+ "interests-vegetarian-kitchen-afternoon": [
+  "interests-sabbath-sunset-host-homes",
+  "health-home-supper-club"
+ ],
+ "interests-series-night-ten-more-weeks": [
+  "interests-life-stage-study-partner",
+  "public-evangelism-monthly-prophecy-cafe"
+ ],
+ "interests-candidates-camp-weekend": [
+  "interests-first-year-circle",
+  "interests-sabbath-sunset-host-homes"
+ ],
+ "interests-series-cards-same-night": [
+  "interests-reply-within-48-hours",
+  "interests-follow-up-pairs-three-each"
+ ],
+ "interests-two-evenings-follow-up-training": [
+  "interests-follow-up-pairs-three-each",
+  "interests-study-givers-monthly-huddle"
+ ],
+ "religious-liberty-parents-teens-school-saturdays": [
+  "religious-liberty-pastors-letter-test-dates",
+  "religious-liberty-first-job-sabbath-mentor"
+ ],
+ "religious-liberty-liberty-sabbath-stories": [
+  "religious-liberty-monthly-liberty-minute",
+  "religious-liberty-liberty-podcast-circle"
+ ],
+ "religious-liberty-freedom-in-scripture-class": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-pray-persecuted-every-faith"
+ ],
+ "religious-liberty-association-annual-evening": [
+  "religious-liberty-monthly-liberty-minute",
+  "religious-liberty-pray-persecuted-every-faith"
+ ],
+ "religious-liberty-managers-accommodate-all": [
+  "religious-liberty-cover-coworker-holy-day",
+  "workplaces-faith-employee-group"
+ ],
+ "religious-liberty-sabbath-stories-booklet": [
+  "religious-liberty-sabbath-job-encourager",
+  "religious-liberty-sabbath-pressure-supper"
+ ],
+ "religious-liberty-adventist-freedom-history": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-monthly-liberty-minute"
+ ],
+ "religious-liberty-elders-first-call-training": [
+  "religious-liberty-sabbath-job-encourager",
+  "religious-liberty-spanish-sabbath-work-line"
+ ],
+ "religious-liberty-new-official-welcome-note": [
+  "religious-liberty-council-listening-visits",
+  "religious-liberty-monthly-liberty-minute"
+ ],
+ "religious-liberty-freedom-day-library-panel": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-faith-leaders-coffee"
+ ],
+ "religious-liberty-library-january-display": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-pray-persecuted-every-faith"
+ ],
+ "religious-liberty-constitution-day-reading": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-monthly-liberty-article-post"
+ ],
+ "religious-liberty-interfaith-service-day": [
+  "religious-liberty-join-interfaith-council",
+  "religious-liberty-accept-open-house-invitation"
+ ],
+ "religious-liberty-district-afternoon-open": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-monthly-liberty-article-post"
+ ],
+ "religious-liberty-conscience-explainer-videos": [
+  "religious-liberty-monthly-liberty-article-post",
+  "religious-liberty-monthly-liberty-minute"
+ ],
+ "religious-liberty-letter-to-editor-evening": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-council-listening-visits"
+ ],
+ "religious-liberty-fair-pocket-first-amendment": [
+  "religious-liberty-monthly-liberty-article-post",
+  "religious-liberty-liberty-podcast-circle"
+ ],
+ "religious-liberty-sponsor-family-fled-persecution": [
+  "immigrants-retiree-video-partners",
+  "religious-liberty-pray-persecuted-every-faith"
+ ],
+ "religious-liberty-library-documentary-night": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-monthly-liberty-minute"
+ ],
+ "religious-liberty-disagree-respectfully-course": [
+  "religious-liberty-liberty-podcast-circle",
+  "religious-liberty-monthly-liberty-article-post"
+ ],
+ "global-mission-mission-360-vespers-series": [
+  "global-mission-mission-biography-shelf",
+  "global-mission-mission-story-for-family-worship"
+ ],
+ "global-mission-prayer-journey-1040-window": [
+  "global-mission-one-family-one-country",
+  "global-mission-mission-story-map"
+ ],
+ "global-mission-could-you-serve-a-year": [
+  "global-mission-returned-volunteer-mentor",
+  "global-mission-welcome-home-volunteers"
+ ],
+ "global-mission-trip-from-host-churchs-list": [
+  "global-mission-travelers-bring-a-greeting",
+  "global-mission-featured-region-prayer-calendar"
+ ],
+ "global-mission-medical-dental-volunteers": [
+  "global-mission-welcome-home-volunteers",
+  "global-mission-returned-volunteer-mentor"
+ ],
+ "global-mission-building-trip-supporting-ministry": [
+  "global-mission-members-home-churches-abroad",
+  "global-mission-adventist-students-sabbath-lunch"
+ ],
+ "global-mission-six-evenings-before-a-trip": [
+  "global-mission-returned-volunteer-mentor",
+  "global-mission-featured-region-prayer-calendar"
+ ],
+ "global-mission-investment-harvest-sabbath": [
+  "global-mission-investment-kickoff-menu",
+  "global-mission-investment-garden-row"
+ ],
+ "global-mission-week-of-sacrifice": [
+  "global-mission-featured-region-prayer-calendar",
+  "global-mission-mission-story-for-family-worship"
+ ],
+ "global-mission-world-church-supper": [
+  "global-mission-hymn-from-the-region",
+  "global-mission-mission-story-map"
+ ],
+ "global-mission-host-missionary-on-home-leave": [
+  "global-mission-mission-biography-shelf",
+  "global-mission-featured-region-prayer-calendar"
+ ],
+ "global-mission-our-own-missionaries-remembered": [
+  "global-mission-mission-biography-shelf",
+  "global-mission-storytellers-who-tell"
+ ],
+ "global-mission-language-course-for-service": [
+  "global-mission-returned-volunteer-mentor",
+  "global-mission-care-team-for-member-abroad"
+ ],
+ "global-mission-teacher-training-trip": [
+  "global-mission-travelers-bring-a-greeting",
+  "global-mission-featured-region-prayer-calendar"
+ ],
+ "global-mission-trip-savings-plan": [
+  "global-mission-returned-volunteer-mentor",
+  "global-mission-featured-region-prayer-calendar"
+ ],
+ "global-mission-pioneer-story-walk": [
+  "global-mission-mission-story-for-family-worship",
+  "global-mission-mission-story-readers-theater"
+ ]
+}

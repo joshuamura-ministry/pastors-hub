@@ -130,7 +130,7 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   P.q('#u-lib [data-lib-more="out"]').click(); await until(()=>cards(P).length===24);
   c('"Show 12 more" adds twelve', shown(), R.slice(0,24).map(o=>o.id));
   choose(P,'#u-lib select[data-lib-f="size"]','1'); await until(()=>cards(P).length===12);
-  c('size "This week": every card is a size-1 idea and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('tier')]===1&&e.querySelector('.lib-facts li').textContent==='This week'), true);
+  c('size "This week": every card is a size-1 idea and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('tier')]===1&&e.querySelector('.lib-facts li:not(.lib-cad)').textContent==='This week'), true);   // v10.43 (the pastor: "separate the things that are weekly or monthly… and events"): how it runs comes first
   choose(P,'#u-lib select[data-lib-f="kind"]','invite'); await sleep(60);
   c('kind "Invite" as well: only invite ideas', cards(P).length>0&&cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('k')]==='invite'&&/invite/i.test(e.querySelector('.lib-kind').textContent)), true);
   choose(P,'#u-lib select[data-lib-f="size"]',''); choose(P,'#u-lib select[data-lib-f="kind"]',''); await sleep(60);
@@ -148,7 +148,8 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   await until(()=>cards(P).length===12);
   const card=cards(P)[0], raw=THEME('prayer').ideas.find(x=>x.id===card.dataset.libId);
   c('name, the 2–3 sentence description, from the library', [card.querySelector('h4').textContent,card.querySelector('.lib-d').textContent], [raw.en.n,raw.en.d]);
-  c('size · people · cost · where · Sabbath', card.querySelectorAll('.lib-facts li').length, 5);
+  // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): how it runs is the card's first fact
+  c('how it runs · size · people · cost · where · Sabbath', [card.querySelectorAll('.lib-facts li').length,!!card.querySelector('.lib-facts li.lib-cad:first-child')], [6,true]);
   c('the four steps, folded until opened', [card.querySelector('details.lib-how').open,[...card.querySelectorAll('.lib-how li')].map(e=>e.textContent)], [false,raw.en.how]);
   c('two actions: Add to our plan · Make the case for this', [...card.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Add to our plan','Make the case for this']);
   const whyOk=P.E(`(()=>{ const env=libEnv(); return [...document.querySelectorAll('#u-lib .lib-card')].every(e=>{ const x=libToCatalog(libFull(e.dataset.libId)), w=e.querySelector('.lib-why');

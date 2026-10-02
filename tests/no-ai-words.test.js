@@ -6,7 +6,8 @@
 // the hub, the Community Survey (the report, the action plan with a draft idea and a new idea, the Idea
 // Library's search, its themes and "More ideas for {town}" locked, unlocked and failing), Spiritual Gifts
 // (the landing, the sample report and its PDF), Make the Case (the three steps, a group, an idea, the
-// slides, the sample slideshow, the handout PDF), the Evangelism Planner, and a member's #watch page.
+// slides, the sample slideshow, the handout PDF), the Evangelism Planner, a member's #watch page, and (v10.43) a
+// neighbour's connection card (#connect=) and the pastor's connection-card sheet.
 // The server's own error words (which name the service) are never shown; the unlock hint shows ?ideas=,
 // and ?ideas= unlocks as ?ai= still does. Last, a static scan of index.html: outside comments, the only
 // "IA" is Iowa's postal code on the conference map. Code identifiers may keep "ai" (lower case, or
@@ -40,6 +41,9 @@ function page(o){
         const m=/^\/ideas\/([a-z-]+)\.json$/.exec(u);
         if(m){ const f=path.join(ROOT,'ideas',m[1]+'.json'); if(!fs.existsSync(f)) return {ok:false,status:404,json:async()=>null};
           const t=fs.readFileSync(f,'utf8'); return {ok:true,status:200,json:async()=>JSON.parse(t)}; }
+        // v10.43: a connection card, as the phone loads it
+        if(/functions\/connect/.test(u)) return {ok:true,status:200,json:async()=>({ok:true,id:'HK7QM4RTZP',v:1,closed:false,card:{lang:'both',kind:'health',look:'health',cadence:'event',church:'Bucks County SDA',title:{en:'Community health fair',es:'Feria de salud comunitaria'},day:null,parent:false,note:true,partner:null,nextWhen:{en:'',es:''},
+          opts:[{k:'next',en:'Tell me about the plant-based cooking school',es:'Quiero saber más de la escuela de cocina a base de plantas',contact:true},{k:'prayer',en:'I’d like prayer',es:'Me gustaría que oren por mí',contact:false},{k:'nothing',en:'Nothing more, thank you',es:'Nada más, gracias',contact:false}]}})};
         if(/advise/.test(u)){
           const ai=o.ai||'off';
           if(!init||init.method!=='POST') return {ok:true,status:200,json:async()=>ai==='off'?{enabled:false}:{enabled:true,locked:ai!=='open'}};
@@ -134,6 +138,14 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     P.q('#cs-lib .lib-card [data-lib-case]').click(); await sleep(300);
     c('an idea chosen, its slides built', P.J('!!(CASE_ST.deck&&CASE_ST.deck.slides.length)'), true);
     scan(P,'Make the Case with the slides');
+    // v10.43 (the pastor: no "AI" anywhere a person can see): step 3's "After the day" card, its picker, and "Runs as"; the survey's
+    // and step 2's "How it runs" filters are in the screens scanned above
+    P.E(`caseChooseGroup('board'); caseChoose('health-expo');`); await until(()=>P.q('#cs-fu:not([hidden])'),3000);
+    if(P.q('#cs-fu [data-fu-change]')) P.q('#cs-fu [data-fu-change]').click(); await sleep(60);
+    P.E(`(()=>{ const el=document.createElement('div'); el.id='zz-runs'; document.getElementById('cs-s3').append(el); el.innerHTML=caseRunsHTML(); })()`);
+    c('v10.43: the follow-up card, its picker and "Runs as" are up', [!!P.q('#cs-fu [data-fu-pick]:not([hidden]) input[name="fu-pick"]'),!!P.q('#zz-runs .cs-runs')], [true,true]);
+    scan(P,'Make the Case: the "After the day" card, its picker and "Runs as"');
+    P.E(`document.getElementById('zz-runs').remove()`);
     { const t=P.E(`(()=>{ try{ const d=casePdfDoc(caseHandout(CASE_ST.model,CASE_ST.deck,{}),{jsPDF:window.jspdf.jsPDF,compress:false}); return d.__caseLog.map(l=>l.t).join(' '); }catch(e){ return 'ERR '+e.message; } })()`);
       c('the handout PDF: no "AI"', [t.length>500,hits(t)], [true,[]]); }
     P.E('caseSampleOpen()'); await sleep(300);
@@ -165,6 +177,14 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
 
     { const M=page({lang,hash:'#watch'}); await sleep(1300);
       scan(M,'a member\'s #watch page'); }
+    { const K=page({lang,hash:'#connect=HK7QM4RTZP'}); await until(()=>K.q('.cn-age'),6000);
+      K.q('[data-cn-age="yes"]').click(); await sleep(20);
+      c('the connection card (#connect=) is up', !!K.q('.cn-picks'), true);
+      scan(K,'a neighbour\'s connection card (#connect=)'); }
+    { const R=page({lang}); await sleep(1300);
+      R.E(`cnSheetOpen(SIGNATURE.find(x=>x.id==='health-expo'),{tab:'card'})`); await sleep(20);
+      c('the connection card sheet is up', !!R.q('#cn-sheet .cn-step'), true);
+      scan(R,'the connection card sheet'); }
   }
 
   console.log('\n-- ?ideas= unlocks, as ?ai= still does --');

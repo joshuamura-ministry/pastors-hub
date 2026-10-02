@@ -13,14 +13,15 @@ in commit messages. See [Security](#security--this-repo-is-public).
 ## Read this first
 
 1. **One file.** The whole app is `index.html` (~2.4 MB). No build step, no
-   framework, no bundler. Two `<script>` blocks. Edit it in place. The one
+   framework, no bundler. Two `<script>` blocks (and a five-line one in the head that loads the web fonts except on a
+   neighbour's `#connect=` page, v10.43). Edit it in place. The one
    exception is data: the Idea Library's `ideas/` is **generated** from
    `tools/ideas-src/` by `tools/build-ideas.mjs` — never edit `ideas/` by hand
    (see [Adding or changing ideas](#adding-or-changing-ideas)).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 86 suites, 7,625 assertions, all green at v10.42.0 (presenter + timing parts, then part 3: the focus, locked phones and the handout on them, decisions, Gifts first, the survey-to-Make-the-Case flow, then the fixes after review and the length a team chooses; about 10 minutes).
+   `npm test`. 107 suites, 8,656 assertions, all green at v10.43.0 (v10.42's presenter, timing and part 3, then v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 15 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -66,25 +67,37 @@ ideas/                         the Idea Library as the page loads it: index.json
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
 tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the ideas, EN + ES), themes.json (57 themes, synonyms),
                                reach.json (in / out / both for the 2,249 ideas written before `reach` existed),
+                               cadence.json (v10.43: ongoing / event / series-N for every idea), next.json (an event's or series' two ongoing next steps),
+                               nocard.json (68 ideas whose own words promise no names: no follow-up plan, no card),
                                vocab.json, validate.mjs, selftest.mjs, examples.json, SCHEMA.md (fields, search), WRITERS.md (quality bar)
 netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.3: 200 results an hour from one address; Netlify Blobs)
 netlify/functions/gifts-sweep.mjs  daily scheduled purge of expired gifts results
 netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.1
 netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.4: his handout and the proposal to vote on as PDFs for phones, op putpdf / GET op=pdf, the `how` slide, the gifts deck; 1.3: how phones move, `mode` follow|free, and `pdf`; 1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
 netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms and their PDFs (present-sweep-1.1)
+netlify/functions/connect.mjs   connection cards (v10.43, connect-1.0): a card per event or series (secret key for the pastor, public id), the phone's answers
+                               (adults only, no markup), pulled by his device only; Netlify Blobs store `terrain-connect`
+netlify/functions/connect-sweep.mjs  daily purge of expired answers, tombstones and unused cards (connect-sweep-1.0)
+fonts/                         (to add, his OK needed to download) CormorantGaramond-SemiBoldItalic.ttf, SpaceGrotesk-SemiBold.ttf, OFL.txt for the printed card
+                               and the neighbour's phone page: fetched same-origin by cnPdfFontBytes when a card is printed, and by the card page's
+                               @font-face rules ("Terrain Card Script" / "Display"): when it lands it must be in the site's publish copy (below)
 FIREBASE-RULES-TERRAIN.txt     rules for the separate Firebase project `terrain-live` (no client writes)
 FIREBASE-SETUP.md              click-by-click setup of that project for the pastor
 README.md                      (in the GitHub repo; not part of this hand-over folder)
 CLAUDE.md                      this file
 package.json                   @netlify/blobs (functions); jsdom + jspdf (tests)
-tests/                         86 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
+tests/                         107 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
-`netlify.toml` (added 1 Oct 2026) builds a `site/` folder holding only `index.html` and `ideas/`, so notes, tests,
+`netlify.toml` (added 1 Oct 2026, PR #2) builds a `site/` folder holding only `index.html` and `ideas/`, so notes, tests,
 tools and function source are no longer served. Functions stay in `netlify/functions/`. **A new file the page must
 load has to be added to the copy command in `netlify.toml`.** Live deploys skip changes that touch only tests, tools,
 `.github/` or `.md` notes (the `ignore` rule; previews always build). Safe headers are set there too (no script CSP).
+v10.43.0 needs no other same-site static file today: the phone form is
+`index.html#connect=`, and everything else is a function. **When `fonts/` is added** (the card's two faces), add
+`fonts/` to that copy command too, or the printed card quietly prints in Times and Helvetica and the neighbour's phone page in the
+phone's own faces (each falls back by itself: a missing file is a same-origin 404, never a request to another site).
 
 **Deploy:** one release = one branch = one pull request = one Merge → Netlify builds → *Published* in the Deploys tab.
 Never upload to `main` directly: each commit there is a separate live deploy (15 credits on a credit plan), and a
@@ -94,6 +107,7 @@ Verify both halves after any deploy:
 
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
+- connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
 
 **Server settings** (Netlify → Project configuration → Environment variables;
 values are never in the repo):
@@ -113,9 +127,16 @@ values are never in the repo):
 | `GIFTS_FROM` | gifts.mjs | Sender, e.g. `Terrain <reports@pastorshub.org>`. The domain must be verified in Resend (DNS records on pastorshub.org). |
 | `SITE_URL` | gifts.mjs | Optional. Base of the private report link in emails; defaults to the Netlify site URL. |
 
+v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registration token like gifts and present, and Netlify Blobs.
+
 ---
 
-## Current state (29 Sep 2026)
+## Current state (1 Oct 2026)
+
+**Handed over now: v10.43.0** (`~/Downloads/terrain-v10.43.0`; the section "v10.43.0" below). The table is as it was at v10.42.0;
+since then v10.42.0 and v10.42.1 went live (30 Sep 2026). v10.43.0 adds `connect.mjs` (connect-1.0) and `connect-sweep.mjs`
+(connect-sweep-1.0), changes `index.html`, `ideas/` (build hash `13dfaf05d4e1`: every idea now carries `cad`, events and series
+`nx` / `nocard`), `tools/` and `tests/`; present.mjs, gifts.mjs, register.mjs and advise.mjs are unchanged.
 
 | | Live on pastorshub.org (29 Sep 2026) | Handed over |
 |---|---|---|
@@ -124,6 +145,196 @@ values are never in the repo):
 | `register.mjs` / `gifts.mjs` | **register-1.1** / **gifts-1.2**, census registration gate on | register-1.1 / **gifts-1.3** (200 results an hour from one address) |
 | `advise.mjs` | **advise-2.2** | same (its error strings still say "AI", but the page never shows them) |
 | `ideas/` | **2,249 ideas in 42 themes** (`e677d04959f8`) | **3,050 ideas in 57 themes**, every one with a reach (634 in · 2,163 out · 253 both), EN + ES (build hash `f2cc1121c190`), from `tools/ideas-src` |
+
+**v10.43.0 (1 Oct 2026) — ongoing · a series · one-day events, a follow-up plan for every outreach event and series, and
+connection cards hosted by Terrain; "What's next" at the end of the survey and "Your path" on the hub.** The pastor (30 Sep
+2026, voice-to-text): *"For 'ministries our church could offer', we should separate the things that are weekly or monthly —
+ongoing ministry — and events, which are one-time, one day. A lot of our churches do a one-day thing, and after one day there
+needs to be some kind of follow-up if we connect with the community. If people come in on a one-day event there has to be a way
+to collect information, connect with the community, get their information somehow, so that we can build a relationship with
+the people."* He approved: *"yes. it should host the connection cards tailored to the situations. and yes, the three-way split is
+good."* And: *"make sure the connection cards are beautiful and attractive, designed well, not just plain text."* Then (§5):
+*"At the end of the Community Survey, at the very bottom, there should be a Make the Case button for this specific ministry…
+right now they can click it and then there's no next… They could skip the Spiritual Gifts and go straight to Make the Case, but
+eventually the Spiritual Gifts need to be done so they know about their membership."* Spec: the build session's scratchpad
+`v45/SPEC.md`; design `v45/design/DESIGN.md` (with `FOLLOWUP.md`, `CONNECT.md`, the data in `design/data/`). Built by three
+builders in parallel (C1 cadence + follow-up plan, C2 connection cards, C3 §5) and merged by the integrator with
+`git merge-file --diff3`; an app restart on 1 Oct 2026 (15:25) wiped that scratchpad (`v48/`: the builders' copies, the integrator's
+fixtures and every harness), and the integration was finished from this folder (record: `~/Downloads/Terrain-work/v53/INTEGRATION.md`;
+the builders' reports: `~/Downloads/Terrain-work/v53/builders.json`; the rebuilt Chrome harness: `~/Downloads/Terrain-work/v53/h/`).
+- *Three kinds of ministry, everywhere* (C1): every idea has a cadence — **ongoing** (weekly or monthly), **a series** (a set number
+  of sessions that ends) or **a one-day event**. Data: `tools/ideas-src/cadence.json` (3,050 ids: 1,937 ongoing · 829 events · 284
+  series, 97 of them with no count stated), shipped as the integer `cad` (0 ongoing · 1 event · 3–26 a weekly series of n ·
+  103–126 n on days in a row · 100 a series whose idea states no count) in the index's last column and each theme record. The
+  103 built-ins: `CASE_CADENCE_BUILTIN` (18 events, 18 series). `caseCadenceOf(x)` reads his "Runs as" › the plan › the data ›
+  the built-ins › a guess. A small label on every card ("One-day event", "Series · 6 sessions", "4 nights in a row") and a filter
+  **All · Ongoing · A series · One-day events** (ES "Todos · Continuos · Una serie · Eventos de un día") in the survey's list,
+  the Idea Library and Make the Case step 2. "Runs as" (step 3's edit panel) corrects a wrong label for his church.
+- *Timing by cadence:* an event has a date to choose (no weekday rhythm, no length), a series its number of sessions (weekly, or
+  nights in a row), ongoing keeps v10.42.1's words **byte for byte** (`tests/v43-ongoing-golden.test.js`, 535 outputs; the
+  builder's full sweep 5,655). Deck, handout, Proposal, motion, the calendar line and Record what we decided all follow.
+- *The follow-up plan* (C1): every outreach event and series (`fuApplies`: not ongoing, not in-reach, not made and handed out, not a
+  no-card idea) names its **next step** — the ongoing ministry it feeds (health fair → cooking school, back-to-school → homework
+  club, block party → monthly family night). Suggested from the plan, then the hand-reviewed pair (`tools/ideas-src/next.json`,
+  1,113 series/events × 2 ongoing targets; `CASE_NEXT_BUILTIN`), then the theme; staffable first; he picks another or names his
+  own (step 3's **"After the day"** card `#cs-fu` and its picker; saved per church + idea, `uChurch().followUp`). The timeline:
+  a thank-you within 48 hours to everyone who left a phone or email; an invitation within 2 weeks **only to those who ticked
+  something about what comes next**; a visit only if they asked (7 days); the interest coordinator keeps the list (Church
+  Manual p. 91). Every event/series deck gets an **"After the day"** slide (series: "After the series"), the handout and the
+  Proposal a **Follow-up plan** section, the motion "…; with the follow-up plan: an invitation to {next} within two weeks, for
+  those who ask". Results are **counts only** ("23 connected · 9 took the next step"), never a name. His Planner series has the
+  plan without counts and no card (its record book keeps its people).
+- *Connection cards hosted by Terrain* (C2): from the idea card or step 3, he makes a card: a short link
+  `https://pastorshub.org/#connect=<ID>` (always the live site, never a deploy preview), a QR code, a printable card (half
+  letter, two per page, or a 4 × 6 postcard; English, Spanish or both) with write-in lines for people without a phone, and the
+  phone form. **Tailored** to the occasion (theme, event or series, next step): a health fair offers the cooking school, the
+  recipe booklet and screening results; back-to-school speaks to parents ("please don't write children's names"); grief,
+  care, recovery and abuse cards are gentle with the professional line (988, SAMHSA 1-800-662-4357, the National Domestic
+  Violence Hotline 1-800-799-7233: checked on the official sites 1 Oct 2026); the abuse card names no event and has a quick exit.
+  Always "I'd like prayer", "I'd like a visit" (never on an abuse card), "Nothing more, thank you". Asked: a first name; a phone
+  or an email only when a ticked choice needs it, with the consent line "The church may contact me about what I ticked. I can
+  ask to be removed at any time."; "Are you 18 or older?" — under 18: a kind message, **nothing sent or kept**. Nothing required
+  beyond the first name. The phone keeps nothing (no storage, no cookie). **Beautiful, not plain:** one design system with nine
+  looks (health, food, family, youth, music, prayer, seasons, calm, general), each a colour family of Terrain's and a drawn
+  motif (data, drawn the same in SVG and in the PDF), the app's display and script faces, a framed QR with "Scan to stay in
+  touch", tiles with small icons, a thank-you that names the next step and when it starts; it prints well in black and white.
+- *The server* `netlify/functions/connect.mjs` (**connect-1.0**, Netlify Blobs store `terrain-connect`) and the daily
+  `connect-sweep.mjs` (**connect-sweep-1.0**): a card with a secret key for him and a public id; op create / update / card /
+  submit (public; honeypot, too-fast, limits per address, per card and site-wide, strict validation, no markup) / pull / ack /
+  delete / withdraw / close / remove; answers readable only with the key, never logged; the registration token as gifts and
+  present use. Kept at most a year; once his device has taken an answer the server keeps it **30 days** more
+  (`TAKEN_KEEP_DAYS`: DESIGN's Q1, the recommended answer, as he did not choose; one constant and one line of the privacy note).
+  **No new environment variables.**
+- *His side* (on his device only, `uChurch().connect`): the **Connections** list per event — names, contact, choices, private
+  notes; the checklist per person (thank-you sent · invited · visit arranged · took the next step) with what is **due today**;
+  copy a thank-you or an invitation, or text / email / call from his own phone (Terrain sends nothing); a CSV for the interest
+  coordinator (never the note; a warning line); delete on request (device and server); a paper card typed in. Clear all keeps
+  the Connections (people are not plans); the Backup line says the file holds names.
+- *"What's next"* (C3) at the very bottom of the Community Survey (`#u-whatsnext`): one **"Make the case for {the ministry}"**
+  button per ministry in the plan, opening Make the Case at step 1 with it chosen; a **Connection card** button beside each event
+  or series; an empty plan points up to the list; then the Gifts first card with "Proposals are stronger when your members know
+  their gifts. You can make the case first and do this alongside." The survey card's "Build proposal" is "Make the case for this".
+- *"Your path"* (C3) on the hub above the tools (`#hubpath`): ① Map your neighborhood (Done ✓) · ② Discover your members' gifts
+  ("40 of 46"; "So every proposal knows who is gifted and ready.") · ③ Make the case ("3 ministries in your plan") · ④ Plan an
+  evangelism series (Optional / Done ✓). The first step not done breathes gently (reduced motion stops it); none blocks another.
+- *The average church* (`tests/average-church/seed-followup.json`, from the part-3 design's `build-fixture.mjs`): seed-after plus
+  the plan of three (the health fair, back-to-school, the 4-night series), his next step for the health fair (the cooking
+  school), and three cards with made-up adult answers (23 for the health fair: 14 thanked, 12 invited, 2 visits asked, 9 took the
+  next step, 2 due on 1 October; 6 for back-to-school; none yet for the series). `tests/v43-average-church.test.js` holds it.
+- *Integration fixes:* the shared block between the markers is C2's (C1 had pasted an earlier copy); `showHub` runs both the quiet
+  pull and "Your path"; section 5's page check reads `memberLink()` (a tenth guard site); four tests that simulated a missing
+  builder by deleting a function declaration (which cannot be deleted) now hide it by assignment; `connect-function`'s leak scan
+  matches the short made-up names as whole words (a random key once contained "Fay"); the ongoing golden says the version field
+  back as v10.42.1 before hashing (it is the only byte that moved).
+- *Finishing the integration (1 Oct 2026, after the scratchpad was lost; each fix failing-first, `v53/INTEGRATION.md`):*
+  (1) **the Proposal's pages**: the Follow-up plan section and the motion's clause pushed every ministry team's (and the whole
+  church's) Proposal of an event or series onto a second page at every level (the average church: 360 of 360; the event and series
+  built-ins × six team groups: 360 of 432 English ones, up to 54 pt over). A team's Proposal *with a follow-up plan* now has
+  a fifth level (`caseProposalDoc`: `top` 5, level 4 at 0.84): no WHAT row (tight, it is only the name the title and motion
+  say), two steps, one safeguard, the review row, the follow-up timeline in the step-3 card's short words (`Pz.followup.tight4`).
+  English: one page for all 1,944 (v10.42.1: 1,890); Spanish: 1,755 (v10.42.1: 1,053), none worse; the library's events and series
+  (every 12th, 744): English all one page, Spanish 336 of 372 (v10.42.1: 206), none worse. Every other Proposal unchanged (an
+  ongoing one never reaches level 4). (2) **fixed dates** said the trial's window: an event "on 20 Oct" had WHEN "20 Oct – 3 Nov"
+  (the review day), the handout's ask "Approve a one-day event, from 20 Oct to 3 Nov", the conference's "Runs" row the same, and
+  the handout's review "continue, change or stop". Now `V.last` + `CASE_CAD_LEAF` ("from {start} to {review}" → "on {start}" /
+  "from {start} to {last}"), WHEN and Runs from `CASE_CAD_T.runs`, the review from `CASE_CAD_T.pdfReview`. (3) **the people
+  stay** when the server forgets a card (`no-card`: answers go 30 days after his device takes them, an unused card 30 days after its
+  day): `cnPull` moved the card off his device and its 23 people were orphaned (gone from the list, the counts, "due today" and
+  the After slide, yet still in the Backup). Now it goes to `past` with no key, like Remove, and the list opens on people with no
+  current card (no paper-card form then). (4) **a slide cut its own sentence**: the renderer kept 120 characters of the ability
+  slide's line (`tdS(s.lead,120)`), so the Spanish "…para esta obra: acompañe y capacite." ended "…esta obra: a"; now 200, a line
+  over 120 a size smaller (`.td-notelong`). (5) **words of a one-day event**: "Serves on the day…", "Training before the day"
+  (`RC.member.textEvent`, `support.startEvent`), and the whole church's Help "Give a few hours on the day." / "Give one evening
+  of the series." (`yes.help.textCongEvent` / `textCongSeries`). (6) the next-step picker's "1 volunteers needed" / "Se necesitan
+  1 voluntarios" → "1 volunteer needed" / "se necesita 1 voluntario". (7) the phone form's tapped tile drew a second ring (the
+  checkbox's focus): the ring is for the keyboard only (`:has(input:focus-visible)`). (8) `present-client`'s "closing the ask
+  list takes the names off the page" read `body.textContent`, which includes the page's own script, and v10.43's list of words that
+  keep their capitals names the book of Ruth: the check now reads what the page shows (a measuring fault, not a change of mind).
+- *Fixes after review (1 Oct 2026; record `~/Downloads/Terrain-work/v53/FIXES.md`, patches `v53/fix/patches/`)*: a design review and a
+  security review of the integrated build found 20 things (7 major, 1 major in security, 12 minor); all are fixed, each failing-first:
+  (1) **the privacy promise** was missing from every team and whole-church Proposal (their tight levels kept two rows) and from about
+  half the handouts (the note was left out from level 3), and 27 children's documents never said "We never keep children's names":
+  every form of the Proposal's Follow-up plan now ends with a Privacy row (`Pz.followup.tight` / `tight4`), and the handout draws the
+  note at every level (at level 3 joined to the list row). Room for it on a team's one page (level 4): FROM and DATE share one row,
+  the budget's one line leaves "Left after this" to the board's Proposal (`Pz.budget.rows4`), a little less air under the heading.
+  Measured on every event/series built-in × 34 groups × both timings (2,040 a language): the promise in all of them; the pages none
+  worse than before (English team Proposals 1,800 of 1,800 on one page, Spanish 1,740 of 1,800, as before; no handout over two).
+  (2) **timing words follow the cadence** (SPEC §1): an event's roles "3 h in all", a series' "2 h a session"; the help line "Give 2
+  hours on the day" / "at each session"; WHO "about 4 hours each, in the weeks before and on the day" / "over the series"; the cost
+  "To start · on the day" / "the series" (an event's monthly cost is its cost on the day; a series' for its months: `ask.run`,
+  `ask.runF`), the motion's "($500 to start and $100 on the day)", the church's own budget "$50 monthly"; the whole church's "give
+  one evening a month" through `CASE_CAD_LEAF` (`CASE_CAD_T.mw`, `caseCadHoursEach`, `caseCadMW`, `ask.cad`). Ongoing ideas stay
+  byte-identical (the golden).
+  (3) **the printed card, redrawn** (`cnPdfCard` with `opt.part` full / front / back, `cnPdfLayout`, `cnPdfSides`, `CN_PDF_FLOOR`):
+  type floors (fine print 7.5 pt, choices and labels 9 pt; bilingual cards went down to 4.4 pt); one language a side ("Both": English
+  on page 1, Spanish on page 2, the same ink and size, each side saying where the other is: "En español al reverso"); a card that does
+  not fit one side loses note lines, then goes two-sided (the QR on the front, the form on the back; the postcard always, a gentle
+  card's helpline on the front when it fits); the choices on a pale panel in the look's tint, each with its box in the look's ink and
+  the phone's own icon in the look's line colour (`cnSvgPath` → `cnIconPDF`: the SVG icons, arcs and all, as vector paths), two
+  columns on the half card; the QR framed at about 2 in, "Scan to stay in touch" as a display line beside it (never past the
+  margin), the printed link without `~en`; the fallback heading face Times Italic (was Times Bold Italic, heavier than the script
+  face the pastor approves on screen); the sheet's preview in the faces the card prints in until `fonts/` holds the two
+  (`CN_FONTS_OK`, `.cn-prev-fb`); "Print on both sides of the paper." when a card is two-sided. `cnPdfFit` is gone.
+  (4) **the Spanish title cut where the English is** (`cnCutPair`, `cnTitles`; `cnNextNoun(name, lang, enName)` for "What's next" and
+  the next step): "Full health expo" / "Feria de salud completa" (the Spanish kept ", con pruebas y una ruta de derivación" on the
+  card, the phone, the sheet and "Lo que sigue"); a Spanish name with no place to cut keeps the English whole too; three built-ins
+  carry a short Spanish card name (`CN_TITLE_ES`: drive-in, lit-doors, toy-swap).
+  (5) **the phone's band**: the church line ends before the motif (`.cn-church` max-width `calc(100% - min(40%,220px) - 24px)`; it ran
+  16–17 px into it), "Seventh‑day" never breaks at its hyphen (`cnNoBreak`, U+2011), headings keep "Thank you" together and never
+  strand a word (`cnHeadKeep`: no-break spaces, the same words).
+  (6) **security**: a withdrawal always writes its tombstone (op withdraw; someone who withdrew between his device's pull and its ack
+  stayed on his device for a year while their phone said "Removed"); an email may not carry ? # & = % /, and only letters, digits,
+  dots and hyphens after the @ (`RE_EMAIL` in connect.mjs, `CN_RE_EMAIL`, `cnPaper`); the list's contact link encodes the address (a
+  submitted "email" could add a Bcc and a body to his mailto:). **The neighbour's page asks no other site** (DESIGN S22; it fetched
+  Google Fonts, telling Google the time and address of everyone who opened a card): a five-line script in the head loads Google
+  Fonts only off `#connect=`; the card page uses its own same-origin faces (`@font-face` "Terrain Card Script" / "Terrain Card
+  Display" from `fonts/`, the files the printed card embeds) or the phone's own serif italic and sans (`html.cn-nofonts`).
+  (7) smaller: three motifs (general: open contour lines running off the edge, not target rings — "neighbours are never targets";
+  seasons: a leaf garland, no Christmas stars on a November festival; family: five linked rings, no stray dots); two icons (prayer:
+  hands together, not a votive candle; the next step: a signpost, not the "sign in" door), his to change; "For parents and
+  guardians." not on the fall festival and the car care day (`CN_NOT_PARENT`; the Christmas toy store "for parents" keeps it); the
+  thank-you adds "We will pray for you." when prayer was ticked with something else (`CN_TEXT.prayLine`); the health fair's step 4
+  "Offer the connection card at every station; follow up within two weeks, only on what people ask for." (was "…the expo is
+  worthless without this"); "Weekly homework club (ongoing)"; the motion's clause in brackets ("…with a named coordinator and the
+  follow-up plan (an invitation to the weekly homework club within two weeks, for those who ask), and to bring it to the finance
+  committee"; `clause.followupA` for a team).
+  (8) the fixture `seed-followup.json`, by the asserting script `v53/fix/patches/p9-fixture.mjs` (never by hand): the cooking school
+  starts on 13 October; the health fair's Spanish card title is cut. The samples (only) give their church the people for its plan.
+  (9) *final review* (`v53/final/patches/p1`, pinned in `v43-review-fixes`): five built-ins' own step 4 said "visit everyone who
+  attended" or "keep the registration list and invite those families" (health-to-why, proph-news, four-nights, vbs,
+  backpack-giveaway) while their After slide, handout and Proposal say "a visit only if they ask" / "an invitation, if they asked"
+  (SPEC §2, D4): the same deck said both. Now "Visit those who ask, within two weeks…" / "Invite only the families who ask…"
+  (EN + ES, each no longer than before), as the health fair's step 4.
+- *Pinned by* the new `v43-cadence-data`, `v43-cadence`, `v43-timing-cadence`, `v43-ongoing-golden`, `v43-followup` (C1),
+  `connect-function` (CONNECT's checks and the DESIGN §9 security list S1–S23), `connect-tailor`, `connect-pastor`, `connect-look`,
+  `connect-pdf`, `connect-client` (C2), `v43-path` (C3) and `v43-average-church`, `v43-proposal-pages`, `v43-fixed-dates`,
+  `v43-connect-keep`, `v43-slide-words` (integrator), each failing on v10.42.1 (the last four also on the merged build before
+  their fix), and the updated suites each builder lists, each changed assertion with a comment quoting him; after the review
+  `v43-privacy-docs`, `v43-cadence-words`, `v43-review-fixes` (each failing on the build before the fixes) and the updated
+  `connect-function`, `connect-pastor`, `connect-tailor`, `connect-pdf`, `connect-look`, `v43-average-church`, `v43-followup`,
+  `v43-proposal-pages`, `v42-fixes`, each changed assertion with a comment. **Full suite: 107 suites · 8,656 passed · 0 failed** (after the final review's fix (9); 8,653 before it).
+- *Gates (Chrome, headless), re-run on the final build after the scratchpad was lost* (`~/Downloads/Terrain-work/v53/gates/`):
+  every slide at 360 × 640, EN + ES, on the average church: the 36 event and series built-ins × all 34 groups × both timings and
+  the Planner series (2,516 decks, 26,846 slides a language), the average church's plan with its answers (204 decks), every library
+  event and series × board / Community Services / the whole church (3,339 decks, 32,468 slides a language) and the 67 ongoing
+  built-ins × five groups (335 decks): **0 over the frame; every After slide (4,868 a language) at 0.9 or better**. At the
+  smallest type (0.75), 0 over: six English library motion slides (two of them so on v10.42.1) and 23 Spanish "Quiénes pueden"
+  slides whose whole sentence now shows (fix 4 above). The relevance rule: 20,398 decks (every built-in × 34 groups × both timings
+  EN, every 3rd ES; every library idea × 3 groups EN, every 5th ES; 3,298 of them events or series): 0 figures a purpose does not
+  allow, 0 design facts, 0 views or partners out of purpose, 0 "Here in" out of purpose, 0 figures on a quiet purpose, 0 figures
+  on an After slide. The live phones scenario with the real present.mjs and a streaming Firebase stand-in (presenter 1280, two
+  phones 390 EN + ES, the health fair to the board): 15 of 15. The connect.mjs security list S1–S23: `connect-function` (210).
+  The first integration run reported about 730 Spanish slides of v10.42.1 past the frame (team "I'm in" 2 px, "Here in" 7–24 px,
+  whole-church closes 11 px, conference motions 17–21 px), measured with its own harness, now lost; this re-run (seed-after, an
+  ongoing sample) found none: re-measure the ongoing decks over all 34 groups before trusting either (open work).
+  *After the review's fixes* (`~/Downloads/Terrain-work/v53/fix/gates/`): the same slide sets again, EN + ES: EN 6,394 decks, 64,777 slides, 0 over the frame, 5 at fit 0.75, 0 errors, every After slide at 1 or better; ES 6,394 decks, 64,777 slides, 0 over the frame, 24 at fit 0.75, 0 errors, every After slide at 0.9 or better; the
+  neighbour's phone with a 45-character church name ("Fairview Village Seventh-day Adventist Church") in every look and the abuse
+  card, 360 / 375 / 390 wide, light and dark (60 pages): 0 where the church line or heading touches the motif, 0 "SEVENTH-/DAY" breaks, 0 sideways scrolls, 0 requests to another site (before the fixes: 14, 20, 0, 60); the documents (every event/series built-in × 34 groups ×
+  both timings, 2,040 a language): the privacy promise (and, for children's events, the children's line) in 2040 of 2040 English Proposals and 2040 handouts, 2040 of 2040 Spanish Proposals and 2040 handouts (before: Proposals 240 / 300, handouts 1079 / 1063); team Proposals on one page 1800 of 1800 English, 1740 of 1800 Spanish (before 1800, 1740); 0 documents with more pages than before; 0 handouts over two pages; 0 lines out of their box.
+- *Not checked on real phones* (printed QR from paper on an iPhone and an Android phone; `sms:` with a body; the abuse exit on
+  iOS Safari; `tel:` / `mailto:`; the form outdoors on a weak signal; a home black-and-white print). The two font files for the
+  card are not in the repo yet (`fonts/`, open work): cards print in Times Italic and Helvetica Bold until then, and the phone page
+  uses the phone's own serif italic and sans.
 
 The session that produced this handover took Terrain from **v10.11.1 to
 v10.35.0**. Highlights, so you recognise them in the code:
@@ -1115,7 +1326,7 @@ Claude Code's own edit tool gives the same guarantee for single edits. For
 multi-part changes, keep the all-or-nothing discipline.
 
 After editing, always run `npm test`. It syntax-checks both inline script
-blocks and every function first, then runs all 86 suites.
+blocks and every function first, then runs all 107 suites.
 
 ### Versioning
 
@@ -1133,7 +1344,7 @@ version: `v10.36.0 — what changed`.
 
 ### Tests
 
-`tests/` holds 86 suites and `run-all.js`. They load `../index.html`
+`tests/` holds 107 suites and `run-all.js`. They load `../index.html`
 and `../netlify/functions/*.mjs` directly, stub `fetch`, and never call a
 real API or spend credit. `fixtures.json` is a fabricated high-need tract plus
 a small and a medium church. `average-church/` (v10.42) is a made-up average
@@ -1152,6 +1363,23 @@ Gifts results) as the app keeps it in localStorage, read by
   `v42-lock.test.js` (phones locked while he presents), `v42-decide-ui.test.js` (Record what we decided, the step-3 card, the
   path editor), `gifts-first-ui.test.js` (the Gifts first card, announcements, the Sabbath deck) and, for section F,
   `v42-plan-first.test.js` (the survey's list is for the community; step 2 opens with "From your plan").
+- v10.43.0 added, for C1, `v43-cadence-data.test.mjs` (the three source files, the index's `cad` column, the theme records' `cad` /
+  `nx` / `nocard`, a broken source stops the build), `v43-cadence.test.js` (the reader, labels, the three filters, "Runs as"),
+  `v43-timing-cadence.test.js` (an event, a weekly series, nights in a row, a series with no count), `v43-ongoing-golden.test.js` +
+  `v43-ongoing-golden.json` (535 ongoing outputs hashed from v10.42.1; the version field is said back as v10.42.1 before hashing)
+  and `v43-followup.test.js` (applies, the next step, the picker, the After slide, handout, Proposal, motion, counts, step 3's
+  card), with the helper `v43-helpers.js` (not a suite); for C2 `connect-function.test.mjs` (the server and the security list
+  S1–S23 of DESIGN §9), `connect-tailor`, `connect-pastor`, `connect-look`, `connect-pdf`, `connect-client` (+ the helper
+  `connect-blocks.js`, which loads the two CONNECTION CARDS blocks out of index.html into a VM); for C3 `v43-path.test.js`; and
+  the integrator's `v43-average-church.test.js` on `average-church/seed-followup.json`, `v43-proposal-pages` (a team's Proposal keeps
+  one page with the follow-up plan: level 4), `v43-fixed-dates` (an event's or a series' own dates and words with dates set, and the
+  one-day words), `v43-connect-keep` (the people stay when the server forgets a card; the tile's ring) and `v43-slide-words` (every
+  word a deck writes is on its slide; the picker's "1 volunteer"). `run-all.js` sets `REQUIRE_V43=1` too.
+  `connect-look` prints a NOTE (not a failure) while `fonts/` lacks the two faces, and checks them once they exist.
+- The review of v10.43 (1 Oct 2026) added `v43-privacy-docs` (the privacy promise and the children's line in every event/series Proposal
+  and handout), `v43-cadence-words` (no monthly rhythm in an event's or a series' deck, handout or Proposal; ongoing keeps its words)
+  and `v43-review-fixes` (S22's head script, the phone's band, the thank-you's prayer, the parents' line, the icons, the health fair's
+  step, the motifs). `gifts-first-decks` takes about 105 s of the runner's 120 s per suite: run the suite on a quiet machine.
 - The fixes after review (30 Sep 2026) added `v42-fixes.test.js` (on `average-church/`: an idea made and handed out, a group's
   own ask, the day but never the length for the bodies that vote, the motion as moved after the vote, the finance handout, the
   conference's amount and budget, one denominator after the gifts results, the club's term and lead figure, smaller words; §13: a
@@ -1254,6 +1482,39 @@ Search for these by name in `index.html`.
   every built-in and every 4th library idea, EN and ES, with a 200-character goal and with ministries in the plan) before
   touching `CASE_FIT`.
 
+**v10.43.0 — cadence, the follow-up plan, connection cards, the path** (blocks just before "THE RECORDS": `/* ==== CONNECTION
+CARDS · shared ==== */` (pure: tailoring, looks, the pastor's rules), `/* ==== CONNECTION CARDS · page ==== */` (form, card, sheet,
+list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
+- Cadence: `CASE_CADENCE_BUILTIN`, `caseCadDecode` / `caseCadEncode`, `caseCadGuess` (+ `caseSeriesCount`, drafts only), **`caseCadenceOf(x,o)`**
+  → `{c:'ongoing'|'series'|'event', n, row, dated, src}`, `caseCadLabel` / `caseCadTag`, `cadSegHTML` / `cadSegPaint`, `U_CAD` /
+  `uCadCounts` (the survey's filter `#u-cadseg`), `libFilter`'s `f.cad`, step 2's `#cs-cad`; "Runs as" `caseRunsHTML` / `caseRunsWire` /
+  `caseRunsSet` (`uChurch().cadence`); in `caseBuild` `KC` / `DT`, `caseCadLeaf`, `caseCadMonth`; `caseKidsOf`
+- The follow-up plan: `fuApplies`, `fuGet` / `fuSet` / `fuClean` (`uChurch().followUp`), `fuOk`, `fuCandidates` / `fuSuggest` / `fuNextOf`,
+  `CASE_NEXT_BUILTIN`, `CASE_NOCARD_BUILTIN`, `fuCounts` (C2's `cnResults` + `cnDueFor`), `fuModel` → `model.followup`, the After slide
+  (`part:'after'`, `CASE_VERSE_AFTER`, `CASE_FU_HEAD_RES`), step 3's `#cs-fu` (`fuCardRowHTML`, the picker), `fuIdeaOf`
+- Connection cards, pure: `cnKind`, `CN_GENTLE`, `cnParent`, `cnIdea`, `cnTailor`, `cnNextLabel` / `cnNextNoun` / `cnNextAbout` / `cnAboutNp`,
+  `CN_TEXT`, `CN_OPT`, `CN_LINES` (helplines), `cnPromise`, `cnThanks`, the looks `CN_LOOK`, `CN_THEME_LOOK`, `CN_BUILTIN_LOOK`, `cnLook`;
+  the pastor's rules `CN_KEEP_MS`, `CN_DUE_DAYS`, `CN_INVITE_PICKS`, `cnPersonOf`, `cnMerge`, `cnPrune`, `cnChecklist`, `cnDueToday`,
+  `cnCounts`, `cnMsg` / `cnHrefs`, `cnCsv` / `cnCsvName`, `cnPaper`
+- Connection cards, page: `CN_SITE` (`https://pastorshub.org`), `CN_FN`, `CONNECT_LINK` + `memberLink()` (every member-link guard),
+  `FEATURES.connect`; motifs `CN_MOTIF` / `cnMotifSVG` / `cnMotifPDF`, icons `CN_ICON`, fonts `CN_FONTS` / `cnPdfFontBytes` /
+  `cnPdfFonts`; the printed card `cnPdfDoc` / `cnPdfCard` / `cnPdfFit(s)` / `cnPdfName`; the phone form `cnBoot` / `cnFormHTML` /
+  `cnFormMount` (`#cnp`); his side `cnStore` (`uChurch().connect`), `cnEligible`, `cnItemOf`, `cnResults`, `cnDueFor`, `cnMake` /
+  `cnSave` / `cnClose` / `cnRetire` / `cnRemove` / `cnPull` / `cnQuietPull` / `cnDelete` / `cnPaperAdd` / `cnCsvSave` / `cnPdfSave`,
+  the sheet `cnSheetOpen` (`#cn-sheet`; `cnOpenMaker` / `cnOpenList`), `cnIdeaBtnHTML` (the idea card's button via `libActsHTML`),
+  `cnBackupNote`; the sheet fires `terrain:connect` on `document` when it closes
+- Review fixes (v53 fix): the printed card `cnPdfCard` (`opt.part`), `cnPdfLayout`, `cnPdfSides`, `CN_PDF_FLOOR`, `cnSvgPath` / `cnIconPDF`,
+  `CN_TEXT.noPhoneBack` / `otherSide` / `prayLine`; titles `cnCutPair` / `cnTitles` / `CN_TITLE_ES`; `cnHeadKeep`, `cnNoBreak`, `CN_NOT_PARENT`,
+  `CN_FONTS_OK`; the head script and `html.cn-nofonts` (S22); `CASE_CAD_T.mw`, `caseCadHoursEach`, `caseCadMW`, `m.ask.cad` / `run` / `runF`,
+  `Pz.budget.rows4`, the Proposal's `memoRows` at level 4, the handout's `join3`; `clause.followupA`
+- Integration (v53): `caseProposalDoc`'s fifth level (`top`, `Pz.followup.tight4`, level 4 at D 0.84); `V.last` and the fixed-date
+  patterns in `CASE_CAD_LEAF`; `RC.member.textEvent`, `CASE_COPY.support.startEvent`, `CASE_COPY.yes.help.textCongEvent` /
+  `textCongSeries`; `cnPull`'s `no-card` → `past` (`gone:true`, no key); the sheet's `listOk` and `cnListHTML(…,{noPaper})`;
+  `.td-notelong`; the picker's `gapOne`
+- Section 5: `NEXT_UI` / `nxU`, `nxPageOk`, `nxPlanItems`, `uNextHTML` / `uNextWire` / `uNextEqual` / `uNextRefresh` (`#u-whatsnext`, the
+  survey's last block; `uOpenProposal(id,{at:'s1'})`), `hubPathSteps` / `hubPathHTML` / `hubPath` (`#hubpath`; the hub's children are now
+  hubwelcome, egw, rule, hubpath, tools, hubgifts; `@keyframes hpBreathe`)
+
 **Idea Library** (v10.40.0; block "THE IDEA LIBRARY" beside `uCatalog`)
 - Data: `LIB` (`libLoadIndex`, `libLoadTheme`, `libLoadWords`; `/ideas/`, generated from `tools/ideas-src`), `libAdopt` (index rows → objects)
 - `libFold` / `libCore` (the query and every synonym folded alike), `libSearch(q)` (SCHEMA.md "Search"), `libThemeQuery` + `libQueryMatch` (built-ins by name for a theme query), `libRank` (words mode: themes covered, then words, then score; home first, variety), `libRankIn` (v10.41 review: an every-theme "For God's people" side by church fit), `libFilter`, `libJump` (the line under the box), `libRenew` (a kept index from an earlier deploy)
@@ -1287,6 +1548,11 @@ church porch; cards, prayer walking, social media done as a neighbour).
    own `reach` field, else its line in `tools/ideas-src/reach.json`, else its theme's default (inside → "in"). The build
    ships the resolved value for every idea; `tests/v41-integration.test.js` holds every row to that rule. A new idea in an
    outward theme that is really for the church family must say `"reach": "in"` (or "both").
+   **Cadence (v10.43):** every idea is `ongoing`, `event`, `series-N` (n weekly sessions, 3–26), `series-N-row` (n days in a row)
+   or `series` / `series-row` (no count stated) — its own `cad` field, else its line in `tools/ideas-src/cadence.json` (which must
+   name every shipped id). A new event or series needs two ongoing next steps in `next.json` (each a shipped ongoing idea, not
+   itself), or a line in `nocard.json` with the reason when its own words promise no names. Any fault in the three files stops
+   the build with nothing written. The index has about 1,500 bytes left under the test's 900 KB limit (open work).
 2. `cd tools/ideas-src && node validate.mjs themes/<theme>.json` (read the REVIEW lines too), then
    `node validate.mjs --all` (unique ids, no near-duplicate names across themes, unambiguous synonyms).
    (The review pass kept the writers' working copy in the build session's scratchpad `ideas/` and packaged it with
@@ -1380,6 +1646,27 @@ Don't relitigate them without a reason he'd accept.
   school breaks"). A clash is shown only when Terrain knows it, never invented. "I already know the dates" keeps the dates.
 - **The survey chooses, Make the Case wins support** (his approval, v10.42 section F): the survey's list is for our community;
   step 2 opens with the plan, then more ideas for the group; a card is never shown twice.
+- **Three kinds of ministry, everywhere** (his request, v10.43: "separate the things that are weekly or monthly — ongoing ministry —
+  and events"): ongoing · a series · one-day events, a label on every card and a filter in the survey, the library and step 2;
+  timing follows the kind; ongoing ideas say exactly what they said in v10.42.
+- **Every outreach event and series has a follow-up plan; counts only** (his request, v10.43: "after one day there needs to be some
+  kind of follow-up"): the next step (an ongoing ministry), a thank-you in 48 hours, an invitation in two weeks only to those who
+  asked about what comes next (the consent is "about what I ticked"), a visit only if asked; the After slide, the handout, the
+  Proposal and the motion say it; shared things carry two numbers (connected, took the next step), never a name. Ongoing, in-reach,
+  made-and-handed-out ideas and the 68 + 6 "no names" ideas get none; his Planner series gets the plan and no card.
+- **Connection cards: adults only, nothing kept on the phone, contact only for what was ticked, messages from his own phone**
+  (v10.43, "it should host the connection cards tailored to the situations"): nothing required beyond a first name; under 18:
+  nothing sent or kept; never children's names; no raffles or "enter to win" on a card; Terrain sends no email or text.
+- **One look per kind of occasion** (his words: "beautiful and attractive, designed well, not just plain text"): nine looks, each
+  a Terrain colour family and a drawn motif; the same card on the phone and on paper; good in black and white. The neighbour's
+  phone page follows the phone's own light or dark setting (the app itself stays dark).
+- **A printed card is readable and balanced** (review of v10.43: "a bilingual layout option that stays balanced"): never under 7.5 pt
+  (choices 9 pt); one language a side, at the same size and ink; a card too full for one side goes two-sided, never smaller.
+- **The neighbour's page asks no other website** (DESIGN S22): no web fonts, scripts or images from elsewhere on `#connect=`.
+- **Clear next steps** (his request, v10.43 §5): "What's next" at the very bottom of the survey (Make the case for each ministry in
+  the plan, a connection card for events and series, Gifts first beside it) and "Your path" on the hub; the gifts never block
+  making the case. The path's next step breathes gently: one more exception to "nothing animates on its own" (reduced motion
+  stops it).
 - **Many ideas, creative and specific** (his request, v10.40): a search for a topic shows 50+ ideas, never a thin list.
   Ideas go where people are (not the church porch), use social media as a neighbour, never ask for or pray about
   people's children by name, and are data in `tools/ideas-src`, not code.
@@ -1388,6 +1675,48 @@ Don't relitigate them without a reason he'd accept.
 
 ## Open work, prioritised
 
+00. **v10.43.0 is integrated and the review's 20 findings are fixed** (1 Oct 2026; records `~/Downloads/Terrain-work/v53/INTEGRATION.md`,
+   `v53/FIXES.md`). Before any upload: his look at
+   `~/Downloads/Terrain-v10.43-samples/` (README.txt there). Then deploy the page and the two new functions together; verify the
+   badge **v10.43.0**, `/.netlify/functions/connect` → `"fn":"connect-1.0"`, and `https://pastorshub.org/ideas/index.json` →
+   `"hash":"13dfaf05d4e1"`. Still open:
+   - **Fonts for the card (paper and phone):** `fonts/CormorantGaramond-SemiBoldItalic.ttf`, `fonts/SpaceGrotesk-SemiBold.ttf`, `fonts/OFL.txt`
+     (Google Fonts, SIL Open Font License, static TTF). Downloading needs his OK; until then the card prints in Times Italic and
+     Helvetica Bold (tested; the sheet's preview shows the same), and the neighbour's phone page uses the phone's own faces (it no
+     longer loads Google Fonts). `connect-look` checks the files once they exist; then add `fonts/` to PR #2's copy command.
+   - **After the review (his to decide):** the two new icons (prayer: hands together; the next step: a signpost); the Christmas toy
+     store keeps "For parents and guardians." (its name says "for parents"); the printed link is not grouped for reading (it would
+     change the link's form); a one-day event's capacity row still says "Hours in the first month"; the samples' church has more
+     helpers than the test fixture's (30 volunteers: so its plan can be staffed), and its 4-night series' next step is saved as his
+     pick (with more helpers the staffable-first rule would suggest the walk-and-talk study: the kitchen-table study shares the hall).
+   - **Real phones** (not possible here): scan a printed QR from paper on an iPhone and an Android phone; `sms:` with a body; the
+     abuse card's exit on iOS Safari (Back must not return); `tel:` / `mailto:`; the form outdoors on a weak signal; one card
+     printed at home in black and white.
+   - **His choices:** Q1 (the server keeps a taken answer 30 days, the recommendation, or a year: `TAKEN_KEEP_DAYS` and one line
+     of the privacy note); screening results on by default only for the health expo and the blood-pressure clinic; a second
+     device for the list (the key stays on the device that made the card); step ③ of "Your path" done once a decision is
+     recorded, step ② at half the adults; "Planifique una serie de evangelismo" (not "evangelización"); the hub tile's "Build a
+     proposal →" and the plan's "Proposal" button were left as they are; a brand-new pastor sees no "Your path" (a one-line
+     change in `hubPath()`); the neighbour's page follows the phone's light/dark setting. His newer word on drawings (1 Oct 2026,
+     `Terrain-design-notes/SABBATH-GUIDELINE.md`: "a connection card may offer a free drawing") is not built: cards still have
+     no drawing; the idea validator already allows free drawings (a change made beside this build and kept by the merge).
+   - **The index** `ideas/index.json` is 920,093 bytes: 1,507 under the test's 900 KB limit. The next library batch needs the
+     limit raised or a column trimmed.
+   - **The church Backup button** is drawn only into `#churchbar`, which nothing creates (older than v10.43); the D15 line is wired
+     to it and is also the last line of the card sheet's privacy note.
+   - **Older Spanish slides past the frame (unconfirmed):** the first integration run reported about 730 Spanish slides of v10.42.1
+     itself past 360 × 640 at the smallest type (team "I'm in" 2 px, "Here in" 7–24 px, three whole-church closes 11 px, two
+     conference motions 17–21 px); its harness was lost, and the v53 re-run (seed-after, events and series, an ongoing sample) found
+     none. Re-measure every ongoing deck × 34 groups with `v53/gates/slides.mjs` before a fit pass (ongoing decks must stay
+     byte-identical: a fit pass needs a new golden).
+   - **Deploy (PR #2's `netlify.toml`):** `fonts/` must join `index.html` and `ideas/` in the build's copy command when the fonts land.
+   - A library idea saved before v10.43 has no `cad` / `nx` / `nocard` of its own: its cadence is guessed until the index loads.
+   - With the survey in Spanish, "Show", "Within reach" and "Area of ministry" around the new filter are still English (as before).
+   - The fixture generator `build-fixture.mjs` lived in the build session's scratchpad and was **lost** in the 1 Oct restart:
+     `tests/average-church/seed-followup.json` is now the only copy (do not edit it by hand; `v43-average-church` checks its story:
+     the ticks agree with the timeline, adults only, every name "(sample)").
+   - The samples' black-and-white cards are the same PDF drawn with every colour turned to its grey (as a home printer prints it);
+     one real home print is still to do.
 0. **v10.42 part 3 is integrated and the review's 25 findings are fixed** (B1 the focus, B2 phones / decisions / Gifts first, B3
    section F; 30 Sep 2026; gates passed, see Current state and "fixes after review"). Waiting on the pastor: his look at the
    regenerated `~/Downloads/Terrain-v10.42-samples/` (README.txt there). Things he may want to decide: in the build session's

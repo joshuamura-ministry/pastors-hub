@@ -54,7 +54,7 @@ setTimeout(()=>{
   c('four links', tools.filter(t=>t.querySelector('.tgo')).length, 4);
   c('links still bottom-aligned', /\.tool \.tgo\{margin-top:auto/.test(html));
   c('quote still under the welcome',
-    [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,tools,hubgifts');   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E)
+    [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,hubgifts');   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E); v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see"): "Your path" above the tools
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },1800);

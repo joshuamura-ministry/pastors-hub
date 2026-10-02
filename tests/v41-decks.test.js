@@ -175,7 +175,7 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
   // v10.42 part 3 (NARRATIVE.md §5.4): the proposal and the goal, the mission (moved up), the field (the churches we serve), how it works,
   // what it takes, who is able, the plan and its dates, the ask, reporting back, the appeal; no hardship figure (field purpose)
   c('the slides: proposal, aims, churches, how, capacity, gifts, plan, ask, reporting, close (11 with the join)', E0.d.slides.map(s=>s.type+(s.part?'/'+s.part:'')),
-    ['join','motion','risks/mission','place','how','capacity','ability','timeline','ask','risks/report','close']);
+    ['join','motion','risks/mission','place','how','capacity','ability','timeline','ask/after','ask','risks/report','close']);   // v10.43 (the pastor: "separate the things that are weekly or monthly… and events"): his series' "After the series" (12 with the join)
   // v10.42 part 3: beside the goal the opening keeps the rows a phone holds in both languages (measured); the churches are named on
   // their own slide, so their row gives way first
   c('the proposal names the town and the opening night (the churches by name on their own slide)', [E0.d.slides[1].headline,E0.d.slides[1].rows.slice(0,2),!!E0.d.slides[1].goal],
@@ -188,37 +188,38 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
     ['29 Sep 2026 Preparation begins','11 Sep 2027 Opening night','15 Oct 2027 Report form to the conference']);
   // v10.41 review: nothing is asked in his name that he did not tick ("The ask shows only what he ticks"): by default counsel, and a share
   // of the cost only when there is a cost to share (his Planner series has a budget); a Bible worker, training and materials only if he ticks them
-  c('the ask by default: a share of the series budget from his planner (no share until he types one) and counsel, nothing else', E0.d.slides[8].rows,
+  c('the ask by default: a share of the series budget from his planner (no share until he types one) and counsel, nothing else', E0.d.slides.find(s=>s.type==='ask'&&!s.part).rows,
     [['A share of the cost','Of $12,000 in all: the share to be agreed'],['Counsel','Your counsel on the plan and its dates']]);
   c('…the model and the handout keep every row, the Pennsylvania policy too', E0.m.conf.ask.rows.map(r=>r[0]), ['A share of the cost','Counsel','Conference policy']);
-  c('reporting back and the aims served (Pennsylvania’s own goals for his conference)', [E0.d.slides[9].items[0],E0.d.slides[2].items],
+  c('reporting back and the aims served (Pennsylvania’s own goals for his conference)', [E0.d.slides.find(s=>s.part==='report').items[0],E0.d.slides[2].items],
     ['A written report to the conference after the meetings: attendance, decisions and baptisms',['Our series opens in September 2027, when All Things New plans public events','Pennsylvania Conference faith goal: “Lead 2,800 people to Christ during the quinquennium.”']]);
   c('…the slide shows what fits beside its verse (Matthew 28:19–20); the model and the handout keep every aim', [idOf('en',E0.d.slides[2].verse.ref),E0.m.conf.mission.map(x=>x.id)],
     ['matt28_19',['m-sept27','m-pa2800','m-pa27','m-ov27','m-iwg','m-cm']]);
-  c('the close asks, and quotes Scripture (Isaiah 52:7)', [E0.d.slides[10].headline,E0.d.slides[10].quote.ref,S0.d.slides[10].quote.ref], ['Will you partner with us?','Isaiah 52:7 · KJV','Isaías 52:7 · RVA']);
+  c('the close asks, and quotes Scripture (Isaiah 52:7)', [E0.d.slides.slice(-1)[0].headline,E0.d.slides.slice(-1)[0].quote.ref,S0.d.slides.slice(-1)[0].quote.ref], ['Will you partner with us?','Isaiah 52:7 · KJV','Isaías 52:7 · RVA']);
   { const ids=CF.map(b=>verseIds(b.d,b.lang));
     c('Scripture on every slide but the join, from the library, never twice, the same in both languages', [ids[0].filter((x,i)=>i>0&&!x).length,ids[0].filter(Boolean).length===new Set(ids[0].filter(Boolean)).size,JSON.stringify(ids[0])===JSON.stringify(ids[1])], [0,true,true]);
     c('…no Ellen White line on a slide; hers (9T 116, to leaders) is in the handout', [CF.some(b=>/White/.test(JSON.stringify(b.d))),E0.m.egw.ref], [false,'Ellen G. White · Testimonies for the Church, vol. 9, pp. 116–117']);
-    c('…the group’s own verse, Romans 10:14–15, on the ask', ids[0][8], 'rom10_14'); }
-  c('the deck is a present-1.2 deck: audience conference, 11 slides, no answers asked', [E0.d.audience,E0.d.slides.length,E0.d.slides.some(s=>s.type==='yes')], [{type:'conference',group:'conference'},11,false]);
+    c('…the group’s own verse, Romans 10:14–15, on the ask', ids[0][E0.d.slides.findIndex(s=>s.type==='ask'&&!s.part)], 'rom10_14'); }   // (v10.43: the ask follows "After the series")
+  // v10.43 (the pastor: "separate the things that are weekly or monthly… and events… after one day there needs to be some kind of follow-up"): his series' "After the series" makes 12 (present.mjs's limit)
+  c('the deck is a present-1.2 deck: audience conference, 12 slides, no answers asked', [E0.d.audience,E0.d.slides.length,E0.d.slides.some(s=>s.type==='yes')], [{type:'conference',group:'conference'},12,false]);
   c('no member’s name, no {placeholder}', CF.filter(b=>NAMES.some(n=>JSON.stringify(b.d).includes(n))||/\{[A-Za-z]+\}|undefined|NaN/.test(JSON.stringify(b.d))).length, 0);
   // his amounts, as he types them
   P.E(`uChurch().confAsk={cost:true,worker:true,speaker:true,training:false,materials:false,counsel:false,total:15000,share:7500}; uPersist();`);
   { const r=deckOf(P,'plan-series','conference','conference','en');
-    c('when he types amounts and ticks a speaker: exactly his figures, and only what he ticked', r.d.slides[8].rows,
+    c('when he types amounts and ticks a speaker: exactly his figures, and only what he ticked', r.d.slides.find(s=>s.type==='ask'&&!s.part).rows,
       [['A share of the cost','$7,500 of $15,000'],['A Bible worker','For the series and the follow-up'],['An evangelist or speaker','Approved under the conference’s guidelines']]);
     c('…the proposal lists them in words', r.d.slides[1].rows.find(x=>x[0]==='We ask for'), ['We ask for','A share of the cost, a Bible worker and a speaker']); }
   P.E(`uChurch().confAsk={cost:true,worker:true,speaker:true,training:true,materials:true,counsel:true,total:null,share:null}; uPersist();`);
   { const r=deckOf(P,'plan-series','conference','conference','es');
-    c('all six ticked: four by name and one "Also" row on the slide (Spanish), all six in the handout', [r.d.slides[8].rows.length,r.d.slides[8].rows[4],r.m.conf.ask.rows.length],
+    c('all six ticked: four by name and one "Also" row on the slide (Spanish), all six in the handout', [r.d.slides.find(s=>s.type==='ask'&&!s.part).rows.length,r.d.slides.find(s=>s.type==='ask'&&!s.part).rows[4],r.m.conf.ask.rows.length],
       [5,['También','Materiales, consejo'],7]); }
   P.E(`delete uChurch().confAsk; uPersist();`);
   { const Q=page({reg:{conf:'Allegheny East'}}); await ready(Q); setup(Q,{plan:{...PLAN,date:'2027-03-06',budget:0}});
     Q.E(`uChurch().confAsk={cost:true}; uPersist();`);   // v10.41 review: with no budget the cost is not ticked for him; here he ticks it
     const r=deckOf(Q,'plan-series','conference','conference','en');
     c('another conference: no Pennsylvania goal, policy or form anywhere; one church, no "churches we serve" slide', [/Pennsylvania|subsidy/i.test(JSON.stringify(r.d)+JSON.stringify(r.m.conf)),r.d.slides.filter(s=>s.type==='place').length,r.m.conf.pa], [false,1,false]);
-    c('…no amount at all when he has none', r.d.slides.find(s=>s.type==='ask').rows[0], ['A share of the cost','The amount to be agreed with you']);
-    c('…a series not in September 2027 claims no alignment with it', r.d.slides[9].items.some(t=>/Our series opens/.test(t)), false);
+    c('…no amount at all when he has none', r.d.slides.find(s=>s.type==='ask'&&!s.part).rows[0], ['A share of the cost','The amount to be agreed with you']);
+    c('…a series not in September 2027 claims no alignment with it', r.d.slides.find(s=>s.part==='mission').items.some(t=>/Our series opens/.test(t)), false);
     c('…the aims: only the verified ones (OneVoice27, All Things New, I Will Go 4.1, the Church Manual)', r.m.conf.mission.map(x=>x.id), ['m-ov27','m-atn','m-iwg','m-cm']); }
   { const r=P.JE(`(()=>{ const keep=DATA; DATA=null; try{ return caseSample({lang:'en',audience:{type:'conference',group:'conference'},now:${NOW}}); }finally{ DATA=keep; } })()`);
     c('the sample conference deck: the prophecy seminar, made-up churches, SAMPLE on every slide', [r.ok,r.deck.ministry.id,r.deck.slides[3].where,r.deck.slides.slice(1).every(s=>/^SAMPLE/.test(s.kicker||s.text||'')||s.type==='close')],
@@ -246,7 +247,7 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
     c('…the planner’s budget offered as a note, never typed in for him', [P.E(`document.querySelector('#cs-s3 [data-cs-camt="total"]').value`),/From your Evangelism Planner: \$12,000/.test(P.E(`document.querySelector('#cs-s3 .cs-cask').textContent`))], ['',true]);
     P.E(`(()=>{ const i=document.querySelector('#cs-s3 [data-cs-camt="share"]'); i.value='$6,000'; i.dispatchEvent(new Event('input')); })()`);
     await sleep(400);
-    c('typing a share saves it with the church and redraws the ask slide', [P.JE('uChurch().confAsk.share'),P.JE(`CASE_ST.deck.slides.find(s=>s.type==='ask').rows[0]`)], [6000,['A share of the cost','$6,000 of $12,000']]);
+    c('typing a share saves it with the church and redraws the ask slide', [P.JE('uChurch().confAsk.share'),P.JE(`CASE_ST.deck.slides.find(s=>s.type==='ask'&&!s.part).rows[0]`)], [6000,['A share of the cost','$6,000 of $12,000']]);
     c('…the panel stays (his cursor is not lost)', !!P.E(`document.querySelector('#cs-s3 [data-cs-camt="share"]')`), true);
     P.E(`caseSetPrefs({ministry:'food-pantry',type:'board',group:'board'}); caseDraw3();`); await sleep(30);
     P.E(`document.querySelector('#cs-s3 [data-cs-go="6"]').click()`); await sleep(20);

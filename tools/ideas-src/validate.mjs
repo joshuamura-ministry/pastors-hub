@@ -97,7 +97,10 @@ const WHERE = ['church', 'streets', 'homes', 'online', 'schools', 'parks', 'comm
 const STAGES = ['open', 'trust', 'deeper', 'decide'];
 const REACHES = ['in', 'out', 'both'];   // in = for God's people (members, officers, services); out = for the community; both
 const REQUIRED = ['id', 'theme', 'tier', 'k', 'ages', 'where', 'sabbath', 'minors', 'need', 'boost', 'ppl', 'leaders', 'hrs', 'cost', 'costMo', 'skill', 'partner', 'en', 'es'];
-const OPTIONAL = ['also', 'st', 'fac', 'reach'];
+// v10.43: an idea may say its own cadence ("cad") and that it keeps no names ("nocard"); most ideas take theirs from
+// cadence.json / nocard.json beside this file (SCHEMA.md "Cadence"; the packager checks those files)
+const OPTIONAL = ['also', 'st', 'fac', 'reach', 'cad', 'nocard'];
+const CAD_FORMS = /^(ongoing|event|series(-([3-9]|1\d|2[0-6]))?(-row)?)$/;
 const themeReach = id => ((THEME.get(id) || {}).inside === true ? 'in' : 'out');
 // The reach an idea is shown under: its own field, else reach.json, else the theme's default.
 const reachOf = x => (x && REACHES.includes(x.reach)) ? x.reach
@@ -150,8 +153,8 @@ const BANNED = [
     /\b(cerdo|puerco|tocino|jamon(es)?|chorizos?|chicharron(es)?|carnitas|manteca de cerdo|camarones|camaron|mariscos|langostas?|cangrejos?|almejas|ostras|ostiones)\b|\bsalchichas?\b(?! (vegetarian|vegana|de soya|vegetal))/],
   ['alcohol', /\b(beers?|wines?|liquor|cocktails?|brewery|breweries|winery|wineries|taprooms?|pubs?|happy hour|sangria|champagne|mimosas?|bartend\w*|booze)\b/,
     /\b(cervezas?|cerveceria|licor(es)?|coctel(es)?|cantinas?|vinos|vino (tinto|blanco)|copas? de vino|hora feliz|bar de copas)\b/],
-  ['raffles, lotteries or games of chance', /\b(raffles?|raffling|lotter(y|ies)|casinos?|betting|poker|sweepstakes|door prizes?|50\/50|fifty-fifty|prize draws?|scratch-?offs?|slot machines?|games of chance)\b/,
-    /\b(rifas?|rifar|sorteos?|loterias?|tragamonedas|raspaditos)\b/],
+  ['selling raffle tickets, lotteries or games of chance (a FREE drawing or giveaway is fine)', /\b(raffle tickets?|sell(s|ing)? (tickets|chances)|buy (a )?tickets? (for|to win)|lotter(y|ies)|casinos?|betting|poker|50\/50|fifty-fifty|scratch-?offs?|slot machines?|games of chance)\b/,
+    /\b(boletos de rifa|vender (boletos|numeros)|loterias?|tragamonedas|raspaditos)\b/],
   ['gambling (only allowed when the idea is recovery FROM gambling)', /\bgambl\w*/, /\b(apuestas|juegos de azar|casinos?)\b/,
     /addict|recover|problem gambl|gamblers anonymous|adiccion|recuperacion|ludopatia|jugadores anonimos/],
   ['"target/targeting" people (say "shown to people within 3 miles", "for", "with")', /\btarget(s|ed|ing)?\b/,
@@ -281,6 +284,9 @@ function checkIdea(x, ctx) {
   if (typeof x.minors !== 'boolean') err('minors must be true or false');
   if ('st' in x && !STAGES.includes(x.st)) err(`st must be one of ${STAGES.join('|')} (or omitted)`);
   if ('reach' in x && !REACHES.includes(x.reach)) err(`reach must be one of ${REACHES.join('|')}, or omitted for the theme's default ("${themeReach(x.theme)}" here)`);
+  if ('cad' in x && !(typeof x.cad === 'string' && CAD_FORMS.test(x.cad))) err('cad must be ongoing, event, series, series-row, series-N or series-N-row (N 3–26), or omitted (cadence.json)');
+  if ('nocard' in x && x.nocard !== true) err('nocard must be true, or omitted');
+  if (x.nocard === true && x.cad === 'ongoing') err('nocard is only for a series or an event');
 
   // census tags and skills
   const tagList = (v, name, lo, hi) => {

@@ -115,8 +115,9 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     setup(P,{pre:PLAN});
     await choose(P,'community');
     c('ONE short line under the title: this is where you win support', P.txt('#cs-s2 .cs-sh .note'), 'This is where you win support for what your church will do.');
-    c('the parts in order: From your plan, More ideas for the group (its search inside), the list', P.qa('#cs-s2 > *').map(e=>e.id||e.className.split(' ')[0]),
-      ['cs-sh','cs-plan','cs-more']);
+    // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): how it runs (#cs-cad) sits above "From your plan"
+    c('the parts in order: How it runs, From your plan, More ideas for the group (its search inside), the list', P.qa('#cs-s2 > *').map(e=>e.id||e.className.split(' ')[0]),
+      ['cs-sh','cs-cad','cs-plan','cs-more']);
     c('…the search and the list sit in "More ideas"', [!!P.q('#cs-more .cs-find #cs-q'),!!P.q('#cs-more #cs-lib')], [true,true]);
     c('From your plan: its heading and one line naming the group', [P.txt('#cs-plan h4'),P.txt('#cs-plan .cs-parth .note')], ['From your plan','What your church chose that fits Community Services (Dorcas).']);
     c('…Community Services (Dorcas): the food pantry (the prayer calendar is not theirs)', planIds(P), ['food-pantry']);
