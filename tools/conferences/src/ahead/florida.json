@@ -1,0 +1,84 @@
+{
+ "conf": "Florida",
+ "slug": "florida",
+ "union": "Southern",
+ "site": "https://floridaconference.com",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "calendarUrls": [
+  "https://floridaconference.com/events",
+  "https://floridaconference.com/impacto",
+  "https://floridaconference.com/campmeeting"
+ ],
+ "calendarGrade": "C",
+ "calendarQuality": "Single website event list (78 entries, Jan 2025-Mar 2027) with each day of multi-day events listed separately and few descriptions; many major activities (Spanish campaigns, Pathfinder Red Zone, school events, Road to Bethlehem) appear only in news; only 5 items in the next 6 months.",
+ "furthestPublished": "2027-10",
+ "furthestPublishedOwnSite": "2027-03",
+ "aheadSummary": "Florida's own pages publish nothing after Disaster Response Training (5-7 Mar 2027). The Southern Union officers' calendar gives the 2027 English and Spanish camp meetings (and a Florida constituency on 10 Oct 2027).",
+ "aheadChecked": [
+  "https://floridaconference.com/events",
+  "https://floridaconference.com/campmeeting",
+  "https://floridaconference.com/campestre",
+  "https://floridaconference.com/camp-ministries/",
+  "https://floridaconference.com/pathfinders/",
+  "https://floridaconference.com/adventurers/",
+  "https://floridaconference.com/redtour/",
+  "https://floridaconference.com/news",
+  "https://www.campkulaqua.com/camp-kulaqua/calendar-of-events/",
+  "https://www.campkulaqua.com/kulaqua-s-summer-camp/sessions-and-rates/",
+  "https://www.campkulaqua.com/kulaqua-s-summer-camp/family-camp/",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://www.southernunion.com/wp-content/uploads/2024/12/SU-Calendar-2025-2027.pdf"
+ ],
+ "usuallyHeldNotYetPublished": [
+  "Camp Kulaqua summer camp (2026: 31 May-21 Jun) and Family Camp (2026: 4-7 Sep): pages still show 2026.",
+  "Red Zone Pathfinder/Adventurer celebration: no 2027 date.",
+  "Pathfinder & Adventurer calendar 2026-27: department page lists only 'Events Calendar' links back to the general event list.",
+  "Camp meeting page and Campestre page still show the 2026 programme; no 2027 venue or programme yet."
+ ],
+ "stats": {
+  "aheadEvents": 2,
+  "conferenceRunPublic": 2,
+  "internal": 0,
+  "otherLevel": 0,
+  "byMonth": {
+   "2027-04": 2
+  },
+  "byMainCategory": {
+   "camp-meeting": 2
+  },
+  "conferenceRunPublicByMainCategory": {
+   "camp-meeting": 2
+  }
+ },
+ "events": [
+  {
+   "title": "Florida Conference Camp Meeting (English)",
+   "start": "2027-04-16",
+   "end": "2027-04-18",
+   "place": null,
+   "category": "camp-meeting",
+   "category2": "discipleship-spiritual",
+   "audience": "all members",
+   "level": "conference",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "from the Southern Union officers' calendar ('FLC Camp Meeting -- English', Fri-Sun); not yet on Florida Conference pages. The 2026 camp meeting was at Camp Kulaqua, High Springs (17-19 Apr 2026).",
+   "when": "upcoming"
+  },
+  {
+   "title": "Florida Conference Camp Meeting (Spanish)",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": null,
+   "category": "camp-meeting",
+   "category2": "multilingual",
+   "audience": "Spanish-speaking members",
+   "level": "conference",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "from the Southern Union officers' calendar ('FLC Camp Meeting -- Spanish', Fri-Sun); not yet on Florida Conference pages",
+   "when": "upcoming"
+  }
+ ]
+}

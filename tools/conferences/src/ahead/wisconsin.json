@@ -1,0 +1,323 @@
+{
+ "conf": "Wisconsin",
+ "slug": "wisconsin",
+ "union": "Lake Union",
+ "site": "https://wi.adventist.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30",
+  "note": "second half of the 12-months-ahead view (Oct 2026 – Mar 2027 is in v50/events/wisconsin.json)"
+ },
+ "furthestPublished": "2027-06",
+ "furthestPublicEvent": "2026-12",
+ "furthestNote": "The Outlook calendar's last entries are Board of Education meetings (2027-03-10, 2027-06-03), which are committees and are left out; the last public event is the Hispanic Departmental Training on 5 Dec 2026.",
+ "calendarUrls": [
+  "https://wi.adventist.org/calendar/",
+  "https://outlook.office365.com/owa/calendar/e2f6364ab8f14f61ab2c51722cff0c88@wi.adventist.org/2fe98e767c2947e6b2678bc834963a7815659990977241993047/calendar.ics"
+ ],
+ "aheadChecked": [
+  "https://outlook.office365.com/owa/calendar/e2f6364ab8f14f61ab2c51722cff0c88@wi.adventist.org/2fe98e767c2947e6b2678bc834963a7815659990977241993047/calendar.ics (71 entries, 2026-04-10 to 2027-06-03)",
+  "https://wi.adventist.org/calendar/",
+  "https://wi.adventist.org/camp-meeting/",
+  "https://wi.adventist.org/camp-meeting/frequently-asked-questions/",
+  "https://wi.adventist.org/youth/",
+  "https://wi.adventist.org/news-events-2/",
+  "https://wi.adventist.org/ministerio-hispano/",
+  "https://wi.adventist.org/ministerio-hispano/retiro-de-varones/",
+  "https://wi.adventist.org/ministerio-hispano/ministerio-de-vida-familiar-hispana/",
+  "https://wi.adventist.org/ministerio-hispano/dia-de-la-hermandad/",
+  "https://wi.adventist.org/ministries/womens-ministries/",
+  "https://wi.adventist.org/youth-evangelism-congress/",
+  "https://wi.adventist.org/wp-json/wp/v2/posts?search=2027",
+  "https://wi.adventist.org/wp-json/wp/v2/posts?after=2026-04-01",
+  "https://wi.adventist.org/wp-json/wp/v2/pages?search=2027",
+  "https://www.wakonda.org/",
+  "https://www.wakonda.org/camp",
+  "https://www.lakeunionherald.org/archive/articles/i-will-go/"
+ ],
+ "aheadChecked_blocked": [
+  "https://wi.adventist.org/hispanic-ministries/, /pathfinders/ and /events/ returned HTTP 500 (server error, not a block); the Spanish pages under /ministerio-hispano/ were read instead"
+ ],
+ "aheadSummary": "No public event is dated for April–September 2027. The published Outlook calendar holds nothing public after December 2026; its only 2027 entries are Board of Education meetings (Mar and Jun 2027), left out as committees. Three 2027 items are announced without dates: camp meeting (the FAQ says it normally runs from the 3rd to the 4th weekend of June at Camp Wakonda), the Hispanic men’s retreat (\"Próximo Retiro de Varones: 2027\"), and Camp Wakonda’s 100th anniversary in 2027.",
+ "counts": {
+  "total": 0,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevels": 0,
+  "occurrences": 0,
+  "byCategoryAll": {},
+  "byCategoryAny": {},
+  "byCategoryConferenceRunPublic": {},
+  "conferenceRunRecordsByStartMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  },
+  "conferenceRunOccurrencesByMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  }
+ },
+ "stats": {
+  "records": 0,
+  "conferenceRunRecords": 0,
+  "occurrences": 0,
+  "firstDate": null,
+  "lastDate": null,
+  "monthsWithConferenceEvents": "0 of 6",
+  "monthsMissing": [
+   "2027-04",
+   "2027-05",
+   "2027-06",
+   "2027-07",
+   "2027-08",
+   "2027-09"
+  ]
+ },
+ "excludedFromCalendar": {
+  "Board of Education": 2
+ },
+ "excludedNote": "Board of Education meetings in 2027 (committee). Holidays, office closures, payroll/treasury closes, audits, merchandise, committees, boards and ADCOM are left out (counted under excludedFromCalendar).",
+ "prepDeadlines": [],
+ "undatedAhead": [
+  {
+   "title": "Wisconsin Camp Meeting 2027",
+   "expected": "normally from the 3rd to the 4th weekend of June at Camp Wakonda (2026: 19–27 Jun); 2027 dates not published",
+   "category": "camp-meeting",
+   "url": "https://wi.adventist.org/camp-meeting/frequently-asked-questions/",
+   "source": "conference FAQ page",
+   "note": "an estimate from the FAQ rule, not a published date"
+  },
+  {
+   "title": "Retiro de Varones (Hispanic men’s retreat) 2027",
+   "expected": "2027, no date (\"Próximo Retiro de Varones: 2027\")",
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "lang": "es",
+   "url": "https://wi.adventist.org/ministerio-hispano/retiro-de-varones/",
+   "source": "Hispanic ministries page"
+  },
+  {
+   "title": "Camp Wakonda 100th anniversary (2027)",
+   "expected": "2027; planning under way, no dates",
+   "category": "other",
+   "category2": "youth-young-adults",
+   "url": "https://www.lakeunionherald.org/archive/articles/i-will-go/",
+   "source": "news (Lake Union Herald, 8 Apr 2026, Wisconsin constituency report)"
+  }
+ ],
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Metro Jóvenes \"Glowing with Grace\" (JAHWI)",
+   "heldIn2026": "2026-04-04",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/glowing-with-grace/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Women's Retreat (Wakonda)",
+   "heldIn2026": "2026-04-10 to 2026-04-12",
+   "category": "family-women-men",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Adventurer's Fun Day N (Chippewa Valley)",
+   "heldIn2026": "2026-04-11",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "WA Aumni Weekend",
+   "heldIn2026": "2026-04-18",
+   "category": "education",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic Children's Ministry Training",
+   "heldIn2026": "2026-04-24 to 2026-04-25",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "JAHWI Evangelistic Campaign",
+   "heldIn2026": "2026-04-25 to 2026-05-02",
+   "category": "evangelism-outreach",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "youth-young-adults",
+   "lang": "es"
+  },
+  {
+   "title": "Pathfinder Fair (Wakonda)",
+   "heldIn2026": "2026-05-01 to 2026-05-03",
+   "category": "pathfinders",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Academy Day (Wisconsin Academy, grades 7–11)",
+   "heldIn2026": "2026-05-03",
+   "category": "education",
+   "url": "https://wi.adventist.org/academy-day-2026/"
+  },
+  {
+   "title": "Adventurer's Fun Day S (Milwaukee Central)",
+   "heldIn2026": "2026-05-09",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Pastors’ Meetings",
+   "heldIn2026": [
+    "2026-05-13",
+    "2026-09-17",
+    "2026-11-05"
+   ],
+   "category": "pastoral-leadership",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "VLP Training",
+   "heldIn2026": "2026-05-15 to 2026-05-17",
+   "category": "pastoral-leadership",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "evangelism-outreach"
+  },
+  {
+   "title": "Milwaukee Metro Evangelistic Campaign",
+   "heldIn2026": "2026-05-22 to 2026-05-30",
+   "category": "evangelism-outreach",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "WA Graduation",
+   "heldIn2026": "2026-05-22 to 2026-05-24",
+   "category": "education",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic Brotherhood Day",
+   "heldIn2026": "2026-05-30",
+   "category": "multilingual",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "discipleship-spiritual",
+   "lang": "es"
+  },
+  {
+   "title": "Camp Directors Training",
+   "heldIn2026": "2026-06-04 to 2026-06-07",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Camp Staff Training",
+   "heldIn2026": "2026-06-07 to 2026-06-16",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Camp Meeting",
+   "heldIn2026": "2026-06-19 to 2026-06-28",
+   "category": "camp-meeting",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Cub Camp (Wakonda)",
+   "heldIn2026": "2026-06-28 to 2026-07-03",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "JAHWI Sports Day and International Food Fair",
+   "heldIn2026": "2026-07-05",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Tween Camp (Wakonda)",
+   "heldIn2026": "2026-07-05 to 2026-07-10",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic Children's Sports Day",
+   "heldIn2026": "2026-07-11 to 2026-07-12",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Teen Camp (Wakonda)",
+   "heldIn2026": "2026-07-12 to 2026-07-17",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Family Camp (Wakonda)",
+   "heldIn2026": "2026-07-19 to 2026-07-26",
+   "category": "family-women-men",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic Camp Meeting",
+   "heldIn2026": "2026-07-29 to 2026-08-02",
+   "category": "camp-meeting",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Teacher In Service",
+   "heldIn2026": "2026-08-05 to 2026-08-06",
+   "category": "education",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic Worship Music Festival",
+   "heldIn2026": "2026-08-15",
+   "category": "music-worship-arts",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Adventurer Family Camp Out (Wakonda)",
+   "heldIn2026": "2026-09-04 to 2026-09-06",
+   "category": "children",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Outdoor Education",
+   "heldIn2026": "2026-09-09 to 2026-09-11",
+   "category": "education",
+   "url": "https://wi.adventist.org/calendar/"
+  },
+  {
+   "title": "Hispanic JAHWI Youth Retreat",
+   "heldIn2026": "2026-09-11 to 2026-09-13",
+   "category": "youth-young-adults",
+   "url": "https://wi.adventist.org/calendar/",
+   "category2": "multilingual",
+   "lang": "es"
+  }
+ ],
+ "usuallyHeldNote": "Held in April–September 2026 (from the calendar feed and news); none has a 2027 date yet. Women’s ministries holds three conference-wide retreats a year (two English, one Spanish); the next listed is the Fall Retreat, 9–11 Oct 2026.",
+ "beyondWindow": [],
+ "events": [],
+ "notes": "The Outlook feed keeps only current and future entries (older ones drop off), so the conference adds dates a few months ahead rather than a year ahead. A news post (Pathfinder Winter Retreat 2026) says that from 2027 that retreat will be aimed at Pathfinders in 8th grade and older (a winter event, outside this window)."
+}

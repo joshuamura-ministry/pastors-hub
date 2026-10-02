@@ -153,8 +153,8 @@ const BANNED = [
     /\b(cerdo|puerco|tocino|jamon(es)?|chorizos?|chicharron(es)?|carnitas|manteca de cerdo|camarones|camaron|mariscos|langostas?|cangrejos?|almejas|ostras|ostiones)\b|\bsalchichas?\b(?! (vegetarian|vegana|de soya|vegetal))/],
   ['alcohol', /\b(beers?|wines?|liquor|cocktails?|brewery|breweries|winery|wineries|taprooms?|pubs?|happy hour|sangria|champagne|mimosas?|bartend\w*|booze)\b/,
     /\b(cervezas?|cerveceria|licor(es)?|coctel(es)?|cantinas?|vinos|vino (tinto|blanco)|copas? de vino|hora feliz|bar de copas)\b/],
-  ['selling raffle tickets, lotteries or games of chance (a FREE drawing or giveaway is fine)', /\b(raffle tickets?|sell(s|ing)? (tickets|chances)|buy (a )?tickets? (for|to win)|lotter(y|ies)|casinos?|betting|poker|50\/50|fifty-fifty|scratch-?offs?|slot machines?|games of chance)\b/,
-    /\b(boletos de rifa|vender (boletos|numeros)|loterias?|tragamonedas|raspaditos)\b/],
+  ['selling raffle tickets, lotteries or games of chance (a FREE drawing or giveaway is fine)', /\b(raffle tickets?|sell(s|ing)? (tickets|chances)|buy (a )?tickets? (for|to win)|lotter(y|ies)|casinos?|betting|poker|50\/50|fifty-fifty|scratch-?offs?|slot machines?|games of chance)\b|\braffl(e|es|ing)\b[^.!?]{0,60}\b(to (pay|raise|fund|cover)|proceeds|fundrais\w*|per (ticket|chance))/,
+    /\b(boletos de rifa|vender (boletos|numeros)|loterias?|tragamonedas|raspaditos)\b|\brifas?\b[^.!?]{0,60}\b(para (pagar|recaudar|cubrir|financiar)|recaud\w*|fondos)/],
   ['gambling (only allowed when the idea is recovery FROM gambling)', /\bgambl\w*/, /\b(apuestas|juegos de azar|casinos?)\b/,
     /addict|recover|problem gambl|gamblers anonymous|adiccion|recuperacion|ludopatia|jugadores anonimos/],
   ['"target/targeting" people (say "shown to people within 3 miles", "for", "with")', /\btarget(s|ed|ing)?\b/,
@@ -241,7 +241,24 @@ const NEG_SAFEGUARD = {
   es: /(\b(nunca|jamas|evite\w*|en lugar de|en vez de|sin|ni|nadie|no (se |le |les |lo |la |los |las )?(diga\w*|decir|pregunt\w*|escrib\w*|publi\w*|anunci\w*|exhib\w*|muestr\w*|mostrar|lea\w*|leer|pegu\w*|pegar|cuelg\w*|colgar|use\w*|usar|hag\w*|hacer|pong\w*|poner|entreg\w*|llame\w*|llamar))\b[^.!?;]{0,40}|\bno "?)$/
 };
 const safeguarded = (txt, re, lang) => { const m = txt.match(re); return !!m && NEG_SAFEGUARD[lang].test(txt.slice(Math.max(0, m.index - 50), m.index)); };
-const SABBATH_REVIEW = /\b(sell|selling|sale|sales|buy|buying|purchas\w*|fundrais\w*|tournaments?|competition|competitive|leagues?|admission|tickets?|shopping)\b/;
+/* SABBATH-GUIDELINE.md (the pastor, 1 Oct 2026): mercy, healing, feeding, teaching, worship, visiting and hospitality fit the
+   Sabbath even when they take real work; commerce, fundraising, fairs and festivals with games, entertainment, competitive sport
+   and routine work do not. These are REVIEW lines (never an error): a word here asks for a re-read, not a verdict. */
+const SABBATH_REVIEW = {
+  en: /\b(sell|sells|selling|sale|sales|buy|buying|purchas\w*|fundrais\w*|tournaments?|competition|competitive|leagues?|admission|tickets?|shopping|fees?|prices?|auctions?|carnivals?|festivals?|bounce houses?|game booths?|balloons?|movie nights?|film nights?|outdoor films?)\b/,
+  es: /\b(vend(a|an|e|en|er|emos|amos|o|iendo|ido|ida|idos|idas)|ventas?|compra(r|n|mos)?|comprando|recaud\w*|torneos?|competencias?|entradas? pagadas|boletos?|cuotas?|precios?|subastas?|carnaval(es)?|festival(es)?|inflables?|globos|noche de cine|peliculas? al aire libre)\b/,
+  // bought beforehand is fine ("buy the items beforehand"; "compre los articulos de antemano")
+  ahead: {en: /\b(beforehand|ahead of time|in advance|the day before|by friday|on friday|before the sabbath)\b/, es: /\b(de antemano|con anticipacion|el dia anterior|el viernes|antes del sabado)\b/}
+};
+// a cafe or diner where buying the food is the point does not fit, unless the text names a home, church, library or park
+const SABBATH_CAFE = {en: /\b(cafes?|coffee ?shops?|diners?|restaurants?)\b/, es: /\b(cafeterias?|restaurantes?|fondas?)\b/,
+  ok: {en: /\b(at|in|to|into) (a |an |the |their |his |her |our |your |someone's |a member's |members' |each other's )?(homes?|houses?|church|church hall|fellowship hall|library|park)\b/,
+    es: /\b(en|a) (la |el |una |un |su |sus |nuestra |casa de )?(casas?|hogar(es)?|iglesia|salon de la iglesia|biblioteca|parque)\b/}};
+// the reverse: marked false but it reads as worship, mercy, feeding or healing, with none of the words that keep it off the Sabbath
+// (v56: "offering" is not one of those words: the pastor, 2 Oct 2026, "a special offering taken during Sabbath worship for a church
+//  project is fine: it is part of worship. Sales, fundraising events and selling tickets stay off the Sabbath.")
+const SABBATH_FITS = /\b(worship|vespers|prayer|pray|bible stud(y|ies)|sabbath school|anoint\w*|visit(s|ing)? (the )?(sick|lonely|shut-?ins?|homebound|hospital|nursing home|care home)|hospital visits?|nursing[- ]home|shut-?ins?|homebound|health (talks?|screenings?|checks?)|blood pressure|screenings?|meals?|potlucks?|soup kitchen|pantry|feed(s|ing)?|homeless|grie(f|ving)|bereave\w*|comfort|support groups?|disaster|respite)\b/;
+const SABBATH_NOT = /\b(sell\w*|sales?|buy\w*|purchas\w*|fees?|prices?|fundrais\w*|donat\w*|auction|market|swap|fair|festival|carnival|party|parties|games?|tournament|league|sport\w*|match|film|movie|video\w*|record\w*|podcast|print\w*|mail\w*|postcards?|repair\w*|fix\w*|build\w*|paint\w*|garden\w*|plant\w*|craft\w*|knit\w*|sew\w*|quilt\w*|committee|budget|admin\w*|training|certif\w*|class(es)?|course|weekdays?|monday|tuesday|wednesday|thursday|school (day|office|hours)|lunch (break|hour)|office|court\w*|cafe|diner|restaurant|coffee shop)\b/;
 const USTED_REVIEW = /\b(tu|tus|tienes|puedes|quieres|necesitas|contigo|tuyo|tuya|haz)\b/;
 const ES_ENGLISH_REVIEW = /\b(pathfinders?|adventurers?|sabbath|community services|sunday school|escuela dominical|church)\b/;
 const US_SPELLING_REVIEW = /\b(neighbour\w*|programme\w*|colour\w*|centre\w*|organis\w*|favour\w*|honour\w*|labour\w*|licence|practise|counselling|travelled|cheque)\b/;
@@ -421,7 +438,15 @@ function checkIdea(x, ctx) {
     if (reEn.test(en) && !(unlessEn && unlessEn.test(en))) rev(`${msg} — EN "${en.match(reEn)[0]}"`);
     else if (reEs.test(es) && !(unlessEs && unlessEs.test(es))) rev(`${msg} — ES "${es.match(reEs)[0]}"`);
   }
-  if (x.sabbath === true && SABBATH_REVIEW.test(en)) rev(`sabbath:true but the text mentions "${en.match(SABBATH_REVIEW)[0]}"; check Adventist Sabbath practice`);
+  if (x.sabbath === true) for (const [lang, txt] of [['en', en], ['es', es]]) {
+    const re = SABBATH_REVIEW[lang], m = txt.match(re);
+    if (m && !negated(txt, re, lang) && !(/^(buy|buying|purchas|compra)/.test(m[0]) && SABBATH_REVIEW.ahead[lang].test(txt))) {
+      rev(`sabbath:true but the ${lang.toUpperCase()} text mentions "${m[0]}"; check it by SABBATH-GUIDELINE.md (mercy fits; commerce, fairs, entertainment, sport and routine work do not)`); break; }
+    if (SABBATH_CAFE[lang].test(txt) && !SABBATH_CAFE.ok[lang].test(txt)) {
+      rev(`sabbath:true but it mentions a "${txt.match(SABBATH_CAFE[lang])[0]}": if buying the food is the point, on a Sabbath meet at church, in a home or in a park, where nothing is bought`); break; }
+  }
+  if (x.sabbath === false && SABBATH_FITS.test(en) && !SABBATH_NOT.test(en))
+    rev(`sabbath:false but it reads as worship, mercy, feeding or healing ("${en.match(SABBATH_FITS)[0]}"); re-read it by SABBATH-GUIDELINE.md`);
   if (USTED_REVIEW.test(es)) rev(`Spanish should address the reader as usted — found "${es.match(USTED_REVIEW)[0]}"`);
   if (ES_ENGLISH_REVIEW.test(es)) rev(`English term in the Spanish text — "${es.match(ES_ENGLISH_REVIEW)[0]}" (Conquistadores, Aventureros, Escuela Sabática, Servicios Comunitarios Adventistas)`);
   if (US_SPELLING_REVIEW.test(en)) rev(`use US spelling in English (the app is American English) — "${en.match(US_SPELLING_REVIEW)[0]}"`);

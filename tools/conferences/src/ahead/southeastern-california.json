@@ -1,0 +1,131 @@
+{
+ "conf": "Southeastern California",
+ "union": "Pacific Union",
+ "slug": "southeastern-california",
+ "site": "https://seccadventist.org",
+ "calendarUrls": [
+  "https://seccadventist.org/upcoming-events/",
+  "https://seccadventist.org/category/events/",
+  "https://seccyouth.com/events/",
+  "https://www.seccministerial.org/mandatory-meetings",
+  "https://www.seccministerial.org/elective-meetings",
+  "https://www.seccministerial.org/ordination-track",
+  "https://www.seccministerial.org/gen34-calendar",
+  "https://www.psr.camp/2026-schedule--overview.html"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "D+ (no conference calendar; department lists only)",
+ "furthestPublished": "2027-05",
+ "furthestNote": "Last dated items: Club Ministries Fair (16 May 2027) and the required All Pastors' Meeting (18 May 2027).",
+ "aheadSummary": "Three items: Ordination Track meeting (14 Apr), Club Ministries Fair (16 May, La Sierra University) and the required All Pastors' Meeting (18 May). The All Things New post (16 Sep 2026) gives no 2027 dates. Pine Springs Ranch says \"Registration 2027 Coming Soon!\".",
+ "aheadChecked": [
+  "https://seccadventist.org/upcoming-events/",
+  "https://seccadventist.org/2026/09/16/all-things-new/",
+  "https://www.seccministerial.org/mandatory-meetings",
+  "https://subsplash.com/+2pqp/lb/ca/+r4kmgnf",
+  "https://www.seccministerial.org/ordination-track",
+  "https://subsplash.com/+2pqp/lb/ca/+vbdmhy9",
+  "https://www.seccministerial.org/elective-meetings",
+  "https://subsplash.com/+2pqp/lb/ca/+fmcz5hb",
+  "https://subsplash.com/+2pqp/lb/ca/+m872758",
+  "https://seccyouth.com/events/",
+  "https://www.psr.camp/",
+  "https://www.adventistfaith.com/news/empowered/"
+ ],
+ "events": [
+  {
+   "title": "Ordination Track Meeting",
+   "start": "2027-04-14",
+   "end": "2027-04-14",
+   "place": "not stated (8:30 a.m.-1:00 p.m.)",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pre-ordained pastors (required)",
+   "url": "https://www.seccministerial.org/ordination-track",
+   "urls": [
+    "https://www.seccministerial.org/ordination-track",
+    "https://subsplash.com/+2pqp/lb/ca/+vbdmhy9"
+   ],
+   "source": "ministerial events list (Subsplash)",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "Club Ministries Fair",
+   "start": "2027-05-16",
+   "end": "2027-05-16",
+   "place": "La Sierra University",
+   "category": "pathfinders",
+   "category2": "children",
+   "audience": "Pathfinder and Adventurer clubs",
+   "url": "https://seccyouth.com/events/",
+   "source": "youth events page",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "All Pastors' Meeting (required)",
+   "start": "2027-05-18",
+   "end": "2027-05-18",
+   "place": "not stated (8:30 a.m.-3:00 p.m.)",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "all SECC pastors",
+   "url": "https://www.seccministerial.org/mandatory-meetings",
+   "urls": [
+    "https://www.seccministerial.org/mandatory-meetings",
+    "https://subsplash.com/+2pqp/lb/ca/+r4kmgnf"
+   ],
+   "source": "ministerial events list (Subsplash)",
+   "when": "upcoming",
+   "level": "conference"
+  }
+ ],
+ "stats": {
+  "items": 3,
+  "occurrences": 3,
+  "occurrencesInWindow": 3,
+  "conferenceLevelItems": 3,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "2 of 6",
+  "byCategory": {
+   "pastoral-leadership": 2,
+   "pathfinders": 1
+  },
+  "byCategoryIncludingSecond": {
+   "pastoral-leadership": 2,
+   "pathfinders": 1,
+   "children": 1
+  },
+  "occurrencesByCategory": {
+   "pastoral-leadership": 2,
+   "pathfinders": 1
+  },
+  "byLevel": {
+   "conference": 3
+  },
+  "bySourceType": {
+   "calendar/event pages": 3
+  }
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Pine Springs Ranch summer camp",
+   "lastKnown": "summer 2026",
+   "url": "https://www.psr.camp/",
+   "note": "\"Registration 2027 Coming Soon !\""
+  },
+  {
+   "title": "Asian Pacific Women's Ministries retreat",
+   "lastKnown": "2026-04-23 to 2026-04-25 (Rancho Cucamonga)",
+   "url": "https://www.adventistfaith.com/news/empowered/",
+   "note": "Recorder, 22 Sep 2026: next year's retreat is being planned at Pine Springs Ranch; registration may open as early as February. No date."
+  }
+ ],
+ "notes": [
+  "The ministerial lists are Subsplash embeds; the public list pages were read. The elective list ends 10 Feb 2027; the GEN34 list has no upcoming events.",
+  "The conference \"Upcoming Events\" page and the All Things New post have no 2027 dates."
+ ]
+}

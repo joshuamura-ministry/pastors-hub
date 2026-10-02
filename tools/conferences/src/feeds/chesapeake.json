@@ -1,0 +1,1481 @@
+{
+ "_about": "Chesapeake Conference public calendar feed (https://ccosda.org/calendar/), read 2026-10-01: title, start, end and status of each meeting from 2026-10-01 to 2027-09-30. Made by tools/conferences/feed.mjs.",
+ "occ": [
+  {
+   "summary": "Women's Ministries Retreat",
+   "start": "2026-10-02",
+   "end": "2026-10-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Ministerial Evangelistic Campaign - Spanish",
+   "start": "2026-10-03",
+   "end": "2026-10-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-10-07",
+   "end": "2026-10-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Peacemaker Training",
+   "start": "2026-10-07",
+   "end": "2026-10-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Preventing Conflict & Peacemaking 4-5",
+   "start": "2026-10-07",
+   "end": "2026-10-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Board of Education",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Peacemaker Training",
+   "start": "2026-10-08",
+   "end": "2026-10-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Indigenous Peoples Day (Schools Closed)",
+   "start": "2026-10-12",
+   "end": "2026-10-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-10-14",
+   "end": "2026-10-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Curriculum Committee Meeting",
+   "start": "2026-10-14",
+   "end": "2026-10-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Master Guide Camporee",
+   "start": "2026-10-16",
+   "end": "2026-10-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Columbia Union Small Schools Workshop",
+   "start": "2026-10-18",
+   "end": "2026-10-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Columbia Union Early Childhood Education Committee",
+   "start": "2026-10-20",
+   "end": "2026-10-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-10-21",
+   "end": "2026-10-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Columbia Union School Administrators Council",
+   "start": "2026-10-21",
+   "end": "2026-10-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Peacemaker Training",
+   "start": "2026-10-21",
+   "end": "2026-10-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Preventing Conflict & Peacemaking 6-7",
+   "start": "2026-10-21",
+   "end": "2026-10-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Peacemaker Training",
+   "start": "2026-10-22",
+   "end": "2026-10-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee",
+   "start": "2026-10-27",
+   "end": "2026-10-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee",
+   "start": "2026-10-27",
+   "end": "2026-10-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-10-28",
+   "end": "2026-10-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Eastern Shore Convocation",
+   "start": "2026-10-30",
+   "end": "2026-10-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "STEM Festival (Spencerville)",
+   "start": "2026-11-01",
+   "end": "2026-11-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2026-11-03",
+   "end": "2026-11-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Couples Retreat with NJ Conference - Spanish (Tentative)",
+   "start": "2026-11-03",
+   "end": "2026-11-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "HVA Board of Trustees Meeting",
+   "start": "2026-11-04",
+   "end": "2026-11-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Association Board",
+   "start": "2026-11-05",
+   "end": "2026-11-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Stewardship Week - Spanish",
+   "start": "2026-11-07",
+   "end": "2026-11-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Next Step Training Retreat - 4",
+   "start": "2026-11-08",
+   "end": "2026-11-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-11-11",
+   "end": "2026-11-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Education Staff Development Day (Min. Day)",
+   "start": "2026-11-11",
+   "end": "2026-11-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Create and Connect Retreat",
+   "start": "2026-11-12",
+   "end": "2026-11-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Office Staff Retreat (Tentative)",
+   "start": "2026-11-13",
+   "end": "2026-11-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Deadline for Evangelism Subsidy Request",
+   "start": "2026-11-15",
+   "end": "2026-11-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "In-House Meetings",
+   "start": "2026-11-17",
+   "end": "2026-11-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Hispanic Pastors' Meeting",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Leaders Training - By District - Spanish",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Office Closes Early- Thanksgiving",
+   "start": "2026-11-25",
+   "end": "2026-11-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Thanksgiving (Office Closed)",
+   "start": "2026-11-26",
+   "end": "2026-11-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Thanksgiving (Office Closed)",
+   "start": "2026-11-27",
+   "end": "2026-11-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pastors and Teachers Meeting",
+   "start": "2026-11-30",
+   "end": "2026-11-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee",
+   "start": "2026-12-01",
+   "end": "2026-12-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee",
+   "start": "2026-12-01",
+   "end": "2026-12-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ACTS - Module 4",
+   "start": "2026-12-02",
+   "end": "2026-12-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-12-02",
+   "end": "2026-12-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Proclaim - Module 4",
+   "start": "2026-12-02",
+   "end": "2026-12-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Certification of Elders and Small Group Leaders - Spanish",
+   "start": "2026-12-04",
+   "end": "2026-12-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Deacons / Deaconess Training",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-12-09",
+   "end": "2026-12-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Principal's Council",
+   "start": "2026-12-09",
+   "end": "2026-12-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Mission and Church Growth Council",
+   "start": "2026-12-10",
+   "end": "2026-12-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Gratitude Day - Spanish",
+   "start": "2026-12-12",
+   "end": "2026-12-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-12-16",
+   "end": "2026-12-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-12-23",
+   "end": "2026-12-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Christmas Eve (Office Closed)",
+   "start": "2026-12-24",
+   "end": "2026-12-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Christmas (Office Closed)",
+   "start": "2026-12-25",
+   "end": "2026-12-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Christmas (Schools Closed)",
+   "start": "2026-12-25",
+   "end": "2026-12-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Christmas (Office Closed)",
+   "start": "2026-12-28",
+   "end": "2026-12-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2026-12-30",
+   "end": "2026-12-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "**TENTATIVE CALENDAR**",
+   "start": "2027-01-01",
+   "end": "2027-12-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "New Year's Day (Office Closed)",
+   "start": "2027-01-01",
+   "end": "2027-01-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "New Year's Day (Schools Closed)",
+   "start": "2027-01-01",
+   "end": "2027-01-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "New Year's Day (Office Closed)",
+   "start": "2027-01-04",
+   "end": "2027-01-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "School Resumes",
+   "start": "2027-01-04",
+   "end": "2027-01-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-01-06",
+   "end": "2027-01-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "10 Days of Prayer",
+   "start": "2027-01-07",
+   "end": "2027-01-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Hispanic Youth Retreat",
+   "start": "2027-01-08",
+   "end": "2027-01-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-01-11",
+   "end": "2027-01-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "MAP Testing",
+   "start": "2027-01-11",
+   "end": "2027-01-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pastors' Zoom Prayer Call",
+   "start": "2027-01-11",
+   "end": "2027-01-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-01-13",
+   "end": "2027-01-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "HVA Board of Trustees Meeting",
+   "start": "2027-01-13",
+   "end": "2027-01-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Create & Connect Retreat",
+   "start": "2027-01-15",
+   "end": "2027-01-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "MLK (Schools & Office Closed)",
+   "start": "2027-01-18",
+   "end": "2027-01-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee Meeting",
+   "start": "2027-01-19",
+   "end": "2027-01-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee Meeting",
+   "start": "2027-01-19",
+   "end": "2027-01-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-01-20",
+   "end": "2027-01-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pathfinder Area Level PBE",
+   "start": "2027-01-23",
+   "end": "2027-01-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pastors' Meeting",
+   "start": "2027-01-25",
+   "end": "2027-01-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-01-27",
+   "end": "2027-01-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Staff Dev. (min. day/ half day)",
+   "start": "2027-01-27",
+   "end": "2027-01-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "TLT Lab",
+   "start": "2027-01-29",
+   "end": "2027-01-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Elders Certification",
+   "start": "2027-01-30",
+   "end": "2027-01-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Dover School Accreditation",
+   "start": "2027-02-01",
+   "end": "2027-02-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pastors' Meeting (alternate date)",
+   "start": "2027-02-01",
+   "end": "2027-02-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-02-03",
+   "end": "2027-02-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Curriculum Committee",
+   "start": "2027-02-03",
+   "end": "2027-02-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-02-09",
+   "end": "2027-02-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-02-10",
+   "end": "2027-02-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Children’s & Youth Pastor’s Advisory Meeting",
+   "start": "2027-02-10",
+   "end": "2027-02-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Association Board Meeting",
+   "start": "2027-02-11",
+   "end": "2027-02-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Baltimore White Marsh Mid-Cycle Accreditation Visit",
+   "start": "2027-02-11",
+   "end": "2027-02-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pathfinder Conference Level PBE",
+   "start": "2027-02-13",
+   "end": "2027-02-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "President's Day (Schools & Office Closed)",
+   "start": "2027-02-15",
+   "end": "2027-02-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Next Step Training",
+   "start": "2027-02-16",
+   "end": "2027-02-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-02-17",
+   "end": "2027-02-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Principal’s Council",
+   "start": "2027-02-17",
+   "end": "2027-02-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Curriculum Committee",
+   "start": "2027-02-22",
+   "end": "2027-02-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-02-24",
+   "end": "2027-02-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU School Administrators Council",
+   "start": "2027-02-24",
+   "end": "2027-02-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Generation NOW - High School Retreat",
+   "start": "2027-02-26",
+   "end": "2027-02-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Eastern Shore Ministerium",
+   "start": "2027-03-02",
+   "end": "2027-03-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-03-03",
+   "end": "2027-03-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Music Festival (HVA)",
+   "start": "2027-03-04",
+   "end": "2027-03-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Children’s & Youth Leaders Enrichment Day",
+   "start": "2027-03-06",
+   "end": "2027-03-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Women's Day of Prayer",
+   "start": "2027-03-06",
+   "end": "2027-03-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Presidents' Council",
+   "start": "2027-03-09",
+   "end": "2027-03-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Southern Ministerium",
+   "start": "2027-03-09",
+   "end": "2027-03-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-03-10",
+   "end": "2027-03-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "HVA Board of Trustees Meeting",
+   "start": "2027-03-10",
+   "end": "2027-03-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "WAU Board of Trustees",
+   "start": "2027-03-10",
+   "end": "2027-03-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Executive Committee",
+   "start": "2027-03-11",
+   "end": "2027-03-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "3rd Quarter Ends (Schools)",
+   "start": "2027-03-12",
+   "end": "2027-03-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Create & Connect Retreat",
+   "start": "2027-03-12",
+   "end": "2027-03-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pathfinder Union Level PBE",
+   "start": "2027-03-13",
+   "end": "2027-03-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Spring Break (schools)",
+   "start": "2027-03-15",
+   "end": "2027-03-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-03-17",
+   "end": "2027-03-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Global Youth Day (local church)",
+   "start": "2027-03-20",
+   "end": "2027-03-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Full Day Professional Dev. (No School)",
+   "start": "2027-03-22",
+   "end": "2027-03-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Joint EXCOM/Assoc. Board Meeting",
+   "start": "2027-03-23",
+   "end": "2027-03-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee Meeting",
+   "start": "2027-03-23",
+   "end": "2027-03-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-03-24",
+   "end": "2027-03-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Good Friday",
+   "start": "2027-03-26",
+   "end": "2027-03-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Easter Sunday",
+   "start": "2027-03-28",
+   "end": "2027-03-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Western Ministerium",
+   "start": "2027-03-30",
+   "end": "2027-03-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-03-31",
+   "end": "2027-03-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "MAP Testing",
+   "start": "2027-04-05",
+   "end": "2027-04-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-04-07",
+   "end": "2027-04-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Association Board Meeting",
+   "start": "2027-04-08",
+   "end": "2027-04-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Northern Ministerium",
+   "start": "2027-04-08",
+   "end": "2027-04-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Adventurer Award Day - Frederick Church",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Chesapeake on the Move Event",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "NAD Spanish Leaders' Convention",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Wilmington Junior Academy Accreditation",
+   "start": "2027-04-12",
+   "end": "2027-04-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-04-14",
+   "end": "2027-04-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Children’s & Youth Pastor’s Advisory Meeting",
+   "start": "2027-04-14",
+   "end": "2027-04-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Board of Ed.",
+   "start": "2027-04-15",
+   "end": "2027-04-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Constituency Session Organizing Committee",
+   "start": "2027-04-18",
+   "end": "2027-04-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-04-20",
+   "end": "2027-04-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-04-21",
+   "end": "2027-04-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Principal’s Council",
+   "start": "2027-04-21",
+   "end": "2027-04-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pathfinder NAD Bible Enrichment Championship",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Young Adult Retreat",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Adventurer Award Day - Ellicott City Church",
+   "start": "2027-04-25",
+   "end": "2027-04-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Church Evangelism & Revitalization Symposium",
+   "start": "2027-04-27",
+   "end": "2027-04-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-04-28",
+   "end": "2027-04-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Master Guide University - Skills Campout",
+   "start": "2027-04-30",
+   "end": "2027-05-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Constituency Session Nominating Committee",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-05-04",
+   "end": "2027-05-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Eastern Shore Ministerium",
+   "start": "2027-05-04",
+   "end": "2027-05-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-05-05",
+   "end": "2027-05-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "HVA Board of Trustees Meeting",
+   "start": "2027-05-05",
+   "end": "2027-05-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Presidents' Council",
+   "start": "2027-05-11",
+   "end": "2027-05-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Southern Ministerium",
+   "start": "2027-05-11",
+   "end": "2027-05-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-05-12",
+   "end": "2027-05-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "WAU Board of Trustees",
+   "start": "2027-05-12",
+   "end": "2027-05-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Executive Committee",
+   "start": "2027-05-13",
+   "end": "2027-05-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "World Adventurer Day (local church)",
+   "start": "2027-05-15",
+   "end": "2027-05-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Constituency Meeting",
+   "start": "2027-05-16",
+   "end": "2027-05-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-05-19",
+   "end": "2027-05-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-05-26",
+   "end": "2027-05-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "8th Grade Graduations",
+   "start": "2027-05-27",
+   "end": "2027-05-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "4th Quarter Ends",
+   "start": "2027-05-28",
+   "end": "2027-05-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Last Day of School",
+   "start": "2027-05-28",
+   "end": "2027-05-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Senior Graduations",
+   "start": "2027-05-30",
+   "end": "2027-05-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Memorial Day (Office Closed)",
+   "start": "2027-05-31",
+   "end": "2027-05-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-06-02",
+   "end": "2027-06-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Post-school In-Service",
+   "start": "2027-06-02",
+   "end": "2027-06-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Association Board Meeting",
+   "start": "2027-06-03",
+   "end": "2027-06-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Adventurer Family Weekend",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Hispanic Pastors' Retreat",
+   "start": "2027-06-06",
+   "end": "2027-06-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-06-09",
+   "end": "2027-06-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Spanish Camp Meeting",
+   "start": "2027-06-11",
+   "end": "2027-06-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Pitch",
+   "start": "2027-06-14",
+   "end": "2027-06-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Director’s Orientation",
+   "start": "2027-06-14",
+   "end": "2027-06-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting",
+   "start": "2027-06-15",
+   "end": "2027-06-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-06-16",
+   "end": "2027-06-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp – Staff Training",
+   "start": "2027-06-20",
+   "end": "2027-06-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Juneteenth Observance Day (office)",
+   "start": "2027-06-21",
+   "end": "2027-06-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "NAD Called Pastors' Convention",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-06-23",
+   "end": "2027-06-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "FLAG Camp – Week #1",
+   "start": "2027-06-27",
+   "end": "2027-07-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Week #1",
+   "start": "2027-06-27",
+   "end": "2027-07-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee Meeting",
+   "start": "2027-06-29",
+   "end": "2027-06-29",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee Meeting",
+   "start": "2027-06-29",
+   "end": "2027-06-29",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-06-30",
+   "end": "2027-06-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "FLAG Camp – Week #2",
+   "start": "2027-07-04",
+   "end": "2027-07-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Independence Day",
+   "start": "2027-07-04",
+   "end": "2027-07-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Week #2",
+   "start": "2027-07-04",
+   "end": "2027-07-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Independence Day (Office Closed)",
+   "start": "2027-07-05",
+   "end": "2027-07-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-07-07",
+   "end": "2027-07-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Church Communication Directors Training",
+   "start": "2027-07-11",
+   "end": "2027-07-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "FLAG Camp – Week #3",
+   "start": "2027-07-11",
+   "end": "2027-07-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Week #3",
+   "start": "2027-07-11",
+   "end": "2027-07-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Principals Boot Camp",
+   "start": "2027-07-12",
+   "end": "2027-07-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Western Ministerium",
+   "start": "2027-07-13",
+   "end": "2027-07-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-07-14",
+   "end": "2027-07-14",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "FLAG Camp – Week #4",
+   "start": "2027-07-18",
+   "end": "2027-07-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Week #4",
+   "start": "2027-07-18",
+   "end": "2027-07-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Northern Ministerium",
+   "start": "2027-07-20",
+   "end": "2027-07-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-07-21",
+   "end": "2027-07-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "FLAG Camp – Week #5",
+   "start": "2027-07-25",
+   "end": "2027-08-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Summer Camp - Week #",
+   "start": "2027-07-25",
+   "end": "2027-08-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "K-12 Encounter Bible Training",
+   "start": "2027-07-26",
+   "end": "2027-07-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-07-28",
+   "end": "2027-07-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Teacher’s 1st Day",
+   "start": "2027-08-02",
+   "end": "2027-08-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Teacher In-Service",
+   "start": "2027-08-03",
+   "end": "2027-08-03",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-08-04",
+   "end": "2027-08-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Pathfinder Camporee",
+   "start": "2027-08-04",
+   "end": "2027-08-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "New Teachers' Orientation",
+   "start": "2027-08-05",
+   "end": "2027-08-05",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Coordinators Retreat  Date TBD",
+   "start": "2027-08-06",
+   "end": "2027-08-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-08-11",
+   "end": "2027-08-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Spanish Men's Retreat (TBD)",
+   "start": "2027-08-13",
+   "end": "2027-08-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "1st Day of School",
+   "start": "2027-08-16",
+   "end": "2027-08-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-08-18",
+   "end": "2027-08-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "End It Now Initiative",
+   "start": "2027-08-21",
+   "end": "2027-08-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Youth & Family Day - Hershey Park",
+   "start": "2027-08-22",
+   "end": "2027-08-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee Meeting",
+   "start": "2027-08-24",
+   "end": "2027-08-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee Meeting",
+   "start": "2027-08-24",
+   "end": "2027-08-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-08-25",
+   "end": "2027-08-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Children’s & Youth Pastors Advisory Meeting",
+   "start": "2027-08-25",
+   "end": "2027-08-25",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Eastern Shore Convocation",
+   "start": "2027-08-27",
+   "end": "2027-08-28",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-09-01",
+   "end": "2027-09-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Principal’s Council",
+   "start": "2027-09-01",
+   "end": "2027-09-01",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Labor Day (Schools & Office Closed)",
+   "start": "2027-09-06",
+   "end": "2027-09-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "MAP Testing",
+   "start": "2027-09-06",
+   "end": "2027-09-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Presidents' Council",
+   "start": "2027-09-07",
+   "end": "2027-09-07",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-09-08",
+   "end": "2027-09-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "WAU Board of Trustees",
+   "start": "2027-09-08",
+   "end": "2027-09-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Executive Committee",
+   "start": "2027-09-09",
+   "end": "2027-09-09",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Children’s & Youth Leaders Convention",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-09-15",
+   "end": "2027-09-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Senior Academy Leadership Training",
+   "start": "2027-09-16",
+   "end": "2027-09-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Spanish Couples' Retreat (TBD)",
+   "start": "2027-09-17",
+   "end": "2027-09-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "World Pathfinder Day",
+   "start": "2027-09-18",
+   "end": "2027-09-18",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Adventurer Fun Day",
+   "start": "2027-09-19",
+   "end": "2027-09-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-09-20",
+   "end": "2027-09-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-09-22",
+   "end": "2027-09-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Professional Dev. (no school)",
+   "start": "2027-09-22",
+   "end": "2027-09-22",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Board of Ed.",
+   "start": "2027-09-23",
+   "end": "2027-09-23",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Pathfinder Camporee",
+   "start": "2027-09-23",
+   "end": "2027-09-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-09-29",
+   "end": "2027-09-29",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Association Board Meeting",
+   "start": "2027-09-30",
+   "end": "2027-09-30",
+   "status": "CONFIRMED"
+  }
+ ]
+}

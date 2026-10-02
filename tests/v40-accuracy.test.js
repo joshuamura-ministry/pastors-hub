@@ -93,11 +93,14 @@ const GEO_ADDR={result:{addressMatches:[{matchedAddress:ADDR,coordinates:{x:-75.
     for(const k in SCRIPTURE){ add('SCRIPTURE',k,'en',SCRIPTURE[k][0],SCRIPTURE[k][1],SCRIPTURE[k][1]); if(SCRIPTURE_ES[k]) add('SCRIPTURE_ES',k,'es',SCRIPTURE_ES[k][0],SCRIPTURE_ES[k][1],SCRIPTURE[k][1]); }
     CASE_QUOTES.filter(q=>q.kind==='kjv').forEach(q=>{ add('CASE_QUOTES',q.id,'en',q.en,q.ref.en,q.ref.en); add('CASE_QUOTES',q.id,'es',q.es,q.ref.es,q.ref.en); });
     CASE_VERSES.forEach(v=>{ add('CASE_VERSES',v.id,'en',v.en.text,v.en.ref,v.en.ref); add('CASE_VERSES',v.id,'es',v.es.text,v.es.ref,v.en.ref); });
+    // v56 (the purchase path, 2 Oct 2026): its own verified library, held to the same record (its 13 new passages fetched into scripture-bg.json)
+    if(typeof PURCHASE_VERSES!=='undefined') PURCHASE_VERSES.forEach(v=>{ add('PURCHASE_VERSES',v.id,'en',v.en.text,v.en.ref,v.en.ref); add('PURCHASE_VERSES',v.id,'es',v.es.text,v.es.ref,v.en.ref); });
     for(const k in GF_DEEP){ add('GF_DEEP',k,'en',GF_DEEP[k].v[0],GF_DEEP[k].v[1],GF_DEEP[k].v[1]); if(GF_DEEP_ES[k]&&GF_DEEP_ES[k].v) add('GF_DEEP_ES',k,'es',GF_DEEP_ES[k].v[0],GF_DEEP_ES[k].v[1],GF_DEEP[k].v[1]); }
     [['GF_VERSES',GF_VERSES,GF_VERSES_ES],['GF_VERSE_SET',GF_VERSE_SET,GF_VERSE_SET_ES]].forEach(([n,A,B])=>A.forEach((v,i)=>{ add(n,i,'en',v[0],v[1],v[1]); add(n+'_ES',i,'es',B[i][0],B[i][1],v[1]); }));
     return o; })()`);
   const tables=[...new Set(T.map(x=>x.table))];
-  c('every Scripture table is read (English and Spanish)', tables, ['SCRIPTURE','SCRIPTURE_ES','CASE_QUOTES','CASE_VERSES','GF_DEEP','GF_DEEP_ES','GF_VERSES','GF_VERSES_ES','GF_VERSE_SET','GF_VERSE_SET_ES']);
+  // v56 (not a regression): the purchase path's verse library is one more Scripture table, read and checked like the others
+  c('every Scripture table is read (English and Spanish)', tables, ['SCRIPTURE','SCRIPTURE_ES','CASE_QUOTES','CASE_VERSES','PURCHASE_VERSES','GF_DEEP','GF_DEEP_ES','GF_VERSES','GF_VERSES_ES','GF_VERSE_SET','GF_VERSE_SET_ES']);
   c(`${T.length} texts, every one's passage in the Bible Gateway record`, T.filter(x=>!BG[bgKey(x.enref)]).map(x=>x.table+'.'+x.key), []);
   c('every text is word for word what Bible Gateway prints, each omission marked', T.map(x=>{ const b=BG[bgKey(x.enref)]; const why=b?verbatim(x.text,b[x.lang==='en'?'KJV':'RVA'].text):'no record'; return why?`${x.table}.${x.key} [${x.lang}] ${why}`:null; }).filter(Boolean), []);
   c('every reference is the page’s own (English KJV, Spanish RVA)', T.filter(x=>{ const b=BG[bgKey(x.enref)]; const h=b[x.lang==='en'?'KJV':'RVA'].heading; const n=s=>s.replace(/–/g,'-').replace(/, /g,'-'); return n(x.ref)!==n(h); }).map(x=>x.table+'.'+x.key+' '+x.ref), []);

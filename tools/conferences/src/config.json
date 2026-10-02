@@ -1,0 +1,5 @@
+{
+ "_about": "The check date and the gatherers' boundaries. At each monthly refresh, set \"checked\" to the day the calendars were re-read. The page says \"Checked <checked> · updated monthly\"; the past 12 months (every comparison) and the year ahead (planning only, never scored) follow from it. firstPassTo is the last day the events/ files cover; the look-ahead files (ahead/) cover the months after it.",
+ "checked": "2026-10-01",
+ "firstPassTo": "2027-03-31"
+}

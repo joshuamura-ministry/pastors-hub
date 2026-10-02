@@ -1,0 +1,154 @@
+{
+ "conf": "Mountain View Conference",
+ "slug": "mountain-view",
+ "union": "Columbia Union Conference",
+ "site": "https://mtviewconf.org/",
+ "calendarUrls": [
+  "https://assets.adventistconnect.org/mountai2/2026/03/26175841/Sonrise-Newsletter-2026-1.pdf",
+  "https://mtviewconf.org/valleyvista/camp-meeting/",
+  "https://mtviewconf.org/valleyvista/summer-camp/",
+  "https://mtviewconf.org/ministries/womens-ministries/",
+  "https://mtviewconf.org/ministries/spanish-ministries/",
+  "https://columbiaunionvisitor.com/category/mountain-view-conference",
+  "https://mtviewconf.org/wp-json/tribe/events/v1/events",
+  "https://pci.jotform.com/form/260574336374966"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the site's events list holds only offering Sabbaths (to Oct 2028); the one 2027 item comes from a registration form linked from the homepage.",
+ "calendarQuality": "C : the website’s Events list holds only offering Sabbaths. A full-year calendar PDF exists for 2025 only. 2026 dates are scattered across a newsletter and ministry pages.",
+ "furthestPublished": "2027-05",
+ "furthestNote": "IDEAL Institute runs to May 2027; offering Sabbaths are posted to Oct 2028 but are not events",
+ "aheadSummary": "Only the IDEAL Institute training year (Sept 2026 – May 2027), which runs into the window. Camp meeting, retreats and summer camp still show 2026. Not published yet for Jun–Sep 2027.",
+ "aheadChecked": [
+  "https://mtviewconf.org/",
+  "https://mtviewconf.org/wp-json/tribe/events/v1/events?start_date=2026-10-01&end_date=2028-12-31",
+  "https://mtviewconf.org/valleyvista/camp-meeting/",
+  "https://mtviewconf.org/valleyvista/summer-camp/",
+  "https://mtviewconf.org/ministries/womens-ministries/",
+  "https://mtviewconf.org/ministries/spanish-ministries/",
+  "https://mtviewconf.org/wp-json/wp/v2/pages?search=2027",
+  "https://mtviewconf.org/wp-json/wp/v2/posts?search=2027",
+  "https://pci.jotform.com/form/260574336374966",
+  "https://pci.jotform.com/form/260615571042955",
+  "https://pci.jotform.com/form/261546728414966",
+  "https://columbiaunionvisitor.com/category/mountain-view-conference"
+ ],
+ "stats": {
+  "records": 1,
+  "datedInWindowRecords": 1,
+  "conferenceRunRecords": 1,
+  "occurrencesInWindow": 1,
+  "conferenceOccurrencesInWindow": 1,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 0,
+  "startsBeforeWindowRecords": 1,
+  "monthsWithConferenceEvents": "1 of 6",
+  "byLevel": {
+   "conference": 1
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  }
+ },
+ "counts": {
+  "total": 1,
+  "conferenceLevel": 1,
+  "observances": 0,
+  "byCategory": {
+   "discipleship-spiritual": 1
+  },
+  "byCategoryConferenceOnly": {
+   "discipleship-spiritual": 1
+  }
+ },
+ "excludedFromCalendar": {
+  "offering Sabbath": 2
+ },
+ "excludedDetail": [
+  {
+   "title": "Church Budget offering",
+   "reason": "offering Sabbath",
+   "occurrences": 6
+  },
+  {
+   "title": "Mtn. View Mission offering",
+   "reason": "offering Sabbath",
+   "occurrences": 6
+  }
+ ],
+ "prepDeadlines": [],
+ "events": [
+  {
+   "title": "IDEAL Institute (discipleship and leadership training)",
+   "start": "2026-09-01",
+   "end": "2027-05-31",
+   "place": "online and in person",
+   "category": "discipleship-spiritual",
+   "category2": "pastoral-leadership",
+   "audience": "lay members, leaders and young adults",
+   "level": "conference",
+   "url": "https://pci.jotform.com/form/260574336374966",
+   "source": "registration form",
+   "sourceDetail": "registration form linked from https://mtviewconf.org/",
+   "datePrecision": "month range (form says \"September 2026 - May 2027\")",
+   "startsBeforeWindow": true,
+   "note": "$125 per person (materials, training, lunch for in-person meetings)"
+  }
+ ],
+ "notes": [
+  "The two other homepage forms are for 2026 events (Men's Retreat 9–11 Oct 2026; Professionals' Retreat 2026).",
+  "Evangelism subsidy rule (v47): budget to the treasurer at least 8 months before a series, so a September 2027 OneVoice27 series needs its budget in by January 2027."
+ ]
+}

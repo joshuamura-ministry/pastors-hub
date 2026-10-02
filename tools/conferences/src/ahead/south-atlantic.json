@@ -1,0 +1,63 @@
+{
+ "conf": "South Atlantic",
+ "slug": "south-atlantic",
+ "union": "Southern",
+ "site": "https://www.sacsda.org",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "calendarUrls": [
+  "https://www.sacsda.org/sac-events/",
+  "https://www.sacsda.org/download/161/events/7185/2026-sac-calendar-final-2.pdf",
+  "https://www.sacsda.org/?mec-ical-feed=1"
+ ],
+ "calendarGrade": "B+",
+ "calendarQuality": "Printed 2026 master calendar (PDF, every month) plus a website event feed with public iCal; Oct-Dec 2025 and 2027 only from the feed (thin); feed and PDF sometimes disagree on dates.",
+ "furthestPublished": "2027-04",
+ "furthestPublishedOwnSite": "2027-04",
+ "aheadSummary": "Only one item: the Be Ready Summit with the SAC ACS Convention (15-18 Apr 2027). There is no 2027 master calendar yet; the event feed ends in April 2027.",
+ "aheadChecked": [
+  "https://www.sacsda.org/?mec-ical-feed=1",
+  "https://www.sacsda.org/sac-events/",
+  "https://www.sacsda.org/events/be-ready-summit-new-date/",
+  "https://www.sacsda.org/wp-content/uploads/2026/09/Be-Ready-Summit-New-Dates-Flyer-2027.jpeg",
+  "https://www.sacsda.org/?s=2027",
+  "https://www.sacsda.org/campground/",
+  "https://www.sacsda.org/camp-meeting/",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+ ],
+ "usuallyHeldNotYetPublished": [
+  "River Oaks camp meeting (June) and its Hispanic and Franco-Haitian camp meetings: no 2027 dates.",
+  "2027 master calendar PDF (the 2026 one was the main source in the first pass): not posted."
+ ],
+ "stats": {
+  "aheadEvents": 1,
+  "conferenceRunPublic": 1,
+  "internal": 0,
+  "otherLevel": 0,
+  "byMonth": {
+   "2027-04": 1
+  },
+  "byMainCategory": {
+   "community-service": 1
+  },
+  "conferenceRunPublicByMainCategory": {
+   "community-service": 1
+  }
+ },
+ "events": [
+  {
+   "title": "Be Ready Summit 'Survival of the Faithful' with the SAC ACS Convention",
+   "start": "2027-04-15",
+   "end": "2027-04-18",
+   "place": "River Oaks Campground, Orangeburg, SC",
+   "category": "community-service",
+   "category2": "health",
+   "audience": "members, ACS and disaster-response volunteers",
+   "level": "conference",
+   "url": "https://www.sacsda.org/events/be-ready-summit-new-date/",
+   "source": "calendar",
+   "note": "flyer: 15-16 Apr Be Ready Summit (disaster-response training and workshops); 17 Apr ACS Convention with evening banquet; 18 Apr 5K run/walk with Health Ministries; registration details coming soon (earlier registrations transfer). Explains the title the first pass could not.",
+   "when": "upcoming"
+  }
+ ]
+}

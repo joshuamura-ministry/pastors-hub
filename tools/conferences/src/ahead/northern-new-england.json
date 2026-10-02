@@ -1,0 +1,258 @@
+{
+ "conf": "Northern New England",
+ "slug": "northern-new-england",
+ "union": "Atlantic Union",
+ "site": "https://www.nnec.org/",
+ "calendarUrls": [
+  "https://www.nnec.org/calendar",
+  "https://web.archive.org/web/20250926220523/https://www.nnec.org/calendar",
+  "https://web.archive.org/web/20251114050902/https://www.nnec.org/calendar",
+  "https://web.archive.org/web/20260121122214/https://www.nnec.org/calendar",
+  "https://web.archive.org/web/20260518025447/https://www.nnec.org/calendar"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "furthestPublished": "2027-07",
+ "furthestNote": "Camp meeting runs 25 Jun - 3 Jul 2027; nothing later is posted. Monthly pastors' (Gatekeeper's) and elders' (Elder's Connect) meetings are posted only through Dec 2026.",
+ "aheadEvents": 3,
+ "aheadSummary": "3 records for Apr-Sep 2027: the NAD Pathfinder Bible Experience (division level, 23-24 Apr), the Spring Pathfinder Camporee at the William Miller Farm (20-23 May) and Camp Meeting 2027 at Pine Tree Academy (25 Jun - 3 Jul). No pastors', elders', evangelism, Lawroweld summer-camp or training dates are posted for those months yet.",
+ "calendarQuality": {
+  "grade": "B-",
+  "summary": "For Apr-Sep 2027 the live calendar and the camp-meeting and Pathfinder pages agree on two conference events and the NAD PBE; the regular monthly meetings and summer camp weeks are not posted that far ahead. One date conflict (NAD PBE 17 vs 23-24 Apr)."
+ },
+ "stats": {
+  "window": "2027-04-01 to 2027-09-30",
+  "allRecordsInWindow": 3,
+  "countedRecords": 3,
+  "countedOccurrences": 3,
+  "conferenceLevelRecords": 2,
+  "conferenceLevelOccurrences": 2,
+  "recordsByLevel": {
+   "division": 1,
+   "conference": 2
+  },
+  "recordsByKind": {
+   "event": 3
+  },
+  "conferenceRecordsByPrimaryCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 1,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 1,
+   "administration": 0,
+   "other": 0
+  },
+  "conferenceRecordsBySecondCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "conferenceOccurrencesByPrimaryCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 1,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 1,
+   "administration": 0,
+   "other": 0
+  },
+  "monthsWithConferenceEvents": "3 of 6",
+  "monthsWithAnyEvent": [
+   "2027-04",
+   "2027-05",
+   "2027-06",
+   "2027-07"
+  ],
+  "deadlinesInWindow": 0,
+  "observancesInWindow": 0
+ },
+ "sourcesUsed": [
+  "nnec.org/calendar (Webflow events list, fetched 1 Oct 2026)",
+  "nnec.org/campmeeting/camp-meeting",
+  "nnec.org/pathfinders (PBE order of events)",
+  "nnec.org ministry pages (22 pages)",
+  "camplawroweld.org (summer camp and staff pages)"
+ ],
+ "excludedNonEvents": 0,
+ "events": [
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & leaders",
+   "url": "https://www.nnec.org/pathfinders",
+   "source": "ministry page (Pathfinders, PBE order of events)",
+   "level": "division",
+   "kind": "event",
+   "note": "Date conflict: the conference calendar entry says 17 Apr 2027; the Pathfinder page and the NAD finals date (Huntsville, AL, in initiatives.json) say 23-24 Apr 2027, which is used here.",
+   "alsoSeen": [
+    "calendar: https://www.nnec.org/events/nad-pathfinder-bible-experience (\"Apr 17, 2027\", place TBD)"
+   ]
+  },
+  {
+   "title": "Spring Pathfinder Camporee",
+   "start": "2027-05-20",
+   "end": "2027-05-23",
+   "place": "William Miller Farm, Whitehall, NY",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & leaders",
+   "url": "https://www.nnec.org/events/spring-pathfinder-camporee-dor3n",
+   "source": "calendar",
+   "level": "conference",
+   "kind": "event",
+   "alsoSeen": [
+    "calendar list: https://www.nnec.org/calendar",
+    "ministry page: https://www.nnec.org/pathfinders"
+   ]
+  },
+  {
+   "title": "Camp Meeting 2027 (Faith Fest)",
+   "start": "2027-06-25",
+   "end": "2027-07-03",
+   "place": "Pine Tree Academy, Freeport, ME",
+   "category": "camp-meeting",
+   "category2": "discipleship-spiritual",
+   "audience": "members",
+   "url": "https://www.nnec.org/campmeeting/camp-meeting",
+   "source": "camp page",
+   "level": "conference",
+   "kind": "event",
+   "note": "Theme \"Not Home Yet: Heaven and the New Earth\". First meeting 25 Jun 6:30 pm, last 3 Jul 6:30 pm. Campsite registration and meal tickets open 1 Jan 2027. The v50 note gave 18-26 Jun 2027; the live calendar and camp page now both say 25 Jun - 3 Jul.",
+   "alsoSeen": [
+    "calendar: https://www.nnec.org/events/camp-meeting-2027"
+   ]
+  }
+ ],
+ "prepDeadlines": [
+  {
+   "title": "Camp meeting campsite registration and meal tickets open",
+   "date": "2027-01-01",
+   "kind": "opens",
+   "appliesTo": "northern-new-england",
+   "what": "Book campsites for Camp Meeting 2027 (25 Jun - 3 Jul)",
+   "url": "https://www.nnec.org/campmeeting/camp-meeting"
+  },
+  {
+   "title": "Evangelism funds: lay-pastor-led churches apply through the supervising pastor",
+   "date": "2026-10-30",
+   "kind": "deadline",
+   "recurring": "yearly (30 Oct, for the following year)",
+   "appliesTo": "northern-new-england",
+   "what": "Request next year's evangelism help (Revival in the East plan); full funding needs the request at least 6 months before the meetings",
+   "url": "https://cdn.prod.website-files.com/6149e20ec96cdd28d0e8ccf9/659ec3d4d8f6c09d4692ad1f_Revival%20in%20the%20East%20-%20compressed.pdf",
+   "note": "Standing rule from v47 research, not re-read on 1 Oct 2026."
+  }
+ ],
+ "outsideWindow": [
+  {
+   "title": "Belize Mission Trip",
+   "start": "2027-01-17",
+   "end": "2027-02-01",
+   "place": "Belize",
+   "category": "community-service",
+   "category2": "evangelism-outreach",
+   "audience": "members",
+   "url": "https://www.nnec.org/missions/home",
+   "source": "ministry page (Missions)",
+   "level": "conference",
+   "kind": "event",
+   "note": "Falls inside the first pass window (Oct 2026 - Mar 2027) but is missing from v50; listed on the Missions page only, not on the calendar."
+  }
+ ],
+ "plannedUndated": [
+  {
+   "title": "Atlantic Union-sponsored evangelistic campaign in Northern New England",
+   "year": "2027",
+   "what": "Union strategic plan 2025-2030: \"Scheduled campaigns: 2026 - NYC; 2027 - NNEC; 2028 - BDA\". No dates or place announced.",
+   "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+   "level": "union",
+   "category": "evangelism-outreach"
+  },
+  {
+   "title": "Union doctrinal revival weekend in Northern New England",
+   "year": "2028",
+   "what": "Union plan schedules NNEC's United Revival for 2028 (after this window).",
+   "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+   "level": "union",
+   "category": "evangelism-outreach"
+  }
+ ],
+ "aheadChecked": [
+  "https://www.nnec.org/calendar",
+  "https://www.nnec.org/campmeeting/camp-meeting",
+  "https://www.nnec.org/pathfinders",
+  "https://www.nnec.org/events/camp-meeting-2027",
+  "https://www.nnec.org/events/nad-pathfinder-bible-experience",
+  "https://www.nnec.org/events/spring-pathfinder-camporee-dor3n",
+  "https://www.nnec.org/announcements",
+  "https://www.nnec.org/evangelism",
+  "https://www.nnec.org/regenerate",
+  "https://www.nnec.org/youth-ministries",
+  "https://www.nnec.org/young-adults",
+  "https://www.nnec.org/adventurers",
+  "https://www.nnec.org/women",
+  "https://www.nnec.org/mens-ministry",
+  "https://www.nnec.org/ministerial",
+  "https://www.nnec.org/connectacademy",
+  "https://www.nnec.org/health-ministries",
+  "https://www.nnec.org/family-ministries",
+  "https://www.nnec.org/prayer-ministries",
+  "https://www.nnec.org/childrens-ministries",
+  "https://www.nnec.org/missions/cuba",
+  "https://www.nnec.org/missions/home",
+  "https://www.nnec.org/le-ministries",
+  "https://www.nnec.org/education/ed",
+  "https://www.nnec.org/locations/camp-lawroweld",
+  "https://www.camplawroweld.org/",
+  "https://www.camplawroweld.org/summer-camp",
+  "https://www.camplawroweld.org/staff",
+  "https://www.nnec.org/sitemap.xml",
+  "https://atlanticuniongleaner.org/"
+ ],
+ "aheadCheckedNotes": [
+  "nnec.org/sitemap.xml returns 404, so pages were found from the site menu.",
+  "Camp Lawroweld lists only 2026 summer weeks (Junior 28 Jun - Blind Camp to 2 Aug 2026); no 2027 weeks yet.",
+  "Gleaner posts since Oct 2025 have no dated NNEC item for 2027."
+ ],
+ "notes": [
+  "All 3 records are Pathfinder events or camp meeting; the conference has not posted its regular 2027 meeting rhythm (Gatekeeper's, Elder's Connect, Volunteer Directors) or any evangelism dates beyond the first window.",
+  "First-window item seen in passing: the NNEC PBE on 6 Mar 2027 is at Woodstock SDA Church on the calendar but at Mountain View Church, Vernon, VT on the Pathfinder page.",
+  "Guest speaker and chef names on the camp page are left out."
+ ]
+}

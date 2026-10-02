@@ -1,0 +1,281 @@
+{
+ "conf": "Illinois",
+ "slug": "illinois",
+ "union": "Lake Union",
+ "site": "https://www.ilcsda.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30",
+  "note": "second half of the 12-months-ahead view (Oct 2026 – Mar 2027 is in v50/events/illinois.json)"
+ },
+ "furthestPublished": "2026-12",
+ "furthestPublicEvent": "2026-12",
+ "furthestNote": "Latest dated event page in the sitemap starts 2026-10-30; the 2026 youth and Hispanic PDF calendars end in December 2026. The only 2027 item is the constituency session, announced for \"2027\" with no date.",
+ "calendarUrls": [
+  "https://www.ilcsda.org/events-announcements",
+  "https://www.ilcsda.org/event-pages-sitemap.xml"
+ ],
+ "aheadChecked": [
+  "https://www.ilcsda.org/event-pages-sitemap.xml (149 event pages; each page's schema.org Event dates read)",
+  "https://www.ilcsda.org/events-announcements",
+  "https://www.ilcsda.org/youth",
+  "https://www.ilcsda.org/hispanic",
+  "https://www.ilcsda.org/constituency",
+  "https://www.ilcsda.org/news",
+  "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf",
+  "https://www.ilcsda.org/_files/ugd/0f5910_b9ad89165c8646eab4a9a4ed8a6870bb.pdf"
+ ],
+ "aheadSummary": "Nothing is published for April–September 2027. Illinois posts events one registration page at a time and its 2026 youth and Hispanic calendars end in December 2026; the newest event page is for late 2026. The 2027 constituency session is announced without a date. Illinois appears to publish a calendar year at a time, so expect 2027 dates around the turn of the year.",
+ "counts": {
+  "total": 0,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevels": 0,
+  "occurrences": 0,
+  "byCategoryAll": {},
+  "byCategoryAny": {},
+  "byCategoryConferenceRunPublic": {},
+  "conferenceRunRecordsByStartMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  },
+  "conferenceRunOccurrencesByMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  }
+ },
+ "stats": {
+  "records": 0,
+  "conferenceRunRecords": 0,
+  "occurrences": 0,
+  "firstDate": null,
+  "lastDate": null,
+  "monthsWithConferenceEvents": "0 of 6",
+  "monthsMissing": [
+   "2027-04",
+   "2027-05",
+   "2027-06",
+   "2027-07",
+   "2027-08",
+   "2027-09"
+  ]
+ },
+ "upcomingEventPages": [
+  {
+   "title": "Chicagoland Convocation",
+   "start": "2026-10-03",
+   "end": "2026-10-03",
+   "url": "https://www.ilcsda.org/event-details-registration/chicagoland-convocation-1",
+   "status": "EventScheduled"
+  },
+  {
+   "title": "Mission Akita 2026: Fall Edition!",
+   "start": "2026-10-14",
+   "end": "2026-10-21",
+   "url": "https://www.ilcsda.org/event-details-registration/mission-akita-2026-fall-edition",
+   "status": "EventScheduled"
+  },
+  {
+   "title": "Young Adult Retreat",
+   "start": "2026-10-30",
+   "end": "2026-11-01",
+   "url": "https://www.ilcsda.org/event-details-registration/young-adult-retreat-1",
+   "status": "EventScheduled"
+  }
+ ],
+ "excludedFromCalendar": {},
+ "prepDeadlines": [],
+ "undatedAhead": [
+  {
+   "title": "Illinois Conference constituency session (quinquennial)",
+   "expected": "2027, date not published",
+   "category": "administration",
+   "url": "https://www.ilcsda.org/constituency",
+   "source": "conference page",
+   "note": "churches send one delegate for the organization plus one per 50 members, based on membership on 30 Sep of the year before"
+  }
+ ],
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "C.A.S.A. Retreat",
+   "heldIn2026": "2026-04-03 to 2026-04-05",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "KIDSCOURSE",
+   "heldIn2026": "2026-04-07",
+   "category": "children",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "Pathfinder Spring Camporee",
+   "heldIn2026": "2026-04-10 to 2026-04-12",
+   "category": "pathfinders",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Retiro de Parejas",
+   "heldIn2026": "2026-04-18",
+   "category": "family-women-men",
+   "url": "https://www.ilcsda.org/event-details-registration/retiro-de-parejas-1",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Master Guide Training",
+   "heldIn2026": "2026-04-26",
+   "category": "pathfinders",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "Forged In Faith: Women's Reset",
+   "heldIn2026": "2026-05-02",
+   "category": "family-women-men",
+   "url": "https://www.ilcsda.org/event-details-registration/forged-in-faith-womens-reset"
+  },
+  {
+   "title": "Adventurer Family Camp",
+   "heldIn2026": "2026-05-15 to 2026-05-17",
+   "category": "children",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "EMW",
+   "heldIn2026": "2026-05-31 to 2026-06-05",
+   "category": "other",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Mission Akita 2026: Summer Edition!",
+   "heldIn2026": "2026-06-03 to 2026-06-10",
+   "category": "other",
+   "url": "https://www.ilcsda.org/event-details-registration/mission-akita-2026-summer-edition"
+  },
+  {
+   "title": "Certification Week",
+   "heldIn2026": "2026-06-07 to 2026-06-13",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Torneo de Fútbol 2026",
+   "heldIn2026": "2026-06-07",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/event-details-registration/torneo-de-futbol-2026",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "BASE/Staff Week",
+   "heldIn2026": "2026-06-14 to 2026-06-21",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "ONE DAY YOUTH RALLY (Chicago)",
+   "heldIn2026": "2026-06-20",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/event-details-registration/one-day-youth-rally-chicago"
+  },
+  {
+   "title": "Cub/Junior Camp",
+   "heldIn2026": "2026-06-21 to 2026-06-27",
+   "category": "children",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Tween Camp",
+   "heldIn2026": "2026-06-28 to 2026-07-04",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Teen + Specialty Camp",
+   "heldIn2026": "2026-07-05 to 2026-07-11",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "YOUTH RALLY - Southern Illinois",
+   "heldIn2026": "2026-07-11",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/event-details-registration/youth-rally-southern-illinois"
+  },
+  {
+   "title": "Family Camp",
+   "heldIn2026": "2026-07-12 to 2026-07-18",
+   "category": "family-women-men",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  },
+  {
+   "title": "Pastors Summer Retreat",
+   "heldIn2026": "2026-07-19 to 2026-07-22",
+   "category": "pastoral-leadership",
+   "url": "https://www.ilcsda.org/event-details-registration/pastors-summer-retreat-4"
+  },
+  {
+   "title": "Family Camp Meeting 2026",
+   "heldIn2026": "2026-07-22 to 2026-07-25",
+   "category": "camp-meeting",
+   "url": "https://www.ilcsda.org/event-details-registration/family-camp-meeting-2026"
+  },
+  {
+   "title": "Campestre Hispano 2026",
+   "heldIn2026": "2026-07-31 to 2026-08-02",
+   "category": "camp-meeting",
+   "url": "https://www.ilcsda.org/event-details-registration/campestre-hispano-2026-1",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Mission Camp",
+   "heldIn2026": "2026-08-09 to 2026-08-16",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf",
+   "category2": "evangelism-outreach"
+  },
+  {
+   "title": "Beyond the Basics 2026",
+   "heldIn2026": "2026-08-29 to 2026-08-30",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/event-details-registration/beyond-the-basics-2026"
+  },
+  {
+   "title": "Empower 2026",
+   "heldIn2026": "2026-09-04 to 2026-09-06",
+   "category": "youth-young-adults",
+   "url": "https://www.ilcsda.org/event-details-registration/empower-2026-1",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "KIDSCOURSE",
+   "heldIn2026": "2026-09-08",
+   "category": "children",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "heldIn2026": "2026-09-13",
+   "category": "children",
+   "url": "https://www.ilcsda.org/_files/ugd/f50cb4_006893247e2444609dce1b01c5b777af.pdf"
+  }
+ ],
+ "usuallyHeldNote": "Held (or scheduled) in April–September 2026; none has a 2027 date yet. Expect them around the same weekends.",
+ "beyondWindow": [],
+ "events": [],
+ "notes": "No Illinois event is dated in April–September 2027. ilcsda.org rate-limits fast requests (HTTP 429); the event pages were re-read slowly, one at a time, and all were read."
+}

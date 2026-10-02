@@ -1,0 +1,84 @@
+{
+ "conf": "Southwestern Union",
+ "slug": "union-southwestern",
+ "union": "Southwestern",
+ "site": "https://southwesternadventist.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30"
+ },
+ "furthestPublished": "2027-11",
+ "aheadSummary": "Almost nothing published at union level. The union events calendar ends with the RISE Pathfinder camporee (Oct 1-4, 2026). Only the education office calendar reaches 2027 (to Nov 2027): one teacher webinar is counted. Southwestern Adventist University's commencement weekend (May 6-9, 2027) is listed as an institution event.",
+ "counts": {
+  "events": 2,
+  "meetings": 2,
+  "conferenceRun": 2
+ },
+ "calendarUrls": [
+  "https://southwesternadventist.org/events/",
+  "https://southwesternadventist.org/wp-json/tribe/events/v1/events",
+  "https://www.southwesternadventisteducation.com/calendar",
+  "https://www.swurecord.org/"
+ ],
+ "events": [
+  {
+   "title": "SWUC teacher webinar: Design Thinking",
+   "start": "2027-04-01",
+   "end": "2027-04-01",
+   "place": "Online",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers and principals",
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar",
+   "note": "Third in the union education webinar series (SBL Nov 5, 2026; AI in the Classroom Feb 4, 2027)."
+  },
+  {
+   "title": "Southwestern Adventist University commencement weekend (with Theology Commissioning Service)",
+   "start": "2027-05-06",
+   "end": "2027-05-09",
+   "place": "Keene, TX",
+   "category": "education",
+   "category2": "pastoral-leadership",
+   "audience": "graduates, families; theology graduates entering ministry",
+   "level": "institution",
+   "url": "https://swau.edu/academics/student-records/graduation/",
+   "source": "event page",
+   "note": "Theology Commissioning Service Friday May 7, 2027, 7 pm; departmental ceremonies May 7-8; commencement Sunday May 9, 2027, 10 am (also on https://catalog.swau.edu/academic-calendar-20262027)."
+  }
+ ],
+ "notes": [
+  "Union events calendar (The Events Calendar REST API): 10 events in total, the last the 2026 Southwestern Union Pathfinder Camporee (Oct 1-4, 2026). Nothing for 2027.",
+  "Union education office calendar runs to Nov 16, 2027 and also lists the NAD Educators' Convention (Aug 7-10, 2028, Columbus, OH). In the window it has: Design Thinking webinar (Apr 1, counted), Leadership Survey (Apr 5-9), spring MAP testing window (Apr 19-May 7), Education Advisory and Board of Education (May 10), and conference boards of education (Texico and Arkansas-Louisiana Apr 13, Arkansas-Louisiana Jun 8, Texas Jun 22). Surveys, testing windows, advisories and boards are not counted.",
+  "Union site search for 2027 finds only a story on the Houston church basketball league, which plans a larger third season in 2027 (no dates). All ministry pages were checked; none gives a 2027 date.",
+  "Southwestern Union Record: online stories run to Jul 30, 2026 (158 stories from 2026 read; no Apr-Sep 2027 event dates). The Sep/Oct 2026 print issue (Issuu, published Aug 12, 2026) was read page by page for news: no 2027 union dates. It reports the annual union equine (wrangler) training at Lone Star Camp (May 24-29, 2026) and rotating Spanish Children's Ministries certification trainings; neither has a 2027 date.",
+  "Not published yet for 2027: union Pathfinder Bible Experience, ministers' meeting or pastors' retreat, women's ministries retreat (2026: Sep 18-20), Cowboy and Biker Camp (2026: Sep 25-27), leadership camp, Asian-Pacific convocation, and any union-wide OneVoice27 plan. NAD and world-church events (including PBE finals and OneVoice27) are in above.json.",
+  "The union's Eventbrite organizer page appears in search results; it was not opened (it returned 403 in the earlier run, and blocks are not worked around)."
+ ],
+ "aheadChecked": [
+  "https://southwesternadventist.org/events/",
+  "https://southwesternadventist.org/wp-json/tribe/events/v1/events?start_date=2020-01-01&end_date=2030-12-31",
+  "https://southwesternadventist.org/wp-json/wp/v2/search?search=2027",
+  "https://southwesternadventist.org/ministerial/",
+  "https://southwesternadventist.org/evangelism/",
+  "https://southwesternadventist.org/young-adults-youth-ministries/",
+  "https://southwesternadventist.org/womens-ministries/",
+  "https://southwesternadventist.org/multicultural-ministries/",
+  "https://southwesternadventist.org/childrens-ministries/",
+  "https://southwesternadventist.org/education/",
+  "https://southwesternadventist.org/prayer-ministries/",
+  "https://www.southwesternadventisteducation.com/calendar",
+  "https://www.southwesternadventisteducation.com/calendar?2916859d_page=2",
+  "https://swau.edu/academics/student-records/graduation/",
+  "https://catalog.swau.edu/academic-calendar-20262027",
+  "https://www.swurecord.org/",
+  "https://www.swurecord.org/conference/southwestern-union",
+  "https://www.swurecord.org/sitemap.xml",
+  "https://www.swurecord.org/events",
+  "https://issuu.com/swurecord/docs/september_october_2026",
+  "https://www.nadadventist.org/camp-meeting/"
+ ]
+}

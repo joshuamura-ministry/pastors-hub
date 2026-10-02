@@ -1,0 +1,932 @@
+[
+  {
+    "conf": "Greater New York",
+    "union": "Atlantic Union",
+    "states": [
+      "NY"
+    ],
+    "site": "https://gnyc.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": null,
+      "cap": null,
+      "deadline": "30 September (for programmes in the following year)",
+      "how": "The pastor plans next year's outreach with church leaders, the church board votes to approve it, and the pastor sends the Local Church Evangelism Subsidy Request Form with a written plan to the (ethnic) Ministry Director before 30 September; the Ministry Director and the Conference Evangelism Coordinator take it to the Evangelism Committee, which approves by the end of October.",
+      "conditions": [
+        "Church board action approving the outreach plan",
+        "Form signed by the pastor, the ethnic ministry director and the evangelism coordinator; a plan for all areas must be attached",
+        "Funds are released by Treasury on the pastor's request four weeks before the programme starts",
+        "Checks are not released if the church is not up to date with treasury, auditing and secretariat reports",
+        "Every expenditure needs a dated invoice or receipt; the pastor and church treasurer are personally responsible for the finances",
+        "The form budgets five areas (spiritual revival, training & equipping, community outreach, evangelistic meetings, nurture & discipling) and lists church and offering income before the 'GNYC assistance requested'"
+      ],
+      "report": "Evangelism Expense Report (sent with the approval letter) to the Ministry Director no later than 60 days after the programme ends, or at the end of December.",
+      "programmes": [
+        "The Year of Reaping (2026), after The Year of Evangelism (2024) and Pentecost 2025",
+        "GNYC School of Evangelism (training for elders, deacons/deaconesses and other leaders)",
+        "Atlantic Union IMPACT evangelistic series scheduled for 2029 (GNYC Upstate/NYC/NEC) and a union revival weekend for 2030 (GNYC & NEC)",
+        "Atlantic Union Virtual School of Evangelism (annual 'Faith in Action' certification training on Zoom; 2026 sessions 1–22 Feb)"
+      ],
+      "sources": [
+        {
+          "title": "Greater New York Conference Evangelism Request Form – Local Church Evangelism Subsidy Request Form (linked from the Executive Secretary page)",
+          "publisher": "Greater New York Conference",
+          "date": "undated; PDF metadata: created 27 Sep 2012, modified 5 Oct 2012",
+          "url": "https://gnyc.org/docs/wp/Evangelism-Subsidy-Request-Form.pdf",
+          "quote": "The pastor develops the outreach plan for the next year in consultation with local church leadership, and the Church Board takes an action approving the plan. The evangelism requests should be presented to the Ministry Director before September 30 to be approved for the following year."
+        },
+        {
+          "title": "Greater New York Conference Evangelism Request Form – Local Church Evangelism Subsidy Request Form (linked from the Executive Secretary page)",
+          "publisher": "Greater New York Conference",
+          "date": "undated; PDF metadata: created 27 Sep 2012, modified 5 Oct 2012",
+          "url": "https://gnyc.org/docs/wp/Evangelism-Subsidy-Request-Form.pdf",
+          "quote": "The Ministry Director receives the application form. After evaluation, the Director in consultation with the Conference Evangelism Coordinator, presents the requests to the Evangelism Committee for approval by the end of October."
+        },
+        {
+          "title": "Greater New York Conference Evangelism Request Form – Local Church Evangelism Subsidy Request Form (linked from the Executive Secretary page)",
+          "publisher": "Greater New York Conference",
+          "date": "undated; PDF metadata: created 27 Sep 2012, modified 5 Oct 2012",
+          "url": "https://gnyc.org/docs/wp/Evangelism-Subsidy-Request-Form.pdf",
+          "quote": "Treasury receives a copy of the approval evangelism budget and releases the funds as it is requested by the pastor four weeks before the program starts (Check request should be signed by the ethnic director and the evangelism coordinator). The checks will not be released if the church is not up to date with the treasury, auditing, and secretariat reports."
+        },
+        {
+          "title": "Greater New York Conference Evangelism Request Form – Local Church Evangelism Subsidy Request Form (linked from the Executive Secretary page)",
+          "publisher": "Greater New York Conference",
+          "date": "undated; PDF metadata: created 27 Sep 2012, modified 5 Oct 2012",
+          "url": "https://gnyc.org/docs/wp/Evangelism-Subsidy-Request-Form.pdf",
+          "quote": "FINAL REPORT – A copy of the Evangelism Expense Report will be sent to you with your letter of subsidy approval. This must be completed and turned in to the Ministry Director no later than 60 days from the end of the program, or at the end of December."
+        },
+        {
+          "title": "Greater New York Conference Evangelism Request Form – Local Church Evangelism Subsidy Request Form (linked from the Executive Secretary page)",
+          "publisher": "Greater New York Conference",
+          "date": "undated; PDF metadata: created 27 Sep 2012, modified 5 Oct 2012",
+          "url": "https://gnyc.org/docs/wp/Evangelism-Subsidy-Request-Form.pdf",
+          "quote": "INVOICES – Our auditors require that a dated invoice or receipt must accompany every expenditure. The pastor and the church treasurer are responsible for expenditures not backed up by receipts."
+        },
+        {
+          "title": "Executive Secretary (Resources list)",
+          "publisher": "Greater New York Conference",
+          "date": "undated",
+          "url": "https://gnyc.org/executive-secretary/",
+          "quote": "Evangelism Subsidy Request Form"
+        },
+        {
+          "title": "Session Report 2026 (consolidated department and officer reports for the 18 Oct 2026 constituency session)",
+          "publisher": "Greater New York Conference",
+          "date": "PDF created 15 Sep 2026 (p. 29)",
+          "url": "https://gnyc.org/docs/session-2026/session-report-2026.pdf",
+          "quote": "Our evangelistic emphasis was strategically shaped around key initiatives, including The Year of Evangelism (2024), Pentecost 2025 (a North American Division initiative), and The Year of Reaping (2026)."
+        },
+        {
+          "title": "Ministerial",
+          "publisher": "Greater New York Conference",
+          "date": "undated",
+          "url": "https://gnyc.org/ministerial/",
+          "quote": "Provide training to elders, deacons/deaconesses, and other leaders through the GNYC School of Evangelism."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Strengthen Mission Impact through Targeted Funding: Provide annual additional funding to each conference, designated for evangelism, church planting, ministry training, and other mission-driven initiatives."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Impact Evangelistic Series: Every two years, the Atlantic Union will host the IMPACT Series in different regions of the territory to promote evangelism and growth. Scheduled location: 2027 – SNEC, 2029 – GNYC (Upstate)/NYC/NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "United Revivals Across the Union: Host an Atlantic Union-sponsored doctrinal revival weekend in each conference once every five years, serving both in-reach and outreach goals. Scheduled locations: 2026 – NYC; 2027 – SNEC; 2028 – NNEC; 2029 – BDA; 2030 – GNYC & NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Personal Evangelism Training: Equip at least 80% of members through the annual AU Virtual School of Evangelism - “Faith in Action” training."
+        },
+        {
+          "title": "AUC Virtual School of Evangelism 2026",
+          "publisher": "Atlantic Union Conference (AUC School of Evangelism)",
+          "date": "event 1–22 Feb 2026",
+          "url": "https://www.aucevangelism.org/event-details/auc-virtual-school-of-evangelism-2026",
+          "quote": "The Atlantic Union Conference Virtual School of Evangelism 2026 is an engaging and transformative Certification Program designed to ignite passion, sharpen skills, and equip believers for effective gospel ministry in today’s world."
+        },
+        {
+          "title": "Pentecost 2025 Union Training (AUC School of Evangelism)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated (2024–25 content)",
+          "url": "https://www.aucevangelism.org/nadpetecost2025",
+          "quote": "2. Up to $3,000 is being made available to each proclamation initiative"
+        },
+        {
+          "title": "Pentecost 2025 – Atlantic Union Conference of Seventh-day Adventists Financial Contribution Form (linked as 'AUC Financial Assitance Form' from the AUC School of Evangelism site, which atlantic-union.org links as its 'School of Evangelism')",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; file last modified 17 Sep 2024",
+          "url": "https://www.aucevangelism.org/_files/ugd/996421_65079d38cb8243d0843d6813add7105a.pdf",
+          "quote": "Please fill & submit this form if your church is registered to conduct a Pentecost 2025 Evangelistic Series. … NAD Financial Contribution: $____ AU-Matching Financial Contribution $____"
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Everyone who works with children and youth (Sabbath School, Pathfinders, Adventurers, AY, Food Pantry, schools) must complete Adventist Screening Verification (child-protection training and background check through Sterling Volunteers, registering under New York / Greater New York), renewed every three years; the conference's 2026 report applies this to all church officers over 18 and to volunteers over 18 who work with children and youth.",
+      "sources": [
+        {
+          "title": "Adventist Screening Verification – Child Protection Training – Background Screening (linked from the Corporation page, Risk Management Files)",
+          "publisher": "Greater New York Corporation of Seventh-day Adventists",
+          "date": "undated; PDF modified 21 Jan 2021",
+          "url": "https://gnyc.org/docs/wp/Adventist-Screening-Verification-2021-Verified-Volunteers.pdf",
+          "quote": "Remember that all those who work with our children and youth (Sabbath School, Pathfinders, Adventurers, AY, Food Pantry, Schools, etc.) need to go thru this training and background check. Also remember that the background check must be renewed every three years."
+        },
+        {
+          "title": "Adventist Screening Verification – Child Protection Training – Background Screening",
+          "publisher": "Greater New York Corporation of Seventh-day Adventists",
+          "date": "undated; PDF modified 21 Jan 2021",
+          "url": "https://gnyc.org/docs/wp/Adventist-Screening-Verification-2021-Verified-Volunteers.pdf",
+          "quote": "First time registrants will be asked to choose a state. Regardless of where you live please choose New York since that is where our churches are. Then you will choose Conference –Greater New York."
+        },
+        {
+          "title": "Session Report 2026 (consolidated department and officer reports for the 18 Oct 2026 constituency session) – Corporation report",
+          "publisher": "Greater New York Conference",
+          "date": "PDF created 15 Sep 2026 (p. 70)",
+          "url": "https://gnyc.org/docs/session-2026/session-report-2026.pdf",
+          "quote": "North American Division policy requires that all church employees and officers who are over 18 years of age complete this training and do a criminal background check every three years. This is also required of any volunteer over age 18 who is working with children and youth."
+        },
+        {
+          "title": "Corporation (Risk Management Files list)",
+          "publisher": "Greater New York Conference",
+          "date": "undated",
+          "url": "https://gnyc.org/corporation/",
+          "quote": "Adventist Screening Verification - 2021 Verified Volunteers"
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": null,
+      "ministerialPage": "https://gnyc.org/ministerial/"
+    },
+    "checked": "2026-10-01",
+    "notes": "No stand-alone evangelism department page: the subsidy form is under the Executive Secretary's resources, and requests go through the church's ethnic ministry director (English, Hispanic, Franco-Haitian, Korean or Multi-Ethnic Ministries). The form's PDF dates from 2012 and states no percentage or cap; ask the ministry director for this year's amounts. The GNYC site was rebuilt in Sept 2026 and older wp-content links now redirect to the home page. Union level (Atlantic Union): the union's 2025–2030 Strategic Plan promises 'annual additional funding to each conference, designated for evangelism' but publishes no amounts or application process, so any union money reaches churches through the conference. In 2025 the union matched the NAD's Pentecost 2025 grant (NAD up to $3,000 per proclamation initiative; 'AU-Matching Financial Contribution' line on the union form); nothing equivalent for 2026–27 (OneVoice27 / All Things New) was found on the union's sites. "
+  },
+  {
+    "conf": "New York",
+    "union": "Atlantic Union",
+    "states": [
+      "NY"
+    ],
+    "site": "https://www.nyconf.org/",
+    "evangelism": {
+      "help": "budget-line",
+      "share": null,
+      "cap": null,
+      "deadline": "1 December (no request processed after this date)",
+      "how": "Fill in the General Evangelism application (sowing, reaping, discipling or online ministry) with estimated expenses and the amount requested, and send it with a copy of the church minutes about the request to the President's Office; it is signed by the pastor, church treasurer, conference president and conference treasurer.",
+      "conditions": [
+        "A copy of the church minutes related to the request must accompany the application",
+        "Covers any event, programme or item in the cycle of sharing and introducing people to Jesus (sowing, reaping, discipling, online ministry)",
+        "Online ministry must in some way promote, highlight, mention or involve the local church or district",
+        "The check is issued to the church treasurer; receipts go to the local church for auditing"
+      ],
+      "report": "Receipts must be submitted to the local church for auditing purposes; no separate conference report form was found.",
+      "programmes": [
+        "Mission ~ Mentorship ~ Media (Executive Committee strategic initiatives voted in 2021); the evangelism budget line is distributed yearly through pastoral requests",
+        "'Friendship camper' ministry counted as evangelism (sending non-Adventist children to Camp Cherokee)",
+        "Atlantic Union-sponsored evangelistic campaign and union revival weekend scheduled for NYC in 2026; IMPACT series 2029 (GNYC Upstate/NYC/NEC)",
+        "Atlantic Union Virtual School of Evangelism (annual 'Faith in Action' certification training on Zoom; 2026 sessions 1–22 Feb)"
+      ],
+      "sources": [
+        {
+          "title": "General Evangelism application ('Evangelism Subsidy Request Form' on the Pastoral Resources page; PDF title 'Evangelism Funding Application updated 2022')",
+          "publisher": "New York Conference",
+          "date": "Date of last review: 04/19/2022",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_40603be0280b42528308987452a417a3.pdf",
+          "quote": "General Evangelism: Any event, program or item related to the cycle of sharing and introducing people to Jesus Christ."
+        },
+        {
+          "title": "General Evangelism application ('Evangelism Subsidy Request Form' on the Pastoral Resources page; PDF title 'Evangelism Funding Application updated 2022')",
+          "publisher": "New York Conference",
+          "date": "Date of last review: 04/19/2022",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_40603be0280b42528308987452a417a3.pdf",
+          "quote": "Instructions: This application must be sent, along with a copy of the church minutes related to this request to the President’s Office. No request will be processed after December 1st."
+        },
+        {
+          "title": "General Evangelism application ('Evangelism Subsidy Request Form' on the Pastoral Resources page; PDF title 'Evangelism Funding Application updated 2022')",
+          "publisher": "New York Conference",
+          "date": "Date of last review: 04/19/2022",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_40603be0280b42528308987452a417a3.pdf",
+          "quote": "The check will be issued to the church treasurer and receipts must be submitted to the local church for auditing purposes."
+        },
+        {
+          "title": "General Evangelism application ('Evangelism Subsidy Request Form' on the Pastoral Resources page; PDF title 'Evangelism Funding Application updated 2022')",
+          "publisher": "New York Conference",
+          "date": "Date of last review: 04/19/2022",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_40603be0280b42528308987452a417a3.pdf",
+          "quote": "The online ministry has to, in some way, promote, highlight. mention or involve the local church or district."
+        },
+        {
+          "title": "Pastoral Resources",
+          "publisher": "New York Conference",
+          "date": "undated",
+          "url": "https://www.nyconf.org/pastoral-resource-page",
+          "quote": "Evangelism Subsidy Request Form"
+        },
+        {
+          "title": "Quinquennial Session, 30 April 2023 – Constituency Book (linked from the Constituency 2023 page) – President's Report",
+          "publisher": "New York Conference",
+          "date": "PDF created 16 Mar 2023 (p. 34)",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_db7f38d6165b4c2499aa148658c7d6ed.pdf",
+          "quote": "The evangelism line item in our budget will be increased from $100,000/yr. to $500,000/ yr. as tithe increases. These funds are distributed yearly through pastoral requests. In 2022, we were able to begin this process by increasing the evangelism budget amount to $150k."
+        },
+        {
+          "title": "Quinquennial Session, 30 April 2023 – Constituency Book (linked from the Constituency 2023 page) – President's Report",
+          "publisher": "New York Conference",
+          "date": "PDF created 16 Mar 2023 (p. 34)",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_db7f38d6165b4c2499aa148658c7d6ed.pdf",
+          "quote": "This financial emphasis also led us to decide that the Conference will no longer absorb unused evangelism funds into the general budget at the end of the fiscal year. At the end of the year, we will take the remaining funds in that account and evenly distribute it among the churches that made initial requests in that calendar year."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Strengthen Mission Impact through Targeted Funding: Provide annual additional funding to each conference, designated for evangelism, church planting, ministry training, and other mission-driven initiatives."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Encourage Membership Growth in Smaller Conferences: Expand evangelistic outreach by sponsoring campaigns in each of the three smaller conferences in the Atlantic Union, in collaboration with Union pastors and evangelists. Scheduled campaigns: 2026 – NYC; 2027 – NNEC; 2028 – BDA."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "United Revivals Across the Union: Host an Atlantic Union-sponsored doctrinal revival weekend in each conference once every five years, serving both in-reach and outreach goals. Scheduled locations: 2026 – NYC; 2027 – SNEC; 2028 – NNEC; 2029 – BDA; 2030 – GNYC & NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Personal Evangelism Training: Equip at least 80% of members through the annual AU Virtual School of Evangelism - “Faith in Action” training."
+        },
+        {
+          "title": "AUC Virtual School of Evangelism 2026",
+          "publisher": "Atlantic Union Conference (AUC School of Evangelism)",
+          "date": "event 1–22 Feb 2026",
+          "url": "https://www.aucevangelism.org/event-details/auc-virtual-school-of-evangelism-2026",
+          "quote": "The Atlantic Union Conference Virtual School of Evangelism 2026 is an engaging and transformative Certification Program designed to ignite passion, sharpen skills, and equip believers for effective gospel ministry in today’s world."
+        },
+        {
+          "title": "Pentecost 2025 Union Training (AUC School of Evangelism)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated (2024–25 content)",
+          "url": "https://www.aucevangelism.org/nadpetecost2025",
+          "quote": "2. Up to $3,000 is being made available to each proclamation initiative"
+        },
+        {
+          "title": "Pentecost 2025 – Atlantic Union Conference of Seventh-day Adventists Financial Contribution Form (linked as 'AUC Financial Assitance Form' from the AUC School of Evangelism site, which atlantic-union.org links as its 'School of Evangelism')",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; file last modified 17 Sep 2024",
+          "url": "https://www.aucevangelism.org/_files/ugd/996421_65079d38cb8243d0843d6813add7105a.pdf",
+          "quote": "Please fill & submit this form if your church is registered to conduct a Pentecost 2025 Evangelistic Series. … NAD Financial Contribution: $____ AU-Matching Financial Contribution $____"
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": null,
+      "sources": [
+        {
+          "title": "Quinquennial Session, 30 April 2023 – Constituency Book (linked from the Constituency 2023 page) – Education report",
+          "publisher": "New York Conference",
+          "date": "PDF created 16 Mar 2023 (p. 52)",
+          "url": "https://www.nyconf.org/_files/ugd/833cd2_db7f38d6165b4c2499aa148658c7d6ed.pdf",
+          "quote": "Our conference has followed the guidance of the North American Division and used the Sterling Volunteers system to train those working in our schools on the topic of sexual abuse and to conduct background checks."
+        },
+        {
+          "title": "Adventist Screening Verification",
+          "publisher": "North American Division",
+          "date": "page modified 31 Aug 2026",
+          "url": "https://www.nadadventist.org/asv/",
+          "quote": "those over 18 who are voted to serve within our churches or organizations, and those who are employed by the church and working with children and youth, are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers. This should be completed every three years."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://www.nyconf.org/general-4",
+      "ministerialPage": "https://www.nyconf.org/ministerial-department"
+    },
+    "checked": "2026-10-01",
+    "notes": "Child protection: no screening rule for church volunteers was found on the conference's own pages (Pathfinder, youth-forms and secretariat pages checked); the only conference statement found covers school workers (Sterling Volunteers, 2023 session book). The NAD's Adventist Screening Verification (training + background check every three years) applies division-wide. The 2023 figures ($150k in 2022, goal $500k/yr) are from the president's report and may have changed; unused evangelism money is shared at year-end among the churches that applied that year. The conference president is also the ministerial director (roles, not names). Union level (Atlantic Union): the union's 2025–2030 Strategic Plan promises 'annual additional funding to each conference, designated for evangelism' but publishes no amounts or application process, so any union money reaches churches through the conference. In 2025 the union matched the NAD's Pentecost 2025 grant (NAD up to $3,000 per proclamation initiative; 'AU-Matching Financial Contribution' line on the union form); nothing equivalent for 2026–27 (OneVoice27 / All Things New) was found on the union's sites. "
+  },
+  {
+    "conf": "Northeastern",
+    "union": "Atlantic Union",
+    "states": [
+      "CT",
+      "ME",
+      "MA",
+      "NH",
+      "NY",
+      "RI",
+      "VT"
+    ],
+    "site": "https://www.northeastern.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": null,
+      "cap": null,
+      "deadline": "30 April (lay-evangelism funds)",
+      "how": "For lay-led meetings, the church's Personal Ministries leader and the pastor sign the Lay-Evangelism Funds Request Form (church, type of meeting, lay presenter, dates, amount requested) and mail it to the NEC Personal Ministries Department by 30 April. No published process for pastor-led conference evangelism funding was found.",
+      "conditions": [
+        "Meetings conducted by lay person(s) (tent, church, small groups or other)",
+        "Signed by the PM leader and the pastor"
+      ],
+      "report": null,
+      "programmes": [
+        "Virtual School of Evangelism (Personal Ministries; Zoom, 29 Mar, 26 Apr and 31 May 2026: Bible work, small-group evangelism and retention, digital evangelism)",
+        "Each One Reach One School of Evangelism (Personal Ministries objective)",
+        "Pastoral Evangelism & Leadership Council (PELC), 7–10 Dec 2025, Oakwood University Church",
+        "Atlantic Union IMPACT series 2029 (GNYC Upstate/NYC/NEC) and union revival weekend 2030 (GNYC & NEC)",
+        "Atlantic Union Virtual School of Evangelism (annual 'Faith in Action' certification training on Zoom; 2026 sessions 1–22 Feb)"
+      ],
+      "sources": [
+        {
+          "title": "Northeastern Conference Personal Ministries Department – Lay-Evangelism Funds Request Form (linked from the Personal Ministries page)",
+          "publisher": "Northeastern Conference",
+          "date": "undated; PDF created 26 Feb 2014",
+          "url": "https://www.northeastern.org/wp-content/uploads/2014/12/PM_Lay_Evangelism_Funds_Request_Form_.pdf",
+          "quote": "Deadline for returning form: April 30th"
+        },
+        {
+          "title": "Northeastern Conference Personal Ministries Department – Lay-Evangelism Funds Request Form (linked from the Personal Ministries page)",
+          "publisher": "Northeastern Conference",
+          "date": "undated; PDF created 26 Feb 2014",
+          "url": "https://www.northeastern.org/wp-content/uploads/2014/12/PM_Lay_Evangelism_Funds_Request_Form_.pdf",
+          "quote": "Name of Lay Person/s conducting the meeting"
+        },
+        {
+          "title": "Personal Ministries",
+          "publisher": "Northeastern Conference",
+          "date": "page modified 14 May 2026",
+          "url": "https://www.northeastern.org/nec-ministry/personal-ministries/",
+          "quote": "PM Lay Evangelism Funds Request Form"
+        },
+        {
+          "title": "Personal Ministries",
+          "publisher": "Northeastern Conference",
+          "date": "page modified 14 May 2026",
+          "url": "https://www.northeastern.org/nec-ministry/personal-ministries/",
+          "quote": "Each One Reach One School of Evangelism"
+        },
+        {
+          "title": "Virtual School of Evangelism",
+          "publisher": "Northeastern Conference",
+          "date": "page modified 8 May 2026",
+          "url": "https://www.northeastern.org/events/virtual-school-of-evangelism/",
+          "quote": "This event is hosted by the Personal Ministries department of the Northeastern Conference."
+        },
+        {
+          "title": "PASTORAL EVANGELISM & LEADERSHIP COUNCIL 2025",
+          "publisher": "Northeastern Conference",
+          "date": "page modified 13 Nov 2025",
+          "url": "https://www.northeastern.org/events/pastoral-evangelism-leadership-council-2025/",
+          "quote": "Date: December 7-10, 2025"
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Strengthen Mission Impact through Targeted Funding: Provide annual additional funding to each conference, designated for evangelism, church planting, ministry training, and other mission-driven initiatives."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Impact Evangelistic Series: Every two years, the Atlantic Union will host the IMPACT Series in different regions of the territory to promote evangelism and growth. Scheduled location: 2027 – SNEC, 2029 – GNYC (Upstate)/NYC/NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "United Revivals Across the Union: Host an Atlantic Union-sponsored doctrinal revival weekend in each conference once every five years, serving both in-reach and outreach goals. Scheduled locations: 2026 – NYC; 2027 – SNEC; 2028 – NNEC; 2029 – BDA; 2030 – GNYC & NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Personal Evangelism Training: Equip at least 80% of members through the annual AU Virtual School of Evangelism - “Faith in Action” training."
+        },
+        {
+          "title": "AUC Virtual School of Evangelism 2026",
+          "publisher": "Atlantic Union Conference (AUC School of Evangelism)",
+          "date": "event 1–22 Feb 2026",
+          "url": "https://www.aucevangelism.org/event-details/auc-virtual-school-of-evangelism-2026",
+          "quote": "The Atlantic Union Conference Virtual School of Evangelism 2026 is an engaging and transformative Certification Program designed to ignite passion, sharpen skills, and equip believers for effective gospel ministry in today’s world."
+        },
+        {
+          "title": "Pentecost 2025 Union Training (AUC School of Evangelism)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated (2024–25 content)",
+          "url": "https://www.aucevangelism.org/nadpetecost2025",
+          "quote": "2. Up to $3,000 is being made available to each proclamation initiative"
+        },
+        {
+          "title": "Pentecost 2025 – Atlantic Union Conference of Seventh-day Adventists Financial Contribution Form (linked as 'AUC Financial Assitance Form' from the AUC School of Evangelism site, which atlantic-union.org links as its 'School of Evangelism')",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; file last modified 17 Sep 2024",
+          "url": "https://www.aucevangelism.org/_files/ugd/996421_65079d38cb8243d0843d6813add7105a.pdf",
+          "quote": "Please fill & submit this form if your church is registered to conduct a Pentecost 2025 Evangelistic Series. … NAD Financial Contribution: $____ AU-Matching Financial Contribution $____"
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "The Risk Management page provides step-by-step registration for the NAD child-protection training and background check (ncsrisk.org/adventist, i.e. Adventist Screening Verification) and Adventist Risk Management's 'Starting Your Child Protection Plan' guide; the conference's own pages state no renewal period.",
+      "sources": [
+        {
+          "title": "Risk Management (Safety Portal list)",
+          "publisher": "Northeastern Conference",
+          "date": "page modified 10 Aug 2026",
+          "url": "https://www.northeastern.org/nec-service/risk-management/",
+          "quote": "Child Protection Registration Instruction"
+        },
+        {
+          "title": "Child Protection Registration Instruction (linked from the Risk Management page)",
+          "publisher": "Northeastern Conference",
+          "date": "undated; PDF modified 10 Feb 2020",
+          "url": "https://www.northeastern.org/wp-content/uploads/2020/02/Child_Protection_Registration_Instruction.pdf",
+          "quote": "Step 1: Go to www.ncsrisk.org/adventist and click on the first-time registrant button"
+        },
+        {
+          "title": "Child Protection Registration Instruction",
+          "publisher": "Northeastern Conference",
+          "date": "undated; PDF modified 10 Feb 2020",
+          "url": "https://www.northeastern.org/wp-content/uploads/2020/02/Child_Protection_Registration_Instruction.pdf",
+          "quote": "Upon completion of your online training, you will be instructed to complete your background check."
+        },
+        {
+          "title": "Adventist Screening Verification",
+          "publisher": "North American Division",
+          "date": "page modified 31 Aug 2026",
+          "url": "https://www.nadadventist.org/asv/",
+          "quote": "those over 18 who are voted to serve within our churches or organizations, and those who are employed by the church and working with children and youth, are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers. This should be completed every three years."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": null,
+      "ministerialPage": "https://www.northeastern.org/nec-ministry/ministerial/"
+    },
+    "checked": "2026-10-01",
+    "notes": "Northeastern is a regional conference overlapping the other five; the Atlantic Union lists its territory as CT, ME, MA, NH, NY, RI and VT, while the conference's own About page lists six states without Vermont. Only a lay-evangelism funds form (2014, still linked in 2026) was found; ask the Personal Ministries or Ministerial department how pastor-led series are funded. No evangelism department page exists (evangelism sits with Personal Ministries and Ministerial). Union level (Atlantic Union): the union's 2025–2030 Strategic Plan promises 'annual additional funding to each conference, designated for evangelism' but publishes no amounts or application process, so any union money reaches churches through the conference. In 2025 the union matched the NAD's Pentecost 2025 grant (NAD up to $3,000 per proclamation initiative; 'AU-Matching Financial Contribution' line on the union form); nothing equivalent for 2026–27 (OneVoice27 / All Things New) was found on the union's sites. "
+  },
+  {
+    "conf": "Northern New England",
+    "union": "Atlantic Union",
+    "states": [
+      "ME",
+      "NH",
+      "VT"
+    ],
+    "site": "https://www.nnec.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": null,
+      "cap": null,
+      "deadline": "At least 6 months before the meetings for full funding (2022 form: 6 months 100%, 5–2 months 30%, 1 month 10%)",
+      "how": "Complete the Evangelism Subsidy Request Form (budget by the five steps of 'Cyclical Evangelism': prepare, sow, cultivate, reap, follow-up), attach a plan for all five areas, have the pastor and church treasurer sign that they have read the conference Evangelism Guidelines, and mail or e-mail it to the Evangelism Director; the Evangelism Committee (EvCom) approves.",
+      "conditions": [
+        "The church must raise a portion of the cost of any outreach strategy",
+        "The event must focus on outreach or training for outreach, include lay involvement and be part of an overarching strategic plan for evangelism",
+        "Pre-work funds may be requested in advance as needed; meeting expenses 60 days before the event",
+        "Traditional series: no conference appropriation for fewer than 15 meetings (2022 form)",
+        "Funds paid in two disbursements: 90% on approval, the last 10% after receipts for the first 90% and the financial report (2022 form)",
+        "Not reimbursable: church painting/repairs/maintenance, utility bills, equipment purchases, auto repairs, internet connection",
+        "Building rent only for the additional rent charged for the meetings"
+      ],
+      "report": "Within 30 days after the event: the Public Meetings Report plus an expenditure report with all itemized original receipts (any income over expenses is returned to the conference, per the 2022 financial report form).",
+      "programmes": [
+        "Fill the Baptistry Sabbath (conference-wide, every church, 3 Oct 2026)",
+        "Revival in the East 2023–2028: every church to hold at least one traditional, small-group, class or virtual evangelistic meeting every year",
+        "Connect Academy (online training in public and personal evangelism, twice a year)",
+        "Conference Advance offering: 40% goes to churches for public evangelism",
+        "Atlantic Union-sponsored evangelistic campaign scheduled for NNEC in 2027; union revival weekend 2028",
+        "Atlantic Union Virtual School of Evangelism (annual 'Faith in Action' certification training on Zoom; 2026 sessions 1–22 Feb)"
+      ],
+      "sources": [
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "The church must raise a portion of the cost of any outreach strategy."
+        },
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "The subsidized event must include lay involvement."
+        },
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "Funds for Pre-work may be requested in advance as needed and Meeting expenses 60 days prior to the event."
+        },
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "The final report of any outreach program has to be submitted within 30 days of the completion of evangelistic event. This is to include the Public Meetings Report and an expenditure report including all itemized receipts."
+        },
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "THIS FORM WILL NOT BE PROCESSED WITHOUTREQUIRED SIGNATURES THAT YOU HAVE READ AND UNDERSTOOD THE NORTHERN NEW ENGLAND CONFERENCE EVANGELISM GUIDELINES"
+        },
+        {
+          "title": "Evangelism Financial Planning and Request Materials (linked as 'Evangelism Funds Request Form' on the Treasury page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; PDF modified 12 May 2022 (created 2015)",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/627d6c1f0d6134a963b1b085_Evangelism%20Funds%20Request%20Form.pdf",
+          "quote": "the percentage of funds appropriated will depend on when the request is received. Percentages appropriated - 6 months prior 100%, 5-2 months prior 30%, 1 month prior 10%."
+        },
+        {
+          "title": "Evangelism Financial Planning and Request Materials (linked as 'Evangelism Funds Request Form' on the Treasury page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; PDF modified 12 May 2022 (created 2015)",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/627d6c1f0d6134a963b1b085_Evangelism%20Funds%20Request%20Form.pdf",
+          "quote": "For traditional evangelism approaches conference appropriation will not be given to a series of less than 15 meetings."
+        },
+        {
+          "title": "Evangelism Financial Planning and Request Materials (linked as 'Evangelism Funds Request Form' on the Treasury page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; PDF modified 12 May 2022 (created 2015)",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/627d6c1f0d6134a963b1b085_Evangelism%20Funds%20Request%20Form.pdf",
+          "quote": "once a project has been approved, upon request, 90% of the funds may be sent to the campaign account designated in the Evangelistic Budget Request. When those funds have been used, the final 10% is sent when the Treasury Department receives receipts for the previous 90% and this completed form."
+        },
+        {
+          "title": "Evangelism – Each One Reach One (Resources)",
+          "publisher": "Northern New England Conference",
+          "date": "undated (theme text refers to 2022)",
+          "url": "https://www.nnec.org/evangelism",
+          "quote": "Evangelism Fund Request Form"
+        },
+        {
+          "title": "Treasury – 'Conference Advance' Offering",
+          "publisher": "Northern New England Conference",
+          "date": "undated",
+          "url": "https://www.nnec.org/treasury",
+          "quote": "Evangelism | 40% – (giving funds to churches specifically for public evangelism efforts)"
+        },
+        {
+          "title": "Revival in the East – The Vision, Mission, and Strategy for 2023-2028 (linked from the Ministerial page)",
+          "publisher": "Northern New England Conference",
+          "date": "2023-2028; PDF modified 10 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/6149e20ec96cdd28d0e8ccf9/659ec3d4d8f6c09d4692ad1f_Revival%20in%20the%20East%20-%20compressed.pdf",
+          "quote": "We are challenging every church in NNEC to hold at least one traditional, small group, class or virtual evangelistic meeting every year until Jesus returns!"
+        },
+        {
+          "title": "Revival in the East – The Vision, Mission, and Strategy for 2023-2028 (linked from the Ministerial page)",
+          "publisher": "Northern New England Conference",
+          "date": "2023-2028; PDF modified 10 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/6149e20ec96cdd28d0e8ccf9/659ec3d4d8f6c09d4692ad1f_Revival%20in%20the%20East%20-%20compressed.pdf",
+          "quote": "NOTE: To apply for financial assistance, the Supervising Pastor should submit a request to the Evangelism Department by October 30 of the preceding year."
+        },
+        {
+          "title": "Regenerate (events list)",
+          "publisher": "Northern New England Conference",
+          "date": "event 3 Oct 2026",
+          "url": "https://www.nnec.org/regenerate",
+          "quote": "Conference-wide we want to encourage our churches to fill their baptistry and baptize! Or at least fill it and talk about what it will take to have baptisms."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Strengthen Mission Impact through Targeted Funding: Provide annual additional funding to each conference, designated for evangelism, church planting, ministry training, and other mission-driven initiatives."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Encourage Membership Growth in Smaller Conferences: Expand evangelistic outreach by sponsoring campaigns in each of the three smaller conferences in the Atlantic Union, in collaboration with Union pastors and evangelists. Scheduled campaigns: 2026 – NYC; 2027 – NNEC; 2028 – BDA."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "United Revivals Across the Union: Host an Atlantic Union-sponsored doctrinal revival weekend in each conference once every five years, serving both in-reach and outreach goals. Scheduled locations: 2026 – NYC; 2027 – SNEC; 2028 – NNEC; 2029 – BDA; 2030 – GNYC & NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Personal Evangelism Training: Equip at least 80% of members through the annual AU Virtual School of Evangelism - “Faith in Action” training."
+        },
+        {
+          "title": "AUC Virtual School of Evangelism 2026",
+          "publisher": "Atlantic Union Conference (AUC School of Evangelism)",
+          "date": "event 1–22 Feb 2026",
+          "url": "https://www.aucevangelism.org/event-details/auc-virtual-school-of-evangelism-2026",
+          "quote": "The Atlantic Union Conference Virtual School of Evangelism 2026 is an engaging and transformative Certification Program designed to ignite passion, sharpen skills, and equip believers for effective gospel ministry in today’s world."
+        },
+        {
+          "title": "Pentecost 2025 Union Training (AUC School of Evangelism)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated (2024–25 content)",
+          "url": "https://www.aucevangelism.org/nadpetecost2025",
+          "quote": "2. Up to $3,000 is being made available to each proclamation initiative"
+        },
+        {
+          "title": "Pentecost 2025 – Atlantic Union Conference of Seventh-day Adventists Financial Contribution Form (linked as 'AUC Financial Assitance Form' from the AUC School of Evangelism site, which atlantic-union.org links as its 'School of Evangelism')",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; file last modified 17 Sep 2024",
+          "url": "https://www.aucevangelism.org/_files/ugd/996421_65079d38cb8243d0843d6813add7105a.pdf",
+          "quote": "Please fill & submit this form if your church is registered to conduct a Pentecost 2025 Evangelistic Series. … NAD Financial Contribution: $____ AU-Matching Financial Contribution $____"
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": "Honorariums to Bible workers, musicians and speakers are listed among 'Unacceptable Report Items': payments of $600 or more in a calendar year to one person or company must be reported to the IRS, so they are paid through the conference Human Resources Department (or the church reports them to NNEC HR by year-end).",
+      "sources": [
+        {
+          "title": "Evangelism Subsidy Request Form with Northern New England Conference Evangelism Guidelines (linked as 'Evangelism Fund Request Form' on the Evangelism page)",
+          "publisher": "Northern New England Conference",
+          "date": "undated; file uploaded 30 Jan 2024",
+          "url": "https://cdn.prod.website-files.com/614cd9f528263fecb4533da7/65b9123b176775a859ca3339_Evangelism%20Subsidy%20Request%20Form.docx",
+          "quote": "HONORARIUMS TO BIBLE WORKERS, MUSICIANS, SPEAKERS: All payments for services to a single individual or company of $600.00 or more within a calendar year is required to be reported to the IRS. If you intended to pay for services that will require reporting to the IRS these needs to be dispersed through the Human Resources Department of the Northern New England Conference."
+        }
+      ]
+    },
+    "childProtection": {
+      "conference": "Pathfinder leaders are asked to complete a criminal background check through Sterling Volunteers (NAD Adventist Screening Verification); the Adventurer and Children's Ministries pages link the same NAD volunteer background check. No renewal period is stated on the conference pages.",
+      "sources": [
+        {
+          "title": "Pathfinders",
+          "publisher": "Northern New England Conference",
+          "date": "undated",
+          "url": "https://www.nnec.org/pathfinders",
+          "quote": "Pathfinder leaders are asked to complete a criminal background check on this website."
+        },
+        {
+          "title": "Adventurers",
+          "publisher": "Northern New England Conference",
+          "date": "undated",
+          "url": "https://www.nnec.org/adventurers",
+          "quote": "Volunteer Background Check"
+        },
+        {
+          "title": "Children's Ministries",
+          "publisher": "Northern New England Conference",
+          "date": "undated",
+          "url": "https://www.nnec.org/childrens-ministries",
+          "quote": "Background Check"
+        },
+        {
+          "title": "Adventist Screening Verification",
+          "publisher": "North American Division",
+          "date": "page modified 31 Aug 2026",
+          "url": "https://www.nadadventist.org/asv/",
+          "quote": "those over 18 who are voted to serve within our churches or organizations, and those who are employed by the church and working with children and youth, are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers. This should be completed every three years."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://www.nnec.org/evangelism",
+      "ministerialPage": "https://www.nnec.org/ministerial"
+    },
+    "checked": "2026-10-01",
+    "notes": "Two versions are online: the Jan 2024 Subsidy Request Form + guidelines (Evangelism page) and the older 2022 'Evangelism Financial Planning' packet (Treasury page) with the lead-time percentages, 15-meeting minimum and 90/10 payments; ask the Evangelism Director which still applies. The form's mailing address (479 Main St, Westbrook) differs from the office address now on the site (91 Allen Ave, Portland, ME) — e-mail is safer. Churches led by volunteer lay pastors/leaders apply through their supervising pastor by 30 October of the year before. Union level (Atlantic Union): the union's 2025–2030 Strategic Plan promises 'annual additional funding to each conference, designated for evangelism' but publishes no amounts or application process, so any union money reaches churches through the conference. In 2025 the union matched the NAD's Pentecost 2025 grant (NAD up to $3,000 per proclamation initiative; 'AU-Matching Financial Contribution' line on the union form); nothing equivalent for 2026–27 (OneVoice27 / All Things New) was found on the union's sites. "
+  },
+  {
+    "conf": "Southern New England",
+    "union": "Atlantic Union",
+    "states": [
+      "CT",
+      "MA",
+      "RI"
+    ],
+    "site": "https://www.sneconline.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": "up to 50% of the cost of materials (lay evangelism)",
+      "cap": "$250 per program",
+      "deadline": null,
+      "how": "Lay-led programmes approved by the church board apply on the Personal Ministries Department's form (no more than two requests per church per year); the money is available once the request is approved.",
+      "conditions": [
+        "The programme is organized, directed and carried out by lay people (pastors may assist and counsel)",
+        "Approved by the church board",
+        "Qualifying programmes: Revelation seminars, NET programmes, lay evangelistic campaigns, literature distribution, Bible studies, training classes, health programmes, cooking classes, Vacation Bible School, prison ministries, soup kitchens",
+        "No more than two requests per church per year",
+        "No further lay-evangelism funding until the final report is received"
+      ],
+      "report": "A final report on the conference form with copies of all receipts to the Conference Personal Ministries Department within 30 days of the end of the programme.",
+      "programmes": [
+        "Focused outreach to four large cities: 2023 Worcester, 2024 Hartford, 2025 Boston, 2026 Providence",
+        "'Together in Mission' evangelism offering (targets $100K in 2023 rising to $250K in 2026)",
+        "Church Evangelism training course ending with a local, member-led evangelistic series",
+        "Atlantic Union IMPACT evangelistic series scheduled for SNEC in 2027; union revival weekend 2027",
+        "Atlantic Union Virtual School of Evangelism (annual 'Faith in Action' certification training on Zoom; 2026 sessions 1–22 Feb)"
+      ],
+      "sources": [
+        {
+          "title": "Lay Evangelism Subsidies – Guidelines for Requesting Lay Evangelism Funds (Policy Book p. 91; linked as 'Lay Evangelism Subsidy from Policy Book' on the Treasury page)",
+          "publisher": "Southern New England Conference",
+          "date": "Date Adopted: 01/01/09",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_ced56daae18643219ab9d92a210a8edd.pdf",
+          "quote": "The Conference will subsidize up to fifty percent 50% of the costs of materials with a maximum of $250 per program. This amount will be available upon approval of request."
+        },
+        {
+          "title": "Lay Evangelism Subsidies – Guidelines for Requesting Lay Evangelism Funds (Policy Book p. 91; linked as 'Lay Evangelism Subsidy from Policy Book' on the Treasury page)",
+          "publisher": "Southern New England Conference",
+          "date": "Date Adopted: 01/01/09",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_ced56daae18643219ab9d92a210a8edd.pdf",
+          "quote": "The Evangelism Program has to be organized, directed and carried out by lay people. Pastors may assist and counsel them."
+        },
+        {
+          "title": "Lay Evangelism Subsidies – Guidelines for Requesting Lay Evangelism Funds (Policy Book p. 91; linked as 'Lay Evangelism Subsidy from Policy Book' on the Treasury page)",
+          "publisher": "Southern New England Conference",
+          "date": "Date Adopted: 01/01/09",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_ced56daae18643219ab9d92a210a8edd.pdf",
+          "quote": "Requests have to be made on the form provided by the Personal Ministries Department. No more than two (2) requests per church/per year."
+        },
+        {
+          "title": "Lay Evangelism Subsidies – Guidelines for Requesting Lay Evangelism Funds (Policy Book p. 91; linked as 'Lay Evangelism Subsidy from Policy Book' on the Treasury page)",
+          "publisher": "Southern New England Conference",
+          "date": "Date Adopted: 01/01/09",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_ced56daae18643219ab9d92a210a8edd.pdf",
+          "quote": "A final report on the form provided with a copy of all receipts must be sent to the Conference Personal Ministries Department within 30 days from the end of the program."
+        },
+        {
+          "title": "Lay Evangelism Subsidies – Guidelines for Requesting Lay Evangelism Funds (Policy Book p. 91; linked as 'Lay Evangelism Subsidy from Policy Book' on the Treasury page)",
+          "publisher": "Southern New England Conference",
+          "date": "Date Adopted: 01/01/09",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_ced56daae18643219ab9d92a210a8edd.pdf",
+          "quote": "No additional funding for lay evangelism will be considered until final report is received."
+        },
+        {
+          "title": "Treasury – Forms & Documents",
+          "publisher": "Southern New England Conference",
+          "date": "undated",
+          "url": "https://www.sneconline.org/treasury",
+          "quote": "Lay Evangelism Subsidy from Policy Book"
+        },
+        {
+          "title": "SNEC KPI's (English)",
+          "publisher": "Southern New England Conference",
+          "date": "undated; PDF created 18 May 2023",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_61b6db42460e490899235d4336dc8a55.pdf",
+          "quote": "Focused outreach to four large cities in our Conference: 2023 - Worcester; 2024 - Hartford; 2025 - Boston; 2026 - Providence"
+        },
+        {
+          "title": "SNEC KPI's (English)",
+          "publisher": "Southern New England Conference",
+          "date": "undated; PDF created 18 May 2023",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_61b6db42460e490899235d4336dc8a55.pdf",
+          "quote": "Launch and grow a “Together in Mission” Evangelism offering each year as follows: 2023 - $100K; 2024 - $150K; 2025 - $200K; 2026 - $250K"
+        },
+        {
+          "title": "SNEC KPI's (English)",
+          "publisher": "Southern New England Conference",
+          "date": "undated; PDF created 18 May 2023",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_61b6db42460e490899235d4336dc8a55.pdf",
+          "quote": "Set up a Church Evangelism training course which will end with a local, member-led evangelistic series"
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Strengthen Mission Impact through Targeted Funding: Provide annual additional funding to each conference, designated for evangelism, church planting, ministry training, and other mission-driven initiatives."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Impact Evangelistic Series: Every two years, the Atlantic Union will host the IMPACT Series in different regions of the territory to promote evangelism and growth. Scheduled location: 2027 – SNEC, 2029 – GNYC (Upstate)/NYC/NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "United Revivals Across the Union: Host an Atlantic Union-sponsored doctrinal revival weekend in each conference once every five years, serving both in-reach and outreach goals. Scheduled locations: 2026 – NYC; 2027 – SNEC; 2028 – NNEC; 2029 – BDA; 2030 – GNYC & NEC."
+        },
+        {
+          "title": "Atlantic Union Conference of Seventh-day Adventists Five-Year Strategic Plan (2025–2030) (PDF linked as 'Strategic Plan' from the atlantic-union.org menu; hosted on qr.view.page)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; PDF created 18 Nov 2025",
+          "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+          "quote": "Personal Evangelism Training: Equip at least 80% of members through the annual AU Virtual School of Evangelism - “Faith in Action” training."
+        },
+        {
+          "title": "AUC Virtual School of Evangelism 2026",
+          "publisher": "Atlantic Union Conference (AUC School of Evangelism)",
+          "date": "event 1–22 Feb 2026",
+          "url": "https://www.aucevangelism.org/event-details/auc-virtual-school-of-evangelism-2026",
+          "quote": "The Atlantic Union Conference Virtual School of Evangelism 2026 is an engaging and transformative Certification Program designed to ignite passion, sharpen skills, and equip believers for effective gospel ministry in today’s world."
+        },
+        {
+          "title": "Pentecost 2025 Union Training (AUC School of Evangelism)",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated (2024–25 content)",
+          "url": "https://www.aucevangelism.org/nadpetecost2025",
+          "quote": "2. Up to $3,000 is being made available to each proclamation initiative"
+        },
+        {
+          "title": "Pentecost 2025 – Atlantic Union Conference of Seventh-day Adventists Financial Contribution Form (linked as 'AUC Financial Assitance Form' from the AUC School of Evangelism site, which atlantic-union.org links as its 'School of Evangelism')",
+          "publisher": "Atlantic Union Conference",
+          "date": "undated; file last modified 17 Sep 2024",
+          "url": "https://www.aucevangelism.org/_files/ugd/996421_65079d38cb8243d0843d6813add7105a.pdf",
+          "quote": "Please fill & submit this form if your church is registered to conduct a Pentecost 2025 Evangelistic Series. … NAD Financial Contribution: $____ AU-Matching Financial Contribution $____"
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "SNEC follows the NAD Child Protection Policy (FB-20): two-person rule, open-door policy, six-month waiting period for new volunteers, worship guidelines for previous sex offenders, and child-protection training plus adult background screening through Adventist Screening Verification (renewed every three years); every volunteer first fills in the Volunteer Information Sheet, and each church has a child protection coordinator.",
+      "sources": [
+        {
+          "title": "Child Protection",
+          "publisher": "Southern New England Conference",
+          "date": "undated",
+          "url": "https://www.sneconline.org/childprotection",
+          "quote": "Our organization follows the safety guidelines set forth by the North American Division, which are listed in the Child Protection Policy (FB-20), and include the following:"
+        },
+        {
+          "title": "Child Protection",
+          "publisher": "Southern New England Conference",
+          "date": "undated",
+          "url": "https://www.sneconline.org/childprotection",
+          "quote": "Six-Month Waiting Period for New Volunteers"
+        },
+        {
+          "title": "Volunteers & Church Officers",
+          "publisher": "Southern New England Conference",
+          "date": "undated",
+          "url": "https://www.sneconline.org/volunteers",
+          "quote": "All volunteers must complete steps 1 & 2 in order to serve in church ministry."
+        },
+        {
+          "title": "Volunteers & Church Officers",
+          "publisher": "Southern New England Conference",
+          "date": "undated",
+          "url": "https://www.sneconline.org/volunteers",
+          "quote": "are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers. This should be completed every three years."
+        },
+        {
+          "title": "Ministry Description for Child Protection Church Coordinators (linked from the Child Protection page)",
+          "publisher": "Southern New England Conference",
+          "date": "Updated 7/23/2020",
+          "url": "https://www.sneconline.org/_files/ugd/64e6c8_2d079519d8e14cfeb8616e2229109e6e.pdf",
+          "quote": "Monitor whether volunteers have registered, completed training, and authorized background screening with Adventist Screening Verification (Compliance Report)."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://www.sneconline.org/evangelism",
+      "ministerialPage": "https://www.sneconline.org/evangelism"
+    },
+    "checked": "2026-10-01",
+    "notes": "Only the lay-evangelism subsidy (policy adopted 2009, still linked in 2026) was found; no published process for pastor-led conference evangelism funding — ask the Ministerial & Evangelism director (one department; one page covers both). The 'Together in Mission' offering is the conference's own evangelism offering goal, not a grant process. Union level (Atlantic Union): the union's 2025–2030 Strategic Plan promises 'annual additional funding to each conference, designated for evangelism' but publishes no amounts or application process, so any union money reaches churches through the conference. In 2025 the union matched the NAD's Pentecost 2025 grant (NAD up to $3,000 per proclamation initiative; 'AU-Matching Financial Contribution' line on the union form); nothing equivalent for 2026–27 (OneVoice27 / All Things New) was found on the union's sites. "
+  }
+]

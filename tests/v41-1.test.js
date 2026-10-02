@@ -199,10 +199,10 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     P.w.close(); });
 
   console.log('\n-- 5. the version --');
-  // v10.43.0 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events"; "it should
-  // host the connection cards tailored to the situations"): the release moved on; the six stamps move together
-  c('the six stamps say v10.43.0', [/TERRAIN {2}v10\.43\.0\b/.test(html.slice(0,400)),/data-version="v10\.43\.0"/.test(html),/<meta name="terrain-version" content="v10\.43\.0">/.test(html),
-    /<title>Community Map — Terrain v10\.43\.0<\/title>/.test(html),/<span id="ver">v10\.43\.0<\/span>/.test(html),/const VERSION = 'v10\.43\.0';/.test(html)], [true,true,true,true,true,true]);
+  // v10.44.0 (the pastor, 2 Oct 2026: "we need to do the projects and purchases and the conference comparison the year ahead
+  // first"): the release moved on (stale, not a regression); the six stamps move together
+  c('the six stamps say v10.44.0', [/TERRAIN {2}v10\.44\.0\b/.test(html.slice(0,400)),/data-version="v10\.44\.0"/.test(html),/<meta name="terrain-version" content="v10\.44\.0">/.test(html),
+    /<title>Community Map — Terrain v10\.44\.0<\/title>/.test(html),/<span id="ver">v10\.44\.0<\/span>/.test(html),/const VERSION = 'v10\.44\.0';/.test(html)], [true,true,true,true,true,true]);
 }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0); })();

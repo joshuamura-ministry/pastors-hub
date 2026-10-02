@@ -278,7 +278,8 @@ function makeStore(){
   // Seen in the render after registering in Spanish: the hub's verbs and its
   // fourth title were still English, and "Planificador de evangelismo" wrapped.
   c('the hub it lands on is Spanish too: titles and verbs', [[...S.D.querySelectorAll('.tool b')].map(b=>b.textContent.trim()),[...S.D.querySelectorAll('.tool .tgo')].map(t=>t.textContent.trim())],
-    [['Encuesta comunitaria','Dones espirituales','Presentar el caso','Plan de evangelismo'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar']]);
+    // v56 (B2): the fifth tile, "Learn from other conferences" (his accepted default), in Spanish too
+    [['Encuesta comunitaria','Dones espirituales','Presentar el caso','Plan de evangelismo','Aprender de otras asociaciones'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar','Comparar calendarios']]);
   // Updated in the v10.38.0 review (S3): "Welcome back" comes from this
   // device (after Change), not from the server.
   S.D.getElementById('regchange').click();

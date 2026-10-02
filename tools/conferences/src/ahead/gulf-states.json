@@ -1,0 +1,50 @@
+{
+ "conf": "Gulf States",
+ "slug": "gulf-states",
+ "union": "Southern",
+ "site": "https://www.gscsda.org",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "calendarUrls": [
+  "https://www.gscsda.org/events",
+  "https://www.southerntidings.com/category/gsc/"
+ ],
+ "calendarGrade": "B-",
+ "calendarQuality": "Clean Squarespace calendar with department tags, but it only starts in late Oct 2025 (new website) and has nothing for 2027 yet; some 2025 end dates are a day off.",
+ "furthestPublished": "2027-03",
+ "furthestPublishedOwnSite": "2027-03",
+ "aheadSummary": "Not published yet. The event calendar ends 11-13 Dec 2026; the youth page lists 2027 teen trips only for January and March.",
+ "aheadChecked": [
+  "https://www.gscsda.org/events",
+  "https://www.gscsda.org/events?format=json",
+  "https://www.gscsda.org/youth",
+  "https://www.gscsda.org/youth-events",
+  "https://www.gscsda.org/bass-camp-meeting",
+  "https://www.gscsda.org/alamisco-camp-meeting",
+  "https://www.gscsda.org/pathfinders",
+  "https://www.gscsda.org/adventurers",
+  "https://www.gscsda.org/hispanic-ministries",
+  "https://www.gscsda.org/womens-ministries",
+  "https://www.gscsda.org/mens-ministries",
+  "https://www.gscsda.org/young-adults-ministries",
+  "https://www.gscsda.org/master-guides",
+  "https://campalamisco.org/",
+  "https://campalamisco.org/summer-camp",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+ ],
+ "usuallyHeldNotYetPublished": [
+  "Camp Alamisco summer camp (2026: 7 Jun-5 Jul): page still shows 2026.",
+  "Alamisco one-day camp meeting and Hispanic camp meeting (spring in 2026): no 2027 dates.",
+  "The Bible Conference page still shows the 2026 event (15-24 May 2026)."
+ ],
+ "stats": {
+  "aheadEvents": 0,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevel": 0,
+  "byMonth": {},
+  "byMainCategory": {},
+  "conferenceRunPublicByMainCategory": {}
+ },
+ "events": []
+}

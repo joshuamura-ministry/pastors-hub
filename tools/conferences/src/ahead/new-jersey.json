@@ -1,0 +1,134 @@
+{
+ "conf": "New Jersey Conference",
+ "slug": "new-jersey",
+ "union": "Columbia Union Conference",
+ "site": "https://njcsda.org/",
+ "calendarUrls": [
+  "https://njcsda.org/events/",
+  "https://njcsda.org/wp-json/wp/v2/mec-events",
+  "https://worldcup-2026-njcsda.netlify.app/",
+  "https://columbiaunionvisitor.com/category/new-jersey-conference"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the events calendar (10 events) ends 21 Nov 2026 and its year selector offers only 2026.",
+ "calendarQuality": "D+ : Modern Events Calendar with only 10 events for the whole period. It has no youth, Pathfinder, Hispanic or departmental schedule. A second, older site (newjerseyconference.org) carries department pages without dates.",
+ "furthestPublished": "2026-11",
+ "furthestNote": "last calendar event: \"Fe y Finanzas\" seminar, 21 Nov 2026; one undated 2027 item (Adventuree theme)",
+ "aheadSummary": "Not published yet. The calendar ends in November 2026. The only 2027 item is the Adventuree theme, with no date.",
+ "aheadChecked": [
+  "https://njcsda.org/events/",
+  "https://njcsda.org/wp-json/wp/v2/mec-events?per_page=100",
+  "https://njcsda.org/",
+  "https://njcsda.org/evangelism/",
+  "https://njcsda.org/family/",
+  "https://njcsda.org/stewardship/",
+  "https://njcsda.org/family-newsletter-aug-eng-2026/",
+  "https://njcsda.org/stewardship-newsletter-august-eng-2026/",
+  "https://njcsda.org/health-newsletter-july-eng-2026/",
+  "https://njcsda.org/wp-json/wp/v2/pages?search=2027",
+  "https://njcsda.org/wp-json/wp/v2/posts?search=2027",
+  "https://columbiaunionvisitor.com/category/new-jersey-conference"
+ ],
+ "stats": {
+  "records": 1,
+  "datedInWindowRecords": 0,
+  "conferenceRunRecords": 1,
+  "occurrencesInWindow": 0,
+  "conferenceOccurrencesInWindow": 0,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 1,
+  "startsBeforeWindowRecords": 0,
+  "monthsWithConferenceEvents": "0 of 6",
+  "byLevel": {
+   "conference": 1
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 1,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 1,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  }
+ },
+ "counts": {
+  "total": 1,
+  "conferenceLevel": 1,
+  "observances": 0,
+  "byCategory": {
+   "children": 1
+  },
+  "byCategoryConferenceOnly": {
+   "children": 1
+  }
+ },
+ "excludedFromCalendar": {},
+ "excludedDetail": [],
+ "prepDeadlines": [],
+ "events": [
+  {
+   "title": "Adventuree 2027 (\"Mission Possible: Power Up with the Holy Spirit\")",
+   "start": null,
+   "end": null,
+   "place": null,
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://columbiaunionvisitor.com/2026/kids-have-%E2%80%98courage-2-stand%E2%80%99-adventuree",
+   "source": "news",
+   "datePrecision": "year only (2027); theme named in a Visitor story posted 8 Sep 2026, no date",
+   "note": "the 2026 Adventuree drew 1,800+"
+  }
+ ],
+ "notes": [
+  "Undated records (start null) are not counted as in-window events."
+ ]
+}

@@ -1,0 +1,76 @@
+{
+ "conf": "Southeastern",
+ "slug": "southeastern",
+ "union": "Southern",
+ "site": "https://www.secsda.org",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "calendarUrls": [
+  "https://www.secsda.org/event",
+  "https://www.secsda.org/wp-content/uploads/2025/02/SEC-ACS-and-DR-2025-Calendar.pdf"
+ ],
+ "calendarGrade": "D",
+ "calendarQuality": "No calendar view, feed or year plan; a handful of current event flyers (dates only inside images) and past events removed; most of the year reconstructed from news; homepage youth link goes to a parked domain.",
+ "furthestPublished": "2027-08",
+ "furthestPublishedOwnSite": "2027-04",
+ "aheadSummary": "The conference site has one 2027 item (women's retreat, 23-25 Apr). The Southern Union officers' calendar adds the Southeastern constituency session (29 Aug 2027).",
+ "aheadChecked": [
+  "https://www.secsda.org/event",
+  "https://www.secsda.org/event/2027-womens-ministries-retreat/",
+  "https://www.secsda.org/wp-content/uploads/2026/09/2027-RETREAT-WM-COVER-LETTER-ENGLISH.pdf",
+  "https://www.secsda.org/?s=2027",
+  "https://www.secsda.org/",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+ ],
+ "usuallyHeldNotYetPublished": [
+  "Camp meeting at the Hawthorne, FL campground (June in 2026), Hispanic camp, I'm Involved disability retreat (Sep in 2026): no 2027 dates."
+ ],
+ "stats": {
+  "aheadEvents": 2,
+  "conferenceRunPublic": 2,
+  "internal": 0,
+  "otherLevel": 0,
+  "byMonth": {
+   "2027-04": 1,
+   "2027-08": 1
+  },
+  "byMainCategory": {
+   "family-women-men": 1,
+   "administration": 1
+  },
+  "conferenceRunPublicByMainCategory": {
+   "family-women-men": 1,
+   "administration": 1
+  }
+ },
+ "events": [
+  {
+   "title": "Women's Ministries Retreat 'Loved & Chosen' - Lift Him Up: From Brokenness to Wholeness",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Embassy Suites by Hilton Lake Buena Vista South, Kissimmee, FL",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women; programmes for children 5-11 and girls 12-17",
+   "level": "conference",
+   "url": "https://www.secsda.org/event/2027-womens-ministries-retreat/",
+   "source": "calendar",
+   "note": "registration opened 1 Sep 2026; invitation letters in English, French and Spanish",
+   "when": "upcoming"
+  },
+  {
+   "title": "Constituency Session",
+   "start": "2027-08-29",
+   "end": "2027-08-29",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "delegates",
+   "level": "conference",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "from the Southern Union officers' calendar ('SEC Constituency'); not on the conference site",
+   "when": "upcoming"
+  }
+ ]
+}

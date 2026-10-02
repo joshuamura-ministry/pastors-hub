@@ -1,0 +1,58 @@
+{
+ "conf": "Hawaii",
+ "union": "Pacific Union",
+ "slug": "hawaii",
+ "site": "https://www.hawaiisda.com",
+ "calendarUrls": [
+  "https://www.hawaiisda.com/youthdept",
+  "https://www.hawaiisda.com/s/2025-YOUTH-DEPT-CALENDAR.pdf",
+  "https://www.hawaiisda.com/news-basil",
+  "https://www.hawaiisda.com/constituency",
+  "https://www.hawaiisda.com/hawaii-convocation",
+  "https://www.campwaianae.org/camp-dates.html"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "D (no event calendar; reports and pages only)",
+ "furthestPublished": "2026-11",
+ "furthestNote": "The latest dated item from Hawaii is the union Fall Education Council (10-12 Nov 2026), from the Q2 2026 education report. Hawaii publishes no conference calendar.",
+ "aheadSummary": "Not published yet. None of the 37 hawaiisda.com pages in the sitemap mentions 2027. The Camp Waianae dates page shows nothing for 2027. The August 2026 Recorder news (Ho`ike) has no 2027 dates.",
+ "aheadChecked": [
+  "https://www.hawaiisda.com/sitemap.xml",
+  "https://www.hawaiisda.com/youthdept",
+  "https://www.hawaiisda.com/hawaii-convocation",
+  "https://www.campwaianae.org/camp-dates.html",
+  "https://www.adventistfaith.com/news/hoike-august-2026/",
+  "https://www.adventistfaith.com/news/reaching-hawaii-with-the-everlasting-gospel/"
+ ],
+ "events": [],
+ "stats": {
+  "items": 0,
+  "occurrences": 0,
+  "occurrencesInWindow": 0,
+  "conferenceLevelItems": 0,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "0 of 6",
+  "byCategory": {},
+  "byCategoryIncludingSecond": {},
+  "occurrencesByCategory": {},
+  "byLevel": {},
+  "bySourceType": {}
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Big Island (Hawai`i) Convocation",
+   "lastKnown": "2026-03-20 to 2026-03-21 (Kurtistown)",
+   "url": "https://www.hawaiisda.com/hawaii-convocation"
+  },
+  {
+   "title": "Camp Waianae summer camp",
+   "lastKnown": "summer 2026 (about three weeks)",
+   "url": "https://www.campwaianae.org/camp-dates.html"
+  }
+ ],
+ "notes": [
+  "An August 2026 Recorder profile says a five-year strategic evangelism plan is being developed with local pastors, churches and schools. It gives no dates."
+ ]
+}

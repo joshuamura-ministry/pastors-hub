@@ -1,0 +1,202 @@
+{
+ "conf": "Central California",
+ "union": "Pacific Union",
+ "slug": "central-california",
+ "site": "https://www.cccadventist.org",
+ "calendarUrls": [
+  "https://www.cccadventist.org/events",
+  "https://www.cccadventist.org/calendar",
+  "https://www.cccadventist.org/event-pages-sitemap.xml",
+  "https://www.cccsdayouth.org/events",
+  "https://www.cccsdayouth.org/events-2026",
+  "https://www.cccpathfinders.org/events",
+  "https://www.cccpathfinders.org/calendar"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "B (public events only; the Pathfinder page is the only one that looks a year ahead)",
+ "furthestPublished": "2027-08",
+ "furthestNote": "Last conference item: Pathfinder Leadership weekend, 13-15 Aug 2027. The same Pathfinder page also lists the International Camporee, 6-12 Aug 2029 (Oshkosh), a world-church event. The conference events page lists nothing after Nov 2026.",
+ "aheadSummary": "Eight items, all from the Pathfinder events page: Master Guide Summit (2-4 Apr), NAD PBE (23-24 Apr), Pathfinder Fair (21-23 May), the Master Guide cohort (3 dates, May-Jul), camp-meeting Pathfinder classes (19-22 Jul) and parade (24 Jul), and Pathfinder Leadership (13-15 Aug). These Pathfinder items also show that Soquel Camp Meeting 2027 includes 19-24 Jul, but its full dates are not published.",
+ "aheadChecked": [
+  "https://www.cccpathfinders.org/events",
+  "https://www.cccadventist.org/events",
+  "https://www.cccadventist.org/event-pages-sitemap.xml",
+  "https://www.cccadventist.org/blog-posts-sitemap.xml",
+  "https://www.cccsdayouth.org/events",
+  "https://www.campwawona.org/",
+  "https://www.cccadventist.org/post/summer-camp-concludes-for-the-season"
+ ],
+ "events": [
+  {
+   "title": "CCC Master Guide Summit (\"Empowered to Lead, Inspired to Serve\")",
+   "start": "2027-04-02",
+   "end": "2027-04-04",
+   "place": "Soquel Camp Meeting grounds, 1931 Soquel San Jose Rd, Soquel, CA",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Master Guide candidates and club leaders",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "NAD Pathfinder Bible Experience (division level)",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": "Von Braun Center, Huntsville, AL (the CCC page says TBD)",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "PBE teams that qualify",
+   "url": "https://www.cccpathfinders.org/events",
+   "urls": [
+    "https://www.cccpathfinders.org/events",
+    "https://nadpbe.org/"
+   ],
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "division"
+  },
+  {
+   "title": "CCC Pathfinder Fair (\"Ready to Serve\")",
+   "start": "2027-05-21",
+   "end": "2027-05-23",
+   "place": "TBD",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinder and Adventurer clubs",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "Master Guide University cohort (camp-out, meeting, investiture)",
+   "start": "2027-05-28",
+   "end": "2027-07-24",
+   "place": "Camp Wawona (camp-out, 28-30 May); CCC office (meeting); Soquel Camp Meeting (investiture)",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Master Guide candidates",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference",
+   "recurring": true,
+   "count": 3,
+   "dates": [
+    "2027-05-28",
+    "2027-06-27",
+    "2027-07-24"
+   ],
+   "note": "Page lists month/day without a year. 2027 is inferred because the same list has the Master Guide Summit on 2-4 Apr, which the page dates 2027. Interviews/binder check \"July 3 or 10\" are left out (date not fixed)."
+  },
+  {
+   "title": "Soquel Camp Meeting 2027 (full dates not yet published)",
+   "start": "2027-07-19",
+   "end": "2027-07-24",
+   "place": "Soquel Camp Ground, Soquel, CA",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "members and families",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference",
+   "datePrecision": "partial: the Pathfinder page lists \"CCC Camp Meeting\" items on 19-22 Jul and 24 Jul 2027; opening and closing days are not published",
+   "note": "In 2026 camp meeting ran 9-18 Jul. Only the days covered by the published Pathfinder program are given here."
+  },
+  {
+   "title": "Camp meeting Pathfinder honor classes and Adventurer award classes",
+   "start": "2027-07-19",
+   "end": "2027-07-22",
+   "place": "Pathfinder Club House, Soquel Camp Ground (1:00-5:00 p.m.)",
+   "category": "pathfinders",
+   "category2": "camp-meeting",
+   "audience": "Pathfinders and Adventurers",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "Camp meeting Pathfinder Parade",
+   "start": "2027-07-24",
+   "end": "2027-07-24",
+   "place": "Soquel Camp Ground, staging in front of the main auditorium (1:15 p.m.)",
+   "category": "pathfinders",
+   "category2": "camp-meeting",
+   "audience": "Pathfinder clubs",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "CCC Pathfinder Leadership (\"Completely Committed to the Mission\")",
+   "start": "2027-08-13",
+   "end": "2027-08-15",
+   "place": "Camp Wawona, 8110 Forest Drive, Wawona, CA",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club directors and staff",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page",
+   "when": "upcoming",
+   "level": "conference"
+  }
+ ],
+ "stats": {
+  "items": 8,
+  "occurrences": 10,
+  "occurrencesInWindow": 10,
+  "conferenceLevelItems": 7,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "5 of 6",
+  "byCategory": {
+   "pathfinders": 7,
+   "camp-meeting": 1
+  },
+  "byCategoryIncludingSecond": {
+   "pathfinders": 7,
+   "pastoral-leadership": 3,
+   "camp-meeting": 3,
+   "discipleship-spiritual": 1
+  },
+  "occurrencesByCategory": {
+   "pathfinders": 9,
+   "camp-meeting": 1
+  },
+  "byLevel": {
+   "conference": 7,
+   "division": 1
+  },
+  "bySourceType": {
+   "calendar/event pages": 8
+  }
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Camp Wawona summer camp 2027",
+   "lastKnown": "2026 season began 28 Jun 2026",
+   "url": "https://www.cccadventist.org/post/summer-camp-concludes-for-the-season",
+   "note": "The conference blog post says \"join us for Summer Camp 2027!\" but gives no dates."
+  },
+  {
+   "title": "Soquel Camp Meeting (opening and closing days)",
+   "lastKnown": "2026-07-09 to 2026-07-18",
+   "url": "https://www.cccadventist.org/event-pages-sitemap.xml"
+  },
+  {
+   "title": "Teen Bible Academy",
+   "lastKnown": "2025-07-06 to 2025-07-13 (Camp Wawona)",
+   "url": "https://www.cccsdayouth.org/events"
+  }
+ ],
+ "notes": [
+  "cccpathfinders.org shows a browser check to scripts. It was read through a fetch service; nothing was bypassed.",
+  "The youth events page (cccsdayouth.org) goes no further than 30 Oct-1 Nov 2026. The blog (23 posts since May 2026) has no 2027 dates."
+ ]
+}

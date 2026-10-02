@@ -1,0 +1,170 @@
+{
+ "union": "Southern",
+ "slug": "union-southern",
+ "site": "https://www.southernunion.com",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadChecked": [
+  "https://www.southernunion.com/events/",
+  "https://www.southernunion.com/?s=2027",
+  "https://www.southernunion.com/wp-json/wp/v2/media?search=calendar",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://www.southernunion.com/wp-content/uploads/2024/12/SU-Calendar-2025-2027.pdf",
+  "https://www.adventistedge.com/wp-json/wp/v2/media?search=multi-year",
+  "https://www.adventistedge.com/wp-content/uploads/2026/06/SOUTHERN-UNION-MULTI-YEAR-CALENDAR-EDITED-6-24-26.pdf",
+  "https://www.southernunion.com/ministries-services/",
+  "https://www.southernunion.com/ministries-services/ministerial-evangelism/evangelism-conference-ec3/",
+  "https://www.southernunion.com/ministries-services/youth/",
+  "https://www.southernunion.com/ministries-services/education/",
+  "https://www.southernunion.com/ministries-services/hispanic-ministries/",
+  "https://www.southerntidings.com/?s=2027",
+  "https://nadpbe.org/",
+  "https://nadministerial.com/called",
+  "https://asiministries.org/convention/"
+ ],
+ "furthestPublished": "2030-03",
+ "aheadSummary": "The union's web event list ends with EC3 (1-3 Nov 2026), but two union PDF calendars reach well past the window: the officers' calendar for 2026-2027 (posted Dec 2025) and the Education department's multi-year planning calendar (updated 24 Jun 2026, to 2030). Union-run in the window: the 21st Southern Union Constituency Session (19-20 Sep 2027) and the SU Leadership conference for educators (16-19 Sep 2027). Three NAD/ASI events meet inside the territory.",
+ "usuallyHeldNotYetPublished": [
+  "Southern Union Evangelism Conference EC3 (1-3 Nov 2026): no 2027 dates published.",
+  "No Southern Union or conference page has a OneVoice27 plan for September 2027; world and NAD dates are in initiatives.json.",
+  "Inside the year ahead (added in review): SU Academy Prayer Conference 13-16 Jan 2027 and SU Pathfinder Bible Experience 26-27 Mar 2027 (officers' calendar; the education multi-year calendar agrees once its columns are read by weekday). Outside it: SU Chaplain Retreat 19-21 Oct 2027; SU Admin/Departmental Council 14-17 Nov 2027."
+ ],
+ "excludedFromUnionCalendars": "Committee and board meetings (SU Youth & Young Adult Advisory 13-15 Apr 2027, executive committees, LLUH/SAU boards, NAD HR/Secretariat/Treasury councils, GC Spring Meeting 13-14 Apr 2027, NADOUP), staff meetings, holidays and university graduations were left out.",
+ "notes": "The officers' calendar also shows a second 'CALLED Convention' bar on 26-29 Jul 2027; it is a leftover from the Dec 2024 version (which had CALLED on those dates). NAD's own page and the KYTN calendar give 21-24 Jun 2027, so only the June dates are used. The Dec 2024 union calendar placed the 2027 ASI convention in 'Tampa Bay'; ASI's own page says Orlando, 4-7 Aug 2027. The newest copy of the education calendar (July upload) returns HTTP 403, so the identical June upload (same 24 Jun 2026 edit) is cited.",
+ "events": [
+  {
+   "title": "NAD Pathfinder Bible Experience finals",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": "Von Braun Center, Huntsville, AL",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "Pathfinder PBE teams",
+   "level": "NAD",
+   "url": "https://nadpbe.org/",
+   "source": "NAD page",
+   "note": "division finals held inside the union; the union-level PBE is 26-27 Mar 2027 (officers' calendar); KYTN lists the finals on 24 Apr",
+   "when": "upcoming"
+  },
+  {
+   "title": "CALLED Pastors' Family Convention",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "place": "Lexington, KY",
+   "category": "pastoral-leadership",
+   "category2": "family-women-men",
+   "audience": "pastors and families",
+   "level": "NAD",
+   "url": "https://nadministerial.com/called",
+   "source": "NAD page",
+   "note": "also on the KYTN calendar and the union officers' calendar",
+   "when": "upcoming"
+  },
+  {
+   "title": "ASI International Convention",
+   "start": "2027-08-04",
+   "end": "2027-08-07",
+   "place": "Orlando, FL",
+   "category": "evangelism-outreach",
+   "category2": "discipleship-spiritual",
+   "audience": "lay members, ministries, business people",
+   "level": "other",
+   "url": "https://asiministries.org/convention/",
+   "source": "ASI page",
+   "note": "on the union officers' calendar as 'NAD ASI Convention'",
+   "when": "upcoming"
+  },
+  {
+   "title": "SU Leadership conference (Education)",
+   "start": "2027-09-16",
+   "end": "2027-09-19",
+   "place": null,
+   "category": "education",
+   "category2": "pastoral-leadership",
+   "audience": "school leaders",
+   "level": "union",
+   "url": "https://www.adventistedge.com/wp-content/uploads/2026/06/SOUTHERN-UNION-MULTI-YEAR-CALENDAR-EDITED-6-24-26.pdf",
+   "source": "union calendar",
+   "note": "Education department multi-year planning calendar, 2027-2028 column ('SU Leadership'); the 2026 edition was 17-20 Sep",
+   "when": "upcoming"
+  },
+  {
+   "title": "Southern Union 21st Constituency Session",
+   "start": "2027-09-19",
+   "end": "2027-09-20",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "delegates",
+   "level": "union",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "also on the Dec 2024 union calendar; venue not stated",
+   "when": "upcoming"
+  },
+  {
+   "title": "View Southern preview days (Southern Adventist University)",
+   "start": "2027-09-21",
+   "end": "2027-09-29",
+   "place": "Southern Adventist University, Collegedale, TN",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy and high-school students",
+   "level": "institution",
+   "url": "https://www.adventistedge.com/wp-content/uploads/2026/06/SOUTHERN-UNION-MULTI-YEAR-CALENDAR-EDITED-6-24-26.pdf",
+   "source": "union calendar",
+   "recurring": true,
+   "count": 2,
+   "note": "21-22 Sep and 28-29 Sep 2027 (education calendar, university dates)",
+   "when": "upcoming"
+  }
+ ],
+ "stats": {
+  "aheadEvents": 6,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevel": 6,
+  "byMonth": {
+   "2027-04": 1,
+   "2027-06": 1,
+   "2027-08": 1,
+   "2027-09": 3
+  },
+  "byMainCategory": {
+   "pathfinders": 1,
+   "pastoral-leadership": 1,
+   "evangelism-outreach": 1,
+   "education": 2,
+   "administration": 1
+  },
+  "conferenceRunPublicByMainCategory": {}
+ },
+ "earlierUnionEvents": [
+  {
+   "title": "SU Academy Prayer Conference",
+   "start": "2027-01-13",
+   "end": "2027-01-16",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": "discipleship-spiritual",
+   "audience": "academy students",
+   "level": "union",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "Officers' calendar, January 2027 page (bar Wed 13 – Sat 16 Jan). The education department's multi-year calendar gives the same dates (Jan 13-16, in its 2027-2028 column, whose dates fall in 2027). Added in review, 1 Oct 2026."
+  },
+  {
+   "title": "SU Pathfinder Bible Experience (union level)",
+   "start": "2027-03-26",
+   "end": "2027-03-27",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinder PBE teams",
+   "level": "union",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "union calendar",
+   "note": "Officers' calendar, March 2027 page (bar Fri 26 – Sat 27 Mar). The education multi-year calendar also gives Mar 26-27 (2027-2028 column). Added in review, 1 Oct 2026."
+  }
+ ]
+}

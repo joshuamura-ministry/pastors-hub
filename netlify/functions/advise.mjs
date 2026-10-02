@@ -1,11 +1,12 @@
-// Terrain · optional AI ministry planner.                            advise-2.2
+// Terrain · optional AI ministry planner.                            advise-2.4
 //
 // The API key lives ONLY in Netlify's encrypted environment variables:
 //   Netlify → Project configuration → Environment variables → ANTHROPIC_API_KEY
 // It is never in this repository and never reaches the browser.
 //
-// GET  → { enabled, model, fn, locked }   the page asks this first and only
+// GET  → { enabled, model, fn, locked, prices, pricesFn }   the page asks this first and only
 //                                          shows the button when a key exists
+//                                          (prices: Find prices is on: a key AND a passphrase)
 // POST { summary }                         → { text }   a prose plan (unchanged)
 // POST { mode:'moves', summary, count, kind, avoid }
 //                                          → { ideas:[...] }  fresh ministry
@@ -16,6 +17,19 @@
 //                                          six on one topic, in the library's shape
 //                                          and one language, each checked by the
 //                                          library's rules before it is returned
+// POST { mode:'prices', lang, device, item, where }   (advise-2.4) Find prices for a church purchase: checks the lock
+//                                          (TERRAIN_AI_PASS must be SET), the registration, the input and the limits,
+//                                          queues the job in Netlify Blobs and wakes advise-prices.mjs (a background
+//                                          function) → 202 { job, key, poll }
+// POST { mode:'prices-status', job, key }  → { status: queued | running | done | failed, options?, notes?, checked?, code? }
+//
+// 2.4 (v56, 2 Oct 2026). Find prices (Make the Case · a project or purchase; DESIGN-PURCHASE.md §7). The pastor: "Find prices"
+// ON, only when he taps it, behind the same lock as the other modes, three options with links, store, price and "checked
+// <date> · confirm before buying"; never claim Amazon's API; no affiliate links. Unlike the other modes, a site with NO
+// passphrase never searches (it is rolled out to every US conference and every search is billed to his account): 403
+// disabled. Limits, counted before anything is spent: 5 a device a UTC day, 10 a registration a day, 8 an address an hour,
+// PRICES_DAY_MAX (40) for the whole site a day. The search itself runs in advise-prices.mjs (up to 15 minutes; Netlify's
+// synchronous limit is 60 s and cannot be raised); the old jobs and counters go daily (prices-sweep.mjs).
 //
 // 2.2 (v10.40.0). The topic mode. Also: no "temperature" is sent any more.
 // Current models (Opus 4.7 and later, Sonnet 5) refuse sampling parameters
@@ -42,8 +56,11 @@
 // call well inside Netlify's 60-second limit and stops the batches producing
 // the same idea twice, because each is told to think in a different direction.
 
+import { getStore } from '@netlify/blobs';
+import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
+
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
-const FN_VERSION = 'advise-2.2';
+const FN_VERSION = 'advise-2.4';   // 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
 function passOk(given){
@@ -71,7 +88,7 @@ const SYSTEM = `You are helping a Seventh-day Adventist pastor. He has just run 
 
 You will receive: the geography, the key figures for the neighbourhood with county comparisons, and the prompts an automated rule engine already produced.
 
-Write a plan he could take to a church board on Sabbath afternoon. Requirements:
+Write a plan he could take to his church board. Requirements:
 
 1. GROUND EVERY CLAIM IN A NUMBER HE GAVE YOU. Quote the figure. If you cannot tie a suggestion to a figure, do not make it.
 2. BE CONCRETE AND LOCAL IN SCALE. A district of two congregations with volunteers, not a megachurch with staff. Say who does it, what it costs roughly, what the first step this week is, and how he will know in three months whether it worked.
@@ -159,8 +176,9 @@ const LIB_BANNED = [
     /\b(cerdo|puerco|tocino|jamon(es)?|chorizos?|chicharron(es)?|carnitas|manteca de cerdo|camarones|camaron|mariscos|langostas?|cangrejos?|almejas|ostras|ostiones)\b|\bsalchichas?\b(?! (vegetarian|vegana|de soya|vegetal))/],
   ['alcohol', /\b(beers?|wines?|liquor|cocktails?|brewery|breweries|winery|wineries|taprooms?|pubs?|happy hour|sangria|champagne|mimosas?|bartend\w*|booze)\b/,
     /\b(cervezas?|cerveceria|licor(es)?|coctel(es)?|cantinas?|vinos|vino (tinto|blanco)|copas? de vino|hora feliz|bar de copas)\b/],
-  ['games of chance', /\b(raffles?|raffling|lotter(y|ies)|casinos?|betting|poker|sweepstakes|door prizes?|50\/50|fifty-fifty|prize draws?|scratch-?offs?|slot machines?|games of chance|bingo)\b/,
-    /\b(rifas?|rifar|sorteos?|loterias?|tragamonedas|raspaditos|bingo)\b/],
+  // the pastor (1 Oct 2026): a FREE drawing, a door prize or a community giveaway is fine; a raffle that sells chances is not
+  ['selling raffle tickets or games of chance', /\b(raffle tickets?|sell(s|ing)? (tickets|chances)|buy (a )?tickets? (for|to win)|lotter(y|ies)|casinos?|betting|poker|50\/50|fifty-fifty|scratch-?offs?|slot machines?|games of chance|bingo)\b|\braffl(e|es|ing)\b[^.!?]{0,60}\b(to (pay|raise|fund|cover)|proceeds|fundrais\w*|per (ticket|chance))/,
+    /\b(boletos de rifa|vender (boletos|numeros)|loterias?|tragamonedas|raspaditos|bingo)\b|\brifas?\b[^.!?]{0,60}\b(para (pagar|recaudar|cubrir|financiar)|recaud\w*|fondos)/],
   ['gambling', /\bgambl\w*/, /\b(apuestas|juegos de azar|casinos?)\b/, /addict|recover|problem gambl|gamblers anonymous|adiccion|recuperacion|ludopatia|jugadores anonimos/],
   ['"target" people', /\btarget(s|ed|ing)?\b/, /\b(publico objetivo|poblacion objetivo|grupo objetivo|segmentar|segmentacion|segmentad[oa]s?|focaliza\w*)\b/],
   ['bait/lure/hook framing', /\b(bait(ed|ing)?|bait-and-switch|lure[sd]?|luring|hook (them|people|neighbou?rs|visitors)|foot in the door|trojan horse)\b/,
@@ -227,7 +245,21 @@ const LIB_STRICT = [
   ['photos with no consent', /\b(photos?|photograph\w*|pictures?|selfies?)\b/, /\b(fotos?|fotografias?|selfies?)\b/,
     /\b(no|never|without|nor) (photos?|photograph\w*|pictures?|selfies?|cameras?)|consent|permission/, /\b(sin|ninguna|nunca|no) (fotos?|fotografias?)|consentimiento|permiso/]
 ];
-const LIB_SABBATH_SELL = /\b(sell|selling|sale|sales|buy|buying|purchas\w*|fundrais\w*|tournaments?|competition|competitive|leagues?|admission|tickets?|shopping|vend\w*|compra\w*|recaud\w*|torneos?|competencias?|entradas? pagadas|boletos?)\b/;
+/* SABBATH-GUIDELINE.md: what keeps a fresh idea off the Sabbath when the model marked it true — commerce, fees, fundraising,
+   markets, fairs and festivals with games, entertainment and competitive sport; and a cafe or diner where buying the food is the
+   point (unless it meets in a home, at church, at the library or in a park). Bought beforehand is fine; a negation is not a mention
+   ("no sales"). advise-2.2 matched "vendran" (they will come) with vend\w* and "buy the groceries beforehand" with buy. */
+const LIB_SABBATH_NOT = {
+  en: /\b(sell|sells|selling|sale|sales|buy|buying|purchas\w*|fundrais\w*|tournaments?|competition|competitive|leagues?|admission|tickets?|shopping|fees?|prices?|auctions?|markets?|carnivals?|festivals?|bounce houses?|game booths?|balloons?|movie nights?|film nights?)\b/,
+  es: /\b(vend(a|an|e|en|er|emos|amos|o|iendo|ido|ida|idos|idas)|ventas?|compra(r|n|mos)?|comprando|recaud\w*|torneos?|competencias?|entradas? pagadas|boletos?|cuotas?|precios?|subastas?|mercados?|carnaval(es)?|festival(es)?|inflables?|globos|noche de cine)\b/ };
+const LIB_SABBATH_AHEAD = {en: /\b(beforehand|ahead of time|in advance|the day before|by friday|on friday|before the sabbath)\b/,
+  es: /\b(de antemano|con anticipacion|el dia anterior|el viernes|antes del sabado)\b/};
+const LIB_SABBATH_CAFE = {en: /\b(cafes?|coffee ?shops?|diners?|restaurants?)\b/, es: /\b(cafeterias?|restaurantes?|fondas?)\b/};
+const LIB_SABBATH_VENUE = {en: /\b(at|in|to|into) (a |an |the |their |his |her |our |your |someone's |a member's |members' )?(homes?|houses?|church|church hall|fellowship hall|library|park)\b/,
+  es: /\b(en|a) (la |el |una |un |su |sus |nuestra |casa de )?(casas?|hogar(es)?|iglesia|salon de la iglesia|biblioteca|parque)\b/};
+const libSabbathOff = (txt, lang) => { const re = LIB_SABBATH_NOT[lang], m = txt.match(re);
+  if (m && !libNegated(txt, re, lang) && !(/^(buy|buying|purchas|compra)/.test(m[0]) && LIB_SABBATH_AHEAD[lang].test(txt))) return true;
+  return LIB_SABBATH_CAFE[lang].test(txt) && !LIB_SABBATH_VENUE[lang].test(txt); };
 const LIB_EMOJI = /\p{Extended_Pictographic}/u;
 const libClean = s => (typeof s === 'string' ? s.replace(/\s+/g, ' ').trim() : '');
 const libIntIn = (v, lo, hi) => { const n = typeof v === 'string' && /^\d+$/.test(v.trim()) ? +v : v; return Number.isInteger(n) && n >= lo && n <= hi ? n : null; };
@@ -309,7 +341,7 @@ function libCheckIdea(x, lang, ctx) {
   }
   if ((tier === 1 || tier === 2) && where === 'church' && !LIB_REACH[lang].test(txt)) return no('waits at the church building');
   let sabbath = x.sabbath === true;
-  if (sabbath && LIB_SABBATH_SELL.test(txt)) sabbath = false;          // buying and selling is not for the Sabbath
+  if (sabbath && libSabbathOff(txt, lang)) sabbath = false;            // SABBATH-GUIDELINE.md: commerce, fairs, entertainment, sport
   const theme = LIB_THEMES.has(ctx.theme) ? ctx.theme : LIB_THEMES.has(x.theme) ? x.theme : null;
   const idea = {theme, tier, k, ages, where, sabbath, minors, need, boost, ppl, leaders, hrs, cost, costMo, skill, partner,
     [lang]: {n, d, how}, dig: LIB_DIGITAL[lang].test(txt) ? 1 : 0};
@@ -332,7 +364,7 @@ Rules, in order of importance:
 4. SOCIAL MEDIA WHERE IT FITS. At least two of the ideas have a real digital or social-media part, done as a practitioner would: a Facebook and Instagram ad shown within a few miles of the church at $5 a day, a post in a Nextdoor or Facebook community group as a neighbour, a text line (opt-in, honour STOP), a QR code on a printed card, a short vertical video with captions, a WhatsApp channel. At least one combines printed cards or walking with a digital follow-up. Meta rejects ad copy that implies the viewer has a condition; talk about the offer.
 5. FRESH AND DIFFERENT. Nothing on the do-not-repeat list or a re-skin of it. No two ideas share a mechanism: vary the channel, the exchange, the rhythm and the people. Specific and concrete: a real action, a real price, a named role who answers.
 6. FIT THIS PLACE AND THIS CHURCH. Use the figures and the census tags given. Respect the church's volunteers, skills, rooms and money, including zero.
-7. ADVENTIST AND SAFE. Vegetarian food only (never pork or shellfish, no meat on menus), no alcohol, no raffles, lotteries, bingo or games of chance. Sabbath (Friday sunset to Saturday sunset): "sabbath": true only for worship, prayer, visiting, nature and mercy, never buying, selling, fundraising or competition. Counselling, therapy, addiction and abuse work only through licensed professionals or a hotline, named as the partner. Invent no named organisations, people, addresses or statistics: say "the county food bank", "a licensed counselor", "the library". Never quote Scripture or Ellen White word for word; name the reference only (for example "a reading of Psalm 23").
+7. ADVENTIST AND SAFE. Vegetarian food only (never pork or shellfish, no meat on menus), no alcohol; never sell raffle tickets or chances, and no lotteries, bingo or games of chance (a FREE drawing, door prize or community giveaway is fine). Sabbath (Friday sunset to Saturday sunset), the pastor's rule: is it doing good, the things Christ did on the Sabbath? "sabbath": true when it worships, prays, studies the Bible, teaches a seminar or health talk, screens health, visits the sick, the lonely or prisoners, prepares, serves or delivers free meals, runs a free pantry, comforts the grieving, helps someone in need now (even with real work: after a disaster, an emergency, childcare so a worn-out parent can rest), welcomes and befriends, or walks in nature. "sabbath": false for buying and selling, prices, fees, sales or fundraising events for a project (a special offering taken during Sabbath worship is part of worship and is fine; never tithe for a project), markets and swaps, a cafe or diner where buying the food is the point, fairs and festivals with games, parties for fun, films, sport and competition, routine work (repairs, building, gardening, crafts, printing and mailing, filming, administration), and anything that can only happen while offices, courts or schools are open. A mixed idea is true when its heart fits: name the part to leave for another day. Counselling, therapy, addiction and abuse work only through licensed professionals or a hotline, named as the partner. Invent no named organisations, people, addresses or statistics: say "the county food bank", "a licensed counselor", "the library". Never quote Scripture or Ellen White word for word; name the reference only (for example "a reading of Psalm 23").
 
 Sizes ("tier"), and the numbers must fit the size:
 - 1: one person or a few, this week, little money: ppl 1-4, leaders 0-1, hrs 1-10, cost <= 150, costMo <= 50.
@@ -367,6 +399,244 @@ function salvageObjects(text) {
     else if (ch === '}') { depth--; if (depth === 0 && start >= 0) { try { out.push(JSON.parse(t.slice(start, j + 1))); } catch {} start = -1; } }
   }
   return out;
+}
+
+// ============================================================ FIND PRICES (advise-2.4)
+const PRICES_FN = 'prices-1.0';
+const PRICES_STORE = 'terrain-prices';
+const PRICES_DEV_DAY = 5, PRICES_REG_DAY = 10, PRICES_IP_HOUR = 8;
+const pricesDayMax = () => { const n = parseInt(process.env.PRICES_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 1000 ? n : 40; };
+const PRICES_MODEL = () => (process.env.PRICES_MODEL || 'claude-opus-5-5').trim();
+const PRICES_EFFORT = () => { const e = (process.env.PRICES_EFFORT || 'low').trim(); return ['low', 'medium', 'high', 'xhigh', 'max'].includes(e) ? e : 'low'; };
+const PRICES_CATS = new Set(['sound', 'stream', 'light', 'computer', 'music', 'building', 'kitchen', 'vehicle', 'other']);
+const PRICES_KINDS = new Set(['buy', 'install', 'repair', 'build']);
+const RE_DEVICE = /^[A-Za-z0-9_-]{22}$/, RE_JOB = /^[A-Za-z0-9_-]{22}$/, RE_JKEY = /^[A-Za-z0-9_-]{43}$/;
+const RE_PTAG = /<[A-Za-z!/?]/;
+const JOB_KEEP_MS = 7 * 864e5, STUCK_MS = 10 * 60 * 1000;
+const US_STATES = { AL: 'Alabama', AK: 'Alaska', AZ: 'Arizona', AR: 'Arkansas', CA: 'California', CO: 'Colorado', CT: 'Connecticut', DE: 'Delaware',
+  DC: 'District of Columbia', FL: 'Florida', GA: 'Georgia', HI: 'Hawaii', ID: 'Idaho', IL: 'Illinois', IN: 'Indiana', IA: 'Iowa', KS: 'Kansas',
+  KY: 'Kentucky', LA: 'Louisiana', ME: 'Maine', MD: 'Maryland', MA: 'Massachusetts', MI: 'Michigan', MN: 'Minnesota', MS: 'Mississippi',
+  MO: 'Missouri', MT: 'Montana', NE: 'Nebraska', NV: 'Nevada', NH: 'New Hampshire', NJ: 'New Jersey', NM: 'New Mexico', NY: 'New York',
+  NC: 'North Carolina', ND: 'North Dakota', OH: 'Ohio', OK: 'Oklahoma', OR: 'Oregon', PA: 'Pennsylvania', RI: 'Rhode Island',
+  SC: 'South Carolina', SD: 'South Dakota', TN: 'Tennessee', TX: 'Texas', UT: 'Utah', VT: 'Vermont', VA: 'Virginia', WA: 'Washington',
+  WV: 'West Virginia', WI: 'Wisconsin', WY: 'Wyoming', PR: 'Puerto Rico', GU: 'Guam', VI: 'U.S. Virgin Islands' };
+const US_NAMES = new Map(Object.values(US_STATES).map(n => [n.toLowerCase(), n]));
+
+function pricesStore() {
+  if (globalThis.__terrainPricesStore) return globalThis.__terrainPricesStore;
+  return getStore({ name: PRICES_STORE, consistency: 'strong' });
+}
+const pSha = s => createHash('sha256').update(String(s), 'utf8').digest('hex');
+const pRand = n => randomBytes(n).toString('base64url');
+function pHashOk(given, storedHex) {
+  if (typeof given !== 'string' || typeof storedHex !== 'string' || !/^[0-9a-f]{64}$/.test(storedHex)) return false;
+  return timingSafeEqual(Buffer.from(pSha(given), 'hex'), Buffer.from(storedHex, 'hex'));
+}
+// One log line a refusal or a queued job: the code only (no words of the request, no town, device, address or registration).
+function pricesLog(code) { try { console.log('[prices] ' + JSON.stringify({ fn: FN_VERSION, code })); } catch { /* never throws */ } }
+const pReply = (code, status, extra) => { pricesLog(code); return reply({ ok: false, code, ...(extra || {}) }, status); };
+
+// ---- the registration token, copied from connect.mjs (functions do not import one another) -----------------------------------
+const RE_REGTOK = /^r1\.([A-Za-z0-9_-]{12})\.([0-9a-z]{1,9})\.([A-Za-z0-9_-]{32})$/;
+function pRegSecret() { const v = (process.env.TERRAIN_REG_SECRET || '').trim(); return v.length >= 32 ? v : ''; }
+function pRegTokenOk(tok, secret, now = Date.now()) {
+  const m = RE_REGTOK.exec(String(tok || '').trim());
+  if (!m || !secret) return null;
+  const iat = parseInt(m[2], 36) * 1000;
+  if (!Number.isFinite(iat) || iat > now + 5 * 60 * 1000 || now - iat > 180 * 864e5) return null;
+  const want = createHmac('sha256', secret).update(`terrain-reg|r1|${m[1]}|${m[2]}`, 'utf8').digest('base64url').slice(0, 32);
+  return timingSafeEqual(Buffer.from(want), Buffer.from(m[3])) ? m[1] : null;
+}
+// ---- the caller's address (Netlify's), as a bucket: an IPv6 address counts as its /64 (as connect.mjs) ---------------------
+function pClientIp(request, context) {
+  const ip = context && typeof context.ip === 'string' ? context.ip : (request && request.headers ? request.headers.get('x-nf-client-connection-ip') || '' : '');
+  let s = String(ip).trim().toLowerCase().replace(/^\[|\]$/g, '').replace(/%.*$/, '').slice(0, 64);
+  const v4 = /^(?:::ffff:)?(\d{1,3}(?:\.\d{1,3}){3})$/.exec(s);
+  if (v4) return v4[1];
+  if (!s.includes(':')) return s;
+  const halves = s.split('::');
+  if (halves.length > 2) return s;
+  const head = halves[0] ? halves[0].split(':') : [], rest = halves.length === 2 ? (halves[1] ? halves[1].split(':') : []) : null;
+  if (rest === null ? head.length !== 8 : head.length + rest.length > 7) return s;
+  const groups = rest === null ? head : [...head, ...Array(8 - head.length - rest.length).fill('0'), ...rest];
+  if (!groups.every(g => /^[0-9a-f]{1,4}$/.test(g))) return s;
+  return groups.slice(0, 4).map(g => parseInt(g, 16).toString(16)).join(':') + '::/64';
+}
+// ---- the input: plain one-line text, no markup, lengths enforced; nothing else is sent (no church, pastor or member) --------
+function pLine(v) {
+  return String(v == null ? '' : v).replace(/[\u0000-\u001f\u007f-\u009f\u2028\u2029\u202a-\u202e\u2066-\u2069]+/g, ' ')
+    .replace(/\p{Cf}+/gu, '').replace(/\s+/g, ' ').trim();
+}
+function pText(v, min, max) {
+  if (typeof v !== 'string') return null;
+  const s = pLine(v);
+  return s.length >= min && s.length <= max && !RE_PTAG.test(s) ? s : null;
+}
+function pList(v, n, max) {
+  if (v == null) return [];
+  if (!Array.isArray(v) || v.length > n) return null;
+  const out = [];
+  for (const x of v) { const s = pText(x, 1, max); if (s == null) return null; out.push(s); }
+  return out;
+}
+// → {input} or {field} (the first field refused)
+function pricesInput(p) {
+  const it = p && typeof p.item === 'object' && !Array.isArray(p.item) ? p.item : null;
+  if (!it) return { field: 'item' };
+  if (!PRICES_CATS.has(it.cat)) return { field: 'item.cat' };
+  const kind = it.kind == null ? 'buy' : it.kind;
+  if (!PRICES_KINDS.has(kind)) return { field: 'item.kind' };
+  const need = pText(it.need, 3, 120); if (!need) return { field: 'item.need' };
+  const names = pList(it.names, 3, 60); if (!names) return { field: 'item.names' };
+  const must = pList(it.must, 5, 60); if (!must) return { field: 'item.must' };
+  let max = null;
+  if (it.budget != null) {
+    if (typeof it.budget !== 'object' || Array.isArray(it.budget)) return { field: 'item.budget' };
+    if (it.budget.max != null) { const b = it.budget.max; if (typeof b !== 'number' || !Number.isFinite(b) || b < 1 || b > 500000) return { field: 'item.budget' }; max = Math.round(b); }
+  }
+  const qty = it.qty == null ? 1 : it.qty;
+  if (!Number.isInteger(qty) || qty < 1 || qty > 50) return { field: 'item.qty' };
+  const w = p.where == null ? {} : p.where;
+  if (typeof w !== 'object' || Array.isArray(w)) return { field: 'where' };
+  let region = null;
+  if (w.region != null && w.region !== '') {
+    const r = pText(w.region, 2, 40); if (!r) return { field: 'where.region' };
+    region = US_STATES[r.toUpperCase()] || US_NAMES.get(r.toLowerCase()) || null;
+    if (!region) return { field: 'where.region' };
+  }
+  let city = null;
+  if (w.city != null && w.city !== '') { city = pText(w.city, 2, 60); if (!city || !/^[\p{L}][\p{L} .'’-]*$/u.test(city)) return { field: 'where.city' }; }
+  let tz = null;
+  if (w.tz != null && w.tz !== '') {
+    if (typeof w.tz !== 'string' || w.tz.length > 40 || !/^[A-Za-z]+(?:\/[A-Za-z0-9_+-]+){1,2}$/.test(w.tz)) return { field: 'where.tz' };
+    try { new Intl.DateTimeFormat('en-US', { timeZone: w.tz }); tz = w.tz; } catch { return { field: 'where.tz' }; }
+  }
+  const lang = p.lang === 'es' ? 'es' : 'en';
+  return { input: { lang, item: { cat: it.cat, kind, need, names, must, budget: { max }, qty }, where: { region, city, tz } } };
+}
+// ---- the counters (create-or-compare-and-set, as connect.mjs's upsert) ------------------------------------------------------
+async function pBump(store, key, max, now) {
+  const cas = typeof store.getWithMetadata === 'function';
+  for (let i = 0; i < 8; i++) {
+    let cur = null, etag, exists = false;
+    if (cas) { const r = await store.getWithMetadata(key, { type: 'json' }); if (r) { exists = true; cur = r.data; etag = r.etag; } }
+    else { cur = await store.get(key, { type: 'json' }); exists = cur != null; }
+    const n = cur && Number.isInteger(cur.n) ? cur.n : 0;
+    if (n >= max) return false;
+    const w = await store.setJSON(key, { n: n + 1, at: now }, !exists ? { onlyIfNew: true } : (cas && etag ? { onlyIfMatch: etag } : undefined));
+    if (!w || w.modified !== false) return true;
+  }
+  throw new Error('busy');
+}
+async function pGiveBack(store, key) {
+  if (!key) return;
+  const cas = typeof store.getWithMetadata === 'function';
+  for (let i = 0; i < 6; i++) {
+    let cur = null, etag;
+    if (cas) { const r = await store.getWithMetadata(key, { type: 'json' }); if (!r) return; cur = r.data; etag = r.etag; }
+    else { cur = await store.get(key, { type: 'json' }); if (!cur) return; }
+    const n = cur && Number.isInteger(cur.n) ? cur.n : 0;
+    if (n <= 0) return;
+    const w = await store.setJSON(key, { ...cur, n: n - 1 }, cas && etag ? { onlyIfMatch: etag } : undefined);
+    if (!w || w.modified !== false) return;
+  }
+}
+// An address is kept only as a keyed hash, the key rolled with the hour (a random salt for each hour, made once).
+async function pIpKey(store, hour, bucket) {
+  const sk = 'c/ipsalt/' + hour;
+  let salt = null;
+  const cur = await store.get(sk, { type: 'json' });
+  if (cur && typeof cur.salt === 'string') salt = cur.salt;
+  else {
+    const mine = pRand(18);
+    const w = await store.setJSON(sk, { salt: mine }, { onlyIfNew: true });
+    if (w && w.modified === false) { const again = await store.get(sk, { type: 'json' }); salt = again && again.salt; }
+    else salt = mine;
+  }
+  if (typeof salt !== 'string') throw new Error('salt');
+  return 'c/ip/' + hour + '/' + createHmac('sha256', salt).update(bucket, 'utf8').digest('hex').slice(0, 16);
+}
+const nextUtcDay = t => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1); };
+const nextUtcHour = t => Math.floor(t / 3600000) * 3600000 + 3600000;
+
+async function pricesRoute(request, context, p) {
+  if (p.mode === 'prices-status') return pricesStatus(p);
+  if (!KEY) return pReply('nokey', 503);
+  if (!PASS) return pReply('disabled', 403);
+  if (!passOk(request.headers.get('x-terrain-pass'))) return pReply('locked', 401);
+  const secret = pRegSecret();
+  let rid = null;
+  if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return pReply('noreg', 401); }
+  if (typeof p.device !== 'string' || !RE_DEVICE.test(p.device)) return pReply('bad-input', 400, { field: 'device' });
+  const got = pricesInput(p);
+  if (!got.input) return pReply('bad-input', 400, { field: got.field });
+  const store = pricesStore(), now = Date.now();
+  const day = new Date(now).toISOString().slice(0, 10), hour = new Date(now).toISOString().slice(0, 13);
+  const bucket = pClientIp(request, context);
+  const keys = { dev: 'c/dev/' + day + '/' + pSha('terrain-prices-dev|' + p.device).slice(0, 16), reg: rid ? 'c/reg/' + day + '/' + rid : null,
+    ip: bucket ? await pIpKey(store, hour, bucket) : null, site: 'c/site/' + day };
+  const plan = [['dev', PRICES_DEV_DAY, 'limit-device', nextUtcDay(now)], ['reg', PRICES_REG_DAY, 'limit-reg', nextUtcDay(now)],
+    ['ip', PRICES_IP_HOUR, 'limit-ip', nextUtcHour(now)], ['site', pricesDayMax(), 'limit-site', nextUtcDay(now)]];
+  const taken = [];
+  for (const [k, max, code, until] of plan) {
+    if (!keys[k]) continue;
+    if (!(await pBump(store, keys[k], max, now))) {
+      for (const t of taken) await pGiveBack(store, keys[t]);
+      return pReply(code, 429, { retryAfter: Math.max(1, Math.ceil((until - now) / 1000)) });
+    }
+    taken.push(k);
+  }
+  const job = pRand(16), key = pRand(32), worker = pRand(32);
+  const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: got.input,
+    model: PRICES_MODEL(), effort: PRICES_EFFORT(), counts: { dev: keys.dev } };
+  const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return pReply('busy', 503); }
+  // wake the worker (the same deploy: a preview wakes its own); only its 202 is awaited
+  let woke = false;
+  try {
+    const res = await fetch(new URL('/.netlify/functions/advise-prices', request.url), {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ job, worker }), signal: AbortSignal.timeout(5000) });
+    woke = res && res.status === 202;
+  } catch { woke = false; }
+  if (!woke) {
+    // v10.44 review: the job is failed only while it is still queued (a conditional write on the queued record's etag). A worker that
+    // already took it runs and pays for its search: its result is kept, the counts stay spent, and the page is given the job to ask for.
+    let lost = false;
+    try {
+      const failed = { ...rec, status: 'failed', code: 'unavailable', finished: Date.now() };
+      let f;
+      if (w && w.etag) f = await store.setJSON('j/' + job, failed, { onlyIfMatch: w.etag });
+      else { const cur = await store.get('j/' + job, { type: 'json' }); f = cur && cur.status === 'queued' ? await store.setJSON('j/' + job, failed) : { modified: false }; }
+      lost = !!(f && f.modified === false);
+    } catch { /* the sweep tidies it */ }
+    if (lost) { pricesLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
+    for (const t of taken) await pGiveBack(store, keys[t]);
+    return pReply('unavailable', 502);
+  }
+  pricesLog('queued');
+  return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202);
+}
+async function pricesStatus(p) {
+  if (typeof p.job !== 'string' || !RE_JOB.test(p.job)) return reply({ ok: false, code: 'gone' }, 404);
+  if (typeof p.key !== 'string' || !RE_JKEY.test(p.key)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const store = pricesStore(), now = Date.now();
+  const cas = typeof store.getWithMetadata === 'function';
+  let rec = null, etag = null;
+  if (cas) { const r = await store.getWithMetadata('j/' + p.job, { type: 'json' }); if (r) { rec = r.data; etag = r.etag; } }
+  else rec = await store.get('j/' + p.job, { type: 'json' });
+  if (!rec || typeof rec !== 'object' || typeof rec.created !== 'number' || now - rec.created > JOB_KEEP_MS) return reply({ ok: false, code: 'gone' }, 404);
+  if (!pHashOk(p.key, rec.keyHash)) return reply({ ok: false, code: 'bad-key' }, 403);
+  // a job nobody finished: running for more than 10 minutes, or never picked up, is failed here (its device count given back)
+  const stuck = (rec.status === 'running' && now - (rec.started || rec.created) > STUCK_MS) || (rec.status === 'queued' && now - rec.created > STUCK_MS);
+  if (stuck) {
+    const next = { ...rec, status: 'failed', code: rec.status === 'running' ? 'timeout' : 'unavailable', finished: now };
+    const w = await store.setJSON('j/' + p.job, next, cas && etag ? { onlyIfMatch: etag } : undefined);
+    if (!w || w.modified !== false) { rec = next; if (rec.counts) await pGiveBack(store, rec.counts.dev); }
+  }
+  const out = { ok: true, status: rec.status, ms: (rec.finished || now) - rec.created };
+  if (rec.status === 'done') Object.assign(out, { checked: rec.checked, options: Array.isArray(rec.options) ? rec.options : [], notes: Array.isArray(rec.notes) ? rec.notes : [], searches: rec.searches || 0 });
+  if (rec.status === 'failed') out.code = typeof rec.code === 'string' ? rec.code : 'unavailable';
+  return reply(out);
 }
 
 async function callClaude(key, body){
@@ -430,15 +700,25 @@ function cleanIdea(x){
   };
 }
 
-export default async (request) => {
+export default async (request, context) => {
   if (request.method === 'GET') {
     return reply({
       enabled: !!KEY, model: MODEL, fn: FN_VERSION, locked: !!PASS,
       keyLooksRight: KEY.startsWith('sk-ant-') && KEY.length > 40, keyLength: KEY.length,
-      maxIdeasPerCall: MAX_IDEAS_PER_CALL, kinds: Object.keys(KINDS), topic: true
+      maxIdeasPerCall: MAX_IDEAS_PER_CALL, kinds: Object.keys(KINDS), topic: true,
+      prices: !!KEY && !!PASS && pricesDayMax() > 0, pricesFn: PRICES_FN   // v10.44 review: PRICES_DAY_MAX=0 turns the button off too
     });
   }
   if (request.method !== 'POST') return reply({ error: 'Use GET or POST.' }, 405);
+  // advise-2.4: the body is read first, so the two price modes keep their own order of checks (prices: key, passphrase SET,
+  // registration, input, limits). Every other mode answers exactly as before (lock, key, size, JSON, summary).
+  let raw = null, early = null;
+  try { raw = await request.text(); } catch { raw = null; }
+  if (raw != null && raw.length <= MAX_BODY) { try { early = JSON.parse(raw); } catch { early = null; } }
+  if (early && (early.mode === 'prices' || early.mode === 'prices-status')) {
+    try { return await pricesRoute(request, context, early); }
+    catch (e) { pricesLog('error'); return reply({ error: 'Prices could not be found just now.', code: 'unavailable' }, 502); }
+  }
   if (!passOk(request.headers.get('x-terrain-pass'))) {
     return reply({ error: 'This ministry planner is private to the pastor who set it up.', code: 'locked' }, 401);
   }
@@ -446,7 +726,7 @@ export default async (request) => {
 
   let payload;
   try {
-    const raw = await request.text();
+    if (raw == null) throw new Error('unreadable');
     if (raw.length > MAX_BODY) return reply({ error: 'That report is too large to send.' }, 413);
     payload = JSON.parse(raw);
   } catch { return reply({ error: 'Could not read the report data.' }, 400); }

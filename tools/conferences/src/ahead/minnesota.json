@@ -1,0 +1,182 @@
+{
+ "conf": "Minnesota",
+ "slug": "minnesota",
+ "union": "Mid-America Union",
+ "site": "https://mnsda.com/",
+ "calendarUrls": [
+  "https://mnsda.com/events/",
+  "https://mnsda.com/?post_type=tribe_events&ical=1&eventDisplay=list",
+  "https://mnsda.com/wp-json/tribe/events/v1/events"
+ ],
+ "otherSources": [
+  "https://mnsda.com/ (The Northern Light Extra posts)",
+  "https://www.outlookmag.org/tag/minnesota-conference/",
+  "https://www.northstarcamp.org/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "C : the online calendar holds only 18 entries (Mar-Oct 2026; past entries removed). The monthly e-newsletter (The Northern Light Extra, Oct 2025-Sep 2026) lists upcoming events and local outreach and makes the combined picture about B-level.",
+ "aheadQuality": "C- : camp meeting is the only conference ministry date for Apr-Sep 2027; Maplewood Academy's school calendar fills in spring 2027.",
+ "furthestPublished": "2027-06",
+ "furthestPublishedAnySource": "2028-05",
+ "furthestPublishedNote": "The conference's own furthest date is camp meeting, Jun 8-12 2027 (save-the-date post). The online calendar holds one entry (Oct 5-7 2026). Maplewood Academy's public school calendar already runs to its May 26-28 2028 graduation weekend.",
+ "aheadChecked": [
+  "https://mnsda.com/wp-json/tribe/events/v1/events?start_date=2026-09-01&end_date=2029-12-31",
+  "https://mnsda.com/wp-json/wp/v2/posts?search=2027",
+  "https://mnsda.com/wp-json/wp/v2/pages?search=2027",
+  "https://mnsda.com/?p=7762",
+  "https://mnsda.com/ministries/men/",
+  "https://mnsda.com/ministries/youth-ministry/pathfinders/pathfinder-bible-experience-2/",
+  "https://mnsda.com/ministries/youth-ministry/pathfinders/pathfinder-club-registration-2/",
+  "https://mnsda.com/ministries/youth-ministry/adventurers/adventurer-club-registration/",
+  "https://mnsda.com/the-northern-light-extra-september-2026/",
+  "https://mailchi.mp/mnsda/the-northern-light-extra-12854565",
+  "https://www.northstarcamp.org/ (HTTP 429 once; read once more through a page reader: 2026 dates only)",
+  "https://www.maplewoodacademy.org/",
+  "https://calendar.google.com/calendar/ical/c_bqmqa38se3ea7ud9l5g4ubl06o%40group.calendar.google.com/public/basic.ics (Maplewood Academy public calendar)",
+  "https://www.messiahsmansion.com/events-and-exhibits",
+  "https://www.outlookmag.org/state-of-the-minnesota-conference/"
+ ],
+ "counts": {
+  "total": 9,
+  "conferenceLevel": 8,
+  "byLevel": {
+   "conference": 8,
+   "other": 1
+  },
+  "byCategory": {
+   "education": 7,
+   "evangelism-outreach": 1,
+   "camp-meeting": 1
+  },
+  "recurringSeries": 0,
+  "approximateDates": 0,
+  "unconfirmed": 0
+ },
+ "events": [
+  {
+   "title": "Elementary Music Festival at Maplewood Academy",
+   "start": "2027-04-01",
+   "end": "2027-04-03",
+   "place": "Maplewood Academy, Hutchinson, MN",
+   "category": "education",
+   "category2": "music-worship-arts",
+   "audience": "elementary school students",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Maplewood Academy Preview Day",
+   "start": "2027-04-16",
+   "end": "2027-04-16",
+   "place": "Maplewood Academy, Hutchinson, MN",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "prospective students and families",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Maplewood Academy Student Week of Prayer",
+   "start": "2027-04-26",
+   "end": "2027-05-01",
+   "place": "Maplewood Academy, Hutchinson, MN",
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "students",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Maplewood Academy Outreach Weekend",
+   "start": "2027-05-01",
+   "end": "2027-05-01",
+   "place": "",
+   "category": "education",
+   "category2": "evangelism-outreach",
+   "audience": "students",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference",
+   "note": "Details not given."
+  },
+  {
+   "title": "Maplewood Academy Spring Concert",
+   "start": "2027-05-08",
+   "end": "2027-05-08",
+   "place": "Maplewood Academy, Hutchinson, MN",
+   "category": "education",
+   "category2": "music-worship-arts",
+   "audience": "school families and church members",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Maplewood Academy Graduation Weekend",
+   "start": "2027-05-21",
+   "end": "2027-05-23",
+   "place": "Maplewood Academy, Hutchinson, MN",
+   "category": "education",
+   "category2": "",
+   "audience": "students and families",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Messiah's Mansion sanctuary exhibit and free tours",
+   "start": "2027-06-05",
+   "end": "2027-06-12",
+   "place": "Hutchinson, MN",
+   "category": "evangelism-outreach",
+   "category2": "",
+   "audience": "public",
+   "url": "https://www.messiahsmansion.com/events-and-exhibits",
+   "source": "ministry page (Messiah's Mansion exhibit schedule)",
+   "level": "other",
+   "note": "Travelling full-size sanctuary exhibit run by a supporting ministry, with free public tours. The host is not named; the schedule says it is \"subject to change\". It is the same week as the 2027 camp meeting (Jun 8-12); the 2026 camp meeting was held in Hutchinson."
+  },
+  {
+   "title": "Minnesota Camp Meeting 2027",
+   "start": "2027-06-08",
+   "end": "2027-06-12",
+   "place": "Hutchinson, MN (Maplewood Academy, as in 2026)",
+   "category": "camp-meeting",
+   "category2": "",
+   "audience": "members",
+   "url": "https://mnsda.com/?p=7762",
+   "source": "news (save-the-date post, Jun 19 2026)",
+   "level": "conference",
+   "note": "The post asks members to \"mark your calendar\" for Jun 8-12 2027 and names the weekend speaker (name left out). Place is not stated in the post; 2026 was at Maplewood Academy."
+  },
+  {
+   "title": "Maplewood Academy Fall Spiritual Retreat",
+   "start": "2027-09-03",
+   "end": "2027-09-05",
+   "place": "",
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "students",
+   "url": "https://www.maplewoodacademy.org/",
+   "source": "academy calendar (Maplewood Academy public Google calendar)",
+   "level": "conference"
+  }
+ ],
+ "notPublishedYet": [
+  "North Star Camp summer camp 2027 (site shows 2026)",
+  "Pathfinder camporee 2027",
+  "Hispanic, Hmong and African camp meetings 2027",
+  "men's retreat 2027 (\"2027 Dates to be determined\")",
+  "women's retreat 2027",
+  "Maplewood alumni reunion 2027"
+ ],
+ "notes": [
+  "Minnesota PBE 2027 (area Jan 16, state Feb 20, union Mar 27 in Lincoln) is before this window.",
+  "The September 2026 newsletter says OneVoice27 \"starts now and culminates in September 2027\" and asks members to pray about how to take part; no Minnesota dates are given. The world-church dates are in above.json.",
+  "Not counted from the Maplewood calendar: A/B Fridays, sports, tests, boards, home leave, registration and first day of school, senior trip, a rental group named after a person, drama nights and other internal school events."
+ ]
+}

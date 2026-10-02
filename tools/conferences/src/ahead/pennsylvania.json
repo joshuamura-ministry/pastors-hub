@@ -1,0 +1,169 @@
+{
+ "conf": "Pennsylvania Conference",
+ "slug": "pennsylvania",
+ "union": "Columbia Union Conference",
+ "site": "https://paconference.org/",
+ "calendarUrls": [
+  "https://paconference.org/events/",
+  "https://columbiaunionvisitor.com/category/pennsylvania-conference",
+  "https://paconference.org/camp-meeting/",
+  "https://paconference.org/onevoice27/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the events page still shows only the \"2026 Calendar of Events\"; 2027 dates come from the camp-meeting and OneVoice27 pages.",
+ "calendarQuality": "B : a clear year-at-a-glance list (about 70 lines) with dates, but no places or links except the featured events. The site blocks automated access, so it was read through a fetch service and checked twice. No 2027 calendar-of-events list yet.",
+ "furthestPublished": "2027-09",
+ "furthestNote": "OneVoice27 evangelistic series in September 2027 (month only); the latest day-dated item is camp meeting, 11–20 Jun 2027",
+ "aheadSummary": "Three items: the OneVoice27 Desire of Ages reading journey (1 Nov 2026 to about May 2027), camp meeting 11–20 Jun 2027, and OneVoice27 evangelistic series in the churches in September 2027 (month only). The 2027 calendar-of-events list is not out; Hispanic camp meeting and summer camp still show 2026.",
+ "aheadChecked": [
+  "https://paconference.org/events/",
+  "https://paconference.org/camp-meeting/",
+  "https://paconference.org/campestre-hispano/",
+  "https://paconference.org/onevoice27/",
+  "https://paconference.org/wp-content/uploads/2026/09/OneVoice27-or-All-Things-New.pdf",
+  "https://paconference.org/wp-json/wp/v2/pages?search=2027",
+  "https://paconference.org/wp-json/wp/v2/posts?search=2027",
+  "https://laurellakesummercamp.org/",
+  "http://laurellakecamp.com/",
+  "https://columbiaunionvisitor.com/2026/proclaiming-one-accord",
+  "https://columbiaunionvisitor.com/category/pennsylvania-conference"
+ ],
+ "stats": {
+  "records": 3,
+  "datedInWindowRecords": 3,
+  "conferenceRunRecords": 3,
+  "occurrencesInWindow": 3,
+  "conferenceOccurrencesInWindow": 3,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 0,
+  "startsBeforeWindowRecords": 1,
+  "monthsWithConferenceEvents": "3 of 6",
+  "byLevel": {
+   "conference": 3
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 1,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 1,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 1,
+   "administration": 0,
+   "other": 0
+  }
+ },
+ "counts": {
+  "total": 3,
+  "conferenceLevel": 3,
+  "observances": 0,
+  "byCategory": {
+   "discipleship-spiritual": 1,
+   "camp-meeting": 1,
+   "evangelism-outreach": 1
+  },
+  "byCategoryConferenceOnly": {
+   "discipleship-spiritual": 1,
+   "camp-meeting": 1,
+   "evangelism-outreach": 1
+  }
+ },
+ "excludedFromCalendar": {},
+ "excludedDetail": [],
+ "prepDeadlines": [],
+ "events": [
+  {
+   "title": "OneVoice27: The Desire of Ages reading journey (conference-wide)",
+   "start": "2026-11-01",
+   "end": "2027-05-30",
+   "place": "churches and homes",
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "members/churches",
+   "level": "conference",
+   "url": "https://paconference.org/onevoice27/",
+   "source": "initiative page",
+   "datePrecision": "day (page: \"Begin reading November 1 … Complete the journey on May 30\")",
+   "startsBeforeWindow": true,
+   "note": "runs into the window from Nov 2026; part of OneVoice27 / All Things New \"Pray Like Jesus\""
+  },
+  {
+   "title": "Camp Meeting 2027",
+   "start": "2027-06-11",
+   "end": "2027-06-20",
+   "place": null,
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "members/families",
+   "level": "conference",
+   "url": "https://paconference.org/camp-meeting/",
+   "source": "camp-meeting page",
+   "note": "page says \"Mark your calendar for camp meeting 2027: June 11-20\"; place not stated (2026 was at Blue Mountain Academy, Hamburg, Pa.)"
+  },
+  {
+   "title": "OneVoice27 evangelistic series in Pennsylvania churches (\"Proclaim in One Accord\")",
+   "start": "2027-09-01",
+   "end": "2027-09-30",
+   "place": "local churches",
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://paconference.org/onevoice27/",
+   "source": "initiative page",
+   "sourceDetail": "initiative page; theme: https://columbiaunionvisitor.com/2026/proclaiming-one-accord",
+   "datePrecision": "month (page says \"an evangelistic series in September 2027\")",
+   "note": "churches will be equipped to present a series in September 2027; the conference's 2027 evangelism theme is \"Proclaim in One Accord\""
+  }
+ ],
+ "notes": [
+  "Pennsylvania's events page and site were readable directly today (no block).",
+  "The OneVoice27 page also says members will \"have opportunities to attend training events\" through the coming year; none is dated yet.",
+  "The conference PDF \"OneVoice27 or All Things New?\" gives the NAD phases: Pray Like Jesus Sept 2026–Mar 2027, Serve Like Jesus Jan–Aug 2027, Share Jesus Apr–Sept 2027, Follow Jesus Oct–Dec 2027. These are NAD-level and belong in the division lane, not here.",
+  "Evangelism-subsidy requests are due 30 September each year (v47); the 2026 date passed yesterday, so the next is 30 Sep 2027 for 2028 meetings."
+ ]
+}

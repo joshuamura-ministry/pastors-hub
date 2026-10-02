@@ -1,0 +1,137 @@
+{
+ "conf": "Allegheny West Conference",
+ "slug": "allegheny-west",
+ "union": "Columbia Union Conference",
+ "site": "https://awconf.org/",
+ "calendarUrls": [
+  "https://awconf.org/events",
+  "https://awconf.org/wp-json/wp/v2/etn",
+  "https://awconf.org/campmeeting-2026/",
+  "https://www.nadsecretariat.org/wp-content/uploads/2026/02/2026-NAD-CAMP-MEETING-.pdf",
+  "https://columbiaunionvisitor.com/category/allegheny-west-conference",
+  "https://awconf.org/departments/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); event posts (40 in the Eventin feed) end in Sept 2026; the departments page lists health coordinator meetings to 19 Nov 2026.",
+ "calendarQuality": "D : the /events page is an empty template. Event posts exist (Eventin plugin, 20 posts, 13 in the window), mostly online trainings. The site news stops in Aug 2025. Camp meeting dates come from the NAD camp meeting list. The website was readable directly on 1 Oct 2026.",
+ "furthestPublished": "2026-11",
+ "furthestNote": "last dated item: health ministry coordinators' Zoom meeting, 19 Nov 2026 (departments page); one undated 2027 item",
+ "aheadSummary": "Not published yet. Newest event posts are deaf-ministry events on 18–19 Sep 2026; the last dated item is a health coordinators' meeting on 19 Nov 2026. The only 2027 item is the Cincinnati child and youth evangelism plan, with no date.",
+ "aheadChecked": [
+  "https://awconf.org/events",
+  "https://awconf.org/wp-json/wp/v2/etn?per_page=100",
+  "https://awconf.org/etn/praise-and-worship/",
+  "https://awconf.org/etn/all-things-are-possible/",
+  "https://awconf.org/departments/",
+  "https://awconf.org/disability-deaf-ministries/",
+  "https://awconf.org/",
+  "https://awconf.org/campmeeting-2027/ (404)",
+  "https://awconf.org/wp-json/wp/v2/pages?search=2027",
+  "https://awconf.org/wp-json/wp/v2/posts?search=2027",
+  "https://www.nadadventist.org/news/what-about-us-how-youth-led-evangelism-sparked-a-movement-in-the-allegheny-west-conference/",
+  "https://columbiaunionvisitor.com/category/allegheny-west-conference"
+ ],
+ "stats": {
+  "records": 1,
+  "datedInWindowRecords": 0,
+  "conferenceRunRecords": 1,
+  "occurrencesInWindow": 0,
+  "conferenceOccurrencesInWindow": 0,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 1,
+  "startsBeforeWindowRecords": 0,
+  "monthsWithConferenceEvents": "0 of 6",
+  "byLevel": {
+   "conference": 1
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  }
+ },
+ "counts": {
+  "total": 1,
+  "conferenceLevel": 1,
+  "observances": 0,
+  "byCategory": {
+   "evangelism-outreach": 1
+  },
+  "byCategoryConferenceOnly": {
+   "evangelism-outreach": 1
+  }
+ },
+ "excludedFromCalendar": {},
+ "excludedDetail": [],
+ "prepDeadlines": [],
+ "events": [
+  {
+   "title": "Child and youth evangelism series in Cincinnati (2027)",
+   "start": null,
+   "end": null,
+   "place": "Cincinnati, Ohio",
+   "category": "evangelism-outreach",
+   "category2": "youth-young-adults",
+   "audience": "children and youth / public",
+   "level": "conference",
+   "url": "https://www.nadadventist.org/news/what-about-us-how-youth-led-evangelism-sparked-a-movement-in-the-allegheny-west-conference/",
+   "source": "news",
+   "datePrecision": "year only (2027); NAD news of 7 Jan 2026 says leadership \"committed\" to Cincinnati (2027), Virginia (2028) and Pittsburgh (2029)",
+   "note": "follows Rescue+ Ohio (Columbus, 2025)"
+  }
+ ],
+ "notes": [
+  "The /events page is still an empty template; site news stops in Aug 2025.",
+  "Undated records (start null) are not counted as in-window events."
+ ]
+}

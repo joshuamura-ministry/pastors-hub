@@ -1,0 +1,150 @@
+{
+ "conf": "Nevada-Utah",
+ "union": "Pacific Union",
+ "slug": "nevada-utah",
+ "site": "https://www.nucsda.com",
+ "calendarUrls": [
+  "https://www.nucsda.com/calendar",
+  "https://calendar.google.com/calendar/ical/ejg38pu9s0ijgc56c514pftqf1nq5p72%40import.calendar.google.com/public/basic.ics",
+  "https://www.nucsda.com/impact-26"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "A- now, but thin after Jan 2027 (complete office calendar; few 2027 entries yet)",
+ "furthestPublished": "2027-09",
+ "furthestNote": "The Southern Nevada pastors' series repeats to 7 Sep 2027 and enditnow Day is on 28 Aug 2027. The latest one-off entry is the NAD convention (listed for 26-29 Jul 2027). Pay days and a VVAA board series also repeat to Sep 2027 (left out).",
+ "aheadSummary": "Four items: the monthly Southern Nevada pastors' meeting (6 dates), the Regional Convocation (4-6 Jun, Salt Lake City, from Recorder news), the NAD CALLED convention, and enditnow Day (28 Aug). Nothing yet for the 2027 evangelism push that the 7 Nov 2026 leadership convocation is preparing for.",
+ "aheadChecked": [
+  "https://www.nucsda.com/calendar",
+  "https://calendar.google.com/calendar/ical/ejg38pu9s0ijgc56c514pftqf1nq5p72%40import.calendar.google.com/public/basic.ics",
+  "https://www.nucsda.com/sitemap.xml",
+  "https://www.adventistfaith.com/news/staying-faithful-in-a-shifting-world/",
+  "https://www.nadministerial.com/called"
+ ],
+ "events": [
+  {
+   "title": "Southern Nevada area pastors' meeting (monthly, first Tuesday)",
+   "start": "2027-04-06",
+   "end": "2027-09-07",
+   "place": "in person and on Microsoft Teams",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "Southern Nevada pastors",
+   "url": "https://www.nucsda.com/calendar",
+   "urls": [
+    "https://www.nucsda.com/calendar",
+    "https://calendar.google.com/calendar/ical/ejg38pu9s0ijgc56c514pftqf1nq5p72%40import.calendar.google.com/public/basic.ics"
+   ],
+   "source": "calendar (Google Calendar ICS)",
+   "when": "upcoming",
+   "level": "conference",
+   "recurring": true,
+   "count": 6,
+   "dates": [
+    "2027-04-06",
+    "2027-05-04",
+    "2027-06-01",
+    "2027-07-06",
+    "2027-08-03",
+    "2027-09-07"
+   ],
+   "note": "A repeating series on the office calendar from Jan 2026 to 7 Sep 2027. The Utah and Northern Nevada pastors' series end in Jan 2027."
+  },
+  {
+   "title": "Nevada-Utah Conference Regional Convocation 2027",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "Salt Lake City, UT",
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "members (Regional churches)",
+   "url": "https://www.adventistfaith.com/news/staying-faithful-in-a-shifting-world/",
+   "source": "news (Recorder)",
+   "when": "upcoming",
+   "level": "conference",
+   "note": "Recorder news, 25 Aug 2026: \"Plans are already underway\" for the 2027 Regional Convocation."
+  },
+  {
+   "title": "NAD CALLED convention (pastors)",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "place": "Lexington, KY",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors and spouses",
+   "url": "https://www.nadministerial.com/called",
+   "urls": [
+    "https://www.nadministerial.com/called",
+    "https://www.nucsda.com/calendar"
+   ],
+   "source": "calendar (Google Calendar ICS) + NAD Ministerial page",
+   "when": "upcoming",
+   "level": "division",
+   "note": "The NUC office calendar shows \"NAD Called Convention\" on 26-29 Jul 2027 (all-day entry ending 30 Jul). The NAD Ministerial page says 21-24 Jun 2027, Lexington, KY. The NAD dates are used here."
+  },
+  {
+   "title": "enditnow Emphasis Day",
+   "start": "2027-08-28",
+   "end": "2027-08-28",
+   "place": "local churches",
+   "category": "family-women-men",
+   "category2": "community-service",
+   "audience": "local churches (emphasis)",
+   "url": "https://www.nucsda.com/calendar",
+   "source": "calendar (Google Calendar ICS)",
+   "when": "upcoming",
+   "level": "division",
+   "observance": true,
+   "note": "A yearly entry on the office calendar (fourth Sabbath of August) linking to the enditnow resources page."
+  }
+ ],
+ "stats": {
+  "items": 4,
+  "occurrences": 9,
+  "occurrencesInWindow": 9,
+  "conferenceLevelItems": 2,
+  "observanceItems": 1,
+  "monthsWithEventsInWindow": "6 of 6",
+  "byCategory": {
+   "pastoral-leadership": 2,
+   "discipleship-spiritual": 1,
+   "family-women-men": 1
+  },
+  "byCategoryIncludingSecond": {
+   "pastoral-leadership": 2,
+   "discipleship-spiritual": 1,
+   "family-women-men": 1,
+   "community-service": 1
+  },
+  "occurrencesByCategory": {
+   "pastoral-leadership": 7,
+   "discipleship-spiritual": 1,
+   "family-women-men": 1
+  },
+  "byLevel": {
+   "conference": 2,
+   "division": 2
+  },
+  "bySourceType": {
+   "calendar/event pages": 3,
+   "news": 1
+  }
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "NUC conference-wide evangelism (\"Evangelism 2027\")",
+   "lastKnown": "2026 conference evangelism ran 8-17 May 2026; the 7 Nov 2026 \"Leadership Convocation for New Area (Evangelism 2027)\" is the only 2027 sign",
+   "url": "https://www.nucsda.com/calendar"
+  },
+  {
+   "title": "Conference Pathfinder camporee",
+   "lastKnown": "June 2026 (plus a spring camporee at Zion Ponderosa Ranch)",
+   "url": "https://www.adventistfaith.com/news/nuc-hosts-spring-pathfinder-camporee/"
+  }
+ ],
+ "notes": [
+  "Left out (rule): Board of Education (6 Apr 2027), VVAA Board (monthly), pay days, Capital Reversion Funds (5 Apr), contracts complete (1 Sep), office closures, staff birthdays and anniversaries.",
+  "None of the 118 nucsda.com pages in the sitemap mentions 2027."
+ ]
+}

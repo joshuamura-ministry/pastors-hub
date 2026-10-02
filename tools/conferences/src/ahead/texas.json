@@ -1,0 +1,53 @@
+{
+ "conf": "Texas",
+ "slug": "texas",
+ "union": "Southwestern",
+ "site": "https://www.texasadventist.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30"
+ },
+ "furthestPublished": "2026-12",
+ "aheadSummary": "Not published yet. The calendar ends on Dec 13, 2026 (Engage Conference and Ignite youth Sabbath School training). A site-wide search for 2027 finds only \"Explore More 2027 (soon)\" on the Sabbath School page. The home page announces \"OneVoice Texas\", a year-long initiative, with no dates.",
+ "counts": {
+  "events": 0,
+  "meetings": 0,
+  "conferenceRun": 0
+ },
+ "calendarUrls": [
+  "https://www.texasadventist.org/events/",
+  "https://www.texasadventist.org/wp-json/tribe/events/v1/events"
+ ],
+ "events": [],
+ "notes": [
+  "Calendar API queried for Dec 2026-Dec 2030: 4 entries, the last Dec 11-13, 2026 (Engage Conference) and Dec 12, 2026 (Ignite Youth Sabbath School Training). Nothing in 2027.",
+  "WordPress site search for \"2027\": only the Sabbath School page (\"Explore More 2027 (soon)\", videos, no date). /camp-meeting-2027/ and /announcements-2027/ return 404; the camp-meeting page still describes Camp Meeting Sabbath and the Lake Whitney Ranch weekend of Nov 13-15, 2026.",
+  "Home page quotes the conference president inviting members to \"OneVoice Texas\", a year-long global initiative to share Jesus; no Texas dates for it are published.",
+  "Lake Whitney Ranch site: only the Oct 1-4, 2026 union camporee. A Record story says the ranch is waiting to hear whether new state rules will require fibre-optic cable for the 2027 summer camp season (no 2027 dates). The youth website shows no events.",
+  "The Sep/Oct 2026 Record print issue has a Texas \"Calendar of Events\" box running only to Oct 24-31, 2026.",
+  "The union education office calendar lists Texas Conference board of education meetings to Jun 22, 2027; these are committee meetings and are not counted.",
+  "Not published yet for 2027: Together As One convocations, camp meeting, summer camps, camporees, Adventurer family camp, 10 Days of Prayer, MAS Evangelismo, CONECTADOS."
+ ],
+ "aheadChecked": [
+  "https://www.texasadventist.org/events/",
+  "https://www.texasadventist.org/wp-json/tribe/events/v1/events?start_date=2026-12-01&end_date=2030-12-31",
+  "https://www.texasadventist.org/wp-json/wp/v2/search?search=2027",
+  "https://www.texasadventist.org/",
+  "https://www.texasadventist.org/camp-meeting/",
+  "https://www.texasadventist.org/camp-meeting-2027/ (404)",
+  "https://www.texasadventist.org/convocation/",
+  "https://www.texasadventist.org/announcements-2026/",
+  "https://www.texasadventist.org/announcements-2027/ (404)",
+  "https://www.texasadventist.org/departments/sabbath-school/",
+  "https://www.texasadventist.org/ministries/youth/",
+  "https://www.texasadventist.org/ministries/hispanic-ministries/",
+  "https://www.lakewhitneyranch.org/",
+  "https://www.youngtexasadventist.org/events",
+  "https://www.swurecord.org/conference/texas",
+  "https://issuu.com/swurecord/docs/september_october_2026",
+  "https://www.southwesternadventisteducation.com/calendar",
+  "https://www.nadadventist.org/camp-meeting/"
+ ]
+}
