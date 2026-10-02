@@ -346,6 +346,13 @@ const stored = async d => { const r = await call(new Request(URL0, { method: 'PO
   c('a verse headline that is not text: 400 bad-deck', [x.r.status, x.r.j.where], [400, 'slides[1].headline']);
   x = await stored(T11([{ ...SL.motion, part: 'agreed' }, { type: 'ask', part: 'decide', kicker: 'k', headline: 'Let’s decide together', rows: [['Option 1', 'Tue evening']], verse: null }]));
   c('part (agreed, decide) is dropped, as any unknown field', [x.r.status, x.d && x.d.slides.slice(1).map(s => 'part' in s)], [200, [false, false]]);
+  // v10.43 (the pastor, 30 Sep 2026: "after one day there needs to be some kind of follow-up"): the "After the day" slide is an ask slide with
+  // part 'after': stored exactly, its part dropped as decide's is (present-1.4 unchanged); a phone finds it by its first row ("Next step")
+  { const AF = { type: 'ask', part: 'after', kicker: 'After the day', headline: 'How we’ll stay connected', rows: [['Next step', 'Weekly homework club'], ['Within 48 hours', 'A thank-you'], ['Within 2 weeks', 'An invitation, if they asked'], ['A visit', 'Only if they ask'], ['The list', 'Private, with the interest coordinator']],
+      verse: { text: 'My little children, let us not love in word, neither in tongue; but in deed and in truth.', ref: '1 John 3:18 · KJV' } };
+    x = await stored(T11([AF]));
+    const { part: _p, ...want } = AF;
+    c('v10.43: the After slide is stored exactly, its part dropped', [x.r.status, x.d && x.d.slides[1]], [200, want]); }
   // the Sabbath deck: gifts {pub}, and the "Take it now" join (GIFTS §10.1, §12.1 E 30–33)
   const PUB = 'QLvn7p0Tqzd5';
   const gd = (o = {}) => deck({ audience: { type: 'congregation', group: 'congregation' }, ministry: { id: 'gifts-first', name: 'Discover your gifts' }, gifts: { pub: PUB },

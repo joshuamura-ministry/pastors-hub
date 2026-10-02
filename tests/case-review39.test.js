@@ -107,8 +107,10 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   { const r=P.J(`caseDeck(caseModel('vbs',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='capacity').gaps`);
     c('a ministry that needs nothing a month is never "Short by $0 a month"', r.some(g=>/\$0\b/.test(g)), false); }
   own(FX.SMALL,[]);
-  { const r=P.J(`(()=>{ const m=caseModel('vbs',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m); return {cap:d.slides.find(s=>s.type==='capacity').gaps.filter(g=>/\\$/.test(g)),left:d.slides.find(s=>s.type==='ask').rows.find(r=>/Left/.test(r[0])),over:d.slides.find(s=>s.type==='ask').rows.find(r=>/over/.test(r[0]))||null,cost:m.questions.find(q=>q.id==='board.cost').a,
+  { const r=P.J(`(()=>{ const m=caseModel('vbs',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m); return {cap:d.slides.find(s=>s.type==='capacity').gaps.filter(g=>/\\$/.test(g)),left:d.slides.find(s=>s.type==='ask'&&s.part!=='after').rows.find(r=>/Left/.test(r[0])),over:d.slides.find(s=>s.type==='ask'&&s.part!=='after').rows.find(r=>/over/.test(r[0]))||null,cost:m.questions.find(q=>q.id==='board.cost').a,
       es:caseModel('vbs',{type:'board',group:'board'},{now:${NOW},lang:'es'}).questions.find(q=>q.id==='board.cost').a}; })()`);
+    // v10.43 ("after one day there needs to be some kind of follow-up"): VBS is a series, so "After the series" (an ask slide, part
+    // 'after') comes before its own ask: the ask read above is the one without that part
     c('VBS ($375 against $300): capacity, ask and answer agree on $75', [r.cap,r.left[1],r.over,/short by \$75 of the start-up budget, so the board would need to find that sum/.test(r.cost)], [['Short by $75 of the start-up budget'],'Short by $75 to start',null,true]);
     c('…in Spanish too: "Después faltan $75 del presupuesto inicial"', /Después faltan \$75 del presupuesto inicial/.test(r.es), true); }
   own(FX.MEDIUM,[]);

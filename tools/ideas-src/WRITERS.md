@@ -186,8 +186,17 @@ In the file this means:
   Invite ideas are honest about what they are.
 - **ages / where:** vary them, with at least 4 `where` values. Keep `church` for the few ideas where the building is
   already where people come.
-- **sabbath:** true only when the activity fits Sabbath hours by Adventist practice (worship, prayer, visiting,
-  nature, mercy). False for buying and selling, fundraising, secular work, or sports competition.
+- **sabbath:** true when the idea does good, the things Christ did on the Sabbath (SABBATH-GUIDELINE.md beside this
+  file, the pastor's rule of 1 Oct 2026: "we are not legalistic"): worship, prayer, Bible study and seminars, health
+  talks and screenings, visiting the sick and lonely, preparing, serving and delivering free meals, a free pantry, kits
+  for people in crisis (bought beforehand), comforting, mercy for someone in need now (even real work), childcare so a
+  worn-out parent can rest, life-saving and care training, hospitality and friendship, nature walks. An ordinary
+  offering in worship is fine. False for buying and selling, prices, fees, fundraising, offerings for a project, markets
+  and swaps, a café or diner where buying the food is the point (unless the text also names a home, church, library or
+  park), fairs and festivals with games, films and parties for fun, sport, exercise classes and competition, routine
+  work (repairs, building, gardening, crafts, printing and mailing, filming, admin and committee business), and anything
+  that can only happen while offices, courts or schools are open. A mixed idea is true when its heart fits; say in the
+  steps which part waits for another day. Free drawings and giveaways are fine; never sell a raffle ticket or a chance.
 - **need:** 1 to 6 census tags from `vocab.json`, **most specific first**. The first tag present in a tract writes
   the card's "Why here" line. For ideas that fit anywhere, add `settled`, `changing` and `growing`: one of the three
   is present wherever the census has ten-year trend data. Add one or two ordinary tags as well (for example
@@ -227,7 +236,7 @@ In the file this means:
 | target, targeting, targeted (público objetivo, segmentar) | "shown to people within 3 miles", "for", "with" |
 | bait, lure, hook them, foot in the door | say what you offer and leave it there |
 | convert them, win them, prospects, soul-winning (convertirlos, ganarlos) | "invite", "study with", "those who ask" |
-| raffle, door prize, 50/50, lottery, bingo (flagged) | a free drawing is still a raffle: give everyone the thing |
+| selling raffle tickets, 50/50, lottery, bingo (flagged) | a FREE drawing or giveaway is fine (a Bible drawn at a seminar, a door prize, a community giveaway); never sell a ticket or a chance |
 | pork, bacon, ham, sausage, shrimp, hot dogs | vegetarian food: veggie dogs, bean chili, haystacks |
 | beer, wine, brewery, pub, happy hour | coffee shop, café, juice |
 | counseling, therapy, diagnose (with no partner) | "not counseling: we listen and refer to …" plus a named professional partner |
@@ -733,8 +742,9 @@ Everything in "Children and young people" above applies. In club and youth work 
 ### The Sabbath in club and department work
 
 - **Fits the Sabbath** (`sabbath:true`): worship, Investiture, nature walks and nature honors, Bible study and
-  Pathfinder Bible Experience, visiting care homes and shut-ins, acts of mercy, mission stories.
-- **Not on the Sabbath** (`sabbath:false`): drill competitions and parade practice, fundraising and sales (fruit,
+  Pathfinder Bible Experience, visiting care homes and shut-ins, acts of mercy, community service done free, feeding
+  people, mission stories.
+- **Best on another day** (`sabbath:false`): drill competitions and parade practice, fundraising and sales (fruit,
   pies, car washes), buying uniforms or supplies, craft and vocational honors that are work, sports and
   competitions, setting up camp and travel that can be done before sunset on Friday.
 - At a camporee or campout, Sabbath is kept as Sabbath: worship, nature and rest, no trading or games of competition.

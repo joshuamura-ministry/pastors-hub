@@ -16,6 +16,9 @@ Code reference: pristine v10.39.0 `index.html` (line numbers below refer to it).
 | `themes.json` | The 57 themes in display order (the 42 outward themes, the 7 INSIDE THE CHURCH themes, then the 8 Adventist department themes): id, EN/ES names, scope, what belongs elsewhere, search synonyms, related census tags, `inside` |
 | `themes/<themeId>.json` | `{"theme":"<id>","ideas":[…]}`: one file per theme, 50+ ideas |
 | `reach.json` | `{"<idea id>":"in"\|"out"\|"both"}`: the reach of the 2,249 ideas written before the `reach` field (kept by the in-reach/outreach classification). Optional; `--all` checks it |
+| `cadence.json` | (v10.43) `{"<idea id>":"ongoing"\|"event"\|"series"\|"series-N"\|"series-N-row"\|"series-row"}`: how every idea runs (see "Cadence" below). With the file present every idea needs a line (or its own `cad`); the packager checks it |
+| `next.json` | (v10.43) `{"<series or event id>":["<ongoing id>","<ongoing id>"]}`: the two ongoing ideas each series and event feeds (its follow-up plan's next step), hand-reviewed |
+| `nocard.json` | (v10.43) `{"<series or event id>":"<reason>"}`: the series and events whose own words promise no names ("anonymous", "through the agency"): no connection card and no follow-up plan |
 | `examples.json` | Three finished prayer ideas (tier 1, 2 and 3). The validator runs idea checks only on this file |
 | `vocab.json` | A snapshot of the app's real vocabularies: 43 `profile()` tags, 13 skills, 13 facilities, 38 RULES ids, and 97 SIGNATURE ids with EN/ES names. Rebuild it with `node validate.mjs --vocab <index.html>` |
 | `validate.mjs` | The validator (see the end of this file) |
@@ -91,7 +94,7 @@ so see "Loading" below.
 | `k` | serve, equip, belong, invite | each theme needs all four, none above 45% | The Serve → Equip → Belong → Invite arc (`KIND`, line 3256) |
 | `ages` | all, children, youth, adults, seniors, families | children or youth ⇒ `minors:true` | Who it is for |
 | `where` | church, streets, homes, online, schools, parks, community, workplaces | each theme needs ≥ 4 different values | Where neighbors meet it. `homes` = at people's doors or in homes (a member's or a neighbor's). `community` = public places used with the owner's or town's permission (library, market, laundromat, station, local events) |
-| `sabbath` | boolean | | Fits Sabbath hours by Adventist practice. Yes: worship, prayer, visiting, nature, mercy. No: buying and selling, fundraising, secular work, sports competition |
+| `sabbath` | boolean | | Fits the Sabbath by the pastor's guideline (SABBATH-GUIDELINE.md, 1 Oct 2026): does it do good, as Christ did on the Sabbath? Yes: worship, prayer, Bible study and seminars, health and healing, feeding (free meals, a free pantry), visiting, comforting, mercy for a present need even with real work, childcare so a parent can rest, hospitality, nature. No: buying and selling, fees, fundraising, markets and swaps, cafés where buying is the point, fairs with games, entertainment, sport, routine work, weekday-only places. A mixed idea is true when its heart fits. Free drawings and giveaways are fine; never a sold chance |
 | `minors` | boolean | true ⇒ `skill` includes `kids`, and both `how` lists mention screening | Involves under-18s. Needs screened adults and the two-adult rule |
 | `need` | 1–6 `profile()` tags | at least one is required | The census tags that make this idea fit a place (`signatureMoves` gate, line 16769). **Order matters:** the first tag found in the tract writes the "Why here" sentence. Put the most specific tag first |
 | `boost` | 0–4 `profile()` tags | | Tags that raise its rank in the library view. The app stores `boost` on SIGNATURE but does not read it; the library ranking below does |
@@ -104,6 +107,8 @@ so see "Loading" below.
 | `partner` | `null` or `{"en","es"}` (3–120 characters each) | tier 3 needs a partner, or `cost` ≥ 300, or `costMo` ≥ 100 | The outside partner (becomes `p`) |
 | `st` | open, trust, deeper, decide | **optional** (added, see below) | The four-stage arc (`STAGE`, line 3560) |
 | `fac` | 1–3 strings such as `"kitchen"` or `"classrooms\|center"` | **optional** (added, see below). Keys: kitchen, classrooms, gym, field, center, parking, stage, av, nursery, library, vehicle, grounds, home | Facilities the idea needs; `\|` separates alternatives |
+| `cad` | `"ongoing"`, `"event"`, `"series"`, `"series-row"`, `"series-N"` or `"series-N-row"` (N 3–26) | **optional** (v10.43, change 9 below). Most ideas take theirs from `cadence.json` | How it runs: weekly or monthly, a set number of sessions, or one day |
+| `nocard` | `true` | **optional** (v10.43, change 9 below); a series or an event only | Its own words promise no names: no connection card and no follow-up plan |
 | `reach` | `"in"`, `"out"` or `"both"` | **optional** (added, see below). Any other value fails. Set it only when the idea differs from its theme's default | Who it is for: `in` = God's people (members, the church family, its officers, classes and services); `out` = the community, including guests who visit; `both` = members and neighbors meet in it on purpose |
 | `en`, `es` | `{"n","d","how"}` | `n` 6–60 characters, no final full stop. `d` 100–420 characters, 2–3 sentences. `how` exactly 4 steps of 20–140 characters. The ES text must be translated, not copied | Name, what it is and why it works, and the first four steps. Spanish is natural Latin-American Spanish and addresses the reader as usted |
 
@@ -141,6 +146,17 @@ Tier limits (they keep sizes honest, and the capacity check depends on these num
    classification of the ideas written before the field); else the theme's default, `"in"` when the theme has
    `"inside": true` and `"out"` otherwise. An idea's own `reach` and its `reach.json` line must agree. The packager
    (tools/build-ideas.mjs) should ship this effective reach with every idea, so the page never has to work it out.
+9. **Cadence** (v10.43; the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and
+   events, which are one-time, one day"). Every idea is `ongoing` (weekly, monthly, a standing offer), a `series` (a set
+   number of sessions that ends) or an `event` (one day, or one short burst). A series says its count only when its own
+   words state a number of gatherings (sessions, weeks, evenings, nights, classes, lessons, meetings, mornings, Sabbaths,
+   parts; 3–26): `series-6` six sessions one a week, `series-4-row` four days in a row; otherwise `series` (the page
+   then says "Series" and times it by dates, never an invented number). The cadence an idea runs as is its own optional
+   `cad` field (the same strings), else its line in `cadence.json`. The packager ships it as an integer: the index's last
+   column `cad` and each record's `cad` (0 ongoing, 1 an event, N a weekly series, 100+N days in a row, 100 a series
+   with no count). It also ships each series' and event's two next steps from `next.json` (record field
+   `nx: [[id, name, nombre], …]`, each target an ongoing idea) and `nocard: true` (the idea's own optional `nocard`
+   field, or `nocard.json`). A fault in any of the three files stops the build, as a bad reach does.
 
 ## How a library idea becomes a first-class ministry
 
@@ -355,8 +371,8 @@ until all 57 exist. The count table shows each theme's in/out/both split (inside
 - Names differ from SIGNATURE names (EN and ES), and ES differs from EN.
 - 2–3 sentences in `d`: a quotation counts as one word, and common abbreviations are ignored.
 - No emoji, no double spaces.
-- Banned content, in both languages: pork or unclean meat ("veggie dogs" and "ham radio" pass); alcohol; raffles,
-  lotteries, casinos, door prizes and 50/50s; gambling (except recovery from it); "target/targeting" (and in
+- Banned content, in both languages: pork or unclean meat ("veggie dogs" and "ham radio" pass); alcohol; sold raffle
+  tickets, lotteries, casinos and 50/50s (free drawings and giveaways are fine); gambling (except recovery from it); "target/targeting" (and in
   Spanish "público objetivo", "segmentar"); bait, lure or hook framing; "convert them" and soul-counting; door-to-door
   gathering of personal information; counselling or therapy words with no partner and no referral cue
   (refer, licensed, professional, hotline, 988, "not counseling"); abuse-survivors ideas without a professional

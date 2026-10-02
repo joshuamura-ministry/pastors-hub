@@ -113,7 +113,9 @@ const NAMES = KEY.map(k => k.name);
       const tag = `${variant} ${lang} ${id === '@plan' ? 'the Planner series' : id} → ${group}`;
       c(`${tag}: builds`, D.ok ? true : D.error, true);
       if (!D.ok) continue;
-      c(`${tag}: 7–11 slides`, D.n >= 7 && D.n <= 11, true);
+      // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): an outreach event or series adds "After the day"
+      // (his Planner series to the conference: 12, present.mjs's limit)
+      c(`${tag}: 7–12 slides`, D.n >= 7 && D.n <= 12, true);
       c(`${tag}: no member's name, no "AI"`, [NAMES.filter(nm => D.json.includes(nm)), rx(RULES.ai, '').test(D.json)], [[], false]);
       if (variant === 'after' && purpose !== 'field' && purpose !== 'family') c(`${tag}: the gifts results are read (39 counted: 40 less the one flagged)`, [D.gifts.has, D.gifts.respondents], [true, 39]);
       if (purpose === 'youth') c(`${tag}: the children's safeguarding rows`, rx(RULES.safeguarding).test(D.json), true);

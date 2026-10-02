@@ -140,10 +140,12 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   c('the Sabbath deck: no date, "Starting soon; we’ll announce the day and the length" (the length, as the day)', rowsOf('pathfinders','congregation','congregation','en'),
     [['When','Starting soon; we’ll announce the day and the length'],['Places','16']]);
   c('…Spanish', rowsOf('pathfinders','congregation','congregation','es')[0], ['Cuándo','Empieza pronto; anunciaremos el día y la duración']);
-  const hx=M(P,'health-expo','board','board',{timing:'options'});
+  // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): the health expo is a one-day event now
+  // (no length at all), so a short trial is an ongoing idea the pastor set to two weeks (Adjust)
+  const ov0=P.J('uChurch().overrides||{}'); P.E(`uChurch().overrides={...uChurch().overrides,'food-pantry':{weeks:2}}; uPersist();`); const hx=M(P,'food-pantry','board','board',{timing:'options'}); P.E(`uChurch().overrides=${JSON.stringify(ov0)}; uPersist();`);
   // v10.42.0 fix after review: the finance committee, the board and the business meeting are asked the day (and start), never the
   // length: "the length is set by the motion" (a board once read "Length 4-week pilot · 6-week trial · a full season" beside a motion for 6 weeks)
-  c('a trial of four weeks or less offers no 4-week pilot (the health expo: 2 weeks)', [hx.capacity.req.weeks,hx.motion.rows.find(r=>r[0]==='Length'||r[0]==='When')[1].includes('pilot'),hx.timing.lengths], [2,false,['2-week trial']]);
+  c('a trial of four weeks or less offers no 4-week pilot (the food pantry, set to 2 weeks)', [hx.capacity.req.weeks,hx.motion.rows.find(r=>r[0]==='Length'||r[0]==='When')[1].includes('pilot'),hx.timing.lengths], [2,false,['2-week trial']]);
   c('a start in another year says its year ("January 2027")', P.J(`caseModel('pathfinders',{type:'team',group:'youth'},{timing:'options',now:${Date.UTC(2026,11,20,15)}}).timing.starts`), 'January 2027, after a calendar check');
   c('the preparation line keeps its month, not its day ("September 2026")', D(P,'pathfinders','board','board',{timing:'options'}).slides[1].by, 'To: Church board · Prepared by Pastor Joshua Mura · September 2026');
   // v10.42 part 3 (X3): one timing slide, "Let's decide together" here; the first steps stay in the model and the handout
@@ -208,7 +210,8 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   P.E(`CAP=null; capSave(${JSON.stringify(FX.MEDIUM)});`);
   // clashes: only what Terrain knows
   const noClash=P.J(`(()=>{ let n=0; for(const x of SIGNATURE) for(const lang of ['en','es']){ const m=caseModel(x.id,{type:'board',group:'board'},{timing:'options',lang,now:${NOW}});
-      m.timing.options.forEach(o=>{ if(o.clashes.length||/clash|choca|coincide/i.test(o.text)) n++; }); } return n; })()`);
+      // v10.43: a weekly series runs its own sessions (eight for stop smoking), so a holiday one of them meets is said: known, never invented
+      m.timing.options.forEach(o=>{ if(o.clashes.some(c=>c.kind!=='holiday')||/clash|choca|coincide/i.test(o.text)) n++; }); } return n; })()`);
   c('with nothing in the plan at a time and no series near, no clash is ever shown (every built-in, EN and ES)', noClash, 0);
   P.E(`uChurch().selected=['grief']; uChurch().overrides={grief:{slot:'Tue evening'},pathfinders:{weeks:6}}; uPersist();`);
   // the homework club (classrooms, not a Sabbath idea): Tuesday, Wednesday and Thursday evenings are its times
@@ -269,7 +272,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   c('the Sabbath deck: the appeal back to the goal, no date', cg.slides.find(s=>s.type==='close').headline, 'Will you join us to grow our Pathfinder Club?');
   c('…Spanish', D(P,'pathfinders','congregation','congregation',{timing:'options',lang:'es'}).slides.find(s=>s.type==='close').headline, '¿Se unirán a nosotros para hacer crecer nuestro Club de Conquistadores?');
   c('the words about the review and the win name no date either (the group’s close, "What to say")', [M(P,'grief','congregation','congregation',{timing:'options'}).close,/a named coordinator, a day agreed together, a spending ceiling and a review after the trial\./.test(M(P,'pathfinders','board','board',{timing:'options'}).questions.find(q=>q.id==='board.tried').a)],
-    ['We will tell you after the trial what God did with it.',true]);
+    ['We will tell you after the series what God did with it.',true]);   // v10.43 (the pastor: "separate the things that are weekly or monthly… and events"): grief recovery is a series of eight sessions
   });
 
   await sec(async()=>{

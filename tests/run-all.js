@@ -18,7 +18,8 @@ const dir=__dirname;
   if(!okSyntax) process.exit(1); }
 const files=fs.readdirSync(dir).filter(f=>/\.test\.(js|mjs)$/.test(f)).sort();
 // v10.42.0 (DESIGN §9.4 step 2): the average church counts every v10.42 check (relevance, the arc, gifts first) — none may be PENDING.
-const env={...process.env,REQUIRE_V42:'1'};
+// v10.43.0 (DESIGN §8): the follow-up plan and the connection cards on the average church (v43-average-church) — none PENDING either.
+const env={...process.env,REQUIRE_V42:'1',REQUIRE_V43:'1'};
 let P=0,F=0; const bad=[];
 for(const f of files){
   const r=spawnSync(process.execPath,[path.join(dir,f)],{encoding:'utf8',timeout:+process.env.SUITE_TIMEOUT_MS||300000,env});

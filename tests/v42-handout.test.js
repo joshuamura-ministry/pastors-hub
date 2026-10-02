@@ -92,6 +92,10 @@ const NAMES=['Ana Lopez','Ben Carter','Cara Diaz','Dan Evans','Eve Fox','Finn Gr
       const aud=w.eval(`(()=>{ const G=CASE_GROUPS.find(g=>g.id==='${group}'); const prev=LANG; LANG='${lang}'; try{ return caseGroupFor(G.id,caseT(G)); }finally{ LANG=prev; } })()`);
       // v10.42 part 3 (DESIGN X3, the pastor: "about 8–10 slides", one story): exactly one timing slide; with "Suggest options" that is
       // "Let's decide together", and the dates slide's three steps stay in the handout (the pastor's own), not on a slide
+      // v10.43 (the pastor, 30 Sep 2026: "after one day there needs to be some kind of follow-up"): VBS is a series, so its deck carries
+      // "After the series"; the member's copy holds every one of its rows (the label and the words), as every other slide's
+      if(mi==='vbs'){ const A=R.d.slides.find(s=>s.type==='ask'&&s.rows&&s.rows[0]&&['Next step','Siguiente paso'].includes(s.rows[0][0]));
+        c(`${tag}: (v10.43) the After slide is there, and every row of it is in the PDF`, [!!A&&R.parts.includes('after'),A?A.rows.filter(r=>!has(r[0])||!has(r[1])).map(r=>r.join(': ')):['none']], [true,[]]); }
       if(opt){ LV.push(R.lv); c(`${tag}: (the fixture) the deck has "Let's decide together", and no dates slide beside it (one timing slide)`, [R.parts.includes('decide'),R.d.slides.some(s=>s.type==='timeline')], [true,false]);
         c(`${tag}: no line to write the agreed day on (a member's copy); the calendar check is there (the rows: every text below)`,
           // (fix after review, the length: a team's own handout says "Agreed day, start and length:"; a member's copy has none either)

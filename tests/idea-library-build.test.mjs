@@ -32,6 +32,10 @@ c('index: version 1, the columns the page reads', [I.v, ['id', 't', 'also', 'tie
 c('57 themes, each with names in both languages, synonyms and a colour of the app', [I.themes.length, I.themes.every(t => t.en && t.es && t.syn.en.length >= 5 && t.syn.es.length >= 5 && ['hardship', 'housing', 'children', 'people', 'language'].includes(t.hue))], [57, true]);
 // v10.41 integration: every idea ships its reach (its own, else reach.json's, else its theme's default), never 0
 c('every idea has a reach: in, out or both', I.ideas.every(r => ['in', 'out', 'both'].includes(r[col('reach')])), true);
+// v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events"): every row ships its
+// cadence, an integer (0 ongoing, 1 a one-day event, 3–26 a weekly series, 103–126 days in a row, 100 a series with no count stated)
+c('v10.43: every idea has a cadence (cad 0, 1, 3–26, 100 or 103–126); the last column of the index (tests/v43-cadence-data.test.mjs holds the rest)',
+  [I.ideas.every(r => { const v = r[col('cad')]; return v === 0 || v === 1 || (v >= 3 && v <= 26) || v === 100 || (v >= 103 && v <= 126); }), col('cad') === I.cols.length - 1], [true, true]);
 c('the count is the rows, and each theme\'s count its rows', [I.count === I.ideas.length, I.themes.every((t, i) => t.n === I.ideas.filter(r => r[col('t')] === i).length)], [true, true]);
 const shipped = I.themes.filter(t => t.n > 0);
 c('every shipped theme has at least 50 ideas (the pastor: "50 different things for prayer")', shipped.filter(t => t.n < 50).map(t => t.id + ':' + t.n), []);

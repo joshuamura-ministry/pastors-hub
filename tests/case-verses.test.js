@@ -54,6 +54,10 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       LIB.egw.map(g=>[g.id,true,true,g.en.ref,g.es.ref]));
     c('the plan (candidates by slide job and by need) is the research plan', P, LIB.plan);
     c('the plan names only verses in the library', [...Object.values(P.byJob),...Object.values(P.byNeed)].flat().filter(id=>!V.some(v=>v.id===id)), []);
+    // v10.43 (the pastor, 30 Sep 2026: "after one day there needs to be some kind of follow-up"): the "After the day" slide's verses are
+    // the verified library's own (Ecclesiastes 11:6, 1 John 3:18, Hebrews 13:2, Galatians 6:9, Psalm 68:6, 1 Peter 4:9)
+    c("v10.43: the After slide's verses (CASE_VERSE_AFTER) are all in the verified library", JE('CASE_VERSE_AFTER').filter(id=>!V.some(v=>v.id===id)), []);
+    c("…and each fits the slide's room (92), two of them the room beside the results row (50)", [JE('CASE_VERSE_AFTER').filter(id=>{ const v=V.find(z=>z.id===id); return Math.max(v.en.text.length,v.es.text.length)>92; }), JE('CASE_VERSE_AFTER').filter(id=>{ const v=V.find(z=>z.id===id); return Math.max(v.en.text.length,v.es.text.length)<=50; }).length], [[],2]);
     c('every English verse is the KJV and every Spanish one the RVA: no verse over 160 characters but Luke 4:18 (the verse slide only)',
       V.filter(v=>Math.max(v.en.text.length,v.es.text.length)>160).map(v=>[v.id,v.jobs]), [['luke4_18',['verse']]]);
     c('every need id the Census rules fire maps to need tags the plan knows', JE(`Object.keys(CASE_NEED_CMP).filter(id=>!(CASE_NEED_TAG[id]||[]).length||(CASE_NEED_TAG[id]||[]).some(t=>!CASE_VERSE_PLAN.byNeed[t]))`), []); }
@@ -133,10 +137,12 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
        §5): one arc per kind. The opening and the goal; why (a figure the purpose allows, or Scripture); where (only when the purpose
        places it); how it works; who and what it takes; safeguards; one timing slide; the ask; the appeal. The finance committee hears
        the cost right after the opening (X12); the whole church has no timing slide; the conference's field and mission (§5.4). */
-    const ARC={board:/^join,motion,(ask,)?(stat|verse),(place,|trio,)?how,capacity,ability,risks,timeline,(ask,)?close$/,
-      team:/^join,motion,(stat|verse),(place,)?how,ability,roles,risks,timeline,yes$/,
-      congregation:/^join,motion,verse,(stat,)?(place,)?how,ability,yes,close$/,
-      conference:/^join,motion,risks,(place,)?how,capacity,ability,timeline,ask,risks,close$/};
+    /* v10.43 (the pastor, 30 Sep 2026: "after one day there needs to be some kind of follow-up"): an event or a series (VBS here) adds
+       "After the day" (an ask slide) after the timing (the whole church: after How it works), FOLLOWUP.md §3.6 */
+    const ARC={board:/^join,motion,(ask,)?(stat|verse),(place,|trio,)?how,capacity,ability,risks,timeline,(ask,)?(ask,)?close$/,
+      team:/^join,motion,(stat|verse),(place,)?how,ability,roles,risks,timeline,(ask,)?yes$/,
+      congregation:/^join,motion,verse,(stat,)?(place,)?how,(ask,)?ability,yes,close$/,
+      conference:/^join,motion,risks,(place,)?how,capacity,ability,timeline,(ask,)?ask,risks,close$/};
     c('about ten content slides, one arc per kind: board, team, the whole church, the conference', Object.fromEntries(Object.entries(n).map(([k,v])=>[k,[...v].filter(x=>!ARC[k].test(x))])),
       {board:[],team:[],congregation:[],conference:[]}); }
   { const bad=[];

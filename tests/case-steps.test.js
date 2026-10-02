@@ -152,7 +152,9 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   { const S=P.J(`SIGNATURE.filter(x=>libBuiltinThemes(x).some(t=>${JSON.stringify(PT)}.includes(t))&&libOut(libReach(x))).map(x=>x.id)`);   // v10.41 integration: the three themes' built-ins
     for(let k=0;k<10&&P.q('#cs-lib [data-lib-more="out"]');k++){ P.q('#cs-lib [data-lib-more="out"]').click(); await sleep(40); }
     c('built-ins are cards of the same kind in the same list (prayer box, prayer walk, prayer list, meal train…)', P.qa('#cs-lib .lib-sig').map(e=>e.dataset.libId).sort(), S.sort()); }
-  c('a built-in card: kind, name, size, people, cost, why here, the fit, "Choose this"', (()=>{ const e=P.q('#cs-lib .lib-sig'); return [!!e.querySelector('.lib-kind'),!!e.querySelector('h4'),e.querySelectorAll('.lib-facts li').length,e.querySelector('.lib-acts button').textContent]; })(), [true,true,3,'Choose this']);
+  // v10.43 (the pastor: "separate the things that are weekly or monthly — ongoing ministry — and events"): how it runs is the first fact
+  // v51 (the Sabbath guideline): a built-in that fits the Sabbath also says "Fits the Sabbath", as a library card does
+  c('a built-in card: kind, name, how it runs, size, people, cost, why here, the fit, "Choose this", and "Fits the Sabbath" when it fits', (()=>{ const e=P.q('#cs-lib .lib-sig'); return [!!e.querySelector('.lib-kind'),!!e.querySelector('h4'),e.querySelectorAll('.lib-facts li:not(.sab)').length,!!e.querySelector('.lib-facts li.lib-cad:first-child'),e.querySelector('.lib-acts button').textContent,!!e.querySelector('.lib-facts li.sab')===P.J('caseSabFits(SIGNATURE.find(x=>x.id==='+JSON.stringify(e.dataset.libId)+'))')]; })(), [true,true,4,true,'Choose this',true]);
   c('no filters and no second heading in the group list (fewer words)', [!!P.q('#cs-lib .lib-filters'),!!P.q('#cs-lib .lib-head')], [false,false]);
 
   console.log('\n-- the search still reaches every idea --');
@@ -194,7 +196,7 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   console.log('\n-- On Sabbath: ideas everyone can join --');
   P.q('#cs-s2 [data-cs-change]').click(); await sleep(40);
   P.q('[data-cs-group="congregation"]').click(); await until(()=>cards(P,'out').length>0); await sleep(60);
-  c('most of the first ideas are "This week"', cards(P,'out').filter(e=>e.querySelector('.lib-facts li').textContent==='This week').length>=4, true);
+  c('most of the first ideas are "This week"', cards(P,'out').filter(e=>e.querySelector('.lib-facts li:not(.lib-cad)').textContent==='This week').length>=4, true);   // v10.43: the size follows how it runs
 
   console.log('\n-- the conference: evangelism only, the Evangelism Planner series first --');
   P.E(`uChurch().plan={church:'Bucks County SDA',date:'2027-10-02',nights:20,kind:'prophecy',perweek:4,v:3}; uPersist();`);

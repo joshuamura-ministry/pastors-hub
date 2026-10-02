@@ -305,7 +305,9 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     click(P,'#cs-ask [data-pr-ydel]');
     c('…and Remove takes one off', [P.J(`caseYesList('pathfinders')`),/Ruth/.test(P.txt('#cs-ask'))], [[],false]);
     click(P,'[data-cs-act="ask"]');
-    c('closing the ask list takes the names off the page', /Ruth/.test(P.D.body.textContent), false);
+    // v10.43 (integration): the page's own script sits in <body>, and since v10.43 it lists the book of Ruth among the words that keep
+    // their capitals (cnNextNoun: "the sunday-morning grief walk" in the samples); the check reads what the page SHOWS, scripts left out
+    c('closing the ask list takes the names off the page', /Ruth/.test([...P.D.body.querySelectorAll(':not(script):not(style)')].filter(e=>!e.closest('script,style')).map(e=>[...e.childNodes].filter(n=>n.nodeType===3).map(n=>n.nodeValue).join('')).join(' ')), false);
     click(P,'[data-cs-act="present"]'); click(P,'[data-pr-start]'); await until(()=>P.q('#casepres .td-root'));
     click(P,'[data-pr-answers]'); await until(()=>P.q('[data-pr-ashow]')); click(P,'[data-pr-ashow]'); await until(()=>P.q('.cp-alist li [data-pr-del]'));
     click(P,'.cp-alist [data-pr-del]'); await until(()=>/No answers yet/.test(P.txt('[data-pr-alist]')||''));

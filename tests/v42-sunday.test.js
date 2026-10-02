@@ -8,15 +8,17 @@ const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.lo
 const has=t=>html.includes(t);
 
 console.log('\n-- moved to Sunday --');
-c('respite: "Respite Sunday", one Sunday afternoon a month', has("n:'Respite Sunday',d:'One Sunday afternoon a month"));
+// v51 (the Sabbath guideline, 1 Oct 2026): respite childcare fits the Sabbath, so a worn-out parent can rest
+c('respite: "Respite afternoon", one Sabbath or Sunday afternoon a month', has("n:'Respite afternoon',d:'One Sabbath or Sunday afternoon a month the church takes the children for four hours, so a worn-out parent can sleep, rest, or do nothing at all.'"));
 c('fall festival: the last Sunday of October (EN)', has('Book the last Sunday of October'));
 c('fall festival: el último domingo de octubre (ES)', has('Reserve el último domingo de octubre'));
 c('car care: a spring and a fall Sunday (EN)', has('pick a spring and a fall Sunday.'));
 c('car care: un domingo de primavera y otro de otoño (ES)', has('escoja un domingo de primavera y otro de otoño.'));
 c('repair day: "Fix-it Sunday", one Sunday a month (EN)', [has("n:'Fix-it Sunday',"),has('One Sunday a month the practical members'),has('Pick one Sunday a month and set out tables')], [true,true,true]);
 c('repair day: Domingo de reparaciones, un domingo al mes (ES)', [has("'repair-cafe':'Domingo de reparaciones',"),has('Escoja un domingo al mes y ponga mesas')], [true,true]);
-c('men’s breakfast: Sunday, seven o’clock (EN, description, why and step)', [has("d:'Sunday, seven o\\u2019clock, cooked breakfast"),has('a Sunday morning is often the one free slot'),has("'Pick a Sunday, seven o\\u2019clock, and cook")], [true,true,true]);
-c('men’s breakfast: un domingo a las siete (ES)', has('Escoja un domingo a las siete y cocine'));
+// v51: a breakfast cannot move to an afternoon: an early Sabbath morning before Sabbath School, or a Sunday
+c('men’s breakfast: a Sabbath morning before Sabbath School, or a Sunday, seven o’clock (EN, description, why and step)', [has("d:'A Sabbath morning before Sabbath School, or a Sunday: seven o\\u2019clock, cooked breakfast, one chapter, done by nine."),has('an early Sabbath or Sunday morning is often the one free slot'),has("'Pick a Sabbath morning before Sabbath School, or a Sunday, at seven o\\u2019clock, and cook")], [true,true,true]);
+c('men’s breakfast: un sábado temprano o un domingo, a las siete (ES)', has('Escoja un sábado temprano, antes de la Escuela Sabática, o un domingo, a las siete, y cocine'));
 
 console.log('\n-- nothing left on the Sabbath --');
 const gone=['Respite Saturday','last Saturday of October','a spring and a fall Saturday','Fix-it Saturday','One Saturday a month','Pick one Saturday a month',
