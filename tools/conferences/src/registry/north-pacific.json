@@ -1,0 +1,1020 @@
+[
+  {
+    "conf": "Alaska",
+    "union": "North Pacific Union",
+    "states": [
+      "AK"
+    ],
+    "site": "https://alaskaconference.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": "up to 75% of expenses for a full-message reaping series (15+ meetings); the church pays at least 25%",
+      "cap": "$18,000 per church district (full series by an NPUC or NAD guest evangelist; citywide campaigns excepted); $10,500 per district (full series by an Alaska pastor); $1,000 (partial series of 7–14 days, one per church per event); $500 (series under 7 days)",
+      "deadline": "at least 90 days before the series (no fixed annual date); for 2027, pastors and elders bring evangelism plans and budget requests to a planning session on 1 November 2026",
+      "how": "Fill in the Public Evangelism Budget Request (church board, pastor and conference evangelism coordinator sign) and submit it to the Conference President at least 90 days ahead; half of the conference portion can be advanced.",
+      "conditions": [
+        "Evangelism funds are for reaping series only, not sowing or nurturing events.",
+        "A full-message series is 15 or more continuous meetings covering all the church's major doctrines; 14 or fewer meetings, or any ShareHIM series, counts as partial.",
+        "The budget lists the church contribution, meeting offerings and conference assistance.",
+        "The local church treasurer handles the money, never mixed with personal funds; offerings are deposited as received and listed separately; every expense needs a receipt or voucher.",
+        "Apart from the advance, money is paid only on receipts; any balance goes back to the conference with the final report.",
+        "Bible worker subsidy: up to $500 a month for up to 3 months before and during a full-message series by an approved NPUC or NAD evangelist (prioritised by available funds).",
+        "Equipment subsidy: $500 (one series a year) for a pastor or administrator who conducts a full-message series of 15+ meetings, approved before it starts, paid on receipts."
+      ],
+      "report": "Income and expense report on treasury forms, with receipts, within 30 days after the meetings close; any balance returned. Media-ministry interests are followed up and reported on the monthly Pastor's Report.",
+      "programmes": [
+        "Conference-wide evangelism campaign with 'One Voice', February/March 2027 (Strategic Plan 2026–2028, Initiative 4.3)",
+        "NAD digital evangelism pilot for remote areas from September 2026 (Initiative 4.2)",
+        "Radio-based conference-wide evangelism thrust, fall 2027 (Initiative 6.3)",
+        "Evangelism 360 and ACTS church-planting training, 16–18 October 2026, Alaska Conference office",
+        "Training for church leaders with the NAD Evangelism Institute, 30–31 October 2026, and a 2027 evangelism planning and budget session for pastors and elders, 1 November 2026",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings",
+        "NPUC small-conference support (union level): the three large conferences each give half a percent of tithe to Alaska, Idaho and Montana; in 2021–2023 NPUC also offered each small conference an extra $150,000 (plus personnel or training) for a year of evangelism"
+      ],
+      "sources": [
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Conference Subsidy: Eligible for up to 75% reimbursement of expenses, while the sponsoring church will be responsible for a minimum of 25% of associated costs of the series. Maximum of $18,000 Conference subsidy per church district, (except citywide campaigns)."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Conference Subsidy: Eligible for up to 75% reimbursement of expenses. The sponsoring church will be responsible for a minimum of 25% of associated costs of the series. Maximum of $10,500 Conference subsidy per church district."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Maximum of $1,000 Conference subsidy for series 7-14 days in duration. (One subsidy per church per event) Maximum of $500 Conference subsidy per church for series less than 7 days (one subsidy per church) with payment made to the sponsoring church."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Evangelism funds are restricted to reaping series only and do not include, sowing or nurturing events."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Requests for evangelism appropriations shall be submitted to the Conference President at least 90 days in advance"
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "For all reaping series, 50% of the conference portion may be requested as an advance. The remainder will be provided after the income and expense report has been reviewed and receipts submitted."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "The final report shall be made within 30 days after the close of the meetings."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Any balance of funds should be returned to the conference with the final report."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "Evangelism funds must not be mingled with personal funds, but shall be handled by the local church treasurer."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "The Alaska Conference will assist the local church with the support of a Bible Worker with up to $500 per month for a maximum of 3 months prior to and including a full-message evangelistic series conducted by an approved NPUC or NAD Evangelist."
+        },
+        {
+          "title": "Public Evangelism Budget Request, with '4100 Appropriations (Evangelism)' policy on page 2 (PDF 'Evangelism Budget Request' on the Ministerial Forms page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "form printed 'REV 12/11/2007' (PDF modified 17 Sep 2018); Forms page modified 2026-09-09",
+          "url": "https://alaskaconference.org/ministries/ministerial/forms/",
+          "quote": "will receive an equipment subsidy of $500 (one series per year). To qualify for the subsidy, approval must be obtained from conference administration before the series is begun and then paid only upon receipts submitted for actual equipment."
+        },
+        {
+          "title": "Alaska Conference home page (Fall Evangelism Training)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-09-30 (page modified)",
+          "url": "https://alaskaconference.org/",
+          "quote": "Sunday, November 1, at 9 a.m., Pastors and elders are invited to bring their 2027 evangelism plans and budget requests for a collaborative planning session"
+        },
+        {
+          "title": "Alaska Conference home page (Fall Evangelism Training)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-09-30 (page modified)",
+          "url": "https://alaskaconference.org/",
+          "quote": "Church Leaders: Join us Friday and Sabbath, October 30-31, 2026!"
+        },
+        {
+          "title": "AKC Strategic Plan 2026-2028 (Rev. 2)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-03-16 (PDF date; linked from the Administration page)",
+          "url": "https://assets.adventistconnect.org/alaskaco/2026/03/16152638/Strategic-Plan-022326-Rev-2.pdf",
+          "quote": "Conduct a Conference-wide evangelistic thrust sharing the gospel message with “One Voice” in Feb/March 2027."
+        },
+        {
+          "title": "AKC Strategic Plan 2026-2028 (Rev. 2)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-03-16 (PDF date; linked from the Administration page)",
+          "url": "https://assets.adventistconnect.org/alaskaco/2026/03/16152638/Strategic-Plan-022326-Rev-2.pdf",
+          "quote": "Participate with the North American Division in promoting a pilot project of digital evangelism for remote areas beginning in September 2026."
+        },
+        {
+          "title": "AKC Strategic Plan 2026-2028 (Rev. 2)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-03-16 (PDF date; linked from the Administration page)",
+          "url": "https://assets.adventistconnect.org/alaskaco/2026/03/16152638/Strategic-Plan-022326-Rev-2.pdf",
+          "quote": "Provide resources and support for broadcast ministry leading to a conference-wide evangelistic thrust in the fall of 2027."
+        },
+        {
+          "title": "Evangelism 360 & ACTS Information (PDF linked from the home page)",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-09-30 (file date in URL)",
+          "url": "https://assets.adventistconnect.org/alaskaco/2026/09/30145135/Evangelism-360-093026.pdf",
+          "quote": "Join us for evangelism training, October 16-17, 2026, at the Alaska Conference Office"
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "The large conferences — Oregon, Upper Columbia and Washington — each give a half percent of their annual tithe to help Idaho, Montana and Alaska Conferences."
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "Friendship evangelism is the strategic basis for NPUC-funded evangelism activities."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Adults 18+ voted to serve in Alaska Conference churches, all conference employees, and anyone working directly with children and youth fill in a Volunteer Information Form (references checked by the local board) and complete a criminal background check and child-protection training through Sterling Volunteers; screenings expire after three years and must be renewed.",
+      "sources": [
+        {
+          "title": "Background Screening",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-09-22 (page modified)",
+          "url": "https://alaskaconference.org/resources/background-screening",
+          "quote": "those over 18 who are voted to serve within Alaska Conference churches or organizations, all employees of the conference and its entities, or those working directly with children and youth are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers. This process should be completed every three years."
+        },
+        {
+          "title": "Background Screening",
+          "publisher": "Alaska Conference of Seventh-day Adventists",
+          "date": "2026-09-22 (page modified)",
+          "url": "https://alaskaconference.org/resources/background-screening",
+          "quote": "All information is confidential; screenings expire after a three-year period and must be renewed."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": null,
+      "ministerialPage": "https://alaskaconference.org/ministries/ministerial/"
+    },
+    "checked": "2026-09-30",
+    "notes": "The subsidy policy is printed on page 2 of the Evangelism Budget Request on the Ministerial Forms page. The form is marked 'REV 12/11/2007', but the page still links it (modified 9 Sep 2026). Confirm the amounts with the conference before budgeting. There is no separate evangelism department page; budget requests go to the Conference President and the conference evangelism coordinator signs the form. No honorarium or guest-speaker pay rule was found (searched the Ministerial, Forms, Resources, Church Forms and Treasury pages, the Strategic Plan and a web search of the site). As a small NPUC conference, Alaska also receives union evangelism support."
+  },
+  {
+    "conf": "Idaho",
+    "union": "North Pacific Union",
+    "states": [
+      "ID",
+      "OR"
+    ],
+    "site": "https://idahoadventist.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": null,
+      "cap": null,
+      "deadline": null,
+      "how": "Churches submit evangelism projects and events to the conference for GROW-funded help. No request form, deadline or route is published online.",
+      "conditions": [
+        "Kinds of projects named: evangelistic series with an evangelist, series by the pastor or church members, depression recovery series, fair booths, community events such as a Live Nativity, and youth-led meetings.",
+        "The funding level depends on GROW giving. Gifts above the budgeted amount bring series 'closer to the 45% and 65% funding'; the page does not say what those percentages apply to."
+      ],
+      "report": null,
+      "programmes": [
+        "GROW (Go Reach Our World): a member-funded evangelism fund for church projects",
+        "Operation Exponential Growth (from 2021; supported by NPUC small-conference funding)",
+        "Pentecost & Beyond: after Pentecost 2025, continuing the cycle of prayer, community engagement, proclamation/evangelism and discipleship",
+        "Hispanic evangelistic caravan with Upper Columbia and Washington conferences, spring 2026",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings",
+        "NPUC small-conference support (union level): the three large conferences each give half a percent of tithe to Alaska, Idaho and Montana; in 2021–2023 NPUC also offered each small conference an extra $150,000 (plus personnel or training) for a year of evangelism"
+      ],
+      "sources": [
+        {
+          "title": "GROW (Go Reach Our World)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2025-10-15 (page modified)",
+          "url": "https://idahoadventist.org/departments/grow/",
+          "quote": "Contributing to GROW helps fund evangelism in the Idaho Conference. Churches submit a wide variety of projects and events: evangelistic series with an evangelist, evangelistic series by the pastor or church members, depression recovery series, fair booths, community events like a Live Nativity, youth-led meetings, and more."
+        },
+        {
+          "title": "GROW (Go Reach Our World)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2025-10-15 (page modified)",
+          "url": "https://idahoadventist.org/departments/grow/",
+          "quote": "The Idaho Conference assists churches in their evangelistic outreach by providing financial resources."
+        },
+        {
+          "title": "GROW (Go Reach Our World)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2025-10-15 (page modified)",
+          "url": "https://idahoadventist.org/departments/grow/",
+          "quote": "When GROW contributions have reached the budgeted amount, anything over that is available to bring evangelistic series which did happen closer to the 45% and 65% funding."
+        },
+        {
+          "title": "Constituency Report 2023 (PDF linked from the 2023 Constituency Session page)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2023",
+          "url": "https://idahoadventist.org/departments/administration/2023-constituency-session/",
+          "quote": "Increased spending on evangelism, including subsidizing over 70 evangelism/VBS events."
+        },
+        {
+          "title": "Constituency Report 2023 (PDF linked from the 2023 Constituency Session page)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2023",
+          "url": "https://idahoadventist.org/departments/administration/2023-constituency-session/",
+          "quote": "A higher level of subsidies to churches doing evangelism."
+        },
+        {
+          "title": "Pentecost & Beyond",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2026-04-06 (page modified)",
+          "url": "https://idahoadventist.org/pentecost-2025/",
+          "quote": "We plan to continue the cycle of prayer, community engagement, proclamation/evangelism, and discipleship."
+        },
+        {
+          "title": "NPUC Leaders Prepare for Constituency Session",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2026-06-10",
+          "url": "https://nwadventists.com/news/2026/06/npuc-leaders-prepare-constituency-session",
+          "quote": "Hispanic ministries hosting a caravan of coordinated evangelism across Idaho Conference (66 baptisms), Upper Columbia Conference (240+ baptisms) and Washington Conference (148+ baptisms) this spring"
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "Idaho Conference embarked on Operation Exponential Growth in 2021"
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "we adopted a growth initiative in which we offered an additional $150,000, needed personnel access or training to small conferences for a specific year of evangelism, church growth and revitalization projects."
+        },
+        {
+          "title": "About Us",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2026-04-02 (page modified)",
+          "url": "https://idahoadventist.org/who-are-we/about-us/",
+          "quote": "We are responsible for the 6 eastern counties of Oregon (Baker, Grant, Harney, Malheur, Union, and Wallowa) and Idaho south of the 45th parallel (including Lemhi County)."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Screening goes through Sterling Volunteers / Verified Volunteers (the Adventist screening site ncsrisk.org/adventist). The Club Resources page lists the Verified Volunteer forms (Adventist Child Protection, Screening Consent, Training Consent, Disclosure and Consent), and the Treasury/Human Resources office handles volunteer screening. The conference does not publish who must be screened or how often.",
+      "sources": [
+        {
+          "title": "Club Resources (Pathfinders)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "2025-09-11 (page modified)",
+          "url": "https://idahoadventist.org/departments/pathfinders/club-resources/",
+          "quote": "Verified Volunteer Information Adventist Child Protection Screening Consent Form Training Consent form Disclosure and Consent form"
+        },
+        {
+          "title": "Handout (Spanish), Sterling Volunteers registration steps (PDF on the Club Resources page)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://idahoadventist.org/departments/pathfinders/club-resources/",
+          "quote": "Paso 1: Ir a www.ncsrisk.org/adventist y haga clic en el botón de registro por primera vez"
+        },
+        {
+          "title": "Treasury & Human Resources (staff list)",
+          "publisher": "Idaho Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://idahoadventist.org/departments/treasury-human-resources/",
+          "quote": "Accountant, Remittances, Property and Liability Insurance, Offering Readings, Investment, Volunteer Screening"
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://idahoadventist.org/departments/grow/",
+      "ministerialPage": "https://idahoadventist.org/departments/ministerial/"
+    },
+    "checked": "2026-09-30",
+    "notes": "Idaho Conference covers southern Idaho (south of the 45th parallel, including Lemhi County) and six eastern Oregon counties (Baker, Grant, Harney, Malheur, Union, Wallowa). The conference subsidises church evangelism through GROW, but no share, cap, form or deadline is published, so ask the conference office. No honorarium rule found (searched the Ministerial, Elders, Resources, Treasury, GROW and Operation Exponential Growth pages, the 2023 Constituency Report and a web search of the site). As a small/mid-sized NPUC conference, Idaho also receives union evangelism support."
+  },
+  {
+    "conf": "Montana",
+    "union": "North Pacific Union",
+    "states": [
+      "MT"
+    ],
+    "site": "https://www.mtcsda.org/",
+    "evangelism": {
+      "help": "budget-line",
+      "share": null,
+      "cap": null,
+      "deadline": null,
+      "how": null,
+      "conditions": [
+        "Board of Directors notice (undated): general evangelism funding may also be given to Adventist education."
+      ],
+      "report": null,
+      "programmes": [
+        "Each One Reach One: every Montana church to see at least one baptism each year",
+        "Renew & Restore (Renewing Faith & Restoring Hope): conference resources, including technology upgrades for smaller churches so evangelism programmes and training reach everyone",
+        "Grow Montana (2023, with NPUC small-conference funding; every district planned evangelism; total budget about $350,000)",
+        "Montana Mission Projects 'Wall of Mission': churches and schools can submit a project request for donor funding",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings",
+        "NPUC small-conference support (union level): the three large conferences each give half a percent of tithe to Alaska, Idaho and Montana; in 2021–2023 NPUC also offered each small conference an extra $150,000 (plus personnel or training) for a year of evangelism"
+      ],
+      "sources": [
+        {
+          "title": "Education Department (Notice from the Montana Conference Board of Directors)",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.mtcsda.org/education",
+          "quote": "Notice from the Montana Conference Board of Directors: going forward general evangelism funding may also be allocated to Adventist education."
+        },
+        {
+          "title": "64th Constituency Session delegate report (PDF on the Constituency Meeting page)",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "2026-07-19",
+          "url": "https://www.mtcsda.org/_files/ugd/c74a1c_b9d87df2b4664e2cadefb5e56e256989.pdf",
+          "quote": "Each One Reach One expresses our desire for every church in Montana to experience at least one baptism each year."
+        },
+        {
+          "title": "Renew & Restore",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.mtcsda.org/renewandrestore",
+          "quote": "Those resources include Bible Study lessons, small group training and materials, and technology upgrades for our smaller churches so that evangelism programs and training seminars are easily accessible to all."
+        },
+        {
+          "title": "Montana Mission Projects",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.mtcsda.org/mission",
+          "quote": "If your Montana church or school has a dream, click on the button below to fill out a request to join the \"Wall of Mission.\""
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "We’ve added our stash of evangelism funds to the mix for a total budget of about $350,000."
+        },
+        {
+          "title": "Reenergizing Evangelism Growth: Finding a Roadmap for Growing Small Conferences",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2023-08-30",
+          "url": "https://nwadventists.com/feature/reenergizing-evangelism-growth-finding-roadmap-growing-small-conferences",
+          "quote": "The infusion of evangelism monies from NPUC came at the right time to kickstart a Grow Montana initiative."
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Sterling Volunteers child-protection training and background check (run through Adventist Risk Management) is required of all Montana Conference employees and of volunteers and church officers in any contact with children/youth: school volunteers and drivers, club leaders and assistants, elders, deacons/deaconesses, greeters, and social-committee and children's-ministries personnel. The renewal period is not stated.",
+      "sources": [
+        {
+          "title": "Sterling Volunteers",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.mtcsda.org/sterling-volunteers",
+          "quote": "The Sterling training and background check process is required of all MTC employees as well as volunteers and church officers who are in any type of contact with children/youth, which includes:"
+        },
+        {
+          "title": "Sterling Volunteers",
+          "publisher": "Montana Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.mtcsda.org/sterling-volunteers",
+          "quote": "School volunteers/drivers Club ministries leaders and assistants Elders Deacons/deaconesses Greeters Personnel of social committees and children’s ministries."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": null,
+      "ministerialPage": "https://www.mtcsda.org/pastor-resources"
+    },
+    "checked": "2026-09-30",
+    "notes": "No published evangelism subsidy policy, form, share, cap or deadline was found. Searched: Forms, Pastor Forms, Pastor Resources, Resources, Departments, Mission, Renew & Restore, Education and Constituency pages, the 2026 delegate report and a web search. The conference does hold evangelism funds (Gleaner 2023; Board notice), so a pastor should ask conference administration. There is no ministerial or evangelism department page; 'Pastor Resources' is the nearest. The Monthly Worker's Report asks pastors for baptisms and professions of faith and any outreach events. No honorarium rule found. As a small NPUC conference, Montana also receives union evangelism support."
+  },
+  {
+    "conf": "Oregon",
+    "union": "North Pacific Union",
+    "states": [
+      "OR",
+      "WA"
+    ],
+    "site": "https://www.oregonadventist.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": "not a fixed share: the church is encouraged to cover at least 50% of a large-scale reaping series, and 25–50% of other approaches",
+      "cap": "requested conference contribution up to $15,000 (large-scale reaping series), $10,000 (small-scale reaping series), $5,000 (innovative approach or other reaping event). These limits are the form's own field limits.",
+      "deadline": null,
+      "how": "Fill in the online Evangelism Funding Request at evangelive.com/request, choosing 'Innovative Approach' or 'Reaping Event (Evangelism Cycle)', with dates, outreach plan and budget. The Oregon Outreach page's 'Evangelistic Reaping Funds Request' link now points there.",
+      "conditions": [
+        "Select at least one desired outcome to qualify: new interests added to a database, appeals for Bible studies, or appeals for baptism.",
+        "A reaping event is planned as a six-phase evangelism cycle: Revitalize (7–8 months before), Fertilize (5–6 months), Sow (3–4 months), Grow (1–2 months), Reap, Keep (1–3 months after).",
+        "Large-scale reaping series: usually 3–6 weeks with an in-person evangelist. Small-scale: usually under 3 weeks, in person or online/downlink, with more pre-work.",
+        "The budget lists church contribution and requested conference contribution; total income should cover expenses."
+      ],
+      "report": "Evangelism Report on evangelive.com/report: dates, outcomes (new interests, Bible-study and baptism decisions), testimonies, how pre-work helped, follow-up plan, church and conference contributions and every expense with a receipt or breakdown. If income exceeded expenses, the conference's share of the excess is returned to the Conference Office.",
+      "programmes": [
+        "Oregon Conference Evangelism Offering at camp meeting: funds innovative approaches, the cycle of evangelism and public evangelism in churches of every size",
+        "Identity-in-Christ public evangelistic series (10 topics; piloted in Corvallis, McMinnville and Brookings; AdventSource kit planned)",
+        "Church planting goal: help plant 20 churches a year for 5 years (pastor-coached or pastor-led plants)",
+        "Group or one-on-one coaching for evangelistic efforts from Outreach Ministries",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings"
+      ],
+      "sources": [
+        {
+          "title": "Outreach Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/outreach",
+          "quote": "Fill out the Evangelistic Reaping Funds Request form for your upcoming evangelistic efforts."
+        },
+        {
+          "title": "Evangelistic Reaping Funds Request (Google Form linked from the Outreach page)",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://docs.google.com/forms/d/e/1FAIpQLSd0UuzehyaznMBiutUi2ubXpFCTCxdkjP4OSqeOR4eyvcgJDg/viewform",
+          "quote": "Evangelism funding requests have been move to this link: https://www.evangelive.com/request/"
+        },
+        {
+          "title": "Evangelism Funding Request (Evangelive, the Oregon Conference's evangelism funding portal)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/request/",
+          "quote": "Requested Conference Contribution (Required) Please enter a number less than or equal to 15000"
+        },
+        {
+          "title": "Evangelism Funding Request (Evangelive, the Oregon Conference's evangelism funding portal)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/request/",
+          "quote": "For a Large-scale Reaping Series, we encourage the local church to cover at least 50% of the budget if at all possible."
+        },
+        {
+          "title": "Evangelism Funding Request (Evangelive, the Oregon Conference's evangelism funding portal)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/request/",
+          "quote": "For the type of evangelistic approach you have selected, we encourage the local church to cover at least 25-50% of the budget."
+        },
+        {
+          "title": "Evangelism Funding Request (Evangelive, the Oregon Conference's evangelism funding portal)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/request/",
+          "quote": "Desired Outcomes (Goals) (Required) Please select at least one option below to qualify for funding."
+        },
+        {
+          "title": "Evangelism Funding Request (Evangelive, the Oregon Conference's evangelism funding portal)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/request/",
+          "quote": "1. Large-scale Reaping Series are usually held over a period of 3-6 weeks with an in-person evangelist covering the fundamental beliefs of our faith."
+        },
+        {
+          "title": "Evangelism Report (Evangelive)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/report/",
+          "quote": "Income in Excess of Expenses Your current responses above indicate that you had more income than expenses."
+        },
+        {
+          "title": "Evangelism Report (Evangelive)",
+          "publisher": "Oregon Conference of Seventh-day Adventists (via Evangelive)",
+          "date": "undated",
+          "url": "https://www.evangelive.com/report/",
+          "quote": "The amount below is the conference's portion of the excess income amount."
+        },
+        {
+          "title": "Evangelism Offering (Camp Meeting)",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/cm-events/evangelism-offering",
+          "quote": "Many churches across our Conference dream of hosting large-scale outreach efforts but simply don’t have the means to do so. Your generosity helps bridge that gap, making it possible for every congregation—regardless of size or budget—to be part of a broader movement of disciplemaking."
+        },
+        {
+          "title": "Innovating Public Evangelism",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "2024-04-04",
+          "url": "https://www.oregonadventist.org/news/innovating-public-evangelism",
+          "quote": "AdventSource is partnering with us to create a box kit that can be easily implemented by churches across North America and beyond."
+        },
+        {
+          "title": "Outreach Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/outreach",
+          "quote": "Our big-picture goal is to help plant 20 churches a year for the next 5 years in the Oregon Conference."
+        },
+        {
+          "title": "Outreach Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/outreach",
+          "quote": "You can also get group or one-on-one coaching for your evangelistic efforts in the Oregon Conference."
+        },
+        {
+          "title": "Outreach Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/outreach",
+          "quote": "Oregon and southwest Washington continue to have one of the largest percentages of unchurched people in our country."
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        },
+        {
+          "title": "[Name] Named Director of Oregon Conference Ministerial & Evangelism (news; person's name left out here)",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "2026-09-21",
+          "url": "https://www.oregonadventist.org/news/harold-altamirano-named-director-of-oregon-conference-ministerial-evangelism",
+          "quote": "On September 17, he accepted his new role––leading Oregon Conference Ministerial & Evangelism."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": "No honorarium amount is published. Guest speakers: an in-conference speaker must be on the Oregon Conference Approved Speakers List (application includes a background check and speaking guidelines). Speakers from outside the conference must be cleared through the Office of the Vice President for Administration.",
+      "sources": [
+        {
+          "title": "Pastoral Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/ministerial",
+          "quote": "Prior to speaker scheduling, churches who wish to have an in-Conference speaker take the pulpit, must verify that the potential speaker has been approved and is on the Oregon Conference Approved Speakers List"
+        },
+        {
+          "title": "Pastoral Ministries",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/ministries/ministerial",
+          "quote": "All speakers from outside of the Oregon Conference must be cleared through the Office of the Vice President for Administration."
+        },
+        {
+          "title": "Approved Speaker Application",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "2025-02-11 (PDF date)",
+          "url": "https://website-folder.s3.us-east-2.amazonaws.com/Webpage-files/Ministerial/OC+Speaker+Application+Form_English+2025.pdf",
+          "quote": "Do you have a current approved Sterling Volunteers Application on file with the Oregon Conference Risk Management Department? (Required)."
+        }
+      ]
+    },
+    "childProtection": {
+      "conference": "Sterling Volunteers screening: volunteers set up an account, give four non-family references (one being the pastor), complete online training and submit a background check. All employees and volunteers who regularly work with children complete a Volunteer Background Check every three years and take conference child-protection training once every three years (Child Protection Policy, revised August 2020).",
+      "sources": [
+        {
+          "title": "Child Protection Policy: Keeping Children Safe in Our Church (revised August 2020)",
+          "publisher": "Oregon Conference of Seventh-day Adventists Risk Management Department",
+          "date": "2020-08",
+          "url": "https://website-folder.s3.us-east-2.amazonaws.com/Webpage-files/Risk/ORC+CPP+Booklet+2020+FINAL.pdf",
+          "quote": "All employees and volunteers who regularly work with children must complete (every three years) a Volunteer Background Check form."
+        },
+        {
+          "title": "Child Protection Policy: Keeping Children Safe in Our Church (revised August 2020)",
+          "publisher": "Oregon Conference of Seventh-day Adventists Risk Management Department",
+          "date": "2020-08",
+          "url": "https://website-folder.s3.us-east-2.amazonaws.com/Webpage-files/Risk/ORC+CPP+Booklet+2020+FINAL.pdf",
+          "quote": "Participate in conference training for child protection once every three years."
+        },
+        {
+          "title": "Approved Speaker Application, page 3: Sterling Volunteers Background Check Process",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "2025-02-11 (PDF date)",
+          "url": "https://website-folder.s3.us-east-2.amazonaws.com/Webpage-files/Ministerial/OC+Speaker+Application+Form_English+2025.pdf",
+          "quote": "Provide four non-family references (please use your pastor as one reference)"
+        },
+        {
+          "title": "Risk Management",
+          "publisher": "Oregon Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.oregonadventist.org/support/risk-management",
+          "quote": "To Volunteer - Click here to get started by setting up your Sterling Volunteer account."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://www.oregonadventist.org/ministries/outreach",
+      "ministerialPage": "https://www.oregonadventist.org/ministries/ministerial"
+    },
+    "checked": "2026-09-30",
+    "notes": "Oregon Conference covers Oregon and southwest Washington. Funding requests and reports run on Evangelive (evangelive.com), not on oregonadventist.org. The Oregon Outreach page links to it through a Google Form, and the report form tells churches to return excess funds to the Conference Office. The conference appointed a director of a combined 'Ministerial & Evangelism Department' on 17 September 2026 (news, 21 September 2026), so pages and processes may change. No submission deadline is published. No honorarium amount was found."
+  },
+  {
+    "conf": "Upper Columbia",
+    "union": "North Pacific Union",
+    "states": [
+      "WA",
+      "ID",
+      "OR"
+    ],
+    "site": "https://www.uccsda.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": null,
+      "cap": null,
+      "deadline": "No current deadline published. The last published one was midnight Thursday 22 October 2020, for 2021 plans, ahead of an Allocation Committee on 23 November 2020.",
+      "how": "Send the UCC Evangelism/Outreach Subsidy Request (next year's plans plus a review of last year) and the Evangelism Budget Request to the Ministerial Department. The evangelism/outreach allocation committee sets the amount.",
+      "conditions": [
+        "The allocation committee weighs the total evangelism funds available for the year, amounts designated for population centres, and the church's total and per-capita tithe.",
+        "Money must be used for outreach-oriented activities and events. Sowing and reaping are subsidised; discipling is listed as non-subsidised.",
+        "Information asked: outreach plans with budget for each church, three years of tithe, baptism and attendance figures, a review of last year's plans, whether a conference-sponsored Bible instructor is wanted, and how many members are in ministry.",
+        "Budget form income lines: offerings, local church(es), request from conference. It is approved by the UCC Evangelism Coordinator.",
+        "Pastor's equipment (2021 memo): $1,000 after the pastor's own series of at least 15 presentations (UCC $500 + NPUC $500), with reports."
+      ],
+      "report": "UCC Evangelistic Report after each series: subsidy, church contribution, expenses and how any balance is budgeted; outreach team and Bible worker use; visitors, baptisms, professions of faith, rebaptisms, commitments, Bible studies and interests. Receipts go to the local church treasurer for the church audit.",
+      "programmes": [
+        "Serve One More: the conference provides ideas, funding and support for churches serving their communities (2026)",
+        "Hispanic evangelistic caravan 'Try with Jesus', 17–25 April 2026, nine locations, 240+ baptisms; another caravan planned for 2027",
+        "Strategic Plan 2023–2025: a UCC-wide evangelistic thrust by 31 December 2025, a new urban center of influence and a Next Generation church plant",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings"
+      ],
+      "sources": [
+        {
+          "title": "Evangelism | Ministerial Department",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.uccsda.org/evangelism",
+          "quote": "We offer training, information and funding you need to pursue Christ’s method of reaching hearts for God."
+        },
+        {
+          "title": "UCC Evangelism/Outreach Subsidy Request for 2021 (DOCX on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020 (for 2021)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/UCC%202021%20Evangelism-Outreach%20SubsidyReq.docx",
+          "quote": "The conference evangelism/outreach allocation committee will determine an amount after consideration of your plan below and the following factors: The total evangelism funds available for the year Amounts designated for our population centers Total and per capita tithe for the local church"
+        },
+        {
+          "title": "UCC Evangelism/Outreach Subsidy Request for 2021 (DOCX on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020 (for 2021)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/UCC%202021%20Evangelism-Outreach%20SubsidyReq.docx",
+          "quote": "All funds requested must be used for outreach oriented activities and events."
+        },
+        {
+          "title": "UCC Evangelism/Outreach Subsidy Request for 2021 (DOCX on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020 (for 2021)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/UCC%202021%20Evangelism-Outreach%20SubsidyReq.docx",
+          "quote": "Discipling (non-subsidized)"
+        },
+        {
+          "title": "Memo: Evangelism Funds for 2021 (PDF on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists Ministerial Department",
+          "date": "2020-10-05",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/Memo-SummarizedEvang2021.pdf",
+          "quote": "by the deadline: Thursday, October 22, 2020"
+        },
+        {
+          "title": "Memo: Evangelism Funds for 2021 (PDF on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists Ministerial Department",
+          "date": "2020-10-05",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/Memo-SummarizedEvang2021.pdf",
+          "quote": "You may qualify for $1,000 equipment funding after the series—UCC $500/NPUC $500—if you conduct your own series with at least 15 presentation, complete reports"
+        },
+        {
+          "title": "Memo: Evangelism Funds for 2021 (PDF on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists Ministerial Department",
+          "date": "2020-10-05",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/Memo-SummarizedEvang2021.pdf",
+          "quote": "After each series, please complete the one-page UCC Evangelism Report."
+        },
+        {
+          "title": "Letter: Evangelism Planning for 2021 (PDF on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020-10-06",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/Msg-EvangAllocationPlanning2021.pdf",
+          "quote": "All of the information is due no later than midnight Thursday, October 22, 2020 [giving us time to prepare materials and spreadsheets] for Allocation Committee November 23, 2020."
+        },
+        {
+          "title": "Evangelism Budget Request (DOC on the Evangelism page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/Evangelism%20BudgetRequestFORM.doc",
+          "quote": "Request from Conference"
+        },
+        {
+          "title": "UCC Evangelism Report form (DOCX 'REPORT-Evangelism, Rev'd Oct 2017')",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2017-10 (revision in file name)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/REPORT-Evangelism%2C%20Rev%27d%20Oct%202017.docx",
+          "quote": "Reaping Series/Seed Sowing Financial Report (Receipts should be submitted to your local church treasurer for review at the time of the church audit.)"
+        },
+        {
+          "title": "A Time to Grow: 2026 (president's New Year message)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2026-01-21",
+          "url": "https://www.uccsda.org/a-time-to-grow-2026",
+          "quote": "I invite you and your church to reach out to your community in creative ways this year and the conference is here to help you by providing ideas, funding, and support through our Serve One More initiative."
+        },
+        {
+          "title": "Hundreds Baptized During UCC Evangelistic Caravan",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2026-07-20",
+          "url": "https://www.uccsda.org/hundreds-baptized-during-ucc-evangelistic-caravan",
+          "quote": "“Try with Jesus” was the rallying cry of the evangelistic caravan, which took place in nine different locations across Upper Columbia Conference from April 17–25, 2026."
+        },
+        {
+          "title": "Hundreds Baptized During UCC Evangelistic Caravan",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2026-07-20",
+          "url": "https://www.uccsda.org/hundreds-baptized-during-ucc-evangelistic-caravan",
+          "quote": "Plans for another evangelistic caravan in 2027 are already underway."
+        },
+        {
+          "title": "Strategic Plan 2023-2025 Initiatives",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "undated (plan for 2023–2025)",
+          "url": "https://www.uccsda.org/strategicinitiatives",
+          "quote": "Conduct a UCC-wide evangelistic thrust by December 31, 2025."
+        },
+        {
+          "title": "[NPUC] Evangelistic Equipment Allowance Request Form (DOC on the UCC Evangelism page; older version of the NPUC allowance)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/NPUC%20SoulWinning-EquipmentRequestFORM.doc",
+          "quote": "Evangelistic Equipment Allowance of $1,000."
+        },
+        {
+          "title": "Entities",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.uccsda.org/entities",
+          "quote": "The Upper Columbia Conference operates operates schools across Idaho, Oregon, and Washington"
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Adventist Screening Verification (Sterling Volunteers) is mandatory for all adults over 18 in any capacity in children's and youth ministries, and for all church ministry leaders and officers voted or appointed by the local church. Volunteers give four references, one of them a pastor or other mandatory reporter, and no relatives. The conference screening coordinator rates each volunteer Level 1–3, and each church appoints a Local Volunteer Screening Coordinator. New and renewing volunteers give references, but the renewal period is not stated.",
+      "sources": [
+        {
+          "title": "ASV Packet for Churches (PDF on the Volunteers page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020-01 (PDF date)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/ASV_Packet_for_Churches_5.20.pdf",
+          "quote": "Adventist Screening Verification is Mandatory for: All adults, over the age of 18, involved in any capacity in children’s and youth ministries and activities. All church ministry leaders and officers voted or appointed by the local church."
+        },
+        {
+          "title": "ASV Packet for Churches (PDF on the Volunteers page)",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "2020-01 (PDF date)",
+          "url": "https://irp-cdn.multiscreensite.com/cb7ff47b/files/uploaded/ASV_Packet_for_Churches_5.20.pdf",
+          "quote": "Each new AND RENEWING volunteer must include this information directly in Adventist Screening Verification or by email to screening@uccsda.org:"
+        },
+        {
+          "title": "Volunteers",
+          "publisher": "Upper Columbia Conference of Seventh-day Adventists",
+          "date": "undated",
+          "url": "https://www.uccsda.org/volunteers",
+          "quote": "All volunteers will need to supply four references, including one pastor or other mandatory reporter, and no relatives."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://www.uccsda.org/evangelism",
+      "ministerialPage": "https://www.uccsda.org/ministerial"
+    },
+    "checked": "2026-09-30",
+    "notes": "Upper Columbia covers eastern Washington, northern Idaho and part of northeastern Oregon (the conference says it runs schools in Idaho, Oregon and Washington; its churches include Pendleton OR and Grangeville ID). Its Evangelism page still posts the forms and memo for the 2021 cycle (memo dated 5 October 2020; report form revised October 2017). Confirm the current process and deadline with the Ministerial Department before relying on these dates. No honorarium rule found (searched the Evangelism, Ministerial, Pastors, Personal Ministries, Treasury Resources and Strategic Plan pages and a web search)."
+  },
+  {
+    "conf": "Washington",
+    "union": "North Pacific Union",
+    "states": [
+      "WA"
+    ],
+    "site": "https://washingtonconference.org/",
+    "evangelism": {
+      "help": "subsidy",
+      "share": "up to, and sometimes more than, 70% of meeting cost (Treasury); children's-ministry events can get 30–50% from conference evangelism funds",
+      "cap": null,
+      "deadline": null,
+      "how": "Plan a 12–18-month cycle of evangelism with the conference's Revangelism team (book a church growth consultation). Use the conference budget sheet, which has a church-board approval date and 'Local Church Contribution' and 'Conference Contribution' lines.",
+      "conditions": [
+        "The conference budget sets aside money for evangelistic series, discipleship programmes, church plants and personal witnessing training (about $700,000 in all, with the annual evangelism offering).",
+        "Pastor's choice of an equipment subsidy (up to $750) or a $500 bonus: hold at least one full-message campaign of at least 15 presentations (3+ nights a week) in the same year the equipment was bought; include a story and pictures; equipment bought with your own funds becomes your property; receipts required.",
+        "Eligible equipment: laptops, printers, video projectors, digital art, evangelistic sermons, iPads/iPods, software, sound systems."
+      ],
+      "report": "No post-meeting report is published for conference evangelism funds. The equipment/bonus request asks for a story, pictures and receipts, and the NPUC allowance asks for a 250–500-word story after the meetings.",
+      "programmes": [
+        "Revangelism: a six-phase church growth and evangelism cycle (personal preparation, cultivating the soil, planting and sowing, irrigating, harvest, preserving), with a training series and church growth consultations",
+        "PLAN IT. FUND IT.: children's ministry workshops on planning events and using conference evangelism funds",
+        "Seeds: church-planting and disciple-making weekend, 6–7 November, Kirkland church (year not shown on the page; page updated 30 Sep 2026)",
+        "Annual evangelism offering",
+        "Hispanic evangelistic caravan with Idaho and Upper Columbia conferences, spring 2026",
+        "NPUC Evangelistic Allowance (union level): $1,500 for a pastor who conducts or hosts a full-message evangelistic meeting ($750 NPUC + $750 conference); the conference's own programme sets what qualifies; limited number, first come first served; send the form and a 250–500-word story to the conference evangelism/ministerial department after the meetings"
+      ],
+      "sources": [
+        {
+          "title": "Tithe & Offering",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-12-16 (page modified)",
+          "url": "https://washingtonconference.org/departments/treasury/tithe-offering/",
+          "quote": "Evangelism Funds –up to and sometimes exceeding 70% of meeting cost"
+        },
+        {
+          "title": "Our Evangelism Commitment",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-11-11 (page modified; first published 2017-08-28)",
+          "url": "https://washingtonconference.org/devotional/our-evangelism-commitment/",
+          "quote": "In addition to the annual evangelism offering, Washington Conference also sets aside a portion of the conference budget for supporting evangelistic series, discipleship programs, church plants, and personal witnessing training. In all, about $700,000 is set aside for evangelism in our territory."
+        },
+        {
+          "title": "PLAN IT. FUND IT.",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-12-17 (page modified)",
+          "url": "https://washingtonconference.org/ministries/children/plan-it-fund-it/",
+          "quote": "Did you know your local church ministry events can be funded from 30-50% with conference evangelism dollars?"
+        },
+        {
+          "title": "Revangelism",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-12-17 (page modified)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "Revangelism is a new concept of two well-established church growth practices: evangelism and church revitalization."
+        },
+        {
+          "title": "Revangelism",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-12-17 (page modified)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "Schedule a consultation with a Washington Conference Church Growth Expert today."
+        },
+        {
+          "title": "Budget: WA Conference 12-18 Month Cycle of Evangelism (spreadsheet linked from the Revangelism page)",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "undated (file created 2 Nov 2022)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "Approve by the Church Board on this Date:"
+        },
+        {
+          "title": "Budget: WA Conference 12-18 Month Cycle of Evangelism (spreadsheet linked from the Revangelism page)",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "undated (file created 2 Nov 2022)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "Local Church Contribution Conference Contribution"
+        },
+        {
+          "title": "Washington Conference Subsidy Request (PDF 'WA Conference Equipment Subsidy Request Form' on the Revangelism page)",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata 3 Jul 2017)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "I would like to receive the $500 bonus for holding a qualifying evangelistic meeting. I would like to receive an equipment subsidy of up to $750."
+        },
+        {
+          "title": "Washington Conference Subsidy Request (PDF 'WA Conference Equipment Subsidy Request Form' on the Revangelism page)",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata 3 Jul 2017)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "You must conduct at least one full message evangelistic campaign consisting of at least 15 presentations (3+ nights per week) in the same year that the equipment was purchased."
+        },
+        {
+          "title": "Washington Conference Subsidy Request (PDF 'WA Conference Equipment Subsidy Request Form' on the Revangelism page)",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata 3 Jul 2017)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "ELIGIBLE EQUIPMENT – Subsidy can be applied toward the purchase of: Laptops, Printers, Video Projectors, Digital Art, Evangelistic Sermons, iPads/iPods, Software or Sound Systems."
+        },
+        {
+          "title": "Church Planting",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2026-09-30 (page modified)",
+          "url": "https://washingtonconference.org/ministries/churchplanting/",
+          "quote": "Gather with us at Seeds, Nov. 6-7 at Kirkland SDA Church!"
+        },
+        {
+          "title": "Our Evangelism Commitment",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2025-11-11 (page modified)",
+          "url": "https://washingtonconference.org/devotional/our-evangelism-commitment/",
+          "quote": "sharing the Three Angels’ Message with 4.98 million residents of western Washington and beyond."
+        },
+        {
+          "title": "NPUC Leaders Prepare for Constituency Session",
+          "publisher": "North Pacific Union Conference (Northwest Adventists / Gleaner)",
+          "date": "2026-06-10",
+          "url": "https://nwadventists.com/news/2026/06/npuc-leaders-prepare-constituency-session",
+          "quote": "Hispanic ministries hosting a caravan of coordinated evangelism across Idaho Conference (66 baptisms), Upper Columbia Conference (240+ baptisms) and Washington Conference (148+ baptisms) this spring"
+        },
+        {
+          "title": "North Pacific Union Conference Evangelistic Allowance Request Form (PDF 'NPUC Equipment Subsidy Request Form', linked from the Washington Conference Revangelism page)",
+          "publisher": "North Pacific Union Conference of Seventh-day Adventists",
+          "date": "undated (PDF metadata: created 16 Jun 2021, modified 18 Jan 2024)",
+          "url": "https://washingtonconference.org/ministries/revangelism/",
+          "quote": "NPUC will provide an evangelistic allowance of $1,500 ($750 NPUC and $750 Conference) to pastors who conduct or host a full message evangelistic meeting in their church. Since this program requires the conference to match some portion of this allowance, NPUC will defer to the conference program for details and restrictions on what type of meeting qualifies and how the allowance can be used."
+        }
+      ]
+    },
+    "honorarium": {
+      "rule": null,
+      "sources": []
+    },
+    "childProtection": {
+      "conference": "Sterling Volunteers screening (criminal background check plus about two hours of training) for all adults over 18 involved in children's and youth ministries and all church ministry leaders and officers voted or appointed by the local church. It is done before serving and renewed every three years; drivers also send a Driving Record Release and a copy of their driver's licence.",
+      "sources": [
+        {
+          "title": "Background Screening",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2026-05-27 (page modified)",
+          "url": "https://washingtonconference.org/departments/human-resources/background-screening/",
+          "quote": "The North American Division Working Policy indicates that a screening process is required for all adults over the age of 18, involved in any capacity in children’s and youth ministries and activities, and all church ministry leaders and officers voted or appointed by the local church."
+        },
+        {
+          "title": "Background Screening",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2026-05-27 (page modified)",
+          "url": "https://washingtonconference.org/departments/human-resources/background-screening/",
+          "quote": "Background Screening should be completed before the volunteer/employee is allowed to serve. The volunteer/employee must renew their screening every three (3) years. The training process will take approximately two (2) hours to complete."
+        },
+        {
+          "title": "Background Screening",
+          "publisher": "Washington Conference of Seventh-day Adventists",
+          "date": "2026-05-27 (page modified)",
+          "url": "https://washingtonconference.org/departments/human-resources/background-screening/",
+          "quote": "Along with the completed Driving Record Release, you will need to provide a copy of your driver’s license by email."
+        }
+      ]
+    },
+    "department": {
+      "evangelismPage": "https://washingtonconference.org/ministries/revangelism/",
+      "ministerialPage": null
+    },
+    "checked": "2026-09-30",
+    "notes": "Washington Conference covers western Washington. The 70% figure comes from the Treasury 'Your Tithe Dollar Explained' page, not from a written subsidy policy. No request form, deadline or cap for series funding is published, so ask the evangelism team (Revangelism page). The WA equipment subsidy form is a 2017 PDF. No ministerial department page and no honorarium rule were found (searched the Revangelism, Church Resources, Treasury, Resources & Forms and Tithe pages, the sitemap and a web search)."
+  }
+]

@@ -1,0 +1,1038 @@
+[
+ {
+  "conf": "Central States",
+  "union": "Mid-America Union",
+  "states": [
+   "CO",
+   "IA",
+   "KS",
+   "MN",
+   "MO",
+   "NE",
+   "ND",
+   "SD",
+   "WY",
+   "NM"
+  ],
+  "site": "https://central-states.org/",
+  "evangelism": {
+   "help": "grant",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": "Pastors make a funding request to the conference (the vice president for administration also serves as evangelism coordinator); no public form, policy or deadline was found.",
+   "conditions": [
+    "Requests are to 'give attention to church growth and evangelism' (2026 report)",
+    "The 2026 money is described as 'additional, unanticipated outside funding for evangelism', not a standing published policy",
+    "The conference coordinator stresses both evangelistic growth and retention of new members"
+   ],
+   "report": null,
+   "programmes": [
+    "Touch 10K Challenge (Personal Ministries; page says it 'Begins May 4th', year not stated)",
+    "Multicultural Ministry offers churches 'training, evangelistic aid, and ministry development'",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "State of the Central States Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference) — Central States Conference News",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-central-states-conference/",
+     "quote": "Earlier in the year, our conference was blessed with some additional, unanticipated outside funding for evangelism, and our pastors have been allowed to make requests for funding that give attention to church growth and evangelism."
+    },
+    {
+     "title": "State of the Central States Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference) — Central States Conference News",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-central-states-conference/",
+     "quote": "who also serves as the conference evangelism coordinator, has encouraged our pastors and churches to focus on both evangelistic growth and the retention of new members."
+    },
+    {
+     "title": "Multicultural Ministry",
+     "publisher": "Central States Conference of Seventh-day Adventists",
+     "date": "2024-09-29",
+     "url": "https://central-states.org/ministries/multicultural-ministry/",
+     "quote": "We offer vision and support to existing churches through training, evangelistic aid, and ministry development to ensure their ongoing mission to spread the gospel, as outlined in Acts 1:8."
+    },
+    {
+     "title": "Personal Ministry",
+     "publisher": "Central States Conference of Seventh-day Adventists",
+     "date": "2024-11-04 (modified)",
+     "url": "https://central-states.org/ministries/personal-ministry/",
+     "quote": "Touch 10k Challenge Initiative Begins May 4th!"
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Winning St. Louis for Jesus in 2025",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-02-27",
+     "url": "https://www.outlookmag.org/winning-st-louis-for-jesus-in-2025/",
+     "quote": "One of the major catalysts for this renewed fervor and energy is that the General Conference, North American Division, and Mid-America Union are all providing extra funding to implement these initiatives because of the upcoming General Conference Session that will be held in St. Louis, Missouri"
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    },
+    {
+     "title": "How Regional Conferences Began in the Seventh-day Adventist Church",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-10-29",
+     "url": "https://www.outlookmag.org/how-regional-conferences-began/",
+     "quote": "Today, Central States covers nine states and continues to carry the legacy of strong evangelism and community presence."
+    },
+    {
+     "title": "Ministerial Ministry",
+     "publisher": "Central States Conference of Seventh-day Adventists",
+     "date": "2024-11-04 (modified)",
+     "url": "https://central-states.org/ministries/ministerial-ministry/",
+     "quote": "The Pastoral Ministries Department of the Central States Conference offers resources to support the growth of our pastors and churches, focusing on mission, vision, and values."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": null,
+   "sources": []
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": "https://central-states.org/ministries/ministerial-ministry/"
+  },
+  "checked": "2026-09-30",
+  "notes": "No evangelism funding policy, request form, honorarium rule or volunteer-screening page was found on central-states.org (147 sitemap pages read, WordPress search for evangelism/background/sterling/screening/honorarium/subsidy returned nothing; the Treasury Request link is a placeholder). The only published evidence of request-based help is the conference's own 2026 report in OUTLOOK. States: Central States is a regional conference overlapping the whole union; OUTLOOK says it 'covers nine states' (CO, IA, KS, MN, MO, NE, ND, SD, WY) and the Adventist Yearbook entry (blocked to automated reading) also lists San Juan County, New Mexico — confirm before display. Advise pastors to ask the conference office directly what is available this year. NAD baseline (division-wide, not this conference's own page): nadadventist.org/asv says adults voted to serve and employees working with children and youth complete a criminal background check (FB 20) and child protection training through Sterling Volunteers, \"This should be completed every three years.\" (Adventist Screening Verification, NAD, modified 31 Aug 2026, https://www.nadadventist.org/asv). Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ },
+ {
+  "conf": "Dakota",
+  "union": "Mid-America Union",
+  "states": [
+   "ND",
+   "SD"
+  ],
+  "site": "https://dakotaadventist.org/",
+  "evangelism": {
+   "help": "in-kind",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": null,
+   "conditions": [],
+   "report": null,
+   "programmes": [
+    "Bible worker initiative: the conference has invested in Bible workers and a church-planting pastor, and more churches have asked to join (2026)",
+    "Partnership with the Hurley church to hire an evangelist/pastor/Bible worker for greater Sioux Falls/Hurley (voted Sept 2025)",
+    "Called to Serve: Dakota Leadership Summit, 6–8 November 2026, Dakota Adventist Academy campus (training members and leaders)",
+    "Conference-wide literature evangelism programme to generate Bible study interests (being explored, Sept 2025)",
+    "Two ASI-sponsored pilot evangelistic campaigns centred on health centres (in development, Sept 2025)",
+    "Pentecost 2025 in Dakota: 26 sites registered; NAD paid $3,000 per completed project",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "State of the Dakota Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-dakota-conference/",
+     "quote": "With that in mind, the conference has identified areas where growth is possible and has invested in Bible workers and a church-planting pastor."
+    },
+    {
+     "title": "State of the Dakota Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-dakota-conference/",
+     "quote": "More churches have expressed interest in joining the Bible worker initiative, and we look forward to seeing how God will continue to bless this work."
+    },
+    {
+     "title": "State of the Dakota Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-dakota-conference/",
+     "quote": "To expand evangelism by training pastors, equipping churches, and providing practical resources for the field."
+    },
+    {
+     "title": "Dakota Dispatch, December 18, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-12-18",
+     "url": "https://assets.adventistconnect.org/dakotac1/2026/02/24181704/12.18.25-Dakota-Dispatch.pdf",
+     "quote": "Evangelism funds continue to grow, working capital stands at 5.82 months of reserves, and both income and expenses are currently under budget."
+    },
+    {
+     "title": "Dakota Dispatch, December 18, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-12-18",
+     "url": "https://assets.adventistconnect.org/dakotac1/2026/02/24181704/12.18.25-Dakota-Dispatch.pdf",
+     "quote": "Looking ahead, a leadership summit—Called to Serve: Dakota Leadership Summit— is being planned for November 6–8, 2026, at the Dakota Adventist Academy campus. The event will focus on training and equipping members and leaders for ministry."
+    },
+    {
+     "title": "Dakota Dispatch, December 18, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-12-18",
+     "url": "https://assets.adventistconnect.org/dakotac1/2026/02/24181704/12.18.25-Dakota-Dispatch.pdf",
+     "quote": "Pentecost 2025 is nearing completion, with 26 sites registered across the Conference and the majority already completing their programs."
+    },
+    {
+     "title": "Dakota Dispatch, September 11, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-09-11",
+     "url": "https://www.dakotaadventist.org/file/800/9.11.25+Dakota+Dispatch.pdf",
+     "quote": "to partner with the Hurley Adventist Church by hiring an evangelist/pastor/Bible worker for the greater Sioux Falls/Hurley area."
+    },
+    {
+     "title": "Dakota Dispatch, September 11, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-09-11",
+     "url": "https://www.dakotaadventist.org/file/800/9.11.25+Dakota+Dispatch.pdf",
+     "quote": "Additional initiatives include exploring a Conference-wide literature evangelism program to generate Bible study interests for pastors and Bible workers, and planning a “Called to Serve: Dakota Leadership Summit” to train local members and leaders."
+    },
+    {
+     "title": "Dakota Dispatch, September 11, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-09-11",
+     "url": "https://www.dakotaadventist.org/file/800/9.11.25+Dakota+Dispatch.pdf",
+     "quote": "to develop two Adventist Laymen’s Services and Industries (ASI)-sponsored pilot evangelistic campaigns centered on health centers as community outreach hubs."
+    },
+    {
+     "title": "Dakota Dispatch, September 11, 2025",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2025-09-11",
+     "url": "https://www.dakotaadventist.org/file/800/9.11.25+Dakota+Dispatch.pdf",
+     "quote": "Three congregations have already completed Pentecost 2025 projects and will each receive $3,000 in support from the North American Division (NAD)."
+    },
+    {
+     "title": "Dakota Dispatch, September 26, 2024",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2024-09-26",
+     "url": "https://www.dakotaadventist.org/file/739/9.26.24+Dakota+Dispatch.pdf",
+     "quote": "a North American Division-wide evangelistic drive offering $3,000 to any church or school that registers."
+    },
+    {
+     "title": "Office Staff",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://dakotaadventist.org/personnel/departmental-staff/",
+     "quote": "President Evangelism Director, A.S.I."
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "All employees and volunteers who work with children must complete child protection training and a background check every three years through Adventist Screening Verification (nadadventist.org/asv, Sterling Volunteers); new members wait six months before working with children; every church votes the Child Protection Plan agreement and submits an 'Annual Board Decision' page each year.",
+   "sources": [
+    {
+     "title": "Dakota Conference Child Protection Policy: Keeping Children Safe in Our Church (UPDATED 2024)",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2024",
+     "url": "https://www.dakotaadventist.org/file/691/Dakota+Child+Protection+Policy.pdf",
+     "quote": "All employees and volunteers MUST complete the child protection training and background check (every three years)."
+    },
+    {
+     "title": "Dakota Conference Child Protection Policy: Keeping Children Safe in Our Church (UPDATED 2024)",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2024",
+     "url": "https://www.dakotaadventist.org/file/691/Dakota+Child+Protection+Policy.pdf",
+     "quote": "New members who desire to work with children and youth must have been an active member of the local church for a minimum of six (6) months or have been known by the organization for a minimum of six (6) months before beginning to work with children."
+    },
+    {
+     "title": "Dakota Conference Child Protection Policy: Keeping Children Safe in Our Church (UPDATED 2024)",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "2024",
+     "url": "https://www.dakotaadventist.org/file/691/Dakota+Child+Protection+Policy.pdf",
+     "quote": "Each year, the Dakota Conference requires that every church vote on and adopt the Church/Participation Agreement - Child Protection Plan, as well as sign and submit the “Annual Board Decision” page."
+    },
+    {
+     "title": "Pathfinder & Adventurer Screening Verification Instructions (linked as 'Background Check Screening')",
+     "publisher": "Dakota Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://dakotaadventist.org/file/626/PF+%26+ADV+INSTRUCTIONS+W+NOTES+Screening+Verification+Instructions.pdf",
+     "quote": "Step 1: Go to https://www.nadadventist.org/asv and click on the first-time registrant button"
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": null
+  },
+  "checked": "2026-09-30",
+  "notes": "No published evangelism subsidy, grant form, deadline or honorarium rule was found (all 561 non-cemetery sitemap pages and 29 Dakota Dispatch issues 2024–2025 read). The conference does report an 'evangelism funds' line in its treasury reports (growing in 2025), and the president also holds the 'Evangelism Director, A.S.I.' role (Office Staff page), so a pastor should ask the conference office directly about evangelism funds and about joining the Bible worker initiative. There is no Ministerial or Evangelism department page on dakotaadventist.org; staff roles are at https://dakotaadventist.org/personnel/departmental-staff/. The 'Dakota Challenge' offering stays in the conference and 'directly benefit[s] local initiatives' (Dispatch, Sept 2025), but no church-request process for it was found. Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ },
+ {
+  "conf": "Iowa-Missouri",
+  "union": "Mid-America Union",
+  "states": [
+   "IA",
+   "MO"
+  ],
+  "site": "https://imsda.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": null,
+   "cap": null,
+   "deadline": "Outreach (non-series) events: request received at least two months before the event; no published deadline for the Evangelism Budget Request for a series",
+   "how": "Fill in the online Evangelism Budget Request (or, for health/family/cooking-type events, the Outreach Event Budget Request) from the conference Evangelism page, with the Evangelism Budget Info Sheet, showing expenses, offerings and local church funds and the 'appropriation requested from conference'; the Evangelism Committee approves.",
+   "conditions": [
+    "The budget shows estimated offerings/fees, local church funds and other income; the conference appropriation covers the rest as approved",
+    "Approval by the conference Evangelism Committee",
+    "Info sheet asks about the church's prayer ministry, its plan to reach its evangelism goal (engaging elders and the church board) and its plan to disciple new members",
+    "Conference funds may be advanced ('Advanced by Conference'); unused funds go back to the conference with the report"
+   ],
+   "report": "Within 30 days of the final night: an itemised Report of Income and Expense (all expenditure documents attached, unused funds returned) mailed to the conference treasurer, plus a Follow-Up Evangelism Report (visits, gospel presentations in homes, baptisms, expected baptisms, follow-up and discipleship plans).",
+   "programmes": [
+    "IM Called School of Evangelism and Discipleship (lay training in St. Louis since 2025; 2027 applications open January 2027)",
+    "Seven for Souls: members asked to give $7 a month to the Conference Evangelism Fund, which supports Bible workers, the school and 'local church evangelism efforts'",
+    "Hispanic Institute of Evangelism (2026)",
+    "Expansion of conference Bible workers under a Bible Worker Director / Evangelism Coordinator",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "Evangelism",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2025-06-17 (modified)",
+     "url": "https://imsda.org/departments/evangelism/",
+     "quote": "We are here to support churches in their evangelistic efforts and to coordinate conference-wide initiatives. Evangelism forms and reports are below, as well as a contact form where you can ask a question, provide feedback, or submit your forms."
+    },
+    {
+     "title": "Evangelism Budget Request (online form linked from the Evangelism page)",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists (Adobe Acrobat Sign web form)",
+     "date": "undated",
+     "url": "https://rmcsda.na1.adobesign.com/public/esignWidget?wid=CBFCIBAA3AAABLblqZhAr4vZW-L8Pn9A6jHIbONoegwhtn9TyZ8EpGmzju-NrM287aOTs_GIDl117TT6Kn88*",
+     "quote": "Please fill: Evangelism Budget Request"
+    },
+    {
+     "title": "Outreach Ministry Events Budget Request",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Outreach-Event-Budget-Request.pdf",
+     "quote": "This request MUST be received not less than two months PRIOR to meeting."
+    },
+    {
+     "title": "Outreach Ministry Events Budget Request",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Outreach-Event-Budget-Request.pdf",
+     "quote": "APPROPRIATION REQUESTED FROM CONFERENCE"
+    },
+    {
+     "title": "Outreach Ministry Events Budget Request",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Outreach-Event-Budget-Request.pdf",
+     "quote": "APPROVED BY EVANGELISM COMMITTEE"
+    },
+    {
+     "title": "Evangelism Budget Info Sheet",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-InfoWEB.pdf",
+     "quote": "Do you or your church have a plan to reach your evangelism goal? (Plan should include engaging elders and church board participation)"
+    },
+    {
+     "title": "Evangelism Budget Info Sheet",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-InfoWEB.pdf",
+     "quote": "Does your church currently have an intentional prayer ministry? If not, how are you engaging the church to do so?"
+    },
+    {
+     "title": "Evangelism Meetings Report of Income and Expense",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-Expense-Report-Form.pdf",
+     "quote": "This report of evangelism expense and income should be completed by the pastor in charge of the meetings or the treasurer and mailed to the conference treasurer within 30 days of the final night of the meetings. Please send any unused funds with the report."
+    },
+    {
+     "title": "Evangelism Meetings Report of Income and Expense",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-Expense-Report-Form.pdf",
+     "quote": "Documents for all expenditures must be included with report."
+    },
+    {
+     "title": "Evangelism Meetings Report of Income and Expense",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-Expense-Report-Form.pdf",
+     "quote": "Advanced by Conference"
+    },
+    {
+     "title": "Follow-Up Evangelism Report Form",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-Follow-Up-Report.pdf",
+     "quote": "How many baptisms resulted from the meetings?"
+    },
+    {
+     "title": "Follow-Up Evangelism Report Form",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "undated (file last modified 2026-01-29)",
+     "url": "https://imsda.org/wp-content/uploads/2024/03/Evangelism-Follow-Up-Report.pdf",
+     "quote": "Do you have discipleship plans for the new converts? Please describe briefly."
+    },
+    {
+     "title": "7 for Souls Fundraising Initiative",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2025-03-01",
+     "url": "https://imsda.org/7-for-souls-fundraising-initiative/",
+     "quote": "This program invites each member to prayerfully consider contributing at least $7 monthly to Conference Evangelism and at least $7 monthly to Sunnydale Academy."
+    },
+    {
+     "title": "7 for Souls Fundraising Initiative",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2025-03-01",
+     "url": "https://imsda.org/7-for-souls-fundraising-initiative/",
+     "quote": "Supporting local church evangelism efforts"
+    },
+    {
+     "title": "IM Called: School of Evangelism and Discipleship",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2026-03-02 (modified)",
+     "url": "https://imsda.org/departments/evangelism/imcalled/",
+     "quote": "The application process for the 2027 school year will begin in January 2027."
+    },
+    {
+     "title": "“IM Called” School of Evangelism: One Year Later",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-06-22",
+     "url": "https://www.outlookmag.org/im-called-school-of-evangelism-one-year-later/",
+     "quote": "designed the school around two pillars: theological depth and practical field experience."
+    },
+    {
+     "title": "Ministerio Hispano",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2025-12-03 (modified)",
+     "url": "https://imsda.org/ministries/ministerio-hispano/",
+     "quote": "Hispanic Institute of Evangelism 2026 Registration Form"
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "Winning St. Louis for Jesus in 2025",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-02-27",
+     "url": "https://www.outlookmag.org/winning-st-louis-for-jesus-in-2025/",
+     "quote": "One of the major catalysts for this renewed fervor and energy is that the General Conference, North American Division, and Mid-America Union are all providing extra funding to implement these initiatives because of the upcoming General Conference Session that will be held in St. Louis, Missouri"
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "All staff and volunteers working with children must complete a background check and online child protection training (40–60 minutes) through Sterling Volunteers (Adventist screening), finished within one month of registering; Pathfinder directors and staff 18+ must have completed it.",
+   "sources": [
+    {
+     "title": "Human Resources",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2026-06-30 (modified)",
+     "url": "https://imsda.org/departments/human-resources/",
+     "quote": "Maintaining a Safe Environment for our Children is a Top Priority for the Iowa-Missouri Conference. All Staff and Volunteers Working with Children Must Complete a Background Check."
+    },
+    {
+     "title": "Human Resources",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2026-06-30 (modified)",
+     "url": "https://imsda.org/departments/human-resources/",
+     "quote": "Sterling Volunteers (formerly Verified Volunteers) provides online training and screening for all staff and volunteers working with children in Adventist churches across North America."
+    },
+    {
+     "title": "Human Resources",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2026-06-30 (modified)",
+     "url": "https://imsda.org/departments/human-resources/",
+     "quote": "All training must be completed no more than one month after registering."
+    },
+    {
+     "title": "Pathfinder Club Registration",
+     "publisher": "Iowa-Missouri Conference of Seventh-day Adventists",
+     "date": "2026-05-13",
+     "url": "https://imsda.org/pathfinder-club-registration/",
+     "quote": "All adults 18 and over must have completed the Child Protection process to qualify as directors and staff. Please write names as registered on Sterling Volunteers."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://imsda.org/departments/evangelism/",
+   "ministerialPage": "https://imsda.org/departments/ministerial/"
+  },
+  "checked": "2026-09-30",
+  "notes": "imsda.org: all 329 sitemap pages read. No percentage share, cap or honorarium rule is published; the Outreach Event form lists guest-presenter housing, per diem, gas and 'Salary' as budget lines but sets no limit. The online Evangelism Budget Request is an Adobe Acrobat Sign form (it sits on an Adobe account also used by the Rocky Mountain Conference) and could only be viewed, not read as text; its visible layout matches the Outreach form (expenses, income, 'appropriation requested from conference', 'approved by'). Screening renewal period is not stated on IM pages. NAD baseline (division-wide, not this conference's own page): nadadventist.org/asv says adults voted to serve and employees working with children and youth complete a criminal background check (FB 20) and child protection training through Sterling Volunteers, \"This should be completed every three years.\" (Adventist Screening Verification, NAD, modified 31 Aug 2026, https://www.nadadventist.org/asv). Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ },
+ {
+  "conf": "Kansas-Nebraska",
+  "union": "Mid-America Union",
+  "states": [
+   "KS",
+   "NE"
+  ],
+  "site": "https://www.ks-ne.org/",
+  "evangelism": {
+   "help": "budget-line",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": "Local congregations request evangelism funds from the conference; no public form, policy or deadline was found (the Ministerial, Evangelism, Church Ministries & Religious Liberty director's office is the likely contact).",
+   "conditions": [],
+   "report": null,
+   "programmes": [
+    "Conference evangelism budget of 'over $200,000 each year', requested by local congregations for meetings, community events and Bible study materials (2023 report)",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "Kansas-Nebraska Conference (Accomplishing Mission)",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2023-12-24",
+     "url": "https://www.outlookmag.org/kansas-nebraska-conference/",
+     "quote": "The conference commits over $200,000 each year to evangelism. These funds are requested by local congregations and are used in so many creative ways to reach those around them. Events include traditional evangelistic meetings, community events and Bible study materials."
+    },
+    {
+     "title": "State of the Kansas-Nebraska Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-kansas-nebraska-conference/",
+     "quote": "These resources allow us to strengthen local churches, support Adventist education, expand evangelism, and respond to new ministry opportunities across Kansas and Nebraska."
+    },
+    {
+     "title": "About us",
+     "publisher": "Kansas-Nebraska Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.ks-ne.org/about-us",
+     "quote": "Ministerial, Evangelism, Church Ministries & Religious Liberties Director"
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "All staff and volunteers working with children must complete a background check and online child protection training through Sterling Volunteers (Adventist Screening Verification), finished within one month of registering; club directors confirm each worker shows 'Eligible' before they serve.",
+   "sources": [
+    {
+     "title": "Human Resources",
+     "publisher": "Kansas-Nebraska Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.ks-ne.org/departments/human-resources",
+     "quote": "Maintaining a safe environment for our children is a top priority for our conference. All staff and volunteers working with children must complete a background check."
+    },
+    {
+     "title": "Human Resources",
+     "publisher": "Kansas-Nebraska Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.ks-ne.org/departments/human-resources",
+     "quote": "Sterling Volunteers (formerly Verified Volunteers) provides online training and screening for all staff and volunteers working with children in Adventist churches across North America."
+    },
+    {
+     "title": "Human Resources",
+     "publisher": "Kansas-Nebraska Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.ks-ne.org/departments/human-resources",
+     "quote": "All training must be completed no more than one month after registering."
+    },
+    {
+     "title": "Staff Screening & Child Protection (Pathfinders)",
+     "publisher": "Kansas-Nebraska Conference Club Ministries",
+     "date": "2026-06-11 (modified)",
+     "url": "https://ks-ne.club/pathfinder-club/staff-screening-child-protection-2-2/",
+     "quote": "Please Note: A person with anything other than “Eligible” CANNOT help with your club, as a problem with the background check prevents that person from serving with youth."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": "https://www.ks-ne.org/departments/ministerial"
+  },
+  "checked": "2026-09-30",
+  "notes": "The $200,000-a-year figure is from the conference's own end-of-2023 report in OUTLOOK; the 2026 report says resources 'expand evangelism' but gives no figure. ks-ne.org (76 sitemap pages read) has no evangelism page, request form or honorarium rule; one director holds Ministerial, Evangelism, Church Ministries and Religious Liberty. The ministerial page's only form is a pastors' travel/vacation/guest-preaching request. Screening renewal period is not stated on KS-NE pages. NAD baseline (division-wide, not this conference's own page): nadadventist.org/asv says adults voted to serve and employees working with children and youth complete a criminal background check (FB 20) and child protection training through Sterling Volunteers, \"This should be completed every three years.\" (Adventist Screening Verification, NAD, modified 31 Aug 2026, https://www.nadadventist.org/asv). Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ },
+ {
+  "conf": "Minnesota",
+  "union": "Mid-America Union",
+  "states": [
+   "MN"
+  ],
+  "site": "https://mnsda.com/",
+  "evangelism": {
+   "help": "grant",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": "A church submits an application (more than one is allowed) with its evangelism ideas to the conference; the form and deadline are not published online.",
+   "conditions": [
+    "Applications are judged on 'creative evangelism ideas'",
+    "Funded from the Minnesota Conference Ministries Budget offering (formerly Minnesota Advance); next year's pool depends on this year's giving"
+   ],
+   "report": null,
+   "programmes": [
+    "Evangelism funding by application from the Minnesota Conference Ministries Budget offering ('usually ... $200,000 or more' a year, 2025)",
+    "Literature evangelism: Minnesota Youth Rush and GLOW",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "North American Division 2025 Offertory Readings (Minnesota Conference Ministries reading for February 22)",
+     "publisher": "Minnesota Conference of Seventh-day Adventists (hosted at mnsda.com)",
+     "date": "2025-02-22",
+     "url": "https://mnsda.com/wp-content/uploads/2025/01/Final-2025-Offering-Appeals-English.pdf",
+     "quote": "Every church that submits an application (or more than one) with creative evangelism ideas is eligible to receive a significant amount of funding for their plans."
+    },
+    {
+     "title": "North American Division 2025 Offertory Readings (Minnesota Conference Ministries reading for February 22)",
+     "publisher": "Minnesota Conference of Seventh-day Adventists (hosted at mnsda.com)",
+     "date": "2025-02-22",
+     "url": "https://mnsda.com/wp-content/uploads/2025/01/Final-2025-Offering-Appeals-English.pdf",
+     "quote": "each year we usually have the funds to issue $200,000 or more for evangelism in Minnesota!"
+    },
+    {
+     "title": "North American Division 2025 Offertory Readings (Minnesota Conference Ministries reading for February 22)",
+     "publisher": "Minnesota Conference of Seventh-day Adventists (hosted at mnsda.com)",
+     "date": "2025-02-22",
+     "url": "https://mnsda.com/wp-content/uploads/2025/01/Final-2025-Offering-Appeals-English.pdf",
+     "quote": "remember that what you give now and throughout the rest of the year towards the Minnesota Conference Ministries offering will determine what is available for next year’s local evangelism projects."
+    },
+    {
+     "title": "North American Division 2025 Offertory Readings (Minnesota Conference Ministries reading for January 25)",
+     "publisher": "Minnesota Conference of Seventh-day Adventists (hosted at mnsda.com)",
+     "date": "2025-01-25",
+     "url": "https://mnsda.com/wp-content/uploads/2025/01/Final-2025-Offering-Appeals-English.pdf",
+     "quote": "everything else that happens in Minnesota like evangelism, Maplewood Academy, North Star Camp, and all other aspects of mission in this conference are funded by Minnesota Conference Ministries Budget offerings."
+    },
+    {
+     "title": "Minnesota Conference Financial Update",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2025-05-02",
+     "url": "https://mnsda.com/minnesota-conference-financial-update/",
+     "quote": "We’re also adjusting how we fund events—some, like women’s and couples’ retreats, will now be sustained more fully by participant registration rather than Conference subsidies."
+    },
+    {
+     "title": "Minnesota Conference Financial Update",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2025-05-02",
+     "url": "https://mnsda.com/minnesota-conference-financial-update/",
+     "quote": "These gifts support areas that tithe doesn’t cover, such as worthy student funding, capital projects, local and global evangelism, camp ministries, and other special mission efforts across the state."
+    },
+    {
+     "title": "Literature Evangelism",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2026-06-05 (modified)",
+     "url": "https://mnsda.com/ministries/literature-evangelism/",
+     "quote": "We oversee literature evangelism efforts across Minnesota, primarily through two avenues: Minnesota Youth Rush and GLOW."
+    },
+    {
+     "title": "The Northern Light Extra – February 2026",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2026-01-30",
+     "url": "https://mnsda.com/tnl-extra-february-2026/",
+     "quote": "SALT: Coming this Fall to Union"
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "Child protection training and a background check are mandatory for those working with children, through Adventist Screening Verification (Sterling Volunteers, linked from the Youth Ministry and volunteer pages); clubs register by 30 September each year to stay compliant with volunteer screening.",
+   "sources": [
+    {
+     "title": "Youth Ministry",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2026-09-17 (modified)",
+     "url": "https://mnsda.com/ministries/youth-ministry/",
+     "quote": "Complete your mandatory child protection training and background check."
+    },
+    {
+     "title": "Pathfinders",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2026-09-17 (modified)",
+     "url": "https://mnsda.com/ministries/youth-ministry/pathfinders/",
+     "quote": "Register your club by Sept. 30 to participate in all events, ensuring compliance with volunteer screening and documentation."
+    },
+    {
+     "title": "Pathfinder Leadership Training (Master Guide)",
+     "publisher": "Minnesota Conference of Seventh-day Adventists",
+     "date": "2026-04-01 (modified)",
+     "url": "https://mnsda.com/ministries/youth-ministry/pathfinders/pathfinder-leadership-training/",
+     "quote": "Complete a background check and child protection course, and be approved by your Conference/Mission."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": null
+  },
+  "checked": "2026-09-30",
+  "notes": "The application-based evangelism funding is described in the conference's own 2025 offertory reading; the 2026 readings do not repeat it, and the May 2025 financial update announced spending cuts and less subsidy for some events (retreats). Whether the evangelism application round runs in 2026–27, and its form and deadline, are UNKNOWN: ask the conference. mnsda.com has no evangelism or ministerial department page (164 sitemap pages read); the team page lists a Ministerial Director role (https://mnsda.com/about/team/), and the only evangelism page is Literature Evangelism. No honorarium rule found. Screening renewal period is not stated on MN pages. NAD baseline (division-wide, not this conference's own page): nadadventist.org/asv says adults voted to serve and employees working with children and youth complete a criminal background check (FB 20) and child protection training through Sterling Volunteers, \"This should be completed every three years.\" (Adventist Screening Verification, NAD, modified 31 Aug 2026, https://www.nadadventist.org/asv). Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ },
+ {
+  "conf": "Rocky Mountain",
+  "union": "Mid-America Union",
+  "states": [
+   "CO",
+   "WY",
+   "NM"
+  ],
+  "site": "https://www.rmcsda.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": null,
+   "cap": null,
+   "deadline": "Preliminary Evangelism Budget Request by 30 October of the year before (30 Oct 2025 for 2026 meetings); Final Budget Request and any changed Speaker Form 60 days before the meetings",
+   "how": "Submit the Preliminary Evangelism Budget Request and an Evangelism Speaker Form (pastor and treasurer sign) to the Ministerial Department by the deadline, then the Final Budget Request 60 days before; the conference evangelism coordinator approves the amount.",
+   "conditions": [
+    "Conference funds requested = total estimated cost less the local church's own subsidy and estimated offerings",
+    "Allowable: hall rental, evangelist expenses, advertising, children's programme and free handout materials; church funds pay for speaker gifts, church equipment, building improvements, leaders' meals and baptismal robes",
+    "No personal equipment purchase, rental or repair may be charged to evangelism",
+    "Expenses above the approved budget are the local church's responsibility",
+    "Receipts must show items, price and proof of payment; use the church's tax-exempt certificate",
+    "Church board approves the evangelist's mileage, per diem and lodging (not above $58/day per diem, $0.50/mile)",
+    "Pastors who preach their own series (minimum ten doctrinal meetings) may claim a $500 equipment allowance, up to twice a year ($1,000 per pastor per year)",
+    "Each nightly offering counted by two people and recorded; no expenses paid directly from the offering"
+   ],
+   "report": "Evangelism Expense Report with receipts, check copies, expense vouchers, W-9s for paid speakers and the church board minutes approving the speaker's travel and lodging, to RMC Treasury within 60 days after the meetings; the Evangelism Offering Report stays with the church treasurer for audit.",
+   "programmes": [
+    "Annual Evangelism Forms packet and evangelism budget cycle (Ministerial Department)",
+    "Annual church planning and evaluation process with each pastor (since 2014)",
+    "Pentecost 2025: RMC matched NAD division funds for evangelistic meetings",
+    "Rocky Mountain Advance offering, designated in part to evangelism (2022)",
+    "Pentecost 2025 (NAD initiative administered in Mid-America; approved events received up to $3,000; MAUC application deadline was 31 December 2024, now closed)",
+    "Pentecost & Beyond (2026 follow-on emphasis named by the MAUC ministerial and evangelism department)",
+    "OneVoice27 (General Conference emphasis, September 2027)",
+    "SALT (It Is Written Bible-worker training school) at Union Adventist University, Lincoln, Nebraska, from fall 2026"
+   ],
+   "sources": [
+    {
+     "title": "Ministerial Department",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2026-04-01 (modified)",
+     "url": "https://www.rmcsda.org/departments/ministerial-department/",
+     "quote": "Click here to fill out the 2026 Preliminary Evangelism Budget Request Form."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "2026 PRELIMINARY EVANGELISM BUDGET REQUEST DEADLINE: OCTOBER 30, 2025"
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Complete the FINAL BUDGET REQUEST form and return it to the Ministerial Department 60 days prior to the evangelism event."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Less local church subsidy Less estimated offerings RMC EVANGELISM FUNDS REQUESTED"
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Allowable expenses would fall under the categories of hall rental, evangelist expenses, advertising, children’s program expenses, and free handout materials."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Expenses exceeding the approved evangelism budget will be the responsibility of the local church."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "The rates should not exceed the current conference rates of $58/day for per diem and $0.50/mile for mileage."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Complete and submit the EVANGELISM EXPENSE REPORT with supporting documents to the RMC Treasury Department within 60 days of completion of the evangelism event to obtain reimbursement for your approved evangelism expenses."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "At least two people should verify nightly offerings and record them on the EVANGELISM OFFERING REPORT form. Keep this form with your records."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Please complete this form for each speaker/evangelist that you plan use for your evangelism events. This form must be completed and turned in with your Preliminary Budget Request Form."
+    },
+    {
+     "title": "Equipment Allowance for Pastors Holding Their Own Evangelistic Meetings",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "undated (uploaded 2023-10; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2023/10/Evangelism-Equipment-Allowance-Reimbursement.pdf",
+     "quote": "There is a $500.00 equipment allowance for pastors who speak for their own evangelistic meetings. In order to qualify as “evangelistic” there shall be a minimum of ten doctrinal message meetings."
+    },
+    {
+     "title": "Equipment Allowance for Pastors Holding Their Own Evangelistic Meetings",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "undated (uploaded 2023-10; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2023/10/Evangelism-Equipment-Allowance-Reimbursement.pdf",
+     "quote": "This allowance may be applied two times per year for a maximum of $1,000 per pastor per year."
+    },
+    {
+     "title": "Ministerial Department",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2026-04-01 (modified)",
+     "url": "https://www.rmcsda.org/departments/ministerial-department/",
+     "quote": "Beginning in 2014, the Ministerial Department implemented an annual planning and evaluation process for all churches."
+    },
+    {
+     "title": "State of the Rocky Mountain Conference",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-21",
+     "url": "https://www.outlookmag.org/state-of-the-rocky-mountain-conference/",
+     "quote": "Through the faithful stewardship of members, the RMC matched division funds and helped assist evangelistic meetings across our territory."
+    },
+    {
+     "title": "RMC Executive Committee Votes 2022 Operating Budget",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2022-03-02",
+     "url": "https://www.rmcsda.org/rmc-executive-committee-votes-2022-operating-budget/",
+     "quote": "This additional giving will assist the six areas for which the advance offering is designated:  evangelism, Campion and Mile High academies, the church and school building fund, summer camp programming, camp facilities, and La Vida Mission."
+    },
+    {
+     "title": "About Us",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2026-08-13 (modified)",
+     "url": "https://www.rmcsda.org/about/",
+     "quote": "we are the administrative headquarters for the Seventh-day Adventist Church in Colorado, Wyoming, and San Juan County, New Mexico"
+    },
+    {
+     "title": "Pentecost 2025: Mid-America Union Conference Update",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2024-12-05",
+     "url": "https://www.outlookmag.org/pentecost-2025-mauc-update/",
+     "quote": "With funding still available, churches and schools are encouraged to apply before the December 31, 2024 deadline. Approved events receive up to $3,000 to support proclamation initiatives, ensuring readiness for this Spirit-filled mission."
+    },
+    {
+     "title": "MAUC Ministerial and Evangelism Constituency Session Report 2026: Collaborating in Ministry",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2026-09-01",
+     "url": "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+     "quote": "Now our attention turns to how local conferences will continue the evangelism fervor in the coming years with Pentecost & Beyond, as well as OneVoice 2027."
+    },
+    {
+     "title": "Adding SALT: It Is Written School of Evangelism Coming to Union Adventist University",
+     "publisher": "OUTLOOK magazine (Mid-America Union Conference)",
+     "date": "2025-12-22",
+     "url": "https://www.outlookmag.org/adding-salt-it-is-written-school-of-evangelism-coming-to-union-adventist-university/",
+     "quote": "Starting fall 2026, the It Is Written Soul-winning And Leadership Training (SALT) program will be held on the campus of Union Adventist University (Union) in Lincoln, Nebraska."
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": "Every evangelist must be approved by the conference and have current US work authorization to receive any pay or honorarium (otherwise only travel, lodging, meals and incidentals are reimbursed); the evangelist's 'basic fee or honorarium' must be approved; paying a part-time pastor for a series needs ADCOM approval beforehand; full-time RMC employees receive no honorarium for a series in RMC; a W-9 is required from anyone paid, and a 1099-NEC is filed at $600 or more in a calendar year. No dollar ceiling on honorariums is published.",
+   "sources": [
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Remember that all evangelists must be approved by the Rocky Mountain Conference and have current authorization to work in the U.S. if they are to receive compensation, including an honorarium."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Individuals who do not possess current work authorization may ONLY be reimbursed for expenses related to the evangelism meetings, which include travel, lodging, meals, and incidentals."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Evangelist’s basic fee or honorarium (Must be approved)"
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Approval from ADCOM must be obtained prior to the meetings if you are considering compensating (including honorariums) a part-time pastor for holding an evangelistic series."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "Full-time employees of the Rocky Mountain Conference are NOT to be compensated or receive honorariums for holding an evangelistic series in the Rocky Mountain Conference."
+    },
+    {
+     "title": "2026 Evangelism Forms (Evangelism Packet)",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2025-10 (uploaded; file last modified 2026-04-14)",
+     "url": "https://www.rmcsda.org/wp-content/uploads/2025/10/2026-EVANGELISM-PACKET.pdf",
+     "quote": "A 1099-NEC form must be filed for any individuals or unincorporated entities that are paid $600.00 or more during a calendar year."
+    }
+   ]
+  },
+  "childProtection": {
+   "conference": "Following NAD policy, a formal background check and child protection training are required for all employees, Pathfinder and Adventurer leaders, counselors, Sabbath School leaders and teachers and other adult volunteers who work with children, done through Sterling Volunteers (select Mid-America, then Rocky Mountain Conference).",
+   "sources": [
+    {
+     "title": "Child Protection Training and Background Checks",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2020-12-13 (modified)",
+     "url": "https://www.rmcsda.org/departments/hr/child-protection-training-and-background-checks/",
+     "quote": "The Rocky Mountain Conference follows the North American Division policies and guidelines for child protection training and requires a formal background check for all employees, Pathfinder and Adventurer leaders, counselors, adult volunteers who work with children and that volunteer at their local church."
+    },
+    {
+     "title": "Volunteer Information and Forms",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2019-09-05",
+     "url": "https://www.rmcsda.org/departments/hr/volunteer-information-and-forms/",
+     "quote": "This is required for all employees as well as for its Pathfinder and Adventurer leaders, counselors, Sabbath school leaders and teachers as well as other adult volunteers who regularly work with children."
+    },
+    {
+     "title": "Child Protection Training and Background Checks",
+     "publisher": "Rocky Mountain Conference of Seventh-day Adventists",
+     "date": "2020-12-13 (modified)",
+     "url": "https://www.rmcsda.org/departments/hr/child-protection-training-and-background-checks/",
+     "quote": "Select “Rocky Mountain Conference” from the drop-down list."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://www.rmcsda.org/departments/ministerial-department/",
+   "ministerialPage": "https://www.rmcsda.org/departments/ministerial-department/"
+  },
+  "checked": "2026-09-30",
+  "notes": "RMC publishes the fullest evangelism-funding process in Mid-America: the forms and guidelines are in the 2026 Evangelism Packet linked from the Ministerial Department page (evangelism has no separate page). No percentage or dollar cap on the conference share is published; the amount is whatever the evangelism coordinator approves. The 30 October preliminary deadline is for the following year's meetings, so a pastor planning a 2027 series should expect a 2027 packet about October 2026 (the 2027 packet was not yet online when checked). The packet's 2026 rates ($58/day, $0.50/mile) change yearly. Territory includes San Juan County, New Mexico. The HR screening pages (2019–2020) do not state a renewal period. NAD baseline (division-wide, not this conference's own page): nadadventist.org/asv says adults voted to serve and employees working with children and youth complete a criminal background check (FB 20) and child protection training through Sterling Volunteers, \"This should be completed every three years.\" (Adventist Screening Verification, NAD, modified 31 Aug 2026, https://www.nadadventist.org/asv). Union level: no standing Mid-America Union evangelism grant or subsidy policy was found on midamericaadventist.org (all 40 sitemap pages read; Ministerial, Church and Youth Ministries, Treasury and Resources pages checked). The money that reached churches through the union was NAD Pentecost 2025 funding (up to $3,000 per approved event; MAUC deadline 31 Dec 2024, closed). The union also set aside one-off funds for St. Louis evangelism around the 2025 GC Session. The union's only published 'subsidy' forms are education forms (e.g. New Converts Subsidy for students), not evangelism."
+ }
+]

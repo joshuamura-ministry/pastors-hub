@@ -1,0 +1,149 @@
+{
+ "conf": "Northeastern",
+ "slug": "northeastern",
+ "union": "Atlantic Union",
+ "site": "https://www.northeastern.org/",
+ "calendarUrls": [
+  "https://www.northeastern.org/conference-calendar/",
+  "https://www.northeastern.org/nec-calendar/",
+  "https://www.northeastern.org/church-calendar/",
+  "https://events.northeastern.org/events"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "furthestPublished": "2027-01",
+ "furthestNote": "The conference Google calendar (loaded the same way its page loads it) has a grid to Sep 2027, but its last entry is \"Quarterly Reports Due - Secretariat\" on 10 Jan 2027; the last real events are in December 2026 (PELC 6-10 Dec, Uniformed Ministries Evening of Distinction 13 Dec).",
+ "aheadEvents": 0,
+ "aheadSummary": "Not published yet. No event for 2027 on the conference calendar, the events board, the ticketed-events site (last item 6 Dec 2026), Camp Victory Lake (2026 registration only) or the ministry pages; a site search for \"2027\" finds nothing.",
+ "calendarQuality": {
+  "grade": "B+ (past) / none yet (Apr-Sep 2027)",
+  "summary": "Busy calendar, but it is filled about three months ahead; nothing is posted after January 2027."
+ },
+ "stats": {
+  "window": "2027-04-01 to 2027-09-30",
+  "allRecordsInWindow": 0,
+  "countedRecords": 0,
+  "countedOccurrences": 0,
+  "conferenceLevelRecords": 0,
+  "conferenceLevelOccurrences": 0,
+  "recordsByLevel": {},
+  "recordsByKind": {},
+  "conferenceRecordsByPrimaryCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "conferenceRecordsBySecondCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "conferenceOccurrencesByPrimaryCategory": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 0,
+   "education": 0,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "monthsWithConferenceEvents": "0 of 6",
+  "monthsWithAnyEvent": [],
+  "deadlinesInWindow": 0,
+  "observancesInWindow": 0
+ },
+ "sourcesUsed": [
+  "northeastern.org/conference-calendar (ICS Calendar Pro view of the conference Google calendar, Jul 2026 - Sep 2027 grid)",
+  "northeastern.org events board (WordPress REST list, newest 20 posts) and site search for 2027",
+  "events.northeastern.org (Zoho Backstage, read in a browser)",
+  "campvictorylakenec.com",
+  "NEC Personal Ministries lay-evangelism funds form"
+ ],
+ "excludedNonEvents": 0,
+ "events": [],
+ "prepDeadlines": [
+  {
+   "title": "Lay-evangelism funds request form due",
+   "date": "2027-04-30",
+   "kind": "deadline",
+   "recurring": "yearly (30 Apr)",
+   "appliesTo": "northeastern",
+   "what": "Return the Personal Ministries lay-evangelism funds request form",
+   "url": "https://www.northeastern.org/wp-content/uploads/2014/12/PM_Lay_Evangelism_Funds_Request_Form_.pdf",
+   "note": "Form text: \"Deadline for returning form: April 30th\". Standing yearly rule on an older form, not a dated 2027 calendar item."
+  }
+ ],
+ "outsideWindow": [],
+ "plannedUndated": [
+  {
+   "title": "Union doctrinal revival weekend in GNYC & NEC",
+   "year": "2030",
+   "what": "Union plan; IMPACT series for GNYC (Upstate)/NYC/NEC in 2029. Both after this window.",
+   "url": "https://qr.view.page/uploads/pdf/Nnh3Z2_01319661a9b0776a.pdf",
+   "level": "union",
+   "category": "evangelism-outreach"
+  }
+ ],
+ "aheadChecked": [
+  "https://www.northeastern.org/conference-calendar/",
+  "https://www.northeastern.org/wp-admin/admin-ajax.php (action r34ics_ajax, the page's own calendar request)",
+  "https://www.northeastern.org/nec-calendar/",
+  "https://www.northeastern.org/wp-json/wp/v2/search?search=2027",
+  "https://www.northeastern.org/wp-json/wp/v2/mec-events",
+  "https://www.northeastern.org/?s=2027",
+  "https://www.northeastern.org/events/congres-laic/",
+  "https://www.northeastern.org/events/solid-rock-seventh-day-adventist-church-homecoming-celebration/",
+  "https://www.northeastern.org/events/power-weekends-mt-vernon-church/",
+  "https://events.northeastern.org/events",
+  "https://www.northeastern.org/nec-service/victory-lake-camp-conference/",
+  "https://www.campvictorylakenec.com/",
+  "https://www.northeastern.org/nec-ministry/youth-ministries/",
+  "https://www.northeastern.org/nec-ministry/personal-ministries/",
+  "https://www.northeastern.org/nec-ministry/pathfinders/",
+  "https://www.northeastern.org/wp-content/uploads/2014/12/PM_Lay_Evangelism_Funds_Request_Form_.pdf",
+  "https://atlanticuniongleaner.org/"
+ ],
+ "aheadCheckedNotes": [
+  "The calendar plugin was asked for its data with the page's own request (same nonce and arguments the page sends); 114 entries, the last on 10 Jan 2027.",
+  "events.northeastern.org (Zoho Backstage) was read in a browser: 5 listings, the last the Uniform Ministries Legacy Gala on 6 Dec 2026."
+ ],
+ "notes": [
+  "First-window discrepancy seen in passing: the ticketed site lists the Uniform Ministries Legacy Gala on 6 Dec 2026, while the conference calendar has a Uniformed Ministries Evening of Distinction on 13 Dec 2026; they may be the same event.",
+  "Recheck in Jan - Mar 2027 for camp meeting (Victory Lake), Hispanic and Haitian camp meetings, and summer evangelism (2026 campaigns ran 11 Jul - 1 Aug)."
+ ]
+}

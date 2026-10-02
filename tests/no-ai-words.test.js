@@ -171,6 +171,38 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     { const t=P.E(`(()=>{ try{ const m=caseModel('plan-series',{type:'conference',group:'conference'}); const d=caseDeck(m); return JSON.stringify(d)+' '+casePdfDoc(caseHandout(m,d,{}),{jsPDF:window.jspdf.jsPDF,compress:false}).__caseLog.map(l=>l.t).join(' '); }catch(e){ return 'ERR '+e.message; } })()`);
       c('the conference proposal: its slides and its handout PDF, no "AI"', [t.length>2000,hits(t)], [true,[]]); }
 
+    // v56 (DESIGN-PURCHASE.md §10: "updated: no-ai-words"): a project or purchase, the average church's sample (a sound board and a
+    // camera for the livestream), on this page's church: its five steps (with the option forms and the quote letter open), every
+    // audience's slides as drawn, the handout, the Proposal, the quote letter's PDF, the price search's every message, and every word
+    // table of the purchase path, EN and ES
+    console.log('-- Make the Case: a project or purchase (v56) --');
+    { const CB=require('./average-church/seed-purchase.json')['terrain-churches-v1'].churches['sample-sampleton-sda'].caseBuys;
+      P.E(`(()=>{ const ch=uChurch(); ch.caseBuys=${JSON.stringify(CB)}; ch.proposalPrefs={...(ch.proposalPrefs||{}),path:'buy',buy:'buy-avs001'}; uPersist(); openTool('case'); caseMount(true); })()`);
+      await until(()=>P.q('#bx-s5'),5000);
+      c('the purchase path is up: five steps', [P.qa('#bx .bx-step').length, !!P.q('#cs-switch [data-bx-path="buy"][aria-pressed="true"]')], [5,true]);
+      scan(P,'a project or purchase: its five steps');
+      P.qa('#bx details').forEach(d=>{ d.open=true; });
+      const ed=P.q('#bx [data-bx-edit]'); if(ed){ ed.click(); await sleep(60); }
+      c('…an option form and the quote letter open', [!!P.q('#bx .bx-of, #bx form, #bx [data-bx-of]'), P.qa('#bx details[open]').length>0], [true,true]);
+      scan(P,'a project or purchase: an option form, the quote letter and the price search\'s details open');
+      const say=P.E(`(()=>{ const out=[]; for(const code of ['done','none','failed','limit','locked','noreg','slow']){ buyPricesSay({code,n:code==='done'?2:0}); out.push(BUY_ST.pmsg); } BUY_ST.pmsg=''; return out.join(' | '); })()`);
+      c('the price search\'s every message: no "AI"', [say.split(' | ').filter(Boolean).length, hits(say)], [7,[]]);
+      const words=P.E(`JSON.stringify([BUY_UI,BUY_SL,BUY_P,BUY_CATS,BUY_WHY,BUY_FUND,BUY_TIERS,BUY_HOW,BUY_RISKS,BUY_RFQ])`);
+      c('every word table of the purchase path (both languages): no "AI"', [words.length>20000, hits(words)], [true,[]]);
+      for(const a of ['finance','board','business','conference','congregation','team']){
+        const ok=P.E(`(()=>{ try{ const host=document.createElement('div'); host.id='zz-buydeck'; document.body.append(host); const m=buyModel(buyGet('buy-avs001'),'${a}');
+          tdeckRender(buyDeck(m),host,{mode:'browse'}); return host.querySelectorAll('.td-slide,section,article').length>0||host.textContent.length>200; }catch(e){ return 'ERR '+e.message; } })()`);
+        c(`the slides for ${a} are drawn`, ok, true);
+        scan(P,`a project or purchase: the slides for ${a}`);
+        P.E(`document.getElementById('zz-buydeck').remove()`);
+      }
+      const t=P.E(`(()=>{ try{ const it=buyGet('buy-avs001'), out=[]; for(const a of ['finance','board','business','conference','congregation','team']){ const m=buyModel(it,a);
+          out.push(buyPdfDoc(buyHandout(m),{jsPDF:window.jspdf.jsPDF,compress:false}).__caseLog.map(l=>l.t).join(' '));
+          const Pz=buyProposal(m); if(Pz) out.push(buyProposalDoc(Pz,{jsPDF:window.jspdf.jsPDF,compress:false}).__caseLog.map(l=>l.t).join(' ')); }
+        out.push(buyRfq(it,'en',{company:'Store A (sample)'}), buyRfq(it,'es',{company:'Store A (sample)'})); return out.join(' '); }catch(e){ return 'ERR '+e.message; } })()`);
+      c('its handouts, Proposals and quote letters (six audiences): no "AI"', [t.length>5000, /^ERR/.test(t), hits(t)], [true,false,[]]);
+      P.E(`(()=>{ const ch=uChurch(); ch.proposalPrefs={...(ch.proposalPrefs||{}),path:'ministry'}; uPersist(); })()`); }
+
     console.log('-- the Evangelism Planner --');
     P.E('openTool("planner")'); await sleep(200);
     scan(P,'Evangelism Planner');

@@ -44,5 +44,12 @@ another day (it fits when the idea names a home, church, library or park). Plann
 (car-care day, fix-it day, building a ramp): best on another day; a real emergency still fits. The back-to-school backpack
 giveaway: fits the Sabbath as a free giveaway (keep the games for another day).
 
+**Offerings (the pastor, 2 Oct 2026):** a special offering taken during Sabbath worship for a church project (for example new
+sound equipment) is fine: it is part of worship. Sales, fundraising events and selling tickets stay off the Sabbath.
+
+**Games (the pastor, 2 Oct 2026):** board games with families on a Sabbath afternoon fit "as long as the board games are
+Bible board games" (Bible games, Bible stories, Scripture quizzes). Ordinary board games, card games and other games for
+entertainment are best on another day.
+
 **When in doubt:** if it is mercy or meeting a need, it fits; if it is commerce, entertainment or routine work, choose
 another day. Terrain offers Sabbath hours only for ideas that fit, and always lets the pastor decide for his church.

@@ -1,0 +1,253 @@
+{
+ "_about": "How far each conference's OWN calendar is published (department-only calendars, such as youth, clubs, schools and camps, do not count). An empty month inside this range means \"nothing listed\"; a month after it means \"not published yet\". null = the conference publishes no calendar at all. Update \"through\" (and both notes) at each monthly refresh when a calendar moves forward; the notes are shown on the page in English and Spanish.",
+ "alaska": {
+  "through": "2027-02",
+  "en": "Calendar runs to Feb 2027; summer camps are listed by month.",
+  "es": "El calendario llega hasta febrero de 2027; los campamentos de verano aparecen por mes."
+ },
+ "allegheny-east": {
+  "through": "2026-12",
+  "en": "One-off events run to Dec 2026; monthly meetings repeat with no end date.",
+  "es": "Los eventos únicos llegan hasta diciembre de 2026; las reuniones mensuales se repiten sin fecha final."
+ },
+ "allegheny-west": {
+  "through": "2026-11",
+  "en": "Nothing is dated after Nov 2026.",
+  "es": "No hay nada con fecha después de noviembre de 2026."
+ },
+ "arizona": {
+  "through": "2026-12",
+  "en": "Only the 2026 calendar is online; the 2027 calendar is being planned.",
+  "es": "Solo el calendario de 2026 está en línea; el de 2027 se está planificando."
+ },
+ "arkansas-louisiana": {
+  "through": "2026-12",
+  "en": "Main calendar runs to Dec 2026; youth and club calendars run to Sep 2027.",
+  "es": "El calendario principal llega hasta diciembre de 2026; los de jóvenes y clubes llegan hasta septiembre de 2027."
+ },
+ "carolina": {
+  "through": "2028-12",
+  "en": "Calendar runs to Dec 2028.",
+  "es": "El calendario llega hasta diciembre de 2028."
+ },
+ "central-california": {
+  "through": "2026-11",
+  "en": "Events page ends Nov 2026; the Pathfinder page runs to Aug 2027.",
+  "es": "La página de eventos termina en noviembre de 2026; la de Conquistadores llega hasta agosto de 2027."
+ },
+ "central-states": {
+  "through": "2026-11",
+  "en": "Calendar ends Nov 2026.",
+  "es": "El calendario termina en noviembre de 2026."
+ },
+ "chesapeake": {
+  "through": "2027-12",
+  "en": "Calendar runs to Dec 2027; all of 2027 is marked tentative.",
+  "es": "El calendario llega hasta diciembre de 2027; todo 2027 está marcado como provisional."
+ },
+ "dakota": {
+  "through": "2027-10",
+  "en": "Calendar runs to Oct 2027.",
+  "es": "El calendario llega hasta octubre de 2027."
+ },
+ "florida": {
+  "through": "2027-03",
+  "en": "Own calendar ends Mar 2027; the April camp meetings come from the union calendar.",
+  "es": "Su propio calendario termina en marzo de 2027; los campestres de abril vienen del calendario de la unión."
+ },
+ "georgia-cumberland": {
+  "through": "2027-05",
+  "en": "Events site runs to May 2027; summer camp weeks come from the camp site.",
+  "es": "El sitio de eventos llega hasta mayo de 2027; las semanas del campamento de verano vienen del sitio del campamento."
+ },
+ "greater-new-york": {
+  "through": "2026-12",
+  "en": "The 2026 calendar ends in December; 2027 is not out yet.",
+  "es": "El calendario de 2026 termina en diciembre; el de 2027 aún no ha salido."
+ },
+ "gulf-states": {
+  "through": "2026-12",
+  "en": "Calendar ends Dec 2026.",
+  "es": "El calendario termina en diciembre de 2026."
+ },
+ "hawaii": {
+  "through": null,
+  "en": "No conference calendar is published.",
+  "es": "No se publica un calendario de la asociación."
+ },
+ "idaho": {
+  "through": "2026-12",
+  "en": "Main calendar ends Dec 2026; club and academy calendars run to Jun 2027.",
+  "es": "El calendario principal termina en diciembre de 2026; los de clubes y de la academia llegan hasta junio de 2027."
+ },
+ "illinois": {
+  "through": "2026-12",
+  "en": "Nothing is dated after Dec 2026.",
+  "es": "No hay nada con fecha después de diciembre de 2026."
+ },
+ "indiana": {
+  "through": "2026-12",
+  "en": "Main calendar has conference dates to Dec 2026; from Jan 2027 it lists only youth, camp and club dates (to Nov 2027).",
+  "es": "El calendario principal tiene fechas de la asociación hasta diciembre de 2026; desde enero de 2027 solo muestra fechas de jóvenes, campamento y clubes (hasta noviembre de 2027)."
+ },
+ "iowa-missouri": {
+  "through": "2026-12",
+  "en": "No ministry events after Dec 2026.",
+  "es": "No hay eventos de ministerio después de diciembre de 2026."
+ },
+ "kansas-nebraska": {
+  "through": "2026-11",
+  "en": "Main calendar holds little; the club calendar runs to May 2028.",
+  "es": "El calendario principal tiene poco; el de clubes llega hasta mayo de 2028."
+ },
+ "kentucky-tennessee": {
+  "through": "2027-11",
+  "en": "Calendar runs to Nov 2027.",
+  "es": "El calendario llega hasta noviembre de 2027."
+ },
+ "lake-region": {
+  "through": "2026-12",
+  "en": "The 2026 calendar ends in December; 2027 is not out yet.",
+  "es": "El calendario de 2026 termina en diciembre; el de 2027 aún no ha salido."
+ },
+ "michigan": {
+  "through": "2027-12",
+  "en": "Calendar runs to Dec 2027.",
+  "es": "El calendario llega hasta diciembre de 2027."
+ },
+ "minnesota": {
+  "through": "2026-10",
+  "en": "The online calendar holds almost nothing; camp meeting 2027 is announced.",
+  "es": "El calendario en línea casi no tiene nada; el campestre de 2027 está anunciado."
+ },
+ "montana": {
+  "through": "2026-12",
+  "en": "Event pages run to Dec 2026; club events and camp meeting 2027 are posted.",
+  "es": "Las páginas de eventos llegan hasta diciembre de 2026; están publicados los eventos de clubes y el campestre de 2027."
+ },
+ "mountain-view": {
+  "through": "2026-10",
+  "en": "Nothing is dated after Oct 2026 except a training year.",
+  "es": "No hay nada con fecha después de octubre de 2026, salvo un año de capacitación."
+ },
+ "nevada-utah": {
+  "through": "2027-02",
+  "en": "Office calendar runs to Feb 2027; a few meetings repeat to Sep 2027.",
+  "es": "El calendario de la oficina llega hasta febrero de 2027; algunas reuniones se repiten hasta septiembre de 2027."
+ },
+ "new-jersey": {
+  "through": "2026-11",
+  "en": "Calendar ends Nov 2026.",
+  "es": "El calendario termina en noviembre de 2026."
+ },
+ "new-york": {
+  "through": "2026-10",
+  "en": "Calendar shows only May to Sep 2026; the last item is in Oct 2026.",
+  "es": "El calendario solo muestra de mayo a septiembre de 2026; lo último es de octubre de 2026."
+ },
+ "northeastern": {
+  "through": "2026-12",
+  "en": "Calendar shows a few months ahead; the last events are in Dec 2026.",
+  "es": "El calendario muestra pocos meses por delante; los últimos eventos son de diciembre de 2026."
+ },
+ "northern-california": {
+  "through": "2026-12",
+  "en": "Events calendar ends Dec 2026; the Pathfinder calendar runs to May 2027.",
+  "es": "El calendario de eventos termina en diciembre de 2026; el de Conquistadores llega hasta mayo de 2027."
+ },
+ "northern-new-england": {
+  "through": "2027-07",
+  "en": "Calendar runs to camp meeting in early Jul 2027.",
+  "es": "El calendario llega hasta el campestre de principios de julio de 2027."
+ },
+ "ohio": {
+  "through": "2027-08",
+  "en": "Calendar runs to Aug 2027.",
+  "es": "El calendario llega hasta agosto de 2027."
+ },
+ "oklahoma": {
+  "through": null,
+  "en": "No calendar is published; dates come from news and the camp-meeting page.",
+  "es": "No se publica un calendario; las fechas vienen de noticias y de la página del campestre."
+ },
+ "oregon": {
+  "through": "2027-11",
+  "en": "Calendar runs to Nov 2027 (mostly clubs and church ministries).",
+  "es": "El calendario llega hasta noviembre de 2027 (sobre todo clubes y ministerios de la iglesia)."
+ },
+ "pennsylvania": {
+  "through": "2026-12",
+  "en": "The 2026 calendar ends in December; 2027 dates come from the camp-meeting and OneVoice27 pages.",
+  "es": "El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27."
+ },
+ "potomac": {
+  "through": "2027-09",
+  "en": "Calendar runs to Sep 2027.",
+  "es": "El calendario llega hasta septiembre de 2027."
+ },
+ "rocky-mountain": {
+  "through": "2027-08",
+  "en": "Calendar shows 12 months ahead, to Aug 2027.",
+  "es": "El calendario muestra 12 meses por delante, hasta agosto de 2027."
+ },
+ "south-atlantic": {
+  "through": "2026-12",
+  "en": "The 2026 master calendar ends in December; a few 2027 flyers.",
+  "es": "El calendario general de 2026 termina en diciembre; hay algunos volantes de 2027."
+ },
+ "south-central": {
+  "through": "2026-12",
+  "en": "The 2026 calendar ends in December; 2027 is not out yet.",
+  "es": "El calendario de 2026 termina en diciembre; el de 2027 aún no ha salido."
+ },
+ "southeastern-california": {
+  "through": null,
+  "en": "No conference calendar; dates come from ministry and youth pages.",
+  "es": "No hay calendario de la asociación; las fechas vienen de páginas de ministerios y de jóvenes."
+ },
+ "southeastern": {
+  "through": null,
+  "en": "No master calendar; dates come from flyers and the union calendar.",
+  "es": "No hay calendario general; las fechas vienen de volantes y del calendario de la unión."
+ },
+ "southern-california": {
+  "through": "2027-03",
+  "en": "Events calendar runs to Mar 2027; later dates come from the school calendar.",
+  "es": "El calendario de eventos llega hasta marzo de 2027; las fechas posteriores vienen del calendario escolar."
+ },
+ "southern-new-england": {
+  "through": "2026-11",
+  "en": "Events run to Nov 2026; the June 2027 camp meetings are posted.",
+  "es": "Los eventos llegan hasta noviembre de 2026; los campestres de junio de 2027 están publicados."
+ },
+ "southwest-region": {
+  "through": "2026-12",
+  "en": "The 2026 calendar ends in December; the UNA VOZ 27 plan gives months.",
+  "es": "El calendario de 2026 termina en diciembre; el plan UNA VOZ 27 da los meses."
+ },
+ "texas": {
+  "through": "2026-12",
+  "en": "Calendar ends Dec 2026.",
+  "es": "El calendario termina en diciembre de 2026."
+ },
+ "texico": {
+  "through": "2029-07",
+  "en": "Calendar runs to Jul 2029.",
+  "es": "El calendario llega hasta julio de 2029."
+ },
+ "upper-columbia": {
+  "through": "2027-02",
+  "en": "Main calendar ends Feb 2027; the club calendar runs to May 2027.",
+  "es": "El calendario principal termina en febrero de 2027; el de clubes llega hasta mayo de 2027."
+ },
+ "washington": {
+  "through": null,
+  "en": "The main calendar is not kept up; only the youth and club calendar runs ahead (to Sep 2027).",
+  "es": "El calendario principal no se mantiene al día; solo el de jóvenes y clubes va por delante (hasta septiembre de 2027)."
+ },
+ "wisconsin": {
+  "through": "2026-12",
+  "en": "No public events after Dec 2026.",
+  "es": "No hay eventos públicos después de diciembre de 2026."
+ }
+}

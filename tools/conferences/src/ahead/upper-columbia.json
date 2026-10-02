@@ -1,0 +1,261 @@
+{
+ "conf": "Upper Columbia",
+ "union": "North Pacific Union",
+ "slug": "upper-columbia",
+ "calendarUrls": [
+  "https://www.uccsda.org/events",
+  "https://ucccalendar.eventcalendarapp.com/",
+  "https://api.eventcalendarapp.com/events?id=7991&widgetUuid=7122694a-5ec6-4635-805a-3755a1bbd288"
+ ],
+ "otherSources": [
+  "https://www.uccsda.org/club-ministries",
+  "https://www.uccsda.org/pathfinders",
+  "https://www.uccsda.org/womensministries",
+  "https://www.uccsda.org/mensministries"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-05",
+ "furthestPublishedNote": "The main Event Calendar App feed (520 records) ends Feb 28-Mar 7, 2027. The Club Ministries 2026-2027 calendar runs to the Pathfinder Fair, May 14-16, 2027. Teen Extreme Mountain Biking is listed only as \"Fall of 2027\".",
+ "calendarQuality": "Main calendar is very good for the past but not yet loaded for spring 2027. Only the club ministries page looks ahead into the window.",
+ "aheadSummary": "Club events only: Adventurer Bible Game (Apr 3), Teen Extreme Rock-Climbing (Apr 23-25), Adventurer Family Fun Day (Apr 25) and the Pathfinder Fair (May 14-16). Camp meeting 2027 is undecided: the regional format was approved as a two-year trial starting 2025.",
+ "events": [
+  {
+   "title": "UCC Adventurer Bible Game",
+   "start": "2027-04-03",
+   "end": "2027-04-03",
+   "place": "",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "Teen Extreme Rock-Climbing Event",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Spokane region (specific sites TBD)",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference",
+   "note": "Also on the Pathfinders page."
+  },
+  {
+   "title": "Adventurer Family Fun Day",
+   "start": "2027-04-25",
+   "end": "2027-04-25",
+   "place": "Fort Walla Walla",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurer families",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "UCC Pathfinder Fair",
+   "start": "2027-05-14",
+   "end": "2027-05-16",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference",
+   "note": "The 2026 fair was at Upper Columbia Academy."
+  }
+ ],
+ "counts": {
+  "total": 4,
+  "conferenceLevel": 4,
+  "unionLevel": 0,
+  "institutionOrOther": 0,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 0,
+  "byCategory": {
+   "children": 2,
+   "pathfinders": 2
+  },
+  "byCategoryConferenceOnly": {
+   "children": 2,
+   "pathfinders": 2
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "Camp meeting 2027",
+   "usual": "regional gatherings May-June in 2025-2026; that plan was approved \"on a two-year trial basis, beginning in 2025\", so the 2027 format is not yet announced",
+   "url": "https://www.uccsda.org/ucc-launches-regional-approach-to-camp-meeting"
+  },
+  {
+   "what": "Camp MiVoden summer camps",
+   "usual": "late June-August; site shows 2026",
+   "url": "https://www.mivoden.com/summer-camps"
+  },
+  {
+   "what": "Men's Summit 2027",
+   "usual": "listed as \"TBD\"",
+   "url": "https://www.uccsda.org/mensministries"
+  },
+  {
+   "what": "Women's & Young Women's Spring One-Day Retreat",
+   "usual": "listed as \"2027 TBD\", at the conference office",
+   "url": "https://www.uccsda.org/womensministries"
+  },
+  {
+   "what": "Teen Extreme Mountain Biking",
+   "usual": "\"Coming Fall of 2027\" (no month)",
+   "url": "https://www.uccsda.org/pathfinders"
+  },
+  {
+   "what": "Hispanic evangelistic caravan 2027",
+   "usual": "news says plans \"are already underway\"; 2026 caravan was Apr 17-25",
+   "url": "https://www.uccsda.org/hundreds-baptized-during-ucc-evangelistic-caravan"
+  },
+  {
+   "what": "Annual Prayer Summit, Elders & Pastors Retreat, Young Adult Summit",
+   "usual": "October-November (2026 dates are in the first-pass file or below)",
+   "url": "https://www.uccsda.org/prayer"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "level": "division",
+   "url": "https://www.uccsda.org/club-ministries",
+   "note": "See NAD/GC file."
+  },
+  {
+   "title": "NPUC Pathfinder Bible Experience",
+   "start": "2027-03-13",
+   "level": "union",
+   "url": "https://www.uccsda.org/club-ministries",
+   "note": "Spokane Valley Church; UCC hosts. See union file."
+  }
+ ],
+ "alsoOct26toMar27": [
+  {
+   "title": "UCC Young Adult Summit 2026",
+   "start": "2026-10-09",
+   "end": "2026-10-11",
+   "place": "Camp MiVoden, Hayden Lake, ID",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "young adults",
+   "url": "https://www.uccsda.org/youngadultsummit",
+   "source": "Young Adult Summit page",
+   "level": "conference",
+   "note": "Not in the v50 file."
+  },
+  {
+   "title": "Adventurer Awards Day",
+   "start": "2026-10-11",
+   "end": "2026-10-11",
+   "place": "Grandview Spanish Church",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers and families",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "UCC Pathfinder Bible Experience",
+   "start": "2027-02-13",
+   "end": "2027-02-13",
+   "place": "Blue Mountain District",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "Pathfinders",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "North District Adventurer Bible Game",
+   "start": "2027-02-20",
+   "end": "2027-02-20",
+   "place": "Otis Orchards Church",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "South District Adventurer Bible Game",
+   "start": "2027-02-27",
+   "end": "2027-02-27",
+   "place": "Pasco-Riverview Church",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  },
+  {
+   "title": "Teen Pathfinder Mission Adventure",
+   "start": "2027-03-21",
+   "end": "2027-03-28",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "evangelism-outreach",
+   "audience": "teen Pathfinders",
+   "url": "https://www.uccsda.org/club-ministries",
+   "source": "Club Ministries Calendar 2026-2027 (dates subject to change)",
+   "level": "conference"
+  }
+ ],
+ "beyondWindow": [],
+ "excluded": [
+  "Main calendar after Dec 2026: K-12 Christmas break (closure)."
+ ],
+ "aheadChecked": [
+  "https://api.eventcalendarapp.com/events?id=7991&widgetUuid=7122694a-5ec6-4635-805a-3755a1bbd288 (all 12 pages, 520 records)",
+  "https://www.uccsda.org/events",
+  "https://www.uccsda.org/sitemap.xml",
+  "https://www.uccsda.org/club-ministries",
+  "https://www.uccsda.org/pathfinders",
+  "https://www.uccsda.org/adventurers",
+  "https://www.uccsda.org/camporee",
+  "https://www.uccsda.org/campmeeting",
+  "https://www.uccsda.org/mensministries",
+  "https://www.uccsda.org/mensretreat",
+  "https://www.uccsda.org/womensministries",
+  "https://www.uccsda.org/womensretreat",
+  "https://www.uccsda.org/youngadults",
+  "https://www.uccsda.org/youngadultsummit",
+  "https://www.uccsda.org/youth",
+  "https://www.uccsda.org/hispanic-ministries",
+  "https://www.uccsda.org/hispanos-ucc",
+  "https://www.uccsda.org/prayer",
+  "https://www.uccsda.org/prayerevents",
+  "https://www.uccsda.org/elders",
+  "https://www.uccsda.org/elders_retreat",
+  "https://www.uccsda.org/ministerial",
+  "https://www.uccsda.org/evangelism",
+  "https://www.uccsda.org/amenconference",
+  "https://www.uccsda.org/familyministries",
+  "https://www.uccsda.org/healthservices",
+  "https://www.uccsda.org/uppercolumbian",
+  "https://www.uccsda.org/ucc-launches-regional-approach-to-camp-meeting",
+  "https://www.uccsda.org/president-s-report-bringing-camp-meeting-to-you",
+  "https://www.uccsda.org/hundreds-baptized-during-ucc-evangelistic-caravan",
+  "https://www.mivoden.com/summer-camps",
+  "https://nwadventists.com/news?section=355"
+ ],
+ "notes": [
+  "The mensretreat page has a stale \"Register for Men's Retreat 2027! Registration opens Sunday, March 15\" line with no 2027 dates; not counted."
+ ]
+}

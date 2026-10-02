@@ -1,0 +1,165 @@
+{
+ "conf": "Southern California",
+ "union": "Pacific Union",
+ "slug": "southern-california",
+ "site": "https://scc.adventist.org",
+ "calendarUrls": [
+  "https://scc.adventist.org/events/",
+  "https://scc.adventist.org/calendar/",
+  "https://scc.adventist.org/wp-json/tribe/events/v1/events?start_date=2025-10-01&end_date=2027-04-01",
+  "https://scc.adventist.org/events/?ical=1",
+  "https://outlook.office365.com/calendar/published/8e9bd1c79e60425b8b10ae710a4803c0@sccsda.org/61793da693364833a199ef7354f4f5fc7608894388062598263/calendar.html",
+  "https://outlook.office365.com/owa/calendar/8e9bd1c79e60425b8b10ae710a4803c0@sccsda.org/61793da693364833a199ef7354f4f5fc7608894388062598263/calendar.ics"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "A to Mar 2027, then education only (public calendar and master calendar both stop)",
+ "furthestPublished": "2027-06",
+ "furthestNote": "Last dated item: EXSEED Workshop, 14-18 Jun 2027 (school-year calendar, 3 Sep 2026). The public events calendar has only holidays after Mar 2027 (to Dec 2027). The master (Outlook) calendar's committee series end 1-2 Apr 2027.",
+ "aheadSummary": "Six items, all from the 2026-2027 school-year calendar: Spring Education Council (13-14 Apr, Las Vegas), Principals' Council (22 Apr), NAD robotics final (2 May), SCC Graduation Weekend (4-6 Jun), LSU and PUC commencements (13 Jun) and EXSEED (14-18 Jun). No ministry, pastoral or evangelism dates are published for mid-2027.",
+ "aheadChecked": [
+  "https://scc.adventist.org/wp-json/tribe/events/v1/events?start_date=2027-03-25&end_date=2027-12-31&per_page=50",
+  "https://scc.adventist.org/events/",
+  "https://outlook.office365.com/owa/calendar/8e9bd1c79e60425b8b10ae710a4803c0@sccsda.org/61793da693364833a199ef7354f4f5fc7608894388062598263/calendar.ics",
+  "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+  "https://assets.adventistconnect.org/scconfer/2026/09/03154510/2026-2027-One-Page-Academic-Calendar.pdf",
+  "https://scc.adventist.org/wp-json/wp/v2/media?search=calendar",
+  "https://assets.adventistconnect.org/scconfer/2026/08/20174419/Youth-Ministry-Report-ExCom.pdf",
+  "https://scc.adventist.org/events/summer-camp-at-camp-cedar-falls/"
+ ],
+ "events": [
+  {
+   "title": "Spring Education Council (Pacific Union)",
+   "start": "2027-04-13",
+   "end": "2027-04-14",
+   "place": "Las Vegas, NV",
+   "category": "education",
+   "category2": null,
+   "audience": "principals and education leaders",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "urls": [
+    "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+    "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf"
+   ],
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "union",
+   "note": "SCC calendar (3 Sep 2026) shows 13-14 Apr; the union calendar of events (Feb 2026) shows 13-15 Apr."
+  },
+  {
+   "title": "Principals' Council (with K-8 and secondary accreditation sessions)",
+   "start": "2027-04-22",
+   "end": "2027-04-22",
+   "place": "",
+   "category": "education",
+   "category2": null,
+   "audience": "school principals",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "NAD FLL Robotics Championship",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "place": "Orlando, FL",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "student robotics teams",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "division"
+  },
+  {
+   "title": "SCC Graduation Weekend",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "",
+   "category": "education",
+   "category2": null,
+   "audience": "graduates, schools and families",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "urls": [
+    "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+    "https://assets.adventistconnect.org/scconfer/2026/09/03154510/2026-2027-One-Page-Academic-Calendar.pdf"
+   ],
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "La Sierra University and Pacific Union College commencements",
+   "start": "2027-06-13",
+   "end": "2027-06-13",
+   "place": "Riverside and Angwin, CA",
+   "category": "education",
+   "category2": null,
+   "audience": "graduates and families",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "institution"
+  },
+  {
+   "title": "EXSEED Workshop (teacher training)",
+   "start": "2027-06-14",
+   "end": "2027-06-18",
+   "place": "Loma Linda, CA (union calendar)",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "url": "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+   "urls": [
+    "https://assets.adventistconnect.org/scconfer/2026/09/03154447/2026-2027-Calendar.pdf",
+    "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf"
+   ],
+   "source": "education calendar (2026-2027 school-year calendar PDF)",
+   "when": "upcoming",
+   "level": "union"
+  }
+ ],
+ "stats": {
+  "items": 6,
+  "occurrences": 6,
+  "occurrencesInWindow": 6,
+  "conferenceLevelItems": 2,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "3 of 6",
+  "byCategory": {
+   "education": 6
+  },
+  "byCategoryIncludingSecond": {
+   "education": 6,
+   "youth-young-adults": 1
+  },
+  "occurrencesByCategory": {
+   "education": 6
+  },
+  "byLevel": {
+   "union": 2,
+   "conference": 2,
+   "division": 1,
+   "institution": 1
+  },
+  "bySourceType": {
+   "calendar/event pages": 6
+  }
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Camp Cedar Falls family camp and summer camp",
+   "lastKnown": "2026-06-24 to 2026-07-05",
+   "url": "https://scc.adventist.org/events/summer-camp-at-camp-cedar-falls/",
+   "note": "The August 2026 youth report to the executive committee asks \"What can we do for 2027?\" but gives no dates."
+  }
+ ],
+ "notes": [
+  "Left out (rule): Board of Education (12 May 2027), MAP test windows, budget and personnel deadlines, holidays and breaks.",
+  "Caution: a web-search summary gave Camp Cedar Falls weeks of 24-28 Jun etc. as \"2027\". The SCC calendar shows those are the 2026 dates; not used.",
+  "Caution: searches for a \"Southern California Conference camp meeting\" return a different church body's event (sdarm.org); not used.",
+  "The newest club-ministries calendar in the SCC media library is 2025-2026; no 2026-2027 club calendar is posted."
+ ]
+}

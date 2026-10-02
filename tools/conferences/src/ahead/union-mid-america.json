@@ -1,0 +1,206 @@
+{
+ "conf": "Mid-America Union (union-level events)",
+ "union": "Mid-America Union",
+ "slug": "union-mid-america",
+ "site": "https://www.midamericaadventist.org/",
+ "calendarUrls": [
+  "https://www.midamericaadventist.org/about/calendar/",
+  "https://www.midamericaadventist.org/wp-admin/admin-ajax.php (ICS Calendar plugin request made by the public calendar page)"
+ ],
+ "otherSources": [
+  "https://midamericacamporee.org/",
+  "https://uau.edu/reunion",
+  "https://uau.edu/graduation",
+  "https://uau.edu/academics/schedules",
+  "https://www.outlookmag.org/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass)",
+ "furthestPublished": "2027-09",
+ "furthestPublishedAnySource": "2030-04",
+ "furthestPublishedNote": "Union calendar: last entry Aug 30 2027 (a Loma Linda board meeting, not counted). Union Adventist University's 2027-28 major-events sheet lists union-wide academy events for Sep 2027; UAU ReUnion dates are set to April 2030.",
+ "aheadQuality": "B : the union calendar, camporee site and university calendars give the main 2027 union dates; no union youth congress, ministers' meeting or union evangelism training is published.",
+ "aheadChecked": [
+  "https://www.midamericaadventist.org/about/calendar/",
+  "https://www.midamericaadventist.org/wp-json/wp/v2/posts?search=2027",
+  "https://www.midamericaadventist.org/wp-json/wp/v2/pages?search=2027",
+  "https://www.midamericaadventist.org/church-and-youth-ministries/",
+  "https://www.midamericaadventist.org/hispanic-ministries/",
+  "https://www.midamericaadventist.org/ministerial/",
+  "https://www.midamericaadventist.org/womens-ministries/",
+  "https://www.midamericaadventist.org/education/",
+  "https://www.midamericaadventist.org/religious-liberty/",
+  "https://midamericacamporee.org/",
+  "https://midamericacamporee.org/registration/",
+  "https://midamericacamporee.org/about/",
+  "https://midamericacamporee.org/pathfinder-bible-experience/",
+  "https://midamericacamporee.org/nad-2029-international-camporee/",
+  "https://midamericacamporee.org/wp-json/tribe/events/v1/events (0 events)",
+  "https://uau.edu/reunion",
+  "https://uau.edu/graduation",
+  "https://uau.edu/academics/schedules",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vTWSsPIr4iwiEVQXITCHr2hAsnfNFmTTXEoOrCQtsnjYZSPyWUKGryNBXMHE7sN4Q/pub?gid=280616108&single=true&output=csv (UAU 2026-27 major events)",
+  "https://docs.google.com/spreadsheets/d/e/2PACX-1vQz3iQnMcnynOWpMIA9SXkYXCDwsTATBp1WSEkMiM44pFDqij_Ji6L0CBi7vJ-fpA/pub?output=csv (UAU 2027-28 major events)",
+  "https://uau.edu/salt",
+  "https://asimidamerica.org/events/",
+  "https://asimidamerica.org/",
+  "https://www.outlookmag.org/wp-json/wp/v2/posts?search=2027",
+  "https://www.outlookmag.org/why-onevoice27/",
+  "https://www.outlookmag.org/sabbathslowdown-all-things-new/",
+  "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
+  "https://www.outlookmag.org/mauc-church-ministries-report-building-relationships-equipping-ministry-leaders/",
+  "https://www.outlookmag.org/mauc-session-2026/",
+  "https://www.outlookmag.org/investing-in-people/"
+ ],
+ "counts": {
+  "total": 8,
+  "byLevel": {
+   "union": 6,
+   "division": 1,
+   "general-conference": 1
+  },
+  "byCategory": {
+   "education": 4,
+   "pastoral-leadership": 1,
+   "pathfinders": 1,
+   "evangelism-outreach": 1,
+   "youth-young-adults": 1
+  },
+  "deadlines": 2
+ },
+ "events": [
+  {
+   "title": "ReUnion 2027 (Union Adventist University homecoming and parents weekend)",
+   "start": "2027-04-01",
+   "end": "2027-04-04",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "education",
+   "category2": "",
+   "audience": "alumni, parents and friends",
+   "url": "https://uau.edu/reunion",
+   "source": "university page",
+   "level": "union",
+   "note": "Theme: 40 years of Warrior athletics. Later ReUnion dates are already set: Apr 6-9 2028, Apr 5-8 2029, Apr 4-7 2030."
+  },
+  {
+   "title": "Union Adventist University Preview Days (spring)",
+   "start": "2027-04-18",
+   "end": "2027-04-20",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "prospective students",
+   "url": "https://uau.edu/academics/schedules",
+   "source": "university major-events calendar (2026-27)",
+   "level": "union"
+  },
+  {
+   "title": "Union Adventist University graduation weekend (commencement May 9)",
+   "start": "2027-05-07",
+   "end": "2027-05-09",
+   "place": "Lincoln, NE (2026 commencement was at College View Church)",
+   "category": "education",
+   "category2": "",
+   "audience": "students and families",
+   "url": "https://uau.edu/graduation",
+   "source": "university page",
+   "level": "union",
+   "note": "Consecration vespers May 7, dedication services May 8, commencement May 9 at 11 a.m. Also on the union calendar (\"UC Graduation\", May 9)."
+  },
+  {
+   "title": "CALLED Pastors' Convention (NAD), on the union calendar",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "place": "Lexington, KY",
+   "category": "pastoral-leadership",
+   "category2": "",
+   "audience": "pastors and families",
+   "url": "https://www.midamericaadventist.org/about/calendar/",
+   "source": "calendar",
+   "level": "division",
+   "note": "NAD event; listed here because the union calendar carries it. Count once with above.json."
+  },
+  {
+   "title": "Limitless: Mid-America Union Pathfinder Camporee",
+   "start": "2027-07-28",
+   "end": "2027-07-31",
+   "place": "Custer, SD (Black Hills); Sabbath trip and closing ceremony at Mount Rushmore",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinder clubs (registered by club directors)",
+   "url": "https://midamericacamporee.org/registration/",
+   "source": "camporee site + union calendar",
+   "level": "union",
+   "note": "First union camporee since 2017. Clubs register as a whole: early bird to May 3 2027 ($95), regular May 4-Jun 1 2027 ($105), children 0-4 free. Limited to 2,000 Pathfinders and adult club staff; registration closes Jun 1 2027 or earlier if full."
+  },
+  {
+   "title": "OneVoice27 / All Things New: public campaign month",
+   "start": "2027-09-01",
+   "end": "2027-09-30",
+   "place": "",
+   "category": "evangelism-outreach",
+   "category2": "",
+   "audience": "members and churches (public outreach)",
+   "url": "https://www.outlookmag.org/why-onevoice27/",
+   "source": "news (OUTLOOK, Sep 4 2026)",
+   "level": "general-conference",
+   "note": "World-church initiative that the union names as its evangelism focus for 2027 (ministerial report, Sep 2026). OUTLOOK says it began with united prayer on Sep 5 2026 and builds \"toward a public campaign in 2027\"; Minnesota's newsletter says it \"culminates in September 2027\". No union-specific dates are published. Count once with above.json.",
+   "datePrecision": "month"
+  },
+  {
+   "title": "Mid-America Academy Leadership Retreat",
+   "start": "2027-09-09",
+   "end": "2027-09-11",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "youth-young-adults",
+   "category2": "education",
+   "audience": "academy student leaders from across the union",
+   "url": "https://uau.edu/academics/schedules",
+   "source": "university major-events calendar (2027-28)",
+   "level": "union"
+  },
+  {
+   "title": "Mid-America Preview Days",
+   "start": "2027-09-19",
+   "end": "2027-09-21",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy seniors from Mid-America",
+   "url": "https://uau.edu/academics/schedules",
+   "source": "university major-events calendar (2027-28)",
+   "level": "union"
+  }
+ ],
+ "deadlines": [
+  {
+   "title": "Limitless camporee: early-bird registration ends",
+   "date": "2027-05-03",
+   "appliesTo": "all",
+   "url": "https://midamericacamporee.org/registration/",
+   "note": "$95 per Pathfinder/staff; start date of early-bird registration is \"TBD\"."
+  },
+  {
+   "title": "Limitless camporee: registration closes (or earlier if 2,000 reached)",
+   "date": "2027-06-01",
+   "appliesTo": "all",
+   "url": "https://midamericacamporee.org/registration/",
+   "note": "$105 regular rate from May 4."
+  }
+ ],
+ "notPublishedYet": [
+  "MAUC Hispanic Youth Congress 2027",
+  "union ministers' meeting or pastors' convention 2027",
+  "union evangelism training for OneVoice27",
+  "ASI Mid-America convention 2027 (site still shows 2026)",
+  "Summer SALT at Union Adventist University (\"coming soon\")",
+  "union women's ministries events 2027 (page lists only fall 2026 conference retreats)"
+ ],
+ "notes": [
+  "Dropped: MAUC Presidents' Council (Apr 21), MAUC Executive Committee (Apr 22), Loma Linda and AdventHealth committees/boards (May 24-26, Aug 30-Sep 1), UAU Board of Trustees (Apr 25-26), and conference executive committees shown on the union calendar.",
+  "Before the window: Union Pathfinder Bible Experience, Mar 27 2027, Lincoln, NE (midamericacamporee.org/pathfinder-bible-experience/).",
+  "Beyond the window: NAD International Pathfinder Camporee \"Stand Strong\", Aug 20-26 2029, Oshkosh, WI (posted on the union club ministries site).",
+  "RMC Constituency Session (Aug 22 2027) is on the union calendar but is a conference event; it is in rocky-mountain.json.",
+  "Union-level events also appear in the conference files when a conference calendar lists them (level union/division). Count them once when the app adds up the union."
+ ]
+}

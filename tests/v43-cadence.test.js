@@ -6,7 +6,7 @@
  *  T-C2 the label on every card: the library's, a built-in's, the survey's row, his Planner series; EN and ES
  *  T-C3 the survey's filter: four buttons, counts that add up to All, U_CAD filters the rows and the library below, resets
  *  T-C4 the library's filter (libFilter cad) in a theme's list and a search
- *  T-C5 step 2: #cs-cad filters "More ideas" (the tab counts follow) and "From your plan" (the chosen idea stays)
+ *  T-C5 step 2: #cs-cad filters "More ideas" (the tab counts follow) and "From your plan" (the chosen idea: v10.43 fix, the line)
  *  T-C6 "Runs as": per church + idea, read everywhere, "As the idea says" deletes it, Clear all clears it, the sample reads none
  */
 const H = require('./v43-helpers.js');
@@ -94,12 +94,15 @@ const { c, sleep, until, page, ready, BUILTIN_EVENTS, BUILTIN_SERIES } = H;
   c('…(fewer than All)', nEv.every((v, i) => v <= nAll[i]) && nEv.some((v, i) => v < nAll[i]), true);
   P.E(`caseChoose('food-pantry')`); await sleep(30); P.E(`CASE_ST.pick=true; caseDraw2();`); await until(() => P.q('#cs-cad')); await sleep(60);
   P.q('#cs-cad [data-cad="event"]').click(); await sleep(80);
-  c('the chosen idea (the food pantry, ongoing) is never hidden', planIds().includes('food-pantry'), true);
+  /* v10.43 fix (2 Oct 2026): the pastor changed this. He set "One-day events", the one card left was his chosen ongoing idea, and he
+     took it: "Do you notice that in the PDF it says six week trial but I chose a one day event so there's a detach somewhere." The
+     chosen idea that runs another way is no longer in the filtered grid; one line above it says what it is (v43-detach holds it). */
+  c('the chosen idea (the food pantry, ongoing) is not in the "One-day events" grid; the line above it names it', [planIds().includes('food-pantry'), !!P.q('#cs-plan [data-cs-now]')], [false, true]);
   P.q('#cs-cad [data-cad="series"]').click(); await sleep(80);
-  c('"A series" keeps the cooking school and the chosen idea', planIds().sort(), ['cooking-school', 'food-pantry']);
+  c('"A series" keeps the cooking school only (the chosen food pantry is in the line, not the grid)', [planIds().sort(), !!P.q('#cs-plan [data-cs-now]')], [['cooking-school'], true]);
   P.E(`uChurch().selected=['food-pantry']; caseChoose('food-pantry'); CASE_ST.pick=true; caseDraw2();`); await sleep(60);
   P.E(`LIB_UI.case.f.cad='event'; casePlanDraw();`); await sleep(30);
-  c('with only the chosen idea in the plan… it still shows', planIds(), ['food-pantry']);
+  c('with only the chosen idea in the plan: no card, the line, and "Nothing in your plan runs this way."', [planIds(), !!P.q('#cs-plan [data-cs-now]'), P.txt('#cs-plan .cs-parth .note')], [[], true, 'Nothing in your plan runs this way.']);
   P.E(`uChurch().selected=['food-pantry','walking-club']; casePrefs().ministry&&caseSetPrefs({ministry:null}); CASE_ST.pick=true; caseDraw2(); LIB_UI.case.f.cad='event'; casePlanDraw();`); await sleep(60);
   c('nothing in the plan runs this way: the line says so, with All beside it', [P.txt('#cs-plan .note'), !!P.q('#cs-plan [data-cs-cadall]')], ['Nothing in your plan runs this way.', true]);
   P.q('#cs-plan [data-cs-cadall]').click(); await sleep(60);

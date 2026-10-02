@@ -1,0 +1,708 @@
+{
+ "conf": "Potomac Conference",
+ "slug": "potomac",
+ "union": "Columbia Union Conference",
+ "site": "https://pcsda.org/",
+ "calendarUrls": [
+  "https://pcsda.org/events_page/",
+  "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+  "https://columbiaunionvisitor.com/category/potomac-conference",
+  "https://pcsda.org/events_page/campmeeting-in-the-valley/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); published Outlook calendar (315 entries) re-read 1 Oct 2026; it runs to 29 Sep 2027.",
+ "calendarQuality": "A : full published Outlook calendar linked from pcsda.org/events_page, with governance, pastoral, youth, club, school and Hispanic items. It is well maintained (entries carry \"moved per ADCOM\" notes). Personal names in a few titles and notes were left out.",
+ "furthestPublished": "2027-09",
+ "furthestNote": "last dated item: 2027-09-29 (Ministry Development Conference)",
+ "aheadSummary": "Calendar runs to 29 Sep 2027. Highlights: Hispanic Evangelism week (17–24 Apr), Hispanic camp meeting (3–6 Jun), camp meeting (9–12 Jun), Master Guide camporee, Pathfinder Fair, Adventurer events, youth (AYM) mission trip and games, young adult retreat, youth discipleship training in Tidewater and Richmond, and the Ministry Development Conference (29 Sep). Also NAD CALLED (21–25 Jun) and the union camporee.",
+ "aheadChecked": [
+  "https://pcsda.org/events_page/",
+  "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+  "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.ics",
+  "https://pcsda.org/events_page/campmeeting-in-the-valley/",
+  "https://pcsda.org/wp-json/wp/v2/pages?search=2027",
+  "https://pcsda.org/wp-json/wp/v2/posts?search=2027",
+  "https://campblueridge.org/",
+  "https://columbiaunionvisitor.com/category/potomac-conference"
+ ],
+ "stats": {
+  "records": 34,
+  "datedInWindowRecords": 34,
+  "conferenceRunRecords": 28,
+  "occurrencesInWindow": 37,
+  "conferenceOccurrencesInWindow": 31,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 0,
+  "startsBeforeWindowRecords": 0,
+  "monthsWithConferenceEvents": "6 of 6",
+  "byLevel": {
+   "conference": 28,
+   "union": 1,
+   "division": 2,
+   "institution": 3
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 3,
+   "youth-young-adults": 7,
+   "children": 6,
+   "pathfinders": 7,
+   "education": 4,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 1,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 2
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 2,
+   "youth-young-adults": 7,
+   "children": 6,
+   "pathfinders": 5,
+   "education": 1,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 1,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 2
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 3,
+   "youth-young-adults": 8,
+   "children": 7,
+   "pathfinders": 5,
+   "education": 1,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 1,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 2
+  }
+ },
+ "counts": {
+  "total": 34,
+  "conferenceLevel": 28,
+  "observances": 0,
+  "byCategory": {
+   "other": 2,
+   "music-worship-arts": 1,
+   "pathfinders": 7,
+   "youth-young-adults": 7,
+   "pastoral-leadership": 3,
+   "education": 4,
+   "children": 6,
+   "evangelism-outreach": 1,
+   "administration": 1,
+   "camp-meeting": 2
+  },
+  "byCategoryConferenceOnly": {
+   "other": 2,
+   "music-worship-arts": 1,
+   "pathfinders": 5,
+   "youth-young-adults": 7,
+   "pastoral-leadership": 2,
+   "children": 6,
+   "evangelism-outreach": 1,
+   "administration": 1,
+   "camp-meeting": 2,
+   "education": 1
+  }
+ },
+ "excludedFromCalendar": {
+  "staff meeting/HR": 2,
+  "committee/board/council/advisory": 8,
+  "holiday/office closure": 4
+ },
+ "excludedDetail": [
+  {
+   "title": "New Employee Orientation",
+   "reason": "staff meeting/HR",
+   "occurrences": 2
+  },
+  {
+   "title": "Staff Meeting",
+   "reason": "staff meeting/HR",
+   "occurrences": 2
+  },
+  {
+   "title": "Church Planters Advisory",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "TA Board",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Personnel Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Executive Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "SVA Board",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Holiday-Memorial Day",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Board of Education",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Holiday-Juneteenth",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Holiday-Independence Day",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Corporation Management",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "PC Principals Council",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "Holiday - Labor Day",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  }
+ ],
+ "prepDeadlines": [],
+ "events": [
+  {
+   "title": "Monthly conference program (title reworded)",
+   "start": "2027-04-08",
+   "end": "2027-04-08",
+   "place": null,
+   "category": "other",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "the calendar title contains a person's name, so it is reworded here; format not stated"
+  },
+  {
+   "title": "Music Festival",
+   "start": "2027-04-08",
+   "end": "2027-04-10",
+   "place": null,
+   "category": "music-worship-arts",
+   "category2": null,
+   "audience": "not stated",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "title only"
+  },
+  {
+   "title": "Master Guide Camporee",
+   "start": "2027-04-09",
+   "end": "2027-04-11",
+   "place": "Camp Blue Ridge, Va.",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Master Guides",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Public Campus Ministry Excursion",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "college students",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Hispanic Pastors' Meeting",
+   "start": "2027-04-15",
+   "end": "2027-05-13",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": "multilingual",
+   "audience": "Hispanic pastors",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "recurring": "repeated",
+   "count": 2,
+   "dates": [
+    "2027-04-15",
+    "2027-05-13"
+   ],
+   "lastDate": "2027-05-13"
+  },
+  {
+   "title": "Shenandoah Valley Academy Alumni Weekend",
+   "start": "2027-04-16",
+   "end": "2027-04-18",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "alumni",
+   "level": "institution",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Children's Ministry Safety Training",
+   "start": "2027-04-17",
+   "end": "2027-04-17",
+   "place": null,
+   "category": "children",
+   "category2": null,
+   "audience": "children’s ministry leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Hispanic Evangelism (week of meetings)",
+   "start": "2027-04-17",
+   "end": "2027-04-24",
+   "place": null,
+   "category": "evangelism-outreach",
+   "category2": "multilingual",
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "the 2026 Hispanic Caravan of Evangelism ran simultaneous meetings in Md., Va. and D.C. (195 baptisms, Visitor 14 Jul 2026)"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "start": "2027-04-18",
+   "end": "2027-04-18",
+   "place": "Washington, D.C.",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Pathfinder Bible Experience - Division Level",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "division",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "levelDetail": "division/GC or external (attended)"
+  },
+  {
+   "title": "Takoma Academy Alumni Weekend",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "alumni",
+   "level": "institution",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Potomac Conference Ministry Center dedication",
+   "start": "2027-05-01",
+   "end": "2027-05-01",
+   "place": "Potomac Conference Ministry Center",
+   "category": "administration",
+   "category2": null,
+   "audience": "members and guests",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Pathfinder Fair",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "place": "Camp Snyder",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Hispanic Ministries trip to Honduras",
+   "start": "2027-05-15",
+   "end": "2027-05-22",
+   "place": null,
+   "category": "other",
+   "category2": "multilingual",
+   "audience": "Hispanic members",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "mission trip; purpose not stated on the calendar"
+  },
+  {
+   "title": "Adventurer Family Campout",
+   "start": "2027-05-21",
+   "end": "2027-05-23",
+   "place": "Camp Blue Ridge, Va.",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Children's Ministry Event",
+   "start": "2027-05-22",
+   "end": "2027-08-22",
+   "place": null,
+   "category": "children",
+   "category2": null,
+   "audience": "children & leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "recurring": "repeated",
+   "count": 2,
+   "dates": [
+    "2027-05-22",
+    "2027-08-21"
+   ],
+   "lastDate": "2027-08-21",
+   "ranges": [
+    "2027-05-22/2027-05-23",
+    "2027-08-21/2027-08-22"
+   ],
+   "note": "title only"
+  },
+  {
+   "title": "Shenandoah Valley Academy Graduation Weekend",
+   "start": "2027-05-28",
+   "end": "2027-05-30",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "students and families",
+   "level": "institution",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Hispanic Camp Meeting",
+   "start": "2027-06-03",
+   "end": "2027-06-06",
+   "place": null,
+   "category": "camp-meeting",
+   "category2": "multilingual",
+   "audience": "Hispanic members",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Camp Meeting",
+   "start": "2027-06-09",
+   "end": "2027-06-12",
+   "place": null,
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "members/families",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "place not on the calendar; the 2026 event was \"Campmeeting in the Valley\" (10–13 Jun 2026)"
+  },
+  {
+   "title": "AYM Olympic Games (youth)",
+   "start": "2027-06-13",
+   "end": "2027-06-13",
+   "place": "Shenandoah Valley Academy, New Market, Va.",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "NAD CALLED Pastors' Convention",
+   "start": "2027-06-21",
+   "end": "2027-06-25",
+   "place": "Lexington, Ky.",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "division",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "levelDetail": "division/GC or external (attended)",
+   "note": "Chesapeake's calendar gives 21–24 Jun"
+  },
+  {
+   "title": "AYM Mission Trip",
+   "start": "2027-06-27",
+   "end": "2027-07-05",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": "community-service",
+   "audience": "youth/young adults",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Regional Master Guide event",
+   "start": "2027-07-09",
+   "end": "2027-07-11",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Master Guides",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "note": "title only; the 2026 entry of this kind was a Hispanic regional Master Guide camporee"
+  },
+  {
+   "title": "School Board Chair Training",
+   "start": "2027-07-11",
+   "end": "2027-07-11",
+   "place": "Online (Zoom)",
+   "category": "education",
+   "category2": "pastoral-leadership",
+   "audience": "school board chairs (often pastors)",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Pathfinder Directors Meeting",
+   "start": "2027-07-18",
+   "end": "2027-07-18",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "club leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "AYM Family Fun Day",
+   "start": "2027-07-25",
+   "end": "2027-07-25",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": "family-women-men",
+   "audience": "youth and families",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Columbia Union Pathfinder Camporee \"UNSHAKABLE 2027\"",
+   "start": "2027-08-04",
+   "end": "2027-08-08",
+   "place": "Summit Bechtel Reserve",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "union",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Young Adult Retreat",
+   "start": "2027-08-27",
+   "end": "2027-08-29",
+   "place": "Camp Blue Ridge, Va.",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "young adults",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Pathfinder Admin & Council Meeting",
+   "start": "2027-09-04",
+   "end": "2027-09-04",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "club leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Adventurer Staff Retreat",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Camp Blue Ridge, Va.",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurer club staff",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Youth Ministries Discipleship Training (Tidewater; Richmond)",
+   "start": "2027-09-10",
+   "end": "2027-09-18",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": "discipleship-spiritual",
+   "audience": "youth and youth leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)",
+   "recurring": "repeated",
+   "count": 2,
+   "dates": [
+    "2027-09-10",
+    "2027-09-17"
+   ],
+   "lastDate": "2027-09-17",
+   "ranges": [
+    "2027-09-10",
+    "2027-09-17/2027-09-18"
+   ],
+   "parts": [
+    {
+     "start": "2027-09-10",
+     "end": "2027-09-10",
+     "title": "Youth Ministries Discipleship Training-Tidewater"
+    },
+    {
+     "start": "2027-09-17",
+     "end": "2027-09-18",
+     "title": "Youth Ministries Discipleship Training-Richmond"
+    }
+   ]
+  },
+  {
+   "title": "Adventurer Directors Meeting",
+   "start": "2027-09-12",
+   "end": "2027-09-12",
+   "place": null,
+   "category": "children",
+   "category2": null,
+   "audience": "club leaders",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Public Campus Ministry gathering",
+   "start": "2027-09-18",
+   "end": "2027-09-18",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "college students",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  },
+  {
+   "title": "Ministry Development Conference",
+   "start": "2027-09-29",
+   "end": "2027-09-29",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "conference",
+   "url": "https://outlook.office365.com/owa/calendar/eb671c1c6b3a414cbc5315f26a4d81f6@pcsda.org/940253a9fbd847c7a56a4270425a45945563978279001128017/calendar.html",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed)"
+  }
+ ],
+ "notes": [
+  "Left out as committees/boards/councils/advisories: Executive and Personnel Committees, Corporation Management, Board of Education, school boards, Principals Council and Church Planters Advisory (2 meetings, 4 May and 14–15 Sep 2027; it shows church planting continues). Staff meetings and new-employee orientation were also left out.",
+  "One monthly program title contains a person's name; it is reworded here.",
+  "Calendar descriptions were not copied (some contain staff names).",
+  "Camp meeting place is not on the calendar; the camp-meeting page still shows 2026."
+ ]
+}

@@ -21,7 +21,8 @@ setTimeout(()=>{
   console.log('\n-- the row --');
   c('Pastors Hub and ES are the same height', /nav\.tools a\{height:40px/.test(html) && /\.themebtn\{[^}]*height:40px/.test(html));
   c('the row centres its items', /\.top \.in\{[^}]*align-items:center/.test(html));
-  c('the hub still has four tiles', D.querySelectorAll('.hub .tools .tool').length, 4);
+// v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
+  c('the hub has five tiles', D.querySelectorAll('.hub .tools .tool').length, 5);
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },1700);

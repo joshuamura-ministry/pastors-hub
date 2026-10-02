@@ -41,17 +41,21 @@ setTimeout(()=>{
   const es=keys.map(k=>w.eval('ES['+JSON.stringify(k)+']')).filter(Boolean);
   const esAll=['Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
-    'Turn community insights into a proposal for your ministry.',
-    'Plan your outreach journey, from preparation to follow-up.'].map(k=>w.eval('ES['+JSON.stringify(k)+']'));
+    'Proposals for ministries, projects and purchases.',
+    'Plan your outreach journey, from preparation to follow-up.',
+    'What other conferences’ calendars hold, side by side.'].map(k=>w.eval('ES['+JSON.stringify(k)+']'));   // v56 (B2): the fifth tile's line, held to the same budget
   esAll.forEach(t=>console.log('    '+String((t||'').length).padStart(2)+'  '+t));
-  c('all four still translated', esAll.every(Boolean));
+  c('all five still translated', esAll.every(Boolean));   // v56 (B2)
+  // v10.44 review (finding 5): Make the Case's line names projects and purchases (DESIGN §1.1, Q10's default), EN and ES
+  c('Make the Case: "Proposals for ministries, projects and purchases." / "Propuestas para ministerios, proyectos y compras."', [en[2], esAll[2]], ['Proposals for ministries, projects and purchases.', 'Propuestas para ministerios, proyectos y compras.']);
   c('Spanish inside the same budget', esAll.every(t=>t.length<=58));
   c('no Spanish card is now the odd one out', Math.max(...esAll.map(t=>t.length))-Math.min(...esAll.map(t=>t.length))<=18);
 
   console.log('\n-- nothing else disturbed --');
   const tools=[...D.querySelectorAll('.tool')];
-  c('four icons', tools.filter(t=>t.querySelector('svg.tsvg')).length, 4);
-  c('four links', tools.filter(t=>t.querySelector('.tgo')).length, 4);
+// v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
+  c('five icons', tools.filter(t=>t.querySelector('svg.tsvg')).length, 5);
+  c('five links', tools.filter(t=>t.querySelector('.tgo')).length, 5);
   c('links still bottom-aligned', /\.tool \.tgo\{margin-top:auto/.test(html));
   c('quote still under the welcome',
     [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,hubgifts');   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E); v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see"): "Your path" above the tools

@@ -1,0 +1,326 @@
+{
+ "conf": "Washington",
+ "union": "North Pacific Union",
+ "slug": "washington",
+ "calendarUrls": [
+  "https://washingtonconference.org/calendar/",
+  "https://washingtonconference.org/wp-json/tribe/events/v1/events",
+  "https://www.washingtonyouth.org/events/",
+  "https://calendar.google.com/calendar/ical/c2efa719096f6142d526aa200d5242030766c555e039af421598f3612cd3a53c%40group.calendar.google.com/public/basic.ics"
+ ],
+ "otherSources": [
+  "https://www.washingtonyouth.org/events/"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-09",
+ "furthestPublishedNote": "Youth/club Google Calendar runs to the Adventurer Family Camp, Sep 24-26, 2027 (plus an IPC 2029 entry). The main calendar holds only a monthly local-church fellowship, repeated to Dec 2029.",
+ "calendarQuality": "Main calendar still effectively abandoned (only the monthly Inclusive Fellowship). The youth/club calendar is fully dated through Sept 2027. Nothing for 2027 on convocation, women's, health, Hispanic or evangelism pages.",
+ "aheadSummary": "Fully dated, but only for youth and clubs: Adventurer Bible Game (Apr 3), Pathfinder Fair at Auburn Adventist Academy (Apr 25), Adventurer Fun Day (May 16), seven Sunset Lake summer camps (Jun 21-Aug 7), club training (Aug 27-29) and the Adventurer Family Camp (Sep 24-26). Washington hosts the NPUC camporee (Sep 9-12).",
+ "events": [
+  {
+   "title": "Adventurer Bible Game",
+   "start": "2027-04-03",
+   "end": "2027-04-03",
+   "place": "",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Inclusive Fellowship",
+   "start": "2027-04-10",
+   "end": "2027-09-11",
+   "place": "Tacoma Central Church",
+   "category": "discipleship-spiritual",
+   "category2": "community-service",
+   "audience": "people unable to attend regular services, and their families",
+   "url": "https://washingtonconference.org/events/inclusive-fellowship/2027-04-10/",
+   "source": "calendar (The Events Calendar)",
+   "level": "local-church",
+   "count": 6,
+   "dates": [
+    "2027-04-10",
+    "2027-05-08",
+    "2027-06-12",
+    "2027-07-10",
+    "2027-08-14",
+    "2027-09-11"
+   ],
+   "recurring": "monthly, second Sabbath (runs on the calendar to Dec 2029)"
+  },
+  {
+   "title": "Washington Conference Pathfinder Fair",
+   "start": "2027-04-25",
+   "end": "2027-04-25",
+   "place": "Auburn Adventist Academy",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "start": "2027-05-16",
+   "end": "2027-05-16",
+   "place": "",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurers and families",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake Camp Staff Training Week",
+   "start": "2027-06-11",
+   "end": "2027-06-19",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "summer camp staff",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Discovery Day Camp (6-12)",
+   "start": "2027-06-21",
+   "end": "2027-06-25",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children ages 6-12",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Foothills Camp (8-11)",
+   "start": "2027-06-27",
+   "end": "2027-07-04",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children ages 8-11",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Base Camp (10-12)",
+   "start": "2027-07-04",
+   "end": "2027-07-11",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "ages 10-12",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Timberline Camp (11-13)",
+   "start": "2027-07-11",
+   "end": "2027-07-18",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "ages 11-13",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Alpine Camp (12-14)",
+   "start": "2027-07-18",
+   "end": "2027-07-25",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "ages 12-14",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Glacier Camp (13-16)",
+   "start": "2027-07-25",
+   "end": "2027-08-01",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "ages 13-16",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Sunset Lake: Summit Camp (14-17)",
+   "start": "2027-08-01",
+   "end": "2027-08-07",
+   "place": "Sunset Lake Camp, Wilkeson",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "ages 14-17",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Club Ministries Training - Sunset Lake",
+   "start": "2027-08-27",
+   "end": "2027-08-29",
+   "place": "Sunset Lake Camp",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club leaders",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Adventurer Family Camp",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurer families",
+   "url": "https://www.washingtonyouth.org/events/",
+   "source": "youth/club calendar (public Google Calendar)",
+   "level": "conference",
+   "note": "Held at Sunset Lake Camp in 2026."
+  }
+ ],
+ "counts": {
+  "total": 14,
+  "conferenceLevel": 13,
+  "unionLevel": 0,
+  "institutionOrOther": 1,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 0,
+  "byCategory": {
+   "youth-young-adults": 8,
+   "children": 3,
+   "pathfinders": 2,
+   "discipleship-spiritual": 1
+  },
+  "byCategoryConferenceOnly": {
+   "youth-young-adults": 8,
+   "children": 3,
+   "pathfinders": 2
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "District convocations / camp meeting for 2027",
+   "usual": "2026 replaced camp meeting with five district convocations (May-Oct), each opened by a Prayer Train; no 2027 plan posted",
+   "url": "https://washingtonconference.org/about/2026-convocations/"
+  },
+  {
+   "what": "Women's Retreat 2027",
+   "usual": "fall; the 2026 page shows no dates in text",
+   "url": "https://washingtonconference.org/ministries/womens-ministries/"
+  },
+  {
+   "what": "Campestre Hispano (Hispanic camp meeting)",
+   "usual": "June at Auburn Adventist Academy; page still shows 2025",
+   "url": "https://washingtonconference.org/ministries/hispanic-ministries/campestre/"
+  },
+  {
+   "what": "Community health fair, Emotional Freedom retreat, Seeds, LEAD WELL",
+   "usual": "2026 editions only",
+   "url": "https://washingtonconference.org/ministries/health-ministries/"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "level": "division",
+   "url": "https://www.washingtonyouth.org/events/",
+   "note": "Huntsville, Alabama. See NAD/GC file."
+  },
+  {
+   "title": "GC World Adventurer Day (theme: Created for Service)",
+   "start": "2027-05-15",
+   "level": "general-conference",
+   "url": "https://www.washingtonyouth.org/events/",
+   "note": "Observance day. See NAD/GC file."
+  },
+  {
+   "title": "NPUC Pathfinder Camporee - Washington Conference hosting",
+   "start": "2027-09-09",
+   "end": "2027-09-12",
+   "level": "union",
+   "url": "https://www.washingtonyouth.org/events/",
+   "note": "See union file."
+  },
+  {
+   "title": "International Pathfinder Camporee",
+   "start": "2029-08-20",
+   "end": "2029-08-26",
+   "level": "division",
+   "url": "https://www.washingtonyouth.org/events/",
+   "note": "This calendar still says Cam-Plex, Gillette, WY; the NAD moved the 2029 camporee to Oshkosh, WI (Sept 2026 reports)."
+  }
+ ],
+ "alsoOct26toMar27": [
+  {
+   "title": "Children's ministry / evangelism event funding: November 1 planning deadline (Plan It. Fund It.)",
+   "start": "2026-11-01",
+   "end": "2026-11-01",
+   "place": "",
+   "category": "evangelism-outreach",
+   "category2": "stewardship-finance",
+   "audience": "pastors and church ministry leaders",
+   "url": "https://washingtonconference.org/ministries/womens-ministries/lead-well-2026/lead-well-schedule/",
+   "source": "LEAD WELL schedule page",
+   "level": "conference",
+   "deadline": true,
+   "note": "A LEAD WELL session (Aug 2026) explains \"the conference evangelism cycle\" with a \"November 1 planning deadline\". Year is inferred as the next Nov 1."
+  }
+ ],
+ "beyondWindow": [],
+ "excluded": [
+  "None of the youth calendar items were holidays or closures."
+ ],
+ "aheadChecked": [
+  "https://washingtonconference.org/wp-json/tribe/events/v1/events?start_date=2027-01-01&end_date=2029-12-31",
+  "https://washingtonconference.org/wp-json/wp/v2/search?search=2027",
+  "https://washingtonconference.org/wp-json/wp/v2/pages?orderby=modified",
+  "https://washingtonconference.org/wp-json/wp/v2/posts",
+  "https://www.washingtonyouth.org/events/",
+  "https://calendar.google.com/calendar/ical/c2efa719096f6142d526aa200d5242030766c555e039af421598f3612cd3a53c%40group.calendar.google.com/public/basic.ics",
+  "https://washingtonconference.org/",
+  "https://washingtonconference.org/about/2026-convocations/",
+  "https://washingtonconference.org/about/pray-like-jesus/",
+  "https://washingtonconference.org/ministries/churchplanting/",
+  "https://washingtonconference.org/ministries/prayer-ministries/",
+  "https://washingtonconference.org/ministries/womens-ministries/",
+  "https://washingtonconference.org/ministries/womens-ministries/womens-retreat-2026-2/",
+  "https://washingtonconference.org/ministries/womens-ministries/lead-well-2026/",
+  "https://washingtonconference.org/ministries/womens-ministries/lead-well-2026/lead-well-schedule/",
+  "https://washingtonconference.org/ministries/pathfinders-adventurers/",
+  "https://washingtonconference.org/ministries/adventist-singles-ministry/",
+  "https://washingtonconference.org/ministries/health-ministries/",
+  "https://washingtonconference.org/ministries/health-ministries/emotionalfreedom/",
+  "https://washingtonconference.org/ministries/sunset-lake-camp/",
+  "https://washingtonconference.org/ministries/children/",
+  "https://washingtonconference.org/ministries/children/bear-health-fair/",
+  "https://washingtonconference.org/ministries/revangelism/",
+  "https://washingtonconference.org/ministries/hispanic-ministries/campestre/",
+  "https://nwadventists.com/news?section=356"
+ ],
+ "notes": [
+  "All-day Google Calendar end dates are exclusive; the day before was used as the end date."
+ ]
+}

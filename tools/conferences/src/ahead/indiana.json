@@ -1,0 +1,448 @@
+{
+ "conf": "Indiana",
+ "slug": "indiana",
+ "union": "Lake Union",
+ "site": "https://indysda.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30",
+  "note": "second half of the 12-months-ahead view (Oct 2026 – Mar 2027 is in v50/events/indiana.json)"
+ },
+ "furthestPublished": "2027-11",
+ "furthestPublicEvent": "2027-11",
+ "calendarUrls": [
+  "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+  "https://calendar.google.com/calendar/ical/indysdacalendar%40gmail.com/public/basic.ics",
+  "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York",
+  "https://calendar.google.com/calendar/ical/indysdayouth%40gmail.com/public/basic.ics"
+ ],
+ "aheadChecked": [
+  "https://calendar.google.com/calendar/ical/indysdacalendar%40gmail.com/public/basic.ics (896 entries, last start 2027-11-12)",
+  "https://calendar.google.com/calendar/ical/indysdayouth%40gmail.com/public/basic.ics (274 entries, last start 2027-11-12)",
+  "https://indysda.org/",
+  "https://indysda.org/events",
+  "https://indysda.org/conference-connection",
+  "https://indysda.org/s/CC26Q2-Full-Web.pdf",
+  "https://indysda.org/evangelism",
+  "https://indysda.org/ministerial-department",
+  "https://indysda.org/multicultural-ministries",
+  "https://indysda.org/womens-ministries",
+  "https://indysda.org/campaigns",
+  "https://indysda.org/2026-youth-event-calendar",
+  "https://www.lakeunionherald.org/archive/articles/indiana-camp-meeting-draws-over-2700-for-week-of-worship-family-and-mission/"
+ ],
+ "aheadSummary": "Indiana's two public Google Calendars run to November 2027, but April–September 2027 only carries the youth, camp and club programme: 14 events (TLT campout, two Adventurer family weekends, Pathfinder Fair — date may change — Camp for the Blind, five summer-camp weeks at Timber Ridge, club leadership training 30 Jul–1 Aug, Pathfinder camporee 17–19 Sep, campus-ministry retreat and a mountain-bike weekend). The 2027 camp meeting is announced (theme: the life and ministry of Jesus, tied to One Voice 2027) but not dated; no Hispanic, Haitian, evangelism, prayer or pastors' dates are published for 2027 yet.",
+ "counts": {
+  "total": 14,
+  "conferenceRunPublic": 14,
+  "internal": 0,
+  "otherLevels": 0,
+  "occurrences": 14,
+  "byCategoryAll": {
+   "pathfinders": 4,
+   "children": 4,
+   "youth-young-adults": 4,
+   "community-service": 1,
+   "family-women-men": 1
+  },
+  "byCategoryAny": {
+   "youth-young-adults": 5,
+   "pathfinders": 4,
+   "children": 4,
+   "community-service": 1,
+   "family-women-men": 1,
+   "pastoral-leadership": 1,
+   "evangelism-outreach": 1
+  },
+  "byCategoryConferenceRunPublic": {
+   "pathfinders": 4,
+   "children": 4,
+   "youth-young-adults": 4,
+   "community-service": 1,
+   "family-women-men": 1
+  },
+  "conferenceRunRecordsByStartMonth": {
+   "2027-04": 2,
+   "2027-05": 1,
+   "2027-06": 3,
+   "2027-07": 4,
+   "2027-08": 0,
+   "2027-09": 4
+  },
+  "conferenceRunOccurrencesByMonth": {
+   "2027-04": 2,
+   "2027-05": 1,
+   "2027-06": 3,
+   "2027-07": 4,
+   "2027-08": 0,
+   "2027-09": 4
+  }
+ },
+ "stats": {
+  "records": 14,
+  "conferenceRunRecords": 14,
+  "occurrences": 14,
+  "firstDate": "2027-04-09",
+  "lastDate": "2027-09-26",
+  "monthsWithConferenceEvents": "5 of 6",
+  "monthsMissing": [
+   "2027-08"
+  ]
+ },
+ "excludedFromCalendar": {
+  "office closures, school breaks, staff appointments and private youth-department appointments": "not counted (none fall in Apr–Sep 2027 except routine items)"
+ },
+ "prepDeadlines": [],
+ "undatedAhead": [
+  {
+   "title": "Indiana Camp Meeting 2027 (theme: the life and ministry of Jesus; linked to One Voice 2027)",
+   "expected": "early June 2027 if the usual pattern holds (2026: 1–6 June at Indiana Academy, Cicero)",
+   "category": "camp-meeting",
+   "category2": "evangelism-outreach",
+   "url": "https://www.lakeunionherald.org/archive/articles/indiana-camp-meeting-draws-over-2700-for-week-of-worship-family-and-mission/",
+   "source": "news (Lake Union Herald, 17 Jun 2026)"
+  }
+ ],
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Music Fest",
+   "heldIn2026": "2026-04-02 to 2026-04-04",
+   "category": "music-worship-arts",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "education"
+  },
+  {
+   "title": "Graduation Weekend - IA",
+   "heldIn2026": "2026-05-22 to 2026-05-24",
+   "category": "education",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "Hispanic Fraternity Day",
+   "heldIn2026": "2026-05-30",
+   "category": "multilingual",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "discipleship-spiritual",
+   "lang": "es"
+  },
+  {
+   "title": "Indiana Youth Rush 2026 (student literature evangelism)",
+   "heldIn2026": "2026-05-31 to 2026-08-08",
+   "category": "evangelism-outreach",
+   "url": "https://indysda.org/s/CC26Q1-Full-Web-783w.pdf",
+   "category2": "youth-young-adults"
+  },
+  {
+   "title": "Camp Meeting",
+   "heldIn2026": "2026-06-01 to 2026-06-06",
+   "category": "camp-meeting",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "One-day Haitian Camp Meeting",
+   "heldIn2026": "2026-06-06",
+   "category": "camp-meeting",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "multilingual",
+   "lang": "ht/fr"
+  },
+  {
+   "title": "2026 Single Mom's & Kids Camp",
+   "heldIn2026": "2026-06-10 to 2026-06-14",
+   "category": "family-women-men",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "community-service"
+  },
+  {
+   "title": "Conference Prayer Retreat",
+   "heldIn2026": "2026-07-25",
+   "category": "discipleship-spiritual",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "Pastors' Family Retreat",
+   "heldIn2026": "2026-07-27 to 2026-07-29",
+   "category": "pastoral-leadership",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "Hispanic Evangelism Caravan",
+   "heldIn2026": "2026-08-29 to 2026-09-04",
+   "category": "evangelism-outreach",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Hispanic Camp Meeting",
+   "heldIn2026": "2026-09-04 to 2026-09-07",
+   "category": "camp-meeting",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Education Fair",
+   "heldIn2026": "2026-09-20",
+   "category": "education",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  }
+ ],
+ "usuallyHeldNote": "Held in April–September 2026 but not yet on the 2027 calendars. Expect them on roughly the same weekends.",
+ "beyondWindow": [
+  {
+   "title": "2027 Backpack Boot Camp",
+   "start": "2027-10-01",
+   "end": "2027-10-03",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "2027 Master Guide Outdoors",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "2027 Young Adult Retreat",
+   "start": "2027-11-12",
+   "end": "2027-11-14",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  },
+  {
+   "title": "Pathfinder Council Retreat",
+   "start": "2027-11-12",
+   "end": "2027-11-13",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York"
+  }
+ ],
+ "events": [
+  {
+   "title": "Teen Leaders Training Campout",
+   "start": "2027-04-09",
+   "end": "2027-04-11",
+   "place": "",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders (TLT)",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Adventurer Family Weekend (spring)",
+   "start": "2027-04-30",
+   "end": "2027-05-02",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurer families",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Pathfinder Fair",
+   "start": "2027-05-14",
+   "end": "2027-05-16",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders and leaders",
+   "level": "conference",
+   "dateNote": "the calendar entry says \"Possible date change to this event\"",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Camp for the Blind",
+   "start": "2027-06-13",
+   "end": "2027-06-20",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "community-service",
+   "category2": null,
+   "audience": "blind and visually impaired campers",
+   "level": "joint",
+   "levelDetail": "conference with Christian Record Services (National Camps for the Blind)",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Cub Camp-Age 7-10yrs",
+   "start": "2027-06-20",
+   "end": "2027-06-27",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "children 7–10 (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Junior Camp-Age 10-13yrs",
+   "start": "2027-06-27",
+   "end": "2027-07-04",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "children 10–13 (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Tween Camp-Age 13-15yrs",
+   "start": "2027-07-04",
+   "end": "2027-07-11",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "tweens 13–15 (summer camp)",
+   "level": "conference",
+   "note": "listed on the youth calendar only",
+   "sourceDetail": "calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Teen Camp-Age 15-17yrs",
+   "start": "2027-07-11",
+   "end": "2027-07-18",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "teens 15–17 (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Family Camp-All Ages",
+   "start": "2027-07-18",
+   "end": "2027-07-25",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "families",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Club Leadership Training",
+   "start": "2027-07-30",
+   "end": "2027-08-01",
+   "place": "",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Adventurer, Pathfinder, Master Guide and TLT leaders",
+   "level": "conference",
+   "kind": "training",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Adventurer Family Weekend (fall)",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurer families",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Pathfinder Camporee",
+   "start": "2027-09-17",
+   "end": "2027-09-19",
+   "place": "",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders and leaders",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Public Campus Ministry Retreat",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": "evangelism-outreach",
+   "audience": "college / public-campus students",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  },
+  {
+   "title": "2027 Brown County Blowout!",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "Timber Ridge Camp, Spencer, IN",
+   "url": "https://calendar.google.com/calendar/embed?src=indysdacalendar%40gmail.com&ctz=America%2FNew_York",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth (mountain-bike weekend)",
+   "level": "conference",
+   "alsoListed": [
+    "https://calendar.google.com/calendar/embed?src=indysdayouth%40gmail.com&ctz=America%2FNew_York"
+   ],
+   "sourceDetail": "calendar (Indiana Conference public Google Calendar \"Indy SDA Calendar\", ICS feed) + calendar (Indiana Conference Youth Department public Google Calendar, ICS feed)"
+  }
+ ],
+ "notes": "Both feeds were merged (same title and start date); the youth feed adds the Tween Camp. Google Calendar entries have no per-event public page, so each event links to the public calendar (embed) it appears on. The youth feed also contains private appointments with named people; none were recorded. Pathfinder Fair 2027 carries the note \"Possible date change to this event\"."
+}

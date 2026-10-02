@@ -1,0 +1,376 @@
+{
+ "conf": "Idaho",
+ "union": "North Pacific Union",
+ "slug": "idaho",
+ "calendarUrls": [
+  "https://idahoadventist.org/conference-calendar/",
+  "https://idahoadventist.org/events/",
+  "https://idahoadventist.org/wp-json/tribe/events/v1/events"
+ ],
+ "otherSources": [
+  "https://idahoadventist.org/departments/pathfinders/",
+  "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+  "https://gemstate.org/student-life/calendar/"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-06",
+ "furthestPublishedNote": "The conference calendar (and its API) ends Dec 31, 2026. Two other public calendars run further: the Pathfinder & Adventurer PDF calendar (to Jun 19, 2027) and the Gem State Adventist Academy Google Calendar (to Jun 2, 2027).",
+ "calendarQuality": "Main calendar has nothing for 2027. The 2027 look-ahead exists only in the club ministries PDF and the academy calendar, both linked from public pages.",
+ "aheadSummary": "Not on the conference calendar, but the Pathfinder PDF dates the spring club rhythm (planning session Apr 11, Pathfinder Fair May 2, club council May 16, Adventurer Family Campout Jun 4-6) and the academy calendar dates its spring concert and graduation. No camp meeting, camp, retreat or evangelism dates for 2027 yet.",
+ "events": [
+  {
+   "title": "GSAA Music to Churches (academy music groups visit churches)",
+   "start": "2027-04-03",
+   "end": "2027-05-08",
+   "place": "churches in the conference",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "local churches",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution",
+   "count": 3,
+   "dates": [
+    "2027-04-03",
+    "2027-04-17",
+    "2027-05-08"
+   ],
+   "recurring": "Sabbath church visits (also Oct 24, 2026 and Feb 20, 2027)"
+  },
+  {
+   "title": "Pathfinder & Adventurer 2-Year Planning Session (Part 2)",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club leaders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference",
+   "note": "Part 1 is Mar 7, 2027."
+  },
+  {
+   "title": "Pathfinder Fair",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "children",
+   "audience": "Pathfinders and Adventurers",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference",
+   "note": "The 2026 edition was a combined Pathfinder Fair/Adventurer Fun Day at GSAA."
+  },
+  {
+   "title": "GSAA Spring Concert & Art Show",
+   "start": "2027-05-13",
+   "end": "2027-05-13",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "families and community",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "Club council at the conference office",
+   "start": "2027-05-16",
+   "end": "2027-05-16",
+   "place": "Idaho Conference office",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club leaders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference",
+   "note": "Listed as \"Council @ Conf. Office\"."
+  },
+  {
+   "title": "GSAA Graduation Weekend",
+   "start": "2027-05-28",
+   "end": "2027-05-30",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "education",
+   "category2": "",
+   "audience": "families, churches, alumni",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "Adventurer Family Campout",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurer families",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  }
+ ],
+ "counts": {
+  "total": 7,
+  "conferenceLevel": 4,
+  "unionLevel": 0,
+  "institutionOrOther": 3,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 0,
+  "byCategory": {
+   "pathfinders": 3,
+   "music-worship-arts": 2,
+   "education": 1,
+   "children": 1
+  },
+  "byCategoryConferenceOnly": {
+   "pathfinders": 3,
+   "children": 1
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "Idaho Conference Camp Meeting (English & Spanish)",
+   "usual": "June at GSAA (2026: Jun 9-13). The Pathfinder PDF lists \"Campmeeting Parking\" on Jun 19, 2027, but its 2026 entry (Jun 20) did not match the 2026 camp meeting, so it is not a reliable date.",
+   "url": "https://idahoadventist.org/departments/administration/camp-meeting-2026/"
+  },
+  {
+   "what": "Camp Ida-Haven summer camps (Cub, Junior, Tween, BeTween, Earliteen, Teen)",
+   "usual": "late June-early August; site still shows 2026",
+   "url": "https://www.idahaven.org/"
+  },
+  {
+   "what": "Women's Retreat",
+   "usual": "September at Camp Ida-Haven (2026: Sep 11-13)",
+   "url": "https://idahoadventist.org/departments/womens-ministries/"
+  },
+  {
+   "what": "Pastors' meetings and area pastors' meetings for 2027",
+   "usual": "about monthly; ministerial page shows the 2026 schedule only",
+   "url": "https://idahoadventist.org/departments/ministerial/"
+  },
+  {
+   "what": "Teen Mountain Biking, Pathfinder Leadership, fall camporee, Bike-A-Ton",
+   "usual": "Aug-Sep (2026 pattern); the PDF stops at June 2027",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-17",
+   "level": "division",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "note": "The Idaho PDF shows \"17?-NAD PBE\" (tentative). The NAD and the other NPUC calendars give Apr 23-24, 2027, in Huntsville, Alabama. Left to the NAD/GC file."
+  },
+  {
+   "title": "NPUC Pathfinder Coordinators Convention / NPUC PBE",
+   "start": "2027-03-12",
+   "level": "union",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "note": "PDF: \"12-14? NPUC Coordin. Convention\", \"15? NPUC PBE\". The NPUC youth page gives Mar 12-14 (retreat) and Mar 13 (PBE). See union file."
+  }
+ ],
+ "alsoOct26toMar27": [
+  {
+   "title": "Teen Fall Event - Lock-In",
+   "start": "2026-11-07",
+   "end": "2026-11-07",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference",
+   "note": "Same day as Biblefest. Not in the v50 file."
+  },
+  {
+   "title": "Area Pathfinder Bible Experience",
+   "start": "2027-01-16",
+   "end": "2027-01-16",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "Pathfinders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  },
+  {
+   "title": "GSAA Choral Festival",
+   "start": "2027-01-22",
+   "end": "2027-01-23",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "academy and visiting choirs",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "Pathfinder Teen Retreat",
+   "start": "2027-01-29",
+   "end": "2027-01-31",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  },
+  {
+   "title": "Conference Pathfinder Bible Experience",
+   "start": "2027-02-06",
+   "end": "2027-02-06",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "Pathfinders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  },
+  {
+   "title": "Pinewood Derby",
+   "start": "2027-02-07",
+   "end": "2027-02-07",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "children",
+   "audience": "Pathfinders and Adventurers",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  },
+  {
+   "title": "GSAA Music to Churches",
+   "start": "2027-02-20",
+   "end": "2027-02-20",
+   "place": "churches in the conference",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "local churches",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "GSAA Student Week of Prayer",
+   "start": "2027-03-01",
+   "end": "2027-03-05",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "students",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "GSAA Academy Day",
+   "start": "2027-03-05",
+   "end": "2027-03-05",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "education",
+   "category2": "",
+   "audience": "prospective students and families",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "Idaho Youth Conference",
+   "start": "2027-03-05",
+   "end": "2027-03-06",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "youth",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "conference",
+   "note": "From the academy calendar; the conference calendar has not posted it yet. The 2026 Youth Conference was also at GSAA (Mar 6-7, 2026)."
+  },
+  {
+   "title": "Pathfinder & Adventurer 2-Year Planning Session (Part 1)",
+   "start": "2027-03-07",
+   "end": "2027-03-07",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club leaders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference"
+  },
+  {
+   "title": "GSAA Gem of Gems Gala",
+   "start": "2027-03-14",
+   "end": "2027-03-14",
+   "place": "Gem State Adventist Academy, Caldwell",
+   "category": "education",
+   "category2": "stewardship-finance",
+   "audience": "supporters and families",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "GSAA calendar (public Google Calendar on gemstate.org)",
+   "level": "institution"
+  },
+  {
+   "title": "Teen Mission Experience",
+   "start": "2027-03-21",
+   "end": "2027-03-28",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "evangelism-outreach",
+   "audience": "teen Pathfinders",
+   "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+   "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
+   "level": "conference",
+   "tentative": true,
+   "note": "Shown with a question mark (\"21-28?\") in the PDF."
+  }
+ ],
+ "beyondWindow": [],
+ "excluded": [
+  "Conference API: 0 events after Dec 31, 2026.",
+  "GSAA internal items: vespers, ASB events, MAP/SAT testing, home-leaves, exams, operating board, senior trips, STEM trip, faculty/board dinner, last day of school.",
+  "Walla Walla U Days (Apr 4-7) on the GSAA calendar: a WWU event, listed in the union file."
+ ],
+ "aheadChecked": [
+  "https://idahoadventist.org/wp-json/tribe/events/v1/events?start_date=2026-12-01&end_date=2029-12-31",
+  "https://idahoadventist.org/wp-json/wp/v2/search?search=2027",
+  "https://idahoadventist.org/wp-json/wp/v2/pages?orderby=modified",
+  "https://idahoadventist.org/",
+  "https://idahoadventist.org/departments/pathfinders/",
+  "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
+  "https://idahoadventist.org/departments/youth-ministries/",
+  "https://idahoadventist.org/departments/education/",
+  "https://idahoadventist.org/departments/administration/elders/",
+  "https://idahoadventist.org/departments/womens-ministries/",
+  "https://idahoadventist.org/departments/prayer-ministries/",
+  "https://idahoadventist.org/departments/ministerial/",
+  "https://idahoadventist.org/departments/hispanic-ministries/",
+  "https://idahoadventist.org/departments/childrens-ministries/",
+  "https://idahoadventist.org/departments/administration/camp-meeting-2026/",
+  "https://idahoadventist.org/departments/administration/camp-meeting-2027/ (404)",
+  "https://www.idahaven.org/",
+  "https://www.idahaven.org/schedules",
+  "https://gemstate.org/",
+  "https://gemstate.org/student-life/calendar/",
+  "https://calendar.google.com/calendar/ical/gemstate.org_tlml39sg6fhcgfqv4i1e980ofc%40group.calendar.google.com/public/basic.ics",
+  "https://gemstate.org/wp-json/tribe/events/v1/events?start_date=2027-01-01",
+  "https://nwadventists.com/news?section=352"
+ ],
+ "notes": [
+  "The youth page also links a Europe Reformation tour flyer from a travel agency, with no dates; not counted.",
+  "The Pathfinder PDF marks some dates with \"?\" (tentative); those are flagged tentative:true."
+ ]
+}

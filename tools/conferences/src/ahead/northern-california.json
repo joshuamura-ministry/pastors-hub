@@ -1,0 +1,116 @@
+{
+ "conf": "Northern California",
+ "union": "Pacific Union",
+ "slug": "northern-california",
+ "site": "https://nccsda.com",
+ "calendarUrls": [
+  "https://nccsda.com/calendar/",
+  "https://nccsda.com/wp-sitemap-posts-mec-events-1.xml",
+  "https://www.nccsdayouth.com/pathfinder-events",
+  "https://www.nccsdayouth.com/youth-department-events",
+  "https://www.nccsdayouth.com/young-adult-events",
+  "https://redwoodcampmeeting.com/camp-schedule/",
+  "https://www.leonimeadows.org/youth-camps"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "C (sparse events calendar; the 2026-27 youth and Pathfinder calendars are images)",
+ "furthestPublished": "2027-05",
+ "furthestNote": "Last dated item: Pathfinder Fair, 2 May 2027 (2026-2027 Pathfinder calendar image). The events calendar has nothing after Dec 2026.",
+ "aheadSummary": "Two items, both from the 2026-2027 Pathfinder calendar image: Bike-a-thon (4 Apr, Sutter) and Pathfinder Fair (2 May, Napa). The youth calendar ends with a March 2027 mission trip. Redwood Area Camp Meeting says \"2027 dates coming soon\".",
+ "aheadChecked": [
+  "https://www.nccsdayouth.com/pathfinder-events",
+  "https://storage1.snappages.site/HRQ5Q5/assets/images/24639773_970x2000_2500.png",
+  "https://www.nccsdayouth.com/youth-department-events",
+  "https://storage1.snappages.site/HRQ5Q5/assets/images/24639851_1200x1800_2500.png",
+  "https://www.nccsdayouth.com/young-adult-events",
+  "https://nccsda.com/calendar/",
+  "https://nccsda.com/wp-sitemap-posts-mec-events-1.xml",
+  "https://redwoodcampmeeting.com/",
+  "https://www.leonimeadows.org/youth-camps",
+  "https://www.adventistfaith.com/news/building-organizational-health-to-advance-the-2027-vision/"
+ ],
+ "events": [
+  {
+   "title": "Pathfinder Bike-a-thon",
+   "start": "2027-04-04",
+   "end": "2027-04-04",
+   "place": "South Ridge Estates, Sutter",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinder clubs",
+   "url": "https://www.nccsdayouth.com/pathfinder-events",
+   "urls": [
+    "https://www.nccsdayouth.com/pathfinder-events",
+    "https://storage1.snappages.site/HRQ5Q5/assets/images/24639773_970x2000_2500.png"
+   ],
+   "source": "youth department calendar (image)",
+   "when": "upcoming",
+   "level": "conference"
+  },
+  {
+   "title": "Pathfinder Fair",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "place": "Napa Campus of Christian Education, Napa",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinder clubs",
+   "url": "https://www.nccsdayouth.com/pathfinder-events",
+   "urls": [
+    "https://www.nccsdayouth.com/pathfinder-events",
+    "https://storage1.snappages.site/HRQ5Q5/assets/images/24639773_970x2000_2500.png"
+   ],
+   "source": "youth department calendar (image)",
+   "when": "upcoming",
+   "level": "conference"
+  }
+ ],
+ "stats": {
+  "items": 2,
+  "occurrences": 2,
+  "occurrencesInWindow": 2,
+  "conferenceLevelItems": 2,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "2 of 6",
+  "byCategory": {
+   "pathfinders": 2
+  },
+  "byCategoryIncludingSecond": {
+   "pathfinders": 2
+  },
+  "occurrencesByCategory": {
+   "pathfinders": 2
+  },
+  "byLevel": {
+   "conference": 2
+  },
+  "bySourceType": {
+   "calendar/event pages": 2
+  }
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Redwood Area Camp Meeting",
+   "lastKnown": "2026-07-26 to 2026-08-01",
+   "url": "https://redwoodcampmeeting.com/",
+   "note": "Site says \"2027 dates coming soon\"."
+  },
+  {
+   "title": "Leoni Meadows summer camps",
+   "lastKnown": "2026 camps ran to 2 Aug 2026",
+   "url": "https://www.leonimeadows.org/youth-camps"
+  },
+  {
+   "title": "African American Ministries convocation (50th)",
+   "lastKnown": "49th convocation on the 2026 events calendar",
+   "url": "https://nccsda.com/wp-sitemap-posts-mec-events-1.xml"
+  }
+ ],
+ "notes": [
+  "nccsda.com/calendar and the site's WordPress API return a bot-check page to scripts; not bypassed. The events sitemap (newest entry Aug 2026) was read instead.",
+  "The education working calendar is on SharePoint behind a sign-in; not read.",
+  "NCC has a stated \"2027 mission goal\" (organizational health in 51% of churches, schools and ministries); it is a goal, not an event."
+ ]
+}

@@ -1,0 +1,112 @@
+{
+ "conf": "Iowa-Missouri",
+ "slug": "iowa-missouri",
+ "union": "Mid-America Union",
+ "site": "https://imsda.org/",
+ "calendarUrls": [
+  "https://imsda.org/events/",
+  "https://imsda.org/events/month/",
+  "https://imsda.org/wp-json/tribe/events/v1/events"
+ ],
+ "otherSources": [
+  "https://www.outlookmag.org/tag/iowa-missouri-conference/",
+  "https://imsda.org/departments/evangelism/imcalled/",
+  "https://imsda.org/ministries/ministerio-hispano/",
+  "https://imsda.org/camp-meeting-2026/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "B+ : public Events Calendar feed (REST + iCal), 193 entries Sep 2025-Jun 2027 with youth, Pathfinder, Adventurer, Hispanic, men's/women's, school and evangelism-school dates; mixed with holidays and school breaks (dropped). Few ministry entries after Dec 2026.",
+ "aheadQuality": "D : conference calendar has nothing for Apr-Sep 2027 except holidays. Only the academy calendar (to May 2027) and the IM Called page (\"2027 school year\") point into the window.",
+ "furthestPublished": "2026-12",
+ "furthestPublishedAnySource": "2027-05",
+ "furthestPublishedNote": "The conference calendar has no ministry events after the December pastors' meetings (Dec 6-9 2026) and the Union graduation weekend (Dec 11-13 2026); its 2027-2029 entries are only holidays, school breaks and office closures. Sunnydale Adventist Academy's own public calendar runs to May 2027.",
+ "aheadChecked": [
+  "https://imsda.org/wp-json/tribe/events/v1/events?start_date=2027-01-01&end_date=2029-12-31",
+  "https://imsda.org/wp-json/tribe/events/v1/events?start_date=2026-11-15&end_date=2026-12-31",
+  "https://imsda.org/wp-json/wp/v2/posts?search=2027",
+  "https://imsda.org/wp-json/wp/v2/pages?search=2027",
+  "https://imsda.org/departments/evangelism/imcalled/",
+  "https://imsda.org/camp-meeting-2027/ (404)",
+  "https://imsda.org/camp-meeting-2026/",
+  "https://imsda.org/ministries/youth-ministries/",
+  "https://imsda.org/ministries/club-ministries/",
+  "https://imsda.org/ministries/ministerio-hispano/",
+  "https://imsda.org/ministries/womens-ministries/",
+  "https://imsda.org/ministries/mens-ministries/",
+  "https://www.campheritage.org/",
+  "https://www.campheritage.org/summer-camp-info/ (2026 schedule only)",
+  "https://www.campheritage.org/calendar (embedded Google calendars are not public as feeds: 404)",
+  "https://sunnydale.org/calendar (public Google calendar qfu75d3o4o54rbitdeok55r4m8@group.calendar.google.com)",
+  "https://www.outlookmag.org/state-of-the-iowa-missouri-conference/"
+ ],
+ "counts": {
+  "total": 3,
+  "conferenceLevel": 3,
+  "byLevel": {
+   "conference": 3
+  },
+  "byCategory": {
+   "education": 2,
+   "evangelism-outreach": 1
+  },
+  "recurringSeries": 0,
+  "approximateDates": 1,
+  "unconfirmed": 1
+ },
+ "events": [
+  {
+   "title": "Elementary Music Festival at Sunnydale Adventist Academy",
+   "start": "2027-04-08",
+   "end": "2027-04-10",
+   "place": "Sunnydale Adventist Academy, Centralia, MO",
+   "category": "education",
+   "category2": "music-worship-arts",
+   "audience": "elementary school students",
+   "url": "https://sunnydale.org/calendar",
+   "source": "academy calendar (Sunnydale Adventist Academy public Google calendar)",
+   "level": "conference"
+  },
+  {
+   "title": "Missouri Church Blitz (Sunnydale Adventist Academy)",
+   "start": "2027-04-16",
+   "end": "2027-04-17",
+   "place": "churches in Missouri",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy students and host churches",
+   "url": "https://sunnydale.org/calendar",
+   "source": "academy calendar (Sunnydale Adventist Academy public Google calendar)",
+   "level": "conference",
+   "note": "Title as listed on the academy calendar; host churches are not named. An Iowa Blitz (Mar 5-7) and an earlier Missouri Church Blitz (Feb 13) fall before the window."
+  },
+  {
+   "title": "IM Called: School of Evangelism and Discipleship, 2027 school year",
+   "start": "2027-06-01",
+   "end": "2027-09-30",
+   "place": "St. Louis area, MO (2026 location)",
+   "category": "evangelism-outreach",
+   "category2": "discipleship-spiritual",
+   "audience": "lay members training as Bible workers",
+   "url": "https://imsda.org/departments/evangelism/imcalled/",
+   "source": "ministry page",
+   "level": "conference",
+   "note": "The page says \"The application process for the 2027 school year will begin in January 2027.\" Dates are not published; the summer timing is an estimate from 2026 (Jun 22-Sep 17 2026). Replace when applications open.",
+   "datePrecision": "season",
+   "confirmed": false
+  }
+ ],
+ "notPublishedYet": [
+  "camp meeting 2027 (/camp-meeting-2027/ returns 404)",
+  "Camp Heritage summer camp 2027",
+  "spring 2027 Pathfinder camporee, PBE and Adventurer events",
+  "Hispanic ministries events 2027 (retreats, Festival de Ministerios Hispanos)",
+  "men's camp and women's retreat 2027",
+  "Sunnydale Adventist Academy graduation 2027 (not on its calendar yet)"
+ ],
+ "notes": [
+  "Not counted: conference holidays and office closures for 2027-2029 (the only 2027 entries on the conference calendar), academy internal items (A/B days, home leave, sports, banquets, staff weekends, tests).",
+  "Sunnydale Adventist Academy items are taken from the academy's own public calendar, which the conference site links to; its last 2027 one-off entry is an All Staff Weekend, May 14-16 2027.",
+  "Camp Heritage's calendar page embeds three Google calendars that are not published as public feeds (HTTP 404), so they could not be read."
+ ]
+}

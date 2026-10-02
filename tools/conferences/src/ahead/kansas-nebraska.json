@@ -1,0 +1,211 @@
+{
+ "conf": "Kansas-Nebraska",
+ "slug": "kansas-nebraska",
+ "union": "Mid-America Union",
+ "site": "https://www.ks-ne.org/",
+ "calendarUrls": [
+  "https://www.ks-ne.org/#Calendar-Home",
+  "https://ks-ne.club/calendar/"
+ ],
+ "otherSources": [
+  "https://us10.campaign-archive.com/home/?u=71379d5c768fa82cc2cf87f02&id=e7b5620a5e",
+  "https://www.brokenarrowranch.org/camp-sessions",
+  "https://www.ks-ne.org/ministries/youth-young-adults",
+  "https://www.ks-ne.org/ministries/multilingual-ministries",
+  "https://www.ks-ne.org/ministries/womens-ministries",
+  "https://www.ks-ne.org/prayerministries",
+  "https://www.outlookmag.org/tag/kansas-nebraska-conference/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "C : the conference home-page calendar widget has only 8 real events (Apr-Nov 2026). A separate Club Ministries calendar (ks-ne.club) covers the 2026-27 club season well, and the weekly e-newsletter archive (last 10 weeks) and OUTLOOK fill in the rest. Oct 2025-Jun 2026 is thin.",
+ "aheadQuality": "B (clubs only) : the Club Ministries calendar is complete through May 2028; everything else (camp meeting, Broken Arrow Ranch camps, Hispanic events, retreats) is not published for 2027.",
+ "furthestPublished": "2028-05",
+ "furthestPublishedAnySource": "2028-06",
+ "furthestPublishedNote": "The Club Ministries calendar covers the 2026-27 and 2027-28 club seasons, ending with the spring Pathfinder camporee May 4-6 2028 (season end Jun 30 2028). The main conference site has no 2027 dates.",
+ "aheadChecked": [
+  "https://ks-ne.club/calendar/",
+  "https://www.ks-ne.org/",
+  "https://www.ks-ne.org/camp-meeting (2026 only)",
+  "https://www.ks-ne.org/ministries/youth-young-adults",
+  "https://www.ks-ne.org/ministries/multilingual-ministries",
+  "https://www.ks-ne.org/ministries/womens-ministries",
+  "https://www.ks-ne.org/prayerministries",
+  "https://www.brokenarrowranch.org/camp-sessions (2026 only)",
+  "https://us10.campaign-archive.com/home/?u=71379d5c768fa82cc2cf87f02&id=e7b5620a5e",
+  "https://us10.campaign-archive.com/feed?u=71379d5c768fa82cc2cf87f02&id=e7b5620a5e (10 latest Cutting Edge issues: no 2027 dates)",
+  "https://mailchi.mp/18e416e661d8/the-cutting-edge-march-13-13374433",
+  "https://www.outlookmag.org/state-of-the-kansas-nebraska-conference/",
+  "https://cvak12.org/",
+  "https://enterpriseacademy.org/ (page renders only with scripts; nothing readable)"
+ ],
+ "counts": {
+  "total": 11,
+  "conferenceLevel": 8,
+  "byLevel": {
+   "conference": 8,
+   "observance": 2,
+   "union": 1
+  },
+  "byCategory": {
+   "pathfinders": 7,
+   "children": 4
+  },
+  "recurringSeries": 1,
+  "approximateDates": 0,
+  "unconfirmed": 0
+ },
+ "events": [
+  {
+   "title": "Eastern Nebraska Area Pathfinder Zoo Trip",
+   "start": "2027-04-04",
+   "end": "2027-04-04",
+   "place": "Omaha, NE",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "Club Ministry Planning Meetings",
+   "start": "2027-04-09",
+   "end": "2027-04-10",
+   "place": "Lincoln, NE",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Adventurer and Pathfinder club leaders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "Kansas and Nebraska Area Adventurer Zoo Trips",
+   "start": "2027-04-18",
+   "end": "2027-04-18",
+   "place": "",
+   "category": "children",
+   "category2": "",
+   "audience": "Adventurers and families",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "Conference Pathfinder Spring Camporee",
+   "start": "2027-04-29",
+   "end": "2027-05-01",
+   "place": "Woodland Acres, NE",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "World Adventurer Day",
+   "start": "2027-05-15",
+   "end": "2027-05-15",
+   "place": "",
+   "category": "children",
+   "category2": "",
+   "audience": "Adventurers",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "observance"
+  },
+  {
+   "title": "YMMS Adventurer Training",
+   "start": "2027-06-26",
+   "end": "2027-09-25",
+   "place": "",
+   "category": "children",
+   "category2": "pastoral-leadership",
+   "audience": "Adventurer leaders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference",
+   "recurring": "quarterly (also Mar 27 and Dec 18 2027)",
+   "count": 2,
+   "dates": [
+    "2027-06-26",
+    "2027-09-25"
+   ]
+  },
+  {
+   "title": "Limitless: Mid-America Union Pathfinder Camporee",
+   "start": "2027-07-28",
+   "end": "2027-07-31",
+   "place": "Custer, SD (Black Hills)",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinder clubs",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "union",
+   "note": "The club calendar lists Jul 28-Aug 1 (travel day included); the union gives Jul 28-31."
+  },
+  {
+   "title": "Pathfinder & Adventurer Leadership Training Weekend",
+   "start": "2027-08-27",
+   "end": "2027-08-29",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Adventurer, Pathfinder and Master Guide leaders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "Conference Adventurer Camporee",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "TBD",
+   "category": "children",
+   "category2": "",
+   "audience": "Adventurers and families",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  },
+  {
+   "title": "World Pathfinder Day",
+   "start": "2027-09-18",
+   "end": "2027-09-18",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "observance"
+  },
+  {
+   "title": "Western Kansas Area Pathfinder Fall Camporee",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "TBD",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "level": "conference"
+  }
+ ],
+ "notPublishedYet": [
+  "camp meeting 2027 (page still shows 2026, May 27-30)",
+  "Broken Arrow Ranch summer camp 2027",
+  "Hispanic camp meetings (Kansas, Nebraska), Panhandle camp meeting and winter convocations 2027",
+  "women's, young adult and Hispanic retreats 2027",
+  "Oxygen youth rally 2027"
+ ],
+ "notes": [
+  "All Apr-Sep 2027 dates come from the Club Ministries calendar (ks-ne.club), which already lists the whole 2027-28 club season through May 2028.",
+  "Beyond the window (already published): Eastern KS fall camporee Oct 1-3 2027, Eastern NE fall camporee Oct 8-10 2027, Adventurer Award Expo Nov 6 2027, TLT training Nov 12-14 2027, spring camporee May 4-6 2028.",
+  "Messiah's Mansion (sanctuary exhibit) comes to Shawnee, KS on Oct 24-31 2026; that is before this window and is in the v50 file."
+ ]
+}

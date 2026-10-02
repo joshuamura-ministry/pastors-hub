@@ -1,0 +1,972 @@
+{
+ "conf": "Chesapeake Conference",
+ "slug": "chesapeake",
+ "union": "Columbia Union Conference",
+ "site": "https://ccosda.org/",
+ "calendarUrls": [
+  "https://ccosda.org/calendar/",
+  "https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics",
+  "https://ccosda.org/eventshub/",
+  "https://ccosda.org/category/news/",
+  "https://www.nadsecretariat.org/wp-content/uploads/2026/02/2026-NAD-CAMP-MEETING-.pdf",
+  "https://columbiaunionvisitor.com/category/chesapeake-conference"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the Google Calendar embedded on ccosda.org/calendar (4,066 entries) has a public ICS feed that reads fine; all of 2027 is marked tentative.",
+ "calendarQuality": "A– (calendar feed found): ccosda.org/calendar embeds a public Google Calendar whose ICS feed is readable. It holds a full 2027 calendar under a \"**TENTATIVE CALENDAR**\" banner, with departments, ministeriums, camps, clubs, Hispanic ministries, union and NAD items. The first pass (grade C) could not read it.",
+ "furthestPublished": "2027-12",
+ "furthestNote": "last dated item: 2027-12-18 (Day of Gratitude); the whole of 2027 is tentative",
+ "aheadSummary": "Full tentative 2027 calendar. In Apr–Sep 2027: constituency meeting (16 May, Frederick church), Spanish camp meeting (11–13 Jun) and camp meeting (15–19 Jun) at Highland View Academy, an evangelism and revitalization symposium (27 Apr), five summer-camp and five FLAG Camp weeks, ministeriums, retreats, Adventurer events and the Pathfinder camporee (23–26 Sep). Also lists union education events, the union camporee and NAD items.",
+ "aheadChecked": [
+  "https://ccosda.org/calendar/",
+  "https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics",
+  "https://ccosda.org/wp-json/wp/v2/posts?search=2027",
+  "https://ccosda.org/wp-json/wp/v2/pages?search=2027",
+  "https://ccosda.org/childrens-youth-young-adults-ministries-plan-2027-initiatives-at-annual-coordinators-retreat/",
+  "https://ccosda.org/chesapeake-leaders-tour-frederick-church-ahead-of-2027-constituency-meeting/",
+  "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/",
+  "https://columbiaunionvisitor.com/category/chesapeake-conference",
+  "https://columbiaunionvisitor.com/rss.xml"
+ ],
+ "stats": {
+  "records": 34,
+  "datedInWindowRecords": 34,
+  "conferenceRunRecords": 23,
+  "occurrencesInWindow": 47,
+  "conferenceOccurrencesInWindow": 32,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 24,
+  "undatedRecords": 0,
+  "startsBeforeWindowRecords": 0,
+  "monthsWithConferenceEvents": "6 of 6",
+  "byLevel": {
+   "conference": 23,
+   "union": 4,
+   "division": 3,
+   "local-church": 1,
+   "observance": 3
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 4,
+   "youth-young-adults": 7,
+   "children": 5,
+   "pathfinders": 5,
+   "education": 3,
+   "health": 1,
+   "community-service": 0,
+   "family-women-men": 3,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 1
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 2,
+   "youth-young-adults": 7,
+   "children": 3,
+   "pathfinders": 2,
+   "education": 0,
+   "health": 1,
+   "community-service": 0,
+   "family-women-men": 2,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 1
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 1,
+   "discipleship-spiritual": 1,
+   "pastoral-leadership": 6,
+   "youth-young-adults": 11,
+   "children": 4,
+   "pathfinders": 2,
+   "education": 0,
+   "health": 1,
+   "community-service": 0,
+   "family-women-men": 2,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 2,
+   "administration": 1,
+   "other": 1
+  }
+ },
+ "counts": {
+  "total": 34,
+  "conferenceLevel": 23,
+  "observances": 3,
+  "byCategory": {
+   "pastoral-leadership": 4,
+   "children": 5,
+   "health": 1,
+   "pathfinders": 5,
+   "youth-young-adults": 7,
+   "evangelism-outreach": 1,
+   "administration": 1,
+   "camp-meeting": 2,
+   "other": 1,
+   "education": 3,
+   "family-women-men": 3,
+   "discipleship-spiritual": 1
+  },
+  "byCategoryConferenceOnly": {
+   "pastoral-leadership": 2,
+   "children": 3,
+   "health": 1,
+   "youth-young-adults": 7,
+   "evangelism-outreach": 1,
+   "pathfinders": 2,
+   "administration": 1,
+   "camp-meeting": 2,
+   "other": 1,
+   "family-women-men": 2,
+   "discipleship-spiritual": 1
+  }
+ },
+ "excludedFromCalendar": {
+  "school calendar date": 12,
+  "committee/board/council/advisory": 15,
+  "holiday/office closure": 5,
+  "camp set-up": 1
+ },
+ "excludedDetail": [
+  {
+   "title": "MAP Testing",
+   "reason": "school calendar date",
+   "occurrences": 2
+  },
+  {
+   "title": "ADCOM  Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 26
+  },
+  {
+   "title": "Association Board Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 3
+  },
+  {
+   "title": "Wilmington Junior Academy Accreditation",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Children’s & Youth Pastor’s Advisory Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "Board of Ed.",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Constituency Session Organizing Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "Camp Meeting Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 3
+  },
+  {
+   "title": "Principal’s Council",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Constituency Session Nominating Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "HVA Board of Trustees Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "CU Presidents' Council",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "WAU Board of Trustees",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "CU Executive Committee",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "8th Grade Graduations",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "4th Quarter Ends",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Last Day of School",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Senior Graduations",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Memorial Day (Office Closed)",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Post-school In-Service",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Camp Meeting Pitch",
+   "reason": "camp set-up",
+   "occurrences": 1
+  },
+  {
+   "title": "Juneteenth Observance Day (office)",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Executive Committee Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Personnel Committee Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "Independence Day",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Independence Day (Office Closed)",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Teacher’s 1st Day",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Teacher In-Service",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "New Teachers' Orientation",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "1st Day of School",
+   "reason": "school calendar date",
+   "occurrences": 1
+  },
+  {
+   "title": "Children’s & Youth Pastors Advisory Meeting",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "Labor Day (Schools & Office Closed)",
+   "reason": "holiday/office closure",
+   "occurrences": 1
+  },
+  {
+   "title": "Professional Dev. (no school)",
+   "reason": "school calendar date",
+   "occurrences": 1
+  }
+ ],
+ "prepDeadlines": [
+  {
+   "title": "Deadline for Evangelism Subsidy Request (2027 cycle)",
+   "date": "2026-11-15",
+   "what": "churches apply for conference evangelism subsidy for 2027 events",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar (public ICS feed)",
+   "note": "on the conference feed; news of 16 Sep 2026 says the 2027 application cycle opens in October 2026"
+  }
+ ],
+ "events": [
+  {
+   "title": "Area ministeriums (regional pastors' meetings: Northern, Eastern Shore, Southern, Western)",
+   "start": "2027-04-08",
+   "end": "2027-07-20",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "recurring": "repeated",
+   "count": 5,
+   "dates": [
+    "2027-04-08",
+    "2027-05-04",
+    "2027-05-11",
+    "2027-07-13",
+    "2027-07-20"
+   ],
+   "lastDate": "2027-07-20",
+   "parts": [
+    {
+     "start": "2027-04-08",
+     "end": "2027-04-08",
+     "title": "Northern Ministerium"
+    },
+    {
+     "start": "2027-05-04",
+     "end": "2027-05-04",
+     "title": "Eastern Shore Ministerium"
+    },
+    {
+     "start": "2027-05-11",
+     "end": "2027-05-11",
+     "title": "Southern Ministerium"
+    },
+    {
+     "start": "2027-07-13",
+     "end": "2027-07-13",
+     "title": "Western Ministerium"
+    },
+    {
+     "start": "2027-07-20",
+     "end": "2027-07-20",
+     "title": "Northern Ministerium"
+    }
+   ],
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Adventurer Award Days (Frederick church; Ellicott City church)",
+   "start": "2027-04-11",
+   "end": "2027-04-25",
+   "place": "Frederick and Ellicott City churches, Md.",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "recurring": "repeated",
+   "count": 2,
+   "dates": [
+    "2027-04-11",
+    "2027-04-25"
+   ],
+   "lastDate": "2027-04-25",
+   "parts": [
+    {
+     "start": "2027-04-11",
+     "end": "2027-04-11",
+     "title": "Adventurer Award Day - Frederick Church"
+    },
+    {
+     "start": "2027-04-25",
+     "end": "2027-04-25",
+     "title": "Adventurer Award Day - Ellicott City Church"
+    }
+   ],
+   "tentative": true,
+   "note": "the feed gives the Frederick church address for both days; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Chesapeake on the Move",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "place": null,
+   "category": "health",
+   "category2": "community-service",
+   "audience": "members and community",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "title only; the October 2025 \"On The Move\" was a 1-mile and 5K run/walk; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "NAD Spanish Leaders' Convention",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": "multilingual",
+   "audience": "Hispanic church leaders",
+   "level": "division",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "levelDetail": "division/GC or external (attended)"
+  },
+  {
+   "title": "Pathfinder Bible Experience - NAD (division) level",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders",
+   "level": "division",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "levelDetail": "division/GC or external (attended)"
+  },
+  {
+   "title": "Young Adult Retreat (2027 theme: relationships)",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Mt Aetna Retreat Center, Hagerstown, Md.",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "young adults",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Church Evangelism & Revitalization Symposium",
+   "start": "2027-04-27",
+   "end": "2027-04-27",
+   "place": null,
+   "category": "evangelism-outreach",
+   "category2": "pastoral-leadership",
+   "audience": "pastors and lay leaders",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Master Guide University - Skills Campout",
+   "start": "2027-04-30",
+   "end": "2027-05-02",
+   "place": "Boonsboro campgrounds, Md.",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Master Guides",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "World Adventurer Day (local church)",
+   "start": "2027-05-15",
+   "end": "2027-05-15",
+   "place": null,
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurers",
+   "level": "observance",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Constituency Meeting (sixth quinquennial session)",
+   "start": "2027-05-16",
+   "end": "2027-05-16",
+   "place": "Frederick Seventh-day Adventist Church, Frederick, Md.",
+   "category": "administration",
+   "category2": null,
+   "audience": "delegates",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "held every five years; elects conference officers. Host church voted by the Executive Committee (news, 16 Jul 2026); the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Adventurer Family Weekend",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "Highland View Academy, Hagerstown, Md.",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "2027 theme chosen, to be revealed later (news, 13 Aug 2026); the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Hispanic Pastors' Retreat",
+   "start": "2027-06-06",
+   "end": "2027-06-08",
+   "place": "Mt Aetna Retreat Center, Hagerstown, Md.",
+   "category": "pastoral-leadership",
+   "category2": "multilingual",
+   "audience": "Hispanic pastors",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Spanish Camp Meeting",
+   "start": "2027-06-11",
+   "end": "2027-06-13",
+   "place": "Highland View Academy, Hagerstown, Md.",
+   "category": "camp-meeting",
+   "category2": "multilingual",
+   "audience": "Hispanic members",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Summer camp - director's orientation",
+   "start": "2027-06-14",
+   "end": "2027-06-20",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "camp staff",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Camp Meeting",
+   "start": "2027-06-15",
+   "end": "2027-06-19",
+   "place": "Highland View Academy, Hagerstown, Md.",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "members/families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Summer camp - staff training",
+   "start": "2027-06-20",
+   "end": "2027-06-27",
+   "place": "Mt. Aetna Retreat Center, Hagerstown, Md.",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "camp staff",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "NAD CALLED Pastors' Convention",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "division",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "levelDetail": "division/GC or external (attended)",
+   "note": "Potomac's calendar gives 21–25 Jun"
+  },
+  {
+   "title": "FLAG Camp (five weekly sessions)",
+   "start": "2027-06-27",
+   "end": "2027-08-01",
+   "place": null,
+   "category": "children",
+   "category2": "multilingual",
+   "audience": "children",
+   "level": "local-church",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "levelDetail": "local church (conference FLAG Camp programme)",
+   "recurring": "repeated",
+   "count": 5,
+   "dates": [
+    "2027-06-27",
+    "2027-07-04",
+    "2027-07-11",
+    "2027-07-18",
+    "2027-07-25"
+   ],
+   "lastDate": "2027-07-25",
+   "ranges": [
+    "2027-06-27/2027-07-04",
+    "2027-07-04/2027-07-11",
+    "2027-07-11/2027-07-18",
+    "2027-07-18/2027-07-25",
+    "2027-07-25/2027-08-01"
+   ],
+   "parts": [
+    {
+     "start": "2027-06-27",
+     "end": "2027-07-04",
+     "title": "FLAG Camp – Week #1"
+    },
+    {
+     "start": "2027-07-04",
+     "end": "2027-07-11",
+     "title": "FLAG Camp – Week #2"
+    },
+    {
+     "start": "2027-07-11",
+     "end": "2027-07-18",
+     "title": "FLAG Camp – Week #3"
+    },
+    {
+     "start": "2027-07-18",
+     "end": "2027-07-25",
+     "title": "FLAG Camp – Week #4"
+    },
+    {
+     "start": "2027-07-25",
+     "end": "2027-08-01",
+     "title": "FLAG Camp – Week #5"
+    }
+   ],
+   "tentative": true,
+   "note": "weeks run Sunday to Sunday; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Mt. Aetna summer camp (five weeks)",
+   "start": "2027-06-27",
+   "end": "2027-08-01",
+   "place": "Mt. Aetna Retreat Center, Hagerstown, Md.",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children and teens",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "recurring": "repeated",
+   "count": 5,
+   "dates": [
+    "2027-06-27",
+    "2027-07-04",
+    "2027-07-11",
+    "2027-07-18",
+    "2027-07-25"
+   ],
+   "lastDate": "2027-07-25",
+   "ranges": [
+    "2027-06-27/2027-07-04",
+    "2027-07-04/2027-07-11",
+    "2027-07-11/2027-07-18",
+    "2027-07-18/2027-07-25",
+    "2027-07-25/2027-08-01"
+   ],
+   "parts": [
+    {
+     "start": "2027-06-27",
+     "end": "2027-07-04",
+     "title": "Summer Camp - Week #1"
+    },
+    {
+     "start": "2027-07-04",
+     "end": "2027-07-11",
+     "title": "Summer Camp - Week #2"
+    },
+    {
+     "start": "2027-07-11",
+     "end": "2027-07-18",
+     "title": "Summer Camp - Week #3"
+    },
+    {
+     "start": "2027-07-18",
+     "end": "2027-07-25",
+     "title": "Summer Camp - Week #4"
+    },
+    {
+     "start": "2027-07-25",
+     "end": "2027-08-01",
+     "title": "Summer Camp - Week #"
+    }
+   ],
+   "tentative": true,
+   "note": "weeks run Sunday to Sunday; the fifth is titled \"Summer Camp - Week #\" in the feed; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Church Communication Directors Training",
+   "start": "2027-07-11",
+   "end": "2027-07-11",
+   "place": null,
+   "category": "other",
+   "category2": null,
+   "audience": "church communication directors",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Columbia Union Principals Bootcamp",
+   "start": "2027-07-12",
+   "end": "2027-07-15",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "principals",
+   "level": "union",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "K–12 Teachers Encounter Bible Training (union)",
+   "start": "2027-07-26",
+   "end": "2027-07-28",
+   "place": null,
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "teachers",
+   "level": "union",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Columbia Union Pathfinder Camporee \"UNSHAKABLE 2027\"",
+   "start": "2027-08-04",
+   "end": "2027-08-08",
+   "place": "Summit Bechtel Reserve, Glen Jean, W.Va.",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "union",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Children's, Youth & Young Adult coordinators' retreat",
+   "start": "2027-08-06",
+   "end": "2027-08-08",
+   "place": "Mt Aetna Retreat Center, Hagerstown, Md.",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "area coordinators",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "datePrecision": "feed title says \"Date TBD\"",
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Spanish Men's Retreat",
+   "start": "2027-08-13",
+   "end": "2027-08-15",
+   "place": null,
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "Hispanic men",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "datePrecision": "feed title says \"(TBD)\"",
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "End It Now (abuse-prevention emphasis)",
+   "start": "2027-08-21",
+   "end": "2027-08-21",
+   "place": null,
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "churches",
+   "level": "observance",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "levelDetail": "NAD emphasis day on the conference calendar"
+  },
+  {
+   "title": "Youth & Family Day at Hersheypark",
+   "start": "2027-08-22",
+   "end": "2027-08-22",
+   "place": "Hersheypark, Hershey, Pa.",
+   "category": "youth-young-adults",
+   "category2": "family-women-men",
+   "audience": "youth and families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Eastern Shore Convocation",
+   "start": "2027-08-27",
+   "end": "2027-08-28",
+   "place": null,
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "Eastern Shore members",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Children's & Youth Leaders Convention",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Mt Aetna Retreat Center, Hagerstown, Md.",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children’s, youth and YA leaders",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "SALT: Spiritual Academy Leadership Training (union)",
+   "start": "2027-09-16",
+   "end": "2027-09-19",
+   "place": null,
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy student leaders",
+   "level": "union",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Spanish Couples' Retreat",
+   "start": "2027-09-17",
+   "end": "2027-09-19",
+   "place": null,
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "Hispanic couples",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "datePrecision": "feed title says \"(TBD)\"",
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "World Pathfinder Day",
+   "start": "2027-09-18",
+   "end": "2027-09-18",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders",
+   "level": "observance",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "start": "2027-09-19",
+   "end": "2027-09-19",
+   "place": "Fort McHenry National Monument and Historic Shrine, Baltimore, Md.",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurers and families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  },
+  {
+   "title": "Pathfinder Camporee",
+   "start": "2027-09-23",
+   "end": "2027-09-26",
+   "place": "Mt Aetna Retreat Center, Hagerstown, Md.",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "calendar",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "tentative": true,
+   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+  }
+ ],
+ "notes": [
+  "All 2027 entries sit under a year-long \"**TENTATIVE CALENDAR**\" banner entry, so every conference record here carries tentative:true.",
+  "News (13 Aug 2026): the 2027 Young Adult Retreat will focus on relationships; the Adventurer Family Weekend theme is chosen but not yet revealed; Generation NOW 2027 (high-school retreat) is 26–28 Feb 2027, before this window.",
+  "The constituency meeting (May 2027) is held every five years; the conference news says the Executive Committee voted the Frederick church as host.",
+  "The feed also confirms the evangelism-subsidy deadline of 15 Nov 2026 (listed in prepDeadlines).",
+  "Left out: committees, boards, councils and advisories (including camp-meeting, constituency organizing and nominating committees, ADCOM weekly), school-calendar dates, holidays and the camp-meeting \"pitch\" (set-up).",
+  "This feed also fills Oct 2026 – Mar 2027, which the first pass left almost empty for Chesapeake (not rebuilt here; see open items)."
+ ]
+}

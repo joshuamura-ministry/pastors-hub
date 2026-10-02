@@ -1,0 +1,364 @@
+{
+ "conf": "Pacific Union Conference",
+ "union": "Pacific Union",
+ "slug": "union-pacific",
+ "site": "https://www.adventistfaith.com",
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarUrls": [
+  "https://www.adventistfaith.com/wp-json/tribe/events/v1/events?start_date=2026-10-01&end_date=2028-12-31",
+  "https://paucedu.adventistfaith.com/tk12-resources/calendars-and-events/",
+  "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+  "https://assets.adventistconnect.org/puceduca/2026/02/19092802/Long-range-School-Calendar-2026-2029.pdf",
+  "https://www.adventistfaith.com/about/evangelism-endowment-fund/"
+ ],
+ "calendarQuality": "D for ministry events (the union events calendar is empty); B for education (a yearly calendar of events and a three-year school calendar)",
+ "furthestPublished": "2029-06",
+ "furthestNote": "The education office's long-range school calendar runs to June 2029. The furthest dated event in the window is the Secondary Student Leadership Conference (23-25 Sep 2027). The furthest non-school item is the fall 2027 Evangelism Endowment deadline (28 Oct 2027). The education calendar also lists the NAD Educators' Convention, 7-10 Aug 2028, Columbus, OH.",
+ "aheadSummary": "Seven items in Apr-Sep 2027, almost all from the education office: Spring Education Council (13-15 Apr, Las Vegas), PUC commencement weekend (11-13 Jun), La Sierra graduation (13 Jun), EXSEED (14-18 Jun), first day of the 2027-28 school year (23 Aug) and the Secondary Student Leadership Conference (23-25 Sep). The one outreach item is the SOULS West spring canvassing blitz (2-24 Apr). The union events calendar is empty, and no union camporee, youth congress, ministers' meeting or union-wide OneVoice27 / All Things New series is dated.",
+ "aheadChecked": [
+  "https://www.adventistfaith.com/wp-json/tribe/events/v1/events?start_date=2026-10-01&end_date=2028-12-31",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027",
+  "https://www.adventistfaith.com/wp-json/wp/v2/pages?search=2027",
+  "https://www.adventistfaith.com/ministries/ministerial-association/",
+  "https://www.adventistfaith.com/ministries/pathfinder-ministry/",
+  "https://www.adventistfaith.com/news/pacific-union-camporee-hundreds-of-pathfinders-give-their-hearts-to-jesus/",
+  "https://azsdayouth.com/pacific-union-pathfinder-camporee/",
+  "https://paucedu.adventistfaith.com/tk12-resources/calendars-and-events/",
+  "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+  "https://assets.adventistconnect.org/puceduca/2026/02/19092802/Long-range-School-Calendar-2026-2029.pdf",
+  "https://acrobat.adobe.com/id/urn:aaid:sc:US:44a1598b-6d2e-4ce3-bc84-092592a1c6a6",
+  "https://events.puc.edu/event/commencement_2027",
+  "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
+  "https://www.adventistfaith.com/ministries/growing-young-leaders/",
+  "https://soulswest.org/",
+  "https://soulswest.org/s/CALENDAR-2026-2027-revised-8-2-2026.pdf",
+  "https://soulswest.org/invite",
+  "https://www.adventistfaith.com/ministries/literature-ministries/",
+  "https://youthrush.adventistfaith.org/"
+ ],
+ "events": [
+  {
+   "title": "SOULS West spring canvassing blitz (student literature evangelism)",
+   "start": "2027-04-02",
+   "end": "2027-04-24",
+   "place": "host churches and communities",
+   "category": "evangelism-outreach",
+   "category2": "youth-young-adults",
+   "audience": "SOULS West students and host churches",
+   "url": "https://soulswest.org/s/CALENDAR-2026-2027-revised-8-2-2026.pdf",
+   "urls": [
+    "https://soulswest.org/s/CALENDAR-2026-2027-revised-8-2-2026.pdf",
+    "https://soulswest.org/invite"
+   ],
+   "source": "school calendar 2026-2027 (PDF, revised 2 Aug 2026)",
+   "when": "upcoming",
+   "level": "institution",
+   "note": "SOULS West (Prescott, AZ) is the union-backed outreach leadership school; churches can ask for a student team through soulswest.org/invite. The page gives no request deadline."
+  },
+  {
+   "title": "Spring Education Council",
+   "start": "2027-04-13",
+   "end": "2027-04-15",
+   "place": "Las Vegas, NV",
+   "category": "education",
+   "category2": null,
+   "audience": "principals and education leaders",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF, updated 11 Feb 2026)",
+   "when": "upcoming",
+   "level": "union",
+   "note": "Preceded by an Educational Leadership Council retreat and meeting on 12 Apr. The SCC school calendar shows 13-14 Apr."
+  },
+  {
+   "title": "Pacific Union College commencement weekend",
+   "start": "2027-06-11",
+   "end": "2027-06-13",
+   "place": "Maxwell Commons, Angwin, CA",
+   "category": "education",
+   "category2": null,
+   "audience": "graduates and families",
+   "url": "https://events.puc.edu/event/commencement_2027",
+   "urls": [
+    "https://events.puc.edu/event/commencement_2027",
+    "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf"
+   ],
+   "source": "college events calendar",
+   "when": "upcoming",
+   "level": "institution"
+  },
+  {
+   "title": "La Sierra University graduation",
+   "start": "2027-06-13",
+   "end": "2027-06-13",
+   "place": "Riverside, CA",
+   "category": "education",
+   "category2": null,
+   "audience": "graduates and families",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "urls": [
+    "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+    "https://assets.adventistconnect.org/puceduca/2026/02/19092802/Long-range-School-Calendar-2026-2029.pdf"
+   ],
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "when": "upcoming",
+   "level": "institution"
+  },
+  {
+   "title": "EXSEED Workshop (teacher training)",
+   "start": "2027-06-14",
+   "end": "2027-06-18",
+   "place": "Loma Linda, CA",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "when": "upcoming",
+   "level": "union"
+  },
+  {
+   "title": "2027-28 school year begins (first day of school)",
+   "start": "2027-08-23",
+   "end": "2027-08-23",
+   "place": "Pacific Union schools",
+   "category": "education",
+   "category2": null,
+   "audience": "schools, students and families",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092802/Long-range-School-Calendar-2026-2029.pdf",
+   "source": "union long-range school calendar 2026-2029 (PDF)",
+   "when": "upcoming",
+   "level": "union",
+   "note": "Teachers report on 9 Aug 2027. Conferences may set their own first day (SCC used 17 Aug in 2026, a week before the union date)."
+  },
+  {
+   "title": "Secondary Student Leadership Conference",
+   "start": "2027-09-23",
+   "end": "2027-09-25",
+   "place": "not stated for 2027 (2026: Leoni Meadows)",
+   "category": "youth-young-adults",
+   "category2": "education",
+   "audience": "academy student leaders",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092802/Long-range-School-Calendar-2026-2029.pdf",
+   "source": "union long-range school calendar 2026-2029 (PDF)",
+   "when": "upcoming",
+   "level": "union"
+  }
+ ],
+ "stats": {
+  "items": 7,
+  "occurrences": 7,
+  "occurrencesInWindow": 7,
+  "conferenceLevelItems": 0,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "4 of 6",
+  "byCategory": {
+   "education": 5,
+   "evangelism-outreach": 1,
+   "youth-young-adults": 1
+  },
+  "byCategoryIncludingSecond": {
+   "education": 6,
+   "youth-young-adults": 2,
+   "evangelism-outreach": 1
+  },
+  "occurrencesByCategory": {
+   "education": 5,
+   "evangelism-outreach": 1,
+   "youth-young-adults": 1
+  },
+  "byLevel": {
+   "union": 4,
+   "institution": 3
+  },
+  "bySourceType": {
+   "calendar/event pages": 7
+  }
+ },
+ "prepDeadlines": [
+  {
+   "level": "union",
+   "title": "Evangelism Endowment Fund, fall 2026 round: applications due at the union (from conferences only)",
+   "date": "2026-10-22",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
+   "note": "The church deadline to the local conference (24 Sep 2026) has passed."
+  },
+  {
+   "level": "union",
+   "title": "Evangelism Endowment Fund, spring 2027 round: applications due at the local conference",
+   "date": "2027-01-28",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/"
+  },
+  {
+   "level": "union",
+   "title": "Evangelism Endowment Fund, spring 2027 round: due at the union",
+   "date": "2027-02-25",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/"
+  },
+  {
+   "level": "union",
+   "title": "Growing Young Leaders (GYL) scholarship: applications due through the local conference (graduating 12th graders)",
+   "date": "2027-04-15",
+   "url": "https://www.adventistfaith.com/ministries/growing-young-leaders/",
+   "note": "Page says \"April 15 deadline\" each year; 2027 is the next one."
+  },
+  {
+   "level": "union",
+   "title": "Evangelism Endowment Fund, fall 2027 round: applications due at the local conference",
+   "date": "2027-10-07",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
+   "note": "Just after the 12-month window; listed because churches prepare for it during the window."
+  },
+  {
+   "level": "union",
+   "title": "Evangelism Endowment Fund, fall 2027 round: due at the union",
+   "date": "2027-10-28",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/"
+  }
+ ],
+ "earlierUnionEvents": [
+  {
+   "category2": null,
+   "when": "upcoming",
+   "title": "Pacific Union Young Adult Weekend",
+   "start": "2026-10-16",
+   "end": "2026-10-18",
+   "place": "",
+   "category": "youth-young-adults",
+   "audience": "young adults",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf",
+   "source": "calendar (Arizona 2026 year calendar PDF)",
+   "level": "union"
+  },
+  {
+   "category2": "multilingual",
+   "when": "upcoming",
+   "title": "FESJA Congress, union level (Hispanic youth)",
+   "start": "2026-10-16",
+   "end": "2026-10-18",
+   "place": "",
+   "category": "youth-young-adults",
+   "audience": "Hispanic youth",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf",
+   "source": "calendar (Arizona 2026 year calendar PDF)",
+   "level": "union"
+  },
+  {
+   "category2": null,
+   "when": "upcoming",
+   "title": "ECE Directors' Workshop",
+   "start": "2026-11-10",
+   "end": "2026-11-11",
+   "place": "Ontario, CA",
+   "category": "education",
+   "audience": "early-childhood directors",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "level": "union"
+  },
+  {
+   "category2": null,
+   "when": "upcoming",
+   "title": "Fall Education Council",
+   "start": "2026-11-10",
+   "end": "2026-11-12",
+   "place": "Ontario, CA",
+   "category": "education",
+   "audience": "principals and education leaders",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "level": "union"
+  },
+  {
+   "category2": null,
+   "when": "upcoming",
+   "title": "Secondary subject-area in-service: Math",
+   "start": "2027-01-25",
+   "end": "2027-01-26",
+   "place": "Westlake Village, CA",
+   "category": "education",
+   "audience": "secondary math teachers",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "level": "union"
+  },
+  {
+   "category2": null,
+   "when": "upcoming",
+   "title": "Higher Ed/Secondary subject-area workshop: English (two regional sessions)",
+   "start": "2027-02-09",
+   "end": "2027-02-18",
+   "place": "Riverside, CA (AZ, NU, SECC, SCC); Angwin, CA (CCC, HI, NCC)",
+   "category": "education",
+   "audience": "English teachers",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "level": "union",
+   "recurring": true,
+   "count": 2,
+   "dates": [
+    "2027-02-09",
+    "2027-02-18"
+   ]
+  },
+  {
+   "category2": "youth-young-adults",
+   "when": "upcoming",
+   "title": "FLL Robotics Tournament (union)",
+   "start": "2027-03-09",
+   "end": "2027-03-09",
+   "place": "Loma Linda, CA",
+   "category": "education",
+   "audience": "student robotics teams",
+   "url": "https://assets.adventistconnect.org/puceduca/2026/02/19092800/2026-2027-Calendar-of-Events-updated-2-11-26.pdf",
+   "source": "union education calendar of events 2026-2027 (PDF)",
+   "level": "union"
+  },
+  {
+   "category2": "discipleship-spiritual",
+   "when": "upcoming",
+   "title": "Pathfinder Bible Experience, union level",
+   "start": "2027-03-13",
+   "end": "2027-03-13",
+   "place": "Las Vegas, NV",
+   "category": "pathfinders",
+   "audience": "PBE teams",
+   "url": "https://www.cccpathfinders.org/events",
+   "source": "Pathfinder events page (CCC)",
+   "level": "union"
+  }
+ ],
+ "earlierUnionEventsNote": "Union-level items dated Oct 2026-Mar 2027, given so the year-ahead \"your union\" lane is complete. Not counted in aheadEvents. Some may already appear as level \"union\" items inside the v50 conference files; de-duplicate by title and date.",
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Pacific Union Pathfinder Camporee",
+   "lastKnown": "first weekend of October 2022, Lake Skinner (Temecula, CA)",
+   "url": "https://www.adventistfaith.com/news/pacific-union-camporee-hundreds-of-pathfinders-give-their-hearts-to-jesus/",
+   "note": "Recorder: \"Camporee happens every five years\" (2017, 2022), so 2027 is the expected year, most likely after this window (October). No 2027 date, place or registration is published on the union, conference Pathfinder or AZ youth pages."
+  },
+  {
+   "title": "Pacific Union pastors' meeting and pastor/family retreat",
+   "lastKnown": "2026-08-16 to 2026-08-19 (Palm Springs), alongside the union constituency session",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf"
+  },
+  {
+   "title": "YouthRush 2027 (summer student literature evangelism)",
+   "lastKnown": "summer 2026",
+   "url": "https://www.adventistfaith.com/ministries/literature-ministries/",
+   "note": "youthrush.adventistfaith.org could not be opened (TLS error), so its 2027 dates, if any, were not seen."
+  },
+  {
+   "title": "Union education calendar of events 2027-2028",
+   "lastKnown": "page says \"Coming soon!\"",
+   "url": "https://paucedu.adventistfaith.com/tk12-resources/calendars-and-events/"
+  }
+ ],
+ "notes": [
+  "adventistfaith.com events API: 0 events from Oct 2026 to Dec 2028. Union news (frame_news) searched for 2027, camporee, camp meeting, convocation, All Things New, OneVoice, pastors' meeting, evangelism training, youth congress: the only dated 2027 ministry event found is the Nevada-Utah Regional Convocation (4-6 Jun 2027), filed under nevada-utah.",
+  "The \"Calendar of Events 2026-2027 - Revised August 2026\" opens only in an Adobe cloud viewer that could not be read; the February 2026 PDF from the public media library was used.",
+  "Left out (rule): NAD Education Advisory Committee (17-19 May), NAD Union Directors' Council (19-20 May), NAD summer curriculum committees (14-25 Jun), Educational Leadership/Superintendents' Councils, MAP test windows, holidays.",
+  "NAD FLL Robotics Championship (2 May 2027, Orlando) is on the union calendar but is a division event; it is filed under southern-california, which lists it too.",
+  "SOULS West classes, closed banquet weekend and school shutdown (May 2027) are internal and left out."
+ ]
+}

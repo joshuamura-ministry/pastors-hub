@@ -1,0 +1,63 @@
+{
+ "conf": "Oklahoma",
+ "slug": "oklahoma",
+ "union": "Southwestern",
+ "site": "https://www.okadventist.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30"
+ },
+ "furthestPublished": "2029-04",
+ "aheadSummary": "Almost nothing published. Oklahoma has no calendar. The only Apr-Sep 2027 date is camp meeting, Jul 9-17, 2027, at Wewoka Woods. The furthest date anywhere is the next constituency session, \"April 2029\".",
+ "counts": {
+  "events": 1,
+  "meetings": 1,
+  "conferenceRun": 1
+ },
+ "calendarUrls": [
+  "https://www.okadventist.org/campmeeting2026",
+  "https://www.okadventist.org/blog",
+  "https://www.okadventist.org/constituencysession"
+ ],
+ "events": [
+  {
+   "title": "Oklahoma Conference Camp Meeting 2027",
+   "start": "2027-07-09",
+   "end": "2027-07-17",
+   "place": "Wewoka Woods Adventist Center, Wewoka, OK",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "all ages",
+   "level": "conference",
+   "url": "https://www.okadventist.org/campmeeting2026",
+   "source": "camp-meeting page",
+   "note": "The 2026 camp-meeting page says camp meeting next year will be July 9-17, 2027. Online pre-registration for 2027 tent, RV and cabin sites opened Jul 15, 2026."
+  }
+ ],
+ "notes": [
+  "No conference calendar exists. All 67 pages in the site map were checked for 2027-2029 dates: only the camp-meeting page (Jul 9-17, 2027) and the constituency page (72nd session, April 2029, Wewoka Woods) give future dates.",
+  "Event pages (Wix event site map) end in 2025. The blog feed (20 newest posts, Sep 8-28, 2026) has no 2027 dates.",
+  "Not published yet for 2027: Hispanic camp meeting (campamento), Zomi camp meeting, summer camp, Pathfinder camporee, prayer retreat, Oklahoma Reconnect trainings.",
+  "Record (union magazine): no Apr-Sep 2027 dates in the 2026 Oklahoma stories online or in the Sep/Oct 2026 print issue.",
+  "The April 2029 constituency session is a business session and lies outside the window; it is not listed as an event."
+ ],
+ "aheadChecked": [
+  "https://www.okadventist.org/campmeeting2026",
+  "https://www.okadventist.org/campmeeting",
+  "https://www.okadventist.org/campmeeting2027 (404)",
+  "https://www.okadventist.org/events (not found page)",
+  "https://www.okadventist.org/sitemap.xml",
+  "https://www.okadventist.org/pages-sitemap.xml (67 pages read)",
+  "https://www.okadventist.org/event-pages-sitemap.xml",
+  "https://www.okadventist.org/blog-feed.xml (20 posts read)",
+  "https://www.okadventist.org/constituencysession",
+  "https://www.okadventist.org/ministeriohispano",
+  "https://www.okadventist.org/summercamp",
+  "https://www.okadventist.org/wewokawoods",
+  "https://www.swurecord.org/conference/oklahoma",
+  "https://issuu.com/swurecord/docs/september_october_2026",
+  "https://www.nadadventist.org/camp-meeting/"
+ ]
+}

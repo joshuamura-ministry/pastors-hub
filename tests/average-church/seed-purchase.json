@@ -1,0 +1,1907 @@
+{
+ "_about": "Terrain AVERAGE CHURCH fixture (PURCHASE, v56): seed-followup plus one project or purchase, a sound board and a camera for the livestream (uChurch().caseBuys: three options at sample prices from Store A/B/C (sample), the funding plan of $3,400 with a special offering in Sabbath worship on Sabbath 7 Nov 2026, the dates, the path Finance committee > Church board, and the church's business-meeting rule of $10,000 (sample)). Made by tests/average-church/make-seed-purchase.mjs (never by hand).",
+ "terrain-reg": {
+  "name": "Sam Sample",
+  "email": "pastor@example.org",
+  "church": "Sampleton SDA (SAMPLE)",
+  "conf": "Pennsylvania",
+  "role": "pastor",
+  "synced": true,
+  "tok": "r1.SampleOnly00.lx2abc.AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+ },
+ "terrain-churches-v1": {
+  "active": "sample-sampleton-sda",
+  "churches": {
+   "sample-sampleton-sda": {
+    "id": "sample-sampleton-sda",
+    "name": "Sampleton SDA (SAMPLE)",
+    "address": "100 SAMPLE RD, SAMPLETON, PA, 18999",
+    "capacity": {
+     "confirmed": true,
+     "demo": true,
+     "members": 55,
+     "volunteers": 12,
+     "leaders": 3,
+     "hours": 160,
+     "busyVolunteers": 0,
+     "busyLeaders": 0,
+     "busyHours": 0,
+     "startupBudget": 1500,
+     "monthlyBudget": 150,
+     "pendingBudget": 0,
+     "languages": "Spanish — one fluent member",
+     "slots": [
+      "Tue evening",
+      "Wed evening",
+      "Thu evening",
+      "Sat afternoon"
+     ],
+     "skillCounts": {
+      "lead": 3,
+      "medical": 1,
+      "teach": 2,
+      "kids": 2,
+      "cook": 3,
+      "music": 2,
+      "lang": 1,
+      "trade": 2,
+      "vehicle": 2,
+      "weekday": 3,
+      "admin": 1,
+      "av": 1,
+      "support": 0
+     },
+     "facilities": {
+      "kitchen": {
+       "available": true,
+       "capacity": 60,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      },
+      "classrooms": {
+       "available": true,
+       "capacity": 24,
+       "partner": "",
+       "slots": [
+        "Tue evening",
+        "Wed evening",
+        "Thu evening",
+        "Sat afternoon"
+       ]
+      }
+     },
+     "who": {
+      "mixed": true,
+      "older": true
+     },
+     "commitments": "Sabbath School and the divine service; Wednesday prayer meeting; a fellowship lunch once a month. The same few people carry most of it.",
+     "membership": 80,
+     "adults": 46
+    },
+    "selected": [
+     "health-expo",
+     "backpack-giveaway",
+     "four-nights"
+    ],
+    "overrides": {},
+    "members": [],
+    "linked": [],
+    "drafts": [],
+    "share": {
+     "church": "Sampleton SDA (SAMPLE)"
+    },
+    "plan": {
+     "church": "Sampleton SDA (SAMPLE)",
+     "members": 55,
+     "leaders": 3,
+     "workers": 12,
+     "nights": 12,
+     "perweek": 4,
+     "date": "2027-02-26",
+     "kind": "prophecy",
+     "seats": 120,
+     "file": 18,
+     "budget": 6000,
+     "built": 1790683200000,
+     "v": 3
+    },
+    "confAsk": {
+     "cost": true,
+     "worker": false,
+     "speaker": false,
+     "training": true,
+     "materials": false,
+     "counsel": true,
+     "total": 6000,
+     "share": 3000
+    },
+    "caseApproval": {
+     "v": 1,
+     "path": [
+      "team",
+      "finance",
+      "board"
+     ],
+     "order": "motion"
+    },
+    "memberReviews": {
+     "sample-m01": {
+      "name": "Ada (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "teach",
+       "admin"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m01"
+     },
+     "sample-m04": {
+      "name": "Dov (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "teach"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m04"
+     },
+     "sample-m07": {
+      "name": "Greer (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": true,
+      "skills": [
+       "lead",
+       "vehicle"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m07"
+     },
+     "sample-m10": {
+      "name": "Jory (sample)",
+      "hours": 8,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "cook"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m10"
+     },
+     "sample-m13": {
+      "name": "Milo (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "cook",
+       "weekday"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m13"
+     },
+     "sample-m16": {
+      "name": "Pia (sample)",
+      "hours": 8,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "kids",
+       "teach"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m16"
+     },
+     "sample-m19": {
+      "name": "Sol (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "music"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m19"
+     },
+     "sample-m22": {
+      "name": "Vale (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "trade",
+       "vehicle"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m22"
+     },
+     "sample-m25": {
+      "name": "Yara (sample)",
+      "hours": 8,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "cook",
+       "weekday"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m25"
+     },
+     "sample-m28": {
+      "name": "Bree (sample)",
+      "hours": 12,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "kids",
+       "music"
+      ],
+      "slots": [
+       "Tue evening",
+       "Wed evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m28"
+     },
+     "sample-m31": {
+      "name": "Edda (sample)",
+      "hours": 16,
+      "languages": "",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "medical",
+       "weekday"
+      ],
+      "slots": [
+       "Tue evening",
+       "Thu evening",
+       "Sat afternoon"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m31"
+     },
+     "sample-m34": {
+      "name": "Hale (sample)",
+      "hours": 12,
+      "languages": "Spanish (fluent)",
+      "willing": true,
+      "leader": false,
+      "skills": [
+       "av",
+       "lang"
+      ],
+      "slots": [
+       "Wed evening",
+       "Thu evening"
+      ],
+      "experience": "",
+      "confirmed": true,
+      "id": "sample-m34"
+     }
+    },
+    "followUp": {
+     "health-expo": {
+      "v": 1,
+      "next": {
+       "id": "cooking-school",
+       "n": "",
+       "ne": ""
+      },
+      "at": "2026-09-08"
+     }
+    },
+    "connect": {
+     "cards": {
+      "health-expo": {
+       "lang": "both",
+       "kind": "health",
+       "look": "health",
+       "cadence": "event",
+       "church": "Sampleton SDA (SAMPLE)",
+       "title": {
+        "en": "Full health expo",
+        "es": "Feria de salud completa"
+       },
+       "day": "2026-09-20",
+       "parent": false,
+       "note": true,
+       "nextWhen": {
+        "en": "Tuesday evenings, from October 13",
+        "es": "Los martes por la noche, desde el 13 de octubre"
+       },
+       "partner": null,
+       "opts": [
+        {
+         "k": "next",
+         "en": "Tell me about the plant-based cooking school",
+         "es": "Quiero saber más de la escuela de cocina a base de plantas",
+         "contact": true
+        },
+        {
+         "k": "recipes",
+         "en": "Send me the recipe booklet",
+         "es": "Envíenme el recetario",
+         "contact": true
+        },
+        {
+         "k": "results",
+         "en": "Send me my screening results",
+         "es": "Envíenme los resultados de mis pruebas",
+         "contact": true
+        },
+        {
+         "k": "prayer",
+         "en": "I’d like prayer",
+         "es": "Me gustaría que oren por mí",
+         "contact": false
+        },
+        {
+         "k": "visit",
+         "en": "I’d like a visit",
+         "es": "Me gustaría recibir una visita",
+         "contact": true
+        },
+        {
+         "k": "nothing",
+         "en": "Nothing more, thank you",
+         "es": "Nada más, gracias",
+         "contact": false
+        },
+        {
+         "k": "news",
+         "en": "Tell me about other events",
+         "es": "Avísenme de otras actividades",
+         "contact": true,
+         "off": true
+        }
+       ],
+       "id": "HFSAMPXE23",
+       "key": "sample-key-health-fair-made-up-not-real-000",
+       "v": 1,
+       "made": 1789063200000,
+       "format": "half",
+       "printLang": "both",
+       "closed": false,
+       "lastPull": 1790809200000
+      },
+      "backpack-giveaway": {
+       "lang": "en",
+       "kind": "family",
+       "look": "family",
+       "cadence": "event",
+       "church": "Sampleton SDA (SAMPLE)",
+       "title": {
+        "en": "Back-to-school backpack giveaway",
+        "es": "Entrega de mochilas para el regreso a clases"
+       },
+       "day": "2026-08-23",
+       "parent": true,
+       "note": true,
+       "nextWhen": {
+        "en": "",
+        "es": ""
+       },
+       "partner": null,
+       "opts": [
+        {
+         "k": "next",
+         "en": "Tell me about the weekly homework club",
+         "es": "Quiero saber más del club semanal de tareas escolares",
+         "contact": true
+        },
+        {
+         "k": "events",
+         "en": "Tell me about family events",
+         "es": "Avísenme de las actividades para familias",
+         "contact": true
+        },
+        {
+         "k": "prayer",
+         "en": "I’d like prayer",
+         "es": "Me gustaría que oren por mí",
+         "contact": false
+        },
+        {
+         "k": "visit",
+         "en": "I’d like a visit",
+         "es": "Me gustaría recibir una visita",
+         "contact": true
+        },
+        {
+         "k": "nothing",
+         "en": "Nothing more, thank you",
+         "es": "Nada más, gracias",
+         "contact": false
+        },
+        {
+         "k": "news",
+         "en": "Tell me about other events",
+         "es": "Avísenme de otras actividades",
+         "contact": true,
+         "off": true
+        }
+       ],
+       "id": "BTSAMPXE23",
+       "key": "sample-key-back-to-school-made-up-not-real-",
+       "v": 1,
+       "made": 1786557600000,
+       "format": "post",
+       "printLang": "en",
+       "closed": false,
+       "lastPull": 1790809200000
+      },
+      "four-nights": {
+       "lang": "es",
+       "kind": "bible",
+       "look": "prayer",
+       "cadence": "series",
+       "church": "Sampleton SDA (SAMPLE)",
+       "title": {
+        "en": "Four nights, not four weeks",
+        "es": "Cuatro noches, no cuatro semanas"
+       },
+       "day": "2026-11-01",
+       "parent": false,
+       "note": true,
+       "nextWhen": {
+        "en": "",
+        "es": ""
+       },
+       "partner": null,
+       "opts": [
+        {
+         "k": "next",
+         "en": "Tell me about “One study, at one kitchen table”",
+         "es": "Quiero saber más sobre «Un estudio, en la mesa de una cocina»",
+         "contact": true
+        },
+        {
+         "k": "study",
+         "en": "I’d like to study the Bible",
+         "es": "Me gustaría estudiar la Biblia",
+         "contact": true
+        },
+        {
+         "k": "remind",
+         "en": "Remind me before each session",
+         "es": "Recuérdenme antes de cada sesión",
+         "contact": true
+        },
+        {
+         "k": "prayer",
+         "en": "I’d like prayer",
+         "es": "Me gustaría que oren por mí",
+         "contact": false
+        },
+        {
+         "k": "visit",
+         "en": "I’d like a visit",
+         "es": "Me gustaría recibir una visita",
+         "contact": true
+        },
+        {
+         "k": "nothing",
+         "en": "Nothing more, thank you",
+         "es": "Nada más, gracias",
+         "contact": false
+        },
+        {
+         "k": "series",
+         "en": "Tell me when the next series starts",
+         "es": "Avísenme cuándo empieza la próxima serie",
+         "contact": true,
+         "off": true
+        },
+        {
+         "k": "news",
+         "en": "Tell me about other events",
+         "es": "Avísenme de otras actividades",
+         "contact": true,
+         "off": true
+        }
+       ],
+       "id": "FNSAMPXE23",
+       "key": "sample-key-four-nights-made-up-not-real-000",
+       "v": 1,
+       "made": 1790618400000,
+       "format": "half",
+       "printLang": "es",
+       "closed": false,
+       "lastPull": 1790809200000
+      }
+     },
+     "past": [],
+     "gone": {},
+     "people": {
+      "HFSAMPXE23": [
+       {
+        "id": "hf-sample-01",
+        "src": "phone",
+        "ts": 1789913100000,
+        "lang": "es",
+        "name": "Anita (sample)",
+        "picks": [
+         "next",
+         "recipes"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0101"
+        },
+        "consent": 1789913100000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821449100000,
+        "fu": {
+         "thanks": 1789999500000,
+         "invite": 1790258700000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-02",
+        "src": "phone",
+        "ts": 1789916820000,
+        "lang": "en",
+        "name": "Ben (sample)",
+        "picks": [
+         "next",
+         "results"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "ben.sample@example.org"
+        },
+        "consent": 1789916820000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821452820000,
+        "fu": {
+         "thanks": 1790003220000,
+         "invite": 1790262420000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-03",
+        "src": "phone",
+        "ts": 1789920540000,
+        "lang": "es",
+        "name": "Carmen (sample)",
+        "picks": [
+         "next",
+         "prayer"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0103"
+        },
+        "consent": 1789920540000,
+        "safe": null,
+        "note": "Por mi mamá, que está enferma.",
+        "cv": 1,
+        "keep": 1821456540000,
+        "fu": {
+         "thanks": 1790006940000,
+         "invite": 1790266140000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-04",
+        "src": "phone",
+        "ts": 1789924260000,
+        "lang": "en",
+        "name": "Dmitri (sample)",
+        "picks": [
+         "next"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0104"
+        },
+        "consent": 1789924260000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821460260000,
+        "fu": {
+         "thanks": 1790010660000,
+         "invite": 1790269860000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-05",
+        "src": "phone",
+        "ts": 1789927980000,
+        "lang": "en",
+        "name": "Edith (sample)",
+        "picks": [
+         "next",
+         "recipes",
+         "results"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "edith.sample@example.org"
+        },
+        "consent": 1789927980000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821463980000,
+        "fu": {
+         "thanks": 1790014380000,
+         "invite": 1790273580000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-06",
+        "src": "phone",
+        "ts": 1789913700000,
+        "lang": "en",
+        "name": "Frank (sample)",
+        "picks": [
+         "next",
+         "visit"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0106"
+        },
+        "consent": 1789913700000,
+        "safe": null,
+        "note": "Evenings are best.",
+        "cv": 1,
+        "keep": 1821449700000,
+        "fu": {
+         "thanks": 1790000100000,
+         "invite": 1790259300000,
+         "visit": 1790345700000,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-07",
+        "src": "phone",
+        "ts": 1789917420000,
+        "lang": "es",
+        "name": "Greta (sample)",
+        "picks": [
+         "next",
+         "prayer"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0107"
+        },
+        "consent": 1789917420000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821453420000,
+        "fu": {
+         "thanks": 1790003820000,
+         "invite": 1790263020000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-08",
+        "src": "phone",
+        "ts": 1789921140000,
+        "lang": "en",
+        "name": "Hector (sample)",
+        "picks": [
+         "next",
+         "recipes"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "hector.sample@example.org"
+        },
+        "consent": 1789921140000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821457140000,
+        "fu": {
+         "thanks": 1790007540000,
+         "invite": 1790266740000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-09",
+        "src": "phone",
+        "ts": 1789924860000,
+        "lang": "en",
+        "name": "Irene (sample)",
+        "picks": [
+         "next"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0109"
+        },
+        "consent": 1789924860000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821460860000,
+        "fu": {
+         "thanks": 1790011260000,
+         "invite": 1790270460000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "hf-sample-10",
+        "src": "phone",
+        "ts": 1789928580000,
+        "lang": "en",
+        "name": "Jamal (sample)",
+        "picks": [
+         "next",
+         "results"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "jamal.sample@example.org"
+        },
+        "consent": 1789928580000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821464580000,
+        "fu": {
+         "thanks": 1790014980000,
+         "invite": 1790274180000,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-11",
+        "src": "phone",
+        "ts": 1789914300000,
+        "lang": "en",
+        "name": "Keisha (sample)",
+        "picks": [
+         "next",
+         "prayer"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0111"
+        },
+        "consent": 1789914300000,
+        "safe": null,
+        "note": "For my job search.",
+        "cv": 1,
+        "keep": 1821450300000,
+        "fu": {
+         "thanks": 1790000700000,
+         "invite": 1790259900000,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-12",
+        "src": "phone",
+        "ts": 1789918020000,
+        "lang": "es",
+        "name": "Luis (sample)",
+        "picks": [
+         "next"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0112"
+        },
+        "consent": 1789918020000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821454020000,
+        "fu": {
+         "thanks": 1790004420000,
+         "invite": 1790263620000,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-13",
+        "src": "phone",
+        "ts": 1789921740000,
+        "lang": "en",
+        "name": "Mirela (sample)",
+        "picks": [
+         "recipes",
+         "results"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "mirela.sample@example.org"
+        },
+        "consent": 1789921740000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821457740000,
+        "fu": {
+         "thanks": 1790008140000,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-14",
+        "src": "phone",
+        "ts": 1789925460000,
+        "lang": "en",
+        "name": "Nadia (sample)",
+        "picks": [
+         "results",
+         "visit"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0114"
+        },
+        "consent": 1789925460000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821461460000,
+        "fu": {
+         "thanks": 1790011860000,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-15",
+        "src": "phone",
+        "ts": 1789929180000,
+        "lang": "en",
+        "name": "Omar (sample)",
+        "picks": [
+         "recipes"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "omar.sample@example.org"
+        },
+        "consent": 1789929180000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821465180000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-16",
+        "src": "phone",
+        "ts": 1789914900000,
+        "lang": "en",
+        "name": "Paula (sample)",
+        "picks": [
+         "prayer"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "For my son.",
+        "cv": 1,
+        "keep": 1821450900000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-17",
+        "src": "phone",
+        "ts": 1789918620000,
+        "lang": "es",
+        "name": "Rosa (sample)",
+        "picks": [
+         "prayer"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821454620000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-18",
+        "src": "phone",
+        "ts": 1789922340000,
+        "lang": "en",
+        "name": "Stefan (sample)",
+        "picks": [
+         "nothing"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821458340000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-19",
+        "src": "phone",
+        "ts": 1789926060000,
+        "lang": "en",
+        "name": "Teresa (sample)",
+        "picks": [],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821462060000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-20",
+        "src": "phone",
+        "ts": 1789929780000,
+        "lang": "en",
+        "name": "Victor (sample)",
+        "picks": [
+         "prayer"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821465780000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-21",
+        "src": "phone",
+        "ts": 1789915500000,
+        "lang": "en",
+        "name": "Wanda (sample)",
+        "picks": [
+         "nothing"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821451500000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-22",
+        "src": "phone",
+        "ts": 1789919220000,
+        "lang": "en",
+        "name": "Yusuf (sample)",
+        "picks": [],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821455220000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "hf-sample-23",
+        "src": "phone",
+        "ts": 1789922940000,
+        "lang": "en",
+        "name": "Zoe (sample)",
+        "picks": [
+         "prayer"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1821458940000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       }
+      ],
+      "BTSAMPXE23": [
+       {
+        "id": "bt-sample-01",
+        "src": "phone",
+        "ts": 1787493900000,
+        "lang": "es",
+        "name": "Adela (sample)",
+        "picks": [
+         "next",
+         "events"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0121"
+        },
+        "consent": 1787493900000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819029900000,
+        "fu": {
+         "thanks": 1787580300000,
+         "invite": 1787839500000,
+         "visit": 0,
+         "next": 1790724600000
+        }
+       },
+       {
+        "id": "bt-sample-02",
+        "src": "phone",
+        "ts": 1787497620000,
+        "lang": "en",
+        "name": "Brian (sample)",
+        "picks": [
+         "next"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "brian.sample@example.org"
+        },
+        "consent": 1787497620000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819033620000,
+        "fu": {
+         "thanks": 1787584020000,
+         "invite": 1787843220000,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "bt-sample-03",
+        "src": "phone",
+        "ts": 1787501340000,
+        "lang": "es",
+        "name": "Celia (sample)",
+        "picks": [
+         "events",
+         "prayer"
+        ],
+        "reach": {
+         "t": "phone",
+         "v": "(215) 555-0123"
+        },
+        "consent": 1787501340000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819037340000,
+        "fu": {
+         "thanks": 1787587740000,
+         "invite": 1787846940000,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "bt-sample-04",
+        "src": "phone",
+        "ts": 1787505060000,
+        "lang": "en",
+        "name": "Derek (sample)",
+        "picks": [
+         "prayer"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819041060000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "bt-sample-05",
+        "src": "phone",
+        "ts": 1787508780000,
+        "lang": "en",
+        "name": "Erin (sample)",
+        "picks": [
+         "nothing"
+        ],
+        "reach": null,
+        "consent": null,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819044780000,
+        "fu": {
+         "thanks": 0,
+         "invite": 0,
+         "visit": 0,
+         "next": 0
+        }
+       },
+       {
+        "id": "bt-sample-06",
+        "src": "phone",
+        "ts": 1787494500000,
+        "lang": "en",
+        "name": "Fatima (sample)",
+        "picks": [
+         "next",
+         "prayer"
+        ],
+        "reach": {
+         "t": "email",
+         "v": "fatima.sample@example.org"
+        },
+        "consent": 1787494500000,
+        "safe": null,
+        "note": "",
+        "cv": 1,
+        "keep": 1819030500000,
+        "fu": {
+         "thanks": 1787580900000,
+         "invite": 1787840100000,
+         "visit": 0,
+         "next": 0
+        }
+       }
+      ],
+      "FNSAMPXE23": []
+     }
+    },
+    "caseBuys": {
+     "v": 1,
+     "items": {
+      "buy-avs001": {
+       "v": 1,
+       "id": "buy-avs001",
+       "sample": true,
+       "created": 1790866800000,
+       "updated": 1790866800000,
+       "cat": "stream",
+       "kind": "buy",
+       "team": "media",
+       "name": {
+        "en": "Sound board and camera",
+        "es": "Consola de sonido y cámara"
+       },
+       "need": {
+        "en": "A new sound board and a camera so shut-ins can join the service",
+        "es": "Una nueva consola de sonido y una cámara para que los miembros que no pueden salir de casa se unan al culto"
+       },
+       "why": [
+        {
+         "k": "shutins",
+         "n": 9
+        },
+        {
+         "k": "ministries"
+        }
+       ],
+       "goal": {
+        "en": "A sound board and a camera, so that members who cannot come can worship with us every Sabbath.",
+        "es": "Una consola de sonido y una cámara, para que los miembros que no pueden venir adoren con nosotros cada sábado."
+       },
+       "names": [],
+       "must": [
+        {
+         "en": "Audio from the mixer straight to the stream",
+         "es": "Audio de la consola directo a la transmisión"
+        },
+        {
+         "en": "A camera that moves by remote",
+         "es": "Una cámara que se mueve a control remoto"
+        }
+       ],
+       "options": [
+        {
+         "id": "a",
+         "tier": "good",
+         "src": "typed",
+         "checked": "2026-10-01",
+         "name": {
+          "en": "12-channel mixer (USB) + 1080p camera",
+          "es": "Consola de 12 canales (USB) + cámara 1080p"
+         },
+         "store": "Store A (sample)",
+         "host": "",
+         "url": "",
+         "price": 1180,
+         "extra": 0,
+         "features": {
+          "en": [
+           "USB audio to the stream",
+           "Fixed camera, manual zoom",
+           "Simple for new volunteers"
+          ],
+          "es": [
+           "Audio USB para la transmisión",
+           "Cámara fija, zoom manual",
+           "Sencilla para voluntarios nuevos"
+          ]
+         },
+         "warranty": {
+          "en": "1 year",
+          "es": "1 año"
+         },
+         "install": {
+          "how": "volunteers",
+          "cost": 0
+         },
+         "running": {
+          "what": {
+           "en": "Song streaming license (yearly)",
+           "es": "Licencia de transmisión de cantos (anual)"
+          },
+          "cost": null,
+          "per": "year"
+         }
+        },
+        {
+         "id": "b",
+         "tier": "better",
+         "src": "typed",
+         "checked": "2026-10-01",
+         "name": {
+          "en": "16-channel digital mixer + PTZ camera + encoder",
+          "es": "Consola digital de 16 canales + cámara PTZ + codificador"
+         },
+         "store": "Store B (sample)",
+         "host": "",
+         "url": "",
+         "price": 3150,
+         "extra": 0,
+         "features": {
+          "en": [
+           "Saved settings for each service",
+           "Camera moves by remote",
+           "Streams without a computer"
+          ],
+          "es": [
+           "Ajustes guardados para cada culto",
+           "La cámara se mueve a control remoto",
+           "Transmite sin computadora"
+          ]
+         },
+         "warranty": {
+          "en": "2 years",
+          "es": "2 años"
+         },
+         "install": {
+          "how": "pro",
+          "cost": 250,
+          "note": {
+           "en": "2 hours of a technician",
+           "es": "2 horas de un técnico"
+          }
+         },
+         "running": {
+          "what": {
+           "en": "Song streaming license (yearly)",
+           "es": "Licencia de transmisión de cantos (anual)"
+          },
+          "cost": null,
+          "per": "year"
+         }
+        },
+        {
+         "id": "c",
+         "tier": "best",
+         "src": "typed",
+         "checked": "2026-10-01",
+         "name": {
+          "en": "24-channel mixer + two 4K PTZ cameras + switcher",
+          "es": "Consola de 24 canales + dos cámaras PTZ 4K + mezclador de video"
+         },
+         "store": "Store C (sample)",
+         "host": "",
+         "url": "",
+         "price": 7650,
+         "extra": 0,
+         "features": {
+          "en": [
+           "Two camera angles",
+           "4K video",
+           "Room to grow"
+          ],
+          "es": [
+           "Dos ángulos de cámara",
+           "Video 4K",
+           "Espacio para crecer"
+          ]
+         },
+         "warranty": {
+          "en": "3 years",
+          "es": "3 años"
+         },
+         "install": {
+          "how": "pro",
+          "cost": 1200
+         },
+         "running": {
+          "what": {
+           "en": "Song streaming license (yearly)",
+           "es": "Licencia de transmisión de cantos (anual)"
+          },
+          "cost": null,
+          "per": "year"
+         }
+        }
+       ],
+       "pick": "b",
+       "pickWhy": null,
+       "fund": {
+        "lines": [
+         {
+          "k": "budget",
+          "amount": 1000
+         },
+         {
+          "k": "offering",
+          "amount": 1200,
+          "date": "2026-11-07"
+         },
+         {
+          "k": "designated",
+          "amount": 600
+         },
+         {
+          "k": "match",
+          "amount": 400,
+          "note": {
+           "en": "A member matches the offering up to $400 (sample)",
+           "es": "Un miembro iguala la ofrenda hasta $400 (muestra)"
+          }
+         },
+         {
+          "k": "sell",
+          "amount": 200,
+          "note": {
+           "en": "The old mixer",
+           "es": "La consola anterior"
+          }
+         }
+        ],
+        "phases": null
+       },
+       "dates": {
+        "finance": "2026-10-13",
+        "board": "2026-10-20",
+        "buyBy": "2026-11-15",
+        "install": "2026-11-22",
+        "firstUse": "2026-11-28",
+        "report": "2026-12-15"
+       },
+       "path": [
+        "finance",
+        "board"
+       ],
+       "lastSearch": null
+      }
+     },
+     "rules": {
+      "v": 1,
+      "businessAt": 10000,
+      "confAt": null,
+      "quotesAt": null,
+      "sample": true
+     }
+    }
+   }
+  }
+ },
+ "terrain-gifts-roster": [
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNyIsImNoYXJzIjoiMzIxMjIyMjIxMTExMTEwMDExMTIwMTEyMjIyMjIxMTIxMjI0NDMzNDMzNDQzMTExMTIyMDIwMjQuMTIyMjEwMTIyMDAyMDAyMDExMTAxMjAyMDAxMjM0MzQ0MTEyMjIxMjAwMjMzMTIyIiwiaGVhcnQiOiIwMDAwMDAwMjAxLjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ikd3ZW4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzMiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Gwen (sample)",
+   "date": "2026-09-27",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790521200000,
+   "minor": false,
+   "expires": 1853593200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNyIsImNoYXJzIjoiMzIxMjIyMTIyMTIxMDAyMjIwMTAwMDAxMDIyMTAwNDQzMzMyMTEwMDIwMjIyMjIxMDA0LjQ0NDMzMzMzMjIxMTI0MzIxMjEwMTExNDQzNDMxMjExMjAyMDEyNDIxMTIyMjAwMjAwMjEwIiwiaGVhcnQiOiIwMDAwMDAyMDAuMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik5pYSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW00MCIsInJlc291cmNlcyI6e319",
+   "name": "Nia (sample)",
+   "date": "2026-09-27",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790521200000,
+   "minor": false,
+   "expires": 1853593200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNiIsImNoYXJzIjoiMzQzMzMwMjEyMjIxMjAyMDEwMTAxMTIxMDExMjAwMTAxMTAwMTEwMjQyMTExMjJ4eDIyMTAwMDExMjEyNDM0M3gwMTIwMDAwMTIyNDM0NDQwMjExMDAxMTEyMTIyMTIxMjIwMDAxMDEwIiwiaGVhcnQiOiIxMDAwMjAwMjIwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkdyZWVyIChzYW1wbGUpIiwibWVtYmVySWQiOiJzYW1wbGUtbTA3IiwicmVzb3VyY2VzIjp7ImhvdXJzIjoxNiwid2lsbGluZyI6dHJ1ZSwibGVhZGVyIjp0cnVlLCJza2lsbHMiOlsibGVhZCIsInZlaGljbGUiXSwic2xvdHMiOlsiV2VkIGV2ZW5pbmciLCJUaHUgZXZlbmluZyJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Greer (sample)",
+   "date": "2026-09-26",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790434800000,
+   "minor": false,
+   "expires": 1853506800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNiIsImNoYXJzIjoiMTIyMTIxMDEwMDIwMTIyNDM0NDMyMTIwMjAwMTAxMDAwMTAwMTIwMDExMjEwMTIxMjIyMnh4eDM0NDQzMTIyMjAxMjAyMDQzNDR4MzM0NDQxMjAwMjAyMTAwNDIxMjIwMTIxMDIwMTExIiwiaGVhcnQiOiIwMDEuMTAxMC4yMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik5lbGwgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTQiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Nell (sample)",
+   "date": "2026-09-26",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790434800000,
+   "minor": false,
+   "expires": 1853506800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yNCIsImNoYXJzIjoiMTExMjExMTIwMTExMS4yMjIwMjEyMDIwMTIxeHh4MzMxMTIxMjAyMDEyMTAyNDIxMTIuMjAyMDMzNDM0MTAxMDIwMDAwMTMzMzMzMDExMTEwMTIxMjExMDIxMjIxMjAyMTIxMjIxMDEwIiwiaGVhcnQiOiIxMDIwMTIwMjAwMC4iLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkVzbWUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDUiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Esme (sample)",
+   "date": "2026-09-24",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790262000000,
+   "minor": false,
+   "expires": 1853334000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMyIsImNoYXJzIjoiMDEyMDIyMDEwMTAwMTIxMDAwMDAxMjIxMDExMTAxMDEyMTEzMzM0NDIxMDAyMTAyMDE0MzIyMjExMjAxMDIyMjAyMXh4eDIwMTAxMTIwMTIzMzM0MzIwMjAxMTEwMDEwMTEwMjIwMTIxIiwiaGVhcnQiOiIxMDAyMTAwMi4wMTIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlVsbGEgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjEiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Ulla (sample)",
+   "date": "2026-09-23",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790175600000,
+   "minor": false,
+   "expires": 1853247600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMyIsImNoYXJzIjoiMTJ4eDIwMDAyMDM0NDMzNDIxMjIxMTEyMTIyMjExMzM0NDQzMzEyMTEyMDIwNDQ0MzMyMDExMTIwMjIwMTEwMDExMTAyMDExMjEwMDAwLjAxMDEyMjQzMjExMDIwMTIxMjAyMTIyMjIyIiwiaGVhcnQiOiIwMDAyMjAxMTAwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkJyZWUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjgiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjEyLCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsia2lkcyIsIm11c2ljIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiV2VkIGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Bree (sample)",
+   "date": "2026-09-23",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790175600000,
+   "minor": false,
+   "expires": 1853247600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMyIsImNoYXJzIjoiMjAyMjAyMDEwMjAyMDEyMjExMjAzMzExMTExMTEyMTEyMTIwMTIxMDEwMTExMzMxMjEyMDIyMDMzMTEyMDAxMjIxMTEwMDAxMTExMTF4eDIzMzQzMzIwMjAxMjAxMjIyMjExMDAxMTIwIiwiaGVhcnQiOiIwMDAwMDAyMjEwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkVkZGEgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzEiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjE2LCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsibWVkaWNhbCIsIndlZWtkYXkiXSwic2xvdHMiOlsiVHVlIGV2ZW5pbmciLCJUaHUgZXZlbmluZyIsIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Edda (sample)",
+   "date": "2026-09-23",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790175600000,
+   "minor": false,
+   "expires": 1853247600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMyIsImNoYXJzIjoiNDM0NDMwMTAyMDEyMjEyMDAwMjEyMDAxMjEyMjAyMjIwMjIyMTIxMjM0MzMzMDEyMjI0MzIxMjQzMTIxMTAwMjI0MzQzNDAyMTIxMDAwMTAwMjEyMDMzMjExMjIxMjIxMjAxMTIyMjExIiwiaGVhcnQiOiIwMDEyMC4uMTAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ikx1bHUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzgiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Lulu (sample)",
+   "date": "2026-09-23",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790175600000,
+   "minor": false,
+   "expires": 1853247600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMSIsImNoYXJzIjoiMTIyMjAzMjIxMTQzNDQzMTIxMTIwMjAxMjAyMTIwMzIxMTIwMjAyMTQ0MzN4MDEwMTIzMjIyMjIwMDEyMjEyMjEwMTExMjAwMDEyNDM0NDQwMDAwMTEuMDIxMDAwMTExMnh4MTEyeHh4IiwiaGVhcnQiOiIwMC4wMjAwMjEwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkluZXMgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDkiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Ines (sample)",
+   "date": "2026-09-21",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790002800000,
+   "minor": false,
+   "expires": 1853074800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMSIsImNoYXJzIjoiMjAxMTI0MzQ0eDAwMjAyMTEyMjA0NDM0MzQyMjEyMjAxMjA0MzExMTAxMDIyMTEwMDAxMDEwMjExeHgxMjAxMDExMjExMjIyMDExMTAxMjIxMnh4MjExMTEyMTEwMDE0NDMzNDAyMDIxIiwiaGVhcnQiOiIwMDIuMjAxMDAwMDEiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlRhbXNpbiAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0yMCIsInJlc291cmNlcyI6e319",
+   "name": "Tamsin (sample)",
+   "date": "2026-09-21",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1790002800000,
+   "minor": false,
+   "expires": 1853074800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMjF4eDExMTEwMjQzMzM0MTAxMTAyMjIxMTQzMTExMjEwMjAyMXh4MjQzMjEyMzQ0M3gzMzIyMjAwMDExMTIwMTAwMDIyMDEwMDIwMjExMTEwMjAyMTEwMjIyMTEyMjIxMTAyMDQ0MzQzIiwiaGVhcnQiOiIwMDAwMjAwMDIwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkJyYW0gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDIiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Bram (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMTAyMjAyMjAxMDAwMTAyMTEyMTEwMTEwMTAxMjEyMjIyMDEzNDMzNDAuMjAyMTIwMjIxMjIwMTExMjIxMDAyMTEwMDExMTEwMjEwNDQzNDM0MzExMTAwMDIxMDIyMDIxMjIyMjIwMTIxIiwiaGVhcnQiOiIyMDAwMTEwMDAwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkZpbm4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDYiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Finn (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiNDQ0NDMwMDAyMDAwMTEwMDAwMTA0NDMzeDIyMjAwMjIxMjIzNDM0NDIxeHgyMjAxMjIxMjEwMDIxMDIxMDIyMjAxMDExMDMyMjIxMDExMjAyMnh4eDIyMi4xMDEyMjIyMTAxMTIxeHh4IiwiaGVhcnQiOiIwMDAxMDAyMDAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkpvcnkgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTAiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjgsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6WyJjb29rIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiV2VkIGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Jory (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0yMCIsImNoYXJzIjoiMjEwMjIyMTIxMDIxMjEwMDEyMDAyMTAwMTIyMjEyMjExMTExMTAxMTAwMDIyNDIxMjEyMTIyMDQzMTIyMTEwMDEyMDEyMDMzMTIyMDIxMDEzMzQzNDExMjAyMTIyMDIxMTIwMDExMjIyIiwiaGVhcnQiOiIuMDEwMjAwMDEyMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlBpYSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0xNiIsInJlc291cmNlcyI6eyJob3VycyI6OCwid2lsbGluZyI6dHJ1ZSwibGVhZGVyIjpmYWxzZSwic2tpbGxzIjpbImtpZHMiLCJ0ZWFjaCJdLCJzbG90cyI6WyJXZWQgZXZlbmluZyIsIlRodSBldmVuaW5nIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Pia (sample)",
+   "date": "2026-09-20",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789916400000,
+   "minor": false,
+   "expires": 1852988400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xOCIsImNoYXJzIjoiMTIxMjIxMnh4MTQ0NDN4NDQzM3gxMDAwMDQzMTIxMTExMTAwMjAwMjMzMjIxMTAwMjExMjEyMDAyMTIwMDEyMDIwMjAwMDAwMDIxMDAxLjIyMDIyMDIxMTIyMTExMDAyMjExMDQyMTExIiwiaGVhcnQiOiIyMDAwMDAwMDEwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IktpdCAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0xMSIsInJlc291cmNlcyI6e319",
+   "name": "Kit (sample)",
+   "date": "2026-09-18",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789743600000,
+   "minor": false,
+   "expires": 1852815600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xOCIsImNoYXJzIjoiMjIwMDIwMjAwMDAxMDEwMjIxMjEwMjEyMjExMDIxMjIwMjAxMDExMTQzMjExMzMzNDMxMTIwMTExMTIwMjExMDAzMzM0NDExMTIyMjAyMjE0MjIxMTMzMzMzMDAxMDIxMjExMTEwMTAxIiwiaGVhcnQiOiIwMDAxMjAyMjEwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkFybG8gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjciLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Arlo (sample)",
+   "date": "2026-09-18",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789743600000,
+   "minor": false,
+   "expires": 1852815600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xNyIsImNoYXJzIjoiMTIxMDIyMjExMjIwMjEyMDAxMTExMTEyMDAxMDEyMjAwMjAxMjIyMTQ0NDM0MTExMDIzMzIyMjAwMjAwMjIxMTEyMDAxMTAxMDIwMTIyMjEyMjAwMDAyMTAyMTIwMTAxMjIxMDEyMDIwIiwiaGVhcnQiOiIxMDAwMTAwMjAwMC4iLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkRlbGwgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzAiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Dell (sample)",
+   "date": "2026-09-17",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789657200000,
+   "minor": false,
+   "expires": 1852729200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMzQzNDQzMzQ0NDAyMTAwMDIyMTAwMTAxMDIyMTIxNDIxMjE0MzIxMjQyMTEyMDIwMDExMTAyMTEwMDExMjIwMTAyMTIxMTIxeHgxMDIxMDIwMjAxMDIxMjAxMDIyMjEyMTAyMTAyMTIyIiwiaGVhcnQiOiIwMDAyMTAyMTIwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkFkYSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wMSIsInJlc291cmNlcyI6eyJob3VycyI6MTYsIndpbGxpbmciOnRydWUsImxlYWRlciI6dHJ1ZSwic2tpbGxzIjpbImxlYWQiLCJ0ZWFjaCIsImFkbWluIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiV2VkIGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Ada (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMDIwMDEwMTAwMDM0MzR4MjAwMDIwMDEwMTAyMjEyMjAxMDIzNDM0NDIxMTExMjExMDA0MzMzNDExMTIxMjIyMjIyMDAwMTMzMjEyMDAyMDIxMjIyMDEwMjAxMjIxMjAxMDIwMjAxMDAyIiwiaGVhcnQiOiIxMDAyMjAwLjAxMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkRvdiAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wNCIsInJlc291cmNlcyI6eyJob3VycyI6MTIsIndpbGxpbmciOnRydWUsImxlYWRlciI6dHJ1ZSwic2tpbGxzIjpbImxlYWQiLCJ0ZWFjaCJdLCJzbG90cyI6WyJUdWUgZXZlbmluZyIsIlRodSBldmVuaW5nIiwiU2F0IGFmdGVybm9vbiJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Dov (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMjAxMjEyMDAwMTIwMDIxMTEwMjEzMzM0MzAxMjExMjEyMjExMnh4MjQzMjIxNDQ0NHgxMnh4eDMyMjIyMDEwMDIwMTAyMjMzMTEyMjIxMDIxMnh4MTAxMDIxMjAyMDIxMDIyMTAyMDEyIiwiaGVhcnQiOiIwMDAxMDAwMDAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik9yZW4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTUiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Oren (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMyIsImNoYXJzIjoiMjF4eDE0NDQ0MzIwMjExMzQ0NDMxMjEyMTEwMTIyMjIwMjI0MjEyMjEyMDEwMzIxMjExMjIwMTMzNDM0MjExMjExMjEwMTIyMDAwNDQzM3gwMjAwMTEyMjAwMTIyMjEyMjAxMDEwMDExIiwiaGVhcnQiOiIyMDAwMi4xMDIuMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlF1aWxsIChzYW1wbGUpIiwibWVtYmVySWQiOiJzYW1wbGUtbTE3IiwicmVzb3VyY2VzIjp7fX0",
+   "name": "Quill (sample)",
+   "date": "2026-09-13",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789311600000,
+   "minor": false,
+   "expires": 1852383600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMiIsImNoYXJzIjoiMTExMjE0MzMzNDMzNDMzMTAxMTIyMXh4MTIyMTEwMTAxMDAxMDIxMTExMTExNDMxMTIxMXh4MTIyeHgyMTAxMjAxMjAyMDAyMTIyNDIyMTEyMDEyMjEyMDAyMTIwMDEyMTExMTQzMzMzIiwiaGVhcnQiOiIwMDAxMC4xMTAwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkhhbGUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzQiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjEyLCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsiYXYiLCJsYW5nIl0sInNsb3RzIjpbIldlZCBldmVuaW5nIiwiVGh1IGV2ZW5pbmciXSwibGFuZ3VhZ2VzIjoiU3BhbmlzaCAoZmx1ZW50KSIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Hale (sample)",
+   "date": "2026-09-12",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789225200000,
+   "minor": false,
+   "expires": 1852297200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMiIsImNoYXJzIjoiMzM0NDQ0MzMzMzM0NDMzNDM0NDQzMzQzNDQ0NDQ0NDM0MzQ0MzMzNDMzNDM0MzQzNDMzMzQzMzQzMzM0NDQzNDM0NDMzNDMzNDQzNDMzMzQzNDMzNDQ0MzQzMzQ0MzQ0MzMzMzMzMzQ0IiwiaGVhcnQiOiIwMTIyMDAwMjAwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik1hY2UgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzkiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Mace (sample)",
+   "date": "2026-09-12",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789225200000,
+   "minor": false,
+   "expires": 1852297200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMSIsImNoYXJzIjoiMDIyMTEwMjIyMjAxMjIxMjAyMDAxMjIwMDMzMTIyMjAxMjAzMzMzMzIxeHh4MDIxMTAxMjAwMTExMTExMzMzMzQxMTIxMTEyeHgyMjAxMjAxMTExMDExMjIyMzM0MzQyMXh4eDIyMjExIiwiaGVhcnQiOiIwMDIwMDEwMDIwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IllhcmEgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjUiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjgsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6WyJjb29rIiwid2Vla2RheSJdLCJzbG90cyI6WyJXZWQgZXZlbmluZyIsIlRodSBldmVuaW5nIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Yara (sample)",
+   "date": "2026-09-11",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789138800000,
+   "minor": false,
+   "expires": 1852210800000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0xMCIsImNoYXJzIjoiMDExMjEzMzMzNDIwMjAwMjF4eDIyMTAyMjIwMjIxMjEwMTEwMjAxMTIxMjIyNDM0MzMxMDAwMTQ0MzQ0MjAyMDAyMTIwMDQzMjExMzQzMzMwMTIyMTExMDEwMTAyMDEwMDEwMjEyMTEwIiwiaGVhcnQiOiIyMDAxMDAwMDAwMDEiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkNhc3MgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjkiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Cass (sample)",
+   "date": "2026-09-10",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1789052400000,
+   "minor": false,
+   "expires": 1852124400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wOSIsImNoYXJzIjoiMTAwMDAyMXh4eDQ0MzM0MjEwMTAxMTAxMjEwMDAwMzIxMjIyMjIyMDQzMzQ0MjAwMDIyMDEyMTM0NDM0MjAyMTEwMjAxMTExMDAwMjAyMDI0NDQ0eDExMDEyMTExMTAyMDIwMDEyMjAyIiwiaGVhcnQiOiIwMDAwMjIwMDAwMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IldyZW4gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjMiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Wren (sample)",
+   "date": "2026-09-09",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788966000000,
+   "minor": false,
+   "expires": 1852038000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wOSIsImNoYXJzIjoiMTIyMTAyMjIyMjEyMjIxMjIyMDIyMTIyMjQyMTExMTF4eHgyMDAuMDIwMDEwMjEyMTAzMzQzNDAxMTIxMjF4eHgwMDEyMTM0NDM0MjF4eHgxMTAxMjQzMjIxMzM0MzMyMjAyMjQyMTIyIiwiaGVhcnQiOiIwMTAxMTAyMDAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlhhbiAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0yNCIsInJlc291cmNlcyI6e319",
+   "name": "Xan (sample)",
+   "date": "2026-09-09",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788966000000,
+   "minor": false,
+   "expires": 1852038000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wOSIsImNoYXJzIjoiMjF4eHgwMjIxMjAxMDIxMzIyMTIxMjExMjIyMDIyNDIyMjEyMDAyMDAwMDEyNDIyMTE0MzQ0NDEwMTEyMjIxMjIxMTIxMTIwMjIwMjExMTIyMjIyMTIxMjIyMDIxMjEyMjIxMTMzMzM0IiwiaGVhcnQiOiIyMDAwMDAwMDAwMDEiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkZpdHogKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzIiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Fitz (sample)",
+   "date": "2026-09-09",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788966000000,
+   "minor": false,
+   "expires": 1852038000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wOCIsImNoYXJzIjoiMTExLjIwMjIwMTMzMzQ0MTIwMTExMTExMDExMTIxMjIxMDAzNDQzNDAxMTEwMTIyMjIzMzQzeDEyMTIwMTAwMTEyMjAxMDEyMjAyMDAwMjAyMTAyMjIxMDIwNDMxMTExMDAxMDEyMTIyIiwiaGVhcnQiOiIyMC4wMDExMTAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlNvbCAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0xOSIsInJlc291cmNlcyI6eyJob3VycyI6MTYsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6WyJtdXNpYyJdLCJzbG90cyI6WyJUdWUgZXZlbmluZyIsIldlZCBldmVuaW5nIiwiU2F0IGFmdGVybm9vbiJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Sol (sample)",
+   "date": "2026-09-08",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788879600000,
+   "minor": false,
+   "expires": 1851951600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wOCIsImNoYXJzIjoiMjAxMTAzMjEyMjAyMjIwMTAwMjEyMTAyMjQ0NDMzMTIwMTIyMDIyMjQ0NDMzMDExMjExMDAxMDM0MzN4MTEwMDIwMTIyMTIyeHh4MzM0MzQyMDIwMjIxMTIwMTIyMDAxMjIxMDAwMDExIiwiaGVhcnQiOiIwMC4wMjEuMDAwMjIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlZhbGUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMjIiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjEyLCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsidHJhZGUiLCJ2ZWhpY2xlIl0sInNsb3RzIjpbIlR1ZSBldmVuaW5nIiwiVGh1IGV2ZW5pbmciLCJTYXQgYWZ0ZXJub29uIl0sImxhbmd1YWdlcyI6IiIsImV4cGVyaWVuY2UiOiIifX0",
+   "name": "Vale (sample)",
+   "date": "2026-09-08",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788879600000,
+   "minor": false,
+   "expires": 1851951600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNyIsImNoYXJzIjoiMjF4eHgxMDIyMDMzNDQ0MTAxMDExMjEwMjIyMjIyMTIwMjEyMDEyMDAwMjAwMTAwMjAwMDEwMjMzMzM0MTEuMDI0MjExMjAyMTAwMjIwMDIwMDIxMDIwMTAwMDAxMjExMjAwMjAwMDEyIiwiaGVhcnQiOiIwMDAwMjAwMTAwMDEiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ikl2byAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0zNSIsInJlc291cmNlcyI6e319",
+   "name": "Ivo (sample)",
+   "date": "2026-09-07",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788793200000,
+   "minor": false,
+   "expires": 1851865200000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNSIsImNoYXJzIjoiMDIyMDIxMjIwMTQzMzMzMTEyMjE0MzExMTIyMjIyMjAwMjAxMTIyMjAyMDAyLjEyMDE0NDM0NDIyMTIyMzQzM3gxMDEwMjExeHh4MjIwMTExMjIxMDAwMDExMTAxMDEwMjExMDEwMTAxIiwiaGVhcnQiOiIxMTAyMDAxMDAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkNsZW8gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMDMiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Cleo (sample)",
+   "date": "2026-09-05",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788620400000,
+   "minor": false,
+   "expires": 1851692400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNSIsImNoYXJzIjoiMDExMjExMTEwMTEwMTAxMTEwMTEyMDExMTIxMjIxMjJ4eHgwMDAwMDExMDAwMjF4eDEzNDMzNDMyMTExMTAyMDEwMjEyMDMzNDMzMDAyMTExMXh4eDIyMjEwMTIyMDIyMjIwMDAyMDIwIiwiaGVhcnQiOiIyMDIwMjAxMDAuMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ik1pbG8gKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTMiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjEyLCJ3aWxsaW5nIjp0cnVlLCJsZWFkZXIiOmZhbHNlLCJza2lsbHMiOlsiY29vayIsIndlZWtkYXkiXSwic2xvdHMiOlsiVHVlIGV2ZW5pbmciLCJUaHUgZXZlbmluZyIsIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Milo (sample)",
+   "date": "2026-09-05",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788620400000,
+   "minor": false,
+   "expires": 1851692400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNSIsImNoYXJzIjoiMDIyMTEyMDAyMDM0MzQ0MjAxMTIyMDAyMDAwMDAyMTEwMTIxMTIwMDQ0NDQ0MjEwMDE0MjExMjAwMjIwMTEyMjAwMjIxMTQyMjEyMTIyMTIxMTEyMDQzNDQzMjIxMTEwMjAyMDExMjAxIiwiaGVhcnQiOiIwMDAwMDAwMjIwMDEiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkthaSAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0zNyIsInJlc291cmNlcyI6e319",
+   "name": "Kai (sample)",
+   "date": "2026-09-05",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788620400000,
+   "minor": false,
+   "expires": 1851692400000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNCIsImNoYXJzIjoiMjEwMDAxMTEyMjExMTEwMDIxMTIyMDIxMTMzNDN4MzM0MzM0MjExMTIxMDAwMDIyMDIzMzMzNDQyMTExMTAyMDAwMjIxMTAyMTAxMTEyMjAxMjAyMjAwMTIxMTAxMDEzMzM0MzEwMDAxIiwiaGVhcnQiOiIwMDAwMjAxMDEyMTAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkhvbGxpcyAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0wOCIsInJlc291cmNlcyI6e319",
+   "name": "Hollis (sample)",
+   "date": "2026-09-04",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788534000000,
+   "minor": false,
+   "expires": 1851606000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wNCIsImNoYXJzIjoiNDQ0NDMyMjAwMjEyLjIwMTF4eHgxMjIwMDEwMjAwMTAwMTAyMTAxMDMyMTEyMTAyMTEzNDM0eDIwMjEyNDM0MzQxMDIyMDAyMDIxMDIxMjIyMTIxMTEwMTExMTIxMTEwMTIxMjAyMjEyIiwiaGVhcnQiOiIwMTAwMC4wMTIwMDIiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlplYiAoc2FtcGxlKSIsIm1lbWJlcklkIjoic2FtcGxlLW0yNiIsInJlc291cmNlcyI6eyJob3VycyI6NCwid2lsbGluZyI6dHJ1ZSwibGVhZGVyIjpmYWxzZSwic2tpbGxzIjpbXSwic2xvdHMiOlsiU2F0IGFmdGVybm9vbiJdLCJsYW5ndWFnZXMiOiIiLCJleHBlcmllbmNlIjoiIn19",
+   "name": "Zeb (sample)",
+   "date": "2026-09-04",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788534000000,
+   "minor": false,
+   "expires": 1851606000000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wMyIsImNoYXJzIjoiMjEwMjAyMDIyMTIyMjIxMjAyMjExMTIxMjIyMDIxNDIxMjIxMDEyMTAxMTAwMDIyMjA0NDM0NDMzMjEyMTEwMDAxMTEwMDQ0MzMzMTAyMTAyMjAyMTExMDIyMTExMjIyMjIyMTMzMTExIiwiaGVhcnQiOiIwMDAxMDAyMjAwMjAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IkxhcmsgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTIiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "Lark (sample)",
+   "date": "2026-09-03",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788447600000,
+   "minor": false,
+   "expires": 1851519600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wMyIsImNoYXJzIjoiMTAxMTAzMjEyMTEyMTEwMzQzNDQwMTExMTAxMDAxMTEyMjAzMzQzNDQ0NDM0NDMxMTExMDAyMTMyMjIxMDIyMTEyMTAyMjIxMjIxMTIwMTIxMXh4MTIwMTIwMTEwMDEyMDEyMDEwMjExIiwiaGVhcnQiOiIwMDAxMjEwMjAwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6IlJoZWEgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMTgiLCJyZXNvdXJjZXMiOnsiaG91cnMiOjQsIndpbGxpbmciOnRydWUsImxlYWRlciI6ZmFsc2UsInNraWxscyI6W10sInNsb3RzIjpbIlNhdCBhZnRlcm5vb24iXSwibGFuZ3VhZ2VzIjoiIiwiZXhwZXJpZW5jZSI6IiJ9fQ",
+   "name": "Rhea (sample)",
+   "date": "2026-09-03",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788447600000,
+   "minor": false,
+   "expires": 1851519600000
+  },
+  {
+   "code": "TG1-eyJ2Ijo0LCJkYXRlIjoiMjAyNi0wOS0wMiIsImNoYXJzIjoiMTIxMDA0MjIxMTQzNDQ0MzIxMjEwMDAwMTEyMDIwMzMyMjExMDAwMjAyMjIxMDIwMjIyMjEyMTAxMTEwMTIwMDAyMTAxMjIxeHgxMjEyMTExMTAxMjEyMDAyMTIxMDIxMTAyMTMzNDM0IiwiaGVhcnQiOiIwMDIwMjAwMjEwMDAiLCJtaW5vciI6ZmFsc2UsImNodXJjaCI6IlNhbXBsZXRvbiBTREEgKFNBTVBMRSkiLCJjaHVyY2hJZCI6InNhbXBsZS1zYW1wbGV0b24tc2RhIiwibmFtZSI6Ikp1bmUgKHNhbXBsZSkiLCJtZW1iZXJJZCI6InNhbXBsZS1tMzYiLCJyZXNvdXJjZXMiOnt9fQ",
+   "name": "June (sample)",
+   "date": "2026-09-02",
+   "church": "Sampleton SDA (SAMPLE)",
+   "ts": 1788361200000,
+   "minor": false,
+   "expires": 1851433200000
+  }
+ ]
+}

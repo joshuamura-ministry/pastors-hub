@@ -190,8 +190,9 @@ In the file this means:
   file, the pastor's rule of 1 Oct 2026: "we are not legalistic"): worship, prayer, Bible study and seminars, health
   talks and screenings, visiting the sick and lonely, preparing, serving and delivering free meals, a free pantry, kits
   for people in crisis (bought beforehand), comforting, mercy for someone in need now (even real work), childcare so a
-  worn-out parent can rest, life-saving and care training, hospitality and friendship, nature walks. An ordinary
-  offering in worship is fine. False for buying and selling, prices, fees, fundraising, offerings for a project, markets
+  worn-out parent can rest, life-saving and care training, hospitality and friendship, nature walks. An offering in
+  worship is fine, and so is a special offering in Sabbath worship for a church project (the pastor, 2 Oct 2026: "it is
+  part of worship"). False for buying and selling, prices, fees, fundraising events and sales, markets
   and swaps, a café or diner where buying the food is the point (unless the text also names a home, church, library or
   park), fairs and festivals with games, films and parties for fun, sport, exercise classes and competition, routine
   work (repairs, building, gardening, crafts, printing and mailing, filming, admin and committee business), and anything

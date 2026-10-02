@@ -1,0 +1,490 @@
+{
+ "conf": "North Pacific Union (union-level)",
+ "union": "North Pacific Union",
+ "slug": "union-north-pacific",
+ "calendarUrls": [
+  "https://npuc.org/events/",
+  "https://npuc.org/wp-json/tribe/events/v1/events",
+  "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf"
+ ],
+ "otherSources": [
+  "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+  "https://npuc.org/ministries/youth",
+  "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+  "https://npuc.org/greece-tour",
+  "https://www.discipletrek.life/collegiate"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2028-06",
+ "furthestPublishedNote": "The NPUC K-12 education calendar PDF runs to June 2028. The NPUC events calendar itself ends in May 2027 and is mostly committees. The Israel young-adult tour is Oct 25-Nov 2, 2027.",
+ "calendarQuality": "The union events calendar is an administrators' calendar (GC, NAD and committee meetings) and ends in May 2027. Real union events come from ministry pages (camporee, young adults, DiscipleTrek), the education calendar PDF and Walla Walla University pages.",
+ "aheadSummary": "The NPUC Pathfinder Camporee is Sep 9-12, 2027 at Grays Harbor County Fairgrounds, Elma, WA (hosted by Washington), with deadlines on Apr 30 (early ticket price), Aug 25 (event staff) and Sep 1 (child-protection screening). Also: Greece young-adult tour (Apr 4-11), WWU University Days, Homecoming and Graduation, the superintendents' retreat, DiscipleTrek (Jul 4-25; apply by May 25), new-teacher cohort and the Fall Leadership Council. OneVoice27 is promoted on the evangelism page but has no union dates.",
+ "events": [
+  {
+   "title": "ASI Northwest Spring Conference",
+   "start": "2027-04",
+   "end": "2027-04",
+   "place": "",
+   "category": "evangelism-outreach",
+   "category2": "discipleship-spiritual",
+   "audience": "ASI members and anyone interested in lay ministry (free)",
+   "url": "https://asinorthwest.org/",
+   "source": "ASI Northwest homepage",
+   "level": "other",
+   "datePrecision": "month",
+   "note": "\"Join us April 2027 for our Chapter Spring Conference. More details to follow.\""
+  },
+  {
+   "title": "NPUC Young Adult Faith Tour: Greece, \"In the Footsteps of Paul\"",
+   "start": "2027-04-04",
+   "end": "2027-04-11",
+   "place": "Greece (Athens, Corinth, Meteora, Berea, Thessaloniki, Philippi)",
+   "category": "youth-young-adults",
+   "category2": "discipleship-spiritual",
+   "audience": "young adults (35 and under) and anyone recruiting one; adults welcome",
+   "url": "https://npuc.org/greece-tour",
+   "source": "NPUC Greece Tour page + tour flyer PDF",
+   "level": "union",
+   "note": "Optional Patmos pre-extension from Apr 1 and Santorini post-extension to Apr 14 (the Gleaner classified says \"April 1-11\"). Flyer: https://npuc.org/wp-content/uploads/2026/09/Greece-Tour-2027-Patmos-Santorini.pdf"
+  },
+  {
+   "title": "WWU April University Days (U-Days)",
+   "start": "2027-04-04",
+   "end": "2027-04-06",
+   "place": "Walla Walla University, College Place, WA",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy seniors",
+   "url": "https://www.wallawalla.edu/admissions-and-aid/recruiting-events/university-days",
+   "source": "WWU University Days page + NPUC education calendar",
+   "level": "institution",
+   "note": "Early-bird registration Dec 15, 2026; final registration deadline Mar 15, 2027."
+  },
+  {
+   "title": "NPUC Superintendents' Spiritual Retreat",
+   "start": "2027-04-12",
+   "end": "2027-04-15",
+   "place": "Warrenton, OR",
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "conference education superintendents",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union"
+  },
+  {
+   "title": "WWU Alumni Homecoming Weekend",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Walla Walla University, College Place, WA",
+   "category": "education",
+   "category2": "",
+   "audience": "alumni and families",
+   "url": "https://www.wallawalla.edu/alumni/events/homecoming",
+   "source": "WWU Homecoming page",
+   "level": "institution"
+  },
+  {
+   "title": "Education Sabbath (NPUC)",
+   "start": "2027-04-24",
+   "end": "2027-04-24",
+   "place": "",
+   "category": "education",
+   "category2": "",
+   "audience": "all churches",
+   "url": "https://npuc.org/event/education-sabbath-2",
+   "source": "NPUC events calendar",
+   "level": "union",
+   "observance": true
+  },
+  {
+   "title": "NPUC Camporee: early ticket price ends ($65, then $75)",
+   "start": "2027-04-30",
+   "end": "2027-04-30",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "stewardship-finance",
+   "audience": "club directors",
+   "url": "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+   "source": "NPUC Pathfinder Camporee 2027 page",
+   "level": "union",
+   "deadline": true
+  },
+  {
+   "title": "DiscipleTrek application deadline",
+   "start": "2027-05-25",
+   "end": "2027-05-25",
+   "place": "",
+   "category": "youth-young-adults",
+   "category2": "",
+   "audience": "college-age young adults and their pastors",
+   "url": "https://www.discipletrek.life/collegiate",
+   "source": "DiscipleTrek collegiate page",
+   "level": "union",
+   "deadline": true
+  },
+  {
+   "title": "Academy graduation weekend across the Northwest",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "",
+   "category": "education",
+   "category2": "",
+   "audience": "academy families and churches",
+   "url": "https://www.wallawalla.edu/admissions-and-aid/visit-wwu/blockout-dates",
+   "source": "WWU visit blockout dates",
+   "level": "institution",
+   "note": "WWU lists \"NPUC Graduation Weekend, June 4-6, 2027\" when its staff attend academy graduations across the Northwest. Individual academies may differ (GSAA: May 28-30)."
+  },
+  {
+   "title": "WWU Graduation Weekend",
+   "start": "2027-06-11",
+   "end": "2027-06-13",
+   "place": "Walla Walla University, College Place, WA",
+   "category": "education",
+   "category2": "",
+   "audience": "graduates, families, churches",
+   "url": "https://www.wallawalla.edu/resources/family-resources/graduation",
+   "source": "WWU graduation page + NPUC education calendar",
+   "level": "institution",
+   "note": "Commencement Sunday, June 13, 2027."
+  },
+  {
+   "title": "DiscipleTrek (collegiate discipleship and leadership program)",
+   "start": "2027-07-04",
+   "end": "2027-07-25",
+   "place": "Flag Mountain Camp, Black Hills, South Dakota",
+   "category": "youth-young-adults",
+   "category2": "discipleship-spiritual",
+   "audience": "college-age young adults",
+   "url": "https://www.discipletrek.life/collegiate",
+   "source": "DiscipleTrek collegiate page",
+   "level": "union",
+   "note": "NPUC young adult ministries contact; application deadline May 25, 2027."
+  },
+  {
+   "title": "New Teacher Cohort (Year 1)",
+   "start": "2027-08-03",
+   "end": "2027-08-05",
+   "place": "Ridgefield, WA (NPUC office)",
+   "category": "education",
+   "category2": "pastoral-leadership",
+   "audience": "new teachers",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union"
+  },
+  {
+   "title": "NPUC Camporee: event staff registration deadline",
+   "start": "2027-08-25",
+   "end": "2027-08-25",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "camporee event staff",
+   "url": "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+   "source": "NPUC Pathfinder Camporee 2027 page",
+   "level": "union",
+   "deadline": true
+  },
+  {
+   "title": "NPUC Camporee: child-protection screening (Sterling Volunteers) must be cleared",
+   "start": "2027-09-01",
+   "end": "2027-09-01",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "administration",
+   "audience": "all Pathfinder staff and adults staying overnight",
+   "url": "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+   "source": "NPUC Pathfinder Camporee 2027 page",
+   "level": "union",
+   "deadline": true
+  },
+  {
+   "title": "NPUC Pathfinder Camporee",
+   "start": "2027-09-09",
+   "end": "2027-09-12",
+   "place": "Grays Harbor County Fairgrounds, 32 Elma McCleary Rd, Elma, WA 98541",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "Pathfinder clubs, staff and families",
+   "url": "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+   "source": "NPUC Pathfinder Camporee 2027 page + education calendar + conference calendars",
+   "level": "union",
+   "note": "Hosted by the Washington Conference. Early arrival Wed Sep 8 (4-8 pm) for clubs travelling far; regular arrival Thu Sep 9; departure Sunday Sep 12. Tickets $75 ($65 by Apr 30); day pass $25. Service-project sign-up opens April 2027."
+  },
+  {
+   "title": "Fall Leadership Council (education)",
+   "start": "2027-09-13",
+   "end": "2027-09-16",
+   "place": "TBD",
+   "category": "education",
+   "category2": "pastoral-leadership",
+   "audience": "education leaders",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union",
+   "note": "2026 edition was at Ridgefield, Sep 14-17."
+  }
+ ],
+ "counts": {
+  "total": 16,
+  "conferenceLevel": 0,
+  "unionLevel": 11,
+  "institutionOrOther": 5,
+  "deadlines": 4,
+  "observances": 1,
+  "monthOnly": 1,
+  "byCategory": {
+   "education": 8,
+   "pathfinders": 4,
+   "youth-young-adults": 3,
+   "evangelism-outreach": 1
+  },
+  "byCategoryConferenceOnly": {}
+ },
+ "notYetPublished": [
+  {
+   "what": "NPUC Young Adult Summit (Spark Tank)",
+   "usual": "postponed from Sep 11-12, 2026 to a 2027 date \"to be determined\"",
+   "url": "https://npuc.org/spark"
+  },
+  {
+   "what": "NPUC Youth/Young Adult Ministry Conference 2027-28",
+   "usual": "listed as TBD (2026: Nov 16-18, Walla Walla)",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf"
+  },
+  {
+   "what": "Regional Convocation 2027",
+   "usual": "yearly; page shows the 50th (2026) only",
+   "url": "https://npuc.org/ministries/regional/convocation"
+  },
+  {
+   "what": "Specially called NPUC constituency meeting",
+   "usual": "\"fall 2027\", proposed in a Strategic Study Item for the Aug 2026 session; not confirmed as voted",
+   "url": "https://nwadventists.com/news/2026/06/strategic-study-items-briefing"
+  },
+  {
+   "what": "2,700 missional small groups and an ACTS church-planting cohort",
+   "usual": "goal for 2027 (departmental report); no dates",
+   "url": "https://nwadventists.com/news/2026/06/ripples-gods-rain-departmental-reports-20212025"
+  },
+  {
+   "what": "Hispanic union-wide events (caravans, youth congress)",
+   "usual": "nothing posted for 2027",
+   "url": "https://npuc.org/ministries/hispanic"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "OneVoice27 (world church) / All Things New (NAD)",
+   "start": "2027-09",
+   "level": "general-conference",
+   "url": "https://npuc.org/ministries/evangelism",
+   "note": "NPUC evangelism page: \"Leading up to September 2027, the entire worldwide Church will be united in mission.\" No union-specific dates. See NAD/GC file."
+  },
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "level": "division",
+   "url": "https://npuc.org/ministries/youth",
+   "note": "NPUC youth page lists it with location TBD; the NAD gives Huntsville, Alabama."
+  }
+ ],
+ "alsoOct26toMar27": [
+  {
+   "title": "NPUC Early Childhood Workshop",
+   "start": "2026-10-12",
+   "end": "2026-10-13",
+   "place": "Oregon Conference",
+   "category": "education",
+   "category2": "children",
+   "audience": "early childhood educators",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union"
+  },
+  {
+   "title": "New Teacher Cohort (Year 2)",
+   "start": "2026-10-21",
+   "end": "2026-10-22",
+   "place": "Ridgefield, WA (NPUC office)",
+   "category": "education",
+   "category2": "",
+   "audience": "second-year teachers",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union"
+  },
+  {
+   "title": "NPUC Youth/Young Adult Ministry Conference",
+   "start": "2026-11-16",
+   "end": "2026-11-18",
+   "place": "Walla Walla, WA",
+   "category": "youth-young-adults",
+   "category2": "pastoral-leadership",
+   "audience": "youth and young adult leaders",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "union"
+  },
+  {
+   "title": "WWU Friendship Tournament",
+   "start": "2027-01-28",
+   "end": "2027-01-30",
+   "place": "Walla Walla University",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy students",
+   "url": "https://www.wallawalla.edu/admissions-and-aid/recruiting-events",
+   "source": "WWU recruiting events + education calendar",
+   "level": "institution"
+  },
+  {
+   "title": "WWU Music Festival (Band)",
+   "start": "2027-02-10",
+   "end": "2027-02-13",
+   "place": "Walla Walla University",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "academy band students",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
+   "level": "institution"
+  },
+  {
+   "title": "WWU March University Days (U-Days)",
+   "start": "2027-03-04",
+   "end": "2027-03-06",
+   "place": "Walla Walla University",
+   "category": "education",
+   "category2": "",
+   "audience": "academy seniors",
+   "url": "https://www.wallawalla.edu/admissions-and-aid/recruiting-events/university-days",
+   "source": "WWU University Days page",
+   "level": "institution",
+   "note": "Registration deadline Feb 15, 2027."
+  },
+  {
+   "title": "NPUC Pathfinder Coordinators' Retreat",
+   "start": "2027-03-12",
+   "end": "2027-03-14",
+   "place": "Camp MiVoden, Hayden Lake, ID",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "conference club ministries coordinators",
+   "url": "https://npuc.org/ministries/youth",
+   "source": "NPUC youth page",
+   "level": "union",
+   "alsoInV50": [
+    "oregon"
+   ]
+  },
+  {
+   "title": "NPUC Pathfinder Bible Experience",
+   "start": "2027-03-13",
+   "end": "2027-03-13",
+   "place": "Spokane Valley Church (per UCC and Montana)",
+   "category": "pathfinders",
+   "category2": "discipleship-spiritual",
+   "audience": "Pathfinder PBE teams",
+   "url": "https://npuc.org/ministries/youth",
+   "source": "NPUC youth page + conference club calendars",
+   "level": "union",
+   "note": "NPUC page says location TBD; Upper Columbia hosts.",
+   "alsoInV50": [
+    "montana",
+    "washington"
+   ]
+  },
+  {
+   "title": "WWU April U-Days registration deadline",
+   "start": "2027-03-15",
+   "end": "2027-03-15",
+   "place": "",
+   "category": "education",
+   "category2": "",
+   "audience": "academy seniors and families",
+   "url": "https://www.wallawalla.edu/admissions-and-aid/recruiting-events/university-days",
+   "source": "WWU University Days page",
+   "level": "institution",
+   "deadline": true,
+   "note": "Early-bird deadline Dec 15, 2026."
+  }
+ ],
+ "beyondWindow": [
+  {
+   "title": "NPUC Young Adult Faith Tour: Israel (with Egypt/Jordan options)",
+   "start": "2027-10-25",
+   "end": "2027-11-02",
+   "url": "https://npuc.org/israel-tour"
+  },
+  {
+   "title": "WWU Fall Classic Tourney",
+   "start": "2027-10-07",
+   "end": "2027-10-09",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf"
+  },
+  {
+   "title": "New Teacher Cohort (Year 2)",
+   "start": "2027-10-20",
+   "end": "2027-10-21",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf"
+  },
+  {
+   "title": "International Pathfinder Camporee (Oshkosh, WI)",
+   "start": "2029-08-20",
+   "end": "2029-08-26",
+   "url": "https://www.wyopio.com/story/2026/09/17/news/international-pathfinder-camporee-wont-return-to-gillette-in-2029/4037.html"
+  }
+ ],
+ "excluded": [
+  "NPUC events calendar: GC Spring Meeting (Apr 13-14), NADCOM (Apr 15), NAD Treasury Council and NAD Secretariat Council (Apr 28-29) - committees; NAD HR Conference (Apr 25-27) - HR staff only; Mother's Day (May 9) - holiday.",
+  "Education calendar: Accreditation Commission (Jun 3), Board of Education, School Commission, Education Council - committees; MAP testing windows; WWU breaks and summer-school start."
+ ],
+ "aheadChecked": [
+  "https://npuc.org/wp-json/tribe/events/v1/events?start_date=2027-01-01 and ?start_date=2027-03-15",
+  "https://npuc.org/",
+  "https://npuc.org/wp-json/wp/v2/pages?orderby=modified",
+  "https://npuc.org/wp-json/wp/v2/search?search=2027",
+  "https://npuc.org/ministries/youth/pathfinder-camporee-2027",
+  "https://npuc.org/ministries/youth",
+  "https://npuc.org/ministries/young-adult",
+  "https://npuc.org/ministries/children",
+  "https://npuc.org/greece-tour",
+  "https://npuc.org/wp-content/uploads/2026/09/Greece-Tour-2027-Patmos-Santorini.pdf",
+  "https://npuc.org/israel-tour",
+  "https://npuc.org/spark",
+  "https://npuc.org/ministries/education/calendar",
+  "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+  "https://npuc.org/ministries/evangelism",
+  "https://npuc.org/ministries/ministerial",
+  "https://npuc.org/ministries/hispanic",
+  "https://npuc.org/ministries/regional/convocation",
+  "https://npuc.org/ministries/secretariat/30thsession",
+  "https://npuc.org/church-growth",
+  "https://npuc.org/ministries/men",
+  "https://npuc.org/ministries/family",
+  "https://npuc.org/ministries/community",
+  "https://npuc.org/ministries/native",
+  "https://npuc.org/ministries/women",
+  "https://register.adventsourceevents.org/NPUCMinisterialConvention",
+  "https://www.discipletrek.life/collegiate",
+  "https://asinorthwest.org/",
+  "https://www.wallawalla.edu/alumni/events/homecoming",
+  "https://www.wallawalla.edu/admissions-and-aid/recruiting-events",
+  "https://www.wallawalla.edu/admissions-and-aid/recruiting-events/university-days",
+  "https://www.wallawalla.edu/resources/family-resources/graduation",
+  "https://www.wallawalla.edu/admissions-and-aid/visit-wwu/blockout-dates",
+  "https://nwadventists.com/classifieds",
+  "https://nwadventists.com/issue/2026/09",
+  "https://nwadventists.com/news?section=All (123 articles Mar-Oct 2026 searched for 2027)"
+ ],
+ "notes": [
+  "Union events in alsoOct26toMar27 with alsoInV50 are already in those conferences' first-pass files (level union); de-duplicate by title and date when merging.",
+  "The education calendar shows Prayeradigm as \"Nov 11-14, 2028\" in the 2027-28 column; probably a typo for 2027. Not used.",
+  "The NPUC Ministerial Convention was Aug 19-23, 2026; no 2027 ministers' meeting is posted."
+ ]
+}

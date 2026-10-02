@@ -1,0 +1,1334 @@
+[
+ {
+  "conf": "Allegheny East",
+  "union": "Columbia Union",
+  "states": [
+   "DE",
+   "DC",
+   "MD",
+   "NJ",
+   "PA",
+   "VA",
+   "WV"
+  ],
+  "site": "https://www.visitaec.org/",
+  "evangelism": {
+   "help": "budget-line",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": null,
+   "conditions": [
+    "The conference 'Evangelism Appropriation' is sent to the local church; the church treasurer keeps it in a separate line item called 'Conference Evangelism Appropriation' and pays it out only on a properly executed voucher.",
+    "The pastor is directly responsible for disbursing the appropriation, and every payment must fit the published lists of allowable pre-evangelism, evangelism and post-evangelism expenses.",
+    "The local church budget is expected to include an annual amount for evangelism.",
+    "Rental of the pastor's own equipment may be charged at most 10% of the appropriation; honorariums and reimbursements for the pastor's family's services must not exceed 10% of it."
+   ],
+   "report": null,
+   "programmes": [
+    "Impact Philly 2026: a conference-wide initiative for Philadelphia-area churches (free health clinic 7–9 August, Compassion Evangelistic Meetings 12–22 August and a second series in September, Bible-study training, food distributions)",
+    "AEC School of Evangelism (Refresh AEC strategic plan: quarterly training sessions and certification; aim of 50+ certified evangelists by December 2026)",
+    "Refresh AEC strategic plan (draft, 2025): evangelism objectives include a \"cultural shift\" toward evangelism by summer 2027 and a digital evangelism ministry"
+   ],
+   "sources": [
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "In recent years, the conference Evangelism Committee recommended that the Evangelism Appropriation be sent directly to the local church, with the understanding that the local church treasurer would be the custodian of the funds."
+    },
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "A separate line item or account entitled “Conference Evangelism Appropriation” would be set up on the local church’s accounting records."
+    },
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "The pastor is directly responsible for the disbursement of the Conference Evangelism Appropriation."
+    },
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "It is EXPECTED that the local church budget will include an amount for “Evangelism on an annual basis”."
+    },
+    {
+     "title": "Treasury (Office of the Vice President for Finance), VisitAEC.org",
+     "publisher": "Allegheny East Conference",
+     "date": "undated",
+     "url": "https://www.visitaec.org/treasury",
+     "quote": "Evangelism Expenditures Guidelines"
+    },
+    {
+     "title": "ImpactPhilly",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (2026 programme)",
+     "url": "https://www.visitaec.org/impactphilly",
+     "quote": "Impact Philly 2026 is a conference-wide empowerment initiative mobilizing Philadelphia-area churches through health ministry, youth engagement, community service, and multi-site evangelistic meetings to share the gospel of Jesus Christ."
+    },
+    {
+     "title": "ImpactPhilly",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (2026 programme)",
+     "url": "https://www.visitaec.org/impactphilly",
+     "quote": "Compassion Evangelistic Meetings: August 12-22"
+    },
+    {
+     "title": "Refresh AEC Strategic Plan (Draft Document)",
+     "publisher": "Allegheny East Conference",
+     "date": "2025 (draft)",
+     "url": "https://www.visitaec.org/s/Refresh-Strategic-Plan-Booklet_Lettersize.pdf",
+     "quote": "Establish and operate the “AEC School of Evangelism” offering quarterly training sessions, a standardized training manual, and certification process"
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": "Honorariums for speakers, artists and guests are allowable evangelism expenses; IRS Form 1099-MISC is issued for honorariums of $600 or more (recipient completes a W-9); honorariums and reimbursements for the pastor's family's services must not exceed 10% of the conference evangelism appropriation. No per-speaker cap is published.",
+   "sources": [
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "IRS requires that FORM 1099-MISC be issued for all honorariums or that are $600.00 or more and the recipient is REQUIRED to complete a FORM W-9"
+    },
+    {
+     "title": "Local Church Evangelism Expenditures Guidelines",
+     "publisher": "Allegheny East Conference",
+     "date": "undated (file name says 2014)",
+     "url": "https://www.visitaec.org/s/2014GuidelinesForEvangelisticExpenditures-Treasurers.pdf",
+     "quote": "All honorariums and/or reimbursements for the pastor’s family staffing services should not exceed (10%) of the conference evangelism appropriation."
+    }
+   ]
+  },
+  "childProtection": {
+   "conference": "Child Protection Screening and Training through Sterling Volunteers (the NAD programme, Adventist Screening Verification) for employees and volunteers; the conference's administration page also links an FBI criminal background check (IdentoGO), an FBI fingerprinting waiver form, the PA Child Abuse History Clearance and the PA State Police criminal record check (Pennsylvania-law items). Who must screen and how often are not stated on the page.",
+   "sources": [
+    {
+     "title": "Office of the Vice President for Administration, VisitAEC.org",
+     "publisher": "Allegheny East Conference",
+     "date": "undated",
+     "url": "https://www.visitaec.org/vpadmin",
+     "quote": "Allegheny East Conference in partnership with the North American Division of the Seventh-Day Adventist Church has launched a Child Protection Screening and Training program utilizing Sterling Volunteers."
+    },
+    {
+     "title": "Office of the Vice President for Administration, VisitAEC.org",
+     "publisher": "Allegheny East Conference",
+     "date": "undated",
+     "url": "https://www.visitaec.org/vpadmin",
+     "quote": "The web-based platform features a training and screening system for both employees and volunteers across all conferences in the division."
+    },
+    {
+     "title": "Office of the Vice President for Administration, VisitAEC.org",
+     "publisher": "Allegheny East Conference",
+     "date": "undated",
+     "url": "https://www.visitaec.org/vpadmin",
+     "quote": "PA Child Abuse History Clearance"
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": "https://www.visitaec.org/ministerial"
+  },
+  "checked": "2026-09-30",
+  "notes": "No public evangelism-subsidy application, share, cap or deadline was found; the guidelines describe a conference 'Evangelism Appropriation' already sent to churches, so a pastor should ask the conference how the year's appropriation is set. No separate Evangelism department page was found; Ministries Development (https://www.visitaec.org/minsdev) covers personal ministries. The guidelines say pastors historically turned in an evangelism financial report with receipts at the end of a crusade, but they do not state the current reporting rule. The linked 'Sterling Volunteers FAQ' and 'Who Should Complete Sterling Volunteers?' PDFs returned 'No Such Website' (404) on 30 Sep/1 Oct 2026. Territory spans seven jurisdictions, so state law differs by church location (see states file). Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Allegheny West",
+  "union": "Columbia Union",
+  "states": [
+   "OH",
+   "WV",
+   "VA",
+   "PA"
+  ],
+  "site": "https://awconf.org/",
+  "evangelism": {
+   "help": "none-found",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": null,
+   "conditions": [],
+   "report": null,
+   "programmes": [
+    "Rescue+ Ohio (Pentecost Kids and Youth Pentecost), July–August 2025: children and youth evangelistic series in seven Columbus churches; AWC administration chose to forgo camp meeting and reallocate those funds to it",
+    "Youth Pentecost and Pentecost Kids planned for 2026; leadership committed to child and youth evangelism in Cincinnati (2027), Virginia (2028) and Pittsburgh (2029)",
+    "2026 \"Year of Health\" (Health Ministries: health evangelism events, wellness programmes, community outreach)"
+   ],
+   "sources": [
+    {
+     "title": "“What About Us?”: How Youth-Led Evangelism Sparked a Movement in the Allegheny West Conference",
+     "publisher": "North American Division of Seventh-day Adventists",
+     "date": "7 Jan 2026",
+     "url": "https://www.nadadventist.org/news/what-about-us-how-youth-led-evangelism-sparked-a-movement-in-the-allegheny-west-conference/",
+     "quote": "with the support of AWC administration, who chose to forego camp meeting and reallocate those funds to Reach+ Ohio."
+    },
+    {
+     "title": "“What About Us?”: How Youth-Led Evangelism Sparked a Movement in the Allegheny West Conference",
+     "publisher": "North American Division of Seventh-day Adventists",
+     "date": "7 Jan 2026",
+     "url": "https://www.nadadventist.org/news/what-about-us-how-youth-led-evangelism-sparked-a-movement-in-the-allegheny-west-conference/",
+     "quote": "AWC leadership has committed to continuing with dedicated child and youth evangelism in Cincinnati (2027), Virginia (2028), and Pittsburgh (2029)."
+    },
+    {
+     "title": "Departments - Allegheny West Conference",
+     "publisher": "Allegheny West Conference",
+     "date": "modified 6 Aug 2026",
+     "url": "https://awconf.org/departments/",
+     "quote": "Her vision for 2026 is to make it the \"Year of Health\" across the conference"
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "Child protection training is required for all volunteers, and background checks for Verified Volunteers, through Adventist Screening Verification/Sterling Volunteers (ncsrisk.org/adventist): register under Ohio > Allegheny West Conference, complete the Child Protection module, then the background check. Renewal period is not stated.",
+   "sources": [
+    {
+     "title": "Departments - Allegheny West Conference (Children’s Ministries: Protecting Our Children)",
+     "publisher": "Allegheny West Conference",
+     "date": "modified 6 Aug 2026",
+     "url": "https://awconf.org/departments/",
+     "quote": "We require child protection training for all volunteers and background checks for Verified Volunteers (VV)."
+    },
+    {
+     "title": "AWC Employee Training Modules & Background Check Instructions",
+     "publisher": "Allegheny West Conference",
+     "date": "uploaded Oct 2021",
+     "url": "https://awconf.org/wp-content/uploads/2021/10/AWC-Employee-Training-Modules-Background-Check-Instructions.pdf",
+     "quote": "Click on the Child Protection Module. Follow the prompts to complete the training."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": "https://awconf.org/departments/"
+  },
+  "checked": "2026-09-30",
+  "notes": "No evangelism subsidy, grant or application process is published on awconf.org (sitemap, departments page, treasury forms and WordPress media library searched). The treasury page links a 'Treasurer Portal' on Notion that could not be read without a browser, so it may hold forms not seen here. The Ministerial department is a section of the Departments page; there is no separate Evangelism page. Ask the conference office directly. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Chesapeake",
+  "union": "Columbia Union",
+  "states": [
+   "DE",
+   "MD",
+   "VA",
+   "WV"
+  ],
+  "site": "https://ccosda.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": "up to 50% (only 25% if the application is late)",
+   "cap": null,
+   "deadline": "15 November of the year before (the 2026 cycle closed \"November 15, 2025 at midnight\"); the 2027 cycle was due to open in October 2026",
+   "how": "Complete two online forms: the year’s Cycle of Evangelism Form (the church’s 12-month evangelism plan) and a separate Evangelism Subsidy Request Form, with an estimated budget, for each outreach event.",
+   "conditions": [
+    "Outreach should be part of an intentional plan that includes pre-work, reaping, follow-up and disciple-making; the application must show how the request fits these areas (regular and creative outreach applications are also accepted).",
+    "Subsidy may not exceed 50% of the total cost; the amount paid is the approved amount or 50% of actual costs, whichever is less.",
+    "Up to 75% may be requested six weeks before the outreach; the final 25% is paid after the Evangelism Report Form is returned.",
+    "Funds go to the local church; the treasurer keeps the evangelism budget in a separate ledger account with a receipt or voucher for every entry.",
+    "The conference advance is a receivable from the church until the report is returned; any excess over the formula is returned pro rata.",
+    "All Bible workers must be approved and paid through the conference."
+   ],
+   "report": "Evangelism Report Form (board-approved) after the event, with a final actual-expense report within 45 days; it records baptisms, rebaptisms, professions of faith, attendance, visits, follow-up plan and itemised expenses (receipts kept for audit, not sent).",
+   "programmes": [
+    "Evangelism subsidy 2026: $539,561 committed to 138 programmes at 46 churches and ministries",
+    "Proclaim Evangelism Modules (year-long, four 2-day modules; participants commit to hold an evangelistic meeting)",
+    "Alive. Together. On Mission. (conference vision, Camp Meeting 2026) and Partners in Mission (survey-led conference support for local churches)",
+    "Forecasting Hope evangelistic series and Discover Bible Prophecy series (Evangelism department resources)",
+    "Reach Chesapeake (united outreach named in the subsidy policy and evangelism-offering page; date of the most recent cycle not stated)"
+   ],
+   "sources": [
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "The deadline to submit your evangelism subsidy requests for 2026 is November 15, 2025 at midnight."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "To be eligible for up to 50 percent of the cost of your outreach, your application must be submitted by the deadline. Anything received after that will only be eligible for 25% of the outreach cost."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "The first is the 2026 Cycle of Evangelism Form , which asks you to share what your overall evangelism plans are for next year (12 months)."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "You will need to fill out a separate request for each outreach event."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "Receipts do not need to be submitted to the conference, but a final actual expense report is required within 45 days of the end of the event."
+    },
+    {
+     "title": "Chesapeake Evangelism Subsidy Policy and Application",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "revised 1 Jan 2021",
+     "url": "http://ccosda.org/wp-content/uploads/2021/02/Chesapeake-Conference-Subsidy-Policy.pdf",
+     "quote": "the actual subsidy amount reimbursed after the outreach will be limited to either the amount approved for the church, or 50 percent of the actual costs of the approved project, whichever is less."
+    },
+    {
+     "title": "Chesapeake Evangelism Subsidy Policy and Application",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "revised 1 Jan 2021",
+     "url": "http://ccosda.org/wp-content/uploads/2021/02/Chesapeake-Conference-Subsidy-Policy.pdf",
+     "quote": "You may request up to 75 percent of your subsidy six weeks prior to the outreach event in an email specifying the dates of your outreach and the amount you are requesting."
+    },
+    {
+     "title": "Chesapeake Evangelism Subsidy Policy and Application",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "revised 1 Jan 2021",
+     "url": "http://ccosda.org/wp-content/uploads/2021/02/Chesapeake-Conference-Subsidy-Policy.pdf",
+     "quote": "All Bible Workers must be approved and paid through the conference."
+    },
+    {
+     "title": "Chesapeake Conference Evangelism Report Form",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "revised 1 Jan 2021",
+     "url": "http://ccosda.org/wp-content/uploads/2021/02/Evangelism-Report-Form.pdf",
+     "quote": "This form must be completed after the evangelism event to request your subsidy."
+    },
+    {
+     "title": "Chesapeake Conference Commits $539,561 to Local Church Evangelism in 2026",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "16 Sep 2026",
+     "url": "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/",
+     "quote": "The Chesapeake Conference of Seventh-day Adventists has committed $539,561 to fund evangelism and outreach initiatives across its territory in 2026, supporting 138 programs at 46 churches and ministries in Maryland, Delaware, Virginia, and West Virginia."
+    },
+    {
+     "title": "Chesapeake Conference Commits $539,561 to Local Church Evangelism in 2026",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "16 Sep 2026",
+     "url": "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/",
+     "quote": "The conference plans to open the application cycle for 2027 evangelism subsidies next month."
+    },
+    {
+     "title": "Chesapeake Conference Commits $539,561 to Local Church Evangelism in 2026",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "16 Sep 2026",
+     "url": "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/",
+     "quote": "Every church in the conference is eligible to apply for evangelism subsidies."
+    },
+    {
+     "title": "Proclaim Evangelism Modules",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 15 Oct 2025",
+     "url": "https://www.ccosda.org/proclaim",
+     "quote": "You must commit to conducting an evangelistic meeting during the year you are in the modules, or within six months of completing the modules."
+    },
+    {
+     "title": "Chesapeake Conference Launches “Partners in Mission” Initiative at Camp Meeting 2026",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "25 Jun 2026",
+     "url": "https://ccosda.org/chesapeake-conference-launches-partners-in-mission-initiative-at-camp-meeting-2026/",
+     "quote": "Partners in Mission is a new conference initiative designed to bridge the gap between what local churches need and what the conference can provide."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": "Guest Evangelist Honorarium Policy: honorariums go on the proposed and actual budget, only when there is no other fee, and only to the sole or main speaker. Guide amounts: 2–5 sessions $125–$250; 6–8 sessions $250–$500; 9 or more sessions $500–$1,000; more needs approval from the ministries development director. A Chesapeake pastor preaching in another district may receive up to $500. Honorariums over $600 a year to one person go through conference payroll (W-9 needed); out-of-country speakers are ineligible.",
+   "sources": [
+    {
+     "title": "Chesapeake Conference Guest Evangelist Honorarium Policy",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "26 Feb 2014",
+     "url": "http://ccosda.org/wp-content/uploads/2020/03/Handbook-Honorarium-Policy_v2.pdf",
+     "quote": "Nine or more session series typically done over two or more weeks: $500 to $1,000."
+    },
+    {
+     "title": "Chesapeake Conference Guest Evangelist Honorarium Policy",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "26 Feb 2014",
+     "url": "http://ccosda.org/wp-content/uploads/2020/03/Handbook-Honorarium-Policy_v2.pdf",
+     "quote": "Pastors who hold meetings may be given an honorarium of up to $500 maximum"
+    },
+    {
+     "title": "Chesapeake Conference Guest Evangelist Honorarium Policy",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "26 Feb 2014",
+     "url": "http://ccosda.org/wp-content/uploads/2020/03/Handbook-Honorarium-Policy_v2.pdf",
+     "quote": "Honorariums may be granted when there is no other fee for the guest evangelist’s service."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "Honorariums to an individual greater than $600 in a year must be processed through conference payroll and conform to the honorarium policy."
+    },
+    {
+     "title": "Subsidy - Chesapeake Conference of Seventh-day Adventists",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 21 Oct 2025",
+     "url": "https://ccosda.org/subsidy/",
+     "quote": "Out-of-country speakers are ineligible for honorariums."
+    }
+   ]
+  },
+  "childProtection": {
+   "conference": "Chesapeake Child Protection Policy: every children’s and youth volunteer, regardless of experience, signs the Children and Youth Ministry Volunteer Code of Conduct and completes online training and a background check through Verified Volunteers/Adventist Screening Verification (Sterling Volunteers) before serving, renewed every three years; six months’ membership is required for volunteer leadership; the local church or school pays.",
+   "sources": [
+    {
+     "title": "Chesapeake Conference Child Protection Policy and Procedures",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "undated (uploaded Apr 2020)",
+     "url": "http://ccosda.org/wp-content/uploads/2020/04/VV-Child-Protection-Policy-and-Procedures.pdf",
+     "quote": "The volunteer screening procedure must be updated for each individual every three (3) years."
+    },
+    {
+     "title": "Chesapeake Conference Child Protection Policy and Procedures",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "undated (uploaded Apr 2020)",
+     "url": "http://ccosda.org/wp-content/uploads/2020/04/VV-Child-Protection-Policy-and-Procedures.pdf",
+     "quote": "Background screening and online training, conducted by Verified Volunteers, must be completed before the volunteer is allowed to serve."
+    },
+    {
+     "title": "Chesapeake Conference Child Protection Policy and Procedures",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "undated (uploaded Apr 2020)",
+     "url": "http://ccosda.org/wp-content/uploads/2020/04/VV-Child-Protection-Policy-and-Procedures.pdf",
+     "quote": "The local church or school is responsible for the cost of implementing these screening procedures."
+    },
+    {
+     "title": "Child Protection Training and Background Screening – Church/School Resources",
+     "publisher": "Chesapeake Conference of Seventh-day Adventists",
+     "date": "modified 14 Jun 2022",
+     "url": "https://ccosda.org/childprotection/",
+     "quote": "Create an Adventist Screening Verification/Sterling Volunteers account"
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://ccosda.org/evangelism/",
+   "ministerialPage": "https://ccosda.org/ministerial/"
+  },
+  "checked": "2026-09-30",
+  "notes": "Closest match to the Pennsylvania model (same 50% share, 75% advance, separate ledger, $600 honorarium line). Watch the deadline: the late rate drops to 25%. The 2027 forms were not yet posted when checked (the subsidy page still shows the 2026 forms and deadline). The policy PDF (revised 1 Jan 2021) also mentions a special budget for the \"Reach Chesapeake\" initiative. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Mountain View",
+  "union": "Columbia Union",
+  "states": [
+   "WV",
+   "MD"
+  ],
+  "site": "https://mtviewconf.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": "2/3 of actual cost (conference), local church pays the rest",
+   "cap": "up to $14,000 (high-population area), $6,500 (medium), $4,000 (low)",
+   "deadline": "budget to the conference treasurer at least 8 months before the series begins",
+   "how": "Submit the Evangelism Budget Approval Form (with the pre-campaign plan) to the conference treasurer; it is signed by the pastor, evangelism coordinator, conference president and treasurer, and final approval is by the Evangelism Committee.",
+   "conditions": [
+    "Subject to available funds and a vote of the Evangelism Committee.",
+    "Only meetings that present all major doctrines with reaping as the primary focus are funded; short condensed series are preferred.",
+    "Pre-campaign work is required and a detailed plan of it must be submitted before final budget approval.",
+    "Roughly one series per church every 18 months.",
+    "The local pastor is encouraged to preach; otherwise a conference evangelist, a qualified lay member, or an outside presenter chosen with the conference.",
+    "A conference evangelist costs the church nothing for salary, travel or equipment; housing for any evangelist is the local church’s cost and is not counted in the 2/3 calculation.",
+    "An advance (generally 80% of the conference portion) may be sent no sooner than 3 months before the series; assistance is based on actual, not budgeted, cost."
+   ],
+   "report": "A detailed financial report of income and expense, including copies of receipts, before the remaining funds are sent.",
+   "programmes": [],
+   "sources": [
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005 (linked from the Ministerial Forms page, modified 3 Nov 2025)",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "The Conference shall pay 2/3 of the actual cost up to the maximum as listed in item G."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "Meetings determined to be in a high population area shall receive up to $14,000."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "Evangelism budgets are to be submitted to the Conference treasurer at least 8 months before the series is to begin. Final budget approval is to be made by the Evangelism Committee."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "the Conference will financially support only those meetings in which there is a presentation of all major doctrines and reaping is the primary focus."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "The advance shall generally be 80% of the budgeted Conference portion."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Guidelines",
+     "publisher": "Mountain View Conference",
+     "date": "revised 5 Dec 2005",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "The remaining funds shall be sent after a detailed financial report of income and expense, including copies of receipts, is received from the local church."
+    },
+    {
+     "title": "Mountain View Conference Evangelism Budget Approval Form",
+     "publisher": "Mountain View Conference",
+     "date": "undated",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "Please submit form to Conference Treasurer"
+    },
+    {
+     "title": "Forms – Mountain View Conference",
+     "publisher": "Mountain View Conference",
+     "date": "modified 3 Nov 2025",
+     "url": "https://mtviewconf.org/departments/ministerial/forms1/",
+     "quote": "Evangelism Budget Agreement (pdf)"
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "The Risk Management page points to Verified Volunteers / Adventist Screening Verification (nadadventist.org/asv), and the Treasury page notes that Risk Management \"includes Verified Volunteer form\"; no conference policy text (who, renewal, cost) is published.",
+   "sources": [
+    {
+     "title": "Risk Management – Mountain View Conference",
+     "publisher": "Mountain View Conference",
+     "date": "modified 3 Nov 2025",
+     "url": "https://mtviewconf.org/departments/employee-resources/risk-management/",
+     "quote": "Verified Volunteers"
+    },
+    {
+     "title": "Treasury – Mountain View Conference",
+     "publisher": "Mountain View Conference",
+     "date": "modified 11 Jun 2026",
+     "url": "https://mtviewconf.org/departments/employee-resources/",
+     "quote": "Risk Management (includes Verified Volunteer form)"
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://mtviewconf.org/departments/evangelism/",
+   "ministerialPage": "https://mtviewconf.org/departments/ministerial/"
+  },
+  "checked": "2026-09-30",
+  "notes": "The guidelines are dated December 2005 but are still the linked \"Evangelism Budget Guidelines\" on the current Ministerial Forms page; confirm the dollar caps with the conference before quoting them. The guidelines list which towns count as high, medium or low population (e.g. high: Parkersburg, Charleston, Huntington, Morgantown, Cumberland). The PDF links are time-limited signed URLs, so the stable citation is the Forms page. No honorarium rule is published (the budget form has a line for \"Outside Evangelist Salary\"). Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "New Jersey",
+  "union": "Columbia Union",
+  "states": [
+   "NJ"
+  ],
+  "site": "https://njcsda.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": "Fill in the 2026 Evangelism Project Church Information & Subsidy Request form (budget breakdown, funding sources, community profile, baptismal goal), get it signed by the head elder, treasurer and pastor with the board’s approval date, attach the board minutes and send it to the conference; the NJC Evangelism Committee sets the approved subsidy.",
+   "conditions": [
+    "Church board approval, with the board minutes attached.",
+    "Form asks for the church’s own contribution, expected offerings and donations, and the date of the church’s last evangelistic campaign."
+   ],
+   "report": null,
+   "programmes": [
+    "Pentecost 2025 conference evangelism plan (spiritual preparation, sowing and reaping phases; lay evangelism, spring and regional fall evangelism; goal of 1,000 souls)",
+    "Regional Ministries Training (north, central and south regions, January 2026)"
+   ],
+   "sources": [
+    {
+     "title": "resources – New Jersey Conference of SDA",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://njcsda.org/resources/",
+     "quote": "2026 Evangelism Subsidy Form"
+    },
+    {
+     "title": "Evangelism Project: Church Information & Subsidy Request (2026, fillable)",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "uploaded Apr 2026",
+     "url": "https://njcsda.org/wp-content/uploads/2026/04/Evangelism-Church-Budget-Breakdown-2026-Fillable.pdf",
+     "quote": "Please attach the board minutes with this form."
+    },
+    {
+     "title": "Evangelism Project: Church Information & Subsidy Request (2026, fillable)",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "uploaded Apr 2026",
+     "url": "https://njcsda.org/wp-content/uploads/2026/04/Evangelism-Church-Budget-Breakdown-2026-Fillable.pdf",
+     "quote": "NJC Evangelism Committee Date Approved"
+    },
+    {
+     "title": "New Jersey Conference Hosts Ministries Training in Three Regions",
+     "publisher": "Columbia Union Conference",
+     "date": "2026 (undated page)",
+     "url": "https://columbiaunion.org/content/new-jersey-conference-hosts-ministries-training-three-regions",
+     "quote": "The New Jersey Conference launched 2026 with its annual Regional Ministries Training, held across its three regions: north, central and south."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": "Pastors’ Evangelism Assistance: a conference employee who is the principal speaker in his or her own district (also conference administrators and departmental directors) may receive a special evangelistic allowance of $25 per night, up to $1,000 a year; a second simultaneous effort may get at most 50% of the first allowance. No rule for guest-speaker honorariums is published.",
+   "sources": [
+    {
+     "title": "Request for Pastors Evangelism - Evangelism Assistance",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.newjerseyconference.org/_files/ugd/e10a7d_d9241ef42b1f4d5ca28ccd8aa38ae5d8.pdf",
+     "quote": "SPECIAL EVANGELISTIC ALLOWANCE – THE SPEAKER MAY RECEIVE AN ALLOWANCE OF $25.00 PER NIGHT AS A SPECIAL ALLOWANCE, UP TO A TOTAL OF $1,000 A YEAR."
+    },
+    {
+     "title": "Request for Pastors Evangelism - Evangelism Assistance",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.newjerseyconference.org/_files/ugd/e10a7d_d9241ef42b1f4d5ca28ccd8aa38ae5d8.pdf",
+     "quote": "When more than one effort is conducted simultaneously at separate locations, a second special allowance may be granted, but to be at most 50% of the initial allowance."
+    }
+   ]
+  },
+  "childProtection": {
+   "conference": "The conference resources page lists the NAD Volunteer Screening Guidelines, a Child Protection Plan church guide, the Code of Conduct for volunteers, the Ministry Volunteer Information Sheet and a \"Background check\" link to Adventist Screening Verification (nadadventist.org/asv). Under the guidelines all volunteers get Basic screening (interview, signed form, three references), Comprehensive screening (state/FBI criminal and sex-offender check) may be required for regular one-on-one or off-site work, and volunteer information is updated every three years.",
+   "sources": [
+    {
+     "title": "Volunteer Screening Guidelines for Children and Youth Ministries of the North American Division (Revision 540-05N), as posted by the New Jersey Conference",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.newjerseyconference.org/_files/ugd/af9957_54a8e1d0c3ee453a9b822da648705c2f.pdf",
+     "quote": "(Volunteer information on file at the church should be updated every three (3) years.)"
+    },
+    {
+     "title": "Volunteer Screening Guidelines for Children and Youth Ministries (NAD), as posted by the New Jersey Conference",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.newjerseyconference.org/_files/ugd/af9957_54a8e1d0c3ee453a9b822da648705c2f.pdf",
+     "quote": "All volunteers must complete the Basic Level of screening."
+    },
+    {
+     "title": "resources – New Jersey Conference of SDA",
+     "publisher": "New Jersey Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://njcsda.org/resources/",
+     "quote": "Volunteer Screening Guidelines"
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://njcsda.org/evangelism/",
+   "ministerialPage": null
+  },
+  "checked": "2026-09-30",
+  "notes": "A subsidy exists (2026 form, approved by the NJC Evangelism Committee), but no share, cap, deadline or after-event report rule is published. The 2026 PDF has no text layer; it was read by OCR. The conference has two web addresses (njcsda.org and newjerseyconference.org). No separate Ministerial page was found. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Ohio",
+  "union": "Columbia Union",
+  "states": [
+   "OH"
+  ],
+  "site": "https://www.ohioadventist.org/",
+  "evangelism": {
+   "help": "grant",
+   "share": null,
+   "cap": "$10,000 per participating church plus a fully funded Bible worker and speaker (Ignite Ohio 2026); church invests at least $5,000",
+   "deadline": "church board vote to join by the end of January 2026 (Ignite Ohio 2026); no 2027 date published",
+   "how": "Pastor fills in the Ignite Ohio interest form (one per church), the church board votes to participate, the church writes its pre-campaign, campaign and post-campaign plan, and the pastor submits the commitment form; the Evangelism Department then schedules training and the $10,000 is released.",
+   "conditions": [
+    "Take part in the 28-Day Acts Challenge (February), Share Your Table Month (June) and the simultaneous proclamation week (19–26 September 2026).",
+    "Invest a minimum of $5,000 in the church’s own proclamation initiative and attend the conference’s local training.",
+    "The $10,000 may be used across pre-campaign, proclamation week and post-campaign work.",
+    "Churches not joining Ignite Ohio continue with the conference’s normal yearly evangelism process and support (terms not published)."
+   ],
+   "report": null,
+   "programmes": [
+    "Ignite Ohio 2026 (with the Columbia Union): 28-Day Acts Challenge, Share Your Table Month, simultaneous proclamation initiatives 19–26 September 2026; with the parallel Hispanic campaigns, 657 baptisms reported",
+    "Pentecost 2025 (conference allocated $675,000 to evangelism in 2025; 101 churches and schools in public evangelism)",
+    "BLAST (\"Building Lives Around Solid Truth\") evangelism model taught by the Evangelism Department"
+   ],
+   "sources": [
+    {
+     "title": "IGNITE OHIO 2026 (FAQs)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated (2026 programme)",
+     "url": "https://igniteohio.com/",
+     "quote": "Each participating church will receive $10,000, one fully funded Bible worker during the proclamation series, and a fully funded speaker."
+    },
+    {
+     "title": "IGNITE OHIO 2026 (FAQs)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated (2026 programme)",
+     "url": "https://igniteohio.com/",
+     "quote": "invest a minimum of $5,000 into their proclamation initiative."
+    },
+    {
+     "title": "IGNITE OHIO 2026 (FAQs)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated (2026 programme)",
+     "url": "https://igniteohio.com/",
+     "quote": "The $10,000 is released after your church board votes to officially join Ignite Ohio, builds an evangelism plan, and the local pastor fills out the commitment form."
+    },
+    {
+     "title": "IGNITE OHIO 2026",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated (2026 programme)",
+     "url": "https://igniteohio.com/",
+     "quote": "Pastors, discuss Ignite Ohio with your church board and secure a vote to participate by the end of January 2026."
+    },
+    {
+     "title": "IGNITE OHIO 2026 (FAQs)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated (2026 programme)",
+     "url": "https://igniteohio.com/",
+     "quote": "Non-participating churches will simply continue with the normal yearly evangelism process and support available through the Ohio Conference."
+    },
+    {
+     "title": "Advancing the Mission Through Statewide Evangelism",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "15 Apr 2026",
+     "url": "https://columbiaunionvisitor.com/2026/advancing-mission-through-statewide-evangelism",
+     "quote": "In partnership with the Columbia Union Conference, each church that formally commits will receive a comprehensive support package valued at nearly $20,000."
+    },
+    {
+     "title": "Ohio Conference Concludes Two-Day Pastors' Meeting Focused on Evangelism and Ministry Support",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "4 Mar 2025",
+     "url": "https://www.ohioadventist.org/ohio-conference-concludes-two-day-pastors-meeting-focused-on-evangelism-and-ministry-support",
+     "quote": "Conference administrators announced that $675,000 has been allocated this year to support evangelism efforts."
+    },
+    {
+     "title": "Ohio Conference Celebrates 657 Baptisms Following Historic Week of Evangelism",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "28 Sep 2026",
+     "url": "https://www.ohioadventist.org/ohio-conference-celebrates-657-baptisms-following-historic-week-of-evangelism",
+     "quote": "The total includes baptisms from Ignite Ohio and the conference’s simultaneous Hispanic evangelistic campaigns, conducted September 19–26."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "All volunteers in Ohio Conference schools, churches and affiliated institutions, of any role or age, must complete Sterling Volunteers screening before serving. The conference policy requires a signed Volunteer Ministry Information Form, a criminal background check, three character references and child-abuse education, renewed every three years; the local church or school pays (the conference may help at its discretion).",
+   "sources": [
+    {
+     "title": "Background Screening | Ohio Conference of Seventh-day Adventists",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://www.ohioadventist.org/background-screening",
+     "quote": "All volunteers in Ohio Conference schools, churches, and affiliated institutions must complete Sterling Volunteers official screening program before engaging in any activity in Ohio Conference entities - regardless of role or age."
+    },
+    {
+     "title": "Child Protection and Background Check for Employees and Volunteers (Ohio Conference policy, .docx)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://irp.cdn-website.com/e883bbd8/files/uploaded/CHILD+PROTECTION+AND+BACKGROUND+CHECK+FOR+EMPLOYEES+AND+VOLUNTEERS.docx",
+     "quote": "All volunteers are required to participate in a screening procedure that will include a signed Volunteer Ministry Information Form, a criminal background check, and three (3) character references."
+    },
+    {
+     "title": "Child Protection and Background Check for Employees and Volunteers (Ohio Conference policy, .docx)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://irp.cdn-website.com/e883bbd8/files/uploaded/CHILD+PROTECTION+AND+BACKGROUND+CHECK+FOR+EMPLOYEES+AND+VOLUNTEERS.docx",
+     "quote": "The volunteer screening procedure must be updated for each individual every three (3) years."
+    },
+    {
+     "title": "Child Protection and Background Check for Employees and Volunteers (Ohio Conference policy, .docx)",
+     "publisher": "Ohio Conference of Seventh-day Adventists",
+     "date": "undated",
+     "url": "https://irp.cdn-website.com/e883bbd8/files/uploaded/CHILD+PROTECTION+AND+BACKGROUND+CHECK+FOR+EMPLOYEES+AND+VOLUNTEERS.docx",
+     "quote": "The local church or school is responsible for the cost of implementing these screening procedures. The local conference may provide financial assistance at their discretion."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://www.ohioadventist.org/evangelism",
+   "ministerialPage": null
+  },
+  "checked": "2026-09-30",
+  "notes": "Ignite Ohio was a 2026 programme and its proclamation week ended 26 September 2026; whether a 2027 round will run is not published. The \"normal yearly evangelism process\" exists but its share, cap and deadline are not published; ask the Evangelism Department. Members can give to the \"Conference Evangelism\" fund (Ignite Ohio page). The 2013 Treasurers’ Manual linked on the forms page returned 404. No Ministerial page was found. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Pennsylvania",
+  "union": "Columbia Union",
+  "states": [
+   "PA"
+  ],
+  "site": "https://paconference.org/",
+  "evangelism": {
+   "help": "subsidy",
+   "share": "up to 50%",
+   "cap": null,
+   "deadline": "30 September",
+   "how": "Submit one online Evangelistic Request Form per church event, through the subsidy form at paconference.org/evangelism/subsidy (pastor logs in with the conference e-mail account), with the church board’s support by 30 September; the Evangelism Committee notifies the pastor.",
+   "conditions": [
+    "Part of an intentional plan that includes pre-work and reaping; follow-up and disciple-making must also be prioritised.",
+    "Request up to but not exceeding 50% of the total cost; local church support and meeting offerings make up the other 50%.",
+    "Do not commit to budgeted expenditures until approval is received.",
+    "Up to 75% may be drawn three months before the meetings open (earlier for auditorium deposits); the rest after the Evangelistic Report Form.",
+    "Meetings under $1,000: pay the bills first, then claim reimbursement.",
+    "Claims must be made within the budget year; none after 31 December.",
+    "Funds only for the approved project; anything above the conference share of actual cost is returned.",
+    "The local treasurer keeps the budget in a ledger account separate from other church funds, with a receipt or voucher for each entry."
+   ],
+   "report": "Evangelistic Report Form, submitted immediately after the end of the meetings (releases the remaining funds and clears the advance).",
+   "programmes": [
+    "In One Accord (personal and public evangelism through the quinquennium)",
+    "Shine the Light (online Bible studies for Pennsylvania’s 13 million people)",
+    "OneVoice27: churches equipped to present an evangelistic series in September 2027",
+    "CORE Up Close (weekend version of the CORE programme)"
+   ],
+   "sources": [
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "budget requests from the Conference should be up to but not exceeding 50% of the total cost of the meeting or seminar."
+    },
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "Please submit a separate Evangelistic Request Form for each church event with the church board's support by September 30."
+    },
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "The remaining monies will be disbursed once the Evangelistic Report Form is submitted immediately after the end of the meetings."
+    },
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "Requests submitted after December 31 cannot be honored because the Conference is in a different budget year."
+    },
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "Details of the evangelism budget are to be kept in a ledger account separate from other church funds."
+    },
+    {
+     "title": "Evangelism Subsidy - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 4 Mar 2026",
+     "url": "https://paconference.org/evangelism/subsidy/",
+     "quote": "Churches should not commit themselves to the budget expenditures until they have received approval."
+    },
+    {
+     "title": "Evangelism - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 21 Jul 2026",
+     "url": "https://paconference.org/evangelism/",
+     "quote": "Our primary role is that of training, encouraging and resourcing churches in their evangelistic endeavors."
+    },
+    {
+     "title": "OneVoice27 - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 15 Sep 2026",
+     "url": "https://paconference.org/onevoice27/",
+     "quote": "Churches will be equipped with resources to share the gospel digitally, connect with interests, and present an evangelistic series in September 2027"
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": "Honorariums must not exceed $600 in a year and may be processed through conference payroll under the honorarium policy (contact treasury for forms); out-of-country speakers are ineligible.",
+   "sources": [
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "Honorariums must not exceed $600 in a year and may be processed through Conference payroll and conform to the honorarium policy"
+    },
+    {
+     "title": "Pennsylvania Conference Evangelism Subsidy Policy",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "uploaded Mar 2026",
+     "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
+     "quote": "Out-of-country speakers are ineligible for honorariums."
+    }
+   ]
+  },
+  "childProtection": {
+   "conference": "Four-part background check via Sterling Volunteers: Pennsylvania State Police check (PATCH), PA Child Abuse Registry released to Sterling, FBI fingerprints (or a residency affidavit/waiver for volunteers living in PA ten years or more; all employees fingerprint), and child-protection training; required for children’s Sabbath School teachers and assistants, Children’s Ministries, Adventurer, Pathfinder and youth leaders and assistants, school volunteers and anyone else with direct contact; the conference asks for it every three years.",
+   "sources": [
+    {
+     "title": "Background Checks - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 18 Jun 2025",
+     "url": "https://paconference.org/backgroundchecks/",
+     "quote": "Please note that the Pennsylvania background check will consist of 4 parts:"
+    },
+    {
+     "title": "Background Checks - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 18 Jun 2025",
+     "url": "https://paconference.org/backgroundchecks/",
+     "quote": "All Sabbath School Children’s Division Teachers and assistants (Cradle roll through Teens)"
+    },
+    {
+     "title": "Background Checks - Pennsylvania Conference of SDA",
+     "publisher": "Pennsylvania Conference of Seventh-day Adventists",
+     "date": "modified 18 Jun 2025",
+     "url": "https://paconference.org/backgroundchecks/",
+     "quote": "This should be completed every three years."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": "https://paconference.org/evangelism/",
+   "ministerialPage": "https://paconference.org/ministerial/"
+  },
+  "checked": "2026-09-30",
+  "notes": "Re-checked: the subsidy page (modified 4 Mar 2026) and policy PDF are unchanged from the v42 record. The subsidy page still also links the 2023 policy update. The policy does not print a year next to \"September 30\"; with the 31 December budget-year rule it reads as the request deadline for the coming year (confirm with the Evangelism Committee). Pennsylvania state law requires a renewal every 60 months; the conference asks for every three years. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ },
+ {
+  "conf": "Potomac",
+  "union": "Columbia Union",
+  "states": [
+   "VA",
+   "DC",
+   "MD"
+  ],
+  "site": "https://pcsda.org/",
+  "evangelism": {
+   "help": "none-found",
+   "share": null,
+   "cap": null,
+   "deadline": null,
+   "how": null,
+   "conditions": [],
+   "report": null,
+   "programmes": [
+    "Hispanic Caravan of Evangelism (2026): simultaneous evangelistic meetings in Maryland, Virginia and Washington, D.C., with 195 baptisms",
+    "LEAD groups (monthly peer groups for pastors) and church consultations (Pastoral Ministries)",
+    "\"Go Beyond The Walls\" (ministries mandate)"
+   ],
+   "sources": [
+    {
+     "title": "Hispanic Ministries Caravan: One Week, 195 Souls",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "14 Jul 2026",
+     "url": "https://columbiaunionvisitor.com/2026/hispanic-ministries-caravan-one-week-195-souls",
+     "quote": "A spirit of unity and purpose recently swept across the Potomac Conference as the Hispanic Caravan of Evangelism resulted in 195 baptisms."
+    },
+    {
+     "title": "Development and Events – Potomac Conference",
+     "publisher": "Potomac Conference Corporation of Seventh-day Adventists",
+     "date": "28 Oct 2025",
+     "url": "https://pcsda.org/ministries/pastoral-ministries/development-and-events/",
+     "quote": "LEAD is an acronym for Leadership, Encouragement, Accountability and Dream (vision)."
+    },
+    {
+     "title": "Ministries – Potomac Conference",
+     "publisher": "Potomac Conference Corporation of Seventh-day Adventists",
+     "date": "28 Oct 2025",
+     "url": "https://pcsda.org/ministries/",
+     "quote": "Go Beyond The Walls."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Columbia Union Ministries Development: Available Funding & Guidelines 2025)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025 (applications due 13 February 2025)",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "These are Columbia Union funds which are distributed to the local conferences to assist them with local projects that are evangelistic in nature and make a community impact."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "All requests for funding must be processed through the local conference president's office."
+    },
+    {
+     "title": "2025 Homeland Missions Project Funding Application",
+     "publisher": "Columbia Union Conference",
+     "date": "revised 15 Oct 2024",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_project_funding_application_-_rev_10.15.24.pdf",
+     "quote": "Applications must be submitted by no later than February 13, 2025."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Church Revitalization Funding)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "This is a one-time grant of $3,000 (NAD $1,000; Union $1,000; Conference $1,000) to help up to 4 churches per conference."
+    },
+    {
+     "title": "2025 Homeland Missions Funding Brochure (Global Missions Church Planting Funds)",
+     "publisher": "Columbia Union Conference",
+     "date": "2025",
+     "url": "https://columbiaunion.org/sites/default/files/2025_homeland_missions_funding_brochure.pdf",
+     "quote": "$10,000 per church plant (GC/NAD $4,000; CU $3,000; Conference $3,000)"
+    },
+    {
+     "title": "Celebrating God’s Goodness and Growth: 29th Constituency Meeting",
+     "publisher": "Visitor (Columbia Union Conference)",
+     "date": "30 Jun 2026",
+     "url": "https://columbiaunionvisitor.com/2026/celebrating-gods-goodness-and-growth-29th-constituency-meeting",
+     "quote": "announced the Columbia Union’s 2026 initiative, Share Your Table"
+    }
+   ]
+  },
+  "honorarium": {
+   "rule": null,
+   "sources": []
+  },
+  "childProtection": {
+   "conference": "Child Protection Program: those over 18 voted to serve in churches or organisations, and employees working with children and youth, complete a criminal background check (FB 20) and child protection training through Sterling Volunteers (Adventist Screening Verification), every three years; the page links a model child protection plan, volunteer information and interview forms, the NAD volunteer code of conduct and a convicted sex offender policy.",
+   "sources": [
+    {
+     "title": "Child Protection Program – Potomac Conference",
+     "publisher": "Potomac Conference Corporation of Seventh-day Adventists",
+     "date": "modified 10 Jun 2026",
+     "url": "https://pcsda.org/volunteers/child-protection-program/",
+     "quote": "those over 18 who are voted to serve within our churches or organizations, and those who are employed by the church and working with children and youth, are asked to complete a criminal background check (FB 20) and child protection training through Sterling Volunteers"
+    },
+    {
+     "title": "Child Protection Program – Potomac Conference",
+     "publisher": "Potomac Conference Corporation of Seventh-day Adventists",
+     "date": "modified 10 Jun 2026",
+     "url": "https://pcsda.org/volunteers/child-protection-program/",
+     "quote": "This should be completed every three years."
+    }
+   ]
+  },
+  "department": {
+   "evangelismPage": null,
+   "ministerialPage": "https://pcsda.org/ministries/pastoral-ministries/"
+  },
+  "checked": "2026-09-30",
+  "notes": "No evangelism subsidy, grant, budget or honorarium rule is published on pcsda.org (rebuilt October 2025; full sitemap, WordPress media library, Visitor Potomac news and web searches checked). There is no Evangelism department page; pastoral support sits under Pastoral Ministries (VP for Pastoral Ministries) and Hispanic Ministries. Ask the conference office. Columbia Union level (any conference): the union's Ministries Development office distributes 'Homeland Missions' funds to conferences for local evangelistic projects with community impact (applied for through the conference president's office; one year at a time, up to 3 years; year-end report required; the page still shows the 2025 brochure and application, due 13 Feb 2025, so the 2026/2027 dates are not published). Also listed: Church Revitalization (one-time $3,000 grant: NAD $1,000, Union $1,000, Conference $1,000; up to 4 churches per conference) and Global Missions church-plant funds ($10,000 per plant, shared GC/NAD, union and conference). The union's 2026 initiative is 'Share Your Table'."
+ }
+]

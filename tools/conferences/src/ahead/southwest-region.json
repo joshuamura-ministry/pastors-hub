@@ -1,0 +1,107 @@
+{
+ "conf": "Southwest Region",
+ "slug": "southwest-region",
+ "union": "Southwestern",
+ "site": "https://southwestregionsda.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30"
+ },
+ "furthestPublished": "2027-11",
+ "aheadSummary": "Plan published, few exact dates. There is no 2027 calendar. The UNA VOZ 27 page sets out an evangelism plan month by month to Nov 2027, with simultaneous campaigns in every church in Sep 2027 (the conference's part in the world church's OneVoice27 harvest). Its stages have months, not days. The one exact-date event is the Women's Ministries cruise, Jul 11-17, 2027.",
+ "counts": {
+  "events": 4,
+  "meetings": 4,
+  "conferenceRun": 4
+ },
+ "calendarUrls": [
+  "https://southwestregionsda.org/ministries/multicultural-ministries/",
+  "https://southwestregionsda.org/2026-calendar-of-events/",
+  "https://southwestregionsda.org/womens-ministries-cruise/"
+ ],
+ "events": [
+  {
+   "title": "UNA VOZ 27: preparatory evangelistic series in local churches",
+   "start": "2027-06-01",
+   "end": "2027-06-30",
+   "place": "Local churches",
+   "category": "evangelism-outreach",
+   "category2": "multilingual",
+   "audience": "public",
+   "level": "conference",
+   "url": "https://southwestregionsda.org/ministries/multicultural-ministries/",
+   "source": "plan page",
+   "note": "Short series of three to seven nights, set by each church, to present Jesus and learn what must be strengthened before September (stage 3, Sow and Cultivate, Apr-Jun 2027).",
+   "datePrecision": "month (June 2027)"
+  },
+  {
+   "title": "Women's Ministries cruise",
+   "start": "2027-07-11",
+   "end": "2027-07-17",
+   "place": "Symphony of the Seas, sailing from Galveston, TX (Costa Maya, Cozumel, Roatan)",
+   "category": "family-women-men",
+   "category2": "discipleship-spiritual",
+   "audience": "women of all ages",
+   "level": "conference",
+   "url": "https://southwestregionsda.org/womens-ministries-cruise/",
+   "source": "event page",
+   "note": "Devotionals and sessions on board; interior cabins from $865 per person (double occupancy). Also on the 2026 calendar page."
+  },
+  {
+   "title": "UNA VOZ 27: forty days of prayer and personal invitation",
+   "start": "2027-08-01",
+   "end": "2027-08-31",
+   "place": "All churches",
+   "category": "discipleship-spiritual",
+   "category2": "evangelism-outreach",
+   "audience": "members",
+   "level": "conference",
+   "url": "https://southwestregionsda.org/ministries/multicultural-ministries/",
+   "source": "plan page",
+   "note": "Daily prayer for each member's MIS CINCO list and for Bible students; personal invitations come first, digital media only support them. The world church's OneVoice27 40 days of prayer (Jul 23-Aug 31, 2027) is in above.json.",
+   "datePrecision": "month (August 2027)"
+  },
+  {
+   "title": "UNA VOZ 27: simultaneous evangelistic campaigns (nine messages)",
+   "start": "2027-09-01",
+   "end": "2027-09-30",
+   "place": "All churches",
+   "category": "evangelism-outreach",
+   "category2": "multilingual",
+   "audience": "public",
+   "level": "conference",
+   "url": "https://southwestregionsda.org/ministries/multicultural-ministries/",
+   "source": "plan page",
+   "note": "Every church preaches a nine-message series centred on Jesus and Bible hope, with follow-up during the campaign. Public harvest of the Oct 2026-Nov 2027 project; a 90-day discipleship path follows in Oct-Nov 2027.",
+   "datePrecision": "month (September 2027)"
+  }
+ ],
+ "notes": [
+  "There is no 2027 calendar page (/2027-calendar-of-events/ returns 404). The 2026 calendar page ends with the Dec 21, 2026-Jan 2, 2027 office closure, plus the Jul 2027 cruise.",
+  "UNA VOZ 27 month-by-month plan, Apr-Sep 2027: April digital mission (training youth and adults as digital missionaries), May Bible studies, June preparatory series, July team training (reception, hospitality, prayer, Bible study, decisions, baptism, children, media, discipleship), August forty days of prayer and invitation, September simultaneous campaigns. April, May and July are emphases or local training with no event and are left here; June, August and September are listed as events (month precision). Oct-Nov 2027 is the discipleship stage.",
+  "Not published yet for 2027: camp meeting (2026 was Jun 10-13 at Lone Star Camp), Spanish camp meeting, summer camp, youth federations, God's Daughters, EndItNow, women's leadership conference.",
+  "Out of window: 2027 Married Couples Retreat, Valentine's weekend February 2027 (Record story). A church plans to serve at the 2027 San Antonio rodeo (no date).",
+  "All 80 pages in the site map were checked for 2027-2028 dates.",
+  "Record (union magazine): no Apr-Sep 2027 dates in the 2026 Southwest Region stories online or in the Sep/Oct 2026 print issue."
+ ],
+ "aheadChecked": [
+  "https://southwestregionsda.org/2027-calendar-of-events/ (404)",
+  "https://southwestregionsda.org/2026-calendar-of-events/",
+  "https://southwestregionsda.org/ministries/multicultural-ministries/",
+  "https://southwestregionsda.org/womens-ministries-cruise/",
+  "https://southwestregionsda.org/camp-meeting/",
+  "https://southwestregionsda.org/summer-camp-2026/",
+  "https://southwestregionsda.org/lone-star-camp/",
+  "https://southwestregionsda.org/evangelism/",
+  "https://southwestregionsda.org/ministries/youth-young-adult-ministries/",
+  "https://southwestregionsda.org/ministries/womens-ministries/",
+  "https://southwestregionsda.org/ministry-life-news/",
+  "https://southwestregionsda.org/sitemap-index.xml (80 pages read)",
+  "https://www.swurecord.org/conference/southwest-region",
+  "https://www.swurecord.org/article/50-couples-renew-vows-at-marriage-retreat",
+  "https://issuu.com/swurecord/docs/september_october_2026",
+  "https://www.nadadventist.org/camp-meeting/"
+ ]
+}

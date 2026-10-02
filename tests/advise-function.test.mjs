@@ -17,7 +17,10 @@ console.log('-- GET --');
 const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
 // Updated for v10.40.0 (stale, not a regression): the pastor's Idea Library asked for "More ideas
 // for {town}", which added the topic mode, so the function is advise-2.2 (tests/advise-topic.test.mjs).
-c('reports 2.2', g.fn, 'advise-2.2');
+// v56 (stale, not a regression): the pastor's "Find prices" (2 Oct 2026) added the prices modes, so the function is advise-2.4
+// (tests/advise-prices.test.mjs); 2.3 was the Sabbath guideline. GET also says prices / pricesFn now.
+c('reports 2.4', g.fn, 'advise-2.4');
+c('says whether Find prices is on (a key and a passphrase; none set here: off)', [g.prices, g.pricesFn], [false, 'prices-1.0']);
 c('defaults to Opus', g.model, 'claude-opus-5-5');
 c('advertises the kinds', g.kinds, ['Serve','Equip','Belong','Invite']);
 

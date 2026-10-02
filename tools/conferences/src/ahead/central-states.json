@@ -1,0 +1,125 @@
+{
+ "conf": "Central States",
+ "slug": "central-states",
+ "union": "Mid-America Union",
+ "site": "https://central-states.org/",
+ "calendarUrls": [
+  "https://central-states.org/events/",
+  "https://central-states.org/?mec-ical-feed=1",
+  "https://central-states.org/wp-json/wp/v2/mec-events"
+ ],
+ "otherSources": [
+  "https://www.outlookmag.org/tag/central-states-conference/",
+  "https://central-states.org/news/",
+  "https://central-states.org/ministries/youth-ministry/",
+  "https://central-states.org/ministries/pathfinder-ministry/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "C+ : complete public iCal feed (Modern Events Calendar) but only 34 entries in total; very thin Oct 2025-Jan 2026 and nothing after Nov 15 2026. Strong on youth federations; no evangelism, health or Pathfinder events listed. News (OUTLOOK) adds a few items.",
+ "aheadQuality": "D : nothing dated is published for Apr-Sep 2027. The events calendar stops in Nov 2026; news posts on the site stop in May 2026.",
+ "furthestPublished": "2026-11",
+ "furthestPublishedAnySource": "2026-11",
+ "furthestPublishedNote": "Calendar (34 entries, complete iCal feed) ends with the Great Lakes Area Youth Federation, Nov 14-15 2026. The only later items are the open-ended weekly men's prayer line and an undated plan for a first Pathfinder Fair in \"summer of 2027\".",
+ "aheadChecked": [
+  "https://central-states.org/?mec-ical-feed=1",
+  "https://central-states.org/wp-json/wp/v2/mec-events?per_page=100",
+  "https://central-states.org/wp-json/wp/v2/posts?search=2027",
+  "https://central-states.org/wp-json/wp/v2/pages?search=2027",
+  "https://central-states.org/wp-json/wp/v2/posts?per_page=15",
+  "https://central-states.org/",
+  "https://central-states.org/ministries/youth-ministry/",
+  "https://central-states.org/ministries/pathfinder-ministry/",
+  "https://www.outlookmag.org/wp-json/wp/v2/posts?search=2027",
+  "https://www.outlookmag.org/central-states-strengthens-pathfinder-ministry-through-leadership-training/",
+  "https://www.outlookmag.org/state-of-the-central-states-conference/",
+  "https://adventistregionalministries.org/camp-meeting-calendar/ (only a 2022 list)",
+  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp%20meeting (NAD camp-meeting date lists exist only to 2026)"
+ ],
+ "counts": {
+  "total": 2,
+  "conferenceLevel": 2,
+  "byLevel": {
+   "conference": 2
+  },
+  "byCategory": {
+   "discipleship-spiritual": 1,
+   "pathfinders": 1
+  },
+  "recurringSeries": 1,
+  "approximateDates": 1,
+  "unconfirmed": 1
+ },
+ "events": [
+  {
+   "title": "Men's Prayer Line",
+   "start": "2027-04-05",
+   "end": "2027-09-27",
+   "place": "",
+   "category": "discipleship-spiritual",
+   "category2": "family-women-men",
+   "audience": "men",
+   "url": "https://central-states.org/events/mens-prayer-line/",
+   "source": "calendar",
+   "level": "conference",
+   "recurring": "weekly (Mondays 8:00-8:30 pm CT, phone line; open-ended series since Nov 2024)",
+   "count": 26,
+   "dates": [
+    "2027-04-05",
+    "2027-04-12",
+    "2027-04-19",
+    "2027-04-26",
+    "2027-05-03",
+    "2027-05-10",
+    "2027-05-17",
+    "2027-05-24",
+    "2027-05-31",
+    "2027-06-07",
+    "2027-06-14",
+    "2027-06-21",
+    "2027-06-28",
+    "2027-07-05",
+    "2027-07-12",
+    "2027-07-19",
+    "2027-07-26",
+    "2027-08-02",
+    "2027-08-09",
+    "2027-08-16",
+    "2027-08-23",
+    "2027-08-30",
+    "2027-09-06",
+    "2027-09-13",
+    "2027-09-20",
+    "2027-09-27"
+   ],
+   "note": "Open-ended weekly series (iCal RRULE FREQ=WEEKLY with no end date). Dates are the Mondays in Apr-Sep 2027; the conference has not posted separate 2027 entries."
+  },
+  {
+   "title": "First Central States Conference Pathfinder Fair (planned)",
+   "start": "2027-06-01",
+   "end": "2027-08-31",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders and club leaders",
+   "url": "https://www.outlookmag.org/central-states-strengthens-pathfinder-ministry-through-leadership-training/",
+   "source": "news (OUTLOOK, Aug 25 2026)",
+   "level": "conference",
+   "note": "The article says that \"during the summer of 2027 plans will be put in place\" to hold the first conference Pathfinder Fair. It is unclear whether the fair itself or only its planning falls in summer 2027; no date or place is published.",
+   "datePrecision": "season",
+   "confirmed": false
+  }
+ ],
+ "notPublishedYet": [
+  "2027 camp meeting (2026 was Jun 10-14, Kansas City)",
+  "Youth & Young Adult camp meeting 2027",
+  "summer camp 2027 (\"Camp Highpoint\" ran Jun 15-21 2026)",
+  "spring 2027 youth federation dates",
+  "women's and couples' retreats 2027"
+ ],
+ "notes": [
+  "Not published yet: the events calendar ends Nov 15 2026, and nothing dated for Apr-Sep 2027 appears in the calendar, site search, news or OUTLOOK.",
+  "Goal, not an event: \"by the end of 2029\" the Pathfinder ministry aims to have 100 Master Guides in the conference (OUTLOOK, Aug 25 2026).",
+  "Union-wide events that Central States clubs and members may join (Limitless Pathfinder Camporee Jul 28-31 2027, UAU events) are in union-mid-america.json."
+ ]
+}

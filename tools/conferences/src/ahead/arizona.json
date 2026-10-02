@@ -1,0 +1,86 @@
+{
+ "conf": "Arizona",
+ "union": "Pacific Union",
+ "slug": "arizona",
+ "site": "https://www.azconference.org",
+ "calendarUrls": [
+  "https://www.azconference.org",
+  "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf",
+  "https://www.azconference.org/campmeeting",
+  "https://www.azconference.org/_files/ugd/15e531_07c33b4f4a1b4fcaacd7b647f129358b.pdf",
+  "https://www.azconference.org/arizonanews"
+ ],
+ "retrieved": "2026-10-01",
+ "checked": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "calendarQuality": "B+ for the current year, but nothing for 2027 yet: one office year calendar (PDF) at a time",
+ "furthestPublished": "2026-12",
+ "furthestNote": "The only calendar online is the 2026 year calendar PDF (revised 9 Jul 2026); its last entries are in December 2026. Its 4 Aug 2026 entry \"ADCOM - 2027 CALENDAR\" shows the 2027 calendar was being planned, but it is not posted.",
+ "aheadSummary": "Not published yet. No event dated April-September 2027 on the home page, the 2026 calendar PDF, the camp-meeting page, azsdayouth.com or campyavapines.org. 2027 camp-meeting dates are not out.",
+ "aheadChecked": [
+  "https://www.azconference.org",
+  "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf",
+  "https://www.azconference.org/campmeeting",
+  "https://www.azsdayouth.com/",
+  "https://www.campyavapines.org/",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027"
+ ],
+ "events": [],
+ "stats": {
+  "items": 0,
+  "occurrences": 0,
+  "occurrencesInWindow": 0,
+  "conferenceLevelItems": 0,
+  "observanceItems": 0,
+  "monthsWithEventsInWindow": "0 of 6",
+  "byCategory": {},
+  "byCategoryIncludingSecond": {},
+  "occurrencesByCategory": {},
+  "byLevel": {},
+  "bySourceType": {}
+ },
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Native American Camp Meeting",
+   "lastKnown": "2026-05-28 to 2026-05-31",
+   "place": "Camp Yavapines, Prescott",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf"
+  },
+  {
+   "title": "English Camp Meeting",
+   "lastKnown": "2026-06-05 to 2026-06-13",
+   "place": "Camp Yavapines, Prescott",
+   "url": "https://www.azconference.org/campmeeting",
+   "note": "2026 registration opened 23 Mar 2026"
+  },
+  {
+   "title": "Hispanic Family Camp Meeting",
+   "lastKnown": "2026-06-15 to 2026-06-20",
+   "place": "Camp Yavapines, Prescott",
+   "url": "https://www.azconference.org/campmeeting"
+  },
+  {
+   "title": "AZ Pathfinder Camporee",
+   "lastKnown": "2026-04-10 to 2026-04-12",
+   "place": "Camp Yavapines",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf"
+  },
+  {
+   "title": "Hispanic Evangelism Harvest and evangelistic meetings by region",
+   "lastKnown": "2026-04-05 to 2026-04-25",
+   "place": "Phoenix; Tucson, Yuma, Nogales, AZ North",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf"
+  },
+  {
+   "title": "AZ Leadership Convention",
+   "lastKnown": "2026-08-28 to 2026-08-30",
+   "place": "Camp Yavapines",
+   "url": "https://www.azconference.org/_files/ugd/88e038_dba0262355d5414aa5f3ca3d02b23cb9.pdf"
+  }
+ ],
+ "notes": [
+  "Pattern only: the usuallyHeldNotYetPublished list gives 2026 dates so a pastor can expect similar timing in 2027. They are not 2027 dates.",
+  "Monthly \"Prayer Time with Pastors\", pre-ordained and Hispanic pastors' meetings run through Dec 2026 on the 2026 calendar; none are scheduled for 2027 yet.",
+  "Left out (rule): ADCOM and other committees, office closures, holidays."
+ ]
+}

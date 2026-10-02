@@ -1,0 +1,338 @@
+{
+ "conf": "Oregon",
+ "union": "North Pacific Union",
+ "slug": "oregon",
+ "calendarUrls": [
+  "https://oregonadventist.churchcenter.com/calendar",
+  "https://www.oregonadventist.org/#calendar"
+ ],
+ "otherSources": [
+  "https://www.oregonadventist.org/campmeeting",
+  "https://biglake.org/",
+  "https://nwadventists.com/news/2026/07/creators-lab-brings-collaborative-imaginations-together"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-11",
+ "furthestPublishedNote": "Church Center calendar runs to the Oregon Conference Women's Retreat, Nov 12-14, 2027 (Twin Rocks).",
+ "calendarQuality": "Best look-ahead in the union. The Church Center calendar (public API, 36 upcoming events) is dated through Nov 2027, but it is mainly a club ministries and Church Ministries calendar: no Hispanic, ministerial or evangelism events for 2027.",
+ "aheadSummary": "Gladstone Camp Meeting Jul 20-24, 2027 (calendar, homepage and camp-meeting page). Club and teen events every month, a Central Oregon town hall (Apr 29), the Milo women's retreat (Jun 4-6), Creators Lab (Apr 30-May 2) and the Big Lake golf benefit (Sep 19).",
+ "events": [
+  {
+   "title": "Pathfinder Spring Teen Event",
+   "start": "2027-04-09",
+   "end": "2027-04-11",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236186501",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Adventurer Bible Game Day",
+   "start": "2027-04-10",
+   "end": "2027-04-10",
+   "place": "",
+   "category": "children",
+   "category2": "pathfinders",
+   "audience": "Adventurers",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236186985",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Town Hall Meeting - Central Oregon",
+   "start": "2027-04-29",
+   "end": "2027-04-29",
+   "place": "Central Oregon",
+   "category": "administration",
+   "category2": "",
+   "audience": "members",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/234181464",
+   "source": "calendar (Church Center)",
+   "level": "conference",
+   "note": "Evening meeting (6:00-8:30 pm): conference administrators give updates and hear members."
+  },
+  {
+   "title": "Creators Lab 2027",
+   "start": "2027-04-30",
+   "end": "2027-05-02",
+   "place": "Holden Convention Center, Gladstone, OR",
+   "category": "music-worship-arts",
+   "category2": "evangelism-outreach",
+   "audience": "Adventist creatives and communicators, including college students",
+   "url": "https://nwadventists.com/news/2026/07/creators-lab-brings-collaborative-imaginations-together",
+   "source": "Gleaner news",
+   "level": "conference",
+   "note": "Article (Jul 2026) says next year's event \"will be held April 30-May 2, 2027\"; details promised in the first quarter of 2027."
+  },
+  {
+   "title": "Oregon Adventist Men's Chorus spring concert",
+   "start": "2027-05",
+   "end": "2027-05",
+   "place": "",
+   "category": "music-worship-arts",
+   "category2": "family-women-men",
+   "audience": "churches and public",
+   "url": "https://www.oregonadventist.org/news/oregon-adventist-mens-chorus-invites-singers-to-join-kickoff",
+   "source": "announcement",
+   "level": "other",
+   "datePrecision": "month",
+   "note": "The chorus season runs October to a May spring concert; no day given."
+  },
+  {
+   "title": "Pathfinder Community Service",
+   "start": "2027-05-02",
+   "end": "2027-05-02",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "community-service",
+   "audience": "Pathfinders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236188325",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Pathfinder Fair - Jasper",
+   "start": "2027-05-14",
+   "end": "2027-05-16",
+   "place": "Jasper",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236188881",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Milo Women's Retreat",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "Milo",
+   "category": "family-women-men",
+   "category2": "discipleship-spiritual",
+   "audience": "women",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236190095",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Adventurer Family Camporee - Gladstone",
+   "start": "2027-06-04",
+   "end": "2027-06-06",
+   "place": "Gladstone",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurer families",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/225867852",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Pathfinder Teen Event",
+   "start": "2027-07-08",
+   "end": "2027-07-11",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236193726",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Gladstone Camp Meeting",
+   "start": "2027-07-20",
+   "end": "2027-07-24",
+   "place": "Gladstone Park Conference Center, Gladstone, OR",
+   "category": "camp-meeting",
+   "category2": "",
+   "audience": "members and families",
+   "url": "https://www.oregonadventist.org/campmeeting",
+   "source": "camp-meeting page + calendar + homepage",
+   "level": "conference",
+   "note": "Campsite reservations open Sept 2026; speakers and events to be announced in 2027. Calendar event: https://oregonadventist.churchcenter.com/calendar/event/204228740"
+  },
+  {
+   "title": "Club Ministry Leadership Training - Gladstone",
+   "start": "2027-08-06",
+   "end": "2027-08-08",
+   "place": "Gladstone",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "club leaders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/226117186",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Pathfinder Teen Water Skiing",
+   "start": "2027-08-19",
+   "end": "2027-08-19",
+   "place": "",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinders",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236194253",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "TLT Summer Convention - Holden",
+   "start": "2027-08-20",
+   "end": "2027-08-22",
+   "place": "Holden Convention Center, Gladstone",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "teen Pathfinder leaders (TLT)",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/226117223",
+   "source": "calendar (Church Center)",
+   "level": "conference"
+  },
+  {
+   "title": "Big Lake Youth Camp Golf Benefit",
+   "start": "2027-09-19",
+   "end": "2027-09-19",
+   "place": "",
+   "category": "stewardship-finance",
+   "category2": "youth-young-adults",
+   "audience": "supporters of Big Lake Youth Camp",
+   "url": "https://biglake.org/golf-benefit/",
+   "source": "Big Lake Youth Camp site",
+   "level": "conference",
+   "note": "The 2026 benefit page says \"Join us next year on September 19, 2027\"."
+  }
+ ],
+ "counts": {
+  "total": 15,
+  "conferenceLevel": 14,
+  "unionLevel": 0,
+  "institutionOrOther": 1,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 1,
+  "byCategory": {
+   "pathfinders": 7,
+   "children": 2,
+   "music-worship-arts": 2,
+   "administration": 1,
+   "family-women-men": 1,
+   "camp-meeting": 1,
+   "stewardship-finance": 1
+  },
+  "byCategoryConferenceOnly": {
+   "pathfinders": 7,
+   "children": 2,
+   "administration": 1,
+   "music-worship-arts": 1,
+   "family-women-men": 1,
+   "camp-meeting": 1,
+   "stewardship-finance": 1
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "Big Lake Youth Camp summer sessions (junior, adventure, tween, teen, family camps, alumni retreat)",
+   "usual": "late June-August; the site still shows 2026 and a countdown to registration",
+   "url": "https://biglake.org/"
+  },
+  {
+   "what": "Hispanic ministries events (RED leadership conference, RED Jovenes, Hispanic Festival)",
+   "usual": "Jan-May (2026 pattern); none posted for 2027",
+   "url": "https://www.oregonadventist.org/ministries/hispanic"
+  },
+  {
+   "what": "Other spring town halls",
+   "usual": "spring; only Central Oregon (Apr 29) is posted",
+   "url": "https://oregonadventist.churchcenter.com/calendar"
+  },
+  {
+   "what": "Conference evangelism or ministerial events for 2027",
+   "usual": "none posted",
+   "url": "https://www.oregonadventist.org/ministries/outreach"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "level": "division",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236187059",
+   "note": "On the Oregon calendar (\"Off Campus\"). See NAD/GC file."
+  },
+  {
+   "title": "NPUC Pathfinder Camporee - Grays Harbor, WA",
+   "start": "2027-09-09",
+   "end": "2027-09-12",
+   "level": "union",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236194335",
+   "note": "See union file."
+  }
+ ],
+ "alsoOct26toMar27": [
+  {
+   "title": "Big Lake Mardi Himal Leadership Trek",
+   "start": "2027-03-18",
+   "end": "2027-03-30",
+   "place": "Nepal (trek)",
+   "category": "youth-young-adults",
+   "category2": "pastoral-leadership",
+   "audience": "ages 18-80",
+   "url": "https://www.ultracamp.com/info/upcomingSessions.aspx?idCamp=8",
+   "source": "Big Lake Youth Camp registration (UltraCamp)",
+   "level": "conference",
+   "note": "Leadership trek offered by Big Lake Youth Camp; $3,999. Not in the v50 file."
+  }
+ ],
+ "beyondWindow": [
+  {
+   "title": "Pathfinder Teen Fall Event",
+   "start": "2027-10-01",
+   "end": "2027-10-03",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236194537"
+  },
+  {
+   "title": "Teen Ministry Training - Holden",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/226117245"
+  },
+  {
+   "title": "Oregon Conference Women's Retreat - Twin Rocks",
+   "start": "2027-11-12",
+   "end": "2027-11-14",
+   "url": "https://oregonadventist.churchcenter.com/calendar/event/236194618"
+  }
+ ],
+ "excluded": [
+  "Memorial Day - Office is Closed (May 31, 2027)."
+ ],
+ "aheadChecked": [
+  "https://api.churchcenter.com/calendar/v2/events?filter=upcoming (public Church Center calendar, anonymous visitor token)",
+  "https://oregonadventist.churchcenter.com/calendar",
+  "https://www.oregonadventist.org/",
+  "https://www.oregonadventist.org/campmeeting",
+  "https://www.oregonadventist.org/categories/announcement",
+  "https://www.oregonadventist.org/news/oregon-adventist-mens-chorus-invites-singers-to-join-kickoff",
+  "https://www.oregonadventist.org/ministries/hispanic",
+  "https://www.oregonadventist.org/ministries/ministerial",
+  "https://www.oregonadventist.org/ministries/outreach",
+  "https://www.oregonadventist.org/ministries/youth",
+  "https://www.oregonadventist.org/ministries/prayer-ministries",
+  "https://biglake.org/",
+  "https://biglake.org/golf-benefit/",
+  "https://biglake.org/alumni-retreat/",
+  "https://biglake.org/family-camps/",
+  "https://www.ultracamp.com/info/upcomingSessions.aspx?idCamp=8",
+  "https://nwadventists.com/news/2026/07/creators-lab-brings-collaborative-imaginations-together",
+  "https://nwadventists.com/news/2026/05/oregon-prayer-conference-experiences-miracles",
+  "https://nwadventists.com/news?section=354"
+ ],
+ "notes": [
+  "Church Center times are UTC; all dates here were converted to Pacific time (all-day events end the day before the UTC end stamp).",
+  "Event descriptions on Church Center name coordinators; no names were copied."
+ ]
+}

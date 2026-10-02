@@ -1,0 +1,1122 @@
+{
+ "conf": "Michigan",
+ "slug": "michigan",
+ "union": "Lake Union",
+ "site": "https://misda.org/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30",
+  "note": "second half of the 12-months-ahead view (Oct 2026 – Mar 2027 is in v50/events/michigan.json)"
+ },
+ "furthestPublished": "2027-12",
+ "furthestPublicEvent": "2027-12",
+ "calendarUrls": [
+  "https://misda.org/calendar/event-calendar/",
+  "https://misda.org/wp-json/tribe/events/v1/events",
+  "https://misda.org/events/?ical=1"
+ ],
+ "aheadChecked": [
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2027-04-01&end_date=2028-12-31&per_page=50 (6 pages, 298 listings, 2027-04-02 to 2027-12-29)",
+  "https://misda.org/calendar/event-calendar/",
+  "https://nadpbe.org/",
+  "https://asiministries.org/convention/",
+  "https://asilakeunion.org/"
+ ],
+ "aheadSummary": "Michigan has published its whole 2027 calendar, through December 2027 (the REST API returns 298 listings from April to December 2027, last one 29 Dec 2027). April–September 2027 holds 50 records after removing committees, office worship, closures and treasury items; 37 are conference-run public events (camp meeting 11–19 Jun, Hispanic camp meeting 21–23 May, UP camp meeting 10–12 Sep, Youth Rush from 30 May/6 Jun, four family-camp weeks, ministerial retreat 25–28 Jul, evangelism training 1 Aug, Emmanuel Institute 22–28 Aug, Pathfinder camporee 17–19 Sep). Entries carry titles and dates only (no descriptions or venues beyond the title), so categories come from titles.",
+ "counts": {
+  "total": 50,
+  "conferenceRunPublic": 37,
+  "internal": 7,
+  "otherLevels": 6,
+  "occurrences": 55,
+  "byCategoryAll": {
+   "evangelism-outreach": 9,
+   "family-women-men": 7,
+   "youth-young-adults": 7,
+   "education": 6,
+   "pastoral-leadership": 5,
+   "camp-meeting": 5,
+   "pathfinders": 4,
+   "children": 4,
+   "administration": 2,
+   "discipleship-spiritual": 1
+  },
+  "byCategoryAny": {
+   "evangelism-outreach": 11,
+   "youth-young-adults": 11,
+   "pastoral-leadership": 9,
+   "family-women-men": 7,
+   "education": 6,
+   "children": 5,
+   "camp-meeting": 5,
+   "pathfinders": 4,
+   "multilingual": 2,
+   "administration": 2,
+   "stewardship-finance": 1,
+   "discipleship-spiritual": 1
+  },
+  "byCategoryConferenceRunPublic": {
+   "family-women-men": 7,
+   "evangelism-outreach": 6,
+   "youth-young-adults": 5,
+   "education": 5,
+   "children": 4,
+   "pastoral-leadership": 3,
+   "pathfinders": 3,
+   "camp-meeting": 3,
+   "discipleship-spiritual": 1
+  },
+  "conferenceRunRecordsByStartMonth": {
+   "2027-04": 10,
+   "2027-05": 5,
+   "2027-06": 5,
+   "2027-07": 2,
+   "2027-08": 11,
+   "2027-09": 6
+  },
+  "conferenceRunOccurrencesByMonth": {
+   "2027-04": 11,
+   "2027-05": 5,
+   "2027-06": 5,
+   "2027-07": 4,
+   "2027-08": 11,
+   "2027-09": 6
+  }
+ },
+ "stats": {
+  "records": 50,
+  "conferenceRunRecords": 37,
+  "occurrences": 55,
+  "firstDate": "2027-04-02",
+  "lastDate": "2027-10-03",
+  "monthsWithConferenceEvents": "6 of 6",
+  "monthsMissing": []
+ },
+ "excludedFromCalendar": {
+  "Office Worship (staff devotional)": 28,
+  "Personnel committee": 25,
+  "ADCO (administrative committee)": 24,
+  "Office closed (holidays)": 8,
+  "Treasury Dept. Meeting": 6,
+  "Camp meeting planning meetings (CM Admin / CM Directors)": 6,
+  "Director’s Meeting": 5,
+  "Treasury Month-End Close": 4,
+  "Great Lakes Adventist Academy board / finance committee": 4,
+  "Lay Advisory (Coordinating) Committee": 3,
+  "District Superintendents meeting": 3,
+  "MCEC (executive committee)": 3,
+  "Conference Audit": 2,
+  "EDCOM (education committee)": 2,
+  "Board of Education": 2,
+  "TMAC (committee)": 2
+ },
+ "excludedNote": "Holidays, office closures, payroll/treasury closes, audits, merchandise, committees, boards and ADCOM are left out (counted under excludedFromCalendar). Counts are listings in the API (many items appear twice, once per public category).",
+ "prepDeadlines": [
+  {
+   "what": "MAP Pooled Resource Funds (Lay Advisory): an initial application must reach the conference at least four weeks before a Lay Advisory Coordinating Committee meeting. The 2027 calendar has that committee on 18 Apr 2027 (apply by about 21 Mar 2027) and a Lay Advisory Committee on 22 Aug 2027 (by about 25 Jul 2027); the next coordinating committee is 5 Dec 2027.",
+   "date": "2027-03-21",
+   "computed": true,
+   "url": "https://misda.org/departments/lay-advisory/map-pooled-resource-funding/",
+   "alsoListed": [
+    "https://misda.org/events/lay-advisory-coordinating-committee-29/",
+    "https://misda.org/events/lay-advisory-committee/"
+   ]
+  },
+  {
+   "what": "Discipleship Plans: every church submits its board-approved plan for the coming year; late plans get no district evangelism funds. Checks are likely mailed to churches by 31 Mar 2027, ahead of the spring and summer 2027 events.",
+   "date": "2027-03-31",
+   "url": "https://misda.org/departments/evangelism/discipleship-plans/",
+   "source": "v49 initiatives.json (mic-discipleship-plans)"
+  }
+ ],
+ "undatedAhead": [],
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Camp Au Sable Work Week",
+   "heldIn2026": "2026-05-03 to 2026-05-07",
+   "category": "other",
+   "url": "https://misda.org/events/camp-au-sable-work-week-11/"
+  },
+  {
+   "title": "Mini Medical Missionary Training (CAS)",
+   "heldIn2026": "2026-05-08 to 2026-05-10",
+   "category": "health",
+   "url": "https://misda.org/events/mini-medical-missionary-training-cas-2/"
+  },
+  {
+   "title": "Youth Rush Leadership (Conference)",
+   "heldIn2026": "2026-05-24 to 2026-05-29",
+   "category": "evangelism-outreach",
+   "url": "https://misda.org/events/youth-rush-leadership-conference/",
+   "category2": "youth-young-adults"
+  },
+  {
+   "title": "Golden Years Retreat (CAS)",
+   "heldIn2026": "2026-09-13 to 2026-09-17",
+   "category": "family-women-men",
+   "url": "https://misda.org/events/golden-years-retreat-cas-2/"
+  },
+  {
+   "title": "Men of Faith (CAS North Woods)",
+   "heldIn2026": "2026-09-18 to 2026-09-20",
+   "category": "family-women-men",
+   "url": "https://misda.org/events/men-of-faith-cas-north-woods-2/"
+  }
+ ],
+ "usuallyHeldNote": "Held in April–September 2026 but with no April–September 2027 listing yet. Moved rather than missing: the Mother-Daughter Retreat (Sep 2026) is listed for 8–10 Oct 2027; the Hispanic Marriage Retreat (Aug 2026) is listed for 2–4 Apr 2027, the weekend the 2026 calendar used for a Hispanic Children’s Ministries Retreat (whose web address also reads \"hispanic-marriage-retreat\"); Youth Rush leadership training moves from late May (2026) to an 8–11 Aug 2027 retreat.",
+ "beyondWindow": [
+  {
+   "title": "TLT Squared (CAS North Woods)",
+   "start": "2027-10-01",
+   "end": "2027-10-03",
+   "url": "https://misda.org/events/tlt-squared-cas-north-woods/"
+  },
+  {
+   "title": "LIFT",
+   "start": "2027-10-03",
+   "end": "2027-10-06",
+   "url": "https://misda.org/events/lift-9/"
+  },
+  {
+   "title": "Mother-Daughter Retreat (CAS)",
+   "start": "2027-10-08",
+   "end": "2027-10-10",
+   "url": "https://misda.org/events/mother-daughter-retreat-cas-6/"
+  },
+  {
+   "title": "Pathfinder Council (Conference Office)",
+   "start": "2027-10-24",
+   "end": "2027-10-24",
+   "url": "https://misda.org/events/pathfinder-council-conference-office/"
+  },
+  {
+   "title": "New in Ministry (Conference Office)",
+   "start": "2027-11-02",
+   "end": "2027-11-04",
+   "url": "https://misda.org/events/new-in-ministry-conference-office/"
+  },
+  {
+   "title": "UP Fall Campout (Camp Sagola)",
+   "start": "2027-11-05",
+   "end": "2027-11-07",
+   "url": "https://misda.org/events/up-fall-campout-camp-sagola-2/"
+  },
+  {
+   "title": "Public Hi-C Retreat (CAS)",
+   "start": "2027-11-05",
+   "end": "2027-11-07",
+   "url": "https://misda.org/events/public-hi-c-retreat-cas-3/"
+  },
+  {
+   "title": "Prayer & Fasting (CAS)",
+   "start": "2027-11-07",
+   "end": "2027-11-09",
+   "url": "https://misda.org/events/prayer-fasting-cas-2/"
+  },
+  {
+   "title": "Lay Advisory Retreat (CAS)",
+   "start": "2027-11-12",
+   "end": "2027-11-14",
+   "url": "https://misda.org/events/lay-advisory-retreat-cas-7/"
+  },
+  {
+   "title": "GYC",
+   "start": "2027-12-29",
+   "end": "2028-01-01",
+   "url": "https://misda.org/events/gyc-2/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Hispanic Marriage Retreat (CAS)",
+   "start": "2027-04-02",
+   "end": "2027-04-04",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/hispanic-marriage-retreat-cas-6/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "Hispanic couples",
+   "level": "conference",
+   "lang": "es",
+   "alsoListed": [
+    "https://misda.org/events/hispanic-marriage-retreat-cas-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "PM Workshop (Conference Office)",
+   "start": "2027-04-04",
+   "end": "2027-04-04",
+   "place": "Conference Office",
+   "url": "https://misda.org/events/pm-workshop-conference-office/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": "pastoral-leadership",
+   "audience": "personal ministries leaders",
+   "level": "conference",
+   "kind": "training",
+   "categoryNote": "PM = Personal Ministries (2026 equivalent: \"Personal Ministries Workshop\"); listed only on the office calendar",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Women’s Retreat (CAS)",
+   "start": "2027-04-09",
+   "end": "2027-04-18",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/womens-retreat-cas-9/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women",
+   "level": "conference",
+   "recurring": true,
+   "count": 2,
+   "dates": [
+    "2027-04-09",
+    "2027-04-16"
+   ],
+   "lastDate": "2027-04-18",
+   "note": "dates: 2027-04-09 to 2027-04-11; 2027-04-16 to 2027-04-18",
+   "alsoListed": [
+    "https://misda.org/events/womens-retreat-cas-12/",
+    "https://misda.org/events/womens-retreat-cas-10/",
+    "https://misda.org/events/womens-retreat-cas-11/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "MiTribe Rally (GLAA)",
+   "start": "2027-04-10",
+   "end": "2027-04-10",
+   "place": "Great Lakes Adventist Academy",
+   "url": "https://misda.org/events/mitribe-rally-glaa/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/mitribe-rally-glaa-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Treasurer Training (Conference Office)",
+   "start": "2027-04-11",
+   "end": "2027-04-11",
+   "place": "Conference Office",
+   "url": "https://misda.org/events/treasurer-training-conference-office/",
+   "source": "calendar",
+   "category": "pastoral-leadership",
+   "category2": "stewardship-finance",
+   "audience": "church treasurers",
+   "level": "conference",
+   "kind": "training",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Division Level PBE",
+   "start": "2027-04-16",
+   "end": "2027-04-17",
+   "place": "",
+   "url": "https://misda.org/events/division-level-pbe-3/",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders and leaders",
+   "level": "division",
+   "levelDetail": "North American Division",
+   "dateNote": "misda.org (and lakeunion.org) give 16–17 Apr 2027; the official site nadpbe.org gives the 2027 NAD PBE Finals as 23–24 Apr 2027 at the Von Braun Center, Huntsville, Alabama. Check before planning travel.",
+   "alsoListed": [
+    "https://misda.org/events/division-level-pbe-4/",
+    "https://nadpbe.org/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Literature Impact Day",
+   "start": "2027-04-17",
+   "end": "2027-04-17",
+   "place": "",
+   "url": "https://misda.org/events/literature-impact-day-4/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "all churches",
+   "level": "observance",
+   "kind": "emphasis-day",
+   "categoryNote": "literature-sharing emphasis day (the world calendar has World Impact Day on 10 Apr 2027; Michigan lists 17 Apr)",
+   "calendarCategory": "michigan-conference-events",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Prayer & Fasting (CAS)",
+   "start": "2027-04-18",
+   "end": "2027-04-20",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/prayer-fasting-cas-3/",
+   "source": "calendar",
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "categoryNote": "listed only on the office calendar",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "CAMPUS Graduation (Conference Office)",
+   "start": "2027-04-23",
+   "end": "2027-04-23",
+   "place": "Conference Office",
+   "url": "https://misda.org/events/campus-graduation-conference-office/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": "evangelism-outreach",
+   "audience": "public university / high school students",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/campus-graduation-conference-office-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Church Leader’s Workshop (CAS)",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/church-leaders-workshop-cas-6/",
+   "source": "calendar",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "elders, deacons, deaconesses",
+   "level": "conference",
+   "kind": "training",
+   "alsoListed": [
+    "https://misda.org/events/church-leaders-workshop-cas-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Lake Union ASI",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": "",
+   "url": "https://misda.org/events/lake-union-asi-3/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "lay business and professional members",
+   "level": "external",
+   "levelDetail": "ASI Lake Union chapter",
+   "note": "asilakeunion.org still shows only the 2026 Spring Fellowship; the 2027 date comes from the Michigan calendar.",
+   "alsoListed": [
+    "https://misda.org/events/lake-union-asi-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "start": "2027-04-25",
+   "end": "2027-04-25",
+   "place": "",
+   "url": "https://misda.org/events/adventurer-fun-day-9/",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurer families",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/adventurer-fun-day-10/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "NAD HR Conference / Secretariat Council",
+   "start": "2027-04-25",
+   "end": "2027-04-29",
+   "place": "",
+   "url": "https://misda.org/events/nad-hr-conference-secretariat-council-2/",
+   "source": "calendar",
+   "category": "administration",
+   "category2": null,
+   "audience": "conference administrators / HR staff",
+   "level": "division",
+   "levelDetail": "North American Division",
+   "kind": "staff conference",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Marriage Retreat (CAS)",
+   "start": "2027-04-30",
+   "end": "2027-05-02",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/marriage-retreat-cas-5/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "couples",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/marriage-retreat-cas-6/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Pathfinder Fair (CAS North Woods)",
+   "start": "2027-05-14",
+   "end": "2027-05-16",
+   "place": "Camp Au Sable (North Woods)",
+   "url": "https://misda.org/events/pathfinder-fair-cas-north-woods-3/",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders and leaders",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/pathfinder-fair-cas-north-woods-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "ASPIRE Capstone",
+   "start": "2027-05-18",
+   "end": "2027-08-26",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/aspire-capstone-cas/",
+   "source": "calendar",
+   "category": "education",
+   "category2": null,
+   "audience": "students / teachers",
+   "level": "conference",
+   "recurring": true,
+   "count": 2,
+   "dates": [
+    "2027-05-18",
+    "2027-08-24"
+   ],
+   "lastDate": "2027-08-26",
+   "note": "dates: 2027-05-18 to 2027-05-20; 2027-08-24 to 2027-08-26",
+   "alsoListed": [
+    "https://misda.org/events/aspire-capstone-cas-2/",
+    "https://misda.org/events/aspire-capstone-6/",
+    "https://misda.org/events/aspire-capstone-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Academy Graduation Weekend",
+   "start": "2027-05-21",
+   "end": "2027-05-23",
+   "place": "",
+   "url": "https://misda.org/events/academy-graduation-weekend-3/",
+   "source": "calendar",
+   "category": "education",
+   "category2": null,
+   "audience": "students / school families",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/academy-graduation-weekend-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Hispanic Camp Meeting (CAS)",
+   "start": "2027-05-21",
+   "end": "2027-05-23",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/hispanic-camp-meeting-cas-6/",
+   "source": "calendar",
+   "category": "camp-meeting",
+   "category2": "multilingual",
+   "audience": "Hispanic members",
+   "level": "conference",
+   "lang": "es",
+   "alsoListed": [
+    "https://misda.org/events/hispanic-camp-meeting-cas-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Camp Certification Week (CAS)",
+   "start": "2027-05-23",
+   "end": "2027-05-29",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/camp-certification-week-cas/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "summer camp staff",
+   "level": "conference",
+   "kind": "staff training",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Camp Orientation (CAS)",
+   "start": "2027-05-28",
+   "end": "2027-06-05",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/camp-orientation-cas/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "summer camp staff",
+   "level": "conference",
+   "kind": "staff training",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Youth Rush begins (summer student literature evangelism)",
+   "start": "2027-05-30",
+   "end": "2027-05-30",
+   "place": "",
+   "url": "https://misda.org/events/youth-rush-begins-6/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": "youth-young-adults",
+   "audience": "students 16+",
+   "level": "conference",
+   "dateNote": "Two start dates are published: 30 May 2027 (office calendar) and 6 Jun 2027 (public events list). No 2027 end date is published yet (2026 ran 31 May – 8 Aug).",
+   "alsoListed": [
+    "https://misda.org/events/youth-rush-begins-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "publishedTitles": [
+    "Youth Rush Begins (2027-05-30, calendar)",
+    "Youth Rush Begins (2027-06-06, events)"
+   ],
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Camp Pitch",
+   "start": "2027-06-06",
+   "end": "2027-06-10",
+   "place": "",
+   "url": "https://misda.org/events/camp-pitch-11/",
+   "source": "calendar",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "staff and volunteers",
+   "level": "conference",
+   "kind": "logistics (camp meeting set-up)",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Junior Camp (CAS)",
+   "start": "2027-06-06",
+   "end": "2027-06-12",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/junior-camp-cas-4/",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "children (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/junior-camp-cas-5/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Camp Meeting",
+   "start": "2027-06-11",
+   "end": "2027-06-19",
+   "place": "",
+   "url": "https://misda.org/events/camp-meeting-15/",
+   "source": "calendar",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "all members",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/camp-meeting-16/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Tween Camp (CAS)",
+   "start": "2027-06-13",
+   "end": "2027-06-19",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/tween-camp-cas-4/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "tweens (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/tween-camp-cas-5/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Camp Strike",
+   "start": "2027-06-20",
+   "end": "2027-06-20",
+   "place": "",
+   "url": "https://misda.org/events/camp-strike-12/",
+   "source": "calendar",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "staff and volunteers",
+   "level": "conference",
+   "kind": "logistics (camp meeting tear-down)",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Teen Camp (CAS)",
+   "start": "2027-06-20",
+   "end": "2027-06-26",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/teen-camp-cas-4/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "teens (summer camp)",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/teen-camp-cas-5/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Called Convention",
+   "start": "2027-06-21",
+   "end": "2027-06-24",
+   "place": "Lexington, Kentucky",
+   "url": "https://misda.org/events/called-convention/",
+   "source": "calendar",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors and families",
+   "level": "division",
+   "levelDetail": "North American Division Ministerial (CALLED pastors’ family convention)",
+   "alsoListed": [
+    "https://lakeunion.org/event/called-convention/"
+   ],
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Family Camp (CAS), four weeks",
+   "start": "2027-06-27",
+   "end": "2027-07-24",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/family-camp-i-cas-4/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "families",
+   "level": "conference",
+   "recurring": true,
+   "count": 4,
+   "dates": [
+    "2027-06-27",
+    "2027-07-04",
+    "2027-07-11",
+    "2027-07-18"
+   ],
+   "lastDate": "2027-07-24",
+   "note": "dates: 2027-06-27 to 2027-07-03; 2027-07-04 to 2027-07-10; 2027-07-11 to 2027-07-17; 2027-07-18 to 2027-07-24",
+   "alsoListed": [
+    "https://misda.org/events/family-camp-i-cas-5/",
+    "https://misda.org/events/family-camp-ii-cas-4/",
+    "https://misda.org/events/family-camp-ii-cas-5/",
+    "https://misda.org/events/family-camp-iii-cas-3/",
+    "https://misda.org/events/family-camp-iii-cas-4/",
+    "https://misda.org/events/family-camp-iv-cas/",
+    "https://misda.org/events/family-camp-iv-cas-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Ministerial Retreat (CAS)",
+   "start": "2027-07-25",
+   "end": "2027-07-28",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/ministerial-retreat-cas-5/",
+   "source": "calendar",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "conference",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Evangelism Training (Conference Office)",
+   "start": "2027-08-01",
+   "end": "2027-08-01",
+   "place": "Conference Office",
+   "url": "https://misda.org/events/evangelism-training-conference-office/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": "pastoral-leadership",
+   "audience": "church members and leaders",
+   "level": "conference",
+   "kind": "training",
+   "alsoListed": [
+    "https://misda.org/events/evangelism-training-conference-office-3/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Seal Training (GLAA)",
+   "start": "2027-08-01",
+   "end": "2027-08-06",
+   "place": "Great Lakes Adventist Academy",
+   "url": "https://misda.org/events/seal-training-glaa-3/",
+   "source": "calendar",
+   "category": "education",
+   "category2": null,
+   "audience": "not stated",
+   "level": "conference",
+   "categoryNote": "\"Seal Training\" is not explained on the calendar; filed under education because of the academy venue",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "New Teacher Orientation (CAS)",
+   "start": "2027-08-02",
+   "end": "2027-08-03",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/new-teacher-orientation-cas/",
+   "source": "calendar",
+   "category": "education",
+   "category2": null,
+   "audience": "new teachers",
+   "level": "conference",
+   "kind": "training",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "ASI Convention",
+   "start": "2027-08-04",
+   "end": "2027-08-06",
+   "place": "Rosen Shingle Creek, Orlando, Florida",
+   "url": "https://misda.org/events/asi-convention-5/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "lay business and professional members",
+   "level": "external",
+   "levelDetail": "ASI (Adventist-laymen’s Services & Industries)",
+   "dateNote": "misda.org lists 4–6 Aug; ASI and lakeunion.org list 4–7 Aug 2027",
+   "alsoListed": [
+    "https://misda.org/events/asi-convention-6/",
+    "https://asiministries.org/convention/",
+    "https://lakeunion.org/event/asi-convention-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Teachers’ Convention (CAS)",
+   "start": "2027-08-04",
+   "end": "2027-08-06",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/teachers-convention-cas/",
+   "source": "calendar",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "level": "conference",
+   "kind": "training",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "iShare (GLAA)",
+   "start": "2027-08-06",
+   "end": "2027-08-08",
+   "place": "Great Lakes Adventist Academy",
+   "url": "https://misda.org/events/ishare-glaa/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": "youth-young-adults",
+   "audience": "students 16+",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/ishare-glaa-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Youth Rush Leadership Retreat",
+   "start": "2027-08-08",
+   "end": "2027-08-11",
+   "place": "",
+   "url": "https://misda.org/events/youth-rush-leadership-retreat-5/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": "youth-young-adults",
+   "audience": "Youth Rush leaders",
+   "level": "conference",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Women’s Ministries (1-day Event)",
+   "start": "2027-08-14",
+   "end": "2027-08-14",
+   "place": "",
+   "url": "https://misda.org/events/womens-ministries-1-day-event/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/womens-ministries-1-day-event-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Adventurer Leadershop (CAS)",
+   "start": "2027-08-20",
+   "end": "2027-08-22",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/adventurer-leadershop-cas-3/",
+   "source": "calendar",
+   "category": "children",
+   "category2": "pastoral-leadership",
+   "audience": "Adventurer leaders",
+   "level": "conference",
+   "kind": "training",
+   "alsoListed": [
+    "https://misda.org/events/adventurer-leadershop-cas-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Emmanuel Institute",
+   "start": "2027-08-22",
+   "end": "2027-08-28",
+   "place": "",
+   "url": "https://misda.org/events/emmanuel-institute-2/",
+   "source": "calendar",
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "lay members",
+   "level": "conference",
+   "kind": "training",
+   "note": "Michigan Conference evangelism training centre (see v49 initiative mic-emmanuel-institute)",
+   "alsoListed": [
+    "https://misda.org/events/emmanuel-institute-3/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "NAD Conference Presidents’ Retreat",
+   "start": "2027-08-23",
+   "end": "2027-08-26",
+   "place": "",
+   "url": "https://misda.org/events/nad-conference-presidents-retreat-3/",
+   "source": "calendar",
+   "category": "administration",
+   "category2": null,
+   "audience": "conference presidents",
+   "level": "division",
+   "levelDetail": "North American Division",
+   "kind": "leaders’ retreat",
+   "internal": true,
+   "alsoListed": [
+    "https://lakeunion.org/event/presidents-of-large-conferences-retreat/"
+   ],
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Pathfinder Leadershop (CAS)",
+   "start": "2027-08-27",
+   "end": "2027-08-29",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/pathfinder-leadershop-cas-5/",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "Pathfinder leaders",
+   "level": "conference",
+   "kind": "training",
+   "alsoListed": [
+    "https://misda.org/events/pathfinder-leadershop-cas-6/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Adventurer Family Camp (CAS North Woods)",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Camp Au Sable (North Woods)",
+   "url": "https://misda.org/events/adventurer-family-camp-cas-north-woods-3/",
+   "source": "calendar",
+   "category": "children",
+   "category2": null,
+   "audience": "Adventurer families",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/adventurer-family-camp-cas-north-woods-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "PCM Fall Retreat (CAS)",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/pcm-fall-retreat-cas-6/",
+   "source": "calendar",
+   "category": "youth-young-adults",
+   "category2": "evangelism-outreach",
+   "audience": "public university / high school students",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/pcm-fall-retreat-cas-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "UP Camp Meeting (Camp Sagola)",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Camp Sagola",
+   "url": "https://misda.org/events/up-camp-meeting-camp-sagola-4/",
+   "source": "calendar",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "all members (Upper Peninsula)",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/up-camp-meeting-camp-sagola-5/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Pathfinder Camporee (CAS North Woods)",
+   "start": "2027-09-17",
+   "end": "2027-09-19",
+   "place": "Camp Au Sable (North Woods)",
+   "url": "https://misda.org/events/pathfinder-camporee-cas-north-woods/",
+   "source": "calendar",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders and leaders",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/pathfinder-camporee-cas-north-woods-2/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Districts Supts Retreat",
+   "start": "2027-09-21",
+   "end": "2027-09-23",
+   "place": "",
+   "url": "https://misda.org/events/districts-supts-retreat/",
+   "source": "calendar",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "district superintendents (pastors)",
+   "level": "conference",
+   "kind": "leaders’ retreat",
+   "internal": true,
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Family First Retreat (CAS)",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/family-first-retreat-cas-3/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "couples / families",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/family-first-retreat-cas-4/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "UP Women’s Retreat (Camp Sagola)",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "place": "Camp Sagola",
+   "url": "https://misda.org/events/up-womens-retreat-camp-sagola-6/",
+   "source": "calendar",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women (Upper Peninsula)",
+   "level": "conference",
+   "alsoListed": [
+    "https://misda.org/events/up-womens-retreat-camp-sagola-7/"
+   ],
+   "calendarCategory": "michigan-conference-events + michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  },
+  {
+   "title": "Lake Union Secondary Leadership Retreat (CAS)",
+   "start": "2027-09-30",
+   "end": "2027-10-03",
+   "place": "Camp Au Sable",
+   "url": "https://misda.org/events/lake-union-secondary-leadership-retreat-cas/",
+   "source": "calendar",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy student leaders",
+   "level": "union",
+   "levelDetail": "Lake Union Conference",
+   "note": "starts 30 Sep 2027 and runs to 3 Oct",
+   "calendarCategory": "michigan-conference-calendar",
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+  }
+ ],
+ "notes": "Michigan publishes two public categories in The Events Calendar (\"Michigan Conference Events\" and the full office calendar \"Michigan Conference Calendar\"); most items appear in both and were merged (same title and date), the second URL kept in alsoListed. Repeated items are listed once with count and dates (Women’s Retreat ×2, ASPIRE Capstone ×2, Family Camp ×4). Internal staff items (camp staff certification/orientation, camp pitch/strike, NAD HR / presidents’ retreats, district superintendents’ retreat) are kept but marked internal:true. Several listings were last modified 2026-09-30, so the calendar is actively maintained."
+}

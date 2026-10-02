@@ -1,0 +1,1048 @@
+{
+ "verses": [
+  {
+   "id": "ex35_5",
+   "en": {
+    "text": "Take ye from among you an offering unto the LORD: whosoever is of a willing heart, let him bring it, an offering of the LORD…",
+    "ref": "Exodus 35:5"
+   },
+   "es": {
+    "text": "Tomad de entre vosotros ofrenda para Jehová: todo liberal de corazón la traerá á Jehová…",
+    "ref": "Éxodo 35:5"
+   },
+   "jobs": [
+    "fund",
+    "yes"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 125,
+    "es": 88
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Exodus+35%3A5&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Exodus+35%3A5&version=RVA"
+   }
+  },
+  {
+   "id": "ex35_21",
+   "en": {
+    "text": "And they came, every one whose heart stirred him up, and every one whom his spirit made willing, and they brought the LORD's offering to the work of the tabernacle…",
+    "ref": "Exodus 35:21"
+   },
+   "es": {
+    "text": "Y vino todo varón á quien su corazón estimuló, y todo aquel á quien su espíritu le dió voluntad, y trajeron ofrenda á Jehová para la obra del tabernáculo…",
+    "ref": "Éxodo 35:21"
+   },
+   "jobs": [
+    "fund",
+    "close"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 164,
+    "es": 154
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Exodus+35%3A21&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Exodus+35%3A21&version=RVA"
+   }
+  },
+  {
+   "id": "ex35_29",
+   "en": {
+    "text": "The children of Israel brought a willing offering unto the LORD, every man and woman, whose heart made them willing to bring for all manner of work…",
+    "ref": "Exodus 35:29"
+   },
+   "es": {
+    "text": "De los hijos de Israel, así hombres como mujeres, todos los que tuvieron corazón voluntario para traer para toda la obra… trajeron ofrenda voluntaria á Jehová.",
+    "ref": "Éxodo 35:29"
+   },
+   "jobs": [
+    "close",
+    "after"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 148,
+    "es": 159
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Exodus+35%3A29&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Exodus+35%3A29&version=RVA"
+   }
+  },
+  {
+   "id": "1chr29_5",
+   "en": {
+    "text": "…And who then is willing to consecrate his service this day unto the LORD?",
+    "ref": "1 Chronicles 29:5"
+   },
+   "es": {
+    "text": "…¿Y quién quiere hacer hoy ofrenda á Jehová?",
+    "ref": "1 Crónicas 29:5"
+   },
+   "jobs": [
+    "yes",
+    "motion"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 74,
+    "es": 44
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A5&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A5&version=RVA"
+   }
+  },
+  {
+   "id": "1chr29_9",
+   "en": {
+    "text": "Then the people rejoiced, for that they offered willingly, because with perfect heart they offered willingly to the LORD…",
+    "ref": "1 Chronicles 29:9"
+   },
+   "es": {
+    "text": "Y holgóse el pueblo de haber contribuído de su voluntad; porque con entero corazón ofrecieron á Jehová voluntariamente.",
+    "ref": "1 Crónicas 29:9"
+   },
+   "jobs": [
+    "close",
+    "after"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 121,
+    "es": 119
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A9&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A9&version=RVA"
+   }
+  },
+  {
+   "id": "1chr29_14",
+   "en": {
+    "text": "…for all things come of thee, and of thine own have we given thee.",
+    "ref": "1 Chronicles 29:14"
+   },
+   "es": {
+    "text": "…porque todo es tuyo, y lo recibido de tu mano te damos.",
+    "ref": "1 Crónicas 29:14"
+   },
+   "jobs": [
+    "fund",
+    "close"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 66,
+    "es": 56
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A14&version=RVA"
+   }
+  },
+  {
+   "id": "neh2_18",
+   "en": {
+    "text": "…And they said, Let us rise up and build. So they strengthened their hands for this good work.",
+    "ref": "Nehemiah 2:18"
+   },
+   "es": {
+    "text": "…Y dijeron: Levantémonos, y edifiquemos. Así esforzaron sus manos para bien.",
+    "ref": "Nehemías 2:18"
+   },
+   "jobs": [
+    "motion",
+    "yes",
+    "timeline"
+   ],
+   "needs": [
+    "general",
+    "building"
+   ],
+   "chars": {
+    "en": 94,
+    "es": 76
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A18&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Nehemiah+2%3A18&version=RVA"
+   }
+  },
+  {
+   "id": "hag1_8",
+   "en": {
+    "text": "Go up to the mountain, and bring wood, and build the house; and I will take pleasure in it, and I will be glorified, saith the LORD.",
+    "ref": "Haggai 1:8"
+   },
+   "es": {
+    "text": "Subid al monte, y traed madera, y reedificad la casa; y pondré en ella, mi voluntad, y seré honrado, ha dicho Jehová.",
+    "ref": "Hageo 1:8"
+   },
+   "jobs": [
+    "why",
+    "motion"
+   ],
+   "needs": [
+    "building",
+    "general",
+    "other"
+   ],
+   "chars": {
+    "en": 132,
+    "es": 117
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Haggai+1%3A8&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Haggai+1%3A8&version=RVA"
+   }
+  },
+  {
+   "id": "luke14_28",
+   "en": {
+    "text": "For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?",
+    "ref": "Luke 14:28"
+   },
+   "es": {
+    "text": "Porque ¿cuál de vosotros, queriendo edificar una torre, no cuenta primero sentado los gastos, si tiene lo que necesita para acabarla?",
+    "ref": "Lucas 14:28"
+   },
+   "jobs": [
+    "options",
+    "pick",
+    "risks"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 133,
+    "es": 133
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Luke+14%3A28&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Luke+14%3A28&version=RVA"
+   }
+  },
+  {
+   "id": "ps33_3",
+   "en": {
+    "text": "Sing unto him a new song; play skilfully with a loud noise.",
+    "ref": "Psalm 33:3"
+   },
+   "es": {
+    "text": "Cantadle canción nueva: Hacedlo bien tañendo con júbilo.",
+    "ref": "Salmos 33:3"
+   },
+   "jobs": [
+    "why",
+    "pick"
+   ],
+   "needs": [
+    "sound",
+    "music",
+    "general"
+   ],
+   "chars": {
+    "en": 59,
+    "es": 56
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Psalm+33%3A3&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Psalm+33%3A3&version=RVA"
+   }
+  },
+  {
+   "id": "1cor14_40",
+   "en": {
+    "text": "Let all things be done decently and in order.",
+    "ref": "1 Corinthians 14:40"
+   },
+   "es": {
+    "text": "Empero hagáse todo decentemente y con orden.",
+    "ref": "1 Corintios 14:40"
+   },
+   "jobs": [
+    "path",
+    "risks",
+    "timeline"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 45,
+    "es": 44
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=1+Corinthians+14%3A40&version=RVA"
+   }
+  },
+  {
+   "id": "2cor9_7",
+   "en": {
+    "text": "Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver.",
+    "ref": "2 Corinthians 9:7"
+   },
+   "es": {
+    "text": "Cada uno dé como propuso en su corazón: no con tristeza, ó por necesidad; porque Dios ama el dador alegre.",
+    "ref": "2 Corintios 9:7"
+   },
+   "jobs": [
+    "fund"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 132,
+    "es": 106
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Corinthians+9%3A7&version=RVA"
+   }
+  },
+  {
+   "id": "2cor8_21",
+   "en": {
+    "text": "Providing for honest things, not only in the sight of the Lord, but also in the sight of men.",
+    "ref": "2 Corinthians 8:21"
+   },
+   "es": {
+    "text": "Procurando las cosas honestas, no sólo delante del Señor, mas aun delante de los hombres.",
+    "ref": "2 Corintios 8:21"
+   },
+   "jobs": [
+    "options",
+    "risks"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 93,
+    "es": 89
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Corinthians+8%3A21&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Corinthians+8%3A21&version=RVA"
+   }
+  },
+  {
+   "id": "prov15_22",
+   "en": {
+    "text": "Without counsel purposes are disappointed: but in the multitude of counsellors they are established.",
+    "ref": "Proverbs 15:22"
+   },
+   "es": {
+    "text": "Los pensamientos son frustrados donde no hay consejo; Mas en la multitud de consejeros se afirman.",
+    "ref": "Proverbios 15:22"
+   },
+   "jobs": [
+    "options",
+    "path"
+   ],
+   "needs": [
+    "general"
+   ],
+   "chars": {
+    "en": 100,
+    "es": 98
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Proverbs+15%3A22&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Proverbs+15%3A22&version=RVA"
+   }
+  },
+  {
+   "id": "neh8_8",
+   "en": {
+    "text": "So they read in the book in the law of God distinctly, and gave the sense, and caused them to understand the reading.",
+    "ref": "Nehemiah 8:8"
+   },
+   "es": {
+    "text": "Y leían en el libro de la ley de Dios claramente, y ponían el sentido, de modo que entendiesen la lectura.",
+    "ref": "Nehemías 8:8"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "sound",
+    "stream",
+    "computer"
+   ],
+   "chars": {
+    "en": 117,
+    "es": 106
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Nehemiah+8%3A8&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Nehemiah+8%3A8&version=RVA"
+   }
+  },
+  {
+   "id": "rom10_17",
+   "en": {
+    "text": "So then faith cometh by hearing, and hearing by the word of God.",
+    "ref": "Romans 10:17"
+   },
+   "es": {
+    "text": "Luego la fe es por el oir; y el oir por la palabra de Dios.",
+    "ref": "Romanos 10:17"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "sound"
+   ],
+   "chars": {
+    "en": 64,
+    "es": 59
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Romans+10%3A17&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Romans+10%3A17&version=RVA"
+   }
+  },
+  {
+   "id": "col2_5",
+   "en": {
+    "text": "For though I be absent in the flesh, yet am I with you in the spirit, joying and beholding your order…",
+    "ref": "Colossians 2:5"
+   },
+   "es": {
+    "text": "Porque aunque estoy ausente con el cuerpo, no obstante con el espíritu estoy con vosotros, gozándome y mirando vuestro concierto…",
+    "ref": "Colosenses 2:5"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "stream"
+   ],
+   "chars": {
+    "en": 102,
+    "es": 129
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Colossians+2%3A5&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Colossians+2%3A5&version=RVA"
+   }
+  },
+  {
+   "id": "2chr24_13",
+   "en": {
+    "text": "So the workmen wrought, and the work was perfected by them, and they set the house of God in his state, and strengthened it.",
+    "ref": "2 Chronicles 24:13"
+   },
+   "es": {
+    "text": "Hacían pues los oficiales la obra, y por sus manos fué la obra restaurada, y restituyeron la casa de Dios á su condición, y la consolidaron.",
+    "ref": "2 Crónicas 24:13"
+   },
+   "jobs": [
+    "why",
+    "after",
+    "close"
+   ],
+   "needs": [
+    "building",
+    "kitchen"
+   ],
+   "chars": {
+    "en": 124,
+    "es": 140
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=2+Chronicles+24%3A13&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=2+Chronicles+24%3A13&version=RVA"
+   }
+  },
+  {
+   "id": "matt5_15",
+   "en": {
+    "text": "Neither do men light a candle, and put it under a bushel, but on a candlestick; and it giveth light unto all that are in the house.",
+    "ref": "Matthew 5:15"
+   },
+   "es": {
+    "text": "Ni se enciende una lámpara y se pone debajo de un almud, mas sobre el candelero, y alumbra á todos los que están en casa.",
+    "ref": "Mateo 5:15"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "light"
+   ],
+   "chars": {
+    "en": 131,
+    "es": 121
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Matthew+5%3A15&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Matthew+5%3A15&version=RVA"
+   }
+  },
+  {
+   "id": "mark2_3",
+   "en": {
+    "text": "And they come unto him, bringing one sick of the palsy, which was borne of four.",
+    "ref": "Mark 2:3"
+   },
+   "es": {
+    "text": "Entonces vinieron á él unos trayendo un paralítico, que era traído por cuatro.",
+    "ref": "Marcos 2:3"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "vehicle"
+   ],
+   "chars": {
+    "en": 80,
+    "es": 78
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Mark+2%3A3&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Mark+2%3A3&version=RVA"
+   }
+  },
+  {
+   "id": "hab2_2",
+   "en": {
+    "text": "And the LORD answered me, and said, Write the vision, and make it plain upon tables, that he may run that readeth it.",
+    "ref": "Habakkuk 2:2"
+   },
+   "es": {
+    "text": "Y Jehová me respondió, y dijo: Escribe la visión, y declárala en tablas, para que corra el que leyere en ella.",
+    "ref": "Habacuc 2:2"
+   },
+   "jobs": [
+    "why",
+    "motion"
+   ],
+   "needs": [
+    "computer"
+   ],
+   "chars": {
+    "en": 117,
+    "es": 110
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Habakkuk+2%3A2&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Habakkuk+2%3A2&version=RVA"
+   }
+  },
+  {
+   "id": "acts2_46",
+   "en": {
+    "text": "…breaking bread from house to house, did eat their meat with gladness and singleness of heart… And the Lord added to the church daily such as should be saved.",
+    "ref": "Acts 2:46–47"
+   },
+   "es": {
+    "text": "…partiendo el pan en las casas, comían juntos con alegría y con sencillez de corazón… Y el Señor añadía cada día á la iglesia los que habían de ser salvos.",
+    "ref": "Hechos 2:46–47"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "kitchen"
+   ],
+   "chars": {
+    "en": 158,
+    "es": 155
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Acts+2%3A46-47&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Acts+2%3A46-47&version=RVA"
+   }
+  },
+  {
+   "id": "mark10_14",
+   "en": {
+    "text": "…Suffer the little children to come unto me, and forbid them not: for of such is the kingdom of God.",
+    "ref": "Mark 10:14"
+   },
+   "es": {
+    "text": "…Dejad los niños venir, y no se lo estorbéis; porque de los tales es el reino de Dios.",
+    "ref": "Marcos 10:14"
+   },
+   "jobs": [
+    "why"
+   ],
+   "needs": [
+    "children"
+   ],
+   "chars": {
+    "en": 100,
+    "es": 86
+   },
+   "src": {
+    "en": "https://www.biblegateway.com/passage/?search=Mark+10%3A14&version=KJV",
+    "es": "https://www.biblegateway.com/passage/?search=Mark+10%3A14&version=RVA"
+   }
+  }
+ ],
+ "egw": [
+  {
+   "id": "pp343_3",
+   "en": {
+    "text": "For the building of the sanctuary great and expensive preparations were necessary; a large amount of the most precious and costly material was required; yet the Lord accepted only freewill offerings… Devotion to God and a spirit of sacrifice were the first requisites in preparing a dwelling place for the Most High.",
+    "ref": "Ellen G. White · Patriarchs and Prophets, p. 343"
+   },
+   "es": {
+    "text": "Para la construcción del santuario fue necesario hacer grandes y costosos preparativos; hacía falta gran cantidad de los materiales más preciosos y caros; no obstante, el Señor únicamente aceptó ofrendas voluntarias… La devoción a Dios y un espíritu de sacrificio fueron los primeros requisitos para construir la morada del Altísimo…",
+    "ref": "Elena G. de White · Historia de los Patriarcas y Profetas, p. 314"
+   },
+   "jobs": [
+    "fund",
+    "motion"
+   ],
+   "needs": [
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/84.1541"
+  },
+  {
+   "id": "pp344_5",
+   "en": {
+    "text": "…All who love the worship of God and prize the blessing of His sacred presence will manifest the same spirit of sacrifice in preparing a house where He may meet with them. They will desire to bring to the Lord an offering of the very best that they possess…",
+    "ref": "Ellen G. White · Patriarchs and Prophets, p. 344"
+   },
+   "es": {
+    "text": "…Todos los que aman el culto de Dios y aprecian la bendición de su santa presencia, mostrarán el mismo espíritu de sacrificio en la preparación de una casa donde él pueda reunirse con ellos. Desearán traer al Señor una ofrenda de lo mejor que posean…",
+    "ref": "Elena G. de White · Historia de los Patriarcas y Profetas, p. 315"
+   },
+   "jobs": [
+    "close",
+    "yes"
+   ],
+   "needs": [
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/84.1547"
+  },
+  {
+   "id": "pp344_5d",
+   "en": {
+    "text": "…A house built for God should not be left in debt, for He is thereby dishonored. An amount sufficient to accomplish the work should be freely given, that the workmen may be able to say, as did the builders of the tabernacle, “Bring no more offerings.”",
+    "ref": "Ellen G. White · Patriarchs and Prophets, pp. 344, 347"
+   },
+   "es": {
+    "text": "…La casa que se construya para Dios no debe quedar endeudada, pues con ello Dios sería deshonrado. Debe darse voluntariamente una cantidad suficiente para llevar a cabo la obra, para que los que la construyen puedan decir, como dijeron los constructores del tabernáculo: “No traigáis ya ofrendas”.",
+    "ref": "Elena G. de White · Historia de los Patriarcas y Profetas, p. 315"
+   },
+   "jobs": [
+    "fund"
+   ],
+   "needs": [
+    "building",
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/84.1547"
+  },
+  {
+   "id": "pp376_1",
+   "en": {
+    "text": "God is a God of order… God requires order and system in His work now no less than in the days of Israel. All who are working for Him are to labor intelligently, not in a careless, haphazard manner…",
+    "ref": "Ellen G. White · Patriarchs and Prophets, p. 376"
+   },
+   "es": {
+    "text": "Dios es un Dios de orden… Dios exige orden y organización en su obra en nuestros días tanto como los exigía en los días de Israel. Todos los que trabajan para él han de actuar con inteligencia, no en forma negligente o al azar…",
+    "ref": "Elena G. de White · Historia de los Patriarcas y Profetas, p. 347"
+   },
+   "jobs": [
+    "path",
+    "timeline",
+    "options"
+   ],
+   "needs": [
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/84.1699"
+  },
+  {
+   "id": "5t491_1",
+   "en": {
+    "text": "…The song of praise, the prayer, the words spoken by Christ’s representatives, are God’s appointed agencies to prepare a people for the church above…",
+    "ref": "Ellen G. White · Testimonies for the Church, vol. 5, p. 491"
+   },
+   "es": {
+    "text": "…El canto de alabanza, la oración, las palabras pronunciadas por los representantes de Cristo, son los agentes designados por Dios para preparar un pueblo para la iglesia celestial…",
+    "ref": "Elena G. de White · Testimonios para la Iglesia, tomo 5, pp. 463, 464"
+   },
+   "jobs": [
+    "why",
+    "close"
+   ],
+   "needs": [
+    "sound",
+    "stream",
+    "light",
+    "computer",
+    "music",
+    "building",
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/113.2412"
+  },
+  {
+   "id": "6t101_4",
+   "en": {
+    "text": "In none of our buildings should we seek to make a display; for this would not advance the work. Our economy should testify to our principles… Everything should be done solidly for time and for eternity.",
+    "ref": "Ellen G. White · Testimonies for the Church, vol. 6, pp. 101, 102"
+   },
+   "es": {
+    "text": "No se debe mostrar pomposidad en ninguno de nuestros edificios, porque esto no adelantará la obra. Nuestras economías deben testificar de nuestros principios… Todo debe hacerse con solidez, para que dure en el tiempo y la eternidad.",
+    "ref": "Elena G. de White · Testimonios para la Iglesia, tomo 6, pp. 106, 107"
+   },
+   "jobs": [
+    "options",
+    "pick"
+   ],
+   "needs": [
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/118.564"
+  },
+  {
+   "id": "9t144_1",
+   "en": {
+    "text": "In the meetings held let a number be chosen to take part in the song service. And let the singing be accompanied with musical instruments skillfully handled… This part of the service is to be carefully conducted, for it is the praise of God in song.",
+    "ref": "Ellen G. White · Testimonies for the Church, vol. 9, p. 144"
+   },
+   "es": {
+    "text": "En las reuniones elegid a varias personas para que participen en el canto, acompañados por instrumentos musicales bien interpretados… Esta parte del servicio debe conducirse con habilidad, porque es alabanza a Dios mediante el canto.",
+    "ref": "Elena G. de White · Testimonios para la Iglesia, tomo 9, p. 116"
+   },
+   "jobs": [
+    "why",
+    "pick"
+   ],
+   "needs": [
+    "sound",
+    "music",
+    "stream"
+   ],
+   "src": "https://m.egwwritings.org/en/book/115.794"
+  },
+  {
+   "id": "aa342_1",
+   "en": {
+    "text": "…Thus He taught that the value of the gift is estimated not by the amount, but by the proportion that is given and the motive that actuates the giver.",
+    "ref": "Ellen G. White · The Acts of the Apostles, p. 342"
+   },
+   "es": {
+    "text": "…Así enseñó que el valor de la dádiva no se estima por el monto, sino por la proporción que se da y por el motivo que impulsa al dador.",
+    "ref": "Elena G. de White · Los Hechos de los Apóstoles, p. 275"
+   },
+   "jobs": [
+    "fund",
+    "yes"
+   ],
+   "needs": [
+    "general"
+   ],
+   "src": "https://m.egwwritings.org/en/book/127.1510"
+  }
+ ],
+ "plan": {
+  "byJob": {
+   "motion": [
+    "neh2_18",
+    "hag1_8",
+    "hab2_2",
+    "1chr29_5"
+   ],
+   "why": [
+    "hag1_8",
+    "ps33_3",
+    "2chr24_13"
+   ],
+   "options": [
+    "luke14_28",
+    "prov15_22",
+    "2cor8_21"
+   ],
+   "pick": [
+    "luke14_28",
+    "ps33_3"
+   ],
+   "fund": [
+    "2cor9_7",
+    "ex35_5",
+    "1chr29_14",
+    "ex35_21"
+   ],
+   "path": [
+    "1cor14_40",
+    "prov15_22"
+   ],
+   "risks": [
+    "2cor8_21",
+    "1cor14_40",
+    "luke14_28"
+   ],
+   "timeline": [
+    "1cor14_40",
+    "neh2_18"
+   ],
+   "yes": [
+    "1chr29_5",
+    "ex35_5",
+    "neh2_18"
+   ],
+   "close": [
+    "1chr29_9",
+    "ex35_29",
+    "1chr29_14",
+    "2chr24_13"
+   ],
+   "after": [
+    "1chr29_9",
+    "2chr24_13"
+   ],
+   "verse": [
+    "hag1_8",
+    "ps33_3",
+    "neh8_8"
+   ],
+   "ask": [
+    "1chr29_14",
+    "neh2_18",
+    "2cor8_21"
+   ],
+   "how": [
+    "1cor14_40",
+    "neh8_8",
+    "2chr24_13"
+   ],
+   "roles": [
+    "ex35_21",
+    "neh2_18"
+   ]
+  },
+  "byNeed": {
+   "sound": [
+    "neh8_8",
+    "rom10_17",
+    "ps33_3"
+   ],
+   "stream": [
+    "col2_5",
+    "neh8_8"
+   ],
+   "light": [
+    "matt5_15"
+   ],
+   "computer": [
+    "hab2_2",
+    "neh8_8"
+   ],
+   "music": [
+    "ps33_3"
+   ],
+   "building": [
+    "hag1_8",
+    "2chr24_13",
+    "neh2_18"
+   ],
+   "kitchen": [
+    "acts2_46",
+    "2chr24_13"
+   ],
+   "vehicle": [
+    "mark2_3"
+   ],
+   "children": [
+    "mark10_14"
+   ],
+   "other": [
+    "hag1_8"
+   ],
+   "general": [
+    "hag1_8",
+    "ps33_3"
+   ]
+  },
+  "egwByJob": {
+   "why": [
+    "5t491_1",
+    "9t144_1"
+   ],
+   "options": [
+    "6t101_4",
+    "pp376_1"
+   ],
+   "fund": [
+    "pp343_3",
+    "aa342_1",
+    "pp344_5d"
+   ],
+   "path": [
+    "pp376_1"
+   ],
+   "close": [
+    "pp344_5",
+    "5t491_1"
+   ],
+   "yes": [
+    "aa342_1",
+    "pp344_5"
+   ]
+  }
+ },
+ "plans": {
+  "finance": {
+   "motion": [
+    "luke14_28",
+    "2cor8_21",
+    "neh2_18"
+   ],
+   "fund": [
+    "2cor9_7",
+    "1chr29_14"
+   ],
+   "close": [
+    "1chr29_9",
+    "1chr29_14"
+   ]
+  },
+  "congregation": {
+   "fund": [
+    "2cor9_7",
+    "ex35_5"
+   ],
+   "yes": [
+    "1chr29_5",
+    "ex35_5"
+   ],
+   "close": [
+    "1chr29_9",
+    "ex35_29"
+   ]
+  }
+ },
+ "_sources": {
+  "fetched": "2026-10-02",
+  "scripture": "Bible Gateway, KJV and RVA (Reina-Valera Antigua: the 1909 revision; Bible Gateway has no RVR1909 code; cross-checked against eBible.org spaRV1909, Psalm 33:3). Verse numbers, footnotes and headings left out.",
+  "egw": "egwwritings.org (m.egwwritings.org), English paragraph and the Spanish edition the site links from it; Patriarchs and Prophets in the Spanish edition \"Historia de los Patriarcas y Profetas\" (book 1704).",
+  "egwEs": {
+   "pp343_3": "https://m.egwwritings.org/es/book/1704.1599",
+   "pp344_5": "https://m.egwwritings.org/es/book/1704.1606",
+   "pp344_5d": "https://m.egwwritings.org/es/book/1704.1606",
+   "pp376_1": "https://m.egwwritings.org/es/book/1704.1765",
+   "5t491_1": "https://m.egwwritings.org/es/book/226.2399",
+   "6t101_4": "https://m.egwwritings.org/es/book/231.605",
+   "9t144_1": "https://m.egwwritings.org/es/book/229.762",
+   "aa342_1": "https://m.egwwritings.org/es/book/198.1411"
+  },
+  "egwRefcodes": {
+   "pp343_3": "PP 343.3 / PP 314.1",
+   "pp344_5": "PP 344.5 / PP 315.1",
+   "pp344_5d": "PP 344.5 / PP 315.1",
+   "pp376_1": "PP 376.1 / PP 347.2",
+   "5t491_1": "5T 491.1 / 5TPI 463.2",
+   "6t101_4": "6T 101.4 / 6TPI 106.4",
+   "9t144_1": "9T 144.1 / 9TPI 116.2",
+   "aa342_1": "AA 342.1 / HAp 275.2"
+  },
+  "excluded": {
+   "mal3_10": "the tithe; never argues a local project (Church Manual 2025 p. 148)"
+  },
+  "egwPages": {
+   "_note": "the pages each entry's quoted words are on, from egwwritings.org's page marks (read 2 Oct 2026); a reference names them all",
+   "pp343_3": {
+    "en": [
+     343
+    ],
+    "es": [
+     314
+    ]
+   },
+   "pp344_5": {
+    "en": [
+     344
+    ],
+    "es": [
+     315
+    ]
+   },
+   "pp344_5d": {
+    "en": [
+     344,
+     347
+    ],
+    "es": [
+     315
+    ]
+   },
+   "pp376_1": {
+    "en": [
+     376
+    ],
+    "es": [
+     347
+    ]
+   },
+   "5t491_1": {
+    "en": [
+     491
+    ],
+    "es": [
+     463,
+     464
+    ]
+   },
+   "6t101_4": {
+    "en": [
+     101,
+     102
+    ],
+    "es": [
+     106,
+     107
+    ]
+   },
+   "9t144_1": {
+    "en": [
+     144
+    ],
+    "es": [
+     116
+    ]
+   },
+   "aa342_1": {
+    "en": [
+     342
+    ],
+    "es": [
+     275
+    ]
+   }
+  },
+  "egwShortened": {
+   "5t491_1": "v10.44 review (2 Oct 2026): the sentence that names Christ, for the deciding decks' close (the whole paragraph did not fit at 360 x 640 in Spanish)"
+  }
+ }
+}

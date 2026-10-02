@@ -1,0 +1,348 @@
+{
+ "conf": "Lake Region",
+ "slug": "lake-region",
+ "union": "Lake Union",
+ "site": "https://www.lrcsda.com/",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "aheadWindow": {
+  "from": "2027-04-01",
+  "to": "2027-09-30",
+  "note": "second half of the 12-months-ahead view (Oct 2026 – Mar 2027 is in v50/events/lake-region.json)"
+ },
+ "furthestPublished": "2026-12",
+ "furthestPublicEvent": "2026-12",
+ "furthestNote": "The 2026 \"Calendar of Events\" PDF (posted June 2026) ends in December 2026; the media library has no 2027 calendar and the newest event post is dated 10 Sep 2026.",
+ "calendarUrls": [
+  "https://www.lrcsda.com/calendar/",
+  "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+  "https://www.lrcsda.com/lrc-events/"
+ ],
+ "aheadChecked": [
+  "https://www.lrcsda.com/",
+  "https://www.lrcsda.com/calendar/",
+  "https://www.lrcsda.com/lrc-events/",
+  "https://www.lrcsda.com/camp-meeting/",
+  "https://www.lrcsda.com/camp-wagner/",
+  "https://www.lrcsda.com/wp-json/wp/v2/mec-events?per_page=100 (newest event post 2026-09-10)",
+  "https://www.lrcsda.com/wp-json/wp/v2/media?search=2027 (no 2027 files)",
+  "https://www.lrcsda.com/wp-json/wp/v2/media?search=calendar",
+  "https://www.lrcsda.com/wp-json/wp/v2/posts?search=2027",
+  "https://www.lrcsda.com/wp-json/wp/v2/pages?search=2027",
+  "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+  "https://www.lrcsda.com/wp-content/uploads/2026/08/LRC_Constituency2026_web2.pdf",
+  "https://www.lrcsda.com/elementor-19200/",
+  "https://assets.adventistconnect.org/lakeunio/2026/09/28135939/October_LUH2026_web.pdf"
+ ],
+ "aheadSummary": "Nothing is dated for April–September 2027. Lake Region publishes a designed whole-year calendar PDF (the 2026 one went up in June 2026), so 2027 dates may not appear until well into 2027. The 2027 camp meeting is already set as the place where delegates will vote on the remaining constitution and bylaws changes, but it has no date (2026 camp meeting: 1–4 July at Camp Wagner).",
+ "counts": {
+  "total": 0,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevels": 0,
+  "occurrences": 0,
+  "byCategoryAll": {},
+  "byCategoryAny": {},
+  "byCategoryConferenceRunPublic": {},
+  "conferenceRunRecordsByStartMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  },
+  "conferenceRunOccurrencesByMonth": {
+   "2027-04": 0,
+   "2027-05": 0,
+   "2027-06": 0,
+   "2027-07": 0,
+   "2027-08": 0,
+   "2027-09": 0
+  }
+ },
+ "stats": {
+  "records": 0,
+  "conferenceRunRecords": 0,
+  "occurrences": 0,
+  "firstDate": null,
+  "lastDate": null,
+  "monthsWithConferenceEvents": "0 of 6",
+  "monthsMissing": [
+   "2027-04",
+   "2027-05",
+   "2027-06",
+   "2027-07",
+   "2027-08",
+   "2027-09"
+  ]
+ },
+ "excludedFromCalendar": {},
+ "prepDeadlines": [],
+ "undatedAhead": [
+  {
+   "title": "Lake Region Camp Meeting 2027 (delegates will vote on the postponed constitution and bylaws changes)",
+   "expected": "summer 2027, date not published (2026: 1–4 July)",
+   "category": "camp-meeting",
+   "category2": "administration",
+   "url": "https://www.lrcsda.com/elementor-19200/",
+   "source": "news (lrcsda.com constituency report, Aug 2026; also Lake Union Herald, Oct 2026, p. 30)",
+   "alsoListed": [
+    "https://assets.adventistconnect.org/lakeunio/2026/09/28135939/October_LUH2026_web.pdf"
+   ]
+  }
+ ],
+ "usuallyHeldNotYetPublished": [
+  {
+   "title": "Chicagoland - FEHJA Youth Federation",
+   "heldIn2026": "2026-04-03 to 2026-04-04",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual"
+  },
+  {
+   "title": "LRC Women’s Ministries training",
+   "heldIn2026": [
+    "2026-04-05",
+    "2026-06-28",
+    "2026-10-04"
+   ],
+   "category": "family-women-men",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "LRC Schools Week of Prayer",
+   "heldIn2026": "2026-04-07 to 2026-04-10",
+   "category": "education",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "discipleship-spiritual"
+  },
+  {
+   "title": "Adventurer Escape Weekend",
+   "heldIn2026": "2026-04-10 to 2026-04-12",
+   "category": "children",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "CLC Lake Union",
+   "heldIn2026": "2026-04-11",
+   "category": "other",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Adventist Community Service Convention",
+   "heldIn2026": "2026-04-16 to 2026-04-18",
+   "category": "community-service",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "LRC Women's Ministry Retreat",
+   "heldIn2026": "2026-04-24 to 2026-04-26",
+   "category": "family-women-men",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Motor City Youth Federation",
+   "heldIn2026": "2026-04-24 to 2026-04-25",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "LRC Adult Min./Personal Min. Training (Virtual)",
+   "heldIn2026": "2026-04-26",
+   "category": "evangelism-outreach",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "discipleship-spiritual"
+  },
+  {
+   "title": "LRC Stewardship Training",
+   "heldIn2026": "2026-05-03",
+   "category": "stewardship-finance",
+   "url": "https://www.lrcsda.com/events/lrc-stewardship-training/",
+   "category2": "pastoral-leadership"
+  },
+  {
+   "title": "Hispanic Min. Missionary & Prayer (Women)",
+   "heldIn2026": "2026-05-06",
+   "category": "family-women-men",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "LRC Health and Wellness Retreat",
+   "heldIn2026": "2026-05-15 to 2026-05-17",
+   "category": "health",
+   "url": "https://www.lrcsda.com/events/lrc-health-and-wellness-retreat/"
+  },
+  {
+   "title": "NSO Challenge",
+   "heldIn2026": "2026-05-16 to 2026-05-17",
+   "category": "other",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "LRC School's Field Day (Camp Wagner)",
+   "heldIn2026": "2026-05-19",
+   "category": "education",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Hispanic Youth Camp",
+   "heldIn2026": "2026-05-22 to 2026-05-23",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Young Adult Retreat (Blair Lake)",
+   "heldIn2026": "2026-05-22 to 2026-05-23",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Master Guide Camp Out",
+   "heldIn2026": "2026-05-29 to 2026-05-31",
+   "category": "pathfinders",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Prayer Ministry Training",
+   "heldIn2026": "2026-05-31",
+   "category": "discipleship-spiritual",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Men Who Care Response Team: Skill Set Give Back",
+   "heldIn2026": "2026-06-07",
+   "category": "community-service",
+   "url": "https://www.lrcsda.com/events/men-who-care-response-team-skill-set-give-back/",
+   "category2": "family-women-men"
+  },
+  {
+   "title": "Hispanic Ministries youth sports",
+   "heldIn2026": [
+    "2026-06-21",
+    "2026-07-19"
+   ],
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Hisp. Min. Elderly Day",
+   "heldIn2026": "2026-06-27",
+   "category": "family-women-men",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Adventurer Fun Day",
+   "heldIn2026": "2026-06-28",
+   "category": "children",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "LRC Camp Meeting",
+   "heldIn2026": "2026-07-01 to 2026-07-04",
+   "category": "camp-meeting",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Unstoppable – Youth Camp Meeting 2026",
+   "heldIn2026": "2026-07-01 to 2026-07-04",
+   "category": "youth-young-adults",
+   "url": "https://www.lrcsda.com/events/unstoppable-youth-camp-meeting-2026/",
+   "category2": "camp-meeting"
+  },
+  {
+   "title": "Jr. Camp Staff Training",
+   "heldIn2026": "2026-07-08 to 2026-07-11",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Hispanic Min. Elders Retreat",
+   "heldIn2026": "2026-07-11",
+   "category": "pastoral-leadership",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "Junior Camp (Ages 8-12)",
+   "heldIn2026": "2026-07-12 to 2026-07-18",
+   "category": "children",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Junior Camp (Ages 13-16)",
+   "heldIn2026": "2026-07-19 to 2026-07-25",
+   "category": "youth-young-adults",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf"
+  },
+  {
+   "title": "Hispanic Ministries Pastoral Families Activity",
+   "heldIn2026": "2026-07-26",
+   "category": "pastoral-leadership",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "LRC Prison Ministries Sabbath",
+   "heldIn2026": [
+    "2026-08-15",
+    "2026-09-19"
+   ],
+   "category": "evangelism-outreach",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "community-service"
+  },
+  {
+   "title": "Hispanic Min. Health Fair",
+   "heldIn2026": "2026-08-16",
+   "category": "health",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "LRC Campestre Hispano (Camp Wagner)",
+   "heldIn2026": "2026-09-03 to 2026-09-05",
+   "category": "camp-meeting",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  },
+  {
+   "title": "LRC Health and Wellness Retreat",
+   "heldIn2026": "2026-09-11 to 2026-09-13",
+   "category": "health",
+   "url": "https://www.lrcsda.com/events/lrc-health-and-wellness-retreat-2/"
+  },
+  {
+   "title": "Conscious and Justice Council Convention",
+   "heldIn2026": "2026-09-17 to 2026-09-20",
+   "category": "other",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "community-service"
+  },
+  {
+   "title": "Hispanic Ministries Evangelism Week",
+   "heldIn2026": "2026-09-20 to 2026-09-26",
+   "category": "evangelism-outreach",
+   "url": "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
+   "category2": "multilingual",
+   "lang": "es"
+  }
+ ],
+ "usuallyHeldNote": "Held in April–September 2026 (from the 2026 calendar PDF and event posts); none has a 2027 date yet.",
+ "beyondWindow": [],
+ "events": [],
+ "notes": "The 2026 calendar PDF is mostly artwork; text was read page by page in v50. The constituency report says Camp Wagner priorities for 2027 include a splash pad, trails, a woodland chapel and a feasibility study for a large auditorium (no dated events). Caution: lrcsda.com page code has carried hidden spam links (noted in v50); only visible content was used."
+}

@@ -1,0 +1,147 @@
+{
+ "conf": "Montana",
+ "union": "North Pacific Union",
+ "slug": "montana",
+ "calendarUrls": [
+  "https://www.mtcsda.org/calendar",
+  "https://www.mtcsda.org/events",
+  "https://www.mtcsda.org/event-pages-sitemap.xml",
+  "https://mtclubministries.org/"
+ ],
+ "otherSources": [
+  "https://mtclubministries.org/",
+  "https://www.mtcsda.org/newsletter-stories-2026/on-the-calendar.-.-.-announcements"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-08",
+ "furthestPublishedNote": "Conference items run to the Adventurer Family Camp, Aug 6-8, 2027 (club ministries site). The club site also lists the NPUC camporee (Sep 2027) and the International Pathfinder Camporee (Aug 2029), which are union and division events.",
+ "calendarQuality": "Wix Events shows upcoming events only; all 90 event pages in the sitemap were read. One 2027 event page exists (camp meeting). The club ministries site keeps its own short list of dated events.",
+ "aheadSummary": "Camp meeting is back: Jun 16-19, 2027 at Mount Ellis Academy (event page and the fall newsletter). The club ministries site lists the Club Ministries Fair (Apr 29-May 2, location TBD) and the Adventurer Family Camp (Aug 6-8, Hamilton).",
+ "events": [
+  {
+   "title": "Club Ministries Fair",
+   "start": "2027-04-29",
+   "end": "2027-05-02",
+   "place": "location TBD",
+   "category": "pathfinders",
+   "category2": "children",
+   "audience": "Pathfinder and Adventurer clubs",
+   "url": "https://mtclubministries.org/",
+   "source": "club ministries calendar of events",
+   "level": "conference",
+   "note": "The fair page itself is still \"under construction\"."
+  },
+  {
+   "title": "Montana Camp Meeting",
+   "start": "2027-06-16",
+   "end": "2027-06-19",
+   "place": "Mount Ellis Academy, 3641 Bozeman Trail Rd, Bozeman, MT 59715",
+   "category": "camp-meeting",
+   "category2": "",
+   "audience": "members and families",
+   "url": "https://www.mtcsda.org/event-details/montana-campmeeting",
+   "source": "events page (Wix Events) + newsletter",
+   "level": "conference",
+   "note": "Back after the 2026 camp meeting was cancelled for the academy gym renovation. Also announced in the fall 2026 newsletter (\"Montana Conference Campmeeting 2027: June 16-19!\")."
+  },
+  {
+   "title": "Adventurer Family Camp",
+   "start": "2027-08-06",
+   "end": "2027-08-08",
+   "place": "Blodgett View Christian School, Hamilton, MT",
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "Adventurer families",
+   "url": "https://mtclubministries.org/",
+   "source": "club ministries calendar of events",
+   "level": "conference"
+  }
+ ],
+ "counts": {
+  "total": 3,
+  "conferenceLevel": 3,
+  "unionLevel": 0,
+  "institutionOrOther": 0,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 0,
+  "byCategory": {
+   "pathfinders": 1,
+   "camp-meeting": 1,
+   "children": 1
+  },
+  "byCategoryConferenceOnly": {
+   "pathfinders": 1,
+   "camp-meeting": 1,
+   "children": 1
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "Camp Paxson summer camps",
+   "usual": "summer; no 2027 dates on the Camp Paxson page",
+   "url": "https://www.mtcsda.org/camppaxson"
+  },
+  {
+   "what": "Women's retreat",
+   "usual": "yearly; no 2027 date",
+   "url": "https://www.mtcsda.org/womens-retreat-info"
+  },
+  {
+   "what": "Quarterly conference-wide prayer meeting (Zoom, joined from local churches)",
+   "usual": "quarterly; last listed Sep 23, 2026",
+   "url": "https://www.mtcsda.org/event-details/conference-wide-prayer-meeting-3"
+  }
+ ],
+ "sharedListedHere": [
+  {
+   "title": "NPUC Union Camporee",
+   "start": "2027-09-09",
+   "end": "2027-09-12",
+   "level": "union",
+   "url": "https://mtclubministries.org/",
+   "note": "Grays Harbor County Fairgrounds, Elma, WA. See union file."
+  },
+  {
+   "title": "International Pathfinder Camporee",
+   "start": "2029-08-20",
+   "end": "2029-08-26",
+   "level": "division",
+   "url": "https://mtclubministries.org/",
+   "note": "Montana lists Oshkosh, WI, which matches the Sept 2026 NAD announcement."
+  }
+ ],
+ "alsoOct26toMar27": [],
+ "beyondWindow": [],
+ "excluded": [
+  "Conference Board of Directors meetings (committee).",
+  "Offering and sunset calendar PDFs."
+ ],
+ "aheadChecked": [
+  "https://www.mtcsda.org/event-pages-sitemap.xml (all 90 event pages read)",
+  "https://www.mtcsda.org/event-details/montana-campmeeting",
+  "https://www.mtcsda.org/events",
+  "https://www.mtcsda.org/calendar",
+  "https://www.mtcsda.org/calendars",
+  "https://www.mtcsda.org/campmeeting",
+  "https://www.mtcsda.org/camppaxson",
+  "https://www.mtcsda.org/womens-retreat-info",
+  "https://www.mtcsda.org/womensministries",
+  "https://www.mtcsda.org/mea",
+  "https://www.mtcsda.org/pbe",
+  "https://www.mtcsda.org/announcements",
+  "https://www.mtcsda.org/pastor-resources",
+  "https://www.mtcsda.org/newsletter-stories-2026/on-the-calendar.-.-.-announcements",
+  "https://www.mtcsda.org/newsletter-stories-2026/onevoice27",
+  "https://www.mtcsda.org/newsletter-stories-2026/a-montanan-%22mission-field%22",
+  "https://mtclubministries.org/",
+  "https://mtclubministries.org/pathfinder-camporee/",
+  "https://mtclubministries.org/montana-club-ministries-fair/",
+  "https://mtclubministries.org/wp-json/wp/v2/pages",
+  "https://nwadventists.com/news?section=353"
+ ],
+ "notes": [
+  "The Sept 2026 newsletter also tells churches about OneVoice27 / All Things New: the NAD launch day of prayer on Sept 5, 2026 begins a year-long emphasis leading to September 2027 (see the NAD/GC file)."
+ ]
+}

@@ -1,0 +1,263 @@
+{
+ "conf": "Columbia Union Conference",
+ "slug": "union-columbia",
+ "union": "Columbia Union Conference",
+ "site": "https://www.columbiaunion.org/",
+ "calendarUrls": [
+  "https://cucamporee.com/",
+  "https://www.columbiaunion.org/education-calendar",
+  "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+  "https://www.columbiaunion.org/ministries/pathfinders",
+  "https://columbiaunionvisitor.com/"
+ ],
+ "retrieved": "2026-10-01",
+ "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); union-level events only (camporee, education, ministers, youth, evangelism, prayer, funding).",
+ "calendarQuality": "C: the union has no general events calendar (/calendar is a sunset table). Dated union events come from the camporee site and the Office of Education calendar (.docx, 2025–2029). Ministries pages carry no 2027 dates.",
+ "furthestPublished": "2029-06",
+ "furthestNote": "the education calendar runs to June 2029; the latest non-education union event is the camporee (Aug 2027)",
+ "aheadSummary": "Five union events: the Pathfinder camporee \"UNSHAKABLE 2027\" (4–8 Aug, Summit Bechtel Reserve, W.Va.) and four education events (superintendents' Zoom 2 Jun, Principals Bootcamp 12–15 Jul, K–12 Encounter Bible Training 26–28 Jul, SALT 16–19 Sep). No union OneVoice27 plan, ministers' meeting, youth congress, prayer-meeting or Homeland Missions dates for 2027 are published.",
+ "aheadChecked": [
+  "https://www.columbiaunion.org/",
+  "https://www.columbiaunion.org/calendar",
+  "https://www.columbiaunion.org/education-calendar",
+  "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+  "https://www.columbiaunion.org/find/camp-meeting",
+  "https://www.columbiaunion.org/about-us/special-events-0",
+  "https://www.columbiaunion.org/ministries/office-evangelism",
+  "https://www.columbiaunion.org/ministries/youth-and-young-adult",
+  "https://www.columbiaunion.org/ministries/pathfinders",
+  "https://www.columbiaunion.org/ministries/multilingual-ministries",
+  "https://www.columbiaunion.org/ministries/ministries-development",
+  "https://www.columbiaunion.org/ministries/church-planting",
+  "https://www.columbiaunion.org/ministries/womens-ministries",
+  "https://www.columbiaunion.org/ministries/childrens-ministries",
+  "https://www.columbiaunion.org/ministries/health-ministries",
+  "https://www.columbiaunion.org/ministries/acs",
+  "https://www.columbiaunion.org/ministries/communication",
+  "https://www.columbiaunion.org/ministries/education",
+  "https://www.columbiaunion.org/ministries/office-president",
+  "https://www.columbiaunion.org/ministries/disabilities-ministries",
+  "https://cucamporee.com/",
+  "https://cucamporee.com/registration/",
+  "https://cucamporee.com/information/faq/",
+  "https://cucamporee.com/information/schedule/",
+  "https://cucamporee.com/information/forms/",
+  "https://cucamporee.com/information/location/",
+  "https://columbiaunionvisitor.com/rss.xml",
+  "https://columbiaunionvisitor.com/2026/pray-us-2026",
+  "https://columbiaunionvisitor.com/2026/columbia-union-conference-executive-committee-holds-first-executive-committee-meeting"
+ ],
+ "stats": {
+  "records": 5,
+  "datedInWindowRecords": 5,
+  "conferenceRunRecords": 5,
+  "occurrencesInWindow": 5,
+  "conferenceOccurrencesInWindow": 5,
+  "projectedSeriesRecords": 0,
+  "tentativeRecords": 0,
+  "undatedRecords": 0,
+  "startsBeforeWindowRecords": 0,
+  "monthsWithConferenceEvents": "4 of 6",
+  "byLevel": {
+   "union": 5
+  },
+  "byCategoryAllRecords": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 1,
+   "education": 4,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRun": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 1,
+   "education": 4,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "byCategoryConferenceRunOccurrences": {
+   "evangelism-outreach": 0,
+   "discipleship-spiritual": 0,
+   "pastoral-leadership": 0,
+   "youth-young-adults": 0,
+   "children": 0,
+   "pathfinders": 1,
+   "education": 4,
+   "health": 0,
+   "community-service": 0,
+   "family-women-men": 0,
+   "music-worship-arts": 0,
+   "multilingual": 0,
+   "stewardship-finance": 0,
+   "camp-meeting": 0,
+   "administration": 0,
+   "other": 0
+  },
+  "note": "for this union file, the conference-run fields count union-level records"
+ },
+ "counts": {
+  "total": 5,
+  "conferenceLevel": 0,
+  "observances": 0,
+  "byCategory": {
+   "education": 4,
+   "pathfinders": 1
+  },
+  "byCategoryConferenceOnly": {}
+ },
+ "excludedFromCalendar": {
+  "committee/board/council/advisory": 4
+ },
+ "excludedDetail": [
+  {
+   "title": "School Evaluation Review Committee (2 Jun 2027)",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "Code Review Committee (21–22 Jul 2027)",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 1
+  },
+  {
+   "title": "CU Presidents' Council (11 May, 7 Sep 2027; on the Chesapeake feed)",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  },
+  {
+   "title": "CU Executive Committee (13 May, 9 Sep 2027; on the Chesapeake feed)",
+   "reason": "committee/board/council/advisory",
+   "occurrences": 2
+  }
+ ],
+ "prepDeadlines": [
+  {
+   "title": "Camporee meal package and SBR lodging links open",
+   "date": "2026-10-01",
+   "end": "2026-10-31",
+   "datePrecision": "month (page says \"check back in October\")",
+   "what": "12-meal vegetarian package $325/person; lodging (tents, bunkhouses, rooms) by reservation",
+   "url": "https://cucamporee.com/registration/"
+  },
+  {
+   "title": "Camporee registration (opens \"soon\"; deadline not published)",
+   "date": null,
+   "what": "only clubs that buy tickets before the registration deadline are admitted; no day passes",
+   "url": "https://cucamporee.com/registration/"
+  }
+ ],
+ "events": [
+  {
+   "title": "Superintendents' Zoom meeting (union education)",
+   "start": "2027-06-02",
+   "end": "2027-06-02",
+   "place": "Online (Zoom)",
+   "category": "education",
+   "category2": "administration",
+   "audience": "conference education superintendents",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar",
+   "sourceDetail": "union Office of Education calendar 2025–2029 (.docx linked from https://www.columbiaunion.org/education-calendar)",
+   "note": "the calendar lists the day as \"Thursday\", but 2 Jun 2027 is a Wednesday"
+  },
+  {
+   "title": "Columbia Union Principals Bootcamp",
+   "start": "2027-07-12",
+   "end": "2027-07-15",
+   "place": "Columbia, Md.",
+   "category": "education",
+   "category2": null,
+   "audience": "principals",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar",
+   "sourceDetail": "union Office of Education calendar 2025–2029 (.docx linked from https://www.columbiaunion.org/education-calendar)"
+  },
+  {
+   "title": "K–12 Teachers Encounter Bible Training",
+   "start": "2027-07-26",
+   "end": "2027-07-28",
+   "place": "Columbia, Md.",
+   "category": "education",
+   "category2": "discipleship-spiritual",
+   "audience": "teachers",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar",
+   "sourceDetail": "union Office of Education calendar 2025–2029 (.docx linked from https://www.columbiaunion.org/education-calendar)"
+  },
+  {
+   "title": "Columbia Union Pathfinder Camporee \"UNSHAKABLE 2027\"",
+   "start": "2027-08-04",
+   "end": "2027-08-08",
+   "place": "Summit Bechtel Reserve, Glen Jean, W.Va.",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "Pathfinders & club leaders",
+   "level": "union",
+   "url": "https://cucamporee.com/",
+   "source": "event page",
+   "sourceDetail": "camporee site; also https://www.columbiaunion.org/ministries/pathfinders",
+   "note": "held every 5 years; registration \"will open soon\"; tickets $255 (Pathfinders and staff with activities); no tickets or day passes at the gate"
+  },
+  {
+   "title": "SALT: Spiritual Academy Leadership Training",
+   "start": "2027-09-16",
+   "end": "2027-09-19",
+   "place": "Camp Blue Ridge, Va.",
+   "category": "education",
+   "category2": "youth-young-adults",
+   "audience": "academy student leaders",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar",
+   "sourceDetail": "union Office of Education calendar 2025–2029 (.docx linked from https://www.columbiaunion.org/education-calendar)"
+  }
+ ],
+ "notes": [
+  "The union camporee is held every five years; 2027 returns to Summit Bechtel Reserve after 2022 (\"Relentless\").",
+  "Union Online Prayer Meetings are dated only to 2 Dec 2026 (Visitor, \"Pray With Us in 2026\").",
+  "Homeland Missions funding: the latest brochure and application on the union site are for 2025 (due 13 Feb 2025); no 2026 or 2027 cycle is posted.",
+  "The union executive committee report (Visitor, Sept 2026) mentions Share Your Table, OneVoice 2027/All Things New, Ignite Ohio and Impact Philly, but gives no union-wide 2027 dates.",
+  "Union education events also appear on the Chesapeake feed (Principals Boot Camp, K-12 Encounter, SALT) with the same dates."
+ ],
+ "earlierUnionEvents": [
+  {
+   "title": "Small Schools' (Multigrade) Workshop",
+   "start": "2027-02-21",
+   "end": "2027-02-22",
+   "place": "Columbia, MD",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers of multigrade schools",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "union Office of Education calendar 2025-2029",
+   "confirmed": false,
+   "note": "The union's calendar (last edited Oct 2025) gives 21-22 Feb 2027; Chesapeake's calendar gives 18-19 Oct 2026. Added in review."
+  }
+ ]
+}

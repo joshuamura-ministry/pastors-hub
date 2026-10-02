@@ -1,5 +1,5 @@
 {
- "_about": "Bible Gateway, fetched 29 Sep 2026 (v10.40.0): the printed text of every passage Terrain quotes, KJV and Reina-Valera Antigua 1909 (RVA), verse numbers, footnotes and headings left out, verses of a range joined by one space. tests/v40-accuracy.test.js holds every Scripture string in index.html, and every quoted verse in the Idea Library source (tools/ideas-src), to these (Numbers 6:24, Psalm 46:1 and Proverbs 17:22 fetched for the library in the v10.40.0 review pass). Public domain texts.",
+ "_about": "Bible Gateway, fetched 29 Sep 2026 (v10.40.0): the printed text of every passage Terrain quotes, KJV and Reina-Valera Antigua 1909 (RVA), verse numbers, footnotes and headings left out, verses of a range joined by one space. tests/v40-accuracy.test.js holds every Scripture string in index.html, and every quoted verse in the Idea Library source (tools/ideas-src), to these (Numbers 6:24, Psalm 46:1 and Proverbs 17:22 fetched for the library in the v10.40.0 review pass). Public domain texts. v56 (2 Oct 2026, the purchase path): Exodus 35:5, 35:21, 35:29; 1 Chronicles 29:5, 29:9; Haggai 1:8; Psalm 33:3; Nehemiah 8:8; Romans 10:17; Colossians 2:5; 2 Chronicles 24:13; Matthew 5:15; Mark 2:3, fetched from Bible Gateway (KJV, RVA) by the design's research/bg/fetch.mjs.",
  "passages": {
   "1 Corinthians 12:18": {
    "KJV": {
@@ -1691,6 +1691,162 @@
     "url": "https://www.biblegateway.com/passage/?search=1+Peter+2%3A2&version=RVA",
     "heading": "1 Pedro 2:2",
     "text": "Desead, como niños recién nacidos, la leche espiritual, sin engaño, para que por ella crezcáis en salud:"
+   }
+  },
+  "Exodus 35:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A5&version=KJV",
+    "heading": "Exodus 35:5",
+    "text": "Take ye from among you an offering unto the LORD: whosoever is of a willing heart, let him bring it, an offering of the LORD; gold, and silver, and brass,"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A5&version=RVA",
+    "heading": "Éxodo 35:5",
+    "text": "Tomad de entre vosotros ofrenda para Jehová: todo liberal de corazón la traerá á Jehová: oro, plata, metal;"
+   }
+  },
+  "Exodus 35:21": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A21&version=KJV",
+    "heading": "Exodus 35:21",
+    "text": "And they came, every one whose heart stirred him up, and every one whom his spirit made willing, and they brought the LORD's offering to the work of the tabernacle of the congregation, and for all his service, and for the holy garments."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A21&version=RVA",
+    "heading": "Éxodo 35:21",
+    "text": "Y vino todo varón á quien su corazón estimuló, y todo aquel á quien su espíritu le dió voluntad, y trajeron ofrenda á Jehová para la obra del tabernáculo del testimonio, y para toda su fábrica, y para las sagradas vestiduras."
+   }
+  },
+  "Exodus 35:29": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A29&version=KJV",
+    "heading": "Exodus 35:29",
+    "text": "The children of Israel brought a willing offering unto the LORD, every man and woman, whose heart made them willing to bring for all manner of work, which the LORD had commanded to be made by the hand of Moses."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Exodus+35%3A29&version=RVA",
+    "heading": "Éxodo 35:29",
+    "text": "De los hijos de Israel, así hombres como mujeres, todos los que tuvieron corazón voluntario para traer para toda la obra, que Jehová había mandado por medio de Moisés que hiciesen, trajeron ofrenda voluntaria á Jehová."
+   }
+  },
+  "1 Chronicles 29:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A5&version=KJV",
+    "heading": "1 Chronicles 29:5",
+    "text": "The gold for things of gold, and the silver for things of silver, and for all manner of work to be made by the hands of artificers. And who then is willing to consecrate his service this day unto the LORD?"
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A5&version=RVA",
+    "heading": "1 Crónicas 29:5",
+    "text": "Oro pues para las cosas de oro, y plata para las cosas de plata, y para toda la obra de manos de los oficiales. ¿Y quién quiere hacer hoy ofrenda á Jehová?"
+   }
+  },
+  "1 Chronicles 29:9": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A9&version=KJV",
+    "heading": "1 Chronicles 29:9",
+    "text": "Then the people rejoiced, for that they offered willingly, because with perfect heart they offered willingly to the LORD: and David the king also rejoiced with great joy."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=1+Chronicles+29%3A9&version=RVA",
+    "heading": "1 Crónicas 29:9",
+    "text": "Y holgóse el pueblo de haber contribuído de su voluntad; porque con entero corazón ofrecieron á Jehová voluntariamente."
+   }
+  },
+  "Haggai 1:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Haggai+1%3A8&version=KJV",
+    "heading": "Haggai 1:8",
+    "text": "Go up to the mountain, and bring wood, and build the house; and I will take pleasure in it, and I will be glorified, saith the LORD."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Haggai+1%3A8&version=RVA",
+    "heading": "Hageo 1:8",
+    "text": "Subid al monte, y traed madera, y reedificad la casa; y pondré en ella, mi voluntad, y seré honrado, ha dicho Jehová."
+   }
+  },
+  "Psalm 33:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+33%3A3&version=KJV",
+    "heading": "Psalm 33:3",
+    "text": "Sing unto him a new song; play skilfully with a loud noise."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+33%3A3&version=RVA",
+    "heading": "Salmos 33:3",
+    "text": "Cantadle canción nueva: Hacedlo bien tañendo con júbilo."
+   }
+  },
+  "Nehemiah 8:8": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+8%3A8&version=KJV",
+    "heading": "Nehemiah 8:8",
+    "text": "So they read in the book in the law of God distinctly, and gave the sense, and caused them to understand the reading."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Nehemiah+8%3A8&version=RVA",
+    "heading": "Nehemías 8:8",
+    "text": "Y leían en el libro de la ley de Dios claramente, y ponían el sentido, de modo que entendiesen la lectura."
+   }
+  },
+  "Romans 10:17": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+10%3A17&version=KJV",
+    "heading": "Romans 10:17",
+    "text": "So then faith cometh by hearing, and hearing by the word of God."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Romans+10%3A17&version=RVA",
+    "heading": "Romanos 10:17",
+    "text": "Luego la fe es por el oir; y el oir por la palabra de Dios."
+   }
+  },
+  "Colossians 2:5": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Colossians+2%3A5&version=KJV",
+    "heading": "Colossians 2:5",
+    "text": "For though I be absent in the flesh, yet am I with you in the spirit, joying and beholding your order, and the stedfastness of your faith in Christ."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Colossians+2%3A5&version=RVA",
+    "heading": "Colosenses 2:5",
+    "text": "Porque aunque estoy ausente con el cuerpo, no obstante con el espíritu estoy con vosotros, gozándome y mirando vuestro concierto, y la firmeza de vuestra fe en Cristo."
+   }
+  },
+  "2 Chronicles 24:13": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Chronicles+24%3A13&version=KJV",
+    "heading": "2 Chronicles 24:13",
+    "text": "So the workmen wrought, and the work was perfected by them, and they set the house of God in his state, and strengthened it."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=2+Chronicles+24%3A13&version=RVA",
+    "heading": "2 Crónicas 24:13",
+    "text": "Hacían pues los oficiales la obra, y por sus manos fué la obra restaurada, y restituyeron la casa de Dios á su condición, y la consolidaron."
+   }
+  },
+  "Matthew 5:15": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+5%3A15&version=KJV",
+    "heading": "Matthew 5:15",
+    "text": "Neither do men light a candle, and put it under a bushel, but on a candlestick; and it giveth light unto all that are in the house."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Matthew+5%3A15&version=RVA",
+    "heading": "Mateo 5:15",
+    "text": "Ni se enciende una lámpara y se pone debajo de un almud, mas sobre el candelero, y alumbra á todos los que están en casa."
+   }
+  },
+  "Mark 2:3": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Mark+2%3A3&version=KJV",
+    "heading": "Mark 2:3",
+    "text": "And they come unto him, bringing one sick of the palsy, which was borne of four."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Mark+2%3A3&version=RVA",
+    "heading": "Marcos 2:3",
+    "text": "Entonces vinieron á él unos trayendo un paralítico, que era traído por cuatro."
    }
   }
  }

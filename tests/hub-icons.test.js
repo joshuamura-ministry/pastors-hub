@@ -12,7 +12,8 @@ setTimeout(()=>{
   c('no boot errors', errs.length, 0);
   const tools=[...D.querySelectorAll('.tool')];
   console.log('\n-- the supplied artwork --');
-  c('four icons', tools.length===4 && tools.every(t=>t.querySelector('svg.tsvg')));
+// v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
+  c('five icons', tools.length===5 && tools.every(t=>t.querySelector('svg.tsvg')));
   c('all on the 256 grid they were drawn on', tools.every(t=>t.querySelector('svg').getAttribute('viewBox')==='0 0 256 256'));
   c('none of my 64-grid drawings survive', /viewBox="0 0 64 64"/.test(html), false);
   // v10.38: per-tool inks, so the gradient ids are ink-* (were mint-*).
@@ -21,9 +22,9 @@ setTimeout(()=>{
 
   console.log('\n-- ids that would have collided --');
   const ids=[...D.querySelectorAll('.tool [id]')].map(e=>e.id);
-  c('eight ids, all distinct', new Set(ids).size, ids.length);
+  c('ten ids, all distinct', new Set(ids).size, ids.length);   // v56 (B2): five tiles
   c('namespaced per tool', ids.sort().join(','),
-    'glow-case,glow-gifts,glow-planner,glow-survey,ink-case,ink-gifts,ink-planner,ink-survey');
+    'glow-case,glow-compare,glow-gifts,glow-planner,glow-survey,ink-case,ink-compare,ink-gifts,ink-planner,ink-survey');   // v56 (B2)
   // every url(#x) inside an icon must resolve inside that same icon
   let dangling=0;
   tools.forEach(t=>{
@@ -49,8 +50,8 @@ setTimeout(()=>{
   c('charts and maps keep theirs, correctly', /class="mapsvg"[^>]*role="img"/.test(html));
   c('no title/desc to be read out twice', tools.every(t=>!t.querySelector('svg title')&&!t.querySelector('svg desc')));
   c('the button text still carries the name', tools.map(t=>t.querySelector('b').textContent),
-    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner']);
-  c('and still routes', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner']);
+    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences']);   // v56 (B2)
+  c('and still routes', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare']);
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);

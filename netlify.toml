@@ -2,9 +2,10 @@
 # Never put a secret value here. Secrets stay in Netlify > Project configuration > Environment variables.
 
 [build]
-  # Make a clean folder holding only what visitors need: the app page, the idea library and the connection-card fonts.
-  # If any copy fails, the deploy fails and the live site stays exactly as it was.
-  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/"
+  # Make a clean folder holding only what visitors need: the app page, the idea library, the connection-card fonts and the
+  # conference calendars ("Learn from other conferences": conferences/, built by tools/conferences/build.mjs; its source,
+  # tools/conferences/src, is never copied). If any copy fails, the deploy fails and the live site stays exactly as it was.
+  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/ && cp -R conferences site/"
   publish = "site"
 
   # Skip a LIVE deploy only when every change since the last live build is inside tests/, tools/,

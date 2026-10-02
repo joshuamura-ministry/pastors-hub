@@ -1,0 +1,49 @@
+{
+ "conf": "South Central",
+ "slug": "south-central",
+ "union": "Southern",
+ "site": "https://iamsouthcentral.org",
+ "retrieved": "2026-10-01",
+ "window": "2027-04-01 to 2027-09-30",
+ "calendarUrls": [
+  "https://iamsouthcentral.org/south-central-events/",
+  "https://iamsouthcentral.org/wp-content/uploads/2026/03/SCC-2026-Calendar_March30.pdf",
+  "https://iamsouthcentral.org/wp-content/uploads/2024/10/SCC-2025-Calendar-website.pdf"
+ ],
+ "calendarGrade": "B",
+ "calendarQuality": "Full month-grid master calendars (PDF) for 2025 and 2026, heavy with internal meetings and report deadlines; the website event list is almost empty; no 2027 calendar yet.",
+ "furthestPublished": "2026-12",
+ "furthestPublishedOwnSite": "2026-12",
+ "aheadSummary": "Not published yet. No 2027 calendar PDF (latest is the 2026 calendar, revised 30 Mar 2026), the web event list shows no events, and the iCal link returns a web page.",
+ "aheadChecked": [
+  "https://iamsouthcentral.org/south-central-events/",
+  "https://iamsouthcentral.org/?mec-ical-feed=1",
+  "https://iamsouthcentral.org/wp-json/wp/v2/mec-events?per_page=100",
+  "https://iamsouthcentral.org/wp-json/wp/v2/media?search=calendar",
+  "https://iamsouthcentral.org/wp-json/wp/v2/media?search=2027",
+  "https://iamsouthcentral.org/?s=2027",
+  "https://iamsouthcentral.org/youth-young-adult-ministries/",
+  "https://iamsouthcentral.org/multicultural/",
+  "https://iamsouthcentral.org/ministerial/",
+  "https://iamsouthcentral.org/church-ministries-mission-development/",
+  "https://iamsouthcentral.org/adventist-community-service/",
+  "https://iamsouthcentral.org/health-ministries/",
+  "https://iamsouthcentral.org/education/",
+  "https://iamsouthcentral.org/south-central-news/",
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+ ],
+ "usuallyHeldNotYetPublished": [
+  "Camp meeting (June in 2026), Latino camp meeting, Camp Thunderbird summer camp, youth federation days, Simultaneous Harvest campaign, ACS back-to-school outreach: no 2027 dates.",
+  "Recent uploads include a BAYDA Adventurer Fun Escape save-the-date (11-14 May 2028, Ridgecrest, NC) and an Oshkosh 2029 image; both are outside the window and not conference events."
+ ],
+ "stats": {
+  "aheadEvents": 0,
+  "conferenceRunPublic": 0,
+  "internal": 0,
+  "otherLevel": 0,
+  "byMonth": {},
+  "byMainCategory": {},
+  "conferenceRunPublicByMainCategory": {}
+ },
+ "events": []
+}

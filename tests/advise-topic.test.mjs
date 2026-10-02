@@ -31,7 +31,8 @@ const one=(patch,lang='en')=>{ const x=clone(TI[lang][0]); patch(x); return x; }
 
 console.log('-- GET and the version --');
 const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
-c('reports advise-2.2 (the topic mode is new)', g.fn, 'advise-2.2');
+// v56 (stale): advise-2.4 adds Find prices (tests/advise-prices.test.mjs); the topic mode is unchanged
+c('reports advise-2.4 (Find prices; 2.3 the Sabbath guideline)', g.fn, 'advise-2.4');
 c('says the topic mode exists', g.topic, true);
 c('model and per-call limit unchanged (Opus by default, six a call)', [g.model,g.maxIdeasPerCall], ['claude-opus-5-5',6]);
 
@@ -51,7 +52,7 @@ c('…the census tags that fire here (unknown ones dropped)', /CENSUS TAGS THAT 
 c('…and what not to repeat', /DO NOT REPEAT ANY OF THESE.*Prayer cards on every door within a mile/.test(lastBody.messages[0].content), true);
 c('the prompt carries the pastor\'s words', ['50 different things for prayer','nobody walks by','praying for kids'].every(w=>lastBody.system.includes(w)), true);
 c('…the children rules, the outsider test, go where people are, social media', ['CHILDREN','OUTSIDER TEST','GO WHERE PEOPLE ARE','SOCIAL MEDIA','$5 a day','screened adults'].every(w=>lastBody.system.includes(w)), true);
-c('…Adventist food and Sabbath, and no invented organisations', ['Vegetarian food only','no raffles','"sabbath": true only for','Invent no named organisations'].every(w=>lastBody.system.includes(w)), true);
+c('…Adventist food and Sabbath, and no invented organisations', ['Vegetarian food only','never sell raffle tickets','"sabbath": true when it worships','Invent no named organisations'].every(w=>lastBody.system.includes(w)), true);
 c('same model, no sampling parameters (current models refuse them)', [lastBody.model,'temperature' in lastBody,'top_p' in lastBody], ['claude-opus-5-5',false,false]);
 c('a low effort and room for thinking, inside the 60 s limit', [lastBody.output_config&&lastBody.output_config.effort,lastBody.max_tokens], ['low',2500+6*900]);
 c('the upstream call has a timeout signal', !!(lastOpts&&lastOpts.signal), true);
@@ -87,7 +88,8 @@ const REJ=[
   ['at the school gate', x=>{ x.en.how[1]='Hand out cards at the school gate at pick-up time each Friday.'; }],
   ['"reach kids"', x=>{ x.en.d=x.en.d.replace('Two members restock','A great way to reach kids. Two members restock').replace(/\. Two/,' Two'); }],
   ['pork on the menu', x=>{ x.en.how[3]='Bring pulled pork sandwiches for the owner and staff on the last Tuesday.'; }],
-  ['a raffle', x=>{ x.en.how[3]='Hold a raffle for a gift basket to thank those who take a card.'; }],
+  // the pastor (1 Oct 2026): a free drawing is fine; a raffle that sells chances or raises money is not
+  ['a raffle that sells tickets', x=>{ x.en.how[3]='Sell raffle tickets for a gift basket to pay for the printing.'; }],
   ['"target"', x=>{ x.en.how[3]='Target the laundromat regulars with a second card after a month.'; }],
   ['counselling with no professional', x=>{ x.en.how[3]='Offer grief counseling at the folding table on Tuesday evenings.'; }],
   ['minors with no screening in the steps', x=>{ x.ages='youth'; }],

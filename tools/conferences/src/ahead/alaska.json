@@ -1,0 +1,160 @@
+{
+ "conf": "Alaska",
+ "union": "North Pacific Union",
+ "slug": "alaska",
+ "calendarUrls": [
+  "https://alaskaconference.org/events/",
+  "https://alaskaconference.org/wp-json/tribe/events/v1/events"
+ ],
+ "otherSources": [
+  "https://alaskaconference.org/ministries/alaska-camps/",
+  "https://alaskaconference.org/ministries/youthyoung-adults/"
+ ],
+ "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-10-01",
+ "furthestPublished": "2027-08",
+ "furthestPublishedNote": "Real events on the calendar end with Educators Meetings, Feb 8-10, 2027. The camps page lists summer 2027 camps by month (July and August 2027). The calendar also holds monthly offering Sabbaths through Dec 2029; these are not events and were dropped.",
+ "calendarQuality": "Thin for 2027. The Events Calendar (WordPress) API returns 40 entries from Jan 2027 on; after Feb 10, 2027 every entry is an offering Sabbath. Only the camps page has dated items for the window, and only by month.",
+ "aheadSummary": "Three summer camps are published for the window, by month only (Camp Polaris in July 2027; Camp Lorraine and Camp Tuk in August 2027; \"final dates to be confirmed\"). Camp meetings, Arctic Mission Adventure village weekends, the Memorial Day camporee and the fall 2027 evangelism thrust have no 2027 dates yet.",
+ "events": [
+  {
+   "title": "Camp Polaris (summer camp)",
+   "start": "2027-07",
+   "end": "2027-07",
+   "place": "",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children and youth ages 8-16",
+   "url": "https://alaskaconference.org/ministries/alaska-camps/",
+   "source": "Alaska Camps page",
+   "level": "conference",
+   "datePrecision": "month",
+   "note": "Registration for 2027 is open; the page lists \"JULY 2027 Camp Polaris\" and says final dates are to be confirmed. In 2026 it ran Jul 5-12."
+  },
+  {
+   "title": "Camp Lorraine (summer camp)",
+   "start": "2027-08",
+   "end": "2027-08",
+   "place": "",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children and youth ages 8-16",
+   "url": "https://alaskaconference.org/ministries/alaska-camps/",
+   "source": "Alaska Camps page",
+   "level": "conference",
+   "datePrecision": "month",
+   "note": "Listed as \"AUGUST 2027\"; final dates to be confirmed. In 2026 it ran Aug 9-14."
+  },
+  {
+   "title": "Camp Tukuskoya (Camp Tuk) (summer camp)",
+   "start": "2027-08",
+   "end": "2027-08",
+   "place": "",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "children and youth ages 8-16",
+   "url": "https://alaskaconference.org/ministries/alaska-camps/",
+   "source": "Alaska Camps page",
+   "level": "conference",
+   "datePrecision": "month",
+   "note": "Listed as \"AUGUST 2027\"; final dates to be confirmed. In 2026 it ran Jul 26-Aug 2."
+  }
+ ],
+ "counts": {
+  "total": 3,
+  "conferenceLevel": 3,
+  "unionLevel": 0,
+  "institutionOrOther": 0,
+  "deadlines": 0,
+  "observances": 0,
+  "monthOnly": 3,
+  "byCategory": {
+   "youth-young-adults": 3
+  },
+  "byCategoryConferenceOnly": {
+   "youth-young-adults": 3
+  }
+ },
+ "notYetPublished": [
+  {
+   "what": "AKC Pathfinder Camporee",
+   "usual": "every Memorial Day weekend at the Palmer Pioneer Peak campground (2027 would be May 28-31)",
+   "url": "https://alaskaconference.org/ministries/youthyoung-adults/pathfinders-2/"
+  },
+  {
+   "what": "Camp meetings (Interior, Southcentral at Palmer, Southeast)",
+   "usual": "June-August (2026: Interior Jun 19-20, Southcentral Jul 21-25, Southeast Aug 7-8)",
+   "url": "https://alaskaconference.org/events/"
+  },
+  {
+   "what": "Arctic Mission Adventure village camp-meeting weekends (Nome, Dillingham, Bethel, Utqiagvik, St. Lawrence Island)",
+   "usual": "Feb-Aug (2026 pattern)",
+   "url": "https://alaskaconference.org/events/"
+  },
+  {
+   "what": "Men's Wilderness Retreat, Caribou Creek",
+   "usual": "every July",
+   "url": "https://alaskaconference.org/ministries/mens-ministries/"
+  },
+  {
+   "what": "Women's Ministries spring retreat (Southcentral)",
+   "usual": "each spring",
+   "url": "https://alaskaconference.org/ministries/womens-ministries/"
+  },
+  {
+   "what": "Young Adult Summer Weekend",
+   "usual": "late June (2026: Jun 25-28)",
+   "url": "https://alaskaconference.org/ministries/youthyoung-adults/"
+  },
+  {
+   "what": "Conference-wide evangelistic thrust built on the broadcast ministry",
+   "usual": "fall 2027 (Strategic Plan 2026-2028); no dates",
+   "url": "https://assets.adventistconnect.org/alaskaco/2026/03/16152638/Strategic-Plan-022326-Rev-2.pdf"
+  }
+ ],
+ "sharedListedHere": [],
+ "alsoOct26toMar27": [
+  {
+   "title": "Pathfinder Winter Fair 2027",
+   "start": "2027-02-12",
+   "end": "2027-02-14",
+   "place": "Pioneer Peak, Palmer",
+   "category": "pathfinders",
+   "category2": "",
+   "audience": "Pathfinder and Adventurer clubs",
+   "url": "https://alaskaconference.org/ministries/youthyoung-adults/",
+   "source": "Youth | Young Adults page",
+   "level": "conference",
+   "note": "Not in the first-pass (v50) file. The page says: \"The 2027 Winter Fair at Pioneer Peak is February 12-14.\""
+  }
+ ],
+ "beyondWindow": [],
+ "excluded": [
+  "Monthly \"Offering: Local Church Budget\" Sabbaths Apr-Sep 2027 (and on to Dec 2029): offering schedule, not events."
+ ],
+ "aheadChecked": [
+  "https://alaskaconference.org/wp-json/tribe/events/v1/events?start_date=2027-01-01&end_date=2029-12-31",
+  "https://alaskaconference.org/",
+  "https://alaskaconference.org/ministries/alaska-camps/",
+  "https://alaskaconference.org/ministries/youthyoung-adults/",
+  "https://alaskaconference.org/ministries/youthyoung-adults/pathfinders-2/",
+  "https://alaskaconference.org/ministries/youthyoung-adults/alaska-childrens-ministries/",
+  "https://alaskaconference.org/ministries/womens-ministries/",
+  "https://alaskaconference.org/ministries/mens-ministries/",
+  "https://alaskaconference.org/ministries/ministerial/",
+  "https://alaskaconference.org/ministries/akc-prayer-initiative/",
+  "https://alaskaconference.org/education/",
+  "https://alaskaconference.org/elders-resources/",
+  "https://alaskaconference.org/camp-meeting/speakers/",
+  "https://www.alaskaconference.org/camp-meeting/southcentral-camp-meeting",
+  "https://alaskaconference.org/wp-json/wp/v2/pages?orderby=modified",
+  "https://arcticmissionadventure.org/",
+  "https://alaskaconference.org/resources/alyeskan/",
+  "https://nwadventists.com/news?section=347",
+  "https://nwadventists.com/news?section=All (Mar-Oct 2026 articles searched for 2027)"
+ ],
+ "notes": [
+  "The events calendar is kept current as an offering schedule (to Dec 2029) but has no gatherings after Feb 10, 2027.",
+  "Pastors were asked to bring 2027 evangelism plans and budget requests to a Nov 1, 2026 planning session (homepage), so 2027 evangelism dates may appear after that."
+ ]
+}

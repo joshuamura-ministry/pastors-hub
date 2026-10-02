@@ -28,7 +28,8 @@ setTimeout(()=>{
   c('the link is pushed to the bottom, not spaced by a fixed gap', /\.tool \.tgo\{margin-top:auto/.test(html));
   c('no fixed margin left to drop one card', /\.tool \.tgo\{margin-top:18px/.test(html), false);
   const tools=[...D.querySelectorAll('.tool')];
-  c('all four still have a link', tools.filter(t=>t.querySelector('.tgo')).length, 4);
+// v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
+  c('all five still have a link', tools.filter(t=>t.querySelector('.tgo')).length, 5);
   const lines=tools.map(t=>t.querySelector('.td').textContent.length);
   console.log('    blurb lengths:', lines.join(', '), '\u2014 uneven on purpose, alignment no longer depends on them');
   // inverted in v10.21: the survey blurb was the longest and wrapped to three
@@ -38,15 +39,15 @@ setTimeout(()=>{
   console.log('\n-- and it holds in Spanish, where every string is longer --');
   const es=['Know who lives nearby and where to reach first.',
             'Help members discover their gifts and find a place to serve.',
-            'Turn community insights into a proposal for your ministry.',
+            'Proposals for ministries, projects and purchases.',
             'Plan your outreach journey, from preparation to follow-up.']
     .map(k=>w.eval('ES['+JSON.stringify(k)+']'));
   c('all four translated', es.every(Boolean));
   console.log('    es lengths:', es.map(x=>x.length).join(', '));
 
   console.log('\n-- nothing else moved --');
-  c('four icons still there', tools.filter(t=>t.querySelector('svg.tsvg')).length, 4);
-  c('still routing', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner']);
+  c('five icons there', tools.filter(t=>t.querySelector('svg.tsvg')).length, 5);   // v56 (B2): five tiles
+  c('still routing', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare']);   // v56 (B2)
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },1800);
