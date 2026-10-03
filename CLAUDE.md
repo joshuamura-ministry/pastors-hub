@@ -153,7 +153,16 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ---
 
-## Current state (2 Oct 2026)
+## Current state
+
+**v10.44.1 (2 Oct 2026, quick lane) — the Hotspots map frames the reach.** The pastor, on his old Bay Area church: *"this is the
+view that shows on the map from a very, very far distance. It's not just the immediate community under hotspots."* `basemap` sized
+the frame to every nearby block's full outline, so one huge rural tract (centre a mile away, edge 30 miles off) pulled a map that
+says "about 1.8 miles" out to the whole Bay Area. Now the frame is the reach (`ZONES.radius`, passed through `zoneMap` →
+`basemap(church,zones,all,radiusMi)`) plus the numbered blocks' centres, with a 20 px pad (`pickZoom(bbox,church,pad)`); a block that
+reaches past the edge is cut off there. Zoom 13 at 1.8 miles, 11 at 4.5, 10 at 10 (San José, Warminster, Miami). Pinned by
+`tests/v44-map-zoom.test.js` (5 checks; 2 fail on v10.44.0).
+ (2 Oct 2026)
 
 **Handed over now: v10.44.0** (`~/Downloads/terrain-v10.44.0`; samples `~/Downloads/Terrain-v10.44-samples/`, README.txt there; the
 integration record `~/Downloads/Terrain-work/v56/INTEGRATION.md`). The pastor (2 Oct 2026): *"we need to do the projects and purchases and the conference
