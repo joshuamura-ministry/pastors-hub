@@ -161,6 +161,11 @@ community resources should be at the bottom"* (v10.45.1 had put it after Churche
 committed a `node_modules` symlink (a worktree's, made in `Terrain-work/v65`; `.gitignore`'s `node_modules/` matches only a
 directory); it is untracked again and `.gitignore` says `node_modules`. **Never symlink node_modules inside a worktree that is
 committed with `git add -A`.**
+- The lifts across the top (same release): *"light lift moderate lift and heavy lift across the top bar … I click light lift it
+  essentially opens up … they will all be closed so just those three are seen … more compact"*. `nsIdeasHTML` draws `.ns-ltabs`
+  (three `.ns-ltab` buttons, `data-ns-lift`, `aria-expanded`, the count) and one `.ns-lift` panel per lift, hidden unless open;
+  `NS.lift={need,L}` holds his choice ('' after closing); `nsLiftOpen()` falls back to the lift of the idea he came back to
+  (`nsBack` clears `NS.lift`). One list open at a time; tapping the open one closes it.
 
 **v10.46.0 (5 Oct 2026) — signing in, and the conference bounds the churches mapped.** The pastor: *"every time I try to
 sign in it makes me register again. There's no like sign in place"*; *"if you press Pennsylvania … shouldn't you have to click a

@@ -70,8 +70,9 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   console.log('\n-- the ideas: Light, Moderate, Heavy; the curated order inside each --');
   await openNeed(P,'rent50',true);
   const r50=rows(P,'rent50');
-  c('the twelve, grouped Light → Moderate → Heavy, a heading and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-lift h4').map(h=>h.textContent)],
-    [12,LIFTS,['Light lift','Moderate lift','Heavy lift']]);
+  // v10.46.1: each lift's name is on its button across the top (was a heading over each list)
+  c('the twelve, grouped Light → Moderate → Heavy, a button and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-ltab .ns-lt').map(h=>h.textContent),P.qa('#ns-i-rent50 .ns-lift .ns-gl').length],
+    [12,LIFTS,['Light lift','Moderate lift','Heavy lift'],3]);
   c('…inside each lift, the curator\'s order (most effective first)', r50, [1,2,3].flatMap(t=>STUB.needs.rent50.filter(id=>tierOf(id)===t)));
   c('the button says how many, then "Hide ideas ⌃"', [P.txt('[data-ns-show="rent50"] small'),P.q('[data-ns-show="rent50"]').getAttribute('aria-expanded')], ['Hide ideas ⌃','true']);
   c('a row: the name, one line from the map (d1), people and money', [P.txt('#ns-i-rent50 [data-idea="homeless-rent-help-page"] .ns-id'),P.qa('#ns-i-rent50 [data-idea="homeless-rent-help-page"] .ns-if span').map(s=>s.textContent)],

@@ -46,6 +46,23 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   c('the button and the list sit in their own framed section, after the need\'s detail', [!!P.q(A+' .ns-ideasec [data-ns-show]'),!!P.q(A+' .ns-ideasec .ns-ideas'),P.q(A+' .ns-ideasec').previousElementSibling.className], [true,true,'ns-detail']);
   c('…in the theme\'s mint, not the need\'s colour', /\.ns-ideasec\{--k:var\(--acc\)/.test(HTML), true);
 
+  console.log('\n-- v10.46.1: the three lifts across the top, one list open at a time --');
+  // "light lift moderate lift and heavy lift across the top bar … I click light lift it essentially opens up … if I press moderate lift
+  // it makes moderate lift the whole thing … they will all be closed so just those three are seen"
+  const I='#ns-i-rent50';
+  const tabs=()=>P.qa(I+' .ns-ltab').map(b=>[b.dataset.nsLift,b.getAttribute('aria-expanded')]), shown=()=>P.qa(I+' .ns-lift').filter(x=>!x.hidden).map(x=>x.dataset.lift);
+  c('three buttons across the top, each with its count; every list closed at first', [P.qa(I+' .ns-ltabs > .ns-ltab').length,P.qa(I+' .ns-ltab small').every(x=>/^\d+ ideas?$/.test(x.textContent)),tabs().map(x=>x[1]),shown()], [3,true,['false','false','false'],[]]);
+  P.q(I+' [data-ns-lift="light"]').click();
+  c('Light lift: its list opens, the others stay closed', [tabs().map(x=>x[1]),shown()], [['true','false','false'],['light']]);
+  P.q(I+' [data-ns-lift="moderate"]').click();
+  c('Moderate lift: the list switches', [tabs().map(x=>x[1]),shown()], [['false','true','false'],['moderate']]);
+  P.q(I+' [data-ns-lift="moderate"]').click();
+  c('tap the open one again: all closed, the three buttons only', [tabs().map(x=>x[1]),shown()], [['false','false','false'],[]]);
+  P.q(I+' [data-ns-lift="heavy"]').click(); P.E('nsIdeasRedraw()');
+  c('a redraw keeps the lift he chose', shown(), ['heavy']);
+  c('each button names the list it opens', P.qa(I+' .ns-ltab').every(b=>P.q('#'+b.getAttribute('aria-controls'))&&P.q('#'+b.getAttribute('aria-controls')).dataset.lift===b.dataset.nsLift), true);
+  P.q(I+' [data-ns-lift="heavy"]').click();
+
   console.log('\n-- a tap stays under the pointer --');
   c('opening a need keeps its head where it was (scrollBy the shift), and jumps only when asked', P.E(`(f=>f.includes('window.scrollBy(0,after-before)')&&/if\\(o\\.jump\\) a\\.scrollIntoView/.test(f))(nsOpenCard.toString())`), true);
   // a real shift: open the first need, then an "Also here" row below it, with the layout faked (jsdom has none)
