@@ -1,4 +1,4 @@
-// Exercise register.mjs (register-1.1) against an in-memory store.
+// Exercise register.mjs (register-1.2: + signin, v10.46.0) against an in-memory store.
 // No real storage, no email, no network.
 // Updated for register-1.1 (v10.38.0 review, findings S2–S11): the first
 // registration's words stand and later ones are kept as claims; every answer
@@ -58,9 +58,9 @@ const recs=()=>[...S.m.keys()].filter(k=>k.startsWith('e/'));
 
 console.log('-- status --');
 let r=await call(new Request(URL0,{method:'GET'}));
-c('GET answers status', [r.status,r.j], [200,{ok:true,fn:'register-1.1'}]);
+c('GET answers status', [r.status,r.j], [200,{ok:true,fn:'register-1.2'}]);
 r=await post({op:'status'});
-c('POST op:status too', r.j, {ok:true,fn:'register-1.1'});
+c('POST op:status too', r.j, {ok:true,fn:'register-1.2'});
 r=await call(new Request(URL0,{method:'PUT',body:'{}'}));
 c('other methods → 405', r.status, 405);
 r=await post('{nope');
@@ -310,6 +310,53 @@ c('and a right key is never counted against it', r.status, 200);
 delete process.env.TERRAIN_ADMIN_KEY;
 r=await post({op:'list'},{'x-terrain-admin':'admin-key-for-tests-only-0123456789'});
 c('key removed again: gone again', r.status, 404);
+
+console.log('\n-- signing in on another device (register-1.2, v10.46.0) --');
+// The pastor (5 Oct 2026): "every time I try to sign in it makes me register again. There's no like sign in place."
+{ const keep=S; const T=makeStore(); globalThis.__terrainRegStore=T;
+  const SIN={ip:'198.51.100.7'};
+  const signin=(email,ctx=SIN,over={})=>post({op:'signin',email,...over},{},ctx);
+  r=await signin('nobody@example.org');
+  c('an address that is not on file: 404 not-found, nothing else', [r.status,r.j], [404,{ok:false,error:'not-found'}]);
+  c('…and no record is made', [...T.m.keys()].filter(k=>k.startsWith('e/')).length, 0);
+  await reg({},{},{ip:'198.51.100.8'});
+  const before=JSON.stringify(T.peek('e/'+hex('pastor.josh@example.org')));
+  r=await signin('  Pastor.Josh@EXAMPLE.org ');
+  c('the same address, any case or spaces: what the registration said, nothing more',
+    [r.status,r.j], [200,{ok:true,name:'Joshua Mura',church:'Bucks County SDA',role:'pastor',conf:'Pennsylvania',union:'Columbia Union',news:false,lang:'en'}]);
+  c('no token without TERRAIN_REG_SECRET', 'tok' in r.j, false);
+  c('signing in writes nothing to the record', JSON.stringify(T.peek('e/'+hex('pastor.josh@example.org'))), before);
+  await reg({name:'Someone Else',church:'Another Church',conf:'Ohio',news:true},{},{ip:'198.51.100.8'});
+  r=await signin('pastor.josh@example.org');
+  c('a later, different registration does not change what signing in returns (the first word stands)', [r.j.name,r.j.church,r.j.conf,r.j.news], ['Joshua Mura','Bucks County SDA','Pennsylvania',false]);
+  await reg({email:'news@example.org',news:true,lang:'es',role:'leader'},{},{ip:'198.51.100.8'});
+  r=await signin('news@example.org');
+  c('the news choice, the role and the language come back as given (a later re-registration from that device keeps them)', [r.j.news,r.j.role,r.j.lang], [true,'leader','es']);
+  r=await signin('not an address');
+  c('not an address: 400 bad-email', [r.status,r.j.error], [400,'bad-email']);
+  r=await post({op:'signin'},{},SIN);
+  c('no address: 400 bad-email', [r.status,r.j.error], [400,'bad-email']);
+  process.env.TERRAIN_REG_SECRET='test-secret-for-registration-0123456789';
+  r=await signin('pastor.josh@example.org');
+  const id0=T.peek('e/'+hex('pastor.josh@example.org')).id;
+  c('with TERRAIN_REG_SECRET: a token for the same record, r1.<id>.<issued>.<signature>', [r.status,typeof r.j.tok==='string'&&r.j.tok.split('.')[1]===id0,/^r1\.[A-Za-z0-9_-]{12}\.[0-9a-z]{1,9}\.[A-Za-z0-9_-]{32}$/.test(r.j.tok||'')], [200,true,true]);
+  const census=(await import(new URL('../netlify/functions/census.mjs', import.meta.url).href)).default;
+  const keepFetch=globalThis.fetch; globalThis.fetch=async()=>({ok:true,status:200,text:async()=>'[["NAME"],["x"]]'});
+  const x=await census(new Request('https://x/.netlify/functions/census?cv=2&u='+encodeURIComponent('https://api.census.gov/data/2024/acs/acs5?get=NAME'),{headers:{'x-terrain-reg':r.j.tok}}));
+  globalThis.fetch=keepFetch;
+  c('…which census.mjs takes', x.status, 200);
+  delete process.env.TERRAIN_REG_SECRET;
+  // Every try counts, found or not: twenty an hour from one client, then 429.
+  const L={ip:'198.51.100.50'}; const st=[];
+  for(let i=0;i<20;i++) st.push((await signin(i%2?'pastor.josh@example.org':'nobody'+i+'@example.org',L)).status);
+  c('twenty tries in an hour from one client are answered', st.every(s=>s===200||s===404), true);
+  r=await signin('pastor.josh@example.org',L);
+  c('the twenty-first: 429 slow-down, even for an address on file', [r.status,r.j.error], [429,'slow-down']);
+  r=await signin('pastor.josh@example.org',{ip:'198.51.100.51'});
+  c('another client is not affected', r.status, 200);
+  c('the counter is a g/sin/<hour>/<tag> blob, no raw address kept', [[...T.m.keys()].some(k=>/^g\/sin\/\d{4}-\d{2}-\d{2}T\d{2}\/[A-Za-z0-9_-]{22}$/.test(k)),/198\.51\.100/.test(T.raw())], [true,false]);
+  c('signing in does not use up registrations (its own counter)', [...T.m.keys()].filter(k=>k.startsWith('g/reg/')).length, 1);
+  globalThis.__terrainRegStore=keep; }
 
 console.log('\n-- the store failing --');
 const keep=globalThis.__terrainRegStore;

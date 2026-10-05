@@ -173,7 +173,7 @@ const SECRET='s'.repeat(40); process.env.TERRAIN_REG_SECRET=SECRET;
 const regTok=(id='AbCdEfGhIjKl',t=Date.now())=>{ const iat=Math.floor(t/1000).toString(36); return `r1.${id}.${iat}.`+createHmac('sha256',SECRET).update(`terrain-reg|r1|${id}|${iat}`,'utf8').digest('base64url').slice(0,32); };
 r=await post({op:'status'}); c('status says registration is required', r.j.regRequired, true);
 r=await post({op:'create',card:HEALTH},{},ip('10.0.2.1')); c('registration on: no token → 401 noreg', [r.status,r.j.error], [401,'noreg']);
-r=await post({op:'create',card:HEALTH},{'x-terrain-reg':regTok().slice(0,-1)+'A'},ip('10.0.2.1')); c('a forged token → 401', r.status, 401);
+r=await post({op:'create',card:HEALTH},{'x-terrain-reg':(t=>t.slice(0,-1)+(t.endsWith('A')?'B':'A'))(regTok())},ip('10.0.2.1')); c('a forged token → 401', r.status, 401);   // v10.46.0: the forged last letter always differs (it was 'A', which failed 1 run in 64)
 r=await post({op:'create',card:HEALTH},{'x-terrain-reg':regTok('AbCdEfGhIjKl',Date.now()-181*864e5)},ip('10.0.2.1')); c('a token over 180 days old → 401', r.status, 401);
 { let last; for(let i=0;i<20;i++) last=await post({op:'create',card:HEALTH},{'x-terrain-reg':regTok('RegOne123456')},ip('10.0.3.'+(i%2)));
   c('twenty cards a day for one registration', last.status, 200);

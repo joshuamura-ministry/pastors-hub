@@ -1,4 +1,4 @@
-// Terrain · pastor registration.                                   register-1.1
+// Terrain · pastor registration.                                   register-1.2
 //
 // The first page asks a pastor for a name, an email address, the church and a
 // role, once per device, after they have found their conference. This function
@@ -25,9 +25,22 @@
 //                           lang, verified, created, updated, count, claims}
 //   g/reg/<hour>/<tag>     {n} registrations from one client this hour
 //   g/adm/<hour>/<tag>     {n} failed admin-list attempts from one client
+//   g/sin/<hour>/<tag>     {n} sign-in tries from one client this hour
 //   g/salt/<day>           {salt} only while TERRAIN_REG_SECRET is unset
 // One small blob per client and window, so registrations from different people
 // never wait on one another. gifts-sweep.mjs deletes earlier days' counters.
+//
+// SIGNING IN (register-1.2, v10.46.0). The pastor (5 Oct 2026): "every time I
+// try to sign in it makes me register again. There's no like sign in place."
+// op 'signin' {email}: when the address is on file, the answer carries what the
+// first registration said (name, church, role, conference, union, news,
+// language) and, when TERRAIN_REG_SECRET is set, a fresh token, so another
+// phone or computer is in with one field. When it is not on file: 404
+// not-found. So signin, unlike register, says whether an address is on file:
+// the pastor chose this over a code by email (no mail is sent from here). It
+// never returns the address, the record's id (only inside the token), its
+// claims or its counts, it writes nothing to the record, and every try counts
+// against the client: at most 20 an hour (g/sin/<hour>/<tag>), found or not.
 //
 // ONE RECORD PER ADDRESS, AND THE FIRST WORD STANDS. Nothing proves that the
 // person typing an address owns it, so registering again with an address that
@@ -71,6 +84,7 @@
 //   status                                              → {ok, fn}
 //   register {name, email, church, role, conf, union?, news?, lang?}
 //                                                       → {ok, tok?}
+//   signin   {email}            → {ok, name, church, role, conf, union, news, lang, tok?} | 404 not-found
 //   list     {after?, limit?}   +x-terrain-admin header  → {ok, items:[record…], total, next?}
 //
 // LOGGING. Nothing a pastor typed is ever logged. Only the op name on an
@@ -79,7 +93,7 @@
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
-const FN_VERSION = 'register-1.1';
+const FN_VERSION = 'register-1.2';
 const STORE_NAME = 'terrain-registrations';
 
 const MAX_BODY = 8 * 1024;          // a registration is a few hundred bytes
@@ -89,6 +103,7 @@ const MAX_CHURCH = 120;
 const MAX_CONF = 80;                // conference and union
 const MAX_IP_HOUR = 20;             // registrations from one client, per hour
 const MAX_ADMIN_FAILS = 10;         // wrong admin keys from one client, per hour
+const MAX_SIGNIN_HOUR = 20;         // sign-in tries from one client, per hour
 const MAX_CLAIMS = 5;               // later, differing registrations kept per record
 const MIN_SECRET = 32;              // TERRAIN_REG_SECRET and TERRAIN_ADMIN_KEY
 const LIST_PAGE = 100, LIST_MAX = 500;
@@ -298,6 +313,29 @@ const OPS = {
     // The same shape for a new address and a known one.
     const secret = regSecret();
     return secret ? { ok: true, tok: mintToken(secret, id, now) } : { ok: true };
+  },
+
+  // Another device, the same pastor: what the first registration said, and a
+  // token. Read-only; every try counted first (see SIGNING IN above).
+  async signin(b, { request, context, store }) {
+    const email = cleanEmail(own(b, 'email'));
+    const now = Date.now();
+    const ip = clientIp(request, context);
+    if (ip) {
+      await upsert(store, await counterKey(store, 'sin', ip, now), cur => {
+        const n = countOf(cur);
+        need(n < MAX_SIGNIN_HOUR, 429, 'slow-down');
+        return { value: { n: n + 1 }, result: null };
+      });
+    }
+    const cur = await store.get('e/' + shaHex(email), { type: 'json' });
+    need(isPlain(cur) && typeof cur.id === 'string' && !!cur.id, 404, 'not-found');
+    const r = order(cur);
+    const res = { ok: true, name: r.name, church: r.church, role: ROLES.has(r.role) ? r.role : 'pastor',
+      conf: r.conf, union: r.union, news: r.news, lang: r.lang };
+    const secret = regSecret();
+    if (secret) res.tok = mintToken(secret, r.id, now);
+    return res;
   },
 
   async list(b, { request, context, store }) {
