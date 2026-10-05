@@ -155,6 +155,26 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.46.0 (5 Oct 2026) — signing in, and the conference bounds the churches mapped.** The pastor: *"every time I try to
+sign in it makes me register again. There's no like sign in place"*; *"if you press Pennsylvania … shouldn't you have to click a
+California or another conference in order to check those areas … what's the use of clicking Pennsylvania when you can still put any
+Church in"*.
+- **Signing in:** register.mjs is **register-1.2**: op `signin {email}` → what the first registration said (name, church, role,
+  conf, union, news, lang) and, with `TERRAIN_REG_SECRET`, a token; 404 `not-found` otherwise. So signin says whether an address
+  is on file (register still never does). It never returns the address, the id (only inside the token), claims or counts, writes
+  nothing to the record, and counts every try: 20 an hour per client (`g/sin/<hour>/<tag>`, swept daily by gifts-sweep). The page:
+  "Already registered? Sign in" under the first page's sub-line (`#gsignin`, `#signform`, `wireSignIn`, `regSignIn`,
+  `regSignInPost`), one field; the record it gets back is kept as this device's registration (`synced:true`), then "Welcome
+  back, {first}." and the hub. Hidden while conference codes are on. The help note says to sign in on another device.
+  Church information still lives on each device (accounts and sync are later work).
+- **The conference bounds addresses:** `CONF_STATES` (the conference registry's "states", embedded; `tests/v46-signin-conf`
+  keeps it equal to `tools/conferences/src/registry/*.json`), `myConf()`, `confStatesText()`. `run()` refuses a typed or located
+  church outside the signed-in conference's states (`OUTCONF`, before any Census call) with "This church is in {state}, outside
+  the {conf} Conference … Wrong conference? Tap Change at the top." A quiet reload of a saved church is not checked; a conference
+  with no list (Bermuda, Canada) is not checked; regional conferences use their several states.
+- Tests: `v46-signin-conf` (13), sign-in sections in `registration.test.js` and `register-function.test.mjs`, the sweep's
+  counters in `gifts-function.test.mjs`; all failing-first on v10.45.1 (`Terrain-work/v65-logs/ff-*.log`).
+
 **v10.45.1 (5 Oct 2026) — the needs follow the report; each need opens on its figures.** The pastor, looking at v10.45.0 live on
 his computer: *"it should be right after the community … survey"*; *"you don't need the thing that says your church's information
 is on the spiritual gifts page … nothing to fill-in … English only at home, born abroad … don't need to be there either"*; *"what

@@ -258,7 +258,7 @@ function makeStore(){
     ['Encuentre su asociación','Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.']);
   // Updated in the v10.38.0 review (P8, P10): "le recuerda" read as "reminds
   // you"; the longer placeholder was cut off on a phone.
-  c('the help note', S.D.getElementById('ghelp').textContent, 'No hay contraseña: Terrain guarda su registro en este dispositivo. En otro teléfono o computadora, regístrese de nuevo con el mismo correo electrónico.');
+  c('the help note', S.D.getElementById('ghelp').textContent, 'No hay contraseña. En otro teléfono o computadora, toque «¿Ya se registró? Inicie sesión» y escriba el mismo correo electrónico.');
   c('the search box', S.D.getElementById('csearch').placeholder, 'Buscar: Pennsylvania, Texico…');
   pick(S);
   const SF=S.D.getElementById('regform');
@@ -286,6 +286,48 @@ function makeStore(){
   pick(S); submit(S);
   await until(()=>/bienvenida/.test(errText(S)));
   c('welcome back, in Spanish', errText(S), 'Le damos la bienvenida de nuevo, Ana.');
+
+  console.log('\n-- signing in on another phone or computer (v10.46.0) --');
+  // The pastor (5 Oct 2026): "every time I try to sign in it makes me register again. There's no like sign in place."
+  const SN=page('https://pastorshub.org/');
+  await until(()=>SN.gateUp());
+  const sb=SN.D.getElementById('gsignbtn');
+  c('the first page offers "Already registered? Sign in", its form folded', [sb&&sb.textContent,SN.D.getElementById('signform').hidden,sb&&sb.getAttribute('aria-expanded')], ['Already registered? Sign in',true,'false']);
+  c('the help note says to sign in on another device', /tap “Already registered\? Sign in” and type the same email/.test(SN.D.getElementById('ghelp').textContent), true);
+  sb.click();
+  c('one tap opens it: one field', [SN.D.getElementById('signform').hidden,sb.getAttribute('aria-expanded'),SN.D.querySelectorAll('#signform input').length], [false,'true',1]);
+  SN.D.getElementById('sbtn').click(); await wait(20);
+  c('nothing typed: asks for it, sends nothing', [SN.D.getElementById('serr').textContent,SN.D.getElementById('semail').getAttribute('aria-invalid'),SN.mine.length], ['Type your email address.','true',0]);
+  SN.D.getElementById('semail').value='pastor@'; SN.D.getElementById('sbtn').click(); await wait(20);
+  c('not an address: refused in the page', [/does not look right/.test(SN.D.getElementById('serr').textContent),SN.mine.length], [true,0]);
+  SN.D.getElementById('semail').value='nobody@example.org'; SN.D.getElementById('sbtn').click();
+  await until(()=>/could not find/.test(SN.D.getElementById('serr').textContent));
+  c('an address not on file: says so, and how to register; still on the first page, nothing kept', [SN.D.getElementById('serr').textContent,SN.gateUp(),SN.reg()], ['We could not find that email. Check it for a typo, or register: tap your state below.',true,null]);
+  SN.D.getElementById('semail').value='  Pastor.Josh@Example.ORG '; SN.D.getElementById('sbtn').click();
+  await until(()=>/Welcome back/.test(SN.D.getElementById('serr').textContent));
+  c('the registered address: "Welcome back, Joshua."', SN.D.getElementById('serr').textContent, 'Welcome back, Joshua.');
+  c('…the server was sent the address and nothing else', SN.mine.slice(-1)[0], {op:'signin',email:'pastor.josh@example.org'});
+  await until(()=>SN.hubUp());
+  const nr=SN.reg();
+  c('…then in: the hub, with the registration as first given kept on this device', [SN.hubUp(),SN.gateUp(),nr.name,nr.email,nr.church,nr.conf,nr.union,nr.role,nr.news,nr.synced], [true,false,'Joshua Mura','pastor.josh@example.org','Bucks County SDA','Pennsylvania','Columbia Union','leader',false,true]);   // news: a later registration above withdrew it (true to false only)
+  c('…the chip says who and where', SN.D.querySelector('#whoami .whotxt').textContent, 'Joshua Mura · Pennsylvania');
+  c('…and the church profile is named from it', SN.E('uChurch().name'), 'Bucks County SDA');
+  const SO=page('https://pastorshub.org/',{reg:'down'}); await until(()=>SO.gateUp());
+  SO.D.getElementById('gsignbtn').click(); SO.D.getElementById('semail').value='pastor.josh@example.org'; SO.D.getElementById('sbtn').click();
+  await until(()=>/could not reach/.test(SO.D.getElementById('serr').textContent));
+  c('the server out of reach: says so, stays on the first page, keeps nothing', [SO.gateUp(),SO.reg(),SO.D.getElementById('sbtn').disabled], [true,null,false]);
+  const SQ=page('https://pastorshub.org/',{reg:429}); await until(()=>SQ.gateUp());
+  SQ.D.getElementById('gsignbtn').click(); SQ.D.getElementById('semail').value='pastor.josh@example.org'; SQ.D.getElementById('sbtn').click();
+  await until(()=>/Too many tries/.test(SQ.D.getElementById('serr').textContent));
+  c('too many tries: says to wait an hour', /wait an hour/.test(SQ.D.getElementById('serr').textContent), true);
+  const SE=page('https://pastorshub.org/',{lang:'es'}); await until(()=>SE.gateUp());
+  c('in Spanish: "¿Ya se registró? Inicie sesión", "Iniciar sesión", the help note', [SE.D.getElementById('gsignbtn').textContent,SE.D.getElementById('sbtn').textContent,/Ya se registró\? Inicie sesión» y escriba el mismo correo/.test(SE.D.getElementById('ghelp').textContent)], ['¿Ya se registró? Inicie sesión','Iniciar sesión',true]);
+  SE.D.getElementById('gsignbtn').click(); SE.D.getElementById('semail').value='pastor.josh@example.org';
+  SE.D.getElementById('semail').dispatchEvent(new SE.w.KeyboardEvent('keydown',{key:'Enter',bubbles:true}));   // Enter in the box signs in too
+  await until(()=>/bienvenida/.test(SE.D.getElementById('serr').textContent));
+  c('…and welcomed in Spanish (by Enter in the box)', SE.D.getElementById('serr').textContent, 'Le damos la bienvenida de nuevo, Joshua.');
+  const SC=page('https://pastorshub.org/',{check:{required:true,ok:false,name:'',conf:'',picked:''}}); await until(()=>SC.gateUp());
+  c('with conference codes switched on, no sign-in (a code is its own way in)', SC.D.getElementById('gsignin').hidden, true);
 
   console.log('\n-- layout rules checked in a real browser (jsdom does no layout) --');
   // Updated in the v10.38.0 review (P4): from 820px, since between 720 and

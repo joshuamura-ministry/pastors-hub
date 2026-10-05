@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.45.1
+     TERRAIN  v10.46.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.45.1" data-theme="dark">
+<html lang="en" data-version="v10.46.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.45.1">
-<title>Community Map — Terrain v10.45.1</title>
+<meta name="terrain-version" content="v10.46.0">
+<title>Community Map — Terrain v10.46.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -284,6 +284,19 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   padding:11px 13px;margin-bottom:5px;font-size:.88rem;color:var(--ink);cursor:pointer;min-height:42px}
 .crow:hover{border-color:var(--acc);color:var(--acc)}
 .crow small{display:block;color:var(--ink3);font-size:.72rem;margin-top:2px}
+/* v10.46.0: "Already registered? Sign in" — one field, under the first page's sub-line */
+.gsignin{margin:14px 0 0}
+.gsignin[hidden]{display:none}
+.gsignin>.btn{border-color:color-mix(in srgb,var(--acc) 60%,var(--line2));color:var(--acc);font-weight:700}
+.signform{margin-top:12px;padding:14px 15px;border:1px solid var(--acc);border-radius:var(--r);background:var(--acc-dim);display:grid;gap:8px;max-width:560px}
+.signform[hidden]{display:none}
+.signform label{font-size:.8rem;font-weight:700;color:var(--ink2)}
+.signrow{display:flex;gap:10px;flex-wrap:wrap}
+.signrow input{flex:1 1 240px;min-width:0;height:50px;background:var(--panel);color:var(--ink);border:1px solid var(--line2);border-radius:12px;padding:0 14px;font-size:1rem}
+.signrow input:focus{border-color:var(--acc);outline:none}
+.signrow input[aria-invalid="true"]{border-color:#F0857A}
+.signrow .btn{height:50px}
+.signform .status{margin-top:0;min-height:0;font-size:.88rem}
 .chosen{margin-top:14px;padding:14px 15px;border:1px solid var(--acc);border-radius:var(--r);background:var(--acc-dim);scroll-margin-top:calc(var(--topH,65px) + 12px)}
 .chosen[hidden]{display:none}
 .chosen b{display:block;font-family:var(--disp);font-size:1.05rem;margin-bottom:2px}
@@ -3953,6 +3966,14 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
     <h2>Find your conference</h2>
     <p class="gintro" id="gintro">Terrain reads the U.S. Census around your church and turns it into a plan for ministry that fits the people who live there.</p>
     <p class="sub" id="gsub">Tap your state on the map, or search the list. Then register with your name, email and church.</p>
+    <div class="gsignin" id="gsignin">
+      <button type="button" class="btn ghost" id="gsignbtn" aria-expanded="false" aria-controls="signform">Already registered? Sign in</button>
+      <div class="signform" id="signform" role="group" aria-labelledby="semaillab" hidden>
+        <label for="semail" id="semaillab">Your email</label>
+        <div class="signrow"><input id="semail" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" maxlength="254" placeholder="name@example.com"><button class="btn" id="sbtn" type="button">Sign in</button></div>
+        <div class="status" id="serr" role="alert"></div>
+      </div>
+    </div>
     <p class="gjoin"><a href="#watch" id="gatejoin">Here to follow a presentation? Enter its code</a></p>
     <p class="status err" id="gmsg" role="alert" hidden></p>
     <div class="usmapwrap"><div id="usmap"></div></div>
@@ -3961,7 +3982,7 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
     </div>
     <div id="clist"></div>
     <div class="chosen" id="chosen" hidden></div>
-    <p class="note" id="ghelp" style="margin-top:14px">There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.</p>
+    <p class="note" id="ghelp" style="margin-top:14px">There is no password. On another phone or computer, tap “Already registered? Sign in” and type the same email.</p>
   </div>
   <div class="report" id="report">
     <div class="place" id="place"></div>
@@ -3982,13 +4003,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.45.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.45.1';
+const VERSION = 'v10.46.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -4638,6 +4659,16 @@ const UNIONS=[
  {id:'gmm', name:'Guam-Micronesia Mission', hue:190, states:[],
   confs:['Guam-Micronesia Mission']}
 ];
+/* v10.46.0 — the pastor (5 Oct 2026): "if you press Pennsylvania … shouldn't you have to click California or another conference
+   in order to check those areas … what's the use of clicking Pennsylvania when you can still put any church in". Each conference's
+   states, as the conference registry has them (tools/conferences/src/registry/*.json, "states"; a regional conference overlaps the
+   others, so a state can be in more than one). A church address outside the pastor's conference is refused (run(), OUTCONF); a
+   conference with no list here (Bermuda, Canada) is not checked. tests/v46-signin-conf keeps this table equal to the registry. */
+const CONF_STATES={'Greater New York':['NY'],'New York':['NY'],'Northeastern':['CT','ME','MA','NH','NY','RI','VT'],'Northern New England':['ME','NH','VT'],'Southern New England':['CT','MA','RI'],'Allegheny East':['DE','DC','MD','NJ','PA','VA','WV'],'Allegheny West':['OH','WV','VA','PA'],'Chesapeake':['DE','MD','VA','WV'],'Mountain View':['WV','MD'],'New Jersey':['NJ'],'Ohio':['OH'],'Pennsylvania':['PA'],'Potomac':['VA','DC','MD'],'Illinois':['IL'],'Indiana':['IN'],'Lake Region':['IL','IN','MI','MN','WI'],'Michigan':['MI'],'Wisconsin':['WI'],'Central States':['CO','IA','KS','MN','MO','NE','ND','SD','WY','NM'],'Dakota':['ND','SD'],'Iowa-Missouri':['IA','MO'],'Kansas-Nebraska':['KS','NE'],'Minnesota':['MN'],'Rocky Mountain':['CO','WY','NM'],'Alaska':['AK'],'Idaho':['ID','OR'],'Montana':['MT'],'Oregon':['OR','WA'],'Upper Columbia':['WA','ID','OR'],'Washington':['WA'],'Arizona':['AZ'],'Central California':['CA'],'Hawaii':['HI'],'Nevada-Utah':['NV','UT','CA','AZ'],'Northern California':['CA'],'Southeastern California':['CA'],'Southern California':['CA'],'Guam-Micronesia Mission':['GU','MP','FM','PW','MH'],'Carolina':['NC','SC'],'Florida':['FL'],'Georgia-Cumberland':['GA','TN','NC'],'Gulf States':['AL','MS','FL'],'Kentucky-Tennessee':['KY','TN'],'South Atlantic':['GA','NC','SC'],'South Central':['KY','TN','AL','MS','FL'],'Southeastern':['FL','GA'],'Arkansas-Louisiana':['AR','LA'],'Oklahoma':['OK'],'Southwest Region':['AR','LA','NM','OK','TX'],'Texas':['TX'],'Texico':['NM','TX']};
+/* The conference this device signed in under ('' when none is known). */
+function myConf(){ try{ if(ACCESS.required&&ACCESS.ok) return localStorage.getItem('terrain-conf')||''; const r=regGet(); return r&&r.conf?r.conf:''; }catch(e){ return ''; } }
+/* "Pennsylvania" · "Ohio, West Virginia, Virginia or Pennsylvania" (Spanish: "o") */
+function confStatesText(list){ const n=list.map(a=>STATE_NAMES[a]||a); return n.length<2?(n[0]||''):n.slice(0,-1).join(', ')+L(' or ',' o ')+n[n.length-1]; }
 const STATE_UNION={};
 UNIONS.forEach(u=>u.states.forEach(s=>STATE_UNION[s]=u.id));
 
@@ -8649,8 +8680,9 @@ const ES={
  'Find your conference':'Encuentre su asociación',
  'Tap your state on the map, or search the list. Then register with your name, email and church.':
    'Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.',
- 'There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.':
-   'No hay contraseña: Terrain guarda su registro en este dispositivo. En otro teléfono o computadora, regístrese de nuevo con el mismo correo electrónico.',
+ 'There is no password. On another phone or computer, tap “Already registered? Sign in” and type the same email.':
+   'No hay contraseña. En otro teléfono o computadora, toque «¿Ya se registró? Inicie sesión» y escriba el mismo correo electrónico.',
+ 'Already registered? Sign in':'¿Ya se registró? Inicie sesión','Sign in':'Iniciar sesión','Your email':'Su correo electrónico',
  'Terrain reads the U.S. Census around your church and turns it into a plan for ministry that fits the people who live there.':
    'Terrain lee el censo de EE. UU. alrededor de su iglesia y lo convierte en un plan de ministerio a la medida de quienes viven allí.',
  'Access code':'Código de acceso','Enter':'Entrar',
@@ -11513,6 +11545,67 @@ async function regSubmit(){
   }
   regEnter();
 }
+/* ---- signing in (v10.46.0) ----
+   The pastor (5 Oct 2026): "every time I try to sign in it makes me register again. There's no like sign in place." Another phone
+   or computer, the same pastor: one field, the email. register.mjs (op 'signin', register-1.2) answers with what the first
+   registration said (name, church, role, conference, union, news) and, when it checks registrations, a token; the device keeps it
+   as its registration (synced), and the pastor is in. Nothing is asked twice; nothing is emailed. */
+async function regSignInPost(email){
+  try{
+    const res=await Promise.race([
+      fetch(REG_FN,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({op:'signin',email})}),
+      new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),8000))]);
+    let j=null; try{ j=await res.json(); }catch(e){}
+    if(res&&res.ok&&j&&j.ok===true){
+      const str=k=>typeof j[k]==='string'?j[k]:'';
+      const r={name:regLine(str('name')).slice(0,80),church:regLine(str('church')).slice(0,120),role:str('role'),conf:regLine(str('conf')).slice(0,80),union:regLine(str('union')).slice(0,80),news:j.news===true};
+      const tok=typeof j.tok==='string'&&REG_RE_TOK.test(j.tok)?j.tok:'';
+      return {ok:true,r,tok};
+    }
+    const err=j&&typeof j.error==='string'?j.error:'';
+    if(res&&res.status===404&&err==='not-found') return {notFound:true};
+    if(res&&res.status===429) return {slow:true};
+    if(res&&res.status===400&&err==='bad-email') return {bad:true};
+    return {down:true};
+  }catch(e){ return {down:true}; }
+}
+function wireSignIn(){
+  const sb=$('gsignbtn'), sf=$('signform'); if(!sb||!sf) return;
+  sb.onclick=()=>{ const open=sf.hidden; sf.hidden=!open; sb.setAttribute('aria-expanded',String(open));
+    if(open){ const i=$('semail'); if(i){ try{ i.focus({preventScroll:true}); }catch(e){ i.focus(); } regReveal(sf); } } };
+  // a group, not a <form> (no page of Terrain's that a neighbour sees carries a form): the button, or Enter in the box
+  const b=$('sbtn'); if(b) b.onclick=()=>regSignIn();
+  const i=$('semail'); if(i){ i.addEventListener('input',()=>i.removeAttribute('aria-invalid'));
+    i.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); regSignIn(); } }); }
+}
+async function regSignIn(){
+  if(REG_BUSY) return;
+  const em=$('semail'), err=$('serr'), btn=$('sbtn'); if(!em||!err||!btn) return;
+  const say=(m,ok)=>{ err.className='status'+(m?(ok?' ok':' err'):''); err.textContent=m||''; };
+  const bad=m=>{ em.setAttribute('aria-invalid','true'); try{ em.focus({preventScroll:true}); }catch(e){ em.focus(); } say(m); };
+  const typed=em.value.trim(), email=regEmail(typed);
+  em.removeAttribute('aria-invalid'); say('');
+  if(!typed) return bad(L('Type your email address.','Escriba su correo electrónico.'));
+  if(!email) return bad(regBadEmailText());
+  REG_BUSY=true; btn.disabled=true; btn.textContent=L('Signing in…','Iniciando sesión…');
+  const res=await regSignInPost(email);
+  REG_BUSY=false; btn.disabled=false; btn.textContent=L('Sign in','Iniciar sesión');
+  if(res.notFound) return bad(L('We could not find that email. Check it for a typo, or register: tap your state below.','No encontramos ese correo. Revise si tiene algún error, o regístrese: toque su estado más abajo.'));
+  if(res.bad) return bad(regBadEmailText());
+  if(res.slow) return say(L('Too many tries from here. Please wait an hour and try again.','Demasiados intentos desde aquí. Espere una hora e inténtelo de nuevo.'));
+  const down=L('Terrain could not reach its server. Please try again in a few minutes.','Terrain no pudo comunicarse con su servidor. Inténtelo de nuevo en unos minutos.');
+  // With registrations checked, nothing opens without a token.
+  if(!res.ok||(ACCESS.regRequired&&!res.tok)) return say(down);
+  const r=res.r, rec={id:'',name:r.name,email,church:r.church,role:REG_ROLES.includes(r.role)?r.role:'pastor',conf:r.conf,union:r.union,news:r.news,ts:Date.now(),synced:true};
+  if(res.tok){ rec.tok=res.tok; rec.id=res.tok.split('.')[1]; }
+  if(!regValid(rec)) return say(down);
+  regSave(rec);
+  regNameChurch(rec.church);
+  const first=rec.name.split(' ')[0];
+  say(L(`Welcome back, ${first}.`,`Le damos la bienvenida de nuevo, ${first}.`),true);
+  btn.disabled=true;
+  setTimeout(regEnter,900);
+}
 /* "This is how they find their church": the church typed here names the
    church profile on this device, unless it already has a name of its own. */
 function regNameChurch(name){
@@ -11621,10 +11714,19 @@ function openGate(mode,msg){
     ?L('Tap your state on the map, or search the list. Then enter the access code for your conference.','Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.')
     :L('Tap your state on the map, or search the list. Then register with your name, email and church.','Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.');
   { const gj=$('gatejoin'); if(gj) gj.textContent=L('Here to follow a presentation? Enter its code','¿Viene a seguir una presentación? Escriba su código'); }
+  // v10.46.0: the sign-in, only while the first page asks for a registration (never with codes)
+  { const gs=$('gsignin'), sb=$('gsignbtn'), sf=$('signform');
+    if(gs) gs.hidden=code;
+    if(sb){ sb.textContent=L('Already registered? Sign in','¿Ya se registró? Inicie sesión'); sb.setAttribute('aria-expanded','false'); }
+    if(sf){ sf.hidden=true; const lb=$('semaillab'), i=$('semail'), b=$('sbtn'), e=$('serr');
+      if(lb) lb.textContent=L('Your email','Su correo electrónico');
+      if(i){ i.placeholder=L('name@example.com','nombre@ejemplo.com'); i.removeAttribute('aria-invalid'); }
+      if(b){ b.textContent=L('Sign in','Iniciar sesión'); b.disabled=false; }
+      if(e){ e.className='status'; e.textContent=''; } } }
   const help=$('ghelp');
   if(help) help.textContent=code
     ?L('Codes are issued per person, so one can be withdrawn without disturbing anyone else. If your conference is not yet enrolled, the screen will tell you who to ask.','Los códigos se entregan a cada persona, así que uno puede retirarse sin afectar a nadie más. Si su asociación todavía no está inscrita, la pantalla le dirá a quién pedírselo.')
-    :L('There is no password: Terrain remembers you on this device. On another phone or computer, register again with the same email.','No hay contraseña: Terrain guarda su registro en este dispositivo. En otro teléfono o computadora, regístrese de nuevo con el mismo correo electrónico.');
+    :L('There is no password. On another phone or computer, tap “Already registered? Sign in” and type the same email.','No hay contraseña. En otro teléfono o computadora, toque «¿Ya se registró? Inicie sesión» y escriba el mismo correo electrónico.');
   const box=$('chosen'); if(box){ box.hidden=true; box.innerHTML=''; }
   const s=$('csearch');
   if(s){
@@ -11634,6 +11736,7 @@ function openGate(mode,msg){
   }
   if(!GATE_WIRED){
     GATE_WIRED=true;
+    wireSignIn();
     drawUSMap();
     if(s) s.addEventListener('input',()=>{
       const q=s.value.trim().toLowerCase();
@@ -13215,6 +13318,10 @@ async function run(getGeo,opt){
       STATE_INFO={abbr:ab,name:nm,slug:nm.toLowerCase().replace(/ /g,'-')};
       HELP_LINKCTX={county:levels.county.name,short:(levels.cousub?levels.cousub.short:levels.county.short),
         state:nm,stateSlug:nm.toLowerCase().replace(/ /g,'-')}; }
+    // v10.46.0: a church typed (or located) outside the pastor's conference is not mapped; a quiet reload of a church already
+    // saved is left alone
+    if(!quiet){ const cf=myConf(), st=CONF_STATES[cf], ab=STATE_INFO&&STATE_INFO.abbr;
+      if(st&&st.length&&ab&&!st.includes(ab)){ const e=new Error('OUTCONF'); e.conf=cf; e.st=st; e.ab=ab; throw e; } }
     status('Reading the Census for '+levels.tract.name+'…');
     const M={};
     const jobs=Object.keys(levels).map(async l=>{
@@ -13255,6 +13362,12 @@ async function run(getGeo,opt){
       ACCESS={required:true,ok:false,name:''};
       openGate('code',had?L('That code is no longer valid. Ask Pastor Josh for a current one.','Ese código ya no es válido. Pida uno vigente al pastor Josh.')
         :L('Terrain now needs an access code for your conference.','Terrain ahora necesita un código de acceso de su asociación.'));
+      return false; }
+    if(e.message==='OUTCONF'){
+      why='gate';
+      const there=STATE_NAMES[e.ab]||e.ab, conf=e.conf;
+      status(L(`This church is in ${there}, outside the ${conf} Conference. Terrain looks at churches in your own conference: ${confStatesText(e.st)}. Wrong conference? Tap Change at the top.`,
+        `Esta iglesia está en ${there}, fuera de la Asociación de ${conf}. Terrain analiza iglesias de su propia asociación: ${confStatesText(e.st)}. ¿No es su asociación? Toque Cambiar arriba.`),true);
       return false; }
     if(e.message==='NOREG'){
       // Registration is checked on the server and this device's could not be

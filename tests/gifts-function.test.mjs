@@ -843,17 +843,18 @@ console.log('\n-- the sweep: unused campaigns and old counters (v10.38.0 review 
   const Y=day(now-DAY), T=day(now);
   for(const k of ['g/cid/'+Y+'/AAAAAAAAAAAAAAAAAAAAAA','g/salt/'+Y,'g/cid/'+T+'/BBBBBBBBBBBBBBBBBBBBBB','g/salt/'+T]) st.poke(k,{n:1,salt:'s'});
   st.poke('g/ip',{hour:'x',to:{}}); st.poke('g/sends',{date:'2000-01-01',n:1});
-  for(const k of ['g/reg/'+Y+'T05/CCCCCCCCCCCCCCCCCCCCCC','g/adm/'+Y+'T23/DDDDDDDDDDDDDDDDDDDDDD','g/salt/'+Y,'g/reg/'+T+'T00/EEEEEEEEEEEEEEEEEEEEEE']) rs.poke(k,{n:1});
+  for(const k of ['g/reg/'+Y+'T05/CCCCCCCCCCCCCCCCCCCCCC','g/adm/'+Y+'T23/DDDDDDDDDDDDDDDDDDDDDD','g/sin/'+Y+'T11/FFFFFFFFFFFFFFFFFFFFFF','g/salt/'+Y,'g/reg/'+T+'T00/EEEEEEEEEEEEEEEEEEEEEE']) rs.poke(k,{n:1});
   rs.poke('e/'+'a'.repeat(64),{id:'x'});
   const out=await (await sweepMod.default(new Request('https://x/',{method:'POST',body:'{}'}))).json();
-  c('sweep: reports what it did', [out.ok,out.campaigns,out.counters,out.left], [true,2,5,0]);
+  // v10.46.0: register-1.2's sign-in counters (g/sin) go too
+  c('sweep: reports what it did', [out.ok,out.campaigns,out.counters,out.left], [true,2,6,0]);
   c('a campaign with no result and not opened for 31 days is deleted', st.peek('c/'+old.pub), null);
   c('one last opened 40 days ago is deleted too', st.peek('c/'+gone.pub), null);
   c('one that has had a result is kept, however old', !!st.peek('c/'+used.pub), true);
   c('one opened three days ago is kept', !!st.peek('c/'+opened.pub), true);
   c('one five days old is kept', !!st.peek('c/'+fresh.pub), true);
   c('one its pastor listed today is kept', !!st.peek('c/'+listed.pub), true);
-  c('earlier days’ counters and day keys go, in both stores', [st.peek('g/cid/'+Y+'/AAAAAAAAAAAAAAAAAAAAAA'),st.peek('g/salt/'+Y),rs.peek('g/reg/'+Y+'T05/CCCCCCCCCCCCCCCCCCCCCC'),rs.peek('g/adm/'+Y+'T23/DDDDDDDDDDDDDDDDDDDDDD'),rs.peek('g/salt/'+Y)], [null,null,null,null,null]);
+  c('earlier days’ counters and day keys go, in both stores', [st.peek('g/cid/'+Y+'/AAAAAAAAAAAAAAAAAAAAAA'),st.peek('g/salt/'+Y),rs.peek('g/reg/'+Y+'T05/CCCCCCCCCCCCCCCCCCCCCC'),rs.peek('g/adm/'+Y+'T23/DDDDDDDDDDDDDDDDDDDDDD'),rs.peek('g/sin/'+Y+'T11/FFFFFFFFFFFFFFFFFFFFFF'),rs.peek('g/salt/'+Y)], [null,null,null,null,null,null]);
   c('today’s stay', [!!st.peek('g/cid/'+T+'/BBBBBBBBBBBBBBBBBBBBBB'),!!st.peek('g/salt/'+T),!!rs.peek('g/reg/'+T+'T00/EEEEEEEEEEEEEEEEEEEEEE')], [true,true,true]);
   c('g/ip, g/sends and the registrations themselves are never touched', [!!st.peek('g/ip'),!!st.peek('g/sends'),!!rs.peek('e/'+'a'.repeat(64))], [true,true,true]);
   delete globalThis.__terrainRegStore;
