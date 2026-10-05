@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.46.0
+     TERRAIN  v10.46.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.46.0" data-theme="dark">
+<html lang="en" data-version="v10.46.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.46.0">
-<title>Community Map — Terrain v10.46.0</title>
+<meta name="terrain-version" content="v10.46.1">
+<title>Community Map — Terrain v10.46.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -4003,13 +4003,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.46.0';
+const VERSION = 'v10.46.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -13094,7 +13094,9 @@ function render(){
      survey asks for nothing. v10.45.1 (the pastor, 5 Oct 2026): "the Pastor has to go through all the things about what the
      community is like and then it will show what this neighborhood needs from this church" — so the needs (#u-needs, nsDraw)
      follow the report (Economy … Churches nearby) and come before the action plan (Where to look, Community resources). */
-  secs.push('<div id="ns-slot"></div>');
+  // v10.46.1 — the pastor (5 Oct 2026): "what this neighborhood needs from your church should go after community resources should
+  // be at the bottom". With the plan: after Community resources (below). Free tier: here, before the lock that ends the survey.
+  if(!entitled('plan')) secs.push('<div id="ns-slot"></div>');
 
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
@@ -13105,6 +13107,7 @@ function render(){
   }
   secs.push(SEC_WHERE);
   secs.push(SEC_HELP);
+  if(entitled('plan')) secs.push('<div id="ns-slot"></div>');   // v10.46.1: the needs at the bottom, after Community resources
   // v10.45.0: "What's next" follows Community resources (it followed the ministries list)
   // v10.43 (SPEC §5): "What's next" at the very bottom of the survey (make the case for each ministry in the plan, Gifts first)
   { const nx=uNextHTML(); if(nx) secs.push(nx); }

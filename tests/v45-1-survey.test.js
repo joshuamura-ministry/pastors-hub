@@ -14,11 +14,13 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   console.log('\n-- the needs follow the report, and nothing above them but the heading and the verse --');
   const P=page({needs:'file'}); await ready(P); survey(P); await sleep(60);
   const n=P.q('#u-needs'), h2=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:null;
-  c('in #sections, after Churches nearby and before Where to look', [n.parentElement.id,h2(n.previousElementSibling),h2(n.nextElementSibling)], ['sections','Churches nearby','Where to look']);
-  c('…and it stays there after a scope change (the same node, moved into its slot)', (P.E('SCOPE="cousub"; render()'),[P.q('#u-needs')===n,n.parentElement.id,h2(n.previousElementSibling)]), [true,'sections','Churches nearby']);
+  // v10.46.1 — the pastor: "should go after community resources should be at the bottom" (v10.45.1 had it after Churches nearby)
+  c('in #sections, at the bottom: after Community resources', [n.parentElement.id,h2(n.previousElementSibling)], ['sections','Community resources']);
+  c('…and it stays there after a scope change (the same node, moved into its slot)', (P.E('SCOPE="cousub"; render()'),[P.q('#u-needs')===n,n.parentElement.id,h2(n.previousElementSibling)]), [true,'sections','Community resources']);
+  c('nothing of the survey\'s own comes after it but What\'s next (Make the Case\'s section is another tool\'s)', [...P.qa('#sections > section.blk')].slice([...P.qa('#sections > section.blk')].indexOf(n)+1).filter(x=>!x.classList.contains('offtab')).map(x=>x.querySelector('h2').textContent).filter(t=>t!=='What’s next'), []);
   P.E('SCOPE="tract"; render()');
   c('no language strip, no note, no Spiritual Gifts link', [P.qa('#u-needs .ns-strip').length,P.qa('#u-needs .ns-nofill').length,P.qa('#u-needs [data-gf-church]').length], [0,0,0]);
-  c('the chip bar names it once, in its place', (b=>[b.indexOf('Needs')===b.indexOf('Churches nearby')+1,b.filter(x=>x==='Needs').length])(P.qa('#secnav button').map(x=>x.textContent)), [true,1]);
+  c('the chip bar names it once, in its place', (b=>[b.indexOf('Needs')===b.indexOf('Community resources')+1,b.filter(x=>x==='Needs').length])(P.qa('#secnav button').map(x=>x.textContent)), [true,1]);
 
   console.log('\n-- an opened need: the figures as rings, what helps, where to begin, the question --');
   await openNeed(P,'rent50');

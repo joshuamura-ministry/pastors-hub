@@ -27,7 +27,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   let P=page({needs:STUB}); await ready(P); survey(P); await sleep(50);
   // v10.45.1 — the pastor changed his mind (5 Oct 2026): "go through all the things about what the community is like and then it
   // will show what this neighborhood needs". Was: #u-needs between #focusnote and #brief.
-  c('#u-needs follows the report (after Churches nearby) and comes before the plan (Where to look)', (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling),h(n&&n.nextElementSibling)]; })(P), [true,'sections','Churches nearby','Where to look']);
+  c('#u-needs at the bottom of the survey, after Community resources (v10.46.1: "should go after community resources")', (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling)]; })(P),[true,'sections','Community resources']);   // v10.46.1: at the bottom, after Community resources
   c('its heading and John 4:35 under it', [P.txt('#u-needs > h2'),/John 4:35/.test(P.txt('#u-needs .verse')||'')], ['What this neighborhood needs from our church',true]);
   // the review round (#27f): on a phone the preamble pushed the first need off the screen: a short note, the church link on its own
   // line, and the lifts said where the ideas are (each opened list names its lifts)
@@ -36,7 +36,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   c('no "nothing to fill in" line and no Spiritual Gifts link above the needs', [P.qa('#u-needs .ns-nofill').length,P.qa('#u-needs [data-gf-church]').length], [0,0]);
   c('no lift legend above the needs', P.qa('#u-needs .ns-legend').length, 0);
   // v10.45.1: was '"Needs" first, then "Brief"'
-  c('the chip bar: "Brief" first; "Needs" once, right after the report\'s last section', (b=>[b[0],b.filter(x=>x==='Needs').length,b[b.indexOf('Needs')+1]])(P.qa('#secnav button').map(b=>b.textContent)), ['Brief',1,'Where to look']);
+  c('the chip bar: "Brief" first; "Needs" once, right after the report\'s last section', (b=>[b[0],b.filter(x=>x==='Needs').length,b[b.indexOf('Needs')-1]])(P.qa('#secnav button').map(b=>b.textContent)), ['Brief',1,'Community resources']);   // v10.46.1: right after Community resources
   c('no church form, Mobilization or ministries list in the survey', [!!P.q('#capslot'),!!P.q('#hinge'),!!P.q('#u-ministry-list'),P.qa('#sections h2').map(h=>h.textContent).filter(t=>/Mobilization|Your church|Ministries your church/.test(t))], [false,false,false,[]]);
 
   console.log('\n-- the cards --');

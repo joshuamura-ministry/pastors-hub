@@ -74,8 +74,8 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     const P=page(); await ready(P); survey(P);
     // v10.45.1 — the pastor changed his mind (5 Oct 2026): the report first ("what the community is like"), then the needs.
     // Was: #u-needs between the focus note and THE BRIEF.
-    c('the needs follow the report: #u-needs after Churches nearby, before Where to look',
-      (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling),h(n&&n.nextElementSibling)]; })(P),[true,'sections','Churches nearby','Where to look']);
+    c('the needs at the bottom of the survey: #u-needs after Community resources (v10.46.1)',
+      (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling)]; })(P),[true,'sections','Community resources']);   // v10.46.1: at the bottom, after Community resources
     await openSheet(P,NEED,IDEA);
     c('the sheet is open on the idea, for its need', [P.q('#ns-sheet').dataset.idea,P.q('#ns-sheet').dataset.need],[IDEA,NEED]);
     c('one primary button, "Create a proposal for this ministry"', [P.qa('#ns-sheet .primary').length,P.qa('#ns-sheet [data-ns-propose]').length,P.txt('#ns-sheet [data-ns-propose]')],[1,1,'Create a proposal for this ministry']);

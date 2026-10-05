@@ -155,6 +155,13 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.46.1 (5 Oct 2026) — the needs at the bottom.** The pastor: *"what this neighborhood needs from your church should go after
+community resources should be at the bottom"* (v10.45.1 had put it after Churches nearby). `render()` pushes `#ns-slot` after
+`SEC_HELP` (with the plan; What's next follows it) and, in the free tier, before the "Beyond the survey" lock. Also: v10.46.0 had
+committed a `node_modules` symlink (a worktree's, made in `Terrain-work/v65`; `.gitignore`'s `node_modules/` matches only a
+directory); it is untracked again and `.gitignore` says `node_modules`. **Never symlink node_modules inside a worktree that is
+committed with `git add -A`.**
+
 **v10.46.0 (5 Oct 2026) — signing in, and the conference bounds the churches mapped.** The pastor: *"every time I try to
 sign in it makes me register again. There's no like sign in place"*; *"if you press Pennsylvania … shouldn't you have to click a
 California or another conference in order to check those areas … what's the use of clicking Pennsylvania when you can still put any
