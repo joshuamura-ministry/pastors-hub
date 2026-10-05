@@ -145,104 +145,17 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
   c('print leaves the strip out', /@media print\{\.hubpath\{display:none\}\}/.test(html));
   c('symmetric: four equal columns from 720 px, two by two below, each step as tall as its row', [/\.hp-steps\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(html),/@media \(min-width:720px\)\{\.hp-steps\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}\}/.test(html),/\.hp-step\{[^}]*height:100%/.test(html)], [true,true,true]);
 
-  console.log('\n-- "What’s next" at the very bottom of the Community Survey --');
+  console.log('\n-- "What’s next" is no longer at the bottom of the Community Survey (v10.47.1) --');
+  // The pastor (5 Oct 2026): "What's next? Does that even have to be there?" — the needs above it now lead to Make the Case, and the
+  // Gifts reminder is on the hub (Your path) and the Gifts page. Retired here: its buttons, its Spanish naming, the connection-card
+  // button beside it, the empty-plan line and the way into Make the Case (uNextHTML stays in the file, unused by the survey).
   await sec(async()=>{
-    const P=page(); await ready(P);
-    survey(P,`uChurch().selected=['cooking-school','food-pantry']; caseSetPrefs({type:'board',group:'board'});`);
-    const blks=P.qa('#sections section.blk'), i=blks.findIndex(s=>s.id==='u-whatsnext');
-    // v10.45.0 (stale): the ministries list is gone; What's next follows Community resources (DESIGN-SURVEY §1.4)
-    // v10.46.1: the needs moved to the bottom, after Community resources ("should go after community resources"); What's next follows them
-    c('one block, the survey’s last (after the needs; Make the Case’s own block follows, shown only in that tool)',
-      [P.qa('#u-whatsnext').length,blks[i-1].querySelector('h2').textContent,blks[i+1].dataset.tab,blks.slice(i+2).length], [1,'What this neighborhood needs from our church','case',0]);
-    c('in the survey: shown, a section with its heading ("What’s next"), kept under a Focus (prompts)', [P.q('#u-whatsnext').classList.contains('offtab'),P.txt('#u-whatsnext h2'),P.q('#u-whatsnext').dataset.tab,P.q('#u-whatsnext').dataset.theme.split(' ')[0]], [false,'What’s next','mobilize','prompts']);
-    c('…in the section bar too', P.qa('#secnav button').map(b=>b.textContent).includes('What’s next'), true);
-    c('two parts: make the case, then the gifts', P.qa('#u-whatsnext .u-next-part h3').map(h=>h.textContent), ['Make the Case','Discover your members’ gifts']);
-    const hasNoun=P.E('typeof cnNextNoun==="function"');
-    c('one button per ministry in the plan, in plan order: "Make the case for …"', nextBtns(P), hasNoun
-      ? [['cooking-school','Create the proposal for the plant-based cooking school'],['food-pantry','Create the proposal for “A real food pantry, on a schedule”']]
-      : [['cooking-school','Make the case for “Plant-based cooking school”'],['food-pantry','Make the case for “A real food pantry, on a schedule”']]);
-    console.log('    (the noun phrase: '+(hasNoun?'the connection cards’ cnNextNoun':'quoted; cnNextNoun is not in this page yet')+')');
-    P.w.__scrolled.length=0;
-    P.q('#u-whatsnext [data-u-next-case="food-pantry"]').click();
-    c('a button opens Make the Case with that ministry chosen, at step 1 "Who is it for?" (even with a group already chosen)',
-      [P.J('TOOL'),P.J('casePrefs().ministry'),P.w.__scrolled.slice(-1)[0],P.J('casePrefs().group')], ['case','food-pantry','cs-s1','board']);
-    c('…step 1 drawn, the ministry in the step bar', [!!P.q('#cs-s1 [data-cs-group]'),P.txt('#cs-bar [data-cs-jump="2"] small')], [true,'A real food pantry, on a schedule']);
-    // v10.45.0 (§1.4, a bug fixed): after he last used "A project or purchase", the button opened that path and his ministry was nowhere
-    P.E(`openTool('survey'); caseSetPrefs({path:'buy'});`); P.q('#u-whatsnext [data-u-next-case="food-pantry"]').click();
-    c('…on the ministry path, even when he last used "A project or purchase"', [P.J('casePrefs().path'),P.J('buyPath()'),P.J('casePrefs().ministry')], ['ministry','ministry','food-pantry']);
-    P.E(`openTool('survey')`); P.w.__scrolled.length=0; P.E(`uOpenProposal('food-pantry')`);
-    c('the survey and library cards’ own call is unchanged: its slides when a group is chosen', P.w.__scrolled.slice(-1)[0], 'cs-s3');
-    P.E(`openTool('survey')`);
-    const gf=P.q('#u-whatsnext [data-gf-first]');
-    c('the gifts part: one line, then the Gifts first card (one number, one button)', [P.txt('#u-whatsnext .u-next-gifts > .note'),gf&&gf.dataset.gfFirst,P.qa('#u-whatsnext [data-gf-first] button').map(b=>b.textContent),!!P.q('#u-whatsnext [data-gf-first] .gff-n')],
-      ['Proposals are stronger when your members know their gifts. You can make the case first and do this alongside.','survey-end',['Invite the whole church'],true]);
-    c('…the line after the heading, the card after the line', [P.q('#u-whatsnext .u-next-gifts h3').nextElementSibling.className,P.q('#u-whatsnext .u-next-gifts > .note').nextElementSibling.dataset.gfFirst], ['note','survey-end']);
-    P.q('#u-whatsnext [data-gf-invite]').click();
-    c('"Invite the whole church" opens Spiritual Gifts', P.J('TOOL'), 'gifts');
-    P.E(`openTool('survey')`);
-    c('no connection card while the connection cards are not in the page (or say no)', P.qa('#u-whatsnext [data-u-next-card]').length, P.E(`typeof cnEligible==='function'?nxPlanItems().filter(x=>nxCardOk(x)).length:0`));
-    // v10.45.0 (§1.4): the old list, where removal lived, is gone: a quiet "×" beside each
-    c('a quiet remove button beside each, named for its ministry', P.qa('#u-whatsnext [data-u-next-drop]').map(b=>[b.dataset.uNextDrop,b.textContent,b.getAttribute('aria-label')]),
-      [['cooking-school','×','Remove '+P.E(`gfCap(caseMinName(uCatalog().find(x=>x.id==='cooking-school')))`)+' from your plan'],['food-pantry','×','Remove A real food pantry, on a schedule from your plan']]);
-    P.q('#u-whatsnext [data-u-next-drop="cooking-school"]').click();
-    c('…which takes it out of the plan, in place', [P.J('uSelected()'),nextBtns(P).map(b=>b[0])], [['food-pantry'],['food-pantry']]);
-    c('no "Build proposal" anywhere, and no "AI"', [/Build proposal/.test(P.w.document.documentElement.outerHTML),AI.test(P.txt('#u-whatsnext'))], [false,false]);
-    c('no errors', P.errs, []);
-    P.w.close(); });
-  await sec(async()=>{
-    // the connection cards (C2) decide which ideas get a card: an event or series in the plan; stubbed here so the wiring is checked alone
-    const P=page(); await ready(P);
-    P.E(`window.__made=[]; window.cnEligible=x=>x.id==='cooking-school'; window.cnOpenMaker=x=>window.__made.push(x.id);`);
-    survey(P,`uChurch().selected=['cooking-school','food-pantry'];`);
-    c('beside an event or series (cnEligible) a "Connection card" button; none beside the others', P.qa('#u-whatsnext .u-next-row').map(r=>[r.querySelector('[data-u-next-case]').dataset.uNextCase,r.querySelector('[data-u-next-card]')?r.querySelector('[data-u-next-card]').textContent:null]),
-      [['cooking-school','Connection card'],['food-pantry',null]]);
-    c('…every row then keeps the same column for it, so the "Make the case" buttons line up', P.q('#u-whatsnext .u-next-list').classList.contains('with-cards'), true);
-    P.q('#u-whatsnext [data-u-next-card="cooking-school"]').click();
-    c('…it opens the connection cards’ maker with that idea (cnOpenMaker)', P.J('__made'), ['cooking-school']);
-    P.E(`window.cnEligible=()=>{ throw new Error('x'); }; uNextRefresh();`);
-    c('…a failure there costs only the card button (and the list keeps one column)', [P.qa('#u-whatsnext [data-u-next-case]').length,P.qa('#u-whatsnext [data-u-next-card]').length,P.q('#u-whatsnext .u-next-list').classList.contains('with-cards')], [2,0,false]);
-    c('no errors', P.errs, []); P.w.close(); });
-  await sec(async()=>{
-    // the noun phrase: the connection cards' cnNextNoun (C2), stubbed with its three shapes so the composition is checked alone
-    const P=page({lang:'es'}); await ready(P);
-    P.E(`window.cnNextNoun=(n,l)=>/cocina/i.test(n)?{np:'la escuela de cocina',art:'la',quoted:false}:/despensa/i.test(n)?{np:'«Una despensa de verdad, con horario»',art:'',quoted:true}:{np:'el club semanal de tareas',art:'el',quoted:false};`);
-    survey(P,`uChurch().selected=['cooking-school','food-pantry','homework-club'];`);
-    c('Spanish: "de la …", "del …" (de + el), "sobre «…»" when quoted', nextBtns(P).map(b=>b[1]),
-      ['Crear la propuesta para la escuela de cocina','Crear la propuesta para «Una despensa de verdad, con horario»','Crear la propuesta para el club semanal de tareas']);
-    P.E(`window.cnNextNoun=undefined; uNextRefresh();`);   // v10.43 (integration): C2's function is a declaration now; delete cannot remove it
-    c('…without it, the Spanish name in «»', nextBtns(P)[0][1], 'Crear la propuesta para «'+P.E(`caseMinName(uCatalog().find(x=>x.id==='cooking-school'))`)+'»');
-    c('the heading, the parts and the gifts line in Spanish', [P.txt('#u-whatsnext h2'),P.qa('#u-whatsnext .u-next-part h3').map(h=>h.textContent),P.txt('#u-whatsnext .u-next-gifts > .note')],
-      ['Lo que sigue',['Presentar el caso','Descubra los dones de sus miembros'],'Las propuestas son más sólidas cuando sus miembros conocen sus dones. Puede presentar el caso primero y hacer esto a la vez.']);
-    P.E(`window.cnEligible=()=>true; window.cnOpenMaker=()=>{}; uNextRefresh();`);
-    c('…"Tarjeta de contacto"', P.qa('#u-whatsnext [data-u-next-card]').map(b=>b.textContent)[0], 'Tarjeta de contacto');
-    P.E(`uChurch().selected=[]; uPersist(); uRefresh();`);
-    c('…the empty plan in Spanish (v10.45.0: open a need, choose an idea)', P.txt('#u-whatsnext [data-u-next-up]'), '↑ Abra una necesidad arriba, elija una idea y toque «Crear una propuesta para este ministerio».');
-    c('the survey card’s button: "Presentar el caso de esta idea"', P.E(`(()=>{ const d=document.createElement('div'); d.innerHTML=uCard(uCatalog().find(x=>x.id==='food-pantry')); return d.querySelector('[data-u-propose]').textContent; })()`), 'Presentar el caso de esta idea');
-    c('no errors', P.errs, []); P.w.close(); });
-  await sec(async()=>{
-    const P=page(); await ready(P);
-    survey(P,`uChurch().selected=[];`);
-    // v10.45.0 (stale): the plan is filled from a need's idea now ("Create a proposal for this ministry")
-    c('an empty plan: one line pointing up to the needs, no buttons', [P.txt('#u-whatsnext [data-u-next-up]'),P.qa('#u-whatsnext [data-u-next-case]').length], ['↑ Open a need above, choose an idea, then tap “Create a proposal for this ministry”.',0]);
-    P.w.__scrolled.length=0; P.q('#u-whatsnext [data-u-next-up]').click();
-    c('…tapping it goes up to the needs (their heading)', [P.w.__scrolled.slice(-1)[0],P.txt('#'+P.w.__scrolled.slice(-1)[0]+' > h2')], ['u-needs','What this neighborhood needs from our church']);
-    const id=P.E(`(()=>{ const m=suggestions(DATA.M,SCOPE).moves.find(x=>uCheck(x).ok); return m&&m.id; })()`);
-    P.E(`uChurch().selected=[${JSON.stringify(id)}]; uPersist(); uNextRefresh();`);   // (as "Create a proposal for this ministry" does: v45-handoff)
-    c('a ministry in the plan: its button appears at the bottom', nextBtns(P).map(b=>b[0]), [id]);
-    // a built-in added from the survey's Idea Library (libAddX) redraws the panel without the whole report
-    const other=P.E(`(()=>{ const m=SIGNATURE.find(x=>x.id!==${JSON.stringify(id)}&&uCheck(x).ok); return m&&m.id; })()`);
-    P.E(`libAddX('survey',${JSON.stringify(other)})`);
-    c('…and one added from the Idea Library (in place)', nextBtns(P).map(b=>b[0]), [id,other]);
-    c('the survey card: "Make the case for this" (the library cards’ words), opening Make the Case as before', P.E(`(()=>{ const d=document.createElement('div'); d.innerHTML=uCard(uCatalog().find(x=>x.id==='food-pantry')); const b=d.querySelector('[data-u-propose]'); return [b.textContent,b.dataset.uPropose]; })()`), ['Make the case for this','food-pantry']);
-    c('…the same words as the library cards', P.E(`libT('mk')`), 'Create a proposal for this ministry');   // v10.45.0 review #27d (the old survey card, unreferenced now, keeps its words)
-    c('no errors', P.errs, []); P.w.close(); });
-  await sec(async()=>{
-    const F=page({url:'https://pastorshub.org/?flat'}); await ready(F); survey(F,`uChurch().selected=['food-pantry'];`);
-    c('never in the flat view', F.qa('#u-whatsnext').length, 0); F.w.close();
-    const T=page({tier:'free'}); await ready(T); survey(T,`uChurch().selected=['food-pantry'];`);
-    c('…nor in the free tier (the survey ends on its lock)', T.qa('#u-whatsnext').length, 0); T.w.close();
-    const C=page(); await ready(C); survey(C,`uChurch().selected=['food-pantry'];`); C.E(`openTool('case')`);
-    c('in Make the Case the block is out of sight (it belongs to the survey)', C.q('#u-whatsnext').classList.contains('offtab'), true); C.w.close(); });
+    const P=page({seed:'partial'}); await ready(P); survey(P);
+    P.E(`uChurch().selected=['vbs']; uPersist(); render();`);
+    c('not drawn in the survey, with or without a plan', [P.qa('#u-whatsnext').length,P.J('uSelected().length')], [0,1]);
+    c('the needs are the survey\'s last block (Make the Case\'s own block follows, shown only in that tool)', (b=>[b[b.length-2].id,b[b.length-1].dataset.tab])(P.qa('#sections section.blk')), ['u-needs','case']);
+  });
+
   console.log('\n-- the look --');
   c('equal heights (each button as tall as the tallest, measured), one full-width button each, the connection card beside it from 640 px', [/\.u-next-row \.u-next-go\{min-height:var\(--nx-h,48px\)\}/.test(html)&&/function uNextEqual\(\)/.test(html),/@media \(min-width:640px\)\{[^\n]*\.u-next-list\.with-cards \.u-next-row\{grid-template-columns:minmax\(0,1fr\) 11rem\}/.test(html)], [true,true]);
   c('the two parts in their tools’ colours (the case amber, the gifts violet)', [/\.u-next-part\{--nc:var\(--m-hardship\)/.test(html),/\.u-next-part\.u-next-gifts\{--nc:var\(--m-children\)\}/.test(html)], [true,true]);

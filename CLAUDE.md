@@ -155,6 +155,18 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.47.1 (5 Oct 2026) — the needs a place of their own; "Main menu" at the bottom.** The pastor: *"This is a whole new kind of a
+section so I don't want it to look like every other section. There's gotta be a title there … that will let people know that this is
+a clickable area"*; of What's next, *"Does that even have to be there?"*; *"I like the top … at the bottom … keep that and then also
+… main menu which will bring you to the main menu"*.
+- `nsHTML` opens with `.ns-hero`: the label "From survey to ministry" (`nsU('eyebrow')`), the heading (no dot or rule), one line
+  (`nsU('lead')`), John 4:35; the panel is framed in mint, set apart from the report.
+- What's next is no longer drawn in the survey (`render()`; `uNextHTML` stays, unused there; `uNextRefresh` finds nothing).
+- `#tomenu` ("⌂ Main menu", `floatMenu()`): beside "↑ Top", shown with it inside a tool (never on the hub, the first page or a
+  member's link); it opens the hub. Its `right` follows Top's measured width (`--totopW`).
+- Tests: `v47-clean` gains the panel, What's next and Main menu checks; What's next's UI checks retired in v43-path (with a
+  comment); v45-handoff uses `uOpenProposal` directly; connect-client counts twelve `memberLink()` guard sites.
+
 **v10.47.0 (5 Oct 2026) — the proposal first in Make the Case; a clean top to the survey.** The pastor: *"when I click make a
 proposal from the community survey, it goes to the middle … this proposal will be front and center at the top and then below …
 who it's for … as simple as possible … right now it's really messy"*; *"decide … should be leadership … then Ministry departments …

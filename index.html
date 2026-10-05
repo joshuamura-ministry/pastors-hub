@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.47.0
+     TERRAIN  v10.47.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.47.0" data-theme="dark">
+<html lang="en" data-version="v10.47.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.47.0">
-<title>Community Map — Terrain v10.47.0</title>
+<meta name="terrain-version" content="v10.47.1">
+<title>Community Map — Terrain v10.47.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -605,6 +605,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   box-shadow:0 6px 22px -10px rgba(0,0,0,.5);display:flex;align-items:center;gap:6px;min-height:44px}
 .totop:hover{border-color:var(--acc);color:var(--acc)}
 .totop[hidden]{display:none}
+.tomenu{right:calc(16px + var(--totopW,84px) + 8px)}
 section.blk,#brief,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 @media print{.secnav,.totop{display:none}}
 /* A collapsed section must never silently vanish from a printed report.
@@ -3703,6 +3704,17 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
    One column of needs, each a framed card that opens in place; an idea opens a sheet over the page. Colour by the kind of
    figure: the card's bar, rank, category and badge in --m-{kind}; headings stay mint; the lift bars are ink. */
 section.blk.u-needs{margin-top:22px}
+/* v10.47.1: the needs are their own place, not one more report section: a framed mint panel, a label, a bigger heading, one line */
+section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
+.u-needs>.ns-hero{position:relative;padding:28px 26px 22px;margin:0 0 18px;border:1px solid color-mix(in srgb,var(--acc) 55%,var(--line2));border-radius:22px;
+  background:radial-gradient(120% 140% at 0% 0%,color-mix(in srgb,var(--acc) 16%,transparent),transparent 60%),linear-gradient(180deg,color-mix(in srgb,var(--acc) 7%,var(--panel)),var(--panel));
+  box-shadow:var(--shadow),0 18px 50px -30px var(--acc)}
+.ns-eyebrow{display:inline-flex;align-items:center;gap:8px;margin:0 0 10px;padding:4px 12px;border-radius:999px;background:color-mix(in srgb,var(--acc) 18%,transparent);
+  color:var(--acc);font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.u-needs>.ns-hero h2{font-size:clamp(1.75rem,4.6vw,2.6rem);line-height:1.12;margin:0;text-wrap:balance}
+.u-needs>.ns-hero h2::before,.u-needs>.ns-hero h2::after{display:none}
+.ns-lead{margin:10px 0 0;color:var(--ink);font-size:1.05rem;line-height:1.5;max-width:62ch}
+.u-needs>.ns-hero .verse{margin-top:16px}
 .u-needs .ns-strip{display:flex;flex-wrap:wrap;gap:6px 8px;margin:4px 0 0}
 .u-needs .ns-lang{font-size:.82rem;border:1px solid color-mix(in srgb,var(--m-language) 40%,transparent);color:var(--m-language);border-radius:999px;padding:2px 10px;font-variant-numeric:tabular-nums;max-width:100%;overflow-wrap:anywhere}
 .u-needs .ns-lang.ns-born{border-color:color-mix(in srgb,var(--m-people) 40%,transparent);color:var(--m-people)}
@@ -4050,15 +4062,17 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <dialog id="ns-sheet" class="ns-sheet" aria-labelledby="ns-s-t"></dialog>
 
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
+  <!-- v10.47.1: "keep that [Top] and then also … main menu which will bring you to the main menu" -->
+  <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.47.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.47.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.47.0';
+const VERSION = 'v10.47.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11947,9 +11961,18 @@ function measureTop(){
   const t=document.querySelector('.top');
   if(t) document.documentElement.style.setProperty('--topH',Math.round(t.getBoundingClientRect().height)+'px');
 }
+/* v10.47.1: "Main menu" beside "↑ Top", inside a tool (never on the hub, the first page or a member's link), with Top */
+function floatMenu(){
+  const tm=document.getElementById('tomenu'), tt=document.getElementById('totop'); if(!tm||!tt) return;
+  let inTool=false; try{ const tb=document.getElementById('toolbar'); inTool=!!tb&&!tb.hidden&&!gated()&&!memberLink(); }catch(e){ inTool=false; }
+  tm.hidden=tt.hidden||!inTool;
+  const lab=tm.lastElementChild; if(lab) lab.textContent=L('Main menu','Menú principal');
+  if(!tm.hidden) document.documentElement.style.setProperty('--totopW',Math.ceil(tt.getBoundingClientRect().width||84)+'px');
+}
 window.addEventListener('scroll',()=>{
   markSection();
   const b=document.getElementById('totop'); if(b) b.hidden=window.scrollY<500;
+  floatMenu();
 },{passive:true});
 window.addEventListener('resize',measureTop);
 
@@ -12151,6 +12174,8 @@ function churchNameInSentence(){
    (nsFallback). DESIGN-SURVEY §2, §4, §6. Never the words "AI", "generated" or "assistant" on these screens. */
 const NS_UI={
   h2:['What this neighborhood needs from our church','Lo que este vecindario necesita de nuestra iglesia'],
+  eyebrow:['From survey to ministry','De la encuesta al ministerio'],
+  lead:['This is where you choose what to do. Tap a need to see why it matters and ministry ideas to meet it.','Aquí usted elige qué hacer. Toque una necesidad para ver por qué importa e ideas de ministerio para atenderla.'],
   chip:['Needs','Necesidades'],
   // review #27f: short on a phone; the church's information is a link on its own line
   nofill:['Nothing to fill in. Tap a need, then its ideas.','No hay nada que llenar. Toque una necesidad y luego sus ideas.'],
@@ -12604,7 +12629,11 @@ function nsHTML(S){
   /* v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts
      page … nothing to fill-in … English only at home, born abroad … don't need to be there either". The heading, the verse, the
      needs. Where people were born now sits inside the needs it explains (nsFigsHTML). */
-  return `<h2>${esc(nsU('h2'))}</h2>${verseHTML('prompts')}
+  /* v10.47.1 — the pastor (5 Oct 2026): "This is a whole new kind of a section so I don't want it to look like every other section.
+     There's gotta be a title there … that will let people know that this is a clickable area … this is where we actually discover
+     what we actually want to do … something there that just separates it". A framed panel of its own: a label, the heading, one
+     line saying what to do, the verse; then the needs. */
+  return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${verseHTML('prompts')}</div>
     ${S.needs.length?`<div class="ns-list">${S.needs.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
     ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',S.needs.length))}</button>`:''}
     ${S.also.length?`<div class="ns-alsob"><h3>${esc(nsU('also'))}</h3><p class="note">${esc(alsoLine)}</p><div class="ns-also">${S.also.map(nsAlsoHTML).join('')}</div></div>`:''}
@@ -13191,7 +13220,9 @@ function render(){
   if(entitled('plan')) secs.push('<div id="ns-slot"></div>');   // v10.46.1: the needs at the bottom, after Community resources
   // v10.45.0: "What's next" follows Community resources (it followed the ministries list)
   // v10.43 (SPEC §5): "What's next" at the very bottom of the survey (make the case for each ministry in the plan, Gifts first)
-  { const nx=uNextHTML(); if(nx) secs.push(nx); }
+  /* v10.47.1 — the pastor (5 Oct 2026), of "What's next": "Does that even have to be there?" The needs above now lead to Make the
+     Case; the Gifts reminder is on the main menu (Your path) and the Gifts page. Not drawn in the survey any more (uNextHTML stays,
+     unused here; uNextRefresh finds no block and does nothing). */
 
   // Make the Case: the screens draw themselves into #casebody (caseMount).
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
@@ -41115,6 +41146,7 @@ function caseCmpDoorWire(h){ const b=h&&h.querySelector('[data-cs-cmp]'); if(b) 
   measureTop();
   const tt=document.getElementById('totop');
   if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});
+  { const tm=document.getElementById('tomenu'); if(tm) tm.onclick=()=>{ tm.hidden=true; showHub(); window.scrollTo({top:0,behavior:'auto'}); }; }
   aiClaimPass();
   if(!key()){$('setup').style.display='block';}
   // A permalink must not run itself before we know the visitor is allowed in.
