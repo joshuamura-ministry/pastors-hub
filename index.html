@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.45.0
+     TERRAIN  v10.45.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.45.0" data-theme="dark">
+<html lang="en" data-version="v10.45.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.45.0">
-<title>Community Map — Terrain v10.45.0</title>
+<meta name="terrain-version" content="v10.45.1">
+<title>Community Map — Terrain v10.45.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3965,13 +3965,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.45.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.45.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.45.0';
+const VERSION = 'v10.45.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11183,14 +11183,13 @@ function buildSecNavInner(){
   // Only visible, named sections belong in the page's jump navigation.
   const secs=[...document.querySelectorAll('#sections section.blk')]
     .filter(x=>!x.classList.contains('hidden')&&!x.classList.contains('offtab')&&x.querySelector('h2'));
-  // v10.45.0: the needs come first, before the brief (their chip says "Needs")
-  const needsSec=document.getElementById('u-needs'), needsShown=!!needsSec&&!needsSec.classList.contains('offtab')&&!!needsSec.querySelector('h2')&&(FLAT||TOOL==='survey');
+  // v10.45.1: the needs are one of #sections' sections now (after Churches nearby); their chip says "Needs"
   if(!DATA||!secs.length){ nav.hidden=true; return; }
   if(!FLAT&&TOOL&&(TOOLS[TOOL]||{tabs:[]}).tabs.length===1){ nav.hidden=true; return; }
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
   const briefShown=FLAT||TOOL==='survey';
-  nav.innerHTML=(needsShown?`<button data-t="u-needs">${esc(needsSec.dataset.chip||needsSec.querySelector('h2').textContent)}</button>`:'')+(briefShown?`<button data-t="brief">Brief</button>`:'')+
+  nav.innerHTML=(briefShown?`<button data-t="brief">${L('Brief','Resumen')}</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.dataset.chip||x.querySelector('h2').textContent)}</button>`).join('');
   nav.scrollLeft=0;      // always start at the first section, not wherever it was
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
@@ -11207,7 +11206,7 @@ function buildSecNavInner(){
 function markSection(){
   const nav=document.getElementById('secnav'); if(!nav||nav.hidden) return;
   const line=(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58)+90;
-  const marks=[{id:'u-needs',el:document.getElementById('u-needs')},{id:'brief',el:document.getElementById('brief')},
+  const marks=[{id:'brief',el:document.getElementById('brief')},
     ...[...document.querySelectorAll('#sections section.blk')].filter(x=>!x.classList.contains('hidden')&&!x.classList.contains('offtab')).map(x=>({id:x.id,el:x}))]
     .filter(x=>x.el&&!x.el.classList.contains('offtab'));
   let cur=marks[0]&&marks[0].id;
@@ -12864,7 +12863,10 @@ function render(){
 
   /* v10.45.0 (DESIGN-SURVEY §1.1): the church profile moved to the Spiritual Gifts landing ("Your church"); Mobilization and the
      ministries list left the survey (their functions stay in the file, unreferenced: uMinistriesHTML, uCardsHTML, uRow…). The
-     survey asks for nothing: its needs come first (#u-needs, nsDraw), then the brief and the figures. */
+     survey asks for nothing. v10.45.1 (the pastor, 5 Oct 2026): "the Pastor has to go through all the things about what the
+     community is like and then it will show what this neighborhood needs from this church" — so the needs (#u-needs, nsDraw)
+     follow the report (Economy … Churches nearby) and come before the action plan (Where to look, Community resources). */
+  secs.push('<div id="ns-slot"></div>');
 
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
@@ -12881,7 +12883,9 @@ function render(){
 
   // Make the Case: the screens draw themselves into #casebody (caseMount).
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
-  $('sections').innerHTML=secs.join('');
+  { const nsEl=document.getElementById('u-needs');
+    $('sections').innerHTML=secs.join('');
+    const slot=document.getElementById('ns-slot'); if(nsEl&&slot) slot.replaceWith(nsEl); }
   nsDraw();   // v10.45.0: what this neighborhood needs from our church (#u-needs)
   balanceGrids($('sections'));
   /* No per-section hue any more. --sec stays mint for the whole report, which
