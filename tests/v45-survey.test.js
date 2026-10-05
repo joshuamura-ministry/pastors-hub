@@ -39,8 +39,9 @@ const sha=s=>crypto.createHash('sha1').update(s).digest('hex');
 (async()=>{ await T.sec(async()=>{
   console.log('\n-- the six stamps --');
   const v=(HTML.match(/<meta name="terrain-version" content="([^"]+)"/)||[])[1];
-  c('v10.45.0 in all six places', [v,(HTML.match(/TERRAIN {2}(v[\d.]+)/)||[])[1],(HTML.match(/data-version="([^"]+)"/)||[])[1],(HTML.match(/<title>Community Map — Terrain (v[\d.]+)<\/title>/)||[])[1],(HTML.match(/<span id="ver">([^<]+)<\/span>/)||[])[1],(HTML.match(/const VERSION = '([^']+)'/)||[])[1]],
-    Array(6).fill('v10.45.0'));
+  // v10.45.1: the six must agree, whatever the release (was pinned to v10.45.0)
+  c('one version in all six places', [v,(HTML.match(/TERRAIN {2}(v[\d.]+)/)||[])[1],(HTML.match(/data-version="([^"]+)"/)||[])[1],(HTML.match(/<title>Community Map — Terrain (v[\d.]+)<\/title>/)||[])[1],(HTML.match(/<span id="ver">([^<]+)<\/span>/)||[])[1],(HTML.match(/const VERSION = '([^']+)'/)||[])[1]],
+    Array(6).fill(v));
 
   console.log('\n-- nothing Pennsylvania-only where the page shows it in every state --');
   const P=gpage('en'); await sleep(300);

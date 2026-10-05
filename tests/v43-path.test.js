@@ -138,8 +138,10 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
     R.E(`(()=>{ const r=uRead(GF_ROSTER,[]); localStorage.setItem(GF_ROSTER,JSON.stringify(r.slice(0,1))); })(); gfFirstRefresh();`);
     c('results coming in redraw it (gfFirstRefresh)', steps(R)[1][1], '1 of 46'); R.w.close(); });
   console.log('\n-- the glow: gentle, and still for reduced motion --');
-  c('the first step not done breathes (its own keyframes, slow)', /\.hp-step\.now\{[^}]*animation:hpBreathe 3\.6s ease-in-out infinite/.test(html)&&/@keyframes hpBreathe\{/.test(html));
-  c('reduced motion stops it', /@media \(prefers-reduced-motion:reduce\)\{\.hp-step\.now\{animation:none\}\}/.test(html));
+  // v10.45.1 — the pastor changed his mind (5 Oct 2026): "nothing stays highlighted", only the step under the pointer.
+  // Was: the first step not done breathes (hpBreathe), and reduced motion stops it.
+  c('the next step is not lit at rest: no border colour, no breathing', [/\.hp-step\.now\{/.test(html),/hpBreathe/.test(html)], [false,false]);
+  c('the step under the pointer lights (on a computer), and keyboard focus shows', [/@media \(hover:hover\)\{\.hp-step:hover\{border-color:var\(--hc\);box-shadow:/.test(html),/\.hp-step:focus-visible\{outline:2px solid var\(--hc\)/.test(html)], [true,true]);
   c('print leaves the strip out', /@media print\{\.hubpath\{display:none\}\}/.test(html));
   c('symmetric: four equal columns from 720 px, two by two below, each step as tall as its row', [/\.hp-steps\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(html),/@media \(min-width:720px\)\{\.hp-steps\{grid-template-columns:repeat\(4,minmax\(0,1fr\)\)\}\}/.test(html),/\.hp-step\{[^}]*height:100%/.test(html)], [true,true,true]);
 

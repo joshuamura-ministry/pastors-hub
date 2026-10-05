@@ -98,7 +98,8 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   console.log('\n-- no information yet: "Your church" opens by itself (the coordinator\'s decision 6) --');
   const P=page(); await ready(P); landing(P); await sleep(30);
   c('a church with nothing saved: the card is open', [P.J('capGet().confirmed||false'),P.q('#gf-church').open], [false,true]);
-  c('the survey\'s note links to it', (survey(P),P.q('#u-needs [data-gf-church]').click(),[P.E('TOOL'),P.q('#gf-church').open]), ['gifts',true]);
+  // v10.45.1: the survey's note and its link went at the pastor's word ("you don't need the thing that says your church's information is on the spiritual gifts page")
+  c('the survey carries no link to it any more', (survey(P),P.qa('#u-needs [data-gf-church]').length), 0);
 }); await T.sec(async()=>{
   console.log('\n-- B1: two churches in one district; the form follows the church on screen --');
   const P=page(); await ready(P);

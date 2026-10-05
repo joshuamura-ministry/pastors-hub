@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.45.0
+     TERRAIN  v10.45.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.45.0" data-theme="dark">
+<html lang="en" data-version="v10.45.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.45.0">
-<title>Community Map — Terrain v10.45.0</title>
+<meta name="terrain-version" content="v10.45.1">
+<title>Community Map — Terrain v10.45.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -467,11 +467,10 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   transition:transform .18s cubic-bezier(.2,.7,.3,1)}
 .tool::before{content:"";position:absolute;left:50%;top:6px;width:186px;height:186px;margin-left:-93px;
   border-radius:50%;background:radial-gradient(circle,var(--tglow,var(--acc-dim)),transparent 66%);
-  opacity:.55;transition:opacity .22s;pointer-events:none;
-  /* v10.38, at the pastor's request: each tool has its own colour and its halo
-     breathes slowly. The delays put the four a beat apart so they glow in turn
-     rather than in unison. Reduced motion and print stop it. */
-  animation:toolBreathe 6s ease-in-out infinite;animation-delay:var(--td,0s)}
+  opacity:.22;transition:opacity .22s;pointer-events:none}
+/* v10.45.1 — the pastor (5 Oct 2026): "whenever I go to the main menu, the spiritual gifts is always highlighted … It will
+   highlight wherever I hover my mouse pointer … so nothing stays highlighted." The halos no longer breathe in turn (v10.38):
+   at rest every tool is the same quiet glow; the one under the pointer (or focused from the keyboard) lights. */
 @keyframes toolBreathe{0%,100%{opacity:.45;transform:scale(.92)}50%{opacity:1;transform:scale(1.08)}}
 /* the icon's own light swells with its halo (the animation is set on the
    icon's rest rule below) */
@@ -487,6 +486,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 }
 .tool:active{transform:translateY(-1px) scale(.985)}
 .tool:focus-visible{outline:2px solid var(--tc,var(--acc));outline-offset:6px;border-radius:18px}
+.tool:focus-visible::before{opacity:1}
 .tool .tico{line-height:0;position:relative;margin-bottom:20px}
 /* Drawn, not typed. Emoji render differently on every device and cannot take
    the theme colour, which is exactly why they looked out of place. */
@@ -495,8 +495,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   /* No drop-shadow at rest. The artwork carries its own two-pass glow, and
      stacking a CSS one on top is exactly what made these look muddy before.
      CSS only adds the extra light on hover. */
-  transition:filter .22s,transform .22s;
-  animation:iconBreathe 6s ease-in-out infinite;animation-delay:var(--td,0s)}
+  transition:filter .22s,transform .22s}
 .tool b{font-size:clamp(1.15rem,2.6vw,1.4rem);font-weight:700;letter-spacing:-.02em}
 .tool .td{max-width:23ch;margin:8px auto 0}
 /* margin-top:auto, not a fixed gap. The four blurbs are different lengths —
@@ -3184,17 +3183,17 @@ button.cd-rowb:hover{background:var(--panel2)}
   background:var(--panel);border:1px solid var(--line2);border-top:3px solid var(--hc);border-radius:12px;transition:border-color .18s}
 .hp-step i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font:700 .82rem/1 var(--disp);font-style:normal;
   background:var(--panel2);border:1px solid var(--line2);color:var(--ink2)}
-.hp-step.done i,.hp-step.now i{background:color-mix(in srgb,var(--hc) 26%,var(--panel));border-color:var(--hc);color:var(--ink)}
+.hp-step.done i{background:color-mix(in srgb,var(--hc) 26%,var(--panel));border-color:var(--hc);color:var(--ink)}
 .hp-step>span{min-width:0;display:grid;gap:2px}
 .hp-step b{font-size:.9rem;font-weight:650;line-height:1.3}
 .hp-step small{font-size:.8rem;line-height:1.35;color:var(--ink2)}
 .hp-step.done small{color:var(--ink)}
 .hp-step em{font-style:normal;font-size:.76rem;line-height:1.35;color:var(--ink3)}
-.hp-step.now{border-color:var(--hc);animation:hpBreathe 3.6s ease-in-out infinite}
-@keyframes hpBreathe{0%,100%{box-shadow:0 0 0 0 transparent}50%{box-shadow:0 0 0 6px color-mix(in srgb,var(--hc) 22%,transparent)}}
-@media (hover:hover){.hp-step:hover{border-color:var(--hc)}}
+/* v10.45.1 — the pastor (5 Oct 2026): "whenever I go to the main menu, the spiritual gifts is always highlighted … It will
+   highlight wherever I hover my mouse pointer … so nothing stays highlighted." The next step no longer glows or breathes (its
+   words still say "Not yet" / "Start here"); the step under the pointer, or focused from the keyboard, lights. */
+@media (hover:hover){.hp-step:hover{border-color:var(--hc);box-shadow:0 0 0 4px color-mix(in srgb,var(--hc) 18%,transparent)}}
 .hp-step:focus-visible{outline:2px solid var(--hc);outline-offset:2px}
-@media (prefers-reduced-motion:reduce){.hp-step.now{animation:none}}
 @media print{.hubpath{display:none}}
 /* v10.43 (SPEC §5, the pastor: "at the very bottom, there should be a Make the Case button for this specific ministry… right now
    they can click it and then there's no next"): "What's next", the survey's last block. Two framed parts in their tools' colours
@@ -3692,6 +3691,24 @@ section.blk.u-needs{margin-top:22px}
 .ns-detail h4,.ns-sheet .ns-block h3{font-family:var(--disp);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--k);font-weight:600}
 .ns-detail ul{margin:0;padding-left:18px;color:var(--ink2);font-size:.92rem}
 .ns-detail li{margin:4px 0}
+/* v10.45.1: the figures behind a need (the report's rings, in the kind's colour; the notch is the county) */
+.ns-figs .stats{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:4px 0 0}
+.ns-figs .stat{box-shadow:none;background:var(--panel2)}
+.ns-figs .stat .ring .trk{stroke:var(--line2)}
+.ns-figs .statkey{margin-top:8px}
+.ns-born{color:var(--ink2);font-size:.88rem}
+.ns-born b{color:var(--m-people);font-weight:600}
+.ns-help{color:var(--ink2);font-size:.92rem;line-height:1.6;border-left:3px solid var(--k);padding:2px 0 2px 12px;margin:4px 0}
+.ns-help b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
+.ns-detail h5{font-family:var(--disp);font-size:.9rem;font-weight:600;color:var(--ink);margin-top:4px}
+.ns-ideasec{--k:var(--acc);margin-top:18px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line));border-radius:14px;
+  background:color-mix(in srgb,var(--acc) 5%,var(--panel));padding:0 14px 0}
+.ns-ideasec .ns-show{margin:0 -14px;width:calc(100% + 28px);border:0;border-radius:13px;background:color-mix(in srgb,var(--acc) 13%,var(--panel2));
+  padding:15px 16px;font-family:var(--disp);font-size:1.02rem}
+.ns-ideasec .ns-show[aria-expanded="true"]{border-radius:13px 13px 0 0;border-bottom:1px solid color-mix(in srgb,var(--acc) 35%,var(--line))}
+.ns-ideasec .ns-show span{display:inline-flex;align-items:center;gap:10px;color:var(--acc)}
+.ns-ideasec .ns-ideas:not([hidden]){padding:14px 0 16px}
+.ns-bulb{width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
 .ns-ask{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink2);font-size:.88rem}
 .ns-ask b{color:var(--ink);font-weight:600}
 .ns-show{margin-top:14px;width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;background:color-mix(in srgb,var(--k) 12%,var(--panel2));border:1px solid color-mix(in srgb,var(--k) 45%,transparent);color:var(--ink);border-radius:12px;padding:12px 14px;font:inherit;font-weight:600;text-align:left;cursor:pointer;min-height:44px}
@@ -3965,13 +3982,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.45.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.45.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.45.0';
+const VERSION = 'v10.45.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11183,14 +11200,13 @@ function buildSecNavInner(){
   // Only visible, named sections belong in the page's jump navigation.
   const secs=[...document.querySelectorAll('#sections section.blk')]
     .filter(x=>!x.classList.contains('hidden')&&!x.classList.contains('offtab')&&x.querySelector('h2'));
-  // v10.45.0: the needs come first, before the brief (their chip says "Needs")
-  const needsSec=document.getElementById('u-needs'), needsShown=!!needsSec&&!needsSec.classList.contains('offtab')&&!!needsSec.querySelector('h2')&&(FLAT||TOOL==='survey');
+  // v10.45.1: the needs are one of #sections' sections now (after Churches nearby); their chip says "Needs"
   if(!DATA||!secs.length){ nav.hidden=true; return; }
   if(!FLAT&&TOOL&&(TOOLS[TOOL]||{tabs:[]}).tabs.length===1){ nav.hidden=true; return; }
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
   const briefShown=FLAT||TOOL==='survey';
-  nav.innerHTML=(needsShown?`<button data-t="u-needs">${esc(needsSec.dataset.chip||needsSec.querySelector('h2').textContent)}</button>`:'')+(briefShown?`<button data-t="brief">Brief</button>`:'')+
+  nav.innerHTML=(briefShown?`<button data-t="brief">${L('Brief','Resumen')}</button>`:'')+
     secs.map(x=>`<button data-t="${x.id}">${esc(x.dataset.chip||x.querySelector('h2').textContent)}</button>`).join('');
   nav.scrollLeft=0;      // always start at the first section, not wherever it was
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
@@ -11207,7 +11223,7 @@ function buildSecNavInner(){
 function markSection(){
   const nav=document.getElementById('secnav'); if(!nav||nav.hidden) return;
   const line=(parseInt(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58)+90;
-  const marks=[{id:'u-needs',el:document.getElementById('u-needs')},{id:'brief',el:document.getElementById('brief')},
+  const marks=[{id:'brief',el:document.getElementById('brief')},
     ...[...document.querySelectorAll('#sections section.blk')].filter(x=>!x.classList.contains('hidden')&&!x.classList.contains('offtab')).map(x=>({id:x.id,el:x}))]
     .filter(x=>x.el&&!x.el.classList.contains('offtab'));
   let cur=marks[0]&&marks[0].id;
@@ -12266,12 +12282,117 @@ function nsIdeasHTML(n){
 }
 function nsBodyHTML(n,open,ideasOpen){
   const steps=Array.isArray(n.steps)?n.steps:[];
+  const help=NS_HELP[n.cat];
+  // v10.45.1: "what the community needs … more robust with information … the circular graphs with the colors"; and the ideas a
+  // section of their own ("there's no differentiation between Ministry ideas to meet the need and what the community needs")
   return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}>
-    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>
+    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}
+      ${help?`<p class="ns-help"><b>${esc(L('What helps','Lo que ayuda'))}</b> ${esc(help[LANG==='es'?1:0])}</p>`:''}
+      ${steps.length?`<h5>${esc(L('Where to begin','Por dónde empezar'))}</h5><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
       ${n.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(n.ask)}</p>`:''}</div>
-    <button type="button" class="ns-show" data-ns-show="${esc(n.id)}" aria-expanded="${ideasOpen}" aria-controls="ns-i-${esc(n.id)}"><span>${esc(nsU('show'))}</span><small>${esc(ideasOpen?nsU('hide'):nsCountText(n))}</small></button>
+    <div class="ns-ideasec">
+    <button type="button" class="ns-show" data-ns-show="${esc(n.id)}" aria-expanded="${ideasOpen}" aria-controls="ns-i-${esc(n.id)}"><span><i class="ns-bulb" aria-hidden="true"></i>${esc(nsU('show'))}</span><small>${esc(ideasOpen?nsU('hide'):nsCountText(n))}</small></button>
     <div class="ns-ideas" id="ns-i-${esc(n.id)}"${ideasOpen?'':' hidden'}>${ideasOpen?nsIdeasHTML(n):''}</div>
+    </div>
   </div>`;
+}
+/* v10.45.1 — the figures behind each need, as the report draws them: a ring per figure in its kind's colour (amber money and
+   hardship, blue housing, violet children and families, pink people, mint language), the notch on it the county. Keys are the
+   report's own metrics; '@lang' and '@langLow' are the need's language (its share, and how many of its speakers have limited
+   English), '@teens' ages 10–17, '@occ:<group>' a share of the employed. At most four. */
+const NS_FIG_DEF={
+  poverty:['Below the poverty line','Bajo el nivel de pobreza','hardship'], childPoverty:['Children in poverty','Niños en pobreza','hardship'],
+  snap:['Households on SNAP','Hogares con SNAP','hardship'], pubAssist:['Households on cash assistance','Hogares con asistencia en efectivo','hardship'],
+  unemp:['Unemployed','Desempleo','hardship'], uninsured:['No health insurance','Sin seguro médico','hardship'],
+  incLow:['Households under $35k','Hogares con menos de $35 mil','hardship'], incHigh:['Households over $150k','Hogares con más de $150 mil','hardship'],
+  renters:['Households renting','Hogares que alquilan','housing'], rent30:['Renters paying 30% or more','Inquilinos que pagan el 30 % o más','housing'],
+  rent50:['Renters paying half or more','Inquilinos que pagan la mitad o más','housing'], overcrowd:['Overcrowded homes','Viviendas con hacinamiento','housing'],
+  noCar:['Households without a car','Hogares sin auto','housing'], homeowners:['Homeowners','Propietarios','housing'],
+  kidsShare:['Children under 18','Menores de 18 años','children'], famWithKids:['Families with children','Familias con hijos','children'],
+  singleParent:['Single-parent families','Familias de un solo padre o madre','children'], k12Share:['In school, K–12','En la escuela, K–12','children'],
+  grandKids:['Children raised by a grandparent','Niños criados por un abuelo','children'], '@teens':['Ages 10 to 17','De 10 a 17 años','children'],
+  seniorsShare:['Age 65 and over','De 65 años o más','children'], seniorsAlone:['Seniors living alone','Personas mayores que viven solas','children'],
+  collegeShare:['In college','En la universidad','people'], foreign:['Born outside the U.S.','Nacidos fuera de EE. UU.','people'],
+  recentOfForeign:['Of them, arrived since 2010','De ellos, llegaron desde 2010','people'], veterans:['Veterans','Veteranos','people'],
+  limEng:['Limited-English households','Hogares con inglés limitado','language'],
+  '@occ:Management & professional':['Management and professional jobs','Trabajos de gerencia y profesionales','people'],
+  '@occ:Service jobs':['Service jobs','Trabajos de servicio','people'], '@occ:Production & transport':['Production and transport jobs','Trabajos de producción y transporte','people']
+};
+const NS_FIGS={
+  'lang-primary':['@lang','@langLow','limEng','foreign'], 'lang-also':['@lang','@langLow','limEng','foreign'], 'lang-third':['@lang','@langLow','limEng','foreign'],
+  'lang-second':['@lang','limEng','foreign'], limeng:['limEng','foreign','recentOfForeign'], foreign:['foreign','recentOfForeign','limEng'],
+  recent:['recentOfForeign','foreign','limEng'], 'foreign-shift':['foreign','recentOfForeign','limEng'], 'family-english':['limEng','kidsShare','famWithKids'],
+  kids:['kidsShare','famWithKids','singleParent','childPoverty'], 'single-parent':['singleParent','famWithKids','childPoverty'],
+  schools:['k12Share','kidsShare','childPoverty'], teens:['@teens','k12Share','singleParent'], grandparents:['grandKids','childPoverty','seniorsShare'],
+  newborn:['kidsShare','famWithKids'], college:['collegeShare','renters'], isolationyoung:['renters','collegeShare'],
+  'seniors-alone':['seniorsAlone','seniorsShare','noCar'], 'older-area':['seniorsShare','seniorsAlone'], 'seniors-nocar':['seniorsAlone','noCar','seniorsShare'],
+  'seniors-many':['seniorsShare','seniorsAlone','noCar'], 'aging-owners':['seniorsShare','homeowners','seniorsAlone'], grief:['seniorsAlone','seniorsShare'],
+  veterans:['veterans','seniorsShare'],
+  poverty:['poverty','childPoverty','snap','incLow'], 'child-poverty':['childPoverty','poverty','singleParent'], 'near-poor':['incLow','poverty','snap'],
+  'working-poor':['incLow','unemp','uninsured'], snap:['snap','poverty','pubAssist'], pubassist:['pubAssist','snap','poverty'],
+  unemp:['unemp','poverty','uninsured'], uninsured:['uninsured','poverty','unemp'], debt:['rent50','snap','incLow'], foodaccess:['noCar','snap','poverty'],
+  shiftwork:['@occ:Service jobs','@occ:Production & transport','incLow'], professional:['@occ:Management & professional','incHigh'],
+  commuters:['@occ:Management & professional','noCar'],
+  rent50:['rent50','rent30','renters'], rent30:['rent30','rent50','renters'], renters:['renters','rent30'], overcrowd:['overcrowd','renters','famWithKids'],
+  nocar:['noCar','seniorsAlone','poverty'], divided:['incLow','incHigh','poverty'], gini:['incLow','incHigh','poverty'], affluent:['incHigh','incLow']
+};
+/* What helps, by the kind of need (the survey's own STRATEGY, in plain US English, and in Spanish) */
+const NS_HELP={
+  'Families with children':['Serve the parents, not only the children. A holiday club fills a gap for a week; a parenting course, a strengthened marriage and a monthly family night change what happens in that home all year. Reach the child through a program, reach the family through the parent, and the whole household moves together.',
+    'Sirva a los padres, no solo a los niños. Un club de vacaciones llena un vacío por una semana; un curso para padres, un matrimonio fortalecido y una noche familiar cada mes cambian lo que pasa en ese hogar todo el año. Se llega al niño por medio de un programa y a la familia por medio de los padres, y todo el hogar avanza junto.'],
+  'Language & newcomers':['Language is the door, not the ministry. Help with the paperwork that frightens people, teach the English and citizenship that free them, then give them a room where their culture is honored rather than tolerated. Spiritual conversation follows in the language people pray in.',
+    'El idioma es la puerta, no el ministerio. Ayude con los trámites que asustan, enseñe el inglés y la ciudadanía que dan libertad, y luego ofrezca un lugar donde su cultura sea honrada y no solo tolerada. La conversación espiritual viene después, en el idioma en que la gente ora.'],
+  'Seniors & isolation':['Isolation is not solved by an event; it is solved by somebody expected. Build the reliable rhythm first (a call, a ride, a Tuesday), teach what this stage of life actually asks about, and pair generations so being needed is part of the cure.',
+    'La soledad no se resuelve con un evento; se resuelve con alguien que llega cuando se le espera. Primero construya un ritmo fiable (una llamada, llevarle en auto, un martes), enseñe lo que de verdad pregunta esta etapa de la vida y una a las generaciones, para que sentirse necesario sea parte de la cura.'],
+  'Hardship & work':['Relieve the emergency, then work on what caused it. A food box meets today; budgeting, job skills and cooking on a low income change next year. Do both under one roof, at a table rather than in a line, and dignity survives the help.',
+    'Alivie la emergencia y luego trabaje en lo que la causó. Una caja de alimentos atiende el día de hoy; el presupuesto, las habilidades de trabajo y cocinar con poco dinero cambian el año que viene. Haga las dos cosas bajo un mismo techo, en una mesa y no en una fila, y la dignidad se conserva.'],
+  'Housing pressure':['Housing stress runs on a clock: late rent, a notice, an eviction. Be fast and small early, know the process before anyone needs it, and help tenants know their rights. In a neighborhood that turns over, welcoming new arrivals beats any advertising.',
+    'La presión de la vivienda corre contra el reloj: renta atrasada, un aviso, un desalojo. Actúe pronto y en pequeño, conozca el proceso antes de que alguien lo necesite y ayude a los inquilinos a conocer sus derechos. En un vecindario donde la gente se muda a menudo, dar la bienvenida a los recién llegados vale más que cualquier anuncio.'],
+  'A divided neighborhood':['One program will fit one half and quietly leave out the other. Plan two front doors, then do the harder work of getting both groups into the same room. Comfort is not the absence of need; it is a different kind of need, and it can fund the ministry the other half needs.',
+    'Un solo programa le servirá a una mitad y dejará fuera, sin decirlo, a la otra. Planee dos puertas de entrada y luego haga el trabajo más difícil: reunir a los dos grupos en el mismo salón. Tener comodidades no es no tener necesidades; es otra clase de necesidad, y puede sostener el ministerio que la otra mitad necesita.'],
+  'A changing community':['Listen for a year before launching anything. A congregation that stopped changing when its neighborhood did will feel out of place, and no welcome sign can fix that. Leaders who reflect the street, and partnership rather than absorption, are the whole strategy.',
+    'Escuche durante un año antes de lanzar cualquier cosa. Una congregación que dejó de cambiar cuando cambió su vecindario se sentirá fuera de lugar, y ningún letrero de bienvenida lo arregla. Líderes que se parezcan a la calle, y colaborar en vez de absorber: esa es toda la estrategia.']
+};
+/* the figures of one need: [{v, c, label, kind}] — this area (or the town, for an "across the town" row) against the county */
+function nsFigs(n){
+  try{
+    if(!DATA||!DATA.M) return [];
+    const M=DATA.M, m=n.tag==='town'&&M.cousub?M.cousub:M[SCOPE], c=SCOPE==='county'?null:M.county, es=LANG==='es';
+    if(!m) return [];
+    const L=/^lang-/.test(n.id)?nsNeedLang(n):null, cL=L&&c&&c.langs?c.langs.find(x=>x.name===L.name):null;
+    const name=L?(es?nsLangOf(L).es:nsLangOf(L).en):'';
+    const occ=(x,g)=>{ const r=x&&Array.isArray(x.occ)?x.occ.find(o=>o[0]===g):null; return r?r[1]:null; };
+    const low=x=>x&&x.ltvw!=null&&x.count?x.ltvw/x.count*100:null;
+    const out=[];
+    for(const k of NS_FIGS[n.id]||[]){
+      let v=null, cv=null, lab='', kind='language';
+      if(k==='@lang'){ if(!L) continue; v=L.share; cv=cL?cL.share:null; lab=es?'Hablan '+name.charAt(0).toLowerCase()+name.slice(1)+' en casa':'Speak '+name+' at home'; }   // in Spanish a language is lower case in a sentence
+      else if(k==='@langLow'){ if(!L) continue; v=low(L); cv=low(cL); lab=es?'De ellos, con inglés limitado':'Of them, limited English'; }
+      else{ const d=NS_FIG_DEF[k]; if(!d) continue; lab=d[es?1:0]; kind=d[2];
+        if(k==='@teens'){ v=nsTeen(m); cv=c?nsTeen(c):null; }
+        else if(k.startsWith('@occ:')){ v=occ(m,k.slice(5)); cv=occ(c,k.slice(5)); }
+        else { v=m[k]; cv=c?c[k]:null; } }
+      if(v==null||!isFinite(v)) continue;
+      out.push({v:Math.max(0,Math.min(100,v)),c:cv!=null&&isFinite(cv)?cv:null,label:lab,kind});
+      if(out.length===4) break;
+    }
+    return out;
+  }catch(e){ return []; }
+}
+function nsFigsHTML(n){
+  const F=nsFigs(n), es=LANG==='es';
+  const where=n.tag==='town'?nsTownAll():(SCOPE==='county'?L('this county','este condado'):SCOPE==='cousub'?L('this town','este municipio'):L('this neighborhood','este vecindario'));
+  const born=['foreign','recent','foreign-shift','limeng','lang-primary','lang-also','lang-third','lang-second'].includes(n.id)&&NSM&&NSM.born&&NSM.born.length
+    ?`<p class="ns-born"><b>${esc(L('Where neighbors born abroad come from:','De dónde vienen los vecinos nacidos en el extranjero:'))}</b> ${esc(NSM.born.join(', '))}</p>`:'';
+  if(!F.length) return born?`<div class="ns-figs">${born}</div>`:'';
+  const cards=F.map(f=>{
+    const gap=f.c!=null?f.v-f.c:null;
+    const read=gap==null?'':Math.abs(gap)<2?L('about the county','similar al condado'):(gap>0?'+':'−')+fmtPct(Math.abs(gap))+L(' vs county',' vs. condado');
+    const out=gap!=null&&standsOut(f.v,f.c);
+    return `<div class="stat${out?' out':''}" style="--hue:var(--m-${f.kind})">${statRing(f.v,f.c,f.label)}<div class="statwrap"><div class="statval">${fmtPct(f.v)}</div><div class="statlab">${esc(f.label)}</div>${read?`<div class="statcmp">${esc(read)}</div>`:''}</div></div>`;
+  }).join('');
+  const key=F.some(f=>f.c!=null)?L(`Each ring is ${where}; the mark on it is the county.`,`Cada anillo es ${where}; la marca sobre él es el condado.`):'';
+  return `<div class="ns-figs"><div class="stats">${cards}</div>${key?`<p class="statkey">${esc(key)}</p>`:''}${born}</div>`;
 }
 function nsCardHTML(n,i,hide){
   const open=NS.open===n.id, io=open&&NS.ideas;
@@ -12304,9 +12425,10 @@ function nsHTML(S){
   const many=S.needs.length>15, shown=many&&!NS.showAll?12:S.needs.length;
   const alsoLine=S.also.some(n=>n.tag==='town')?nsU('alsoLine',nsTownAll()):nsU('alsoNear');
   // review #27f: the note short, the church's information a link of its own, the lift legend inside an opened ideas list
-  return `<h2>${esc(nsU('h2'))}</h2>${verseHTML('prompts')}${nsStripHTML(S)}
-    <p class="ns-nofill"><i aria-hidden="true">i</i><span>${esc(nsU('nofill'))}</span></p>
-    <p class="ns-churchlink"><a href="#gf-church" data-gf-church>${esc(nsU('churchLink'))}</a></p>
+  /* v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts
+     page … nothing to fill-in … English only at home, born abroad … don't need to be there either". The heading, the verse, the
+     needs. Where people were born now sits inside the needs it explains (nsFigsHTML). */
+  return `<h2>${esc(nsU('h2'))}</h2>${verseHTML('prompts')}
     ${S.needs.length?`<div class="ns-list">${S.needs.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
     ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',S.needs.length))}</button>`:''}
     ${S.also.length?`<div class="ns-alsob"><h3>${esc(nsU('also'))}</h3><p class="note">${esc(alsoLine)}</p><div class="ns-also">${S.also.map(nsAlsoHTML).join('')}</div></div>`:''}
@@ -12356,11 +12478,13 @@ function nsOpenCard(id,o){
     const bd=x.querySelector('.ns-body'); if(bd) bd.hidden=true; const box=x.querySelector('.ns-ideas'); if(box&&!box.hidden){ box.hidden=true; const s=x.querySelector('.ns-show');
       if(s){ s.setAttribute('aria-expanded','false'); s.querySelector('small').textContent=nsCountText(nsNeedById(x.dataset.need)); } } });
   a.classList.add('open'); head.setAttribute('aria-expanded','true'); a.querySelector('.ns-body').hidden=false;
+  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)); } }
   NS.open=id;
   nsSetIdeas(a,!!o.ideas);
   if(entitled('plan')&&!NS.map) nsLoad();
   const after=head.getBoundingClientRect().top;
-  if(o.jump||Math.abs(after-before)>1) a.scrollIntoView({block:'start',behavior:'auto'});
+  if(o.jump) a.scrollIntoView({block:'start',behavior:'auto'});
+  else if(Math.abs(after-before)>1) window.scrollBy(0,after-before);   // v10.45.1: keep it under the pointer, never jump
 }
 function nsCloseCard(a){
   a.classList.remove('open'); a.querySelector('.ns-head').setAttribute('aria-expanded','false'); a.querySelector('.ns-body').hidden=true;
@@ -12864,7 +12988,10 @@ function render(){
 
   /* v10.45.0 (DESIGN-SURVEY §1.1): the church profile moved to the Spiritual Gifts landing ("Your church"); Mobilization and the
      ministries list left the survey (their functions stay in the file, unreferenced: uMinistriesHTML, uCardsHTML, uRow…). The
-     survey asks for nothing: its needs come first (#u-needs, nsDraw), then the brief and the figures. */
+     survey asks for nothing. v10.45.1 (the pastor, 5 Oct 2026): "the Pastor has to go through all the things about what the
+     community is like and then it will show what this neighborhood needs from this church" — so the needs (#u-needs, nsDraw)
+     follow the report (Economy … Churches nearby) and come before the action plan (Where to look, Community resources). */
+  secs.push('<div id="ns-slot"></div>');
 
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
@@ -12881,7 +13008,9 @@ function render(){
 
   // Make the Case: the screens draw themselves into #casebody (caseMount).
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
-  $('sections').innerHTML=secs.join('');
+  { const nsEl=document.getElementById('u-needs');
+    $('sections').innerHTML=secs.join('');
+    const slot=document.getElementById('ns-slot'); if(nsEl&&slot) slot.replaceWith(nsEl); }
   nsDraw();   // v10.45.0: what this neighborhood needs from our church (#u-needs)
   balanceGrids($('sections'));
   /* No per-section hue any more. --sec stays mint for the whole report, which

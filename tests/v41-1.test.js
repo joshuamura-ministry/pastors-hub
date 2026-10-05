@@ -202,9 +202,10 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   // v10.44.0 (the pastor, 2 Oct 2026: "we need to do the projects and purchases and the conference comparison the year ahead
   // first"): the release moved on (stale, not a regression); the six stamps move together
   // v10.44.1 (2 Oct 2026): the hotspots map frames the reach, not the blocks' outlines (v44-map-zoom); stamps bumped.
-  // v10.45.0 (5 Oct 2026): the Community Survey rebuilt (DESIGN-SURVEY.md): the release moved on (stale, not a regression); stamps bumped.
-  c('the six stamps say v10.45.0', [/TERRAIN {2}v10\.45\.0\b/.test(html.slice(0,400)),/data-version="v10\.45\.0"/.test(html),/<meta name="terrain-version" content="v10\.45\.0">/.test(html),
-    /<title>Community Map — Terrain v10\.45\.0<\/title>/.test(html),/<span id="ver">v10\.45\.0<\/span>/.test(html),/const VERSION = 'v10\.45\.0';/.test(html)], [true,true,true,true,true,true]);
+  // v10.45.1: the six stamps must agree, whatever the release (it was pinned to one release and went stale with each bump).
+  { const v=(html.match(/<meta name="terrain-version" content="(v\d+\.\d+\.\d+)">/)||[])[1]||'none', q=v.replace(/\./g,'\\.');
+    c('the six stamps agree ('+v+')', [new RegExp('TERRAIN {2}'+q+'\\b').test(html.slice(0,400)),new RegExp('data-version="'+q+'"').test(html),/^v\d+\.\d+\.\d+$/.test(v),
+      new RegExp('<title>Community Map — Terrain '+q+'</title>').test(html),new RegExp('<span id="ver">'+q+'</span>').test(html),new RegExp("const VERSION = '"+q+"';").test(html)], [true,true,true,true,true,true]); }
 }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e)); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`);
 process.exit(fail?1:0); })();

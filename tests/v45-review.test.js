@@ -206,11 +206,8 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   console.log('\n-- #1, #27f: the sheet on a computer; the phone preamble --');
   const P=page({needs:'file'}); await ready(P); survey(P,{mod:PA});
   c('#1: the sheet is centred again (margin:auto after the page\'s *{margin:0}; a phone keeps margin:0)', /dialog\.ns-sheet\{[^}]*margin:auto/.test(require('fs').readFileSync(path.join(ROOT,'index.html'),'utf8')), true);
-  c('#27f: "Nothing to fill in. Tap a need, then its ideas."', P.txt('#u-needs .ns-nofill span'), 'Nothing to fill in. Tap a need, then its ideas.');
-  c('…the Spiritual Gifts link on its own line, a link', [P.txt('#u-needs [data-gf-church]'),!!P.q('#u-needs .ns-churchlink a[data-gf-church]')], ['Your church’s information is on the Spiritual Gifts page.',true]);
-  c('…no lift legend above the needs (each opened list says its lifts)', [P.qa('#u-needs > .ns-legend').length,P.qa('#u-needs .ns-legend').length], [0,0]);
-  P.q('#u-needs [data-gf-church]').click(); await sleep(80);
-  c('…the link opens "Your church" on the Spiritual Gifts page', [P.E('TOOL'),!!(P.q('#gf-church')&&P.q('#gf-church').open)], ['gifts',true]);
+  // v10.45.1 — the pastor (5 Oct 2026) asked for the note and the link to go: "erase that, they will understand".
+  c('#27f (v10.45.1): no note, no Spiritual Gifts link, no lift legend above the needs', [P.qa('#u-needs .ns-nofill').length,P.qa('#u-needs [data-gf-church]').length,P.qa('#u-needs .ns-legend').length], [0,0,0]);
 }); await T.sec(async()=>{
   console.log('\n-- #3, #15, #16, #20, #24, #28: the ideas\' own words --');
   const P=page({needs:'file'}); await ready(P);
