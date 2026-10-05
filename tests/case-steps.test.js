@@ -240,16 +240,18 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
     c('…with the real Pathfinder Club (no stub), it moves', Z.J('casePrefs().group'), 'pathfinders'); }
 
   console.log('\n-- reach: every idea for God\'s people, the community, or both --');
-  { const Q=page(); await sleep(1300); setup(Q); Q.E(`openTool('survey'); render();`);
-    type(Q,'#u-search','prayer'); await until(()=>Q.qa('#u-lib .lib-sec').length===2); await sleep(60);
-    c('the survey\'s library: the same two sections', Q.qa('#u-lib .lib-sech h4').map(h=>h.firstChild.textContent.trim()), ['For God’s people','For our community']);
-    c('…God\'s people: the 12 "in" and the 3 "both"', Q.txt('#u-lib .lib-sec[data-lib-sec="in"] .lib-secn'), String(STUB.ideas.filter(r=>touches(r,[TI('prayer')])&&['in','both'].includes(r[col('reach')])).length));
-    c('…twelve a page in each', [Q.qa('#u-lib .lib-sec[data-lib-sec="in"] .lib-card').length,Q.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card').length], [12,12]);
-    type(Q,'#u-search',''); await sleep(300); Q.q('#u-lib [data-lib-browse]').click(); await until(()=>Q.qa('#u-lib .lib-tile').length>0);
-    const tl=sec=>Q.qa(`#u-lib .lib-sec[data-lib-sec="${sec}"] .lib-tile`).map(t=>t.dataset.libTheme);
+  // v10.45.0 (ported): the survey's ministries list, where the Idea Library lived, is gone (DESIGN-SURVEY §1.1); the same library code serves
+  // Make the Case's step 2 (no group chosen), where a pastor looks beyond a need's own ideas: the checks run there.
+  { const Q=page(); await sleep(1300); setup(Q); Q.E(`openTool('case'); caseSetPrefs({group:null,type:null}); CASE_ST.pick=true; caseMount(true);`);
+    type(Q,'#cs-q','prayer'); await until(()=>Q.qa('#cs-lib .lib-sec').length===2); await sleep(60);
+    c('the library with no group chosen: the same two sections', Q.qa('#cs-lib .lib-sech h4').map(h=>h.firstChild.textContent.trim()), ['For God’s people','For our community']);
+    c('…God\'s people: the 12 "in" and the 3 "both"', Q.txt('#cs-lib .lib-sec[data-lib-sec="in"] .lib-secn'), String(STUB.ideas.filter(r=>touches(r,[TI('prayer')])&&['in','both'].includes(r[col('reach')])).length));
+    c('…twelve a page in each', [Q.qa('#cs-lib .lib-sec[data-lib-sec="in"] .lib-card').length,Q.qa('#cs-lib .lib-sec[data-lib-sec="out"] .lib-card').length], [12,12]);
+    type(Q,'#cs-q',''); await sleep(300); Q.q('#cs-s2 [data-cs-browse]').click(); await until(()=>Q.qa('#cs-lib .lib-tile').length>0);
+    const tl=sec=>Q.qa(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-tile`).map(t=>t.dataset.libTheme);
     // v10.41 integration: member-care is a real inside-the-church theme now (it was small groups, stubbed)
     c('theme browse grouped the same way: an inside-the-church theme under God\'s people only', [tl('in').includes('member-care'),tl('out').includes('member-care')], [true,false]);
-    c('…a theme with ten or more ideas each way under both, each counting its own', [tl('in').includes('prayer'),tl('out').includes('prayer'),Q.txt('#u-lib .lib-sec[data-lib-sec="in"] [data-lib-theme="prayer"] span')], [true,true,'15 ideas']);
+    c('…a theme with ten or more ideas each way under both, each counting its own', [tl('in').includes('prayer'),tl('out').includes('prayer'),Q.txt('#cs-lib .lib-sec[data-lib-sec="in"] [data-lib-theme="prayer"] span')], [true,true,'15 ideas']);
     c('…a section\'s own themes first', tl('in')[0], 'member-care');
     c('…a theme with none for God\'s people only under the community', [tl('in').includes('hunger'),tl('out').includes('hunger')], [false,true]);
     c('libReach: the idea\'s own, else its theme\'s (inside → in, a theme\'s reach, else out); built-ins from their table, else out; a new idea its section',

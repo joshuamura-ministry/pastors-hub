@@ -9,6 +9,7 @@
 //  T-D3 theme records: cad, nx (targets ship, ongoing, not self, names the target's), nocard only on series/events
 //  T-D4 the built-ins' kinds and next steps in index.html               T-D5 a broken source stops the build, nothing written
 import fs from 'node:fs';
+import zlib from 'node:zlib';
 import path from 'node:path';
 import os from 'node:os';
 import {spawnSync} from 'node:child_process';
@@ -32,7 +33,8 @@ c('tools/ideas-src/cadence.json exists', exists(path.join(SRC, 'cadence.json')),
 c('it names every idea of the library (3,050), and no other id', [ids.filter(id => !(id in CAD) && !('cad' in src[id])).length, Object.keys(CAD).filter(id => !(id in src))], [0, []]);
 c('every value is ongoing, event, series, series-N or series-N-row (N 3–26)', Object.entries(CAD).filter(([, v]) => !FORM.test(v)).map(([k]) => k), []);
 const tally = Object.values(CAD).reduce((a, v) => { const k = kind(cadInt(v)); a[k] = (a[k] || 0) + 1; return a; }, {});
-c('1,937 ongoing · 829 one-day events · 284 series (the data design\'s classification)', [tally.ongoing, tally.event, tally.series], [1937, 829, 284]);
+// v10.45.0: the curation's 50 new ideas (43 ongoing, 3 one-day events, 4 series)
+c('1,980 ongoing · 832 one-day events · 288 series (the data design\'s classification, and the curation\'s)', [tally.ongoing, tally.event, tally.series], [1980, 832, 288]);
 // C1's review of design/data/series-review.txt: a count is the number of gatherings the idea's own words state
 c('reviewed: "Mission 360° TV episodes for six Friday vespers" is six sessions; "Women of the Bible: four evenings" four, not in a row',
   [CAD['global-mission-mission-360-vespers-series'], CAD['women-women-of-the-bible-library']], ['series-6', 'series-4']);
@@ -46,17 +48,18 @@ const okCad = v => v === 0 || v === 1 || (v >= 3 && v <= 26) || v === 100 || (v 
 c('every row: 0, 1, 3–26, 100 or 103–126', I.ideas.filter(r => !okCad(r[col('cad')])).map(r => r[0]).slice(0, 5), []);
 c('every row is its source\'s cadence', I.ideas.filter(r => r[col('cad')] !== cadInt(src[r[0]].cad || CAD[r[0]])).map(r => r[0]).slice(0, 5), []);
 const split = I.ideas.reduce((a, r) => { const k = kind(r[col('cad')]); a[k]++; return a; }, {ongoing: 0, event: 0, series: 0});
-c('the split ships: 1,937 / 829 / 284', [split.ongoing, split.event, split.series], [1937, 829, 284]);
+c('the split ships: 1,980 / 832 / 288', [split.ongoing, split.event, split.series], [1980, 832, 288]);
 const bytes = fs.statSync(path.join(D, 'index.json')).size;
-// (DESIGN.md C1.1: 1,470 bytes to spare as measured; the next library batch needs the limit raised or a column trimmed: CLAUDE.md open work)
-c(`the index stays under 900 KB with the column (${bytes} of 921,600 bytes)`, bytes < 921600, true);
+// v10.45.0 (DESIGN-SURVEY §6.4): the limit is 1,000 KB raw and 300 KB gzipped (what a phone downloads); its purpose, a search that loads fast on a phone, is kept
+const gz = zlib.gzipSync(fs.readFileSync(path.join(D, 'index.json'))).length;
+c(`the index stays under 1,000 KB raw (${bytes} of 1,024,000 bytes) and 300 KB gzipped (${gz} of 307,200)`, [bytes < 1024000, gz < 307200], [true, true]);
 
 console.log('\n-- T-D3 the theme records --');
 const NX = exists(path.join(SRC, 'next.json')) ? read(path.join(SRC, 'next.json')) : {}, NC = exists(path.join(SRC, 'nocard.json')) ? read(path.join(SRC, 'nocard.json')) : {};
 const recs = {}; for (const t of I.themes.filter(t => t.n > 0)) for (const x of read(path.join(D, t.id + '.json')).ideas) recs[x.id] = x;
 c('every record carries its cad, the index\'s', I.ideas.filter(r => recs[r[0]].cad !== r[col('cad')]).map(r => r[0]).slice(0, 5), []);
 const evs = I.ideas.filter(r => r[col('cad')] !== 0).map(r => r[0]);
-c('every series and event (1,113) has its two next steps (nx)', [evs.length, evs.filter(id => !Array.isArray(recs[id].nx) || recs[id].nx.length !== 2).slice(0, 5)], [1113, []]);
+c('every series and event (1,120) has its two next steps (nx)', [evs.length, evs.filter(id => !Array.isArray(recs[id].nx) || recs[id].nx.length !== 2).slice(0, 5)], [1120, []]);
 const bad = [];
 for (const id of evs) for (const [t, n, ne] of recs[id].nx || []) { const y = recs[t];
   if (!y || t === id || y.cad !== 0 || n !== y.en.n || ne !== y.es.n) bad.push(id + ' → ' + t); }

@@ -24,6 +24,14 @@ const minorsOk = x => { x.minors = true; x.skill = ['kids']; setEn(x, 3, 'Every 
 const cases = [
   // [label, expect 'fail'|'review'|'ok', mutate(x), pattern the output must contain]
   ['baseline passes', 'ok', x => x],
+  // v10.45.0: nothing Pennsylvania-only
+  ['Pennsylvania EN fails', 'fail', x => setEn(x, 2, 'Learn the clearances Pennsylvania asks of every school volunteer before the first visit.'), /Pennsylvania-only word "Pennsylvania"/],
+  ['Pensilvania ES fails', 'fail', x => setEs(x, 2, 'Conozca las autorizaciones que Pensilvania pide a cada voluntario antes de la primera visita.'), /Pennsylvania-only word "Pensilvania"/],
+  ['CareerLink fails', 'fail', x => setEn(x, 2, 'Leave a stack of cards at CareerLink and at the library front desk each month.'), /Pennsylvania-only word "CareerLink"/],
+  ['a standalone PA fails', 'fail', x => setEn(x, 2, 'Bring the PA and two microphones, and set them up before the doors open.'), /Pennsylvania-only word "PA"/],
+  ['township is a REVIEW', 'review', x => setEn(x, 2, 'Ask the township office where the cards may be left, and leave them only there.'), /a Pennsylvania word for a town/],
+  ['borough is a REVIEW', 'review', x => setEn(x, 2, 'Ask the borough office where the cards may be left, and leave them only there.'), /a Pennsylvania word for a town/],
+  ['a compass (lowercase) is fine', 'ok', x => setEn(x, 2, 'Walk in pairs with a small compass and a map, praying quietly for each street you pass.')],
   ['children names EN', 'fail', x => setEn(x, 1, 'Ask parents to write the names of their children on the card so we can pray.'), /names, photos/],
   ["kids' names EN", 'fail', x => setEn(x, 1, "Keep a notebook of the kids' names who come by the table each month."), /names, photos/],
   ['school gate EN', 'fail', x => setEn(x, 2, 'Stand at the school gate at pick-up with a basket of cards for parents.'), /school gate/],

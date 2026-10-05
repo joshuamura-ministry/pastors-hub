@@ -20,7 +20,8 @@ setTimeout(async()=>{
   c('tier is full', F.eval('currentTier()'),'full');
   c('every feature entitled', F.eval("Object.keys(FEATURES).every(entitled)"));
   F.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave('+JSON.stringify(H.MEDIUM)+'); render(); openTool("survey");');
-  c('the survey shows all three tabs', F.eval("[...document.querySelectorAll('#sections section.blk')].filter(s=>!s.classList.contains('offtab')).length")>10);
+  // v10.45.0: Mobilization, Your church and the ministries left the survey (DESIGN-SURVEY §1.1); the needs lead it (#u-needs, outside #sections)
+  c('the survey shows its sections: the needs, then the report and the plan\'s where-to-look, resources and what\'s next', [!F.document.getElementById('u-needs').classList.contains('offtab'),F.eval("[...document.querySelectorAll('#sections section.blk')].filter(s=>!s.classList.contains('offtab')).length")>=9], [true,true]);
   c('no lock anywhere on the page', F.document.querySelectorAll('.lock').length, 0);
   c('no "Full version" tags on the hub', F.document.querySelectorAll('.tool .tlock').length, 0);
   F.eval('openTool("case")');
@@ -42,11 +43,16 @@ setTimeout(async()=>{
   c('the action plan does not', !shown.includes('Mobilization')&&!shown.includes('Your church')&&!shown.includes('Ministries your church could offer'));
   c('the survey ends on a lock, not a cliff', shown[shown.length-1], 'Beyond the survey');
   c('the lock names what is beyond', /action plan is part of the full version/i.test(G.document.querySelector('#sections .lock').textContent));
+  // v10.45.0 (§2.11): the needs and their detail are the survey (free); their ideas, the sheet, the PDF and the proposal are the plan
+  c('the free survey: the needs, first, and each need\'s detail', [!G.document.getElementById('u-needs').classList.contains('offtab'),G.document.querySelectorAll('#u-needs .ns-need').length>0,!!G.document.querySelector('#u-needs .ns-detail')], [true,true,true]);
+  G.document.querySelector('#u-needs .ns-head').click(); G.document.querySelector('#u-needs .ns-need.open [data-ns-show]').click();
+  c('…its ideas show the lock (what it opens: ministry ideas for every need), no row, no sheet', [!!G.document.querySelector('#u-needs .ns-need.open .lock[data-lock="plan"]'),/Ministry ideas for every need/.test(G.document.querySelector('#u-needs .ns-need.open .lock').textContent),G.document.querySelectorAll('#u-needs .ns-row').length,!!G.document.querySelector('#ns-sheet[open]')], [true,true,0,false]);
   G.eval('openTool("planner")');
   c('opening a paid tool shows the lock', !G.document.getElementById('locked').hidden && /Evangelism Planner is part of the full version/.test(G.document.getElementById('locked').textContent));
   c('the tool itself stays hidden', G.document.getElementById('planner').hidden);
   G.eval('showHub()');
   c('back to the hub clears the lock', G.document.getElementById('locked').hidden);
+  G.eval(`(()=>{ const g=document.createElement('div'); g.id='u-generate'; document.body.appendChild(g); })()`);   // v10.45.0: its host left with the ministries list
   await G.eval('uGenerateMount()');
   await new Promise(r=>setTimeout(r,50));
   c('fresh ideas are locked too', /fresh ministry ideas is part of the full version/i.test((G.document.getElementById('u-generate')||{}).textContent||''));

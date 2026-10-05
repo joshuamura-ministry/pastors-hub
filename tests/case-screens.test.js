@@ -213,7 +213,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   setup(P,{members:false}); P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; caseMount(true);`);
   click(P,'[data-cs-act="ask"]');
   c('no gifts results yet: it says so, and opens Spiritual Gifts', [/No Spiritual Gifts results yet for Bucks County SDA/.test(P.txt('#cs-ask')),!!P.q('#cs-ask [data-cs-gifts]')], [true,true]);
-  c('…and the page says the ability slide counts the profile instead', /counts the skills in your church profile/.test(P.txt('#cs-s3')), true);
+  c('…and the page says the ability slide counts the profile instead', /counts the skills under Your church/.test(P.txt('#cs-s3')), true);
 
   console.log('\n-- the sample slideshow --');
   setup(P); P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; caseMount(true);`);

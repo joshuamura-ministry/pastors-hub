@@ -69,7 +69,7 @@
  "ring-cap.test.js": 2461,
  "rings-and-donuts.test.js": 2648,
  "rings-and-signal.test.js": 2566,
- "scroll-to-mobilization.test.js": 4780,
+ "scroll-to-church.test.js": 4772,
  "survey-audit.test.js": 2600,
  "ten-year-chart.test.js": 2411,
  "timing-options.test.js": 58483,
@@ -107,5 +107,13 @@
  "v43-review-fixes.test.js": 928,
  "v43-slide-words.test.js": 33951,
  "v43-timing-cadence.test.js": 71200,
+ "v45-handoff.test.js": 7420,
+ "v45-needs-data.test.mjs": 7732,
+ "v45-needs-ui.test.js": 7861,
+ "v45-needs.test.js": 4080,
+ "v45-pdf.test.js": 11758,
+ "v45-profile-move.test.js": 7628,
+ "v45-review.test.js": 12462,
+ "v45-survey.test.js": 11759,
  "v51-sabbath.test.js": 821
 }

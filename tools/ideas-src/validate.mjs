@@ -259,6 +259,10 @@ const SABBATH_CAFE = {en: /\b(cafes?|coffee ?shops?|diners?|restaurants?)\b/, es
 //  project is fine: it is part of worship. Sales, fundraising events and selling tickets stay off the Sabbath.")
 const SABBATH_FITS = /\b(worship|vespers|prayer|pray|bible stud(y|ies)|sabbath school|anoint\w*|visit(s|ing)? (the )?(sick|lonely|shut-?ins?|homebound|hospital|nursing home|care home)|hospital visits?|nursing[- ]home|shut-?ins?|homebound|health (talks?|screenings?|checks?)|blood pressure|screenings?|meals?|potlucks?|soup kitchen|pantry|feed(s|ing)?|homeless|grie(f|ving)|bereave\w*|comfort|support groups?|disaster|respite)\b/;
 const SABBATH_NOT = /\b(sell\w*|sales?|buy\w*|purchas\w*|fees?|prices?|fundrais\w*|donat\w*|auction|market|swap|fair|festival|carnival|party|parties|games?|tournament|league|sport\w*|match|film|movie|video\w*|record\w*|podcast|print\w*|mail\w*|postcards?|repair\w*|fix\w*|build\w*|paint\w*|garden\w*|plant\w*|craft\w*|knit\w*|sew\w*|quilt\w*|committee|budget|admin\w*|training|certif\w*|class(es)?|course|weekdays?|monday|tuesday|wednesday|thursday|school (day|office|hours)|lunch (break|hour)|office|court\w*|cafe|diner|restaurant|coffee shop)\b/;
+/* v10.45.0 (DESIGN-SURVEY §3.6): Terrain rolls out to every US conference. A Pennsylvania-only word is an error; township and
+   borough (Pennsylvania's words for a town) are a REVIEW line. "PA" and "COMPASS" count in capitals only. */
+const PA_ERROR = [/\b(PA|COMPASS)\b/, /\b(pennsylvania|pensilvania|careerlink|penn state|pa 211)\b/i];
+const PA_REVIEW = /\b(townships?|boroughs?)\b/i;
 const USTED_REVIEW = /\b(tu|tus|tienes|puedes|quieres|necesitas|contigo|tuyo|tuya|haz)\b/;
 const ES_ENGLISH_REVIEW = /\b(pathfinders?|adventurers?|sabbath|community services|sunday school|escuela dominical|church)\b/;
 const US_SPELLING_REVIEW = /\b(neighbour\w*|programme\w*|colour\w*|centre\w*|organis\w*|favour\w*|honour\w*|labour\w*|licence|practise|counselling|travelled|cheque)\b/;
@@ -451,6 +455,11 @@ function checkIdea(x, ctx) {
   if (ES_ENGLISH_REVIEW.test(es)) rev(`English term in the Spanish text — "${es.match(ES_ENGLISH_REVIEW)[0]}" (Conquistadores, Aventureros, Escuela Sabática, Servicios Comunitarios Adventistas)`);
   if (US_SPELLING_REVIEW.test(en)) rev(`use US spelling in English (the app is American English) — "${en.match(US_SPELLING_REVIEW)[0]}"`);
 
+  // v10.45.0: nothing Pennsylvania-only (the words as written, case and all)
+  { const raw = [textOf(x.en, x.partner, 'en'), textOf(x.es, x.partner, 'es')].join(' \n ');
+    const pa = raw.match(PA_ERROR[0]) || raw.match(PA_ERROR[1]);
+    if (pa) err(`Pennsylvania-only word "${pa[0]}": Terrain is used in every state; write it for any state ("your state's clearances", "the local American Job Center")`);
+    const tb = raw.match(PA_REVIEW); if (tb) rev(`"${tb[0]}" is a Pennsylvania word for a town: say "the town", "the city" or "the county"`); }
   // built-in catalogue names
   if (x.en && isStr(x.en.n)) {
     const A = tokens(x.en.n), fn = fold(x.en.n).replace(/[^a-z0-9]+/g, ' ').trim();

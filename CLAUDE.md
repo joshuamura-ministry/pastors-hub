@@ -12,7 +12,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 
 ## Read this first
 
-1. **One file.** The whole app is `index.html` (~2.4 MB). No build step, no
+1. **One file.** The whole app is `index.html` (~3.6 MB). No build step, no
    framework, no bundler. Two `<script>` blocks (and a five-line one in the head that loads the web fonts except on a
    neighbour's `#connect=` page, v10.43). Edit it in place. The one
    exception is data: the Idea Library's `ideas/` is **generated** from
@@ -21,7 +21,7 @@ in commit messages. See [Security](#security--this-repo-is-public).
 2. **Deploy = commit to `main`.** Netlify is wired to this repo and publishes
    every push in about a minute. There is no separate server to upgrade.
 3. **Run the tests before and after every change:** `npm install` once, then
-   `npm test`. 122 suites, 9,398 assertions, all green at v10.44.0 (with the v57 "detach" fix merged) (2 Oct 2026, after the review's fixes; v10.44: Make the Case for a project or purchase, "Find prices", Learn from other conferences, the Sabbath leftovers; before it v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 20 minutes).
+   `npm test`. 131 suites, 9,759 assertions, all green at v10.45.0 (5 Oct 2026: the Community Survey says what the neighborhood needs, and its review round; v10.44.1 had 123 · 9,403; v10.44: Make the Case for a project or purchase, "Find prices", Learn from other conferences, the Sabbath leftovers; before it v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 20 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
 5. **The pastor is not a developer.** He tests on the live site, often on his
@@ -100,7 +100,7 @@ FIREBASE-SETUP.md              click-by-click setup of that project for the past
 README.md                      (in the GitHub repo; not part of this hand-over folder)
 CLAUDE.md                      this file
 package.json                   @netlify/blobs (functions); jsdom + jspdf (tests)
-tests/                         122 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
+tests/                         131 suites + runner + fixtures (case-quotes.json: the verified verse/EGW library; reach-builtins.json: the built-ins' reach; scripture-bg.json: Bible Gateway's
                                KJV + RVA 1909 text of every passage the app quotes; topic-ideas.json: a stubbed AI answer)
 ```
 
@@ -154,6 +154,98 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.45.0 (5 Oct 2026) — the Community Survey says what the neighborhood needs.** His words (3–5 Oct 2026, voice-to-text): *"There's
+too much to fill in… no more filling in on community survey."* *"It's gonna give the things the community needs, the top priorities and the
+greatest opportunities… in each need there's going to be a place to click and a drop-down with ideas… around 10… light lift, moderate lift
+and heavy lift…"* *"…you can print the PDF… a clean and beautiful one-page PDF… then it can say create a proposal for this ministry."* (5 Oct)
+*"One thing I really want to make sure is that it's clean and clear and easy to understand."* Design `~/Downloads/Terrain-work/v63/design/DESIGN-SURVEY.md`
+(its §9 questions were built on their defaults), mockup `v63/terrain-survey-mockup.html`, the curated map `v63/curation/` (NOTES.md), the
+build record `v63/build-work/` (patches, logs, gates); samples `~/Downloads/Terrain-v10.45-samples/` (README.txt there).
+- *What it is:* the survey asks nothing. First under the address: **What this neighborhood needs from our church** (`#u-needs`): the
+  needs, greatest first, each a card that opens in place (what the community needs, "Ask first") with **Ministry ideas to meet this need**:
+  10–24 curated ideas in Light · Moderate · Heavy lift (8 at most a lift). An idea opens a sheet: what it is, why here, how to get started,
+  what it needs from our church (general words, no check, no church data), the children's line where children take part; **One-page PDF**
+  and **Create a proposal for this ministry** (Make the Case, path "A ministry", the idea chosen; "← Back to the need" reopens the need and
+  the sheet). Below: **Also here**, near the line (4 at most) and across the town (4 at most, by score at the town), 8 in all. More than 15
+  needs: 12, then "Show all {n} needs". THE BRIEF and every report section follow, unchanged. The church profile moved to the Spiritual
+  Gifts landing, **Your church** (`#gf-church`); the hinge, Mobilization and the ministries list left `render()` (their functions stay,
+  unreferenced, until the next phase). No background "fresh ideas" on Save, Demo or a survey (Q3: `autoIdeas` is no longer called).
+- *Six decisions* (DESIGN-SURVEY §0): (1) `RULES` unchanged, so Make the Case, the gifts reports and every golden read what they read; the
+  survey adds `RULES_MORE` (9 needs), `RULES_SAY` (its own words where a rule overstates), `NS_GATE` (debt: the rent half needs renters
+  ≥ 15), `NS_RANK`; (2) the needs first, above THE BRIEF; (3) the curated map ships as `ideas/needs.json`, built from
+  `tools/ideas-src/needs.json`; (4) lift = the library's `tier`, a built-in's `bandOf(load)` (`nsLift`); (5) the hand-off (`nsPropose`)
+  saves the idea, adds it to the plan with no capacity check, opens Make the Case on the ministry path and lands on the card; (6) the old
+  list code stays in the file, unreferenced by the page.
+- *Calibration* (53,140 tracts in 18 states, `design/work/calib*.mjs`): a tract fires 6 · 9 · 11 · 15 · 19 needs (p10 · p25 · median ·
+  p75 · p90) against 6 · 8 · 11 · 14 · 17 before; the debt gate takes debt away in 8.0% of tracts (where few rent). Score = w × strength
+  (1–2) × 0.75 for a lens; within half a point the more effective need goes first.
+- *The curated map* (curation/NOTES.md): 47 needs, 10–13 ideas each; 50 new library ideas, 41 reworded (84 fixes); `@lang` lists for six
+  language groups (Spanish 22, the others 1–2), shown after the need's own list for the three language needs. `{lang}` in an idea's words
+  is the neighbors' language (`libFill`): a language need's own; every other need's, and the Idea Library's, the tract's first at 4% or
+  more; an "Across {town}" row's, the tract's first at 8% or more, else the town's at 4%. A Census group is filled with the members its
+  title names, joined by "or" ("Hindi, Gujarati or Urdu" / "hindi, guyaratí o urdu", `nsLangMembers`, saved as `…--indo-european`);
+  "our neighbors’ language" / "el idioma de nuestros vecinos" when the origins name no member, for Slavic and "Other", no survey, or no
+  language that clears its line. It is filled on the cards, sheets, PDFs and in
+  Make the Case (the library's search text drops the token: a search never sees the language). A {lang} idea is saved filled, under its
+  own id for that language (`…--chinese`, `libFillRaw`), whether proposed from a need or chosen in Make the Case (`libSave`), and
+  keeps it. The Diwali greeting shows only where India is among the top five places of birth of the need's own geography
+  (`NS_ORIGIN_GATE`).
+- *Nothing Pennsylvania-only* (§3.6): the rules' IDEAS (rent50, snap, unemp, growth), five built-ins and their steps (garden,
+  skills-center, lot-market, noticeboard, bench), Community resources (town, city & county offices; centers; the mayor or town manager),
+  14 library ideas (32 phrases; "the local American Job Center", "your state's clearances"); the validator's PA check (error;
+  township/borough a REVIEW line; 90 library ideas still say township or borough, none of them reached by a need). The town's short name also drops the
+  Census's "CCD" (Florida, California, Texas…: "Across Immokalee", not "Immokalee Ccd").
+- *Changed files:* `index.html` (six stamps v10.45.0), `ideas/` (hash **`720b5d961b8d`**, 3,100 ideas, `needs.json` new),
+  `tools/build-ideas.mjs` (the needs map and its checks), `tools/ideas-src/` (the curation: needs.json, themes, next.json and the rest;
+  validate.mjs with the PA check, selftest.mjs 135 cases, vocab.json), `tests/`, this file. **Functions unchanged.** Verify after
+  deploy: the badge **v10.45.0**; `https://pastorshub.org/ideas/needs.json` → `"v":1`, `"hash":"720b5d961b8d"`; `ideas/index.json`
+  → the same hash.
+- *Gates* (headless Chrome, `v63/build-work/gates/`, checked by `scripts/gate-check.mjs`): 1500 Berryessa Rd San José, 10 Greene Rd
+  Warminster, 417 N 1st St Immokalee, at 390 and 1280, EN and ES: **345 checks, 0 failed**: the needs in Appendix A's order (13 · 8 · 26,
+  "Show all 26 needs"), a need with 12–24 ideas in three lifts, a sheet per lift with one primary button, the PDF saved and one page with
+  its fonts, the hand-off landing below the header with focus and "← Back", What's next (each row's × removes it), Demo and Save landing
+  at "Your church", no sideways scroll, no console error, no new host; Warminster EN also the keyboard walk (Tab past the sheet's last
+  button goes to the browser, never to the page behind: a native modal), reduced motion, print.
+- *The review round (5 Oct 2026; `v63/review/`: CODE-REVIEW.md B1, S1–S5, M1–M7; PASTOR-REVIEW.md 1–28; COORD-NOTES.md 1–4, and the
+  coordinator's ten decisions), patches `build-work/patches/p7-review.mjs` (the app), `p8-library-review.mjs` (the library),
+  `p9-tests-review.mjs` (the suites); notes `build-work/NOTES.md`.* What changed:
+  - **Money said truly** (#6): the 54 built-ins the needs show are priced at their source (`U_LINES_OWN`, US church, 2026,
+    rounded; four truly free, `U_FREE_OK`), so the sheet, the PDF and Make the Case agree; an event or a series is one sum "in all"
+    (before, and on the day or for the series); any other built-in says "Cost varies: ask your conference", never the $75/$25
+    allowance on a sheet. Heavy-lift library ideas at "No cost" got figures unless truly free (NOTES.md). Make the Case's ceilings
+    changed with them (248 golden keys of 38 ongoing built-ins re-written on purpose, listed in v43-ongoing-golden's header).
+  - **The needs**: greatest first by score (a tie to the larger figure, then effectiveness); a language need's strength counts how many
+    of its speakers have limited English (under a quarter: 1); on the Spanish page the badge never sits on a Spanish need, and that
+    need says a church worshiping in Spanish has met it; no need on a share of a handful (`NS_MIN`: families with children 50,
+    children 100, renter households 50, people born abroad 100; the badge only on a count of 50 or more); one figure, one row (debt's
+    ideas join rent burden's or SNAP's list, grief's join "seniors living alone"; "Also here" never repeats a figure); the town of a
+    census county division is "the Immokalee area"; "Also here" in plain words ("Almost a need here", "across Warminster"); Gini in
+    plain words; the Census groups named by the members the origins point to, never two titles alike; "French or Haitian Creole" is
+    Haitian Creole where Haiti is among the origins, else French; love-first wording and US spelling (`NS_SAY_FIX`, `NS_US`); the
+    categories (`NS_CAT_SAY`: Work & schedules, Income, Young adults, Veterans); grief's verse Psalm 34:18, single parents' Galatians 6:2.
+  - **The ideas**: the Spanish need 15 ideas at most, 5 a lift, no near-twins; no snow ideas in Florida, Hawaii, the territories or
+    south of latitude 30; three built-ins and the Lunar New Year card in the need's language; VBS, the cold-snap check-in (only those who
+    say yes), the court (two screened adults), Pathfinders and the sports camp reworded; the 54 built-ins' Spanish descriptions and
+    partners; the Sabbath notes; the Diwali card's gentler words; the children's line "a parent's or guardian's consent".
+  - **The sheet and the PDF**: the sheet centred on a computer; the short phone preamble (the lifts said inside an opened list); the
+    PDF's labels as wide as the language needs, its foot in Spanish, its write-in lines, the verse above the foot, one type floor
+    (9 pt read, 8–8.5 pt only for small labels, step numbers and the foot), a long church name ending "…", one in letters the page cannot print (Korean, Chinese) "Our church" / "Nuestra iglesia".
+  - **The hand-off and Make the Case**: one plan entry per language (S1), kept in its language (S2); a proposal closed while it loads
+    adds nothing (M2); "Why here" is the need's own figure (`nsWhyOf`); above the chosen card, what comes next and the way back;
+    "Create the proposal for …" in lists; "Open the Community Survey" lands on the needs (M1).
+  - **"Your church"**: a framed card near the top of the Spiritual Gifts landing, "Moved here from the Community Survey" a small note
+    on its own line under the heading, open by
+    itself while the church has no information, in Spanish (the form and its summary box), named for the church; kept across a redraw
+    only for the church it was drawn for, and never saved into another (B1).
+  - **The rest of the code review**: a deploy under an open tab reloads the index (S4); the PDF's type test reads the real sizes (S5);
+    the focus note counts needs and "Also here" apart (M5); a new address starts closed (M6).
+- *Gates after the review round* (`build-work/gates/`, `scripts/gate-check.mjs`): the three addresses and Atlanta West End and
+  Edison NJ, at 390 and 1280, EN and ES: **743 checks, 0 failed** (the sheet centred, the landing's line in view, every button's words
+  inside it, "Why here" the need's own figure, no badge on a handful, no twin group titles, no "Ccd").
+- **Full suite: 131 suites · 9,759 passed · 0 failed.** (Before the review round: 130 · 9,647.)
+- *Version clash:* the paused Evangelism Planner rebuild (`Terrain-work/v60/INTEGRATION.md`) was stamped v10.45.0 but never shipped;
+  it becomes v10.46.0 when it resumes (re-stamp and merge on top of this).
 
 **v10.44.1 (2 Oct 2026, quick lane) — the Hotspots map frames the reach.** The pastor, on his old Bay Area church: *"this is the
 view that shows on the map from a very, very far distance. It's not just the immediate community under hotspots."* `basemap` sized
@@ -1545,7 +1637,7 @@ Claude Code's own edit tool gives the same guarantee for single edits. For
 multi-part changes, keep the all-or-nothing discipline.
 
 After editing, always run `npm test`. It syntax-checks both inline script
-blocks and every function first, then runs all 122 suites.
+blocks and every function first, then runs all 131 suites.
 
 ### Versioning
 
@@ -1563,7 +1655,7 @@ version: `v10.36.0 — what changed`.
 
 ### Tests
 
-`tests/` holds 122 suites and `run-all.js`. They load `../index.html`
+`tests/` holds 131 suites and `run-all.js`. They load `../index.html`
 and `../netlify/functions/*.mjs` directly, stub `fetch`, and never call a
 real API or spend credit. `fixtures.json` is a fabricated high-need tract plus
 a small and a medium church. `average-church/` (v10.42) is a made-up average
@@ -1573,6 +1665,26 @@ Gifts results) as the app keeps it in localStorage, read by
 `build-fixture.mjs` (never edit it by hand). `run-all.js` runs every suite with
 `REQUIRE_V42=1` (v10.42.0), so none of that suite's part-3 checks may be PENDING: they all count.
 
+- v10.45 added `v45-needs` (61: `nsModel` on the fixture, `RULES` untouched, `NS_GATE`, the ranking, "Also here", the strip),
+  `v45-needs-ui` (59: the section, one card open, the lifts, the sheet, focus and keys, Spanish), `v45-needs-data` (35: `needs.json`
+  from the build and its checks, `{lang}`, `@lang`, the Diwali gate), `v45-pdf` (27: `nsPdfDoc` in node, one page always, both faces,
+  EN + ES), `v45-handoff` (41, the design's own: Create a proposal → Make the Case → Back), `v45-profile-move` (31: the profile on the
+  gifts landing, `capMerged()` unchanged) and `v45-survey` (18: the stamps, the Pennsylvania words, the validator's PA check, the golden
+  keys changed only by those words, "CCD"); `scroll-to-mobilization` became `scroll-to-church`. Updated to the new intent, each with a
+  comment: background-ideas, buy-core, case-fixes, case-steps, church-summary-box, connect-tailor, demo-and-clear, entitlement-tiers,
+  gifts-first-ui, home-church, idea-fresh, idea-library-build (the index under 1,000 KB raw and 300 KB gzipped), idea-library,
+  near-miss-ordering, no-ai-words, profile-slider, v40-accuracy, v40-review-app, v40-review-lib, v41-1, v42-core, v42-plan-first,
+  v43-cadence-data, v43-cadence, v43-path, v44-sabbath-leftovers (the library tests now search Make the Case's library, where the
+  survey's went). `v43-ongoing-golden.json`: 18 keys of lot-market, noticeboard and bench re-written (the Pennsylvania words; v45-survey
+  puts the old words back and gets v10.44.1's hashes), every other key unchanged.
+- v10.45's review round added `v45-review` (92: one or more checks per finding of review/PASTOR-REVIEW.md and CODE-REVIEW.md, EN + ES)
+  and grew v45-needs (62), v45-needs-ui (59), v45-pdf (37: the real type sizes, uncompressed; the Spanish labels; the foot; the
+  write-in lines; the church's name), v45-profile-move (40: the card near the top, open when empty, in Spanish; B1, two churches) and
+  v45-survey (18). Updated to the new intent (`patches/p9-tests-review.mjs`): the prices in case-fixes, case-model, case-review39,
+  timing-options, v42-fixes, v42-proposal, v43-cadence-words and v43-timing-cadence; "Create the proposal for …" in v43-path and
+  v43-average-church; "Your church" in case-screens and gifts-first-ui; the focus note in rings-and-donuts; the empty plan in
+  v42-plan-first; Psalm 34:18 in v40-accuracy (and `scripture-bg.json`). The golden file's 248 re-written keys (38 ongoing built-ins,
+  priced at their source and given their Spanish) are listed in v43-ongoing-golden.test.js's header; every other key is v10.44.1's.
 - v10.42 part 3 added `case-focus.test.js` (the goal, the arc, the relevance rule: NARRATIVE T1–T10, T12),
   `v42-core.test.js` (the decision records, the approval path, the goal store, `gfReadiness`, the profile's two new
   fields, the average demo church), `v42-proposal.test.js` (the Proposal to vote on) and `gifts-first-decks.test.js`
@@ -1647,6 +1759,33 @@ Search for these by name in `index.html`.
 - `balanceGrids()` — runs after `render()`; sets `--sd` / `--sp` spans on survey cards
 - Spanish: `ES` (whole-string lookup by `translateDOM()`), `tr()`, `L(en,es)` for built strings, `briefES()`, `HELP_ES`, `SCRIPTURE_ES`
 
+**Community Survey · the needs** (v10.45, DESIGN-SURVEY.md; the block after `RULES_ES`, the page code before `render()`)
+- Data: `RULES_MORE` (lang-also, lang-third, teens, near-poor, working-poor, pubassist, family-english, aging-owners, seniors-many) +
+  `RULES_MORE_ES`; `RULES_SAY` (the survey's words: grief, debt, seniors-nocar, isolationyoung, lang-primary, lang-second); `NS_GATE`
+  (debt); `NS_RANK` {lens, eff, s}; `NS_NEAR` (near the line); `NS_TOPIC`, `NS_CAT_ES`, `NS_KIND_MORE`; `NS_LANG` (the Census's 12
+  language names in EN/ES, the two groups and their members); `NS_FALLBACK` (tags/themes topping a short list up to 10), `NS_LANG_NEED`
+- `nsModel(M,scope)` → {needs (ranked), also, langs, born, groups, town}; `nsSay`, `nsOn`, `nsScore`, `nsNeedOf`
+- The section `#u-needs` (static, under `#focusnote`): `NS` (state), `NSM` (the model drawn), `nsHTML` / `nsDraw` / `nsCardHTML` /
+  `nsBodyHTML` / `nsIdeasHTML`; `nsLoad` (the index + `ideas/needs.json`, sessionStorage `terrain-lib-needs`, a new hash renews it);
+  `nsIdeasFor(need)` (the curated list, a merged need's four, then `@lang` for lang-primary/also/third; `NS_ORIGIN_GATE` on the need's
+  own geography, `NS_SNOW` / `nsSnowless`, `NS_TWINS`; 8 a lift, 5 for the long Spanish list; topped up from `NS_FALLBACK`);
+  `nsLift`; `nsView(id)` (one shape for library and built-in ideas; `NS_BUILTIN_LANG`; `priced`); `nsOnce` / `nsTotal` (an event's
+  or a series' money and hours "in all", as Make the Case sums them); `{lang}`: `libFill`, `libLangCtx`, `nsLangFill`, `nsNeedLang`,
+  `nsLangKey`, `libFillRaw` (a filled copy, its own id); `nsRenewed` (a deploy under an open tab)
+- The review round's model parts: `NS_MIN` (the small-group gate), `nsLangS` (a language by limited English), `NS_SAY_FIX` /
+  `NS_US` / `nsFixWords` (love first, US spelling), `NS_CAT_SAY` / `NS_KIND_SAY`, `NS_COUNT` (the badge's 50), `nsFigKey` and
+  `merged` (one figure, one row), `nsTownWords` (a CCD is "the X area"; `placeTown` on the place line), `NS_GROUP_BY_ORIGIN` /
+  `nsGroupMembers` (a group named by its members here), `nsOrigins` / `NS_CTX`
+- The sheet `#ns-sheet` (a dialog, `showModal`): `nsSheetOpen` / `nsSheetDraw` / `nsSheetClose`; `nsPropose` (the hand-off) →
+  `nsLand`; `nsFromHTML` / `nsChosenNextHTML` / `nsBack` / `nsBackTo` (sessionStorage `terrain-ns-back`); `nsPlanId` (one plan
+  entry per language); `nsWhyOf` (`uChurch().whyFrom`: Make the Case's "Why here" for an idea proposed from a need, read by
+  `libWhyText` and `uEvidence`); `casePrefs().path` (not enumerable, so the saved choice reads as before)
+- The PDF: `nsPdf` → `nsPdfDoc(jsPDF, idea, need, o)` (pure; `v45-pdf` runs it in node) → `nsPdfFit` (levels `NS_PDF_LV`) →
+  `nsPdfLayout` (its audit: every string with its size and role); `nsPdfName`; `nsPlaceIn` (the foot in Spanish); `nsVerse` (the
+  verified library only; `NS_VERSE_OWN` / `NS_VERSE_NEED`: grief Psalm 34:18, single parents Galatians 6:2)
+- The built-ins' prices: `U_LINES_OWN` (the 54 the needs show; an event's two lines, before and on the day) and `U_FREE_OK`; the
+  library's {lang} copies found in the index by `libRowOf`; the profile's name `capName`; `gfChurchEmpty` (the card opens by itself)
+
 **Tags, rules, ministries — the engine**
 - `profile(m,c,trend)` — census figures → ~40 threshold tags (`poor`, `many-kids`, `no-car`…)
 - `trendOf(M,scope)` — the geography carrying ten-year data (the town, at tract scope); `raceShifts()`
@@ -1662,14 +1801,15 @@ Search for these by name in `index.html`.
 **The church**
 - `U_STORE` / `uStore()` / `uChurch()` / `uPersist()` — all church data, per church, on the device. When accounts arrive, this store is what syncs.
 - `capGet()` / `capSave()` / `capMerged()` — the profile; `capMerged()` is what every check reads
-- `capRender()` — the four-step slider (`.u-stage` fixed height, `.u-track` slides)
+- `capRender()` — the four-step slider (`.u-stage` fixed height, `.u-track` slides); since v10.45 on the Spiritual Gifts landing, "Your church"
+  (`#gf-church` → `#capslot`), never in the survey: `gfChurchOpen()` opens the fold, `gfChurchSum()` is its one-line summary
 - `DEMO_CHURCH`, `capFillDemo()`, `capClearAll()`, `armThen()` — demo and two-tap clear
-- `capSummaryHTML()` — the itemised box above the action plan
-- `goToMobilization()` — instant jump after Save/Demo (never `smooth` — it animated from the bottom)
+- `capSummaryHTML()` — the itemised box, now under the profile in "Your church" (v10.45)
+- `capShowSaved()` (the old name `goToMobilization()` is kept as its alias) — instant jump after Save/Demo to "Your church" (never `smooth` — it animated from the bottom)
 
 **Fresh ideas (the model; shown as "New idea" / "Draft idea", never "AI")**
 - `GEN_PLAN` — 20 per level, four parallel batches (Serve / Equip / Belong / Invite)
-- `autoIdeas()` — background run after a profile save or survey completes; **synchronous `AUTO_RUNNING` guard before any await** (without it, two triggers generated and billed twice)
+- `autoIdeas()` — no longer called by the page (v10.45, Q3: it fed the survey's ministries list, which is gone, and each run spends credit; "More ideas for {group}" in Make the Case stays). It was the background run after a profile save or survey; **synchronous `AUTO_RUNNING` guard before any await** (without it, two triggers generated and billed twice)
 - `genBand()`, `draftFrom()`, `roomReq()` — one level; a draft's cited `metric` is verified against the tract before it counts as evidence
 - `autoKey()` — once-only per church + neighborhood + profile
 
@@ -1812,7 +1952,13 @@ church porch; cards, prayer walking, social media done as a neighbour).
    or `series` / `series-row` (no count stated) — its own `cad` field, else its line in `tools/ideas-src/cadence.json` (which must
    name every shipped id). A new event or series needs two ongoing next steps in `next.json` (each a shipped ongoing idea, not
    itself), or a line in `nocard.json` with the reason when its own words promise no names. Any fault in the three files stops
-   the build with nothing written. The index has about 1,500 bytes left under the test's 900 KB limit (open work).
+   the build with nothing written. The index is 0.94 MB raw (238 KB gzipped) under the test's 1,000 KB raw and 300 KB gzipped limits (v10.45).
+   **The needs map (v10.45):** `tools/ideas-src/needs.json` = {ruleId: [ids…], "@lang": {group: [ids…]}}, every list in display order
+   (light, moderate, heavy; most effective first). The build checks it and writes `ideas/needs.json` (with each idea's one line, `d1`;
+   the hash covers it): keys are `RULES` / `RULES_MORE` ids (vocab.json) or `@lang` groups; a need's list 10–24 ids (an `@lang` list
+   has no count); every id shipped (library or built-in), none `reach: "in"`; an idea whose name names a language or culture only under
+   its own `@lang` (a description doing so is a REVIEW line); no Pennsylvania word (error), and no township or borough in any idea a need
+   reaches. `{lang}` in an idea's words is filled with the neighbors' language on the page (the validator counts it as 6 characters).
 2. `cd tools/ideas-src && node validate.mjs themes/<theme>.json` (read the REVIEW lines too), then
    `node validate.mjs --all` (unique ids, no near-duplicate names across themes, unambiguous synonyms).
    (The review pass kept the writers' working copy in the build session's scratchpad `ideas/` and packaged it with
@@ -1820,8 +1966,8 @@ church porch; cards, prayer walking, social media done as a neighbour).
    `tools/ideas-src` directly and running steps 2-4 is the same thing.)
 3. From the repo root: `node tools/build-ideas.mjs --src tools/ideas-src` — it writes nothing if anything fails.
 4. `npm test`: `idea-library-build.test.mjs` rebuilds from `tools/ideas-src` and fails if `ideas/` differs by one byte
-   (and holds `ideas/index.json` under 900 KB: it is 892 KB at 57 themes, so the next themes need the index slimmed or the
-   limit reconsidered);
+   (and holds `ideas/index.json` under 1,000 KB raw and 300 KB gzipped, v10.45: 0.94 MB at 57 themes and 3,100 ideas, so the next themes
+   still need the index slimmed or the limit reconsidered);
    `v40-review-lib.test.js` types every synonym as a query (each must open its own theme, and only it); `v40-accuracy` holds
    every quoted verse near a reference to `scripture-bg.json` (add the passage there, fetched, before quoting it).
 5. If `profile()` tags, `U_SKILLS` or `U_FAC` change in `index.html` (or a built-in's name), refresh the validator's copy:
@@ -1953,10 +2099,31 @@ Don't relitigate them without a reason he'd accept.
 - **Many ideas, creative and specific** (his request, v10.40): a search for a topic shows 50+ ideas, never a thin list.
   Ideas go where people are (not the church porch), use social media as a neighbour, never ask for or pray about
   people's children by name, and are data in `tools/ideas-src`, not code.
+- **The Community Survey asks nothing** (v10.45, his words: "no more filling in on community survey"). It shows what the neighborhood
+  needs, first, above THE BRIEF; the church's numbers live on the Spiritual Gifts landing ("Your church").
+- **Lift = the library's tier** (a built-in's `bandOf(load)`), Light · Moderate · Heavy, one rule everywhere (`nsLift`). An idea sheet
+  says what the idea needs from our church in general words, with no capacity check: "if we don't have it, then we don't have it."
+- **One page, always,** for an idea's PDF (`nsPdfFit` steps the type down, then shows the verse as a reference only).
+- **The hand-off:** "Create a proposal for this ministry" is the sheet's only primary button; it lands on the chosen idea in Make the Case
+  (path "A ministry"), and "← Back to the need" returns. Make the Case is otherwise unchanged.
+- **`RULES` is frozen** until the Make the Case phase: the survey's words and its nine new needs live in `RULES_SAY` / `RULES_MORE`.
 
 ---
 
 ## Open work, prioritised
+
+0000. **v10.45.0 is built** (5 Oct 2026; `~/Downloads/Terrain-work/v63/build`, record `v63/build-work/`). Before any upload: his look at
+   `~/Downloads/Terrain-v10.45-samples/` (README.txt there). Then, the next phase, in order:
+   - **Make the Case, lift and money:** choosing Light / Moderate / Heavy there (the mockup's toast, Q9); the 43 built-ins the needs do
+     not show still carry the planning allowance in Make the Case (a sheet would say "Cost varies"): price them at their source too;
+     then delete the survey's old list code (`uMinistriesHTML`, `uCardsHTML`, `uRow`… and their suites, decision 6).
+   - Make the Case names the three language built-ins (small group, prophecy seminar, literature) in their general words; the survey's
+     sheet names them in the need's language (`NS_BUILTIN_LANG`): carry that over when Make the Case is reworked.
+   - Make the Case's slides still say "church profile" in a few places (their words are held by the golden file): "Your church" there too.
+   - **Spiritual Gifts, "Your church":** the profile's own redesign (moved as is in v10.45).
+   - Fold `RULES_MORE` / `RULES_SAY` into `RULES` (with Make the Case's words and goldens moving together).
+   - The library's remaining township / borough sweep (Q6: 90 ideas, none reached by a need; the validator lists them as REVIEW).
+   - `GF_NEEDS` `LN`'s "another European language" (the survey now says "another Indo-European language", `NS_LANG`).
 
 000. **v10.44.0 is integrated** (2 Oct 2026; record `~/Downloads/Terrain-work/v56/INTEGRATION.md`). Before any upload: his look at
    `~/Downloads/Terrain-v10.44-samples/` (README.txt there). One release, one pull request: the page, `conferences/`, `ideas/` and the

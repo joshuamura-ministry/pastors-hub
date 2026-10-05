@@ -97,10 +97,12 @@ const GEO_ADDR={result:{addressMatches:[{matchedAddress:ADDR,coordinates:{x:-75.
     if(typeof PURCHASE_VERSES!=='undefined') PURCHASE_VERSES.forEach(v=>{ add('PURCHASE_VERSES',v.id,'en',v.en.text,v.en.ref,v.en.ref); add('PURCHASE_VERSES',v.id,'es',v.es.text,v.es.ref,v.en.ref); });
     for(const k in GF_DEEP){ add('GF_DEEP',k,'en',GF_DEEP[k].v[0],GF_DEEP[k].v[1],GF_DEEP[k].v[1]); if(GF_DEEP_ES[k]&&GF_DEEP_ES[k].v) add('GF_DEEP_ES',k,'es',GF_DEEP_ES[k].v[0],GF_DEEP_ES[k].v[1],GF_DEEP[k].v[1]); }
     [['GF_VERSES',GF_VERSES,GF_VERSES_ES],['GF_VERSE_SET',GF_VERSE_SET,GF_VERSE_SET_ES]].forEach(([n,A,B])=>A.forEach((v,i)=>{ add(n,i,'en',v[0],v[1],v[1]); add(n+'_ES',i,'es',B[i][0],B[i][1],v[1]); }));
+    // v10.45.0 review #26: the survey's own verse for grief (Psalm 34:18), read and checked like the others
+    if(typeof NS_VERSE_OWN!=='undefined') for(const k in NS_VERSE_OWN){ const v=NS_VERSE_OWN[k]; add('NS_VERSE_OWN',k,'en',v.en.text,v.en.ref,v.en.ref); add('NS_VERSE_OWN',k,'es',v.es.text,v.es.ref,v.en.ref); }
     return o; })()`);
   const tables=[...new Set(T.map(x=>x.table))];
   // v56 (not a regression): the purchase path's verse library is one more Scripture table, read and checked like the others
-  c('every Scripture table is read (English and Spanish)', tables, ['SCRIPTURE','SCRIPTURE_ES','CASE_QUOTES','CASE_VERSES','PURCHASE_VERSES','GF_DEEP','GF_DEEP_ES','GF_VERSES','GF_VERSES_ES','GF_VERSE_SET','GF_VERSE_SET_ES']);
+  c('every Scripture table is read (English and Spanish)', tables, ['SCRIPTURE','SCRIPTURE_ES','CASE_QUOTES','CASE_VERSES','PURCHASE_VERSES','GF_DEEP','GF_DEEP_ES','GF_VERSES','GF_VERSES_ES','GF_VERSE_SET','GF_VERSE_SET_ES','NS_VERSE_OWN']);
   c(`${T.length} texts, every one's passage in the Bible Gateway record`, T.filter(x=>!BG[bgKey(x.enref)]).map(x=>x.table+'.'+x.key), []);
   c('every text is word for word what Bible Gateway prints, each omission marked', T.map(x=>{ const b=BG[bgKey(x.enref)]; const why=b?verbatim(x.text,b[x.lang==='en'?'KJV':'RVA'].text):'no record'; return why?`${x.table}.${x.key} [${x.lang}] ${why}`:null; }).filter(Boolean), []);
   c('every reference is the page’s own (English KJV, Spanish RVA)', T.filter(x=>{ const b=BG[bgKey(x.enref)]; const h=b[x.lang==='en'?'KJV':'RVA'].heading; const n=s=>s.replace(/–/g,'-').replace(/, /g,'-'); return n(x.ref)!==n(h); }).map(x=>x.table+'.'+x.key+' '+x.ref), []);
@@ -235,7 +237,7 @@ const GEO_ADDR={result:{addressMatches:[{matchedAddress:ADDR,coordinates:{x:-75.
     const groups=()=>P.qa('#helpslot details.suggroup').map(d=>[d.querySelector('summary').textContent.replace(/\s+/g,' ').trim(),[...d.querySelectorAll('.helprow b')].map(b=>b.textContent)]);
     const G=groups();
     c('the survey lists twelve kinds of help, the six new ones after housing', G.map(g=>g[0].replace(/\d+ links?( \+ map)?$/,'').replace(/^\S+ /,'').trim()),
-      ['Food pantries & banks','Ministerial councils & fellow pastors','Homeless & housing services','Senior centres & services','Clinics & health centres','Social services & family support','Immigrant & language services','Youth & children’s organisations','Libraries & community centres','Township, borough & county offices','Honouring community leaders','Recovery, addiction & crisis']);
+      ['Food pantries & banks','Ministerial councils & fellow pastors','Homeless & housing services','Senior centres & services','Clinics & health centres','Social services & family support','Immigrant & language services','Youth & children’s organisations','Libraries & community centres','Town, city & county offices','Honouring community leaders','Recovery, addiction & crisis']);
     c('…each new one with its mapped places (named, with the distance)', G.slice(3,9).map(g=>g[1]), [['Warminster Senior Center'],['Bucks Community Health Center'],['Bucks County Children and Youth'],['Newcomer Welcome Center'],['Warminster Youth Center','Central Bucks Family YMCA'],['Warminster Township Free Library','Warminster Community Center']]);
     c('…and the township offices and the fire station, fetched before but never listed, now are', [G[9][1],G[10][1]], [['Warminster Township Building'],['Warminster Fire Department']]);
     c('…a mapped row carries its distance in miles', /^\d+\.\d mi/.test(P.q('#helpslot .helprow span').textContent), true);

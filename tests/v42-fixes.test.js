@@ -132,10 +132,11 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     // "A volunteer with food-handler training leads the kitchen", "Ingredients and allergens labelled" (a pantry hands out groceries)
     const sg = [...F.m.risks.items.map(r => r.text), ...R.m.support.items].join(' | ');
     c('safeguards: the food bank\'s rules, dates, dignity at sign-in; never a kitchen', [/partner-agency rules/.test(sg), /Dates checked/.test(sg), /food-handler|allergens|prepared and served/.test(F.m.risks.items.map(r => r.text).join(' '))], [true, true, false]);
-    c('…and the board\'s slide leads with them', S(F, 'risks').items.slice(0, 2).map(t => t.slice(0, 30)), ['Paid from the local church bud', 'A spending ceiling of $125; no']);
+    c('…and the board\'s slide leads with them', S(F, 'risks').items.slice(0, 2).map(t => t.slice(0, 30)), ['Paid from the local church bud', 'A spending ceiling of $2,100; ']);
     c('the budget says where the food comes from (the coordinator costs it; nothing invented)', F.m.ask.lines.map(l => [l.name, l.startup, l.monthly]),
-      [['Shelving, bags and sign-in supplies (allowance)', 75, 0], ['Bags and supplies to restock (allowance)', 0, 25], ['Food: from the food bank at partner prices; the coordinator costs it before the finance meeting', 0, 0]]);
-    c('…the same $125 ceiling', F.m.ask.rows.find(r => r[0] === 'Ceiling')[1], '$125'); }
+      /* v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the pantry's start-up and running costs, and its food still costed by the coordinator */
+      [['Start-up: equipment and materials (2026 estimate)', 1500, 0], ['Each month: supplies and running costs (2026 estimate)', 0, 300], ['Food: from the food bank at partner prices; the coordinator costs it before the finance meeting', 0, 0]]);
+    c('…the same $2,100 ceiling', F.m.ask.rows.find(r => r[0] === 'Ceiling')[1], '$2,100'); }
 
   console.log('\n-- 5. the Pathfinder club runs by term --');
   { const R = await run(P, 'pathfinders', 'pathfinders');

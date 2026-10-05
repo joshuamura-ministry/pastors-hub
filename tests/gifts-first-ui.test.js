@@ -63,14 +63,17 @@ function makeStore(){ const m=new Map(); return { m,
   c('(the partial church: 18 of 46 adults, from D’s seed)', P.J('(({n,den,state,pct})=>({n,den,state,pct}))(gfReadiness())'), {n:18,den:{d:46,kind:'adults'},state:'low',pct:39});
   c('the hub: the card below the four tools (kicker, church, number line, bar, source, one button)',
     [P.q('#hubgifts').hidden,P.txt('#hubgifts .gff-k'),P.txt('#hubgifts .gff-n'),P.q('#hubgifts .gff-bar').getAttribute('aria-label'),P.txt('#hubgifts .gff-src'),P.qa('#hubgifts button').map(b=>b.textContent)],
-    [false,'Gifts first · Sampleton SDA (SAMPLE)','18 of 46 adults have discovered their gifts','39%','Adults in worship on an average Sabbath, from your church profile (demo profile).',['Invite the whole church']]);   // (D's seed is a demo profile, and says so)
+    [false,'Gifts first · Sampleton SDA (SAMPLE)','18 of 46 adults have discovered their gifts','39%','Adults in worship on an average Sabbath, from Your church (demo profile).',['Invite the whole church']]);   // v10.45.0 review #18: one name, "Your church"   // (D's seed is a demo profile, and says so)
   c('…the number in bold, nothing else (no names, no counts of gifts)', [P.txt('#hubgifts .gff-n b'),NAMES.some(n=>P.txt('#hubgifts').includes(n))], ['18 of 46 adults',false]);
   P.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`);
-  c('the Spiritual Gifts landing: the same card between the heading and the two doors', [P.qa('#gifts [data-gf-first]').length,P.txt('#gifts [data-gf-first] .gff-n'),P.q('.gfhead').nextElementSibling.matches('[data-gf-first]'),P.q('[data-gf-first="landing"]').nextElementSibling.classList.contains('gfdoors')],
+  // v10.45.0 review #18: "Your church" now sits between this card and the two doors
+  c('the Spiritual Gifts landing: the same card between the heading and the two doors', [P.qa('#gifts [data-gf-first]').length,P.txt('#gifts [data-gf-first] .gff-n'),P.q('.gfhead').nextElementSibling.matches('[data-gf-first]'),P.q('[data-gf-first="landing"]').nextElementSibling.id==='gf-church'&&P.q('#gf-church').nextElementSibling.classList.contains('gfdoors')],
     [1,'18 of 46 adults have discovered their gifts',true,true]);
   c('…“about 15 minutes” on the landing', /about 15 minutes/.test(P.txt('.gfhead .sub')), true);
-  // (the profile's own host, as the survey's Mobilization section holds it; the seed church has no survey of its own here)
-  P.E(`(()=>{ const d=document.createElement('div'); d.id='capslot'; document.body.appendChild(d); capRender(); })()`);
+  // v10.45.0 (stale): the profile lives in "Your church" on this landing, under the card at the landing's top: it is not repeated there
+  c('"Your church" on the landing: the form, and no second card inside it', [!!P.q('#gf-church #u-cap-form'),P.qa('#gf-church [data-gf-first]').length], [true,0]);
+  // …while a profile host anywhere else still opens with the card (none on the page now: one made here, the landing's own taken away)
+  P.E(`(()=>{ const f=document.getElementById('gf-church'); if(f) f.remove(); const d=document.createElement('div'); d.id='capslot'; document.body.appendChild(d); capRender(); })()`);
   c('the church profile: the card first, above the form (outside it)', [P.qa('#capslot [data-gf-first]').length,P.q('#capslot').firstElementChild.matches('[data-gf-first="profile"]'),!!P.q('#capslot [data-gf-first] + #u-cap-form'),P.txt('#capslot [data-gf-first] .gff-n')],
     [1,true,true,'18 of 46 adults have discovered their gifts']);
   c('one card in each place, one button each', ['hub','landing','profile'].map(w=>[P.qa(`[data-gf-first="${w}"]`).length,P.qa(`[data-gf-first="${w}"] button`).length]), [[1,1],[1,1],[1,1]]);   // (the landing stays drawn behind the other tools)
@@ -89,17 +92,17 @@ function makeStore(){ const m=new Map(); return { m,
     c('…nor for the “My church” placeholder with no profile and no results', [N.J('gfReadiness().church'),N.qa('#hubgifts .gff').length], ['',0]); N.w.close(); }
   { const L=(seed,lang,fn)=>{ const X=page('https://pastorshub.org/',{seed,lang}); return ready(X).then(()=>{ if(fn) X.E(fn); X.E('showHub()'); const t=X.txt('#hubgifts .gff-n'), s=X.txt('#hubgifts .gff-src'); X.w.close(); return [t,s]; }); };
     c('before: “0 of 46 adults have discovered their gifts”', (await L('before'))[0], '0 of 46 adults have discovered their gifts');
-    c('…in Spanish', await L('before','es'), ['0 de 46 adultos han descubierto sus dones','Adultos que asisten un sábado promedio, según el perfil de su iglesia (perfil de demostración).']);
+    c('…in Spanish', await L('before','es'), ['0 de 46 adultos han descubierto sus dones','Adultos que asisten un sábado promedio, según Su iglesia (perfil de demostración).']);   // v10.45.0 review #18: one name, "Your church"
     c('after: 40 of 46 (the one who answered 3–4 to everything took it: counted)', (await L('after'))[0], '40 of 46 adults have discovered their gifts');
     c('one result: singular', (await L('partial',null,`(()=>{ const r=uRead(GF_ROSTER,[]); localStorage.setItem(GF_ROSTER,JSON.stringify(r.slice(0,1))); })()`))[0], '1 of 46 adults has discovered their gifts');
     c('…in Spanish', (await L('partial','es',`(()=>{ const r=uRead(GF_ROSTER,[]); localStorage.setItem(GF_ROSTER,JSON.stringify(r.slice(0,1))); })()`))[0], '1 de 46 adultos ha descubierto sus dones');
     c('no adults in the profile: the attendance, and it says so', await L('partial',null,`(()=>{ const c=uChurch().capacity; delete c.adults; uPersist(); CAP=null; })()`),
-      ['18 of the 55 in worship have discovered their gifts','Average Sabbath attendance from your church profile, children included. Add the number of adults there for a truer count (demo profile).']);
+      ['18 of the 55 in worship have discovered their gifts','Average Sabbath attendance from Your church, children included. Add the number of adults there for a truer count (demo profile).']);   // v10.45.0 review #18: one name, "Your church"
     c('…nor attendance: the members on the books', (await L('partial',null,`(()=>{ const c=uChurch().capacity; delete c.adults; delete c.members; uPersist(); CAP=null; })()`))[0], '18 of 80 members have discovered their gifts');
     c('…nothing at all, and nobody yet: “Nobody has taken it yet”', await L('before',null,`(()=>{ const c=uChurch().capacity; delete c.adults; delete c.members; delete c.membership; uPersist(); CAP=null; })()`),
-      ['Nobody has taken it yet','Add your average Sabbath attendance in the church profile to see how far the church has come (demo profile).']);
+      ['Nobody has taken it yet','Add your average Sabbath attendance under Your church, on the Spiritual Gifts page, to see how far the church has come (demo profile).']);   // v10.45.0 review #18: one name, "Your church"
     c('more results than the profile says: capped at 100%, and “update the number there”', await L('after',null,`(()=>{ uChurch().capacity.adults=20; uPersist(); CAP=null; })()`),
-      ['40 of 20 adults have discovered their gifts','More than the 20 in your church profile: update the number there (demo profile).']); }
+      ['40 of 20 adults have discovered their gifts','More than the 20 under Your church: update the number there (demo profile).']); }   // v10.45.0 review #18: one name, "Your church"
 
   console.log('\n-- B. "Invite the whole church" --');
   { const X=page('https://pastorshub.org/',{seed:'partial'}); await ready(X); X.E('showHub()'); calls.length=0;
@@ -259,7 +262,7 @@ function makeStore(){ const m=new Map(); return { m,
     X=await B('after');
     c('after (40 of 46, at half or more): no reminder', [X.q('#cs-gff').hidden,X.txt('#cs-gff')], [true,'']); X.w.close();
     X=await B('partial'); X.E(`(()=>{ const c=uChurch().capacity; delete c.adults; delete c.members; delete c.membership; uPersist(); CAP=null; caseMount(); })()`);
-    c('unknown size: it asks for the attendance', X.txt('#cs-gff p'), 'Gifts first: 18 adults have discovered their gifts so far. Add your attendance in the church profile. Invite the whole church · Sabbath slides');
+    c('unknown size: it asks for the attendance', X.txt('#cs-gff p'), 'Gifts first: 18 adults have discovered their gifts so far. Add your attendance under Your church. Invite the whole church · Sabbath slides');   // v10.45.0 review #18: one name, "Your church"
     c('it never blocks: every step and action is there', [!!X.q('#cs-s1'),!!X.q('#cs-s2'),!!X.q('#cs-s3')], [true,true,true]); X.w.close(); }
 
   console.log('\n-- 41. step 3: "Your church, ready to serve" --');
@@ -273,7 +276,7 @@ function makeStore(){ const m=new Map(); return { m,
     c('…the strongest gifts as counts, never names', [rows[4][1],rows[4][1]===R.strongest.map(g=>g.name+' '+g.n).join(' · '),NAMES.some(n=>X.txt('#cs-ready').includes(n))], [rows[4][1],true,false]);
     c('…and the quiet link to the Sabbath slides', X.txt('[data-gfr-sabbath]'), 'Discover your gifts · Sabbath slides');
     X.E(`uChurch().capacity.confirmed=false; uPersist(); CAP=null; gfReadyPanelMount(document.getElementById('cs-ready'))`);
-    c('a profile not saved: the gifts row only, and “Save your church profile…”', [X.qa('#cs-ready .gfr-row dt').map(d=>d.textContent),/^Save your church profile to see the whole picture\./.test(X.txt('#cs-ready .note'))], [['Gifts'],true]);
+    c('a profile not saved: the gifts row only, and “Save Your church…”', [X.qa('#cs-ready .gfr-row dt').map(d=>d.textContent),/^Save Your church, on the Spiritual Gifts page, to see the whole picture\./.test(X.txt('#cs-ready .note'))], [['Gifts'],true]);   // v10.45.0 review #18: one name, "Your church"
     X.E(`localStorage.setItem('terrain-lang','es'); LANG='es'; uChurch().capacity.confirmed=true; uPersist(); CAP=null; gfReadyPanelMount(document.getElementById('cs-ready'))`);
     c('in Spanish', [X.txt('#cs-ready summary'),X.qa('#cs-ready .gfr-row dt').map(d=>d.textContent)], ['Su iglesia, lista para servir',['Personas','Voluntarios','Líderes','Dones','Dones más fuertes']]);
     X.w.close(); }

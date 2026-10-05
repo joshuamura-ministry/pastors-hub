@@ -178,7 +178,7 @@ const DATA = { ...FX.DATA, geo: { ...FX.DATA.geo, matched: ADDRESS } };
     PP.E(`openTool('survey'); render(); 1`); await sleep(150);
     c(`${lang}: What's next: one "Make the case" per ministry in the plan, at step 1; a connection card beside each (all three are cnEligible)`,
       [PP.qa('#u-whatsnext [data-u-next-case]').map(b => b.dataset.uNextCase), PP.qa('#u-whatsnext [data-u-next-card]').length, PP.qa('#u-whatsnext [data-u-next-case]')[0].textContent.trim()],
-      [['health-expo', 'backpack-giveaway', 'four-nights'], 3, lang === 'en' ? 'Make the case for the full health expo' : 'Presentar el caso de la feria de salud completa']);   // v10.43 (review, 1 Oct 2026): the Spanish name cut where the English is (it read «…, con pruebas y una ruta de derivación»)   // a name with a comma is quoted (CONNECT §4.3, rule 6)
+      [['health-expo', 'backpack-giveaway', 'four-nights'], 3, lang === 'en' ? 'Create the proposal for the full health expo' : 'Crear la propuesta para la feria de salud completa']);   // v10.45.0 review #27d: one name for the proposal   // v10.43 (review, 1 Oct 2026): the Spanish name cut where the English is (it read «…, con pruebas y una ruta de derivación»)   // a name with a comma is quoted (CONNECT §4.3, rule 6)
   }
   c('no page errors', [...P.errs, ...Pes.errs].filter(e => !/Not implemented/.test(e)).slice(0, 3), []);
   console.log(`\n${T.pass} passed, ${T.fail} failed${pending ? ', ' + pending + ' pending' : ''}`);

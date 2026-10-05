@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/* Terrain · the Idea Library packager.                                      build-ideas 1
+/* Terrain · the Idea Library packager.                                      build-ideas 2
  *
  *   node tools/build-ideas.mjs --src <library folder> [--skip-invalid] [--out ideas]
  *
@@ -37,6 +37,16 @@
  *      promise no names (theme record "nocard": true; or the idea's own "nocard": true): no
  *      connection card and no follow-up plan. Any fault in the three files stops the build like a
  *      bad reach (--skip-invalid leaves the faulty entries out instead).
+ *   6. (v10.45, DESIGN-SURVEY §6.3) the Community Survey's curated map: <library folder>/needs.json
+ *      ({"<rule id>": [idea id, …], "@lang": {"<language key>": [idea id, …]}}, the curation's need-ideas.json
+ *      copied as is) becomes ideas/needs.json ({v:1, hash, needs, lang, d1}: keys sorted, lists as given, d1 the first
+ *      sentence of every mapped idea's description, EN and ES; built-ins English only). Every key is a RULES or RULES_MORE
+ *      id of index.html beside this folder (or @lang with the twelve language keys); every list 10–24 unique ids (an @lang
+ *      list 1–24), each a built library id or a built-in; no library idea for God's people (reach "in": the survey is for
+ *      the community); an idea whose name names a language only under that language's @lang key; no Pennsylvania-only
+ *      word, township or borough in a mapped idea (they are read in every state). A list with one lift only is a REVIEW
+ *      line. Any fault writes nothing (--skip-invalid does not change that). No needs.json: no ideas/needs.json, and
+ *      the page tops every need up from the library. The hash covers the map, so a page holding an older one renews it.
  *
  * By default nothing is written unless the validator passes: a half-valid library never
  * ships. --skip-invalid (for a library still being written) leaves out each idea the
@@ -238,8 +248,79 @@ const themeFiles = THEMES.filter(t => counts[t.id]).map(t => [t.id, JSON.stringi
 const idxThemes = THEMES.map(t => ({id: t.id, en: t.en, es: t.es, hue: hueOf(t.id), n: counts[t.id] || 0, syn: t.syn, tags: t.tags,
   ...(t.inside === true ? {inside: true} : {}), ...(REACH_OK.has(t.reach) ? {reach: t.reach} : {})}));
 const unknownReach = Object.keys(REACH).filter(id => !seen.has(id));
+/* v10.45 (step 6): the curated need → ideas map */
+const NEEDS = (() => {
+  const f = path.join(SRC, 'needs.json'); if (!fs.existsSync(f)) return null;
+  let j = null; try { j = JSON.parse(fs.readFileSync(f, 'utf8')); } catch (e) { console.log('needs.json is not valid JSON: nothing written.'); process.exit(1); }
+  if (!j || typeof j !== 'object' || Array.isArray(j)) { console.log('needs.json must be {"<rule id>": [idea ids], "@lang": {…}}: nothing written.'); process.exit(1); }
+  const ruleIds = s => [...s.matchAll(/\{id:'([a-z0-9-]+)'/g)].map(m => m[1]);
+  const part = (a, b) => app.includes(a) ? slice(a, b) : '';
+  const RULE_IDS = new Set([...ruleIds(part('const RULES=[', '\nfunction suggestions(')), ...ruleIds(part('const RULES_MORE=[', '\n];'))]);
+  const LANG_KEYS = new Set(['spanish', 'french-creole', 'german', 'slavic', 'indo-european', 'korean', 'chinese', 'vietnamese', 'tagalog', 'asian-pacific', 'arabic', 'other']);
+  // the built-ins (SIGNATURE and its small groups), read as the page reads them; their words for d1 and the checks
+  const BUILT = new Map();
+  for (const [a, b] of [['const SIGNATURE=[', '\n];'], ['const SMALL_GROUPS=[', '\n];']]) {
+    const t = part(a, b); if (!t) continue;
+    let arr = null; try { const P = new Proxy({}, {get: (o, k) => String(k)}); arr = new Function('KIND', 'EFFORT', 'return ' + t.slice(t.indexOf('[')) + '\n]')(P, P); } catch (e) { arr = null; }
+    if (arr) arr.forEach(x => { if (x && typeof x.id === 'string') BUILT.set(x.id, x); });
+    else ruleIds(t).forEach(id => BUILT.set(id, {id}));
+  }
+  const LIBREC = new Map(); for (const [id, x] of SHIPPED) LIBREC.set(id, x);
+  const reachOf = new Map(rows.map(r => [r[0], r[COLS.indexOf('reach')]]));
+  // a language, people or culture named in an idea's own name (the page's NS_LANG_WORDS, read folded); in its description, a REVIEW line.
+  // Each word lists the language keys (@lang) it belongs to.
+  const LANGW = [[/\b(spanish|espanol|hispanohablantes?|hispanic|latino|latina|latinos|latinas|dia de reyes)\b/, ['spanish']],
+    [/\b(chinese|chino|mandarin|cantonese|cantones)\b/, ['chinese']], [/\b(lunar new year|ano nuevo lunar|tet|seollal|mid-autumn|medio otono)\b/, ['chinese', 'vietnamese', 'korean']],
+    [/\b(vietnamese|vietnamita)\b/, ['vietnamese']], [/\b(tagalog|tagalo|filipino|filipina|filipinos|filipinas|parol)\b/, ['tagalog']], [/\b(korean|coreano|coreana)\b/, ['korean']],
+    [/\b(hindi|gujarati|guyarati|punjabi|panyabi|urdu|bengali|portuguese|portugues|persian|persa|indian|diwali)\b/, ['indo-european']], [/\b(arabic|arabe)\b/, ['arabic']],
+    [/\b(haitian|haitiano|haitiana|creole|criollo|kreyol|french|frances)\b/, ['french-creole']], [/\b(russian|ruso|polish|polaco|ukrainian|ucraniano)\b/, ['slavic']],
+    [/\b(german|aleman)\b/, ['german']], [/\b(japanese|japones|tamil|telugu|khmer|jemer|hmong|thai|tailandes|nepali)\b/, ['asian-pacific']],
+    [/\b(swahili|suajili|somali|afghan|afgano|congolese|congoleno)\b/, ['other']]];
+  const foldT = t => String(t || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+  const named = t => LANGW.filter(([re]) => re.test(foldT(t))).map(([, k]) => k);
+  const nameOf = keys => keys.join('/');
+  const PA_CS = /\b(PA|COMPASS)\b/, PA_I = /\b(pennsylvania|pensilvania|careerlink|penn state|pa 211|townships?|boroughs?)\b/i;
+  const words = id => { const x = LIBREC.get(id); if (x) return {name: [x.en.n, x.es.n].join(' \n '), all: [x.en.n, x.en.d, ...x.en.how, x.es.n, x.es.d, ...x.es.how, x.partner ? x.partner.en + ' \n ' + x.partner.es : ''].join(' \n ')};
+    const b = BUILT.get(id) || {}; return {name: b.n || '', all: [b.n, b.d, b.p].filter(s => typeof s === 'string').join(' \n ')}; };
+  // a built-in's lift is its band, as the page reads it: MOVE_LOAD first, then its own load (at most 2), else heavy
+  const MOVE_LOAD = new Map([...part('const MOVE_LOAD={', '\n};').matchAll(/'([a-z0-9-]+)':([0-2])/g)].map(m => [m[1], +m[2]]));
+  const lift = id => { const x = LIBREC.get(id); if (x) return x.tier; const b = BUILT.get(id); if (!b) return 0;
+    const ml = MOVE_LOAD.get(id); return (ml != null ? ml : Number.isInteger(b.load) ? Math.min(2, b.load) : 2) + 1; };
+  const E = [], R = [], needs = {}, lang = {}, mapped = new Set();
+  const list = (key, ids, own, lo) => {
+    if (!Array.isArray(ids)) { E.push(`NEEDS ${key}: must be a list of idea ids`); return null; }
+    if (ids.length < lo || ids.length > 24) E.push(`NEEDS ${key}: ${ids.length} ideas (${lo}–24)`);
+    if (new Set(ids).size !== ids.length) E.push(`NEEDS ${key}: an id is listed twice`);
+    for (const id of ids) {
+      if (typeof id !== 'string') { E.push(`NEEDS ${key}: ${JSON.stringify(id)} is not an id`); continue; }
+      if (!LIBREC.has(id) && !BUILT.has(id)) { E.push(`NEEDS ${key} ${id}: not a library idea that ships, nor a built-in`); continue; }
+      if (LIBREC.has(id) && reachOf.get(id) === 'in') E.push(`NEEDS ${key} ${id}: an idea for God's people (reach "in"); the survey's lists are for the community`);
+      const w = words(id), n = named(w.name).filter(k => !k.includes(own));
+      if (n.length) E.push(`NEEDS ${key} ${id}: its name names a language or a people (${n.map(nameOf).join(', ')}); it belongs only under that language's @lang list`);
+      else if (!own) { const d = named(w.all); if (d.length) R.push(`REVIEW needs ${key} ${id}: its words mention a language or a people (${d.map(nameOf).join(', ')})`); }
+      const pa = w.all.match(PA_CS) || w.all.match(PA_I); if (pa) E.push(`NEEDS ${key} ${id}: "${pa[0]}" is read in every state (Pennsylvania-only word, township or borough)`);
+      mapped.add(id);
+    }
+    const lifts = new Set(ids.map(lift).filter(Boolean)); if (!own && ids.length && lifts.size === 1) R.push(`REVIEW needs ${key}: every idea is one lift`);
+    return ids.slice();
+  };
+  for (const k of Object.keys(j)) {
+    if (k === '@lang') { const L = j[k]; if (!L || typeof L !== 'object' || Array.isArray(L)) { E.push('NEEDS @lang: must be {"<language key>": [idea ids]}'); continue; }
+      for (const lk of Object.keys(L)) { if (!LANG_KEYS.has(lk)) { E.push(`NEEDS @lang ${lk}: not one of ${[...LANG_KEYS].join(', ')}`); continue; } const v = list('@lang.' + lk, L[lk], lk, 1); if (v) lang[lk] = v; }
+      continue; }
+    if (!RULE_IDS.has(k)) { E.push(`NEEDS ${k}: not a need of index.html (RULES or RULES_MORE)`); continue; }
+    const v = list(k, j[k], '', 10); if (v) needs[k] = v;
+  }
+  if (E.length) { E.slice(0, 40).forEach(l => console.log(l)); console.log(`\nneeds.json has ${E.length} fault${E.length === 1 ? '' : 's'}: nothing written.`); process.exit(1); }
+  const first = s => { s = String(s || '').replace(/\s+/g, ' ').trim(); const m = /^.*?[.!?](?=\s|$)/.exec(s); return m ? m[0] : s; };
+  const d1 = {};
+  for (const id of [...mapped].sort()) { const x = LIBREC.get(id); if (x) d1[id] = [first(x.en.d), first(x.es.d)]; else { const b = BUILT.get(id); if (b && b.d) d1[id] = [first(b.d), '']; } }
+  const sortK = o => Object.fromEntries(Object.keys(o).sort().map(k => [k, o[k]]));
+  const body = {needs: sortK(needs), lang: sortK(lang), d1};
+  return {body, core: JSON.stringify(body), review: R, n: Object.keys(needs).length, nl: Object.keys(lang).length, ideas: mapped.size};
+})();
 const hash = crypto.createHash('sha256').update(themeFiles.map(([, s]) => s).join('\n'))
-  .update('\n' + JSON.stringify({cols: COLS, themes: idxThemes, ideas: rows})).update('\n' + kws.join('\n')).digest('hex').slice(0, 12);
+  .update('\n' + JSON.stringify({cols: COLS, themes: idxThemes, ideas: rows})).update('\n' + kws.join('\n')).update(NEEDS ? '\n' + NEEDS.core : '').digest('hex').slice(0, 12);
 const index = {
   v: 1, hash, count: rows.length, cols: COLS,
   themes: idxThemes,
@@ -253,6 +334,8 @@ for (const [id, s] of themeFiles) fs.writeFileSync(path.join(OUT, id + '.json'),
 const idxText = JSON.stringify(index), wordsText = JSON.stringify({hash, kw: kws});
 fs.writeFileSync(path.join(OUT, 'index.json'), idxText);
 fs.writeFileSync(path.join(OUT, 'words.json'), wordsText);
+const needsText = NEEDS ? JSON.stringify({v: 1, hash, ...NEEDS.body}) : '';
+if (NEEDS) fs.writeFileSync(path.join(OUT, 'needs.json'), needsText);
 
 const kb = n => (n / 1024).toFixed(0) + ' KB';
 const total = themeFiles.reduce((a, [, s]) => a + s.length, 0);
@@ -263,4 +346,7 @@ if (themeProblems.length) { console.log('\ntheme problems (the theme ships its v
 console.log(`\nreach: ${reachStats.in} in, ${reachStats.out} out, ${reachStats.both} both (${reachStats.theme} of them their theme's default) (${fs.existsSync(reachFile) ? 'reach.json read' : 'no reach.json'})${unknownReach.length ? `; reach.json names ${unknownReach.length} ideas not shipped (${unknownReach.slice(0, 5).join(', ')}${unknownReach.length > 5 ? '…' : ''})` : ''}`);
 { const k = {ongoing: 0, event: 0, series: 0, row: 0, nocount: 0}; for (const v of CAD.values()) { if (v === 0) k.ongoing++; else if (v === 1) k.event++; else if (v === 100) k.nocount++; else if (v > 100) k.row++; else k.series++; }
   console.log(`\ncadence: ${k.ongoing} ongoing, ${k.event} one-day events, ${k.series + k.row + k.nocount} series (${k.series} weekly, ${k.row} on days in a row, ${k.nocount} without a count) (${CADENCE ? 'cadence.json read' : 'no cadence.json: ideas without their own cad ship as ongoing'}); next steps for ${NX.size} series and events (${NEXT ? 'next.json read' : 'no next.json'}); ${NOC.size} with no card${sideBad.length ? `; ${sideBad.length} faults left out (--skip-invalid)` : ''}`); }
+if (NEEDS) { if (NEEDS.review.length) { console.log(''); NEEDS.review.slice(0, 40).forEach(l => console.log(l)); }
+  console.log(`\nneeds: ${NEEDS.n} needs and ${NEEDS.nl} languages, ${NEEDS.ideas} ideas mapped (needs.json read; ideas/needs.json ${kb(needsText.length)})`); }
+else console.log('\nneeds: no needs.json (the page tops every need up from the library)');
 console.log(`\nwrote ${path.relative(ROOT, OUT)}/index.json (${kb(idxText.length)}, ${rows.length} ideas in ${themeFiles.length} themes, hash ${hash}), words.json (${kb(wordsText.length)}) and ${themeFiles.length} theme files (${kb(total)})`);

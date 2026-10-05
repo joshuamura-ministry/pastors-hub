@@ -92,27 +92,30 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
       const d=document.createElement('div'); d.id='__fresh'; d.innerHTML=uRow(x); document.body.appendChild(d); })()`);
     c('a new idea is marked "New idea" in the plan', P.txt('#__fresh .u-ai'), lang==='es'?'Idea nueva':'New idea');
     scan(P,'survey report and action plan');
-    type(P,'#u-search','prayer'); await until(()=>P.qa('#u-lib .lib-card').length>0); await until(()=>P.q('#survey-lib-ai .lib-aimsg'),3000);
-    c('locked: the hint shows ?ideas=, not ?ai=', [/\?ideas=/.test(P.txt('#survey-lib-ai')),/\?ai=/.test(P.txt('#survey-lib-ai'))], [true,false]);
+    // v10.45.0 (ported): the survey's ministries list, where the Idea Library lived, is gone (DESIGN-SURVEY §1.1); the same library code serves
+    // Make the Case's step 2 (no group chosen), where a pastor looks beyond a need's own ideas: the checks run there.
+    P.E(`openTool('case'); caseMount(true);`);
+    type(P,'#cs-q','prayer'); await until(()=>P.qa('#cs-lib .lib-card').length>0); await until(()=>P.q('#case-lib-ai .lib-aimsg'),3000);
+    c('locked: the hint shows ?ideas=, not ?ai=', [/\?ideas=/.test(P.txt('#case-lib-ai')),/\?ai=/.test(P.txt('#case-lib-ai'))], [true,false]);
     scan(P,'the Idea Library, "More ideas" locked');
-    P.q('#u-lib [data-lib-close]')&&P.q('#u-lib [data-lib-close]').click();
-    type(P,'#u-search',''); await sleep(300); P.q('#u-lib [data-lib-browse]').click(); await until(()=>P.qa('#u-lib .lib-tile').length>0);
+    P.q('#cs-lib [data-lib-close]')&&P.q('#cs-lib [data-lib-close]').click();
+    type(P,'#cs-q',''); await sleep(300); P.q('#cs-s2 [data-cs-browse]').click(); await until(()=>P.qa('#cs-lib .lib-tile').length>0);
     scan(P,'the Idea Library\'s themes');
 
-    { const Q=page({lang,ai:'open'}); await sleep(1300); survey(Q); await sleep(100);
-      type(Q,'#u-search','prayer'); await until(()=>Q.q('#u-lib [data-lib-ai]'),6000);
-      c('unlocked: the button says "More ideas for Warminster"', Q.q('#u-lib [data-lib-ai]').textContent, lang==='es'?'Más ideas para Warminster':'More ideas for Warminster');
-      Q.q('#u-lib [data-lib-ai]').click(); await until(()=>Q.q('#u-lib .lib-card .u-ai'),6000);
-      c('a new idea is marked "New idea"', Q.txt('#u-lib .lib-card .u-ai'), lang==='es'?'Idea nueva':'New idea');
+    { const Q=page({lang,ai:'open'}); await sleep(1300); survey(Q); await sleep(100); Q.E(`openTool('case'); caseMount(true);`);
+      type(Q,'#cs-q','prayer'); await until(()=>Q.q('#cs-lib [data-lib-ai]'),6000);
+      c('unlocked: the button says "More ideas for Warminster"', Q.q('#cs-lib [data-lib-ai]').textContent, lang==='es'?'Más ideas para Warminster':'More ideas for Warminster');
+      Q.q('#cs-lib [data-lib-ai]').click(); await until(()=>Q.q('#cs-lib .lib-card:not(.lib-sig) .u-ai'),6000);
+      c('a new idea is marked "New idea"', Q.txt('#cs-lib .lib-card:not(.lib-sig) .u-ai'), lang==='es'?'Idea nueva':'New idea');
       scan(Q,'the Idea Library with new ideas');
       await until(()=>Q.J('!!(DATA&&capMerged().ready)'),2000); Q.E('autoIdeas()'); await until(()=>/new ideas were written|nuevas|written/.test(Q.J('U_GEN_NOTICE||""'))||Q.J('U_GEN_NOTICE||""').length>0,6000);
       c('the background ideas\' notice says "drafts", never "AI"', [Q.J('U_GEN_NOTICE').length>0,BAD.test(Q.J('U_GEN_NOTICE'))], [true,false]);
       scan(Q,'the action plan after new ideas'); }
 
-    { const F=page({lang,ai:'fail',pass:'x'}); await sleep(1300); survey(F); await sleep(100);
-      type(F,'#u-search','prayer'); await until(()=>F.q('#u-lib [data-lib-ai]'),6000);
-      F.q('#u-lib [data-lib-ai]').click(); await until(()=>F.q('#u-lib .lib-aimsg.err'),6000);
-      c('a refusal: the page\'s own sentence, never the server\'s words', [F.txt('#u-lib .lib-aimsg.err'),/refused|overloaded/.test(F.txt('#u-lib'))],
+    { const F=page({lang,ai:'fail',pass:'x'}); await sleep(1300); survey(F); await sleep(100); F.E(`openTool('case'); caseMount(true);`);
+      type(F,'#cs-q','prayer'); await until(()=>F.q('#cs-lib [data-lib-ai]'),6000);
+      F.q('#cs-lib [data-lib-ai]').click(); await until(()=>F.q('#cs-lib .lib-aimsg.err'),6000);
+      c('a refusal: the page\'s own sentence, never the server\'s words', [F.txt('#cs-lib .lib-aimsg.err'),/refused|overloaded/.test(F.txt('#cs-lib'))],
         [lang==='es'?'Las ideas nuevas no están disponibles en este momento. La biblioteca no se ve afectada.':'More ideas are not available just now. The library is unaffected.',false]);
       F.E(`uChurch().autoKey=null; uChurch().drafts=[]; uPersist();`); F.E('autoIdeas()'); await until(()=>F.J('U_GEN_NOTICE||""').length>0,6000);
       // v10.41 review: the notice is Spanish on a Spanish page (it was pinned in English)

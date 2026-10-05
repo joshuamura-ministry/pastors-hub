@@ -9,6 +9,7 @@
 // TERRAIN_IDEAS_SRC, else the repo's own copy in tools/ideas-src (integration, v10.40.0: the source ships with the
 // repo so the library can be edited and rebuilt, and the shipped files can never drift from it).
 import fs from 'node:fs';
+import zlib from 'node:zlib';
 import path from 'node:path';
 import os from 'node:os';
 import {spawnSync} from 'node:child_process';
@@ -62,9 +63,11 @@ c('every shipped theme has its file', missing, []);
 c('every index row has its full record (EN + ES, four steps each) and the same numbers', bad.slice(0, 5), []);
 c('one hash for the index, the theme files and words.json', [...hashes, W.hash].every(h => h === I.hash) && /^[0-9a-f]{12}$/.test(I.hash), true);
 c('words.json: one entry per idea, in index order', [W.kw.length === I.count, W.kw.every(s => typeof s === 'string' && !/[A-Z]/.test(s))], [true, true]);
-c('no stray files in ideas/', fs.readdirSync(D).filter(f => !(f === 'index.json' || f === 'words.json' || shipped.some(t => t.id + '.json' === f))), []);
+// v10.45.0: the build also writes needs.json, the Community Survey's curated map (DESIGN-SURVEY §6.2; v45-needs-data holds the rest)
+c('no stray files in ideas/ (index, words, needs and the theme files)', fs.readdirSync(D).filter(f => !(f === 'index.json' || f === 'words.json' || f === 'needs.json' || shipped.some(t => t.id + '.json' === f))), []);
 const kb = f => fs.statSync(path.join(D, f)).size / 1024;
-c('the index stays small enough to load on a search (< 900 KB raw; served compressed)', kb('index.json') < 900, true);
+// v10.45.0 (DESIGN-SURVEY §6.4): 1,000 KB raw and 300 KB gzipped, which is what a phone actually downloads (it was 900 KB raw)
+c('the index stays small enough to load on a search (< 1,000 KB raw, < 300 KB gzipped)', [kb('index.json') < 1000, zlib.gzipSync(fs.readFileSync(path.join(D, 'index.json'))).length / 1024 < 300], [true, true]);
 
 console.log('\n-- the packager on a made-up library --');
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'terrain-ideas-'));
