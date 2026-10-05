@@ -46,14 +46,15 @@ const strs = (o, p, out) => { if (typeof o === 'string') out.push([p, o]); else 
     // the money: the event's own cost once, the series' cost for the series; the church's monthly budget named as such
     const budget = R => (R.Pz.budget && R.Pz.budget.rows || []).map(r => r.join(': '));
     const ask = R => ((R.d.slides.find(s => s.type === 'ask' && !s.part) || {}).rows || []).map(r => r.join(': '));
+    // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the backpack giveaway is $2,300 before and $200 on the day
     const BB0 = await build(P, 'backpack-giveaway', 'board');
     c(`${lang}: back-to-school's budget and the board's ask slide: "To start · on the day", no "Each month"`, [budget(B).filter(t => /^(To start|On the day|Each month|Para empezar|Ese día|Cada mes)/.test(t)),
       ask(BB0).find(t => /^(To start|Para empezar)/.test(t))],
-      lang === 'es' ? [['Para empezar: $500', 'Ese día: $100'], 'Para empezar · ese día: $500 · $100'] : [['To start: $500', 'On the day: $100'], 'To start · on the day: $500 · $100']);
+      lang === 'es' ? [['Para empezar: $2,300', 'Ese día: $200'], 'Para empezar · ese día: $2,300 · $200'] : [['To start: $2,300', 'On the day: $200'], 'To start · on the day: $2,300 · $200']);
     const mo = R => (/\(([^)]*)\)/.exec(R.Pz.motion) || [])[1] || null;
     const BB = await build(P, 'backpack-giveaway', 'board'), CB = await build(P, 'cooking-school', 'board');
     c(`${lang}: the board's motion: "($500 to start and $100 on the day)", the series "($75 to start and $210 for the series)"`, [mo(BB), mo(CB)],
-      lang === 'es' ? ['$500 para empezar y $100 ese día', '$75 para empezar y $210 durante la serie'] : ['$500 to start and $100 on the day', '$75 to start and $210 for the series']);
+      lang === 'es' ? ['$2,300 para empezar y $200 ese día', '$75 para empezar y $210 durante la serie'] : ['$2,300 to start and $200 on the day', '$75 to start and $210 for the series']);
     c(`${lang}: no page errors`, P.errs.filter(e => !/Not implemented/.test(e)).slice(0, 3), []);
     P.w.close();
   }

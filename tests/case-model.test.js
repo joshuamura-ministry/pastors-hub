@@ -226,7 +226,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   // …and a phone shows the rows that fit beside the goal and a verse in the longer language (caseFitDeck, measured in Chrome): here
   // the Spanish headline takes five lines, so Review gives way on the slide (the model, the handout and the Proposal keep it)
   c('motion rows: runs, the ceiling with its funds (not tithe), review; the goal beside them', [S('motion').rows.map(r=>r[0]),BM.motion.rows.map(r=>r[0]),!!S('motion').goal], [['Runs','Spending ceiling'],['Runs','Spending ceiling','Review'],true]);
-  c('…funds: the local church budget, not tithe', S('motion').rows[1][1], '$125 · local budget, not tithe');
+  c('…funds: the local church budget, not tithe', S('motion').rows[1][1], '$1,700 · local budget, not tithe');
   c('…the review is a board meeting on the review date', /^\d{1,2} [A-Z][a-z]{2} · board meeting$/.test(BM.motion.rows[2][1]), true);
   c('…to whom and the date (no one registered on this device: no "Prepared by")', S('motion').by, 'To: Church board · 28 Sep 2026');
   c('…and with the pastor registered: "Prepared by Pastor …", in Spanish "el pastor …"', [
@@ -249,8 +249,9 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('here in Warminster: only the figures the idea’s purpose allows (the club: children of its ages)', [S('place').kicker,BM.place.facts.map(f=>f.value),S('place').facts.map(f=>f.value)], ['Here in Warminster',['815'],['815']]);
   c('…the board’s emphasis adds no support (the purpose allows none that differs here)', BM.need.supports.map(f=>f.key), []);
   c('…each says what it counts, in plain words', BM.place.facts.map(i=>i.label), ['Children aged 5 to 14 live around us.']);
+  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): Pathfinders $1,500 to start and $100 a month (a 6-week trial $1,700); the community dinner $350 a month
   c('capacity: volunteers, leaders, hours, start-up budget', S('capacity').rows.map(r=>[r.label,r.need,r.have,r.unit]),
-    [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h'],['Start-up budget',75,2500,'$']]);
+    [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h'],['Start-up budget',1500,2500,'$']]);
   // v10.42 part 3: every headline serves the goal ("{aim}": the theme's own words)
   c('…nothing missing, so no gaps and the headline says so, in the aim\'s words', [S('capacity').gaps,S('capacity').headline], [[],'We have the people and hours to grow our Pathfinder Club']);
   // v10.42 part 3 (the pastor, SPEC-FOCUS E: "the Spiritual Gifts initiative has to be done for the whole church membership"): six
@@ -265,7 +266,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       // said with it ("Leaders 3 free" on one slide, "Nobody is ready to coordinate yet" on the next read as a contradiction)
       ['God has already put people for this in our church','3','Members whose gifts fit this work, of 6 results counted','3 of them have time to give. 7 leaders in the church; none yet among those whose gifts fit: pair and train.','Spiritual Gifts results from 6 members · adults only · counts only, no names']); }
   // v10.42 part 3: Places moves from the opening to the ask (the opening keeps four rows beside the goal)
-  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['Places','16'],['To start · each month','$75 · $25'],['Ceiling','$125'],['Source','Local budget, not tithe'],['Left after this','$2,425 · $425 a month']]);
+  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['Places','16'],['To start · each month','$1,500 · $100'],['Ceiling','$1,700'],['Source','Local budget, not tithe'],['Left after this','$1,000 · $350 a month']]);
   // v10.40: a verse on every slide (verbatim from the verified library). v10.42 part 3: Nehemiah 2:18 is the appeal's verse now
   // (NARRATIVE.md §6.1, the close job), so the ask counts the cost with Luke 14:28; What it takes, whose headline now names the aim,
   // holds one line of verse beside its four rows (measured at 360 × 640): Acts 15:28, "no greater burden than these necessary things".
@@ -369,7 +370,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     c('every question answered with real figures: no placeholder left, none empty', qs.filter(([l,g,id,q])=>/\{/.test(q.q+q.a)||!q.q||!q.a).length, 0);
     c('“Which ages is it for?” only for the Pathfinder club', [...new Set(qs.filter(([l,g,id,q])=>q.id==='youth.ages').map(x=>x[2]))], ['pathfinders']);
     const bq=one('board','board','pathfinders').m.questions.find(q=>q.id==='board.cost');
-    c('the board’s cost question, answered in dollars from the local budget', bq.a, 'The trial costs at most $125, from the local church budget, never tithe (Church Manual p. 142). After it, $2,425 of the start-up budget and $425 a month remains in the budget. Receipts go to the treasurer and an itemised account comes back at the review.');
+    c('the board’s cost question, answered in dollars from the local budget', bq.a, 'The trial costs at most $1,700, from the local church budget, never tithe (Church Manual p. 142). After it, $1,000 of the start-up budget and $350 a month remains in the budget. Receipts go to the treasurer and an itemised account comes back at the review.');
     const why=one('board','board','pathfinders').m.questions.find(q=>q.id==='board.why');
     c('…and “why here” with the margin of error', why.a, 'Because of the Census figures for Census Tract 2041.02. About 1 in 4 people around us is a child: higher than the county, with a margin of error of ±3.1 points. Where a difference is too small to be sure of, the slides say “similar to the county”.'); }
 
@@ -422,10 +423,10 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     const m=JE(`caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}})`), d=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}}))`);
     const cap=d.slides.find(s=>s.type==='capacity');
     // v10.42 part 3: What it takes names the aim ("What we have to {aim}, and what is still missing")
-    c('a small church short of money: the gap is said in dollars, not "$0k"', [m.capacity.ok,cap.headline,cap.gaps.filter(g=>/\$/.test(g))], [false,'What we have to feed neighbours who are hungry, and what is still missing',['Short by $45 a month']]);
-    c('…and the ask says what is short, not a negative balance', d.slides.find(s=>s.type==='ask').rows.find(r=>r[0]==='Left after this')[1], 'Short by $45 a month');
+    c('a small church short of money: the gap is said in dollars, not "$0k"', [m.capacity.ok,cap.headline,cap.gaps.filter(g=>/\$/.test(g))], [false,'What we have to feed neighbours who are hungry, and what is still missing',['Short by $290 a month']]);
+    c('…and the ask says what is short, not a negative balance', d.slides.find(s=>s.type==='ask').rows.find(r=>r[0]==='Left after this')[1], 'Short by $290 a month');
     const es=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW},lang:'es'}))`).slides.find(s=>s.type==='capacity');
-    c('…in Spanish too', es.gaps.filter(g=>/\$/.test(g)), ['Por cubrir: $45 al mes']);
+    c('…in Spanish too', es.gaps.filter(g=>/\$/.test(g)), ['Por cubrir: $290 al mes']);
     E('CAP=null; capSave('+JSON.stringify(FX.MEDIUM)+'); U_PEOPLE_CACHE=null;'); }
 
   console.log('\n-- no Spiritual Gifts results yet --');

@@ -114,8 +114,9 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     c('…no scroll, and the focus did not move', [B.net.scrolls,B.D.activeElement===focus0], [0,true]);
     // the same spy counts a survey he runs himself: the difference is the quiet flag alone
     B.E(`showHub(); openTool('survey'); showAddressForm();`); B.q('#addr').value='10 Greene Rd, Warminster, PA'; click(B,'#go');
-    await until(()=>B.E('window.__ai')>0,3000);
-    c('(a survey he runs himself still starts them, as before)', B.E('window.__ai'), 1);
+    await sleep(1500);
+    // v10.45.0 (stale, Q3: the pastor's default): the background ideas fed the survey's ministries list, which is gone; no survey starts them
+    c('(a survey he runs himself no longer starts them either)', B.E('window.__ai'), 0);
     c('no errors', B.errs, []);
     B.w.close(); }
 

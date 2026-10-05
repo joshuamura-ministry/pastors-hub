@@ -118,17 +118,11 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
   c('possessives fold away ("parents\'", "children\'s")', [P.E(`libFold("Children’s parents' night")`)], ['children parents night']);
 
   console.log('\n-- 3. a theme query: built-ins by their names, the line under the box, the counts --');
-  type(P,'#u-search','prayer'); await until(()=>P.q('#u-lib .lib-card'),8000); await sleep(100);
-  const names=P.qa('#u-cards .u-row, #u-cards .u-card').map(e=>e.textContent);
-  c('the survey: "prayer" no longer brings the backpack giveaway (its description mentions a prayer)', names.some(t=>/backpack/i.test(t)), false);
+  // v10.45.0 (retired): the survey's built-in grid (#u-cards), its count and its jump line (#u-libjump) went with its ministries list
+  // (DESIGN-SURVEY §1.1); the same rule, built-ins only by their names, is checked in Make the Case just below.
   const SY=P.J(`libSearch('prayer').syns.filter(s=>s.length>=6||s.includes(' '))`);
   const byName=t=>{ const f=' '+P.E(`libFold(${JSON.stringify(t)})`)+' '; return /pray/i.test(t)||SY.some(s=>f.includes(' '+s+' ')); };
   const firstLine=t=>t.split(/\n/).map(x=>x.trim()).filter(Boolean)[0]||'';
-  c('…every built-in it shows is named for prayer (the word, or one of the theme\'s own words such as "blessing")', names.length>0&&names.every(t=>byName(firstLine(t))), true);
-  c('a line right under the search box: how many library ideas, as a link down to them', P.txt('#u-libjump .lib-jump'), `${inQuery(['prayer'])} ideas in the Idea Library for “prayer” ↓`);
-  { const before=P.scrolled(); P.q('#u-libjump .lib-jump').click(); c('…which takes him to them', P.scrolled()>before, true); }
-  type(P,'#u-search',''); await sleep(300);
-  c('…and goes when the box is cleared', P.q('#u-libjump').children.length, 0);
   setup(P,'case'); await sleep(100);
   type(P,'#cs-q','prayer'); await until(()=>P.q('#cs-lib .lib-card'),8000); await sleep(100);
   // Updated v10.41 (the pastor: "Why do I type Prayer under 'What are you proposing?' and get four things, then 84
@@ -161,10 +155,10 @@ const inQuery=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filter
     c('the first twenty are all about both hunger and homelessness (in both themes, or in one and speaking of the other)', top.filter(o=>o.rel<200).map(o=>o.id), []);
     c('…fifteen new ideas that feed neighbors without a home where they are, cross-listed to hunger, among them', top.filter(o=>/^homeless-/.test(o.id)&&o.also.includes('hunger')).length>=12, true); }
   c('the homeless theme now has 20 or more ideas cross-listed to hunger', IDX.ideas.filter(r=>r[col('t')]===TI.homeless&&r[col('also')].includes(TI.hunger)).length>=15, true);
-  { P.E(`libMount('survey')`); type(P,'#u-search','feeding the homeless'); await until(()=>P.qa('#u-lib .lib-card').length>=12,8000);
+  { P.E(`openTool('case'); caseSetPrefs({group:null,type:null}); CASE_ST.pick=true; caseMount(true);`); type(P,'#cs-q','feeding the homeless'); await until(()=>P.qa('#cs-lib .lib-card').length>=12,8000);   // v10.45.0 (ported): Make the Case's library
     // v10.41 integration: the community section (feeding neighbours without a home is outreach; the list has two sections now)
-    const first=P.qa('#u-lib .lib-sec[data-lib-sec="out"] .lib-card h4').slice(0,6).map(e=>e.textContent);
-    c('on the screen too: the first cards are about feeding people without a home', first.filter(n=>/lunch|supper|breakfast|meal|brunch|food|oatmeal|groceries|kitchen|diner|rescue|dinner/i.test(n)).length>=4, true); }
+    const first=P.qa('#cs-lib .lib-sec[data-lib-sec="out"] .lib-card h4').slice(0,6).map(e=>e.textContent);
+    c('on the screen too: the first cards are about feeding people without a home', first.filter(n=>/lunch|supper|breakfast|meal|brunch|food|oatmeal|groceries|kitchen|diner|rescue|dinner|pantry/i.test(n)).length>=4, true); }
 
   console.log('\n-- 6. the handout\'s Spanish budget lines; no made-up places; the file name --');
   const flyer=P.J(`LIB.rows.find(r=>/^Tear-off prayer flyers/.test(r.n)).id`);

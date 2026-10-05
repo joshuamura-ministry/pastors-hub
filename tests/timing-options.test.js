@@ -120,10 +120,11 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   const shown=(id,t,g,lang)=>{ const all=rowsOf(id,t,g,lang).map(r=>r[0]), d=D(P,id,t,g,{timing:'options',lang}).slides.find(s=>s.type==='motion').rows.map(r=>r[0]); let k=0; return d.length>=1&&d.every(l=>{ const j=all.indexOf(l,k); if(j<0) return false; k=j+1; return true; }); };
   // v10.42.0 fix after review: the finance committee, the board and the business meeting are asked the day (and start), never the
   // length: "the length is set by the motion" (a board once read "Length 4-week pilot · 6-week trial · a full season" beside a motion for 6 weeks)
+  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): Pathfinders' 6-week trial is $1,500 + 2 × $100
   c('board (pathfinders, 16 places, 6 weeks): four rows; When and Starts share one; Places in the ask', rowsOf('pathfinders','board','board','en'),
-    [['When','3 options · from October, after a calendar check'],['Length','A 6-week trial'],['Spending ceiling','$125 · local budget, not tithe'],['Review','First board meeting after the trial']]);
+    [['When','3 options · from October, after a calendar check'],['Length','A 6-week trial'],['Spending ceiling','$1,700 · local budget, not tithe'],['Review','First board meeting after the trial']]);
   c('…Spanish', rowsOf('pathfinders','board','board','es'),
-    [['Cuándo','3 opciones · desde octubre, tras revisar el calendario'],['Duración','Una prueba de 6 semanas'],['Tope de gasto','$125 · presupuesto local, no el diezmo'],['Revisión','Primera reunión de la junta tras la prueba']]);
+    [['Cuándo','3 opciones · desde octubre, tras revisar el calendario'],['Duración','Una prueba de 6 semanas'],['Tope de gasto','$1,700 · presupuesto local, no el diezmo'],['Revisión','Primera reunión de la junta tras la prueba']]);
   c('…the slide shows the rows that fit, in their order (EN, ES, board and team)', [shown('pathfinders','board','board','en'),shown('pathfinders','board','board','es'),shown('pathfinders','team','youth','en'),shown('pathfinders','team','youth','es')], [true,true,true,true]);
   const sm=rowsOf('sg-homes','board','board','en');
   c('a board deck with fewer options says how many (small groups in homes: two times a host home and the kitchen are free)', sm[0], ['When','2 options · from October, after a calendar check']);
@@ -252,15 +253,15 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   await sec(async()=>{
   console.log('\n-- 4. the ask: a two-part motion that still decides --');
   c('the board', M(P,'pathfinders','board','board',{timing:'options'}).ask.text,
-    'Tonight we approve the plan, a named coordinator and a ceiling of $125. The team sets the day and start date with the church calendar within two weeks and reports them to the board.');
+    'Tonight we approve the plan, a named coordinator and a ceiling of $1,700. The team sets the day and start date with the church calendar within two weeks and reports them to the board.');
   // v10.42.0 fix after review: Spanish "en dos semanas" means "after two weeks"; "within" is "en un plazo de"
   c('…Spanish', M(P,'pathfinders','board','board',{timing:'options',lang:'es'}).ask.text,
-    'Esta noche aprobamos el plan, una persona coordinadora designada y un tope de $125. El equipo fija el día y la fecha de inicio con el calendario de la iglesia en un plazo de dos semanas y los informa a la junta.');
+    'Esta noche aprobamos el plan, una persona coordinadora designada y un tope de $1,700. El equipo fija el día y la fecha de inicio con el calendario de la iglesia en un plazo de dos semanas y los informa a la junta.');
   P.E(`uChurch().overrides={pathfinders:{owner:'Maria Lopez',weeks:6}}; uPersist();`);
-  c('the coordinator he proposed (Adjust) is named', M(P,'pathfinders','board','board',{timing:'options'}).ask.text.startsWith('Tonight we approve the plan, Maria Lopez as coordinator and a ceiling of $125.'), true);
+  c('the coordinator he proposed (Adjust) is named', M(P,'pathfinders','board','board',{timing:'options'}).ask.text.startsWith('Tonight we approve the plan, Maria Lopez as coordinator and a ceiling of $1,700.'), true);
   P.E(`uChurch().overrides={pathfinders:{weeks:6}}; uPersist();`);
   c('the business meeting: the church votes', M(P,'pathfinders','board','business',{timing:'options'}).ask.text,
-    'Today the church votes on the plan, a named coordinator and a ceiling of $125. The team sets the day and start date with the church calendar within two weeks and reports them to the church board.');
+    'Today the church votes on the plan, a named coordinator and a ceiling of $1,700. The team sets the day and start date with the church calendar within two weeks and reports them to the church board.');
   const el=M(P,'pathfinders','board','elders',{timing:'options'}).ask.text;
   c('the officers keep their own ask, then who sets the day', [el.startsWith(M(P,'pathfinders','board','elders').ask.text),/The team sets the day and start date with the church calendar within two weeks and reports them to the board\.$/.test(el)], [true,true]);
   c('the treasurer’s ask names no date (its account at the review after the trial)', /itemised account at the review after the trial\. The team sets the day/.test(M(P,'pathfinders','board','finance',{timing:'options'}).ask.text), true);

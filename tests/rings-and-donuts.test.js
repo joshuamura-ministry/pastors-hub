@@ -20,7 +20,8 @@ setTimeout(()=>{
   w.eval('FOCUS=new Set(); applyFocus();');
   const note=()=>w.document.getElementById('focusnote').textContent.trim();
   c('no longer says zero prompts', /0 prompt/.test(note()), false);
-  c('counts the real needs', /3 needs found/.test(note()));
+  // v10.45.0 review round (#23, M5): the note counts the needs here, and "Also here" apart
+  c('counts the real needs', /^Showing everything: \d+ needs? here/.test(note()));
   w.eval('FOCUS=new Set(["housing"]); applyFocus();');
   c('filtering by category now works', w.document.querySelectorAll('[data-cat].hidden').length, 2);
   c('and says what it kept', /showing 1 of 3/.test(note()));

@@ -94,7 +94,8 @@ const DATA = { ...FX.DATA, geo: { ...FX.DATA.geo, matched: SEED('purchase')['ter
   console.log('\n-- Clear all, and the sample --');
   c('the sample slideshow (caseSampleCtx) writes nothing to caseBuys', J(`(()=>{ const before=JSON.stringify(uChurch().caseBuys); try{ caseSample({ministry:'pathfinders',audience:{type:'board',group:'board'},timing:CASE_TIMING_DEFAULT}); }catch(e){} return JSON.stringify(uChurch().caseBuys)===before; })()`), true);
   // v10.44 review (finding 19): its second tap's warning says the projects go too (it said "profile, plan and drafts")
-  const armed = Q => Q.J(`(()=>{ try{ render(); }catch(e){} const b=document.getElementById('u-clear'); if(!b) return null; const before=b.textContent; b.click(); const t=b.textContent; b.dataset.armed=''; b.textContent=before; return [before,t]; })()`);
+  // v10.45.0 (stale setup): Clear all is in "Your church" on the Spiritual Gifts landing
+  const armed = Q => Q.J(`(()=>{ try{ render(); openTool('gifts'); }catch(e){} const b=document.getElementById('u-clear'); if(!b) return null; const before=b.textContent; b.click(); const t=b.textContent; b.dataset.armed=''; b.textContent=before; return [before,t]; })()`);
   c('Clear all\'s warning names the projects (EN)', armed(P), ['Clear all', 'Tap again to clear this church’s profile, plan, drafts and projects']);
   const PS = await ready(page('purchase', 'es', { data: DATA }));
   c('…and in Spanish', armed(PS), ['Borrar todo', 'Toque otra vez para borrar el perfil, el plan, los borradores y los proyectos de esta iglesia']);

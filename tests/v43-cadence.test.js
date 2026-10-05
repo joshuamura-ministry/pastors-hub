@@ -50,22 +50,10 @@ const { c, sleep, until, page, ready, BUILTIN_EVENTS, BUILTIN_SERIES } = H;
   c('his Planner series\' card says "Series · {n} nights"', P.E(`(()=>{ const x={id:CASE_PLAN_ID,plan:true,planRaw:{nights:12,perweek:4,date:'2027-03-06'}}; return casePlanCardHTML({item:x,date:new Date('2027-03-06T12:00:00'),nights:12,kind:'both',ministry:CASE_PLAN_ID}).includes('<li class="lib-cad" data-cad="series">Series · 12 nights</li>'); })()`), true);
 
   console.log('\n-- T-C3 the survey\'s filter --');
-  P.E(`openTool('survey'); render();`); await until(() => P.q('#u-cadseg .cad-seg'));
-  const seg = () => P.qa('#u-cadseg [data-cad]').map(b => [b.dataset.cad, b.getAttribute('aria-pressed'), b.textContent.replace(/\s+/g, ' ').trim()]);
-  const s0 = seg();
-  c('four buttons, All first and pressed: All · Ongoing · A series · One-day events', s0.map(z => [z[0], z[1], z[2].replace(/ \(\d+\)$/, '')]), [['', 'true', 'All'], ['ongoing', 'false', 'Ongoing'], ['series', 'false', 'A series'], ['event', 'false', 'One-day events']]);
-  const n = s0.map(z => +((/\((\d+)\)$/.exec(z[2]) || [])[1] || -1));
-  c('a count on each, and the three add up to All', [n.every(v => v >= 0), n[1] + n[2] + n[3] === n[0]], [true, true]);
-  c('the group is labelled for a screen reader ("How it runs")', P.q('#u-cadseg .cad-seg').getAttribute('aria-label'), 'How it runs');
-  const rowsShown = () => P.qa('#u-cards [data-row]').map(e => e.dataset.row);
-  P.q('#u-cadseg [data-cad="event"]').click(); await sleep(30);
-  const evRows = rowsShown();
-  c('"One-day events": U_CAD set, the button pressed, every row shown is an event, as many as its count',
-    [P.E('U_CAD'), P.q('#u-cadseg [data-cad="event"]').getAttribute('aria-pressed'), evRows.length > 0 && evRows.every(id => P.E(`caseCadenceOf(uCatalog().find(z=>z.id===${JSON.stringify(id)})).c`) === 'event'), evRows.length], ['event', 'true', true, n[3]]);
-  P.E(`LIB_UI.survey.browse=true; LIB_UI.survey.theme='health'; libMount('survey');`); await until(() => P.q('#u-lib .lib-card'));
-  await sleep(50);
-  const libCards = P.qa('#u-lib .lib-card').map(e => e.dataset.libId);
-  c('…and the library below with it (one state): every card there is an event', [libCards.length > 0, libCards.every(id => P.E(`caseCadenceOf(LIB.byId.get(${JSON.stringify(id)})).c`) === 'event')], [true, true]);
+  // v10.45.0 (stale, retired): the survey's filter (#u-cadseg) and its rows (#u-cards) went with the ministries list (DESIGN-SURVEY §1.1); the
+  // filter stays in Make the Case and the Idea Library (T-C4, T-C5 below). U_CAD's resets are still checked here.
+  P.E(`openTool('survey'); render();`);
+  c('the survey has no ministries list, so no filter of its own (the needs carry the ideas)', [!!P.q('#u-cadseg'), !!P.q('#u-cards'), !!P.q('#u-needs')], [false, false, true]);
   P.E(`U_BAND='';`); P.q('[data-u-reset]') ? P.q('[data-u-reset]').click() : P.E(`U_FILTER='auto';U_QUERY='';U_BAND='';U_CAD='';U_SHOW=6;uRefresh();`);
   c('it resets where the level does ("Show available ideas")', P.E('U_CAD'), '');
   P.E(`U_CAD='series'; capClearAll();`); c('…on Clear all', P.E('U_CAD'), '');

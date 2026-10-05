@@ -22,9 +22,10 @@ const rowsOf = s => s ? s.rows.map(r => r.join(' · ')) : null;
     [slide(E, 'decide').headline, rowsOf(slide(E, 'decide'))], ['Choose the date together', ['When · One day in November', 'Day · Sabbath afternoon, or a Sunday', 'Check first · Communion Sabbath, Week of Prayer, camp meeting, holidays, school breaks, the town’s own events']]);
   c('…in Spanish', [slide(Ees, 'decide').headline, rowsOf(slide(Ees, 'decide'))], ['Elijamos juntos la fecha', ['Cuándo · Un día de noviembre', 'Día · Sábado por la tarde, o un domingo', 'Revisar antes · Santa Cena, Semana de Oración, campestre, feriados, vacaciones escolares, eventos del pueblo']]);
   const mo = E.d.slides.find(s => s.type === 'motion');
+  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the health expo is $2,500 for the day
   // (the motion as built; the slide keeps what fits beside his goal: caseFitDeck lets Review give way first)
   c('the motion: "Approve a one-day event: …"; When · the ceiling with its funds · Review "after the event" (no Length row)',
-    [/^Approve a one-day event: /.test(mo.headline), E.m.motion.rows.map(r => r.join(' · ')), mo.rows.some(r => r[0] === 'Length')], [true, ['When · One day in November, after a calendar check', 'Spending ceiling · $800 · local budget, not tithe', 'Review · First board meeting after the event'], false]);
+    [/^Approve a one-day event: /.test(mo.headline), E.m.motion.rows.map(r => r.join(' · ')), mo.rows.some(r => r[0] === 'Length')], [true, ['When · One day in November, after a calendar check', 'Spending ceiling · $2,500 · local budget, not tithe', 'Review · First board meeting after the event'], false]);
   c('the ask: "The team sets the date … and reports it to the board."', / The team sets the date with the church calendar within two weeks and reports it to the board\.$/.test(E.m.ask.text), true);
   c('the handout: "The date" (When, Day), "Agreed date:", the review "hold it again"',
     [E.H.timing.title, E.H.timing.boxes.map(b => b.label + ': ' + b.title), E.H.timing.agreed, E.H.review], ['The date', ['When: One day in November', 'Day: Sabbath afternoon, or a Sunday'], 'Agreed date:', 'Review at the first board meeting after the event: hold it again, change it or stop.']);
@@ -76,7 +77,8 @@ const rowsOf = s => s ? s.rows.map(r => r.join(' · ')) : null;
 
   console.log('\n-- T-T5 weeks and the ceiling (FOLLOWUP.md §2.2) --');
   const ceil = async id => (await build(P, id, 'board')).m.vals.ceiling;
-  c('an event\'s ceiling is its start-up and one month: the backpack giveaway $600, the fall festival $100, the health expo $800', [await ceil('backpack-giveaway'), await ceil('fall-festival'), await ceil('health-expo')], ['$600', '$100', '$800']);
+  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): each event priced before and on the day
+  c('an event\'s ceiling is its start-up and one month: the backpack giveaway $2,500, the fall festival $1,500, the health expo $2,500', [await ceil('backpack-giveaway'), await ceil('fall-festival'), await ceil('health-expo')], ['$2,500', '$1,500', '$2,500']);
   c('V.weeks: "one day" (an event), "6 sessions" (a weekly series), "4 sessions" (in a row)', [E.m.vals.weeks, Wb.m.vals.weeks, R4.m.vals.weeks], ['one day', '6 sessions', '4 sessions']);
 
   console.log('\n-- T-T6 the scan: no "trial", "pilot" or "season" on an event or a series --');

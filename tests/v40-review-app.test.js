@@ -122,10 +122,12 @@ function setup(P,tool){ P.E(`(()=>{ DATA=${JSON.stringify(FX.DATA)}; SCOPE='trac
 
   console.log('\n-- C. an idea index kept from an earlier deploy, and a word search --');
   { const kept=JSON.parse(fs.readFileSync(path.join(ROOT,'ideas','index.json'),'utf8')); kept.hash='000000000000';
-    const C=page({kept:JSON.stringify(kept)}); await sleep(1300); setup(C,'survey');
-    type(C,'#u-search','coffee');
-    await until(()=>C.qa('#u-lib .lib-card').length>0||C.q('#u-lib .lib-fail'),8000); await sleep(200);
-    c('the old index is renewed once, and the search shows cards', [C.qa('#u-lib .lib-card').length>0,!!C.q('#u-lib .lib-fail'),C.E('LIB.idx.hash')], [true,false,IDX.hash]);
+    // v10.45.0 (ported): the survey's ministries list, where the Idea Library lived, is gone (DESIGN-SURVEY §1.1); the same library code serves
+    // Make the Case's step 2 (no group chosen), where a pastor looks beyond a need's own ideas: the checks run there.
+    const C=page({kept:JSON.stringify(kept)}); await sleep(1300); setup(C,'case');
+    type(C,'#cs-q','coffee');
+    await until(()=>C.qa('#cs-lib .lib-card').length>0||C.q('#cs-lib .lib-fail'),8000); await sleep(200);
+    c('the old index is renewed once, and the search shows cards', [C.qa('#cs-lib .lib-card').length>0,!!C.q('#cs-lib .lib-fail'),C.E('LIB.idx.hash')], [true,false,IDX.hash]);
     c('…words.json fetched twice at most, the index once', [C.net.ideas.filter(x=>x==='words').length<=2,C.net.ideas.filter(x=>x==='index').length], [true,1]);
     c('…and the session keeps the current index now', JSON.parse(C.w.sessionStorage.getItem('terrain-lib-idx')).hash, IDX.hash);
     C.w.close(); }
@@ -137,14 +139,15 @@ function setup(P,tool){ P.E(`(()=>{ DATA=${JSON.stringify(FX.DATA)}; SCOPE='trac
   { const bad='<img src=x onerror="window.__x=1">';
     const idea=l=>({tier:1,k:'serve',ages:'adults',where:'community',sabbath:false,minors:false,need:['poor'],boost:[],ppl:2,leaders:0,hrs:2,cost:0,costMo:0,skill:[],
       partner:{[l]:'The laundromat '+bad},[l]:{n:'Cards at the laundromat '+bad,d:'A stand of cards at the laundromat folding table. '+bad+' Two members answer every text within a day.',how:['Ask the owner for a spot '+bad,'Print 250 cards with a text number.','Answer each text within a day, privately.','Restock the stand every Monday morning.']}});
-    const D=page({ai:b=>[idea(b.lang==='es'?'es':'en')],pass:'x'}); await sleep(1300); setup(D,'survey');
-    type(D,'#u-search','prayer'); await until(()=>D.q('#u-lib [data-lib-ai]'),8000);
-    D.q('#u-lib [data-lib-ai]').click(); await until(()=>D.qa('#u-lib .lib-card .u-ai').length>0,8000); await sleep(100);
-    const card=D.qa('#u-lib .lib-card').find(e=>e.querySelector('.u-ai'));
-    c('the survey: the fresh card shows the markup as text, with no element made from it', [!!card,card&&card.querySelectorAll('img').length,card&&card.textContent.includes('<img src=x'),D.E('window.__x||0')], [true,0,true,0]);
+    // v10.45.0 (ported): "More ideas" is asked for in Make the Case's library now (the survey's list is gone)
+    const D=page({ai:b=>[idea(b.lang==='es'?'es':'en')],pass:'x'}); await sleep(1300); setup(D,'case');
+    type(D,'#cs-q','prayer'); await until(()=>D.q('#cs-lib [data-lib-ai]'),8000);
+    D.q('#cs-lib [data-lib-ai]').click(); await until(()=>D.qa('#cs-lib .lib-card .u-ai').length>0,8000); await sleep(100);
+    const card=D.qa('#cs-lib .lib-card').find(e=>e.querySelector('.u-ai'));
+    c('Make the Case: the fresh card shows the markup as text, with no element made from it', [!!card,card&&card.querySelectorAll('img').length,card&&card.textContent.includes('<img src=x'),D.E('window.__x||0')], [true,0,true,0]);
     setup(D,'case'); type(D,'#cs-q','prayer'); await until(()=>D.qa('#cs-lib .lib-card .u-ai').length>0,8000); await sleep(100);
     const card2=D.qa('#cs-lib .lib-card').find(e=>e.querySelector('.u-ai'));
-    c('Make the Case: the same', [!!card2,card2&&card2.querySelectorAll('img').length,D.E('window.__x||0')], [true,0,0]);
+    c('…drawn again: the same', [!!card2,card2&&card2.querySelectorAll('img').length,D.E('window.__x||0')], [true,0,0]);
     c('…and nowhere on the page', D.qa('img[src="x"]').length, 0);
     D.w.close(); }
 

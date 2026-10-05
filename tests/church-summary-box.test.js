@@ -12,7 +12,9 @@ setTimeout(()=>{
   const D=w.document;
   c('version stamps agree', w.eval('VERSION'), (html.match(/<meta name="terrain-version" content="([^"]+)"/)||[])[1]);
   c('no boot errors', errs.length, 0);
-  w.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave({}); render();');
+  // v10.45.0 (stale setup, the checks kept): the church profile left the Community Survey for the Spiritual Gifts landing ("Your church",
+  // #gf-church); the pastor, 3–5 Oct 2026: "no more filling in on community survey". Its buttons are opened there.
+  w.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave({}); render(); openTool(\'gifts\');');
   console.log('\n-- no profile, no box --');
   c('nothing to summarise yet', D.querySelectorAll('.capsum').length, 0);
 
@@ -20,7 +22,8 @@ setTimeout(()=>{
   D.getElementById('u-demo').click();
   const box=D.querySelector('.capsum');
   c('the box appears', !!box);
-  c('at the top of the action plan, before the ask', box.closest('section.blk').querySelector('h2').textContent==='Mobilization' && !!(box.compareDocumentPosition(box.closest('section').querySelector('.askpanel'))&4));
+  // v10.45.0 (stale): the box is in "Your church" on the Spiritual Gifts landing, above the form (it was at the top of Mobilization)
+  c('in "Your church" on the Spiritual Gifts landing, above the form', !!box.closest('#gf-church #capsumslot') && !!(box.compareDocumentPosition(D.getElementById('capslot'))&4));
   c('labelled as the sample', /sample church, as filled in/.test(box.querySelector('.capsumk').textContent));
   const groups=[...box.querySelectorAll('.capsumg h4')].map(h=>h.textContent);
   c('four groups, matching the four steps', groups, ['People','Money','Building','Skills']);
@@ -34,19 +37,21 @@ setTimeout(()=>{
   c('skills with counts', /1nurses or health professionals/.test(txt.replace(/\s+/g,''))||/1nurses or health professionals/.test(txt));
   c('languages', /Spanish — one fluent member/.test(txt));
   c('and what they are already carrying', /Already carrying/.test(txt)&&/Wednesday prayer meeting/.test(txt));
-  c('it tells the reader the plan rests on these', /Everything below is measured against these numbers/.test(txt));
+  // v10.45.0 (stale): there is no plan "below" it now; the sample says where Clear all is (above, in the form)
+  c('it says it is the sample, and where to clear it', /The sample church: press Clear all above when you are done\./.test(txt));
   c('and how to leave the sample', /Clear all/.test(txt));
   c('the four groups carry the four step colours', [...box.querySelectorAll('.capsumg')].map(g=>g.getAttribute('style')), ['--k:var(--acc)','--k:var(--m-hardship)','--k:var(--m-housing)','--k:var(--m-children)']);
 
   console.log('\n-- a real church reads the same, without the demo label --');
-  w.eval('capSave({confirmed:true,members:60,volunteers:20,leaders:3,hours:100,busyVolunteers:0,startupBudget:300,monthlyBudget:50,facilities:{kitchen:{available:true,capacity:40,slots:[]}},skillCounts:{cook:3},languages:"",slots:["Sat afternoon"],who:{older:true}}); render();');
+  w.eval('capSave({confirmed:true,members:60,volunteers:20,leaders:3,hours:100,busyVolunteers:0,startupBudget:300,monthlyBudget:50,facilities:{kitchen:{available:true,capacity:40,slots:[]}},skillCounts:{cook:3},languages:"",slots:["Sat afternoon"],who:{older:true}}); gfChurchSum();');   // v10.45.0: the landing's box, drawn again
   const b2=D.querySelector('.capsum');
   c('box shown for a real profile', !!b2);
   c('labelled as theirs', /Your church, as you entered it/.test(b2.textContent));
   c('not styled as demo', b2.classList.contains('demo'), false);
   c('shows their smaller numbers', /Attending60/.test(b2.textContent)&&/Kitchen \/ fellowship hall40 people/.test(b2.textContent)&&/3can cook for a crowd/i.test(b2.textContent.replace(/\s+/g,' ').replace(' Can',' can')));
   c('omits what they did not fill', /Languages/.test(b2.textContent), false);
-  c('tells them where to change it', /Change them under Your church/.test(b2.textContent));
+  // v10.45.0 (stale): it says who reads these numbers (the form to change them is right under it)
+  c('says who reads these numbers', /Make the Case and the Evangelism Planner read these numbers\./.test(b2.textContent));
 
   console.log('\n-- Clear all removes it --');
   let b=D.getElementById('u-clear'); b.click(); b=D.getElementById('u-clear'); b.click();

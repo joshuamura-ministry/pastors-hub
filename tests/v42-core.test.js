@@ -188,7 +188,7 @@ const dayOff=n=>{ const d=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.ge
   console.log('\n-- the profile: members on the books, adults (GIFTS.md §2.1) --');
   { E(`capSave({...capGet(),membership:190,adults:105}); U_PEOPLE_CACHE=null;`);
     c('capMerged reads both, a blank as null', [J('capMerged().membership'),J('capMerged().adults'),J('(capSave({...capGet(),membership:"",adults:null}),[capMerged().membership,capMerged().adults])')], [190,105,[null,null]]);
-    E(`openTool('survey'); render(); capRender();`);
+    E(`openTool('gifts');`);   // v10.45.0 (stale setup): the form is in "Your church" on the Spiritual Gifts landing (DESIGN-SURVEY §1.2)
     const f=P.w.document.getElementById('u-cap-form');
     c('the form asks both on step 1 (members on the books before the attendance, adults after it)', f?[...f.querySelectorAll('[data-panel="0"] input[type=number]')].map(i=>i.name).slice(0,3):null, ['membership','members','adults']);
     if(f){ f.querySelector('[name=members]').value='55'; f.querySelector('[name=adults]').value='60'; f.querySelector('[name=volunteers]').value='12'; f.querySelector('[name=leaders]').value='3';

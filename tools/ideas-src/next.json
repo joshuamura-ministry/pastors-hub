@@ -4450,5 +4450,33 @@
  "global-mission-pioneer-story-walk": [
   "global-mission-mission-story-for-family-worship",
   "global-mission-mission-story-readers-theater"
+ ],
+ "health-evening-in-lang": [
+  "health-zoom-cook-along",
+  "health-walk-with-a-doctor"
+ ],
+ "immigrants-how-things-work-evenings": [
+  "immigrants-paperwork-hour-library",
+  "immigrants-first-year-friend-family"
+ ],
+ "holidays-parol-lantern-evening": [
+  "immigrants-supper-swap",
+  "immigrants-home-recipes-class"
+ ],
+ "holidays-mid-autumn-moon-evening": [
+  "immigrants-supper-swap",
+  "immigrants-home-recipes-class"
+ ],
+ "transport-permit-test-practice-in-lang": [
+  "transport-adult-first-license-practice",
+  "immigrants-first-year-friend-family"
+ ],
+ "families-parenting-between-two-cultures": [
+  "families-parent-cafe-table-talks",
+  "immigrants-supper-swap"
+ ],
+ "education-summer-reading-camp-english-learners": [
+  "education-after-school-english-help",
+  "children-bible-storybooks-in-lang"
  ]
 }

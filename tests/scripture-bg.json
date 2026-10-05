@@ -1,5 +1,5 @@
 {
- "_about": "Bible Gateway, fetched 29 Sep 2026 (v10.40.0): the printed text of every passage Terrain quotes, KJV and Reina-Valera Antigua 1909 (RVA), verse numbers, footnotes and headings left out, verses of a range joined by one space. tests/v40-accuracy.test.js holds every Scripture string in index.html, and every quoted verse in the Idea Library source (tools/ideas-src), to these (Numbers 6:24, Psalm 46:1 and Proverbs 17:22 fetched for the library in the v10.40.0 review pass). Public domain texts. v56 (2 Oct 2026, the purchase path): Exodus 35:5, 35:21, 35:29; 1 Chronicles 29:5, 29:9; Haggai 1:8; Psalm 33:3; Nehemiah 8:8; Romans 10:17; Colossians 2:5; 2 Chronicles 24:13; Matthew 5:15; Mark 2:3, fetched from Bible Gateway (KJV, RVA) by the design's research/bg/fetch.mjs.",
+ "_about": "Bible Gateway, fetched 29 Sep 2026 (v10.40.0): the printed text of every passage Terrain quotes, KJV and Reina-Valera Antigua 1909 (RVA), verse numbers, footnotes and headings left out, verses of a range joined by one space. tests/v40-accuracy.test.js holds every Scripture string in index.html, and every quoted verse in the Idea Library source (tools/ideas-src), to these (Numbers 6:24, Psalm 46:1 and Proverbs 17:22 fetched for the library in the v10.40.0 review pass). Public domain texts. v56 (2 Oct 2026, the purchase path): Exodus 35:5, 35:21, 35:29; 1 Chronicles 29:5, 29:9; Haggai 1:8; Psalm 33:3; Nehemiah 8:8; Romans 10:17; Colossians 2:5; 2 Chronicles 24:13; Matthew 5:15; Mark 2:3, fetched from Bible Gateway (KJV, RVA) by the design's research/bg/fetch.mjs. v10.45.0 (5 Oct 2026): Psalm 34:18, fetched the same way, for the survey's grief need.",
  "passages": {
   "1 Corinthians 12:18": {
    "KJV": {
@@ -1847,6 +1847,18 @@
     "url": "https://www.biblegateway.com/passage/?search=Mark+2%3A3&version=RVA",
     "heading": "Marcos 2:3",
     "text": "Entonces vinieron á él unos trayendo un paralítico, que era traído por cuatro."
+   }
+  },
+  "Psalm 34:18": {
+   "KJV": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+34%3A18&version=KJV",
+    "heading": "Psalm 34:18",
+    "text": "The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit."
+   },
+   "RVA": {
+    "url": "https://www.biblegateway.com/passage/?search=Psalm+34%3A18&version=RVA",
+    "heading": "Salmos 34:18",
+    "text": "Cercano está Jehová á los quebrantados de corazón; Y salvará á los contritos de espíritu."
    }
   }
  }

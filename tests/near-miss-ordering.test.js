@@ -1,3 +1,5 @@
+// v10.45.0: uMinistriesHTML and uRow are no longer drawn in the Community Survey (its needs carry the ideas now, DESIGN-SURVEY §1.1);
+// the functions stay in the file, unreferenced by the page, until the next phase deletes them with this suite (decision 6).
 const {JSDOM}=require('jsdom');const fs=require('fs');
 const html=fs.readFileSync(require('path').resolve(__dirname,'..','index.html'),'utf8');
 const H=require('./fixtures.json');

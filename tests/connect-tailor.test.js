@@ -165,7 +165,8 @@ const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.lo
       if(res.status!==200) bad.push(id+' '+(await res.text()));
     }
     c(`all ${cards.length} cards accepted by connect.mjs`, bad.slice(0,5), []);
-    c('6,306 cards (3,050 library ideas and 103 built-ins, each as an event and as a series)', cards.length, 6306);
+    // v10.45.0: the curation's 50 new library ideas
+    c('6,406 cards (3,100 library ideas and 103 built-ins, each as an event and as a series)', cards.length, 6406);
     delete process.env.TERRAIN_CODES; }
   console.log('\n-- v10.43 (review, 1 Oct 2026): the title is cut alike in both languages --');
   // The review: the English name was cut at its subtitle and the Spanish was not, so the health fair's Spanish card read "Feria de salud

@@ -30,14 +30,21 @@ setTimeout(async()=>{
   const D=w.document;
   c('version stamps agree', w.eval('VERSION'), (html.match(/<meta name="terrain-version" content="([^"]+)"/)||[])[1]);
   c('no boot errors', errs.length, 0);
-  w.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave({}); render();');
+  // v10.45.0 (stale setup, the checks kept): the church profile left the Community Survey for the Spiritual Gifts landing ("Your church",
+  // #gf-church); the pastor, 3–5 Oct 2026: "no more filling in on community survey". Its buttons are opened there.
+  w.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave({}); render(); openTool(\'gifts\');');
 
   console.log('\n-- nothing runs without a profile --');
   await w.eval('autoIdeas()'); await wait(60);
   c('no calls before the profile is saved', calls.length, 0);
 
-  console.log('\n-- press Demo: the background generator starts on its own --');
-  D.getElementById('u-demo').click();
+  // v10.45.0 (stale, Q3: the pastor's default): Demo and Save no longer start the background ideas. Their only screen, the survey's
+  // ministries list, is gone, and each run spends his credit. autoIdeas itself is unchanged (its guard, billing once): called here directly.
+  console.log('\n-- press Demo: nothing is asked of the server now (Q3) --');
+  D.getElementById('u-demo').click(); await wait(200);
+  c('Demo makes no request', calls.length, 0);
+  console.log('\n-- autoIdeas itself, called directly --');
+  w.eval('autoIdeas()');
   // type into the form while it runs, to prove nothing wipes it
   await wait(30); D.querySelector('[name="commitments"]').value='typing while it runs';
   await wait(400);
@@ -88,12 +95,18 @@ setTimeout(async()=>{
   console.log('\n-- Clear all lets it run again --');
   let b=D.getElementById('u-clear'); b.click(); b=D.getElementById('u-clear'); b.click();
   c('key cleared', w.eval('uChurch().autoKey'), '');
-  const n2=calls.length; D.getElementById('u-demo').click(); await wait(400);
-  c('demo regenerates after a clear', calls.length-n2, 12);
+  const n2=calls.length; D.getElementById('u-demo').click(); await wait(200);
+  c('Demo after a clear asks nothing (v10.45.0, Q3)', calls.length-n2, 0);
+  w.eval('autoIdeas()'); await wait(400);
+  c('autoIdeas regenerates after a clear', calls.length-n2, 12);
+  // v10.45.0 (Q3): nor does Save
+  { const n4=calls.length; D.querySelector('[name="churchName"]').value='Test church'; w.HTMLFormElement.prototype.reportValidity=()=>true;
+    D.getElementById('u-cap-form').dispatchEvent(new w.Event('submit',{cancelable:true})); await wait(200);
+    c('Save makes no request', calls.length-n4, 0); }
 
   console.log('\n-- no key on the server: silent --');
   enabled=false; w.eval('AI_INFO=null;'); b=D.getElementById('u-clear'); b.click(); b=D.getElementById('u-clear'); b.click();
-  const n3=calls.length; D.getElementById('u-demo').click(); await wait(120);
+  const n3=calls.length; D.getElementById('u-demo').click(); w.eval('autoIdeas()'); await wait(120);
   c('no calls when the function reports disabled', calls.length, n3);
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);

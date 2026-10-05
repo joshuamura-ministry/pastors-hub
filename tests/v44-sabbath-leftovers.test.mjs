@@ -57,7 +57,8 @@ const I = read(path.join(ROOT, 'ideas', 'index.json')), sc = I.cols.indexOf('sab
 const row = I.ideas.find(r => r[0] === 'stewardship-building-without-pressure');
 c('it ships so: the index\'s Sabbath column and its theme file (ideas/ rebuilt, one hash everywhere)',
   [row[sc], read(path.join(ROOT, 'ideas', 'stewardship.json')).ideas.find(x => x.id === row[0]).sabbath, read(path.join(ROOT, 'ideas', 'stewardship.json')).hash === I.hash], [1, true, true]);
-c('1,481 of the 3,050 ideas fit the Sabbath (1,480 before the offering line)', [I.ideas.filter(r => r[sc] === 1).length, I.count], [1481, 3050]);
+// v10.45.0: the curation's 50 new ideas (DESIGN-SURVEY §6.1; curation/NOTES.md): 20 of them fit the Sabbath
+c('1,501 of the 3,100 ideas fit the Sabbath (1,481 of 3,050 before the curation\'s 50; 1,480 before the offering line)', [I.ideas.filter(r => r[sc] === 1).length, I.count], [1501, 3100]);
 
 console.log('\n-- 4. the writers\' notes --');
 const G = txt(path.join(SRC, 'SABBATH-GUIDELINE.md'));

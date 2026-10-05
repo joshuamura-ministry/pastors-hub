@@ -55,7 +55,9 @@ function setup(P,tool,cap){
 const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Event('input',{bubbles:true})); };
 const choose=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Event('change',{bubbles:true})); };
 // v10.41 integration: a list has two sections now; by default read "For our community" (sec '' = both)
-const cards=(P,host='#u-lib',sec='out')=>P.qa(host+(sec?` .lib-sec[data-lib-sec="${sec}"]`:'')+' .lib-card');
+const cards=(P,host='#cs-lib',sec='out')=>P.qa(host+(sec?` .lib-sec[data-lib-sec="${sec}"]`:'')+' .lib-card');
+// v10.45.0: in Make the Case the built-ins are cards of the same kind in the list (.lib-sig); the library's own, for its ranking
+const lcards=(P,sec='out')=>cards(P,'#cs-lib',sec).filter(e=>!e.classList.contains('lib-sig'));
 // what the index says a theme search must return: the theme's own ideas, then those cross-listed to it
 const TI=Object.fromEntries(IDX.themes.map((t,i)=>[t.id,i]));
 const col=k=>IDX.cols.indexOf(k);
@@ -69,14 +71,16 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
     const P=page({hash}); await sleep(1300);
     c(`${hash||'the hub'}: no idea file fetched`, P.ideasFetched(), []);
     if(!hash){
-      setup(P,'survey'); await sleep(200);
-      c('the survey\'s ministries: an "Idea library" invitation, still nothing fetched', [!!P.q('#u-lib .lib-invite [data-lib-browse]'),!!P.q('#u-ministry-list [data-lib-open]'),P.ideasFetched()], [true,true,[]]);
+      // v10.45.0 (ported): the survey's ministries list, where the Idea Library lived, is gone (DESIGN-SURVEY §1.1); the same library code serves
+      // Make the Case's step 2 (no group chosen), where a pastor looks beyond a need's own ideas: the checks run there.
+      setup(P,'case'); await sleep(200);
+      c('Make the Case\'s step 2: one search box and "All themes", still nothing fetched', [!!P.q('#cs-s2 #cs-q'),!!P.q('#cs-s2 [data-cs-browse]'),P.ideasFetched()], [true,true,[]]);
       c('no boot errors', P.errs, []);
     }
   }
 
   console.log('\n-- search finds everything (SCHEMA.md "Search") --');
-  const P=page(); await sleep(1300); setup(P,'survey');
+  const P=page(); await sleep(1300); setup(P,'case');
   await P.E('libLoadIndex()'); await sleep(20);
   const S=q=>P.J(`(()=>{ const s=libSearch(${JSON.stringify(q)}); return s&&{mode:s.mode,themes:s.themes,n:s.rows.length,need:s.needWords,home:s.rows.filter(r=>s.themes.includes(r.theme)).length,
     homeFirst:s.rows.findIndex(r=>!s.themes.includes(r.theme))===-1||s.rows.slice(s.rows.findIndex(r=>!s.themes.includes(r.theme))).every(r=>!s.themes.includes(r.theme))}; })()`);
@@ -96,22 +100,25 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('nonsense: nothing, and no error', S('xyzzy qwv').n, 0);
   c('the index is fetched once', P.ideasFetched().filter(u=>u==='/ideas/index.json').length, 1);
 
-  console.log('\n-- the survey\'s ministries: search, rank, pages, filters --');
+  console.log('\n-- the library in Make the Case\'s step 2: search, rank, pages, filters --');
+  // v10.45.0 (ported): the survey's ministries list, where the Idea Library lived, is gone (DESIGN-SURVEY §1.1); the same library code serves
+  // Make the Case's step 2 (no group chosen), where a pastor looks beyond a need's own ideas: the checks run there.
+
   // v10.41 integration: with the 57 themes the library is split for real ("what can I do for God's people, but also
   // what can I do for the community?"): a "prayer" search shows the cross-listed in-reach ideas (children's
   // ministries, global mission…) under "For God's people" first, then the prayer ideas under "For our community".
   // The checks below that meant "the prayer list" read the community section; the rest say which section they read.
-  type(P,'#u-search','prayer');
-  c('typing "prayer" shows twelve library ideas under the built-ins', await until(()=>cards(P).length===12), true);
+  type(P,'#cs-q','prayer');
+  c('typing "prayer" shows a page of twelve: the built-ins it found by their names first, then the library\'s', [await until(()=>cards(P).length===12),cards(P).findIndex(e=>!e.classList.contains('lib-sig'))===P.qa('#cs-lib .lib-sec[data-lib-sec="out"] .lib-sig').length], [true,true]);
   const N=expectOf(['prayer']);
-  c('the heading counts them all', P.txt('#u-lib .lib-head h3'), `${N} ideas from the library for “prayer”`);
-  c('the built-ins that are about prayer are there too', P.qa('#u-cards .u-rowname').map(e=>e.textContent).filter(t=>/pray/i.test(t)).length>=2, true);
-  { const firstPage=[...new Set(cards(P,'#u-lib','').map(e=>'/ideas/'+P.J(`LIB.byId.get(${JSON.stringify(e.dataset.libId)}).theme`)+'.json'))].sort();
+  c('the heading counts them all', P.txt('#cs-lib .lib-head h3'), `${N} ideas from the library for “prayer”`);
+  c('the built-ins that are about prayer are there too', P.qa('#cs-lib .lib-sig h4').map(e=>e.textContent).filter(t=>/pray/i.test(t)).length>=2, true);
+  { const firstPage=[...new Set(lcards(P,'').map(e=>'/ideas/'+P.J(`LIB.byId.get(${JSON.stringify(e.dataset.libId)}).theme`)+'.json'))].sort();
     c('only the theme files of the ideas on the first page were fetched (prayer first)', [P.ideasFetched().filter(u=>!/index|words/.test(u)).sort(),P.ideasFetched().filter(u=>!/index|words/.test(u))[0]], [firstPage,'/ideas/prayer.json']); }
-  const shown=()=>cards(P).map(e=>e.dataset.libId);
+  const shown=()=>lcards(P).map(e=>e.dataset.libId);
   const R=P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows.filter(r=>libOut(libReach(r))),S).map(o=>({id:o.r.id,score:o.score,cross:o.cross,tier:o.r.tier,k:o.r.k,nh:o.nh,ok:o.ok,base:o.base})); })()`);
-  c('the community section\'s cards are its ranking\'s first twelve, in order', shown(), R.slice(0,12).map(o=>o.id));
-  c('…and God\'s people\'s are its own ranking\'s first twelve', cards(P,'#u-lib','in').map(e=>e.dataset.libId), P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows.filter(r=>libIn(libReach(r))),S).slice(0,12).map(o=>o.r.id); })()`));
+  c('the library\'s cards in the community section are its ranking\'s first, in order', [shown().length>=6,shown()], [true,R.slice(0,shown().length).map(o=>o.id)]);
+  c('…and God\'s people\'s are its own ranking\'s first', lcards(P,'in').map(e=>e.dataset.libId), P.J(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows.filter(r=>libIn(libReach(r))),S).slice(0,${lcards(P,'in').length}).map(o=>o.r.id); })()`));
   c('the theme\'s own ideas first, then the cross-listed', R.findIndex(o=>o.cross)>=homeOf('prayer')&&R.slice(homeOf('prayer')).every(o=>o.cross), true);
   c('in each, never a lower score above a higher one', R.every((o,i)=>i===0||o.cross!==R[i-1].cross||o.score<=R[i-1].score), true);
   const tags=P.J('[...profile(DATA.M[SCOPE],DATA.M.county,trendOf(DATA.M,SCOPE))]');
@@ -127,59 +134,38 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('an idea with no figure behind it here can still fit and be added', R.some(o=>o.nh===0&&o.ok), true);
   c('some do not fit (the check is real: costly homeless-theme programmes)', P.E(`(()=>{ const S=libSearch('homeless'); const X=libRank(S.rows,S); return X.some(o=>o.ok)&&X.some(o=>!o.ok); })()`), true);
   { const top=R.slice(0,12); c('a page is not twelve of one kind or one size', [new Set(top.map(o=>o.k)).size>=2,new Set(top.map(o=>o.tier)).size>=2], [true,true]); }
-  P.q('#u-lib [data-lib-more="out"]').click(); await until(()=>cards(P).length===24);
-  c('"Show 12 more" adds twelve', shown(), R.slice(0,24).map(o=>o.id));
-  choose(P,'#u-lib select[data-lib-f="size"]','1'); await until(()=>cards(P).length===12);
-  c('size "This week": every card is a size-1 idea and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('tier')]===1&&e.querySelector('.lib-facts li:not(.lib-cad)').textContent==='This week'), true);   // v10.43 (the pastor: "separate the things that are weekly or monthly… and events"): how it runs comes first
-  choose(P,'#u-lib select[data-lib-f="kind"]','invite'); await sleep(60);
-  c('kind "Invite" as well: only invite ideas', cards(P).length>0&&cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('k')]==='invite'&&/invite/i.test(e.querySelector('.lib-kind').textContent)), true);
-  choose(P,'#u-lib select[data-lib-f="size"]',''); choose(P,'#u-lib select[data-lib-f="kind"]',''); await sleep(60);
-  P.q('#u-lib [data-lib-tog="sab"]').click(); await until(()=>P.q('#u-lib [data-lib-tog="sab"]').getAttribute('aria-pressed')==='true'&&cards(P).length>0);
-  c('"Fits the Sabbath": every card fits it, and says so', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('sab')]===1&&e.querySelector('.lib-facts .sab')), true);
-  P.q('#u-lib [data-lib-tog="sab"]').click(); await sleep(40); P.q('#u-lib [data-lib-tog="online"]').click(); await until(()=>cards(P).length>0);
-  c('"Online or social media": every card has a digital part', cards(P,'#u-lib','').every(e=>byId[e.dataset.libId][col('dig')]===1||byId[e.dataset.libId][col('where')]==='online'), true);
-  choose(P,'#u-lib select[data-lib-f="ages"]','children'); await sleep(80);
-  const kidsCards=cards(P,'#u-lib','');
-  c('ages "Children" (and online): children\'s ideas only', kidsCards.every(e=>byId[e.dataset.libId][col('ages')]==='children'), true);
-  P.q('#u-lib [data-lib-tog="online"]').click(); await sleep(60);
-  choose(P,'#u-lib select[data-lib-f="ages"]',''); await sleep(60);
+  { const n0=shown().length; P.q('#cs-lib [data-lib-more="out"]').click(); await until(()=>cards(P).length===24);
+    c('"Show 12 more" adds twelve cards, the library\'s still in its ranking\'s order', [cards(P).length,shown().length>n0,shown()], [24,true,R.slice(0,shown().length).map(o=>o.id)]); }
+  // v10.45.0 (retired): size, kind, ages, "Fits the Sabbath" and "Online" were the survey list's filters (Make the Case's step 2 keeps
+  // its "how it runs" filter, v43-cadence); libFilter itself is unchanged.
 
   console.log('\n-- one card --');
-  await until(()=>cards(P).length===12);
-  const card=cards(P)[0], raw=THEME('prayer').ideas.find(x=>x.id===card.dataset.libId);
+  await until(()=>lcards(P).length>0);
+  const card=lcards(P)[0], raw=THEME('prayer').ideas.find(x=>x.id===card.dataset.libId);
   c('name, the 2–3 sentence description, from the library', [card.querySelector('h4').textContent,card.querySelector('.lib-d').textContent], [raw.en.n,raw.en.d]);
   // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): how it runs is the card's first fact
   c('how it runs · size · people · cost · where · Sabbath', [card.querySelectorAll('.lib-facts li').length,!!card.querySelector('.lib-facts li.lib-cad:first-child')], [6,true]);
   c('the four steps, folded until opened', [card.querySelector('details.lib-how').open,[...card.querySelectorAll('.lib-how li')].map(e=>e.textContent)], [false,raw.en.how]);
-  c('two actions: Add to our plan · Make the case for this', [...card.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Add to our plan','Make the case for this']);
-  const whyOk=P.E(`(()=>{ const env=libEnv(); return [...document.querySelectorAll('#u-lib .lib-card')].every(e=>{ const x=libToCatalog(libFull(e.dataset.libId)), w=e.querySelector('.lib-why');
+  c('one action in Make the Case: "Choose this" (the survey\'s "Add to our plan" went with its list)', [...card.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Choose this']);
+  const whyOk=P.E(`(()=>{ const env=libEnv(); return [...document.querySelectorAll('#cs-lib .lib-card:not(.lib-sig)')].every(e=>{ const x=libToCatalog(libFull(e.dataset.libId)), w=e.querySelector('.lib-why');
     if(libReach(LIB.byId.get(e.dataset.libId))==='in') return !w;   // v10.41: an idea for God's people argues from the church family, never the census
     const fired=x.need.some(t=>env.tags.has(t)); return w?(fired&&/\\d/.test(w.textContent)&&w.textContent.endsWith(libWhyText(x,env.m,env.tags))):!libWhyText(x,env.m,env.tags); }); })()`);
   c('"Why here" only when a need tag fired, always with a figure (and never on an idea for God\'s people)', whyOk, true);
   c('…the survey\'s own words for that need (poverty: the report\'s sentence)', P.E(`(()=>{ const x=libToCatalog({...libFull(${JSON.stringify(raw.id)}),need:['poor']}); const h=suggestions(DATA.M,SCOPE).hits.find(h=>h.id==='poverty'); return !!h&&libWhyText(x,DATA.M[SCOPE],libEnv().tags)===h.evidence; })()`), true);
   c('…and nothing at all when no need tag fires here (never invented)', P.E(`(()=>{ const env=libEnv(); const off=LIB.rows.find(r=>r.need.every(t=>!env.tags.has(t))); if(!off) return 'none'; return libWhyText(libLite(off),env.m,env.tags); })()`), '');
   { const kid=IDX.ideas.find(r=>r[col('min')]===1&&IDX.themes[r[col('t')]].id==='children');
-    type(P,'#u-search','children'); await until(()=>cards(P).length===12&&P.txt('#u-lib .lib-head h3').includes('children'));
+    type(P,'#cs-q','children'); await until(()=>cards(P).length===12&&P.txt('#cs-lib .lib-head h3').includes('children'));
     const has=P.E(`(()=>{ const r=LIB.byId.get(${JSON.stringify(kid[0])}); return new Promise(res=>libLoadTheme(r.theme).then(()=>{ const x=libToCatalog(libFull(r.id)); res(libCardHTML('survey',libFull(r.id),x,libEnv(),null)); })); })()`);
     const h=await has;
     c('an idea with children keeps the safeguarding line in view', /lib-kids/.test(h)&&/screened adults/.test(h), true);
-    c('…on every children\'s card on the page', cards(P,'#u-lib','').filter(e=>byId[e.dataset.libId][col('min')]===1).every(e=>e.querySelector('.lib-kids')), true); }
+    c('…on every children\'s card on the page', lcards(P,'').filter(e=>byId[e.dataset.libId][col('min')]===1).every(e=>e.querySelector('.lib-kids')), true); }
 
-  console.log('\n-- "Add to our plan": joins the plan like a built-in --');
-  type(P,'#u-search','prayer'); await until(()=>cards(P).length===12&&/prayer/.test(P.txt('#u-lib .lib-head h3')));
-  const addable=cards(P).find(e=>!e.querySelector('[data-lib-add]').disabled), blocked=P.E(`(()=>{ const S=libSearch('prayer'); return libRank(S.rows,S).filter(o=>!o.ok).length; })()`);
-  c('a card that fits can be added; one that does not stays off (as built-ins)', [!!addable,cards(P).filter(e=>e.querySelector('[data-lib-add]').disabled).every(e=>!/Fits what/.test(e.querySelector('.lib-fit').textContent))], [true,true]);
-  const aid=addable.dataset.libId, before=P.J('uUsage()'), req=P.J(`uReq(libToCatalog(libFull(${JSON.stringify(aid)})))`);
-  addable.querySelector('[data-lib-add]').click(); await sleep(150);
-  const store=JSON.parse(P.w.localStorage.getItem('terrain-churches-v1')), ch=store.churches[store.active];
-  c('saved with the church: selected, and its record kept (works offline and after library updates)', [ch.selected.includes(aid),ch.lib[aid]&&ch.lib[aid].en.n], [true,THEME('prayer').ideas.find(x=>x.id===aid).en.n]);
-  c('in the catalogue as a library idea on the "creative extras" shelf', P.J(`(()=>{ const x=uCatalog().find(x=>x.id===${JSON.stringify(aid)}); return x&&[x.lib,x.tier,x.size>0,x.requirements.reviewed]; })()`), [true,2,true,true]);
-  c('the plan reserves its people, hours and money', P.J('uUsage()').people-before.people, req.people);
-  c('it is listed in "Your selected plan"', P.txt('.u-portfolio').includes(THEME('prayer').ideas.find(x=>x.id===aid).en.n), true);
-  c('its card now offers to remove it', P.q(`#u-lib [data-lib-id="${aid}"] [data-lib-add]`).textContent, 'Remove from our plan');
+  // v10.45.0 (retired): "Add to our plan" was the survey list's card button, and its list is gone; the plan is filled by "Create a
+  // proposal for this ministry" (v45-handoff) and Make the Case. The catalogue checks below keep their idea.
+  console.log('\n-- a library idea as a catalogue item --');
+  type(P,'#cs-q','prayer'); await until(()=>lcards(P).length>0&&/prayer/.test(P.txt('#cs-lib .lib-head h3')));
+  const aid=lcards(P)[0].dataset.libId;
   c('uReq follows the library\'s numbers (SCHEMA.md mapping)', P.J(`(()=>{ const L=libFull(${JSON.stringify(aid)}), r=uReq(libToCatalog(L)); return [r.people===L.ppl, r.leaders===L.leaders, r.startup===L.cost, r.monthly===L.costMo]; })()`), [true,true,true,true]);
-  P.q(`#u-lib [data-lib-id="${aid}"] [data-lib-add]`).click(); await sleep(120);
-  c('…and remove it again', P.J('uSelected()').includes(aid), false);
 
   console.log('\n-- the catalogue item (libToCatalog) --');
   c('a built-in\'s id or a reserved prefix is refused', P.J(`[libToCatalog({...libFull(${JSON.stringify(aid)}),id:'food-pantry'}),libToCatalog({...libFull(${JSON.stringify(aid)}),id:'draft-x1'})]`), [null,null]);
@@ -188,8 +174,8 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('a prayer flyer is not "food" work in Make the Case (its theme, not its words)', P.E(`caseBridgeOf(libToCatalog(libFull('prayer-tear-off-flyers')||libFull(${JSON.stringify(aid)}))).kind`), 'general');
 
   console.log('\n-- "Make the case for this" --');
-  const cid=cards(P)[1].dataset.libId, craw=THEME('prayer').ideas.find(x=>x.id===cid);
-  cards(P)[1].querySelector('[data-lib-case]').click(); await sleep(300);
+  const cid=lcards(P)[1].dataset.libId, craw=THEME('prayer').ideas.find(x=>x.id===cid);
+  lcards(P)[1].querySelector('[data-lib-case]').click(); await sleep(300);
   c('Make the Case opens with the idea chosen, step 2 next', [P.E('TOOL'),P.J('casePrefs()').ministry,P.q('#cs-s2')&&!P.q('#cs-s2').hidden], ['case',cid,true]);
   P.E(`caseSetPrefs({type:'board',group:'board'}); caseDraw2(); caseDraw3();`); await sleep(400);
   const deck=P.J('caseCurrentDeck()');
@@ -241,33 +227,33 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('no errors on this page', P.errs, []);
 
   console.log('\n-- offline, a missing file, the session cache --');
-  { const Q=page({offline:true}); await sleep(1300); setup(Q,'survey');
-    type(Q,'#u-search','prayer'); await until(()=>Q.q('#u-lib .lib-fail'));
-    c('offline: one plain sentence and "Try again", never a blank', [Q.txt('#u-lib .lib-fail p'),!!Q.q('#u-lib [data-lib-retry]')], ['The idea library could not be opened just now. The ministries built into Terrain are still here.',true]);
-    c('…the built-in list is untouched', Q.qa('#u-cards .u-row').length>0, true);
-    Q.o.offline=false; Q.q('#u-lib [data-lib-retry]').click(); await until(()=>cards(Q).length===12);
+  { const Q=page({offline:true}); await sleep(1300); setup(Q,'case');
+    type(Q,'#cs-q','prayer'); await until(()=>Q.q('#cs-lib .lib-fail'));
+    c('offline: one plain sentence and "Try again", never a blank', [Q.txt('#cs-lib .lib-fail p'),!!Q.q('#cs-lib [data-lib-retry]')], ['The idea library could not be opened just now. The ministries built into Terrain are still here.',true]);
+    c('…step 2 is still there to search again', !!Q.q('#cs-s2 #cs-q'), true);
+    Q.o.offline=false; Q.q('#cs-lib [data-lib-retry]').click(); await until(()=>cards(Q).length===12);
     c('back online, "Try again" shows the ideas', cards(Q).length, 12); }
-  { const Q=page({noThemes:true}); await sleep(1300); setup(Q,'survey');
-    type(Q,'#u-search','prayer'); await until(()=>Q.q('#u-lib .lib-fail'));
-    c('a theme file that does not come: the heading, then one sentence and "Try again"', [!!Q.q('#u-lib .lib-head h3'),Q.txt('#u-lib .lib-fail p')], [true,'These ideas could not be loaded just now (the connection may have dropped).']); }
+  { const Q=page({noThemes:true}); await sleep(1300); setup(Q,'case');
+    type(Q,'#cs-q','prayer'); await until(()=>Q.q('#cs-lib .lib-fail'));
+    c('a theme file that does not come: the heading, then one sentence and "Try again"', [!!Q.q('#cs-lib .lib-head h3'),Q.txt('#cs-lib .lib-fail p')], [true,'These ideas could not be loaded just now (the connection may have dropped).']); }
   { const kept=P.w.sessionStorage.getItem('terrain-lib-idx');
     c('the index is kept for the session', !!kept&&JSON.parse(kept).hash===IDX.hash, true);
-    const Q=page({session:{'terrain-lib-idx':kept}}); await sleep(1300); setup(Q,'survey');
-    type(Q,'#u-search','prayer'); await until(()=>cards(Q).length===12);
+    const Q=page({session:{'terrain-lib-idx':kept}}); await sleep(1300); setup(Q,'case');
+    type(Q,'#cs-q','prayer'); await until(()=>cards(Q).length===12);
     c('a reload in the same session searches without fetching the index again', [Q.ideasFetched().includes('/ideas/index.json'),Q.ideasFetched()[0]], [false,'/ideas/prayer.json']); }
   { const old=JSON.parse(P.w.sessionStorage.getItem('terrain-lib-idx')); old.hash='000000000000';
-    const Q=page({session:{'terrain-lib-idx':JSON.stringify(old)}}); await sleep(1300); setup(Q,'survey');
-    type(Q,'#u-search','prayer'); await until(()=>cards(Q).length===12);
+    const Q=page({session:{'terrain-lib-idx':JSON.stringify(old)}}); await sleep(1300); setup(Q,'case');
+    type(Q,'#cs-q','prayer'); await until(()=>cards(Q).length===12);
     c('an index kept from an earlier deploy is replaced once the files disagree', [Q.E('LIB.idx.hash'),Q.ideasFetched().filter(u=>u==='/ideas/index.json').length,cards(Q).length], [IDX.hash,1,12]); }
 
   console.log('\n-- Spanish --');
-  { const Q=page({lang:'es'}); await sleep(1300); setup(Q,'survey');
-    c('the invitation in Spanish', Q.txt('#u-lib .lib-invite button'), 'Biblioteca de ideas');
-    type(Q,'#u-search','oración'); await until(()=>cards(Q).length===12);
-    c('the heading in Spanish', Q.txt('#u-lib .lib-head h3'), `${N} ideas de la biblioteca para «oración»`);
-    const k=cards(Q)[0], r2=THEME('prayer').ideas.find(x=>x.id===k.dataset.libId);
+  { const Q=page({lang:'es'}); await sleep(1300); setup(Q,'case');
+    c('step 2\'s "All themes" in Spanish', Q.txt('#cs-s2 [data-cs-browse]'), 'Todos los temas');
+    type(Q,'#cs-q','oración'); await until(()=>cards(Q).length===12);
+    c('the heading in Spanish', Q.txt('#cs-lib .lib-head h3'), `${N} ideas de la biblioteca para «oración»`);
+    const k=lcards(Q)[0], r2=THEME('prayer').ideas.find(x=>x.id===k.dataset.libId);
     c('the card in the library\'s Spanish: name, description, steps', [k.querySelector('h4').textContent,k.querySelector('.lib-d').textContent,[...k.querySelectorAll('.lib-how li')].map(e=>e.textContent)], [r2.es.n,r2.es.d,r2.es.how]);
-    c('labels in Spanish', [...k.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Añadir a nuestro plan','Presentar el caso de esta idea']);
+    c('labels in Spanish', [...k.querySelectorAll('.lib-acts button')].map(b=>b.textContent), ['Elegir esta']);
     c('"why here" in Spanish, from the Spanish rules', !k.querySelector('.lib-why')||/^Por qué aquí:/.test(k.querySelector('.lib-why').textContent), true);
     c('capacity gaps said in Spanish', cards(Q).map(e=>e.querySelector('.lib-fit')).filter(Boolean).every(f=>!/needed|remain|Confirm /.test(f.textContent)), true);
     k.querySelector('[data-lib-case]').click(); await sleep(250);

@@ -74,11 +74,15 @@ const EN_FOR={board:'the church board',business:'the business meeting',elders:'t
 const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '+(e&&e.stack||e).toString().split('\n').slice(0,3).join(' | ')); fail++; } };
 
 (async()=>{ try{
-  console.log('\n-- 1. the survey\'s ministries: for our community, where the church chooses what to do --');
+  // v10.45.0 (stale, kept in a new form): the survey's ministries list is gone (DESIGN-SURVEY §1.1); "the survey is for our community" is now
+  // the needs' rule: no need's ideas include an idea for God's people (the build refuses them, §6.3; v45-needs-ui checks the page). The
+  // list's first line (.u-choose) and "Your selected plan" retire with it; signatureMoves' own rule (reach) is still checked.
+  console.log('\n-- 1. the survey: for our community --');
   await sec(async()=>{ const P=page(); await sleep(1300);
     await P.E(`libLoadIndex()`); await until(()=>P.J('!!LIB.idx'));
     setup(P,{tool:'survey',pre:`libSave(${JSON.stringify(CAL)}); libSave(${JSON.stringify(CARD)}); libSave(${JSON.stringify(ANNIV)});`});
-    c('one short line first: "For our community. This is where your church chooses what to do."', P.txt('#u-ministry-list > .u-choose'), 'For our community. This is where your church chooses what to do.');
+    await P.E(`nsLoad()`); await until(()=>P.J('!!NS.map'));
+    c('the needs\' ideas: every one for the community (none for God\'s people)', P.J(`NSM.needs.concat(NSM.also).flatMap(n=>nsIdeasFor(n)).filter(v=>v.reach==='in').map(v=>v.id)`), []);
     const moves=P.J(`suggestions(DATA.M,SCOPE).moves.map(x=>x.id)`);
     c('an outreach library idea the church keeps is in the list (its need tags fire here)', moves.includes('prayer-town-prayer-calendar'), true);
     c('…an in-reach one never is: the card after two missed Sabbaths, a card on each baptism anniversary (filed under personal evangelism)',
@@ -87,7 +91,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('…nor in its rows, at any level, within reach or not yet (the outreach one is)', [rows.includes('member-care-two-sabbath-card'),rows.includes('personal-evangelism-baptism-anniversary'),rows.includes('prayer-town-prayer-calendar')], [false,false,true]);
     c('…their need tags DO fire here (so only the reach keeps them out)', P.J(`(()=>{ const t=suggestions(DATA.M,SCOPE).tags; return ['member-care-two-sabbath-card','personal-evangelism-baptism-anniversary'].map(id=>uCatalog().find(x=>x.id===id).need.some(n=>t.has(n))); })()`), [true,true]);
     P.E(`uChurch().selected=['member-care-two-sabbath-card']; uPersist(); uRefresh();`);
-    c('added to the plan anyway (from the Idea Library), it stays in "Your selected plan"', [/A handwritten card when a member misses two Sabbaths/.test(P.txt('.u-portfolio')||''),rowsAll(P).includes('member-care-two-sabbath-card')], [true,false]);
+    c('added to the plan anyway (from the Idea Library), it is in the plan (What\'s next lists it) and still never in the rows', [P.qa('#u-whatsnext [data-u-next-case]').map(b=>b.dataset.uNextCase).includes('member-care-two-sabbath-card'),rowsAll(P).includes('member-care-two-sabbath-card')], [true,false]);
     c('no errors', P.errs, []);
     P.w.close(); });
   await sec(async()=>{ const id='church-1';
@@ -96,17 +100,17 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     const P=page({store}); await sleep(1300);
     c('a fresh visit: the Idea Library\'s index is not loaded yet', P.J('!!LIB.idx'), false);
     setup(P,{tool:'survey'});
-    await until(()=>P.J('!!LIB.idx')&&!!P.q('#u-ministry-list')); await sleep(80);
-    c('…the survey loads it once, because the church keeps library ideas (their own reach is in it)', [P.net.idx,P.J('!!LIB.idx')], [1,true]);
+    await until(()=>P.J('!!LIB.idx'),4000); await sleep(80);
+    c('…the survey loads it once, for the needs\' ideas (1.5 s after it draws)', [P.net.idx,P.J('!!LIB.idx')], [1,true]);
     c('…and the list is drawn again without the in-reach one filed under an outward theme', [P.J(`suggestions(DATA.M,SCOPE).moves.map(x=>x.id).includes('personal-evangelism-baptism-anniversary')`),rowsAll(P).includes('personal-evangelism-baptism-anniversary'),rowsAll(P).includes('prayer-town-prayer-calendar')], [false,false,true]);
-    c('…the first line and the wiring survive the redraw', [P.txt('#u-ministry-list > .u-choose'),P.qa('#u-ministry-list').length,typeof P.q('#u-ministry-list').onclick], ['For our community. This is where your church chooses what to do.',1,'function']);
+    c('…and the needs section is wired (one handler, kept across a redraw)', [P.qa('#u-needs').length,typeof P.q('#u-needs').onclick], [1,'function']);
     c('no errors', P.errs, []);
     P.w.close(); });
   await sec(async()=>{ const P=page(); await sleep(1300); setup(P,{tool:'survey'});
     c('a church with no library ideas: nothing extra is fetched', P.net.idx, 0);
     P.w.close(); });
   await sec(async()=>{ const P=page({lang:'es'}); await sleep(1300); setup(P,{tool:'survey'});
-    c('Spanish: "Para la comunidad. Aquí es donde su iglesia elige qué hacer."', P.txt('#u-ministry-list > .u-choose'), 'Para la comunidad. Aquí es donde su iglesia elige qué hacer.');
+    c('Spanish: the needs\' heading', P.txt('#u-needs > h2'), 'Lo que este vecindario necesita de nuestra iglesia');
     P.w.close(); });
 
   console.log('\n-- 2. Make the Case step 2: "From your plan", then "More ideas for {group}" --');
@@ -155,7 +159,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     setup(P);
     await choose(P,'prayer');
     c('an empty plan: one line points back to the survey (the approved words), no cards', [planIds(P),P.txt('#cs-plan .cs-parth .note')],
-      [[],'Choose what your church will do in the Community Survey first, or pick an idea below.']);
+      [[],'Open a need in the Community Survey and choose an idea, or pick an idea below.']);
     c('…"More ideas" still opens on the list', [P.txt('#cs-more h4'),listIds(P).length>0], ['More ideas for the prayer ministry',true]);
     // the idea already chosen (a library idea chosen from the Idea Library), when he taps another group
     await P.E(`libLoadTheme('member-care')`); await until(()=>P.J(`!!libFull('member-care-two-sabbath-card')`));
@@ -196,7 +200,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('…nothing for this group', P.txt('#cs-plan .cs-parth .note'), 'Nada de su plan encaja todavía con el equipo de recepción y hospitalidad. Añada ideas en la Encuesta Comunitaria, o escoja una idea abajo.');
     c('…the way back', P.txt('#cs-plan [data-cs-survey]'), 'Abrir la Encuesta Comunitaria');
     P.E(`uChurch().selected=[]; uPersist(); caseDraw2();`); await until(()=>/Elija primero/.test(P.txt('#cs-plan')||''));
-    c('…an empty plan', P.txt('#cs-plan .cs-parth .note'), 'Elija primero en la Encuesta Comunitaria lo que su iglesia hará, o escoja una idea abajo.');
+    c('…an empty plan', P.txt('#cs-plan .cs-parth .note'), 'Abra una necesidad en la Encuesta Comunitaria y elija una idea, o escoja una idea abajo.');
     c('no English and no "IA" in step 2\'s new words', /\b(IA|AI)\b|From your plan|More ideas/.test(P.txt('#cs-s2')), false);
     c('no errors', P.errs, []);
     P.w.close(); });

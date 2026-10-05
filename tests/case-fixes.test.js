@@ -37,13 +37,18 @@ function page(lang){
   c('the survey still says the incomes as before: $52k here, $98k in the county', /Median household income is \$52k — far below the county's \$98k/.test(P.D.getElementById('brief').textContent.replace(/\s+/g,' ')), true);
   c('…and the income card still reads $52k', /\$52k/.test(txt()), true);
   c('no "$0k" anywhere in the survey and the action plan', /\$0k/.test(txt()), false);
-  { const rows=[...P.D.querySelectorAll('.u-rowmeta')].map(e=>e.textContent.replace(/\s+/g,' ').trim());
+  // v10.45.0: the survey no longer draws its ministries list (DESIGN-SURVEY §1.1); its rows are read from the kept function, as it drew them
+  { const rows=JSON.parse(P.E(`(()=>{ const d=document.createElement('div'); d.innerHTML=uMinistriesHTML(suggestions(DATA.M,SCOPE)); return JSON.stringify([...d.querySelectorAll('.u-rowmeta')].map(e=>e.textContent.replace(/\\s+/g,' ').trim())); })()`));
     c('the ministry rows say their cost to the dollar ('+rows.length+' rows)', [rows.length>10,rows.some(t=>/\$0k|· \$0$/.test(t)),rows.filter(t=>/· \$75$/.test(t)).length>0], [true,false,true]);
-    c('…and a ministry with only a monthly cost says that sum, a month ("$25/mo"), not "$0"', rows.some(t=>/· \$\d[\d,]*\/mo$/.test(t)), true); }
-  c('a ministry card’s requirements show the start-up and monthly sums to the dollar', P.E(`uReqHTML(uReq(uCatalog().find(x=>x.id==='pathfinders')))`).includes('<dd>$75 / $25</dd>'), true);
+    // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the rows' monthly-only example is the meal schedule ($100 a month), read from its own row
+    { const mt=P.E(`(()=>{ const d=document.createElement('div'); d.innerHTML=uRow(uCatalog().find(z=>z.id==='meal-train')); return d.querySelector('.u-rowmeta').textContent.replace(/\\s+/g,' ').trim(); })()`);
+      c('…and a ministry with only a monthly cost says that sum, a month ("$100/mo"), not "$0"', /· \$100\/mo$/.test(mt), true); } }
+  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6)
+  c('a ministry card’s requirements show the start-up and monthly sums to the dollar', P.E(`uReqHTML(uReq(uCatalog().find(x=>x.id==='pathfinders')))`).includes('<dd>$1,500 / $100</dd>'), true);
   { P.E('CAP=null; capSave('+JSON.stringify(FX.SMALL)+');');
     const g=P.J(`uCheck(uCatalog().find(x=>x.id==='community-dinner')).gaps.filter(t=>/funding/.test(t))`);
-    c('the capacity check’s gap sentence names real amounts', g, ['$105 monthly funding needed; $60 remains.']);
+    // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the community dinner is $350 a month
+    c('the capacity check’s gap sentence names real amounts', g, ['$350 monthly funding needed; $60 remains.']);
     P.E('CAP=null; capSave('+JSON.stringify(FX.MEDIUM)+');'); }
   /* Updated when the Make the Case screens replaced the old proposal memo
      (v10.39.0, approved blueprint): the money now reaches the pastor through the
@@ -58,10 +63,11 @@ function page(lang){
     const ask=()=>slides().filter(s=>s.classList.contains('td-t-ask')).pop(), cap=()=>slides().find(s=>s.classList.contains('td-t-capacity'));
     // v10.42.0 fix after review: the Pathfinder club runs by term ("offer 'the first term' instead of a 6-week or 4-week trial"):
     // 13 weeks, so its ceiling is $75 + 4 × $25 = $175
-    c('the ask slide’s money in dollars: $75 to start, $175 ceiling (the first term), never $0k or $3k', [/\$75/.test(ask().textContent),/Ceiling\s*\$175/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
+    // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): Pathfinders $1,500 to start and $100 a month, the term's ceiling $1,500 + 4 × $100
+    c('the ask slide’s money in dollars: $1,500 to start, $1,900 ceiling (the first term), never $0k or $3k', [/\$1,500/.test(ask().textContent),/Ceiling\s*\$1,900/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
     // v10.41 final review: capacity reads what we have first, then what is needed ("$75 of $2,500" read backwards to the
     // conference's administrators as "$12,000 of $2,500"): "$2,500 free · $75 needed". The intent is unchanged: to the dollar.
-    c('…and what is available, to the dollar ($2,500 start-up; $2,425 and $425 a month left)', [/\$2,500\s*free · \$75\s*needed/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$2,425\s·\s\$425\sa\smonth/.test(ask().textContent)], [true,true]);
+    c('…and what is available, to the dollar ($2,500 start-up; $1,000 and $350 a month left)', [/\$2,500\s*free · \$1,500\s*needed/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$1,000\s·\s\$350\sa\smonth/.test(ask().textContent)], [true,true]);
 
     console.log('\n-- the old proposal is not editable --');
     c('nothing in Make the Case is contenteditable (tapping it opened the phone keyboard)', [body().querySelectorAll('[contenteditable]').length,[...body().querySelectorAll('*')].some(e=>e.isContentEditable===true)], [0,false]);
@@ -71,15 +77,14 @@ function page(lang){
     c('wording saved by an older version is no longer pasted over the slides as plain text',
       (()=>{ P.E(`uChurch().proposalText={'pathfinders|board':{signature:'x',text:'OLD WORDING'}}; caseMount(true);`); return [/OLD WORDING/.test(body().textContent),slides().length>=8]; })(), [false,true]);
 
-    console.log('\n-- the survey’s banner stays in the survey --');
-    const hinge=P.D.getElementById('hinge');
-    c('Make the Case: the "Now your church" banner is hidden', [!!hinge,hinge&&hinge.classList.contains('offtab')], [true,true]);
+    // v10.45.0 (stale): the survey asks nothing of the church now (DESIGN-SURVEY §1.1): the "That is the neighborhood. Now your church."
+    // banner (#hinge) is gone from every tool
+    console.log('\n-- no "Now your church" banner anywhere --');
+    c('Make the Case: none', !P.D.getElementById('hinge'), true);
     P.E(`openTool('survey'); applyTool();`);
-    c('the Community Survey: it is shown, between the neighbourhood and Your church', P.D.getElementById('hinge').classList.contains('offtab'), false);
-    P.E(`openTool('case'); applyTool();`);
-    c('back in Make the Case: hidden again', P.D.getElementById('hinge').classList.contains('offtab'), true);
+    c('the Community Survey: none', !P.D.getElementById('hinge'), true);
     P.E(`currentTier=()=>'free'; openTool('survey'); render();`);
-    c('the free survey (no action plan): hidden, since Your church is not shown', P.D.getElementById('hinge')?P.D.getElementById('hinge').classList.contains('offtab'):true, true);
+    c('the free survey: none', !P.D.getElementById('hinge'), true);
   }
 
   console.log('\n-- DA 141.3, exactly --');
