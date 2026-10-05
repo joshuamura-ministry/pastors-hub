@@ -155,6 +155,26 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.47.0 (5 Oct 2026) — the proposal first in Make the Case; a clean top to the survey.** The pastor: *"when I click make a
+proposal from the community survey, it goes to the middle … this proposal will be front and center at the top and then below …
+who it's for … as simple as possible … right now it's really messy"*; *"decide … should be leadership … then Ministry departments …
+the three main places to propose … the board, the finance, the business meeting … the elders, not the nominating committee … let's
+keep the Deacon and Deaconesses"*; and on the survey: *"focus everything show everything … erase all that and then the census track
+area … we just need to know which church … neighborhood town and County … right above the brief … nice and clean"*.
+- **The proposal view** (`casePropMode()`: Make the Case, `NS.back` set, its idea still the chosen one, not the buy path):
+  `caseMount` draws `#cs-prop` (`casePropHTML`: "Your proposal", the name, one line, lift · people · money chips, "For the need:"
+  with its figure, "← Back to the need", "Choose a different ministry" ⇄ "Keep this ministry" via `CASE_ST.propList`), then step 1,
+  step 2 (the list, hidden unless asked), step 3 numbered 2 (`caseStepNo`). No path switch (`#cs-switch` hidden), no Gifts-first
+  line, no step bar here. `nsLand` opens it at the top, focused; `caseChooseGroup` then scrolls to the slides.
+- **Who is it for?** (`caseDraw1`, every view): the four sections as buttons across the top (`.cs-acats`, `data-cs-asec`,
+  `CASE_ST.audSec`), the one holding the chosen group open, else Leadership. `CASE_AUD_SECTIONS`: Leadership / Liderazgo,
+  Ministry departments / Departamentos de ministerio. `CASE_AUD_LAYOUT`: board, finance, business, elders, deacons; nominating under
+  Ministry departments › Other committees (`CASE_AUD_SUBS.other`).
+- **The survey's top:** `#place` is the church (`placeChurchHTML`: pin, name, address); Neighborhood · Town · County below it sit
+  on the Brief; `#focusbar` and `#focusnote` are not shown (CSS), so with nothing chosen everything shows.
+- Tests: `v47-clean` (new, failing-first on v10.46.1); updated with comments: v45-handoff (the proposal view), case-screens,
+  case-steps, home-church (the new names and order).
+
 **v10.46.1 (5 Oct 2026) — the needs at the bottom.** The pastor: *"what this neighborhood needs from your church should go after
 community resources should be at the bottom"* (v10.45.1 had put it after Churches nearby). `render()` pushes `#ns-slot` after
 `SEC_HELP` (with the plan; What's next follows it) and, in the free tier, before the "Beyond the survey" lock. Also: v10.46.0 had

@@ -262,7 +262,7 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
   c('…all 23 as tiles', P.qa('#cs-s1 .cs-atile').map(b=>b.dataset.csGroup).sort(), G.map(g=>g.id).sort());
   c('…each a coloured dot and the group’s name', P.qa('#cs-s1 .cs-atile').map(b=>[!!b.querySelector('.cs-adot'),b.querySelector('b').textContent]).sort(), G.map(g=>[true,g.en]).sort());
   c('…in sections, each in its own colour', P.qa('#cs-s1 .cs-aud').map(s=>[s.querySelector('h4').textContent,s.getAttribute('style'),s.querySelectorAll('.cs-atile').length]),
-    [['Decide','--g:var(--m-hardship)',6],['Ministry teams','--g:var(--m-children)',26],['On Sabbath','--g:var(--m-language)',1],['The conference','--g:var(--m-housing)',1]]);   // v10.41 integration, see above
+    [['Leadership','--g:var(--m-hardship)',5],['Ministry departments','--g:var(--m-children)',27],['On Sabbath','--g:var(--m-language)',1],['The conference','--g:var(--m-housing)',1]]);   // v10.47.0: Leadership, Ministry departments; nominating moved down   // v10.41 integration, see above
   c('…buttons, none chosen yet, and no emoji', [P.qa('#cs-s1 .cs-atile').every(b=>b.tagName==='BUTTON'&&b.type==='button'&&b.getAttribute('aria-pressed')==='false'),/[\u{1F300}-\u{1FAFF}⚖]/u.test(P.txt('#cs-s1'))], [true,false]);
   // the floor is the tallest tile of all (--atile-h, set by caseAudEqual), 54px before it is measured
   c('…tiles share one height rule (a floor for the shortest, measured)', [/\.cs-atile\{[^}]*min-height:var\(--atile-h,54px\)/.test(html),P.E('typeof caseAudEqual')], [true,'function']);
@@ -288,7 +288,7 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     await until(()=>!!S.q('#cs-s1 .cs-atile'));
     const es=S.J(`CASE_GROUPS.map(g=>g.es)`);
     c('the heading, the sections and every tile', [S.q('#cs-s1 h3').lastChild.textContent,S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent),S.qa('#cs-s1 .cs-atile b').map(b=>b.textContent).sort()],
-      ['¿Para quién es?',['Quienes deciden','Equipos de ministerio','En sábado','La asociación'],es.slice().sort()]);   // v10.41 integration: the conference section
+      ['¿Para quién es?',['Liderazgo','Departamentos de ministerio','En sábado','La asociación'],es.slice().sort()]);   // v10.47.0   // v10.41 integration: the conference section
     c('…the church line', S.txt('#homeline'), 'Bucks County SDA · 10 Greene Rd, Warminster, PA 18974 · Cambiar de iglesia');
     const txt=S.txt('#cs-s1')+' '+S.txt('#homeline');
     c('…no English left in step 1 or the line', ['Who ','Board &','Ministry teams','The whole church','Tap the group','A decision','An invitation','On Sabbath','Change church','Decide'].filter(t=>txt.includes(t)), []);

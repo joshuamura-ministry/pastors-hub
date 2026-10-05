@@ -96,11 +96,20 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('the sheet is closed', !!P.q('#ns-sheet[open]'), false);
     c('step 2 shows the chosen card, not the list', [!!P.q(`#cs-s2 .cs-chosen [data-lib-id="${IDEA}"]`),!!P.q('#cs-s2 #cs-q')],[true,false]);
     const L=lastScroll(P);
-    c('the view lands on that card: the last jump is to it, instant (never smooth)', [L&&L.lib,L&&L.how],[IDEA,'auto']);
-    c('…and the card has the focus (keyboard and screen readers start there)', P.E(`document.activeElement&&document.activeElement.closest('.cs-chosen')?document.activeElement.closest('[data-lib-id]').dataset.libId:''`), IDEA);
-    c('the step bar names it at step 2', P.txt('#cs-bar [data-cs-jump="2"] small'), P.E(`gfCap(caseMinName(caseItemOf(${JSON.stringify(IDEA)}))||caseItemOf(${JSON.stringify(IDEA)}).n)`));
-    c('the way back: one line at the top, naming the need', [P.qa('#casebody [data-cs-from]').length,/^← Back to the need: /.test(P.txt('#casebody [data-cs-from]')||''),
-      (P.txt('#casebody [data-cs-from]')||'').includes(P.J(`NSM.needs.find(n=>n.id==='${NEED}').title`))],[1,true,true]);
+    // v10.47.0 — the pastor (5 Oct 2026): "this proposal will be front and center at the top and then below … who it's for … as simple
+    // as possible". Was: landing on the chosen card in step 2, the step bar naming it, the way back as a line above the step bar.
+    c('the view lands on the proposal card at the top: the last jump is to it, instant (never smooth)', [L&&L.id,L&&L.how],['cs-prop','auto']);
+    c('…and the card has the focus (keyboard and screen readers start there)', P.E(`document.activeElement?document.activeElement.id:''`), 'cs-prop');
+    c('nothing above it: it is the first thing in Make the Case (no ministry-or-project switch, no Gifts-first line, no step bar)',
+      [P.q('#casebody').firstElementChild.id,!!P.q('#cs-bar'),!!P.q('#cs-gff'),P.q('#cs-switch').hidden],['cs-prop',false,false,true]);
+    c('the card names the ministry, its lift, its people and its money, and the need it meets', [P.txt('#cs-prop .cs-pt'),P.qa('#cs-prop .cs-pchips > span').length>=2,
+      (P.txt('#cs-prop .cs-pneed')||'').includes(P.J(`NSM.needs.find(n=>n.id==='${NEED}').title`))], [P.E(`gfCap(nsView(${JSON.stringify(IDEA)},nsNeedLang(nsNeedById('${NEED}'))).name)`),true,true]);
+    c('then Who is it for? (step 1), the list of ideas put away, then the slides (step 2)', [P.q('#cs-prop').nextElementSibling.id,P.q('#cs-s2').hidden,(P.txt('#cs-s3 .cs-num')||'')],['cs-s1',true,'2']);
+    c('the way back, in the card: "← Back to the need"', [P.qa('#casebody [data-cs-from]').length,P.txt('#cs-prop [data-cs-from]')],[1,'← Back to the need']);
+    P.q('#cs-prop [data-cs-other]').click();
+    c('"Choose a different ministry" brings the list back (step 2), and says how to keep this one', [P.q('#cs-s2').hidden,P.txt('#cs-prop [data-cs-other]')],[false,'Keep this ministry']);
+    P.q('#cs-prop [data-cs-other]').click();
+    c('…"Keep this ministry" puts it away again', P.q('#cs-s2').hidden, true);
 
     console.log('\n-- the way back keeps the need and the idea --');
     P.w.__scrolled.length=0;
@@ -144,7 +153,7 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('chosen and in the plan', [P.J('casePrefs().ministry'),P.J(`uSelected().includes('${BUILTIN}')`)],[BUILTIN,true]);
     c('nothing saved in the library store (a built-in is in the page)', P.J(`!!(uChurch().lib&&uChurch().lib['${BUILTIN}'])`), false);
     c('its built-in card is the chosen card', !!P.q(`#cs-s2 .cs-chosen .lib-sig[data-lib-id="${BUILTIN}"]`), true);
-    c('the view lands on it', (lastScroll(P)||{}).lib, BUILTIN);
+    c('the view lands on the proposal card, which names it (v10.47.0)', [(lastScroll(P)||{}).id,P.txt('#cs-prop .cs-pt')], ['cs-prop',P.E(`gfCap(nsView('${BUILTIN}').name)`)]);
   });
 
   console.log('\n-- Spanish --');
@@ -154,7 +163,7 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('"Crear una propuesta para este ministerio"', P.txt('#ns-sheet [data-ns-propose]'), 'Crear una propuesta para este ministerio');
     P.q('#ns-sheet [data-ns-propose]').click();
     await until(()=>P.E('TOOL')==='case'&&P.q('#casebody [data-cs-from]'));
-    c('"← Volver a la necesidad: …"', /^← Volver a la necesidad: /.test(P.txt('#casebody [data-cs-from]')||''), true);
+    c('"← Volver a la necesidad" (v10.47.0: in the proposal card), and "Su propuesta"', [P.txt('#casebody [data-cs-from]'),P.txt('#cs-prop .cs-pk')], ['← Volver a la necesidad','Su propuesta']);
   });
 
   console.log('\n-- the free version: no ideas, so no hand-off --');
