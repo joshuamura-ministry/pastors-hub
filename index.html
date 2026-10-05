@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.46.1
+     TERRAIN  v10.47.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.46.1" data-theme="dark">
+<html lang="en" data-version="v10.47.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.46.1">
-<title>Community Map — Terrain v10.46.1</title>
+<meta name="terrain-version" content="v10.47.0">
+<title>Community Map — Terrain v10.47.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -673,6 +673,14 @@ section.blk,#brief,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 .report.show{display:block;animation:rise .38s ease both}
 @keyframes rise{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 .place{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;margin:22px 0 6px;color:var(--ink2);font-size:.88rem}
+/* v10.47.0: the church line (pin, name, address); then Neighborhood · Town · County sitting on the Brief. Focus and its note are no
+   longer shown ("focus everything show everything … erase all that"): with nothing chosen the report shows everything, as it did. */
+.place{gap:6px 8px;align-items:center;font-size:.98rem}
+.place .pl-pin{display:inline-flex;color:var(--acc)}.place .pl-pin svg{width:18px;height:18px}
+.place .pl-dot{color:var(--ink3)}
+#focusbar,#focusnote{display:none!important}
+#scope{margin:14px 0 0}
+#report>.brief{margin-top:10px}
 .place b{color:var(--ink);font-weight:600}
 .scope{display:inline-flex;background:var(--panel);border:1px solid var(--line2);border-radius:10px;padding:3px;margin:12px 0 4px}
 .scope button{background:transparent;border:none;border-radius:8px;padding:7px 12px;font-size:.84rem;font-weight:600;color:var(--ink2);cursor:pointer}
@@ -2628,6 +2636,34 @@ button.td-opt:disabled{cursor:default}
 /* step 1 (v10.41): the groups in coloured sections (the pastor: "Board & officers should be a different
    colour"): Decide gold, Ministry teams violet with four small sub-headings, On Sabbath mint, The
    conference blue. Equal tiles (the tallest sets the height, caseAudEqual), 4 a row, 2 on a phone. */
+/* v10.47.0: the proposal card, first in the proposal view */
+.cs-prop{--k:var(--m-hardship);margin:8px 0 22px;padding:22px 22px 18px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line2));border-radius:18px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 9%,var(--panel)),var(--panel));box-shadow:var(--shadow);scroll-margin-top:calc(var(--topH,58px) + 12px)}
+.cs-prop:focus{outline:none}
+.cs-pk{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.cs-pt{font-family:var(--disp);font-size:clamp(1.35rem,3.2vw,1.9rem);font-weight:650;line-height:1.2;margin:6px 0 0;color:var(--ink);text-wrap:balance}
+.cs-pd{margin:8px 0 0;color:var(--ink2);font-size:.98rem;line-height:1.55;max-width:70ch}
+.cs-pchips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.cs-pchips>span{display:inline-flex;align-items:center;gap:8px;padding:5px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--panel2);font-size:.86rem;color:var(--ink);font-variant-numeric:tabular-nums}
+.cs-prop .lift{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.cs-prop .lift b{width:4px;border-radius:1px;background:var(--line2)}
+.cs-prop .lift b:nth-child(1){height:5px}.cs-prop .lift b:nth-child(2){height:8px}.cs-prop .lift b:nth-child(3){height:12px}
+.cs-prop .lift.l1 b:nth-child(-n+1),.cs-prop .lift.l2 b:nth-child(-n+2),.cs-prop .lift.l3 b{background:var(--acc)}
+.cs-pneed{margin:14px 0 0;font-size:.9rem;color:var(--ink2);line-height:1.5}
+.cs-pneed b{color:var(--ink);font-weight:600}
+.cs-pacts{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:16px}
+.cs-pacts .btn{white-space:normal;height:auto;min-height:44px;line-height:1.3}
+#cs-switch[hidden]{display:none}
+/* v10.47.0: Who is it for? — the four kinds across the top, one open at a time */
+.cs-acats{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px;margin:4px 0 16px}
+.cs-acat{--g:var(--m-hardship);min-height:52px;padding:10px 8px;border:1px solid var(--line2);border-top:3px solid var(--g);border-radius:12px;background:var(--panel2);
+  color:var(--ink);font:inherit;font-weight:650;font-size:.95rem;line-height:1.2;cursor:pointer;min-width:0;overflow-wrap:anywhere}
+.cs-acat[aria-expanded="true"]{border-color:var(--g);background:color-mix(in srgb,var(--g) 16%,var(--panel2));box-shadow:inset 0 -3px 0 var(--g)}
+@media (hover:hover){.cs-acat:hover{border-color:var(--g)}}
+.cs-acat:focus-visible{outline:2px solid var(--g);outline-offset:2px}
+@media (max-width:560px){.cs-acats{grid-auto-flow:row;grid-template-columns:1fr 1fr}}
+.cs-aud[hidden]{display:none}
+.cs-aud>h4{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cs-auds{display:grid;gap:22px}
 .cs-aud{--g:var(--m-hardship);min-width:0;border-left:3px solid var(--g);padding-left:14px;display:grid;gap:10px}
 .cs-aud h4{font-family:var(--disp);font-size:.92rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g);margin:0;line-height:1.3}
@@ -4016,13 +4052,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.47.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.46.1';
+const VERSION = 'v10.47.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9683,7 +9719,17 @@ function renderPlace(levels,geo){
   const single=TOOL&&(TOOLS[TOOL]||{tabs:[]}).tabs.length===1&&!FLAT;
   el.innerHTML = single
     ? `${geo.matched?`<b>${esc(geo.matched)}</b>`:`<b>${esc(levels.tract.name)}</b>`}<span>${esc(levels.tract.name)} \u00b7 ${esc(levels.cousub?placeTown(levels.cousub)+', ':'')}${esc(levels.county.name)}</span>`
-    : `<b>${esc(levels.tract.name)}</b> <span>${L('in','en')} ${esc(levels.cousub?placeTown(levels.cousub):'')}${levels.cousub?', ':''}${esc(levels.county.name)}</span>${geo.matched?`<span>\u00b7 ${esc(geo.matched)}</span>`:''}`;
+    : placeChurchHTML(levels,geo);
+}
+/* v10.47.0 — the pastor (5 Oct 2026): "the census track area. I don't know if we need all that we just need to know which church
+   … it's actually doing … clean up above". The survey's first line is the church: its name and its address (as Make the Case's
+   church line has them); the tract, town and county are on the Neighborhood · Town · County buttons below it. */
+function placeChurchHTML(levels,geo){
+  let ch=null; try{ ch=uChurch(); }catch(e){ ch=null; }
+  const addr=geo&&geo.matched?homeAddr(geo.matched):[levels.tract&&levels.tract.name,levels.cousub&&placeTown(levels.cousub),levels.county&&levels.county.name].filter(Boolean).join(', ');
+  const name=homeName(ch,geo&&geo.matched||'')||homeRegChurch();
+  return `<span class="pl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>`
+    +(name?`<b>${esc(name)}</b><span class="pl-dot" aria-hidden="true"> · </span>`:'')+`<span>${esc(addr)}</span>`;
 }
 function applyTool(){
   const dc=document.getElementById('datacred');
@@ -12804,6 +12850,8 @@ function nsWhyOf(id){
 /* The chosen card in step 2 (else step 2), brought into view at once and again once the layout settles, then focused. The line
    above it (what comes next, and the way back) is kept in view with it (review #5): the card's top margin makes room for it. */
 function nsLand(id){
+  // v10.47.0: the proposal view opens at its top, the proposal card first
+  if(casePropMode()){ CASE_ST.propList=false; caseMount(); const c=$('cs-prop'); if(c){ c.setAttribute('tabindex','-1'); c.scrollIntoView({behavior:'auto',block:'start'}); try{ c.focus({preventScroll:true}); }catch(e){} } return; }
   const pick=()=>{ const s=$('cs-s2'); if(!s) return null; let el=null;
     try{ el=s.querySelector(`.cs-chosen [data-lib-id="${String(id).replace(/["\\]/g,'')}"]`); }catch(e){ el=null; } return el||s; };
   const jump=()=>{ const el=pick(); if(el){ el.setAttribute('tabindex','-1');
@@ -33423,20 +33471,24 @@ function caseDefaultTab(G){ return G&&CASE_TAB_OUT.has(G.id)?'out':'in'; }
    kind (board → Decide; team → Ministry teams · More teams; congregation → On Sabbath; conference → The
    conference); a group the table lists that CASE_GROUPS does not have yet is simply not drawn. */
 const CASE_AUD_SECTIONS=[
-  {id:'decide',hue:'hardship',en:'Decide',es:'Quienes deciden'},
-  {id:'teams',hue:'children',en:'Ministry teams',es:'Equipos de ministerio'},
+  // v10.47.0 — the pastor (5 Oct 2026): "decide … should be leadership … then Ministry departments"
+  {id:'decide',hue:'hardship',en:'Leadership',es:'Liderazgo'},
+  {id:'teams',hue:'children',en:'Ministry departments',es:'Departamentos de ministerio'},
   {id:'sabbath',hue:'language',en:'On Sabbath',es:'En sábado'},
   {id:'conference',hue:'housing',en:'The conference',es:'La asociación'}];
 const CASE_AUD_SUBS={worship:{en:'Worship & learning',es:'Adoración y enseñanza'},young:{en:'Children & youth',es:'Niños y jóvenes'},
-  outreach:{en:'Outreach & evangelism',es:'Alcance y evangelismo'},care:{en:'Care & family',es:'Cuidado y familia'},more:{en:'More teams',es:'Otros equipos'}};
+  outreach:{en:'Outreach & evangelism',es:'Alcance y evangelismo'},care:{en:'Care & family',es:'Cuidado y familia'},more:{en:'More teams',es:'Otros equipos'},
+  other:{en:'Other committees',es:'Otras comisiones'}};
 const CASE_AUD_LAYOUT=[
-  ['board','decide'],['business','decide'],['elders','decide'],['deacons','decide'],['finance','decide'],['nominating','decide'],
+  // v10.47.0 — "the three main places to propose … the board, the finance, the business meeting … the elders … not the nominating
+  // committee … let's keep the Deacon and Deaconesses": board, finance, business meeting, elders, deacons; nominating moves down
+  ['board','decide'],['finance','decide'],['business','decide'],['elders','decide'],['deacons','decide'],
   ['worship','teams','worship'],['sabbathschool','teams','worship'],['childrens','teams','worship'],['school','teams','worship'],
   ['adventurers','teams','young'],['pathfinders','teams','young'],['youth','teams','young'],['youngadults','teams','young'],
   ['personal','teams','outreach'],['evangelism','teams','outreach'],['bibleworkers','teams','outreach'],['literature','teams','outreach'],['community','teams','outreach'],
   ['health','teams','outreach'],['media','teams','outreach'],['prison','teams','outreach'],['liberty','teams','outreach'],['possibility','teams','outreach'],
   ['prayer','teams','care'],['hospitality','teams','care'],['family','teams','care'],['womens','teams','care'],['mens','teams','care'],['seniors','teams','care'],
-  ['smallgroups','teams','care'],['stewardship','teams','care'],
+  ['smallgroups','teams','care'],['stewardship','teams','care'],['nominating','teams','other'],
   ['congregation','sabbath'],['conference','conference']];
 const CASE_KIND_SECTION={board:'decide',team:'teams',congregation:'sabbath',conference:'conference'};
 /* One short line under a tile, only where the name alone could mislead. */
@@ -33460,7 +33512,15 @@ function caseDraw1(){
       ${S.subs.map(b=>`${b.id&&CASE_AUD_SUBS[b.id]?`<h5 class="cs-asub" id="cs-ah-${S.id}-${b.id}">${esc(caseT(CASE_AUD_SUBS[b.id]))}</h5>`:''}
         <div class="cs-agrid" role="group" aria-labelledby="cs-ah-${S.id}${b.id&&CASE_AUD_SUBS[b.id]?' cs-ah-'+S.id+'-'+b.id:''}">${b.groups.map(tile).join('')}</div>`).join('')}
     </section>`;
-  h.innerHTML=caseStepHead(1,caseStepT('t1'),caseStepT('n1'))+`<div class="cs-auds">${caseAudSections().map(sec).join('')}</div>`;
+  /* v10.47.0 — the pastor: "the top row … like the first page … it would be a much cleaner": the four kinds as buttons across the
+     top (as the lifts are in the survey); the one holding the chosen group open, else Leadership; tapping another switches. */
+  const SECS=caseAudSections(), cur=(SECS.find(S=>S.subs.some(b=>b.groups.some(g=>g.id===P.group)))||{}).id;
+  const open=SECS.some(S=>S.id===CASE_ST.audSec)?CASE_ST.audSec:(cur||SECS[0].id);
+  const tabs=`<div class="cs-acats">${SECS.map(S=>`<button type="button" class="cs-acat" data-cs-asec="${S.id}" style="--g:var(--m-${S.hue})" aria-expanded="${S.id===open}" aria-controls="cs-asec-${S.id}">${esc(caseT(S))}</button>`).join('')}</div>`;
+  h.innerHTML=caseStepHead(caseStepNo(1),caseStepT('t1'),caseStepT('n1'))+tabs+`<div class="cs-auds">${SECS.map(S=>sec(S).replace('<section class="cs-aud','<section id="cs-asec-'+S.id+'"'+(S.id===open?'':' hidden')+' class="cs-aud')).join('')}</div>`;
+  h.querySelectorAll('[data-cs-asec]').forEach(b=>b.onclick=()=>{ CASE_ST.audSec=b.dataset.csAsec;
+    h.querySelectorAll('[data-cs-asec]').forEach(x=>x.setAttribute('aria-expanded',String(x===b)));
+    h.querySelectorAll('.cs-aud[data-cs-sec]').forEach(x=>x.hidden=x.dataset.csSec!==b.dataset.csAsec); caseAudEqual(h); });
   h.querySelectorAll('[data-cs-group]').forEach(b=>b.onclick=()=>caseChooseGroup(b.dataset.csGroup));
   caseAudEqual(h);
 }
@@ -33475,7 +33535,7 @@ function caseChooseGroup(id){
   const h=$('cs-s1');
   if(h) h.querySelectorAll('[data-cs-group]').forEach(b=>{ const on=b.dataset.csGroup===G.id; b.classList.toggle('on',on); b.setAttribute('aria-pressed',String(on)); });
   caseDraw2(); caseDraw3(); caseStepBar();
-  const s=$('cs-s2'); if(s) s.scrollIntoView({block:'start'});
+  const s=$(casePropMode()&&!CASE_ST.propList?'cs-s3':'cs-s2'); if(s) s.scrollIntoView({block:'start'});
 }
 /* v10.40 fix, kept: every group tile as tall as the tallest (measured, so it holds in both languages
    at any width; again on resize). */
@@ -33753,6 +33813,8 @@ function caseChoose(id,o){
 }
 
 /* ---- the step bar: where he is (done / now / next), and a jump to each step ---------------------- */
+/* v10.47.0: in the proposal view (he came with a proposal from the survey) the steps are 1 Who is it for? and 2 Your slides */
+function caseStepNo(n){ return casePropMode()&&!CASE_ST.propList&&n===3?2:n; }
 function caseStepHead(n,title,note,right){
   return `<div class="cs-sh"><span class="cs-num" aria-hidden="true">${n}</span><div class="cs-sht"><h3><span class="cs-vh">${esc(caseStepT('stepOf',{n}))}</span>${esc(title)}</h3>${note?`<p class="note">${esc(note)}</p>`:''}</div>${right||''}</div>`;
 }
@@ -33825,12 +33887,12 @@ function caseDraw3(){
   const door=`<div class="cs-doorw">${caseDoorHTML()}</div>`;
   const wireDoor=()=>{ const b=h.querySelector('[data-cs-sample]'); if(b) b.onclick=()=>caseSampleOpen(); caseStepBar(); };
   h.hidden=false;
-  if(!P.ministry||!P.group){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(3,caseStepT('t3'),caseStepT(P.ministry?'n3group':'n3none'))+door; wireDoor(); return; }
+  if(!P.ministry||!P.group){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT(P.ministry?'n3group':'n3none'))+door; wireDoor(); return; }
   let model=null; try{ model=caseModel(P.ministry,{type:P.type,group:P.group},{respond:caseRespondDefault(P),timing:caseTimingOf(P)}); }catch(e){ model=null; }   // v10.42: timing
-  if(!model||!model.ok){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(3,caseStepT('t3'),'')+`<div class="u-empty">${esc(caseU('failed'))}</div>`+door; wireDoor(); return; }
+  if(!model||!model.ok){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),'')+`<div class="u-empty">${esc(caseU('failed'))}</div>`+door; wireDoor(); return; }
   CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
   const n=CASE_ST.deck.slides.length;
-  h.innerHTML=caseStepHead(3,caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
+  h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
     +caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
     // v10.42 part 3 (X11): how it is being decided (the presenter builder's card), the private ask list, the church's readiness (folded)
     +`<section class="cs-dec" id="cs-dec" hidden></section>`
@@ -34240,10 +34302,24 @@ function caseMount(fresh){
   // (an open sample stays open).
   if(CASE_ST.view!=='sample'){ const cp=$('casep'); if(cp&&!cp.hidden){ cp.hidden=true; cp.innerHTML=''; } }
   caseMigrateYouth(); caseMigrateEdits42();
-  if(swh){ swh.innerHTML=buySwitchHTML(buyPath()); buySwitchWire(swh); }
+  /* v10.47.0 — the pastor (5 Oct 2026): "when it goes to make a proposal this proposal will be front and center at the top and then
+     below … who it's for … as simple as possible … right now it's really messy … so many different things going on at the top". He
+     came with a proposal from the survey: the proposal card first, nothing above it (no ministry-or-project switch, no Gifts-first
+     line, no step bar), then Who is it for?, then the slides. "Choose a different ministry" brings the list back. */
+  const PROP=casePropMode();
+  if(swh){ if(PROP){ swh.innerHTML=''; swh.hidden=true; } else { swh.hidden=false; swh.innerHTML=buySwitchHTML(buyPath()); buySwitchWire(swh); } }
   if(buyPath()==='buy'){ host.innerHTML=`<div id="bx-host"></div><div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`; buyMount($('bx-host')); return; }
   const P=casePrefs(); U_PROP=P.ministry;
   // v10.41: the step bar, then three framed steps: who it is for, what he will propose, his slides
+  if(PROP){
+    host.innerHTML=`<section class="cs-prop" id="cs-prop" aria-labelledby="cs-prop-t">${casePropHTML()}</section>
+      <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"${CASE_ST.propList?'':' hidden'}></section><section class="cs-step" id="cs-s3"></section>
+      <div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`;
+    casePropWire(host);
+    caseDraw1(); caseDraw2(); caseDraw3();
+    const s2=$('cs-s2'); if(s2) s2.hidden=!CASE_ST.propList;
+    return;
+  }
   host.innerHTML=`<div class="cs-gff" id="cs-gff" role="note" hidden></div><nav class="cs-bar" id="cs-bar"></nav>
     <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"></section><section class="cs-step" id="cs-s3"></section>
     <div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`;
@@ -34251,6 +34327,31 @@ function caseMount(fresh){
   { const fh=nsFromHTML(); if(fh){ host.insertAdjacentHTML('afterbegin',fh); const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack; } }
   caseDraw1(); caseDraw2(); caseDraw3(); caseStepBar();
   caseGiftsBanner();   // v10.42 part 3: "Gifts first" below half of the adults (never blocks anything)
+}
+/* The proposal view: he came from a need with "Create a proposal for this ministry", and that ministry is still the one chosen. */
+function casePropMode(){
+  try{ return TOOL==='case'&&!!NS.back&&!!NS.back.plan&&casePrefs().ministry===NS.back.plan&&buyPath()!=='buy'; }catch(e){ return false; }
+}
+/* The proposal card: what he is proposing, for which need, its lift, its people and its money; the way back and another ministry. */
+function casePropHTML(){
+  const b=NS.back||{}; let n=null, v=null;
+  try{ n=nsNeedById(b.need); v=nsView(b.idea,n?nsNeedLang(n):libLangCtx()); }catch(e){ v=null; }
+  if(!v){ const x=caseItemOf(b.plan); v=x?{name:caseMinName(x)||x.n||'',d:'',tier:2,ppl:0,priced:false}:{name:'',d:'',tier:2,ppl:0,priced:false}; }
+  const L=nsLift(v), d1=nsD1(v)||'';
+  const chips=[`${nsBars(L)}${esc(nsU(L))}`,v.ppl?esc(nsU('ppl',v.ppl)):'',esc(nsMoney(v))].filter(Boolean);
+  return `<p class="cs-pk">${esc(L_PROP('k'))}</p>
+    <p id="cs-prop-t" class="cs-pt" role="heading" aria-level="2">${esc(gfCap(v.name))}</p>
+    ${d1?`<p class="cs-pd">${esc(d1)}</p>`:''}
+    <div class="cs-pchips">${chips.map(c=>`<span>${c}</span>`).join('')}</div>
+    ${n?`<p class="cs-pneed"><b>${esc(L_PROP('need'))}</b> ${esc(n.title)}${n.evidence?` · <span>${esc(n.evidence)}</span>`:''}</p>`:''}
+    <div class="cs-pacts"><button type="button" class="btn ghost gfsm" data-cs-from>${esc(L_PROP('back'))}</button>
+      <button type="button" class="btn ghost gfsm" data-cs-other aria-expanded="${!!CASE_ST.propList}" aria-controls="cs-s2">${esc(L_PROP(CASE_ST.propList?'hide':'other'))}</button></div>`;
+}
+const L_PROP=k=>({k:['Your proposal','Su propuesta'],need:['For the need:','Para la necesidad:'],back:['← Back to the need','← Volver a la necesidad'],
+  other:['Choose a different ministry','Elegir otro ministerio'],hide:['Keep this ministry','Mantener este ministerio']}[k]||['',''])[LANG==='es'?1:0];
+function casePropWire(host){
+  const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack;
+  const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const s2=$('cs-s2'); if(s2) s2.scrollIntoView({block:'start'}); } };
 }
 /* ================= /MAKE THE CASE: THE SCREENS ================= */
 

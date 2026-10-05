@@ -82,7 +82,8 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   console.log('\n-- the 34 groups, builder D\'s included --');
   setup(P);
   const secs=()=>P.qa('#cs-s1 .cs-aud').map(s=>[s.dataset.csSec,s.querySelectorAll('[data-cs-group]').length]);
-  c('Decide 6, Ministry teams 26, On Sabbath 1, The conference 1', secs(), [['decide',6],['teams',26],['sabbath',1],['conference',1]]);
+  // v10.47.0 — the pastor (5 Oct 2026): "decide … should be leadership … then Ministry departments"; board, finance, business meeting, elders, deacons; "not the nominating committee" (now under Ministry departments › Other committees)
+  c('Leadership 5, Ministry departments 27, On Sabbath 1, The conference 1', secs(), [['decide',5],['teams',27],['sabbath',1],['conference',1]]);
   c('every group once', P.qa('#cs-s1 [data-cs-group]').map(b=>b.dataset.csGroup).sort(), P.J('CASE_GROUPS.map(g=>g.id)').sort());
 
   console.log('\n-- three framed steps, in order, with the step bar --');
@@ -107,14 +108,14 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   addGroups(P); P.E('caseMount(true)');
   c('four sections in order, each with its colour: Decide gold, teams violet, Sabbath mint, conference blue',
     P.qa('#cs-s1 .cs-aud').map(s=>[s.dataset.csSec,s.getAttribute('style'),s.querySelector('h4').textContent]),
-    [['decide','--g:var(--m-hardship)','Decide'],['teams','--g:var(--m-children)','Ministry teams'],['sabbath','--g:var(--m-language)','On Sabbath'],['conference','--g:var(--m-housing)','The conference']]);
+    [['decide','--g:var(--m-hardship)','Leadership'],['teams','--g:var(--m-children)','Ministry departments'],['sabbath','--g:var(--m-language)','On Sabbath'],['conference','--g:var(--m-housing)','The conference']]);
   const inSec=id=>P.qa(`#cs-s1 [data-cs-sec="${id}"] [data-cs-group]`).map(b=>b.dataset.csGroup);
-  c('Decide: board, business meeting, elders, deacons, treasurer, nominating', inSec('decide'), ['board','business','elders','deacons','finance','nominating']);
+  c('Leadership: the board, finance, the business meeting, the elders, the deacons', inSec('decide'), ['board','finance','business','elders','deacons']);
   const subs=P.qa('#cs-s1 [data-cs-sec="teams"] .cs-asub').map(h=>[h.textContent,[...h.nextElementSibling.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup)]);
   c('Ministry teams in four sub-headings (and "More teams" for one nobody listed)', subs, [
     ['Worship & learning',['worship','sabbathschool','childrens','school']],['Children & youth',['adventurers','pathfinders','youth','youngadults']],
     ['Outreach & evangelism',['personal','evangelism','bibleworkers','literature','community','health','media','prison','liberty','possibility']],
-    ['Care & family',['prayer','hospitality','family','womens','mens','seniors','smallgroups','stewardship']],['More teams',['zzz']]]);
+    ['Care & family',['prayer','hospitality','family','womens','mens','seniors','smallgroups','stewardship']],['Other committees',['nominating']],['More teams',['zzz']]]);
   c('On Sabbath: the whole church; The conference: conference leaders', [inSec('sabbath'),inSec('conference')], [['congregation'],['conference']]);
   c('one short line where the name alone could mislead', ['business','congregation','conference'].map(id=>P.txt(`[data-cs-group="${id}"] em`)), ['the whole church votes','a 6–8 minute presentation','an evangelism proposal']);
   c('tiles: a coloured dot and the name, nothing else to read', P.qa('#cs-s1 .cs-atile').every(b=>b.querySelector('.cs-adot')&&b.querySelector('b')&&!b.querySelector('svg')), true);
@@ -270,7 +271,7 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   console.log('\n-- Spanish --');
   { const S=page({lang:'es'}); await sleep(1300); addGroups(S); setup(S);
     c('titles in Spanish', S.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['¿Para quién es?','¿Qué va a proponer?','Sus diapositivas']);
-    c('sections in Spanish', S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Quienes deciden','Equipos de ministerio','En sábado','La asociación']);
+    c('sections in Spanish', S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Liderazgo','Departamentos de ministerio','En sábado','La asociación']);   // v10.47.0
     c('sub-headings and notes in Spanish', [S.qa('#cs-s1 .cs-asub').map(h=>h.textContent).slice(0,4),S.txt('[data-cs-group="business"] em')],
       [['Adoración y enseñanza','Niños y jóvenes','Alcance y evangelismo','Cuidado y familia'],'vota toda la iglesia']);
     S.q('[data-cs-group="prayer"]').click(); await until(()=>S.qa('#cs-lib .lib-sec').length===2); await sleep(60);

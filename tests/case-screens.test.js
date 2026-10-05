@@ -73,8 +73,9 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   // denomination … We also have an evangelism team" and "we can appeal to the conference leaders for an EVANGELISM
   // proposal"): 34 groups, and the conference in its own section.
   c('all 34 groups at once, none chosen yet', [P.qa('#cs-s1 [data-cs-group]').length,P.qa('#cs-s1 [data-cs-group][aria-pressed="true"]').length], [34,0]);
-  c('…in coloured sections', P.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Decide','Ministry teams','On Sabbath','The conference']);
-  c('…the board groups under Decide, the teams under Ministry teams, the whole church and the conference on their own', P.qa('#cs-s1 .cs-aud').map(s=>[...s.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup).sort()), [boards.slice().sort(),teams.slice().sort(),['congregation'],['conference']]);
+  // v10.47.0 — the pastor (5 Oct 2026): "decide … should be leadership … then Ministry departments"; board, finance, business meeting, elders, deacons; "not the nominating committee" (now under Ministry departments › Other committees)
+  c('…in coloured sections', P.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Leadership','Ministry departments','On Sabbath','The conference']);
+  c('…the board groups under Decide, the teams under Ministry teams, the whole church and the conference on their own', P.qa('#cs-s1 .cs-aud').map(s=>[...s.querySelectorAll('[data-cs-group]')].map(b=>b.dataset.csGroup).sort()), [boards.filter(x=>x!=='nominating').sort(),teams.concat(boards.includes('nominating')?['nominating']:[]).sort(),['congregation'],['conference']]);
   c('…no kind cards and no chips any more', P.qa('[data-cs-type],.cs-type,.cs-chip').length, 0);
   c('no ranked ministry cards, no "Can staff now", no department link', [!!P.q('#cs-grid'),!!P.q('[data-cs-filter]'),!!P.q('[data-cs-deptjump]')], [false,false,false]);
   click(P,'[data-cs-group="youth"]');
@@ -271,7 +272,7 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     // Updated v10.41 (the three steps: who it is for, then what, then the slides; the ranked cards are gone).
     c('the steps in Spanish', S.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['¿Para quién es?','¿Qué va a proponer?','Sus diapositivas']);
     // v10.41 integration: the conference section, and "Worship & learning" opens with the new Worship & music and children's tiles
-    c('who it is for: the sections', S.qa('#cs-s1 .cs-aud h4').map(b=>b.textContent), ['Quienes deciden','Equipos de ministerio','En sábado','La asociación']);
+    c('who it is for: the sections', S.qa('#cs-s1 .cs-aud h4').map(b=>b.textContent), ['Liderazgo','Departamentos de ministerio','En sábado','La asociación']);   // v10.47.0
     c('…the groups', S.qa('[data-cs-sec="teams"] [data-cs-group] b').slice(0,3).map(b=>b.textContent), ['Adoración y música','Consejo de Escuela Sabática','Escuela Sabática de Niños y Ministerios Infantiles']);
     click(S,'[data-cs-group="community"]'); await until(()=>S.q('#cs-lib .lib-card'),8000);
     type(S,'#cs-q','despensa'); await until(()=>S.qa('#cs-lib .lib-sig h4').some(b=>/despensa/i.test(b.textContent)),8000);

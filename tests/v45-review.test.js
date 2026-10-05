@@ -60,7 +60,8 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   S=model(P,`D.levels.cousub={kind:'Town',name:'Immokalee Ccd',short:'Immokalee',ccd:true}; D.M.cousub.past=D.M.tract.past; D.M.cousub.pop=D.M.tract.pop; D.M.tract.past=null;`);
   c('a census county division is "the Immokalee area": the tag and the line', [P.txt('#u-needs [data-also="town"] .ns-tag'),/across the Immokalee area as a whole/.test(P.txt('#u-needs .ns-alsob .note')||'')], ['Across the Immokalee area',true]);
   c('…the growth figure says where it is ("across the Immokalee area")', /^The population across the Immokalee area has grown/.test((S.needs.find(n=>n.id==='growth')||{}).evidence||''), true);
-  c('…and the place line under the address, never "Immokalee Ccd"', P.E(`(renderPlace(DATA.levels,DATA.geo),document.getElementById('place').textContent)`).includes('the Immokalee area'), true);
+  // v10.47.0: the place line is the church now (the pastor: "we just need to know which church"); the town is on the Town button
+  c('…never "Ccd": not on the place line (the church), not on the Town button', [/Ccd|CCD/.test(P.E(`(renderPlace(DATA.levels,DATA.geo),document.getElementById('place').textContent)`)),/Ccd|CCD/.test(P.txt('#scope')||'')], [false,false]);
   const Pes=page({needs:'file',lang:'es'}); await ready(Pes); survey(Pes,{mod:`D.levels.cousub={kind:'Town',name:'Immokalee Ccd',short:'Immokalee',ccd:true};`});
   c('…in Spanish: "En toda la zona de Immokalee"', Pes.txt('#u-needs [data-also="town"] .ns-tag'), 'En toda la zona de Immokalee');
   model(P,'');
