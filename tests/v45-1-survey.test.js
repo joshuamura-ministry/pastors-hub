@@ -14,11 +14,13 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   console.log('\n-- the needs follow the report, and nothing above them but the heading and the verse --');
   const P=page({needs:'file'}); await ready(P); survey(P); await sleep(60);
   const n=P.q('#u-needs'), h2=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:null;
-  c('in #sections, after Churches nearby and before Where to look', [n.parentElement.id,h2(n.previousElementSibling),h2(n.nextElementSibling)], ['sections','Churches nearby','Where to look']);
-  c('…and it stays there after a scope change (the same node, moved into its slot)', (P.E('SCOPE="cousub"; render()'),[P.q('#u-needs')===n,n.parentElement.id,h2(n.previousElementSibling)]), [true,'sections','Churches nearby']);
+  // v10.46.1 — the pastor: "should go after community resources should be at the bottom" (v10.45.1 had it after Churches nearby)
+  c('in #sections, at the bottom: after Community resources', [n.parentElement.id,h2(n.previousElementSibling)], ['sections','Community resources']);
+  c('…and it stays there after a scope change (the same node, moved into its slot)', (P.E('SCOPE="cousub"; render()'),[P.q('#u-needs')===n,n.parentElement.id,h2(n.previousElementSibling)]), [true,'sections','Community resources']);
+  c('nothing of the survey\'s own comes after it but What\'s next (Make the Case\'s section is another tool\'s)', [...P.qa('#sections > section.blk')].slice([...P.qa('#sections > section.blk')].indexOf(n)+1).filter(x=>!x.classList.contains('offtab')).map(x=>x.querySelector('h2').textContent).filter(t=>t!=='What’s next'), []);
   P.E('SCOPE="tract"; render()');
   c('no language strip, no note, no Spiritual Gifts link', [P.qa('#u-needs .ns-strip').length,P.qa('#u-needs .ns-nofill').length,P.qa('#u-needs [data-gf-church]').length], [0,0,0]);
-  c('the chip bar names it once, in its place', (b=>[b.indexOf('Needs')===b.indexOf('Churches nearby')+1,b.filter(x=>x==='Needs').length])(P.qa('#secnav button').map(x=>x.textContent)), [true,1]);
+  c('the chip bar names it once, in its place', (b=>[b.indexOf('Needs')===b.indexOf('Community resources')+1,b.filter(x=>x==='Needs').length])(P.qa('#secnav button').map(x=>x.textContent)), [true,1]);
 
   console.log('\n-- an opened need: the figures as rings, what helps, where to begin, the question --');
   await openNeed(P,'rent50');
@@ -43,6 +45,23 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   await openNeed(P,'rent50',true);
   c('the button and the list sit in their own framed section, after the need\'s detail', [!!P.q(A+' .ns-ideasec [data-ns-show]'),!!P.q(A+' .ns-ideasec .ns-ideas'),P.q(A+' .ns-ideasec').previousElementSibling.className], [true,true,'ns-detail']);
   c('…in the theme\'s mint, not the need\'s colour', /\.ns-ideasec\{--k:var\(--acc\)/.test(HTML), true);
+
+  console.log('\n-- v10.46.1: the three lifts across the top, one list open at a time --');
+  // "light lift moderate lift and heavy lift across the top bar … I click light lift it essentially opens up … if I press moderate lift
+  // it makes moderate lift the whole thing … they will all be closed so just those three are seen"
+  const I='#ns-i-rent50';
+  const tabs=()=>P.qa(I+' .ns-ltab').map(b=>[b.dataset.nsLift,b.getAttribute('aria-expanded')]), shown=()=>P.qa(I+' .ns-lift').filter(x=>!x.hidden).map(x=>x.dataset.lift);
+  c('three buttons across the top, each with its count; every list closed at first', [P.qa(I+' .ns-ltabs > .ns-ltab').length,P.qa(I+' .ns-ltab small').every(x=>/^\d+ ideas?$/.test(x.textContent)),tabs().map(x=>x[1]),shown()], [3,true,['false','false','false'],[]]);
+  P.q(I+' [data-ns-lift="light"]').click();
+  c('Light lift: its list opens, the others stay closed', [tabs().map(x=>x[1]),shown()], [['true','false','false'],['light']]);
+  P.q(I+' [data-ns-lift="moderate"]').click();
+  c('Moderate lift: the list switches', [tabs().map(x=>x[1]),shown()], [['false','true','false'],['moderate']]);
+  P.q(I+' [data-ns-lift="moderate"]').click();
+  c('tap the open one again: all closed, the three buttons only', [tabs().map(x=>x[1]),shown()], [['false','false','false'],[]]);
+  P.q(I+' [data-ns-lift="heavy"]').click(); P.E('nsIdeasRedraw()');
+  c('a redraw keeps the lift he chose', shown(), ['heavy']);
+  c('each button names the list it opens', P.qa(I+' .ns-ltab').every(b=>P.q('#'+b.getAttribute('aria-controls'))&&P.q('#'+b.getAttribute('aria-controls')).dataset.lift===b.dataset.nsLift), true);
+  P.q(I+' [data-ns-lift="heavy"]').click();
 
   console.log('\n-- a tap stays under the pointer --');
   c('opening a need keeps its head where it was (scrollBy the shift), and jumps only when asked', P.E(`(f=>f.includes('window.scrollBy(0,after-before)')&&/if\\(o\\.jump\\) a\\.scrollIntoView/.test(f))(nsOpenCard.toString())`), true);

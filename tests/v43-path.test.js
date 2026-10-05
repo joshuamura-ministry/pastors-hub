@@ -151,8 +151,9 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
     survey(P,`uChurch().selected=['cooking-school','food-pantry']; caseSetPrefs({type:'board',group:'board'});`);
     const blks=P.qa('#sections section.blk'), i=blks.findIndex(s=>s.id==='u-whatsnext');
     // v10.45.0 (stale): the ministries list is gone; What's next follows Community resources (DESIGN-SURVEY §1.4)
-    c('one block, the survey’s last (after Community resources; Make the Case’s own block follows, shown only in that tool)',
-      [P.qa('#u-whatsnext').length,blks[i-1].querySelector('h2').textContent,blks[i+1].dataset.tab,blks.slice(i+2).length], [1,'Community resources','case',0]);
+    // v10.46.1: the needs moved to the bottom, after Community resources ("should go after community resources"); What's next follows them
+    c('one block, the survey’s last (after the needs; Make the Case’s own block follows, shown only in that tool)',
+      [P.qa('#u-whatsnext').length,blks[i-1].querySelector('h2').textContent,blks[i+1].dataset.tab,blks.slice(i+2).length], [1,'What this neighborhood needs from our church','case',0]);
     c('in the survey: shown, a section with its heading ("What’s next"), kept under a Focus (prompts)', [P.q('#u-whatsnext').classList.contains('offtab'),P.txt('#u-whatsnext h2'),P.q('#u-whatsnext').dataset.tab,P.q('#u-whatsnext').dataset.theme.split(' ')[0]], [false,'What’s next','mobilize','prompts']);
     c('…in the section bar too', P.qa('#secnav button').map(b=>b.textContent).includes('What’s next'), true);
     c('two parts: make the case, then the gifts', P.qa('#u-whatsnext .u-next-part h3').map(h=>h.textContent), ['Make the Case','Discover your members’ gifts']);

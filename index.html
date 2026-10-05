@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.46.0
+     TERRAIN  v10.46.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.46.0" data-theme="dark">
+<html lang="en" data-version="v10.46.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.46.0">
-<title>Community Map — Terrain v10.46.0</title>
+<meta name="terrain-version" content="v10.46.1">
+<title>Community Map — Terrain v10.46.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3721,6 +3721,19 @@ section.blk.u-needs{margin-top:22px}
 .ns-ideasec .ns-show[aria-expanded="true"]{border-radius:13px 13px 0 0;border-bottom:1px solid color-mix(in srgb,var(--acc) 35%,var(--line))}
 .ns-ideasec .ns-show span{display:inline-flex;align-items:center;gap:10px;color:var(--acc)}
 .ns-ideasec .ns-ideas:not([hidden]){padding:14px 0 16px}
+/* v10.46.1: the three lifts across the top, one list open at a time */
+.ns-ltabs{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:8px}
+.ns-ltab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;min-height:64px;padding:10px 6px;border:1px solid var(--line2);
+  border-radius:12px;background:var(--panel2);color:var(--ink);font:inherit;font-weight:600;font-size:.95rem;line-height:1.2;text-align:center;cursor:pointer;min-width:0}
+.ns-ltab .ns-lt{overflow-wrap:anywhere}
+.ns-ltab small{color:var(--ink3);font-weight:500;font-size:.78rem}
+.ns-ltab[aria-expanded="true"]{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 16%,var(--panel2));box-shadow:inset 0 -3px 0 var(--acc)}
+.ns-ltab[aria-expanded="true"] small{color:var(--ink2)}
+@media (hover:hover){.ns-ltab:hover{border-color:color-mix(in srgb,var(--acc) 60%,var(--line2))}}
+.ns-ltab:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.ns-lift[hidden]{display:none}
+.u-needs .ns-ltab .lift b{background:var(--line2)}
+.u-needs .ns-ltab .lift.l1 b:nth-child(-n+1),.u-needs .ns-ltab .lift.l2 b:nth-child(-n+2),.u-needs .ns-ltab .lift.l3 b{background:var(--acc)}
 .ns-bulb{width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
 .ns-ask{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink2);font-size:.88rem}
 .ns-ask b{color:var(--ink);font-weight:600}
@@ -4003,13 +4016,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.46.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.46.0';
+const VERSION = 'v10.46.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -12373,13 +12386,27 @@ function nsCountText(n){
   if(NS.err||!NS.map||!LIB.idx) return '…';
   return nsU('count',nsIdeasFor(n).length);
 }
+/* "5 ideas" · "1 idea" (the same words in Spanish) */
+const L_IDEAS=k=>k===1?'1 idea':k+' ideas';
+/* The lift open in this need's ideas: the one he chose (or '' after closing it), else the lift of the idea he came back to, else none */
+function nsLiftOpen(n,list){
+  if(NS.lift&&NS.lift.need===n.id) return NS.lift.L;
+  if(NS.open===n.id&&NS.last){ const v=(list||[]).find(x=>x.id===NS.last); if(v) return nsLift(v); }
+  return '';
+}
 function nsIdeasHTML(n){
   if(!entitled('plan')) return lockHTML('plan');
   if(NS.err) return `<p class="note ns-fail" role="status">${esc(nsU('failed'))} <button type="button" class="btn ghost gfsm" data-ns-retry>${esc(nsU('retry'))}</button></p>`;
   if(!NS.map||!LIB.idx) return `<p class="note ns-wait" role="status">${esc(nsU('loading'))}</p>`;
   const list=nsIdeasFor(n);
-  return NS_LIFTS.map(L=>{ const g=list.filter(v=>nsLift(v)===L); if(!g.length) return '';
-    return `<div class="ns-lift" data-lift="${L}"><h4>${nsBars(L)}${esc(nsU(L))}</h4><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
+  /* v10.46.1 — the pastor (5 Oct 2026): "light lift moderate lift and heavy lift across the top bar … I click light lift it
+     essentially opens up … if I press moderate lift it makes moderate lift the whole thing … they will all be closed so just those
+     three are seen … something that looks a little bit more compact". Three buttons across, each with its count; one list open at a
+     time (tap the open one again to close it); nothing open at first, except the lift of the idea he came back to. */
+  const groups=NS_LIFTS.map(L=>[L,list.filter(v=>nsLift(v)===L)]).filter(([,g])=>g.length), open=nsLiftOpen(n,list);
+  const tabs=`<div class="ns-ltabs">${groups.map(([L,g])=>`<button type="button" class="ns-ltab" data-ns-lift="${L}" aria-expanded="${open===L}" aria-controls="ns-l-${esc(n.id)}-${L}">${nsBars(L)}<span class="ns-lt">${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></button>`).join('')}</div>`;
+  return tabs+groups.map(([L,g])=>{
+    return `<div class="ns-lift" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"${open===L?'':' hidden'}><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
       return `<button type="button" class="ns-row${NS.last===v.id&&NS.open===n.id?' ns-last':''}" data-idea="${esc(v.id)}" data-need="${esc(n.id)}"><span class="ns-in">${esc(gfCap(v.name))}</span><span class="ns-ia" aria-hidden="true">›</span>`
         +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`; }).join('');
 }
@@ -12600,6 +12627,12 @@ function nsClick(e){
   if(head&&h.contains(head)){ const a=head.closest('.ns-need'); if(a.classList.contains('open')) nsCloseCard(a); else nsOpenCard(a.dataset.need); return; }
   const sh=t.closest('[data-ns-show]');
   if(sh){ const a=sh.closest('.ns-need'); nsSetIdeas(a,sh.getAttribute('aria-expanded')!=='true'); return; }
+  const lt=t.closest('[data-ns-lift]');
+  if(lt){ const a=lt.closest('.ns-need'), id=a.dataset.need, L=lt.dataset.nsLift, now=lt.getAttribute('aria-expanded')==='true'?'':L;
+    NS.lift={need:id,L:now};
+    a.querySelectorAll('[data-ns-lift]').forEach(b=>b.setAttribute('aria-expanded',String(b.dataset.nsLift===now)));
+    a.querySelectorAll('.ns-lift[data-lift]').forEach(p=>p.hidden=p.dataset.lift!==now);
+    return; }
   const row=t.closest('.ns-row[data-idea]');
   if(row){ nsSheetOpen(row.dataset.idea,row.dataset.need,{row}); return; }
   if(t.closest('[data-ns-more]')){ NS.showAll=true; h.querySelectorAll('.ns-list > .ns-need[hidden]').forEach(x=>x.hidden=false); const m=h.querySelector('[data-ns-more]');
@@ -12796,7 +12829,7 @@ function nsBack(){
   try{ sessionStorage.removeItem('terrain-ns-back'); }catch(e){}
   openTool('survey');
   if(!b) return;
-  NS.open=b.need; NS.ideas=true; NS.last=b.idea;
+  NS.open=b.need; NS.ideas=true; NS.last=b.idea; NS.lift=null;   // v10.46.1: the lift of that idea opens
   if(!nsCardEl(b.need)){ NS.reopen=b; return; }   // the survey is still being drawn: nsDraw() opens it
   nsBackTo(b);
 }
@@ -13094,7 +13127,9 @@ function render(){
      survey asks for nothing. v10.45.1 (the pastor, 5 Oct 2026): "the Pastor has to go through all the things about what the
      community is like and then it will show what this neighborhood needs from this church" — so the needs (#u-needs, nsDraw)
      follow the report (Economy … Churches nearby) and come before the action plan (Where to look, Community resources). */
-  secs.push('<div id="ns-slot"></div>');
+  // v10.46.1 — the pastor (5 Oct 2026): "what this neighborhood needs from your church should go after community resources should
+  // be at the bottom". With the plan: after Community resources (below). Free tier: here, before the lock that ends the survey.
+  if(!entitled('plan')) secs.push('<div id="ns-slot"></div>');
 
   /* The action plan, in the order it is actually worked:
        look at the map, see who is already helping, know your own church,
@@ -13105,6 +13140,7 @@ function render(){
   }
   secs.push(SEC_WHERE);
   secs.push(SEC_HELP);
+  if(entitled('plan')) secs.push('<div id="ns-slot"></div>');   // v10.46.1: the needs at the bottom, after Community resources
   // v10.45.0: "What's next" follows Community resources (it followed the ministries list)
   // v10.43 (SPEC §5): "What's next" at the very bottom of the survey (make the case for each ministry in the plan, Gifts first)
   { const nx=uNextHTML(); if(nx) secs.push(nx); }
