@@ -155,6 +155,32 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.45.1 (5 Oct 2026) — the needs follow the report; each need opens on its figures.** The pastor, looking at v10.45.0 live on
+his computer: *"it should be right after the community … survey"*; *"you don't need the thing that says your church's information
+is on the spiritual gifts page … nothing to fill-in … English only at home, born abroad … don't need to be there either"*; *"what
+the community needs is essentially needs to be more robust with information and I really like the circular graphs with the
+colors"*; *"there's no differentiation between Ministry ideas to meet the need and what the community needs … it's all mush
+together"*; *"when I click down below under also here … it jumps to the top"*; *"the spiritual gifts is always highlighted … nothing
+stays highlighted"*; *"I really want the computer to be solid."*
+- `#u-needs` moves into `#sections` on each `render()` (a `#ns-slot` after Churches nearby, before Where to look / the free tier's
+  lock); the node is kept, so an open need stays open. The chip bar lists it in place (`buildSecNavInner`, `markSection` no longer
+  special-case it); the Brief chip is "Resumen" in Spanish.
+- Above the needs: the heading and John 4:35 only (`nsStripHTML`, the note and the Gifts link no longer drawn; their `NS_UI`
+  strings stay unused). Where people were born sits in the language and newcomer needs (`.ns-born`).
+- An opened need: `nsFigsHTML(n)` — up to four of the report's rings (`statRing`, `.stats/.stat`, kind colours, the county as the
+  notch, "+9% vs county"), from `NS_FIGS` (rule id → figure keys) and `NS_FIG_DEF` (key → EN, ES, kind; `@lang`, `@langLow`,
+  `@teens`, `@occ:<group>`); then "What helps" (`NS_HELP`, the old `STRATEGY` by category, US spelling, with Spanish); then "Where
+  to begin" (the steps) and "Ask first". Rings are drawn only for the open need.
+- The ideas are their own framed mint section (`.ns-ideasec`, `--k:var(--acc)`), the show button its header.
+- `nsOpenCard`: closing the open need above no longer pulls the tapped row to the top (Safari has no scroll anchoring):
+  `window.scrollBy(0,after-before)`; `scrollIntoView` only with `o.jump`.
+- Hub: the halos and icons no longer breathe in turn (v10.38); all rest at `opacity:.22`; hover or keyboard focus lights one.
+  "Your path": `.hp-step.now` no longer glows or breathes (it outlined Spiritual Gifts on every visit once a church was mapped);
+  hover lights a step.
+- Tests: new `v45-1-survey` (26, failing-first on v10.45.0: `Terrain-work/v64/logs/ff-v45-1-survey.log`); updated with comments:
+  v45-handoff, v45-needs, v45-needs-ui, v45-review, v45-profile-move, v43-path, hub-glow, v41-1 and v45-survey (the version checks
+  now read "the six agree" instead of a pinned release). `tools/ideas-src/vocab.json` rebuilt for the version.
+
 **v10.45.0 (5 Oct 2026) — the Community Survey says what the neighborhood needs.** His words (3–5 Oct 2026, voice-to-text): *"There's
 too much to fill in… no more filling in on community survey."* *"It's gonna give the things the community needs, the top priorities and the
 greatest opportunities… in each need there's going to be a place to click and a drop-down with ideas… around 10… light lift, moderate lift

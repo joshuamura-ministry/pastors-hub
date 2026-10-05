@@ -139,21 +139,22 @@ const need=(S,id)=>S.needs.find(n=>n.id===id)||null;
   c('…a need is never in both lists, nor among the needs', new Set([...s.also.map(n=>n.id),...s.needs.map(n=>n.id)]).size, s.also.length+s.needs.length);
   c('the town rows only in the neighborhood view', model(P,'','cousub').also.filter(n=>n.tag==='town').length, 0);
 
-  console.log('\n-- the language strip (on the page) --');
+  console.log('\n-- v10.45.1: no language strip above the needs; where people were born sits inside the needs it explains --');
+  // The pastor (5 Oct 2026): "English only at home, born abroad, India, Bosnia, Trinidad and Tobago, Germany don't need to be there
+  // either" (and the note and the Spiritual Gifts link). Was: one chip per language, the born-abroad chip, the group notes.
   survey(P); await sleep(60);
-  c('one chip per language at 2% or more (top five), named truthfully, then where people were born', P.qa('#u-needs .ns-strip .ns-lang').map(x=>x.textContent),
-    ['Spanish 19%','Other Asian or Pacific 4%','Arabic 2%','Born abroad: Mexico, Dominican Republic, Guatemala, Vietnam']);
-  c('a group chip adds its note (the Census group\'s languages)', P.txt('#u-needs .ns-gnote'), '“Other Asian or Pacific” includes Japanese, Tamil, Telugu, Khmer, Hmong, Thai and others.');
-  survey(P,{mod:`D.M.tract.langs=[{name:'Spanish',share:1.5,count:80,ltvw:10}];D.M.tract.foreign=1.5`}); await sleep(60);
-  c('no language at 2%: "English only at home 64%", and no born-abroad chip under 2%', P.qa('#u-needs .ns-strip .ns-lang').map(x=>x.textContent), ['English only at home 64%']);
+  c('nothing above the needs but the heading and the verse: no strip, no group note, no "nothing to fill in", no link',
+    [P.qa('#u-needs .ns-strip').length,P.qa('#u-needs > .ns-gnote').length,P.qa('#u-needs .ns-nofill').length,P.qa('#u-needs [data-gf-church]').length], [0,0,0,0]);
+  P.q('#u-needs [data-need="lang-primary"] .ns-head').click(); await sleep(30);
+  c('the language need opens on its figures (the language; how many of its speakers have limited English) and where neighbors born abroad come from',
+    [P.qa('#u-needs [data-need="lang-primary"] .ns-figs .statlab').map(x=>x.textContent).slice(0,2),P.txt('#u-needs [data-need="lang-primary"] .ns-born')],
+    [['Speak Spanish at home','Of them, limited English'],'Where neighbors born abroad come from: Mexico, Dominican Republic, Guatemala, Vietnam']);
   survey(P,{mod:`D.M.tract.langs=[{name:'Other European',share:6,count:300,ltvw:50},{name:'Chinese',share:3,count:150,ltvw:60}]`}); await sleep(60);
-  c('"Other Indo-European", never "Other European", on the strip and in the Language section\'s bars',
-    [P.txt('#u-needs .ns-strip'),/Other Indo-European/.test(P.txt('#sections')),/Other European/.test(P.txt('#sections'))],
-    ['Other Indo-European 6%Chinese 3%Born abroad: Mexico, Dominican Republic, Guatemala, Vietnam',true,false]);
-  c('…and its note', P.txt('#u-needs .ns-gnote'), '“Other Indo-European” includes Hindi, Urdu, Gujarati, Punjabi, Bengali, Persian, Portuguese and others.');
+  c('"Other Indo-European", never "Other European", in the Language section\'s bars', [/Other Indo-European/.test(P.txt('#sections')),/Other European/.test(P.txt('#sections'))], [true,false]);
   c('the Language section\'s "Materials in …" note says what the group is', /Materials in another Indo-European language would reach about 300 people here/.test(P.txt('#sections')), true);
   survey(S0); await sleep(60);
-  c('…in Spanish: "Español 19%", "Nacidos en el extranjero: México…"', S0.qa('#u-needs .ns-strip .ns-lang').map(x=>x.textContent).slice(0,1).concat([/^Nacidos en el extranjero: /.test(S0.qa('#u-needs .ns-strip .ns-lang').pop().textContent)]), ['Español 19%',true]);
+  S0.q('#u-needs [data-need="lang-primary"] .ns-head').click(); await sleep(30);
+  c('…in Spanish: the ring\'s words and where people were born', [S0.qa('#u-needs [data-need="lang-primary"] .ns-figs .statlab').map(x=>x.textContent)[0],/^De dónde vienen los vecinos nacidos en el extranjero: /.test(S0.txt('#u-needs [data-need="lang-primary"] .ns-born'))], ['Hablan español en casa',true]);
   survey(P,{mod:`for(const k of Object.keys(D.M.tract)) if(typeof D.M.tract[k]==='number'&&!['pop','hh','medAge','medInc','englishOnly'].includes(k)) D.M.tract[k]=0;
     D.M.tract.langs=[];D.M.tract.origins=[];D.M.tract.occ=D.M.tract.occ.map(o=>[o[0],0]);D.M.tract.medAge=40;D.M.tract.past=null;D.M.cousub=null;delete D.levels.cousub;`}); await sleep(60);
   c('nothing fired and nothing near: the "none" line', P.txt('#u-needs .ns-none'), 'Nothing crossed a line here at this level. Try the town or the county view above.');

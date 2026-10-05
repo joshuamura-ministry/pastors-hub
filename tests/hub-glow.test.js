@@ -37,10 +37,10 @@ setTimeout(()=>{
   c('an explicit Explore affordance', D.querySelectorAll('.tool .tgo').length, 5);   // v56 (B2): five tiles
   // v10.38: the pastor asked for the tiles to glow and pulse a little. The
   // old rule (nothing on the hub moves) is retired for the hub halos only.
-  c('the halos breathe slowly', /\.tool::before\{[^}]*animation:toolBreathe 6s ease-in-out infinite/.test(html) && /@keyframes toolBreathe/.test(html));
-  c('the five breathe a beat apart, not in unison', new Set(tools.map(t=>(t.getAttribute('style').match(/--td:([-0-9.]+s)/)||[])[1])).size, 5);   // v56 (B2)
-  c('reduced motion stops the breathing', /@media \(prefers-reduced-motion:reduce\)\{\.tool \.tsvg,\.tool::before\{animation:none\}\}/.test(html));
-  c('hovering a tile holds its glow still', /\.tool:hover::before\{[^}]*animation-play-state:paused/.test(html));
+  // v10.45.1 — the pastor changed his mind (5 Oct 2026): "nothing stays highlighted … it will highlight wherever I hover my mouse
+  // pointer". Was (v10.38): the halos breathe slowly, a beat apart; reduced motion stops it; hovering holds the glow still.
+  c('the halos rest, all the same quiet glow (no breathing in turn)', [/animation:toolBreathe/.test(html),/\.tool::before\{[^}]*opacity:\.22/.test(html)], [false,true]);
+  c('hovering a tile lights its halo fully', /\.tool:hover::before\{opacity:1/.test(html));
   c('the breathe signal is still reserved for the profile button', /\.btn\.breathe\{animation:needsYou/.test(html));
   c('print drops the glow', /@media print\{[\s\S]{0,200}\.tool \.tsvg\{filter:none/.test(html));
 
