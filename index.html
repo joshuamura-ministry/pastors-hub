@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.47.1
+     TERRAIN  v10.48.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.47.1" data-theme="dark">
+<html lang="en" data-version="v10.48.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.47.1">
-<title>Community Map — Terrain v10.47.1</title>
+<meta name="terrain-version" content="v10.48.0">
+<title>Community Map — Terrain v10.48.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -2638,8 +2638,21 @@ button.td-opt:disabled{cursor:default}
    colour"): Decide gold, Ministry teams violet with four small sub-headings, On Sabbath mint, The
    conference blue. Equal tiles (the tallest sets the height, caseAudEqual), 4 a row, 2 on a phone. */
 /* v10.47.0: the proposal card, first in the proposal view */
-.cs-prop{--k:var(--m-hardship);margin:8px 0 22px;padding:22px 22px 18px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line2));border-radius:18px;
-  background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 9%,var(--panel)),var(--panel));box-shadow:var(--shadow);scroll-margin-top:calc(var(--topH,58px) + 12px)}
+.cs-prop{margin:8px 0 22px;scroll-margin-top:calc(var(--topH,58px) + 12px)}
+/* v10.48.0: "Proposal" in large letters, then the idea as its sheet shows it */
+#cs-prop .cs-pbig{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2.4rem,7vw,3.6rem);letter-spacing:-.035em;line-height:1;margin:6px 0 18px;color:var(--ink)}
+#cs-prop .cs-pbig::before,#cs-prop .cs-pbig::after{display:none}
+.cs-pcard{--k:var(--acc);display:grid;gap:14px;padding:20px 22px 18px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line2));border-radius:18px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 8%,var(--panel)),var(--panel));box-shadow:var(--shadow)}
+.cs-pcard .ns-shneed{padding-top:0}
+.cs-pcard .cs-pneed{margin:0;font-size:.8rem;color:var(--k);line-height:1.4}
+.cs-pcard .cs-pt{margin:0}
+.cs-pcard .lift{display:inline-flex;align-items:flex-end;gap:2px;height:12px;flex:none}
+.cs-pcard .lift b{width:4px;border-radius:1px;background:var(--line2)}
+.cs-pcard .lift b:nth-child(1){height:5px}.cs-pcard .lift b:nth-child(2){height:8px}.cs-pcard .lift b:nth-child(3){height:12px}
+.cs-pcard .lift.l1 b:nth-child(-n+1),.cs-pcard .lift.l2 b:nth-child(-n+2),.cs-pcard .lift.l3 b{background:var(--ink)}
+.cs-pcard .ns-status:empty{display:none}
+.cs-aud-prop>h4{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cs-prop:focus{outline:none}
 .cs-pk{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
 .cs-pt{font-family:var(--disp);font-size:clamp(1.35rem,3.2vw,1.9rem);font-weight:650;line-height:1.2;margin:6px 0 0;color:var(--ink);text-wrap:balance}
@@ -3749,7 +3762,7 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-body{padding:0 18px 18px 22px}
 .ns-body[hidden]{display:none}
 .ns-detail{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:10px}
-.ns-detail h4,.ns-sheet .ns-block h3{font-family:var(--disp);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--k);font-weight:600}
+.ns-detail h4,.ns-sheet .ns-block h3,.cs-pcard .ns-block h3{font-family:var(--disp);font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--k);font-weight:600}
 .ns-detail ul{margin:0;padding-left:18px;color:var(--ink2);font-size:.92rem}
 .ns-detail li{margin:4px 0}
 /* v10.45.1: the figures behind a need (the report's rings, in the kind's colour; the notch is the county) */
@@ -4066,13 +4079,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.47.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.48.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.47.1';
+const VERSION = 'v10.48.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -12824,7 +12837,7 @@ function nsSheetClosed(){
   if(!NS.leaving&&NS.lastRow&&NS.lastRow.isConnected){ try{ NS.lastRow.focus({preventScroll:true}); }catch(e){} }
   else if(!NS.leaving){ const r=NS.open&&NS.last?document.querySelector(`#ns-i-${NS.open} .ns-row[data-idea="${NS.last}"]`):null; if(r) try{ r.focus({preventScroll:true}); }catch(e){} }
 }
-function nsStatus(s){ NS.status=s||''; const el=document.querySelector('#ns-sheet .ns-status'); if(el) el.textContent=NS.status; }
+function nsStatus(s){ NS.status=s||''; document.querySelectorAll('#ns-sheet .ns-status, #cs-prop .ns-status').forEach(el=>el.textContent=NS.status); }   // v10.48.0: the Proposal page's PDF too
 function nsRemove(id){
   const ch=uChurch(); ch.selected=uSelected().filter(x=>x!==id); uPersist();
   CASE_ST.rank=null; uNextRefresh(); nsSheetDraw();
@@ -33522,6 +33535,8 @@ const CASE_AUD_LAYOUT=[
   ['smallgroups','teams','care'],['stewardship','teams','care'],['nominating','teams','other'],
   ['congregation','sabbath'],['conference','conference']];
 const CASE_KIND_SECTION={board:'decide',team:'teams',congregation:'sabbath',conference:'conference'};
+/* v10.48.0: who a proposal from the survey goes to — the church board, the finance committee, the business meeting, the elders */
+const CASE_PROP_GROUPS=['board','finance','business','elders'];
 /* One short line under a tile, only where the name alone could mislead. */
 const CASE_AUD_NOTE={business:{en:'the whole church votes',es:'vota toda la iglesia'},congregation:{en:'a 6–8 minute presentation',es:'una presentación de 6 a 8 minutos'},
   conference:{en:'an evangelism proposal',es:'una propuesta de evangelismo'}};
@@ -33543,6 +33558,15 @@ function caseDraw1(){
       ${S.subs.map(b=>`${b.id&&CASE_AUD_SUBS[b.id]?`<h5 class="cs-asub" id="cs-ah-${S.id}-${b.id}">${esc(caseT(CASE_AUD_SUBS[b.id]))}</h5>`:''}
         <div class="cs-agrid" role="group" aria-labelledby="cs-ah-${S.id}${b.id&&CASE_AUD_SUBS[b.id]?' cs-ah-'+S.id+'-'+b.id:''}">${b.groups.map(tile).join('')}</div>`).join('')}
     </section>`;
+  /* v10.48.0 — the Proposal page: "who are you proposing to … the church board … the business session … the finance committee …
+     do we need all the others" — the four who decide (the elders kept, his word "keep"), one row, no kinds. */
+  if(casePropMode()&&!CASE_ST.propList){
+    const byId=new Map(CASE_GROUPS.map(g=>[g.id,g])), four=CASE_PROP_GROUPS.map(id=>byId.get(id)).filter(Boolean);
+    h.innerHTML=caseStepHead(1,L_PROP('who'),L_PROP('whoN'))+`<div class="cs-auds"><section class="cs-aud cs-aud-decide cs-aud-prop" data-cs-sec="decide" style="--g:var(--m-hardship)" aria-labelledby="cs-who-h">
+      <h4 id="cs-who-h">${esc(L_PROP('who'))}</h4><div class="cs-agrid" role="group" aria-labelledby="cs-who-h">${four.map(tile).join('')}</div></section></div>`;
+    h.querySelectorAll('[data-cs-group]').forEach(b=>b.onclick=()=>caseChooseGroup(b.dataset.csGroup));
+    caseAudEqual(h); return;
+  }
   /* v10.47.0 — the pastor: "the top row … like the first page … it would be a much cleaner": the four kinds as buttons across the
      top (as the lifts are in the survey); the one holding the chosen group open, else Leadership; tapping another switches. */
   const SECS=caseAudSections(), cur=(SECS.find(S=>S.subs.some(b=>b.groups.some(g=>g.id===P.group)))||{}).id;
@@ -34342,8 +34366,10 @@ function caseMount(fresh){
   if(buyPath()==='buy'){ host.innerHTML=`<div id="bx-host"></div><div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`; buyMount($('bx-host')); return; }
   const P=casePrefs(); U_PROP=P.ministry;
   // v10.41: the step bar, then three framed steps: who it is for, what he will propose, his slides
+  { const tn=$('toolname'); if(tn&&TOOL==='case') tn.textContent=PROP?L_PROP('big'):tr(TOOLS.case.name); }   // v10.48.0: "Proposal"
+  if(PROP&&!CASE_ST.propList){ const P0=casePrefs(); if(P0.group&&!CASE_PROP_GROUPS.includes(P0.group)) caseSetPrefs({group:'',type:''}); }
   if(PROP){
-    host.innerHTML=`<section class="cs-prop" id="cs-prop" aria-labelledby="cs-prop-t">${casePropHTML()}</section>
+    host.innerHTML=`<section class="cs-prop" id="cs-prop" aria-labelledby="cs-prop-h">${casePropHTML()}</section>
       <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"${CASE_ST.propList?'':' hidden'}></section><section class="cs-step" id="cs-s3"></section>
       <div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`;
     casePropWire(host);
@@ -34364,24 +34390,40 @@ function casePropMode(){
   try{ return TOOL==='case'&&!!NS.back&&!!NS.back.plan&&casePrefs().ministry===NS.back.plan&&buyPath()!=='buy'; }catch(e){ return false; }
 }
 /* The proposal card: what he is proposing, for which need, its lift, its people and its money; the way back and another ministry. */
+/* v10.48.0 — the pastor (5 Oct 2026): "I don't like make the case I just want it to [say] proposal … this beautiful thing [the
+   idea's sheet] should be what you see when you press create a proposal for this ministry at the top … big letters above that
+   says proposal … then … who are you proposing to". "Proposal" in large letters, then the idea as the survey's sheet shows it: the
+   need, the name, the lift, what it is, why here, how to get started, what it needs from our church; the PDF, the way back and
+   another ministry. */
 function casePropHTML(){
   const b=NS.back||{}; let n=null, v=null;
   try{ n=nsNeedById(b.need); v=nsView(b.idea,n?nsNeedLang(n):libLangCtx()); }catch(e){ v=null; }
   if(!v){ const x=caseItemOf(b.plan); v=x?{name:caseMinName(x)||x.n||'',d:'',tier:2,ppl:0,priced:false}:{name:'',d:'',tier:2,ppl:0,priced:false}; }
-  const L=nsLift(v), d1=nsD1(v)||'';
-  const chips=[`${nsBars(L)}${esc(nsU(L))}`,v.ppl?esc(nsU('ppl',v.ppl)):'',esc(nsMoney(v))].filter(Boolean);
-  return `<p class="cs-pk">${esc(L_PROP('k'))}</p>
-    <p id="cs-prop-t" class="cs-pt" role="heading" aria-level="2">${esc(gfCap(v.name))}</p>
-    ${d1?`<p class="cs-pd">${esc(d1)}</p>`:''}
-    <div class="cs-pchips">${chips.map(c=>`<span>${c}</span>`).join('')}</div>
-    ${n?`<p class="cs-pneed"><b>${esc(L_PROP('need'))}</b> ${esc(n.title)}${n.evidence?` · <span>${esc(n.evidence)}</span>`:''}</p>`:''}
-    <div class="cs-pacts"><button type="button" class="btn ghost gfsm" data-cs-from>${esc(L_PROP('back'))}</button>
-      <button type="button" class="btn ghost gfsm" data-cs-other aria-expanded="${!!CASE_ST.propList}" aria-controls="cs-s2">${esc(L_PROP(CASE_ST.propList?'hide':'other'))}</button></div>`;
+  const L=nsLift(v), d=v.d||nsD1(v)||'';
+  const how=v.how&&v.how.length?`<ol class="ns-steps">${v.how.slice(0,4).map(t=>`<li><span>${esc(t)}</span></li>`).join('')}</ol>`:'';
+  let rows=[]; try{ rows=v.ppl!=null?nsRows(v):[]; }catch(e){ rows=[]; }
+  return `<h2 class="cs-pbig" id="cs-prop-h">${esc(L_PROP('big'))}</h2>
+    <div class="cs-pcard" style="--k:var(--m-${n&&n.kind||'language'})">
+      ${n?`<p class="ns-shneed cs-pneed">${esc(nsU('sheetFor',n.title))}</p>`:''}
+      <p id="cs-prop-t" class="cs-pt" role="heading" aria-level="3">${esc(gfCap(v.name))}</p>
+      <p class="ns-liftline">${nsBars(L)}<span><b>${esc(nsU(L))}</b> · ${esc(nsU(L+'G'))}${v.sab!=null?' · '+esc(v.sab?libT('sab'):libT('noSab')):''}</span></p>
+      ${d?`<p class="ns-shd">${esc(d)}</p>`:''}
+      ${n&&n.evidence?`<div class="ns-block"><h3>${esc(nsU('why'))}</h3><p class="ns-why">${esc(n.evidence)}</p></div>`:''}
+      ${how?`<div class="ns-block"><h3>${esc(nsU('how'))}</h3>${how}</div>`:''}
+      ${rows.length?`<div class="ns-block"><h3>${esc(nsU('needs'))}</h3><dl class="ns-grid">${rows.map(([k,val])=>`<div class="ns-gi${k==='rPartner'||k==='rSkills'?' wide':''}"><dt>${esc(nsU(k))}</dt><dd>${esc(val)}</dd></div>`).join('')}</dl>
+        <p class="note ns-askfor">${esc(nsU('askFor'))}</p></div>`:''}
+      ${v.kids?`<p class="ns-kids">${esc(libT('kids'))}</p>`:''}
+      <div class="cs-pacts">${n?`<button type="button" class="btn ghost gfsm" data-cs-pdf>${esc(nsU('pdf'))}</button>`:''}<button type="button" class="btn ghost gfsm" data-cs-from>${esc(L_PROP('back'))}</button>
+        <button type="button" class="btn ghost gfsm" data-cs-other aria-expanded="${!!CASE_ST.propList}" aria-controls="cs-s2">${esc(L_PROP(CASE_ST.propList?'hide':'other'))}</button></div>
+      <p class="note ns-status" role="status"></p>
+    </div>`;
 }
-const L_PROP=k=>({k:['Your proposal','Su propuesta'],need:['For the need:','Para la necesidad:'],back:['← Back to the need','← Volver a la necesidad'],
+const L_PROP=k=>({big:['Proposal','Propuesta'],who:['Who are you proposing to?','¿A quién le presenta la propuesta?'],whoN:['Tap the group that will decide.','Toque el grupo que va a decidir.'],
+  k:['Your proposal','Su propuesta'],need:['For the need:','Para la necesidad:'],back:['← Back to the need','← Volver a la necesidad'],
   other:['Choose a different ministry','Elegir otro ministerio'],hide:['Keep this ministry','Mantener este ministerio']}[k]||['',''])[LANG==='es'?1:0];
 function casePropWire(host){
   const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack;
+  const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need); };
   const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const s2=$('cs-s2'); if(s2) s2.scrollIntoView({block:'start'}); } };
 }
 /* ================= /MAKE THE CASE: THE SCREENS ================= */

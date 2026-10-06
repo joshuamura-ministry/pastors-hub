@@ -102,7 +102,8 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('…and the card has the focus (keyboard and screen readers start there)', P.E(`document.activeElement?document.activeElement.id:''`), 'cs-prop');
     c('nothing above it: it is the first thing in Make the Case (no ministry-or-project switch, no Gifts-first line, no step bar)',
       [P.q('#casebody').firstElementChild.id,!!P.q('#cs-bar'),!!P.q('#cs-gff'),P.q('#cs-switch').hidden],['cs-prop',false,false,true]);
-    c('the card names the ministry, its lift, its people and its money, and the need it meets', [P.txt('#cs-prop .cs-pt'),P.qa('#cs-prop .cs-pchips > span').length>=2,
+    // v10.48.0 — "big letters above that says proposal … this beautiful thing [the sheet]": the card is the idea's whole sheet
+    c('the card names the ministry, its lift and what it needs from our church, and the need it meets', [P.txt('#cs-prop .cs-pt'),!!P.q('#cs-prop .ns-liftline')&&P.qa('#cs-prop .ns-gi').length>=2,
       (P.txt('#cs-prop .cs-pneed')||'').includes(P.J(`NSM.needs.find(n=>n.id==='${NEED}').title`))], [P.E(`gfCap(nsView(${JSON.stringify(IDEA)},nsNeedLang(nsNeedById('${NEED}'))).name)`),true,true]);
     c('then Who is it for? (step 1), the list of ideas put away, then the slides (step 2)', [P.q('#cs-prop').nextElementSibling.id,P.q('#cs-s2').hidden,(P.txt('#cs-s3 .cs-num')||'')],['cs-s1',true,'2']);
     c('the way back, in the card: "← Back to the need"', [P.qa('#casebody [data-cs-from]').length,P.txt('#cs-prop [data-cs-from]')],[1,'← Back to the need']);
@@ -163,7 +164,7 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('"Crear una propuesta para este ministerio"', P.txt('#ns-sheet [data-ns-propose]'), 'Crear una propuesta para este ministerio');
     P.q('#ns-sheet [data-ns-propose]').click();
     await until(()=>P.E('TOOL')==='case'&&P.q('#casebody [data-cs-from]'));
-    c('"← Volver a la necesidad" (v10.47.0: in the proposal card), and "Su propuesta"', [P.txt('#casebody [data-cs-from]'),P.txt('#cs-prop .cs-pk')], ['← Volver a la necesidad','Su propuesta']);
+    c('"← Volver a la necesidad" (in the proposal card), and "Propuesta" in large letters (v10.48.0)', [P.txt('#casebody [data-cs-from]'),P.txt('#cs-prop .cs-pbig')], ['← Volver a la necesidad','Propuesta']);
   });
 
   console.log('\n-- the free version: no ideas, so no hand-off --');

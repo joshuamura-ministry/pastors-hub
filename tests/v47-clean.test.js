@@ -27,6 +27,33 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   const S=page({lang:'es'}); await ready(S); survey(S); S.E(`openTool('case')`); await sleep(80);
   c('in Spanish', S.qa('#cs-s1 .cs-acat').map(b=>b.textContent), ['Liderazgo','Departamentos de ministerio','En sábado','La asociación']);
 
+  console.log('\n-- v10.48.0: the Proposal page (from "Create a proposal for this ministry") --');
+  // "I don't like make the case I just want it to [say] proposal … big letters above that says proposal … this beautiful thing should
+  // be what you see … then … who are you proposing to … the church board … the business session … the finance committee … do we
+  // need all the others" — the elders kept ("keep"), the schools left out ("we're focusing on the churches").
+  { const {openSheet,openNeed}=require('./v45-helpers.js');
+    const R=page({needs:'file'}); await ready(R); survey(R);
+    const NEED=R.J(`NSM.needs[0].id`);
+    await openNeed(R,NEED,true);
+    const IDEA=R.q(`#ns-i-${NEED} .ns-row`).dataset.idea;
+    await openSheet(R,NEED,IDEA);
+    R.E(`uChurch().proposalPrefs={...uChurch().proposalPrefs,group:'pathfinders',type:'team'}; uPersist();`);
+    R.q('#ns-sheet [data-ns-propose]').click();
+    const {until}=require('./v45-helpers.js'); await until(()=>R.E('TOOL')==='case'&&R.q('#cs-prop'));
+    c('the tool bar says "Proposal", not "Make the Case"', R.txt('#toolname'), 'Proposal');
+    c('"Proposal" in large letters first, then the idea as its sheet shows it: the need, the name, the lift, why here, what it needs', [R.txt('#cs-prop .cs-pbig'),!!R.q('#cs-prop .cs-pneed'),!!R.q('#cs-prop .cs-pt'),!!R.q('#cs-prop .ns-liftline'),R.qa('#cs-prop .ns-block h3').map(h=>h.textContent).filter(t=>/Why here|What it needs/.test(t)).length], ['Proposal',true,true,true,2]);
+    c('the one-page PDF, the way back and another ministry are on it', [!!R.q('#cs-prop [data-cs-pdf]'),!!R.q('#cs-prop [data-cs-from]'),!!R.q('#cs-prop [data-cs-other]')], [true,true,true]);
+    c('"Who are you proposing to?": the church board, finance, the business meeting, the elders, and no one else', [R.txt('#cs-s1 h3').replace(/^Step \d of 3: /,''),R.qa('#cs-s1 [data-cs-group]').map(b=>b.dataset.csGroup),R.qa('#cs-s1 .cs-acat').length], ['Who are you proposing to?',['board','finance','business','elders'],0]);
+    c('a group chosen before that is not one of the four (Pathfinders) is not kept', [R.J('casePrefs().group'),R.qa('#cs-s1 .cs-atile.on').length], [null,0]);
+    R.q('#cs-s1 [data-cs-group="finance"]').click(); await sleep(40);
+    c('tapping the finance committee chooses it', [R.J('casePrefs().group'),R.q('#cs-s1 [data-cs-group="finance"]').classList.contains('on')], ['finance',true]);
+    R.q('#cs-prop [data-cs-other]').click(); await sleep(40);
+    c('"Choose a different ministry": the full list of groups comes back with the list of ideas', R.qa('#cs-s1 .cs-acat').length, 4);
+    R.q('#cs-prop [data-cs-other]').click(); await sleep(40);
+    R.E(`showHub(); openTool('case')`); await sleep(40);
+    c('Make the Case from the main menu with another ministry chosen is Make the Case again', (R.E(`caseSetPrefs({ministry:'vbs'}); caseMount(); 1`),R.txt('#toolname')), 'Make the Case');
+    c('no page error', R.errs, []); }
+
   console.log('\n-- the Community Survey\'s top: the church, then Neighborhood · Town · County on the Brief --');
   const Q=page(); await ready(Q); survey(Q); await sleep(60);
   c('the first line is the church: its name and its address, no census tract', [Q.txt('#place'),/Census Tract|Tract /.test(Q.txt('#place'))], ['Bucks County SDA · '+Q.E('homeAddr(DATA.geo.matched)'),false]);
