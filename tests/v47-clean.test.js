@@ -81,9 +81,9 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   console.log('\n-- v10.47.1: the needs, a place of their own; "Main menu" beside "Top" --');
   // "This is a whole new kind of a section … There's gotta be a title there … that will let people know that this is a clickable area"
   c('the needs open with a framed panel: a label, the heading, one line saying what to do, the verse', [Q.txt('#u-needs .ns-hero .ns-eyebrow'),Q.txt('#u-needs .ns-hero > h2'),Q.txt('#u-needs .ns-hero .ns-lead'),!!Q.q('#u-needs .ns-hero .verse')],
-    ['From survey to ministry','What this neighborhood needs from our church','This is where you choose what to do. Tap a need to see why it matters and ministry ideas to meet it.',true]);
+    ['From survey to ministry','Neighborhood needs','Tap a need and plant the seed.',true]);   // v10.50.0 — the pastor (6 Oct 2026): "Neighborhood needs", "tap the need and plant the seed"
   const QS=page({lang:'es'}); await ready(QS); survey(QS); await sleep(40);
-  c('…in Spanish', [QS.txt('#u-needs .ns-hero .ns-eyebrow'),QS.txt('#u-needs .ns-hero .ns-lead')], ['De la encuesta al ministerio','Aquí usted elige qué hacer. Toque una necesidad para ver por qué importa e ideas de ministerio para atenderla.']);
+  c('…in Spanish', [QS.txt('#u-needs .ns-hero .ns-eyebrow'),QS.txt('#u-needs .ns-hero .ns-lead')], ['De la encuesta al ministerio','Toque una necesidad y siembre la semilla.']);
   c('no "What\'s next" at the bottom of the survey ("Does that even have to be there?")', Q.qa('#u-whatsnext').length, 0);
   // "I like the top … at the bottom … keep that and then also … main menu which will bring you to the main menu"
   Q.q('#totop').hidden=false; Q.E('floatMenu()');
@@ -94,5 +94,25 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   c('on the main menu itself it is not shown', Q.q('#tomenu').hidden, true);
   QS.q('#totop').hidden=false; QS.E('floatMenu()');
   c('…in Spanish: "Menú principal"', QS.txt('#tomenu span:last-child'), 'Menú principal');
+
+  console.log('\n-- v10.50.0: the needs, their colours and the resources --');
+  // "the categories should be much bolder … same color as the 1 2 3 … glowing"; "instead of having it all shades of … pink use … different colors"
+  c('each kind of need its own colour (the newer kinds too): the card\'s --k by its category', Q.E(`(()=>{ const t=(c,k)=>nsHue({catLabel:c,kind:k}); return [t('Veterans','people'),t('Work & schedules','people'),t('Young adults','people'),t('Seniors & isolation','children'),t('Families with children','children'),t('Housing pressure','housing')].join(','); })()`), 'veterans,work,young,seniors,children,housing');
+  c('…each of those colours defined for both themes', ['seniors','veterans','work','young','income','divided'].every(k=>(HTML.match(new RegExp('--m-'+k+':#','g'))||[]).length>=2), true);
+  c('the category is the boldest line of the card: the number\'s colour, a glow', /\.ns-need \.ns-cat\{[^}]*font-weight:800;[^}]*color:var\(--k\);text-shadow:/.test(HTML), true);
+  c('Community resources in two columns on a computer', /#helpslot\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(HTML), true);
+
+  console.log('\n-- v10.50.0: Spiritual Gifts, in three steps --');
+  { const G=page(); await ready(G); survey(G); G.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
+    c('three steps at the top: Your church → Invite your members → See the results', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Your church','Invite your members','See the results']);
+    c('…then Your church (1), the invitation (2), the results (3) with the sample report under them', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&G.q('#gf-results .gfresults').nextElementSibling.id], ['gf-church','2Spiritual Gifts: invite your members','3See the results','gfsample']);
+    c('no "Nobody has taken it yet" card, and no code box', [G.qa('#giftbody [data-gf-first]').length,G.qa('#gfpaste,#gfadd').length], [0,0]);
+    G.q('#gf-church').open=false; G.q('[data-gf-step="church"]').click();
+    c('the first step opens Your church and goes there', G.q('#gf-church').open, true);
+    G.q('[data-gf-step="results"]').click();
+    c('the third goes to the results', G.w.__scrolled.slice(-1)[0].id, 'gf-results');
+    const GS=page({lang:'es'}); await ready(GS); survey(GS); GS.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
+    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Su iglesia','Invite a sus miembros','Vea los resultados']);
+    c('no page error', [G.errs,GS.errs], [[],[]]); }
   c('no page error', [P.errs,S.errs,Q.errs,QS.errs], [[],[],[],[]]);
 }); T.done(); })();

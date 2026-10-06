@@ -122,10 +122,11 @@ const EMAILY=/e-?mail|correo/i;
     MF.D.getElementById('gfsend').click();
     await until(()=>/Nothing is lost/.test(MF.D.getElementById('gfsendnote').textContent));
     const t=MF.D.getElementById('gfsendnote').textContent;
-    c('sending failed: "send that code to your pastor in a message", no email', [/send that code to your pastor in a message\./.test(t),EMAILY.test(t)], [true,false]);
+    // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": no code to copy; the answers wait on the phone.
+    c('sending failed: the answers are saved on this phone, Send again; no email words', [/saved on this phone\. Tap Send my result again/.test(t),EMAILY.test(t)], [true,false]);
     MF.E('GF_EMAIL_ENABLED=true'); MF.D.getElementById('gfsend').click();
-    await until(()=>/text or email that code/.test(MF.D.getElementById('gfsendnote').textContent));
-    c('(with email on it says "text or email", as before)', /text or email that code to your pastor/.test(MF.D.getElementById('gfsendnote').textContent), true); }
+    await until(()=>/Nothing is lost/.test(MF.D.getElementById('gfsendnote').textContent));
+    c('(with email on, the same words: no code to text or email)', [/saved on this phone/.test(MF.D.getElementById('gfsendnote').textContent),/text or email that code/.test(MF.D.getElementById('gfsendnote').textContent)], [true,false]); }
 
   console.log('\n-- the pastor’s results --');
   const statNote=E=>E(`(()=>{ const a={}; GIFTS.forEach(g=>{for(let k=0;k<5;k++) a[g.id+'.'+k]=g.id==='teach'?4:2;});

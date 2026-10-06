@@ -30,7 +30,8 @@ setTimeout(()=>{
   c('members door is pink, pastor door is purple', [...h.querySelectorAll('.gfdoor')].map(d=>d.getAttribute('style')), ['--k:var(--m-people)','--k:var(--m-children)']);
   c('doors route through the existing navigation', [...h.querySelectorAll('.gfdoor')].map(d=>d.dataset.gv), ['setup','take']);
   c('results sit beneath the doors', !!(h.querySelector('.gfdoors').compareDocumentPosition(h.querySelector('.gfresults'))&4));
-  c('the code box is folded away', h.querySelector('#gfpaste').closest('details')!==null);
+  // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": the code box left the landing.
+  c('no code box on the landing', h.querySelectorAll('#gfpaste,#gfadd').length, 0);
   c('the volunteer roster is folded away, not first', h.querySelector('#u-team').closest('details')!==null);
   c('the four-tab strip is gone from the landing', h.querySelectorAll('.gftabs').length, 0);
   c('"Across the church" hides until there are results', h.querySelectorAll('[data-gv="church"]').length, 0);
@@ -46,7 +47,7 @@ setTimeout(()=>{
 
   console.log('\n-- back office still reachable --');
   w.eval('GF_VIEW="roster"; gfRender();');
-  c('paste-a-code still there', !!D.getElementById('gfpaste') && !!D.getElementById('gfadd'));
+  c('no paste-a-code (v10.50.0)', !!D.getElementById('gfpaste') || !!D.getElementById('gfadd'), false);
   c('check for new results still there', !!D.getElementById('gfpull'));
   c('add a volunteer still there', !!D.getElementById('u-addmember'));
   console.log(`\n${pass} passed, ${fail} failed`);

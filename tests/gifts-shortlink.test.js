@@ -288,18 +288,9 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   { const m=P.w.document.getElementById('giftbody').textContent.match(/(\d+) members? so far/);
     c('the church view counts every result on the list', m&&+m[1], P.w.eval('gfRoster().length')); }
   P.w.eval(`gfRosterRemove(${JSON.stringify(nochurch)})`);
-  // A pasted code with no church at all (the member's offline fallback): filed
-  // under this church, and the pastor is told so.
-  const pasted='TG1-'+Buffer.from(JSON.stringify({v:4,date:'2026-09-28',chars:'2'+'.'.repeat(104),heart:'.'.repeat(12),minor:false,church:'',churchId:'',name:'Pasted Paula',memberId:'mp1',resources:{}})).toString('base64url');
-  P.w.eval(`GF_VIEW='roster'; gfRender();`);
-  P.w.document.getElementById('gfpaste').value=pasted; P.w.document.getElementById('gfadd').click();
-  c('a pasted church-less code appears on the list and in uPeople', [P.w.eval('gfRoster().some(r=>r.name==="Pasted Paula")'),P.w.eval('uPeople().some(p=>p.name==="Pasted Paula")')], [true,true]);
-  c('with a note saying where it was filed', /This code named no church, so it was filed under/.test(P.w.document.getElementById('gfaddnote').textContent), true);
-  // A code made with another church's link: not silently swallowed.
-  const otherc='TG1-'+Buffer.from(JSON.stringify({v:4,date:'2026-09-28',chars:'2'+'.'.repeat(104),heart:'.'.repeat(12),minor:false,church:'Elsewhere SDA',churchId:'not-a-church-here',name:'Other Olga',memberId:'mo1',resources:{}})).toString('base64url');
-  P.w.document.getElementById('gfpaste').value=otherc; P.w.document.getElementById('gfadd').click();
-  c('another church\'s code says why it is not listed', [P.w.eval('gfRoster().some(r=>r.name==="Other Olga")'),/another church/.test(P.w.document.getElementById('gfaddnote').textContent)], [false,true]);
-  P.w.eval(`gfRosterRemove(${JSON.stringify(pasted)}); gfRosterRemove(${JSON.stringify(otherc)});`);
+  // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": the paste box left the landing, so the
+  // pasted-code filing checks (a church-less code filed here, another church's code said) are retired; results come by the link.
+  c('no paste box on the landing', (P.w.eval(`GF_VIEW='roster'; gfRender();`),[!!P.w.document.getElementById('gfpaste'),!!P.w.document.getElementById('gfadd')]), [false,false]);
 
   console.log('-- Spanish --');
   const S=page('https://pastorshub.org/',{lang:'es'}); allErrs.push(S.errs);
