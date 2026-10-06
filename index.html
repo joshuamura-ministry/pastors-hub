@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.54.0
+     TERRAIN  v10.54.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.54.0" data-theme="dark">
+<html lang="en" data-version="v10.54.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.54.0">
-<title>Community Map — Terrain v10.54.0</title>
+<meta name="terrain-version" content="v10.54.1">
+<title>Community Map — Terrain v10.54.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -2682,7 +2682,7 @@ button.td-opt:disabled{cursor:default}
 .cs-pcard .lift{display:inline-flex;align-items:flex-end;gap:2px;height:12px;flex:none}
 .cs-pcard .lift b{width:4px;border-radius:1px;background:var(--line2)}
 .cs-pcard .lift b:nth-child(1){height:5px}.cs-pcard .lift b:nth-child(2){height:8px}.cs-pcard .lift b:nth-child(3){height:12px}
-.cs-pcard .lift.l1 b:nth-child(-n+1),.cs-pcard .lift.l2 b:nth-child(-n+2),.cs-pcard .lift.l3 b{background:var(--ink)}
+.cs-pcard .lift.l1 b:nth-child(-n+1),.cs-pcard .lift.l2 b:nth-child(-n+2),.cs-pcard .lift.l3 b{background:var(--lc)}
 .cs-pcard .ns-status:empty{display:none}
 /* v10.49.0: the Money box (amber, the kind of money) */
 .cs-money{--k:var(--m-hardship)}
@@ -2704,7 +2704,7 @@ button.td-opt:disabled{cursor:default}
 .cs-prop .lift{display:inline-flex;align-items:flex-end;gap:2px;height:12px}
 .cs-prop .lift b{width:4px;border-radius:1px;background:var(--line2)}
 .cs-prop .lift b:nth-child(1){height:5px}.cs-prop .lift b:nth-child(2){height:8px}.cs-prop .lift b:nth-child(3){height:12px}
-.cs-prop .lift.l1 b:nth-child(-n+1),.cs-prop .lift.l2 b:nth-child(-n+2),.cs-prop .lift.l3 b{background:var(--acc)}
+.cs-prop .lift.l1 b:nth-child(-n+1),.cs-prop .lift.l2 b:nth-child(-n+2),.cs-prop .lift.l3 b{background:var(--lc)}
 .cs-pneed{margin:14px 0 0;font-size:.9rem;color:var(--ink2);line-height:1.5}
 .cs-pneed b{color:var(--ink);font-weight:600}
 .cs-pacts{display:flex;flex-wrap:wrap;gap:8px 10px;margin-top:16px}
@@ -2862,7 +2862,7 @@ button.td-opt:disabled{cursor:default}
 .cs-szb .lift{grid-area:bars;display:inline-flex;align-items:flex-end;gap:2px;height:12px}
 .cs-szb .lift b{width:4px;border-radius:1px;background:var(--line2)}
 .cs-szb .lift b:nth-child(1){height:5px}.cs-szb .lift b:nth-child(2){height:8px}.cs-szb .lift b:nth-child(3){height:12px}
-.cs-szb .lift.l1 b:nth-child(-n+1),.cs-szb .lift.l2 b:nth-child(-n+2),.cs-szb .lift.l3 b{background:var(--acc)}
+.cs-szb .lift.l1 b:nth-child(-n+1),.cs-szb .lift.l2 b:nth-child(-n+2),.cs-szb .lift.l3 b{background:var(--lc)}
 .cs-szn{grid-area:name;font-weight:750;font-size:.92rem;min-width:0}
 .cs-szo{grid-area:own;font-size:.72rem;color:var(--ink3)}
 .cs-szv{grid-area:vals;font-size:.82rem;color:var(--ink2);font-variant-numeric:tabular-nums}
@@ -3880,7 +3880,7 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .u-needs .lift b:nth-child(2),.ns-sheet .lift b:nth-child(2){height:8px}
 .u-needs .lift b:nth-child(3),.ns-sheet .lift b:nth-child(3){height:12px}
 .u-needs .lift.l1 b:nth-child(-n+1),.u-needs .lift.l2 b:nth-child(-n+2),.u-needs .lift.l3 b,
-.ns-sheet .lift.l1 b:nth-child(-n+1),.ns-sheet .lift.l2 b:nth-child(-n+2),.ns-sheet .lift.l3 b{background:var(--ink)}
+.ns-sheet .lift.l1 b:nth-child(-n+1),.ns-sheet .lift.l2 b:nth-child(-n+2),.ns-sheet .lift.l3 b{background:var(--lc)}
 .u-needs .ns-list{display:grid;gap:12px;margin-top:14px}
 .ns-need{--k:var(--acc);background:var(--panel);border:1px solid var(--line);border-radius:var(--r);position:relative;overflow:hidden;box-shadow:var(--shadow);scroll-margin-top:calc(var(--topH,58px) + 70px)}
 .ns-need::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--k)}
@@ -3951,12 +3951,12 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-lh{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-size:1rem;font-weight:700;color:var(--ink);margin:0}
 .ns-lh small{margin-left:auto;color:var(--ink3);font-weight:500;font-size:.78rem}
 .u-needs .ns-lh .lift b{background:var(--line2)}
-.u-needs .ns-lh .lift.l1 b:nth-child(-n+1),.u-needs .ns-lh .lift.l2 b:nth-child(-n+2),.u-needs .ns-lh .lift.l3 b{background:var(--acc)}
+.u-needs .ns-lh .lift.l1 b:nth-child(-n+1),.u-needs .ns-lh .lift.l2 b:nth-child(-n+2),.u-needs .ns-lh .lift.l3 b{background:var(--lc)}
 .ns-lcol .ns-gl{margin:2px 0 6px}
 /* v10.50.0 — "for community resources it should have two rows instead of one … two columns that way it's not so long" */
 @media (min-width:760px){#helpslot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:start}#helpslot>.suggroup{margin:0}}
 .u-needs .ns-ltab .lift b{background:var(--line2)}
-.u-needs .ns-ltab .lift.l1 b:nth-child(-n+1),.u-needs .ns-ltab .lift.l2 b:nth-child(-n+2),.u-needs .ns-ltab .lift.l3 b{background:var(--acc)}
+.u-needs .ns-ltab .lift.l1 b:nth-child(-n+1),.u-needs .ns-ltab .lift.l2 b:nth-child(-n+2),.u-needs .ns-ltab .lift.l3 b{background:var(--lc)}
 .ns-bulb{width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
 .ns-ask{background:var(--panel2);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink2);font-size:.88rem}
 .ns-ask b{color:var(--ink);font-weight:600}
@@ -4073,6 +4073,21 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
 .acct-lockgo{margin-top:12px}
 .acct-b[aria-busy="true"] button{opacity:.6;cursor:progress}
 @media print{ dialog.acct-sheet{display:none} }
+/* v10.54.1 — the pastor (6 Oct 2026): "Can the light lift moderate lift heavy lift be maybe slightly different colors". One colour per
+   lift, the same everywhere a lift is shown (the survey's three columns, the idea sheet, Make the Case's Size and the Proposal page):
+   Light mint, Moderate blue, Heavy violet. --lc is the lift's colour; the bars fill with it. */
+:root{--lift1:var(--m-language);--lift2:var(--m-housing);--lift3:var(--m-children)}
+.lift.l1,.ns-lcol[data-lift="light"],.ns-ltab[data-ns-lift="light"],.cs-szb[data-cs-lift="1"]{--lc:var(--lift1)}
+.lift.l2,.ns-lcol[data-lift="moderate"],.ns-ltab[data-ns-lift="moderate"],.cs-szb[data-cs-lift="2"]{--lc:var(--lift2)}
+.lift.l3,.ns-lcol[data-lift="heavy"],.ns-ltab[data-ns-lift="heavy"],.cs-szb[data-cs-lift="3"]{--lc:var(--lift3)}
+.ns-lcol .ns-lh>span{color:var(--lc)}
+.ns-lcol .ns-gl{padding-bottom:8px;border-bottom:2px solid color-mix(in srgb,var(--lc) 55%,transparent)}
+.ns-lcol .ns-row{border-left:3px solid var(--lc);background:color-mix(in srgb,var(--lc) 5%,var(--panel2))}
+@media (hover:hover){ .ns-lcol .ns-row:hover{border-color:color-mix(in srgb,var(--lc) 60%,var(--line2));border-left-color:var(--lc)} }
+.cs-szb .cs-szn{color:var(--lc)}
+@media (hover:hover){ .cs-szb:hover{border-color:var(--lc)} }
+.cs-szb.on{border-color:var(--lc);background:color-mix(in srgb,var(--lc) 12%,var(--panel));box-shadow:0 0 0 1px var(--lc)}
+.cs-szb:focus-visible,.ns-lcol .ns-row:focus-visible{outline:2px solid var(--lc);outline-offset:2px}
 /* polish #3: the Gifts page's "Your church" note sits on its own line under the heading */
 #gf-church > summary .note{display:block;margin-top:2px;font-size:.85rem;font-weight:normal;line-height:1.35}
 </style>
@@ -4270,13 +4285,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.54.0';
+const VERSION = 'v10.54.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
