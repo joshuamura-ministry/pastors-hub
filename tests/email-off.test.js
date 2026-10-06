@@ -93,14 +93,12 @@ const EMAILY=/e-?mail|correo/i;
   D.getElementById('gfname').value='Maria Lopez';
   D.getElementById('gfstart').click();
   c('an address left from before is dropped at Begin', [M.E('GFS.email'),M.E('GFS.emailOk')], ['',false]);
-  M.E(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=g.id==="teach"?4:2;}); GF_HEART.forEach(q=>GFS.h[q.k]=1); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-  await until(()=>D.getElementById('gfsend'));
-  c('the report: Download PDF, no "Email me my report"', [!!D.getElementById('gfpdf'),!!D.getElementById('gfemail')], [true,false]);
-  c('the Send box says nothing about email', EMAILY.test(D.getElementById('gfsendnote').textContent), false);
   // Even with an address and consent on the device, nothing goes to the server.
-  M.E(`GFS.email='maria@example.org'; GFS.emailOk=true; gfSave();`);
-  D.getElementById('gfsend').click();
+  // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway": the result goes by itself when the report opens
+  M.E(`GFS.email='maria@example.org'; GFS.emailOk=true; GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=g.id==="teach"?4:2;}); GF_HEART.forEach(q=>GFS.h[q.k]=1); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
+  c('the sending box says nothing about email', EMAILY.test(D.getElementById('gfsendbox').textContent), false);
   await until(()=>M.E('GFS.sent===true'));
+  c('the report: Download PDF, no "Email me my report"', [!!D.getElementById('gfpdf'),!!D.getElementById('gfemail')], [true,false]);
   await sleep(200);
   const sub=calls.filter(x=>x.op==='submit').pop();
   c('the result goes to the pastor with no address', [!!sub,'email' in sub,'emailOk' in sub], [true,false,false]);
@@ -118,9 +116,8 @@ const EMAILY=/e-?mail|correo/i;
     MF.D.querySelector('.gfchip[data-age="adult"]').click(); await sleep(40);
     MF.D.getElementById('gfname').value='Rosa Diaz'; MF.D.getElementById('gfstart').click();
     MF.E(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=3;}); GF_HEART.forEach(q=>GFS.h[q.k]=1); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-    await until(()=>MF.D.getElementById('gfsend'));
-    MF.D.getElementById('gfsend').click();
-    await until(()=>/Nothing is lost/.test(MF.D.getElementById('gfsendnote').textContent));
+    // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway": the result goes by itself when the report opens (and when it does not go through, the button)
+    await until(()=>MF.D.getElementById('gfsend')&&/Nothing is lost/.test(MF.D.getElementById('gfsendnote').textContent));
     const t=MF.D.getElementById('gfsendnote').textContent;
     // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": no code to copy; the answers wait on the phone.
     c('sending failed: the answers are saved on this phone, Send again; no email words', [/saved on this phone\. Tap Send my result again/.test(t),EMAILY.test(t)], [true,false]);

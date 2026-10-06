@@ -114,22 +114,24 @@ function makeStore(){
     D.getElementById('gfname').value=name;
     D.getElementById('gfstart').click();
     M.E(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=(${answers})(g.id,k);}); GF_HEART.forEach(q=>GFS.h[q.k]=1); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-    await until(()=>D.getElementById('gfsend'));
   }
-  const send=async M=>{ M.D.getElementById('gfsend').click(); await until(()=>M.E('GFS.sent===true')); };
+  // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway": the result goes by itself when the report opens; the button only to send again
+  const send=async M=>{ await until(()=>M.E('GFS.sent===true')||M.D.getElementById('gfsend')); const b=M.D.getElementById('gfsend'); if(b&&!M.E('GFS.sent===true')) b.click(); await until(()=>M.E('GFS.sent===true')); };
 
   // ======================================================= E2E-3: the email goes on Send
   console.log('-- an adult who asked for the email gets it on Send (E2E-3) --');
   const A=page(link);
-  await takeIt(A,{name:'Maria Lopez',email:'maria@example.org'});
   // Updated for gifts-1.1: the email on Send is the private link. Updated again
   // (one tap): the PDF copy is emailed only when the member taps for it on the
   // opened link, never on open (mail scanners open links in a real browser).
-  c('before sending, the page says a link will be emailed', /Once you send it, we will email you a link to your report; open it and you can have a PDF copy emailed as well\./.test(A.D.getElementById('gfsendnote').textContent), true);
+  // v10.54.2: no "before sending" step (the result goes by itself when the report opens; the email was asked for on the first page)
+  await until(()=>A.E('typeof gfCall==="function"'));
   const r0=resend.length;
   // (hold the email call a moment so the waiting state can be seen)
   A.E(`window.__gc=gfCall; gfCall=(op,b,w)=>op==='email'?new Promise(r=>setTimeout(r,400)).then(()=>window.__gc(op,b,w)):window.__gc(op,b,w);`);
+  await takeIt(A,{name:'Maria Lopez',email:'maria@example.org'});
   await send(A);
+  c('it went by itself: no Send button was needed', [A.E('GFS.sent===true'),!!A.D.getElementById('gfsend')], [true,false]);
   c('while it is being emailed, "You can close this page" waits', [A.D.getElementById('gfsentclose').hidden,/Emailing a link to your report to m•••@example\.org|Emailing you a link/.test(A.D.getElementById('gfsentemailnote').textContent)], [true,true]);
   await until(()=>resend.length>r0&&/Check your inbox/.test((A.D.getElementById('gfsentemailnote')||{}).textContent||''),10000);
   c('Resend is called once, to the member, with the link and nothing attached, and the Sent box says so', [resend.length-r0,resend.at(-1).to,'attachments' in resend.at(-1),/#gifts-report=[A-Za-z0-9_.-]+/.test(resend.at(-1).text),A.D.getElementById('gfsentemailnote').textContent],
@@ -164,10 +166,11 @@ function makeStore(){
 
   // ======================================================= E2E-2: new details, sent again
   console.log('-- sending again replaces the same record (E2E-2) --');
-  const form=A.D.getElementById('u-member-resource-result');
-  form.querySelector('button[type="submit"]').click();
+  // v10.54.2: the member's "Save details" form is gone (the pastor: "do we really need your skills and availability"); sending the same
+  // answers again (as after deleting from the server, or a pastor's delete) still replaces the record
+  A.E(`GFS.sent=false; gfSave(); gfRenderSend(document.getElementById('gfsendbox'));`);
   await until(()=>A.D.getElementById('gfsend'));
-  c('after "Save details", the Send box says sending replaces the earlier result', /sending replaces it/.test(A.D.getElementById('gfsendnote').textContent), true);
+  c('sending again: the Send box says sending replaces the earlier result', /sending replaces it/.test(A.D.getElementById('gfsendnote').textContent), true);
   c('…with a way to delete the earlier one instead', !!A.D.getElementById('gfdelearlier'), true);
   const nUpd=calls.filter(x=>x.op==='update').length;
   await send(A);
@@ -185,8 +188,7 @@ function makeStore(){
   c('me again: the server record is kept, the name is there, email consent asked again', [A.E('GFS.rid'),A.D.getElementById('gfname').value,A.E('GFS.emailOk')], [rid1,'Maria Lopez',false]);
   A.D.getElementById('gfstart').click();
   A.E(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=g.id==='shep'?4:1;}); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-  await until(()=>A.D.getElementById('gfsend'));
-  await send(A);
+  await send(A);   // v10.54.2: new answers go by themselves
   const again=recs(pub).filter(x=>x.name==='Maria Lopez');
   c('the new answers replace the old ones in the same record', [again.length,A.E('GFS.rid'),decodeIn(A,again[0].code).a['shep.0']], [1,rid1,4]);
   c('the confirmation is still on it', again[0].observers.length, 1);

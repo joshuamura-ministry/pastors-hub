@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.54.1
+     TERRAIN  v10.54.2
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.54.1" data-theme="dark">
+<html lang="en" data-version="v10.54.2" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.54.1">
-<title>Community Map — Terrain v10.54.1</title>
+<meta name="terrain-version" content="v10.54.2">
+<title>Community Map — Terrain v10.54.2</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1876,7 +1876,8 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfr-ticks i:last-child{transform:translateX(-100%)}
 .gfr-key{display:flex;align-items:center;gap:8px;margin-top:10px;font-size:.74rem;color:var(--ink3)}
 .gfr-sw{width:22px;height:8px;border-radius:999px;background:repeating-linear-gradient(135deg,var(--ink3) 0 3px,transparent 3px 6px)}
-.gfr-90{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:6px}
+.gfr-90{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:6px}
+@media (max-width:900px){ .gfr-90{grid-template-columns:repeat(2,minmax(0,1fr))} }
 .gfr-90>div{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
 .gfr-90 small{display:block;font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--acc);font-weight:700}
 .gfr-90 b{display:block;font-family:var(--disp);margin:3px 0 4px;color:var(--ink)}
@@ -4285,13 +4286,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.54.1';
+const VERSION = 'v10.54.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -14893,8 +14894,8 @@ function gfCombo(core){
 function gfShapeWords(P){
   const n=P.core.length, es=LANG==='es';
   if(!n) return es
-    ?'Ningún don resultó con fuerza en sus respuestas todavía. Eso suele significar que usted respondió con cuidado y que ha tenido pocas oportunidades de servir, así que empiece por los primeros dones de la lista de los veintiún, y use los primeros noventa días para probar uno.'
-    :'No gift came back strongly in your answers yet. That usually means you answered carefully and have had few chances to serve, so start from the top of the chart of all twenty-one below, and use the first ninety days to try one of them.';
+    ?'Ningún don resultó con fuerza en sus respuestas todavía. Eso suele significar que usted respondió con cuidado y que ha tenido pocas oportunidades de servir, así que empiece por los primeros dones de la lista de los veintiún, y siga los pasos de abajo para probar uno.'
+    :'No gift came back strongly in your answers yet. That usually means you answered carefully and have had few chances to serve, so start from the top of the chart of all twenty-one below, and follow the steps further down to try one of them.';
   const pts=g=>es?(g===1?'1 punto':g+' puntos'):(g===1?'1 point':g+' points');
   if(P.shape==='single') return es
     ?`Un don sobresale claramente por encima de todo lo demás en sus respuestas, por ${pts(P.gap)}. Eso es poco común, y significa que conviene ubicarle de manera específica y profunda, en lugar de repartirle entre varios ministerios.`
@@ -16566,7 +16567,6 @@ function gfRenderIntro(h){
   </div>`;
   const br=document.getElementById('gfbackr');
   if(br) br.onclick=()=>{ GF_VIEW='roster'; GFS.self=false; gfSave(); gfRender(); };
-  uMemberFormMount();
   const nm=document.getElementById('gfname');
   const cons=document.getElementById('gfconsent');
   const err=document.getElementById('gfintroerr');
@@ -16574,10 +16574,10 @@ function gfRenderIntro(h){
     if(!cons) return;
     // Under 18 the line just above already says where the answers go and for
     // how long, so this one does not say it again.
-    if(GF_PUB_TARGET&&member&&GFS.minor===true){ cons.innerHTML=L('If you add them, your skills and availability go with your answers. They are not shared with anyone else, and they are used only to help find where you might serve.','Si los agrega, sus habilidades y su disponibilidad van con sus respuestas. No se comparten con nadie más, y se usan solo para ayudar a encontrar dónde podría servir.')
-        +(GF_SERVER&&GF_SERVER.ok?' '+L('You can delete your result at any time.','Usted puede eliminar su resultado en cualquier momento.'):''); return; }
+    if(GF_PUB_TARGET&&member&&GFS.minor===true){ cons.innerHTML=L('They are not shared with anyone else, and they are used only to help find where you might serve.','No se comparten con nadie más, y se usan solo para ayudar a encontrar dónde podría servir.')
+        +(GF_SERVER&&GF_SERVER.ok?' '+L('You can delete your result at any time.','Usted puede eliminar su resultado en cualquier momento.'):''); return; }   // v10.54.2: no skills to add
     cons.innerHTML = GF_PUB_TARGET
-      ? L('When you finish, your answers, your name and, if you add them, your skills and availability go to the person who sent you this link \u2014 your pastor or a ministry leader \u2014 so they can talk with you about where you might serve. They are not shared with anyone else, and they are not used for anything but ministry placement.','Al terminar, sus respuestas, su nombre y, si los agrega, sus habilidades y su disponibilidad llegan a la persona que le envió este enlace (su pastor o un líder de ministerio), para que pueda conversar con usted sobre dónde podría servir. No se comparten con nadie más ni se usan para otra cosa que no sea ubicarle en un ministerio.')
+      ? L('When you finish, your answers and your name go to the person who sent you this link \u2014 your pastor or a ministry leader \u2014 so they can talk with you about where you might serve. They are not shared with anyone else, and they are not used for anything but ministry placement.','Al terminar, sus respuestas y su nombre llegan a la persona que le envió este enlace (su pastor o un líder de ministerio), para que pueda conversar con usted sobre dónde podría servir. No se comparten con nadie más ni se usan para otra cosa que no sea ubicarle en un ministerio.')
         +(GF_SERVER&&GF_SERVER.ok?' '+L('Results are kept for two years (one year for anyone under 18), and you can delete yours at any time.','Los resultados se guardan durante dos años (un año si la persona es menor de 18) y usted puede eliminar el suyo en cualquier momento.'):'')
       : L('Your answers stay on this device. At the end you will get a short code you can send to your pastor if you want them to see the result.','Sus respuestas se quedan en este dispositivo. Al final recibirá un código breve que puede enviarle a su pastor si desea que vea el resultado.');
   };
@@ -18987,35 +18987,36 @@ function gfReportModel(S,P,opts){
               'Ninguno está marcado como sin probar: donde usted no pudo responder desde la experiencia, sus otras respuestas bastaron para ubicar el don. Los dones marcados como menos evidentes sí se respondieron, y resultaron más bajos.')
     :L('Every gift was answered from experience. Gifts marked less evident were answered, and came back lower.','Cada don se respondió desde la experiencia. Los dones marcados como menos evidentes sí se respondieron, y resultaron más bajos.'));
 
-  // ---- the first ninety days, built from the top neighbourhood role or church match
+  // ---- how to get involved (v10.54.2; was "Your first ninety days"). The pastor (6 Oct 2026): "the first 90 days, I don't know what that
+  // is. The main thing is just a very simple steps on how to get involved … pray about how much you can commit to serving the church …
+  // go to your pastor go to a church leader ask to serve in … that specific area of your strength … get integrated into … the lifeblood of
+  // the church and then assess … Don't wait for a ministry [leader] to follow up … you go … and make the connection". Four steps, in his
+  // order; step 2 names where to ask, from the top neighbourhood role, then the church's matching ministry, then a ministry, then the gift.
   { const role=M.neighbourhood&&M.neighbourhood.roles[0];
     const cm=M.local&&M.local.rows[0];
     const sv=M.serve&&M.serve.rows[0];
     const gl=g1?gfLow(g1.id):'';
     const q=t=>es?`«${t}»`:`“${t}”`;   // a ministry's name, mid-sentence, in either language
-    const w1=role?(es?`Pídale a su pastor una conversación sobre asumir esto: «${role.role}».`:`Ask your pastor for one conversation about taking this on: “${role.role}”.`)
-      :cm?(es?`Dígale a quien dirige «${cm.n}» en ${where} que le gustaría ayudar, y pregunte cómo sería el primer mes.`:`Tell whoever leads ${q(cm.n)} at ${where} that you would like to help, and ask what the first month would look like.`)
-      :sv?(es?`Pídale a su pastor una conversación sobre «${sv.n}».`:`Ask your pastor for one conversation about ${q(sv.n)}.`)
-      :g1?(es?`Pregúntele a su pastor dónde podría ponerse en práctica el don de ${gl} en los próximos tres meses.`:`Ask your pastor where ${gl} could be put to use in the next three months.`)
-      :L('Ask your pastor for one conversation about what you found in this report.','Pídale a su pastor una conversación sobre lo que encontró en este informe.');
-    const w2=role&&cm?(es?`Sirva en ${q(cm.n)} en ${where}, y dé el primer paso de la tarea en el vecindario con alguien experimentado a su lado.`:`Serve in ${q(cm.n)} at ${where}, and take the first step for the neighbourhood role with someone experienced beside you.`)
-      :role?L('Take the first step for the neighbourhood role with someone experienced beside you, and keep a note of what happens each week.','Dé el primer paso de la tarea en el vecindario con alguien experimentado a su lado, y anote lo que sucede cada semana.')
-      :cm?(es?`Sirva en ${q(cm.n)} junto a alguien que ya lo hace, y anote lo que sucede cada semana.`:`Serve in ${q(cm.n)} beside someone who already does it, and keep a note of what happens each week.`)
-      :sv?(es?`Sirva junto a alguien con experiencia en ${q(sv.n)}, y anote lo que sucede cada semana.`:`Serve beside someone experienced in ${q(sv.n)}, and keep a note of what happens each week.`)
-      :L('Serve beside someone experienced wherever your pastor suggests, and keep a note of what happens each week.','Sirva junto a alguien con experiencia donde su pastor le sugiera, y anote lo que sucede cada semana.');
-    M.ninety={title:L('Your first ninety days','Sus primeros noventa días'),
-      intro:U.add(L('Nothing in this report is an appointment. Every suggestion in it begins the same way: ninety days alongside someone experienced, then an honest conversation about whether to continue.',
-        'Nada de este informe es un nombramiento. Cada sugerencia empieza de la misma manera: noventa días junto a alguien con experiencia, y luego una conversación honesta sobre si continuar.')
-        +(M.flags.minor?L(' For anyone under 18, that means with a parent or guardian’s knowledge and a youth leader alongside.',' Para quien tiene menos de 18 años, eso significa con el conocimiento de su padre, madre o tutor y con un líder de jóvenes al lado.'):'')),
+    const lead=!role&&cm?(es?`, o con quien dirige ${q(cm.n)} en ${where}`:`, or with whoever leads ${q(cm.n)} at ${where}`):'';
+    const ask=role?(es?`Pida servir donde sus dones son más fuertes: ${q(role.role)}.`:`Ask to serve where your gifts are strongest: ${q(role.role)}.`)
+      :cm?(es?`Pida servir en ${q(cm.n)}.`:`Ask to serve in ${q(cm.n)}.`)
+      :sv?(es?`Pida servir en ${q(sv.n)}.`:`Ask to serve in ${q(sv.n)}.`)
+      :g1?(es?`Pregunte dónde puede usar el don de ${gl}.`:`Ask where your gift of ${gl} can be used.`)
+      :L('Ask where you could serve.','Pregunte dónde podría servir.');
+    const w2=(es?`Pida una cita con su pastor${lead}, y lleve este informe. `:`Set up a time with your pastor${lead}, and bring this report. `)+ask;
+    M.ninety={title:L('How to get involved','Cómo involucrarse'),
+      intro:U.add(L('Don’t wait to be asked: you make the first move.','No espere a que le busquen: dé usted el primer paso.')
+        +(M.flags.minor?L(' If you are under 18, do it with a parent or guardian’s knowledge and a youth leader alongside.',' Si tiene menos de 18 años, hágalo con el conocimiento de su padre, madre o tutor y con un líder de jóvenes al lado.'):'')
+        +(M.flags.minor&&own?L(' Your answers go to the person who sent you the link and are kept for one year.',' Sus respuestas llegan a la persona que le envió el enlace y se guardan durante un año.'):'')),
       basis:role?{kind:'need',id:role.id,name:role.role}:cm?{kind:'church',name:cm.n}:sv?{kind:'ministry',name:sv.n}:g1?{kind:'gift',id:g1.id,name:gfName(g1.id)}:{kind:'none',name:''},
-      steps:[{when:L('Week 1','Semana 1'),title:L('One conversation','Una conversación'),text:U.add(w1)},
-             {when:L('Weeks 2–8','Semanas 2 a 8'),title:L('Serve alongside','Servir acompañado'),text:U.add(w2)},
-             {when:L('Day 90','Día 90'),title:L('Honest check-in','Revisión honesta'),text:U.add(L('Keep going, change roles, or stop. Any of the three is a good outcome.','Siga adelante, cambie de tarea o deténgase. Cualquiera de las tres es un buen resultado.'))}]}; }
+      steps:[{when:L('Step 1','Paso 1'),title:L('Pray about it','Ore al respecto'),text:U.add(L('Pray about how much time you can commit to serving the church each week, and where God is leading you.','Ore sobre cuánto tiempo puede comprometerse a servir a la iglesia cada semana, y hacia dónde le guía Dios.'))},
+             {when:L('Step 2','Paso 2'),title:L('Talk to your pastor','Hable con su pastor'),text:U.add(w2)},
+             {when:L('Step 3','Paso 3'),title:L('Start serving','Empiece a servir'),text:U.add(L('Step in and serve beside someone who already does it. That is how you become part of the life of the church.','Empiece a servir junto a alguien que ya lo hace. Así llega a ser parte de la vida de la iglesia.'))},
+             {when:L('Step 4','Paso 4'),title:L('Look back','Evalúe'),text:U.add(L('After a few months, talk it over with your pastor or ministry leader: keep going, change roles, or step back. Any of the three is a good outcome.','Después de unos meses, convérselo con su pastor o su líder de ministerio: siga adelante, cambie de tarea o dé un paso atrás. Cualquiera de las tres es un buen resultado.'))}]}; }
 
   // ---- what happens next
-  M.next=(own?[L('A ministry leader will follow up for a short conversation. Nothing here places anyone on its own — gifts are confirmed by the church, in service, over time.',
-      'Un líder de ministerio le buscará para una conversación breve. Nada de esto le asigna un cargo por sí solo: los dones los confirma la iglesia, en el servicio, con el tiempo.'),
-      ...(M.flags.minor?[L('Your answers go to the person who sent you the link and are kept for one year.','Sus respuestas llegan a la persona que le envió el enlace y se guardan durante un año.')]:[])]
+  // v10.54.2: the member's own copy has none ("Don't wait for a ministry [leader] to follow up"); the pastor's copy keeps its two lines
+  M.next=(own?[]
     :[L('Have the conversation within two weeks, while the answers are still fresh.','Tenga la conversación en las próximas dos semanas, mientras las respuestas están frescas.'),
       L('Nothing here places anyone on its own — the church confirms gifts in service, over time.','Nada de esto asigna un cargo por sí solo: la iglesia confirma los dones en el servicio, con el tiempo.')]).map(t=>U.add(t));
 
@@ -19228,7 +19229,7 @@ function gfReportHTML(M,own){
     ${M.flags&&M.flags.untested?`<div class="gfr-key"><span class="gfr-sw"></span>${e(Lb.striped)}</div>`:''}</section>`);
   out.push(`<section class="card gfcard gfr-ninety"><h3 class="gfr-h">${e(M.ninety.title)}</h3>${para(M.ninety.intro)}
     <div class="gfr-90">${M.ninety.steps.map(s=>`<div><small>${e(s.when)}</small><b>${e(s.title)}</b>${para(s.text)}</div>`).join('')}</div></section>`);
-  out.push(`<section class="card gfcard gfr-next"><h3 class="gfr-h">${e(Lb.next)}</h3>${M.next.map(para).join('')}</section>`);
+  if(M.next&&M.next.length) out.push(`<section class="card gfcard gfr-next"><h3 class="gfr-h">${e(Lb.next)}</h3>${M.next.map(para).join('')}</section>`);
   const A=M.actions||{};
   out.push(`<section class="card gfcard gfr-actions" id="gfactions"><h3 class="gfr-h">${e(Lb.actions)}</h3>
     <div class="gfnav">${A.pdf!==false?`<button class="btn" id="gfpdf">${e(Lb.pdf)}</button>`:''}${A.email?`<button class="btn ghost" id="gfemail">${e(Lb.email)}</button>`:''}${A.invite?`<button class="btn ghost" id="gfinvite">${e(Lb.invite)}</button>`:''}${A.redo?`<button class="btn ghost" id="gfredo">${e(Lb.redo)}</button>`:''}${A.deleteMine?`<button class="btn ghost" id="gfdelmine">${e(Lb.del)}</button>`:''}${A.deleteResult?`<button class="btn ghost" id="gfpdel">${e(Lb.pdel)}</button>`:''}${M.sample&&M.sampleBar?`<button type="button" class="btn ghost" data-sampback="foot">← ${e(M.sampleBar.backLong)}</button>`:''}</div>
@@ -19800,9 +19801,9 @@ function gfReportPDFAt(M,opts,D){
     if(Cc.moreText) flow(Cc.moreText,{...S.small,color:C.ink3});
   }
 
-  // the first ninety days
+  // how to get involved (the four steps)
   {
-    const Nn=M.ninety, gap=10, w=(CW-2*gap)/3, pad=10;
+    const Nn=M.ninety, gap=10, w=(CW-(Nn.steps.length-1)*gap)/Nn.steps.length, pad=10;
     const box=(s,x,top,draw)=>{ let t=top+pad;
       t+=tb(s.when,x+pad,t,w-2*pad,{...S.label,color:C.acc},draw)+2;
       t+=tb(s.title,x+pad,t,w-2*pad,{size:9.8,style:'bold',color:C.ink,lh:12.4},draw)+2;
@@ -20134,7 +20135,6 @@ function gfWireReport(h,M,own,opts){
   }
   if(own&&!opts.readonly&&!M.sample){
     gfRenderSend($$('gfsendbox'));
-    uMemberResultMount();
     gfRefreshObservers(h);
   }
 }
@@ -20279,6 +20279,13 @@ function gfRenderSend(box){
   }
   if(ask){ ask.hidden=true; ask.innerHTML=''; }
   const earlier=gfMyRecords().length>0;
+  // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway". The
+  // start page tells the member their answers go to the person who sent the link; so on finishing it goes by itself, once a page load for
+  // the same answers (Start again and new answers: once more), and never again for answers already sent once (a member who deleted their result, or whose pastor did, sends it again by the button).
+  const auto=!!GF_PUB_TARGET&&GF_AUTO_TRIED!==gfSig()&&GFS.autoSig!==gfSig();
+  if(auto){ GF_AUTO_TRIED=gfSig();
+    box.innerHTML=`<h3>${L('Sending to your pastor…','Enviando a su pastor…')}</h3><p class="note" id="gfsendnote" role="status">${L('Your answers and your name are on their way to your pastor.','Sus respuestas y su nombre van camino a su pastor.')}</p>`;
+    gfSendNow(box,code,true); return; }
   box.innerHTML=`<h3>${L('Send this to your pastor','Envíe esto a su pastor')}</h3>
     <p class="note" id="gfsendnote">${GF_PUB_TARGET
       ?L('This sends your name and your answers to your pastor, so they can talk with you about where you might serve.','Esto envía su nombre y sus respuestas a su pastor, para que pueda conversar con usted sobre dónde podría servir.')
@@ -20291,10 +20298,18 @@ function gfRenderSend(box){
     const n=document.getElementById('gfsendnote');
     if(n) n.textContent=L('Your earlier result was deleted from the server. Nothing has been sent since.','Su resultado anterior se eliminó del servidor. Desde entonces no se ha enviado nada.');
   });
-  const note=document.getElementById('gfsendnote');
   const send=document.getElementById('gfsend');
-  if(send) send.onclick=async()=>{
-    send.disabled=true; send.textContent=L('Sending…','Enviando…');
+  if(send) send.onclick=()=>gfSendNow(box,code,false);
+  if(document.getElementById('gfcopy')) document.getElementById('gfcopy').onclick=()=>{
+    const t=document.getElementById('gfcodebox');
+    gfCopy(t.value,t);
+    document.getElementById('gfcopy').textContent=L('Copied — now send it to your pastor','Copiado: ahora envíeselo a su pastor');
+  };
+}
+let GF_AUTO_TRIED='';   // v10.54.2: the answers the automatic send last tried (once a page load for the same answers)
+async function gfSendNow(box,code,auto){
+  const send=document.getElementById('gfsend');
+  if(send){ send.disabled=true; send.textContent=L('Sending…','Enviando…'); }
     try{
       // A short link opened without a connection never learnt its church.
       // Sending needs the connection anyway, so ask once more first: the
@@ -20302,23 +20317,21 @@ function gfRenderSend(box){
       let c=code, fresh=false;
       if(!GF_CTX&&uGiftShortLink()){ const x=await gfCtxFetch(GIFTS_LINK.pub,5000); if(x){ GF_CTX=x; c=gfEncode(); fresh=true; } }
       await gfSendResult(GF_PUB_TARGET,c);
-      GFS.sent=true; gfSave();
+      GFS.sent=true; GFS.autoSig=gfSig(); gfSave();
       GF_EMAIL_PENDING=gfWillEmail();
-      if(fresh) gfRender(); else { gfRenderSend(box); gfActionsRefresh(); }
+      if(fresh) gfRender(); else { gfRenderSend(document.getElementById('gfsendbox')||box); gfActionsRefresh(); }   // the page may have been drawn again meanwhile
     }catch(e){
-      send.disabled=false; send.textContent=L('Send my result','Enviar mi resultado');
+      // v10.54.2: the automatic send did not go through: the box with the button, then the same sentence as before
+      if(auto||!send){ GFS.sent=false; gfRenderSend(document.getElementById('gfsendbox')||box); }
+      const again=document.getElementById('gfsend'), note=document.getElementById('gfsendnote');
+      if(again){ again.disabled=false; again.textContent=L('Send my result','Enviar mi resultado'); }
+      if(!note) return;
       // v10.50.0: no code to copy and send (the pastor: "why would a member send me a code? Don't need that"): the answers wait on the phone
       const lost=L('Nothing is lost: your answers are saved on this phone. Tap <b>Send my result</b> again when you have a connection.','No se pierde nada: sus respuestas están guardadas en este teléfono. Toque <b>Enviar mi resultado</b> otra vez cuando tenga conexión.');
       note.innerHTML=(e&&e.code&&!['offline','nofn','server'].includes(e.code)
         ? esc(gfErrText(e))+' '
         : L('That did not go through — you may be offline, or the church has not finished setting this up.','No se pudo enviar: es posible que no tenga conexión, o que la iglesia todavía no haya terminado de configurar esto.')+' ')+lost;
     }
-  };
-  if(document.getElementById('gfcopy')) document.getElementById('gfcopy').onclick=()=>{
-    const t=document.getElementById('gfcodebox');
-    gfCopy(t.value,t);
-    document.getElementById('gfcopy').textContent=L('Copied — now send it to your pastor','Copiado: ahora envíeselo a su pastor');
-  };
 }
 
 /* ---- ask two or three people who know you ---------------------------------
@@ -23125,16 +23138,9 @@ function zoneFirstMove(){return 'Ask residents what would help, then use the min
 
 function uResourceForm(r={},admin=false){return `<div class="u-grid">${admin?`<label class="u-field">${L('Name','Nombre')}<input name="memberName" required value="${esc(r.name||'')}"></label>`:''}<label class="u-field">${L('Hours available per month','Horas disponibles por mes')}<input name="memberHours" type="number" min="0" max="744" value="${uNum(r.hours)??''}"></label><label class="u-field">${L('Languages and proficiency','Idiomas y nivel de dominio')}<input name="memberLanguages" maxlength="500" value="${esc(r.languages||'')}"></label></div><label class="u-check"><input name="memberWilling" type="checkbox" ${r.willing?'checked':''}>${L('Willing to discuss a ministry assignment','Dispuesto a conversar sobre una tarea en un ministerio')}</label><label class="u-check"><input name="memberLeader" type="checkbox" ${r.leader?'checked':''}>${L('Willing and able to coordinate a team','Dispuesto y capaz de coordinar un equipo')}</label><fieldset><legend>${L('Practical skills and experience','Habilidades prácticas y experiencia')}</legend><div class="u-checks">${U_SKILLS.map(s=>`<label class="u-check"><input name="memberSkill" type="checkbox" value="${s.k}" ${(r.skills||[]).includes(s.k)?'checked':''}>${esc(uSkillName(s))}</label>`).join('')}</div></fieldset><fieldset><legend>${L('Available times','Horarios disponibles')}</legend><div class="u-checks">${uChecks(U_SLOTS,r.slots,'memberSlot',uSlotName)}</div></fieldset><label class="u-field">${L('Relevant experience, training, and existing commitments','Experiencia y formación pertinentes, y compromisos actuales')}<textarea name="memberExperience" rows="3" maxlength="2000">${esc(r.experience||'')}</textarea></label>${admin?`<label class="u-check"><input name="memberConfirmed" type="checkbox" ${r.confirmed?'checked':''}>${L('I have reviewed this person’s willingness, availability and practical qualifications.','He revisado la disposición, la disponibilidad y las capacidades prácticas de esta persona.')}</label>`:`<p class="note">${L('These details help your pastor discuss a suitable role with you. They do not enroll you in a ministry. Share only information you want your pastor to see.','Estos datos ayudan a su pastor a conversar con usted sobre una función adecuada. No le inscriben en ningún ministerio. Comparta solo la información que desee que su pastor vea.')}</p>`}`;}
 function uReadResource(form){const d=new FormData(form);return {name:String(d.get('memberName')||''),hours:uNum(d.get('memberHours')),languages:String(d.get('memberLanguages')||''),willing:d.has('memberWilling'),leader:d.has('memberLeader'),skills:uValues(form,'memberSkill'),slots:uValues(form,'memberSlot'),experience:String(d.get('memberExperience')||''),confirmed:d.has('memberConfirmed')};}
-function uMemberFormMount(){
-  const start=$('gfstart');if(!start)return;
-  const wrapper=document.createElement('div');wrapper.className='card gfcard';wrapper.innerHTML=`<details class="u-details"><summary>${L('Your skills and availability (optional)','Sus habilidades y disponibilidad (opcional)')}</summary><form id="u-member-resources">${uResourceForm(GFS.resources||{})}</form></details>`;start.closest('.card').before(wrapper);
-  $('u-member-resources').onchange=()=>{GFS.resources=uReadResource($('u-member-resources'));delete GFS.resources.name;gfSave();};
-}
-function uMemberResultMount(){
-  const send=$('gfsendbox');if(!send)return;
-  const host=document.createElement('div');host.className='card gfcard';host.innerHTML=`<h3>${L('Your skills and availability','Sus habilidades y disponibilidad')}</h3><form id="u-member-resource-result">${uResourceForm(GFS.resources||{})}<button class="btn" type="submit">${L('Save details & update sharing code','Guardar datos y actualizar el código')}</button><p id="u-member-save-status" role="status"></p></form>`;send.before(host);
-  $('u-member-resource-result').onsubmit=e=>{e.preventDefault();if(!e.target.reportValidity())return;GFS.resources=uReadResource(e.target);delete GFS.resources.name;GFS.sent=false;gfSave();gfRenderSend(send);$('u-member-save-status').textContent=L('Saved. Use the updated code or send it again to your pastor.','Guardado. Use el código actualizado o vuelva a enviarlo a su pastor.');};
-}
+/* v10.54.2: the member's own skills-and-availability forms are gone (the pastor: "do we really need your skills and availability … the
+   person who takes this is gonna know when they can serve"). A result sent before keeps what it carried; the pastor records a
+   member's skills and times himself in Review members (uEditMember). */
 /* TG1- v4: base64url JSON {v:4,date,chars,heart,minor,church,churchId,name,
    memberId,resources}. chars = 21 gifts × 5 (keys 0-4) in GIFTS order, each
    0-4, x (-1) or . (unanswered); heart = 12 chars in GF_HEART order, 0|1|2|.

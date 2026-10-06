@@ -266,8 +266,7 @@ function makeStore(){
   MD.getElementById('gfstart').click();
   c('Begin starts the statements', !!MD.querySelector('.gfcardq'), true);
   M.w.eval(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=(g.id==='teach'||g.id==='shep')?4:1;}); GF_HEART.forEach(q=>GFS.h[q.k]=1); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-  await until(()=>MD.getElementById('gfsend'));
-  MD.getElementById('gfsend').click();
+  // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway": the result goes by itself when the report opens
   await until(()=>M.w.eval('GFS.sent===true'));
   const sub=calls.filter(x=>x.op==='submit').pop();
   c('submit sends minor as a real boolean and no email for a minor', [sub.minor,'email' in sub,'emailOk' in sub,sub.lang], [true,false,false,'en']);
@@ -346,8 +345,7 @@ function makeStore(){
   AD.getElementById('gfstart').click();
   c('adult email and consent kept on the device', [A.w.eval('GFS.email'),A.w.eval('GFS.emailOk'),A.w.eval('GFS.minor')], ['ana@example.org',true,false]);
   A.w.eval(`GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=2;}); GFS.done=true; GFS.i=GF_TOTAL; gfSave(); gfRender();`);
-  await until(()=>AD.getElementById('gfsend')); AD.getElementById('gfsend').click();
-  await until(()=>A.w.eval('GFS.sent===true'));
+  await until(()=>A.w.eval('GFS.sent===true'));   // v10.54.2: sent by itself
   const sub2=calls.filter(x=>x.op==='submit').pop();
   c('submit carries email, emailOk, minor:false', [sub2.email,sub2.emailOk,sub2.minor], ['ana@example.org',true,false]);
   // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": no code to copy; the answers wait on the phone.

@@ -175,6 +175,32 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.54.2 (6 Oct 2026, quick lane) — the member's report ends simply: how to get involved, sent by itself.** The pastor, of the end of a
+member's Spiritual Gifts report: *"the first 90 days, I don't know what that is. The main thing is just a very simple steps on how to get
+involved … pray about how much you can commit to serving the church … go to your pastor go to a church leader ask to serve in … that
+specific area of your strength … get integrated into … the lifeblood of the church and then assess … Don't wait for a ministry [leader] to
+follow up … do we really need your skills and availability … and send your results to the Pastor doesn't need to be there cause … it's
+gonna go to the pastor anyway"*.
+- **How to get involved** (`M.ninety`, was "Your first ninety days"; title "Cómo involucrarse"): "Don't wait to be asked: you make the first
+  move." and four steps, four across (two on a tablet, one on a phone; the PDF divides its width by the steps): 1 Pray about it (how much
+  time to commit, where God is leading), 2 Talk to your pastor (set up a time, or with whoever leads the church's matching ministry; bring
+  the report; ask to serve where the gifts are strongest: the top neighbourhood role, the church's ministry, a ministry, else the gift),
+  3 Start serving (beside someone who already does it), 4 Look back (after a few months: keep going, change roles, or step back). Under 18:
+  a parent or guardian, a youth leader, and who keeps the answers for a year (moved here from "What happens next").
+- **No "What happens next" on the member's own copy** (`M.next` empty; the section is drawn only when it has lines): no "A ministry leader
+  will follow up". The pastor's copy keeps its two lines.
+- **No skills-and-availability form for members** (the first page's optional fold and the report's form, `uMemberFormMount` /
+  `uMemberResultMount`, are gone; the consent says "your answers and your name"). A result sent before keeps what it carried; the pastor
+  records a member's skills and times in Review members (`uEditMember`), and his own "Your church" counts come first in `capMerged` anyway.
+- **The result goes to the pastor by itself** when the report opens (`gfSendNow`, `GF_AUTO_TRIED`, `GFS.autoSig`): the first page already
+  tells the member their answers go to the person who sent the link. "Sending to your pastor…", then "Sent to your pastor" (Delete stays).
+  Once a page load for the same answers; never again by itself for answers already sent (a member's or a pastor's delete leaves the button);
+  Start again with new answers sends once more. Not sent (no connection): the button and v10.50.0's sentence.
+- Tests: `v54-2-get-involved` (new, 25; failing first on v10.54.1: `v71/ff-v54-2.log`); updated with comments: gifts-report (four steps),
+  gifts-sample and gifts-pdf (the headings), email-off, gifts-engine, gifts-shortlink, gifts-journeys and gifts-pdf (the result goes by itself;
+  "Save details" retired), gifts-review-copy (step 2's quoted ministry). Full suite: 143 suites · 10,199 passed · 0 failed. Samples
+  `~/Downloads/Terrain-v10.54.2-samples/` (`v71/shots16.mjs`).
+
 **v10.54.1 (6 Oct 2026, quick lane) — each lift its own colour.** The pastor, of the survey's three columns of ministry ideas: *"Can
 the light lift moderate lift heavy lift be maybe slightly different colors"*. One colour per lift, the same wherever a lift is shown
 (`--lift1/2/3` = `--m-language` / `--m-housing` / `--m-children`: Light mint, Moderate blue, Heavy violet, both themes; `--lc` on

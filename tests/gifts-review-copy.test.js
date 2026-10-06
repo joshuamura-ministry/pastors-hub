@@ -80,7 +80,8 @@ setTimeout(async()=>{ try{
   console.log('-- English copy (V7) --');
   const ctx={church:'Bucks County SDA',fac:[],min:{'Small groups':'r','Adult Sabbath School teaching':'r'},churchId:'x',needs:[],area:'',year:null};
   const cm=J(`__T.text(__T.model('teacher',{ctx:${JSON.stringify(ctx)}}),true)`);
-  c('ministry names are quoted mid-sentence, never a stray capital (b)', [/Serve in “[^”]+” at Bucks County SDA/.test(cm)||/Tell whoever leads “[^”]+” at/.test(cm),/(Serve in|leads|about|experienced in) (Small groups|Adult Sabbath)/.test(cm)], [true,false]);
+  // v10.54.2: step 2 of "How to get involved" names the ministry ("or with whoever leads “…” at …", "Ask to serve in “…”"), still quoted
+  c('ministry names are quoted mid-sentence, never a stray capital (b)', [/whoever leads “[^”]+” at Bucks County SDA/.test(cm)&&/Ask to serve in “[^”]+”/.test(cm),/(Serve in|serve in|leads|about|experienced in) (Small groups|Adult Sabbath)/.test(cm)], [true,false]);
   c('all twenty-one demonstrated: "All twenty-one", not "21 of the twenty-one" (c)', [/All twenty-one came back demonstrated/.test(J(`__T.model('allhigh',{}).overview.join(' ')`)),/21 of the twenty-one/.test(J(`__T.model('allhigh',{}).overview.join(' ')`))], [true,false]);
   c('"From the report page, Lee can ask…" (d)', /Nobody has confirmed these gifts yet\. From the report page, Lee can ask two or three people who know them\./.test(J(`__T.model('teacher',{own:false,name:'Lee Park'}).pastor.observers`)), true);
 
