@@ -155,6 +155,28 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.49.0 (5 Oct 2026) — money is stated, not checked; "Your church" in three steps.** The pastor: *"take the money part out
+of your church section on the spiritual gifts and add it in the proposal section"*, then *"we don't wanna add a place to fill in
+anything there. We just want the proposal to mention how much money they will need not versus available funds — we're gonna save all
+that in inputting information into the evangelism planner"*; and *"the boxes for clicking … I don't think it's in the right spot"*.
+- "Your church" (`capRender`): three steps (`U_WIZ`: Your church, Your building, Skills; `.u-track` 300%, panels a third, the
+  slide `100/panels.length` per step); the Money panel and the summary's Money group are gone; a save keeps fields the form no
+  longer has (so an older profile's money stays stored, unread). The description: "People, rooms and skills. The money for a
+  ministry is on its proposal."
+- Money is not part of what the church has: `capMerged()` and `caseCapFrom()` return `startup:null, monthly:null`; `uCheck` and
+  `caseCheckWith` make no money gaps. So no "Left after this", no "Already over budget", no budget row on the capacity slide, no
+  "Short by $…". The ask still states To start · Each month, the Ceiling and the Source; the cost answers have a version with no
+  budget beside it (`board.cost`/`finance.afford` `aEn3`/`aEs3`); Luke 14:28 is homed on the ask first (`CASE_VERSE_HOME`).
+  The conference proposal's budget table has no "From the church budget" row until the Evangelism Planner holds the church's funds.
+- The Proposal page states the money in its "What it needs from our church" box; Make the Case itself shows a Money box
+  (`caseMoneyHTML`, `#cs-money` at the foot of step 2, only with a ministry chosen): To start, Each month, nothing to fill in.
+- Handout PDF: on a full last page the small print drops the Church Manual edition line before the under-18 note.
+- "Your building": each room's checkbox, name and + sit inside its box (`.u-facilities>fieldset>legend` floats inside).
+- Golden: all 535 keys re-written; `Terrain-work/v64/golden/golden-money.js check index-money-back.html` (the five money changes put
+  back) reproduces v10.48.0's file 535/535. v45-survey proves its 32 keys the same way (`MONEY_BACK`). Tests updated with comments:
+  case-model, case-fixes, case-review39 (F4 retired), case-pdf, v42-fixes, v42-average-church, v42-core, v41-decks,
+  profile-slider, scroll-to-church, church-summary-box, v45-profile-move; `v47-clean` gains the money and room-box checks.
+
 **v10.48.0 (5 Oct 2026) — the Proposal page.** The pastor: *"I don't like make the case I just want it to [say] proposal … this
 beautiful thing [the idea's sheet] should be what you see when you press create a proposal for this ministry at the top … big letters
 above that says proposal … then … who are you proposing to … the church board … the business session … the finance committee …

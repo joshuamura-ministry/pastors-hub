@@ -72,7 +72,8 @@ const NAMES = KEY.map(k => k.name);
     })()`);
     const n = { before: 0, partial: 18, after: 40 }[variant];
     c(`${variant}: the church is the made-up sample (name, id, demo badge)`, [R.name, R.id, R.demo], ['Sampleton SDA (SAMPLE)', 'sample-sampleton-sda', true]);
-    c(`${variant}: the profile as capMerged() reads it (55 on a Sabbath, 12 volunteers, 3 leaders, 160 h a month, $1,500 + $150)`, [R.attendance, R.hands, R.leaders, R.hours, R.startup, R.monthly], [55, 12, 3, 160, 1500, 150]);
+    // v10.49.0: money is not part of what the church has (stated per proposal; funds will be the Evangelism Planner's): startup and monthly null
+    c(`${variant}: the profile as capMerged() reads it (55 on a Sabbath, 12 volunteers, 3 leaders, 160 h a month, no money)`, [R.attendance, R.hands, R.leaders, R.hours, R.startup, R.monthly], [55, 12, 3, 160, null, null]);
     c(`${variant}: 80 members on the books and 46 adults in worship (capacity.membership, capacity.adults: GIFTS.md §2.1)`, [R.membership, R.adults], [80, 46]);
     c(`${variant}: one fellowship hall (60) and two classrooms (24), Tue–Thu evenings and Sabbath afternoon`, [R.rooms, R.slots],
       [['classrooms:24:Tue evening/Wed evening/Thu evening/Sat afternoon', 'kitchen:60:Tue evening/Wed evening/Thu evening/Sat afternoon'], ['Tue evening', 'Wed evening', 'Thu evening', 'Sat afternoon']]);

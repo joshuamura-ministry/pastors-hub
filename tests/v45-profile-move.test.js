@@ -10,6 +10,7 @@ const T=checker(), c=T.c;
 const SEED=JSON.parse(fs.readFileSync(path.join(ROOT,'tests','average-church','seed-after.json'),'utf8'));
 const STORE=Object.fromEntries(Object.entries(SEED).filter(([k])=>!k.startsWith('_')));
 const CAP_1044='a3ec4448f112adc5949abe62382d8e456d9000df';   // capMerged() of the average church, as v10.44.1 read it
+const CAP_1049='b8716e88d1305e3dc09c8d256e4526f5851bd437';   // …and from v10.49.0: the same, with startup and monthly null (checked: the only difference)
 const landing=P=>P.E(`(()=>{ openTool('gifts'); if(GF_VIEW!=='roster'){ GF_VIEW='roster'; gfRender(); } })()`);
 const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__auto++; return Promise.resolve(); }; })()`);
 
@@ -26,13 +27,14 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   // doors), called only "Your church", saying it moved here
   c('#gf-church near the top of the landing: after the Gifts-first card, before the two doors; a framed card', [!!P.q('#giftbody #gf-church'),P.q('#gf-church').previousElementSibling.matches('[data-gf-first]'),P.q('#gf-church').nextElementSibling.classList.contains('gfdoors'),P.q('#gf-church').classList.contains('card')], [true,true,true,true]);
   c('…its words: "Your church", that it moved here, what it holds and who reads it', [P.txt('#gf-church > summary'),P.txt('#gf-church > p.note')],
-    ['Your church Moved here from the Community Survey.','People, rooms, money and skills. Make the Case and the Evangelism Planner read these numbers.']);
+    ['Your church Moved here from the Community Survey.','People, rooms and skills. The money for a ministry is on its proposal.']);   // v10.49.0: money moved to the proposal
   c('…the form calls it by the church\'s name and "What your church has", never "One profile for My church"', [P.txt('#u-cap-form .u-heading h3'),/One profile for|My church/.test(P.txt('#u-cap-form .u-heading')||''),/^For Sampleton SDA/.test(P.txt('#u-cap-form .u-heading p.note')||'')], ['What your church has',false,true]);
   c('…closed when the church has its information (the average church)', P.q('#gf-church').open, false);
-  c('…the summary box first (#capsumslot), then the four-step form (#capslot), unchanged inside', [!!P.q('#gf-church #capsumslot .capsum'),!!P.q('#gf-church #capslot #u-cap-form'),P.qa('#gf-church .u-steps-nav li').length], [true,true,4]);
+  c('…the summary box first (#capsumslot), then the three-step form (#capslot; v10.49.0: Money moved to the proposal)', [!!P.q('#gf-church #capsumslot .capsum'),!!P.q('#gf-church #capslot #u-cap-form'),P.qa('#gf-church .u-steps-nav li').length], [true,true,3]);
   c('one #capslot on the page (the id stays unique)', P.qa('[id="capslot"]').length, 1);
   c('the Gifts first card is not repeated inside (the landing shows it at its top)', [P.qa('#gf-church [data-gf-first]').length,P.qa('#gifts [data-gf-first="landing"]').length], [0,1]);
-  c('capMerged() reads the average church exactly as v10.44.1 did (Make the Case, the Planner, gfReadiness)', crypto.createHash('sha1').update(P.E('JSON.stringify(capMerged())')).digest('hex'), CAP_1044);
+  // v10.49.0: as v10.44.1 did, but for money (startup and monthly are null: a proposal states what its ministry needs)
+  c('capMerged() reads the average church as v10.44.1 did, without the money (Make the Case, the Planner, gfReadiness)', crypto.createHash('sha1').update(P.E('JSON.stringify(capMerged())')).digest('hex'), CAP_1049);
   c('the Save button and the status, true now', [P.txt('#cap-done'),P.txt('#u-cap-status')], ['Save church','Saved for this church.']);
   c('the summary\'s foot line (the average church is a sample): Clear all is above it now', P.txt('#capsumslot .capsumfoot'), 'The sample church: press Clear all above when you are done.');
   P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`);
@@ -63,9 +65,9 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   P=page({store:STORE}); await ready(P); landing(P); await sleep(30);
   P.q('#gf-church').open=true;
   P.E(`U_STEP_I=1; capRender();`);
-  const inp=P.q('#u-cap-form [name="startupBudget"]'); inp.value='2345'; inp.dispatchEvent(new P.w.Event('input',{bubbles:true}));
+  const inp=P.q('#u-cap-form [data-panel="1"] input[type="number"]'); inp.value='2345'; inp.dispatchEvent(new P.w.Event('input',{bubbles:true}));   // v10.49.0: a step-2 box (Building; Money left)
   P.E(`gfRenderRoster(gfHost())`);   // what "Check for new results", the quiet check and a delete do
-  c('after a redraw: the same form, the value typed, the step, the fold open', [P.q('#u-cap-form [name="startupBudget"]').value,P.E('U_STEP_I'),P.q('#gf-church').open,P.txt('#u-cap-status')], ['2345',1,true,'Unsaved changes — save to update the plan.']);
+  c('after a redraw: the same form, the value typed, the step, the fold open', [P.q('#u-cap-form [data-panel="1"] input[type="number"]').value,P.E('U_STEP_I'),P.q('#gf-church').open,P.txt('#u-cap-status')], ['2345',1,true,'Unsaved changes — save to update the plan.']);
   c('…and still one #gf-church, in its place', [P.qa('#gf-church').length,P.q('#gf-church').nextElementSibling.classList.contains('gfdoors')], [1,true]);
 
   console.log('\n-- every way to the profile leads there --');
@@ -83,7 +85,7 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   console.log('\n-- in Spanish --');
   P=page({lang:'es',store:STORE}); await ready(P); landing(P); await sleep(30);
   c('"Su iglesia", that it moved here, what it holds, who reads it', [P.txt('#gf-church > summary'),P.txt('#gf-church > p.note')],
-    ['Su iglesia Se trasladó aquí desde la Encuesta Comunitaria.','Personas, salones, dinero y habilidades. Presentar el caso y el Planificador de evangelismo usan estas cifras.']);
+    ['Su iglesia Se trasladó aquí desde la Encuesta Comunitaria.','Personas, salones y habilidades. El dinero de cada ministerio está en su propuesta.']);
   // the review round (#18): the form itself in Spanish ("Fill in a demo church" stood beside "Borrar todo")
   { const t=P.txt('#gf-church')||'';   // (the church's own entries, here the sample's, stay as they were typed)
     const EN=['Members on the books','Attending','Volunteers','Leaders','Hours a month','Free to serve','Congregation','Startup funds','Building','Left to give','The sample church, as filled in',

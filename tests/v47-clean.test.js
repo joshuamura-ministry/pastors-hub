@@ -52,7 +52,24 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     R.q('#cs-prop [data-cs-other]').click(); await sleep(40);
     R.E(`showHub(); openTool('case')`); await sleep(40);
     c('Make the Case from the main menu with another ministry chosen is Make the Case again', (R.E(`caseSetPrefs({ministry:'vbs'}); caseMount(); 1`),R.txt('#toolname')), 'Make the Case');
+    // v10.49.0 — "take the money part out of your church section … add it in the proposal section", then "we don't wanna add a
+    // place to fill in anything … just … mention how much money they will need not versus available funds"
+    R.E(`caseSetPrefs({ministry:NS.back.plan}); caseMount();`);
+    // the Proposal page states the money in its "What it needs from our church" box (To start, Each month); nothing to fill in
+    c('the proposal states what the ministry needs (To start, Each month), nothing to fill in, no comparison', [R.qa('#cs-prop .ns-gi dt').map(x=>x.textContent).filter(t=>/^(To start|Each month|In all)$/.test(t)).length>=1,R.qa('#cs-prop input').length,/Covered|Short by|has for it/.test(R.txt('#cs-prop'))], [true,0,false]);
+    R.E(`CASE_ST.propList=true; caseMount();`); await sleep(20);
+    R.E(`NS.back=null; caseMount();`); await sleep(20);
+    c('Make the Case itself (not the proposal view): the Money box at the foot of step 2, its sums, nothing to fill in', [!!R.q('#cs-s2 #cs-money .cs-money'),R.qa('#cs-money input').length,/\$\d|No money needed/.test(R.txt('#cs-money')||'')], [true,0,true]);
+    c('…and the slides compare nothing with funds (no "Left after this")', R.E(`(()=>{ const d=caseDeck(caseModel(casePrefs().ministry,{type:'board',group:'board'})); const a=d.slides.find(s=>s.type==='ask'); return !!(a&&a.rows.some(r=>r[0]==='Left after this')); })()`), false);
     c('no page error', R.errs, []); }
+
+  console.log('\n-- v10.49.0: "Your church" without money; the room boxes in their place --');
+  { const Y=page(); await ready(Y); survey(Y); Y.E(`openTool('gifts')`); await sleep(60);
+    c('three steps: Your church, Your building, Skills (Money moved to the proposal)', Y.qa('#u-steps-nav li span').map(x=>x.textContent), ['Your church','Your building','Skills']);
+    c('no money boxes in the form, and no Money group in the summary', [Y.qa('#u-cap-form [name="startupBudget"],#u-cap-form [name="monthlyBudget"],#u-cap-form [name="pendingBudget"]').length,/Startup funds|Monthly funds/.test(Y.txt('#capsumslot')||'')], [0,false]);
+    c('what the church has holds no money any more (capMerged reads none)', [Y.J('capMerged().startup'),Y.J('capMerged().monthly')], [null,null]);
+    c('the description says where the money is now', Y.txt('#gf-church > p.note'), 'People, rooms and skills. The money for a ministry is on its proposal.');
+    c('the room boxes: the checkbox, the name and the + inside each box (the legend floats inside its fieldset)', /\.u-facilities>fieldset>legend\{float:left;width:100%/.test(HTML), true); }
 
   console.log('\n-- the Community Survey\'s top: the church, then Neighborhood · Town · County on the Brief --');
   const Q=page(); await ready(Q); survey(Q); await sleep(60);

@@ -26,7 +26,16 @@ const OLD_WORDS=`(()=>{ const S=id=>SIGNATURE.find(x=>x.id===id);
   delete U_LINES_OWN['garden']; delete U_LINES_OWN['skills-center']; delete U_LINES_OWN['lot-market'];
   S('garden').d=S('garden').d.replace('a watering schedule','a watering rota'); })()`;
 const NOW='2026-10-01T15:00:00', SEED=JSON.parse(fs.readFileSync(path.join(ROOT,'tests','average-church','seed-after.json'),'utf8'));
-function gpage(lang){ const dom=new JSDOM(HTML,{runScripts:'dangerously',url:'https://pastorshub.org/',pretendToBeVisual:true,virtualConsole:new VirtualConsole(),
+/* v10.49.0: money is stated, not checked (the pastor, 5 Oct 2026). To compare with v10.44.1, these put the money back in a copy of
+   the page (what the church had, the gaps against it, the cost answer without a budget, Luke 14:28's first home). */
+const MONEY_BACK=[
+  ["    startup:null,monthly:null,slots:c.slots||[],   // v10.49.0: money is not part of what the church has (it is stated per proposal)","    startup:uNum(c.startupBudget),monthly:uNum(c.monthlyBudget),slots:c.slots||[],"],
+  ["    startup:null,monthly:null,slots:p.slots||[],   // v10.49.0 (as capMerged)","    startup:uNum(p.startupBudget),monthly:uNum(p.monthlyBudget),slots:p.slots||[],"],
+  ["  // v10.49.0: money is not checked against what the church has (the proposal states what it needs)","  if(c.startup===null) g.push({k:'funds',which:'startup'}); else if(r.startup>c.startup-use.startup) g.push({k:'startup',need:r.startup,have:Math.max(0,c.startup-use.startup)});\n  if(c.monthly===null) g.push({k:'funds',which:'monthly'}); else if(r.monthly>c.monthly-use.monthly) g.push({k:'monthly',need:r.monthly,have:Math.max(0,c.monthly-use.monthly)});"],
+  ["||caseFill(es?Q.aEs2:Q.aEn2,V)||caseFill(es?Q.aEs3:Q.aEn3,V)","||caseFill(es?Q.aEs2:Q.aEn2,V)"],
+  ["const CASE_VERSE_HOME={luke14_28:['ask','capacity','risks'],","const CASE_VERSE_HOME={luke14_28:['capacity','ask','risks'],"]];
+const moneyBack=h=>{ for(const [a,b] of MONEY_BACK){ if(!h.includes(a)) throw Error('money-back anchor missing: '+a.slice(0,60)); h=h.split(a).join(b); } return h; };
+function gpage(lang,html){ const dom=new JSDOM(html||HTML,{runScripts:'dangerously',url:'https://pastorshub.org/',pretendToBeVisual:true,virtualConsole:new VirtualConsole(),
   beforeParse(w){ const RD=w.Date, FIX=+new RD(NOW); class FD extends RD{ constructor(...a){ super(...(a.length?a:[FIX])); } static now(){ return FIX; } } w.Date=FD;
     w.scrollTo=()=>{}; w.scrollBy=()=>{}; w.Element.prototype.scrollIntoView=function(){};
     for(const [k,v] of Object.entries(SEED)) if(!k.startsWith('_')) w.localStorage.setItem(k,JSON.stringify(v));
@@ -89,6 +98,8 @@ const sha=s=>crypto.createHash('sha1').update(s).digest('hex');
   c('the golden file holds today\'s outputs for these keys (re-written for them only)', Object.keys(GOLD_1044).filter(k=>G[k]!==now[k]), []);
   // the review round: garden, skills-center and lot-market are priced at their source now (U_LINES_OWN), so their slides change too
   c(`${changed.length} keys changed, all five ideas (their Pennsylvania words; three of them priced since the review round)`, [...new Set(changed.map(k=>k.split('|')[0]))].sort(), ['bench','garden','lot-market','noticeboard','skills-center']);
+  // v10.49.0: the old words AND the old money (pages made from a copy of the page with the money put back)
+  const MB=moneyBack(HTML); pages.en=gpage('en',MB); pages.es=gpage('es',MB); await sleep(400);
   for(const w of Object.values(pages)) w.eval(OLD_WORDS);
   c('…put the old words (and the old allowance) back in a copy of the page, and every one of the 32 is v10.44.1\'s hash again', Object.keys(GOLD_1044).filter(k=>{ const [id,g,t,l]=k.split('|'); return sha(asBase(build(pages[l],id,g,t)))!==GOLD_1044[k]; }), []);
   c('the golden file keeps its 535 keys; v43-ongoing-golden holds every one, and its header lists each re-written on purpose', [Object.keys(G).length,/the golden keys re-written on purpose/.test(fs.readFileSync(path.join(ROOT,'tests','v43-ongoing-golden.test.js'),'utf8'))], [535,true]);

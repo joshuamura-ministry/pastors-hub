@@ -192,13 +192,14 @@ const dayOff=n=>{ const d=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.ge
     const f=P.w.document.getElementById('u-cap-form');
     c('the form asks both on step 1 (members on the books before the attendance, adults after it)', f?[...f.querySelectorAll('[data-panel="0"] input[type=number]')].map(i=>i.name).slice(0,3):null, ['membership','members','adults']);
     if(f){ f.querySelector('[name=members]').value='55'; f.querySelector('[name=adults]').value='60'; f.querySelector('[name=volunteers]').value='12'; f.querySelector('[name=leaders]').value='3';
-      f.querySelector('[name=startupBudget]').value='1500'; f.querySelector('[name=monthlyBudget]').value='150';
+      // v10.49.0: no money boxes in "Your church" any more (the proposal states what a ministry needs)
       f.dispatchEvent(new P.w.Event('submit',{cancelable:true}));
       c('adults more than the attendance: not saved, and said', [P.w.document.getElementById('u-cap-status').textContent,J('capGet().adults')], ['Adults cannot be more than the attendance. Correct one of the two.',null]); } }
 
   console.log('\n-- the demo church is the average church (the pastor: "Yes" to Q3) --');
   { E(`capFillDemo();`);
-    c('80 on the books, 55 attending, 46 adults, 12 volunteers, 3 leaders, 160 hours, $1,500 + $150', J('(()=>{ const c=capMerged(); return [c.membership,c.members,c.adults,c.hands,c.concurrent,c.hours,c.startup,c.monthly,!!capGet().demo]; })()'), [80,55,46,12,3,160,1500,150,true]);
+    // v10.49.0: money is no longer part of what the church has (capMerged reads null; the demo's saved $1,500 + $150 stay in its profile, unused)
+    c('80 on the books, 55 attending, 46 adults, 12 volunteers, 3 leaders, 160 hours; no money read', J('(()=>{ const c=capMerged(); return [c.membership,c.members,c.adults,c.hands,c.concurrent,c.hours,c.startup,c.monthly,!!capGet().demo]; })()'), [80,55,46,12,3,160,null,null,true]);
     c('a fellowship hall of 60 and classrooms, Tuesday to Thursday evenings and Sabbath afternoon', J('(()=>{ const c=capMerged(); return [Object.keys(c.facilities).sort(),c.facilities.kitchen.capacity,c.slots]; })()'),
       [['classrooms','kitchen'],60,['Tue evening','Wed evening','Thu evening','Sat afternoon']]);
     c('the food pantry fits it (X15: the fellowship hall)', J(`uCheck(SIGNATURE.find(s=>s.id==='food-pantry'),false).gaps.filter(g=>g.k==='room').length`), 0);

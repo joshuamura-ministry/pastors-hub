@@ -193,8 +193,10 @@ const S = (R, t, part) => R.d.slides.find(s => s.type === t && (part === undefin
     // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): his series' motion carries its follow-up plan after the amount
     c('the motion names the amount', /by granting up to \$3,000 \(half of the \$6,000 cost\), with training and counsel, with the follow-up plan \(an invitation to [^;]+ within two weeks, for those who ask\);/.test(R.Pz.motion), true);
     const B = R.Pz.budget.rows, num = v => +String(v).replace(/[$,]/g, '');
-    c('the budget is a table that adds up, and what is not money is one "Also asked" row', [B.slice(0, 4).map(r => r[0]), num(B[1][1]) + num(B[2][1]) + num(B[3][1]) === num(B[0][1]), B[4][0]],
-      [['Total cost', 'From the church budget', 'Asked of the conference', 'Meeting offerings, or still to raise'], true, 'Also asked']);
+    // v10.49.0: no "From the church budget" row (the church's funds are no longer read; the Evangelism Planner will hold them):
+    // the total, the conference's share and the rest still add up
+    c('the budget is a table that adds up, and what is not money is one "Also asked" row', [B.slice(0, 3).map(r => r[0]), num(B[1][1]) + num(B[2][1]) === num(B[0][1]), B[3][0]],
+      [['Total cost', 'Asked of the conference', 'Meeting offerings, or still to raise'], true, 'Also asked']);
     c('"still to settle" is not a reason why', R.Pz.why.some(w => /Still to settle/.test(w.text)), false);
     // "○ Ministry team · still to come / ○ Finance committee · still to come / ✓ Church board · Approved"
     c('the trail: the board ("Supported"), then the conference, this proposal', R.H.trail.rows.map(r => [r.label, r.outcome, r.pending, r.here]), [['Church board', 'Supported', false, false], ['Conference', '', false, true]]);

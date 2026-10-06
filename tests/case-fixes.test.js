@@ -48,7 +48,8 @@ function page(lang){
   { P.E('CAP=null; capSave('+JSON.stringify(FX.SMALL)+');');
     const g=P.J(`uCheck(uCatalog().find(x=>x.id==='community-dinner')).gaps.filter(t=>/funding/.test(t))`);
     // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): the community dinner is $350 a month
-    c('the capacity check’s gap sentence names real amounts', g, ['$350 monthly funding needed; $60 remains.']);
+    // v10.49.0 — money is stated, not checked (the pastor: "not versus available funds"): no funding gap at all
+    c('no funding gap: money is stated, not checked', g, []);
     P.E('CAP=null; capSave('+JSON.stringify(FX.MEDIUM)+');'); }
   /* Updated when the Make the Case screens replaced the old proposal memo
      (v10.39.0, approved blueprint): the money now reaches the pastor through the
@@ -67,7 +68,8 @@ function page(lang){
     c('the ask slide’s money in dollars: $1,500 to start, $1,900 ceiling (the first term), never $0k or $3k', [/\$1,500/.test(ask().textContent),/Ceiling\s*\$1,900/.test(ask().textContent),/\$0k|\$3k/.test(body().textContent)], [true,true,false]);
     // v10.41 final review: capacity reads what we have first, then what is needed ("$75 of $2,500" read backwards to the
     // conference's administrators as "$12,000 of $2,500"): "$2,500 free · $75 needed". The intent is unchanged: to the dollar.
-    c('…and what is available, to the dollar ($2,500 start-up; $1,000 and $350 a month left)', [/\$2,500\s*free · \$1,500\s*needed/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$1,000\s·\s\$350\sa\smonth/.test(ask().textContent)], [true,true]);
+    // v10.49.0 — money is stated, not checked: no "free · needed" budget row on the capacity slide, no "left after this" on the ask
+    c('…and nothing compared with what is available (no "$2,500 free", no "$1,000 · $350 a month" left)', [/\$2,500\s*free/.test(cap().textContent.replace(/\u00a0/g,' ')),/\$1,000\s·\s\$350\sa\smonth/.test(ask().textContent)], [false,false]);
 
     console.log('\n-- the old proposal is not editable --');
     c('nothing in Make the Case is contenteditable (tapping it opened the phone keyboard)', [body().querySelectorAll('[contenteditable]').length,[...body().querySelectorAll('*')].some(e=>e.isContentEditable===true)], [0,false]);

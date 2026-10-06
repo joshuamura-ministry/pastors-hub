@@ -230,11 +230,12 @@ const verseIds=(d,lang)=>d.slides.map(s=>s.type==='verse'?idOf(lang,s.ref):s.ver
     // v10.42.0 fix after review ("the money does not add up… The BUDGET block also holds rows that are not money"): a table that adds
     // up (the whole cost, the church's own, the rest), then what else is asked in one row, then the Pennsylvania policy
     c('…what we ask, how we report back, the aims (each with its published source), how the subsidy works', [H.H.labels.budget,H.H.budgetRows.map(r=>r[0]),H.H.labels.risks,H.H.mission.items.every(i=>i.src),!!H.H.apply,/Pennsylvania Conference Evangelism Subsidy Policy/.test(H.text)],
-      ['What we ask of the conference',['Total cost','From the church budget','The conference’s share, and meeting offerings','Also asked','Conference policy'],'How we will report back',true,true,true]);   // v10.41 review: cost, counsel and the Pennsylvania policy by default
+      ['What we ask of the conference',['Total cost','The conference’s share, and meeting offerings','Also asked','Conference policy'],'How we will report back',true,true,true]);   // v10.49.0: no "From the church budget" (funds not read)   // v10.41 review: cost, counsel and the Pennsylvania policy by default
     c('…the churches on the front, the file named for the conference', [/THE CHURCHES WE SERVE/.test(H.text),H.name], [true,'Bucks-County-SDA-Evangelism-series-conference-2026-09-29.pdf']);
     // v10.42 part 3 (NARRATIVE.md §5.4, DESIGN N8): the field is one slide, the churches we serve (two churches), and the handout follows
     // the deck, so it has the churches and no "Here in" section
-    c('…no "Here in" section beside the churches (the handout follows the deck), the series budget in full', [H.H.place,/\$2,500 of the \$12,000 needed/.test(H.text),/\$12k/.test(H.text)], [null,true,false]); }   // v10.41 final review: have first, then need (it read "$12,000 of $2,500")
+    // v10.49.0: the series budget in full, without the church's own share beside it ("$2,500 of the $12,000 needed" read the old profile)
+    c('…no "Here in" section beside the churches (the handout follows the deck), the series budget in full', [H.H.place,/\$12,000/.test(H.text),/\$12k/.test(H.text),/\$2,500 of the \$12,000 needed/.test(H.text)], [null,true,false,false]); }   // v10.41 final review: have first, then need (it read "$12,000 of $2,500")
 
   console.log('\n-- 5b. the pastor’s own ask, in the edit panel of the ask slide --');
   { P.E(`openTool('case'); render(); caseSetPrefs({ministry:'plan-series',type:'conference',group:'conference'}); caseDraw3();`);

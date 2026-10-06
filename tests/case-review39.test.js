@@ -92,33 +92,20 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
       return M.need.trio.map((f,i)=>({w:f.freqWord,d:f.den,cd:f.countyDen,v:t.items[i].value})); })()`);
     c('"1 in N" stays exactly where it is "about 1 in N" here and a different N in the county', r.every(x=>/ in /.test(x.v)===(x.w==='about'&&x.d!==x.cd)), true); }
 
-  console.log('\n-- F4: money, one shortfall --');
-  // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): an event is one sum (no month), so the three costly ministries chosen first take in the weekday senior day program
-  // ($3,000 and $1,000 a month), to keep start-up and monthly both overdrawn as this block reads them
+  console.log('\n-- F4 (v10.49.0): money is stated, not checked --');
+  // The pastor (5 Oct 2026): "We just want the proposal to mention how much money they will need not versus available funds".
+  // Retired here: the shortfall lines, "Left after this", "Already over budget" and the overdraft verse room (F4, v10.39–v10.45).
   own(FX.SMALL,['health-expo','proph-language','senior-day']);
-  { const r=P.J(`(()=>{ const m=caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m);
-      return {free:[m.capacity.free.startup,m.capacity.free.monthly],gaps:m.capacity.gaps.filter(g=>/\\$/.test(g)),ask:d.slides.find(s=>s.type==='ask').rows.filter(r=>/\\$/.test(r[1])&&/Left|over/.test(r[0])),cost:m.questions.find(q=>q.id==='board.cost').a}; })()`);
-    c('(the SMALL church, three costly ministries chosen: start-up and monthly already overdrawn)', r.free.map(v=>v<0), [true,true]);
-    c('capacity: this ministry’s own shortfall, in one money line', r.gaps, ['Short by $1,500 of the start-up budget · $300 a month']);
-    c('ask: the same shortfall (the slide’s short form), and the earlier overdraft on a line of its own', r.ask, [['Left after this','Short by $1,500 to start · $300 a month'],['Already over budget',`$${(-r.free[0]).toLocaleString('en-US')} to start · $${(-r.free[1]).toLocaleString('en-US')} a month`]]);
-    // v10.40 (the pastor asked for a verse on every slide): beside the overdraft row the ask keeps
-    // a short verse (100 characters at most in either language; seven rows and it fit a phone, measured in Chrome)
-    { const v=P.J(`(()=>{ const d=caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})); const s=d.slides.find(s=>s.type==='ask'); const id=s.verse&&CASE_VERSES.find(x=>x.en.ref+' · KJV'===s.verse.ref).id; const L=CASE_VERSES.find(x=>x.id===id); return {rows:s.rows.length,max:L?Math.max(L.en.text.length,L.es.text.length):null}; })()`);
-      c('an earlier overdraft row still leaves room for a short verse on the ask slide', [v.rows,v.max!=null&&v.max<=100], [7,true]); }
-    c('the treasurer hears the shortfall, never "$0 … remains"', [/\$0 of the start-up budget/.test(r.cost),/the budget is short by \$9,700 of the start-up budget and \$3,240 a month/.test(r.cost)], [false,true]); }
-  { const r=P.J(`caseDeck(caseModel('vbs',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='capacity').gaps`);
-    c('a ministry that needs nothing a month is never "Short by $0 a month"', r.some(g=>/\$0\b/.test(g)), false); }
+  { const r=P.J(`(()=>{ const m=caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m); const ask=d.slides.find(s=>s.type==='ask');
+      return {free:[m.capacity.free.startup,m.capacity.free.monthly],gaps:m.capacity.gaps.filter(g=>/\\$/.test(g)),rows:ask.rows.map(r=>r[0]),cost:m.questions.find(q=>q.id==='board.cost').a}; })()`);
+    c('a small church with costly ministries chosen: nothing is free or short (money is not part of what the church has)', [r.free,r.gaps], [[null,null],[]]);
+    c('the ask states the cost and its source, with no "Left after this" and no "Already over budget"', [r.rows.some(t=>/Left after this|Already over budget/.test(t)),r.rows.includes('Ceiling'),r.rows.includes('Source')], [false,true,true]);
+    c('the treasurer hears the cost, never a shortfall', [/short by|remains in the budget/.test(r.cost),/^The trial costs at most \$[\d,]+, from /.test(r.cost)], [false,true]); }
   own(FX.SMALL,[]);
-  { const r=P.J(`(()=>{ const m=caseModel('vbs',{type:'board',group:'board'},{now:${NOW}}); const d=caseDeck(m); return {cap:d.slides.find(s=>s.type==='capacity').gaps.filter(g=>/\\$/.test(g)),left:d.slides.find(s=>s.type==='ask'&&s.part!=='after').rows.find(r=>/Left/.test(r[0])),over:d.slides.find(s=>s.type==='ask'&&s.part!=='after').rows.find(r=>/over/.test(r[0]))||null,cost:m.questions.find(q=>q.id==='board.cost').a,
-      es:caseModel('vbs',{type:'board',group:'board'},{now:${NOW},lang:'es'}).questions.find(q=>q.id==='board.cost').a}; })()`);
-    // v10.43 ("after one day there needs to be some kind of follow-up"): VBS is a series, so "After the series" (an ask slide, part
-    // 'after') comes before its own ask: the ask read above is the one without that part
-    // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): VBS is $700 before and $300 for the week ($1,000), against $300 and $60 a month
-    c('VBS ($700 and $300 against $300 and $60): capacity, ask and answer agree on $400 and $240', [r.cap,r.left[1],r.over,/short by \$400 of the start-up budget and \$240 monthly, so the board would need to find that sum/.test(r.cost)], [['Short by $400 of the start-up budget · $240 monthly'],'Short by $400 to start · $240 monthly',null,true]);
-    c('…in Spanish too: "Después faltan $400 del presupuesto inicial y $240 mensuales"', /Después faltan \$400 del presupuesto inicial y \$240 mensuales/.test(r.es), true); }
   own(FX.MEDIUM,[]);
   { const r=P.J(`caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}).questions.find(q=>q.id==='board.cost').a`);
-    c('with money to spare the answer still says what remains', /After it, \$[\d,]+ of the start-up budget and \$[\d,]+ a month remains in the budget\./.test(r), true);
+    // v10.49.0: money is stated, not checked — the answer says the cost and its source, never what remains
+    c('the answer says the cost and its source, never what remains (money stated, not checked)', [/remains in the budget/.test(r),/^The trial costs at most \$[\d,]+, from /.test(r)], [false,true]);
     // v10.40: the board's Luke 14:28 counts the cost on the capacity slide (the ask carries its own verse)
     // v10.42 part 3: What it takes names the aim and holds a line of verse (measured), so Luke 14:28 counts the cost beside the budget
     c('…and Luke 14:28 is on the ask', P.J(`caseDeck(caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}})).slides.find(s=>s.type==='ask').verse.ref`), 'Luke 14:28 · KJV'); }
@@ -292,7 +279,8 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
   { own(FX.SMALL,['health-expo','proph-language','senior-day']);   // v10.45.0 review round: the same three as F4 above
     const H=P.J(`(()=>{ const m=caseModel('food-pantry',{type:'board',group:'board'},{now:${NOW}}); return caseHandout(m,caseDeck(m),{}); })()`);
     c('the handout’s capacity heading follows its gaps ("What we have · what is missing")', [H.capacity.gaps.length>0,H.labels.staffGaps], [true,'What we have · what is missing']);
-    c('…the budget’s "Left after this" and the earlier overdraft, as on the ask slide', [H.budget.leftText,/ to start · \$2,940 a month$/.test(H.budget.overText||'')], ['Short by $1,500 to start · $300 a month',true]);
+    // v10.49.0: no "Left after this" and no overdraft (money stated, not checked), as on the ask slide
+    c('…no "Left after this" and no earlier overdraft, as on the ask slide', [H.budget.leftText||null,!!H.budget.overText], [null,false]);
     own(FX.MEDIUM,[]);
     const src=P.E('casePdfDocAt.toString()');
     // v10.42 part 3 (DESIGN N8): the handout follows the slides, so the section is "What it takes" as the kicker says; without that label
