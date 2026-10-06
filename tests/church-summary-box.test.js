@@ -26,13 +26,14 @@ setTimeout(()=>{
   c('in "Your church" on the Spiritual Gifts landing, above the form', !!box.closest('#gf-church #capsumslot') && !!(box.compareDocumentPosition(D.getElementById('capslot'))&4));
   c('labelled as the sample', /sample church, as filled in/.test(box.querySelector('.capsumk').textContent));
   const groups=[...box.querySelectorAll('.capsumg h4')].map(h=>h.textContent);
-  c('four groups, matching the four steps', groups, ['People','Money','Building','Skills']);
+  // v10.49.0 — the pastor: "take the money part out of your church section": three groups, matching the three steps
+  c('three groups, matching the three steps', groups, ['People','Building','Skills']);
   const txt=box.textContent;
   // v10.42 part 3 (the pastor, 29 Sep 2026, Q3: the demo church is the realistic average church, about 80 members and 55 attending;
   // D-AVERAGE-CHURCH.md): the box says its own numbers, the two new profile fields (members on the books, adults attending) first
   c('people: members on the books, attending, adults, volunteers, leaders, hours', /Members on the books80/.test(txt)&&/Attending55/.test(txt)&&/Adults attending46/.test(txt)&&/Volunteers12/.test(txt)&&/Leaders3/.test(txt)&&/Hours a month160/.test(txt));
   c('and what is left after commitments', /Left to give: 12 volunteers, 3 leaders, 160 hours a month/.test(txt));
-  c('money, both lines', /Startup funds\$1,500/.test(txt)&&/Monthly funds\$150/.test(txt));
+  c('no money group (a proposal states what its ministry needs)', /Startup funds|Monthly funds/.test(txt), false);
   c('every room with its capacity', /Kitchen \/ fellowship hall60 people/.test(txt)&&/Classrooms24 people/.test(txt));
   c('skills with counts', /1nurses or health professionals/.test(txt.replace(/\s+/g,''))||/1nurses or health professionals/.test(txt));
   c('languages', /Spanish — one fluent member/.test(txt));
@@ -40,7 +41,7 @@ setTimeout(()=>{
   // v10.45.0 (stale): there is no plan "below" it now; the sample says where Clear all is (above, in the form)
   c('it says it is the sample, and where to clear it', /The sample church: press Clear all above when you are done\./.test(txt));
   c('and how to leave the sample', /Clear all/.test(txt));
-  c('the four groups carry the four step colours', [...box.querySelectorAll('.capsumg')].map(g=>g.getAttribute('style')), ['--k:var(--acc)','--k:var(--m-hardship)','--k:var(--m-housing)','--k:var(--m-children)']);
+  c('the three groups carry the three step colours', [...box.querySelectorAll('.capsumg')].map(g=>g.getAttribute('style')), ['--k:var(--acc)','--k:var(--m-housing)','--k:var(--m-children)']);
 
   console.log('\n-- a real church reads the same, without the demo label --');
   w.eval('capSave({confirmed:true,members:60,volunteers:20,leaders:3,hours:100,busyVolunteers:0,startupBudget:300,monthlyBudget:50,facilities:{kitchen:{available:true,capacity:40,slots:[]}},skillCounts:{cook:3},languages:"",slots:["Sat afternoon"],who:{older:true}}); gfChurchSum();');   // v10.45.0: the landing's box, drawn again

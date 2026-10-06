@@ -102,7 +102,8 @@ const docFor=(P,js)=>P.E(`(()=>{ const r=(${js}); window.__doc=casePdfDoc(r.H,{j
         const hasHere=P.J(`caseDeck(caseModel('${mid}',{type:'${type}',group:'${group}'})).slides.some(s=>s.type==='place')`);
         c(`${tag}: "${lang==='es'?'Aquí en':'Here in'} Warminster" on the front, "${lang==='es'?'La Escritura en este caso':'Scripture in this case'}" and the Ellen White line on the back`,
           [F.perPage[0].includes(lang==='es'?'AQUÍ EN WARMINSTER':'HERE IN WARMINSTER')===hasHere,F.perPage[1].includes(lang==='es'?'LA ESCRITURA EN ESTE CASO':'SCRIPTURE IN THIS CASE'),back.replace(/\s+/g,' ').toUpperCase().includes(P.E(`gfPdfClean(${JSON.stringify(eg.ref)})`).toUpperCase())], [true,true,true]); }
-      c(`${tag}: counts only, and the under-18 note`, [back.includes(P.E('caseT(CASE_COPY.notes.counts)').split(' ')[0]),back.includes(P.E('caseT(CASE_COPY.notes.minors)').slice(0,20))], [true,true]);
+      // v10.49.0: with no budget rows the handout is shorter, so the notes may sit on the front page: anywhere in the handout
+      c(`${tag}: counts only, and the under-18 note`, [F.text.includes(P.E('caseT(CASE_COPY.notes.counts)').split(' ')[0]),F.text.replace(/\s+/g,' ').includes(P.E('caseT(CASE_COPY.notes.minors)').slice(0,20))], [true,true]);
       if(lang==='es'){
         c(`${tag}: accents kept, cost lines in Spanish, no English budget words`, [/Revisi[óo]n|Petici[óo]n|Página/.test(F.text),/Materials and preparation|Replacement supplies|allowance/.test(F.text)], [true,false]);
       }

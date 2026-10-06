@@ -38,7 +38,7 @@ setTimeout(async()=>{
   c('and the form was drawn again, the sample in it', D.querySelector('[name="members"]').value, '55');
 
   console.log('\n-- Save finishes at "Your church" --');
-  scrolledTo=[]; D.querySelector('[name="churchName"]').value='Test'; D.querySelector('[name="startupBudget"]').value='100'; D.querySelector('[name="monthlyBudget"]').value='10';
+  scrolledTo=[]; D.querySelector('[name="churchName"]').value='Test';   // v10.49.0: no money boxes in "Your church" any more
   w.HTMLFormElement.prototype.reportValidity=()=>true;
   D.getElementById('cap-done').click(); await wait(80);
   c('Save took the page to "Your church"', scrolledTo.some(t=>t[0]==='gf-church'));

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.48.0
+     TERRAIN  v10.49.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.48.0" data-theme="dark">
+<html lang="en" data-version="v10.49.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.48.0">
-<title>Community Map — Terrain v10.48.0</title>
+<meta name="terrain-version" content="v10.49.0">
+<title>Community Map — Terrain v10.49.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -92,9 +92,9 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
    can be clipped by a measurement that came back wrong. */
 .u-stage{position:relative;overflow:hidden;height:clamp(380px,58vh,600px);
   border:1px solid var(--line);border-radius:12px;background:var(--panel)}
-.u-track{display:flex;width:400%;height:100%;
+.u-track{display:flex;width:300%;height:100%;   /* v10.49.0: three steps (Money moved to the proposal) */
   transition:transform .48s cubic-bezier(.22,.8,.3,1);will-change:transform}
-.u-panel{display:block;flex:0 0 25%;width:25%;min-width:0;height:100%;overflow-y:auto;
+.u-panel{display:block;flex:0 0 calc(100% / 3);width:calc(100% / 3);min-width:0;height:100%;overflow-y:auto;
   overscroll-behavior:contain;padding:16px 18px 20px;box-sizing:border-box;scrollbar-width:thin}
 .u-panel[inert]{pointer-events:none}
 /* a soft fade at the foot of a panel, so it is obvious there is more below */
@@ -120,8 +120,8 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-steps-nav li.done b{background:color-mix(in srgb,var(--k) 70%,transparent);color:var(--btn-ink)}
 .u-panel[data-panel="0"] h4{color:var(--acc)}
 .u-panel[data-panel="1"] h4{color:var(--m-hardship)}
-.u-panel[data-panel="2"] h4{color:var(--m-housing)}
-.u-panel[data-panel="3"] h4{color:var(--m-children)}
+.u-panel[data-panel="1"] h4{color:var(--m-housing)}
+.u-panel[data-panel="2"] h4{color:var(--m-children)}
 .u-wiznav{display:flex;gap:9px;flex-wrap:wrap;align-items:center;margin-top:16px}
 .u-wiznav .btn{min-height:44px}
 /* Step three: thirteen facilities as a list of rose titles, one row each,
@@ -137,6 +137,13 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-facilities>fieldset:not(.open)>*:not(legend){display:none}
 .u-facilities>fieldset>legend label{display:inline-flex;align-items:center;gap:8px;cursor:pointer}
 .u-facilities>fieldset .u-checks{margin-top:8px}
+/* v10.49.0 — the pastor (5 Oct 2026): "the boxes for clicking it's kind of in the wrong place … I don't think it's in the right
+   spot": a fieldset draws its legend ON its top border, so the checkbox, the name and the + sat on the line above an empty box.
+   The legend now floats inside the box (the standard way), each row one tidy box; what opens under it clears the line. */
+.u-profile .u-facilities>fieldset{margin:0;padding:0 14px}
+.u-profile .u-facilities>fieldset.open{padding:0 14px 12px}
+.u-facilities>fieldset>legend{float:left;width:100%;margin:0;padding:12px 0;min-height:44px}
+.u-facilities>fieldset>legend~*{clear:both}
 @media print{
   .u-stage{height:auto;overflow:visible;border:0;background:none}
   .u-stage::after{display:none}
@@ -175,8 +182,8 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .u-steps-nav li.done b{background:color-mix(in srgb,var(--k) 70%,transparent);color:var(--btn-ink)}
 .u-panel[data-panel="0"] h4{color:var(--acc)}
 .u-panel[data-panel="1"] h4{color:var(--m-hardship)}
-.u-panel[data-panel="2"] h4{color:var(--m-housing)}
-.u-panel[data-panel="3"] h4{color:var(--m-children)}
+.u-panel[data-panel="1"] h4{color:var(--m-housing)}
+.u-panel[data-panel="2"] h4{color:var(--m-children)}
 .blk h2::before{background:var(--sec)!important;box-shadow:0 0 12px var(--sec)}
 .blk h2::after{background:linear-gradient(90deg,color-mix(in srgb,var(--sec) 45%,transparent),transparent)}
 .blk .verse .vmark{color:var(--sec)}
@@ -2652,6 +2659,16 @@ button.td-opt:disabled{cursor:default}
 .cs-pcard .lift b:nth-child(1){height:5px}.cs-pcard .lift b:nth-child(2){height:8px}.cs-pcard .lift b:nth-child(3){height:12px}
 .cs-pcard .lift.l1 b:nth-child(-n+1),.cs-pcard .lift.l2 b:nth-child(-n+2),.cs-pcard .lift.l3 b{background:var(--ink)}
 .cs-pcard .ns-status:empty{display:none}
+/* v10.49.0: the Money box (amber, the kind of money) */
+.cs-money{--k:var(--m-hardship)}
+.cs-money .note{margin:8px 0 0}
+.cs-mrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.cs-mrow:first-of-type{border-top:0}
+.cs-mlab{color:var(--ink2);font-size:.92rem}
+.cs-mneed{font-family:var(--disp);font-size:1.05rem;font-variant-numeric:tabular-nums}
+.cs-mstat{margin:10px 0 0;font-weight:600;color:var(--ink)}
+.cs-moneyw{margin:0 0 18px}
+.cs-moneyw[hidden]{display:none}
 .cs-aud-prop>h4{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cs-prop:focus{outline:none}
 .cs-pk{margin:0;font-size:.74rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
@@ -4079,13 +4096,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.48.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.49.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.48.0';
+const VERSION = 'v10.49.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -8623,6 +8640,7 @@ const ES={
   "Your building":"Su edificio",
   "Skills":"Habilidades",
   "Step 1 of 4 — Your church":"Paso 1 de 4: Su iglesia",
+  "Step 1 of 3 — Your church":"Paso 1 de 3: Su iglesia","Step 2 of 3 — Your building":"Paso 2 de 3: Su edificio","Step 3 of 3 — Your people’s skills":"Paso 3 de 3: Las habilidades de su gente",
   "Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.":"Con quiénes cuenta realmente. Cuente a cada persona una sola vez. Escriba cero si no hay nadie disponible; deje la casilla vacía si todavía no lo sabe.",
   "Church name":"Nombre de la iglesia",
   "Members on the church books":"Miembros en los libros de la iglesia",
@@ -19749,7 +19767,7 @@ function gfRenderRoster(h){
   ${gfFirstCardHTML('landing')}
   <details class="card gfcard gf-church" id="gf-church" data-church="${esc(String(ch.id))}" style="--k:var(--acc)"${gfChurchEmpty()?' open':''}>
     <summary><b>${L('Your church','Su iglesia')}</b> <span class="note">${L('Moved here from the Community Survey.','Se trasladó aquí desde la Encuesta Comunitaria.')}</span></summary>
-    <p class="note">${L('People, rooms, money and skills. Make the Case and the Evangelism Planner read these numbers.','Personas, salones, dinero y habilidades. Presentar el caso y el Planificador de evangelismo usan estas cifras.')}</p>
+    <p class="note">${L('People, rooms and skills. The money for a ministry is on its proposal.','Personas, salones y habilidades. El dinero de cada ministerio está en su propuesta.')}</p>
     <div id="capsumslot"></div>
     <div class="askpanel" style="margin:14px 0"><div id="capslot"></div></div>
   </details>
@@ -20066,7 +20084,7 @@ function capMerged(){
     membership:uNum(c.membership),adults:uNum(c.adults),   // v10.42 (GIFTS.md §2.1): members on the books; adults in the attendance
     hands:Math.max(0,hands-uAmount(c.busyVolunteers)),concurrent:Math.max(0,leaders-uAmount(c.busyLeaders)),
     hours:Math.max(0,hours-uAmount(c.busyHours)),estimated:false,ready:!!c.confirmed,
-    startup:uNum(c.startupBudget),monthly:uNum(c.monthlyBudget),slots:c.slots||[],
+    startup:null,monthly:null,slots:c.slots||[],   // v10.49.0: money is not part of what the church has (it is stated per proposal)
     hasFacility:k=>!!fac[k]?.available,hasSkill:k=>skills[k]>0,isWho:k=>!!c.who?.[k]};
 }
 function uSelected(){return [...new Set(uChurch().selected||[])];}
@@ -21266,8 +21284,7 @@ function uCheck(x,includeSelected=true){
   if(r.firstMonthHours>c.hours-use.hours)gaps.push(`${r.firstMonthHours} volunteer-hours needed in month one; ${Math.max(0,c.hours-use.hours)} remain.`);
   for(const k of r.skills||[])if((c.skills[k]||0)-use.items.filter(i=>(i.r.skills||[]).includes(k)).length<1)gaps.push('Confirm an uncommitted person with '+(U_SKILLS.find(s=>s.k===k)?.n||k)+'.');
   if((r.skills||[]).includes('lang')&&!String(c.languages||'').trim())gaps.push('Record the actual language(s) available.');
-  if(c.startup===null)gaps.push('Enter approved startup funding, including zero.');else if(r.startup>c.startup-use.startup)gaps.push(`${fmtMoney(r.startup)} startup funding needed; ${fmtMoney(Math.max(0,c.startup-use.startup))} remains.`);
-  if(c.monthly===null)gaps.push('Enter approved monthly funding, including zero.');else if(r.monthly>c.monthly-use.monthly)gaps.push(`${fmtMoney(r.monthly)} monthly funding needed; ${fmtMoney(Math.max(0,c.monthly-use.monthly))} remains.`);
+  // v10.49.0: money is not checked (the proposal states what it needs; funds belong to the Evangelism Planner)
   let slots=c.slots.filter(s=>!r.slot||r.slot===s);const spaces=[],groups=[];
   for(const alternatives of r.facilities||[]){
     const candidates=alternatives.filter(k=>c.hasFacility(k)&&uAmount(c.facilities[k].capacity)>=r.participants);
@@ -21352,7 +21369,7 @@ const uSkillName=s=>(LANG==='es'&&U_SKILLS_ES[s.k])||s.n;
 function uValues(form,name){return [...form.querySelectorAll(`[name="${name}"]:checked`)].map(e=>e.value);}
 
 let U_STEP_I=0;
-const U_WIZ=['Your church','Money','Your building','Skills'];
+const U_WIZ=['Your church','Your building','Skills'];   // v10.49.0: Money moved to the proposal
 
 /* v10.42: "Fill in a demo church" fills the realistic average church (the pastor, 29 Sep 2026: "Yes" to Q3; section D's
    Sampleton SDA): about 80 members on the books, 55 in average Sabbath attendance (46 adults), one fellowship hall (60) and two
@@ -21494,7 +21511,6 @@ function capSummaryHTML(){
     <div class="capsumk">${raw.demo?L('The sample church, as filled in','La iglesia de ejemplo, tal como se llenó'):L('Your church, as you entered it','Su iglesia, tal como la escribió')}</div>
     <div class="capsumgrid">
       <div class="capsumg" style="--k:var(--acc)"><h4>${L('People','Personas')}</h4><ul>${people}</ul><p class="capsumleft">${L('Left to give:','Queda para dar:')} <b>${esc(left)}</b></p></div>
-      <div class="capsumg" style="--k:var(--m-hardship)"><h4>${L('Money','Dinero')}</h4><ul>${money}</ul></div>
       <div class="capsumg" style="--k:var(--m-housing)"><h4>${L('Building','Edificio')}</h4>${rooms?`<ul>${rooms}</ul>`:`<p class="note">${L('No rooms recorded.','No hay salones registrados.')}</p>`}</div>
       <div class="capsumg" style="--k:var(--m-children)"><h4>${L('Skills','Habilidades')}</h4>${skills||langs||commit?`<ul>${skills}${langs}${commit}</ul>`:`<p class="note">${L('No skills recorded.','No hay habilidades registradas.')}</p>`}</div>
     </div>
@@ -21516,18 +21532,15 @@ function capRender(){
     <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}</ol>
     <div class="u-stage">
      <div class="u-track" id="u-track">
-      <section class="u-panel" data-panel="0"><h4>Step 1 of 4 — Your church</h4>
+      <section class="u-panel" data-panel="0"><h4>Step 1 of 3 — Your church</h4>
         <p class="note">Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.</p>
 <label class="u-field">Church name<input name="churchName" required maxlength="160" value="${esc(capName(ch))}"></label>
 <div class="u-grid">${U_FIELDS.filter(([k])=>!/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':L('Not recorded','Sin registrar')}"></label>`).join('')}</div>
 <fieldset><legend>${L('When can the team serve?','¿Cuándo puede servir el equipo?')}</legend><div class="u-checks">${uChecks(U_SLOTS,c.slots,'teamSlot')}</div></fieldset>
       </section>
-      <section class="u-panel" data-panel="1"><h4>Step 2 of 4 — Money</h4>
-        <p class="note">What the church has actually approved. Money awaiting a vote goes in the pending box and is never counted as available.</p>
-<div class="u-grid">${U_FIELDS.filter(([k])=>/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':L('Not recorded','Sin registrar')}"></label>`).join('')}</div>
-<p class="note">Funding awaiting approval is shown in proposals but never counted as available. Available funding should already exclude spending on existing ministries.</p>
-      </section>
-      <section class="u-panel" data-panel="2"><h4>Step 3 of 4 — Your building</h4>
+      <!-- v10.49.0 — the pastor (5 Oct 2026): "take the money part out of your church section … and add it in the proposal section":
+           a proposal states what its ministry needs (caseMoneyHTML); funds will be entered in the Evangelism Planner. -->
+      <section class="u-panel" data-panel="1"><h4>Step 2 of 3 — Your building</h4>
         <p class="note">What you can actually use, and when.</p>
 
         
@@ -21536,7 +21549,7 @@ function capRender(){
     <div class="u-facilities">${U_FAC.map(f=>{const v=c.facilities?.[f.k]||{};return `<fieldset><legend><label><input type="checkbox" name="fac-${f.k}" ${v.available||v===true?'checked':''}> ${esc(f.n)}</label></legend><div class="u-grid"><label class="u-field">Capacity<input type="number" name="room-${f.k}" min="0" value="${v.capacity??''}"></label><label class="u-field">Confirmed partner or host, if provided elsewhere<input name="partner-${f.k}" maxlength="160" value="${esc(v.partner||'')}"></label></div><div class="u-checks">${uChecks(U_SLOTS,v.slots,'slot-'+f.k)}</div></fieldset>`;}).join('')}</div>
       
       </section>
-      <section class="u-panel" data-panel="3"><h4>Step 4 of 4 — Your people’s skills</h4>
+      <section class="u-panel" data-panel="2"><h4>Step 3 of 3 — Your people’s skills</h4>
         <p class="note">Skills, languages and what your congregation is already carrying.</p>
 
         
@@ -21589,7 +21602,7 @@ function capRender(){
     // Slide the track. The stage is a fixed height, so the page does not move
     // and nothing needs scrolling back into place. The only scroll is inside
     // the new panel, which starts at its top.
-    if(track) track.style.transform='translateX(-'+(U_STEP_I*25)+'%)';
+    if(track) track.style.transform='translateX(-'+(U_STEP_I*100/panels.length).toFixed(4).replace(/\.?0+$/,'')+'%)';   // v10.49.0: three steps
     panels.forEach((p,n)=>{
       const on=n===U_STEP_I;
       p.classList.toggle('on',on);
@@ -21634,7 +21647,7 @@ function capRender(){
       form.reportValidity(); return;
     }
     const d=new FormData(form),next={...c,skillCounts:{},facilities:{},who:{}};
-    U_FIELDS.forEach(([k])=>{next[k]=uNum(d.get(k));});
+    U_FIELDS.forEach(([k])=>{ if(form.elements.namedItem(k)) next[k]=uNum(d.get(k)); });   // v10.49.0: the money boxes are on the proposal now
     if(next.members!==null&&next.volunteers!==null&&next.volunteers>next.members){$('u-cap-status').textContent='Volunteer count exceeds attendance. Include regular outside volunteers in the attendance total, or correct the count.';return;}
     if(next.leaders!==null&&next.volunteers!==null&&next.leaders>next.volunteers){$('u-cap-status').textContent='Leaders are included in the volunteer count. Check those totals.';return;}
     if(next.members!==null&&next.adults!=null&&next.adults>next.members){$('u-cap-status').textContent='Adults cannot be more than the attendance. Correct one of the two.';return;}
@@ -23187,7 +23200,10 @@ const CASE_GROUPS=[
     aEn2:'The trial costs at most {ceiling}, from {fund}, never tithe (Church Manual p. 142). After it, the budget is short by {budgetShort}, so the board would need to find that sum or approve the trial smaller. Receipts go to the treasurer and an itemised account comes back at the review.',
     qEs:'¿Cuánto costará y de dónde saldrá el dinero?',
     aEs:'La prueba cuesta como máximo {ceiling}, pagados con {fund}, nunca con el diezmo (Manual de la Iglesia, p. 142). Después quedan {budgetLeft} en el presupuesto. Los recibos van a tesorería y en la revisión se presenta una cuenta detallada.',
-    aEs2:'La prueba cuesta como máximo {ceiling}, pagados con {fund}, nunca con el diezmo (Manual de la Iglesia, p. 142). Después faltan {budgetShort}, así que la junta tendría que conseguir esa suma o aprobar la prueba en menor escala. Los recibos van a tesorería y en la revisión se presenta una cuenta detallada.'},
+    aEs2:'La prueba cuesta como máximo {ceiling}, pagados con {fund}, nunca con el diezmo (Manual de la Iglesia, p. 142). Después faltan {budgetShort}, así que la junta tendría que conseguir esa suma o aprobar la prueba en menor escala. Los recibos van a tesorería y en la revisión se presenta una cuenta detallada.',
+    // v10.49.0: what it costs, with no budget beside it (money is stated, not checked: the pastor, 5 Oct 2026)
+    aEn3:'The trial costs at most {ceiling}, from {fund}, never tithe (Church Manual p. 142). Receipts go to the treasurer and an itemised account comes back at the review.',
+    aEs3:'La prueba cuesta como máximo {ceiling}, pagados con {fund}, nunca con el diezmo (Manual de la Iglesia, p. 142). Los recibos van a tesorería y en la revisión se presenta una cuenta detallada.'},
    {id:'board.people', qEn:'Do we have the people, or will the same few carry it again?',
     aEn:'It needs {people} and {leaders}, {hoursEach}. The church profile shows {volFree} and {leadFree} still free after the ministries already chosen.',
     qEs:'¿Tenemos las personas, o lo cargarán otra vez los mismos de siempre?',
@@ -23336,7 +23352,9 @@ const CASE_GROUPS=[
     aEn2:'The trial is capped at {ceiling}. After it, the budget is short by {budgetShort}: that sum would need to be found, or the trial made smaller. Most of what it needs is time, not money: the line covers materials, not salaries.',
     qEs:'¿Podemos permitirnos un nuevo compromiso?',
     aEs:'La prueba tiene un tope de {ceiling}, y después quedan {budgetLeft}. Lo que más necesita es tiempo, no dinero: la partida cubre materiales, no salarios.',
-    aEs2:'La prueba tiene un tope de {ceiling}. Después faltan {budgetShort}: habría que conseguir esa suma o reducir la prueba. Lo que más necesita es tiempo, no dinero: la partida cubre materiales, no salarios.'},
+    aEs2:'La prueba tiene un tope de {ceiling}. Después faltan {budgetShort}: habría que conseguir esa suma o reducir la prueba. Lo que más necesita es tiempo, no dinero: la partida cubre materiales, no salarios.',
+    aEn3:'The trial is capped at {ceiling}. Most of what it needs is time, not money: the line covers materials, not salaries.',   // v10.49.0
+    aEs3:'La prueba tiene un tope de {ceiling}. Lo que más necesita es tiempo, no dinero: la partida cubre materiales, no salarios.'},
    {id:'finance.tithe', qEn:'Will this come out of tithe?',
     aEn:'No. Tithe is held in trust for the conference and is not used by the local church (Church Manual p. 142). This is paid from {fund}; the local budget is meant to include funds for the poor and needy (p. 145).',
     qEs:'¿Saldrá del diezmo?',
@@ -30009,6 +30027,33 @@ function caseHits(M,scope){
   return new Set(RULES.filter(r=>{ try{ return !!r.on(m,c||m,x); }catch(e){ return false; } }).map(r=>r.id));
 }
 /* A profile as capMerged() reads one, for a church that is not on this device. */
+/* v10.49.0 — the pastor (5 Oct 2026): "take the money part out of your church section on the spiritual gifts and add it in the
+   proposal section … the proposal will have the amount that is needed", then: "we don't wanna add a place to fill in anything there.
+   We just want the proposal to mention how much money they will need not versus available funds — we're gonna save all that in
+   inputting information into the evangelism planner". So money is no longer part of what the church has (capMerged, caseCapFrom:
+   startup and monthly are null, whatever an older profile saved), nothing is checked against it (uCheck, caseCheckWith), and the
+   slides and the proposal say what the ministry needs. */
+/* The proposal's Money box: what the ministry needs, to start and each month, as the slides count it. Nothing to fill in. */
+const L_MONEY=k=>({h:['Money','Dinero'],note:['What this ministry needs. The slides use these amounts.','Lo que necesita este ministerio. Las diapositivas usan estas cantidades.'],
+  start:['To start','Para empezar'],month:['Each month','Cada mes'],none:['No money needed.','No necesita dinero.']}[k]||['',''])[LANG==='es'?1:0];
+function caseMoneyNeed(id){
+  const x=caseItemOf(id); if(!x) return null; let r=null; try{ r=uReq(x); }catch(e){ r=null; }
+  return r?{startup:Math.max(0,Math.round(+r.startup||0)),monthly:Math.max(0,Math.round(+r.monthly||0))}:null;
+}
+function caseMoneyHTML(id){
+  const need=caseMoneyNeed(id); if(!need) return '';
+  const row=(lab,v)=>`<div class="cs-mrow"><span class="cs-mlab">${esc(lab)}</span><b class="cs-mneed">${esc(fmtMoney(v))}</b></div>`;
+  return `<div class="ns-block cs-money" data-cs-money="${esc(id)}"><h3>${esc(L_MONEY('h'))}</h3>
+    ${!need.startup&&!need.monthly?`<p class="cs-mstat">${esc(L_MONEY('none'))}</p>`:row(L_MONEY('start'),need.startup)+(need.monthly?row(L_MONEY('month'),need.monthly):'')}
+    <p class="note">${esc(L_MONEY('note'))}</p></div>`;
+}
+/* In Make the Case itself (not the proposal view), the same box between the ministry and the slides. */
+function caseMoneyDraw(){
+  const P=casePrefs(), html=!casePropMode()&&P.ministry&&P.ministry!==CASE_PLAN_ID?caseMoneyHTML(P.ministry):'';
+  let h=$('cs-money'); if(!html){ if(h) h.remove(); return; }   // only with a ministry chosen (step 2's own parts stay as they were)
+  const s2=$('cs-s2'); if(!h&&s2){ s2.insertAdjacentHTML('beforeend','<div class="cs-moneyw" id="cs-money"></div>'); h=$('cs-money'); }
+  if(h) h.innerHTML=html;
+}
 function caseCapFrom(p){
   p=p||{}; const fac=p.facilities||{}, sk=p.skillCounts||{}, skills={};
   U_SKILLS.forEach(s=>{ skills[s.k]=uNum(sk[s.k])??0; });
@@ -30016,7 +30061,7 @@ function caseCapFrom(p){
   return {...p,languages:String(p.languages||'').trim(),members:uNum(p.members),volunteers:uNum(p.volunteers),leaders,skills,facilities:fac,people:[],
     hands:Math.max(0,(uNum(p.volunteers)??0)-uAmount(p.busyVolunteers)),concurrent:Math.max(0,leaders-uAmount(p.busyLeaders)),
     hours:Math.max(0,(uNum(p.hours)??0)-uAmount(p.busyHours)),estimated:false,ready:!!p.confirmed,
-    startup:uNum(p.startupBudget),monthly:uNum(p.monthlyBudget),slots:p.slots||[],
+    startup:null,monthly:null,slots:p.slots||[],   // v10.49.0 (as capMerged)
     hasFacility:k=>!!fac[k]?.available,hasSkill:k=>skills[k]>0,isWho:k=>!!p.who?.[k]};
 }
 /* uReq() with no scope edits: the requirements a church sees before it changes anything. */
@@ -30047,8 +30092,7 @@ function caseCheckWith(c,r,use,evidenceOk,sabOk){
   if(r.firstMonthHours>hFree) g.push({k:'hours',need:r.firstMonthHours,have:Math.max(0,hFree)});
   for(const k of r.skills||[]) if((c.skills[k]||0)-use.items.filter(i=>(i.r.skills||[]).includes(k)).length<1) g.push({k:'skill',skill:k});
   if((r.skills||[]).includes('lang')&&!String(c.languages||'').trim()) g.push({k:'lang'});
-  if(c.startup===null) g.push({k:'funds',which:'startup'}); else if(r.startup>c.startup-use.startup) g.push({k:'startup',need:r.startup,have:Math.max(0,c.startup-use.startup)});
-  if(c.monthly===null) g.push({k:'funds',which:'monthly'}); else if(r.monthly>c.monthly-use.monthly) g.push({k:'monthly',need:r.monthly,have:Math.max(0,c.monthly-use.monthly)});
+  // v10.49.0: money is not checked against what the church has (the proposal states what it needs)
   let slots=(c.slots||[]).filter(s=>!r.slot||r.slot===s); const spaces=[],groups=[];
   for(const alternatives of r.facilities||[]){
     const candidates=alternatives.filter(k=>c.hasFacility(k)&&uAmount(c.facilities[k].capacity)>=r.participants);
@@ -31302,7 +31346,7 @@ function caseBuild(ctx,ministryId,audience,opts){
     if(Q.needs&&Q.needs.includes('county')&&!hasCounty) return false;
     if(Q.kinds&&!Q.kinds.some(k=>kinds.includes(k))) return false;
     if(Q.only&&!Q.only.includes(x.id)) return false;
-    return true; }).map(Q=>({id:Q.id,q:caseFill(es?Q.qEs:Q.qEn,V),a:(()=>{ const t=TA({en:Q.aEn,es:Q.aEs}); return caseFill(es?t.es:t.en,V); })()||caseFill(es?Q.aEs2:Q.aEn2,V)})).filter(Q=>Q.q&&Q.a);
+    return true; }).map(Q=>({id:Q.id,q:caseFill(es?Q.qEs:Q.qEn,V),a:(()=>{ const t=TA({en:Q.aEn,es:Q.aEs}); return caseFill(es?t.es:t.en,V); })()||caseFill(es?Q.aEs2:Q.aEn2,V)||caseFill(es?Q.aEs3:Q.aEn3,V)})).filter(Q=>Q.q&&Q.a);
 
   /* -- the human scale (team deck): club ages when the Census has them -- */
   let ages=null;
@@ -31395,7 +31439,8 @@ function caseTrioItem(f,short){
 /* v10.40: a verse on every content slide. The group's own verse keeps a home: the first of
    these slides, in this order, that its deck has free and with room for it (when it is in the
    verified library). */
-const CASE_VERSE_HOME={luke14_28:['capacity','ask','risks'],gal6_9:['timeline'],'1tim4_12':['ability','roles','yes'],'3john2':['need','motion'],
+const CASE_VERSE_HOME={luke14_28:['ask','capacity','risks'],   /* v10.49.0: "counteth the cost" where the cost is stated (the ask), now that the capacity slide counts no money */
+ gal6_9:['timeline'],'1tim4_12':['ability','roles','yes'],'3john2':['need','motion'],
   matt25_40:['need','motion'],'1pet4_10':['ability','roles'],ps68_6:['need','motion','roles'],jer29_7:['place'],hab2_2:['motion'],acts8_31:['roles','need'],
   ps71_18:['ability','need','motion'],prov22_6:['need','motion','ability'],neh2_18:['ask','yes','motion'],
   /* v10.40: the nine groups' own verses, each on the slide whose job it speaks to (the first of
@@ -33933,6 +33978,7 @@ function caseActsHTML(sample,type){
     <p class="note cs-status" id="${sample?'cs-sstatus':'cs-status'}" role="status"></p>`;
 }
 function caseDraw3(){
+  try{ caseMoneyDraw(); }catch(e){}   // v10.49.0: the Money box follows the ministry chosen (at the foot of step 2)
   const h=$('cs-s3'); if(!h) return;
   if(CASE_ST.pv){ CASE_ST.pv.destroy(); CASE_ST.pv=null; }
   clearTimeout(CASE_ST.timer);
@@ -38369,7 +38415,8 @@ function casePdfDocAt(H,opts,lv){
   }
   { let notes=[Lb.counts,Lb.minors,Lb.cmNote].filter(Boolean).join(' '), h=tb(notes,0,0,CW,{size:7},false); drawWin(h+2);
     // v10.42 part 3: on a full last page the notes say their first sentence (counts only, no names) rather than start a page of their own
-    if(y+h+2>BOT&&y>TOP&&Lb.counts){ const h1=tb(Lb.counts,0,0,CW,{size:7},false); if(y+h1+2<=BOT){ notes=Lb.counts; h=h1; } }
+    // v10.49.0: the under-18 note is kept before the Church Manual edition line is (the edition goes first, then the minors note)
+    if(y+h+2>BOT&&y>TOP&&Lb.counts){ for(const alt of [[Lb.counts,Lb.minors].filter(Boolean).join(' '),Lb.counts]){ const h1=tb(alt,0,0,CW,{size:7},false); if(y+h1+2<=BOT){ notes=alt; h=h1; break; } } }
     need(h+2); y+=tb(notes,MX,y,CW,{size:7,color:C.ink3},true); }
 
   /* ---- running head and foot on every page ---------------------------------------------- */

@@ -1,4 +1,11 @@
-/* v10.45.0 — the golden keys re-written on purpose (248 of 535; every other key is v10.44.1's, byte for byte):
+/* v10.49.0 — EVERY golden key re-written on purpose (535 of 535): money is stated, not checked against what the church has (the
+ * pastor, 5 Oct 2026: "the proposal … mention how much money they will need not versus available funds"): capMerged() and caseCapFrom()
+ * read no money, caseCheckWith() makes no money gaps, the cost answers have a version with no budget beside it (aEn3/aEs3), and Luke
+ * 14:28 is homed on the ask first. Proof: Terrain-work/v64/golden/golden-money.js check, on a copy of the page with exactly those five
+ * changes put back (index-money-back.html), reproduces all 535 hashes of v10.48.0's golden file; v45-survey makes the same proof for
+ * its 32 keys (MONEY_BACK). The list of re-written keys: Terrain-work/v64/golden/keys.txt.
+ *
+ * v10.45.0 — the golden keys re-written on purpose (248 of 535; every other key is v10.44.1's, byte for byte):
  * the Pennsylvania words (DESIGN-SURVEY §3.6) of garden, skills-center, lot-market, noticeboard, bench; and (the review round, 5 Oct 2026)
  * the built-ins the needs show, priced at their source (U_LINES_OWN), with their Spanish and the review's words (build-work/src/builtins-review.json):
  * welcome-table, interpreter-bank, newcomer-circle, food-pantry, clothing-closet, community-dinner, pathfinders, moms-group, bp-clinic, lit-multilingual, lot-market, lot-sport, study-hall, garden, esl-center, skills-center, senior-day, pantry-box, wifi-porch, noticeboard, lift-rota, homework-club, repair-cafe, job-club, conversation-cafe, meal-train, bereavement-visits, supper-study, late-room, bench, funeral-teas, winter-check, noticeboard-jobs, lending-shelf, welcome-newcomers, sg-apartments, sg-language, sg-work.

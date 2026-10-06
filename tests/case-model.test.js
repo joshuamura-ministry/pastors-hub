@@ -250,8 +250,9 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('…the board’s emphasis adds no support (the purpose allows none that differs here)', BM.need.supports.map(f=>f.key), []);
   c('…each says what it counts, in plain words', BM.place.facts.map(i=>i.label), ['Children aged 5 to 14 live around us.']);
   // v10.45.0 review round (stale, the new intent): the built-ins the needs show are priced at their source (U_LINES_OWN, review #6): Pathfinders $1,500 to start and $100 a month (a 6-week trial $1,700); the community dinner $350 a month
-  c('capacity: volunteers, leaders, hours, start-up budget', S('capacity').rows.map(r=>[r.label,r.need,r.have,r.unit]),
-    [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h'],['Start-up budget',1500,2500,'$']]);
+  // v10.49.0 — the pastor (5 Oct 2026): "the proposal … mention how much money they will need not versus available funds": money is stated, not checked.
+  c('capacity: volunteers, leaders, hours (no budget row: the cost is on the ask)', S('capacity').rows.map(r=>[r.label,r.need,r.have,r.unit]),
+    [['Volunteers',5,35,''],['Leaders',1,7,''],['Hours in the first month',50,250,'h']]);
   // v10.42 part 3: every headline serves the goal ("{aim}": the theme's own words)
   c('…nothing missing, so no gaps and the headline says so, in the aim\'s words', [S('capacity').gaps,S('capacity').headline], [[],'We have the people and hours to grow our Pathfinder Club']);
   // v10.42 part 3 (the pastor, SPEC-FOCUS E: "the Spiritual Gifts initiative has to be done for the whole church membership"): six
@@ -266,12 +267,13 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
       // said with it ("Leaders 3 free" on one slide, "Nobody is ready to coordinate yet" on the next read as a contradiction)
       ['God has already put people for this in our church','3','Members whose gifts fit this work, of 6 results counted','3 of them have time to give. 7 leaders in the church; none yet among those whose gifts fit: pair and train.','Spiritual Gifts results from 6 members · adults only · counts only, no names']); }
   // v10.42 part 3: Places moves from the opening to the ask (the opening keeps four rows beside the goal)
-  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['Places','16'],['To start · each month','$1,500 · $100'],['Ceiling','$1,700'],['Source','Local budget, not tithe'],['Left after this','$1,000 · $350 a month']]);
+  c('the ask, itemised, in real dollars', S('ask').rows, [['People','1 leader · 5 volunteers'],['Room','Classrooms · Tuesday evening'],['Places','16'],['To start · each month','$1,500 · $100'],['Ceiling','$1,700'],['Source','Local budget, not tithe']]   /* v10.49.0: no "Left after this" (money stated, not checked) */);
   // v10.40: a verse on every slide (verbatim from the verified library). v10.42 part 3: Nehemiah 2:18 is the appeal's verse now
   // (NARRATIVE.md §6.1, the close job), so the ask counts the cost with Luke 14:28; What it takes, whose headline now names the aim,
   // holds one line of verse beside its four rows (measured at 360 × 640): Acts 15:28, "no greater burden than these necessary things".
-  c('…with Luke 14:28, KJV, and Acts 15:28 on the capacity slide', [S('ask').verse,S('capacity').verse,S('close').quote.ref], [{text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'},
-    {text:'For it seemed good to the Holy Ghost, and to us…',ref:'Acts 15:28 · KJV'},'Nehemiah 2:18 · KJV']);
+  // v10.49.0: with no budget row the capacity slide has room for John 6:9 ("but what are they among so many?"); Luke 14:28 stays on the ask
+  c('…with Luke 14:28, KJV, and John 6:9 on the capacity slide', [S('ask').verse,S('capacity').verse,S('close').quote.ref], [{text:'For which of you, intending to build a tower, sitteth not down first, and counteth the cost, whether he have sufficient to finish it?',ref:'Luke 14:28 · KJV'},
+    {text:'There is a lad here, which hath five barley loaves, and two small fishes: but what are they among so many?',ref:'John 6:9 · KJV'},'Nehemiah 2:18 · KJV']);
   c('risks: the two most serious for children, then never tithe (the slide keeps what fits beside its verse)', S('risks').items.map(t=>t.slice(0,32)), ['Every adult screened through Adv','Two adults in every room and act','Paid from the local church budge']);
   // v10.42.0 fix after review: the conference's counsel is a safeguard on a major matter only (a series, a proposal to the
   // conference, $2,500 or more), said as what we will do; this $125 trial has the board's approval before anything is announced
@@ -293,7 +295,7 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
   c('usted and the Spanish catalogue name after a colon', SS('motion').headline, 'Aprobar una prueba de 6 semanas: Club de Conquistadores y Aventureros, abierto al vecindario');
   c('the need in Spanish, with its county said in Spanish', [SS('stat').headline,SS('stat').count,SS('stat').compare.label,SS('place').kicker,SS('place').source], ['Alrededor de 1 de cada 4 personas de nuestro entorno es menor de 18 años','unos 1,490 menores de 18 años','Condado de Bucks','Aquí en Warminster','Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02']);
   c('…the source in Spanish', SS('stat').source, 'Censo de EE. UU. ACS 2020–2024 · Sección censal 2041.02 · margen de error ±3.1 puntos · por encima del condado');
-  c('the ask in Spanish, and the verses from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref,SS('capacity').verse.ref], ['Personas','Presupuesto local, no el diezmo','Lucas 14:28 · RVA','Hechos 15:28 · RVA']);
+  c('the ask in Spanish, and the verses from the RVA 1909', [SS('ask').rows[0][0],SS('ask').rows.find(r=>r[0]==='Fondos')[1],SS('ask').verse.ref,SS('capacity').verse.ref], ['Personas','Presupuesto local, no el diezmo','Lucas 14:28 · RVA','Juan 6:9 · RVA']);   // v10.49.0
   c('the dates in Spanish', SS('timeline').steps[0].date, '13 oct · inicio');
   c('the same verses as the English deck, slide for slide (v10.40)', BS.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.es.ref===${JSON.stringify(r)})||{}).id`)),
     BD.slides.map(s=>s.verse?s.verse.ref.replace(/ · (KJV|RVA)$/,''):null).map(r=>r&&JE(`(CASE_VERSES.find(v=>v.en.ref===${JSON.stringify(r)})||{}).id`)));
@@ -370,7 +372,8 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     c('every question answered with real figures: no placeholder left, none empty', qs.filter(([l,g,id,q])=>/\{/.test(q.q+q.a)||!q.q||!q.a).length, 0);
     c('“Which ages is it for?” only for the Pathfinder club', [...new Set(qs.filter(([l,g,id,q])=>q.id==='youth.ages').map(x=>x[2]))], ['pathfinders']);
     const bq=one('board','board','pathfinders').m.questions.find(q=>q.id==='board.cost');
-    c('the board’s cost question, answered in dollars from the local budget', bq.a, 'The trial costs at most $1,700, from the local church budget, never tithe (Church Manual p. 142). After it, $1,000 of the start-up budget and $350 a month remains in the budget. Receipts go to the treasurer and an itemised account comes back at the review.');
+    // v10.49.0: the cost and where it comes from, with no budget beside it (aEn3)
+    c('the board’s cost question, answered in dollars from the local budget', bq.a, 'The trial costs at most $1,700, from the local church budget, never tithe (Church Manual p. 142). Receipts go to the treasurer and an itemised account comes back at the review.');
     const why=one('board','board','pathfinders').m.questions.find(q=>q.id==='board.why');
     c('…and “why here” with the margin of error', why.a, 'Because of the Census figures for Census Tract 2041.02. About 1 in 4 people around us is a child: higher than the county, with a margin of error of ±3.1 points. Where a difference is too small to be sure of, the slides say “similar to the county”.'); }
 
@@ -423,10 +426,10 @@ const w=dom.window; const E=s=>w.eval(s); const JE=s=>JSON.parse(E('JSON.stringi
     const m=JE(`caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}})`), d=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW}}))`);
     const cap=d.slides.find(s=>s.type==='capacity');
     // v10.42 part 3: What it takes names the aim ("What we have to {aim}, and what is still missing")
-    c('a small church short of money: the gap is said in dollars, not "$0k"', [m.capacity.ok,cap.headline,cap.gaps.filter(g=>/\$/.test(g))], [false,'What we have to feed neighbours who are hungry, and what is still missing',['Short by $290 a month']]);
-    c('…and the ask says what is short, not a negative balance', d.slides.find(s=>s.type==='ask').rows.find(r=>r[0]==='Left after this')[1], 'Short by $290 a month');
+    // v10.49.0: money is stated, not checked — a small church sees no money gap and no "Left after this"; the ask states the cost
+    c('a small church: no money gap, no "Left after this", the cost stated in dollars', [cap.gaps.filter(g=>/\$/.test(g)),!!d.slides.find(s=>s.type==='ask').rows.find(r=>r[0]==='Left after this'),/\$\d/.test(JSON.stringify(d.slides.find(s=>s.type==='ask').rows))], [[],false,true]);
     const es=JE(`caseDeck(caseModel('community-dinner',{type:'board',group:'board'},{now:${NOW},lang:'es'}))`).slides.find(s=>s.type==='capacity');
-    c('…in Spanish too', es.gaps.filter(g=>/\$/.test(g)), ['Por cubrir: $290 al mes']);
+    c('…in Spanish too: no money gap', es.gaps.filter(g=>/\$/.test(g)), []);
     E('CAP=null; capSave('+JSON.stringify(FX.MEDIUM)+'); U_PEOPLE_CACHE=null;'); }
 
   console.log('\n-- no Spiritual Gifts results yet --');
