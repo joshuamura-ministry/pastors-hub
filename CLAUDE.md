@@ -68,6 +68,10 @@ netlify/functions/advise.mjs   the model behind the prose plan, new ministry ide
 netlify/functions/advise-prices.mjs  (v10.44, prices-1.0) the background worker behind "Find prices" (Make the Case · a project or purchase): web search
                                and web fetch, three options recorded by a strict tool, every link cleaned; Netlify Blobs store `terrain-prices`
 netlify/functions/prices-sweep.mjs   (v10.44, prices-sweep-1.0) daily purge of price-search jobs (7 days) and their counters (2 days)
+netlify/functions/advise-needs.mjs   (v10.53.0, needs-1.0) the background worker behind the Community Survey's needs list made by Claude: web search
+                               and web fetch, one strict tool (record_needs), every number checked against the Census figures sent, every link
+                               the search's own; Netlify Blobs store `terrain-needs` (jobs j/, the place's kept list n/<hash>/<lang>, counters c/)
+netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.0) daily purge: jobs after 7 days, counters after 2, kept lists after 60
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
 conferences/                   (v10.44) "Learn from other conferences" as the page loads it: index.json (the chooser and every comparison, 50
@@ -138,6 +142,8 @@ values are never in the repo):
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
+| `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
+| `NEEDS_MODEL` / `NEEDS_EFFORT` | advise-needs.mjs | Optional (v10.53.0). Default `claude-opus-5-5` at effort `medium`. The needs list needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `PRICES_MODEL` / `PRICES_EFFORT` | advise.mjs, advise-prices.mjs | Optional (v10.44). Default `claude-opus-5-5` at effort `low`. Find prices needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`; without the passphrase the page never shows it. |
 | `TERRAIN_CODES` | census.mjs, gifts.mjs | Conference access codes. **Only enforced when `TERRAIN_REQUIRE_CODE` is on** (v10.38: registration replaced codes on the first page). |
 | `TERRAIN_REQUIRE_CODE` | census.mjs, gifts.mjs | `1`/`true`/`yes`/`on` brings the old access-code gate back. Unset = registration only. |
@@ -154,6 +160,94 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.53.0 (6 Oct 2026) — the Community Survey's needs list made by Claude.** The pastor: *"it should actually do that for the first
+list because I want the best list ever and it's not always going to be the best list if it's just using a database … I really want
+Claude to generate the best list based on the community survey and wherever else … drawing from the Internet too … We need to do our
+best"*; *"Generate new community needs … it can validate certain things that other churches have done … how to meet the needs or plant
+the seed"*. Design `~/Downloads/Terrain-work/v68/DESIGN-NEEDS.md`.
+- **Who:** the same lock as Find prices: the server has `ANTHROPIC_API_KEY` and `TERRAIN_AI_PASS` (and `NEEDS_DAY_MAX` is not 0), and the
+  device is unlocked (`aiPass()`, `?ideas=`). Everyone else sees the survey's own list exactly as before. (When paid plans exist, the plan
+  replaces the lock.)
+- **The page** (block after `nsDraw`: `NS_AI`, `nsAiProbe`, `nsAiPlace` (the state from the matched address or the location's label),
+  `nsAiInput`, `nsAiStart`, `nsAiAccept`, `nsAiClean`, `nsAiApply`, `nsAiKept`/`nsAiKeep`, `nsAiStatusHTML`, `nsAiBlocks`): the survey's
+  own list draws at once; `nsDraw` then asks (`nsAiAuto`) with the place's names, the report's figures (SPEC, tract · town · county), the
+  languages and places of birth, the survey's own list, its categories and the library's themes; **never the church, its address or the
+  pastor**. The answer (the server's kept list, or a study) replaces the list: Claude's order, titles and why (a field whose numbers fail
+  keeps the survey's own), a need the rules missed as `ai-<n>` (its category's colour, its figures as rings: `n.figKeys` in `nsFigs`, ideas
+  from its themes: `nsFallback`), "Also here" the survey's also less what it took. Every number is checked again here (`nsAiPool`,
+  `nsAiNumsOk`: the figures as given, rounded, "1 in N", a ratio to the county, the survey's own lines, a year, 0–12; never more than two
+  decimals); links https, opened apart (`rel=noopener noreferrer`), shown as the site's name. Kept with the church
+  (`uChurch().needsList[place|lang]`, the last three), so a redraw shows it at once. The line under "Tap a need and plant the seed."
+  (`#ns-aistat`): "Studying {town}'s needs and what churches have done… about a minute.", then "Studied {date}" + **Generate new community
+  needs** (fresh), or "The list could not be updated just now." + the button. An opened need: the rings, then **Plant the seed**, **In
+  {town}** (local lines), **What other churches have done** (church lines), then What helps / Where to begin / Ask first.
+- **The server:** advise.mjs **advise-2.5**, modes `needs` (the lock, the registration, `needsInput` — place names and figures only — the
+  kept list `n/<sha(place|figures)>/<lang>` given at no cost unless fresh, then the limits, the job, the wake) and `needs-status`;
+  **advise-needs.mjs** (needs-1.0, background): one request with web search (6) and web fetch (4), social sites and shorteners blocked, the
+  town as the search's place, the strict `record_needs`; `cleanNeeds`: ids sent or "new", the categories sent, the themes sent; every
+  number in title, why and plant one of the figures (`numberPool`/`numbersOk`); local and church lines only with a link the search
+  returned (cleaned, https); no markup, web address, emoji, "AI" or "targets"; 5–15 needs or no result. The kept list is keyed by the place
+  **and its figures**, so nobody can leave a list made from other numbers for another pastor of the same place. **needs-sweep.mjs**.
+- **Never run against the real service** (every test stubs it): the first real study is his, on his unlocked device. Watch it (time,
+  searches, how many needs survive the checks; the job record keeps the counts).
+- Verify after deploy: `/.netlify/functions/advise` → `"fn":"advise-2.5"`, `"needs":true`, `"needsFn":"needs-1.0"`.
+- Tests: `needs-function` (new, 55) and `v53-needs-claude` (new, 28), both failing first on v10.52.0 (`v68/ff-*.log`); updated with comments:
+  advise-function, advise-topic, advise-prices (advise-2.5), connect-client (a thirteenth `memberLink()` guard). Samples (a MADE-UP answer, to
+  show the layout): `~/Downloads/Terrain-v10.53.0-samples/` (`v68/shots13.mjs`).
+
+**v10.52.0 (6 Oct 2026) — Make the Case: choose the size (Light · Moderate · Heavy lift).** The pastor: *"making the case is
+essentially putting together not only what you need in order to start the ministry but also the proposal … it can be a light lift
+moderate lift heavy lift if you choose light lift then of course the investment with the money needed the people needed. It won't be
+that. If you do moderate lift it'll be middle and if you do heavy lift, it's gonna be a much more robust and more demanding thing, but
+the same outreach … if it comes from the community outreach section it already knows"*; asked (a) pick an idea then its size, or (b)
+the size first: **"A"**. Design `~/Downloads/Terrain-work/v67/DESIGN-LIFT.md`.
+- **Size** opens step 3 (both the Proposal page and Make the Case; `caseSizeHTML`, `#cs-size`, before the goal box): Light lift ·
+  Moderate lift · Heavy lift (the survey's words and bars), each with its own numbers ("2 volunteers · $300 to start"), the idea's own
+  marked "its own size" and on until he picks another. A tap (`caseSizeSet`) saves `uChurch().overrides[id].lift` (1–3; its own size
+  stores nothing) and draws the step again (the Proposal page whole, so its card's lift line and "What it needs from our church" follow).
+- **The numbers** (`uLiftReq`, applied inside `uReq` to the base before his Adjust edits, so they still win; `uReq(x,{lift})` asks about a
+  size without saving): one step lighter halves the volunteers (at least 1) and the people it serves (at least 4), keeps one leader,
+  halves set-up and follow-up hours, 40% of the money; one step heavier doubles them, one more leader, 250% of the money; two steps
+  apply it twice. An ongoing idea's trial: 4 weeks Light, 6 Moderate, 12 Heavy; an event or a series keeps its own length (a series its
+  sessions). Session length, skills and rooms stay the idea's own. An idea's own size: `caseLiftOf(x)` (library tier, a built-in's
+  `bandOf(load)+1`, = `nsLift`). With nothing chosen `uReq` is unchanged: the 535 goldens hold.
+- **Words**, only when the size is not its own (`caseLiftNote`): the Proposal's WHAT line and the handout under its budget heading
+  (`H.sizeNote`): "A lighter start: fewer people, a smaller budget and a shorter trial." / "The full version: more people, a larger budget
+  and a longer run." (ES "Un comienzo más ligero…" / "La versión completa…").
+- **Gates:** every built-in × the church board at Light and Heavy, EN + ES (`v67/gate-pages.js`): handout ≤ 2 pages, the Proposal no more
+  pages than at its own size, 0 exceptions (76 lighter and 72 heavier decks a language); the slide fit at 360 × 640 (`v67/gate-slides.mjs`:
+  every built-in × board, finance, the whole church × Light and Heavy, EN + ES): 888 sized decks, 9,005 slides, 0 over the frame, none
+  worse than at its own size. A free idea stays free at any size (no price is invented). Samples: `~/Downloads/Terrain-v10.52.0-samples/`.
+- Tests: `v52-lift` (new, 26; failing first on v10.51.3: `v67/ff-v52.log`). Full suite: 137 suites · 9,939 passed · 0 failed.
+
+**v10.51.3 (6 Oct 2026, quick lane) — Spiritual Gifts: "Who you are drawn to" is Section 6 of 6.** The pastor: *"Part two for the
+spiritual gift survey. It shouldn't be like a next part. It should just be at the last section of the entire survey … right now 1 2 3 4 5
+and this will be the sixth in line … so that it doesn't feel like an extra step they have to take it just gonna continue to the end"*.
+The twelve heart questions keep their page, now under "Section 6 of 6" (never "Part two"), after an opener like the other five
+(`gfRenderHeartOpen`: eyebrow, "Who you are drawn to", the rule, Matthew 9:36 from the verified library via `gfdVerse('case:matt9_36')`,
+what it is, "12 questions", Carry on; seen once, `GFS.hseen`; Back clears it, as crossing back out of any section). The bar has a sixth
+segment and dot (`data-gff="heart"`, red `--m-veterans`, as wide as its twelve, filled as they are answered: `gfHeartFill`, `gfSetBar` on
+each tap); every section reads "of 6" (`GF_SECT_SHOWN`, `gfSectWord`); the welcome back counts it; "Carry on with section 6"; the intro
+says six sections. The heart page's eyebrow and chosen answers are in its red. The five gift families (`GF_FAMS`, `GF_FAM_VAR`, the
+report's colours) are unchanged. Tests: gifts-sections and gifts-engine updated to the new intent with comments, section 6 checked EN + ES
+(failing first on v10.51.2: `Terrain-work/v66/logs/ff-v51-3-*.log`). Samples: `~/Downloads/Terrain-v10.51.3-samples/` (`shots11.mjs`).
+
+**v10.51.2 (6 Oct 2026, quick lane) — "Your church": cut the fat.** The pastor: *"review members in spiritual gifts that should be a
+bright button. It shouldn't look so dull … this box here where you check I don't think you even need that … current commitments and
+limits does it need to be there either … cut the fat and only keep that which is going to be loadbearing to the process"*. Step 3
+(Skills): "Review members in Spiritual Gifts" is a solid Spiritual Gifts violet button (`#u-team-link.u-teamgo`, `--gfv` / `--gfv-ink`
+in both themes). The congregation boxes (`CAP_WHO`: mixed, one ethnic group, international, another language, older, young adults,
+families, newcomers) and "Current commitments and limits" are no longer asked: nothing read them but the summary box (`isWho` was
+never called), so the summary drops "Congregation" and "Already carrying"; a save keeps a church's earlier answers stored, unread
+(`next={...c,…}` no longer resets `who`). Tests: `v51-2-church` (new, 7; failing first on v10.51.1: `Terrain-work/v66/logs/ff-v51-2.log`);
+church-summary-box and background-ideas (typed into the languages field instead) updated with comments.
+**His picture of the tools (6 Oct 2026):** the Community Survey finds what to do and hands a proposal to Make the Case; Make the Case
+also stands alone (browse ideas there and make a proposal), and choosing Light / Moderate / Heavy lift sizes the people and money
+(from the survey the lift is already chosen); the Evangelism Planner is for the bigger events (a 16-meeting series, a one-day health
+event), drawing on the survey and the Spiritual Gifts results. **Next he asked for:** Make the Case standalone with the lift choice;
+then the Claude-made needs list. Open: where the church's finances live (his question; my recommendation in the conversation: one
+"Church budget" page in the Evangelism Planner, the yearly budget and each ministry's line; proposals still only state what they need).
 
 **v10.51.1 (6 Oct 2026, quick lane) — Learn from other conferences: a better "Add".** The pastor: *"Can the drop-down look better …
 the east Midwest South West East Coast, California regional conferences … as headings … more across and not just straight down … you

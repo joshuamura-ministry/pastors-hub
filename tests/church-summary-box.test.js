@@ -37,7 +37,9 @@ setTimeout(()=>{
   c('every room with its capacity', /Kitchen \/ fellowship hall60 people/.test(txt)&&/Classrooms24 people/.test(txt));
   c('skills with counts', /1nurses or health professionals/.test(txt.replace(/\s+/g,''))||/1nurses or health professionals/.test(txt));
   c('languages', /Spanish — one fluent member/.test(txt));
-  c('and what they are already carrying', /Already carrying/.test(txt)&&/Wednesday prayer meeting/.test(txt));
+  // v10.51.2 — the pastor: "current commitments and limits does it need to be there either … cut the fat": no longer asked, so the
+  // summary no longer shows it (nor the congregation boxes)
+  c('what they are already carrying, and the congregation boxes: no longer asked, no longer shown', [/Already carrying/.test(txt),/Wednesday prayer meeting/.test(txt),/Congregation/.test(txt)], [false,false,false]);
   // v10.45.0 (stale): there is no plan "below" it now; the sample says where Clear all is (above, in the form)
   c('it says it is the sample, and where to clear it', /The sample church: press Clear all above when you are done\./.test(txt));
   c('and how to leave the sample', /Clear all/.test(txt));

@@ -48,23 +48,25 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   c('mint, pink, amber, purple, blue', FAMS.map(f=>E(`GF_FAM_VAR[${JSON.stringify(f)}]`)), ['--m-language','--m-people','--m-hardship','--m-children','--m-housing']);
   c('bar width transitions stop under reduced motion', /@media \(prefers-reduced-motion: reduce\)\{\s*\.gfseg \.gfbarfill\{transition:none\}/.test(html), true);
 
+  // v10.51.3 — the pastor (6 Oct 2026): "Part two … shouldn't be like a next part. It should just be at the last section of the entire
+  // survey … right now 1 2 3 4 5 and this will be the sixth in line": six sections, the sixth "Who you are drawn to" (red, its 12 questions)
   console.log('-- the section 3 opener, 51 of 105 --');
   E(AT(50,1));
   c('it is the section 3 opener', [!!D.getElementById('gfgo'),hb().querySelector('.gfsect').dataset.gff], [true,'lead']);
-  c('five segments in family order', segs(D).map(s=>s.dataset.gff), FAMS);
-  c('each as wide as its share of the statements', segs(D).map(s=>s.style.flex.split(' ')[0]), ['25','25','20','20','15']);
-  c('two done, the third current and empty, two to come', state(D), ['done:100%','done:100%','now:0%','-:0%','-:0%']);
+  c('six segments: the five families in order, then section 6', segs(D).map(s=>s.dataset.gff), [...FAMS,'heart']);
+  c('each as wide as its share (statements; section 6 its 12 questions)', segs(D).map(s=>s.style.flex.split(' ')[0]), ['25','25','20','20','15','12']);
+  c('two done, the third current and empty, three to come', state(D), ['done:100%','done:100%','now:0%','-:0%','-:0%','-:0%']);
   const bar=hb().querySelector('.gfsegs');
   c('a progressbar with values', [bar.getAttribute('role'),bar.getAttribute('aria-valuemin'),bar.getAttribute('aria-valuemax'),bar.getAttribute('aria-valuenow')], ['progressbar','0','105','50']);
-  c('its text names the count and the section', bar.getAttribute('aria-valuetext'), '51 of 105 · Section 3 of 5: Leading and organising');
+  c('its text names the count and the section', bar.getAttribute('aria-valuetext'), '51 of 105 · Section 3 of 6: Leading and organising');
   c('"51 of 105" as before', hb().querySelector('.gfcount').textContent, '51 of 105');
-  c('five dots in the family colours', dots(D), ['done:word','done:people','now:lead','-:out','-:hands']);
+  c('six dots in their colours', dots(D), ['done:word','done:people','now:lead','-:out','-:hands','-:heart']);
   c('the dots are decoration to a screen reader', hb().querySelector('.gfdots').getAttribute('aria-hidden'), 'true');
   const O=hb().querySelector('.gfsect');
   c('opener order: eyebrow, title, rule, verse, description, count and instruction, button',
     [...O.children].map(e=>e.className.split(' ').filter(k=>/^gf/.test(k)&&k!=='gfverse'&&k!=='btn').join('.')||e.tagName),
     ['gfsecn','gfsect-t','gfso-rule','gfso-v','gfso-l','gfso-f','gfbig']);
-  c('eyebrow and title', [O.querySelector('.gfsecn').textContent,O.querySelector('h2').textContent], ['Section 3 of 5','Leading and organising']);
+  c('eyebrow and title', [O.querySelector('.gfsecn').textContent,O.querySelector('h2').textContent], ['Section 3 of 6','Leading and organising']);
   c('the verse, with its reference beneath, KJV', [O.querySelector('.gfso-v q').textContent,O.querySelector('.gfso-v cite').textContent], [E('GF_VERSE_SET[2][0]'),'1 Corinthians 12:18 · KJV']);
   c('the description is its own paragraph', O.querySelector('.gfso-l').textContent.replace(/\u00a0/g,' '), E('GF_FAMS[2].l'));
   c('its dash is kept to the word before, so no line starts with one', [/\u00a0\u2014/.test(O.querySelector('.gfso-l').textContent),/ \u2014/.test(O.querySelector('.gfso-l').textContent)], [true,false]);
@@ -75,7 +77,7 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
 
   console.log('-- section 1 opener --');
   E(AT(0,-1));
-  c('Start, in the Scripture family, nothing done yet', [D.getElementById('gfgo').textContent,hb().querySelector('.gfsect').dataset.gff,state(D).join(' ')], ['Start','word','now:0% -:0% -:0% -:0% -:0%']);
+  c('Start, in the Scripture family, nothing done yet', [D.getElementById('gfgo').textContent,hb().querySelector('.gfsect').dataset.gff,state(D).join(' ')], ['Start','word','now:0% -:0% -:0% -:0% -:0% -:0%']);
   c('25 statements', hb().querySelector('.gfso-n').textContent, '25 statements');
 
   console.log('-- a statement card in section 4 --');
@@ -83,11 +85,11 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   const card=()=>hb().querySelector('.gfcardq');
   c('the card carries its family', [card().dataset.gff,card().dataset.i], ['out','74']);
   c('the label names the family and the statement', [card().querySelector('.gfqf').textContent,card().querySelector('.gfqn').textContent], ['Reaching beyond the church','Reaching beyond the churchStatement 75']);
-  c('the fourth segment filled to its progress (4 of 20)', state(D), ['done:100%','done:100%','done:100%','now:20%','-:0%']);
+  c('the fourth segment filled to its progress (4 of 20)', state(D), ['done:100%','done:100%','done:100%','now:20%','-:0%','-:0%']);
   card().querySelector('.gfopt[data-v="3"]').click();
   c('a tap fills the segment one statement further', state(D)[3], 'now:25%');
   c('the chosen answer is lit', card().querySelector('.gfopt.on').dataset.v, '3');
-  c('aria moves with it', [hb().querySelector('.gfsegs').getAttribute('aria-valuenow'),hb().querySelector('.gfsegs').getAttribute('aria-valuetext')], ['75','76 of 105 · Section 4 of 5: Reaching beyond the church']);
+  c('aria moves with it', [hb().querySelector('.gfsegs').getAttribute('aria-valuenow'),hb().querySelector('.gfsegs').getAttribute('aria-valuetext')], ['75','76 of 105 · Section 4 of 6: Reaching beyond the church']);
   await until(()=>card()&&card().dataset.i==='75',2000);
   c('the next card, same family', [card().dataset.i,card().dataset.gff], ['75','out']);
   D.getElementById('gfback').click();
@@ -98,20 +100,31 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   E(AT(89,3));
   card().querySelector('.gfopt[data-v="2"]').click();
   c('the last statement of section 4 completes its segment', [state(D)[3],state(D)[4]], ['done:100%','now:0%']);
-  c('and the dots move on', dots(D).map(d=>d.split(':')[0]), ['done','done','done','done','now']);
+  c('and the dots move on', dots(D).map(d=>d.split(':')[0]), ['done','done','done','done','now','-']);
   await until(()=>D.getElementById('gfgo'),2000);
-  c('the section 5 opener, blue family', [hb().querySelector('.gfsect').dataset.gff,hb().querySelector('.gfsecn').textContent], ['hands','Section 5 of 5']);
+  c('the section 5 opener, blue family', [hb().querySelector('.gfsect').dataset.gff,hb().querySelector('.gfsecn').textContent], ['hands','Section 5 of 6']);
   D.getElementById('gfgo').click();
   await until(()=>card()&&card().dataset.i==='90',2000);
   c('its first card carries the family', [card().dataset.gff,card().querySelector('.gfqf').textContent], ['hands','Hands and craft']);
 
-  console.log('-- the heart page and the welcome back --');
+  console.log('-- section 6: who you are drawn to, and the welcome back --');
   E(`GFS={name:'Ana',a:{},h:{},i:GF_TOTAL,sect:4,done:false,sent:false,ov:GF_TOTAL}; GFS.a['teach.0']=3; GF_RESUMED=true; gfRender();`);
-  c('the heart page shows every section done', [hb().querySelectorAll('.gfhq').length,state(D).join(' ')], [12,'done:100% done:100% done:100% done:100% done:100%']);
-  c('all five dots done', dots(D).map(d=>d.split(':')[0]), ['done','done','done','done','done']);
-  c('and says so to a screen reader', hb().querySelector('.gfsegs').getAttribute('aria-valuetext'), 'All 105 statements answered');
+  { const O6=hb().querySelector('.gfsect');
+    c('section 6 opens like the others: its card, red, eyebrow, title, a verse, what it is, 12 questions, Carry on',
+      [O6&&O6.dataset.gff,O6&&[...O6.children].map(e=>e.className.split(' ').filter(k=>/^gf/.test(k)&&k!=='gfverse'&&k!=='btn').join('.')||e.tagName),O6&&O6.querySelector('.gfsecn').textContent,O6&&O6.querySelector('h2').textContent,O6&&O6.querySelector('.gfso-v cite').textContent,O6&&O6.querySelector('.gfso-n').textContent,D.getElementById('gfgo').textContent],
+      ['heart',['gfsecn','gfsect-t','gfso-rule','gfso-v','gfso-l','gfso-f','gfbig'],'Section 6 of 6','Who you are drawn to','Matthew 9:36 · KJV','12 questions','Carry on']);
+    c('…its verse word for word from the verified library (Matthew 9:36)', O6&&O6.querySelector('.gfso-v q').textContent, E(`CASE_VERSES.find(v=>v.id==='matt9_36').en.text`));
+    c('…the bar: five done, the sixth current', [state(D).join(' '),dots(D).map(d=>d.split(':')[0])], ['done:100% done:100% done:100% done:100% done:100% now:0%',['done','done','done','done','done','now']]);
+    c('…and says so to a screen reader', hb().querySelector('.gfsegs').getAttribute('aria-valuetext'), 'Section 6 of 6: Who you are drawn to'); }
+  c('the red is its own (the five families keep the report colours)', [/\[data-gff="heart"\]\{--k:var\(--m-veterans\)\}/.test(html),E('Object.keys(GF_FAM_VAR).length')], [true,5]);
+  D.getElementById('gfgo').click(); await until(()=>hb().querySelectorAll('.gfhq').length===12,2000);
+  c('Carry on: the twelve questions on one screen, under "Section 6 of 6", never "Part two"', [hb().querySelectorAll('.gfhq').length,hb().querySelector('.gfhearthead .gfsecn').textContent,/Part two/.test(hb().textContent),hb().querySelector('.gfcount').textContent], [12,'Section 6 of 6',false,'12 questions']);
+  hb().querySelector('.gfhq[data-k="children"] .gfhchip[data-v="2"]').click();
+  hb().querySelector('.gfhq[data-k="seniors"] .gfhchip[data-v="1"]').click();
+  c('each answer fills the sixth segment (2 of 12)', state(D)[5], 'now:16.7%');
+  c('…the page in section 6\'s red, as each section\'s cards are in theirs', [hb().querySelector('.gfhearthead').dataset.gff,hb().querySelector('.gfheart').dataset.gff,/\.gfheart\[data-gff\] \.gfhchip\.on\{background:var\(--kf\)/.test(html)], ['heart','heart',true]);
   E(`(()=>{ const a={}; for(let n=0;n<10;n++){ const p=GF_ORDER[n]; a[gfKeyOf(p[0],p[1])]=1; } GFS={name:'Ana',a,h:{},i:10,sect:0,done:false,sent:false,ov:GF_TOTAL}; GF_RESUMED=false; gfRender(); })()`);
-  c('welcome back shows answers per family', [!!D.getElementById('gfresume'),state(D).join(' ')], [true,'now:40% -:0% -:0% -:0% -:0%']);
+  c('welcome back shows answers per family', [!!D.getElementById('gfresume'),state(D).join(' ')], [true,'now:40% -:0% -:0% -:0% -:0% -:0%']);
   c('as a progressbar of answers', [hb().querySelector('.gfsegs').getAttribute('aria-valuenow'),hb().querySelector('.gfsegs').getAttribute('aria-valuetext')], ['10','10 of 105 answered']);
 
   console.log('-- Spanish --');
@@ -120,9 +133,13 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   S.E(AT(50,1));
   const SO=S.D.querySelector('#giftbody .gfsect');
   c('opener in Spanish, cited RVA', [SO.querySelector('.gfsecn').textContent,SO.querySelector('h2').textContent,SO.querySelector('.gfso-v cite').textContent,SO.querySelector('.gfso-n').textContent,S.D.getElementById('gfgo').textContent],
-    ['Sección 3 de 5','Liderar y organizar','1 Corintios 12:18 · RVA','20 afirmaciones','Continuar']);
+    ['Sección 3 de 6','Liderar y organizar','1 Corintios 12:18 · RVA','20 afirmaciones','Continuar']);
   c('the instruction in usted form', SO.querySelector('.gfso-a').textContent, 'Responda lo que es cierto de usted, no lo que se supone que un cristiano debe decir. Nadie está calificando esto.');
-  c('the progressbar in Spanish', [S.D.querySelector('#giftbody .gfsegs').getAttribute('aria-label'),S.D.querySelector('#giftbody .gfsegs').getAttribute('aria-valuetext')], ['Progreso','51 de 105 · Sección 3 de 5: Liderar y organizar']);
+  c('the progressbar in Spanish', [S.D.querySelector('#giftbody .gfsegs').getAttribute('aria-label'),S.D.querySelector('#giftbody .gfsegs').getAttribute('aria-valuetext')], ['Progreso','51 de 105 · Sección 3 de 6: Liderar y organizar']);
+  S.E(`GFS={name:'Ana',a:{},h:{},i:GF_TOTAL,sect:4,done:false,sent:false,ov:GF_TOTAL}; GF_RESUMED=true; gfRender();`);   // v10.51.3
+  { const O6=S.D.querySelector('#giftbody .gfsect');
+    c('section 6 in Spanish, cited RVA', O6&&[O6.querySelector('.gfsecn').textContent,O6.querySelector('h2').textContent,O6.querySelector('.gfso-v cite').textContent,O6.querySelector('.gfso-n').textContent,S.D.getElementById('gfgo').textContent],
+      ['Sección 6 de 6','Hacia quién se inclina su corazón','Mateo 9:36 · RVA','12 preguntas','Continuar']); }
   S.E(AT(74,3));
   c('the card label in Spanish', S.D.querySelector('#giftbody .gfqn').textContent, 'Llegar más allá de la iglesiaAfirmación 75');
 

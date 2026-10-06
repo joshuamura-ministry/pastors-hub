@@ -160,8 +160,11 @@ function makeStore(){
   c('without one, setup says to run the survey first', /Run the Community Survey for/.test(w.document.getElementById('giftbody').textContent), true);
 
   console.log('-- the heart page --');
+  // v10.51.3 — the pastor: "Part two … shouldn't be like a next part … the sixth in line": section 6 opens with its own card first
   E(`GF_VIEW='take'; GFS={name:'Ana',a:{},h:{},i:GF_TOTAL,sect:4,done:false,sent:false,ov:GF_TOTAL}; GFS.a['teach.0']=3; GF_RESUMED=true; gfRender();`);
   const D=w.document, hb=()=>D.getElementById('giftbody');
+  c('v10.51.3: section 6 opens with its card, like the other five', [!!D.getElementById('gfgo'),hb().querySelector('.gfsect')&&hb().querySelector('.gfsect').dataset.gff,hb().querySelector('.gfsecn')&&hb().querySelector('.gfsecn').textContent,hb().querySelectorAll('.gfhq').length], [true,'heart','Section 6 of 6',0]);
+  D.getElementById('gfgo').click(); await until(()=>hb().querySelectorAll('.gfhq').length===12,2000);
   c('twelve questions on one screen', hb().querySelectorAll('.gfhq').length, 12);
   c('three answers each', [...hb().querySelectorAll('.gfhq')].every(q=>q.querySelectorAll('.gfhchip').length===3), true);
   c('the questions are GF_HEART in order', [...hb().querySelectorAll('.gfhq')].map(q=>q.dataset.k).join(','), E('GF_HEART.map(q=>q.k).join(",")'));
@@ -173,15 +176,18 @@ function makeStore(){
   D.getElementById('gfhdone').click();
   c('a second tap goes on to the result', E('GFS.done'), true);
   E(`GFS.done=false; GFS.i=GF_TOTAL; GF_RESUMED=false; gfRender();`);
-  c('resume knows about the heart page', D.getElementById('gfresume')&&D.getElementById('gfresume').textContent, 'Carry on with the last page');
+  c('resume knows about the heart page (section 6)', D.getElementById('gfresume')&&D.getElementById('gfresume').textContent, 'Carry on with section 6');
   D.getElementById('gfresume').click();
   c('and carries on there', hb().querySelectorAll('.gfhq').length, 12);
   D.getElementById('gfhback').click();
   c('Back goes to the last statement', [E('GFS.i'),!!hb().querySelector('.gfcardq')], [104,true]);
   E(`GFS.a[gfKeyOf(GF_ORDER[104][0],GF_ORDER[104][1])]=undefined; delete GFS.a[gfKeyOf(GF_ORDER[104][0],GF_ORDER[104][1])];`);
   hb().querySelector('.gfcardq .gfopt').click();
-  await until(()=>hb().querySelectorAll('.gfhq').length===12,3000);
-  c('answering the last statement opens the heart page, not the result', [hb().querySelectorAll('.gfhq').length,E('GFS.done')], [12,false]);
+  await until(()=>D.getElementById('gfgo'),3000);
+  // v10.51.3: Back from section 6 then the last statement again: its opener once more (as crossing into any section), then its questions
+  c('answering the last statement opens section 6 (its card), not the result', [hb().querySelector('.gfsecn')&&hb().querySelector('.gfsecn').textContent,E('GFS.done')], ['Section 6 of 6',false]);
+  D.getElementById('gfgo').click(); await until(()=>hb().querySelectorAll('.gfhq').length===12,3000);
+  c('…Carry on: the twelve questions', hb().querySelectorAll('.gfhq').length, 12);
   E(`GFS={name:'Old',a:{'teach.0':3,'teach.1':2},i:40,sect:1,done:false,sent:false}; localStorage.setItem(uGiftSessionKey(),JSON.stringify(GFS)); gfLoad();`);
   c('an 84-order session resumes at its first unanswered statement', E('GFS.i'), E('GF_ORDER.findIndex(p=>GFS.a[gfKeyOf(p[0],p[1])]===undefined)'));
   // A member 83 of the way through the old 84 statements: the 21 new second-fruit
@@ -222,7 +228,7 @@ function makeStore(){
   es('gfRenderSection(gfHost(),0)');
   const secT=PS.w.document.getElementById('giftbody').textContent;
   c('section title, lead and verse are Spanish, cited RVA', /Las Escrituras y la verdad/.test(secT)&&/repartimiento de dones/.test(secT)&&/RVA/.test(secT)&&!/KJV/.test(secT), true);
-  es(`GFS.i=GF_TOTAL; gfRenderHeart(gfHost());`);
+  es(`GFS.i=GF_TOTAL; GFS.hseen=true; gfRenderHeart(gfHost());`);   // v10.51.3: past section 6's opener
   const heT=PS.w.document.getElementById('giftbody').textContent;
   c('the heart page is Spanish', /Mi corazón se inclina hacia los niños/.test(heT)&&/Ver mis resultados/.test(heT)&&/No mucho/.test(heT)&&!/See my results/.test(heT), true);
   es(`GFS={name:'',a:{},h:{},i:0,sect:-1,done:false,sent:false,ov:GF_TOTAL}; gfRenderIntro(gfHost());`);

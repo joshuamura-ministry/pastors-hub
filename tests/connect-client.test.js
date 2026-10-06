@@ -178,7 +178,8 @@ function makeStore(){ const m=new Map(); return { m,
     // they can click it and then there's no next") are a tenth guard site, and read memberLink() like the other nine.
     // v56 (B2): Learn from other conferences is an eleventh guard site (cmpOpen: registered pastors only, never on a member's page)
     // v10.47.1: the floating "Main menu" button (floatMenu) is a twelfth guard site (never on a member's page)
-    c('memberLink() at every guard: 12 sites (8 that read both links, 1 that read neither, section 5\'s page check, Learn from other conferences, the Main menu button), openTool reads all three; the old pair only in its definition', [(outside.match(/memberLink\(\)/g)||[]).length,(src.match(/GIFTS_LINK\.on\|\|WATCH_LINK\.on/g)||[]).length,(src.match(/WATCH_LINK\.on\|\|CONNECT_LINK\.on/g)||[]).length], [12,1,2]); }
+    // v10.53.0: the needs list made by Claude (nsAiAuto) is a thirteenth (never asked for on a member's page)
+    c('memberLink() at every guard: 13 sites (8 that read both links, 1 that read neither, section 5\'s page check, Learn from other conferences, the Main menu button, the needs list), openTool reads all three; the old pair only in its definition', [(outside.match(/memberLink\(\)/g)||[]).length,(src.match(/GIFTS_LINK\.on\|\|WATCH_LINK\.on/g)||[]).length,(src.match(/WATCH_LINK\.on\|\|CONNECT_LINK\.on/g)||[]).length], [13,1,2]); }
   c('FEATURES.connect, full tier', /connect: \{tier:'full', name:'connection cards'/.test(src));
   c('D6: no #cs-connect (step 3 has one "After the day" card, section 2\'s)', /cs-connect/.test(src), false);
   const P=page('https://deploy-preview-12--pastorshub.netlify.app/',{seed:'after'});

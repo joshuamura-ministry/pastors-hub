@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.51.1
+     TERRAIN  v10.53.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.51.1" data-theme="dark">
+<html lang="en" data-version="v10.53.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.51.1">
-<title>Community Map — Terrain v10.51.1</title>
+<meta name="terrain-version" content="v10.53.0">
+<title>Community Map — Terrain v10.53.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -36,6 +36,7 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
   --m-language:#0E8F6E; --m-people:#BE3E68;
   /* v10.50.0: the newer kinds of need, each its own colour ("use some shades of different colors") */
   --m-seniors:#A23BB5; --m-veterans:#C93C3C; --m-work:#0E8EA0; --m-young:#5E8A12; --m-income:#9A7B0A; --m-divided:#4B57D6;
+  --gfv:#6D4FD8; --gfv-ink:#FFFFFF;   /* v10.51.2: the Spiritual Gifts violet, for its bright button */
   --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
   --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
   --shadow:0 1px 2px rgba(15,23,42,.06),0 10px 30px -18px rgba(15,23,42,.28);
@@ -58,6 +59,7 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
   --m-housing:#6FB4FF; --m-children:#A78BFA; --m-hardship:#FBBF77;
   --m-language:#5EE9B5; --m-people:#F09AB8;
   --m-seniors:#E58BF2; --m-veterans:#FF7A7A; --m-work:#4FD6E8; --m-young:#B5E36A; --m-income:#EAD27A; --m-divided:#9DA8FF;   /* v10.50.0 */
+  --gfv:#B9A2FB; --gfv-ink:#140B2E;   /* v10.51.2 */
   --contour:rgba(94,233,181,.05);
   /* The dark theme had no shadows at all, so every panel sat flat on the
      background with nothing but a hairline to separate it. Depth in the dark
@@ -1677,6 +1679,10 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfhchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .gfhchip{min-height:44px;padding:6px 8px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--ink2);font:inherit;font-size:.86rem;line-height:1.25;cursor:pointer;overflow-wrap:break-word;hyphens:manual}
 .gfhchip.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink);font-weight:700}
+/* v10.51.3: section 6's page in its own red, as each section's cards are in theirs */
+.gfhearthead[data-gff] .gfsecn{color:var(--kf)}
+.gfheart[data-gff] .gfhchip:hover{border-color:var(--k)}
+.gfheart[data-gff] .gfhchip.on{background:var(--kf);border-color:var(--kf);color:var(--kink)}
 .gfheartnav{justify-content:space-between}
 .gfcardq .gfnav{justify-content:space-between}
 /* ---- v10.38: coloured sections ----
@@ -1689,6 +1695,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 [data-gff="lead"]{--k:var(--m-hardship)}
 [data-gff="out"]{--k:var(--m-children)}
 [data-gff="hands"]{--k:var(--m-housing)}
+[data-gff="heart"]{--k:var(--m-veterans)}   /* v10.51.3: section 6, who you are drawn to (the gifts' own families above are the report's) */
 /* --kf is the family colour as text, or as a fill with --kink on it. On the
    dark theme (the only one on screen) it is the colour itself: dark ink on it
    6.2:1 or better, it on the card 6.9:1 or better. On the light base layer it
@@ -2846,6 +2853,22 @@ button.td-opt:disabled{cursor:default}
   box-shadow:0 0 0 1px color-mix(in srgb,var(--m-hardship) 55%,transparent),0 0 30px -2px color-mix(in srgb,var(--m-hardship) 58%,transparent)}
 .cs-acts.cs-acts2 .btn.cs-live:hover,.cs-acts.cs-acts2 .btn.cs-live:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--m-hardship) 72%,transparent),0 0 40px 0 color-mix(in srgb,var(--m-hardship) 66%,transparent)}
 .cs-samplel{margin:10px 0 0;text-align:center;font-size:.88rem}
+/* v10.52.0 — Size: Light · Moderate · Heavy lift, the same outreach sized; each with its own numbers */
+.cs-size{margin:2px 0 16px}
+.cs-szh{margin:0 0 8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.cs-szr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cs-szb{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"bars name" "own own" "vals vals";gap:3px 10px;align-items:center;text-align:left;
+  padding:10px 12px;min-height:64px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;cursor:pointer;min-width:0}
+.cs-szb .lift{grid-area:bars;display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.cs-szb .lift b{width:4px;border-radius:1px;background:var(--line2)}
+.cs-szb .lift b:nth-child(1){height:5px}.cs-szb .lift b:nth-child(2){height:8px}.cs-szb .lift b:nth-child(3){height:12px}
+.cs-szb .lift.l1 b:nth-child(-n+1),.cs-szb .lift.l2 b:nth-child(-n+2),.cs-szb .lift.l3 b{background:var(--acc)}
+.cs-szn{grid-area:name;font-weight:750;font-size:.92rem;min-width:0}
+.cs-szo{grid-area:own;font-size:.72rem;color:var(--ink3)}
+.cs-szv{grid-area:vals;font-size:.82rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+@media (hover:hover){ .cs-szb:hover{border-color:var(--acc)} }
+.cs-szb.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel));box-shadow:0 0 0 1px var(--acc)}
+@media(max-width:560px){ .cs-szr{grid-template-columns:minmax(0,1fr)} .cs-szb{min-height:0} }
 /* v10.51.0 — the Proposal to vote on, on the page, line for line as the PDF prints it; Edit turns each line into a box */
 .cs-pz{margin:22px 0 0;padding:16px 18px 18px;border:1px solid var(--line2);border-left:3px solid var(--m-hardship);border-radius:var(--r);background:var(--panel)}
 .cs-pzhd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -3652,6 +3675,9 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-addrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .cmp-addrow select{flex:1 1 220px;min-width:0}
 .cmp-why{margin:8px 0 0}
+/* v10.51.2 — "review members in spiritual gifts that should be a bright button. It shouldn't look so dull": the Spiritual Gifts violet */
+#u-team-link.u-teamgo{background:var(--gfv);color:var(--gfv-ink);margin-top:4px;box-shadow:0 0 0 1px color-mix(in srgb,var(--gfv) 60%,transparent),0 8px 26px -8px var(--gfv)}
+#u-team-link.u-teamgo:hover,#u-team-link.u-teamgo:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--gfv) 75%,transparent),0 10px 32px -6px var(--gfv)}
 /* v10.51.1 — "Add conferences" opens a panel: the areas across its top, the conferences in rows under each heading, tap several, Done */
 .cmp-addbtn::after{content:' ▾';color:var(--ink3)}
 .cmp-addbtn[aria-expanded=true]::after{content:' ▴'}
@@ -3885,6 +3911,17 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-figs .stat .ring .trk{stroke:var(--line2)}
 .ns-figs .statkey{margin-top:8px}
 .ns-born{color:var(--ink2);font-size:.88rem}
+/* v10.53.0 — the needs list made by Claude: the line under the heading, the plant line, the local and church lines with their sources */
+.ns-aistat{margin:12px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:.88rem;color:var(--ink2)}
+.ns-aistat:empty{display:none}
+.ns-aistat .btn{min-height:36px}
+.ns-aispin{width:14px;height:14px;border-radius:50%;border:2px solid color-mix(in srgb,var(--acc) 30%,transparent);border-top-color:var(--acc);animation:nsAiSpin 1s linear infinite;flex:none}
+@keyframes nsAiSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .ns-aispin{animation:none} }
+.ns-plant{margin:8px 0;color:var(--ink);font-size:.95rem;line-height:1.55}
+.ns-plant b{color:var(--k);margin-right:4px}
+.ns-ailist{margin:4px 0 10px;padding-left:1.1em;display:grid;gap:5px;color:var(--ink2);font-size:.9rem;line-height:1.55}
+.ns-ailist a{color:var(--k);font-weight:650;font-size:.82rem;white-space:nowrap;text-underline-offset:2px}
 .ns-born b{color:var(--m-people);font-weight:600}
 .ns-help{color:var(--ink2);font-size:.92rem;line-height:1.6;border-left:3px solid var(--k);padding:2px 0 2px 12px;margin:4px 0}
 .ns-help b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
@@ -4204,13 +4241,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.53.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.51.1';
+const VERSION = 'v10.53.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5224,6 +5261,9 @@ const MOVE_FACILITY={
    anyone else. It matters because the distance between the church and the
    streets around it is frequently the real pastoral question, and the planner
    should be told rather than left to assume they look alike. */
+/* v10.51.2 — the pastor (6 Oct 2026): "this box here where you check I don't think you even need that … current commitments and limits
+   does it need to be there either … cut the fat and only keep that which is going to be loadbearing": neither was read by any check,
+   slide or document (only the summary echoed them), so "Your church" no longer asks; a church's earlier answers stay stored, unread. */
 const CAP_WHO=[
   {k:'mixed',    n:'Mixed / several backgrounds'},
   {k:'oneethnic',n:'Mainly one ethnic group'},
@@ -12506,6 +12546,9 @@ function nsTagsFor(id){
 }
 function nsFallback(n){
   if(!LIB.rows) return [];
+  // v10.53.0: a need the list made (ai-<n>): the library's ideas of the themes it names, in that order
+  if(/^ai-/.test(n.id)&&n.ai&&n.ai.themes&&n.ai.themes.length){ const th=n.ai.themes;
+    return LIB.rows.filter(r=>r.reach!=='in'&&th.includes(r.theme)).sort((a,b)=>th.indexOf(a.theme)-th.indexOf(b.theme)||(a.id<b.id?-1:a.id>b.id?1:0)).map(r=>r.id); }
   const tags=new Set(nsTagsFor(n.id)), themes=(NS_FALLBACK[n.id]||{}).themes||[], own=n.lang?(NS_LANG[n.lang]||{}).key:'';
   if(!tags.size) return [];
   return LIB.rows.filter(r=>r.reach!=='in').map(r=>{
@@ -12629,7 +12672,7 @@ function nsBodyHTML(n,open,ideasOpen){
   // v10.45.1: "what the community needs … more robust with information … the circular graphs with the colors"; and the ideas a
   // section of their own ("there's no differentiation between Ministry ideas to meet the need and what the community needs")
   return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}>
-    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}
+    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}${open?nsAiBlocks(n):''}
       ${help?`<p class="ns-help"><b>${esc(L('What helps','Lo que ayuda'))}</b> ${esc(help[LANG==='es'?1:0])}</p>`:''}
       ${steps.length?`<h5>${esc(L('Where to begin','Por dónde empezar'))}</h5><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
       ${n.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(n.ask)}</p>`:''}</div>
@@ -12707,7 +12750,7 @@ function nsFigs(n){
     const occ=(x,g)=>{ const r=x&&Array.isArray(x.occ)?x.occ.find(o=>o[0]===g):null; return r?r[1]:null; };
     const low=x=>x&&x.ltvw!=null&&x.count?x.ltvw/x.count*100:null;
     const out=[];
-    for(const k of NS_FIGS[n.id]||[]){
+    for(const k of n.figKeys||NS_FIGS[n.id]||[]){   // v10.53.0: a new need's own figures
       let v=null, cv=null, lab='', kind='language';
       if(k==='@lang'){ if(!L) continue; v=L.share; cv=cL?cL.share:null; lab=es?'Hablan '+name.charAt(0).toLowerCase()+name.slice(1)+' en casa':'Speak '+name+' at home'; }   // in Spanish a language is lower case in a sentence
       else if(k==='@langLow'){ if(!L) continue; v=low(L); cv=low(cL); lab=es?'De ellos, con inglés limitado':'Of them, limited English'; }
@@ -12784,7 +12827,7 @@ function nsHTML(S){
      There's gotta be a title there … that will let people know that this is a clickable area … this is where we actually discover
      what we actually want to do … something there that just separates it". A framed panel of its own: a label, the heading, one
      line saying what to do, the verse; then the needs. */
-  return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${verseHTML('prompts')}</div>
+  return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${nsAiStatusHTML()}${verseHTML('prompts')}</div>
     ${all.length?`<div class="ns-list">${all.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
     ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',all.length))}</button>`:''}
     ${!S.needs.length&&!S.also.length?`<p class="note ns-none">${esc(nsU('none'))}</p>`:''}`;
@@ -12797,6 +12840,9 @@ function nsDraw(){
   if(NS.gk!==undefined&&NS.gk!==gk&&!NS.reopen){ NS.open=''; NS.ideas=false; NS.showAll=false; NS.last=''; NS.lastRow=null; }
   NS.gk=gk;
   NSM=DATA&&DATA.M?nsModel(DATA.M,SCOPE):null;
+  // v10.53.0: the needs list made by Claude, kept with the church for this place and language, replaces the survey's own at once
+  if(NSM&&aiPass()&&SCOPE==='tract'){ const pl=nsAiPlace(), kept=pl?nsAiKept(nsAiKey(pl)):null;
+    if(kept){ NSM=nsAiApply(NSM,kept.list); if(NS_AI.status!=='working'&&NS_AI.status!=='failed'){ NS_AI.status='done'; NS_AI.made=kept.made; } } }
   if(NS.open&&!nsNeedById(NS.open)){ NS.open=''; NS.ideas=false; }
   if(NS.open&&NSM&&[...NSM.needs,...NSM.also].findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
   NS.lists.clear();
@@ -12806,6 +12852,182 @@ function nsDraw(){
   if(NS.open&&NS.ideas&&entitled('plan')) nsLoad();
   else nsLoadSoon();
   if(NS.reopen){ const b=NS.reopen; NS.reopen=null; if(nsNeedById(b.need)){ setTimeout(()=>{ if(TOOL==='survey') nsBackTo(b); },0); } }
+  try{ nsAiAuto(); }catch(e){}   // v10.53.0
+}
+/* ---- v10.53.0 — the needs list made by Claude (DESIGN-NEEDS.md, Terrain-work/v68) ------------------------------------------------
+   The pastor (6 Oct 2026): "it should actually do that for the first list because I want the best list ever … I really want Claude to
+   generate the best list based on the community survey and wherever else … drawing from the Internet too … We need to do our best".
+   On an unlocked device (aiPass) whose server has the list on (GET needs), the survey's own list draws at once; the page asks advise.mjs
+   (mode needs, advise-2.5) with the place's names and the report's figures only (never the church, its address or the pastor), and
+   the list that comes back (the server's kept list for the place, or a study by advise-needs.mjs) replaces it: the same cards, its
+   order, titles and why, a new need numbered in (ai-<n>: its category's colour, its figures as rings, ideas from the themes it names),
+   "Also here" the survey's also less what it took. Every number is checked again here against the page's own figures (nsAiClean);
+   links are https and open apart. Kept with the church by place and language (uChurch().needsList, the last three), so a redraw shows
+   it at once; "Generate new community needs" asks for a fresh study. The survey's own list stays whenever anything fails. */
+const NS_AI={info:null,probing:null,run:null,status:'',made:'',key:'',poll:4000,max:240000};
+const NS_AI_T={
+  working:{en:'Studying {town}’s needs and what churches have done… about a minute.',es:'Estudiando las necesidades de {town} y lo que han hecho otras iglesias… cerca de un minuto.'},
+  workingNo:{en:'Studying the neighborhood’s needs and what churches have done… about a minute.',es:'Estudiando las necesidades del vecindario y lo que han hecho otras iglesias… cerca de un minuto.'},
+  done:{en:'Studied {date}',es:'Estudiado el {date}'}, again:{en:'Generate new community needs',es:'Generar nuevas necesidades de la comunidad'},
+  failed:{en:'The list could not be updated just now.',es:'La lista no se pudo actualizar ahora.'},
+  plant:{en:'Plant the seed',es:'Plante la semilla'}, here:{en:'In {town}',es:'En {town}'}, hereNo:{en:'Nearby',es:'Cerca'},
+  churches:{en:'What other churches have done',es:'Lo que han hecho otras iglesias'}};
+function nsAiT(k,o){ const e=NS_AI_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+async function nsAiProbe(){
+  if(NS_AI.info) return NS_AI.info;
+  if(NS_AI.probing) return NS_AI.probing;
+  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true)}; }
+    catch(e){ NS_AI.info={needs:false}; } NS_AI.probing=null; return NS_AI.info; })();
+  return NS_AI.probing;
+}
+function nsAiState(){ const g=(DATA&&DATA.geo)||{}, t=String(g.matched||g.label||''); const m=/,\s*([A-Z]{2})\s*(?:,\s*)?(?:\d{5}(?:-\d{4})?)?\s*$/.exec(t); return m?m[1]:null; }
+function nsAiPlace(){
+  if(!DATA||!DATA.levels||!DATA.levels.tract) return null;
+  const st=nsAiState(), lv=DATA.levels; if(!st) return null;
+  return {tract:String(lv.tract.name||''),town:String((lv.cousub&&lv.cousub.name)||lv.tract.name||''),county:String((lv.county&&lv.county.name)||''),state:st,lang:LANG==='es'?'es':'en'};
+}
+function nsAiKey(pl){ return pl?[pl.tract,pl.town,pl.county,pl.state,pl.lang].join('|'):''; }
+const nsAiNum=v=>typeof v==='number'&&isFinite(v)?Math.round(v*100)/100:null;
+/* What goes to the server: the place's names, the report's figures, the languages and places of birth, the survey's own list, the
+   categories and the library's themes. Nothing about the church or a person. */
+function nsAiInput(){
+  const pl=nsAiPlace(); if(!pl||!DATA.M||!DATA.M.tract) return null;
+  const M=DATA.M, t=M.tract, w=M.cousub||{}, c=M.county||{};
+  const figs=SPEC.filter(x=>['n','p','$','d1','d2'].includes(x[3])&&[t[x[0]],w[x[0]],c[x[0]]].some(v=>typeof v==='number'&&isFinite(v)))
+    .map(x=>({k:x[0],label:String(x[1]).slice(0,80),unit:x[3],t:nsAiNum(t[x[0]]),w:nsAiNum(w[x[0]]),c:nsAiNum(c[x[0]])})).slice(0,80);
+  const langs=(Array.isArray(t.langs)?t.langs:[]).filter(l=>l&&l.name&&isFinite(l.share)&&isFinite(l.count)).slice(0,4).map(l=>({name:String(l.name).slice(0,60),share:nsAiNum(+l.share),count:nsAiNum(+l.count)}));
+  const origins=(Array.isArray(t.origins)?t.origins:[]).filter(o=>o&&o.name&&isFinite(o.share)).slice(0,4).map(o=>({name:String(o.name).slice(0,60),share:nsAiNum(+o.share)}));
+  let S=null; try{ S=nsModel(M,'tract'); }catch(e){ S=null; } if(!S) return null;
+  const seen=new Set(), cands=[...S.needs,...S.also].filter(n=>n&&/^[a-z0-9@-]{2,48}$/.test(n.id)&&!seen.has(n.id)&&seen.add(n.id)).slice(0,40)
+    .map(n=>({id:n.id,cat:String(n.cat),title:String(n.title||n.topic||n.id).slice(0,140),ev:String(n.evidence||'').slice(0,400)}));
+  const cats=[...new Set([...cands.map(x=>x.cat),...Object.keys(NS_CAT_HUE)])].slice(0,30);
+  const themes=((LIB.idx&&LIB.idx.themes)||[]).map(x=>x&&x.id).filter(id=>typeof id==='string'&&/^[a-z0-9-]{2,30}$/.test(id)).slice(0,120);
+  return {lang:pl.lang,place:{tract:pl.tract,town:pl.town,county:pl.county,state:pl.state},figs,langs,origins,cands,cats,themes};
+}
+// the numbers a sentence may say: the figures sent (as given, rounded, "1 in N", a ratio to the county), the survey's own lines, a year,
+// a small count (the server's numberPool, again here)
+function nsAiPool(I){
+  const pool=new Set(), add=v=>{ if(typeof v==='number'&&isFinite(v)) pool.add(Math.round(v*100)/100); };
+  const sig=(v,d)=>{ if(!v) return 0; const p=Math.pow(10,d-Math.ceil(Math.log10(Math.abs(v)))); return Math.round(v*p)/p; };
+  I.figs.forEach(f=>{ [f.t,f.w,f.c].filter(v=>typeof v==='number'&&isFinite(v)).forEach(v=>{ add(v); add(Math.round(v)); add(Math.round(v*10)/10);
+      if(f.unit==='n'||f.unit==='$'){ add(sig(v,1)); add(sig(v,2)); add(sig(v,3)); }
+      if(f.unit==='p'&&v>=1){ add(Math.round(100/v)); add(Math.floor(100/v)); add(Math.ceil(100/v)); } });
+    if(f.unit==='p'&&typeof f.t==='number'&&typeof f.c==='number'&&f.c>0){ add(Math.round(f.t/f.c*10)/10); add(Math.round(f.t/f.c)); } });
+  I.langs.forEach(l=>{ add(l.share); add(Math.round(l.share)); add(l.count); add(sig(l.count,1)); add(sig(l.count,2)); });
+  I.origins.forEach(o=>{ add(o.share); add(Math.round(o.share)); });
+  I.cands.forEach(x=>(String(x.ev).match(/\d[\d,]*(?:\.\d+)?/g)||[]).forEach(m=>add(+m.replace(/,/g,''))));
+  return pool;
+}
+function nsAiNumsOk(text,pool){
+  return (String(text).match(/\d[\d,]*(?:\.\d+)?/g)||[]).every(m=>{ const x=+m.replace(/,/g,''); if(!isFinite(x)||(m.split('.')[1]||'').length>2) return false;
+    if(Number.isInteger(x)&&((x>=0&&x<=12)||(x>=2000&&x<=2035))) return true; return pool.has(Math.round(x*100)/100); });
+}
+function nsAiSafe(v,max){ const t=typeof v==='string'?v.replace(/\s+/g,' ').trim():''; return t&&t.length<=max&&!/[<>]/.test(t)&&!/\bAI\b|\bIA\b/.test(t)?t:null; }
+function nsAiLink(x){
+  if(!x||typeof x!=='object'||typeof x.url!=='string') return null;
+  let u=null; try{ u=new URL(x.url); }catch(e){ u=null; }
+  if(!u||u.protocol!=='https:'||!u.hostname.includes('.')||u.username||u.password) return null;
+  const text=nsAiSafe(x.text,240); return text?{text,url:u.href,host:u.hostname.replace(/^www\./,'').slice(0,60)}:null;
+}
+function nsAiClean(list,I){
+  const pool=nsAiPool(I), num=t=>t&&nsAiNumsOk(t,pool)?t:null, out=[];
+  (Array.isArray(list)?list:[]).forEach(x=>{ if(!x||typeof x!=='object') return;
+    const isNew=x.id==='new', title=num(nsAiSafe(x.title,90)), why=num(nsAiSafe(x.why,260)), plant=num(nsAiSafe(x.plant,220));
+    if(isNew&&(!title||!why)) return;
+    if(!isNew&&!(typeof x.id==='string'&&/^[a-z0-9@-]{2,48}$/.test(x.id))) return;
+    out.push({id:isNew?'new':x.id,title,why,plant,cat:typeof x.cat==='string'?x.cat:'',
+      figures:(Array.isArray(x.figures)?x.figures:[]).filter(f=>f&&typeof f.key==='string').map(f=>({key:f.key,place:String(f.place||'')})).slice(0,3),
+      local:(Array.isArray(x.local)?x.local:[]).map(nsAiLink).filter(Boolean).slice(0,2),
+      churches:(Array.isArray(x.churches)?x.churches:[]).map(nsAiLink).filter(Boolean).slice(0,3),
+      themes:(Array.isArray(x.themes)?x.themes:[]).filter(t=>typeof t==='string'&&/^[a-z0-9-]{2,30}$/.test(t)).slice(0,3)});
+  });
+  return out;
+}
+function nsAiApply(S,list){
+  if(!S||!Array.isArray(list)||!list.length) return S;
+  const all=[...S.needs,...S.also], byId=new Map(all.map(n=>[n.id,n])), top=[], used=new Set();
+  list.forEach((x,i)=>{
+    const ai={plant:x.plant||'',local:x.local||[],churches:x.churches||[],themes:x.themes||[]};
+    if(x.id==='new'){
+      if(!x.title||!x.why||!(NS_CAT_HUE[x.cat]||all.some(n=>n.cat===x.cat))) return;
+      top.push({id:'ai-'+(i+1),cat:x.cat,catLabel:x.cat,kind:NS_CAT_HUE[x.cat]||'people',title:x.title,evidence:x.why,topic:x.title,steps:[],ask:'',
+        figKeys:(x.figures||[]).map(f=>f.key).filter(k=>NS_FIG_DEF[k]),ai});
+      return; }
+    const n=byId.get(x.id); if(!n||used.has(n.id)) return; used.add(n.id);
+    const m={...n,title:x.title||n.title,evidence:x.why||n.evidence,ai}; delete m.tag; top.push(m);
+  });
+  if(top.length<5) return S;
+  return {...S,needs:top,also:S.also.filter(n=>!used.has(n.id)),ai:true};
+}
+function nsAiKept(key){ try{ const all=uChurch().needsList, e=all&&key?all[key]:null; return e&&Array.isArray(e.list)&&e.list.length?e:null; }catch(e){ return null; } }
+function nsAiKeep(key,list,made){
+  const ch=uChurch(), all=ch.needsList&&typeof ch.needsList==='object'?ch.needsList:(ch.needsList={});
+  all[key]={made:/^\d{4}-\d{2}-\d{2}$/.test(String(made||''))?made:new Date().toISOString().slice(0,10),at:Date.now(),list};
+  Object.keys(all).sort((a,b)=>(all[b].at||0)-(all[a].at||0)).slice(3).forEach(k=>delete all[k]);
+  uPersist();
+}
+function nsAiDate(d){ try{ return caseDate(new Date(String(d)+'T12:00:00'),true); }catch(e){ return String(d||''); } }
+function nsAiStatusInner(){
+  const town=(NSM&&NSM.town)||'', btn=`<button type="button" class="btn ghost gfsm" data-ns-aigen>${esc(nsAiT('again'))}</button>`;
+  if(NS_AI.status==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(town?nsAiT('working',{town}):nsAiT('workingNo'))}</span>`;
+  if(NS_AI.status==='failed') return `<span class="ns-aiwhen">${esc(nsAiT('failed'))}</span>${btn}`;
+  if(NS_AI.status==='done'&&NS_AI.made) return `<span class="ns-aiwhen">${esc(nsAiT('done',{date:nsAiDate(NS_AI.made)}))}</span>${btn}`;
+  return '';
+}
+function nsAiStatusHTML(){ return aiPass()&&SCOPE==='tract'?`<p class="ns-aistat" id="ns-aistat" role="status">${nsAiStatusInner()}</p>`:''; }
+function nsAiPaint(){ const p=$('ns-aistat'); if(p) p.innerHTML=nsAiStatusInner(); }
+function nsAiBlocks(n){
+  const a=n&&n.ai; if(!a) return '';
+  const town=(NSM&&NSM.town)||'';
+  const li=arr=>`<ul class="ns-ailist">${arr.map(x=>`<li>${esc(x.text)} <a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.host)}</a></li>`).join('')}</ul>`;
+  return (a.plant?`<p class="ns-plant"><b>${esc(nsAiT('plant'))}</b> ${esc(a.plant)}</p>`:'')
+    +(a.local&&a.local.length?`<h5 class="ns-aih">${esc(town?nsAiT('here',{town}):nsAiT('hereNo'))}</h5>${li(a.local)}`:'')
+    +(a.churches&&a.churches.length?`<h5 class="ns-aih">${esc(nsAiT('churches'))}</h5>${li(a.churches)}`:'');
+}
+async function nsAiAuto(){
+  if(!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return;
+  const pl=nsAiPlace(); if(!pl) return;
+  const info=await nsAiProbe(); if(!info||!info.needs) { nsAiPaint(); return; }
+  const key=nsAiKey(pl);
+  if(NS_AI.run||nsAiKept(key)||(NS_AI.status==='failed'&&NS_AI.key===key)){ nsAiPaint(); return; }
+  nsAiStart(false);
+}
+function nsAiFail(key){ if(NS_AI.key===key){ NS_AI.status='failed'; nsAiPaint(); } return false; }
+function nsAiAccept(key,I,needs,made){
+  if(nsAiKey(nsAiPlace())!==key) return false;   // another place or language now
+  const list=nsAiClean(needs,I);
+  let test=null; try{ test=nsAiApply(nsModel(DATA.M,'tract'),list); }catch(e){ test=null; }
+  if(!test||!test.ai) return nsAiFail(key);
+  nsAiKeep(key,list,made); NS_AI.status='done'; NS_AI.made=nsAiKept(key).made;
+  if(TOOL==='survey'||$('u-needs')) nsDraw();
+  return true;
+}
+async function nsAiStart(fresh){
+  if(NS_AI.run) return NS_AI.run;
+  const pl=nsAiPlace(); if(!pl) return false;
+  const key=nsAiKey(pl);
+  NS_AI.key=key; NS_AI.status='working'; nsAiPaint();
+  NS_AI.run=(async()=>{
+    try{ await libLoadIndex(); }catch(e){}
+    const I=nsAiInput(); if(!I) return nsAiFail(key);
+    let r=null,j=null;
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+      body:JSON.stringify({mode:'needs',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.needs)) return nsAiAccept(key,I,j.needs,j.made);
+    if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')) NS_AI.info={needs:false}; return nsAiFail(key); }
+    const t0=Date.now();
+    while(Date.now()-t0<NS_AI.max){
+      await new Promise(res=>setTimeout(res,NS_AI.poll));
+      if(nsAiKey(nsAiPlace())!==key) return false;
+      let q=null,qj=null;
+      try{ q=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'needs-status',job:j.job,key:j.key}),signal:AbortSignal.timeout(15000)});
+        qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return nsAiAccept(key,I,qj.needs,qj.made);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return nsAiFail(key);
+    }
+    return nsAiFail(key);
+  })();
+  try{ return await NS_AI.run; } finally{ NS_AI.run=null; }
 }
 function nsCardEl(id){ const h=$('u-needs'); return h?h.querySelector(`.ns-need[data-need="${id}"]`):null; }
 /* Every open ideas list drawn again (the map arrived, or failed); every closed one's count. */
@@ -12833,7 +13055,7 @@ function nsOpenCard(id,o){
     const bd=x.querySelector('.ns-body'); if(bd) bd.hidden=true; const box=x.querySelector('.ns-ideas'); if(box&&!box.hidden){ box.hidden=true; const s=x.querySelector('.ns-show');
       if(s){ s.setAttribute('aria-expanded','false'); s.querySelector('small').textContent=nsCountText(nsNeedById(x.dataset.need)); } } });
   a.classList.add('open'); head.setAttribute('aria-expanded','true'); a.querySelector('.ns-body').hidden=false;
-  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)); } }
+  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')&&!det.querySelector('.ns-aih,.ns-plant')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)+nsAiBlocks(n0)); } }   // v10.53.0: and the list's own lines
   NS.open=id;
   nsSetIdeas(a,!!o.ideas);
   if(entitled('plan')&&!NS.map) nsLoad();
@@ -12848,6 +13070,7 @@ function nsCloseCard(a){
 }
 function nsClick(e){
   const t=e.target, h=$('u-needs'); if(!t||!h) return;
+  if(t.closest('[data-ns-aigen]')){ nsAiStart(true); return; }   // v10.53.0: Generate new community needs
   const head=t.closest('.ns-head');
   if(head&&h.contains(head)){ const a=head.closest('.ns-need'); if(a.classList.contains('open')) nsCloseCard(a); else nsOpenCard(a.dataset.need); return; }
   const sh=t.closest('[data-ns-show]');
@@ -15765,7 +15988,7 @@ function gfRenderResume(h){
     ${gfSegsHTML(gfAnsweredState(),L('Answered','Respondidas'),done,L(done+' of '+GF_TOTAL+' answered',done+' de '+GF_TOTAL+' respondidas'))}
     <p class="note" style="margin-top:8px"><b>${L(done+' of '+GF_TOTAL+' answered.',done+' de '+GF_TOTAL+' respondidas.')}</b> ${L('You can carry on where you left off, or clear everything and start from a blank sheet.','Puede continuar donde lo dej\u00f3, o borrar todo y empezar desde cero.')}</p>
     <div class="gfnav">
-      <button class="btn" id="gfresume">${gfOnHeart()?L('Carry on with the last page','Continuar con la \u00faltima p\u00e1gina'):L('Carry on from statement '+Math.min(gfIndex()+1,GF_TOTAL),'Continuar desde la afirmaci\u00f3n '+Math.min(gfIndex()+1,GF_TOTAL))}</button>
+      <button class="btn" id="gfresume">${gfOnHeart()?L('Carry on with section '+GF_SECT_SHOWN,'Continuar con la secci\u00f3n '+GF_SECT_SHOWN):L('Carry on from statement '+Math.min(gfIndex()+1,GF_TOTAL),'Continuar desde la afirmaci\u00f3n '+Math.min(gfIndex()+1,GF_TOTAL))}</button>
       <button class="btn ghost" id="gfwipe">${L('Clear all answers and start over','Borrar todo y empezar de nuevo')}</button>
       ${first?`<button class="btn ghost" id="gfother">${L('I am not '+first+': someone else is taking it','No soy '+first+': otra persona la va a hacer')}</button>`:''}
     </div>
@@ -15842,7 +16065,7 @@ function gfRenderIntro(h){
     <p class="note">${L(`There are ${GF_TOTAL} statements, then twelve short questions about the people you are drawn to. It takes about ${GF_MINUTES} minutes, and you can stop and come back \u2014 your answers save themselves on this phone as you go.`,`Hay ${GF_TOTAL} afirmaciones y después doce preguntas breves sobre las personas hacia las que se inclina su corazón. Toma unos ${GF_MINUTES} minutos, y puede detenerse y volver más tarde: sus respuestas se guardan en este teléfono a medida que avanza.`)}</p>
     <p class="note">${L('Answer for the way you have actually been over the past few years, not the way you would like to be. If you are newer in the faith, answer according to the desire you sense in your heart.','Responda según lo que ha sido en realidad en los últimos años, no según lo que le gustaría ser. Si es nuevo en la fe, responda de acuerdo con el deseo que percibe en su corazón.')}</p>
     <p class="note">${L('Some statements ask about results \u2014 whether anything came of it, whether anyone else has noticed. If you have never had the chance to find out, say so. <b>&ldquo;I haven\u2019t had an opportunity to know&rdquo; is not a wrong answer and it does not count against you.</b> It simply tells us the gift is untested rather than absent.','Algunas afirmaciones preguntan por los resultados: si algo salió de ello, si alguien más lo ha notado. Si nunca ha tenido la oportunidad de saberlo, dígalo. <b>&ldquo;No he tenido oportunidad de saberlo&rdquo; no es una respuesta equivocada y no cuenta en su contra.</b> Simplemente nos indica que el don todavía no se ha probado, no que no exista.')}</p>
-    <p class="note">${L('The statements come in five sections \u2014 Scripture, people, leading, reaching out, and practical work \u2014 so you know roughly what you are answering about. Which gift any single statement is measuring is deliberately not shown, so that you answer honestly rather than toward the gift you would like to have.','Las afirmaciones vienen en cinco secciones (las Escrituras, las personas, el liderazgo, el alcance y el trabajo práctico) para que sepa más o menos de qué trata cada una. A propósito no se indica qué don mide cada afirmación, para que responda con sinceridad y no en dirección al don que le gustaría tener.')}</p>
+    <p class="note">${L('It comes in six sections \u2014 Scripture, people, leading, reaching out, practical work, and who you are drawn to \u2014 so you know roughly what you are answering about. Which gift any single statement is measuring is deliberately not shown, so that you answer honestly rather than toward the gift you would like to have.','Viene en seis secciones (las Escrituras, las personas, el liderazgo, el alcance, el trabajo práctico y hacia quién se inclina su corazón) para que sepa más o menos de qué trata cada una. A propósito no se indica qué don mide cada afirmación, para que responda con sinceridad y no en dirección al don que le gustaría tener.')}</p>
   </div>
   <div class="card gfcard">
     <label class="gflab" for="gfname">${L('Your name','Su nombre')}</label>
@@ -15947,26 +16170,57 @@ const GF_HEART_SCALE=[
  {v:1,en:'Somewhat',es:'Algo'},
  {v:2,en:'Strongly drawn',es:'Mucho'}
 ];
-function gfRenderHeart(h){
-  document.onkeydown=null;
-  GFS.h=GFS.h&&typeof GFS.h==='object'?GFS.h:{};
-  GFS.i=GF_TOTAL;
-  const es=LANG==='es';
-  h.innerHTML=`<div class="gftop-bar">
+function gfHeartTop(){
+  return `<div class="gftop-bar">
     ${gfBarHTML(GF_TOTAL)}
-    <div class="gfmeta"><span class="gfcount">${L('12 questions \u00b7 the last page','12 preguntas \u00b7 la última página')}</span>
+    <div class="gfmeta"><span class="gfcount">${L(GF_HEART.length+' questions',GF_HEART.length+' preguntas')}</span>
       <span class="gfdots" aria-hidden="true">${gfDotsHTML(gfBarState(GF_TOTAL))}</span></div>
     <div class="gfchromenav">
       ${!gfIsMember()?`<button class="btn ghost gfexit" id="gfexit">\u2190 ${L('Leave this and go to results','Salir e ir a los resultados')}</button>`:''}
       <button class="btn ghost gfexit" id="gfstartover">${L('Start over','Empezar de nuevo')}</button>
     </div>
-  </div>
-  <div class="gfhead gfhearthead">
-    <p class="gfsecn">${L('Part two','Segunda parte')}</p>
+  </div>`;
+}
+/* v10.51.3: Section 6's opener, the same card as the other five (eyebrow, title, rule, a verse from the verified library, what it is,
+   how many, Carry on), in red */
+function gfRenderHeartOpen(h){
+  document.onkeydown=null;
+  GFS.i=GF_TOTAL;
+  const v=typeof gfdVerse==='function'?gfdVerse('case:matt9_36',LANG==='es'?'es':'en'):null, n=GF_HEART.length;
+  h.innerHTML=gfHeartTop()+`
+   <div class="gfstage"><div class="gfcardq gfsect" data-gff="heart">
+     <p class="gfsecn">${gfSectWord(GF_SECT_SHOWN)}</p>
+     <h2 class="gfsect-t">${L('Who you are drawn to','Hacia quién se inclina su corazón')}</h2>
+     <span class="gfso-rule" aria-hidden="true"></span>
+     ${v?`<div class="gfverse gfso-v"><q>${esc(v.text)}</q><cite>${esc(v.ref)}</cite></div>`:''}
+     <p class="gfso-l">${L('Twelve kinds of people. For each, say how strongly you are drawn to them, not what you think you ought to feel. This is what connects your gifts to the people around your church.','Doce grupos de personas. Para cada uno, indique cuánto se inclina su corazón hacia ellos, no lo que cree que debería sentir. Esto es lo que conecta sus dones con la gente que vive alrededor de su iglesia.')}</p>
+     <div class="gfso-f">
+       <p class="gfso-n">${L(n+' questions',n+' preguntas')}</p>
+       <p class="gfso-a">${L('Three answers each: Not especially, Somewhat, Strongly drawn.','Tres respuestas cada una: No mucho, Algo, Mucho.')}</p>
+     </div>
+     <button class="btn gfbig" id="gfgo">${L('Carry on','Continuar')}</button>
+   </div></div>`;
+  gfWireExit(h);
+  document.getElementById('gfgo').onclick=()=>{
+    GF_NAV++; GFS.hseen=true; gfSave();
+    const st=h.querySelector('.gfcardq'), go=()=>{ gfRenderHeart(h); window.scrollTo({top:0,behavior:'auto'}); };
+    if(gfReduced()) return go();
+    st.classList.add('gfout'); setTimeout(go,220);
+  };
+}
+function gfRenderHeart(h){
+  document.onkeydown=null;
+  GFS.h=GFS.h&&typeof GFS.h==='object'?GFS.h:{};
+  GFS.i=GF_TOTAL;
+  if(!GFS.hseen) return gfRenderHeartOpen(h);   // v10.51.3: its opener first, as every section
+  const es=LANG==='es';
+  h.innerHTML=gfHeartTop()+`
+  <div class="gfhead gfhearthead" data-gff="heart">
+    <p class="gfsecn">${gfSectWord(GF_SECT_SHOWN)}</p>
     <h2>${L('Who are you drawn to?','¿Hacia quién se inclina su corazón?')}</h2>
-    <p class="sub">${L('Twelve kinds of people. For each, say how strongly you are drawn to them \u2014 not what you think you ought to feel. This is what connects your gifts to the people around your church.','Doce grupos de personas. Para cada uno, indique cuánto se inclina su corazón hacia ellos, no lo que cree que debería sentir. Esto es lo que conecta sus dones con la gente que vive alrededor de su iglesia.')}</p>
+    <p class="sub">${L('Say how strongly you are drawn to each, not what you think you ought to feel.','Indique cuánto se inclina su corazón hacia cada grupo, no lo que cree que debería sentir.')}</p>
   </div>
-  <div class="gfheart">${GF_HEART.map(q=>{
+  <div class="gfheart" data-gff="heart">${GF_HEART.map(q=>{
     const cur=GFS.h[q.k];
     return `<div class="gfhq" data-k="${q.k}">
       <p class="gfhqk">${esc(es?q.es:q.en)}</p>
@@ -15983,14 +16237,14 @@ function gfRenderHeart(h){
   h.querySelectorAll('.gfhq').forEach(row=>{
     const k=row.dataset.k;
     row.querySelectorAll('.gfhchip').forEach(b=>b.onclick=()=>{
-      GFS.h[k]=+b.dataset.v; gfSave();
+      GFS.h[k]=+b.dataset.v; gfSave(); gfSetBar(h,GF_TOTAL);   // v10.51.3: section 6's segment fills as it is answered
       row.classList.remove('gfmiss');
       row.querySelectorAll('.gfhchip').forEach(x=>{ const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-checked',String(on)); });
     });
   });
   document.getElementById('gfhback').onclick=()=>{
     GF_NAV++;
-    GFS.i=GF_TOTAL-1; GFS.sect=gfSectOf(GF_TOTAL-1); gfSave();
+    GFS.i=GF_TOTAL-1; GFS.sect=gfSectOf(GF_TOTAL-1); GFS.hseen=false; gfSave();   // v10.51.3: forward again shows section 6's opener
     gfRenderPage(h); window.scrollTo({top:0,behavior:'auto'});
   };
   const done=document.getElementById('gfhdone');
@@ -17223,6 +17477,14 @@ function gfStatement(gi,k){ const g=GIFTS[gi];
 
 const GF_SECTS=GF_FAMS.map((f,i)=>({t:f.t,l:f.l,v:GF_VERSE_SET[i]}));
 const GF_SECT_COUNT=GF_SECTS.length;
+/* v10.51.3 — the pastor (6 Oct 2026): "Part two for the spiritual gift survey. It shouldn't be like a next part. It should just be at the
+   last section of the entire survey … right now 1 2 3 4 5 and this will be the sixth in line … so that it doesn't feel like an extra
+   step they have to take it just gonna continue to the end": the twelve heart questions are Section 6 of 6, with an opener like the
+   others (gfRenderHeartOpen, once: GFS.hseen), a sixth segment and dot in the bar (as wide as its twelve, filled as they are answered,
+   red), and every section counted "of 6". The gifts' five families (GF_FAMS, the report's colours) are unchanged. */
+const GF_SECT_SHOWN=GF_SECT_COUNT+1;
+function gfHeartFill(){ const h=(GFS&&GFS.h)||{}; return GF_HEART.filter(q=>[0,1,2].includes(h[q.k])).length/GF_HEART.length; }
+const gfSectWord=n=>L('Section '+n+' of '+GF_SECT_SHOWN,'Secci\u00f3n '+n+' de '+GF_SECT_SHOWN);
 const gfSectOf=i=>{ let n=0; for(let k=0;k<GF_SECT_STARTS.length;k++) if(i>=GF_SECT_STARTS[k]) n=k; return n; };
 const gfIsSectStart=i=>GF_SECT_STARTS.indexOf(i)>=0;
 const gfIsSectEnd=i=>GF_SECT_ENDS.indexOf(i)>=0;
@@ -17285,7 +17547,7 @@ function gfRenderSection(h,sec){
   h.innerHTML=`
    ${gfChrome(GFS.i||0)}
    <div class="gfstage"><div class="gfcardq gfsect" data-gff="${fam}">
-     <p class="gfsecn">${L('Section '+(sec+1)+' of '+GF_SECT_COUNT,'Secci\u00f3n '+(sec+1)+' de '+GF_SECT_COUNT)}</p>
+     <p class="gfsecn">${gfSectWord(sec+1)}</p>
      <h2 class="gfsect-t">${esc(t)}</h2>
      <span class="gfso-rule" aria-hidden="true"></span>
      <div class="gfverse gfso-v"><q>${esc(v[0])}</q><cite>${esc(v[1])} \u00b7 ${es?'RVA':'KJV'}</cite></div>
@@ -17321,25 +17583,25 @@ function gfPct(i){ return Math.round(Math.max(0,Math.min(i,GF_TOTAL))/GF_TOTAL*1
    in and how many are behind them. Position, as before, not answers on file. */
 function gfSegFill(pos,n){ const a=GF_SECT_STARTS[n], z=GF_SECT_ENDS[n]+1; return Math.max(0,Math.min(1,(pos-a)/(z-a))); }
 function gfBarState(pos){ const p=Math.max(0,Math.min(pos,GF_TOTAL));
-  return {fills:GF_SECTS.map((s,n)=>gfSegFill(p,n)),cur:p>=GF_TOTAL?-1:gfSectOf(p)}; }
+  return {fills:[...GF_SECTS.map((s,n)=>gfSegFill(p,n)),p>=GF_TOTAL&&gfOnHeart()?gfHeartFill():0],cur:p>=GF_TOTAL?(gfOnHeart()?GF_SECT_COUNT:-1):gfSectOf(p)}; }   // v10.51.3: the sixth, the heart
 function gfSegClass(st,n){ return st.fills[n]>=1?'done':(n===st.cur?'now':''); }
 function gfW(f){ return (Math.round(f*1000)/10)+'%'; }
 function gfFamT(n){ const f=GF_FAMS[n]||GF_FAMS[0]; return LANG==='es'&&GF_FAMS_ES[f.id]?GF_FAMS_ES[f.id].t:f.t; }
 function gfBarText(pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL));
-  if(p>=GF_TOTAL) return L('All '+GF_TOTAL+' statements answered','Las '+GF_TOTAL+' afirmaciones respondidas');
+  if(p>=GF_TOTAL) return gfOnHeart()?gfSectWord(GF_SECT_SHOWN)+': '+L('Who you are drawn to','Hacia qui\u00e9n se inclina su coraz\u00f3n'):L('All '+GF_TOTAL+' statements answered','Las '+GF_TOTAL+' afirmaciones respondidas');
   const s=gfSectOf(p);
-  return gfCountText(p)+' \u00b7 '+L('Section '+(s+1)+' of '+GF_SECT_COUNT,'Secci\u00f3n '+(s+1)+' de '+GF_SECT_COUNT)+': '+gfFamT(s);
+  return gfCountText(p)+' \u00b7 '+gfSectWord(s+1)+': '+gfFamT(s);
 }
 function gfSegsHTML(st,label,now,text){
   return `<div class="gfbar gfsegs" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="${GF_TOTAL}" aria-valuenow="${now}" aria-valuetext="${esc(text)}">${GF_SECTS.map((s,n)=>
-    `<span class="gfseg ${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}" style="flex:${GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[n])}"></i></span>`).join('')}</div>`;
+    `<span class="gfseg ${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}" style="flex:${GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[n])}"></i></span>`).join('')}<span class="gfseg ${gfSegClass(st,GF_SECT_COUNT)}" data-gff="heart" style="flex:${GF_HEART.length} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[GF_SECT_COUNT]||0)}"></i></span></div>`;
 }
 function gfBarHTML(pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL));
   return `<div class="gfbarwrap">${gfSegsHTML(gfBarState(p),L('Progress','Progreso'),p,gfBarText(p))}<div class="gfsparks" id="gfsparks"></div></div>`;
 }
-function gfDotsHTML(st){ return GF_SECTS.map((s,n)=>`<i class="${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}"></i>`).join(''); }
+function gfDotsHTML(st){ return GF_SECTS.map((s,n)=>`<i class="${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}"></i>`).join('')+`<i class="${gfSegClass(st,GF_SECT_COUNT)}" data-gff="heart"></i>`; }
 /* Move the bar to a position in place, so the fill slides rather than jumps. */
 function gfSetBar(h,pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL)), st=gfBarState(p);
@@ -17361,7 +17623,8 @@ function gfAnsweredState(){
   const fills=GF_SECTS.map((s,n)=>{ let c=0;
     for(let j=GF_SECT_STARTS[n];j<=GF_SECT_ENDS[n];j++){ const p=GF_ORDER[j]; if(GFS.a[gfKeyOf(p[0],p[1])]!==undefined) c++; }
     return c/(GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1); });
-  return {fills,cur:gfOnHeart()?-1:gfSectOf(gfIndex())};
+  fills.push(gfHeartFill());   // v10.51.3: section 6
+  return {fills,cur:gfOnHeart()?GF_SECT_COUNT:gfSectOf(gfIndex())};
 }
 function gfChrome(i){
   return `<div class="gftop-bar">
@@ -21377,8 +21640,35 @@ function uBase(x){
     participants,sessions,sessionHours:campaign?3:2,setupHours:people*(campaign?4:1),followupHours:people,
     weeks:campaign?2:6,slot:'',start:'',owner:'',lines,campaign,reviewed:!x.generated,source:'Planning allowances; replace with local quotes. People and time are initial staffing assumptions.'};
 }
-function uReq(x){
-  const base=x.requirements||uBase(x), o=uChurch().overrides?.[x.id]||{};
+/* v10.52.0 — the pastor (6 Oct 2026): "it can be a light lift moderate lift heavy lift if you choose light lift then of course the
+   investment with the money needed the people needed. It won't be that. If you do moderate lift it'll be middle and if you do heavy
+   lift, it's gonna be a much more robust and more demanding thing, but the same outreach"; pick an idea, then its size ("A").
+   An idea's own size: the library's tier, a built-in's load (nsLift's rule). The one he chose: uChurch().overrides[id].lift (its own
+   size stores nothing). One step lighter halves the volunteers (at least one) and the people it serves (at least 4), keeps one leader,
+   halves the set-up and follow-up hours and takes 40% of the money; one step heavier doubles them, adds a leader and takes 250%; two
+   steps apply it twice. An ongoing idea's trial is 4 weeks light, 6 moderate, 12 heavy; an event or a series keeps its own length.
+   Session length, skills and rooms stay its own. Applied to the base before his own Adjust edits, so they still win; with nothing
+   chosen uReq is what it was. Design: Terrain-work/v67/DESIGN-LIFT.md. */
+function caseLiftOf(x){ if(!x) return 2; if(x.lib&&[1,2,3].includes(+x.size)) return +x.size; return bandOf(x.load!=null?+x.load:(MOVE_LOAD[x.id]!=null?MOVE_LOAD[x.id]:1))+1; }
+function caseLiftNow(id){ let o=null; try{ o=((uChurch()||{}).overrides||{})[id]; }catch(e){ o=null; } return o&&[1,2,3].includes(+o.lift)?+o.lift:0; }
+const U_LIFT_STEP={down:{people:.5,part:.5,hours:.5,money:.4},up:{people:2,part:2,hours:2,money:2.5}};
+function uLiftReq(base,x,to){
+  const d=to-caseLiftOf(x); if(!d||![1,2,3].includes(to)) return base;
+  const S=d>0?U_LIFT_STEP.up:U_LIFT_STEP.down, b={...base,lines:(base.lines||[]).map(l=>({...l}))};
+  for(let i=0;i<Math.abs(d);i++){
+    b.people=Math.max(1,Math.ceil(uAmount(b.people)*S.people));
+    b.leaders=d>0?uAmount(b.leaders)+1:Math.min(uAmount(b.leaders),1);
+    b.participants=Math.max(4,Math.round(uAmount(b.participants)*S.part));
+    b.setupHours=uAmount(b.setupHours)*S.hours; b.followupHours=uAmount(b.followupHours)*S.hours;
+    b.lines=b.lines.map(l=>({...l,startup:Math.round(uAmount(l.startup)*S.money),monthly:Math.round(uAmount(l.monthly)*S.money)}));
+  }
+  let ongoing=true; try{ ongoing=caseCadenceOf(x).c==='ongoing'; }catch(e){ ongoing=true; }
+  if(ongoing) b.weeks=to===1?4:to===3?12:6;
+  return b;
+}
+function uReq(x,at){
+  const o0=uChurch().overrides?.[x.id]||{}, o=at&&at.lift?{...o0,lift:at.lift}:o0;   // v10.52.0: at.lift, the size asked about (the Size buttons)
+  const base0=x.requirements||uBase(x), base=[1,2,3].includes(+o.lift)?uLiftReq(base0,x,+o.lift):base0;
   const r={...base,...o};r.participants=Math.max(1,uAmount(r.participants));r.sessions=Math.max(1,uAmount(r.sessions));r.weeks=Math.max(1,uAmount(r.weeks));
   const scale=Math.max(1,r.participants/Math.max(1,base.participants));
   r.people=Math.max(1,Math.ceil(uAmount(r.people)*scale));r.leaders=Math.max(0,Math.ceil(uAmount(r.leaders)));
@@ -21619,7 +21909,7 @@ function capSummaryHTML(){
     item(L('Leaders','Líderes'), c.leaders!=null?`${n(c.leaders)}${raw.busyLeaders?` (${n(raw.busyLeaders)} ${L('already committed','ya comprometidos')})`:''}`:null),
     item(L('Hours a month','Horas al mes'), raw.hours!=null?`${n(raw.hours)}${raw.busyHours?` (${n(raw.busyHours)} ${L('already committed','ya comprometidas')})`:''}`:null),
     item(L('Free to serve','Libres para servir'), (c.slots||[]).length?c.slots.map(W).join(', '):null),
-    item(L('Congregation','Congregación'), Object.keys(c.who||{}).filter(k=>c.who[k]).map(k=>W((CAP_WHO.find(w=>w.k===k)||{}).n||k)).join(', ')||null)
+    null   // v10.51.2: the congregation boxes are no longer asked
   ].join('');
   const left=L(`${n(c.hands)} volunteers, ${n(c.concurrent)} leaders, ${n(c.hours)} hours a month`,`${n(c.hands)} voluntarios, ${n(c.concurrent)} líderes, ${n(c.hours)} horas al mes`);
   // money
@@ -21636,7 +21926,7 @@ function capSummaryHTML(){
   // skills and languages
   const skills=U_SKILLS.filter(k=>c.skills[k.k]>0).map(k=>`<li><b>${esc(String(c.skills[k.k]))}</b>${esc(es?W(k.n).toLowerCase():k.n.toLowerCase())}</li>`).join('');
   const langs=c.languages?`<li><b>${L('Languages','Idiomas')}</b>${esc(c.languages)}</li>`:'';
-  const commit=raw.commitments?`<li><b>${L('Already carrying','Ya lleva')}</b>${esc(raw.commitments)}</li>`:'';
+  const commit='';   // v10.51.2: "Current commitments and limits" is no longer asked
   return `<div class="capsum${raw.demo?' demo':''}">
     <div class="capsumk">${raw.demo?L('The sample church, as filled in','La iglesia de ejemplo, tal como se llenó'):L('Your church, as you entered it','Su iglesia, tal como la escribió')}</div>
     <div class="capsumgrid">
@@ -21684,8 +21974,8 @@ function capRender(){
 
         
         
-<p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn ghost" id="u-team-link">Review members in Spiritual Gifts</button>
-<div class="u-checks">${CAP_WHO.map(w=>`<label class="u-check"><input name="who" type="checkbox" value="${w.k}" ${c.who?.[w.k]?'checked':''}>${esc(w.n)}</label>`).join('')}</div><label class="u-field">Current commitments and limits<textarea name="commitments" rows="3" maxlength="3000">${esc(c.commitments||'')}</textarea></label>
+<p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn u-teamgo" id="u-team-link">Review members in Spiritual Gifts</button>
+
       
       </section>
      </div>
@@ -21776,16 +22066,16 @@ function capRender(){
       if(p&&+p.dataset.panel!==U_STEP_I){ show(+p.dataset.panel,+p.dataset.panel<U_STEP_I,true); setTimeout(()=>form.reportValidity(),520); return; }
       form.reportValidity(); return;
     }
-    const d=new FormData(form),next={...c,skillCounts:{},facilities:{},who:{}};
+    const d=new FormData(form),next={...c,skillCounts:{},facilities:{}};   // v10.51.2: who and commitments kept as stored (no longer asked)
     U_FIELDS.forEach(([k])=>{ if(form.elements.namedItem(k)) next[k]=uNum(d.get(k)); });   // v10.49.0: the money boxes are on the proposal now
     if(next.members!==null&&next.volunteers!==null&&next.volunteers>next.members){$('u-cap-status').textContent='Volunteer count exceeds attendance. Include regular outside volunteers in the attendance total, or correct the count.';return;}
     if(next.leaders!==null&&next.volunteers!==null&&next.leaders>next.volunteers){$('u-cap-status').textContent='Leaders are included in the volunteer count. Check those totals.';return;}
     if(next.members!==null&&next.adults!=null&&next.adults>next.members){$('u-cap-status').textContent='Adults cannot be more than the attendance. Correct one of the two.';return;}
     for(const [busy,total] of [['busyVolunteers','volunteers'],['busyLeaders','leaders'],['busyHours','hours']])if(next[total]!==null&&uAmount(next[busy])>next[total]){$('u-cap-status').textContent='Existing commitments exceed the total recorded. Check people and hours.';return;}
-    next.slots=uValues(form,'teamSlot');next.languages=String(d.get('languages')||'').trim();next.commitments=String(d.get('commitments')||'');
+    next.slots=uValues(form,'teamSlot');next.languages=String(d.get('languages')||'').trim();
     U_SKILLS.forEach(s=>{const n=uNum(d.get('skill-'+s.k));if(n!==null)next.skillCounts[s.k]=n;});
     U_FAC.forEach(f=>{if(d.has('fac-'+f.k))next.facilities[f.k]={available:true,capacity:uNum(d.get('room-'+f.k)),partner:String(d.get('partner-'+f.k)||'').trim(),slots:uValues(form,'slot-'+f.k)};});
-    uValues(form,'who').forEach(k=>next.who[k]=true);next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
+    next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
     // v10.45.0: the form lives on the Spiritual Gifts landing: draw it and its summary again and stay there (no background ideas, Q3)
     if(DATA&&TOOL==='survey') render();
     capRender(); gfChurchSum(); uChrome(); capShowSaved();
@@ -34131,7 +34421,7 @@ function caseDraw3(){
   CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
   const n=CASE_ST.deck.slides.length;
   h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
-    +caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
+    +caseSizeHTML(model)+caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
     /* v10.51.0 — the pastor (6 Oct 2026): "I don't know if we really need the how it is being decided … you don't need it to have it on
        the bottom again", and "how it is to be decided I don't think that even needs to be there": no #cs-dec in step 3 (a decision is
        still recorded in the presenter view, its Decision button). "The your church ready to serve probably needs to be at the end":
@@ -34144,6 +34434,7 @@ function caseDraw3(){
   // his series' numbers live in the Evangelism Planner, so "Adjust" opens it there
   h.querySelector('[data-cs-adjust]').onclick=()=>P.ministry===CASE_PLAN_ID?openTool('planner'):uEditMinistry(P.ministry);
   h.querySelectorAll('[data-cs-act]').forEach(b=>b.onclick=()=>caseAct(b.dataset.csAct,b));
+  h.querySelectorAll('#cs-size [data-cs-lift]').forEach(b=>b.onclick=()=>caseSizeSet(+b.dataset.csLift));   // v10.52.0
   caseGoalWire(h); caseNamedWire(h);
   prRoomPaint();
   // v10.42 part 3: the presenter builder's mounts (DESIGN §9.2), when they are there
@@ -34589,6 +34880,10 @@ function casePropHTML(){
   const b=NS.back||{}; let n=null, v=null;
   try{ n=nsNeedById(b.need); v=nsView(b.idea,n?nsNeedLang(n):libLangCtx()); }catch(e){ v=null; }
   if(!v){ const x=caseItemOf(b.plan); v=x?{name:caseMinName(x)||x.n||'',d:'',tier:2,ppl:0,priced:false}:{name:'',d:'',tier:2,ppl:0,priced:false}; }
+  // v10.52.0: the size chosen for it (Size, step 3), its lift line and what it needs from our church with it
+  const lv=caseLiftNow(b.plan||'');
+  if(lv&&lv!==NS_LIFTS.indexOf(nsLift(v))+1){ let x=null, r=null; try{ x=caseItemOf(b.plan); r=x?uReq(x):null; }catch(e){ r=null; }
+    if(r) v={...v,tier:lv,ppl:r.people,leaders:r.leaders,cost:r.startup,costMo:r.monthly}; }
   const L=nsLift(v), d=v.d||nsD1(v)||'';
   const how=v.how&&v.how.length?`<ol class="ns-steps">${v.how.slice(0,4).map(t=>`<li><span>${esc(t)}</span></li>`).join('')}</ol>`:'';
   let rows=[]; try{ rows=v.ppl!=null?nsRows(v):[]; }catch(e){ rows=[]; }
@@ -37814,6 +38109,7 @@ function caseHandout(model,deck,o){
       H.figures=(m.sources||[]).map(s=>({label:s.label,here:s.here,county:s.county,moe:s.moe,countyMoe:s.countyMoe,compare:s.compare,years:s.years,table:s.table}));
       if(m.ask) H.budget={lines:(m.ask.lines||[]).map(l=>({name:lang==='es'&&CASE_COST_ES[l.name]||l.name,startup:l.startup||0,monthly:(l.monthly||0)*(m.ask.runF||1)})),startup:m.ask.startup||0,monthly:m.ask.cad?m.ask.run:m.ask.monthly||0,
         ceiling:m.ask.ceiling,fund:m.ask.fund||'',left:m.ask.left||null,leftText:m.ask.leftText||null,overText:m.ask.overText||null,months:m.ask.months||0};
+      { const sn=caseLiftNote(m); if(sn) H.sizeNote=sn; }   // v10.52.0: the size he chose, when not the idea's own
       if(m.risks) H.risks=(m.risks.items||[]).map(r=>({text:r.text,src:r.src?caseF(CASE_COPY.src[r.src],{pages:r.pages||''})||T(CASE_COPY.src[r.src])||'':''}));
       if(!formal&&m.yes&&m.yes.options) H.yes={head:dHead(dOne('yes'),m.yes.headline||''),options:m.yes.options.map(x=>({k:x.k,label:x.label,text:x.text}))};
       /* v10.40: the place in full (the phone shows part of it), every verse the slides carry,
@@ -38454,6 +38750,7 @@ function casePdfDocAt(H,opts,lv){
   };
   if(H.budget||H.budgetRows){
     head(Lb.budget,60);
+    if(H.sizeNote) y+=tb(H.sizeNote,MX,y,CW,{size:S(8.6),style:'bold',color:C.ink2,lh:S(11.4)},true)+S(3);   // v10.52.0
     // v10.42 merge: a member's copy holds every slide's words; when the front is drawn tighter it leaves out the ask slide's
     // headline (with Suggest options the front carries the timing options, so this happens more often), so it is said here,
     // above the ask's rows. The pastor's own handout has no askHead and is drawn as before.
@@ -38799,6 +39096,36 @@ Object.assign(CASE_PROP_FIX.m,{
     es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), en el día y con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'},
   teamLenNoDay:{en:'To agree to a trial of the length we choose together ({lengths}), starting on a date we agree together: {ministry}, with a named coordinator, and {bring}.',
     es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'}});
+/* v10.52.0: Size (step 3), its words and its sentence */
+const CASE_SIZE_T={head:{en:'Size',es:'Tamaño'}, own:{en:'its own size',es:'su propio tamaño'},
+  vol1:{en:'1 volunteer',es:'1 voluntario'}, voln:{en:'{n} volunteers',es:'{n} voluntarios'},
+  start:{en:'{v} to start',es:'{v} para empezar'}, free:{en:'no cost to start',es:'sin costo para empezar'},
+  lighter:{en:'A lighter start: fewer people, a smaller budget and a shorter trial.',es:'Un comienzo más ligero: menos personas, un presupuesto menor y una prueba más corta.'},
+  fuller:{en:'The full version: more people, a larger budget and a longer run.',es:'La versión completa: más personas, un presupuesto mayor y más tiempo.'}};
+function caseLiftNote(m){
+  if(!m||m.sample||!m.ministry||!m.ministry.id) return '';
+  let x=null; try{ x=caseItemOf(m.ministry.id); }catch(e){ x=null; } if(!x||x.plan) return '';
+  const to=caseLiftNow(x.id), own=caseLiftOf(x); if(!to||to===own) return '';
+  return caseT(to<own?CASE_SIZE_T.lighter:CASE_SIZE_T.fuller);
+}
+function caseSizeHTML(m){
+  if(!m||m.sample||!m.ministry||!m.ministry.id) return '';
+  let x=null; try{ x=caseItemOf(m.ministry.id); }catch(e){ x=null; } if(!x||x.plan||m.type==='conference') return '';
+  const own=caseLiftOf(x), cur=caseLiftNow(x.id)||own;
+  const b=n=>{ let r=null; try{ r=uReq(x,{lift:n}); }catch(e){ r=null; } if(!r) return '';
+    const vol=r.people===1?caseT(CASE_SIZE_T.vol1):caseF(CASE_SIZE_T.voln,{n:fmtNum(r.people)}), mon=r.startup>0?caseF(CASE_SIZE_T.start,{v:fmtMoney(r.startup)}):caseT(CASE_SIZE_T.free), L=NS_LIFTS[n-1];
+    return `<button type="button" class="cs-szb${n===own?' own':''}${n===cur?' on':''}" data-cs-lift="${n}" aria-pressed="${n===cur}">${nsBars(L)}<span class="cs-szn">${esc(nsU(L))}</span>${n===own?`<span class="cs-szo">${esc(caseT(CASE_SIZE_T.own))}</span>`:''}<span class="cs-szv">${esc(vol+' · '+mon)}</span></button>`; };
+  return `<div class="cs-size" id="cs-size" role="group" aria-labelledby="cs-szh"><p class="cs-szh" id="cs-szh">${esc(caseT(CASE_SIZE_T.head))}</p><div class="cs-szr">${[1,2,3].map(b).join('')}</div></div>`;
+}
+function caseSizeSet(n){
+  const P=casePrefs(); let x=null; try{ x=caseItemOf(P.ministry); }catch(e){ x=null; } if(!x||![1,2,3].includes(n)) return;
+  const ch=uChurch(), own=caseLiftOf(x), all=ch.overrides&&typeof ch.overrides==='object'?ch.overrides:(ch.overrides={}), o={...(all[x.id]||{})};
+  if(n===own) delete o.lift; else o.lift=n;
+  if(Object.keys(o).length) all[x.id]=o; else delete all[x.id];
+  uPersist();
+  if(casePropMode()) caseMount(); else caseDraw3();
+  const f=document.querySelector(`#cs-size [data-cs-lift="${n}"]`); if(f) try{ f.focus({preventScroll:true}); }catch(e){}
+}
 /* The Proposal as one plain object, in the model's language (caseProposalDoc draws it; the tests read it). */
 function caseProposal(model,deck,o){
   o=o||{};
@@ -38875,7 +39202,8 @@ function caseProposal(model,deck,o){
     const x=typeof caseItemOf==='function'?caseItemOf(m.ministry.id):null;
     const desc=(()=>{ const d=x?(x.lib?(es?x.dEs:x.d):(es?'':x.d)):''; const t=caseClean(d||'',600); if(!t) return ''; if(t.length<=220) return t;
       const cut=t.slice(0,220), i=Math.max(cut.lastIndexOf('. '),cut.lastIndexOf('? '),cut.lastIndexOf('! ')); return i>60?cut.slice(0,i+1):''; })();
-    plan.push({k:'what',label:T(P.what),lines:[gfCap(m.ministry.name||'').replace(/\.?$/,'.')+(desc?' '+desc:'')],desc:!!desc});
+    { const LN=caseLiftNote(m);   // v10.52.0: the size he chose, said once, when it is not the idea's own
+      plan.push({k:'what',label:T(P.what),lines:[gfCap(m.ministry.name||'').replace(/\.?$/,'.')+(desc?' '+desc:'')+(LN?' '+LN:'')],desc:!!desc}); }
     if(m.how&&m.how.steps&&m.how.steps.length) plan.push({k:'how',label:T(P.how),lines:m.how.steps.slice(0,4).map((t,i)=>(i+1)+'. '+t)});
     if(body==='conference'){ if(m.capacity) plan.push({k:'who',label:T(P.who),lines:[(m.capacity.rows||[]).map(r=>{ const w=tdCapWords(r.have,r.need,r.unit,TD_STR[lang],v=>r.unit==='$'?fmtMoney(v):fmtNum(v)); return r.label+' '+w.have+w.rest; }).join(' · ')]}); }
     else{ const pr=(m.ask&&m.ask.rows&&m.ask.rows[0])?String(m.ask.rows[0][1]):''; if(pr) plan.push({k:'who',label:T(P.who),lines:[pr+(V.hoursEach?' · '+V.hoursEach+(/month|mes/.test(V.hoursEach)||(m.ask&&m.ask.cad)?'':T(P.firstMonth)):'')]});
