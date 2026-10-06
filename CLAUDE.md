@@ -155,6 +155,18 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.51.3 (6 Oct 2026, quick lane) — Spiritual Gifts: "Who you are drawn to" is Section 6 of 6.** The pastor: *"Part two for the
+spiritual gift survey. It shouldn't be like a next part. It should just be at the last section of the entire survey … right now 1 2 3 4 5
+and this will be the sixth in line … so that it doesn't feel like an extra step they have to take it just gonna continue to the end"*.
+The twelve heart questions keep their page, now under "Section 6 of 6" (never "Part two"), after an opener like the other five
+(`gfRenderHeartOpen`: eyebrow, "Who you are drawn to", the rule, Matthew 9:36 from the verified library via `gfdVerse('case:matt9_36')`,
+what it is, "12 questions", Carry on; seen once, `GFS.hseen`; Back clears it, as crossing back out of any section). The bar has a sixth
+segment and dot (`data-gff="heart"`, red `--m-veterans`, as wide as its twelve, filled as they are answered: `gfHeartFill`, `gfSetBar` on
+each tap); every section reads "of 6" (`GF_SECT_SHOWN`, `gfSectWord`); the welcome back counts it; "Carry on with section 6"; the intro
+says six sections. The heart page's eyebrow and chosen answers are in its red. The five gift families (`GF_FAMS`, `GF_FAM_VAR`, the
+report's colours) are unchanged. Tests: gifts-sections and gifts-engine updated to the new intent with comments, section 6 checked EN + ES
+(failing first on v10.51.2: `Terrain-work/v66/logs/ff-v51-3-*.log`). Samples: `~/Downloads/Terrain-v10.51.3-samples/` (`shots11.mjs`).
+
 **v10.51.2 (6 Oct 2026, quick lane) — "Your church": cut the fat.** The pastor: *"review members in spiritual gifts that should be a
 bright button. It shouldn't look so dull … this box here where you check I don't think you even need that … current commitments and
 limits does it need to be there either … cut the fat and only keep that which is going to be loadbearing to the process"*. Step 3

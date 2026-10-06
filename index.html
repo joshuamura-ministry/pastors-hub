@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.51.2
+     TERRAIN  v10.51.3
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.51.2" data-theme="dark">
+<html lang="en" data-version="v10.51.3" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.51.2">
-<title>Community Map — Terrain v10.51.2</title>
+<meta name="terrain-version" content="v10.51.3">
+<title>Community Map — Terrain v10.51.3</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1679,6 +1679,10 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfhchips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .gfhchip{min-height:44px;padding:6px 8px;border-radius:12px;background:var(--panel2);border:1px solid var(--line2);color:var(--ink2);font:inherit;font-size:.86rem;line-height:1.25;cursor:pointer;overflow-wrap:break-word;hyphens:manual}
 .gfhchip.on{background:var(--acc);border-color:var(--acc);color:var(--btn-ink);font-weight:700}
+/* v10.51.3: section 6's page in its own red, as each section's cards are in theirs */
+.gfhearthead[data-gff] .gfsecn{color:var(--kf)}
+.gfheart[data-gff] .gfhchip:hover{border-color:var(--k)}
+.gfheart[data-gff] .gfhchip.on{background:var(--kf);border-color:var(--kf);color:var(--kink)}
 .gfheartnav{justify-content:space-between}
 .gfcardq .gfnav{justify-content:space-between}
 /* ---- v10.38: coloured sections ----
@@ -1691,6 +1695,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 [data-gff="lead"]{--k:var(--m-hardship)}
 [data-gff="out"]{--k:var(--m-children)}
 [data-gff="hands"]{--k:var(--m-housing)}
+[data-gff="heart"]{--k:var(--m-veterans)}   /* v10.51.3: section 6, who you are drawn to (the gifts' own families above are the report's) */
 /* --kf is the family colour as text, or as a fill with --kink on it. On the
    dark theme (the only one on screen) it is the colour itself: dark ink on it
    6.2:1 or better, it on the card 6.9:1 or better. On the light base layer it
@@ -4209,13 +4214,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.51.2';
+const VERSION = 'v10.51.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -15773,7 +15778,7 @@ function gfRenderResume(h){
     ${gfSegsHTML(gfAnsweredState(),L('Answered','Respondidas'),done,L(done+' of '+GF_TOTAL+' answered',done+' de '+GF_TOTAL+' respondidas'))}
     <p class="note" style="margin-top:8px"><b>${L(done+' of '+GF_TOTAL+' answered.',done+' de '+GF_TOTAL+' respondidas.')}</b> ${L('You can carry on where you left off, or clear everything and start from a blank sheet.','Puede continuar donde lo dej\u00f3, o borrar todo y empezar desde cero.')}</p>
     <div class="gfnav">
-      <button class="btn" id="gfresume">${gfOnHeart()?L('Carry on with the last page','Continuar con la \u00faltima p\u00e1gina'):L('Carry on from statement '+Math.min(gfIndex()+1,GF_TOTAL),'Continuar desde la afirmaci\u00f3n '+Math.min(gfIndex()+1,GF_TOTAL))}</button>
+      <button class="btn" id="gfresume">${gfOnHeart()?L('Carry on with section '+GF_SECT_SHOWN,'Continuar con la secci\u00f3n '+GF_SECT_SHOWN):L('Carry on from statement '+Math.min(gfIndex()+1,GF_TOTAL),'Continuar desde la afirmaci\u00f3n '+Math.min(gfIndex()+1,GF_TOTAL))}</button>
       <button class="btn ghost" id="gfwipe">${L('Clear all answers and start over','Borrar todo y empezar de nuevo')}</button>
       ${first?`<button class="btn ghost" id="gfother">${L('I am not '+first+': someone else is taking it','No soy '+first+': otra persona la va a hacer')}</button>`:''}
     </div>
@@ -15850,7 +15855,7 @@ function gfRenderIntro(h){
     <p class="note">${L(`There are ${GF_TOTAL} statements, then twelve short questions about the people you are drawn to. It takes about ${GF_MINUTES} minutes, and you can stop and come back \u2014 your answers save themselves on this phone as you go.`,`Hay ${GF_TOTAL} afirmaciones y después doce preguntas breves sobre las personas hacia las que se inclina su corazón. Toma unos ${GF_MINUTES} minutos, y puede detenerse y volver más tarde: sus respuestas se guardan en este teléfono a medida que avanza.`)}</p>
     <p class="note">${L('Answer for the way you have actually been over the past few years, not the way you would like to be. If you are newer in the faith, answer according to the desire you sense in your heart.','Responda según lo que ha sido en realidad en los últimos años, no según lo que le gustaría ser. Si es nuevo en la fe, responda de acuerdo con el deseo que percibe en su corazón.')}</p>
     <p class="note">${L('Some statements ask about results \u2014 whether anything came of it, whether anyone else has noticed. If you have never had the chance to find out, say so. <b>&ldquo;I haven\u2019t had an opportunity to know&rdquo; is not a wrong answer and it does not count against you.</b> It simply tells us the gift is untested rather than absent.','Algunas afirmaciones preguntan por los resultados: si algo salió de ello, si alguien más lo ha notado. Si nunca ha tenido la oportunidad de saberlo, dígalo. <b>&ldquo;No he tenido oportunidad de saberlo&rdquo; no es una respuesta equivocada y no cuenta en su contra.</b> Simplemente nos indica que el don todavía no se ha probado, no que no exista.')}</p>
-    <p class="note">${L('The statements come in five sections \u2014 Scripture, people, leading, reaching out, and practical work \u2014 so you know roughly what you are answering about. Which gift any single statement is measuring is deliberately not shown, so that you answer honestly rather than toward the gift you would like to have.','Las afirmaciones vienen en cinco secciones (las Escrituras, las personas, el liderazgo, el alcance y el trabajo práctico) para que sepa más o menos de qué trata cada una. A propósito no se indica qué don mide cada afirmación, para que responda con sinceridad y no en dirección al don que le gustaría tener.')}</p>
+    <p class="note">${L('It comes in six sections \u2014 Scripture, people, leading, reaching out, practical work, and who you are drawn to \u2014 so you know roughly what you are answering about. Which gift any single statement is measuring is deliberately not shown, so that you answer honestly rather than toward the gift you would like to have.','Viene en seis secciones (las Escrituras, las personas, el liderazgo, el alcance, el trabajo práctico y hacia quién se inclina su corazón) para que sepa más o menos de qué trata cada una. A propósito no se indica qué don mide cada afirmación, para que responda con sinceridad y no en dirección al don que le gustaría tener.')}</p>
   </div>
   <div class="card gfcard">
     <label class="gflab" for="gfname">${L('Your name','Su nombre')}</label>
@@ -15955,26 +15960,57 @@ const GF_HEART_SCALE=[
  {v:1,en:'Somewhat',es:'Algo'},
  {v:2,en:'Strongly drawn',es:'Mucho'}
 ];
-function gfRenderHeart(h){
-  document.onkeydown=null;
-  GFS.h=GFS.h&&typeof GFS.h==='object'?GFS.h:{};
-  GFS.i=GF_TOTAL;
-  const es=LANG==='es';
-  h.innerHTML=`<div class="gftop-bar">
+function gfHeartTop(){
+  return `<div class="gftop-bar">
     ${gfBarHTML(GF_TOTAL)}
-    <div class="gfmeta"><span class="gfcount">${L('12 questions \u00b7 the last page','12 preguntas \u00b7 la última página')}</span>
+    <div class="gfmeta"><span class="gfcount">${L(GF_HEART.length+' questions',GF_HEART.length+' preguntas')}</span>
       <span class="gfdots" aria-hidden="true">${gfDotsHTML(gfBarState(GF_TOTAL))}</span></div>
     <div class="gfchromenav">
       ${!gfIsMember()?`<button class="btn ghost gfexit" id="gfexit">\u2190 ${L('Leave this and go to results','Salir e ir a los resultados')}</button>`:''}
       <button class="btn ghost gfexit" id="gfstartover">${L('Start over','Empezar de nuevo')}</button>
     </div>
-  </div>
-  <div class="gfhead gfhearthead">
-    <p class="gfsecn">${L('Part two','Segunda parte')}</p>
+  </div>`;
+}
+/* v10.51.3: Section 6's opener, the same card as the other five (eyebrow, title, rule, a verse from the verified library, what it is,
+   how many, Carry on), in red */
+function gfRenderHeartOpen(h){
+  document.onkeydown=null;
+  GFS.i=GF_TOTAL;
+  const v=typeof gfdVerse==='function'?gfdVerse('case:matt9_36',LANG==='es'?'es':'en'):null, n=GF_HEART.length;
+  h.innerHTML=gfHeartTop()+`
+   <div class="gfstage"><div class="gfcardq gfsect" data-gff="heart">
+     <p class="gfsecn">${gfSectWord(GF_SECT_SHOWN)}</p>
+     <h2 class="gfsect-t">${L('Who you are drawn to','Hacia quién se inclina su corazón')}</h2>
+     <span class="gfso-rule" aria-hidden="true"></span>
+     ${v?`<div class="gfverse gfso-v"><q>${esc(v.text)}</q><cite>${esc(v.ref)}</cite></div>`:''}
+     <p class="gfso-l">${L('Twelve kinds of people. For each, say how strongly you are drawn to them, not what you think you ought to feel. This is what connects your gifts to the people around your church.','Doce grupos de personas. Para cada uno, indique cuánto se inclina su corazón hacia ellos, no lo que cree que debería sentir. Esto es lo que conecta sus dones con la gente que vive alrededor de su iglesia.')}</p>
+     <div class="gfso-f">
+       <p class="gfso-n">${L(n+' questions',n+' preguntas')}</p>
+       <p class="gfso-a">${L('Three answers each: Not especially, Somewhat, Strongly drawn.','Tres respuestas cada una: No mucho, Algo, Mucho.')}</p>
+     </div>
+     <button class="btn gfbig" id="gfgo">${L('Carry on','Continuar')}</button>
+   </div></div>`;
+  gfWireExit(h);
+  document.getElementById('gfgo').onclick=()=>{
+    GF_NAV++; GFS.hseen=true; gfSave();
+    const st=h.querySelector('.gfcardq'), go=()=>{ gfRenderHeart(h); window.scrollTo({top:0,behavior:'auto'}); };
+    if(gfReduced()) return go();
+    st.classList.add('gfout'); setTimeout(go,220);
+  };
+}
+function gfRenderHeart(h){
+  document.onkeydown=null;
+  GFS.h=GFS.h&&typeof GFS.h==='object'?GFS.h:{};
+  GFS.i=GF_TOTAL;
+  if(!GFS.hseen) return gfRenderHeartOpen(h);   // v10.51.3: its opener first, as every section
+  const es=LANG==='es';
+  h.innerHTML=gfHeartTop()+`
+  <div class="gfhead gfhearthead" data-gff="heart">
+    <p class="gfsecn">${gfSectWord(GF_SECT_SHOWN)}</p>
     <h2>${L('Who are you drawn to?','¿Hacia quién se inclina su corazón?')}</h2>
-    <p class="sub">${L('Twelve kinds of people. For each, say how strongly you are drawn to them \u2014 not what you think you ought to feel. This is what connects your gifts to the people around your church.','Doce grupos de personas. Para cada uno, indique cuánto se inclina su corazón hacia ellos, no lo que cree que debería sentir. Esto es lo que conecta sus dones con la gente que vive alrededor de su iglesia.')}</p>
+    <p class="sub">${L('Say how strongly you are drawn to each, not what you think you ought to feel.','Indique cuánto se inclina su corazón hacia cada grupo, no lo que cree que debería sentir.')}</p>
   </div>
-  <div class="gfheart">${GF_HEART.map(q=>{
+  <div class="gfheart" data-gff="heart">${GF_HEART.map(q=>{
     const cur=GFS.h[q.k];
     return `<div class="gfhq" data-k="${q.k}">
       <p class="gfhqk">${esc(es?q.es:q.en)}</p>
@@ -15991,14 +16027,14 @@ function gfRenderHeart(h){
   h.querySelectorAll('.gfhq').forEach(row=>{
     const k=row.dataset.k;
     row.querySelectorAll('.gfhchip').forEach(b=>b.onclick=()=>{
-      GFS.h[k]=+b.dataset.v; gfSave();
+      GFS.h[k]=+b.dataset.v; gfSave(); gfSetBar(h,GF_TOTAL);   // v10.51.3: section 6's segment fills as it is answered
       row.classList.remove('gfmiss');
       row.querySelectorAll('.gfhchip').forEach(x=>{ const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-checked',String(on)); });
     });
   });
   document.getElementById('gfhback').onclick=()=>{
     GF_NAV++;
-    GFS.i=GF_TOTAL-1; GFS.sect=gfSectOf(GF_TOTAL-1); gfSave();
+    GFS.i=GF_TOTAL-1; GFS.sect=gfSectOf(GF_TOTAL-1); GFS.hseen=false; gfSave();   // v10.51.3: forward again shows section 6's opener
     gfRenderPage(h); window.scrollTo({top:0,behavior:'auto'});
   };
   const done=document.getElementById('gfhdone');
@@ -17231,6 +17267,14 @@ function gfStatement(gi,k){ const g=GIFTS[gi];
 
 const GF_SECTS=GF_FAMS.map((f,i)=>({t:f.t,l:f.l,v:GF_VERSE_SET[i]}));
 const GF_SECT_COUNT=GF_SECTS.length;
+/* v10.51.3 — the pastor (6 Oct 2026): "Part two for the spiritual gift survey. It shouldn't be like a next part. It should just be at the
+   last section of the entire survey … right now 1 2 3 4 5 and this will be the sixth in line … so that it doesn't feel like an extra
+   step they have to take it just gonna continue to the end": the twelve heart questions are Section 6 of 6, with an opener like the
+   others (gfRenderHeartOpen, once: GFS.hseen), a sixth segment and dot in the bar (as wide as its twelve, filled as they are answered,
+   red), and every section counted "of 6". The gifts' five families (GF_FAMS, the report's colours) are unchanged. */
+const GF_SECT_SHOWN=GF_SECT_COUNT+1;
+function gfHeartFill(){ const h=(GFS&&GFS.h)||{}; return GF_HEART.filter(q=>[0,1,2].includes(h[q.k])).length/GF_HEART.length; }
+const gfSectWord=n=>L('Section '+n+' of '+GF_SECT_SHOWN,'Secci\u00f3n '+n+' de '+GF_SECT_SHOWN);
 const gfSectOf=i=>{ let n=0; for(let k=0;k<GF_SECT_STARTS.length;k++) if(i>=GF_SECT_STARTS[k]) n=k; return n; };
 const gfIsSectStart=i=>GF_SECT_STARTS.indexOf(i)>=0;
 const gfIsSectEnd=i=>GF_SECT_ENDS.indexOf(i)>=0;
@@ -17293,7 +17337,7 @@ function gfRenderSection(h,sec){
   h.innerHTML=`
    ${gfChrome(GFS.i||0)}
    <div class="gfstage"><div class="gfcardq gfsect" data-gff="${fam}">
-     <p class="gfsecn">${L('Section '+(sec+1)+' of '+GF_SECT_COUNT,'Secci\u00f3n '+(sec+1)+' de '+GF_SECT_COUNT)}</p>
+     <p class="gfsecn">${gfSectWord(sec+1)}</p>
      <h2 class="gfsect-t">${esc(t)}</h2>
      <span class="gfso-rule" aria-hidden="true"></span>
      <div class="gfverse gfso-v"><q>${esc(v[0])}</q><cite>${esc(v[1])} \u00b7 ${es?'RVA':'KJV'}</cite></div>
@@ -17329,25 +17373,25 @@ function gfPct(i){ return Math.round(Math.max(0,Math.min(i,GF_TOTAL))/GF_TOTAL*1
    in and how many are behind them. Position, as before, not answers on file. */
 function gfSegFill(pos,n){ const a=GF_SECT_STARTS[n], z=GF_SECT_ENDS[n]+1; return Math.max(0,Math.min(1,(pos-a)/(z-a))); }
 function gfBarState(pos){ const p=Math.max(0,Math.min(pos,GF_TOTAL));
-  return {fills:GF_SECTS.map((s,n)=>gfSegFill(p,n)),cur:p>=GF_TOTAL?-1:gfSectOf(p)}; }
+  return {fills:[...GF_SECTS.map((s,n)=>gfSegFill(p,n)),p>=GF_TOTAL&&gfOnHeart()?gfHeartFill():0],cur:p>=GF_TOTAL?(gfOnHeart()?GF_SECT_COUNT:-1):gfSectOf(p)}; }   // v10.51.3: the sixth, the heart
 function gfSegClass(st,n){ return st.fills[n]>=1?'done':(n===st.cur?'now':''); }
 function gfW(f){ return (Math.round(f*1000)/10)+'%'; }
 function gfFamT(n){ const f=GF_FAMS[n]||GF_FAMS[0]; return LANG==='es'&&GF_FAMS_ES[f.id]?GF_FAMS_ES[f.id].t:f.t; }
 function gfBarText(pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL));
-  if(p>=GF_TOTAL) return L('All '+GF_TOTAL+' statements answered','Las '+GF_TOTAL+' afirmaciones respondidas');
+  if(p>=GF_TOTAL) return gfOnHeart()?gfSectWord(GF_SECT_SHOWN)+': '+L('Who you are drawn to','Hacia qui\u00e9n se inclina su coraz\u00f3n'):L('All '+GF_TOTAL+' statements answered','Las '+GF_TOTAL+' afirmaciones respondidas');
   const s=gfSectOf(p);
-  return gfCountText(p)+' \u00b7 '+L('Section '+(s+1)+' of '+GF_SECT_COUNT,'Secci\u00f3n '+(s+1)+' de '+GF_SECT_COUNT)+': '+gfFamT(s);
+  return gfCountText(p)+' \u00b7 '+gfSectWord(s+1)+': '+gfFamT(s);
 }
 function gfSegsHTML(st,label,now,text){
   return `<div class="gfbar gfsegs" role="progressbar" aria-label="${esc(label)}" aria-valuemin="0" aria-valuemax="${GF_TOTAL}" aria-valuenow="${now}" aria-valuetext="${esc(text)}">${GF_SECTS.map((s,n)=>
-    `<span class="gfseg ${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}" style="flex:${GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[n])}"></i></span>`).join('')}</div>`;
+    `<span class="gfseg ${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}" style="flex:${GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[n])}"></i></span>`).join('')}<span class="gfseg ${gfSegClass(st,GF_SECT_COUNT)}" data-gff="heart" style="flex:${GF_HEART.length} 1 0"><i class="gfbarfill" style="width:${gfW(st.fills[GF_SECT_COUNT]||0)}"></i></span></div>`;
 }
 function gfBarHTML(pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL));
   return `<div class="gfbarwrap">${gfSegsHTML(gfBarState(p),L('Progress','Progreso'),p,gfBarText(p))}<div class="gfsparks" id="gfsparks"></div></div>`;
 }
-function gfDotsHTML(st){ return GF_SECTS.map((s,n)=>`<i class="${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}"></i>`).join(''); }
+function gfDotsHTML(st){ return GF_SECTS.map((s,n)=>`<i class="${gfSegClass(st,n)}" data-gff="${GF_FAMS[n].id}"></i>`).join('')+`<i class="${gfSegClass(st,GF_SECT_COUNT)}" data-gff="heart"></i>`; }
 /* Move the bar to a position in place, so the fill slides rather than jumps. */
 function gfSetBar(h,pos){
   const p=Math.max(0,Math.min(pos,GF_TOTAL)), st=gfBarState(p);
@@ -17369,7 +17413,8 @@ function gfAnsweredState(){
   const fills=GF_SECTS.map((s,n)=>{ let c=0;
     for(let j=GF_SECT_STARTS[n];j<=GF_SECT_ENDS[n];j++){ const p=GF_ORDER[j]; if(GFS.a[gfKeyOf(p[0],p[1])]!==undefined) c++; }
     return c/(GF_SECT_ENDS[n]-GF_SECT_STARTS[n]+1); });
-  return {fills,cur:gfOnHeart()?-1:gfSectOf(gfIndex())};
+  fills.push(gfHeartFill());   // v10.51.3: section 6
+  return {fills,cur:gfOnHeart()?GF_SECT_COUNT:gfSectOf(gfIndex())};
 }
 function gfChrome(i){
   return `<div class="gftop-bar">
