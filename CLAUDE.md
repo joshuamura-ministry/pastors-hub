@@ -155,6 +155,23 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.51.1 (6 Oct 2026, quick lane) — Learn from other conferences: a better "Add".** The pastor: *"Can the drop-down look better …
+the east Midwest South West East Coast, California regional conferences … as headings … more across and not just straight down … you
+can click multiple ones so you don't have to … click one and then find it again and open it … up to nine … when you['re] done, it will
+close everything"*. The long `<select id="cmp-add">` is gone: **Add conferences** (`#cmp-addbtn`, `aria-expanded`) opens a panel
+(`cmpAddPanelHTML`, `#cmp-addp`, `CMP.addOpen`, closed whenever the tool opens): the area buttons across its top (moved into it); under
+All a heading for each part of the country (East, Midwest, South, West), else the one area; the conferences in rows (`.cmp-tiles`, two
+across on a phone), each a tick (`data-cmp-pick`, `aria-pressed`); his own is not in it; at nine besides his the rest are disabled; a bar
+that stays in view with "{n} of 9 chosen", the ◌ thin-calendar key and **Done** (Escape too). A tap updates `CMP.st.others`, saves and
+redraws the picker; Done closes it and draws the comparison again (`cmpRender`). `conferences-view` updated (the old list's checks
+replaced, the panel's added, EN + ES; failing first on v10.51.0: `Terrain-work/v66/logs/ff-v51-1.log`). Samples:
+`~/Downloads/Terrain-v10.51.1-samples/` (`Terrain-work/v66/shots8.mjs`).
+- **The main menu** (same release): *"learn from other conferences should be kind of similar to the other icons … 1 2 3 on the top …
+  Evangelism Planner and then next would be learn from other conferences the same format as the others and then maybe we can add one more
+  later and have six"*. The compare tile is a tile like the others (no `.tool-wide`, no `.twt`); `.hub .tools` is three across from
+  760 px (Survey, Gifts, Make the Case; the Planner, Learn from other conferences, a spot left open), one column on a phone
+  (`shots9.mjs`: 1366, 1600, 820, 390). Pinned in `conferences-view`.
+
 **v10.51.0 (6 Oct 2026) — the proposal on the page, editable; the bottom of step 3 cleaned up.** The pastor: *"the proposal to
 vote on PDF … should show underneath … and it should be editable … a place you can tap edit and every line you can change it"*; *"I
 don't know if we really need the how it is being decided"*; *"there's a verse and … a quote from Ellen White so just keep the quote from
@@ -772,8 +789,8 @@ the builders' reports: `~/Downloads/Terrain-work/v53/builders.json`; the rebuilt
 public page); Terrain never tells a conference its calendar is thin. His 2 Oct answer: the data is checked again **monthly** and
 sent to him as a pull request, so the page says "Checked 1 Oct 2026 · updated monthly" (ES "Revisado el 1 oct 2026 · se actualiza
 cada mes") and never claims live reading; after 45 days it adds "Some calendars may have changed since {date}."
-- *The tile:* the fifth `.tool` (`data-tool="compare"`, blue `#8CC4FF`, `ink-compare` / `glow-compare`), a full row under the four
-  on a computer (`.tool-wide`, ≥ 700 px; four, then one across), a tile like the others on a phone. `TOOLS.compare` (standalone,
+- *The tile:* the fifth `.tool` (`data-tool="compare"`, blue `#8CC4FF`, `ink-compare` / `glow-compare`); since v10.51.1 a tile like
+  the others, three across from 760 px (it was a full row of its own, `.tool-wide`). `TOOLS.compare` (standalone,
   panel `cmp`), `FEATURES.compare` (full). `openTool` closes it for any other tool; `showHub` closes it; it loads no church.
 - *The page* (block "LEARN FROM OTHER CONFERENCES" before `boot`; `#cmp` has `data-notr`, which `translateDOM` now skips: the tool
   writes its own Spanish and titles stay as published): `CMP_UI` / `cU` (every word EN + ES), `CMP` (state), `cmpLoadIndex` →

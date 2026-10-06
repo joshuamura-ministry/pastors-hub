@@ -58,6 +58,9 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('a fifth tile, "Learn from other conferences"', t?t.querySelector('b').textContent:null, 'Learn from other conferences');
     c('…with one short line and its link', t?[t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['What other conferences’ calendars hold, side by side.','Compare calendars']);
     c('…its own icon, ink and glow', !!(t&&t.querySelector('svg.tsvg')&&t.querySelector('#ink-compare')&&t.querySelector('#glow-compare')));
+    // v10.51.1 — the pastor: "learn from other conferences should be kind of similar to the other icons … the same format as the others
+    // … maybe we can add one more later and have six": no full row of its own; three across on a computer (a sixth spot left open)
+    c('v10.51.1: a tile like the others (no full row of its own); three across on a computer', [!!t&&t.classList.contains('tool-wide'),!!(t&&t.querySelector('.twt')),/@media \(min-width:760px\)\{ \.hub \.tools\{grid-template-columns:repeat\(3,minmax\(0,1fr\)\)\} \}/.test(html),/tool-wide/.test(html)], [false,false,true,false]);
     c('it is a standalone tool behind the same entitlement as the others', P.J("[TOOLS.compare&&TOOLS.compare.standalone,TOOLS.compare&&TOOLS.compare.panel,FEATURES.compare&&FEATURES.compare.tier]"), [true,'cmp','full']);
     c('nothing is fetched until it opens', P.net.filter(u=>/conferences\//.test(u)), []);
     c('no boot errors', P.errs, []);
@@ -141,15 +144,34 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   console.log('\n-- his choices --');
   P.E("document.querySelector('[data-cmp-rm=\"nevada-utah\"]').click()"); await sleep(30);
   c('a chip removed', P.J('CMP.st.others'), ['ohio','arkansas-louisiana','central-california']);
-  P.E("(()=>{ const s=document.getElementById('cmp-add'); s.value='potomac'; s.dispatchEvent(new Event('change')); })()");
+  /* v10.51.1 — the pastor (6 Oct 2026): "Can the drop-down look better … the east Midwest South West East Coast, California regional
+     conferences … as headings … more across and not just straight down … you can click multiple ones so you don't have to … click one
+     and then find it again and open it … up to nine … when you['re] done, it will close everything". "Add conferences" opens a panel:
+     the areas across its top, the conferences in rows under each area's heading, tap several (each a tick), Done closes it and the
+     comparison follows. (Was: one long <select>, one conference at a time.) */
+  c('v10.51.1: no long list; "Add conferences" (closed) and the suggested set', [P.qa('#cmp-add').length,P.txt('#cmp-addbtn'),P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-addp').length,!!P.q('#cmp-suggest')], [0,'Add conferences','false',0,true]);
+  P.q('#cmp-addbtn').click(); await sleep(20);
+  c('…open: the areas across the top, inside the panel', [P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-addp [data-cmp-region]').map(b=>b.textContent)], ['true',['All','East','Midwest','South','West','East Coast','California','Regional conferences']]);
+  c('…All: a heading for each part of the country, the conferences in rows under it (all 49 but yours)', [P.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),P.qa('#cmp-addp [data-cmp-pick]').length,P.qa('#cmp-addp [data-cmp-pick="pennsylvania"]').length], [['East','Midwest','South','West'],49,0]);
+  c('…the chosen ones ticked', P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').map(b=>b.dataset.cmpPick).sort(), ['arkansas-louisiana','central-california','ohio']);
+  P.q('#cmp-addp [data-cmp-pick="potomac"]').click(); await sleep(10);
+  P.q('#cmp-addp [data-cmp-pick="chesapeake"]').click(); await sleep(10);
+  c('tap several, one after another: each ticked, the panel stays open, the chips follow', [P.J('CMP.st.others'),!!P.q('#cmp-addp'),P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').length,P.qa('.cmp-chip').length,P.txt('#cmp-addp .cmp-cnt')],
+    [['ohio','arkansas-louisiana','central-california','potomac','chesapeake'],true,5,6,'5 of 9 chosen']);
+  P.q('#cmp-addp [data-cmp-pick="chesapeake"]').click(); await sleep(10);
+  c('…tap a ticked one again: it comes off', P.J('CMP.st.others'), ['ohio','arkansas-louisiana','central-california','potomac']);
+  P.q('#cmp-addp [data-cmp-done]').click();
   await until(()=>P.J('!!CMP.det.potomac')); await sleep(30);
-  c('a conference added, its file fetched once', [P.J('CMP.st.others'), P.net.filter(u=>/c\/potomac\.json/.test(u)).length], [['ohio','arkansas-louisiana','central-california','potomac'],1]);
+  c('Done: the panel closes, and the comparison has them (the file fetched once)', [P.qa('#cmp-addp').length,P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-cards .cmp-card h4').some(h=>/Potomac/.test(h.textContent)),P.net.filter(u=>/c\/potomac\.json/.test(u)).length], [0,'false',true,1]);
   c('kept on this device, under his registration', P.J("JSON.parse(localStorage.getItem('terrain-compare'))"), {reg:'pennsylvania',mine:'pennsylvania',others:['ohio','arkansas-louisiana','central-california','potomac']});
-  P.E("document.querySelector('[data-cmp-region=\"California\"]').click()");
-  c('the area buttons narrow the list (California: the four with territory there and Nevada-Utah, less the chosen)', P.qa('#cmp-add option').filter(o=>o.value).map(o=>o.value).sort(), ['nevada-utah','northern-california','southeastern-california','southern-california']);
-  c('…thin calendars say so in the list', P.qa('#cmp-add option').some(o=>/\(thin calendar\)/.test(o.textContent)));
-  P.E("(()=>{ CMP.st.others=['alaska','arizona','carolina','dakota','florida','hawaii','idaho','illinois','indiana']; cmpRender(); })()"); await sleep(30);
-  c('up to 10 at once: the list is closed at ten', [P.qa('.cmp-chip').length, P.q('#cmp-add').disabled, P.q('#cmp-add option').textContent], [10,true,'Up to 10 at once']);
+  P.q('#cmp-addbtn').click(); await sleep(10);
+  P.E("document.querySelector('#cmp-addp [data-cmp-region=\"California\"]').click()");
+  c('the area buttons narrow the panel to one heading (California: the four with territory there and Nevada-Utah)', [P.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),P.qa('#cmp-addp [data-cmp-pick]').map(b=>b.dataset.cmpPick).sort()],
+    [['California'],['central-california','nevada-utah','northern-california','southeastern-california','southern-california']]);
+  c('…thin calendars marked ◌, and the mark explained once', [P.qa('#cmp-addp [data-cmp-pick] .thin').length>0,/◌ thin calendar/.test(P.txt('#cmp-addp .cmp-addf'))], [true,true]);
+  P.E("(()=>{ CMP.st.others=['alaska','arizona','carolina','dakota','florida','hawaii','idaho','illinois','indiana']; cmpPicker(); })()"); await sleep(30);
+  c('up to 9 besides his own: at nine the others cannot be ticked, and it says so', [P.qa('.cmp-chip').length,P.qa('#cmp-addp [data-cmp-pick]:not([aria-pressed="true"])').every(b=>b.disabled),P.txt('#cmp-addp .cmp-cnt')], [10,true,'9 of 9 chosen: the most at once']);
+  P.q('#cmp-addp [data-cmp-done]').click(); await sleep(30);
   await until(()=>P.J("['hawaii','alaska'].every(s=>!!CMP.det[s])")); await sleep(50);
   c('a thin calendar is marked ◌ and the note shows', /Hawaii ◌/.test(P.q('#cmp-ch-balance svg').textContent)&&!P.q('.cmp-thin').hidden);
   c('a thin calendar is never the stronger one in what we could learn', P.qa('#cmp-learng .who').every(x=>!/Hawaii/.test(x.textContent)));
@@ -167,6 +189,10 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   console.log('\n-- Spanish --');
   { const S=page({lang:'es',now:'2026-10-01'}); await openCmp(S);
     c('tool bar in Spanish', S.txt('#toolname'), 'Aprender de otras asociaciones');
+    S.q('#cmp-addbtn').click();   // v10.51.1: the panel in Spanish
+    c('v10.51.1: "Añadir asociaciones", its headings, the count and Listo', [S.txt('#cmp-addbtn'),S.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),S.txt('#cmp-addp .cmp-cnt'),S.txt('#cmp-addp [data-cmp-done]')],
+      ['Añadir asociaciones',['Este','Medio Oeste','Sur','Oeste'],'4 de 9 elegidas','Listo']);
+    S.q('#cmp-addp [data-cmp-done]').click();
     c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Cómo leer esto']);
     c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el 1 oct 2026 · se actualiza cada mes');
     c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De oct 2026 a sep 2027: lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
