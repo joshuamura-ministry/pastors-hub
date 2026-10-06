@@ -85,7 +85,9 @@ setTimeout(async()=>{ try{
   c('the top role is the children\'s club, with the heart named', [N.roles[0].id,N.roles[0].heartLevel,N.roles[0].heartName,/strongly drawn to children/.test(N.roles[0].why)], ['kids',2,'children',true]);
   c('source line: Community Survey · area · ACS year-4–year', N.source, 'Community Survey · Census Tract 2041.02 · ACS 2020–2024');
   c('church matches from the church\'s own ministries, with pct', M.local.rows.length>0&&M.local.rows.every(r=>typeof r.pct==='number'&&r.pct>=55&&(r.state==='r'||r.state==='s')), true);
-  c('ninety days: three steps, built from the top neighbourhood role', [M.ninety.steps.length,M.ninety.basis.kind,M.ninety.basis.id], [3,'need','kids']);
+  // v10.54.2: the pastor: "the first 90 days, I don't know what that is … just a very simple steps on how to get involved": four steps
+  // (pray, talk to your pastor, start serving, look back), the second still built from the top neighbourhood role
+  c('how to get involved: four steps, built from the top neighbourhood role', [M.ninety.steps.length,M.ninety.basis.kind,M.ninety.basis.id], [4,'need','kids']);
   c('flags carried as data', [typeof M.flags.minor,typeof M.flags.allHigh,typeof M.flags.untested], ['boolean','boolean','number']);
   c('the member\'s own copy has no pastor block', M.pastor, null);
   c('verse in KJV', M.verse.ver, 'KJV');
@@ -138,13 +140,14 @@ setTimeout(async()=>{ try{
       const r=J(`(()=>{ const a=__T.answers('${k}',${seed}); const M=__T.model('${k}',${seed},{own:${own},ctx:${ctxs[i%3]},heart:${hearts[i%3]},minor:${i%4===0},
         observers:${own?'null':"[{name:'Pat',ratings:{teach:4,admin:3}},{name:'Lu',ratings:{teach:3,creative:4}}]"},obsCount:${own?2:0},obsInitials:${own?"['P','L']":'null'},
         obs:{teach:[4,3],admin:[3],creative:[4]}}); const x=__T.read(M,${own}); return {dups:x.dups,lows:x.lows,bad:x.bad,count:x.count,
-        ninety:(x.text.match(${lang==='es'?"/noventa días junto a alguien con experiencia/g":"/ninety days alongside someone experienced/g"})||[]).length}; })()`);
+        ninety:(x.text.match(${lang==='es'?"/No espere a que le busquen/g":"/Don’t wait to be asked/g"})||[]).length}; })()`);
       n++;
       if(r.dups.length||r.lows.length||r.bad.length||r.ninety!==1||r.count<20) problems.push({lang,k,seed,own,...r});
     }));
   });
   E(`LANG='en'`);
-  c(`${n} reports (13 answer sets × own/pastor × EN/ES): no repeated sentence, capitalised starts, no NaN/undefined/null, the ninety-day trial said once`, problems.slice(0,3), []);
+  // v10.54.2: "Don't wait to be asked" (the steps' first line) said once, where the ninety-day trial used to be
+  c(`${n} reports (13 answer sets × own/pastor × EN/ES): no repeated sentence, capitalised starts, no NaN/undefined/null, "Don’t wait to be asked" said once`, problems.slice(0,3), []);
   // gfRec used to give three ministries in a row the same "Why you".
   const serve=J(`__T.model('maker',0,{ctx:null}).serve.rows.map(r=>r.why)`);
   c('"Why you" differs for every ministry, and names it once the plain phrasing is used', [serve.length>=3,new Set(serve).size===serve.length], [true,true]);

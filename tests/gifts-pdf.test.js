@@ -125,7 +125,9 @@ function makeStore(){
   }
   E(`LANG='en'`);
   c('rich report: every section is on paper', ['YOUR GIFTS, AND THE EVIDENCE BEHIND EACH','POTENTIAL GIFTS TO TRY','WHERE YOUR GIFTS MEET YOUR NEIGHBORHOOD','WHERE YOU COULD SERVE AT BUCKS COUNTY SDA',
-    'YOUR FIRST NINETY DAYS','ALL TWENTY-ONE, STRONGEST FIRST','YOUR LEADING GIFTS, READ CLOSELY','AREAS TO GROW','WHAT HAPPENS NEXT'].filter(h=>!R['rich-en'].text.includes(h)), []);
+    'HOW TO GET INVOLVED','ALL TWENTY-ONE, STRONGEST FIRST','YOUR LEADING GIFTS, READ CLOSELY','AREAS TO GROW'].filter(h=>!R['rich-en'].text.includes(h)), []);
+  // v10.54.2: "Your first ninety days" is "How to get involved", and a member's own copy has no "What happens next" (the pastor: "the
+  // first 90 days, I don't know what that is … just a very simple steps on how to get involved", "Don't wait for a ministry [leader] to follow up")
   c('rich report: the neighbourhood figures, their source and the confirmations', [/27%/.test(R['rich-en'].text),R['rich-en'].text.includes('Community Survey · Census Tract 2041.02 · ACS 2020–2024'),/Confirmed by 2 people who know you \(P\., A\.\)\./.test(R['rich-en'].text)], [true,true,true]);
   c('rich report in Spanish: accents and Spanish quotation marks kept', ['Enseñanza','Sección censal 2041.02','Página 1 de','«','dones espirituales'].filter(x=>!R['rich-es'].text.includes(x)), []);
   c('no English report headings left in the Spanish PDF', /Your gifts|Why you|First step|What the work is|Potential gifts|NEIGHBORHOOD|All twenty-one|For the pastor|Page \d/i.test(R['rich-es'].text), false);
@@ -305,9 +307,10 @@ function makeStore(){
   // appears once the result is sent, without redrawing the page
   E(`GF_SERVER={ok:true,email:true}; GFS.sent=false; delete GFS.rid; delete GFS.token; delete GFS.hasEmail; gfRender();`);
   c('before the result is sent: no email button yet', !!D.getElementById('gfemail'), false);
-  D.getElementById('gfsend').click();
+  // v10.54.2: the result goes by itself when the report is drawn (the button only when it did not go through)
+  if(D.getElementById('gfsend')) D.getElementById('gfsend').click();
   await until(()=>D.getElementById('gfemail'));
-  c('after Send my result: "Email me my report" appears beside Download PDF', [!!D.getElementById('gfemail'),D.getElementById('gfpdf').nextElementSibling===D.getElementById('gfemail')], [true,true]);
+  c('once it is sent: "Email me my report" appears beside Download PDF', [!!D.getElementById('gfemail'),D.getElementById('gfpdf').nextElementSibling===D.getElementById('gfemail')], [true,true]);
 
   console.log('-- the emailed link: #gifts-report --');
   const rid=E('GFS.rid'), token=E('GFS.token');

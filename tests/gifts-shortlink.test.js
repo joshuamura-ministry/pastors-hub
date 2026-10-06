@@ -109,10 +109,9 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   c('answers are kept under the campaign, not the church the server named', M.w.eval('uGiftSessionKey()'), 'terrain-gifts:p:'+pub);
   c('a copy of the context is kept on the phone', !!M.w.localStorage.getItem('terrain-gifts-ctx:'+pub), true);
   M.w.eval(`GFS.name='Ana Ruiz'; GFS.minor=false; GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=(g.id==='teach'||g.id==='shep')?4:1;}); GF_HEART.forEach(q=>GFS.h[q.k]=q.k==='children'?2:0); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-  await until(()=>MD.getElementById('gfsend'));
-  c('the report shows where the gifts meet the neighbourhood', /Where your gifts meet your neighbo/.test(MD.getElementById('giftbody').textContent), true);
-  MD.getElementById('gfsend').click();
+  // v10.54.2 — the pastor: "send your results to the Pastor doesn't need to be there cause … it's gonna go to the pastor anyway": the result goes by itself when the report opens
   await until(()=>M.w.eval('GFS.sent===true'));
+  c('the report shows where the gifts meet the neighbourhood', /Where your gifts meet your neighbo/.test(MD.getElementById('giftbody').textContent), true);
   const sub=calls.filter(x=>x.op==='submit').pop();
   const dec=JSON.parse(M.w.eval(`JSON.stringify(gfDecode(${JSON.stringify(sub.code)}))`));
   c('the result carries the church and its id', [dec.church,dec.churchId===own.churchId], ['Bucks County SDA',true]);
@@ -133,10 +132,8 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   await until(()=>O.w.document.getElementById('gfstart'));
   c('the assessment still opens, without the church', [!!O.w.document.getElementById('gfstart'),O.w.eval('GF_CTX'),O.w.document.querySelector('.gfforchurch')], [true,null,null]);
   c('answers still go under the campaign', O.w.eval('uGiftSessionKey()'), 'terrain-gifts:p:'+pub);
+  override=null;   // the connection is back by the time they finish (v10.54.2: the result then goes by itself)
   O.w.eval(`GFS.name='Ben Offline'; GFS.minor=false; GIFTS.forEach(g=>{for(let k=0;k<5;k++) GFS.a[g.id+'.'+k]=2;}); GFS.i=GF_TOTAL; GFS.done=true; gfSave(); gfRender();`);
-  await until(()=>O.w.document.getElementById('gfsend'));
-  override=null;   // the connection is back when they send
-  O.w.document.getElementById('gfsend').click();
   await until(()=>O.w.eval('GFS.sent===true'));
   const sub2=calls.filter(x=>x.op==='submit').pop();
   const dec2=JSON.parse(O.w.eval(`JSON.stringify(gfDecode(${JSON.stringify(sub2.code)}))`));

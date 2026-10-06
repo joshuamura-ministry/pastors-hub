@@ -63,10 +63,12 @@ const READ=String.raw`window.__read=function(root){
 };`;
 const HEADS_EN=['Your gifts, and the evidence behind each','Your shape across the five families','Potential gifts to try','Where your gifts meet your neighborhood',
   'Where you could serve at Sample Church','Not yet at Sample Church — and you could be why it starts','Other ministries that fit your gifts',
-  'Your leading gifts, read closely','Areas to grow','All twenty-one, strongest first','Your first ninety days','What happens next','Keep this report'];
+  'Your leading gifts, read closely','Areas to grow','All twenty-one, strongest first','How to get involved','Keep this report'];
+// v10.54.2: "Your first ninety days" is "How to get involved" (four steps), and a member's own report has no "What happens next"
+// (the pastor: "Don't wait for a ministry [leader] to follow up … you go … and make the connection")
 const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco familias','Dones por probar','Donde sus dones se encuentran con su vecindario',
   'Dónde podría servir en Iglesia de ejemplo','Todavía no existe en Iglesia de ejemplo, y usted podría ser la razón de que empiece','Otros ministerios que encajan con sus dones',
-  'Sus dones principales, de cerca','Áreas para crecer','Los veintiún dones, del más fuerte al más débil','Sus primeros noventa días','Qué sigue','Guarde este informe'];
+  'Sus dones principales, de cerca','Áreas para crecer','Los veintiún dones, del más fuerte al más débil','Cómo involucrarse','Guarde este informe'];
 
 (async()=>{ try{
   // ================================================================ English
@@ -167,7 +169,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   const outside=saved.log.filter(l=>l.x0<l.bx0-0.5||l.x1>l.bx1+0.5||l.x0<53.5||l.x1>558.5||(!l.hf&&(l.y<70||l.y>734.5))).map(l=>l.t.slice(0,40)+' @'+l.p);
   c('every line inside its box, the margins and the page (the SAMPLE pill included)', outside, []);
   c('every section is on paper', ['YOUR GIFTS, AND THE EVIDENCE BEHIND EACH','POTENTIAL GIFTS TO TRY','WHERE YOUR GIFTS MEET YOUR NEIGHBORHOOD','WHERE YOU COULD SERVE AT SAMPLE CHURCH',
-    'YOUR FIRST NINETY DAYS','ALL TWENTY-ONE, STRONGEST FIRST','YOUR LEADING GIFTS, READ CLOSELY','AREAS TO GROW','WHAT HAPPENS NEXT'].filter(t=>!pdfText.includes(t)), []);
+    'HOW TO GET INVOLVED','ALL TWENTY-ONE, STRONGEST FIRST','YOUR LEADING GIFTS, READ CLOSELY','AREAS TO GROW'].filter(t=>!pdfText.includes(t)), []);   // v10.54.2: as above
   c('still nothing written and nothing fetched, after the PDF too', [A.writes,A.fetches.slice(f0)], [[],[]]);
   const after=snap();
   c('GFS, the roster, the church store, both storages and the last real report are as they were', Object.keys(before).filter(k=>before[k]!==after[k]), []);
