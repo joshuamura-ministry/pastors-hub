@@ -13522,15 +13522,15 @@ async function nsAiStart(fresh){
    them all the time". On an unlocked device (aiPass) whose server has the ideas on (GET ideas), opening a need asks advise.mjs (mode
    ideas, advise-2.6) with the place's names, the report's figures, the need, the census tags that fire and the library's ideas for it
    (names only; never the church, its address or the pastor). What comes back (the server's kept set, or a study by advise-ideas.mjs):
-   twelve ideas, four a lift, each in the library's own shape (so the sheet, the PDF and Make the Case take it as they take a library
+   eighteen ideas, six a lift (twelve, four a lift, at first: "there should probably be a few more ideas"), each in the library's own shape (so the sheet, the PDF and Make the Case take it as they take a library
    idea), with its own "why" and where it is "seen working"; up to three of the library's own kept by id. Checked again here (nsClOk:
    every text, every number in "why", every link; libToCatalog must take it). Kept with the church (uChurch().needIdeas, the last 40) by
    place, need and language, so it draws at once next time. The library's list shows until it comes, and whenever anything fails.
    An idea of Claude's proposed or printed is a pick (ideas-pick): the server copies it from its own set into the pool for the library. */
-const NS_CL={runs:new Map(),status:new Map(),poll:4000,max:300000,picked:new Set(),idx:null,idxAt:-1};
+const NS_CL={runs:new Map(),status:new Map(),poll:4000,max:480000,picked:new Set(),idx:null,idxAt:-1};   // eighteen ideas take a minute or two
 const NS_CL_T={
-  working:{en:'Studying what works for this need in {town}… about a minute.',es:'Estudiando lo que funciona para esta necesidad en {town}… cerca de un minuto.'},
-  workingNo:{en:'Studying what works for this need… about a minute.',es:'Estudiando lo que funciona para esta necesidad… cerca de un minuto.'},
+  working:{en:'Studying what works for this need in {town}… a minute or two.',es:'Estudiando lo que funciona para esta necesidad en {town}… uno o dos minutos.'},
+  workingNo:{en:'Studying what works for this need… a minute or two.',es:'Estudiando lo que funciona para esta necesidad… uno o dos minutos.'},
   done:{en:'Written for {town} on {date}',es:'Escritas para {town} el {date}'}, doneNo:{en:'Written on {date}',es:'Escritas el {date}'},
   again:{en:'Generate new ideas',es:'Generar nuevas ideas'},
   failed:{en:'New ideas could not be made just now.',es:'No se pudieron preparar nuevas ideas ahora.'}, retry:{en:'Try again',es:'Intentar de nuevo'},
@@ -13553,12 +13553,12 @@ function nsClView(raw,L){
     partner:pt,sab:raw.sabbath===true,kids:raw.minors===true,reach:'out',full:true,n:String(T.n||''),ne:String(T.n||''),L,langful:false,
     why:typeof raw.why==='string'?raw.why:'',seen:Array.isArray(raw.seen)?raw.seen:[]};
 }
-// the columns from a kept set: in each lift what was kept from the library first, then Claude's, four at most
+// the columns from a kept set: in each lift what was kept from the library first, then Claude's, six at most (the pastor: "a few more ideas")
 function nsClList(n){
   if(!aiPass()||SCOPE!=='tract') return null;
   const e=nsClKept(nsClKey(n)); if(!e) return null;
   const L=nsNeedLang(n), kept=(e.keep||[]).map(id=>nsView(id,L)).filter(v=>v&&v.reach!=='in'), made=e.ideas.map(raw=>nsClView(raw,L));
-  return NS_LIFTS.flatMap(lf=>[...kept.filter(v=>nsLift(v)===lf),...made.filter(v=>nsLift(v)===lf)].slice(0,4));
+  return NS_LIFTS.flatMap(lf=>[...kept.filter(v=>nsLift(v)===lf),...made.filter(v=>nsLift(v)===lf)].slice(0,6));
 }
 // the themes the need's ideas belong to: its own (a need Claude added), the survey's map of it, else those of the library's list
 function nsClThemes(n,lib){
@@ -13603,7 +13603,7 @@ function nsClAccept(n,key,I,j){
   const haveIds=new Set(I.have.map(h=>h.id)), keep=(Array.isArray(j.keep)?j.keep:[]).filter(id=>typeof id==='string'&&haveIds.has(id)).slice(0,3);
   const lift=id=>{ const h=I.have.find(x=>x.id===id); return h?h.lift:0; };
   const per=t=>keep.filter(id=>lift(id)===t).length+ideas.filter(x=>x.tier===t).length;
-  if(ideas.length<6||[1,2,3].some(t=>per(t)<2)) return nsClFail(n,key);
+  if(ideas.length<9||[1,2,3].some(t=>per(t)<3)) return nsClFail(n,key);   // as the server: nine new at least, three in each lift
   const made=/^\d{4}-\d{2}-\d{2}$/.test(String(j.made||''))?j.made:new Date().toISOString().slice(0,10);
   nsClKeep(key,{made,at:Date.now(),set:typeof j.set==='string'&&/^[0-9a-f]{32}\/(en|es)$/.test(j.set)?j.set:'',ideas,keep,need:n.id});
   NS_CL.status.set(key,'done'); NS.lists.clear();

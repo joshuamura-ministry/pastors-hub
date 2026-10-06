@@ -40,7 +40,8 @@ const RE_JOB = /^[A-Za-z0-9_-]{22}$/;
 const RE_TOKEN = /^[A-Za-z0-9_-]{43}$/;
 const CALL_MS = 240000, TOTAL_MS = 330000, MAX_CONTINUE = 2;
 export const IDEAS_SEARCH_MAX = 5, IDEAS_FETCH_MAX = 3;
-export const PER_LIFT = 4, KEEP_MAX = 3, NEW_MIN = 6, LIFT_MIN = 2;
+// v10.55.0: six a size (the pastor: "there should probably be a few more ideas"; four a size at first)
+export const PER_LIFT = 6, KEEP_MAX = 3, NEW_MIN = 9, LIFT_MIN = 3;
 export const POOL_NAMES = 20;
 export const CADS = ['ongoing', 'event', 'series'];
 
@@ -80,10 +81,10 @@ In the pastor's own words: "We need to bring in even better ideas, current fresh
 
 Your work:
 1. Search the web (a few searches; read a page or two that matter) for what is working now to meet this kind of need: programs run by churches (Seventh-day Adventist churches especially: Adventist Community Services, health ministry, Pathfinders and Adventurers, prayer and Bible study ministries), by libraries, schools that invite help, cities, food banks and nonprofits, ideally from the last few years. Learn the mechanism that makes each one work, then design for this town.
-2. Write 12 ideas: 4 of each size (tier 1 light, 2 moderate, 3 heavy). You may instead keep up to 3 ideas from THE LIBRARY'S IDEAS FOR THIS NEED (by their id, in "keep"), only when one is truly among the very best for this place; for each one you keep, write one fewer new idea of its size. Never write an idea that repeats or thinly re-skins one on that list or on the do-not-repeat list.
+2. Write 18 ideas: 6 of each size (tier 1 light, 2 moderate, 3 heavy). You may instead keep up to 3 ideas from THE LIBRARY'S IDEAS FOR THIS NEED (by their id, in "keep"), only when one is truly among the very best for this place; for each one you keep, write one fewer new idea of its size. Never write an idea that repeats or thinly re-skins one on that list or on the do-not-repeat list.
 3. For each new idea write its name, what it is, four steps, "why" (one sentence on why it fits this need here; numbers only from the figures you were given), and up to two "seen" lines: where something like it is working, one sentence each with that page's link from your searches. Leave "seen" empty rather than guess.
 
-What makes an idea excellent: it meets the felt need first, with no strings; it is specific (a real action, a real price, a named role who answers); it goes where people already are; it uses digital and social media where it fits, as a practitioner would (a Facebook and Instagram ad within a few miles at $5 a day, a post in a Nextdoor or community group as a neighbor, an opt-in text line that honors STOP, a QR code on a printed card, a short captioned vertical video, a WhatsApp channel); it builds friendships that can grow, for those who want it, into prayer, health, Bible study and church life (Christ's way: mingle with people as one who wants their good, meet their needs, win their confidence, then invite); it fits a small church's people and money; and the twelve are different from one another (vary the channel, the exchange, the rhythm and the people). At least three ideas have a real digital part. Use at least three kinds.
+What makes an idea excellent: it meets the felt need first, with no strings; it is specific (a real action, a real price, a named role who answers); it goes where people already are; it uses digital and social media where it fits, as a practitioner would (a Facebook and Instagram ad within a few miles at $5 a day, a post in a Nextdoor or community group as a neighbor, an opt-in text line that honors STOP, a QR code on a printed card, a short captioned vertical video, a WhatsApp channel); it builds friendships that can grow, for those who want it, into prayer, health, Bible study and church life (Christ's way: mingle with people as one who wants their good, meet their needs, win their confidence, then invite); it fits a small church's people and money; and the eighteen are different from one another (vary the channel, the exchange, the rhythm and the people). At least four ideas have a real digital part. Use at least three kinds.
 
 Rules, in order of importance:
 1. CHILDREN. Never ask strangers or parents who do not know the church for children's names, photos, schools, ages or prayer requests about their children. Nothing at school gates, pick-up lines, bus stops for students, playgrounds or youth hang-outs. Never approach children directly. No lists, cards, boxes or forms that collect children's details. Anything with children goes through their parents, or a school or organization that invites the church. Church-run programs use screened adults (background checks, the two-adult rule, parental consent): if an idea involves anyone under 18, set "minors": true and name the screening in the steps.
@@ -126,7 +127,7 @@ export function IDEAS_USER(input, pool) {
     '', "THE LIBRARY'S IDEAS FOR THIS NEED (id · size · name; you may keep up to 3 by id, never repeat them):", ...(have.length ? have : ['(none)']),
     'DO NOT REPEAT (ideas other pastors picked; names only): ' + (pool.length ? pool.join('; ') : '(none)'),
     'CENSUS TAGS (for "need"): ' + [...LIB_TAGS].join(', '),
-    '', 'Search for what is working now, design the twelve, then call record_ideas.'].join('\n');
+    '', 'Search for what is working now, design the eighteen, then call record_ideas.'].join('\n');
 }
 
 // ---------------------------------------------------------------- helpers
@@ -163,7 +164,7 @@ export function cleanIdeas(record, ctx) {
   const R = isPlain(record) ? record : {};
   const keep = [...new Set((Array.isArray(R.keep) ? R.keep : []).filter(id => typeof id === 'string' && have.has(id)))].slice(0, KEEP_MAX);
   const reasons = [], made = [], names = new Set();
-  for (const x of (Array.isArray(R.ideas) ? R.ideas : []).slice(0, 24)) {
+  for (const x of (Array.isArray(R.ideas) ? R.ideas : []).slice(0, 30)) {
     if (!isPlain(x)) { reasons.push('not an object'); continue; }
     const cad = cadOf(x.cad, x.sessions);
     if (cad == null) { reasons.push('cad'); continue; }
@@ -184,7 +185,7 @@ export function cleanIdeas(record, ctx) {
     names.add(key);
     made.push({ id: ideaId(input.need.id, lang, r.idea[lang].n), ...r.idea, theme, cad, reach: 'out', ai: true, ...(why ? { why } : {}), seen });
   }
-  // four to a size: what was kept first, then the new, in the model's order
+  // six to a size: what was kept first, then the new, in the model's order
   const liftOf = id => have.get(id).lift;
   const out = [], kept = [];
   for (const t of [1, 2, 3]) {

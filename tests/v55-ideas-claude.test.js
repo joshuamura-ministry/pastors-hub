@@ -11,9 +11,10 @@ const ADDR="D.geo={...D.geo,matched:'118 Bristol Rd, Warminster, PA, 18974'}";
 const hex=i=>('0123456789abcd'+i).slice(-14).replace(/[^0-9a-f]/g,'a');
 const WHY='Around the church 16.8% of households receive SNAP, against 6.2% in the county.';
 const NUMS={1:{ppl:2,leaders:0,hrs:3,cost:40,costMo:0},2:{ppl:6,leaders:1,hrs:12,cost:400,costMo:60},3:{ppl:12,leaders:2,hrs:30,cost:2000,costMo:300}};
-const NAMES={1:['Grocery list cards at the laundromat','A text line for a ride to the store','Recipe cards for the food bank line','A shelf swap at the library'],
-  2:['Saturday night soup supper','A cooking class on a SNAP budget','Market vouchers matched by members','Rides to the county food bank'],
-  3:['A mobile pantry stop with the food bank','A community garden with the township','A teaching kitchen night each month','Summer lunches with the library']};
+// six a lift (the pastor: "there should probably be a few more ideas")
+const NAMES={1:['Grocery list cards at the laundromat','A text line for a ride to the store','Recipe cards for the food bank line','A shelf swap at the library','A bus-stop sign for free meals','A neighbor note on the community board'],
+  2:['Saturday night soup supper','A cooking class on a SNAP budget','Market vouchers matched by members','Rides to the county food bank','A seed and seedling giveaway','A Sunday pancake breakfast for neighbors'],
+  3:['A mobile pantry stop with the food bank','A community garden with the township','A teaching kitchen night each month','Summer lunches with the library','A weekday food rescue route','A pantry with a health screening corner']};
 // an idea as the server keeps it: the library's shape, one language, an id of its own, its why and where it is seen working
 const IDEA=(t,i,o={})=>{ const n=NAMES[t][i];
   return {id:'cl-'+(t+''+i+'000000000000').slice(0,14).replace(/[^0-9a-f]/g,'a'),theme:'hunger',tier:t,k:['serve','equip','belong','invite'][i%4],ages:'adults',where:'community',sabbath:false,minors:false,
@@ -21,10 +22,10 @@ const IDEA=(t,i,o={})=>{ const n=NAMES[t][i];
     en:{n,d:`${n} meets neighbors where they already shop and wait for the bus. Two members keep it going each week and answer every text within a day, with no strings attached.`,
       how:[`Ask the manager for permission to start ${n.toLowerCase()} near the door.`,'Print 200 cards with the church text line and a note that every reply stays private.',
         'Choose two members who answer every text within a day, by first name only.','Review what worked each month and share the counts with the church board.']},...o}; };
-const SET=()=>({ideas:[IDEA(1,0),IDEA(1,1),IDEA(1,2,{why:'About 37% of households here go hungry each month.'}),
+const SET=()=>({ideas:[IDEA(1,0),IDEA(1,1),IDEA(1,2,{why:'About 37% of households here go hungry each month.'}),IDEA(1,4),IDEA(1,5),
   IDEA(2,0,{seen:[{text:'A church in Ohio runs a Saturday night soup supper with a short class after it.',url:'https://www.example-sda.org/soup-supper',host:'example-sda.org'},
-    {text:'A page that is not https.',url:'http://insecure.example.org/x',host:'insecure.example.org'}]}),IDEA(2,1),IDEA(2,2),IDEA(2,3),
-  IDEA(3,0),IDEA(3,1),IDEA(3,2),IDEA(3,3),IDEA(1,3,{en:{...IDEA(1,3).en,n:'AI grocery helper'}})],keep:[],made:'2026-10-06',set:'a'.repeat(32)+'/en'});
+    {text:'A page that is not https.',url:'http://insecure.example.org/x',host:'insecure.example.org'}]}),IDEA(2,1),IDEA(2,2),IDEA(2,3),IDEA(2,4),IDEA(2,5),
+  IDEA(3,0),IDEA(3,1),IDEA(3,2),IDEA(3,3),IDEA(3,4),IDEA(3,5),IDEA(1,3,{en:{...IDEA(1,3).en,n:'AI grocery helper'}})],keep:[],made:'2026-10-06',set:'a'.repeat(32)+'/en'});
 function fake(P,plan){
   const orig=P.w.fetch; P.calls=[];
   P.w.fetch=async(u,o)=>{ u=String(u);
@@ -72,19 +73,19 @@ const cols=(P,id)=>P.qa(`#ns-i-${id} .ns-lcol`).map(col=>[col.dataset.lift,[...c
   c('…never the church\'s name, its street address, the pastor or his email', ['Bucks County SDA','118 Bristol Rd','Joshua Mura','jm@example.org'].map(w=>raw.includes(w)), [false,false,false,false]);
   await until(()=>P.q('#ns-i-snap .ns-clstat .ns-aiwhen'),3000);
   c('while it works: one line above the columns, the town named, no "AI"', [P.txt('#ns-i-snap .ns-clstat'),/\bAI\b/.test(P.txt('#ns-i-snap .ns-clstat'))],
-    ['Studying what works for this need in Warminster… about a minute.',false]);
+    ['Studying what works for this need in Warminster… a minute or two.',false]);
   const libFirst=cols(P,'snap');
   c('…the library\'s columns meanwhile', libFirst.length>=2&&libFirst.every(([,names])=>names.length>=1), true);
 
   console.log('\n-- done: Claude\'s columns, four a lift, checked again here --');
   hold=false; await until(()=>P.J(`!!nsClKept(nsClKey(nsNeedById('snap')))`),5000); await sleep(60);
-  c('three columns of Claude\'s ideas; the one that says "AI" left out here', cols(P,'snap'),
-    [['light',[NAMES[1][0],NAMES[1][1],NAMES[1][2]]],['moderate',NAMES[2]],['heavy',NAMES[3]]]);
+  c('three columns of Claude\'s ideas, six a lift; the one that says "AI" left out here', cols(P,'snap'),
+    [['light',[NAMES[1][0],NAMES[1][1],NAMES[1][2],NAMES[1][4],NAMES[1][5]]],['moderate',NAMES[2]],['heavy',NAMES[3]]]);
   c('each row: its first sentence, its people and money', [P.txt(`#ns-i-snap .ns-row[data-idea="${IDEA(2,0).id}"] .ns-id`),P.txt(`#ns-i-snap .ns-row[data-idea="${IDEA(2,0).id}"] .ns-if`)],
     [`${NAMES[2][0]} meets neighbors where they already shop and wait for the bus.`,'6 people$400 to start · $60 a month']);
   c('an event says "in all"', /in all/.test(P.txt(`#ns-i-snap .ns-row[data-idea="${IDEA(3,0).id}"] .ns-if`)), true);
   c('the line: when, and Generate new ideas', [P.txt('#ns-i-snap .ns-clstat .ns-aiwhen'),P.txt('#ns-i-snap .ns-clstat [data-ns-clgen]')], ['Written for Warminster on 6 Oct 2026','Generate new ideas']);
-  c('kept with the church, by place, need and language', P.J(`(()=>{ const k=Object.keys(uChurch().needIdeas||{}); return [k.length,/\\|en\\|snap$/.test(k[0]),uChurch().needIdeas[k[0]].ideas.length]; })()`), [1,true,11]);
+  c('kept with the church, by place, need and language', P.J(`(()=>{ const k=Object.keys(uChurch().needIdeas||{}); return [k.length,/\\|en\\|snap$/.test(k[0]),uChurch().needIdeas[k[0]].ideas.length]; })()`), [1,true,17]);
   c('nothing on screen says "AI"', /\bAI\b|\bIA\b/.test(P.txt('#u-needs')), false);
 
   console.log('\n-- the sheet: the idea\'s own why, its steps, where it is seen working --');
@@ -135,7 +136,7 @@ const cols=(P,id)=>P.qa(`#ns-i-${id} .ns-lcol`).map(col=>[col.dataset.lift,[...c
     await until(()=>K.J(`!!nsClKept(nsClKey(nsNeedById('snap')))`),4000); await sleep(60);
     const light=cols(K,'snap')[0][1];
     c('the server\'s kept set: shown at once, no study; a library idea it kept leads its lift (an id not sent is ignored)',
-      [K.calls.filter(x=>x.body.mode==='ideas-status').length,light[0],light.length], [0,have.find(h=>h.lift===1).name,3]);
+      [K.calls.filter(x=>x.body.mode==='ideas-status').length,light[0],light.length], [0,have.find(h=>h.lift===1).name,5]);
     K.w.close(); }
 
   console.log('\n-- in Spanish --');
@@ -144,7 +145,7 @@ const cols=(P,id)=>P.qa(`#ns-i-${id} .ns-lcol`).map(col=>[col.dataset.lift,[...c
     E.E('NS_CL.poll=25'); survey(E,{mod:ADDR}); await sleep(150); await openNeed(E,'snap',true);
     await until(()=>E.calls.some(x=>x.body.mode==='ideas')&&E.q('#ns-i-snap .ns-clstat .ns-aiwhen'),4000);
     c('the request in Spanish; the line in Spanish', [E.calls.find(x=>x.body.mode==='ideas').body.lang,E.txt('#ns-i-snap .ns-clstat')],
-      ['es','Estudiando lo que funciona para esta necesidad en Warminster… cerca de un minuto.']);
+      ['es','Estudiando lo que funciona para esta necesidad en Warminster… uno o dos minutos.']);
     E.w.close(); }
 
   c('an id that is not one of Claude\'s kept ideas draws nothing', (()=>{ const X=page({needs:'file'}); const r=X.E(`typeof nsView==='function'?nsView('cl-0000000000abcd'):'none'`); X.w.close(); return r; })(), null);

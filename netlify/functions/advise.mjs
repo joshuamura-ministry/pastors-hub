@@ -35,7 +35,7 @@
 //
 // 2.6 (v10.55.0, 6 Oct 2026). The work for each need (DESIGN-IDEAS.md, v72). The pastor: "if Claude is generating the community needs
 // then it also needs to generate the work to meet those needs", and "the great ideas … selected we should consider … to put them in the
-// library … that way it doesn't have to generate them all the time". Twelve ideas a need (four a size), written after a search for what
+// library … that way it doesn't have to generate them all the time". Eighteen ideas a need (six a size), written after a search for what
 // works now, each passing the Idea Library's own checks (libCheckIdea, exported for advise-ideas.mjs). Only place names, figures, the
 // need and the library's idea names are sent. A set is kept 60 days (store "terrain-ideas"); limits: 20 a device a UTC day, 30 a
 // registration, 15 an address an hour, IDEAS_DAY_MAX (150) for the site. Picked ideas go to the pool, for the library's monthly batch.

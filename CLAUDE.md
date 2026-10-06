@@ -192,17 +192,17 @@ the time"*. Design `~/Downloads/Terrain-work/v72/DESIGN-IDEAS.md`.
   `nsClAccept`, `nsClStatusHTML`, `nsClAuto`, `nsClStart`, `nsClPick`): opening a need (or its ideas) asks advise.mjs (mode `ideas`) with
   the needs list's place and figures (`nsAiInput`), the need (id, title, category, its line, up to three library themes: `nsClThemes`),
   the census tags that fire, and the library's own list for it (`nsIdeasLib`: id, name, lift; never written again). **Never the church, its
-  address or the pastor.** While it studies (about a minute) a line above the columns ("Studying what works for this need in {town}… about
-  a minute.") and the library's columns; then Claude's: four a lift (`nsIdeasFor` → `nsClList`: the library ideas it kept first, then its
-  own), the line "Written for {town} on {date}" + **Generate new ideas** (fresh), or "New ideas could not be made just now." + Try again.
+  address or the pastor.** While it studies (a minute or two) a line above the columns ("Studying what works for this need in {town}… a
+  minute or two.") and the library's columns; then Claude's: **six a lift** (`nsIdeasFor` → `nsClList`: the library ideas it kept first, then
+  its own; four a lift at first, then his *"there should probably be a few more ideas"*), the line "Written for {town} on {date}" + **Generate new ideas** (fresh), or "New ideas could not be made just now." + Try again.
   Each idea is in the library's shape with an id `cl-<14 hex>` (`nsView` knows them; `nsCad` reads their `cad`), its own `why` (the sheet's
   "Why here", else the need's line) and **Seen working** (links, opened apart). Checked again here (`nsClOk`: every text, every number in
-  why, every link, and `libToCatalog` must take it); a set with fewer than six ideas, or a lift with fewer than two, is not used. Kept with the
+  why, every link, and `libToCatalog` must take it); a set with fewer than nine ideas, or a lift with fewer than three, is not used. Kept with the
   church (`uChurch().needIdeas[place|lang|need]`, the last 40). "Create a proposal" saves it like a library idea (`libSave`), so Make the Case
   takes it; that and the One-page PDF are a **pick** (`nsClPick` → `ideas-pick`).
 - **The server:** advise.mjs **advise-2.6** (modes `ideas`, `ideas-status`, `ideas-pick`; `placeInput` shared with the needs list; the
   library's checker `libCheckIdea` and its lists exported) and **advise-ideas.mjs** (ideas-1.0, background): one request with web search
-  (5) and web fetch (3), the strict tool `record_ideas` (12 ideas, four a size; up to three library ideas kept by id), `cleanIdeas`: every new
+  (5) and web fetch (3), the strict tool `record_ideas` (18 ideas, six a size; up to three library ideas kept by id), `cleanIdeas`: every new
   idea through `libCheckIdea` (lengths, sizes and their numbers, children, the Sabbath guideline, Adventist food, no raffles, no quoted
   Scripture, the outsider test) and this file's own (no markup, web address, emoji or "AI"); "why" numbers from the figures only; "seen"
   links only the search's own. Store `terrain-ideas`: jobs `j/`, kept sets `i/<sha(place|need|title|figures)>/<lang>` (60 days), counters,

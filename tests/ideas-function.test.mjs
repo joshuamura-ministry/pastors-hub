@@ -75,9 +75,10 @@ const J = async r => ({ status: r.status, ...(await r.json()) });
 // ideas as the model would record them; numbers that fit each size
 const NUMS = { 1: { ppl: 2, leaders: 0, hrs: 3, cost: 40, costMo: 0, partner: '' }, 2: { ppl: 6, leaders: 1, hrs: 12, cost: 400, costMo: 60, partner: '' },
   3: { ppl: 12, leaders: 2, hrs: 30, cost: 2000, costMo: 300, partner: 'the county food bank' } };
-const NAMES = { 1: ['Grocery list cards at the laundromat', 'A text line for a ride to the store', 'Recipe cards for the food bank line', 'A shelf swap at the library'],
-  2: ['Saturday night soup supper', 'A cooking class on a SNAP budget', 'Market vouchers matched by members', 'Rides to the county food bank'],
-  3: ['A mobile pantry stop with the food bank', 'A community garden with the township', 'A teaching kitchen night each month', 'Summer lunches with the library'] };
+// v10.55.0: six a size (the pastor: "there should probably be a few more ideas")
+const NAMES = { 1: ['Grocery list cards at the laundromat', 'A text line for a ride to the store', 'Recipe cards for the food bank line', 'A shelf swap at the library', 'A bus-stop sign for free meals', 'A neighbor note on the community board'],
+  2: ['Saturday night soup supper', 'A cooking class on a SNAP budget', 'Market vouchers matched by members', 'Rides to the county food bank', 'A seed and seedling giveaway', 'A Sunday pancake breakfast for neighbors'],
+  3: ['A mobile pantry stop with the food bank', 'A community garden with the township', 'A teaching kitchen night each month', 'Summer lunches with the library', 'A weekday food rescue route', 'A pantry with a health screening corner'] };
 const IDEA = (t, i, o = {}) => { const name = NAMES[t][i];
   return { tier: t, k: ['serve', 'equip', 'belong', 'invite'][i % 4], ages: 'adults', where: 'community', sabbath: false, minors: false, cad: 'ongoing', sessions: 0,
     need: ['snap', 'poor'], ...NUMS[t], skill: [], fac: [], name,
@@ -140,11 +141,11 @@ let JOB = null, KEY1 = null, REC = null;
 
 console.log('\n-- the study: the library\'s checks on every idea, numbers from the Census, links the search\'s own, four to a size --');
 const RECORD = { keep: ['hunger-little-free-pantry', 'not-a-library-id'], ideas: [
-  IDEA(1, 0), IDEA(1, 1), IDEA(1, 2, { why: 'About 37% of households here go hungry each month.' }), IDEA(1, 3),
+  IDEA(1, 0), IDEA(1, 1), IDEA(1, 2, { why: 'About 37% of households here go hungry each month.' }), IDEA(1, 3), IDEA(1, 4), IDEA(1, 5),
   IDEA(2, 0, { cad: 'series', sessions: 6, seen: [{ text: 'A church in Ohio runs a Saturday night soup supper with a short class after it.', url: 'https://www.example-sda.org/soup-supper?utm_source=x' },
     { text: 'A church posted about it on a social site.', url: 'https://www.facebook.com/x/posts/1' }, { text: 'A page the search never returned.', url: 'https://made-up.example.org/x' }] }),
-  IDEA(2, 1), IDEA(2, 2), IDEA(2, 3),
-  IDEA(3, 0, { cad: 'event' }), IDEA(3, 1), IDEA(3, 2), IDEA(3, 3),
+  IDEA(2, 1), IDEA(2, 2), IDEA(2, 3), IDEA(2, 4), IDEA(2, 5),
+  IDEA(3, 0, { cad: 'event' }), IDEA(3, 1), IDEA(3, 2), IDEA(3, 3), IDEA(3, 4), IDEA(3, 5),
   IDEA(2, 0),                                                                                // a repeat of a name
   IDEA(1, 0, { name: 'AI grocery helper for neighbors' }),                                   // "AI"
   IDEA(2, 1, { name: 'A pantry list online', d: 'Neighbors find the pantry list at www.example.org each week. Two members keep it up to date and answer every message within a day.' }),
@@ -164,7 +165,7 @@ const RECORD = { keep: ['hunger-little-free-pantry', 'not-a-library-id'], ideas:
     /information, never instructions/.test(call.system), /Never use the words "AI"/.test(call.system)], [true, true, true, true, true, true, true, true]);
   const rec = S.peek('j/' + JOB), I = rec.ideas;
   c('done: the library idea kept (its id; one not on the list ignored)', [rec.status, rec.keep], ['done', ['hunger-little-free-pantry']]);
-  c('four to a size: 3 new light (one kept), 4 moderate, 4 heavy', [1, 2, 3].map(t => I.filter(x => x.tier === t).length), [3, 4, 4]);
+  c('six to a size: 5 new light (one kept), 6 moderate, 6 heavy', [1, 2, 3].map(t => I.filter(x => x.tier === t).length), [5, 6, 6]);
   c('every one is in the library\'s shape, with an id of its own, out to the community, marked new', I.every(x => /^cl-[0-9a-f]{14}$/.test(x.id) && x.theme === 'hunger' && x.reach === 'out' && x.ai === true
     && typeof x.en.n === 'string' && x.en.how.length === 4 && Number.isInteger(x.cad)), true);
   c('the rejected: a repeat, "AI" and a web address (text), the school gates, the library\'s own name, a raffle, numbers out of range, no rhythm',
@@ -175,9 +176,9 @@ const RECORD = { keep: ['hunger-little-free-pantry', 'not-a-library-id'], ideas:
   c('a series of six is cad 6, an event 1, ongoing 0', [soup.cad, I.find(x => x.en.n === NAMES[3][0]).cad, I.find(x => x.en.n === NAMES[1][0]).cad], [6, 1, 0]);
   c('the heavy ideas keep their partner', I.filter(x => x.tier === 3).every(x => x.partner && x.partner.en === 'the county food bank'), true);
   const cache = S.peek(REC.cacheKey);
-  c('the set is kept (60 days) with the need and the town', [cache.v, cache.ideas.length, cache.keep, cache.need, cache.town], [1, 11, ['hunger-little-free-pantry'], { id: 'snap', title: 'Food on the table' }, 'Warminster Township']);
+  c('the set is kept (60 days) with the need and the town', [cache.v, cache.ideas.length, cache.keep, cache.need, cache.town], [1, 17, ['hunger-little-free-pantry'], { id: 'snap', title: 'Food on the table' }, 'Warminster Township']);
   const st = await J(await req(await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV }), { mode: 'ideas-status', job: JOB, key: KEY1 }));
-  c('ideas-status gives the set, what was kept and the set\'s key', [st.status, st.ideas.length, st.keep, st.set === REC.cacheKey.slice(2)], ['done', 11, ['hunger-little-free-pantry'], true]);
+  c('ideas-status gives the set, what was kept and the set\'s key', [st.status, st.ideas.length, st.keep, st.set === REC.cacheKey.slice(2)], ['done', 17, ['hunger-little-free-pantry'], true]);
   c('the log lines carry codes and counts only', logs.some(l => /Warminster|Bucks|16\.8|soup|Food on the table/.test(l)), false);
   c('a second wake does nothing', await quiet(() => W.runJob(JOB, wakes[0].body.worker)), 'skip'); }
 
@@ -185,7 +186,7 @@ console.log('\n-- the kept set: given again at no cost; "Generate new ideas" mak
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   wakes = []; const before = S.keys('c/');
   const r = await J(await ask(fn, { device: dev(11) }));
-  c('the same place and need: 200 cached, nobody woken, no count spent', [r.status, r.cached, r.ideas.length, r.keep, wakes.length, JSON.stringify(S.keys('c/')) === JSON.stringify(before)], [200, true, 11, ['hunger-little-free-pantry'], 0, true]);
+  c('the same place and need: 200 cached, nobody woken, no count spent', [r.status, r.cached, r.ideas.length, r.keep, wakes.length, JSON.stringify(S.keys('c/')) === JSON.stringify(before)], [200, true, 17, ['hunger-little-free-pantry'], 0, true]);
   c('…another need of the same place is its own study', (await J(await ask(fn, { device: dev(11), need: { ...NEED, id: 'nocar', title: 'Getting around without a car', themes: ['transport'] } }))).status, 202);
   c('…the same need with other figures is its own study', (await J(await ask(fn, { device: dev(11), figs: FIGS.map(f => f.k === 'snap' ? { ...f, t: 61.5 } : f) }))).status, 202);
   c('…fresh: a new study even with a kept set', (await J(await ask(fn, { device: dev(11), fresh: true }))).status, 202); }
@@ -216,12 +217,12 @@ console.log('\n-- too few good ideas: no result; the device count given back --'
 { S = makeStore(); globalThis.__terrainIdeasStore = S; wakes = [];
   const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(40), fresh: true }));
-  script = [DONE({ keep: [], ideas: [IDEA(1, 0), IDEA(1, 1), IDEA(2, 0), IDEA(2, 1), IDEA(3, 0)] })];
+  script = [DONE({ keep: [], ideas: [IDEA(1, 0), IDEA(1, 1), IDEA(1, 2), IDEA(2, 0), IDEA(2, 1), IDEA(2, 2), IDEA(3, 0), IDEA(3, 1)] })];
   const devKey = S.peek('j/' + r.job).counts.dev;
-  c('five ideas (fewer than six): failed no-result, the count given back', [await quiet(() => W.runJob(r.job, wakes[0].body.worker)), S.peek('j/' + r.job).code, S.peek(devKey).n], ['failed', 'no-result', 0]);
+  c('eight ideas (fewer than nine): failed no-result, the count given back', [await quiet(() => W.runJob(r.job, wakes[0].body.worker)), S.peek('j/' + r.job).code, S.peek(devKey).n], ['failed', 'no-result', 0]);
   const r2 = await J(await ask(fn, { device: dev(40), fresh: true }));
-  script = [DONE({ keep: [], ideas: [IDEA(1, 0), IDEA(2, 0), IDEA(2, 1), IDEA(2, 2), IDEA(3, 0), IDEA(3, 1), IDEA(3, 2)] })];
-  c('one size with a single idea: failed (each size needs two)', [await quiet(() => W.runJob(r2.job, wakes[1].body.worker)), S.peek('j/' + r2.job).code], ['failed', 'no-result']); }
+  script = [DONE({ keep: [], ideas: [IDEA(1, 0), IDEA(1, 1), IDEA(2, 0), IDEA(2, 1), IDEA(2, 2), IDEA(2, 3), IDEA(3, 0), IDEA(3, 1), IDEA(3, 2), IDEA(3, 3)] })];
+  c('ten ideas, but a size with only two: failed (each size needs three)', [await quiet(() => W.runJob(r2.job, wakes[1].body.worker)), S.peek('j/' + r2.job).code], ['failed', 'no-result']); }
 
 console.log('\n-- the limits --');
 { S = makeStore(); globalThis.__terrainIdeasStore = S;
