@@ -176,9 +176,10 @@ const DATA = { ...FX.DATA, geo: { ...FX.DATA.geo, matched: ADDRESS } };
     c(`${lang}: Your path: done · 40 of 46 · 3 ministries in your plan · done`, PP.qa('#hubpath .hp-step small').map(s => s.textContent),
       lang === 'en' ? ['Done ✓', '40 of 46', '3 ministries in your plan', 'Done ✓'] : ['Hecho ✓', '40 de 46', '3 ministerios en su plan', 'Hecho ✓']);
     PP.E(`openTool('survey'); render(); 1`); await sleep(150);
-    c(`${lang}: What's next: one "Make the case" per ministry in the plan, at step 1; a connection card beside each (all three are cnEligible)`,
-      [PP.qa('#u-whatsnext [data-u-next-case]').map(b => b.dataset.uNextCase), PP.qa('#u-whatsnext [data-u-next-card]').length, PP.qa('#u-whatsnext [data-u-next-case]')[0].textContent.trim()],
-      [['health-expo', 'backpack-giveaway', 'four-nights'], 3, lang === 'en' ? 'Create the proposal for the full health expo' : 'Crear la propuesta para la feria de salud completa']);   // v10.45.0 review #27d: one name for the proposal   // v10.43 (review, 1 Oct 2026): the Spanish name cut where the English is (it read «…, con pruebas y una ruta de derivación»)   // a name with a comma is quoted (CONNECT §4.3, rule 6)
+    // v10.47.1 — the pastor: "What's next … Does that even have to be there?" It is no longer drawn in the survey (was: one
+    // "Create the proposal for …" per ministry in the plan, with a connection card beside each). The plan itself is unchanged.
+    c(`${lang}: no What's next in the survey; the plan still holds its three ministries`, [PP.qa('#u-whatsnext').length, PP.J('uSelected()')],
+      [0, ['health-expo', 'backpack-giveaway', 'four-nights']]);
   }
   c('no page errors', [...P.errs, ...Pes.errs].filter(e => !/Not implemented/.test(e)).slice(0, 3), []);
   console.log(`\n${T.pass} passed, ${T.fail} failed${pending ? ', ' + pending + ' pending' : ''}`);
