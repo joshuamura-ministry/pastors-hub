@@ -111,7 +111,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('a church with no library ideas: nothing extra is fetched', P.net.idx, 0);
     P.w.close(); });
   await sec(async()=>{ const P=page({lang:'es'}); await sleep(1300); setup(P,{tool:'survey'});
-    c('Spanish: the needs\' heading', P.txt('#u-needs .ns-hero > h2'), 'Lo que este vecindario necesita de nuestra iglesia');
+    c('Spanish: the needs\' heading', P.txt('#u-needs .ns-hero > h2'), 'Necesidades del vecindario');   // v10.50.0 — the pastor (6 Oct 2026)
     P.w.close(); });
 
   console.log('\n-- 2. Make the Case step 2: "From your plan", then "More ideas for {group}" --');

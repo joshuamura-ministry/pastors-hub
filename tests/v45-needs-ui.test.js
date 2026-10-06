@@ -28,7 +28,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   // v10.45.1 — the pastor changed his mind (5 Oct 2026): "go through all the things about what the community is like and then it
   // will show what this neighborhood needs". Was: #u-needs between #focusnote and #brief.
   c('#u-needs at the bottom of the survey, after Community resources (v10.46.1: "should go after community resources")', (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling)]; })(P),[true,'sections','Community resources']);   // v10.46.1: at the bottom, after Community resources
-  c('its heading and John 4:35 under it', [P.txt('#u-needs .ns-hero > h2'),/John 4:35/.test(P.txt('#u-needs .verse')||'')], ['What this neighborhood needs from our church',true]);
+  c('its heading and John 4:35 under it', [P.txt('#u-needs .ns-hero > h2'),/John 4:35/.test(P.txt('#u-needs .verse')||'')], ['Neighborhood needs',true]);   // v10.50.0 — the pastor (6 Oct 2026): "the title could be neighborhood needs"
   // the review round (#27f): on a phone the preamble pushed the first need off the screen: a short note, the church link on its own
   // line, and the lifts said where the ideas are (each opened list names its lifts)
   // v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts page …
@@ -41,23 +41,24 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
 
   console.log('\n-- the cards --');
   const cards=P.qa('#u-needs .ns-list > .ns-need');
-  c('a card per need, numbered, greatest first; the first wears "Greatest need"', [cards.length,P.txt('#u-needs .ns-need .ns-rank'),P.qa('#u-needs .ns-top').length,P.txt('#u-needs .ns-need .ns-top')], [23,'1',1,'Greatest need']);   // the review round (#7): debt and grief join other needs here
+  c('a card per need, numbered, greatest first; the first wears "Greatest need"', [cards.length,P.txt('#u-needs .ns-need .ns-rank'),P.qa('#u-needs .ns-top').length,P.txt('#u-needs .ns-need .ns-top')], [25,'1',1,'Greatest need']);   // v10.50.0 — the pastor (6 Oct 2026): the two also cards numbered on (23 + 2)   // the review round (#7): debt and grief join other needs here
   c('each card: its category, its title as the h3, its evidence, the kind colour', [P.txt('#ns-h-rent50 .ns-cat'),P.txt('#ns-h-rent50 h3'),/^24% of renters pay more than half/.test(P.txt('#ns-h-rent50 .ns-ev')||''),P.q('[data-need="rent50"]').dataset.kind,P.q('[data-need="rent50"]').getAttribute('style')],
     ['Housing pressure','Households one setback from losing housing',true,'housing','--k:var(--m-housing)']);
   c('every control is a button; each toggle names what it opens; the body is a region named by its header',
     [P.qa('#u-needs .ns-head, #u-needs .ns-show').every(b=>b.tagName==='BUTTON'),P.qa('#u-needs .ns-head').every(b=>!!P.q('#'+b.getAttribute('aria-controls'))),P.q('#ns-b-rent50').getAttribute('role'),P.q('#ns-b-rent50').getAttribute('aria-labelledby')],
     [true,true,'region','ns-h-rent50']);
-  c('more than 15 needs: the first 12 show, then "Show all 23 needs"', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,P.txt('[data-ns-more]')], [12,'Show all 23 needs']);
+  c('more than 15 needs: the first 12 show, then "Show all 23 needs"', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,P.txt('[data-ns-more]')], [12,'Show all 25 needs']);
   P.q('[data-ns-more]').click();
-  c('…which shows them all, numbers kept', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,!!P.q('[data-ns-more]'),P.qa('#u-needs .ns-list .ns-rank').pop().textContent], [23,false,'23']);
+  c('…which shows them all, numbers kept', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,!!P.q('[data-ns-more]'),P.qa('#u-needs .ns-list .ns-rank').pop().textContent], [25,false,'25']);
   await openNeed(P,'rent50');
   c('a card opens in place: what the community needs and "Ask first"', [P.q('#ns-h-rent50').getAttribute('aria-expanded'),P.q('#ns-b-rent50').hidden,P.qa('#ns-b-rent50 .ns-detail li').length>=2,/^Ask first: /.test(P.txt('#ns-b-rent50 .ns-ask')||'')], ['true',false,true,true]);
   await openNeed(P,'snap');
   c('one card open at a time', [P.q('#ns-h-rent50').getAttribute('aria-expanded'),P.q('#ns-b-rent50').hidden,P.q('#ns-h-snap').getAttribute('aria-expanded')], ['false',true,'true']);
   P.q('#ns-h-snap').click();
   c('…and a second tap closes it', [P.q('#ns-h-snap').getAttribute('aria-expanded'),P.q('#ns-b-snap').hidden], ['false',true]);
-  c('the also rows: a topic, a tag and the evidence, no number', [P.qa('#u-needs .ns-also .ns-need').map(a=>[a.dataset.need,a.dataset.also]),!!P.q('#u-needs .ns-also .ns-rank'),P.txt('#ns-h-seniors-alone .ns-tag')],
-    [[['seniors-alone','near'],['seniors-nocar','town']],false,'Almost a need here']);   // the review round (#9): plain words
+  // v10.50.0 — the pastor (6 Oct 2026): "where it says also here make it a continuation … until they're all done" — the also cards are needs cards, numbered on, each with its tag
+  c('the also cards continue the list: numbered on, each with its tag', [P.qa('#u-needs .ns-list .ns-need[data-also]').map(a=>[a.dataset.need,a.dataset.also]),P.qa('#u-needs .ns-need[data-also] .ns-rank').map(x=>x.textContent),P.txt('#ns-h-seniors-alone .ns-tag'),P.qa('#u-needs .ns-alsob').length],
+    [[['seniors-alone','near'],['seniors-nocar','town']],['24','25'],'Almost a need here',0]);   // the review round (#9): plain words
   await openNeed(P,'seniors-nocar',true);
   c('…an also row opens into the same body: its detail and its ideas', [!!P.q('#ns-b-seniors-nocar .ns-detail'),rows(P,'seniors-nocar').length>=10], [true,true]);
 
@@ -71,7 +72,8 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   await openNeed(P,'rent50',true);
   const r50=rows(P,'rent50');
   // v10.46.1: each lift's name is on its button across the top (was a heading over each list)
-  c('the twelve, grouped Light → Moderate → Heavy, a button and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-ltab .ns-lt').map(h=>h.textContent),P.qa('#ns-i-rent50 .ns-lift .ns-gl').length],
+  // v10.50.0 — the pastor (6 Oct 2026): "underneath it will have the columns showing of all the ideas instead of having to click every single thing"
+  c('the twelve, grouped Light → Moderate → Heavy, three columns all open, a heading and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-lcol .ns-lh > span:not(.lift)').map(h=>h.textContent),P.qa('#ns-i-rent50 .ns-lift .ns-gl').length],
     [12,LIFTS,['Light lift','Moderate lift','Heavy lift'],3]);
   c('…inside each lift, the curator\'s order (most effective first)', r50, [1,2,3].flatMap(t=>STUB.needs.rent50.filter(id=>tierOf(id)===t)));
   c('the button says how many, then "Hide ideas ⌃"', [P.txt('[data-ns-show="rent50"] small'),P.q('[data-ns-show="rent50"]').getAttribute('aria-expanded')], ['Hide ideas ⌃','true']);
@@ -122,7 +124,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   // (the badge in Spanish: the first need here is Spanish at home, which a Spanish-speaking pastor's church very likely meets: review #12)
   // v10.45.1: the short note is gone
   c('the heading, the chip, the badge on the first need that is not Spanish', [P.txt('#u-needs .ns-hero > h2'),P.txt('#secnav button[data-t="u-needs"]'),P.txt('#u-needs .ns-top'),P.q('#u-needs .ns-top').closest('.ns-need').dataset.need],
-    ['Lo que este vecindario necesita de nuestra iglesia','Necesidades','Mayor necesidad','child-poverty']);
+    ['Necesidades del vecindario','Necesidades','Mayor necesidad','child-poverty']);   // v10.50.0 — the pastor (6 Oct 2026)
   c('the category in Spanish (the filter keeps the English one)', [P.txt('#ns-h-rent50 .ns-cat'),P.q('[data-need="rent50"]').dataset.cat], ['Presión de vivienda','Housing pressure']);
   await openSheet(P,'rent50','homeless-rent-help-page'); await until(()=>P.qa('#ns-sheet .ns-steps li').length===4);
   const rawEs=P.J(`libFull('homeless-rent-help-page')`).es;

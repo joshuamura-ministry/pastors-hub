@@ -58,7 +58,8 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
 
   console.log('\n-- #8, #9: the town, and "Also here" in plain words --');
   S=model(P,`D.levels.cousub={kind:'Town',name:'Immokalee Ccd',short:'Immokalee',ccd:true}; D.M.cousub.past=D.M.tract.past; D.M.cousub.pop=D.M.tract.pop; D.M.tract.past=null;`);
-  c('a census county division is "the Immokalee area": the tag and the line', [P.txt('#u-needs [data-also="town"] .ns-tag'),/across the Immokalee area as a whole/.test(P.txt('#u-needs .ns-alsob .note')||'')], ['Across the Immokalee area',true]);
+  // v10.50.0 — the pastor (6 Oct 2026): the also cards continue the list (no "Also here" heading or intro line): the tag says where
+  c('a census county division is "the Immokalee area": the tag', [P.txt('#u-needs [data-also="town"] .ns-tag'),P.qa('#u-needs .ns-alsob').length], ['Across the Immokalee area',0]);
   c('…the growth figure says where it is ("across the Immokalee area")', /^The population across the Immokalee area has grown/.test((S.needs.find(n=>n.id==='growth')||{}).evidence||''), true);
   // v10.47.0: the place line is the church now (the pastor: "we just need to know which church"); the town is on the Town button
   c('…never "Ccd": not on the place line (the church), not on the Town button', [/Ccd|CCD/.test(P.E(`(renderPlace(DATA.levels,DATA.geo),document.getElementById('place').textContent)`)),/Ccd|CCD/.test(P.txt('#scope')||'')], [false,false]);
@@ -66,7 +67,7 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   c('…in Spanish: "En toda la zona de Immokalee"', Pes.txt('#u-needs [data-also="town"] .ns-tag'), 'En toda la zona de Immokalee');
   model(P,'');
   c('"Near the line" is "Almost a need here"', P.txt('#u-needs [data-also="near"] .ns-tag'), 'Almost a need here');
-  c('the intro says what the two kinds are', P.txt('#u-needs .ns-alsob .note'), 'Two smaller kinds: figures here that are just under our mark, and needs across Warminster as a whole.');
+  c('no intro line any more: each also card carries its own tag ("Almost a need here" / "Across Warminster")', [P.qa('#u-needs .ns-alsob').length,P.qa('#u-needs .ns-need[data-also] .ns-tag').length>0], [0,true]);   // v10.50.0 — the pastor (6 Oct 2026)
   S=model(P,`D.M.tract.rent50=12; Object.assign(D.M.cousub,{rent50:30,renters:50,hh:20000});`);
   const tr50=S.also.find(n=>n.id==='rent50'&&n.tag==='town');
   c('a town row says "across Warminster" where its sentence said "here"', tr50&&tr50.evidence, '30% of renters pay more than half their income in rent — about 3,000 households across Warminster.');

@@ -155,6 +155,31 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.50.0 (6 Oct 2026) — the needs, clearer; Spiritual Gifts in three steps.** The pastor, from his computer: *"the title could be
+neighborhood needs … tap the need and plant the seed"*; *"the categories should be much bolder … same color as the 1 2 3 … glowing"*;
+*"instead of having it all shades of … pink use some shades of different colors"*; *"when you click it Ministry ideas … the columns showing
+of all the ideas instead of having to click every single thing"*; *"also here make it a continuation 7 8 9 10"*; *"community resources …
+two columns"*; and on Spiritual Gifts: *"on the top … steps so people know … fill in your church's information … send out spiritual
+gifts survey … analyze the report … take that box away … it has to start with your church … this next part is the spiritual gifts part …
+sample report should be below results … why would a member send me a code? Don't need that."*
+- Needs: `nsU('h2')` "Neighborhood needs" / "Necesidades del vecindario"; `nsU('lead')` "Tap a need and plant the seed." The also
+  cards are needs cards numbered on (`nsHTML` renders `[...needs,...also]` in one `.ns-list`; `nsCardHTML` adds the tag and
+  `data-also`; `nsAlsoHTML` unused; show-all counts both). The category line (`.ns-need .ns-cat`) is bold, in the card's colour, glowing.
+  Colours by category (`NS_CAT_HUE`, `nsHue`): the five kinds of figure keep theirs; Seniors, Veterans, Work & schedules, Young adults,
+  Income, A divided neighborhood have their own (`--m-seniors` … `--m-divided`, both themes).
+- Ideas: `nsIdeasHTML` draws `.ns-lcols`, three `.ns-lcol` columns (Light, Moderate, Heavy; heading, count, line, every row), one
+  under another below 900 px. v10.46.1's lift buttons are gone (`NS.lift`/`nsLiftOpen` stay, unused).
+- Community resources: `#helpslot` two columns from 760 px.
+- Spiritual Gifts landing (`gfRenderRoster`): `gfStepsHTML()` (1 Your church → 2 Invite your members → 3 See the results; each scrolls
+  to its part, the first opens Your church), Your church (1), `#gf-invite` (2, the two doors), `#gf-results` (3, the results, then
+  "See a sample report"). No Gifts-first card on the landing (the hub and the profile keep theirs). No paste-a-code box; a member is
+  never asked to send a code: a failed send says the answers are saved on the phone and to tap Send again; with no link, to open the
+  church's link again (`gfcopy`/`gfcodebox` gone). "Finish the three steps to save your church."
+- Tests: `v47-clean` gains these; updated with comments: v45-needs-ui, v45-review, v45-1-survey (columns), v42-plan-first, gifts-engine,
+  email-off, gifts-first-ui, gifts-sample, gifts-landing, gifts-shortlink (paste checks retired), v45-profile-move.
+- **Next (asked for):** "Generate new community needs" — Claude studies the tract's figures and proposes more needs, each tied to a
+  real number, with ways to meet them checked against what other churches have done (a paid feature; a small cost per use is fine).
+
 **v10.49.0 (5 Oct 2026) — money is stated, not checked; "Your church" in three steps.** The pastor: *"take the money part out
 of your church section on the spiritual gifts and add it in the proposal section"*, then *"we don't wanna add a place to fill in
 anything there. We just want the proposal to mention how much money they will need not versus available funds — we're gonna save all

@@ -67,8 +67,10 @@ function makeStore(){ const m=new Map(); return { m,
   c('…the number in bold, nothing else (no names, no counts of gifts)', [P.txt('#hubgifts .gff-n b'),NAMES.some(n=>P.txt('#hubgifts').includes(n))], ['18 of 46 adults',false]);
   P.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`);
   // v10.45.0 review #18: "Your church" now sits between this card and the two doors
-  c('the Spiritual Gifts landing: the same card between the heading and the two doors', [P.qa('#gifts [data-gf-first]').length,P.txt('#gifts [data-gf-first] .gff-n'),P.q('.gfhead').nextElementSibling.matches('[data-gf-first]'),P.q('[data-gf-first="landing"]').nextElementSibling.id==='gf-church'&&P.q('#gf-church').nextElementSibling.classList.contains('gfdoors')],
-    [1,'18 of 46 adults have discovered their gifts',true,true]);
+  // v10.50.0 — the pastor (6 Oct 2026): "it doesn't have to say nobody has taken it yet take that box away … it has to start with your church":
+  // the landing has no Gifts-first card; the three steps come first, then Your church (the hub keeps its card)
+  c('the Spiritual Gifts landing: no Gifts-first card; the three steps, then Your church, then the invitation', [P.qa('#gifts [data-gf-first]').length,P.q('.gfhead').nextElementSibling.classList.contains('gfsteps'),P.q('.gfsteps').nextElementSibling.id,P.q('#gf-church').nextElementSibling.id],
+    [0,true,'gf-church','gf-invite']);
   c('…“about 15 minutes” on the landing', /about 15 minutes/.test(P.txt('.gfhead .sub')), true);
   // v10.45.0 (stale): the profile lives in "Your church" on this landing, under the card at the landing's top: it is not repeated there
   c('"Your church" on the landing: the form, and no second card inside it', [!!P.q('#gf-church #u-cap-form'),P.qa('#gf-church [data-gf-first]').length], [true,0]);
@@ -76,7 +78,8 @@ function makeStore(){ const m=new Map(); return { m,
   P.E(`(()=>{ const f=document.getElementById('gf-church'); if(f) f.remove(); const d=document.createElement('div'); d.id='capslot'; document.body.appendChild(d); capRender(); })()`);
   c('the church profile: the card first, above the form (outside it)', [P.qa('#capslot [data-gf-first]').length,P.q('#capslot').firstElementChild.matches('[data-gf-first="profile"]'),!!P.q('#capslot [data-gf-first] + #u-cap-form'),P.txt('#capslot [data-gf-first] .gff-n')],
     [1,true,true,'18 of 46 adults have discovered their gifts']);
-  c('one card in each place, one button each', ['hub','landing','profile'].map(w=>[P.qa(`[data-gf-first="${w}"]`).length,P.qa(`[data-gf-first="${w}"] button`).length]), [[1,1],[1,1],[1,1]]);   // (the landing stays drawn behind the other tools)
+  // v10.50.0: none on the Spiritual Gifts landing any more ("take that box away"); the hub and the profile keep theirs
+  c('one card in each place, one button each (none on the landing)', ['hub','landing','profile'].map(w=>[P.qa(`[data-gf-first="${w}"]`).length,P.qa(`[data-gf-first="${w}"] button`).length]), [[1,1],[0,0],[1,1]]);   // (the landing stays drawn behind the other tools)
   c('(the demo badge the seed carries is said on the source line)', /\(demo profile\)\.$/.test(P.txt('#capslot .gff-src')), true);
 
   console.log('\n-- B. when the card shows, and its words --');

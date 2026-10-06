@@ -344,11 +344,12 @@ function makeStore(){
   await until(()=>A.w.eval('GFS.sent===true'));
   const sub2=calls.filter(x=>x.op==='submit').pop();
   c('submit carries email, emailOk, minor:false', [sub2.email,sub2.emailOk,sub2.minor], ['ana@example.org',true,false]);
-  c('no server: the member still gets a code to copy', await (async()=>{ const N=page(`https://pastorshub.org/#gifts=.${link}`,{server:false});
+  // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": no code to copy; the answers wait on the phone.
+  c('no server: no code to copy, no Send; the note says the answers are saved and to open the link again', await (async()=>{ const N=page(`https://pastorshub.org/#gifts=.${link}`,{server:false});
     await until(()=>N.w.document.getElementById('gfstart'));
     const member=N.w.eval('GF_VIEW')==='take'&&!N.w.document.getElementById('gfbackr');
     N.w.eval(`GFS.minor=false; GIFTS.forEach(g=>{GFS.a[g.id+'.0']=3;}); GFS.done=true; GFS.i=GF_TOTAL; gfRender();`);
-    return member&&!!N.w.document.getElementById('gfcopy')&&!N.w.document.getElementById('gfsend')&&N.w.document.getElementById('gfemail')===null; })(), true);
+    return member&&!N.w.document.getElementById('gfcopy')&&!N.w.document.getElementById('gfcodebox')&&!N.w.document.getElementById('gfsend')&&/saved on this phone\. Open your church’s link again/.test(N.w.document.getElementById('gfsendnote').textContent)&&N.w.document.getElementById('gfemail')===null; })(), true);
 
   const Q=page('https://pastorshub.org/#gifts-confirm=AAAAAAAAAAAA.BBBBBBBBBBBB.CCCCCCCCCCCCCCCCCCCCCCCC',{lang:'es',peek:{ok:true,first:'María',gifts:['mercy','hosp','nope'],church:'Iglesia Central',lang:'es'}});
   await until(()=>Q.w.document.getElementById('gfobsend'));

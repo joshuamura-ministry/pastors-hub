@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.49.0
+     TERRAIN  v10.50.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.49.0" data-theme="dark">
+<html lang="en" data-version="v10.50.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.49.0">
-<title>Community Map — Terrain v10.49.0</title>
+<meta name="terrain-version" content="v10.50.0">
+<title>Community Map — Terrain v10.50.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -34,6 +34,8 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
   --ink:#0E1726; --ink2:#4A5768; --ink3:#78879B;
   --m-housing:#2563EB; --m-children:#7C3AED; --m-hardship:#C2760B;
   --m-language:#0E8F6E; --m-people:#BE3E68;
+  /* v10.50.0: the newer kinds of need, each its own colour ("use some shades of different colors") */
+  --m-seniors:#A23BB5; --m-veterans:#C93C3C; --m-work:#0E8EA0; --m-young:#5E8A12; --m-income:#9A7B0A; --m-divided:#4B57D6;
   --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
   --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
   --shadow:0 1px 2px rgba(15,23,42,.06),0 10px 30px -18px rgba(15,23,42,.28);
@@ -55,6 +57,7 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
      and weak on a white card. */
   --m-housing:#6FB4FF; --m-children:#A78BFA; --m-hardship:#FBBF77;
   --m-language:#5EE9B5; --m-people:#F09AB8;
+  --m-seniors:#E58BF2; --m-veterans:#FF7A7A; --m-work:#4FD6E8; --m-young:#B5E36A; --m-income:#EAD27A; --m-divided:#9DA8FF;   /* v10.50.0 */
   --contour:rgba(94,233,181,.05);
   /* The dark theme had no shadows at all, so every panel sat flat on the
      background with nothing but a hairline to separate it. Depth in the dark
@@ -1438,6 +1441,21 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfback{margin:10px 0 0;border-top:0;padding-top:0}
 .gfback>summary{font-size:.86rem;color:var(--ink2)}
 .gfhead{margin:14px 0 10px}
+/* v10.50.0: the three steps, and the parts they lead to */
+.gfsteps{list-style:none;margin:6px 0 18px;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.gfsteps>li{display:flex}
+.gfstep{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:8px 16px 8px 10px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--ink);font:inherit;font-weight:650;cursor:pointer}
+.gfstep b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--acc) 22%,var(--panel2));color:var(--acc);font-family:var(--disp)}
+@media (hover:hover){.gfstep:hover{border-color:var(--acc)}}
+.gfstep:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.gfarrow{color:var(--ink3);font-size:1.1rem}
+@media (max-width:560px){.gfsteps{flex-direction:column;align-items:stretch}.gfsteps .gfarrow{display:none}.gfstep{width:100%}}
+.gfpart{margin-top:28px;padding-top:22px;border-top:1px solid var(--line2);scroll-margin-top:calc(var(--topH,58px) + 70px)}
+.gfpart-h{display:flex;align-items:center;gap:10px;font-family:var(--disp);font-size:1.35rem;font-weight:700;margin:0 0 14px;color:var(--ink)}
+.gfpn{display:inline-grid;place-items:center;width:30px;height:30px;border-radius:50%;background:color-mix(in srgb,var(--acc) 22%,var(--panel2));color:var(--acc);font-family:var(--disp);font-size:1rem;font-weight:700;margin-right:8px;flex:none}
+.gf-church>summary .gfpn{width:26px;height:26px;font-size:.9rem;vertical-align:middle}
+#gf-church{scroll-margin-top:calc(var(--topH,58px) + 70px)}
+#gf-results .gfsample{margin-top:14px}
 .gfhead h2{font-family:var(--disp);font-size:1.5rem;margin:0 0 4px}
 .gfcard{padding:16px 18px;margin:12px 0}
 .gfcard h3{font-family:var(--disp);font-size:1.05rem;margin:0 0 8px}
@@ -3771,6 +3789,11 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-rank{font-family:var(--disp);font-weight:700;font-size:1.25rem;color:var(--k);min-width:28px;line-height:1.3}
 .ns-t{min-width:0;display:block}
 .ns-cat{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;font-size:.74rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em}
+/* v10.50.0 — the pastor: "the categories should be much bolder, keep it the same color as the 1 2 3 4 5 6 7 … glowing … the most pronounced
+   part": the kind of need on top, in the number's colour, bold, with a soft glow */
+.ns-need .ns-cat{font-size:.86rem;font-weight:800;letter-spacing:.09em;color:var(--k);text-shadow:0 0 14px color-mix(in srgb,var(--k) 55%,transparent)}
+.ns-need .ns-cat .ns-top,.ns-need .ns-cat .ns-tag{text-shadow:none}
+.ns-need .ns-cat .ns-tag{color:var(--ink2);font-weight:600;letter-spacing:.02em}
 .ns-top{color:var(--bg);background:var(--k);border-radius:999px;padding:1px 8px;letter-spacing:.03em;font-weight:700;text-transform:none;font-size:.72rem}
 .u-needs .ns-need h3{font-family:var(--disp);font-size:1.12rem;font-weight:600;margin-top:4px;line-height:1.28;color:var(--ink);overflow-wrap:break-word}
 .ns-ev{display:block;color:var(--ink2);font-size:.88rem;margin-top:4px;overflow-wrap:break-word}
@@ -3810,6 +3833,17 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 @media (hover:hover){.ns-ltab:hover{border-color:color-mix(in srgb,var(--acc) 60%,var(--line2))}}
 .ns-ltab:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .ns-lift[hidden]{display:none}
+/* v10.50.0: every idea showing, in three columns (one under another on a phone) */
+.ns-lcols{display:grid;grid-template-columns:1fr;gap:18px}
+@media (min-width:900px){.ns-lcols{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+.ns-lcol{min-width:0}
+.ns-lh{display:flex;align-items:center;gap:8px;font-family:var(--disp);font-size:1rem;font-weight:700;color:var(--ink);margin:0}
+.ns-lh small{margin-left:auto;color:var(--ink3);font-weight:500;font-size:.78rem}
+.u-needs .ns-lh .lift b{background:var(--line2)}
+.u-needs .ns-lh .lift.l1 b:nth-child(-n+1),.u-needs .ns-lh .lift.l2 b:nth-child(-n+2),.u-needs .ns-lh .lift.l3 b{background:var(--acc)}
+.ns-lcol .ns-gl{margin:2px 0 6px}
+/* v10.50.0 — "for community resources it should have two rows instead of one … two columns that way it's not so long" */
+@media (min-width:760px){#helpslot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:start}#helpslot>.suggroup{margin:0}}
 .u-needs .ns-ltab .lift b{background:var(--line2)}
 .u-needs .ns-ltab .lift.l1 b:nth-child(-n+1),.u-needs .ns-ltab .lift.l2 b:nth-child(-n+2),.u-needs .ns-ltab .lift.l3 b{background:var(--acc)}
 .ns-bulb{width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
@@ -4096,13 +4130,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.49.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.50.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.49.0';
+const VERSION = 'v10.50.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -8724,6 +8758,7 @@ const ES={
   "Next step →":"Siguiente paso →",
   "Save church":"Guardar la iglesia",
   "Finish the four steps to save your church.":"Termine los cuatro pasos para guardar su iglesia.",
+  "Finish the three steps to save your church.":"Termine los tres pasos para guardar su iglesia.",
   "Saved for this church.":"Guardado para esta iglesia.",
  
  
@@ -12204,9 +12239,10 @@ function churchNameInSentence(){
    map, tools/ideas-src/needs.json, built with the library) and the library's index; a short list is topped up from the library
    (nsFallback). DESIGN-SURVEY §2, §4, §6. Never the words "AI", "generated" or "assistant" on these screens. */
 const NS_UI={
-  h2:['What this neighborhood needs from our church','Lo que este vecindario necesita de nuestra iglesia'],
+  // v10.50.0 — the pastor (6 Oct 2026): "the title could be neighborhood needs rather than such a long what this neighborhood needs from our church"
+  h2:['Neighborhood needs','Necesidades del vecindario'],
   eyebrow:['From survey to ministry','De la encuesta al ministerio'],
-  lead:['This is where you choose what to do. Tap a need to see why it matters and ministry ideas to meet it.','Aquí usted elige qué hacer. Toque una necesidad para ver por qué importa e ideas de ministerio para atenderla.'],
+  lead:['Tap a need and plant the seed.','Toque una necesidad y siembre la semilla.'],   // v10.50.0: "tap the need and plant the seed and that's it"
   chip:['Needs','Necesidades'],
   // review #27f: short on a phone; the church's information is a link on its own line
   nofill:['Nothing to fill in. Tap a need, then its ideas.','No hay nada que llenar. Toque una necesidad y luego sus ideas.'],
@@ -12505,12 +12541,13 @@ function nsIdeasHTML(n){
      essentially opens up … if I press moderate lift it makes moderate lift the whole thing … they will all be closed so just those
      three are seen … something that looks a little bit more compact". Three buttons across, each with its count; one list open at a
      time (tap the open one again to close it); nothing open at first, except the lift of the idea he came back to. */
-  const groups=NS_LIFTS.map(L=>[L,list.filter(v=>nsLift(v)===L)]).filter(([,g])=>g.length), open=nsLiftOpen(n,list);
-  const tabs=`<div class="ns-ltabs">${groups.map(([L,g])=>`<button type="button" class="ns-ltab" data-ns-lift="${L}" aria-expanded="${open===L}" aria-controls="ns-l-${esc(n.id)}-${L}">${nsBars(L)}<span class="ns-lt">${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></button>`).join('')}</div>`;
-  return tabs+groups.map(([L,g])=>{
-    return `<div class="ns-lift" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"${open===L?'':' hidden'}><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
+  /* v10.50.0 — the pastor (6 Oct 2026): "when you click it Ministry ideas it will have light lift moderate lift heavy lift, but underneath it
+     will have the columns showing of all the ideas instead of having to click every single thing, just have it all open up". Three
+     columns side by side (stacked on a phone), every idea showing. (v10.46.1's three buttons, one list at a time, are gone.) */
+  const groups=NS_LIFTS.map(L=>[L,list.filter(v=>nsLift(v)===L)]).filter(([,g])=>g.length);
+  return `<div class="ns-lcols">`+groups.map(([L,g])=>`<div class="ns-lift ns-lcol" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"><h4 class="ns-lh">${nsBars(L)}<span>${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></h4><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
       return `<button type="button" class="ns-row${NS.last===v.id&&NS.open===n.id?' ns-last':''}" data-idea="${esc(v.id)}" data-need="${esc(n.id)}"><span class="ns-in">${esc(gfCap(v.name))}</span><span class="ns-ia" aria-hidden="true">›</span>`
-        +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`; }).join('');
+        +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`).join('')+`</div>`;
 }
 function nsBodyHTML(n,open,ideasOpen){
   const steps=Array.isArray(n.steps)?n.steps:[];
@@ -12626,12 +12663,19 @@ function nsFigsHTML(n){
   const key=F.some(f=>f.c!=null)?L(`Each ring is ${where}; the mark on it is the county.`,`Cada anillo es ${where}; la marca sobre él es el condado.`):'';
   return `<div class="ns-figs"><div class="stats">${cards}</div>${key?`<p class="statkey">${esc(key)}</p>`:''}${born}</div>`;
 }
+/* v10.50.0 — the pastor: "where it says People instead of having it all shades of … pink use some shades of different colors": each kind
+   of need its own colour (the five kinds of figure keep theirs; the newer ones have their own). */
+const NS_CAT_HUE={'Language & newcomers':'language','Housing pressure':'housing','Hardship & work':'hardship','Families with children':'children',
+  'Seniors & isolation':'seniors','A divided neighborhood':'divided','A changing community':'people','Work & schedules':'work','Income':'income',
+  'Young adults':'young','Veterans':'veterans'};
+const nsHue=n=>NS_CAT_HUE[n.catLabel||n.cat]||n.kind||'language';
 function nsCardHTML(n,i,hide){
   const open=NS.open===n.id, io=open&&NS.ideas;
-  return `<article class="ns-need${open?' open':''}" data-need="${esc(n.id)}" data-cat="${esc(n.cat)}" data-kind="${n.kind}" style="--k:var(--m-${n.kind})"${hide?' hidden':''}>
+  const tag=n.tag?` <span class="ns-tag">${esc(n.tag==='town'?nsU('across',nsTownAll()):nsU('near'))}</span>`:'';
+  return `<article class="ns-need${n.tag?' ns-alsorow':''}${open?' open':''}" data-need="${esc(n.id)}" data-cat="${esc(n.cat)}" data-kind="${n.kind}"${n.tag?` data-also="${n.tag}"`:''} style="--k:var(--m-${nsHue(n)})"${hide?' hidden':''}>
   <button type="button" class="ns-head" id="ns-h-${esc(n.id)}" aria-expanded="${open}" aria-controls="ns-b-${esc(n.id)}">
     <span class="ns-rank">${i+1}</span>
-    <span class="ns-t"><span class="ns-cat">${esc(nsCatName(n.catLabel||n.cat))}${n.top?` <span class="ns-top">${esc(nsU('top'))}</span>`:''}</span><h3>${esc(n.title)}</h3><span class="ns-ev">${esc(n.evidence)}</span></span>
+    <span class="ns-t"><span class="ns-cat">${esc(nsCatName(n.catLabel||n.cat))}${n.top?` <span class="ns-top">${esc(nsU('top'))}</span>`:''}${tag}</span><h3>${esc(n.title)}</h3><span class="ns-ev">${esc(n.evidence)}</span></span>
     <span class="ns-chev" aria-hidden="true">⌄</span></button>
   ${nsBodyHTML(n,open,io)}</article>`;
 }
@@ -12654,7 +12698,9 @@ function nsStripHTML(S){
 function nsTownAll(){ const S=NSM||{}; return LANG==='es'?(S.ccd?'toda ':'todo ')+(S.town||''):(S.town||''); }
 function nsHTML(S){
   if(!S) return '';
-  const many=S.needs.length>15, shown=many&&!NS.showAll?12:S.needs.length;
+  /* v10.50.0 — the pastor (6 Oct 2026): "where it says also here make it a continuation 7 8 9 10 until they're all done": one list,
+     numbered on; each "also" card keeps its small tag (across the town / almost a need here). */
+  const all=[...S.needs,...S.also], many=all.length>15, shown=many&&!NS.showAll?12:all.length;
   const alsoLine=S.also.some(n=>n.tag==='town')?nsU('alsoLine',nsTownAll()):nsU('alsoNear');
   // review #27f: the note short, the church's information a link of its own, the lift legend inside an opened ideas list
   /* v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts
@@ -12665,9 +12711,8 @@ function nsHTML(S){
      what we actually want to do … something there that just separates it". A framed panel of its own: a label, the heading, one
      line saying what to do, the verse; then the needs. */
   return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${verseHTML('prompts')}</div>
-    ${S.needs.length?`<div class="ns-list">${S.needs.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
-    ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',S.needs.length))}</button>`:''}
-    ${S.also.length?`<div class="ns-alsob"><h3>${esc(nsU('also'))}</h3><p class="note">${esc(alsoLine)}</p><div class="ns-also">${S.also.map(nsAlsoHTML).join('')}</div></div>`:''}
+    ${all.length?`<div class="ns-list">${all.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
+    ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',all.length))}</button>`:''}
     ${!S.needs.length&&!S.also.length?`<p class="note ns-none">${esc(nsU('none'))}</p>`:''}`;
 }
 /* The section, drawn by render(): the model, the cards, the open need and its ideas as they were. */
@@ -12679,7 +12724,7 @@ function nsDraw(){
   NS.gk=gk;
   NSM=DATA&&DATA.M?nsModel(DATA.M,SCOPE):null;
   if(NS.open&&!nsNeedById(NS.open)){ NS.open=''; NS.ideas=false; }
-  if(NS.open&&NSM&&NSM.needs.findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;
+  if(NS.open&&NSM&&[...NSM.needs,...NSM.also].findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
   NS.lists.clear();
   h.dataset.chip=nsU('chip');
   h.innerHTML=NSM?nsHTML(NSM):'';
@@ -19421,10 +19466,8 @@ function gfRenderSend(box){
   box.innerHTML=`<h3>${L('Send this to your pastor','Envíe esto a su pastor')}</h3>
     <p class="note" id="gfsendnote">${GF_PUB_TARGET
       ?L('This sends your name and your answers to your pastor, so they can talk with you about where you might serve.','Esto envía su nombre y sus respuestas a su pastor, para que pueda conversar con usted sobre dónde podría servir.')
-      :L('Send your pastor this code and they can open your full result.','Envíele este código a su pastor y podrá abrir su resultado completo.')}${GF_PUB_TARGET&&gfWillEmail()?' '+L('Once you send it, we will email you a link to your report; open it and you can have a PDF copy emailed as well.','En cuanto lo envíe, le enviaremos por correo un enlace a su informe; al abrirlo, podrá pedir también una copia en PDF.'):''}${GF_PUB_TARGET&&earlier?' '+L('Your earlier result is still with your pastor; sending replaces it.','Su resultado anterior sigue con su pastor; al enviar, se reemplaza.'):''}</p>
-    <div class="gfnav">${GF_PUB_TARGET?`<button class="btn" id="gfsend">${L('Send my result','Enviar mi resultado')}</button>`:''}
-      <button class="btn ghost" id="gfcopy">${L('Copy my code instead','Copiar mi código en su lugar')}</button></div>
-    <textarea class="gfcode" id="gfcodebox" readonly rows="3">${esc(code)}</textarea>
+      :L('Your answers are saved on this phone. Open your church’s link again when you have a connection, and send them from there.','Sus respuestas están guardadas en este teléfono. Abra otra vez el enlace de su iglesia cuando tenga conexión y envíelas desde allí.')}${GF_PUB_TARGET&&gfWillEmail()?' '+L('Once you send it, we will email you a link to your report; open it and you can have a PDF copy emailed as well.','En cuanto lo envíe, le enviaremos por correo un enlace a su informe; al abrirlo, podrá pedir también una copia en PDF.'):''}${GF_PUB_TARGET&&earlier?' '+L('Your earlier result is still with your pastor; sending replaces it.','Su resultado anterior sigue con su pastor; al enviar, se reemplaza.'):''}</p>
+    ${GF_PUB_TARGET?`<div class="gfnav"><button class="btn" id="gfsend">${L('Send my result','Enviar mi resultado')}</button></div>`:''}
     ${earlier?`<div class="gfnav"><button class="btn ghost gfsm" id="gfdelearlier">${L('Delete my earlier result from the server','Eliminar mi resultado anterior del servidor')}</button></div>
     <p class="note" id="gfdelearliernote" role="status"></p>`:''}`;
   if(earlier) gfWireDeleteMine(document.getElementById('gfdelearlier'),document.getElementById('gfdelearliernote'),{all:true},()=>{
@@ -19448,15 +19491,14 @@ function gfRenderSend(box){
       if(fresh) gfRender(); else { gfRenderSend(box); gfActionsRefresh(); }
     }catch(e){
       send.disabled=false; send.textContent=L('Send my result','Enviar mi resultado');
-      const lost=GF_EMAIL_ENABLED
-        ?L('Nothing is lost: tap <b>Copy my code instead</b> and text or email that code to your pastor. It contains your whole result.','No se pierde nada: toque <b>Copiar mi código en su lugar</b> y envíe ese código a su pastor por mensaje o por correo. Contiene su resultado completo.')
-        :L('Nothing is lost: tap <b>Copy my code instead</b> and send that code to your pastor in a message. It contains your whole result.','No se pierde nada: toque <b>Copiar mi código en su lugar</b> y envíe ese código a su pastor en un mensaje. Contiene su resultado completo.');
+      // v10.50.0: no code to copy and send (the pastor: "why would a member send me a code? Don't need that"): the answers wait on the phone
+      const lost=L('Nothing is lost: your answers are saved on this phone. Tap <b>Send my result</b> again when you have a connection.','No se pierde nada: sus respuestas están guardadas en este teléfono. Toque <b>Enviar mi resultado</b> otra vez cuando tenga conexión.');
       note.innerHTML=(e&&e.code&&!['offline','nofn','server'].includes(e.code)
         ? esc(gfErrText(e))+' '
         : L('That did not go through — you may be offline, or the church has not finished setting this up.','No se pudo enviar: es posible que no tenga conexión, o que la iglesia todavía no haya terminado de configurar esto.')+' ')+lost;
     }
   };
-  document.getElementById('gfcopy').onclick=()=>{
+  if(document.getElementById('gfcopy')) document.getElementById('gfcopy').onclick=()=>{
     const t=document.getElementById('gfcodebox');
     gfCopy(t.value,t);
     document.getElementById('gfcopy').textContent=L('Copied — now send it to your pastor','Copiado: ahora envíeselo a su pastor');
@@ -19750,6 +19792,21 @@ function gfStoredCtx(churchId,pub){
 let GF_VIEW=null;   // null = not chosen yet; set to 'take' or 'roster' on open
 let GF_PUB_TARGET=null;   // set from the share link when a member opens it
 
+/* v10.50.0 — the pastor (6 Oct 2026): "on the top of spiritual gifts … there should be a steps so people know and can guide them … the
+   first one is fill in your church's information … then send out spiritual gifts survey to your church and then analyze the report …
+   it doesn't have to say nobody has taken it yet take that box away … it has to start with your church … underneath that it should be
+   very clear that this next part is the spiritual gifts part … sample report should be below results … why would a member send me a
+   code? Don't need that." Three steps across the top, each taking him to its part; the parts numbered to match. */
+function gfStepsHTML(){
+  const st=[['church',L('Your church','Su iglesia')],['invite',L('Invite your members','Invite a sus miembros')],['results',L('See the results','Vea los resultados')]];
+  return `<ol class="gfsteps" aria-label="${esc(L('Three steps','Tres pasos'))}">${st.map(([k,t],i)=>`<li><button type="button" class="gfstep" data-gf-step="${k}"><b>${i+1}</b><span>${esc(t)}</span></button></li>`).join('<li class="gfarrow" aria-hidden="true">→</li>')}</ol>`;
+}
+function gfStepsWire(h){
+  h.querySelectorAll('[data-gf-step]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.gfStep, el=document.getElementById(k==='church'?'gf-church':k==='invite'?'gf-invite':'gf-results'); if(!el) return;
+    if(k==='church') el.open=true;
+    el.scrollIntoView({block:'start',behavior:'auto'}); });
+}
 function gfRenderRoster(h){
   gfRosterPrune();
   const list=gfRoster(), ch=uChurch();
@@ -19764,13 +19821,15 @@ function gfRenderRoster(h){
     <h2>${L('Spiritual Gifts','Dones espirituales')}</h2>
     <p class="sub">${L(`Twenty-one gifts, a hundred and five statements, about ${GF_MINUTES} minutes. Members discover where they fit; you see who you have.`,`Veintiún dones, ciento cinco afirmaciones, unos ${GF_MINUTES} minutos. Los miembros descubren dónde encajan; usted ve con quiénes cuenta.`)}</p>
   </div>
-  ${gfFirstCardHTML('landing')}
+  ${gfStepsHTML()}
   <details class="card gfcard gf-church" id="gf-church" data-church="${esc(String(ch.id))}" style="--k:var(--acc)"${gfChurchEmpty()?' open':''}>
-    <summary><b>${L('Your church','Su iglesia')}</b> <span class="note">${L('Moved here from the Community Survey.','Se trasladó aquí desde la Encuesta Comunitaria.')}</span></summary>
+    <summary><b><span class="gfpn">1</span>${L('Your church','Su iglesia')}</b> <span class="note">${L('Moved here from the Community Survey.','Se trasladó aquí desde la Encuesta Comunitaria.')}</span></summary>
     <p class="note">${L('People, rooms and skills. The money for a ministry is on its proposal.','Personas, salones y habilidades. El dinero de cada ministerio está en su propuesta.')}</p>
     <div id="capsumslot"></div>
     <div class="askpanel" style="margin:14px 0"><div id="capslot"></div></div>
   </details>
+  <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h">
+  <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">2</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
   <div class="gfdoors">
     <button class="gfdoor" data-gv="setup" style="--k:var(--m-people)">
       <span class="gfdk">${L('For your members','Para sus miembros')}</span>
@@ -19784,14 +19843,11 @@ function gfRenderRoster(h){
       <span>${L('See your own profile first. It is the quickest way to know what your members will be shown, and pastors are members too.','Vea primero su propio perfil. Es la forma más rápida de saber lo que verán sus miembros, y los pastores también son miembros.')}</span>
       <span class="gfgo">${L('Begin','Comenzar')} <i></i></span>
     </button>
-    <button type="button" class="gfsample" id="gfsample">
-      <span class="gfsico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
-      <span class="gfstx"><b>${L('See a sample report','Ver un informe de ejemplo')}</b>
-        <span>${L('What a member receives when they finish — for showing people before they take it.','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.')}</span></span>
-      <span class="gfgo" aria-hidden="true"><i></i></span>
-    </button>
   </div>
+  </section>
 
+  <section class="gfpart" id="gf-results" aria-labelledby="gf-results-h">
+  <h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">3</span>${L('See the results','Vea los resultados')}</h3>
   <div class="card gfcard gfresults" style="--k:var(--acc)">
     <div class="gfrh"><h3>${nres?L(nres+' result'+(nres===1?'':'s')+' in',nres+' resultado'+(nres===1?' recibido':'s recibidos')):L('Results','Resultados')}</h3>
       <div class="gfnav" style="margin:0"><button class="btn ghost gfsm" id="gfpull">${L('Check for new results','Buscar resultados nuevos')}</button>${nres?`<button class="btn ghost gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button>`:''}</div></div>
@@ -19808,13 +19864,13 @@ function gfRenderRoster(h){
         <button class="btn ghost gfdel" data-i="${i}">${L('Delete','Eliminar')}</button></div></div>`;}).join('')
       :`<p class="note">${L('Nothing yet. Share the link with a few members and check back here.','Todavía nada. Comparta el enlace con algunos miembros y vuelva a revisar aquí.')}</p>`}
   </div>
-
-  <details class="u-details gfback"><summary>${L('Have a code from a member?','¿Tiene un código de un miembro?')}</summary>
-    <p class="note">${L('If a member sends you a code instead of using the link, paste it here.','Si un miembro le envía un código en lugar de usar el enlace, péguelo aquí.')}</p>
-    <input type="text" id="gfpaste" placeholder="TG1-…">
-    <button class="btn gfsm" id="gfadd">${L('Add to my list','Agregar a mi lista')}</button>
-    <p class="note" id="gfaddnote"></p>
-  </details>
+    <button type="button" class="gfsample" id="gfsample">
+      <span class="gfsico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
+      <span class="gfstx"><b>${L('See a sample report','Ver un informe de ejemplo')}</b>
+        <span>${L('What a member receives when they finish — for showing people before they take it.','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.')}</span></span>
+      <span class="gfgo" aria-hidden="true"><i></i></span>
+    </button>
+  </section>
   <div id="gfteamslot"></div>`;
 
   // The volunteer roster is back-office; it folds under the results. It is
@@ -19826,7 +19882,7 @@ function gfRenderRoster(h){
   { const fresh=h.querySelector('#gf-church');
     if(keep&&fresh){ fresh.replaceWith(keep); gfChurchSum(); } else { capRender(); gfChurchSum(); } }
   gfWireChurchNav(h);
-  gfFirstWire(h);   // v10.42 part 3: the Gifts first card
+  gfStepsWire(h);   // v10.50.0: 1 Your church → 2 Invite your members → 3 See the results
   { const sb=h.querySelector('#gfsample');
     if(sb) sb.onclick=()=>{ GF_VIEW='sample'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); }; }
   document.getElementById('gfpull').onclick=async()=>{
@@ -19869,7 +19925,7 @@ function gfRenderRoster(h){
       gfSync().then(x=>{ const msg=gfSyncText(x);
         if(msg&&uChurch().id===cid&&h.querySelector('#gfpull')){ gfRenderRoster(h); const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=msg; } }).catch(()=>{});
     } }
-  document.getElementById('gfadd').onclick=()=>{
+  if(document.getElementById('gfadd')) document.getElementById('gfadd').onclick=()=>{   // v10.47: the code box left the landing
     const v=document.getElementById('gfpaste').value.trim();
     const n=document.getElementById('gfaddnote');
     const d=gfRosterAdd(v);
@@ -21566,7 +21622,7 @@ function capRender(){
       <button class="btn" type="button" id="u-next">Next step &rarr;</button>
       <button class="btn" id="cap-done" type="submit">Save church</button>
     </div>
-    <span id="u-cap-status" role="status">${c.confirmed?'Saved for this church.':'Finish the four steps to save your church.'}</span>
+    <span id="u-cap-status" role="status">${c.confirmed?'Saved for this church.':'Finish the three steps to save your church.'}</span>
   </form>`;
   const form=$('u-cap-form');form.addEventListener('input',()=>{$('u-cap-status').textContent='Unsaved changes — save to update the plan.';});
   // Demo: one tap if the profile is empty; two if it would replace real entries.

@@ -105,8 +105,9 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   const sb=h.querySelector('#gfsample');
   c('"See a sample report" is on the landing', !!sb&&sb.querySelector('b').textContent, 'See a sample report');
   c('with its one line', sb&&sb.querySelector('.gfstx>span').textContent, 'What a member receives when they finish — for showing people before they take it.');
-  c('under the two doors, inside the same grid, and not a third door', [sb.parentNode.classList.contains('gfdoors'),sb.previousElementSibling&&sb.previousElementSibling.dataset.gv,
-    h.querySelectorAll('.gfdoor').length,sb.classList.contains('gfdoor'),sb.hasAttribute('data-gv')], [true,'take',2,false,false]);
+  // v10.50.0 — the pastor: "sample report should be below results"
+  c('below the results (step 3), not a door', [sb.parentNode.id,sb.previousElementSibling&&sb.previousElementSibling.classList.contains('gfresults'),
+    h.querySelectorAll('.gfdoor').length,sb.classList.contains('gfdoor'),sb.hasAttribute('data-gv')], ['gf-results',true,2,false,false]);
   c('the results still sit beneath the doors', !!(h.querySelector('.gfdoors').compareDocumentPosition(h.querySelector('.gfresults'))&4), true);
 
   console.log('-- opening it touches nothing --');
