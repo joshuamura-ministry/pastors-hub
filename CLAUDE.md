@@ -68,6 +68,10 @@ netlify/functions/advise.mjs   the model behind the prose plan, new ministry ide
 netlify/functions/advise-prices.mjs  (v10.44, prices-1.0) the background worker behind "Find prices" (Make the Case · a project or purchase): web search
                                and web fetch, three options recorded by a strict tool, every link cleaned; Netlify Blobs store `terrain-prices`
 netlify/functions/prices-sweep.mjs   (v10.44, prices-sweep-1.0) daily purge of price-search jobs (7 days) and their counters (2 days)
+netlify/functions/advise-needs.mjs   (v10.53.0, needs-1.0) the background worker behind the Community Survey's needs list made by Claude: web search
+                               and web fetch, one strict tool (record_needs), every number checked against the Census figures sent, every link
+                               the search's own; Netlify Blobs store `terrain-needs` (jobs j/, the place's kept list n/<hash>/<lang>, counters c/)
+netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.0) daily purge: jobs after 7 days, counters after 2, kept lists after 60
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
 conferences/                   (v10.44) "Learn from other conferences" as the page loads it: index.json (the chooser and every comparison, 50
@@ -138,6 +142,8 @@ values are never in the repo):
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
+| `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
+| `NEEDS_MODEL` / `NEEDS_EFFORT` | advise-needs.mjs | Optional (v10.53.0). Default `claude-opus-5-5` at effort `medium`. The needs list needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `PRICES_MODEL` / `PRICES_EFFORT` | advise.mjs, advise-prices.mjs | Optional (v10.44). Default `claude-opus-5-5` at effort `low`. Find prices needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`; without the passphrase the page never shows it. |
 | `TERRAIN_CODES` | census.mjs, gifts.mjs | Conference access codes. **Only enforced when `TERRAIN_REQUIRE_CODE` is on** (v10.38: registration replaced codes on the first page). |
 | `TERRAIN_REQUIRE_CODE` | census.mjs, gifts.mjs | `1`/`true`/`yes`/`on` brings the old access-code gate back. Unset = registration only. |
@@ -154,6 +160,41 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.53.0 (6 Oct 2026) — the Community Survey's needs list made by Claude.** The pastor: *"it should actually do that for the first
+list because I want the best list ever and it's not always going to be the best list if it's just using a database … I really want
+Claude to generate the best list based on the community survey and wherever else … drawing from the Internet too … We need to do our
+best"*; *"Generate new community needs … it can validate certain things that other churches have done … how to meet the needs or plant
+the seed"*. Design `~/Downloads/Terrain-work/v68/DESIGN-NEEDS.md`.
+- **Who:** the same lock as Find prices: the server has `ANTHROPIC_API_KEY` and `TERRAIN_AI_PASS` (and `NEEDS_DAY_MAX` is not 0), and the
+  device is unlocked (`aiPass()`, `?ideas=`). Everyone else sees the survey's own list exactly as before. (When paid plans exist, the plan
+  replaces the lock.)
+- **The page** (block after `nsDraw`: `NS_AI`, `nsAiProbe`, `nsAiPlace` (the state from the matched address or the location's label),
+  `nsAiInput`, `nsAiStart`, `nsAiAccept`, `nsAiClean`, `nsAiApply`, `nsAiKept`/`nsAiKeep`, `nsAiStatusHTML`, `nsAiBlocks`): the survey's
+  own list draws at once; `nsDraw` then asks (`nsAiAuto`) with the place's names, the report's figures (SPEC, tract · town · county), the
+  languages and places of birth, the survey's own list, its categories and the library's themes; **never the church, its address or the
+  pastor**. The answer (the server's kept list, or a study) replaces the list: Claude's order, titles and why (a field whose numbers fail
+  keeps the survey's own), a need the rules missed as `ai-<n>` (its category's colour, its figures as rings: `n.figKeys` in `nsFigs`, ideas
+  from its themes: `nsFallback`), "Also here" the survey's also less what it took. Every number is checked again here (`nsAiPool`,
+  `nsAiNumsOk`: the figures as given, rounded, "1 in N", a ratio to the county, the survey's own lines, a year, 0–12; never more than two
+  decimals); links https, opened apart (`rel=noopener noreferrer`), shown as the site's name. Kept with the church
+  (`uChurch().needsList[place|lang]`, the last three), so a redraw shows it at once. The line under "Tap a need and plant the seed."
+  (`#ns-aistat`): "Studying {town}'s needs and what churches have done… about a minute.", then "Studied {date}" + **Generate new community
+  needs** (fresh), or "The list could not be updated just now." + the button. An opened need: the rings, then **Plant the seed**, **In
+  {town}** (local lines), **What other churches have done** (church lines), then What helps / Where to begin / Ask first.
+- **The server:** advise.mjs **advise-2.5**, modes `needs` (the lock, the registration, `needsInput` — place names and figures only — the
+  kept list `n/<sha(place|figures)>/<lang>` given at no cost unless fresh, then the limits, the job, the wake) and `needs-status`;
+  **advise-needs.mjs** (needs-1.0, background): one request with web search (6) and web fetch (4), social sites and shorteners blocked, the
+  town as the search's place, the strict `record_needs`; `cleanNeeds`: ids sent or "new", the categories sent, the themes sent; every
+  number in title, why and plant one of the figures (`numberPool`/`numbersOk`); local and church lines only with a link the search
+  returned (cleaned, https); no markup, web address, emoji, "AI" or "targets"; 5–15 needs or no result. The kept list is keyed by the place
+  **and its figures**, so nobody can leave a list made from other numbers for another pastor of the same place. **needs-sweep.mjs**.
+- **Never run against the real service** (every test stubs it): the first real study is his, on his unlocked device. Watch it (time,
+  searches, how many needs survive the checks; the job record keeps the counts).
+- Verify after deploy: `/.netlify/functions/advise` → `"fn":"advise-2.5"`, `"needs":true`, `"needsFn":"needs-1.0"`.
+- Tests: `needs-function` (new, 55) and `v53-needs-claude` (new, 28), both failing first on v10.52.0 (`v68/ff-*.log`); updated with comments:
+  advise-function, advise-topic, advise-prices (advise-2.5), connect-client (a thirteenth `memberLink()` guard). Samples (a MADE-UP answer, to
+  show the layout): `~/Downloads/Terrain-v10.53.0-samples/` (`v68/shots13.mjs`).
 
 **v10.52.0 (6 Oct 2026) — Make the Case: choose the size (Light · Moderate · Heavy lift).** The pastor: *"making the case is
 essentially putting together not only what you need in order to start the ministry but also the proposal … it can be a light lift

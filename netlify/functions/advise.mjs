@@ -1,10 +1,10 @@
-// Terrain · optional AI ministry planner.                            advise-2.4
+// Terrain · optional AI ministry planner.                            advise-2.5
 //
 // The API key lives ONLY in Netlify's encrypted environment variables:
 //   Netlify → Project configuration → Environment variables → ANTHROPIC_API_KEY
 // It is never in this repository and never reaches the browser.
 //
-// GET  → { enabled, model, fn, locked, prices, pricesFn }   the page asks this first and only
+// GET  → { enabled, model, fn, locked, prices, pricesFn, needs, needsFn }   the page asks this first and only
 //                                          shows the button when a key exists
 //                                          (prices: Find prices is on: a key AND a passphrase)
 // POST { summary }                         → { text }   a prose plan (unchanged)
@@ -22,6 +22,17 @@
 //                                          queues the job in Netlify Blobs and wakes advise-prices.mjs (a background
 //                                          function) → 202 { job, key, poll }
 // POST { mode:'prices-status', job, key }  → { status: queued | running | done | failed, options?, notes?, checked?, code? }
+// POST { mode:'needs', lang, device, fresh, place, figs, langs, origins, cands, cats, themes }   (advise-2.5) the Community
+//                                          Survey's needs list: the same lock as prices, then the neighborhood's kept list
+//                                          (200 { cached, made, needs }) or a study queued for advise-needs.mjs (202 { job, key, poll })
+// POST { mode:'needs-status', job, key }   → { status, made?, needs?, code? }
+//
+// 2.5 (v10.53.0, 6 Oct 2026). The needs list (DESIGN-NEEDS.md, v68). The pastor: "I want the best list ever … I really want Claude
+// to generate the best list based on the community survey and wherever else … drawing from the Internet too". Only place names and
+// Census figures are sent (never the church or the pastor). A neighborhood's list is kept 60 days (store "terrain-needs") and given
+// again at no cost; "Generate new community needs" (fresh) makes a new one. The same order of checks as prices (key, passphrase SET,
+// lock, registration, input) and, before anything is spent, the limits: 6 a device a UTC day, 12 a registration, 10 an address an
+// hour, NEEDS_DAY_MAX (60) for the site. The study runs in advise-needs.mjs; old jobs, counters and lists go daily (needs-sweep.mjs).
 //
 // 2.4 (v56, 2 Oct 2026). Find prices (Make the Case · a project or purchase; DESIGN-PURCHASE.md §7). The pastor: "Find prices"
 // ON, only when he taps it, behind the same lock as the other modes, three options with links, store, price and "checked
@@ -60,7 +71,7 @@ import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
-const FN_VERSION = 'advise-2.4';   // 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
+const FN_VERSION = 'advise-2.5';   // 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
 function passOk(given){
@@ -639,6 +650,159 @@ async function pricesStatus(p) {
   return reply(out);
 }
 
+// ============================================================ THE NEEDS LIST (advise-2.5, v10.53.0)
+const NEEDS_FN = 'needs-1.0';
+const NEEDS_STORE = 'terrain-needs';
+const NEEDS_DEV_DAY = 6, NEEDS_REG_DAY = 12, NEEDS_IP_HOUR = 10, NEEDS_CACHE_MS = 60 * 864e5;
+const needsDayMax = () => { const n = parseInt(process.env.NEEDS_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 1000 ? n : 60; };
+const NEEDS_MODEL = () => (process.env.NEEDS_MODEL || 'claude-opus-5-5').trim();
+const NEEDS_EFFORT = () => { const e = (process.env.NEEDS_EFFORT || 'medium').trim(); return ['low', 'medium', 'high', 'xhigh', 'max'].includes(e) ? e : 'medium'; };
+const RE_FKEY = /^[A-Za-z][A-Za-z0-9]{1,24}$/, RE_NID = /^[a-z0-9@-]{2,48}$/, RE_THEME = /^[a-z0-9-]{2,30}$/;
+const N_UNITS = new Set(['n', 'p', '$', 'd1', 'd2']);
+function needsStore() {
+  if (globalThis.__terrainNeedsStore) return globalThis.__terrainNeedsStore;
+  return getStore({ name: NEEDS_STORE, consistency: 'strong' });
+}
+function needsLog(code) { try { console.log('[needs] ' + JSON.stringify({ fn: FN_VERSION, code })); } catch { /* never throws */ } }
+const nReply = (code, status, extra) => { needsLog(code); return reply({ ok: false, code, ...(extra || {}) }, status); };
+const nPlain = v => !!v && typeof v === 'object' && !Array.isArray(v);
+// a figure: null (no value) or a finite number; undefined when refused
+const nNum = v => v == null ? null : (typeof v === 'number' && Number.isFinite(v) && Math.abs(v) < 1e9 ? Math.round(v * 100) / 100 : undefined);
+// → {input} or {field}. Place names and figures only: anything that is not one is refused, never passed on.
+function needsInput(p) {
+  const lang = p.lang === 'es' ? 'es' : 'en';
+  const P = p.place;
+  if (!nPlain(P)) return { field: 'place' };
+  const tract = pText(P.tract, 3, 80); if (!tract) return { field: 'place.tract' };
+  const town = pText(P.town, 2, 80); if (!town) return { field: 'place.town' };
+  const county = pText(P.county, 2, 80); if (!county) return { field: 'place.county' };
+  const st = typeof P.state === 'string' && /^[A-Za-z]{2}$/.test(P.state) ? P.state.toUpperCase() : null;
+  const stateName = st ? US_STATES[st] : null; if (!stateName) return { field: 'place.state' };
+  if (!Array.isArray(p.figs) || p.figs.length < 5 || p.figs.length > 80) return { field: 'figs' };
+  const figs = [];
+  for (const f of p.figs) {
+    if (!nPlain(f) || !RE_FKEY.test(String(f.k || ''))) return { field: 'figs.k' };
+    const label = pText(f.label, 2, 80); if (!label) return { field: 'figs.label' };
+    if (!N_UNITS.has(f.unit)) return { field: 'figs.unit' };
+    const t = nNum(f.t), w = nNum(f.w), c = nNum(f.c);
+    if (t === undefined || w === undefined || c === undefined) return { field: 'figs.value' };
+    figs.push({ k: f.k, label, unit: f.unit, t, w, c });
+  }
+  if (new Set(figs.map(f => f.k)).size !== figs.length) return { field: 'figs.k' };
+  const langs = [];
+  for (const l of (Array.isArray(p.langs) ? p.langs : []).slice(0, 6)) {
+    const name = nPlain(l) ? pText(l.name, 2, 60) : null, share = nPlain(l) ? nNum(l.share) : undefined, count = nPlain(l) ? nNum(l.count) : undefined;
+    if (!name || share == null || count == null) return { field: 'langs' };
+    langs.push({ name, share, count });
+  }
+  const origins = [];
+  for (const o of (Array.isArray(p.origins) ? p.origins : []).slice(0, 6)) {
+    const name = nPlain(o) ? pText(o.name, 2, 60) : null, share = nPlain(o) ? nNum(o.share) : undefined;
+    if (!name || share == null) return { field: 'origins' };
+    origins.push({ name, share });
+  }
+  if (!Array.isArray(p.cats) || p.cats.length < 1 || p.cats.length > 30) return { field: 'cats' };
+  const cats = [];
+  for (const c of p.cats) { const v = pText(c, 2, 60); if (!v) return { field: 'cats' }; cats.push(v); }
+  if (!Array.isArray(p.cands) || p.cands.length < 1 || p.cands.length > 60) return { field: 'cands' };
+  const cands = [];
+  for (const c of p.cands) {
+    if (!nPlain(c) || !RE_NID.test(String(c.id || ''))) return { field: 'cands.id' };
+    const title = pText(c.title, 3, 140); if (!title) return { field: 'cands.title' };
+    const cat = pText(c.cat, 2, 60); if (!cat || !cats.includes(cat)) return { field: 'cands.cat' };
+    const ev = c.ev == null || c.ev === '' ? '' : pText(c.ev, 1, 400); if (ev == null) return { field: 'cands.ev' };
+    cands.push({ id: c.id, title, cat, ev });
+  }
+  if (new Set(cands.map(c => c.id)).size !== cands.length) return { field: 'cands.id' };
+  if (!Array.isArray(p.themes) || p.themes.length > 120 || p.themes.some(t => typeof t !== 'string' || !RE_THEME.test(t))) return { field: 'themes' };
+  return { input: { lang, place: { tract, town, county, state: st, stateName }, figs, langs, origins, cats, cands, themes: [...new Set(p.themes)] } };
+}
+async function needsRoute(request, context, p) {
+  if (p.mode === 'needs-status') return needsStatus(p);
+  if (!KEY) return nReply('nokey', 503);
+  if (!PASS || needsDayMax() === 0) return nReply('disabled', 403);
+  if (!passOk(request.headers.get('x-terrain-pass'))) return nReply('locked', 401);
+  const secret = pRegSecret();
+  let rid = null;
+  if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return nReply('noreg', 401); }
+  if (typeof p.device !== 'string' || !RE_DEVICE.test(p.device)) return nReply('bad-input', 400, { field: 'device' });
+  const got = needsInput(p);
+  if (!got.input) return nReply('bad-input', 400, { field: got.field });
+  const I = got.input, store = needsStore(), now = Date.now();
+  // the kept list is the place's AND its figures': a list is given again only for the very same Census figures, so nobody can leave
+  // a list made from other numbers for another pastor of the same place (and the page checks every number again)
+  const cacheKey = 'n/' + pSha('terrain-needs-place|' + [I.place.tract, I.place.town, I.place.county, I.place.state].join('|').toLowerCase() + '|' + pSha(JSON.stringify(I.figs))).slice(0, 32) + '/' + I.lang;
+  if (p.fresh !== true) {
+    let hit = null; try { hit = await store.get(cacheKey, { type: 'json' }); } catch { hit = null; }
+    if (hit && Array.isArray(hit.needs) && typeof hit.at === 'number' && now - hit.at < NEEDS_CACHE_MS) {
+      needsLog('cached');
+      return reply({ ok: true, fn: FN_VERSION, cached: true, made: hit.made, needs: hit.needs });
+    }
+  }
+  const day = new Date(now).toISOString().slice(0, 10), hour = new Date(now).toISOString().slice(0, 13);
+  const bucket = pClientIp(request, context);
+  const keys = { dev: 'c/dev/' + day + '/' + pSha('terrain-needs-dev|' + p.device).slice(0, 16), reg: rid ? 'c/reg/' + day + '/' + rid : null,
+    ip: bucket ? await pIpKey(store, hour, bucket) : null, site: 'c/site/' + day };
+  const plan = [['dev', NEEDS_DEV_DAY, 'limit-device', nextUtcDay(now)], ['reg', NEEDS_REG_DAY, 'limit-reg', nextUtcDay(now)],
+    ['ip', NEEDS_IP_HOUR, 'limit-ip', nextUtcHour(now)], ['site', needsDayMax(), 'limit-site', nextUtcDay(now)]];
+  const taken = [];
+  for (const [k, max, code, until] of plan) {
+    if (!keys[k]) continue;
+    if (!(await pBump(store, keys[k], max, now))) {
+      for (const t of taken) await pGiveBack(store, keys[t]);
+      return nReply(code, 429, { retryAfter: Math.max(1, Math.ceil((until - now) / 1000)) });
+    }
+    taken.push(k);
+  }
+  const job = pRand(16), key = pRand(32), worker = pRand(32);
+  const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
+    model: NEEDS_MODEL(), effort: NEEDS_EFFORT(), counts: { dev: keys.dev } };
+  const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return nReply('busy', 503); }
+  let woke = false;
+  try {
+    const res = await fetch(new URL('/.netlify/functions/advise-needs', request.url), {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ job, worker }), signal: AbortSignal.timeout(5000) });
+    woke = res && res.status === 202;
+  } catch { woke = false; }
+  if (!woke) {
+    let lost = false;
+    try {
+      const failed = { ...rec, status: 'failed', code: 'unavailable', finished: Date.now() };
+      let f;
+      if (w && w.etag) f = await store.setJSON('j/' + job, failed, { onlyIfMatch: w.etag });
+      else { const cur = await store.get('j/' + job, { type: 'json' }); f = cur && cur.status === 'queued' ? await store.setJSON('j/' + job, failed) : { modified: false }; }
+      lost = !!(f && f.modified === false);
+    } catch { /* the sweep tidies it */ }
+    if (lost) { needsLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
+    for (const t of taken) await pGiveBack(store, keys[t]);
+    return nReply('unavailable', 502);
+  }
+  needsLog('queued');
+  return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202);
+}
+async function needsStatus(p) {
+  if (typeof p.job !== 'string' || !RE_JOB.test(p.job)) return reply({ ok: false, code: 'gone' }, 404);
+  if (typeof p.key !== 'string' || !RE_JKEY.test(p.key)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const store = needsStore(), now = Date.now();
+  const cas = typeof store.getWithMetadata === 'function';
+  let rec = null, etag = null;
+  if (cas) { const r = await store.getWithMetadata('j/' + p.job, { type: 'json' }); if (r) { rec = r.data; etag = r.etag; } }
+  else rec = await store.get('j/' + p.job, { type: 'json' });
+  if (!rec || typeof rec !== 'object' || typeof rec.created !== 'number' || now - rec.created > JOB_KEEP_MS) return reply({ ok: false, code: 'gone' }, 404);
+  if (!pHashOk(p.key, rec.keyHash)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const stuck = (rec.status === 'running' && now - (rec.started || rec.created) > STUCK_MS) || (rec.status === 'queued' && now - rec.created > STUCK_MS);
+  if (stuck) {
+    const next = { ...rec, status: 'failed', code: rec.status === 'running' ? 'timeout' : 'unavailable', finished: now };
+    const w = await store.setJSON('j/' + p.job, next, cas && etag ? { onlyIfMatch: etag } : undefined);
+    if (!w || w.modified !== false) { rec = next; if (rec.counts) await pGiveBack(store, rec.counts.dev); }
+  }
+  const out = { ok: true, status: rec.status, ms: (rec.finished || now) - rec.created };
+  if (rec.status === 'done') Object.assign(out, { made: rec.made, needs: Array.isArray(rec.needs) ? rec.needs : [] });
+  if (rec.status === 'failed') out.code = typeof rec.code === 'string' ? rec.code : 'unavailable';
+  return reply(out);
+}
+
 async function callClaude(key, body){
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -706,7 +870,8 @@ export default async (request, context) => {
       enabled: !!KEY, model: MODEL, fn: FN_VERSION, locked: !!PASS,
       keyLooksRight: KEY.startsWith('sk-ant-') && KEY.length > 40, keyLength: KEY.length,
       maxIdeasPerCall: MAX_IDEAS_PER_CALL, kinds: Object.keys(KINDS), topic: true,
-      prices: !!KEY && !!PASS && pricesDayMax() > 0, pricesFn: PRICES_FN   // v10.44 review: PRICES_DAY_MAX=0 turns the button off too
+      prices: !!KEY && !!PASS && pricesDayMax() > 0, pricesFn: PRICES_FN,   // v10.44 review: PRICES_DAY_MAX=0 turns the button off too
+      needs: !!KEY && !!PASS && needsDayMax() > 0, needsFn: NEEDS_FN        // v10.53.0: the needs list (NEEDS_DAY_MAX=0 turns it off)
     });
   }
   if (request.method !== 'POST') return reply({ error: 'Use GET or POST.' }, 405);
@@ -715,6 +880,10 @@ export default async (request, context) => {
   let raw = null, early = null;
   try { raw = await request.text(); } catch { raw = null; }
   if (raw != null && raw.length <= MAX_BODY) { try { early = JSON.parse(raw); } catch { early = null; } }
+  if (early && (early.mode === 'needs' || early.mode === 'needs-status')) {
+    try { return await needsRoute(request, context, early); }
+    catch (e) { needsLog('error'); return reply({ error: 'The needs list could not be made just now.', code: 'unavailable' }, 502); }
+  }
   if (early && (early.mode === 'prices' || early.mode === 'prices-status')) {
     try { return await pricesRoute(request, context, early); }
     catch (e) { pricesLog('error'); return reply({ error: 'Prices could not be found just now.', code: 'unavailable' }, 502); }

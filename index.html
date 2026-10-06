@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.52.0
+     TERRAIN  v10.53.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.52.0" data-theme="dark">
+<html lang="en" data-version="v10.53.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.52.0">
-<title>Community Map — Terrain v10.52.0</title>
+<meta name="terrain-version" content="v10.53.0">
+<title>Community Map — Terrain v10.53.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3911,6 +3911,17 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-figs .stat .ring .trk{stroke:var(--line2)}
 .ns-figs .statkey{margin-top:8px}
 .ns-born{color:var(--ink2);font-size:.88rem}
+/* v10.53.0 — the needs list made by Claude: the line under the heading, the plant line, the local and church lines with their sources */
+.ns-aistat{margin:12px 0 0;display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;font-size:.88rem;color:var(--ink2)}
+.ns-aistat:empty{display:none}
+.ns-aistat .btn{min-height:36px}
+.ns-aispin{width:14px;height:14px;border-radius:50%;border:2px solid color-mix(in srgb,var(--acc) 30%,transparent);border-top-color:var(--acc);animation:nsAiSpin 1s linear infinite;flex:none}
+@keyframes nsAiSpin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){ .ns-aispin{animation:none} }
+.ns-plant{margin:8px 0;color:var(--ink);font-size:.95rem;line-height:1.55}
+.ns-plant b{color:var(--k);margin-right:4px}
+.ns-ailist{margin:4px 0 10px;padding-left:1.1em;display:grid;gap:5px;color:var(--ink2);font-size:.9rem;line-height:1.55}
+.ns-ailist a{color:var(--k);font-weight:650;font-size:.82rem;white-space:nowrap;text-underline-offset:2px}
 .ns-born b{color:var(--m-people);font-weight:600}
 .ns-help{color:var(--ink2);font-size:.92rem;line-height:1.6;border-left:3px solid var(--k);padding:2px 0 2px 12px;margin:4px 0}
 .ns-help b{display:block;color:var(--ink);font-weight:600;margin-bottom:2px}
@@ -4230,13 +4241,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.52.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.53.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.52.0';
+const VERSION = 'v10.53.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -12535,6 +12546,9 @@ function nsTagsFor(id){
 }
 function nsFallback(n){
   if(!LIB.rows) return [];
+  // v10.53.0: a need the list made (ai-<n>): the library's ideas of the themes it names, in that order
+  if(/^ai-/.test(n.id)&&n.ai&&n.ai.themes&&n.ai.themes.length){ const th=n.ai.themes;
+    return LIB.rows.filter(r=>r.reach!=='in'&&th.includes(r.theme)).sort((a,b)=>th.indexOf(a.theme)-th.indexOf(b.theme)||(a.id<b.id?-1:a.id>b.id?1:0)).map(r=>r.id); }
   const tags=new Set(nsTagsFor(n.id)), themes=(NS_FALLBACK[n.id]||{}).themes||[], own=n.lang?(NS_LANG[n.lang]||{}).key:'';
   if(!tags.size) return [];
   return LIB.rows.filter(r=>r.reach!=='in').map(r=>{
@@ -12658,7 +12672,7 @@ function nsBodyHTML(n,open,ideasOpen){
   // v10.45.1: "what the community needs … more robust with information … the circular graphs with the colors"; and the ideas a
   // section of their own ("there's no differentiation between Ministry ideas to meet the need and what the community needs")
   return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}>
-    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}
+    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}${open?nsAiBlocks(n):''}
       ${help?`<p class="ns-help"><b>${esc(L('What helps','Lo que ayuda'))}</b> ${esc(help[LANG==='es'?1:0])}</p>`:''}
       ${steps.length?`<h5>${esc(L('Where to begin','Por dónde empezar'))}</h5><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
       ${n.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(n.ask)}</p>`:''}</div>
@@ -12736,7 +12750,7 @@ function nsFigs(n){
     const occ=(x,g)=>{ const r=x&&Array.isArray(x.occ)?x.occ.find(o=>o[0]===g):null; return r?r[1]:null; };
     const low=x=>x&&x.ltvw!=null&&x.count?x.ltvw/x.count*100:null;
     const out=[];
-    for(const k of NS_FIGS[n.id]||[]){
+    for(const k of n.figKeys||NS_FIGS[n.id]||[]){   // v10.53.0: a new need's own figures
       let v=null, cv=null, lab='', kind='language';
       if(k==='@lang'){ if(!L) continue; v=L.share; cv=cL?cL.share:null; lab=es?'Hablan '+name.charAt(0).toLowerCase()+name.slice(1)+' en casa':'Speak '+name+' at home'; }   // in Spanish a language is lower case in a sentence
       else if(k==='@langLow'){ if(!L) continue; v=low(L); cv=low(cL); lab=es?'De ellos, con inglés limitado':'Of them, limited English'; }
@@ -12813,7 +12827,7 @@ function nsHTML(S){
      There's gotta be a title there … that will let people know that this is a clickable area … this is where we actually discover
      what we actually want to do … something there that just separates it". A framed panel of its own: a label, the heading, one
      line saying what to do, the verse; then the needs. */
-  return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${verseHTML('prompts')}</div>
+  return `<div class="ns-hero"><p class="ns-eyebrow">${esc(nsU('eyebrow'))}</p><h2>${esc(nsU('h2'))}</h2><p class="ns-lead">${esc(nsU('lead'))}</p>${nsAiStatusHTML()}${verseHTML('prompts')}</div>
     ${all.length?`<div class="ns-list">${all.map((n,i)=>nsCardHTML(n,i,i>=shown)).join('')}</div>`:''}
     ${many&&!NS.showAll?`<button type="button" class="btn ghost ns-more" data-ns-more>${esc(nsU('showAll',all.length))}</button>`:''}
     ${!S.needs.length&&!S.also.length?`<p class="note ns-none">${esc(nsU('none'))}</p>`:''}`;
@@ -12826,6 +12840,9 @@ function nsDraw(){
   if(NS.gk!==undefined&&NS.gk!==gk&&!NS.reopen){ NS.open=''; NS.ideas=false; NS.showAll=false; NS.last=''; NS.lastRow=null; }
   NS.gk=gk;
   NSM=DATA&&DATA.M?nsModel(DATA.M,SCOPE):null;
+  // v10.53.0: the needs list made by Claude, kept with the church for this place and language, replaces the survey's own at once
+  if(NSM&&aiPass()&&SCOPE==='tract'){ const pl=nsAiPlace(), kept=pl?nsAiKept(nsAiKey(pl)):null;
+    if(kept){ NSM=nsAiApply(NSM,kept.list); if(NS_AI.status!=='working'&&NS_AI.status!=='failed'){ NS_AI.status='done'; NS_AI.made=kept.made; } } }
   if(NS.open&&!nsNeedById(NS.open)){ NS.open=''; NS.ideas=false; }
   if(NS.open&&NSM&&[...NSM.needs,...NSM.also].findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
   NS.lists.clear();
@@ -12835,6 +12852,182 @@ function nsDraw(){
   if(NS.open&&NS.ideas&&entitled('plan')) nsLoad();
   else nsLoadSoon();
   if(NS.reopen){ const b=NS.reopen; NS.reopen=null; if(nsNeedById(b.need)){ setTimeout(()=>{ if(TOOL==='survey') nsBackTo(b); },0); } }
+  try{ nsAiAuto(); }catch(e){}   // v10.53.0
+}
+/* ---- v10.53.0 — the needs list made by Claude (DESIGN-NEEDS.md, Terrain-work/v68) ------------------------------------------------
+   The pastor (6 Oct 2026): "it should actually do that for the first list because I want the best list ever … I really want Claude to
+   generate the best list based on the community survey and wherever else … drawing from the Internet too … We need to do our best".
+   On an unlocked device (aiPass) whose server has the list on (GET needs), the survey's own list draws at once; the page asks advise.mjs
+   (mode needs, advise-2.5) with the place's names and the report's figures only (never the church, its address or the pastor), and
+   the list that comes back (the server's kept list for the place, or a study by advise-needs.mjs) replaces it: the same cards, its
+   order, titles and why, a new need numbered in (ai-<n>: its category's colour, its figures as rings, ideas from the themes it names),
+   "Also here" the survey's also less what it took. Every number is checked again here against the page's own figures (nsAiClean);
+   links are https and open apart. Kept with the church by place and language (uChurch().needsList, the last three), so a redraw shows
+   it at once; "Generate new community needs" asks for a fresh study. The survey's own list stays whenever anything fails. */
+const NS_AI={info:null,probing:null,run:null,status:'',made:'',key:'',poll:4000,max:240000};
+const NS_AI_T={
+  working:{en:'Studying {town}’s needs and what churches have done… about a minute.',es:'Estudiando las necesidades de {town} y lo que han hecho otras iglesias… cerca de un minuto.'},
+  workingNo:{en:'Studying the neighborhood’s needs and what churches have done… about a minute.',es:'Estudiando las necesidades del vecindario y lo que han hecho otras iglesias… cerca de un minuto.'},
+  done:{en:'Studied {date}',es:'Estudiado el {date}'}, again:{en:'Generate new community needs',es:'Generar nuevas necesidades de la comunidad'},
+  failed:{en:'The list could not be updated just now.',es:'La lista no se pudo actualizar ahora.'},
+  plant:{en:'Plant the seed',es:'Plante la semilla'}, here:{en:'In {town}',es:'En {town}'}, hereNo:{en:'Nearby',es:'Cerca'},
+  churches:{en:'What other churches have done',es:'Lo que han hecho otras iglesias'}};
+function nsAiT(k,o){ const e=NS_AI_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+async function nsAiProbe(){
+  if(NS_AI.info) return NS_AI.info;
+  if(NS_AI.probing) return NS_AI.probing;
+  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true)}; }
+    catch(e){ NS_AI.info={needs:false}; } NS_AI.probing=null; return NS_AI.info; })();
+  return NS_AI.probing;
+}
+function nsAiState(){ const g=(DATA&&DATA.geo)||{}, t=String(g.matched||g.label||''); const m=/,\s*([A-Z]{2})\s*(?:,\s*)?(?:\d{5}(?:-\d{4})?)?\s*$/.exec(t); return m?m[1]:null; }
+function nsAiPlace(){
+  if(!DATA||!DATA.levels||!DATA.levels.tract) return null;
+  const st=nsAiState(), lv=DATA.levels; if(!st) return null;
+  return {tract:String(lv.tract.name||''),town:String((lv.cousub&&lv.cousub.name)||lv.tract.name||''),county:String((lv.county&&lv.county.name)||''),state:st,lang:LANG==='es'?'es':'en'};
+}
+function nsAiKey(pl){ return pl?[pl.tract,pl.town,pl.county,pl.state,pl.lang].join('|'):''; }
+const nsAiNum=v=>typeof v==='number'&&isFinite(v)?Math.round(v*100)/100:null;
+/* What goes to the server: the place's names, the report's figures, the languages and places of birth, the survey's own list, the
+   categories and the library's themes. Nothing about the church or a person. */
+function nsAiInput(){
+  const pl=nsAiPlace(); if(!pl||!DATA.M||!DATA.M.tract) return null;
+  const M=DATA.M, t=M.tract, w=M.cousub||{}, c=M.county||{};
+  const figs=SPEC.filter(x=>['n','p','$','d1','d2'].includes(x[3])&&[t[x[0]],w[x[0]],c[x[0]]].some(v=>typeof v==='number'&&isFinite(v)))
+    .map(x=>({k:x[0],label:String(x[1]).slice(0,80),unit:x[3],t:nsAiNum(t[x[0]]),w:nsAiNum(w[x[0]]),c:nsAiNum(c[x[0]])})).slice(0,80);
+  const langs=(Array.isArray(t.langs)?t.langs:[]).filter(l=>l&&l.name&&isFinite(l.share)&&isFinite(l.count)).slice(0,4).map(l=>({name:String(l.name).slice(0,60),share:nsAiNum(+l.share),count:nsAiNum(+l.count)}));
+  const origins=(Array.isArray(t.origins)?t.origins:[]).filter(o=>o&&o.name&&isFinite(o.share)).slice(0,4).map(o=>({name:String(o.name).slice(0,60),share:nsAiNum(+o.share)}));
+  let S=null; try{ S=nsModel(M,'tract'); }catch(e){ S=null; } if(!S) return null;
+  const seen=new Set(), cands=[...S.needs,...S.also].filter(n=>n&&/^[a-z0-9@-]{2,48}$/.test(n.id)&&!seen.has(n.id)&&seen.add(n.id)).slice(0,40)
+    .map(n=>({id:n.id,cat:String(n.cat),title:String(n.title||n.topic||n.id).slice(0,140),ev:String(n.evidence||'').slice(0,400)}));
+  const cats=[...new Set([...cands.map(x=>x.cat),...Object.keys(NS_CAT_HUE)])].slice(0,30);
+  const themes=((LIB.idx&&LIB.idx.themes)||[]).map(x=>x&&x.id).filter(id=>typeof id==='string'&&/^[a-z0-9-]{2,30}$/.test(id)).slice(0,120);
+  return {lang:pl.lang,place:{tract:pl.tract,town:pl.town,county:pl.county,state:pl.state},figs,langs,origins,cands,cats,themes};
+}
+// the numbers a sentence may say: the figures sent (as given, rounded, "1 in N", a ratio to the county), the survey's own lines, a year,
+// a small count (the server's numberPool, again here)
+function nsAiPool(I){
+  const pool=new Set(), add=v=>{ if(typeof v==='number'&&isFinite(v)) pool.add(Math.round(v*100)/100); };
+  const sig=(v,d)=>{ if(!v) return 0; const p=Math.pow(10,d-Math.ceil(Math.log10(Math.abs(v)))); return Math.round(v*p)/p; };
+  I.figs.forEach(f=>{ [f.t,f.w,f.c].filter(v=>typeof v==='number'&&isFinite(v)).forEach(v=>{ add(v); add(Math.round(v)); add(Math.round(v*10)/10);
+      if(f.unit==='n'||f.unit==='$'){ add(sig(v,1)); add(sig(v,2)); add(sig(v,3)); }
+      if(f.unit==='p'&&v>=1){ add(Math.round(100/v)); add(Math.floor(100/v)); add(Math.ceil(100/v)); } });
+    if(f.unit==='p'&&typeof f.t==='number'&&typeof f.c==='number'&&f.c>0){ add(Math.round(f.t/f.c*10)/10); add(Math.round(f.t/f.c)); } });
+  I.langs.forEach(l=>{ add(l.share); add(Math.round(l.share)); add(l.count); add(sig(l.count,1)); add(sig(l.count,2)); });
+  I.origins.forEach(o=>{ add(o.share); add(Math.round(o.share)); });
+  I.cands.forEach(x=>(String(x.ev).match(/\d[\d,]*(?:\.\d+)?/g)||[]).forEach(m=>add(+m.replace(/,/g,''))));
+  return pool;
+}
+function nsAiNumsOk(text,pool){
+  return (String(text).match(/\d[\d,]*(?:\.\d+)?/g)||[]).every(m=>{ const x=+m.replace(/,/g,''); if(!isFinite(x)||(m.split('.')[1]||'').length>2) return false;
+    if(Number.isInteger(x)&&((x>=0&&x<=12)||(x>=2000&&x<=2035))) return true; return pool.has(Math.round(x*100)/100); });
+}
+function nsAiSafe(v,max){ const t=typeof v==='string'?v.replace(/\s+/g,' ').trim():''; return t&&t.length<=max&&!/[<>]/.test(t)&&!/\bAI\b|\bIA\b/.test(t)?t:null; }
+function nsAiLink(x){
+  if(!x||typeof x!=='object'||typeof x.url!=='string') return null;
+  let u=null; try{ u=new URL(x.url); }catch(e){ u=null; }
+  if(!u||u.protocol!=='https:'||!u.hostname.includes('.')||u.username||u.password) return null;
+  const text=nsAiSafe(x.text,240); return text?{text,url:u.href,host:u.hostname.replace(/^www\./,'').slice(0,60)}:null;
+}
+function nsAiClean(list,I){
+  const pool=nsAiPool(I), num=t=>t&&nsAiNumsOk(t,pool)?t:null, out=[];
+  (Array.isArray(list)?list:[]).forEach(x=>{ if(!x||typeof x!=='object') return;
+    const isNew=x.id==='new', title=num(nsAiSafe(x.title,90)), why=num(nsAiSafe(x.why,260)), plant=num(nsAiSafe(x.plant,220));
+    if(isNew&&(!title||!why)) return;
+    if(!isNew&&!(typeof x.id==='string'&&/^[a-z0-9@-]{2,48}$/.test(x.id))) return;
+    out.push({id:isNew?'new':x.id,title,why,plant,cat:typeof x.cat==='string'?x.cat:'',
+      figures:(Array.isArray(x.figures)?x.figures:[]).filter(f=>f&&typeof f.key==='string').map(f=>({key:f.key,place:String(f.place||'')})).slice(0,3),
+      local:(Array.isArray(x.local)?x.local:[]).map(nsAiLink).filter(Boolean).slice(0,2),
+      churches:(Array.isArray(x.churches)?x.churches:[]).map(nsAiLink).filter(Boolean).slice(0,3),
+      themes:(Array.isArray(x.themes)?x.themes:[]).filter(t=>typeof t==='string'&&/^[a-z0-9-]{2,30}$/.test(t)).slice(0,3)});
+  });
+  return out;
+}
+function nsAiApply(S,list){
+  if(!S||!Array.isArray(list)||!list.length) return S;
+  const all=[...S.needs,...S.also], byId=new Map(all.map(n=>[n.id,n])), top=[], used=new Set();
+  list.forEach((x,i)=>{
+    const ai={plant:x.plant||'',local:x.local||[],churches:x.churches||[],themes:x.themes||[]};
+    if(x.id==='new'){
+      if(!x.title||!x.why||!(NS_CAT_HUE[x.cat]||all.some(n=>n.cat===x.cat))) return;
+      top.push({id:'ai-'+(i+1),cat:x.cat,catLabel:x.cat,kind:NS_CAT_HUE[x.cat]||'people',title:x.title,evidence:x.why,topic:x.title,steps:[],ask:'',
+        figKeys:(x.figures||[]).map(f=>f.key).filter(k=>NS_FIG_DEF[k]),ai});
+      return; }
+    const n=byId.get(x.id); if(!n||used.has(n.id)) return; used.add(n.id);
+    const m={...n,title:x.title||n.title,evidence:x.why||n.evidence,ai}; delete m.tag; top.push(m);
+  });
+  if(top.length<5) return S;
+  return {...S,needs:top,also:S.also.filter(n=>!used.has(n.id)),ai:true};
+}
+function nsAiKept(key){ try{ const all=uChurch().needsList, e=all&&key?all[key]:null; return e&&Array.isArray(e.list)&&e.list.length?e:null; }catch(e){ return null; } }
+function nsAiKeep(key,list,made){
+  const ch=uChurch(), all=ch.needsList&&typeof ch.needsList==='object'?ch.needsList:(ch.needsList={});
+  all[key]={made:/^\d{4}-\d{2}-\d{2}$/.test(String(made||''))?made:new Date().toISOString().slice(0,10),at:Date.now(),list};
+  Object.keys(all).sort((a,b)=>(all[b].at||0)-(all[a].at||0)).slice(3).forEach(k=>delete all[k]);
+  uPersist();
+}
+function nsAiDate(d){ try{ return caseDate(new Date(String(d)+'T12:00:00'),true); }catch(e){ return String(d||''); } }
+function nsAiStatusInner(){
+  const town=(NSM&&NSM.town)||'', btn=`<button type="button" class="btn ghost gfsm" data-ns-aigen>${esc(nsAiT('again'))}</button>`;
+  if(NS_AI.status==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(town?nsAiT('working',{town}):nsAiT('workingNo'))}</span>`;
+  if(NS_AI.status==='failed') return `<span class="ns-aiwhen">${esc(nsAiT('failed'))}</span>${btn}`;
+  if(NS_AI.status==='done'&&NS_AI.made) return `<span class="ns-aiwhen">${esc(nsAiT('done',{date:nsAiDate(NS_AI.made)}))}</span>${btn}`;
+  return '';
+}
+function nsAiStatusHTML(){ return aiPass()&&SCOPE==='tract'?`<p class="ns-aistat" id="ns-aistat" role="status">${nsAiStatusInner()}</p>`:''; }
+function nsAiPaint(){ const p=$('ns-aistat'); if(p) p.innerHTML=nsAiStatusInner(); }
+function nsAiBlocks(n){
+  const a=n&&n.ai; if(!a) return '';
+  const town=(NSM&&NSM.town)||'';
+  const li=arr=>`<ul class="ns-ailist">${arr.map(x=>`<li>${esc(x.text)} <a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.host)}</a></li>`).join('')}</ul>`;
+  return (a.plant?`<p class="ns-plant"><b>${esc(nsAiT('plant'))}</b> ${esc(a.plant)}</p>`:'')
+    +(a.local&&a.local.length?`<h5 class="ns-aih">${esc(town?nsAiT('here',{town}):nsAiT('hereNo'))}</h5>${li(a.local)}`:'')
+    +(a.churches&&a.churches.length?`<h5 class="ns-aih">${esc(nsAiT('churches'))}</h5>${li(a.churches)}`:'');
+}
+async function nsAiAuto(){
+  if(!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return;
+  const pl=nsAiPlace(); if(!pl) return;
+  const info=await nsAiProbe(); if(!info||!info.needs) { nsAiPaint(); return; }
+  const key=nsAiKey(pl);
+  if(NS_AI.run||nsAiKept(key)||(NS_AI.status==='failed'&&NS_AI.key===key)){ nsAiPaint(); return; }
+  nsAiStart(false);
+}
+function nsAiFail(key){ if(NS_AI.key===key){ NS_AI.status='failed'; nsAiPaint(); } return false; }
+function nsAiAccept(key,I,needs,made){
+  if(nsAiKey(nsAiPlace())!==key) return false;   // another place or language now
+  const list=nsAiClean(needs,I);
+  let test=null; try{ test=nsAiApply(nsModel(DATA.M,'tract'),list); }catch(e){ test=null; }
+  if(!test||!test.ai) return nsAiFail(key);
+  nsAiKeep(key,list,made); NS_AI.status='done'; NS_AI.made=nsAiKept(key).made;
+  if(TOOL==='survey'||$('u-needs')) nsDraw();
+  return true;
+}
+async function nsAiStart(fresh){
+  if(NS_AI.run) return NS_AI.run;
+  const pl=nsAiPlace(); if(!pl) return false;
+  const key=nsAiKey(pl);
+  NS_AI.key=key; NS_AI.status='working'; nsAiPaint();
+  NS_AI.run=(async()=>{
+    try{ await libLoadIndex(); }catch(e){}
+    const I=nsAiInput(); if(!I) return nsAiFail(key);
+    let r=null,j=null;
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+      body:JSON.stringify({mode:'needs',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.needs)) return nsAiAccept(key,I,j.needs,j.made);
+    if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')) NS_AI.info={needs:false}; return nsAiFail(key); }
+    const t0=Date.now();
+    while(Date.now()-t0<NS_AI.max){
+      await new Promise(res=>setTimeout(res,NS_AI.poll));
+      if(nsAiKey(nsAiPlace())!==key) return false;
+      let q=null,qj=null;
+      try{ q=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'needs-status',job:j.job,key:j.key}),signal:AbortSignal.timeout(15000)});
+        qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return nsAiAccept(key,I,qj.needs,qj.made);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return nsAiFail(key);
+    }
+    return nsAiFail(key);
+  })();
+  try{ return await NS_AI.run; } finally{ NS_AI.run=null; }
 }
 function nsCardEl(id){ const h=$('u-needs'); return h?h.querySelector(`.ns-need[data-need="${id}"]`):null; }
 /* Every open ideas list drawn again (the map arrived, or failed); every closed one's count. */
@@ -12862,7 +13055,7 @@ function nsOpenCard(id,o){
     const bd=x.querySelector('.ns-body'); if(bd) bd.hidden=true; const box=x.querySelector('.ns-ideas'); if(box&&!box.hidden){ box.hidden=true; const s=x.querySelector('.ns-show');
       if(s){ s.setAttribute('aria-expanded','false'); s.querySelector('small').textContent=nsCountText(nsNeedById(x.dataset.need)); } } });
   a.classList.add('open'); head.setAttribute('aria-expanded','true'); a.querySelector('.ns-body').hidden=false;
-  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)); } }
+  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')&&!det.querySelector('.ns-aih,.ns-plant')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)+nsAiBlocks(n0)); } }   // v10.53.0: and the list's own lines
   NS.open=id;
   nsSetIdeas(a,!!o.ideas);
   if(entitled('plan')&&!NS.map) nsLoad();
@@ -12877,6 +13070,7 @@ function nsCloseCard(a){
 }
 function nsClick(e){
   const t=e.target, h=$('u-needs'); if(!t||!h) return;
+  if(t.closest('[data-ns-aigen]')){ nsAiStart(true); return; }   // v10.53.0: Generate new community needs
   const head=t.closest('.ns-head');
   if(head&&h.contains(head)){ const a=head.closest('.ns-need'); if(a.classList.contains('open')) nsCloseCard(a); else nsOpenCard(a.dataset.need); return; }
   const sh=t.closest('[data-ns-show]');
