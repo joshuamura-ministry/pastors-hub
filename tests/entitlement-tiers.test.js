@@ -62,7 +62,9 @@ setTimeout(async()=>{
   c('currentTier is the single source', (html.match(/function currentTier\(\)/g)||[]).length, 1);
   c('every gate goes through entitled()', (html.match(/entitled\(/g)||[]).length>=6);
   const code=html.replace(/\/\*[\s\S]*?\*\//g,'').replace(/\/\/[^\n]*/g,'');
-  c('nothing else reads the tier (one definition, one caller)', (code.match(/currentTier\(\)/g)||[]).length, 2);
+  // v10.54.0 (accounts and plans, "connect this to the stripe"): the tier is read by entitled() and by acctTierCheck(), which
+  // redraws the page when the plan changes under it (signed in, back from Stripe, signed out). Still one definition.
+  c('nothing else reads the tier (one definition, two callers: entitled and acctTierCheck)', (code.match(/currentTier\(\)/g)||[]).length, 3);
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },2400);
