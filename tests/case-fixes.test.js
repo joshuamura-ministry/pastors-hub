@@ -75,7 +75,10 @@ function page(lang){
     c('nothing in Make the Case is contenteditable (tapping it opened the phone keyboard)', [body().querySelectorAll('[contenteditable]').length,[...body().querySelectorAll('*')].some(e=>e.isContentEditable===true)], [0,false]);
     c('no "Save wording" button, and no line saying the wording can be edited', [!!P.D.getElementById('u-prop-save'),/edit the wording/.test(body().textContent)], [false,false]);
     // v10.42 part 3 (the pastor asked for a proposal to vote on, PROPOSAL.md): a board's actions add "Proposal to vote on (PDF)"
-    c('the actions: Present live, Share link & QR, Download PDF handout, the Proposal to vote on (and the ask list and the sample)', [...body().querySelectorAll('[data-cs-act]')].map(b=>b.textContent), ['Present live','Share link & QR','Download PDF handout','Proposal to vote on (PDF)','Your private ask list','See a sample slideshow']);
+    // v10.51.0 — the pastor (6 Oct 2026): "present live … that's the important button … see a sample slideshow … keep that just in case
+    // … what is your private ask list": Present live, Share, the handout, the sample as a link; the Proposal's PDF beside its Edit
+    // (#cs-pz); the ask list is "Who to ask" in "Your church, ready to serve", once results are in (none here)
+    c('the actions: Present live, Share link & QR, Download PDF handout, the sample (a link), the Proposal\'s PDF beside its Edit', [...body().querySelectorAll('[data-cs-act]')].map(b=>b.textContent), ['Present live','Share link & QR','Download PDF handout','See a sample slideshow','Download PDF']);
     c('wording saved by an older version is no longer pasted over the slides as plain text',
       (()=>{ P.E(`uChurch().proposalText={'pathfinders|board':{signature:'x',text:'OLD WORDING'}}; caseMount(true);`); return [/OLD WORDING/.test(body().textContent),slides().length>=8]; })(), [false,true]);
 

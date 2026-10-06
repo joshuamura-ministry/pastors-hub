@@ -212,8 +212,9 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
   click(P,'[data-cs-act="ask"]');
   c('closed again: gone from the page', [P.q('#cs-ask').hidden,P.q('#cs-ask').innerHTML], [true,'']);
   setup(P,{members:false}); P.E(`uChurch().proposalPrefs={ministry:'pathfinders',type:'board',group:'board'}; caseMount(true);`);
-  click(P,'[data-cs-act="ask"]');
-  c('no gifts results yet: it says so, and opens Spiritual Gifts', [/No Spiritual Gifts results yet for Bucks County SDA/.test(P.txt('#cs-ask')),!!P.q('#cs-ask [data-cs-gifts]')], [true,true]);
+  // v10.51.0: "Who to ask" lives in "Your church, ready to serve" and shows once some results are in; before that the card's one
+  // button opens Spiritual Gifts (the pastor: "a button that will … send the Pastor to the spiritual gifts page")
+  c('no gifts results yet: no "Who to ask"; the card says none have yet, and opens Spiritual Gifts', [P.qa('[data-cs-act="ask"]').length,/^0 of /.test(P.txt('#cs-ready .cs-rl'))||P.txt('#cs-ready .cs-rl'),!!P.q('#cs-ready [data-gfr-gifts]')], [0,true,true]);
   c('…and the page says the ability slide counts the profile instead', /counts the skills under Your church/.test(P.txt('#cs-s3')), true);
 
   console.log('\n-- the sample slideshow --');
@@ -285,10 +286,11 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     S.E('CASE_ST.pv.go(1)');
     c('the edit panel', S.qa('.cs-edit label').map(l=>l.firstChild.textContent.trim()), ['Etiqueta sobre el titular','Titular']);
     // v10.42 part 3 (the pastor: a proposal to vote on, PROPOSAL.md): the board's actions add "The Proposal to vote on (PDF)"
-    c('the actions', S.qa('[data-cs-act]').map(b=>b.textContent), ['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Propuesta para votar (PDF)','Su lista privada para invitar','Ver una presentación de ejemplo']);
+    // v10.51.0: the sample a link, the Proposal's PDF beside its Edit, the ask list "A quién invitar" in the ready card
+    c('the actions', S.qa('[data-cs-act]').map(b=>b.textContent), ['Presentar en vivo','Compartir enlace y QR','Descargar folleto en PDF','Ver una presentación de ejemplo','Descargar PDF','A quién invitar']);
     c('the navigation', [S.q('[data-cs-prev]').textContent,S.q('[data-cs-next]').textContent], ['‹ Anterior','Siguiente ›']);
     click(S,'[data-cs-act="ask"]');
-    c('the ask list', [/Su lista privada para invitar/.test(S.txt('#cs-ask')),/Solo en este dispositivo/.test(S.txt('#cs-ask'))], [true,true]);
+    c('the ask list', [/A quién invitar/.test(S.txt('#cs-ask')),/Solo en este dispositivo/.test(S.txt('#cs-ask'))], [true,true]);
     const en=['Step ','What are you proposing','What will you propose','Who is it for','Who are you asking','Who are you making','Board & officers','Ministry teams','The whole church','Tap the group','For God','For our community','Choose this','Your slides','Search every','Show all','Change','Need','Staffing','Gifts','Present live','Share link','Download PDF','private ask list','See a sample','Previous','Next','Edit slide','Headline','Restore the original','Questions you may hear','County ','Clearly higher','can staff','gifted and drawn','This device only','Ready to lead','Label above'];
     c('no English left in the Spanish builder', en.filter(t=>body().includes(t)), []);
     click(S,'[data-cs-act="sample"]');

@@ -77,8 +77,14 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   await sec(async()=>{
   console.log('\n-- 1. the setting: step 3\'s edit panel, per church, ministry and group --');
   const S=page(); setup(S,{ministry:'pathfinders',type:'board',group:'board'});
-  S.E(`openTool('case'); render(); caseMount(true);`); await until(()=>S.q('#cs-s3 .cs-timing'));
-  const btn=k=>S.q(`#cs-s3 [data-cs-timing="${k}"]`);
+  // v10.51.0 — the pastor (6 Oct 2026): "Dates … suggest options … I already know the dates what does this actually change? … we wanna
+  // just clean up as much as possible": the switch is no longer drawn in the slide panel (a choice saved before still counts). Its
+  // setting and its slides are still the app's, so the switch is mounted here, in step 3, to test them.
+  S.E(`openTool('case'); render(); caseMount(true);`); await until(()=>S.q('#cs-s3 .cs-acts'));
+  const mount=()=>S.E(`(()=>{ const s3=document.getElementById('cs-s3'); let z=document.getElementById('zz-timing'); if(!z){ z=document.createElement('div'); z.id='zz-timing'; s3.append(z); } z.innerHTML=caseTimingHTML(); caseTimingWire(z); })()`);
+  mount();
+  c('v10.51.0: the slide panel itself draws no Dates switch', S.qa('#cs-s3 .cs-edit [data-cs-timing]').length, 0);
+  const btn=k=>(mount(),S.q(`#cs-s3 [data-cs-timing="${k}"]`));
   c('the edit panel starts with "Dates": Suggest options (on, the default) | I already know the dates',
     [S.txt('#cs-s3 .cs-timing .cs-tlab'),S.txt(`#cs-s3 [data-cs-timing="options"]`),btn('options').getAttribute('aria-pressed'),S.txt(`#cs-s3 [data-cs-timing="fixed"]`),btn('fixed').getAttribute('aria-pressed')],
     ['Dates','Suggest options','true','I already know the dates','false']);
@@ -100,11 +106,12 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     JSON.stringify(S.J(`caseApplyEdits(caseDeck(caseModel('pathfinders',{type:'board',group:'board'},{respond:true})),caseEdits())`)));
   c('…no decide slide, and the motion says Runs with its dates', [S.J('caseCurrentDeck().slides.some(s=>s.part==="decide")'),S.J('caseCurrentDeck().slides[1].rows[0][0]'),DAY_RX.test(S.J('caseCurrentDeck().slides[1].rows[0][1]'))], [false,'Runs',true]);
   c('…his edit on the ask is still there', S.J('caseCurrentDeck().slides.filter(s=>s.type==="ask").map(s=>s.headline)'), ['Our ask to the board, itemised']);
+  mount();
   c('…and the switch shows it, with its line', [S.q('#cs-s3 [data-cs-timing="fixed"]').getAttribute('aria-pressed'),/Change them with “Adjust scope and budget”/.test(S.txt('#cs-s3 .cs-timing .note'))], ['true',true]);
   c('another group keeps its own (the default)', [S.J(`caseTimingOf({ministry:'pathfinders',type:'team',group:'youth'})`),S.J(`caseTimingOf({ministry:'grief',type:'board',group:'board'})`)], ['options','options']);
   S.E(`LANG='es';`);
   c('the same in Spanish (one setting for both languages)', S.J(`caseTimingOf(casePrefs())`), 'fixed');
-  S.E(`caseDraw3();`);
+  S.E(`caseDraw3();`); mount();
   c('Spanish: "Fechas": Sugerir opciones | Ya sé las fechas', [S.txt('#cs-s3 .cs-timing .cs-tlab'),S.txt(`#cs-s3 [data-cs-timing="options"]`),S.txt(`#cs-s3 [data-cs-timing="fixed"]`)], ['Fechas','Sugerir opciones','Ya sé las fechas']);
   S.q('#cs-s3 [data-cs-timing="options"]').click(); await sleep(50);
   c('back to Suggest options: nothing stored, the decide slide is back', [S.J('uChurch().caseTiming'),S.J('caseCurrentDeck().slides.some(s=>s.part==="decide")')], [{},true]);
