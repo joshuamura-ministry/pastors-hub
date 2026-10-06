@@ -28,7 +28,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   // v10.45.1 — the pastor changed his mind (5 Oct 2026): "go through all the things about what the community is like and then it
   // will show what this neighborhood needs". Was: #u-needs between #focusnote and #brief.
   c('#u-needs at the bottom of the survey, after Community resources (v10.46.1: "should go after community resources")', (P=>{ const n=P.q('#u-needs'), h=e=>e&&e.querySelector('h2')?e.querySelector('h2').textContent:(e&&e.id); return [!!n,!!n&&n.parentElement.id,h(n&&n.previousElementSibling)]; })(P),[true,'sections','Community resources']);   // v10.46.1: at the bottom, after Community resources
-  c('its heading and John 4:35 under it', [P.txt('#u-needs > h2'),/John 4:35/.test(P.txt('#u-needs .verse')||'')], ['What this neighborhood needs from our church',true]);
+  c('its heading and John 4:35 under it', [P.txt('#u-needs .ns-hero > h2'),/John 4:35/.test(P.txt('#u-needs .verse')||'')], ['What this neighborhood needs from our church',true]);
   // the review round (#27f): on a phone the preamble pushed the first need off the screen: a short note, the church link on its own
   // line, and the lifts said where the ideas are (each opened list names its lifts)
   // v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts page …
@@ -121,7 +121,7 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   P=page({needs:STUB,lang:'es'}); await ready(P); survey(P); await sleep(50);
   // (the badge in Spanish: the first need here is Spanish at home, which a Spanish-speaking pastor's church very likely meets: review #12)
   // v10.45.1: the short note is gone
-  c('the heading, the chip, the badge on the first need that is not Spanish', [P.txt('#u-needs > h2'),P.txt('#secnav button[data-t="u-needs"]'),P.txt('#u-needs .ns-top'),P.q('#u-needs .ns-top').closest('.ns-need').dataset.need],
+  c('the heading, the chip, the badge on the first need that is not Spanish', [P.txt('#u-needs .ns-hero > h2'),P.txt('#secnav button[data-t="u-needs"]'),P.txt('#u-needs .ns-top'),P.q('#u-needs .ns-top').closest('.ns-need').dataset.need],
     ['Lo que este vecindario necesita de nuestra iglesia','Necesidades','Mayor necesidad','child-poverty']);
   c('the category in Spanish (the filter keeps the English one)', [P.txt('#ns-h-rent50 .ns-cat'),P.q('[data-need="rent50"]').dataset.cat], ['Presión de vivienda','Housing pressure']);
   await openSheet(P,'rent50','homeless-rent-help-page'); await until(()=>P.qa('#ns-sheet .ns-steps li').length===4);

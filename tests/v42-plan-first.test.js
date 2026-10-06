@@ -91,7 +91,8 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('…nor in its rows, at any level, within reach or not yet (the outreach one is)', [rows.includes('member-care-two-sabbath-card'),rows.includes('personal-evangelism-baptism-anniversary'),rows.includes('prayer-town-prayer-calendar')], [false,false,true]);
     c('…their need tags DO fire here (so only the reach keeps them out)', P.J(`(()=>{ const t=suggestions(DATA.M,SCOPE).tags; return ['member-care-two-sabbath-card','personal-evangelism-baptism-anniversary'].map(id=>uCatalog().find(x=>x.id===id).need.some(n=>t.has(n))); })()`), [true,true]);
     P.E(`uChurch().selected=['member-care-two-sabbath-card']; uPersist(); uRefresh();`);
-    c('added to the plan anyway (from the Idea Library), it is in the plan (What\'s next lists it) and still never in the rows', [P.qa('#u-whatsnext [data-u-next-case]').map(b=>b.dataset.uNextCase).includes('member-care-two-sabbath-card'),rowsAll(P).includes('member-care-two-sabbath-card')], [true,false]);
+    // v10.47.1: What's next is no longer drawn in the survey; the plan itself is read
+    c('added to the plan anyway (from the Idea Library), it is in the plan and still never in the rows', [P.J('uSelected()').includes('member-care-two-sabbath-card'),rowsAll(P).includes('member-care-two-sabbath-card')], [true,false]);
     c('no errors', P.errs, []);
     P.w.close(); });
   await sec(async()=>{ const id='church-1';
@@ -110,7 +111,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('a church with no library ideas: nothing extra is fetched', P.net.idx, 0);
     P.w.close(); });
   await sec(async()=>{ const P=page({lang:'es'}); await sleep(1300); setup(P,{tool:'survey'});
-    c('Spanish: the needs\' heading', P.txt('#u-needs > h2'), 'Lo que este vecindario necesita de nuestra iglesia');
+    c('Spanish: the needs\' heading', P.txt('#u-needs .ns-hero > h2'), 'Lo que este vecindario necesita de nuestra iglesia');
     P.w.close(); });
 
   console.log('\n-- 2. Make the Case step 2: "From your plan", then "More ideas for {group}" --');

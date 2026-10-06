@@ -33,5 +33,22 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   c('then Neighborhood · Town · County, then the Brief', [Q.q('#place').nextElementSibling.id,Q.qa('#scope button').length,!!Q.q('#brief .k')], ['scope',3,true]);
   c('Focus and its "Showing everything" line are not shown', /#focusbar,#focusnote\{display:none!important\}/.test(HTML), true);
   c('…and with nothing chosen everything shows (no section hidden by Focus)', Q.qa('#sections section.blk.hidden').length, 0);
-  c('no page error', [P.errs,S.errs,Q.errs], [[],[],[]]);
+
+  console.log('\n-- v10.47.1: the needs, a place of their own; "Main menu" beside "Top" --');
+  // "This is a whole new kind of a section … There's gotta be a title there … that will let people know that this is a clickable area"
+  c('the needs open with a framed panel: a label, the heading, one line saying what to do, the verse', [Q.txt('#u-needs .ns-hero .ns-eyebrow'),Q.txt('#u-needs .ns-hero > h2'),Q.txt('#u-needs .ns-hero .ns-lead'),!!Q.q('#u-needs .ns-hero .verse')],
+    ['From survey to ministry','What this neighborhood needs from our church','This is where you choose what to do. Tap a need to see why it matters and ministry ideas to meet it.',true]);
+  const QS=page({lang:'es'}); await ready(QS); survey(QS); await sleep(40);
+  c('…in Spanish', [QS.txt('#u-needs .ns-hero .ns-eyebrow'),QS.txt('#u-needs .ns-hero .ns-lead')], ['De la encuesta al ministerio','Aquí usted elige qué hacer. Toque una necesidad para ver por qué importa e ideas de ministerio para atenderla.']);
+  c('no "What\'s next" at the bottom of the survey ("Does that even have to be there?")', Q.qa('#u-whatsnext').length, 0);
+  // "I like the top … at the bottom … keep that and then also … main menu which will bring you to the main menu"
+  Q.q('#totop').hidden=false; Q.E('floatMenu()');
+  c('in a tool, with "↑ Top": a "Main menu" button beside it', [Q.q('#tomenu').hidden,Q.txt('#tomenu span:last-child')], [false,'Main menu']);
+  Q.q('#tomenu').click(); await sleep(30);
+  c('…which goes to the main menu', [!Q.q('#hub').hidden,Q.q('#tomenu').hidden], [true,true]);
+  Q.q('#totop').hidden=false; Q.E('floatMenu()');
+  c('on the main menu itself it is not shown', Q.q('#tomenu').hidden, true);
+  QS.q('#totop').hidden=false; QS.E('floatMenu()');
+  c('…in Spanish: "Menú principal"', QS.txt('#tomenu span:last-child'), 'Menú principal');
+  c('no page error', [P.errs,S.errs,Q.errs,QS.errs], [[],[],[],[]]);
 }); T.done(); })();

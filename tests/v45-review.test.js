@@ -199,7 +199,8 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   c('…and the top line is still the one way back of its kind', P.qa('#casebody [data-cs-from]').length, 1);
   P.q('#cs-s2 [data-cs-from2]').click(); await until(()=>P.E('TOOL')==='survey'); await sleep(100);
   c('…it goes back to the need', [P.E('TOOL'),P.J('NS.open')], ['survey','lang-also']);
-  c('#27d: What\'s next names it the sheet\'s way, "Create the proposal for …"', /^Create the proposal for /.test(P.txt('#u-whatsnext [data-u-next-case]')||''), true);
+  // v10.47.1 — the pastor: "What's next … Does that even have to be there?" It is not drawn in the survey any more (was #27d: "Create the proposal for …")
+  c('#27d (v10.47.1): no What\'s next in the survey', P.qa('#u-whatsnext').length, 0);
   P.E(`showHub(); openTool('case'); caseToSurvey();`); await sleep(120);
   c('M1: Make the Case\'s "Open the Community Survey" lands on the needs', (P.w.__scrolled.filter(s=>s.id).pop()||{}).id, 'u-needs');
   c('…its words point to a need', P.J(`caseStepT('planNone')`), 'Open a need in the Community Survey and choose an idea, or pick an idea below.');

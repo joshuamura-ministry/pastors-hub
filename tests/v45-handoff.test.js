@@ -136,10 +136,10 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     c('the idea\'s row is marked as the last one opened', P.q(`#ns-i-${NEED} .ns-row[data-idea="${IDEA}"]`).classList.contains('ns-last'), true);
 
     console.log('\n-- What\'s next and Your path see it --');
-    c('What\'s next: "Make the case for …" this idea', P.qa('#u-whatsnext [data-u-next-case]').map(b=>b.dataset.uNextCase).includes(IDEA), true);
-    P.E(`uChurch().proposalPrefs={...uChurch().proposalPrefs,path:'buy'}; uPersist();`);
-    P.q(`#u-whatsnext [data-u-next-case="${IDEA}"]`).click(); await sleep(80);
-    c('…and its button also opens the ministry path (uOpenProposal fixed)', [P.E('TOOL'),P.J('casePrefs().path'),P.J('casePrefs().ministry')],['case','ministry',IDEA]);
+    // v10.47.1: What's next is no longer drawn in the survey ("Does that even have to be there?"); uOpenProposal still opens the ministry path
+    c('no What\'s next in the survey', P.qa('#u-whatsnext').length, 0);
+    P.E(`uChurch().proposalPrefs={...uChurch().proposalPrefs,path:'buy'}; uPersist(); uOpenProposal(${JSON.stringify(IDEA)});`); await sleep(80);
+    c('uOpenProposal opens the ministry path on this idea (as What\'s next\'s button did)', [P.E('TOOL'),P.J('casePrefs().path'),P.J('casePrefs().ministry')],['case','ministry',IDEA]);
     c('Your path counts it ("1 ministry in your plan")', P.J('hubPathSteps()[2].state'), '1 ministry in your plan');
     c('no page error along the way', P.errs, []);
   });
