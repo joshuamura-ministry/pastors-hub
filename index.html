@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.51.1
+     TERRAIN  v10.51.2
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.51.1" data-theme="dark">
+<html lang="en" data-version="v10.51.2" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.51.1">
-<title>Community Map — Terrain v10.51.1</title>
+<meta name="terrain-version" content="v10.51.2">
+<title>Community Map — Terrain v10.51.2</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -36,6 +36,7 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
   --m-language:#0E8F6E; --m-people:#BE3E68;
   /* v10.50.0: the newer kinds of need, each its own colour ("use some shades of different colors") */
   --m-seniors:#A23BB5; --m-veterans:#C93C3C; --m-work:#0E8EA0; --m-young:#5E8A12; --m-income:#9A7B0A; --m-divided:#4B57D6;
+  --gfv:#6D4FD8; --gfv-ink:#FFFFFF;   /* v10.51.2: the Spiritual Gifts violet, for its bright button */
   --acc:#1F6FEB; --acc-soft:#1A5FCC; --acc-dim:rgba(31,111,235,.09);
   --acc-glow:rgba(31,111,235,.22); --btn-ink:#FFFFFF;
   --shadow:0 1px 2px rgba(15,23,42,.06),0 10px 30px -18px rgba(15,23,42,.28);
@@ -58,6 +59,7 @@ a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital
   --m-housing:#6FB4FF; --m-children:#A78BFA; --m-hardship:#FBBF77;
   --m-language:#5EE9B5; --m-people:#F09AB8;
   --m-seniors:#E58BF2; --m-veterans:#FF7A7A; --m-work:#4FD6E8; --m-young:#B5E36A; --m-income:#EAD27A; --m-divided:#9DA8FF;   /* v10.50.0 */
+  --gfv:#B9A2FB; --gfv-ink:#140B2E;   /* v10.51.2 */
   --contour:rgba(94,233,181,.05);
   /* The dark theme had no shadows at all, so every panel sat flat on the
      background with nothing but a hairline to separate it. Depth in the dark
@@ -3652,6 +3654,9 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-addrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .cmp-addrow select{flex:1 1 220px;min-width:0}
 .cmp-why{margin:8px 0 0}
+/* v10.51.2 — "review members in spiritual gifts that should be a bright button. It shouldn't look so dull": the Spiritual Gifts violet */
+#u-team-link.u-teamgo{background:var(--gfv);color:var(--gfv-ink);margin-top:4px;box-shadow:0 0 0 1px color-mix(in srgb,var(--gfv) 60%,transparent),0 8px 26px -8px var(--gfv)}
+#u-team-link.u-teamgo:hover,#u-team-link.u-teamgo:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--gfv) 75%,transparent),0 10px 32px -6px var(--gfv)}
 /* v10.51.1 — "Add conferences" opens a panel: the areas across its top, the conferences in rows under each heading, tap several, Done */
 .cmp-addbtn::after{content:' ▾';color:var(--ink3)}
 .cmp-addbtn[aria-expanded=true]::after{content:' ▴'}
@@ -4204,13 +4209,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.51.1';
+const VERSION = 'v10.51.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -5224,6 +5229,9 @@ const MOVE_FACILITY={
    anyone else. It matters because the distance between the church and the
    streets around it is frequently the real pastoral question, and the planner
    should be told rather than left to assume they look alike. */
+/* v10.51.2 — the pastor (6 Oct 2026): "this box here where you check I don't think you even need that … current commitments and limits
+   does it need to be there either … cut the fat and only keep that which is going to be loadbearing": neither was read by any check,
+   slide or document (only the summary echoed them), so "Your church" no longer asks; a church's earlier answers stay stored, unread. */
 const CAP_WHO=[
   {k:'mixed',    n:'Mixed / several backgrounds'},
   {k:'oneethnic',n:'Mainly one ethnic group'},
@@ -21619,7 +21627,7 @@ function capSummaryHTML(){
     item(L('Leaders','Líderes'), c.leaders!=null?`${n(c.leaders)}${raw.busyLeaders?` (${n(raw.busyLeaders)} ${L('already committed','ya comprometidos')})`:''}`:null),
     item(L('Hours a month','Horas al mes'), raw.hours!=null?`${n(raw.hours)}${raw.busyHours?` (${n(raw.busyHours)} ${L('already committed','ya comprometidas')})`:''}`:null),
     item(L('Free to serve','Libres para servir'), (c.slots||[]).length?c.slots.map(W).join(', '):null),
-    item(L('Congregation','Congregación'), Object.keys(c.who||{}).filter(k=>c.who[k]).map(k=>W((CAP_WHO.find(w=>w.k===k)||{}).n||k)).join(', ')||null)
+    null   // v10.51.2: the congregation boxes are no longer asked
   ].join('');
   const left=L(`${n(c.hands)} volunteers, ${n(c.concurrent)} leaders, ${n(c.hours)} hours a month`,`${n(c.hands)} voluntarios, ${n(c.concurrent)} líderes, ${n(c.hours)} horas al mes`);
   // money
@@ -21636,7 +21644,7 @@ function capSummaryHTML(){
   // skills and languages
   const skills=U_SKILLS.filter(k=>c.skills[k.k]>0).map(k=>`<li><b>${esc(String(c.skills[k.k]))}</b>${esc(es?W(k.n).toLowerCase():k.n.toLowerCase())}</li>`).join('');
   const langs=c.languages?`<li><b>${L('Languages','Idiomas')}</b>${esc(c.languages)}</li>`:'';
-  const commit=raw.commitments?`<li><b>${L('Already carrying','Ya lleva')}</b>${esc(raw.commitments)}</li>`:'';
+  const commit='';   // v10.51.2: "Current commitments and limits" is no longer asked
   return `<div class="capsum${raw.demo?' demo':''}">
     <div class="capsumk">${raw.demo?L('The sample church, as filled in','La iglesia de ejemplo, tal como se llenó'):L('Your church, as you entered it','Su iglesia, tal como la escribió')}</div>
     <div class="capsumgrid">
@@ -21684,8 +21692,8 @@ function capRender(){
 
         
         
-<p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn ghost" id="u-team-link">Review members in Spiritual Gifts</button>
-<div class="u-checks">${CAP_WHO.map(w=>`<label class="u-check"><input name="who" type="checkbox" value="${w.k}" ${c.who?.[w.k]?'checked':''}>${esc(w.n)}</label>`).join('')}</div><label class="u-field">Current commitments and limits<textarea name="commitments" rows="3" maxlength="3000">${esc(c.commitments||'')}</textarea></label>
+<p class="note">Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.</p><div class="u-grid">${U_SKILLS.map(s=>`<label class="u-field">${esc(s.n)}<input type="number" name="skill-${s.k}" min="0" max="5000" value="${c.skillCounts?.[s.k]??''}" placeholder="Roster: ${m.people.filter(p=>(p.skills||[]).includes(s.k)).length}"></label>`).join('')}</div><label class="u-field">Languages available, with proficiency<input name="languages" value="${esc(c.languages||'')}" placeholder="For example: Spanish — fluent"></label><p class="note">Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.</p><button type="button" class="btn u-teamgo" id="u-team-link">Review members in Spiritual Gifts</button>
+
       
       </section>
      </div>
@@ -21776,16 +21784,16 @@ function capRender(){
       if(p&&+p.dataset.panel!==U_STEP_I){ show(+p.dataset.panel,+p.dataset.panel<U_STEP_I,true); setTimeout(()=>form.reportValidity(),520); return; }
       form.reportValidity(); return;
     }
-    const d=new FormData(form),next={...c,skillCounts:{},facilities:{},who:{}};
+    const d=new FormData(form),next={...c,skillCounts:{},facilities:{}};   // v10.51.2: who and commitments kept as stored (no longer asked)
     U_FIELDS.forEach(([k])=>{ if(form.elements.namedItem(k)) next[k]=uNum(d.get(k)); });   // v10.49.0: the money boxes are on the proposal now
     if(next.members!==null&&next.volunteers!==null&&next.volunteers>next.members){$('u-cap-status').textContent='Volunteer count exceeds attendance. Include regular outside volunteers in the attendance total, or correct the count.';return;}
     if(next.leaders!==null&&next.volunteers!==null&&next.leaders>next.volunteers){$('u-cap-status').textContent='Leaders are included in the volunteer count. Check those totals.';return;}
     if(next.members!==null&&next.adults!=null&&next.adults>next.members){$('u-cap-status').textContent='Adults cannot be more than the attendance. Correct one of the two.';return;}
     for(const [busy,total] of [['busyVolunteers','volunteers'],['busyLeaders','leaders'],['busyHours','hours']])if(next[total]!==null&&uAmount(next[busy])>next[total]){$('u-cap-status').textContent='Existing commitments exceed the total recorded. Check people and hours.';return;}
-    next.slots=uValues(form,'teamSlot');next.languages=String(d.get('languages')||'').trim();next.commitments=String(d.get('commitments')||'');
+    next.slots=uValues(form,'teamSlot');next.languages=String(d.get('languages')||'').trim();
     U_SKILLS.forEach(s=>{const n=uNum(d.get('skill-'+s.k));if(n!==null)next.skillCounts[s.k]=n;});
     U_FAC.forEach(f=>{if(d.has('fac-'+f.k))next.facilities[f.k]={available:true,capacity:uNum(d.get('room-'+f.k)),partner:String(d.get('partner-'+f.k)||'').trim(),slots:uValues(form,'slot-'+f.k)};});
-    uValues(form,'who').forEach(k=>next.who[k]=true);next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
+    next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
     // v10.45.0: the form lives on the Spiritual Gifts landing: draw it and its summary again and stay there (no background ideas, Q3)
     if(DATA&&TOOL==='survey') render();
     capRender(); gfChurchSum(); uChrome(); capShowSaved();

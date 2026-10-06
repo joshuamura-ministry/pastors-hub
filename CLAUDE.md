@@ -155,6 +155,22 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.51.2 (6 Oct 2026, quick lane) — "Your church": cut the fat.** The pastor: *"review members in spiritual gifts that should be a
+bright button. It shouldn't look so dull … this box here where you check I don't think you even need that … current commitments and
+limits does it need to be there either … cut the fat and only keep that which is going to be loadbearing to the process"*. Step 3
+(Skills): "Review members in Spiritual Gifts" is a solid Spiritual Gifts violet button (`#u-team-link.u-teamgo`, `--gfv` / `--gfv-ink`
+in both themes). The congregation boxes (`CAP_WHO`: mixed, one ethnic group, international, another language, older, young adults,
+families, newcomers) and "Current commitments and limits" are no longer asked: nothing read them but the summary box (`isWho` was
+never called), so the summary drops "Congregation" and "Already carrying"; a save keeps a church's earlier answers stored, unread
+(`next={...c,…}` no longer resets `who`). Tests: `v51-2-church` (new, 7; failing first on v10.51.1: `Terrain-work/v66/logs/ff-v51-2.log`);
+church-summary-box and background-ideas (typed into the languages field instead) updated with comments.
+**His picture of the tools (6 Oct 2026):** the Community Survey finds what to do and hands a proposal to Make the Case; Make the Case
+also stands alone (browse ideas there and make a proposal), and choosing Light / Moderate / Heavy lift sizes the people and money
+(from the survey the lift is already chosen); the Evangelism Planner is for the bigger events (a 16-meeting series, a one-day health
+event), drawing on the survey and the Spiritual Gifts results. **Next he asked for:** Make the Case standalone with the lift choice;
+then the Claude-made needs list. Open: where the church's finances live (his question; my recommendation in the conversation: one
+"Church budget" page in the Evangelism Planner, the yearly budget and each ministry's line; proposals still only state what they need).
+
 **v10.51.1 (6 Oct 2026, quick lane) — Learn from other conferences: a better "Add".** The pastor: *"Can the drop-down look better …
 the east Midwest South West East Coast, California regional conferences … as headings … more across and not just straight down … you
 can click multiple ones so you don't have to … click one and then find it again and open it … up to nine … when you['re] done, it will

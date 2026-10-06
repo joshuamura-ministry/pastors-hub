@@ -46,7 +46,8 @@ setTimeout(async()=>{
   console.log('\n-- autoIdeas itself, called directly --');
   w.eval('autoIdeas()');
   // type into the form while it runs, to prove nothing wipes it
-  await wait(30); D.querySelector('[name="commitments"]').value='typing while it runs';
+  // v10.51.2: "Current commitments and limits" is no longer asked (the pastor: "cut the fat"); the languages field stands in
+  await wait(30); D.querySelector('[name="languages"]').value='typing while it runs';
   await wait(400);
   c('twelve calls: three levels × four directions', calls.length, 12);
   c('the levels ran in order, one at a time', calls.map(b=>b.summary.match(/COMMITMENT LEVEL: (\w+)/)[1]), ['Light','Light','Light','Light','Moderate','Moderate','Moderate','Moderate','Heavy','Heavy','Heavy','Heavy']);
@@ -55,7 +56,7 @@ setTimeout(async()=>{
   const drafts=w.eval('uChurch().drafts');
   c('sixty drafts saved with the church', drafts.length, 60);
   c('twenty per load', [0,1,2].map(l=>drafts.filter(d=>d.load===l).length), [20,20,20]);
-  c('what was typed mid-run survived', D.querySelector('[name="commitments"]').value, 'typing while it runs');
+  c('what was typed mid-run survived', D.querySelector('[name="languages"]').value, 'typing while it runs');
   c('a verified metric is accepted', drafts.some(d=>d.metric==='poverty'&&d.reviewedEvidence===true));
   c('a made-up metric is not', drafts.filter(d=>d.metric==='bogusMetric').length===0 && drafts.some(d=>d.reviewedEvidence===false));
   c('room "none" needs no facility', drafts.some(d=>d.requirements.facilities.length===0));
