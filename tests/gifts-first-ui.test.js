@@ -270,18 +270,20 @@ function makeStore(){ const m=new Map(); return { m,
 
   console.log('\n-- 41. step 3: "Your church, ready to serve" --');
   { const X=page('https://pastorshub.org/',{seed:'after'}); await ready(X);
-    X.E(`(()=>{ const d=document.createElement('details'); d.id='cs-ready'; d.className='cs-qs cs-ready'; d.hidden=true; document.body.appendChild(d); gfReadyPanelMount(d); })()`);
-    const rows=X.qa('#cs-ready .gfr-row').map(r=>[r.querySelector('dt').textContent,r.querySelector('dd').textContent]);
+    /* v10.51.0 — the pastor (6 Oct 2026): "the your church ready to serve probably needs to be at the end and it should have the spiritual
+       gifts icon, and smaller one with a button that will … send the Pastor to the spiritual gifts page": a small card (a section, last in
+       step 3), the icon, the name, one line, one button. The people / volunteers / leaders rows and the Sabbath link are on the landing. */
+    X.E(`(()=>{ const d=document.createElement('section'); d.id='cs-ready'; d.className='cs-ready'; d.hidden=true; document.body.appendChild(d); gfReadyPanelMount(d); })()`);
     const R=X.J('gfReadiness()');
-    c('the panel (folded): its title, and one row each: people, volunteers, leaders, gifts, strongest gifts', [X.q('#cs-ready').hidden,X.txt('#cs-ready summary'),rows.map(r=>r[0])],
-      [false,'Your church, ready to serve',['People','Volunteers','Leaders','Gifts','Strongest gifts']]);
-    c('…the numbers, from gfReadiness()', rows.map(r=>r[1]).slice(0,4), ['80 members · 55 in worship · 46 adults',`${R.profile.hands} with ${R.profile.hours} hours a month still free`,`${R.profile.leaders} free to lead`,'40 of 46 adults have discovered their gifts']);
-    c('…the strongest gifts as counts, never names', [rows[4][1],rows[4][1]===R.strongest.map(g=>g.name+' '+g.n).join(' · '),NAMES.some(n=>X.txt('#cs-ready').includes(n))], [rows[4][1],true,false]);
-    c('…and the quiet link to the Sabbath slides', X.txt('[data-gfr-sabbath]'), 'Discover your gifts · Sabbath slides');
-    X.E(`uChurch().capacity.confirmed=false; uPersist(); CAP=null; gfReadyPanelMount(document.getElementById('cs-ready'))`);
-    c('a profile not saved: the gifts row only, and “Save Your church…”', [X.qa('#cs-ready .gfr-row dt').map(d=>d.textContent),/^Save Your church, on the Spiritual Gifts page, to see the whole picture\./.test(X.txt('#cs-ready .note'))], [['Gifts'],true]);   // v10.45.0 review #18: one name, "Your church"
-    X.E(`localStorage.setItem('terrain-lang','es'); LANG='es'; uChurch().capacity.confirmed=true; uPersist(); CAP=null; gfReadyPanelMount(document.getElementById('cs-ready'))`);
-    c('in Spanish', [X.txt('#cs-ready summary'),X.qa('#cs-ready .gfr-row dt').map(d=>d.textContent)], ['Su iglesia, lista para servir',['Personas','Voluntarios','Líderes','Dones','Dones más fuertes']]);
+    c('the card: shown, the Spiritual Gifts icon, its title, no rows, one button', [X.q('#cs-ready').hidden,!!X.q('#cs-ready .cs-rico svg'),X.txt('#cs-ready .cs-rk'),X.qa('#cs-ready .gfr-row').length,X.qa('#cs-ready .btn').map(b=>b.textContent)],
+      [false,true,'Your church, ready to serve',0,['Open Spiritual Gifts']]);
+    c('…one line: how many have discovered their gifts, then the strongest gifts as counts, never names', [X.txt('#cs-ready .cs-rl'),NAMES.some(n=>X.txt('#cs-ready').includes(n))],
+      ['40 of 46 adults have discovered their gifts · Strongest gifts: '+R.strongest.map(g=>g.name+' '+g.n).join(' · '),false]);
+    c('…no "Who to ask" outside Make the Case (no ask list on the page)', X.qa('#cs-ready [data-cs-act="ask"]').length, 0);
+    X.q('#cs-ready [data-gfr-gifts]').click(); await sleep(30);
+    c('…the button opens Spiritual Gifts, its landing', [X.E('TOOL'),X.E('GF_VIEW')], ['gifts','roster']);
+    X.E(`localStorage.setItem('terrain-lang','es'); LANG='es'; gfReadyPanelMount(document.getElementById('cs-ready'))`);
+    c('in Spanish', [X.txt('#cs-ready .cs-rk'),X.txt('#cs-ready [data-gfr-gifts]')], ['Su iglesia, lista para servir','Abrir Dones espirituales']);
     X.w.close(); }
 
   console.log('\n-- 42. no "AI" anywhere a person reads, EN and ES --');

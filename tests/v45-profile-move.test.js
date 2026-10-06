@@ -77,9 +77,11 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   P.w.__scrolled.length=0;
   P.q('#u-resource-profile').click(); await sleep(60);
   c('the volunteers\' "church profile" button: the landing, "Your church" open and in view', [P.E('TOOL'),P.q('#gf-church').open,P.w.__scrolled.some(s=>s.id==='gf-church'&&s.how==='auto')], ['gifts',true,true]);
-  P.E(`openTool('case'); const h=document.createElement('details'); h.id='gfr-test'; document.body.appendChild(h); gfReadyPanelMount(h);`);
-  const pb=P.q('#gfr-test [data-gfr-profile]');
-  c('Make the Case\'s "Your church, ready to serve": its profile button leads there too', pb?(pb.click(),[P.E('TOOL'),P.q('#gf-church').open]):'no button (the profile is saved)', pb?['gifts',true]:'no button (the profile is saved)');
+  // v10.51.0: "Your church, ready to serve" is a small card with one button, "Open Spiritual Gifts" (the pastor: "a button that will …
+  // send the Pastor to the spiritual gifts page"): it leads to the landing, where "Your church" is
+  P.E(`openTool('case'); const h=document.createElement('section'); h.id='gfr-test'; document.body.appendChild(h); gfReadyPanelMount(h);`);
+  P.q('#gfr-test [data-gfr-gifts]').click(); await sleep(40);
+  c('Make the Case\'s "Your church, ready to serve": its button leads to the landing, with Your church on it', [P.E('TOOL'),!!P.q('#gf-church')], ['gifts',true]);
   c('the Planner\'s facilities note names the new place', /Tick them under Your church, on the Spiritual Gifts page/.test(HTML.match(/No facilities recorded yet\.[^']*/)[0]), true);
   c('uRefresh keeps its place by the needs now (else the form)', P.E(`uRefresh.toString().includes("'u-needs'")`), true);
 

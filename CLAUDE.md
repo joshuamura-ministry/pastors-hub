@@ -155,6 +155,42 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.51.0 (6 Oct 2026) — the proposal on the page, editable; the bottom of step 3 cleaned up.** The pastor: *"the proposal to
+vote on PDF … should show underneath … and it should be editable … a place you can tap edit and every line you can change it"*; *"I
+don't know if we really need the how it is being decided"*; *"there's a verse and … a quote from Ellen White so just keep the quote from
+Ellen White … Let's clean everything up"*; *"the your church ready to serve probably needs to be at the end and it should have the
+spiritual gifts icon, and smaller one with a button that will … send the Pastor to the spiritual gifts page"*; then, of the slide panel
+and the buttons: *"Dates … suggest options … I already know the dates what does this actually change? … what's the difference between
+ongoing and a series? … restore the original. What is that? … present live should probably be a different color and highlighted and
+glowing … see a sample slideshow … keep that just in case … what is your private ask list … how it is to be decided I don't think that
+even needs to be there"*.
+- **The Proposal to vote on, on the page** (`#cs-pz`, right after `#cs-room`, every view but the whole church and the sample):
+  `casePzDraw` draws `caseProposal(model, deck)` line for line in the PDF's order (`casePzHTML`: kicker, title, memo, status, path, the
+  motion box, why, the plan, the follow-up plan, the budget (amounts read-only: Adjust sets them), safeguards, review, Action taken with
+  its boxes, the small print). **Edit** turns every line into a box; each change is saved as it is typed in `uChurch().propEdits[caseEditKey()]`
+  (per church, ministry, group, language), keyed by what the line is (`casePzMap`: kicker, title, memo:<label>, status, path, motion,
+  why:<k>, plan:<k>:<i>, fu:<label>, line:<i>, bud:<label>, bnote, safe:<i>, rev:<i>); an emptied line goes back to the app's words;
+  **Done**; **Undo my changes** clears them all. `casePzApply` puts them on the Proposal: the page, **Download PDF** (beside Edit;
+  `caseProposalPdf`) and the phones' copy (`prPdfSend`), only for the model chosen now (`casePzEditsFor`). `caseProposal` itself is
+  unchanged (the goldens). The goal and the slides' words redraw it (`casePzSoon`), never while he edits it.
+- **The buttons under the slides** (`caseActsHTML(false)`, `.cs-acts2`): Present live alone on the first row, gold (`--m-hardship`) and
+  glowing (`.cs-live`); Share link & QR and Download PDF handout under it; "See a sample slideshow" a quiet link (`.cs-samplel`). The
+  Proposal's PDF moved beside its Edit; the private ask list is "Who to ask" / "A quién invitar" (`caseU('askList')`) inside "Your church,
+  ready to serve", shown once some results are in. The sample slideshow keeps its own row.
+- **The slide panel** (`caseDrawEdit`): only the slide's own words. Dates (`caseTimingHTML`) and Runs as (`caseRunsHTML`) are no longer
+  drawn (a choice saved before still counts; the functions stay); "Restore the original" is "Undo my changes" / "Deshacer mis cambios",
+  shown only once the slide has his words; no "Saved on this device…" line.
+- **Step 3's end:** no "How it is being decided" (`#cs-dec`) in step 3 at all (a decision is still recorded in the presenter view: its
+  Decision button and end card); What to say, Questions, then **"Your church, ready to serve"** (`#cs-ready`, a `section`, last):
+  `gfReadyPanelMount` draws a small card — the Spiritual Gifts icon (the main menu's own SVG, its ids suffixed: `toolIconSVG`), the name,
+  one line (how many have discovered their gifts; the strongest as counts when there are enough), **Open Spiritual Gifts** (`gfU('openGifts')`,
+  the landing) and, in Make the Case, "Who to ask" (opens `#cs-ask` under the card). The people / volunteers / leaders rows and the
+  Sabbath-slides link are gone from it (the landing has them).
+- **The close** (`.cs-close`, all three places): the Ellen White quote only; the Nehemiah verse is gone.
+- Tests: `v51-proposal-page` (new, 43; failing-first on v10.50.0: `Terrain-work/v66/logs/ff-v51.log`); updated with comments: case-fixes,
+  case-steps, case-screens (the buttons, "Who to ask"), timing-options (the Dates switch mounted by the test), v43-followup (#cs-fu after
+  #cs-pz), gifts-first-ui and v45-profile-move (the small card). Samples: `~/Downloads/Terrain-v10.51.0-samples/` (`Terrain-work/v66/shots7.mjs`).
+
 **v10.50.0 (6 Oct 2026) — the needs, clearer; Spiritual Gifts in three steps.** The pastor, from his computer: *"the title could be
 neighborhood needs … tap the need and plant the seed"*; *"the categories should be much bolder … same color as the 1 2 3 … glowing"*;
 *"instead of having it all shades of … pink use some shades of different colors"*; *"when you click it Ministry ideas … the columns showing

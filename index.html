@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.50.0
+     TERRAIN  v10.51.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.50.0" data-theme="dark">
+<html lang="en" data-version="v10.51.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.50.0">
-<title>Community Map — Terrain v10.50.0</title>
+<meta name="terrain-version" content="v10.51.0">
+<title>Community Map — Terrain v10.51.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -2839,6 +2839,63 @@ button.td-opt:disabled{cursor:default}
 .cs-close{margin-top:34px}
 .cs-close .verse{margin:0 0 4px}
 .cs-egw{margin:14px 0 0}
+/* v10.51.0 — "present live should probably be a different color and highlighted and glowing … that's the important button":
+   Present live alone on the first row, gold and glowing; Share and the handout under it; the sample a quiet link */
+.cs-acts.cs-acts2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;margin-left:auto;margin-right:auto}
+.cs-acts.cs-acts2 .btn.cs-live{grid-column:1/-1;min-height:58px;font-size:1.04rem;background:var(--m-hardship);color:var(--panel);
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--m-hardship) 55%,transparent),0 0 30px -2px color-mix(in srgb,var(--m-hardship) 58%,transparent)}
+.cs-acts.cs-acts2 .btn.cs-live:hover,.cs-acts.cs-acts2 .btn.cs-live:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--m-hardship) 72%,transparent),0 0 40px 0 color-mix(in srgb,var(--m-hardship) 66%,transparent)}
+.cs-samplel{margin:10px 0 0;text-align:center;font-size:.88rem}
+/* v10.51.0 — the Proposal to vote on, on the page, line for line as the PDF prints it; Edit turns each line into a box */
+.cs-pz{margin:22px 0 0;padding:16px 18px 18px;border:1px solid var(--line2);border-left:3px solid var(--m-hardship);border-radius:var(--r);background:var(--panel)}
+.cs-pzhd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.cs-pzhd h3{margin:0;font-family:var(--disp);font-size:1.12rem;color:var(--ink);text-wrap:balance}
+.cs-pzb{display:flex;gap:8px;flex-wrap:wrap}
+.cs-pzb [hidden]{display:none}
+.cs-pzn{margin:4px 0 14px!important}
+.cs-pzdoc{border:1px solid var(--line);border-radius:10px;padding:18px 20px;background:var(--panel2);max-width:780px;font-size:.92rem;line-height:1.55;color:var(--ink)}
+.cs-pzk{margin:0;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--m-hardship)}
+.cs-pzt{margin:2px 0 10px;font-family:var(--disp);font-size:1.3rem;line-height:1.25;color:var(--ink);text-wrap:balance}
+.cs-pzmemo{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;margin:0 0 6px}
+.cs-pzmemo dt,.cs-pzrows dt{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);padding-top:.3em}
+.cs-pzmemo dd,.cs-pzrows dd{margin:0;min-width:0}
+.cs-pzst{margin:6px 0 0;font-weight:700;color:var(--m-hardship)}
+.cs-pzpath{margin:2px 0 0;font-size:.82rem;color:var(--ink3)}
+.cs-pzdoc h5{margin:16px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--line);font-size:.72rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--m-hardship)}
+.cs-pzmo{margin:12px 0 0;padding:12px 14px;border:1.5px solid var(--m-hardship);border-radius:8px;background:var(--panel)}
+.cs-pzlab{margin:0 0 4px;font-size:.7rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--m-hardship)}
+.cs-pzmo [data-pz-f="motion"]{font-weight:700}
+.cs-pzlist{margin:0;padding-left:1.2em;display:grid;gap:5px}
+.cs-pzrows{display:grid;grid-template-columns:minmax(0,8.5em) minmax(0,1fr);gap:6px 14px;margin:0}
+.cs-pzrows dd>[data-pz-f]{display:block}
+.cs-pztw{overflow-x:auto}
+.cs-pztab{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;margin:0 0 8px}
+.cs-pztab th{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);text-align:right;padding:2px 0 4px 10px}
+.cs-pztab th:first-child,.cs-pztab td:first-child{text-align:left;padding-left:0}
+.cs-pztab td{padding:3px 0 3px 10px;text-align:right;vertical-align:top}
+.cs-pztab tr.tot td{border-top:1px solid var(--line2);font-weight:700;padding-top:5px}
+.cs-pzsrc{display:block;font-size:.78rem;color:var(--ink3)}
+.cs-pzact{margin:14px 0 0;padding:4px 14px 12px;border:1px dashed var(--line2);border-radius:8px}
+.cs-pzboxes{display:flex;flex-wrap:wrap;gap:6px 16px;margin:4px 0 6px}
+.cs-pzbox::before{content:'☐ ';color:var(--ink3)}
+.cs-pzbox.on::before{content:'☑ ';color:var(--m-hardship)}
+.cs-pzfill{margin:4px 0 0;font-size:.84rem;color:var(--ink2)}
+.cs-pznotes{margin:12px 0 0;font-size:.76rem;color:var(--ink3)}
+.cs-pzdoc span[data-pz-f].ed{background:color-mix(in srgb,var(--m-hardship) 16%,transparent);border-radius:4px;box-shadow:0 0 0 2px color-mix(in srgb,var(--m-hardship) 16%,transparent)}
+.cs-pzdoc textarea[data-pz-f]{display:block;width:100%;box-sizing:border-box;margin:2px 0;padding:6px 8px;border:1px solid var(--line2);border-radius:8px;background:var(--panel);color:var(--ink);font:inherit;line-height:1.45;resize:vertical;min-height:2.4em}
+.cs-pzdoc textarea[data-pz-f]:focus{outline:2px solid var(--m-hardship);outline-offset:1px}
+@media(max-width:560px){ .cs-pz{padding:14px 12px} .cs-pzdoc{padding:14px 12px} .cs-pzmemo,.cs-pzrows{grid-template-columns:minmax(0,1fr);gap:2px 0} .cs-pzmemo dd,.cs-pzrows dd{margin-bottom:6px} }
+/* v10.51.0 — "Your church, ready to serve": a small card at the end, the Spiritual Gifts icon, one button */
+.cs-ready{display:flex;align-items:center;gap:14px;margin:18px 0 0;padding:12px 16px;border:1px solid var(--line);border-radius:var(--r);background:var(--panel)}
+.cs-ready[hidden]{display:none}
+.cs-rico{flex:none;line-height:0}
+.cs-rico svg{width:52px;height:52px;display:block}
+.cs-rtx{flex:1 1 auto;min-width:0}
+.cs-rk{margin:0;font-weight:750;color:var(--ink);font-size:.96rem}
+.cs-rl{margin:2px 0 0;font-size:.86rem;color:var(--ink2)}
+.cs-rl .gff-l{min-height:32px}
+.cs-rgo{flex:none}
+@media(max-width:520px){ .cs-ready{flex-wrap:wrap} .cs-rgo{width:100%} }
 /* the sample slideshow, and the tool with no survey yet */
 .casep{margin:0 0 10px}
 .casep[hidden]{display:none}
@@ -4130,13 +4187,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.50.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.50.0';
+const VERSION = 'v10.51.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -28747,7 +28804,7 @@ const CASE_COPY={
   speakingTo:{en:'Who are you speaking to?', es:'¿A quién se dirige?'},
   build:{en:'Build the slides', es:'Crear las diapositivas'},
   editHeadline:{en:'Edit headline', es:'Editar el titular'},
-  restore:{en:'Restore the original', es:'Restaurar el original'},
+  restore:{en:'Undo my changes', es:'Deshacer mis cambios'},   // v10.51.0: "restore the original. What is that?"
   handout:{en:'Download handout (PDF)', es:'Descargar folleto (PDF)'},
   askList:{en:'Private ask list', es:'Lista privada para invitar'},
   askListNote:{en:'For your eyes only. Names never appear on a shared slide or handout.', es:'Solo para usted. Los nombres nunca aparecen en una diapositiva ni en un folleto compartido.'},
@@ -33364,7 +33421,7 @@ const CASE_UI={
   present:{en:'Present live',es:'Presentar en vivo'},
   share:{en:'Share link & QR',es:'Compartir enlace y QR'},
   pdf:{en:'Download PDF handout',es:'Descargar folleto en PDF'},
-  askList:{en:'Your private ask list',es:'Su lista privada para invitar'},
+  askList:{en:'Who to ask',es:'A quién invitar'},   // v10.51.0: "what is your private ask list" (it is: who to ask, on this device only)
   sample:{en:'See a sample slideshow',es:'Ver una presentación de ejemplo'},
   actsLabel:{en:'What to do with these slides',es:'Qué hacer con estas diapositivas'},
   sampleDoor:{en:'What members see on their phones, marked SAMPLE on every slide: for showing people before you present.',
@@ -34030,6 +34087,13 @@ function caseActsHTML(sample,type){
   const b=(k,cls,extra)=>`<button type="button" class="btn${cls?' '+cls:''}" data-cs-act="${k}"${extra||''}>${esc(caseU(k==='ask'?'askList':k))}</button>`;
   // v10.42 part 3: "Proposal to vote on (PDF)" beside the handout (not for the whole church: invited, not asked to vote)
   const prop=type!=='congregation', n=(sample?3:5)+(prop?1:0);
+  /* v10.51.0 — the pastor (6 Oct 2026): "present live should probably be a different color and highlighted and glowing … that's the
+     important button", the sample "keep that just in case", and "what is your private ask list": Present live alone and gold; Share
+     and the handout under it; the sample a quiet link; the Proposal's PDF beside its Edit (#cs-pz); the private ask list in "Your
+     church, ready to serve" ("Who to ask"). The sample slideshow keeps its own row. */
+  if(!sample) return `<div class="cs-acts cs-acts2" role="group" aria-label="${esc(caseU('actsLabel'))}">${b('present','cs-live')}${b('share','ghost')}${b('pdf','ghost')}</div>
+    <p class="cs-samplel"><button type="button" class="gff-l" data-cs-act="sample">${esc(caseU('sample'))}</button></p>
+    <p class="note cs-status" id="cs-status" role="status"></p>`;
   return `<div class="cs-acts${sample?' cs-a3':''}${n===6?' cs-a6':n===4?' cs-a4':''}" role="group" aria-label="${esc(caseU('actsLabel'))}">${b('present','')}${b('share','ghost')}${b('pdf','ghost')}${prop?b('proposal','ghost'):''}${sample?'':b('ask','ghost',' aria-expanded="false" aria-controls="cs-ask"')+b('sample','ghost')}</div>
     <p class="note cs-status" id="${sample?'cs-sstatus':'cs-status'}" role="status"></p>`;
 }
@@ -34038,7 +34102,7 @@ function caseDraw3(){
   const h=$('cs-s3'); if(!h) return;
   if(CASE_ST.pv){ CASE_ST.pv.destroy(); CASE_ST.pv=null; }
   clearTimeout(CASE_ST.timer);
-  CASE_ST.ask=false;
+  CASE_ST.ask=false; CASE_ST.pzEdit=false;
   const P=casePrefs();
   // v10.41: step 3 is always framed; until a group and an idea are chosen it says so, with the sample door
   const door=`<div class="cs-doorw">${caseDoorHTML()}</div>`;
@@ -34050,11 +34114,14 @@ function caseDraw3(){
   CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
   const n=CASE_ST.deck.slides.length;
   h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
-    +caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
-    // v10.42 part 3 (X11): how it is being decided (the presenter builder's card), the private ask list, the church's readiness (folded)
-    +`<section class="cs-dec" id="cs-dec" hidden></section>`
-    +`<section class="card gfcard cs-ask" id="cs-ask" hidden aria-label="${esc(caseU('askList'))}"></section>`
-    +`<details id="cs-ready" class="cs-qs cs-ready" hidden></details>`+caseSayHTML(model)+caseQuestionsHTML(model);
+    +caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
+    /* v10.51.0 — the pastor (6 Oct 2026): "I don't know if we really need the how it is being decided … you don't need it to have it on
+       the bottom again", and "how it is to be decided I don't think that even needs to be there": no #cs-dec in step 3 (a decision is
+       still recorded in the presenter view, its Decision button). "The your church ready to serve probably needs to be at the end":
+       last, a small card (gfReadyPanelMount), its "Who to ask" opening the private ask list under it. */
+    +caseSayHTML(model)+caseQuestionsHTML(model)
+    +`<section id="cs-ready" class="cs-ready" hidden></section>`
+    +`<section class="card gfcard cs-ask" id="cs-ask" hidden aria-label="${esc(caseU('askList'))}"></section>`;
   CASE_ST.slide=Math.max(0,Math.min(CASE_ST.slide,n-1));
   CASE_ST.pv=casePvMount($('cs-pv'),CASE_ST.deck,{edit:true,start:CASE_ST.slide,onIndex:i=>{ CASE_ST.slide=i; }});
   // his series' numbers live in the Evangelism Planner, so "Adjust" opens it there
@@ -34066,6 +34133,7 @@ function caseDraw3(){
   try{ fuCardMount($('cs-fu'),model); }catch(e){}   // v10.43 (C1.9)
   if(typeof caseDecCardMount==='function') try{ caseDecCardMount($('cs-dec'),model); }catch(e){}
   if(typeof gfReadyPanelMount==='function') try{ gfReadyPanelMount($('cs-ready')); }catch(e){}
+  try{ casePzDraw(); }catch(e){}   // v10.51.0: the Proposal to vote on, under the buttons
   caseStepBar();
 }
 /* v10.43 fix (2 Oct 2026, "there's a detach somewhere"): the time the idea names itself, said plainly above his slides when the slides
@@ -34263,10 +34331,12 @@ function caseDrawEdit(el,S,api){
         ?`<input id="${id}" type="text" data-cs-f="${f}" maxlength="${max}" value="${esc(v)}" autocomplete="off">`
         :`<textarea id="${id}" data-cs-f="${f}" rows="3" maxlength="${max}">${esc(v)}</textarea>`}</label><p class="cs-cnt" data-cs-cnt="${f}">${v.length} / ${max}</p>`; }).join('')
     +`<p class="cs-flag" data-cs-stale hidden>${esc(caseU('stale'))}</p><p class="cs-flag" data-cs-over hidden>${esc(caseU('over'))}</p>
-      <div class="cs-erow"><button type="button" class="btn ghost gfsm" data-cs-restore>${esc(caseT(CASE_COPY.builder.restore))}</button>
-      <span class="note">${esc(caseU('saved',{church:churchNameInSentence()}))}</span></div>`;
-  el.innerHTML=caseTimingHTML()+caseRunsHTML()+`<h4>${esc(caseU('editOf',{i:i+1,n}))}${lab?` <span>· ${esc(lab)}</span>`:''}</h4>${body}`;
-  caseTimingWire(el); caseRunsWire(el);   // v10.43: "Runs as"
+      <div class="cs-erow"><button type="button" class="btn ghost gfsm" data-cs-restore hidden>${esc(caseT(CASE_COPY.builder.restore))}</button></div>`;
+  /* v10.51.0 — the pastor (6 Oct 2026): "Dates … suggest options … I already know the dates what does this actually change? … what's the
+     difference between ongoing and a series? … we wanna just clean up as much as possible … restore the original. What is that?": the
+     panel is the slide's own words only. Dates (caseTimingHTML: the board chooses the day together, his v10.42 rule) and Runs as
+     (caseRunsHTML: the idea already says ongoing, a series or one day) are no longer drawn; a choice saved before still counts. */
+  el.innerHTML=`<h4>${esc(caseU('editOf',{i:i+1,n}))}${lab?` <span>· ${esc(lab)}</span>`:''}</h4>${body}`;
   // v10.41: on a conference proposal's ask slide, what he asks for and the amounts he types (never filled in for him)
   if(s.type==='ask'&&CASE_ST.model&&CASE_ST.model.type==='conference'){ el.insertAdjacentHTML('beforeend',caseConfAskHTML(CASE_ST.model)); caseConfAskWire(el,api); }
   const refresh=()=>{ clearTimeout(CASE_ST.timer); CASE_ST.timer=setTimeout(()=>{ uPersist(); caseRedeck(api); },250); };
@@ -34335,7 +34405,7 @@ function caseConfRebuild(api){
 /* Restore on or off, the "figures changed since you edited" and "no longer fits" notes. */
 function caseEditFlags(el,S){
   const slot=caseSlotKeys(S.deck)[S.i], e=caseEdits()[slot], base=(CASE_ST.base&&CASE_ST.base.slides[S.i])||{};
-  const r=el.querySelector('[data-cs-restore]'); if(r) r.disabled=!e;
+  const r=el.querySelector('[data-cs-restore]'); if(r){ r.disabled=!e; r.hidden=!e; }   // v10.51.0: shown once he changed the slide
   const st=el.querySelector('[data-cs-stale]');
   if(st) st.hidden=!(e&&e.was&&Object.keys(e.was).some(f=>typeof e[f]==='string'&&e.was[f]!==String(base[f]||'')));
   const ov=el.querySelector('[data-cs-over]');
@@ -34346,6 +34416,7 @@ function caseRedeck(api){
   if(!CASE_ST.base) return;
   CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits());
   if(api) api.set(CASE_ST.deck);
+  casePzSoon();   // v10.51.0
 }
 
 /* ---- the sample slideshow ------------------------------------------------------ */
@@ -34465,7 +34536,7 @@ function caseMount(fresh){
      line, no step bar), then Who is it for?, then the slides. "Choose a different ministry" brings the list back. */
   const PROP=casePropMode();
   if(swh){ if(PROP){ swh.innerHTML=''; swh.hidden=true; } else { swh.hidden=false; swh.innerHTML=buySwitchHTML(buyPath()); buySwitchWire(swh); } }
-  if(buyPath()==='buy'){ host.innerHTML=`<div id="bx-host"></div><div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`; buyMount($('bx-host')); return; }
+  if(buyPath()==='buy'){ host.innerHTML=`<div id="bx-host"></div><div class="cs-close">${caseEgwHTML()}</div>`; buyMount($('bx-host')); return; }
   const P=casePrefs(); U_PROP=P.ministry;
   // v10.41: the step bar, then three framed steps: who it is for, what he will propose, his slides
   { const tn=$('toolname'); if(tn&&TOOL==='case') tn.textContent=PROP?L_PROP('big'):tr(TOOLS.case.name); }   // v10.48.0: "Proposal"
@@ -34473,7 +34544,7 @@ function caseMount(fresh){
   if(PROP){
     host.innerHTML=`<section class="cs-prop" id="cs-prop" aria-labelledby="cs-prop-h">${casePropHTML()}</section>
       <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"${CASE_ST.propList?'':' hidden'}></section><section class="cs-step" id="cs-s3"></section>
-      <div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`;
+      <div class="cs-close">${caseEgwHTML()}</div>`;
     casePropWire(host);
     caseDraw1(); caseDraw2(); caseDraw3();
     const s2=$('cs-s2'); if(s2) s2.hidden=!CASE_ST.propList;
@@ -34481,7 +34552,7 @@ function caseMount(fresh){
   }
   host.innerHTML=`<div class="cs-gff" id="cs-gff" role="note" hidden></div><nav class="cs-bar" id="cs-bar"></nav>
     <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"></section><section class="cs-step" id="cs-s3"></section>
-    <div class="cs-close">${verseHTML('case')}${caseEgwHTML()}</div>`;
+    <div class="cs-close">${caseEgwHTML()}</div>`;
   // v10.45.0 (DESIGN-SURVEY §2.7): "← Back to the need: {title}" while he came from a need in the Community Survey
   { const fh=nsFromHTML(); if(fh){ host.insertAdjacentHTML('afterbegin',fh); const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack; } }
   caseDraw1(); caseDraw2(); caseDraw3(); caseStepBar();
@@ -37031,7 +37102,7 @@ async function prPdfSend(P){
   if(!(hash===r.pdfHash&&r.pv>0)) jobs.push({kind:'handout',vk:'pv',hk:'pdfHash',hash,make:()=>({doc:casePdfDoc(H,{jsPDF:J}),name:casePdfName(H),lang:H.lang})});
   // the proposal to vote on (section B's document) for the bodies that vote, when this page can make it
   if(prVoteDeck(deckJ)&&typeof caseProposal==='function'&&typeof caseProposalDoc==='function'){
-    try{ const Pz=caseProposal(P.model,deckJ,{sample:!!P.sample}), qh=prHash(Pz);
+    try{ const Pz=typeof casePzApply==='function'&&!P.sample?casePzApply(caseProposal(P.model,deckJ,{sample:false}),casePzEditsFor(P.model)):caseProposal(P.model,deckJ,{sample:!!P.sample}), qh=prHash(Pz);   // v10.51.0: his words on phones too
       if(Pz&&!(qh===r.voteHash&&r.qv>0)) jobs.push({kind:'vote',vk:'qv',hk:'voteHash',hash:qh,
         make:()=>({doc:caseProposalDoc(Pz,{jsPDF:J}),name:typeof caseProposalName==='function'?caseProposalName(Pz):casePdfName(H),lang:Pz.lang==='es'?'es':H.lang})}); }
     catch(e){}
@@ -39063,12 +39134,125 @@ async function caseProposalPdf(model,opts){
   say(prU('pdfMaking'));
   try{
     const J=await gfLoadJsPDF();
-    const Pz=caseProposal(model,opts.deck||null,{sample:!!opts.sample});
+    let Pz=caseProposal(model,opts.deck||null,{sample:!!opts.sample});
     if(!Pz) throw new Error('model');
+    if(!opts.sample) Pz=casePzApply(Pz,casePzEditsFor(model));   // v10.51.0: his words, as the page shows them
     const doc=caseProposalDoc(Pz,{jsPDF:J}), name=caseProposalName(Pz);
     doc.save(name); say(prU('pdfSaved',{file:name})); return true;
   }catch(e){ say(prU('pdfFail')); return false; }
 }
+
+/* ---- v10.51.0 — the Proposal to vote on, on the page (#cs-pz, under the buttons) ----------------------------------------------
+   The pastor (6 Oct 2026): "the proposal to vote on PDF that you get from the proposal should show underneath … and it should be
+   editable … a place you can tap edit and every line you can change it". caseProposal's own object, drawn in the order the PDF
+   draws it (motion first or the explanation first; the finance committee's budget first); Edit turns every line into a box. His
+   words are kept per church, ministry, group and language (uChurch().propEdits under caseEditKey, as the slides' are), keyed by
+   what each line is (kicker, title, memo:<label>, status, path, motion, why:<k>, plan:<k>:<i>, fu:<label>, line:<i> (a cost's name),
+   bud:<label>, bnote, safe:<i>, rev:<i>); the PDF and the phones' copy print them (casePzApply). An emptied line goes back to the
+   app's words; "Undo my changes" takes back every one. The amounts (Adjust sets them) and Action taken (the meeting's) stay. */
+const CASE_PZ_T={head:{en:'Proposal to vote on',es:'Propuesta para votar'},
+  note:{en:'This is what the PDF prints. Tap Edit to change any line.',es:'Esto es lo que imprime el PDF. Toque Editar para cambiar cualquier línea.'},
+  edit:{en:'Edit',es:'Editar'}, done:{en:'Done',es:'Listo'}, undo:{en:'Undo my changes',es:'Deshacer mis cambios'}, pdf:{en:'Download PDF',es:'Descargar PDF'}};
+const CASE_PZ_MAX=1200;
+function casePzEdits(P){ const all=uChurch().propEdits, e=all&&typeof all==='object'?all[caseEditKey(P)]:null; return e&&typeof e==='object'?e:{}; }
+/* The edits for a model only when it is the one chosen now (a room's model may be another ministry's or group's). */
+function casePzEditsFor(m){
+  const P=casePrefs();
+  return m&&!m.sample&&m.ministry&&m.group&&m.ministry.id===P.ministry&&m.group.id===P.group&&m.lang===caseLang()?casePzEdits(P):{};
+}
+function casePzSet(f,val,orig){
+  const ch=uChurch(); if(!ch.propEdits||typeof ch.propEdits!=='object') ch.propEdits={};
+  const k=caseEditKey(), all=ch.propEdits, e=all[k]&&typeof all[k]==='object'?all[k]:(all[k]={});
+  const v=caseClean(val,CASE_PZ_MAX);
+  if(!v||v===caseClean(orig,CASE_PZ_MAX)) delete e[f]; else e[f]=v;
+  if(!Object.keys(e).length) delete all[k];
+}
+function casePzUndo(){ const ch=uChurch(); if(ch.propEdits&&typeof ch.propEdits==='object') delete ch.propEdits[caseEditKey()]; }
+const casePzFuKey=(r,i)=>'fu:'+(r[0]||'#'+i);
+/* Every line he may change, {key: the app's words} (the keys casePzHTML draws and casePzApply reads). */
+function casePzMap(Pz){
+  const o={}, put=(k,v)=>{ if(v!=null&&v!==''&&!(k in o)) o[k]=String(v); };
+  put('kicker',Pz.kicker); put('title',Pz.title); (Pz.memo||[]).forEach(r=>put('memo:'+r[0],r[1]));
+  if(Pz.status) put('status',Pz.status.text); if(Pz.path) put('path',Pz.path); put('motion',Pz.motion);
+  (Pz.why||[]).forEach(w=>put('why:'+w.k,w.text));
+  (Pz.plan||[]).forEach(p=>(p.lines||[]).forEach((t,i)=>put('plan:'+p.k+':'+i,t)));
+  if(Pz.followup) (Pz.followup.rows||[]).forEach((r,i)=>put(casePzFuKey(r,i),r[1]));
+  if(Pz.budget){ (Pz.budget.lines||[]).forEach((l,i)=>put('line:'+i,l.name)); (Pz.budget.rows||[]).forEach(r=>put('bud:'+r[0],r[1])); put('bnote',Pz.budget.note); }
+  (Pz.safeguards||[]).forEach((r,i)=>put('safe:'+i,r.text));
+  (Pz.review||[]).forEach((r,i)=>put('rev:'+i,r[1]));
+  return o;
+}
+function casePzApply(Pz,E){
+  if(!Pz||!E||typeof E!=='object'||!Object.keys(E).length) return Pz;
+  const z=JSON.parse(JSON.stringify(Pz)), g=k=>typeof E[k]==='string'&&E[k].trim()?E[k]:null; let v;
+  if((v=g('kicker'))) z.kicker=v;
+  if((v=g('title'))) z.title=v;
+  (z.memo||[]).forEach(r=>{ if((v=g('memo:'+r[0]))) r[1]=v; });
+  if(z.status&&(v=g('status'))) z.status={...z.status,text:v,blank:false};
+  if(z.path&&(v=g('path'))) z.path=v;
+  if((v=g('motion'))) z.motion=v;
+  (z.why||[]).forEach(w=>{ if((v=g('why:'+w.k))) w.text=v; });
+  (z.plan||[]).forEach(p=>(p.lines||[]).forEach((t,i)=>{ if((v=g('plan:'+p.k+':'+i))) p.lines[i]=v; }));
+  if(z.followup){ (z.followup.rows||[]).forEach((r,i)=>{ if((v=g(casePzFuKey(r,i)))) r[1]=v; });
+    ['tight','tight4'].forEach(n=>(z.followup[n]||[]).forEach(r=>{ if(r[0]&&(v=g('fu:'+r[0]))) r[1]=v; })); }
+  if(z.budget){ ['rows','rows4'].forEach(n=>(z.budget[n]||[]).forEach(r=>{ if((v=g('bud:'+r[0]))) r[1]=v; }));
+    (z.budget.lines||[]).forEach((l,i)=>{ if((v=g('line:'+i))) l.name=v; });
+    if(z.budget.note&&(v=g('bnote'))) z.budget.note=v; }
+  (z.safeguards||[]).forEach((r,i)=>{ if((v=g('safe:'+i))) r.text=v; });
+  (z.review||[]).forEach((r,i)=>{ if((v=g('rev:'+i))) r[1]=v; });
+  return z;
+}
+function casePzHTML(Pz,ed,E){
+  const T=k=>caseT(CASE_PZ_T[k]), Lb=Pz.labels||{}, fin=Pz.audience==='finance', has=!!Object.keys(E||{}).length;
+  const F=(f,t)=>ed?`<textarea data-pz-f="${esc(f)}" rows="${Math.max(1,Math.min(8,Math.ceil(String(t||'').length/64)))}" maxlength="${CASE_PZ_MAX}">${esc(t||'')}</textarea>`
+    :`<span data-pz-f="${esc(f)}"${E&&E[f]?' class="ed"':''}>${esc(t||'')}</span>`;
+  const sec=(h,body)=>body?`<h5>${esc(h||'')}</h5>${body}`:'';
+  const rows=(list,key)=>`<dl class="cs-pzrows">${list.map((r,i)=>`<dt>${esc(r[0]||'')}</dt><dd>${F(key(r,i),r[1])}</dd>`).join('')}</dl>`;
+  const head=`<p class="cs-pzk">${F('kicker',Pz.kicker)}</p><h4 class="cs-pzt">${F('title',Pz.title)}</h4>
+    <dl class="cs-pzmemo">${(Pz.memo||[]).map(r=>`<dt>${esc(r[0])}</dt><dd>${F('memo:'+r[0],r[1])}</dd>`).join('')}</dl>
+    ${Pz.status?`<p class="cs-pzst">${F('status',Pz.status.text)}${Pz.status.blank&&!ed?' ________':''}</p>`:''}${Pz.path?`<p class="cs-pzpath">${F('path',Pz.path)}</p>`:''}`;
+  const motion=`<div class="cs-pzmo"><p class="cs-pzlab">${esc(Lb.motion||'')}</p>${F('motion',Pz.motion)}</div>`;
+  const why=sec(Lb.why,(Pz.why||[]).length?`<ul class="cs-pzlist">${Pz.why.map(w=>`<li>${F('why:'+w.k,w.text)}${w.ref||w.source?`<span class="cs-pzsrc">${esc(w.ref||w.source)}</span>`:''}</li>`).join('')}</ul>`:'');
+  const plan=sec(Lb.plan,(Pz.plan||[]).length?`<dl class="cs-pzrows">${Pz.plan.map(p=>`<dt>${esc(p.label||'')}</dt><dd>${(p.lines||[]).map((t,i)=>F('plan:'+p.k+':'+i,t)).join('')}</dd>`).join('')}</dl>`:'');
+  const Fo=Pz.followup, fu=Fo&&(Fo.rows||[]).length?sec(Fo.head,rows(Fo.rows,casePzFuKey)):'';
+  const B=Pz.budget, mo=v=>v?fmtMoney(v):'—';
+  const bud=B?sec(Lb.budget,(B.lines&&B.lines.length?`<div class="cs-pztw"><table class="cs-pztab"><thead><tr><th></th><th>${esc(Lb.start||'')}</th><th>${esc(Lb.month||'')}</th></tr></thead><tbody>${B.lines.map((l,i)=>`<tr><td>${F('line:'+i,l.name)}</td><td>${mo(l.startup)}</td><td>${mo(l.monthly)}</td></tr>`).join('')}<tr class="tot"><td>${esc(Lb.total||'')}</td><td>${fmtMoney(B.startup||0)}</td><td>${fmtMoney(B.monthly||0)}</td></tr></tbody></table></div>`:'')
+    +((B.rows||[]).length?rows(B.rows,r=>'bud:'+r[0]):'')+(B.note?`<p class="cs-pzfill">${F('bnote',B.note)}</p>`:'')):'';
+  const safe=sec(Lb.safeguards,(Pz.safeguards||[]).length?`<ul class="cs-pzlist">${Pz.safeguards.map((r,i)=>`<li>${F('safe:'+i,r.text)}${r.src?`<span class="cs-pzsrc">${esc(r.src)}</span>`:''}</li>`).join('')}</ul>`:'');
+  const rev=sec(Lb.review,(Pz.review||[]).length?rows(Pz.review,(r,i)=>'rev:'+i):'');
+  const A=Pz.action;
+  const act=A?`<div class="cs-pzact"><h5>${esc(A.head||'')}</h5><div class="cs-pzboxes">${(A.boxes||[]).map(b=>`<span class="cs-pzbox${b.checked?' on':''}">${esc(b.label)}</span>`).join('')}</div>
+    ${A.timing?`<p class="cs-pzfill">${esc(A.timing.label)}: ${esc(A.timing.text)}</p>`:''}
+    <p class="cs-pzfill">${esc(Lb.date||'')}: ${A.date?esc(A.date):'________'} · ${esc(Lb.vote||'')}: ${esc(Lb.voteLine||'')}</p>
+    ${A.rec?`<p class="cs-pzfill">${esc(A.rec.label)}: ${A.rec.text?esc(A.rec.text):'________'}</p>`:''}${A.sig?`<p class="cs-pzfill">${esc(A.sig)}: ________</p>`:''}${A.next?`<p class="cs-pzfill">${esc(A.next)}</p>`:''}</div>`:'';
+  const body=Pz.order==='explain'?(fin?bud:'')+why+plan+fu+(fin?'':bud)+safe+rev+motion+act:motion+(fin?bud:'')+why+plan+fu+(fin?'':bud)+safe+rev+act;
+  return `<div class="cs-pzhd"><h3 id="cs-pz-h">${esc(T('head'))}</h3><div class="cs-pzb">
+      <button type="button" class="btn ghost gfsm" data-pz-edit${ed?' hidden':''}>${esc(T('edit'))}</button>
+      <button type="button" class="btn ghost gfsm" data-cs-act="proposal"${ed?' hidden':''}>${esc(T('pdf'))}</button>
+      <button type="button" class="btn gfsm" data-pz-done${ed?'':' hidden'}>${esc(T('done'))}</button>
+      <button type="button" class="btn ghost gfsm" data-pz-undo${ed&&has?'':' hidden'}>${esc(T('undo'))}</button></div></div>
+    <p class="note cs-pzn">${esc(T('note'))}</p>
+    <article class="cs-pzdoc" lang="${Pz.lang==='es'?'es':'en'}">${head}${body}${Lb.notes?`<p class="cs-pznotes">${esc(Lb.notes)}</p>`:''}</article>`;
+}
+function casePzDraw(){
+  const host=$('cs-pz'); if(!host) return;
+  const m=CASE_ST.model;
+  if(!m||!m.ok||m.sample||m.type==='congregation'){ host.hidden=true; host.innerHTML=''; CASE_ST.pzEdit=false; return; }
+  let base=null; try{ base=caseProposal(m,CASE_ST.deck); }catch(e){ base=null; }
+  if(!base){ host.hidden=true; host.innerHTML=''; return; }
+  const E=casePzEdits(), ed=!!CASE_ST.pzEdit, orig=casePzMap(base);
+  host.innerHTML=casePzHTML(casePzApply(base,E),ed,E); host.hidden=false;
+  const q=sel=>host.querySelector(sel);
+  q('[data-pz-edit]').onclick=()=>{ CASE_ST.pzEdit=true; casePzDraw(); const t=q('textarea[data-pz-f]'); if(t) try{ t.focus({preventScroll:true}); }catch(e){} };
+  q('[data-pz-done]').onclick=()=>{ CASE_ST.pzEdit=false; casePzDraw(); };
+  q('[data-pz-undo]').onclick=()=>{ casePzUndo(); uPersist(); CASE_ST.pzEdit=false; casePzDraw(); };
+  const pb=q('[data-cs-act="proposal"]'); if(pb) pb.onclick=()=>caseAct('proposal',pb);
+  const fit=t=>{ if(t.scrollHeight){ t.style.height='auto'; t.style.height=t.scrollHeight+2+'px'; } };
+  host.querySelectorAll('textarea[data-pz-f]').forEach(t=>{ fit(t); t.addEventListener('input',()=>{ const f=t.dataset.pzF;
+    casePzSet(f,t.value,orig[f]); uPersist(); fit(t); const u=q('[data-pz-undo]'); if(u) u.hidden=!Object.keys(casePzEdits()).length; }); });
+}
+/* The slides' words or his goal changed: drawn again a moment later (never while he edits the proposal: his cursor stays). */
+function casePzSoon(){ if(CASE_ST.pzEdit) return; clearTimeout(CASE_ST.pzT); CASE_ST.pzT=setTimeout(()=>{ try{ casePzDraw(); }catch(e){} },300); }
 
 /* ---- v10.42 part 3: step 3 (DESIGN X4, X11): the goal box under the step head, the Proposal button, the hosts of the decision
    card and the readiness panel (the presenter builder fills them), "Our goal" first in "What to say" ---- */
@@ -39094,6 +39278,7 @@ function caseGoalRebuild(){
   if(CASE_ST.pv&&typeof CASE_ST.pv.set==='function') CASE_ST.pv.set(CASE_ST.deck);
   const r=document.querySelector('[data-cs-goalreset]'); if(r) r.hidden=!!(m.goal&&m.goal.suggested);
   const say=document.querySelector('#cs-s3 [data-cs-saygoal]'); if(say) say.textContent=m.goal&&m.goal.text||'';
+  casePzSoon();   // v10.51.0: "Our goal" in the Proposal's WHY
 }
 /* A save waiting (typing, 600 ms): done now. Present, Share, the PDFs and the Proposal call it first (never mid-word). */
 function caseGoalFlush(){
@@ -40040,6 +40225,7 @@ const GF_FIRST_UI={
   sabbathLink:{en:'Sabbath slides',es:'Diapositivas para el sábado'},
   hide2w:{en:'Hide for two weeks',es:'Ocultar por dos semanas'},
   panel:{en:'Your church, ready to serve',es:'Su iglesia, lista para servir'},
+  openGifts:{en:'Open Spiritual Gifts',es:'Abrir Dones espirituales'},   // v10.51.0
   rPeople:{en:'People',es:'Personas'}, rVol:{en:'Volunteers',es:'Voluntarios'}, rLead:{en:'Leaders',es:'Líderes'}, rGifts:{en:'Gifts',es:'Dones'}, rStrong:{en:'Strongest gifts',es:'Dones más fuertes'},
   pMembers:{en:'{n} members',es:'{n} miembros'}, pWorship:{en:'{n} in worship',es:'{n} asisten'}, pAdults:{en:'{n} adults',es:'{n} adultos'},
   vHours:{en:'{hands} with {hours} hours a month still free',es:'{hands} con {hours} horas al mes disponibles'},
@@ -40352,20 +40538,28 @@ function gfReadyPanelMount(host){
   if(!host) return;
   let R=null; try{ R=gfFirstOk()?gfReadiness():null; }catch(e){ R=null; }
   if(!R){ host.hidden=true; host.innerHTML=''; return; }
-  const P=R.profile||{}, row=(k,v)=>v?`<div class="gfr-row"><dt>${esc(gfU(k))}</dt><dd>${esc(v)}</dd></div>`:'';
-  const people=[P.membership?gfU('pMembers',{n:fmtNum(P.membership)}):'',P.attendance?gfU('pWorship',{n:fmtNum(P.attendance)}):'',P.adults?gfU('pAdults',{n:fmtNum(P.adults)}):''].filter(Boolean).join(' · ');
-  const vol=P.hands!=null&&P.hands!==''?(P.hours!=null&&P.hours!==''?gfU('vHours',{hands:fmtNum(P.hands),hours:fmtNum(P.hours)}):gfU('vHands',{hands:fmtNum(P.hands)})):'';
-  const lead=P.leaders!=null&&P.leaders!==''?gfU('lFree',{n:fmtNum(P.leaders)}):'';
+  /* v10.51.0 — the pastor (6 Oct 2026): "the your church ready to serve probably needs to be at the end and it should have the spiritual
+     gifts icon, and smaller one with a button that will … send the Pastor to the spiritual gifts page". One card: the Spiritual Gifts
+     icon (the main menu's own), the name, one line (how many have discovered their gifts; the strongest as counts, never names), one
+     button; in Make the Case also "Who to ask", the private ask list (moved here from the buttons under the slides). */
   const strong=R.shareOk&&R.strongest&&R.strongest.length?R.strongest.map(g=>`${g.name} ${fmtNum(g.n)}`).join(' · '):'';
-  const gifts=gfFirstLine(R).text;
-  const rows=P.ready?row('rPeople',people)+row('rVol',vol)+row('rLead',lead)+row('rGifts',gifts)+row('rStrong',strong):row('rGifts',gifts);
-  const open=host.open;
-  host.innerHTML=`<summary>${esc(gfU('panel'))}</summary><dl class="gfr-rows">${rows}</dl>
-    ${P.ready?'':`<p class="note">${esc(gfU('saveProfile'))} <button type="button" class="gff-l" data-gfr-profile>${esc(gfU('openProfile'))}</button></p>`}
-    <p class="note gfr-quiet"><button type="button" class="gff-l" data-gfr-sabbath>${esc(gfU('sabbathQuiet'))}</button></p>`;
-  host.open=open; host.hidden=false;
-  const pb=host.querySelector('[data-gfr-profile]'); if(pb) pb.onclick=()=>gfChurchOpen();   // v10.45.0: "Your church" on the Spiritual Gifts landing
-  host.querySelector('[data-gfr-sabbath]').onclick=()=>gfOpenSabbath();
+  const ask=host.id==='cs-ready'&&!!$('cs-ask')&&R.n>0;
+  host.innerHTML=`<span class="cs-rico" aria-hidden="true">${toolIconSVG('gifts','rdy')}</span>
+    <div class="cs-rtx"><p class="cs-rk">${esc(gfU('panel'))}</p><p class="cs-rl">${esc(gfFirstLine(R).text)}${strong?` · ${esc(gfU('rStrong'))}: ${esc(strong)}`:''}</p>
+      ${ask?`<p class="cs-rl"><button type="button" class="gff-l" data-cs-act="ask" aria-expanded="false" aria-controls="cs-ask">${esc(caseU('askList'))}</button></p>`:''}</div>
+    <button type="button" class="btn ghost gfsm cs-rgo" data-gfr-gifts>${esc(gfU('openGifts'))}</button>`;
+  host.hidden=false;
+  host.querySelector('[data-gfr-gifts]').onclick=()=>{ try{ openTool('gifts'); }catch(e){}
+    if(typeof GF_VIEW!=='undefined'&&GF_VIEW!=='roster'){ GF_VIEW='roster'; try{ gfRender(); }catch(e){} }
+    try{ window.scrollTo({top:0,behavior:'auto'}); }catch(e){} };
+  const ab=host.querySelector('[data-cs-act="ask"]'); if(ab) ab.onclick=()=>caseAct('ask',ab);
+}
+/* A main-menu tool's own icon, for a small card elsewhere: its ids (gradient, glow) made its own, so both draw. */
+function toolIconSVG(tool,sfx){
+  const g=document.querySelector(`.tool[data-tool="${tool}"] svg`); if(!g) return '';
+  let h=g.outerHTML;
+  (h.match(/\sid="[^"]+"/g)||[]).map(x=>x.slice(5,-1)).forEach(id=>{ h=h.split(`id="${id}"`).join(`id="${id}-${sfx}"`).split(`url(#${id})`).join(`url(#${id}-${sfx})`).split(`href="#${id}"`).join(`href="#${id}-${sfx}"`); });
+  return h.replace(/\sclass="tsvg"/,' class="cs-rsvg"');
 }
 
 /* ================= "Discover your gifts": the Sabbath presentation ================= */

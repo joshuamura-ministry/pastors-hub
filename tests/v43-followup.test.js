@@ -191,7 +191,9 @@ const UNSTUB = `window.cnResults=window.__cnSaved&&window.__cnSaved[0]; window.c
   console.log('\n-- T-F10 step 3: one "After the day" card (C1.9, D6) --');
   P2.E(`openTool('survey'); render(); openTool('case'); caseMount(true); caseChooseGroup('board'); caseChoose('health-expo');`);
   await until(() => P2.q('#cs-fu:not([hidden])')); await sleep(40);
-  c('one card #cs-fu, after the room, before how it is being decided', [P2.qa('#cs-fu').length, P2.q('#cs-fu').previousElementSibling.id, P2.q('#cs-fu').nextElementSibling.id], [1, 'cs-room', 'cs-dec']);
+  // v10.51.0: the Proposal to vote on now sits after the room (#cs-pz), and step 3 has no "How it is being decided" (the pastor: "I don't
+  // think that even needs to be there"): the card comes after the proposal, before What to say
+  c('one card #cs-fu, after the proposal, before What to say', [P2.qa('#cs-fu').length, P2.q('#cs-fu').previousElementSibling.id, P2.q('#cs-fu').nextElementSibling.matches('details.cs-say')], [1, 'cs-pz', true]);
   // v10.43 (integration): C2 is in the page now, so the card row is there ("it should host the connection cards"); hiding its
   // cnOpenMaker shows the row is drawn only with C2.
   c('"After the day", the next step and why, the timeline; the card row with C2 in the page', [P2.txt('#cs-fu h4'), P2.txt('#cs-fu [data-fu-name]'), P2.txt('#cs-fu .cs-fuwhy'), P2.txt('#cs-fu .cs-futl'), !!P2.q('#cs-fu [data-fu-card]'), P2.txt('#cs-fu [data-fu-make]')],

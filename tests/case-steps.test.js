@@ -181,7 +181,10 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   cards(P,'out')[0].querySelector('[data-lib-case]').click(); await sleep(200);
   c('step 2 shows it chosen, with Change', [P.J('casePrefs().ministry'),!!P.q('#cs-s2 [data-cs-change]'),P.q('#cs-s2 .cs-chosen .lib-card').dataset.libId], [pick,true,pick]);
   // v10.42 part 3 (PROPOSAL.md): the Proposal to vote on, after the handout
-  c('step 3 has the slides and every action (present, share, handout, proposal, ask list, sample)', [P.J('CASE_ST.deck.slides.length')>=8,P.qa('#cs-s3 [data-cs-act]').map(b=>b.dataset.csAct)], [true,['present','share','pdf','proposal','ask','sample']]);
+  // v10.51.0 — the pastor: "present live … that's the important button … see a sample slideshow … keep that just in case … what is your
+  // private ask list": Present live, Share, the handout, the sample (a link); the Proposal's PDF beside its Edit (#cs-pz); "Who to ask"
+  // in "Your church, ready to serve" once results are in (none here)
+  c('step 3 has the slides and every action (present, share, handout, the sample; the proposal\'s PDF in its box)', [P.J('CASE_ST.deck.slides.length')>=8,P.qa('#cs-s3 [data-cs-act]').map(b=>b.dataset.csAct)], [true,['present','share','pdf','sample','proposal']]);
   c('the bar: done, done, now, with the slide count', bar().map(b=>b[0]).concat([/\d+ slides/.test(bar()[2][1])]), ['done','done','now',true]);
   // v10.41.1: "slides for the deacons and deaconesses" (English articles, as the Spanish)
   c('one short line over the slides', P.txt('#cs-s3 .cs-sh .note'), `${P.J('CASE_ST.deck.slides.length')} slides for the deacons and deaconesses. Swipe to check them, then present.`);
