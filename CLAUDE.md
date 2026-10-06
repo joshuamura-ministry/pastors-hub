@@ -175,6 +175,16 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.54.1 (6 Oct 2026, quick lane) — each lift its own colour.** The pastor, of the survey's three columns of ministry ideas: *"Can
+the light lift moderate lift heavy lift be maybe slightly different colors"*. One colour per lift, the same wherever a lift is shown
+(`--lift1/2/3` = `--m-language` / `--m-housing` / `--m-children`: Light mint, Moderate blue, Heavy violet, both themes; `--lc` on
+`.lift.lN`, `.ns-lcol[data-lift]`, `.cs-szb[data-cs-lift]`): the survey's columns (the name, the line under the gloss, a 3 px edge and a
+faint tint on every idea), the bars on the idea sheet, Make the Case's Size (the name, the chosen box) and the Proposal page. CSS only.
+Tests: `v54-1-lift-colours` (new, 8; failing first on v10.54.0: `v70/ff-v54-1.log`). Full suite: 142 suites · 10,174 passed ·
+0 failed. Samples `~/Downloads/Terrain-v10.54.1-samples/`
+(`v70/shots15.mjs`). His question with it, "where will the sign-up page be?": there is no separate page; v10.54.0's sign-in opens from
+the Account button and from the trial button on every locked tool (only once payments are on); registration stays the first page.
+
 **v10.54.0 (6 Oct 2026) — accounts and plans, Stripe in TEST mode; payments OFF on the live site.** The pastor: *"Now we need to make
 sure we connect this to the stripe and build this to be of the product."* On the trial: *"what if you give them a 14 day trial,
 they'll just sign up and use the features and then get the surveys what's going to entice them to stay"*; the answer (ongoing value,
@@ -2352,7 +2362,7 @@ Don't relitigate them without a reason he'd accept.
   theme. Colouring whole *sections* was tried (v10.13) and rejected; all-mint
   was tried (v10.14) and rejected.
 - **Headings stay mint;** the data carries the colour. (Exception by his request, v10.38: the hub tiles and the
-  Spiritual Gifts sections each carry their own colour.)
+  Spiritual Gifts sections each carry their own colour. v10.54.1: each lift, Light mint, Moderate blue, Heavy violet, everywhere a lift is shown.)
 - **Nothing animates on its own** except the breathing button on the church
   profile — the one control that needs the pastor — and (v10.38, his request) the slow breathing glow of the
   four hub tiles. Reduced motion stops both.
