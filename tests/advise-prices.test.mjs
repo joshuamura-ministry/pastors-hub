@@ -71,7 +71,8 @@ console.log('-- GET says whether Find prices is on: a key AND a passphrase --');
 { let fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   let g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   // v10.53.0 (stale): advise-2.5 (the needs list); Find prices is unchanged
-  c('advise-2.5, prices true, pricesFn prices-1.0', [g.fn, g.prices, g.pricesFn], ['advise-2.5', true, 'prices-1.0']);
+  // v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
+  c('advise-2.6, prices true, pricesFn prices-1.0', [g.fn, g.prices, g.pricesFn], ['advise-2.6', true, 'prices-1.0']);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: prices false (a site with no passphrase never searches)', g.prices, false);
   fn = await advise({ TERRAIN_AI_PASS: PASSV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -122,7 +123,7 @@ S = makeStore(); globalThis.__terrainPricesStore = S; wakes = []; api = [];
 let JOB = null, KEY1 = null;
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(10), ip: '203.0.113.7' }));
-  c('202 {ok, fn, job (22), key (43), poll 4000}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.5', true, true, 4000]);
+  c('202 {ok, fn, job (22), key (43), poll 4000}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.6', true, true, 4000]);   // v10.55.0 (stale): advise-2.6
   JOB = r.job; KEY1 = r.key;
   const rec = S.peek('j/' + r.job);
   c('the record: queued, the key and the worker token as SHA-256 only', [rec.status, rec.keyHash === sha(r.key), /^[0-9a-f]{64}$/.test(rec.workerHash), JSON.stringify(rec).includes(r.key)], ['queued', true, true, false]);

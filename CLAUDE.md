@@ -71,7 +71,10 @@ netlify/functions/prices-sweep.mjs   (v10.44, prices-sweep-1.0) daily purge of p
 netlify/functions/advise-needs.mjs   (v10.53.0, needs-1.0) the background worker behind the Community Survey's needs list made by Claude: web search
                                and web fetch, one strict tool (record_needs), every number checked against the Census figures sent, every link
                                the search's own; Netlify Blobs store `terrain-needs` (jobs j/, the place's kept list n/<hash>/<lang>, counters c/)
-netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.0) daily purge: jobs after 7 days, counters after 2, kept lists after 60
+netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.1 since v10.55.0) daily purge of both stores: jobs after 7 days, counters
+                               after 2, kept lists and idea sets after 60; never the pool of picked ideas (p/)
+netlify/functions/advise-ideas.mjs   (v10.55.0, ideas-1.0) the background worker behind the work for each need: web search and fetch,
+                               twelve ideas a need (four a size) through the library's own checker; store `terrain-ideas` (j/, i/, c/, p/ the pool)
 netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans: GET (sign-in settings, billing on/off, test or live, the
                                two prices read from Stripe), POST op session (Firebase's ID token checked here: Google's keys, RS256, the
                                project, email verified → Terrain's own 30-day session) / plan / checkout (Stripe Checkout, 14 days free the
@@ -157,6 +160,8 @@ values are never in the repo):
 | `FIREBASE_WEB_API_KEY` / `FIREBASE_PROJECT_ID` | account.mjs | (v10.54.0) Sign-in (Firebase Authentication on `terrain-live`: Google and Email link). The web key is a public identifier (the page gets it from GET account). Without both, no sign-in. |
 | `TERRAIN_BILLING` | account.mjs | (v10.54.0) **Unset = payments off: everyone has the full version.** `on` (with a key and both prices) turns the paid version on for everyone. Only when he says "turn it on", after release 2. |
 | `TERRAIN_COMP_EMAILS` | account.mjs | (v10.54.0) Optional. Comma-separated addresses that always have the full version ("complimentary"). |
+| `IDEAS_DAY_MAX` | advise.mjs | Optional (v10.55.0). Idea studies a day for the whole site, default 150 (0 turns them off: GET says `ideas:false`). Also 20 a device, 30 a registration a day and 15 an address an hour. A kept set (60 days) is given again at no cost. |
+| `IDEAS_MODEL` / `IDEAS_EFFORT` | advise-ideas.mjs | Optional (v10.55.0). Default `claude-opus-5-5` at effort `medium`. Needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `NEEDS_MODEL` / `NEEDS_EFFORT` | advise-needs.mjs | Optional (v10.53.0). Default `claude-opus-5-5` at effort `medium`. The needs list needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `PRICES_MODEL` / `PRICES_EFFORT` | advise.mjs, advise-prices.mjs | Optional (v10.44). Default `claude-opus-5-5` at effort `low`. Find prices needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`; without the passphrase the page never shows it. |
 | `TERRAIN_CODES` | census.mjs, gifts.mjs | Conference access codes. **Only enforced when `TERRAIN_REQUIRE_CODE` is on** (v10.38: registration replaced codes on the first page). |
@@ -174,6 +179,46 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.55.0 (6 Oct 2026) — Claude writes the work for each need.** The pastor, asked whether Claude now makes the Light / Moderate / Heavy
+lift ideas: *"a lot of the ideas are gonna all be the same … because it's coming from the library … bring in some even better ideas …
+current fresh ideas things that are actually working … in line with our denomination seventh day Adventists, but we could still go out of
+the box … we need a deeper thinker because if Claude is generating the community needs then it also needs to generate the work to meet those
+needs"*; and *"the great ideas … selected we should consider … to put them in the library … that way it doesn't have to generate them all
+the time"*. Design `~/Downloads/Terrain-work/v72/DESIGN-IDEAS.md`.
+- **Who:** the same lock as the needs list (server `ANTHROPIC_API_KEY` + `TERRAIN_AI_PASS`, `IDEAS_DAY_MAX` not 0; device unlocked,
+  `?ideas=`). Everyone else sees the library's columns exactly as before. (Release 2 of the paid version moves it to the plan.)
+- **The page** (block after `nsAiStart`: `NS_CL`, `nsClKey`, `nsClRaw`, `nsClView`, `nsClList`, `nsClThemes`, `nsClInput`, `nsClOk`,
+  `nsClAccept`, `nsClStatusHTML`, `nsClAuto`, `nsClStart`, `nsClPick`): opening a need (or its ideas) asks advise.mjs (mode `ideas`) with
+  the needs list's place and figures (`nsAiInput`), the need (id, title, category, its line, up to three library themes: `nsClThemes`),
+  the census tags that fire, and the library's own list for it (`nsIdeasLib`: id, name, lift; never written again). **Never the church, its
+  address or the pastor.** While it studies (about a minute) a line above the columns ("Studying what works for this need in {town}… about
+  a minute.") and the library's columns; then Claude's: four a lift (`nsIdeasFor` → `nsClList`: the library ideas it kept first, then its
+  own), the line "Written for {town} on {date}" + **Generate new ideas** (fresh), or "New ideas could not be made just now." + Try again.
+  Each idea is in the library's shape with an id `cl-<14 hex>` (`nsView` knows them; `nsCad` reads their `cad`), its own `why` (the sheet's
+  "Why here", else the need's line) and **Seen working** (links, opened apart). Checked again here (`nsClOk`: every text, every number in
+  why, every link, and `libToCatalog` must take it); a set with fewer than six ideas, or a lift with fewer than two, is not used. Kept with the
+  church (`uChurch().needIdeas[place|lang|need]`, the last 40). "Create a proposal" saves it like a library idea (`libSave`), so Make the Case
+  takes it; that and the One-page PDF are a **pick** (`nsClPick` → `ideas-pick`).
+- **The server:** advise.mjs **advise-2.6** (modes `ideas`, `ideas-status`, `ideas-pick`; `placeInput` shared with the needs list; the
+  library's checker `libCheckIdea` and its lists exported) and **advise-ideas.mjs** (ideas-1.0, background): one request with web search
+  (5) and web fetch (3), the strict tool `record_ideas` (12 ideas, four a size; up to three library ideas kept by id), `cleanIdeas`: every new
+  idea through `libCheckIdea` (lengths, sizes and their numbers, children, the Sabbath guideline, Adventist food, no raffles, no quoted
+  Scripture, the outsider test) and this file's own (no markup, web address, emoji or "AI"); "why" numbers from the figures only; "seen"
+  links only the search's own. Store `terrain-ideas`: jobs `j/`, kept sets `i/<sha(place|need|title|figures)>/<lang>` (60 days), counters,
+  and **the pool `p/<need>/<id>`**: a picked idea copied from the server's own set (never words from the page), counted once a device a day,
+  its picks and dates. The pool's names go to the next study for that need as "do not repeat". needs-sweep.mjs is **needs-sweep-1.1**
+  (sweeps both stores; never the pool). Limits: 20 a device a UTC day, 30 a registration, 15 an address an hour, `IDEAS_DAY_MAX` (150).
+- **The pool into the library (his "put them in the library"):** not automatic. Monthly, like the conference calendars: read `p/` (Netlify
+  → Blobs → `terrain-ideas`), make each picked idea general (no town names), give it Spanish, run `tools/ideas-src` validation, add it to a
+  theme and to `needs.json`, one pull request. The index is at 0.94 of its 1,000 KB limit: slim it with the first batch.
+- **Never run against the real service** (every test stubs it). Watch the first real studies (time, searches, how many ideas pass; the job
+  record keeps the counts and the first twelve rejection reasons).
+- Verify after deploy: `/.netlify/functions/advise` → `"fn":"advise-2.6"`, `"ideas":true`, `"ideasFn":"ideas-1.0"`.
+- Tests: `ideas-function` (new, 56) and `v55-ideas-claude` (new, 29), both failing first on v10.54.2 (`v72/ff-*.log`); updated with comments:
+  advise-function, advise-prices, advise-topic, needs-function (advise-2.6), connect-client (19 `memberLink()` guard sites). Full suite:
+  145 suites · 10,284 passed · 0 failed. Samples (a
+  MADE-UP answer, to show the layout): `~/Downloads/Terrain-v10.55.0-samples/` (`v72/shots17.mjs`, `v72/sample-ideas.json`).
 
 **v10.54.2 (6 Oct 2026, quick lane) — the member's report ends simply: how to get involved, sent by itself.** The pastor, of the end of a
 member's Spiritual Gifts report: *"the first 90 days, I don't know what that is. The main thing is just a very simple steps on how to get

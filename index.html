@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.54.2
+     TERRAIN  v10.55.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.54.2" data-theme="dark">
+<html lang="en" data-version="v10.55.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.54.2">
-<title>Community Map — Terrain v10.54.2</title>
+<meta name="terrain-version" content="v10.55.0">
+<title>Community Map — Terrain v10.55.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -4286,13 +4286,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.55.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.54.2';
+const VERSION = 'v10.55.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -12969,13 +12969,14 @@ const NS_BUILTIN_LANG={
 };
 const NS_BUILTIN_WHERE={'winter-check':'homes'};
 /* an idea's cadence: an event or a series counts its hours, and its money, in all (review #6) */
-function nsCad(v){ try{ return v.lib?caseCadDecode(v.cad):caseCadenceOf(v.x); }catch(e){ return null; } }
+function nsCad(v){ try{ return v.lib||v.cl?caseCadDecode(v.cad):caseCadenceOf(v.x); }catch(e){ return null; } }   // v10.55.0: Claude's carry the library's cad
 function nsOnce(v){ const k=nsCad(v); return !!k&&(k.c==='event'||k.c==='series'); }
 /* in all, as Make the Case's ceiling sums it (its trialCost): what is bought before, and the day's (an event, a series on days in a
    row) or each month's of a weekly series */
 function nsTotal(v){ const k=nsCad(v), months=!k||k.c==='event'||k.row?1:Math.max(1,Math.ceil((k.n||4)/4)); return (+v.cost||0)+(+v.costMo||0)*months; }
 /* An idea for the page, from the library's index row (and its theme's full text once loaded) or a built-in (SIGNATURE). */
 function nsView(id,L){
+  if(/^cl-[0-9a-f]{14}$/.test(String(id))){ const raw=nsClRaw(id); return raw?nsClView(raw,L):null; }   // v10.55.0: an idea Claude wrote for a need
   const es=LANG==='es', lg=es?'es':'en', F=(s,l)=>libFill(s,l||lg,L===undefined?libLangCtx():L);
   const r=LIB.byId&&LIB.byId.get(id);
   if(r){ const raw=libFull(id), T=raw&&raw[lg], pt=raw&&raw.partner;
@@ -13007,7 +13008,7 @@ function nsD1(v){
   if(!v) return '';
   const es=LANG==='es', d1=NS.map&&NS.map.d1&&NS.map.d1[v.id];
   if(Array.isArray(d1)&&typeof d1[es?1:0]==='string'&&d1[es?1:0]) return libFill(d1[es?1:0],es?'es':'en',v.L);
-  if(v.lib) return v.d?nsFirst(v.d):'';
+  if(v.lib||v.cl) return v.d?nsFirst(v.d):'';   // v10.55.0: Claude's are written in the page's language
   return es?'':nsFirst(v.d);
 }
 function nsMoney(v){
@@ -13056,6 +13057,10 @@ function nsSnowIdea(v){ return NS_SNOW.has(v.id)||/\bsnow/i.test(String(v.n||v.n
 const NS_TWINS={'immigrants-spanish-web-whatsapp':'immigrants-lang-page-and-messaging-app','immigrants-worship-interpretation':'immigrants-worship-interpreted-in-lang'};
 const NS_LIFT_MAX=8, NS_LANG_LIFT_MAX=5;
 function nsIdeasFor(n){
+  const cl=nsClList(n); if(cl) return cl;   // v10.55.0: the work Claude wrote for this need, once it is here
+  return nsIdeasLib(n);
+}
+function nsIdeasLib(n){
   const key=n.id+'|'+(n.lang||'')+'|'+(n.tag||'')+'|'+LANG+'|'+SCOPE;
   if(NS.lists.has(key)) return NS.lists.get(key);
   const M=NS.map||{}, own=n.lang?(NS_LANG[n.lang]||{}).key:'', L=nsNeedLang(n), langNeed=['lang-primary','lang-also','lang-third'].includes(n.id);
@@ -13142,7 +13147,7 @@ function nsIdeasHTML(n){
      will have the columns showing of all the ideas instead of having to click every single thing, just have it all open up". Three
      columns side by side (stacked on a phone), every idea showing. (v10.46.1's three buttons, one list at a time, are gone.) */
   const groups=NS_LIFTS.map(L=>[L,list.filter(v=>nsLift(v)===L)]).filter(([,g])=>g.length);
-  return `<div class="ns-lcols">`+groups.map(([L,g])=>`<div class="ns-lift ns-lcol" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"><h4 class="ns-lh">${nsBars(L)}<span>${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></h4><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
+  return nsClStatusHTML(n)+`<div class="ns-lcols">`+groups.map(([L,g])=>`<div class="ns-lift ns-lcol" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"><h4 class="ns-lh">${nsBars(L)}<span>${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></h4><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
       return `<button type="button" class="ns-row${NS.last===v.id&&NS.open===n.id?' ns-last':''}" data-idea="${esc(v.id)}" data-need="${esc(n.id)}"><span class="ns-in">${esc(gfCap(v.name))}</span><span class="ns-ia" aria-hidden="true">›</span>`
         +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`).join('')+`</div>`;
 }
@@ -13356,8 +13361,8 @@ function nsAiT(k,o){ const e=NS_AI_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o
 async function nsAiProbe(){
   if(NS_AI.info) return NS_AI.info;
   if(NS_AI.probing) return NS_AI.probing;
-  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true)}; }
-    catch(e){ NS_AI.info={needs:false}; } NS_AI.probing=null; return NS_AI.info; })();
+  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true),ideas:!!(j&&j.ideas===true)}; }
+    catch(e){ NS_AI.info={needs:false,ideas:false}; } NS_AI.probing=null; return NS_AI.info; })();   // v10.55.0: and the work for each need
   return NS_AI.probing;
 }
 function nsAiState(){ const g=(DATA&&DATA.geo)||{}, t=String(g.matched||g.label||''); const m=/,\s*([A-Z]{2})\s*(?:,\s*)?(?:\d{5}(?:-\d{4})?)?\s*$/.exec(t); return m?m[1]:null; }
@@ -13509,6 +13514,153 @@ async function nsAiStart(fresh){
   })();
   try{ return await NS_AI.run; } finally{ NS_AI.run=null; }
 }
+/* ---- v10.55.0 — the work for each need, written by Claude (DESIGN-IDEAS.md, Terrain-work/v72) -----------------------------------
+   The pastor (6 Oct 2026): "a lot of the ideas are gonna all be the same … because it's coming from the library … bring in some even
+   better ideas … current fresh ideas things that are actually working … in line with our denomination seventh day Adventists, but we
+   could still go out of the box … we need a deeper thinker because if Claude is generating the community needs then it also needs to
+   generate the work to meet those needs"; and "the great ideas … selected … put them in the library … that way it doesn't have to generate
+   them all the time". On an unlocked device (aiPass) whose server has the ideas on (GET ideas), opening a need asks advise.mjs (mode
+   ideas, advise-2.6) with the place's names, the report's figures, the need, the census tags that fire and the library's ideas for it
+   (names only; never the church, its address or the pastor). What comes back (the server's kept set, or a study by advise-ideas.mjs):
+   twelve ideas, four a lift, each in the library's own shape (so the sheet, the PDF and Make the Case take it as they take a library
+   idea), with its own "why" and where it is "seen working"; up to three of the library's own kept by id. Checked again here (nsClOk:
+   every text, every number in "why", every link; libToCatalog must take it). Kept with the church (uChurch().needIdeas, the last 40) by
+   place, need and language, so it draws at once next time. The library's list shows until it comes, and whenever anything fails.
+   An idea of Claude's proposed or printed is a pick (ideas-pick): the server copies it from its own set into the pool for the library. */
+const NS_CL={runs:new Map(),status:new Map(),poll:4000,max:300000,picked:new Set(),idx:null,idxAt:-1};
+const NS_CL_T={
+  working:{en:'Studying what works for this need in {town}… about a minute.',es:'Estudiando lo que funciona para esta necesidad en {town}… cerca de un minuto.'},
+  workingNo:{en:'Studying what works for this need… about a minute.',es:'Estudiando lo que funciona para esta necesidad… cerca de un minuto.'},
+  done:{en:'Written for {town} on {date}',es:'Escritas para {town} el {date}'}, doneNo:{en:'Written on {date}',es:'Escritas el {date}'},
+  again:{en:'Generate new ideas',es:'Generar nuevas ideas'},
+  failed:{en:'New ideas could not be made just now.',es:'No se pudieron preparar nuevas ideas ahora.'}, retry:{en:'Try again',es:'Intentar de nuevo'},
+  seen:{en:'Seen working',es:'Ya funciona en otros lugares'}};
+function nsClT(k,o){ const e=NS_CL_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+function nsClKey(n){ const pl=nsAiPlace(); return pl&&n&&n.id?nsAiKey(pl)+'|'+n.id:''; }
+function nsClStore(){ const ch=uChurch(); if(!ch.needIdeas||typeof ch.needIdeas!=='object') ch.needIdeas={}; return ch.needIdeas; }
+function nsClKept(key){ try{ const e=key?uChurch().needIdeas&&uChurch().needIdeas[key]:null; return e&&Array.isArray(e.ideas)&&e.ideas.length?e:null; }catch(e){ return null; } }
+// every idea of Claude's this church holds: its kept sets, and the ones it proposed (saved with the church's library ideas)
+function nsClRaw(id){
+  const ch=uChurch(), sets=ch.needIdeas&&typeof ch.needIdeas==='object'?ch.needIdeas:{};
+  for(const k of Object.keys(sets)){ const e=sets[k], hit=e&&Array.isArray(e.ideas)?e.ideas.find(x=>x&&x.id===id):null; if(hit) return hit; }
+  const lib=ch.lib&&typeof ch.lib==='object'?ch.lib:{}; return lib[id]&&/^cl-/.test(id)?lib[id]:null;
+}
+function nsClSetOf(id){ const sets=uChurch().needIdeas||{}; for(const k of Object.keys(sets)){ const e=sets[k]; if(e&&Array.isArray(e.ideas)&&e.ideas.some(x=>x&&x.id===id)) return e; } return null; }
+function nsClView(raw,L){
+  const lg=raw.en?'en':'es', T=raw[lg]||{}, pt=raw.partner&&typeof raw.partner==='object'?String(raw.partner[lg]||raw.partner.en||raw.partner.es||''):'';
+  return {id:raw.id,lib:false,cl:true,theme:raw.theme,tier:raw.tier,cad:raw.cad,name:String(T.n||''),d:String(T.d||''),how:Array.isArray(T.how)?T.how.slice(0,4):null,
+    ppl:raw.ppl,leaders:raw.leaders||0,hrs:raw.hrs,cost:raw.cost||0,costMo:raw.costMo||0,about:false,priced:true,where:raw.where,skills:Array.isArray(raw.skill)?raw.skill:[],
+    partner:pt,sab:raw.sabbath===true,kids:raw.minors===true,reach:'out',full:true,n:String(T.n||''),ne:String(T.n||''),L,langful:false,
+    why:typeof raw.why==='string'?raw.why:'',seen:Array.isArray(raw.seen)?raw.seen:[]};
+}
+// the columns from a kept set: in each lift what was kept from the library first, then Claude's, four at most
+function nsClList(n){
+  if(!aiPass()||SCOPE!=='tract') return null;
+  const e=nsClKept(nsClKey(n)); if(!e) return null;
+  const L=nsNeedLang(n), kept=(e.keep||[]).map(id=>nsView(id,L)).filter(v=>v&&v.reach!=='in'), made=e.ideas.map(raw=>nsClView(raw,L));
+  return NS_LIFTS.flatMap(lf=>[...kept.filter(v=>nsLift(v)===lf),...made.filter(v=>nsLift(v)===lf)].slice(0,4));
+}
+// the themes the need's ideas belong to: its own (a need Claude added), the survey's map of it, else those of the library's list
+function nsClThemes(n,lib){
+  const ok=new Set(((LIB.idx&&LIB.idx.themes)||[]).map(t=>t&&t.id).filter(Boolean)), pick=a=>(Array.isArray(a)?a:[]).filter(t=>ok.has(t));
+  let th=pick(n.ai&&n.ai.themes); if(!th.length) th=pick(NS_FALLBACK[n.id]&&NS_FALLBACK[n.id].themes);
+  if(!th.length){ const c={}; lib.forEach(v=>{ if(v.theme&&ok.has(v.theme)) c[v.theme]=(c[v.theme]||0)+1; }); th=Object.keys(c).sort((a,b)=>c[b]-c[a]); }
+  return (th.length?th:['neighbors']).slice(0,3);
+}
+/* What goes to the server: the needs list's place and figures (nsAiInput), the need, the census tags that fire, the library's list. */
+function nsClInput(n){
+  const A=nsAiInput(); if(!A) return null;
+  let lib=[]; try{ lib=nsIdeasLib(n); }catch(e){ lib=[]; }
+  let tags=[]; try{ tags=[...profile(DATA.M.tract,DATA.M.county,trendOf(DATA.M,'tract'))].filter(t=>typeof t==='string').slice(0,80); }catch(e){ tags=[]; }
+  const have=lib.filter(v=>/^[a-z0-9]+(-[a-z0-9]+)*(--[a-z0-9]+(-[a-z0-9]+)*)?$/.test(v.id)&&v.id.length<=110&&String(v.name||'').trim().length>=3)
+    .slice(0,40).map(v=>({id:v.id,name:String(v.name).replace(/\s+/g,' ').trim().slice(0,120),lift:NS_LIFTS.indexOf(nsLift(v))+1}));
+  return {lang:A.lang,place:A.place,figs:A.figs,langs:A.langs,origins:A.origins,
+    need:{id:n.id,title:String(n.title||n.topic||n.id).replace(/\s+/g,' ').trim().slice(0,140),cat:String(n.catLabel||n.cat||'Community').slice(0,60),
+      why:String(n.evidence||'').replace(/\s+/g,' ').trim().slice(0,400),themes:nsClThemes(n,lib)},tags,have};
+}
+// one idea from the server, checked again: its words, its numbers, its links, and Make the Case must be able to take it
+function nsClOk(raw,I,pool){
+  if(!raw||typeof raw!=='object'||!/^cl-[0-9a-f]{14}$/.test(String(raw.id))||![1,2,3].includes(raw.tier)) return null;
+  const lg=I.lang, T=raw[lg]; if(!T||typeof T!=='object') return null;
+  const n=nsAiSafe(T.n,60), d=nsAiSafe(T.d,420), how=Array.isArray(T.how)&&T.how.length===4?T.how.map(s=>nsAiSafe(s,140)):null;
+  if(!n||!d||!how||how.some(s=>!s)) return null;
+  const why=nsAiSafe(raw.why,240), x={...raw,[lg]:{n,d,how},seen:(Array.isArray(raw.seen)?raw.seen:[]).map(nsAiLink).filter(Boolean).slice(0,2),reach:'out',ai:true};
+  if(why&&nsAiNumsOk(why,pool)) x.why=why; else delete x.why;
+  delete x[lg==='en'?'es':'en'];
+  let ok=null; try{ ok=libToCatalog(x); }catch(e){ ok=null; }
+  return ok?x:null;
+}
+function nsClKeep(key,e){
+  const all=nsClStore(); all[key]=e;
+  Object.keys(all).sort((a,b)=>(all[b].at||0)-(all[a].at||0)).slice(40).forEach(k=>delete all[k]);
+  uPersist();
+}
+function nsClFail(n,key){ if(NS_CL.status.get(key)!=='done') NS_CL.status.set(key,'failed'); nsClPaint(n); return false; }
+function nsClAccept(n,key,I,j){
+  if(nsClKey(n)!==key) return false;   // another place or language now
+  const pool=nsAiPool({figs:I.figs,langs:I.langs,origins:I.origins,cands:[{ev:I.need.why}]});
+  const ideas=(Array.isArray(j.ideas)?j.ideas:[]).map(x=>nsClOk(x,I,pool)).filter(Boolean);
+  const haveIds=new Set(I.have.map(h=>h.id)), keep=(Array.isArray(j.keep)?j.keep:[]).filter(id=>typeof id==='string'&&haveIds.has(id)).slice(0,3);
+  const lift=id=>{ const h=I.have.find(x=>x.id===id); return h?h.lift:0; };
+  const per=t=>keep.filter(id=>lift(id)===t).length+ideas.filter(x=>x.tier===t).length;
+  if(ideas.length<6||[1,2,3].some(t=>per(t)<2)) return nsClFail(n,key);
+  const made=/^\d{4}-\d{2}-\d{2}$/.test(String(j.made||''))?j.made:new Date().toISOString().slice(0,10);
+  nsClKeep(key,{made,at:Date.now(),set:typeof j.set==='string'&&/^[0-9a-f]{32}\/(en|es)$/.test(j.set)?j.set:'',ideas,keep,need:n.id});
+  NS_CL.status.set(key,'done'); NS.lists.clear();
+  nsIdeasRedraw(); nsClPaint(n);
+  return true;
+}
+function nsClStatusInner(n){
+  const key=nsClKey(n), st=NS_CL.status.get(key)||'', e=nsClKept(key), town=(NSM&&NSM.town)||'';
+  const btn=k=>`<button type="button" class="btn ghost gfsm" data-ns-clgen="${esc(n.id)}">${esc(nsClT(k))}</button>`;
+  if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(town?nsClT('working',{town}):nsClT('workingNo'))}</span>`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}</span>${btn(e?'again':'retry')}`;
+  if(e) return `<span class="ns-aiwhen">${esc(town?nsClT('done',{town,date:nsAiDate(e.made)}):nsClT('doneNo',{date:nsAiDate(e.made)}))}</span>${btn('again')}`;
+  return '';
+}
+function nsClStatusHTML(n){ return aiPass()&&SCOPE==='tract'?`<p class="ns-aistat ns-clstat" data-ns-clstat="${esc(n.id)}" role="status">${nsClStatusInner(n)}</p>`:''; }
+function nsClPaint(n){ document.querySelectorAll('[data-ns-clstat]').forEach(p=>{ if(p.dataset.nsClstat===n.id) p.innerHTML=nsClStatusInner(n); }); }
+async function nsClAuto(n){
+  if(!n||!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract'||!entitled('plan')) return;
+  const key=nsClKey(n); if(!key) return;
+  const info=await nsAiProbe(); if(!info||!info.ideas){ nsClPaint(n); return; }
+  if(NS_CL.runs.has(key)||nsClKept(key)||NS_CL.status.get(key)==='failed'){ nsClPaint(n); return; }
+  nsClStart(n,false);
+}
+async function nsClStart(n,fresh){
+  const key=nsClKey(n); if(!key) return false;
+  if(NS_CL.runs.has(key)) return NS_CL.runs.get(key);
+  NS_CL.status.set(key,'working'); nsClPaint(n);
+  const run=(async()=>{
+    try{ await nsLoad(); }catch(e){}
+    const I=nsClInput(n); if(!I) return nsClFail(n,key);
+    let r=null,j=null;
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+      body:JSON.stringify({mode:'ideas',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.ideas)) return nsClAccept(n,key,I,j);
+    if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.ideas=false; return nsClFail(n,key); }
+    const t0=Date.now();
+    while(Date.now()-t0<NS_CL.max){
+      await new Promise(res=>setTimeout(res,NS_CL.poll));
+      if(nsClKey(n)!==key) return false;
+      let q=null,qj=null;
+      try{ q=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'ideas-status',job:j.job,key:j.key}),signal:AbortSignal.timeout(15000)});
+        qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return nsClAccept(n,key,I,qj);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return nsClFail(n,key);
+    }
+    return nsClFail(n,key);
+  })();
+  NS_CL.runs.set(key,run);
+  try{ return await run; } finally{ NS_CL.runs.delete(key); }
+}
+// a pick (its proposal or its PDF): the server copies the idea from its own set into the pool for the library; once a page per idea
+function nsClPick(id){
+  if(NS_CL.picked.has(id)||!aiPass()) return; NS_CL.picked.add(id);
+  const e=nsClSetOf(id); if(!e||!e.set) return;
+  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    body:JSON.stringify({mode:'ideas-pick',device:buyDevice(),set:e.set,id}),signal:AbortSignal.timeout(15000)}).catch(()=>{}); }catch(e2){}
+}
 function nsCardEl(id){ const h=$('u-needs'); return h?h.querySelector(`.ns-need[data-need="${id}"]`):null; }
 /* Every open ideas list drawn again (the map arrived, or failed); every closed one's count. */
 function nsIdeasRedraw(){
@@ -13522,7 +13674,7 @@ function nsSetIdeas(a,open){
   const n=nsNeedById(a.dataset.need), b=a.querySelector('.ns-show'), box=a.querySelector('.ns-ideas'); if(!n||!b||!box) return;
   box.hidden=!open; b.setAttribute('aria-expanded',String(open));
   b.querySelector('small').textContent=open?nsU('hide'):nsCountText(n);
-  if(open){ box.innerHTML=nsIdeasHTML(n); if(entitled('plan')&&!NS.map) nsLoad(); }
+  if(open){ box.innerHTML=nsIdeasHTML(n); if(entitled('plan')&&!NS.map) nsLoad(); nsClAuto(n); }
   NS.ideas=open;
 }
 /* One card open at a time; an opened card whose header moved is brought to the top at once (never smooth). */
@@ -13539,6 +13691,7 @@ function nsOpenCard(id,o){
   NS.open=id;
   nsSetIdeas(a,!!o.ideas);
   if(entitled('plan')&&!NS.map) nsLoad();
+  if(!o.ideas){ const n1=nsNeedById(id); if(n1) nsClAuto(n1); }   // v10.55.0: the work for the need, started as it opens
   const after=head.getBoundingClientRect().top;
   if(o.jump) a.scrollIntoView({block:'start',behavior:'auto'});
   else if(Math.abs(after-before)>1) window.scrollBy(0,after-before);   // v10.45.1: keep it under the pointer, never jump
@@ -13551,6 +13704,7 @@ function nsCloseCard(a){
 function nsClick(e){
   const t=e.target, h=$('u-needs'); if(!t||!h) return;
   if(t.closest('[data-ns-aigen]')){ nsAiStart(true); return; }   // v10.53.0: Generate new community needs
+  { const g=t.closest('[data-ns-clgen]'); if(g){ const n=nsNeedById(g.dataset.nsClgen); if(n) nsClStart(n,true); return; } }   // v10.55.0: Generate new ideas
   const head=t.closest('.ns-head');
   if(head&&h.contains(head)){ const a=head.closest('.ns-need'); if(a.classList.contains('open')) nsCloseCard(a); else nsOpenCard(a.dataset.need); return; }
   const sh=t.closest('[data-ns-show]');
@@ -13603,8 +13757,9 @@ function nsSheetHTML(v,n){
       <h2 id="ns-s-t" tabindex="-1">${esc(gfCap(v.name))}</h2>
       <p class="ns-liftline">${nsBars(L)}<span><b>${esc(nsU(L))}</b> · ${esc(nsU(L+'G'))} · ${esc(v.sab?libT('sab'):libT('noSab'))}</span></p>
       ${d?`<p class="ns-shd">${esc(d)}</p>`:''}
-      <div class="ns-block"><h3>${esc(nsU('why'))}</h3><p class="ns-why">${esc(n.evidence)}</p></div>
+      <div class="ns-block"><h3>${esc(nsU('why'))}</h3><p class="ns-why">${esc(v.cl&&v.why?v.why:n.evidence)}</p></div>
       ${how?`<div class="ns-block"><h3>${esc(nsU('how'))}</h3>${how}</div>`:''}
+      ${v.cl&&v.seen&&v.seen.length?`<div class="ns-block"><h3>${esc(nsClT('seen'))}</h3><ul class="ns-ailist">${v.seen.map(x=>`<li>${esc(x.text)} <a href="${esc(x.url)}" target="_blank" rel="noopener noreferrer">${esc(x.host)}</a></li>`).join('')}</ul></div>`:''}
       <div class="ns-block"><h3>${esc(nsU('needs'))}</h3><dl class="ns-grid">${nsRows(v).map(([k,val])=>`<div class="ns-gi${k==='rPartner'||k==='rSkills'?' wide':''}"><dt>${esc(nsU(k))}</dt><dd>${esc(val)}</dd></div>`).join('')}</dl>
         <p class="note ns-askfor">${esc(nsU('askFor'))}</p></div>
       ${v.kids?`<p class="ns-kids">${esc(libT('kids'))}</p>`:''}
@@ -13697,6 +13852,7 @@ async function nsPropose(id,needId){
     if(raw&&JSON.stringify(raw).includes('{lang}')){ raw=libFillRaw(raw,L); pid=raw.id; }
     if(!raw||!libSave(raw)){ nsStatus(nsU('proposeFail')); return; }
   }
+  if(v.cl){ const raw=nsClRaw(id); if(!raw||!libSave(raw)){ nsStatus(nsU('proposeFail')); return; } nsClPick(id); }   // v10.55.0
   if(NS.sheet!==id||!nsSheetIsOpen()){ nsStatus(''); return; }
   const ch=uChurch(); ch.selected=[...new Set([...uSelected(),pid])];
   // review #4: Make the Case says "Why here" with this need's own figure (its card, its slides), not the first rule it fits
@@ -13929,6 +14085,7 @@ async function nsPdf(id,needId){
       tract:lv.tract&&lv.tract.name||'',county:lv.county&&lv.county.name||'',years:`${ACS_YEAR-4}–${ACS_YEAR}`});
     const name=nsPdfName(v,town,LANG);
     doc.save(name); nsStatus(nsU('pdfSaved',name));
+    if(v.cl) nsClPick(id);   // v10.55.0: a picked idea goes to the pool
   }catch(e){ log('needs pdf: '+(e&&e.message||e)); nsStatus(nsU('pdfFail')); }
 }
 
