@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.51.3
+     TERRAIN  v10.52.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.51.3" data-theme="dark">
+<html lang="en" data-version="v10.52.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.51.3">
-<title>Community Map — Terrain v10.51.3</title>
+<meta name="terrain-version" content="v10.52.0">
+<title>Community Map — Terrain v10.52.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -2853,6 +2853,22 @@ button.td-opt:disabled{cursor:default}
   box-shadow:0 0 0 1px color-mix(in srgb,var(--m-hardship) 55%,transparent),0 0 30px -2px color-mix(in srgb,var(--m-hardship) 58%,transparent)}
 .cs-acts.cs-acts2 .btn.cs-live:hover,.cs-acts.cs-acts2 .btn.cs-live:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--m-hardship) 72%,transparent),0 0 40px 0 color-mix(in srgb,var(--m-hardship) 66%,transparent)}
 .cs-samplel{margin:10px 0 0;text-align:center;font-size:.88rem}
+/* v10.52.0 — Size: Light · Moderate · Heavy lift, the same outreach sized; each with its own numbers */
+.cs-size{margin:2px 0 16px}
+.cs-szh{margin:0 0 8px;font-size:.74rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.cs-szr{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.cs-szb{display:grid;grid-template-columns:auto minmax(0,1fr);grid-template-areas:"bars name" "own own" "vals vals";gap:3px 10px;align-items:center;text-align:left;
+  padding:10px 12px;min-height:64px;border:1px solid var(--line2);border-radius:12px;background:var(--panel);color:var(--ink);font:inherit;cursor:pointer;min-width:0}
+.cs-szb .lift{grid-area:bars;display:inline-flex;align-items:flex-end;gap:2px;height:12px}
+.cs-szb .lift b{width:4px;border-radius:1px;background:var(--line2)}
+.cs-szb .lift b:nth-child(1){height:5px}.cs-szb .lift b:nth-child(2){height:8px}.cs-szb .lift b:nth-child(3){height:12px}
+.cs-szb .lift.l1 b:nth-child(-n+1),.cs-szb .lift.l2 b:nth-child(-n+2),.cs-szb .lift.l3 b{background:var(--acc)}
+.cs-szn{grid-area:name;font-weight:750;font-size:.92rem;min-width:0}
+.cs-szo{grid-area:own;font-size:.72rem;color:var(--ink3)}
+.cs-szv{grid-area:vals;font-size:.82rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+@media (hover:hover){ .cs-szb:hover{border-color:var(--acc)} }
+.cs-szb.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel));box-shadow:0 0 0 1px var(--acc)}
+@media(max-width:560px){ .cs-szr{grid-template-columns:minmax(0,1fr)} .cs-szb{min-height:0} }
 /* v10.51.0 — the Proposal to vote on, on the page, line for line as the PDF prints it; Edit turns each line into a box */
 .cs-pz{margin:22px 0 0;padding:16px 18px 18px;border:1px solid var(--line2);border-left:3px solid var(--m-hardship);border-radius:var(--r);background:var(--panel)}
 .cs-pzhd{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
@@ -4214,13 +4230,13 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.51.3</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.52.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.51.3';
+const VERSION = 'v10.52.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -21430,8 +21446,35 @@ function uBase(x){
     participants,sessions,sessionHours:campaign?3:2,setupHours:people*(campaign?4:1),followupHours:people,
     weeks:campaign?2:6,slot:'',start:'',owner:'',lines,campaign,reviewed:!x.generated,source:'Planning allowances; replace with local quotes. People and time are initial staffing assumptions.'};
 }
-function uReq(x){
-  const base=x.requirements||uBase(x), o=uChurch().overrides?.[x.id]||{};
+/* v10.52.0 — the pastor (6 Oct 2026): "it can be a light lift moderate lift heavy lift if you choose light lift then of course the
+   investment with the money needed the people needed. It won't be that. If you do moderate lift it'll be middle and if you do heavy
+   lift, it's gonna be a much more robust and more demanding thing, but the same outreach"; pick an idea, then its size ("A").
+   An idea's own size: the library's tier, a built-in's load (nsLift's rule). The one he chose: uChurch().overrides[id].lift (its own
+   size stores nothing). One step lighter halves the volunteers (at least one) and the people it serves (at least 4), keeps one leader,
+   halves the set-up and follow-up hours and takes 40% of the money; one step heavier doubles them, adds a leader and takes 250%; two
+   steps apply it twice. An ongoing idea's trial is 4 weeks light, 6 moderate, 12 heavy; an event or a series keeps its own length.
+   Session length, skills and rooms stay its own. Applied to the base before his own Adjust edits, so they still win; with nothing
+   chosen uReq is what it was. Design: Terrain-work/v67/DESIGN-LIFT.md. */
+function caseLiftOf(x){ if(!x) return 2; if(x.lib&&[1,2,3].includes(+x.size)) return +x.size; return bandOf(x.load!=null?+x.load:(MOVE_LOAD[x.id]!=null?MOVE_LOAD[x.id]:1))+1; }
+function caseLiftNow(id){ let o=null; try{ o=((uChurch()||{}).overrides||{})[id]; }catch(e){ o=null; } return o&&[1,2,3].includes(+o.lift)?+o.lift:0; }
+const U_LIFT_STEP={down:{people:.5,part:.5,hours:.5,money:.4},up:{people:2,part:2,hours:2,money:2.5}};
+function uLiftReq(base,x,to){
+  const d=to-caseLiftOf(x); if(!d||![1,2,3].includes(to)) return base;
+  const S=d>0?U_LIFT_STEP.up:U_LIFT_STEP.down, b={...base,lines:(base.lines||[]).map(l=>({...l}))};
+  for(let i=0;i<Math.abs(d);i++){
+    b.people=Math.max(1,Math.ceil(uAmount(b.people)*S.people));
+    b.leaders=d>0?uAmount(b.leaders)+1:Math.min(uAmount(b.leaders),1);
+    b.participants=Math.max(4,Math.round(uAmount(b.participants)*S.part));
+    b.setupHours=uAmount(b.setupHours)*S.hours; b.followupHours=uAmount(b.followupHours)*S.hours;
+    b.lines=b.lines.map(l=>({...l,startup:Math.round(uAmount(l.startup)*S.money),monthly:Math.round(uAmount(l.monthly)*S.money)}));
+  }
+  let ongoing=true; try{ ongoing=caseCadenceOf(x).c==='ongoing'; }catch(e){ ongoing=true; }
+  if(ongoing) b.weeks=to===1?4:to===3?12:6;
+  return b;
+}
+function uReq(x,at){
+  const o0=uChurch().overrides?.[x.id]||{}, o=at&&at.lift?{...o0,lift:at.lift}:o0;   // v10.52.0: at.lift, the size asked about (the Size buttons)
+  const base0=x.requirements||uBase(x), base=[1,2,3].includes(+o.lift)?uLiftReq(base0,x,+o.lift):base0;
   const r={...base,...o};r.participants=Math.max(1,uAmount(r.participants));r.sessions=Math.max(1,uAmount(r.sessions));r.weeks=Math.max(1,uAmount(r.weeks));
   const scale=Math.max(1,r.participants/Math.max(1,base.participants));
   r.people=Math.max(1,Math.ceil(uAmount(r.people)*scale));r.leaders=Math.max(0,Math.ceil(uAmount(r.leaders)));
@@ -34184,7 +34227,7 @@ function caseDraw3(){
   CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
   const n=CASE_ST.deck.slides.length;
   h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
-    +caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
+    +caseSizeHTML(model)+caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
     /* v10.51.0 — the pastor (6 Oct 2026): "I don't know if we really need the how it is being decided … you don't need it to have it on
        the bottom again", and "how it is to be decided I don't think that even needs to be there": no #cs-dec in step 3 (a decision is
        still recorded in the presenter view, its Decision button). "The your church ready to serve probably needs to be at the end":
@@ -34197,6 +34240,7 @@ function caseDraw3(){
   // his series' numbers live in the Evangelism Planner, so "Adjust" opens it there
   h.querySelector('[data-cs-adjust]').onclick=()=>P.ministry===CASE_PLAN_ID?openTool('planner'):uEditMinistry(P.ministry);
   h.querySelectorAll('[data-cs-act]').forEach(b=>b.onclick=()=>caseAct(b.dataset.csAct,b));
+  h.querySelectorAll('#cs-size [data-cs-lift]').forEach(b=>b.onclick=()=>caseSizeSet(+b.dataset.csLift));   // v10.52.0
   caseGoalWire(h); caseNamedWire(h);
   prRoomPaint();
   // v10.42 part 3: the presenter builder's mounts (DESIGN §9.2), when they are there
@@ -34642,6 +34686,10 @@ function casePropHTML(){
   const b=NS.back||{}; let n=null, v=null;
   try{ n=nsNeedById(b.need); v=nsView(b.idea,n?nsNeedLang(n):libLangCtx()); }catch(e){ v=null; }
   if(!v){ const x=caseItemOf(b.plan); v=x?{name:caseMinName(x)||x.n||'',d:'',tier:2,ppl:0,priced:false}:{name:'',d:'',tier:2,ppl:0,priced:false}; }
+  // v10.52.0: the size chosen for it (Size, step 3), its lift line and what it needs from our church with it
+  const lv=caseLiftNow(b.plan||'');
+  if(lv&&lv!==NS_LIFTS.indexOf(nsLift(v))+1){ let x=null, r=null; try{ x=caseItemOf(b.plan); r=x?uReq(x):null; }catch(e){ r=null; }
+    if(r) v={...v,tier:lv,ppl:r.people,leaders:r.leaders,cost:r.startup,costMo:r.monthly}; }
   const L=nsLift(v), d=v.d||nsD1(v)||'';
   const how=v.how&&v.how.length?`<ol class="ns-steps">${v.how.slice(0,4).map(t=>`<li><span>${esc(t)}</span></li>`).join('')}</ol>`:'';
   let rows=[]; try{ rows=v.ppl!=null?nsRows(v):[]; }catch(e){ rows=[]; }
@@ -37867,6 +37915,7 @@ function caseHandout(model,deck,o){
       H.figures=(m.sources||[]).map(s=>({label:s.label,here:s.here,county:s.county,moe:s.moe,countyMoe:s.countyMoe,compare:s.compare,years:s.years,table:s.table}));
       if(m.ask) H.budget={lines:(m.ask.lines||[]).map(l=>({name:lang==='es'&&CASE_COST_ES[l.name]||l.name,startup:l.startup||0,monthly:(l.monthly||0)*(m.ask.runF||1)})),startup:m.ask.startup||0,monthly:m.ask.cad?m.ask.run:m.ask.monthly||0,
         ceiling:m.ask.ceiling,fund:m.ask.fund||'',left:m.ask.left||null,leftText:m.ask.leftText||null,overText:m.ask.overText||null,months:m.ask.months||0};
+      { const sn=caseLiftNote(m); if(sn) H.sizeNote=sn; }   // v10.52.0: the size he chose, when not the idea's own
       if(m.risks) H.risks=(m.risks.items||[]).map(r=>({text:r.text,src:r.src?caseF(CASE_COPY.src[r.src],{pages:r.pages||''})||T(CASE_COPY.src[r.src])||'':''}));
       if(!formal&&m.yes&&m.yes.options) H.yes={head:dHead(dOne('yes'),m.yes.headline||''),options:m.yes.options.map(x=>({k:x.k,label:x.label,text:x.text}))};
       /* v10.40: the place in full (the phone shows part of it), every verse the slides carry,
@@ -38507,6 +38556,7 @@ function casePdfDocAt(H,opts,lv){
   };
   if(H.budget||H.budgetRows){
     head(Lb.budget,60);
+    if(H.sizeNote) y+=tb(H.sizeNote,MX,y,CW,{size:S(8.6),style:'bold',color:C.ink2,lh:S(11.4)},true)+S(3);   // v10.52.0
     // v10.42 merge: a member's copy holds every slide's words; when the front is drawn tighter it leaves out the ask slide's
     // headline (with Suggest options the front carries the timing options, so this happens more often), so it is said here,
     // above the ask's rows. The pastor's own handout has no askHead and is drawn as before.
@@ -38852,6 +38902,36 @@ Object.assign(CASE_PROP_FIX.m,{
     es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), en el día y con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'},
   teamLenNoDay:{en:'To agree to a trial of the length we choose together ({lengths}), starting on a date we agree together: {ministry}, with a named coordinator, and {bring}.',
     es:'Acordar una prueba de la duración que elijamos juntos ({lengths}), con la fecha de inicio que acordemos juntos: {ministry}, con una persona coordinadora designada, y {bring}.'}});
+/* v10.52.0: Size (step 3), its words and its sentence */
+const CASE_SIZE_T={head:{en:'Size',es:'Tamaño'}, own:{en:'its own size',es:'su propio tamaño'},
+  vol1:{en:'1 volunteer',es:'1 voluntario'}, voln:{en:'{n} volunteers',es:'{n} voluntarios'},
+  start:{en:'{v} to start',es:'{v} para empezar'}, free:{en:'no cost to start',es:'sin costo para empezar'},
+  lighter:{en:'A lighter start: fewer people, a smaller budget and a shorter trial.',es:'Un comienzo más ligero: menos personas, un presupuesto menor y una prueba más corta.'},
+  fuller:{en:'The full version: more people, a larger budget and a longer run.',es:'La versión completa: más personas, un presupuesto mayor y más tiempo.'}};
+function caseLiftNote(m){
+  if(!m||m.sample||!m.ministry||!m.ministry.id) return '';
+  let x=null; try{ x=caseItemOf(m.ministry.id); }catch(e){ x=null; } if(!x||x.plan) return '';
+  const to=caseLiftNow(x.id), own=caseLiftOf(x); if(!to||to===own) return '';
+  return caseT(to<own?CASE_SIZE_T.lighter:CASE_SIZE_T.fuller);
+}
+function caseSizeHTML(m){
+  if(!m||m.sample||!m.ministry||!m.ministry.id) return '';
+  let x=null; try{ x=caseItemOf(m.ministry.id); }catch(e){ x=null; } if(!x||x.plan||m.type==='conference') return '';
+  const own=caseLiftOf(x), cur=caseLiftNow(x.id)||own;
+  const b=n=>{ let r=null; try{ r=uReq(x,{lift:n}); }catch(e){ r=null; } if(!r) return '';
+    const vol=r.people===1?caseT(CASE_SIZE_T.vol1):caseF(CASE_SIZE_T.voln,{n:fmtNum(r.people)}), mon=r.startup>0?caseF(CASE_SIZE_T.start,{v:fmtMoney(r.startup)}):caseT(CASE_SIZE_T.free), L=NS_LIFTS[n-1];
+    return `<button type="button" class="cs-szb${n===own?' own':''}${n===cur?' on':''}" data-cs-lift="${n}" aria-pressed="${n===cur}">${nsBars(L)}<span class="cs-szn">${esc(nsU(L))}</span>${n===own?`<span class="cs-szo">${esc(caseT(CASE_SIZE_T.own))}</span>`:''}<span class="cs-szv">${esc(vol+' · '+mon)}</span></button>`; };
+  return `<div class="cs-size" id="cs-size" role="group" aria-labelledby="cs-szh"><p class="cs-szh" id="cs-szh">${esc(caseT(CASE_SIZE_T.head))}</p><div class="cs-szr">${[1,2,3].map(b).join('')}</div></div>`;
+}
+function caseSizeSet(n){
+  const P=casePrefs(); let x=null; try{ x=caseItemOf(P.ministry); }catch(e){ x=null; } if(!x||![1,2,3].includes(n)) return;
+  const ch=uChurch(), own=caseLiftOf(x), all=ch.overrides&&typeof ch.overrides==='object'?ch.overrides:(ch.overrides={}), o={...(all[x.id]||{})};
+  if(n===own) delete o.lift; else o.lift=n;
+  if(Object.keys(o).length) all[x.id]=o; else delete all[x.id];
+  uPersist();
+  if(casePropMode()) caseMount(); else caseDraw3();
+  const f=document.querySelector(`#cs-size [data-cs-lift="${n}"]`); if(f) try{ f.focus({preventScroll:true}); }catch(e){}
+}
 /* The Proposal as one plain object, in the model's language (caseProposalDoc draws it; the tests read it). */
 function caseProposal(model,deck,o){
   o=o||{};
@@ -38928,7 +39008,8 @@ function caseProposal(model,deck,o){
     const x=typeof caseItemOf==='function'?caseItemOf(m.ministry.id):null;
     const desc=(()=>{ const d=x?(x.lib?(es?x.dEs:x.d):(es?'':x.d)):''; const t=caseClean(d||'',600); if(!t) return ''; if(t.length<=220) return t;
       const cut=t.slice(0,220), i=Math.max(cut.lastIndexOf('. '),cut.lastIndexOf('? '),cut.lastIndexOf('! ')); return i>60?cut.slice(0,i+1):''; })();
-    plan.push({k:'what',label:T(P.what),lines:[gfCap(m.ministry.name||'').replace(/\.?$/,'.')+(desc?' '+desc:'')],desc:!!desc});
+    { const LN=caseLiftNote(m);   // v10.52.0: the size he chose, said once, when it is not the idea's own
+      plan.push({k:'what',label:T(P.what),lines:[gfCap(m.ministry.name||'').replace(/\.?$/,'.')+(desc?' '+desc:'')+(LN?' '+LN:'')],desc:!!desc}); }
     if(m.how&&m.how.steps&&m.how.steps.length) plan.push({k:'how',label:T(P.how),lines:m.how.steps.slice(0,4).map((t,i)=>(i+1)+'. '+t)});
     if(body==='conference'){ if(m.capacity) plan.push({k:'who',label:T(P.who),lines:[(m.capacity.rows||[]).map(r=>{ const w=tdCapWords(r.have,r.need,r.unit,TD_STR[lang],v=>r.unit==='$'?fmtMoney(v):fmtNum(v)); return r.label+' '+w.have+w.rest; }).join(' · ')]}); }
     else{ const pr=(m.ask&&m.ask.rows&&m.ask.rows[0])?String(m.ask.rows[0][1]):''; if(pr) plan.push({k:'who',label:T(P.who),lines:[pr+(V.hoursEach?' · '+V.hoursEach+(/month|mes/.test(V.hoursEach)||(m.ask&&m.ask.cad)?'':T(P.firstMonth)):'')]});

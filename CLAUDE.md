@@ -155,6 +155,31 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.52.0 (6 Oct 2026) — Make the Case: choose the size (Light · Moderate · Heavy lift).** The pastor: *"making the case is
+essentially putting together not only what you need in order to start the ministry but also the proposal … it can be a light lift
+moderate lift heavy lift if you choose light lift then of course the investment with the money needed the people needed. It won't be
+that. If you do moderate lift it'll be middle and if you do heavy lift, it's gonna be a much more robust and more demanding thing, but
+the same outreach … if it comes from the community outreach section it already knows"*; asked (a) pick an idea then its size, or (b)
+the size first: **"A"**. Design `~/Downloads/Terrain-work/v67/DESIGN-LIFT.md`.
+- **Size** opens step 3 (both the Proposal page and Make the Case; `caseSizeHTML`, `#cs-size`, before the goal box): Light lift ·
+  Moderate lift · Heavy lift (the survey's words and bars), each with its own numbers ("2 volunteers · $300 to start"), the idea's own
+  marked "its own size" and on until he picks another. A tap (`caseSizeSet`) saves `uChurch().overrides[id].lift` (1–3; its own size
+  stores nothing) and draws the step again (the Proposal page whole, so its card's lift line and "What it needs from our church" follow).
+- **The numbers** (`uLiftReq`, applied inside `uReq` to the base before his Adjust edits, so they still win; `uReq(x,{lift})` asks about a
+  size without saving): one step lighter halves the volunteers (at least 1) and the people it serves (at least 4), keeps one leader,
+  halves set-up and follow-up hours, 40% of the money; one step heavier doubles them, one more leader, 250% of the money; two steps
+  apply it twice. An ongoing idea's trial: 4 weeks Light, 6 Moderate, 12 Heavy; an event or a series keeps its own length (a series its
+  sessions). Session length, skills and rooms stay the idea's own. An idea's own size: `caseLiftOf(x)` (library tier, a built-in's
+  `bandOf(load)+1`, = `nsLift`). With nothing chosen `uReq` is unchanged: the 535 goldens hold.
+- **Words**, only when the size is not its own (`caseLiftNote`): the Proposal's WHAT line and the handout under its budget heading
+  (`H.sizeNote`): "A lighter start: fewer people, a smaller budget and a shorter trial." / "The full version: more people, a larger budget
+  and a longer run." (ES "Un comienzo más ligero…" / "La versión completa…").
+- **Gates:** every built-in × the church board at Light and Heavy, EN + ES (`v67/gate-pages.js`): handout ≤ 2 pages, the Proposal no more
+  pages than at its own size, 0 exceptions (76 lighter and 72 heavier decks a language); the slide fit at 360 × 640 (`v67/gate-slides.mjs`:
+  every built-in × board, finance, the whole church × Light and Heavy, EN + ES): 888 sized decks, 9,005 slides, 0 over the frame, none
+  worse than at its own size. A free idea stays free at any size (no price is invented). Samples: `~/Downloads/Terrain-v10.52.0-samples/`.
+- Tests: `v52-lift` (new, 26; failing first on v10.51.3: `v67/ff-v52.log`). Full suite: 137 suites · 9,939 passed · 0 failed.
+
 **v10.51.3 (6 Oct 2026, quick lane) — Spiritual Gifts: "Who you are drawn to" is Section 6 of 6.** The pastor: *"Part two for the
 spiritual gift survey. It shouldn't be like a next part. It should just be at the last section of the entire survey … right now 1 2 3 4 5
 and this will be the sixth in line … so that it doesn't feel like an extra step they have to take it just gonna continue to the end"*.
