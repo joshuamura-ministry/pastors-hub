@@ -1,4 +1,4 @@
-// Terrain · the needs list, the daily sweep.                            needs-sweep-1.0
+// Terrain · the needs list and the work for each need, the daily sweep.   needs-sweep-1.1
 //
 // Runs once a day on Netlify's scheduler (the `config` export below). No URL reaches it in production. In the store
 // "terrain-needs" (advise.mjs mode 'needs' and advise-needs.mjs, v10.53.0) it deletes:
@@ -6,23 +6,30 @@
 //   n/<place>/<lang>        a neighborhood's kept list, 60 days after it was made (a new study then makes it again);
 //   c/dev|reg|site/<day>/…  the daily counters, 2 days after their UTC day;
 //   c/ip|ipsalt/<hour>…     the hourly counters and the hour's salt, 2 days after their hour.
+// v10.55.0 (needs-sweep-1.1): the same in the store "terrain-ideas" (advise.mjs mode 'ideas' and advise-ideas.mjs): jobs after 7 days,
+//   i/<place>/<lang> kept sets after 60, the counters (and the picks' c/pkd, c/pk1) after 2. The pool p/<need>/<id> (ideas pastors
+//   picked, for the library's monthly batch) is NEVER deleted here.
 // Nothing is read or logged beyond the keys, a job's `created` time and the counts of what was deleted.
 
 import { getStore } from '@netlify/blobs';
 
 export const config = { schedule: '@daily' };
 
-const STORE_NAME = 'terrain-needs';
+const STORE_NAME = 'terrain-needs', IDEAS_STORE = 'terrain-ideas';
 const JOB_DAYS = 7, COUNTER_DAYS = 2, CACHE_DAYS = 60;
-const RE_CACHE = /^n\/[0-9a-f]{32}\/(?:en|es)$/;
+const RE_CACHE = /^[ni]\/[0-9a-f]{32}\/(?:en|es)$/;
 const BUDGET_MS = 20000;   // scheduled functions get 30 s; the rest waits for tomorrow
 const RE_JOB = /^j\/[A-Za-z0-9_-]{22}$/;
-const RE_DAYC = /^c\/(?:dev|reg|site)\/(\d{4}-\d{2}-\d{2})(?:\/[A-Za-z0-9_-]{1,64})?$/;
+const RE_DAYC = /^c\/(?:dev|reg|site|pkd|pk1)\/(\d{4}-\d{2}-\d{2})(?:\/[A-Za-z0-9_-]{1,64})?$/;
 const RE_HOURC = /^c\/(?:ip|ipsalt)\/(\d{4}-\d{2}-\d{2})T(\d{2})(?:\/[0-9a-f]{16})?$/;
 
 function theStore() {
   if (globalThis.__terrainNeedsStore) return globalThis.__terrainNeedsStore;
   return getStore({ name: STORE_NAME, consistency: 'strong' });
+}
+function ideasStore() {
+  if (globalThis.__terrainIdeasStore) return globalThis.__terrainIdeasStore;
+  return getStore({ name: IDEAS_STORE, consistency: 'strong' });
 }
 async function keysUnder(store, prefix) {
   const l = await store.list({ prefix });
@@ -47,7 +54,7 @@ export async function sweep(store, now = Date.now(), started = Date.now()) {
     const created = rec && typeof rec.created === 'number' ? rec.created : 0;
     if (!created || now - created > JOB_DAYS * 864e5) { await store.delete(k); out.jobs++; } else out.kept++;
   }
-  for (const k of await keysUnder(store, 'n/')) {
+  for (const k of [...await keysUnder(store, 'n/'), ...await keysUnder(store, 'i/')]) {
     if (late()) { out.left = true; break; }
     if (!RE_CACHE.test(k)) { out.kept++; continue; }
     let rec = null; try { rec = await store.get(k, { type: 'json' }); } catch { rec = null; }
@@ -59,10 +66,12 @@ export async function sweep(store, now = Date.now(), started = Date.now()) {
 
 export default async () => {
   try {
-    const r = await sweep(theStore());
-    console.log('[needs-sweep] ' + JSON.stringify({ fn: 'needs-sweep-1.0', ...r }));
+    const started = Date.now();
+    const r = await sweep(theStore(), Date.now(), started);
+    const i = await sweep(ideasStore(), Date.now(), started);
+    console.log('[needs-sweep] ' + JSON.stringify({ fn: 'needs-sweep-1.1', ...r, ideas: i }));
   } catch (e) {
-    console.log('[needs-sweep] ' + JSON.stringify({ fn: 'needs-sweep-1.0', ok: false }));
+    console.log('[needs-sweep] ' + JSON.stringify({ fn: 'needs-sweep-1.1', ok: false }));
   }
   return new Response(null, { status: 204 });
 };

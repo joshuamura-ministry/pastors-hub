@@ -85,7 +85,8 @@ const J = async r => ({ status: r.status, ...(await r.json()) });
 console.log('-- GET says whether the needs list is on: a key AND a passphrase --');
 { let fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   let g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
-  c('advise-2.5, needs true, needsFn needs-1.0', [g.fn, g.needs, g.needsFn], ['advise-2.5', true, 'needs-1.0']);
+  // v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
+  c('advise-2.6, needs true, needsFn needs-1.0', [g.fn, g.needs, g.needsFn], ['advise-2.6', true, 'needs-1.0']);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: needs false', g.needs, false);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV, NEEDS_DAY_MAX: '0' }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -120,7 +121,7 @@ S = makeStore(); globalThis.__terrainNeedsStore = S; wakes = []; api = [];
 let JOB = null, KEY1 = null, REC = null;
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(10), ip: '203.0.113.7', extra: { church: 'Bucks County SDA', pastor: 'Joshua Mura', address: '10 Greene Rd' } }));
-  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.5', true, true, 4000]);
+  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.6', true, true, 4000]);
   JOB = r.job; KEY1 = r.key; REC = S.peek('j/' + r.job);
   c('the record: queued, the key and the worker token as SHA-256 only, kept by its place', [REC.status, REC.keyHash === sha(r.key), /^[0-9a-f]{64}$/.test(REC.workerHash), /^n\/[0-9a-f]{32}\/en$/.test(REC.cacheKey)], ['queued', true, true, true]);
   const txt = JSON.stringify(REC);

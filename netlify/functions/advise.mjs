@@ -1,10 +1,10 @@
-// Terrain · optional AI ministry planner.                            advise-2.5
+// Terrain · optional AI ministry planner.                            advise-2.6
 //
 // The API key lives ONLY in Netlify's encrypted environment variables:
 //   Netlify → Project configuration → Environment variables → ANTHROPIC_API_KEY
 // It is never in this repository and never reaches the browser.
 //
-// GET  → { enabled, model, fn, locked, prices, pricesFn, needs, needsFn }   the page asks this first and only
+// GET  → { enabled, model, fn, locked, prices, pricesFn, needs, needsFn, ideas, ideasFn }   the page asks this first and only
 //                                          shows the button when a key exists
 //                                          (prices: Find prices is on: a key AND a passphrase)
 // POST { summary }                         → { text }   a prose plan (unchanged)
@@ -26,6 +26,19 @@
 //                                          Survey's needs list: the same lock as prices, then the neighborhood's kept list
 //                                          (200 { cached, made, needs }) or a study queued for advise-needs.mjs (202 { job, key, poll })
 // POST { mode:'needs-status', job, key }   → { status, made?, needs?, code? }
+// POST { mode:'ideas', lang, device, fresh, place, figs, langs, origins, need, tags, have }   (advise-2.6) the work for one need:
+//                                          the same lock, then the kept set for the place, the need and its figures
+//                                          (200 { cached, made, ideas, keep, set }) or a study queued for advise-ideas.mjs (202 { job, key, poll })
+// POST { mode:'ideas-status', job, key }   → { status, made?, ideas?, keep?, set?, code? }
+// POST { mode:'ideas-pick', device, set, id }   → { ok, counted }   a pastor picked an idea (its proposal or its PDF): the idea is
+//                                          copied from the server's own kept set into the pool (p/<need>/<id>), never from the page
+//
+// 2.6 (v10.55.0, 6 Oct 2026). The work for each need (DESIGN-IDEAS.md, v72). The pastor: "if Claude is generating the community needs
+// then it also needs to generate the work to meet those needs", and "the great ideas … selected we should consider … to put them in the
+// library … that way it doesn't have to generate them all the time". Eighteen ideas a need (six a size), written after a search for what
+// works now, each passing the Idea Library's own checks (libCheckIdea, exported for advise-ideas.mjs). Only place names, figures, the
+// need and the library's idea names are sent. A set is kept 60 days (store "terrain-ideas"); limits: 20 a device a UTC day, 30 a
+// registration, 15 an address an hour, IDEAS_DAY_MAX (150) for the site. Picked ideas go to the pool, for the library's monthly batch.
 //
 // 2.5 (v10.53.0, 6 Oct 2026). The needs list (DESIGN-NEEDS.md, v68). The pastor: "I want the best list ever … I really want Claude
 // to generate the best list based on the community survey and wherever else … drawing from the Internet too". Only place names and
@@ -71,7 +84,7 @@ import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
-const FN_VERSION = 'advise-2.5';   // 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
+const FN_VERSION = 'advise-2.6';   // 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
 function passOk(given){
@@ -360,6 +373,9 @@ function libCheckIdea(x, lang, ctx) {
   if (fac.length) idea.fac = fac;
   return {idea};
 }
+
+// v10.55.0: advise-ideas.mjs holds Claude's ideas for a need to the very same checks
+export { libCheckIdea, LIB_TAGS, LIB_THEMES, LIB_KINDS, LIB_AGES, LIB_WHERE, libFold };
 
 const TOPIC_SYSTEM = (lang) => `You are inventing ministry ideas for a Seventh-day Adventist pastor of a small or medium church (20 to 150 members, few paid staff, a modest budget) in the United States. You receive: one TOPIC the pastor searched for, a census report on the neighbourhood around the church, the census tags that fire there, the church's honest inventory, and the names of ideas he already has on this topic ("do not repeat").
 
@@ -669,7 +685,8 @@ const nPlain = v => !!v && typeof v === 'object' && !Array.isArray(v);
 // a figure: null (no value) or a finite number; undefined when refused
 const nNum = v => v == null ? null : (typeof v === 'number' && Number.isFinite(v) && Math.abs(v) < 1e9 ? Math.round(v * 100) / 100 : undefined);
 // → {input} or {field}. Place names and figures only: anything that is not one is refused, never passed on.
-function needsInput(p) {
+// v10.55.0: the place, its figures, languages and places of birth (placeInput), shared by the needs list and the work for a need
+function placeInput(p) {
   const lang = p.lang === 'es' ? 'es' : 'en';
   const P = p.place;
   if (!nPlain(P)) return { field: 'place' };
@@ -701,6 +718,10 @@ function needsInput(p) {
     if (!name || share == null) return { field: 'origins' };
     origins.push({ name, share });
   }
+  return { input: { lang, place: { tract, town, county, state: st, stateName }, figs, langs, origins } };
+}
+function needsInput(p) {
+  const base = placeInput(p); if (!base.input) return base;
   if (!Array.isArray(p.cats) || p.cats.length < 1 || p.cats.length > 30) return { field: 'cats' };
   const cats = [];
   for (const c of p.cats) { const v = pText(c, 2, 60); if (!v) return { field: 'cats' }; cats.push(v); }
@@ -715,7 +736,7 @@ function needsInput(p) {
   }
   if (new Set(cands.map(c => c.id)).size !== cands.length) return { field: 'cands.id' };
   if (!Array.isArray(p.themes) || p.themes.length > 120 || p.themes.some(t => typeof t !== 'string' || !RE_THEME.test(t))) return { field: 'themes' };
-  return { input: { lang, place: { tract, town, county, state: st, stateName }, figs, langs, origins, cats, cands, themes: [...new Set(p.themes)] } };
+  return { input: { ...base.input, cats, cands, themes: [...new Set(p.themes)] } };
 }
 async function needsRoute(request, context, p) {
   if (p.mode === 'needs-status') return needsStatus(p);
@@ -803,6 +824,156 @@ async function needsStatus(p) {
   return reply(out);
 }
 
+// ============================================================ THE WORK FOR EACH NEED (advise-2.6, v10.55.0)
+const IDEAS_FN = 'ideas-1.0';
+const IDEAS_STORE = 'terrain-ideas';
+const IDEAS_DEV_DAY = 20, IDEAS_REG_DAY = 30, IDEAS_IP_HOUR = 15, IDEAS_CACHE_MS = 60 * 864e5, PICK_DEV_DAY = 60;
+const ideasDayMax = () => { const n = parseInt(process.env.IDEAS_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 2000 ? n : 150; };
+const IDEAS_MODEL = () => (process.env.IDEAS_MODEL || 'claude-opus-5-5').trim();
+const IDEAS_EFFORT = () => { const e = (process.env.IDEAS_EFFORT || 'medium').trim(); return ['low', 'medium', 'high', 'xhigh', 'max'].includes(e) ? e : 'medium'; };
+const RE_LIBID = /^[a-z0-9]+(-[a-z0-9]+)*(--[a-z0-9]+(-[a-z0-9]+)*)?$/, RE_SET = /^[0-9a-f]{32}\/(en|es)$/, RE_CLID = /^cl-[0-9a-f]{14}$/;
+function ideasStore() {
+  if (globalThis.__terrainIdeasStore) return globalThis.__terrainIdeasStore;
+  return getStore({ name: IDEAS_STORE, consistency: 'strong' });
+}
+function ideasLog(code) { try { console.log('[ideas] ' + JSON.stringify({ fn: FN_VERSION, code })); } catch { /* never throws */ } }
+const iReply = (code, status, extra) => { ideasLog(code); return reply({ ok: false, code, ...(extra || {}) }, status); };
+// → {input} or {field}: the place and its figures (placeInput), the need, the census tags that fire, the library's ideas for it (names)
+function ideasInput(p) {
+  const base = placeInput(p); if (!base.input) return base;
+  const N = p.need; if (!nPlain(N)) return { field: 'need' };
+  if (!RE_NID.test(String(N.id || ''))) return { field: 'need.id' };
+  const title = pText(N.title, 3, 140); if (!title) return { field: 'need.title' };
+  const cat = pText(N.cat, 2, 60); if (!cat) return { field: 'need.cat' };
+  const why = N.why == null || N.why === '' ? '' : pText(N.why, 1, 400); if (why == null) return { field: 'need.why' };
+  if (!Array.isArray(N.themes) || N.themes.length > 3 || N.themes.some(t => !LIB_THEMES.has(t))) return { field: 'need.themes' };
+  if (!Array.isArray(p.tags) || p.tags.length > 80 || p.tags.some(t => typeof t !== 'string' || t.length > 40)) return { field: 'tags' };   // the page's profile tags: only the library's are kept
+  if (!Array.isArray(p.have) || p.have.length > 40) return { field: 'have' };
+  const have = [];
+  for (const h of p.have) {
+    if (!nPlain(h) || typeof h.id !== 'string' || h.id.length > 110 || !RE_LIBID.test(h.id)) return { field: 'have.id' };
+    const name = pText(h.name, 3, 120); if (!name) return { field: 'have.name' };
+    if (![1, 2, 3].includes(h.lift)) return { field: 'have.lift' };
+    have.push({ id: h.id, name, lift: h.lift });
+  }
+  if (new Set(have.map(h => h.id)).size !== have.length) return { field: 'have.id' };
+  return { input: { ...base.input, need: { id: N.id, title, cat, why, themes: [...new Set(N.themes)] }, tags: [...new Set(p.tags.filter(t => LIB_TAGS.has(t)))], have } };
+}
+async function ideasRoute(request, context, p) {
+  if (p.mode === 'ideas-status') return ideasStatus(p);
+  if (!KEY) return iReply('nokey', 503);
+  if (!PASS || ideasDayMax() === 0) return iReply('disabled', 403);
+  if (!passOk(request.headers.get('x-terrain-pass'))) return iReply('locked', 401);
+  const secret = pRegSecret();
+  let rid = null;
+  if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return iReply('noreg', 401); }
+  if (typeof p.device !== 'string' || !RE_DEVICE.test(p.device)) return iReply('bad-input', 400, { field: 'device' });
+  if (p.mode === 'ideas-pick') return ideasPick(p);
+  const got = ideasInput(p);
+  if (!got.input) return iReply('bad-input', 400, { field: got.field });
+  const I = got.input, store = ideasStore(), now = Date.now();
+  // kept for the place, the need AND the figures (as the needs list): nobody can leave a set made from other numbers for another pastor
+  const cacheKey = 'i/' + pSha('terrain-ideas|' + [I.place.tract, I.place.town, I.place.county, I.place.state].join('|').toLowerCase() + '|' + I.need.id + '|'
+    + I.need.title.toLowerCase() + '|' + pSha(JSON.stringify(I.figs))).slice(0, 32) + '/' + I.lang;
+  if (p.fresh !== true) {
+    let hit = null; try { hit = await store.get(cacheKey, { type: 'json' }); } catch { hit = null; }
+    if (hit && Array.isArray(hit.ideas) && typeof hit.at === 'number' && now - hit.at < IDEAS_CACHE_MS) {
+      ideasLog('cached');
+      return reply({ ok: true, fn: FN_VERSION, cached: true, made: hit.made, ideas: hit.ideas, keep: Array.isArray(hit.keep) ? hit.keep : [], set: cacheKey.slice(2) });
+    }
+  }
+  const day = new Date(now).toISOString().slice(0, 10), hour = new Date(now).toISOString().slice(0, 13);
+  const bucket = pClientIp(request, context);
+  const keys = { dev: 'c/dev/' + day + '/' + pSha('terrain-ideas-dev|' + p.device).slice(0, 16), reg: rid ? 'c/reg/' + day + '/' + rid : null,
+    ip: bucket ? await pIpKey(store, hour, bucket) : null, site: 'c/site/' + day };
+  const plan = [['dev', IDEAS_DEV_DAY, 'limit-device', nextUtcDay(now)], ['reg', IDEAS_REG_DAY, 'limit-reg', nextUtcDay(now)],
+    ['ip', IDEAS_IP_HOUR, 'limit-ip', nextUtcHour(now)], ['site', ideasDayMax(), 'limit-site', nextUtcDay(now)]];
+  const taken = [];
+  for (const [k, max, code, until] of plan) {
+    if (!keys[k]) continue;
+    if (!(await pBump(store, keys[k], max, now))) {
+      for (const t of taken) await pGiveBack(store, keys[t]);
+      return iReply(code, 429, { retryAfter: Math.max(1, Math.ceil((until - now) / 1000)) });
+    }
+    taken.push(k);
+  }
+  const job = pRand(16), key = pRand(32), worker = pRand(32);
+  const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
+    model: IDEAS_MODEL(), effort: IDEAS_EFFORT(), counts: { dev: keys.dev } };
+  const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return iReply('busy', 503); }
+  let woke = false;
+  try {
+    const res = await fetch(new URL('/.netlify/functions/advise-ideas', request.url), {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ job, worker }), signal: AbortSignal.timeout(5000) });
+    woke = res && res.status === 202;
+  } catch { woke = false; }
+  if (!woke) {
+    let lost = false;
+    try {
+      const failed = { ...rec, status: 'failed', code: 'unavailable', finished: Date.now() };
+      let f;
+      if (w && w.etag) f = await store.setJSON('j/' + job, failed, { onlyIfMatch: w.etag });
+      else { const cur = await store.get('j/' + job, { type: 'json' }); f = cur && cur.status === 'queued' ? await store.setJSON('j/' + job, failed) : { modified: false }; }
+      lost = !!(f && f.modified === false);
+    } catch { /* the sweep tidies it */ }
+    if (lost) { ideasLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
+    for (const t of taken) await pGiveBack(store, keys[t]);
+    return iReply('unavailable', 502);
+  }
+  ideasLog('queued');
+  return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202);
+}
+async function ideasStatus(p) {
+  if (typeof p.job !== 'string' || !RE_JOB.test(p.job)) return reply({ ok: false, code: 'gone' }, 404);
+  if (typeof p.key !== 'string' || !RE_JKEY.test(p.key)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const store = ideasStore(), now = Date.now();
+  const cas = typeof store.getWithMetadata === 'function';
+  let rec = null, etag = null;
+  if (cas) { const r = await store.getWithMetadata('j/' + p.job, { type: 'json' }); if (r) { rec = r.data; etag = r.etag; } }
+  else rec = await store.get('j/' + p.job, { type: 'json' });
+  if (!rec || typeof rec !== 'object' || typeof rec.created !== 'number' || now - rec.created > JOB_KEEP_MS) return reply({ ok: false, code: 'gone' }, 404);
+  if (!pHashOk(p.key, rec.keyHash)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const stuck = (rec.status === 'running' && now - (rec.started || rec.created) > STUCK_MS) || (rec.status === 'queued' && now - rec.created > STUCK_MS);
+  if (stuck) {
+    const next = { ...rec, status: 'failed', code: rec.status === 'running' ? 'timeout' : 'unavailable', finished: now };
+    const w = await store.setJSON('j/' + p.job, next, cas && etag ? { onlyIfMatch: etag } : undefined);
+    if (!w || w.modified !== false) { rec = next; if (rec.counts) await pGiveBack(store, rec.counts.dev); }
+  }
+  const out = { ok: true, status: rec.status, ms: (rec.finished || now) - rec.created };
+  if (rec.status === 'done') Object.assign(out, { made: rec.made, ideas: Array.isArray(rec.ideas) ? rec.ideas : [], keep: Array.isArray(rec.keep) ? rec.keep : [],
+    set: typeof rec.cacheKey === 'string' ? rec.cacheKey.slice(2) : null });
+  if (rec.status === 'failed') out.code = typeof rec.code === 'string' ? rec.code : 'unavailable';
+  return reply(out);
+}
+// A pastor picked one of Claude's ideas: the server's own copy of it goes to the pool (counted once a device a day), for the library.
+async function ideasPick(p) {
+  const set = typeof p.set === 'string' && RE_SET.test(p.set) ? p.set : null; if (!set) return iReply('bad-input', 400, { field: 'set' });
+  const id = typeof p.id === 'string' && RE_CLID.test(p.id) ? p.id : null; if (!id) return iReply('bad-input', 400, { field: 'id' });
+  const store = ideasStore(), now = Date.now(), day = new Date(now).toISOString().slice(0, 10);
+  if (!(await pBump(store, 'c/pkd/' + day + '/' + pSha('terrain-ideas-pick|' + p.device).slice(0, 16), PICK_DEV_DAY, now))) return iReply('limit-device', 429);
+  let rec = null; try { rec = await store.get('i/' + set, { type: 'json' }); } catch { rec = null; }
+  const idea = rec && Array.isArray(rec.ideas) ? rec.ideas.find(x => x && x.id === id) : null;
+  const needId = rec && rec.need && RE_NID.test(String(rec.need.id || '')) ? rec.need.id : null;
+  if (!idea || !needId) return iReply('gone', 404);
+  const once = await store.setJSON('c/pk1/' + day + '/' + pSha('terrain-ideas-pick1|' + p.device + '|' + id).slice(0, 16), { at: now }, { onlyIfNew: true });
+  const counted = !(once && once.modified === false);
+  if (counted) {
+    const key = 'p/' + needId + '/' + id, cas = typeof store.getWithMetadata === 'function';
+    for (let i = 0; i < 6; i++) {
+      let cur = null, etag;
+      if (cas) { const r = await store.getWithMetadata(key, { type: 'json' }); if (r) { cur = r.data; etag = r.etag; } }
+      else cur = await store.get(key, { type: 'json' });
+      const next = nPlain(cur) ? { ...cur, picks: (Number.isInteger(cur.picks) ? cur.picks : 0) + 1, last: now }
+        : { v: 1, idea, need: { id: needId, title: String(rec.need.title || '').slice(0, 140) }, town: String(rec.town || '').slice(0, 80), lang: rec.lang === 'es' ? 'es' : 'en', picks: 1, first: now, last: now };
+      const w = await store.setJSON(key, next, cur == null ? { onlyIfNew: true } : (cas && etag ? { onlyIfMatch: etag } : undefined));
+      if (!w || w.modified !== false) break;
+    }
+  }
+  ideasLog(counted ? 'picked' : 'picked-again');
+  return reply({ ok: true, fn: FN_VERSION, counted });
+}
+
 async function callClaude(key, body){
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -871,7 +1042,8 @@ export default async (request, context) => {
       keyLooksRight: KEY.startsWith('sk-ant-') && KEY.length > 40, keyLength: KEY.length,
       maxIdeasPerCall: MAX_IDEAS_PER_CALL, kinds: Object.keys(KINDS), topic: true,
       prices: !!KEY && !!PASS && pricesDayMax() > 0, pricesFn: PRICES_FN,   // v10.44 review: PRICES_DAY_MAX=0 turns the button off too
-      needs: !!KEY && !!PASS && needsDayMax() > 0, needsFn: NEEDS_FN        // v10.53.0: the needs list (NEEDS_DAY_MAX=0 turns it off)
+      needs: !!KEY && !!PASS && needsDayMax() > 0, needsFn: NEEDS_FN,       // v10.53.0: the needs list (NEEDS_DAY_MAX=0 turns it off)
+      ideas: !!KEY && !!PASS && ideasDayMax() > 0, ideasFn: IDEAS_FN        // v10.55.0: the work for each need (IDEAS_DAY_MAX=0 turns it off)
     });
   }
   if (request.method !== 'POST') return reply({ error: 'Use GET or POST.' }, 405);
@@ -883,6 +1055,10 @@ export default async (request, context) => {
   if (early && (early.mode === 'needs' || early.mode === 'needs-status')) {
     try { return await needsRoute(request, context, early); }
     catch (e) { needsLog('error'); return reply({ error: 'The needs list could not be made just now.', code: 'unavailable' }, 502); }
+  }
+  if (early && (early.mode === 'ideas' || early.mode === 'ideas-status' || early.mode === 'ideas-pick')) {
+    try { return await ideasRoute(request, context, early); }
+    catch (e) { ideasLog('error'); return reply({ error: 'The ideas could not be made just now.', code: 'unavailable' }, 502); }
   }
   if (early && (early.mode === 'prices' || early.mode === 'prices-status')) {
     try { return await pricesRoute(request, context, early); }

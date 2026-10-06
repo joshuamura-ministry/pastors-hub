@@ -33,7 +33,8 @@ console.log('-- GET and the version --');
 const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
 // v56 (stale): advise-2.4 adds Find prices (tests/advise-prices.test.mjs); the topic mode is unchanged
 // v10.53.0 (stale): advise-2.5 adds the needs list (tests/needs-function.test.mjs); the topic mode is unchanged
-c('reports advise-2.5 (the needs list; 2.4 Find prices; 2.3 the Sabbath guideline)', g.fn, 'advise-2.5');
+// v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
+c('reports advise-2.6 (the work for each need; 2.5 the needs list; 2.4 Find prices; 2.3 the Sabbath guideline)', g.fn, 'advise-2.6');
 c('says the topic mode exists', g.topic, true);
 c('model and per-call limit unchanged (Opus by default, six a call)', [g.model,g.maxIdeasPerCall], ['claude-opus-5-5',6]);
 
