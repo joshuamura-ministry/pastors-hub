@@ -155,6 +155,20 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.48.0 (5 Oct 2026) — the Proposal page.** The pastor: *"I don't like make the case I just want it to [say] proposal … this
+beautiful thing [the idea's sheet] should be what you see when you press create a proposal for this ministry at the top … big letters
+above that says proposal … then … who are you proposing to … the church board … the business session … the finance committee …
+do we need all the others"*; the elders: *"keep"*; the schools: *"just take away the schools … we're focusing on the churches"*.
+- In the proposal view (`casePropMode()`), the tool bar says "Proposal" / "Propuesta" (`caseMount` sets `#toolname`; Make the Case
+  again when another ministry is chosen). `casePropHTML`: "Proposal" in large letters (`.cs-pbig`), then `.cs-pcard` with the idea
+  as the sheet shows it (for the need, the name, the lift line, what it is, Why here, How to get started, What it needs from our
+  church, the children's line), the One-page PDF (`data-cs-pdf` → `nsPdf`; `nsStatus` writes to the card too), the way back and
+  "Choose a different ministry".
+- Step 1 there is "Who are you proposing to?": `CASE_PROP_GROUPS` = board, finance, business, elders, one row, no kinds; a
+  previously chosen group outside the four is cleared on arrival. "Choose a different ministry" brings back the full view.
+- Tests: `v47-clean` gains the Proposal page (failing-first on v10.47.1: `Terrain-work/v64/logs/ff-v48.log`); v45-handoff reads
+  the card's new parts.
+
 **v10.47.1 (5 Oct 2026) — the needs a place of their own; "Main menu" at the bottom.** The pastor: *"This is a whole new kind of a
 section so I don't want it to look like every other section. There's gotta be a title there … that will let people know that this is
 a clickable area"*; of What's next, *"Does that even have to be there?"*; *"I like the top … at the bottom … keep that and then also
