@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.53.0
+     TERRAIN  v10.54.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.53.0" data-theme="dark">
+<html lang="en" data-version="v10.54.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.53.0">
-<title>Community Map — Terrain v10.53.0</title>
+<meta name="terrain-version" content="v10.54.0">
+<title>Community Map — Terrain v10.54.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -354,15 +354,15 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .whoami{font-size:.8rem;color:var(--ink3);margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .whoami .whotxt{min-width:0;max-width:min(44ch,62vw);overflow:hidden;text-overflow:ellipsis}
 .whoami .whoname{color:var(--ink2);font-weight:600}
-.whoami #signout,.whoami #regchange{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
+.whoami #signout,.whoami #regchange,.whoami #acctbtn{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
 /* The chip sits after Pastors Hub and ES, set off by a hairline, rather than
    splitting the free space with them; the same height as they are. */
-.whoami #regchange,.whoami #signout{min-height:40px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
+.whoami #regchange,.whoami #signout,.whoami #acctbtn{min-height:40px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
 /* From 700px the chip never wraps under the others: it takes what room is
    left (up to its own width) and the name ends in an ellipsis. Narrower, it
    has a row of its own, right-aligned, with no hairline. */
 @media(min-width:700px){ .themebtn+.whoami{margin-left:4px;padding-left:14px;border-left:1px solid var(--line);min-height:40px;flex:1 1 0;min-width:0;max-width:max-content} }
-.whoami #regchange,.whoami #signout{flex:none}
+.whoami #regchange,.whoami #signout,.whoami #acctbtn{flex:none}
 @media(max-width:699px){
   .top .in{gap:10px 12px}
   .whoami{margin-left:0;flex-basis:100%;justify-content:flex-end;order:9}
@@ -574,7 +574,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 #datacred[hidden]{display:none}
 /* A locked feature. One design, used everywhere a paid feature would be, so
    the free tier is consistent and the upgrade path is obvious without being
-   loud. No dead button: until sign-up exists there is nothing to press. */
+   loud. v10.54.0: with payments on, one button (the free trial, or Choose a plan). */
 #locked[hidden]{display:none}
 .lock{background:linear-gradient(160deg,var(--acc-dim),transparent 70%),var(--panel);
   border:1px solid var(--acc);border-radius:var(--r);padding:22px 22px 18px;margin:18px 0;box-shadow:var(--shadow)}
@@ -4045,6 +4045,34 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
 }
 @media (prefers-reduced-motion:reduce){ .ns-chev{transition:none} }
 @media print{ #u-needs .ns-body[hidden]{display:block} #u-needs .ns-need[hidden]{display:block} .ns-show,.ns-more{display:none} dialog.ns-sheet{display:none} }
+/* v10.54.0: accounts and plans. The sheet uses the idea sheet's frame (dialog.ns-sheet, .ns-sh, .ns-x). */
+html.acct-modal,html.acct-modal body{overflow:hidden}
+@media (min-width:521px){ dialog.acct-sheet{max-width:min(540px,calc(100vw - 24px))} }   /* a phone: full screen, as the idea sheet */
+.acct-top{display:flex;justify-content:flex-end;padding:12px 12px 0}
+.acct-b{padding:0 22px 22px;display:grid;gap:14px}
+.acct-b h2{font-family:var(--disp);font-size:clamp(1.25rem,4vw,1.5rem);letter-spacing:-.02em;line-height:1.2;text-wrap:balance}
+.acct-b h2:focus{outline:none}
+.acct-b p{color:var(--ink2);line-height:1.55;font-size:.95rem}
+.acct-plans{display:grid;gap:10px}
+.acct-plan{display:flex;align-items:center;justify-content:space-between;gap:10px 14px;flex-wrap:wrap;border:1px solid var(--line2);border-radius:14px;padding:14px 16px;background:var(--panel)}
+.acct-plan.best{border:2px solid var(--acc);background:linear-gradient(160deg,var(--acc-dim),transparent 70%),var(--panel)}
+.acct-plan>div{min-width:0;flex:1 1 170px}
+.acct-tag{display:block;font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc);margin-bottom:4px}
+.acct-plan b{font-size:1.05rem;color:var(--ink)}
+.acct-amt{font-size:.95rem;color:var(--ink2);margin-top:2px}
+.acct-b .acct-or{text-align:center;color:var(--ink3);font-size:.85rem}
+.acct-email{display:flex;gap:8px;flex-wrap:wrap}
+.acct-email input{flex:1 1 220px;min-width:0;min-height:46px;border:1px solid var(--line2);border-radius:12px;padding:0 12px;font:inherit;background:var(--panel);color:var(--ink)}
+.acct-b .acct-google{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;min-height:48px}
+.acct-b .acct-note{font-size:.85rem;color:var(--ink3)}
+.acct-b .acct-test{font-size:.86rem;border:1px dashed var(--m-hardship);border-radius:10px;padding:8px 12px}
+.acct-test button{font:inherit;font-weight:600;color:var(--acc);background:none;border:0;text-decoration:underline;cursor:pointer;padding:0 0 0 4px}
+.acct-b .acct-err{color:var(--m-veterans);font-weight:600}
+.acct-b .acct-line{font-size:1rem;color:var(--ink)}
+.acct-acts{display:flex;gap:10px;flex-wrap:wrap}
+.acct-lockgo{margin-top:12px}
+.acct-b[aria-busy="true"] button{opacity:.6;cursor:progress}
+@media print{ dialog.acct-sheet{display:none} }
 /* polish #3: the Gifts page's "Your church" note sits on its own line under the heading */
 #gf-church > summary .note{display:block;margin-top:2px;font-size:.85rem;font-weight:normal;line-height:1.35}
 </style>
@@ -4235,19 +4263,20 @@ dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
   </div>
   <!-- v10.45: one idea of a need, over the page (nsSheetOpen) -->
   <dialog id="ns-sheet" class="ns-sheet" aria-labelledby="ns-s-t"></dialog>
+  <dialog id="acct-sheet" class="ns-sheet acct-sheet" aria-labelledby="acct-t" data-notr></dialog>
 
   <button class="totop" id="totop" hidden aria-label="Back to top">↑<span>Top</span></button>
   <!-- v10.47.1: "keep that [Top] and then also … main menu which will bring you to the main menu" -->
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.53.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.54.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.53.0';
+const VERSION = 'v10.54.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9579,9 +9608,10 @@ const memberLink=()=>GIFTS_LINK.on||WATCH_LINK.on||CONNECT_LINK.on;
    function draws a locked feature. Every paid feature asks entitled(); nothing
    else in the app knows or cares how the answer was reached.
 
-   TODAY  currentTier() returns 'full' for everyone who is past the gate.
-   LATER  it reads the signed-in user's plan (Firebase custom claim, as in
-          Slide Preach). That is the only line that changes. */
+   v10.54.0  currentTier() reads the plan (ACCOUNTS AND PLANS, below): 'full' for
+          everyone while payments are off (account.mjs says billing "off"), and
+          on a member's page; with payments on, 'full' only with a plan that is
+          active, in its trial, past due (Stripe still retrying) or given. */
 const FEATURES={
   survey:  {tier:'free', name:'Community Survey'},
   plan:    {tier:'full', name:'the action plan',        blurb:'Ministry ideas for every need, a one-page sheet for each, where to look and community resources.'},
@@ -9596,7 +9626,9 @@ function currentTier(){
   // ?tier=free lets the pastor preview the free experience before it exists.
   // Harmless in public: it can only ever REMOVE features from the viewer.
   try{ const t=new URLSearchParams(location.search).get('tier'); if(t==='free') return 'free'; }catch(e){}
-  return 'full';   // ← the one line the paid version replaces
+  try{ if(memberLink()) return 'full'; }catch(e){}   // v10.54.0: members never pay; the pastor does
+  if(!acctBillingOn()) return 'full';                // payments off: everyone has the full version, as before
+  return acctFull()?'full':'free';
 }
 function entitled(f){ const d=FEATURES[f]; return !d || d.tier==='free' || currentTier()==='full'; }
 function lockHTML(f){
@@ -9605,8 +9637,439 @@ function lockHTML(f){
     <div class="lockk">Full version</div>
     <h3>${esc(d.name.charAt(0).toUpperCase()+d.name.slice(1))} is part of the full version</h3>
     <p>${esc(d.blurb)}</p>
-    <p class="note">The free version includes the community survey. Everything that turns the survey into a plan is in the full version.</p>
+    <p class="note">The free version includes the community survey. Everything that turns the survey into a plan is in the full version.</p>${acctLockBtnHTML()}
   </div>`;
+}
+/* ==== ACCOUNTS AND PLANS (v10.54.0) ====
+   The pastor (6 Oct 2026): "Now we need to make sure we connect this to the stripe and build this to be of the product."
+   Design ~/Downloads/Terrain-work/v69/DESIGN-PRODUCT.md. A pastor signs in only to pay (the survey still needs registration
+   only): "Sign in with Google" or a link by email, through Firebase Authentication on terrain-live, whose two scripts load
+   (pinned by their SRI hashes) only when a sign-in is opened, never on a member's page. account.mjs checks Firebase's token
+   itself and answers with Terrain's own session (30 days) and the plan; Firebase is signed out at once. Stripe's own pages take
+   the card (Checkout) and manage it (the Customer Portal); stripe-webhook.mjs keeps the plan. PAYMENTS OFF until he says:
+   while account.mjs says billing "off", everyone has the full version as before; one device can try the paid version against
+   Stripe's test mode with ?billing=test (?billing=off ends it). The plan known last is kept on the device, so the page knows at
+   once, and asked again on each load. This is the page's side only: the server checks the plan where it costs money in the
+   next release. */
+var ACCT={info:null, view:'', busy:false, err:'', sent:'', next:'', linkHref:'', tierShown:null, booted:false, auth:null, waitN:0};
+const ACCT_FN='/.netlify/functions/account';
+const ACCT_K={sess:'terrain-session', plan:'terrain-plan', info:'terrain-acct-info', test:'terrain-billing-test', email:'terrain-signin-email', redirect:'terrain-signin-redirect'};
+const ACCT_FB={v:'10.12.2', app:'sha384-AQ3POAMqIhwS81FrUH95ekxqBZHeP5tG2JfEL3+7GuTtfRLWnrRh32UxwzM+//A9', auth:'sha384-TnlRYaR4JYz/lpaGuaiU61PjNberSA4vjLjtF+oRC/IkohkJqnWxw5EmDSOt1vA1'};
+const ACCT_RE_SESS=/^s1\.[A-Za-z0-9_-]{1,180}\.[0-9a-z]{1,10}\.[A-Za-z0-9_-]{43}$/;
+const ACCT_RE_EMAIL=/^[^@\s]{1,64}@[^@\s]{1,190}\.[^@\s.]{2,}$/;
+const ACCT_POLL={ms:2000, n:15};   // back from Stripe: the plan is asked for every 2 s, 15 times (30 s)
+const ACCT_STATUS=['trialing','active','past_due','comp','canceled','unpaid','incomplete','incomplete_expired','paused','none','unknown'];
+function acctGet(k){ try{ return localStorage.getItem(ACCT_K[k]); }catch(e){ return null; } }
+function acctPut(k,v){ try{ if(v==null) localStorage.removeItem(ACCT_K[k]); else localStorage.setItem(ACCT_K[k],String(v)); }catch(e){} }
+function acctJSON(k){ try{ const v=JSON.parse(acctGet(k)||'null'); return v&&typeof v==='object'&&!Array.isArray(v)?v:null; }catch(e){ return null; } }
+function acctInfo(){ return ACCT.info||acctJSON('info'); }
+function acctSession(){ const s=acctGet('sess')||''; return ACCT_RE_SESS.test(s)?s:''; }
+function acctKept(){ return acctSession()?acctJSON('plan'):null; }
+function acctPlan(){ const k=acctKept(); return k&&k.plan&&typeof k.plan==='object'?k.plan:null; }
+function acctEmail(){ const k=acctKept(); return k&&typeof k.email==='string'?k.email:''; }
+function acctTestOn(){ return acctGet('test')==='1'; }
+function acctBillingOn(){ const i=acctInfo(); return !!i&&(i.billing==='on'||(i.mode==='test'&&!!i.checkout&&acctTestOn())); }
+function acctFull(){ const p=acctPlan(); return !!(p&&p.full===true); }
+function acctTrialDays(){ const i=acctInfo(); return i&&Number.isInteger(i.trialDays)&&i.trialDays>0&&i.trialDays<=60?i.trialDays:14; }
+function acctPlanClean(p){
+  if(!p||typeof p!=='object') return null;
+  const n=v=>Number.isFinite(v)&&v>0?v:null;
+  return {full:p.full===true, status:ACCT_STATUS.includes(p.status)?p.status:'unknown', interval:p.interval==='year'||p.interval==='month'?p.interval:null,
+    end:n(p.end), trialEnd:n(p.trialEnd), cancelAtEnd:!!p.cancelAtEnd, trialUsed:!!p.trialUsed, billing:!!p.billing};
+}
+function acctKeep(email,plan){ acctPut('plan',JSON.stringify({email:String(email||'').slice(0,254), plan:acctPlanClean(plan), at:Date.now()})); }
+function acctForget(){ acctPut('sess',null); acctPut('plan',null); }
+function acctErr(code){ const e=new Error(String(code||'unavailable')); e.code=String(code||'unavailable'); return e; }
+function acctSignal(ms){ try{ return AbortSignal.timeout(ms); }catch(e){ return undefined; } }
+function acctFbClean(f){
+  return f&&typeof f==='object'&&/^[A-Za-z0-9_-]{20,60}$/.test(f.apiKey||'')&&/^[a-z0-9-]{4,40}$/.test(f.projectId||'')&&/^[a-z0-9.-]{4,80}$/.test(f.authDomain||'')
+    ?{apiKey:f.apiKey, authDomain:f.authDomain, projectId:f.projectId}:null;
+}
+function acctPricesClean(p){
+  const one=x=>x&&Number.isInteger(x.amount)&&x.amount>0&&/^[a-z]{3}$/.test(x.currency||'')?{amount:x.amount, currency:x.currency}:null;
+  if(!p||typeof p!=='object') return null;
+  const y=one(p.year), m=one(p.month); return y&&m?{year:y, month:m}:null;
+}
+function acctMoney(p){
+  if(!p||!Number.isInteger(p.amount)) return '';
+  const cur=String(p.currency||'usd').toUpperCase(), v=p.amount/100;
+  try{ return new Intl.NumberFormat(LANG==='es'?'es-US':'en-US',{style:'currency',currency:cur,minimumFractionDigits:p.amount%100?2:0,maximumFractionDigits:2}).format(v); }
+  catch(e){ return (cur==='USD'?'$':cur+' ')+(p.amount%100?v.toFixed(2):String(v)); }
+}
+function acctDate(ms){ try{ return new Date(ms).toLocaleDateString(LANG==='es'?'es-US':'en-US',{day:'numeric',month:'short',year:'numeric'}); }catch(e){ return ''; } }
+function acctSay(code){
+  const c=String(code||'');
+  if(c==='auth-off'||c==='auth/operation-not-allowed'||c==='auth/configuration-not-found'||c==='auth/invalid-api-key') return L('Sign-in is not set up yet.','El inicio de sesión aún no está listo.');
+  if(c==='auth/unauthorized-domain'||c==='auth/unauthorized-continue-uri') return L('Sign-in is not set up for this address yet.','El inicio de sesión aún no está listo para esta dirección.');
+  if(c==='limit'||c==='auth/too-many-requests') return L('Too many tries. Wait a few minutes and try again.','Demasiados intentos. Espere unos minutos y vuelva a intentarlo.');
+  if(c==='offline'||c==='load'||c==='timeout'||c==='auth/network-request-failed') return L('No connection. Check the internet and try again.','Sin conexión. Revise el internet y vuelva a intentarlo.');
+  if(c==='auth/invalid-action-code'||c==='auth/expired-action-code') return L('That link has expired or was already used. Send a new one.','Ese enlace venció o ya se usó. Envíe uno nuevo.');
+  if(c==='bad-email'||c==='auth/invalid-email'||c==='auth/missing-email') return L('Check the email address.','Revise el correo electrónico.');
+  if(c==='bad-session'||c==='no-account') return L('Please sign in again.','Inicie sesión de nuevo.');
+  if(c==='billing-off') return L('The plans are not open yet.','Los planes aún no están disponibles.');
+  if(c==='no-customer') return L('There is no billing to manage yet.','Aún no hay pagos que administrar.');
+  return L('That did not work just now. Try again in a minute.','Eso no funcionó ahora. Vuelva a intentarlo en un minuto.');
+}
+
+/* the server */
+async function acctProbe(){
+  try{
+    const r=await fetch(ACCT_FN,{headers:{accept:'application/json'},cache:'no-store',signal:acctSignal(8000)});
+    if(!r||!r.ok) return acctInfo();
+    const j=await r.json();
+    if(!j||typeof j.fn!=='string'||!/^account-/.test(j.fn)) return acctInfo();
+    const i={fn:j.fn, billing:j.billing==='on'?'on':'off', mode:j.mode==='live'||j.mode==='test'?j.mode:null, checkout:j.checkout===true,
+      trialDays:Number.isInteger(j.trialDays)?j.trialDays:14, fb:acctFbClean(j.fb), prices:acctPricesClean(j.prices)};
+    ACCT.info=i; acctPut('info',JSON.stringify(i));
+    return i;
+  }catch(e){ return acctInfo(); }
+}
+async function acctPost(body,ms){
+  try{
+    const r=await fetch(ACCT_FN,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body),cache:'no-store',signal:acctSignal(ms||15000)});
+    let j=null; try{ j=await r.json(); }catch(e){}
+    return {ok:!!(r&&r.ok&&j&&j.ok===true), status:r?r.status:0, j:j&&typeof j==='object'?j:{}};
+  }catch(e){ return {ok:false, status:0, j:{code:'offline'}}; }
+}
+async function acctRefresh(){
+  const s=acctSession(); if(!s) return null;
+  const r=await acctPost({op:'plan',session:s},10000);
+  if(r.ok&&r.j.plan){ acctKeep(r.j.email||acctEmail(),r.j.plan); return acctPlan(); }
+  if(r.status===401||r.status===404) acctForget();   // the session ran out, or the account is gone: sign in again
+  return acctPlan();
+}
+
+/* Firebase, only when a sign-in is opened */
+const ACCT_SCRIPTS={};
+function acctScript(src,sri){
+  if(ACCT_SCRIPTS[src]) return ACCT_SCRIPTS[src];
+  const p=new Promise((ok,no)=>{
+    const s=document.createElement('script'); let t=null, done=false;
+    const end=err=>{ if(done) return; done=true; clearTimeout(t); if(err){ s.remove(); no(err); } else ok(); };
+    t=setTimeout(()=>end(acctErr('timeout')),20000);
+    s.src=src; s.async=true;
+    s.setAttribute('crossorigin','anonymous'); s.setAttribute('integrity',sri); s.setAttribute('referrerpolicy','no-referrer');
+    s.onload=()=>end(null); s.onerror=()=>end(acctErr('load'));
+    document.head.appendChild(s);
+  });
+  ACCT_SCRIPTS[src]=p;
+  p.catch(()=>{ if(ACCT_SCRIPTS[src]===p) delete ACCT_SCRIPTS[src]; });   // a later tap may try again
+  return p;
+}
+async function acctFirebase(){
+  if(ACCT.auth) return ACCT.auth;
+  const i=acctInfo(); if(!i||!i.fb) throw acctErr('auth-off');
+  const have=()=>window.firebase&&typeof window.firebase.initializeApp==='function'&&typeof window.firebase.auth==='function'?window.firebase:null;
+  if(!have()){
+    const base='https://www.gstatic.com/firebasejs/'+ACCT_FB.v+'/';
+    await acctScript(base+'firebase-app-compat.js',ACCT_FB.app);
+    await acctScript(base+'firebase-auth-compat.js',ACCT_FB.auth);
+  }
+  const fb=have(); if(!fb) throw acctErr('load');
+  let app=null; try{ app=(fb.apps||[]).find(a=>a&&a.name==='terrain-acct')||null; }catch(e){}
+  if(!app) app=fb.initializeApp({apiKey:i.fb.apiKey, authDomain:i.fb.authDomain, projectId:i.fb.projectId},'terrain-acct');
+  ACCT.auth=app.auth();
+  return ACCT.auth;
+}
+/* Firebase's word → Terrain's own session; Firebase is signed out at once (the session is ours) */
+async function acctFromUser(user){
+  if(!user||typeof user.getIdToken!=='function') throw acctErr('bad-token');
+  const idToken=await user.getIdToken();
+  const r=await acctPost({op:'session',idToken});
+  try{ if(ACCT.auth&&typeof ACCT.auth.signOut==='function') await ACCT.auth.signOut(); }catch(e){}
+  if(!r.ok||!ACCT_RE_SESS.test(String(r.j.session||''))) throw acctErr(r.j.code||'unavailable');
+  acctPut('sess',r.j.session); acctKeep(r.j.email,r.j.plan);
+  ACCT.sent=''; acctBusy(false,true);
+  acctTierCheck(); acctWho();
+  ACCT.next='';
+  acctShow(!acctFull()&&acctBillingOn()?'plans':'account');   // a given address, or a plan already running: the account
+}
+function acctGoogle(){
+  ACCT.err='';
+  const go=auth=>{
+    const P=window.firebase.auth.GoogleAuthProvider, prov=new P();
+    try{ prov.setCustomParameters({prompt:'select_account'}); }catch(e){}
+    acctBusy(true);
+    return auth.signInWithPopup(prov).then(c=>acctFromUser(c&&c.user)).catch(e=>{
+      const c=e&&e.code||'';
+      if(c==='auth/popup-blocked'||c==='auth/operation-not-supported-in-this-environment'){ acctPut('redirect','1'); return auth.signInWithRedirect(prov).catch(acctFail); }
+      if(c==='auth/popup-closed-by-user'||c==='auth/cancelled-popup-request'||c==='auth/user-cancelled'){ acctBusy(false); return; }
+      acctFail(e);
+    });
+  };
+  if(ACCT.auth) return go(ACCT.auth);   // loaded when the sheet opened: the popup opens inside the tap
+  acctBusy(true);
+  return acctFirebase().then(go).catch(acctFail);
+}
+async function acctSendLink(email){
+  ACCT.err='';
+  if(!ACCT_RE_EMAIL.test(email)){ ACCT.err=acctSay('bad-email'); acctDraw(); return; }
+  acctBusy(true);
+  try{
+    const auth=await acctFirebase();
+    await auth.sendSignInLinkToEmail(email,{url:location.origin+'/?signin=link', handleCodeInApp:true});
+    acctPut('email',email); ACCT.sent=email; acctBusy(false);
+  }catch(e){ acctFail(e); }
+}
+async function acctFinishLink(){
+  let auth; try{ auth=await acctFirebase(); }catch(e){ acctShow('signin'); acctFail(e); return; }
+  try{ if(!auth.isSignInWithEmailLink(ACCT.linkHref)) return; }catch(e){ return; }
+  const email=acctGet('email');
+  if(!email){ acctShow('confirm'); return; }   // opened on another device: ask which address it was sent to
+  await acctConfirmLink(email);
+}
+async function acctConfirmLink(email){
+  ACCT.err='';
+  if(!ACCT_RE_EMAIL.test(email)){ ACCT.err=acctSay('bad-email'); acctDraw(); return; }
+  acctShow('signing'); acctBusy(true);
+  try{
+    const auth=await acctFirebase();
+    const c=await auth.signInWithEmailLink(email,ACCT.linkHref);
+    acctPut('email',null); ACCT.linkHref='';
+    await acctFromUser(c&&c.user);
+  }catch(e){ acctFail(e); }
+}
+async function acctFinishRedirect(){
+  acctPut('redirect',null);
+  let auth; try{ auth=await acctFirebase(); }catch(e){ return; }
+  try{ const c=await auth.getRedirectResult(); if(c&&c.user){ acctShow('signing'); acctBusy(true); await acctFromUser(c.user); } }
+  catch(e){ acctShow('signin'); acctFail(e); }
+}
+function acctFail(e){
+  ACCT.err=acctSay(e&&e.code||e&&e.message);
+  if(ACCT.view==='signing'||!ACCT.view) ACCT.view=ACCT.linkHref?'confirm':'signin';
+  acctBusy(false); acctOpenSheet();
+}
+
+/* Stripe's pages */
+function acctGo(url){ try{ location.assign(url); }catch(e){} }
+async function acctBuy(iv){
+  const s=acctSession(); if(!s){ ACCT.next='plans'; acctShow('signin'); return; }
+  ACCT.err=''; acctBusy(true);
+  const r=await acctPost({op:'checkout', session:s, interval:iv==='month'?'month':'year'});
+  if(r.ok&&/^https:\/\/checkout\.stripe\.com\//.test(String(r.j.url||''))){ acctGo(r.j.url); return; }   // the buttons wait while Stripe opens
+  acctBusy(false,true);
+  const c=r.j.code;
+  if(c==='already'){ await acctRefresh(); acctTierCheck(); acctWho(); acctShow('account'); return; }
+  if(c==='bad-session'||c==='no-account'){ acctForget(); acctTierCheck(); acctWho(); ACCT.next='plans'; acctShow('signin'); ACCT.err=acctSay(c); acctDraw(); return; }
+  ACCT.err=acctSay(c); acctDraw();
+}
+async function acctPortal(){
+  const s=acctSession(); if(!s){ acctShow('signin'); return; }
+  ACCT.err=''; acctBusy(true);
+  const r=await acctPost({op:'portal', session:s});
+  if(r.ok&&/^https:\/\/billing\.stripe\.com\//.test(String(r.j.url||''))){ acctGo(r.j.url); return; }
+  acctBusy(false,true);
+  const c=r.j.code;
+  if(c==='bad-session'||c==='no-account'){ acctForget(); acctTierCheck(); acctWho(); acctShow('signin'); ACCT.err=acctSay(c); acctDraw(); return; }
+  ACCT.err=acctSay(c); acctDraw();
+}
+/* back from Stripe (?plan=done): the plan is asked for until it arrives */
+function acctAwaitPlan(){
+  if(!acctSession()) return;
+  ACCT.waitN=0; acctShow('wait');
+  const tick=async()=>{
+    if(ACCT.view!=='wait') return;   // closed
+    const p=await acctRefresh();
+    if(ACCT.view!=='wait') return;
+    if(p&&p.full){ acctTierCheck(); acctWho(); acctShow('welcome'); return; }
+    if(++ACCT.waitN>=ACCT_POLL.n){ acctShow('slow'); return; }
+    setTimeout(tick,ACCT_POLL.ms);
+  };
+  tick();
+}
+function acctSignOut(){ acctForget(); ACCT.sent=''; ACCT.err=''; acctClose(); acctTierCheck(); acctWho(); }
+function acctStart(){ if(!acctSession()){ ACCT.next='plans'; acctShow('signin'); } else if(acctFull()) acctShow('account'); else acctShow('plans'); }
+function acctOpen(){
+  if(!acctSession()){ ACCT.next=''; acctShow('signin'); return; }
+  acctShow('account');
+  acctRefresh().then(()=>{ acctTierCheck(); acctWho(); if(ACCT.view==='account'&&!ACCT.busy) acctDraw(); });
+}
+
+/* the plan changed under the page: tiles, the tool on screen, the survey's plan */
+function acctTileLocks(){
+  document.querySelectorAll('.tool').forEach(b=>{
+    const feat=(TOOLS[b.dataset.tool]||{}).feature, has=b.querySelector('.tlock');
+    if(feat&&!entitled(feat)){ if(!has){ const t=document.createElement('span'); t.className='tlock'; t.textContent=tr('Full version'); const bb=b.querySelector('b'); if(bb) bb.after(t); } }
+    else if(has) has.remove();
+  });
+}
+function acctApplyTier(){
+  try{ acctTileLocks(); }catch(e){}
+  try{
+    if(gated()||memberLink()) return;
+    const hub=$('hub');
+    if(hub&&!hub.hidden){ showHub(); return; }
+    if(!TOOL) return;
+    if(TOOL==='survey'){ if(DATA) render(); return; }
+    openTool(TOOL);
+  }catch(e){}
+}
+function acctTierCheck(){
+  const t=currentTier();
+  if(ACCT.tierShown!==null&&t!==ACCT.tierShown){ ACCT.tierShown=t; acctApplyTier(); }
+  else ACCT.tierShown=t;
+}
+function acctWho(){ try{ if(!gated()&&!memberLink()) showWho(); }catch(e){} }
+function acctBtnHTML(){
+  try{ if(memberLink()||(!acctSession()&&!acctBillingOn())) return ''; }catch(e){ return ''; }
+  return `<button type="button" id="acctbtn">${esc(L('Account','Cuenta'))}</button>`;
+}
+function acctLockBtnHTML(){
+  try{ if(!acctBillingOn()) return ''; }catch(e){ return ''; }
+  const p=acctPlan(), d=acctTrialDays();
+  return `<p class="acct-lockgo"><button type="button" class="btn" data-acct-trial>${esc(p&&p.trialUsed?L('Choose a plan','Elegir un plan'):L(`Start your ${d}-day free trial`,`Empiece su prueba gratis de ${d} días`))}</button></p>`;
+}
+document.addEventListener('click',e=>{ const b=e.target&&e.target.closest&&e.target.closest('[data-acct-trial]'); if(b){ e.preventDefault(); acctStart(); } });
+
+/* the sheet: sign in · plans · account · back from Stripe */
+const ACCT_G_SVG='<svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>';
+function acctPlanLine(p){
+  if(!p) return L('Free version','Versión gratuita');
+  const iv=p.interval==='year'?L('Yearly plan','Plan anual'):p.interval==='month'?L('Monthly plan','Plan mensual'):L('Your plan','Su plan');
+  if(p.status==='comp') return L('Full version · complimentary','Versión completa · cortesía');
+  if(p.status==='trialing'&&p.trialEnd) return p.cancelAtEnd
+    ?L(`Free trial until ${acctDate(p.trialEnd)}. It ends then; nothing is charged.`,`Prueba gratis hasta el ${acctDate(p.trialEnd)}. Termina ese día; no se cobra nada.`)
+    :L(`Free trial until ${acctDate(p.trialEnd)}, then the ${p.interval==='month'?'monthly':'yearly'} plan.`,`Prueba gratis hasta el ${acctDate(p.trialEnd)}; después, el plan ${p.interval==='month'?'mensual':'anual'}.`);
+  if(p.status==='active'||p.status==='trialing') return p.end
+    ?(p.cancelAtEnd?L(`${iv} · ends ${acctDate(p.end)}`,`${iv} · termina el ${acctDate(p.end)}`):L(`${iv} · renews ${acctDate(p.end)}`,`${iv} · se renueva el ${acctDate(p.end)}`))
+    :iv;
+  if(p.status==='past_due') return L('Payment needs attention: update the card in Manage billing.','El pago necesita atención: actualice la tarjeta en Administrar pagos.');
+  return L('Free version','Versión gratuita');
+}
+function acctBodyHTML(){
+  const v=ACCT.view, i=acctInfo()||{}, p=acctPlan(), d=acctTrialDays();
+  const err=ACCT.err?`<p class="acct-err" role="alert">${esc(ACCT.err)}</p>`:'';
+  const h=t=>`<h2 id="acct-t" tabindex="-1">${esc(t)}</h2>`;
+  const mailIn=(id,val)=>`<input type="email" id="${id}" autocomplete="email" inputmode="email" required maxlength="254" value="${esc(val||'')}" placeholder="${esc(L('you@yourchurch.org','usted@suiglesia.org'))}" aria-label="${esc(L('Email','Correo electrónico'))}">`;
+  if(v==='signin'){
+    if(!i.fb) return h(L('Sign in','Iniciar sesión'))+`<p class="acct-err">${esc(acctSay('auth-off'))}</p>`;
+    let reg=''; try{ reg=(regGet()||{}).email||''; }catch(e){}
+    return h(L('Sign in','Iniciar sesión'))
+      +`<p>${esc(ACCT.next==='plans'?L('Sign in first, so your plan stays with you.','Inicie sesión primero, para que su plan quede con usted.'):L('Sign in to see your plan.','Inicie sesión para ver su plan.'))}</p>`
+      +`<button type="button" class="btn ghost acct-google" data-acct-google>${ACCT_G_SVG}<span>${esc(L('Sign in with Google','Iniciar sesión con Google'))}</span></button>`
+      +`<p class="acct-or">${esc(L('or','o'))}</p>`
+      +(ACCT.sent
+        ?`<p role="status">${esc(L('We sent a sign-in link to','Enviamos un enlace para iniciar sesión a'))} <b>${esc(ACCT.sent)}</b>. ${esc(L('Open it on this device.','Ábralo en este dispositivo.'))}</p><p><button type="button" class="btn ghost" data-acct-resend>${esc(L('Use another email','Usar otro correo'))}</button></p>`
+        :`<form class="acct-email" data-acct-mailform novalidate>${mailIn('acct-mail',reg)}<button type="submit" class="btn">${esc(L('Email me a sign-in link','Enviarme un enlace'))}</button></form>`)
+      +err+`<p class="acct-note">${esc(L('No password. Your church’s information stays on this device.','Sin contraseña. La información de su iglesia queda en este dispositivo.'))}</p>`;
+  }
+  if(v==='confirm') return h(L('Finish signing in','Terminar de iniciar sesión'))
+    +`<p>${esc(L('Type the email the link was sent to.','Escriba el correo al que se envió el enlace.'))}</p>`
+    +`<form class="acct-email" data-acct-confirmform novalidate>${mailIn('acct-mail2','')}<button type="submit" class="btn">${esc(L('Sign in','Iniciar sesión'))}</button></form>`+err;
+  if(v==='signing') return h(L('Signing in…','Iniciando sesión…'))+err;
+  if(v==='plans'){
+    const pr=i.prices, trial=!(p&&p.trialUsed);
+    const head=h(L('Terrain, full version','Terrain, versión completa'))
+      +`<p>${esc(L('Spiritual Gifts, Make the Case, the Evangelism Planner, Learn from other conferences, and ministry ideas for every need the survey finds.','Dones Espirituales, Presente su propuesta, el Plan de evangelismo, Aprenda de otras asociaciones, e ideas de ministerio para cada necesidad que encuentra el estudio.'))}</p>`;
+    if(!pr||!i.checkout) return head+`<p class="acct-err">${esc(acctSay('billing-off'))}</p>`;
+    const free=Math.round((pr.month.amount*12-pr.year.amount)/pr.month.amount);
+    const go=L(trial?'Start free trial':'Choose',trial?'Empezar la prueba':'Elegir');
+    return head+`<div class="acct-plans">`
+      +`<div class="acct-plan best"><div><span class="acct-tag">${esc(L('Best for a church budget','Lo mejor para el presupuesto de la iglesia'))}</span><b>${esc(L('Yearly','Anual'))}</b>`
+        +`<div class="acct-amt">${esc(L(`${acctMoney(pr.year)} a year`,`${acctMoney(pr.year)} al año`))}${free>=1?' · '+esc(L(free===1?'1 month free':`${free} months free`,free===1?'1 mes gratis':`${free} meses gratis`)):''}</div></div>`
+        +`<button type="button" class="btn" data-acct-buy="year">${esc(go)}</button></div>`
+      +`<div class="acct-plan"><div><b>${esc(L('Monthly','Mensual'))}</b><div class="acct-amt">${esc(L(`${acctMoney(pr.month)} a month`,`${acctMoney(pr.month)} al mes`))}</div></div>`
+        +`<button type="button" class="btn ghost" data-acct-buy="month">${esc(go)}</button></div>`
+      +`</div>`
+      +`<p>${esc(trial?L(`${d} days free, then the plan you choose. Cancel before the trial ends and nothing is charged.`,`${d} días gratis; después, el plan que elija. Cancele antes de que termine la prueba y no se cobra nada.`):L('Cancel anytime in Manage billing.','Cancele cuando quiera en Administrar pagos.'))}</p>`
+      +(i.mode==='test'?`<p class="acct-test">${esc(L('Test mode: card 4242 4242 4242 4242, any future date, any three digits. No real money moves.','Modo de prueba: tarjeta 4242 4242 4242 4242, cualquier fecha futura, tres dígitos cualesquiera. No se mueve dinero real.'))}</p>`:'')
+      +err+`<p class="acct-note">${esc(L('Stripe takes the card on its own page. Terrain never sees it.','Stripe recibe la tarjeta en su propia página. Terrain nunca la ve.'))}</p>`;
+  }
+  if(v==='account'){
+    const full=acctFull(), on=acctBillingOn();
+    return h(L('Account','Cuenta'))
+      +`<p><b>${esc(acctEmail())}</b></p><p class="acct-line">${esc(acctPlanLine(p))}</p>`
+      +`<div class="acct-acts">`
+        +(p&&p.billing?`<button type="button" class="btn" data-acct-portal>${esc(L('Manage billing','Administrar pagos'))}</button>`:'')
+        +(!full&&on?`<button type="button" class="btn" data-acct-plans>${esc(p&&p.trialUsed?L('Choose a plan','Elegir un plan'):L('Start free trial','Empezar la prueba'))}</button>`:'')
+        +`<button type="button" class="btn ghost" data-acct-out>${esc(L('Sign out','Cerrar sesión'))}</button></div>`
+      +(acctTestOn()?`<p class="acct-test">${esc(L('Test payments on this device.','Pagos de prueba en este dispositivo.'))}<button type="button" data-acct-endtest>${esc(L('Stop testing','Dejar de probar'))}</button></p>`:'')
+      +err;
+  }
+  if(v==='wait') return h(L('Confirming your plan…','Confirmando su plan…'))+`<p>${esc(L('Stripe is telling Terrain about it. This takes a few seconds.','Stripe se lo está avisando a Terrain. Toma unos segundos.'))}</p>`;
+  if(v==='slow') return h(L('Almost there','Ya casi'))+`<p>${esc(L('Your plan is not confirmed yet. Stripe can take a minute.','Su plan aún no está confirmado. Stripe puede tardar un minuto.'))}</p><div class="acct-acts"><button type="button" class="btn" data-acct-check>${esc(L('Check again','Revisar otra vez'))}</button></div>`+err;
+  if(v==='welcome') return h(L('Welcome to the full version','Bienvenido a la versión completa'))
+    +(p&&p.status==='trialing'&&p.trialEnd?`<p>${esc(L(`Your free trial runs until ${acctDate(p.trialEnd)}. You can cancel anytime under Account, Manage billing.`,`Su prueba gratis dura hasta el ${acctDate(p.trialEnd)}. Puede cancelar cuando quiera en Cuenta, Administrar pagos.`))}</p>`:'')
+    +`<div class="acct-acts"><button type="button" class="btn" data-acct-x>${esc(L('Start','Empezar'))}</button></div>`;
+  return '';
+}
+function acctDraw(){
+  const d=$('acct-sheet'); if(!d) return;
+  d.innerHTML=`<div class="ns-sh"><div class="acct-top"><button type="button" class="ns-x" data-acct-x aria-label="${esc(L('Close','Cerrar'))}">✕</button></div><div class="acct-b"${ACCT.busy?' aria-busy="true"':''}>${acctBodyHTML()}</div></div>`;
+  if(ACCT.busy) d.querySelectorAll('.acct-b button,.acct-b input').forEach(b=>{ b.disabled=true; });
+}
+function acctBusy(on,quiet){ ACCT.busy=!!on; if(!quiet) acctDraw(); }
+function acctSheetWire(d){
+  if(d.dataset.wired) return; d.dataset.wired='1';
+  d.addEventListener('click',e=>{
+    if(e.target===d){ if(!ACCT.busy) acctClose(); return; }   // the backdrop
+    const t=e.target.closest&&e.target.closest('button'); if(!t||t.disabled) return;
+    if(t.hasAttribute('data-acct-x')){ acctClose(); return; }
+    if(ACCT.busy) return;
+    if(t.hasAttribute('data-acct-google')) acctGoogle();
+    else if(t.dataset.acctBuy) acctBuy(t.dataset.acctBuy);
+    else if(t.hasAttribute('data-acct-portal')) acctPortal();
+    else if(t.hasAttribute('data-acct-plans')) acctShow('plans');
+    else if(t.hasAttribute('data-acct-out')) acctSignOut();
+    else if(t.hasAttribute('data-acct-resend')){ ACCT.sent=''; acctPut('email',null); acctDraw(); }
+    else if(t.hasAttribute('data-acct-check')) acctAwaitPlan();
+    else if(t.hasAttribute('data-acct-endtest')){ acctPut('test',null); acctClose(); acctTierCheck(); acctWho(); }
+  });
+  d.addEventListener('submit',e=>{
+    e.preventDefault(); if(ACCT.busy) return;
+    const f=e.target, inp=f.querySelector('input[type=email]'), v=String(inp&&inp.value||'').trim();
+    if(f.hasAttribute('data-acct-mailform')) acctSendLink(v); else if(f.hasAttribute('data-acct-confirmform')) acctConfirmLink(v);
+  });
+  d.addEventListener('close',acctClosed);
+}
+function acctOpenSheet(){
+  const d=$('acct-sheet'); if(!d) return;
+  acctSheetWire(d); acctDraw();
+  if(!d.hasAttribute('open')){ if(typeof d.showModal==='function'){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } } else d.setAttribute('open',''); }
+  document.documentElement.classList.add('acct-modal');
+  const t=$('acct-t'); if(t) try{ t.focus({preventScroll:true}); }catch(e){}
+}
+function acctShow(view){
+  ACCT.view=view; ACCT.err='';
+  acctOpenSheet();
+  if(view==='signin') acctFirebase().catch(()=>{});   // ready before the tap, so Google's window is not blocked
+}
+function acctClose(){
+  const d=$('acct-sheet'); if(!d) return;
+  if(d.hasAttribute('open')){ if(typeof d.close==='function'){ try{ d.close(); }catch(e){ d.removeAttribute('open'); } } else d.removeAttribute('open'); }
+  acctClosed();
+}
+function acctClosed(){ ACCT.view=''; ACCT.err=''; document.documentElement.classList.remove('acct-modal'); }
+
+/* on load, after the registration check */
+function acctQuery(){ try{ return new URLSearchParams(location.search); }catch(e){ return new URLSearchParams(''); } }
+function acctCleanUrl(link){
+  try{
+    const q=acctQuery(); let n=0;
+    const ks=['plan','billing','signin'].concat(link?['apiKey','oobCode','mode','lang','continueUrl','tenantId']:[]);
+    ks.forEach(k=>{ if(q.has(k)){ q.delete(k); n++; } });
+    if(!n) return;
+    const s=q.toString();
+    history.replaceState(history.state,'',location.pathname+(s?'?'+s:'')+location.hash);
+  }catch(e){}
+}
+async function acctBoot(){
+  if(ACCT.booted) return; ACCT.booted=true;
+  try{ if(memberLink()) return; }catch(e){ return; }
+  const q=acctQuery();
+  if(q.get('billing')==='test') acctPut('test','1'); else if(q.get('billing')==='off') acctPut('test',null);
+  const plan=q.get('plan'), link=q.get('signin')==='link'||q.has('oobCode');
+  if(link) ACCT.linkHref=location.href;
+  acctCleanUrl(link);
+  acctTierCheck();   // the tier the page drew with (from the plan kept on the device)
+  await acctProbe();
+  if(acctSession()) await acctRefresh();
+  acctTierCheck(); acctWho();
+  try{ if(gated()) return; }catch(e){ return; }
+  if(link) await acctFinishLink();
+  else if(acctGet('redirect')) await acctFinishRedirect();
+  if(plan==='done') acctAwaitPlan();
 }
 const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
@@ -12046,7 +12509,7 @@ function showWho(){
   d.className='whoami'; d.id='whoami';
   if(byCode){
     const conf=localStorage.getItem('terrain-conf');
-    d.innerHTML=`<span class="whotxt">${esc(ACCESS.name||'Verified')}${conf?' · '+esc(conf):''}</span><button type="button" id="signout">${L('sign out','cerrar sesión')}</button>`;
+    d.innerHTML=`<span class="whotxt">${esc(ACCESS.name||'Verified')}${conf?' · '+esc(conf):''}</span><button type="button" id="signout">${L('sign out','cerrar sesión')}</button>${acctBtnHTML()}`;
     nav.appendChild(d);
     document.getElementById('signout').onclick=()=>{
       localStorage.removeItem('terrain-code');
@@ -12058,10 +12521,11 @@ function showWho(){
       try{ location.reload(); }catch(e){}
     };
   } else {
-    d.innerHTML=`<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>`;
+    d.innerHTML=`<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>${acctBtnHTML()}`;
     nav.appendChild(d);
     document.getElementById('regchange').onclick=regChange;
   }
+  { const ab=document.getElementById('acctbtn'); if(ab) ab.onclick=acctOpen; }   // v10.54.0
   measureTop();
 }
 async function initAccess(){
@@ -41855,7 +42319,7 @@ function caseCmpDoorWire(h){ const b=h&&h.querySelector('[data-cs-cmp]'); if(b) 
   initTheme(); initPrintExpand();
   wireHub();
   initLang();
-  initAccess().then(uChrome);
+  initAccess().then(()=>{ uChrome(); acctBoot(); });   // v10.54.0: accounts and plans after the registration check
   measureTop();
   const tt=document.getElementById('totop');
   if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});

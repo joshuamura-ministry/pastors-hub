@@ -72,6 +72,14 @@ netlify/functions/advise-needs.mjs   (v10.53.0, needs-1.0) the background worker
                                and web fetch, one strict tool (record_needs), every number checked against the Census figures sent, every link
                                the search's own; Netlify Blobs store `terrain-needs` (jobs j/, the place's kept list n/<hash>/<lang>, counters c/)
 netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.0) daily purge: jobs after 7 days, counters after 2, kept lists after 60
+netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans: GET (sign-in settings, billing on/off, test or live, the
+                               two prices read from Stripe), POST op session (Firebase's ID token checked here: Google's keys, RS256, the
+                               project, email verified → Terrain's own 30-day session) / plan / checkout (Stripe Checkout, 14 days free the
+                               first time, card at sign-up) / portal (Stripe's Customer Portal); Netlify Blobs store `terrain-accounts`
+netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
+                               once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
+netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
 conferences/                   (v10.44) "Learn from other conferences" as the page loads it: index.json (the chooser and every comparison, 50
@@ -143,6 +151,12 @@ values are never in the repo):
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
+| `STRIPE_SECRET_KEY` | account.mjs | (v10.54.0) Stripe's secret key (`sk_test_…` now; `sk_live_…` only when he says "turn it on"). A test key lets one device try checkout with `?billing=test` while payments are off. |
+| `STRIPE_PRICE_YEAR` / `STRIPE_PRICE_MONTH` | account.mjs | (v10.54.0) The two prices of the product "Terrain" (`price_…`; $150 a year, $15 a month). The amounts are read from Stripe (cached 10 minutes). |
+| `STRIPE_WEBHOOK_SECRET` | stripe-webhook.mjs | (v10.54.0) The webhook endpoint's signing secret (`whsec_…`). Without it the webhook answers 503 and plans never update. |
+| `FIREBASE_WEB_API_KEY` / `FIREBASE_PROJECT_ID` | account.mjs | (v10.54.0) Sign-in (Firebase Authentication on `terrain-live`: Google and Email link). The web key is a public identifier (the page gets it from GET account). Without both, no sign-in. |
+| `TERRAIN_BILLING` | account.mjs | (v10.54.0) **Unset = payments off: everyone has the full version.** `on` (with a key and both prices) turns the paid version on for everyone. Only when he says "turn it on", after release 2. |
+| `TERRAIN_COMP_EMAILS` | account.mjs | (v10.54.0) Optional. Comma-separated addresses that always have the full version ("complimentary"). |
 | `NEEDS_MODEL` / `NEEDS_EFFORT` | advise-needs.mjs | Optional (v10.53.0). Default `claude-opus-5-5` at effort `medium`. The needs list needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `PRICES_MODEL` / `PRICES_EFFORT` | advise.mjs, advise-prices.mjs | Optional (v10.44). Default `claude-opus-5-5` at effort `low`. Find prices needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`; without the passphrase the page never shows it. |
 | `TERRAIN_CODES` | census.mjs, gifts.mjs | Conference access codes. **Only enforced when `TERRAIN_REQUIRE_CODE` is on** (v10.38: registration replaced codes on the first page). |
@@ -160,6 +174,47 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.54.0 (6 Oct 2026) — accounts and plans, Stripe in TEST mode; payments OFF on the live site.** The pastor: *"Now we need to make
+sure we connect this to the stripe and build this to be of the product."* On the trial: *"what if you give them a 14 day trial,
+they'll just sign up and use the features and then get the surveys what's going to entice them to stay"*; the answer (ongoing value,
+a card at sign-up, a small Claude allowance in the trial, the yearly plan first, conferences later, work readable after cancelling):
+*"yes, it sound good"*. Price and sign-in were not chosen by him: built on the suggestions ($150 a year / $15 a month, set in Stripe;
+Google or an emailed link), both changeable without code. Design `~/Downloads/Terrain-work/v69/DESIGN-PRODUCT.md`; his setup
+`PRODUCT-SETUP.md`.
+- **Release 1 (this one):** sign-in, the plans, Stripe Checkout and the Customer Portal, the webhook, in test mode. **Payments stay off
+  until he says "turn it on"**: while `TERRAIN_BILLING` is unset, GET account says billing "off" and `currentTier()` is 'full' for
+  everyone, exactly as before. One device tries the paid version against Stripe's test mode with `?billing=test` (`terrain-billing-test`;
+  `?billing=off` or Account › Stop testing ends it), only while the key is a test key and both prices are set (GET's `checkout`).
+- **The page** (block "ACCOUNTS AND PLANS" before `const TOOLS`): `ACCT`, `acctBillingOn()`, `acctFull()`, `currentTier()` (members'
+  pages always full; payments off → full; else the plan: active, trialing, past_due or comp); the plan known last kept on the device
+  (`terrain-session`, `terrain-plan`, `terrain-acct-info`) and asked again on each load (`acctBoot`, after `initAccess`); a kept plan
+  counts only with a well-formed session. **Account** in the header chip (`acctBtnHTML`, beside Change, only when payments are on for
+  this device or a session exists); the lock (`lockHTML`) gets one button, "Start your 14-day free trial" / "Choose a plan"
+  (`acctLockBtnHTML`, `[data-acct-trial]`). One sheet `#acct-sheet` (the idea sheet's frame; full screen on a phone) with views
+  signin (Sign in with Google, or "Email me a sign-in link"; the registration's email filled in) · confirm (a link opened on another
+  device) · plans (Yearly first, "Best for a church budget", "$150 a year · 2 months free"; Monthly; "14 days free…" unless the trial
+  was used; the test card line in test mode; "Stripe takes the card on its own page") · account (email, the plan line, Manage billing,
+  Start free trial / Choose a plan, Sign out, Stop testing) · wait / slow / welcome (back from Stripe, `?plan=done`: the plan asked
+  every 2 s, 15 times, `ACCT_POLL`). Firebase (compat 10.12.2 from gstatic, SRI-pinned in `ACCT_FB`, its own app `terrain-acct`) loads
+  only when a sign-in opens, never on a member's page; Google by popup (loaded before the tap), the same tab when a popup is blocked
+  (`terrain-signin-redirect`); Firebase is signed out at once (Terrain keeps its own session). Only `checkout.stripe.com` and
+  `billing.stripe.com` addresses are ever opened (`acctGo`). A plan that changes under the page redraws it (`acctTierCheck` →
+  `acctApplyTier`: the hub's tags, the tool on screen, the survey).
+- **The server:** `account.mjs` (account-1.0), `stripe-webhook.mjs` (stripe-webhook-1.0), `account-sweep.mjs` (account-sweep-1.0); the
+  repo map and the variables above. Card details never touch Terrain.
+- **Not yet (release 2, before "turn it on"):** the server checks the plan where it costs money (Claude features with the trial's
+  allowance, live presentations, Spiritual Gifts results, connection cards): today the plan is checked by the page only, which a
+  determined person can get around; a cancelled pastor's work readable, not editable; Terms, Privacy and Refunds pages (Mura Works);
+  then the live keys and `TERRAIN_BILLING=on`. Church data still lives on each device (accounts don't sync it yet).
+- Verify after deploy: `/.netlify/functions/account` → `"fn":"account-1.0"`, `"billing":"off"` (and, once he has done PRODUCT-SETUP,
+  `"auth":true`, `"mode":"test"`, `"checkout":true`, the prices). **Never run against the real Stripe or Firebase** (every test stands
+  them in).
+- Tests: `account-function` (new, 48: the token check with a stand-in key set, the session, the plans, Checkout and the Portal's
+  parameters, the webhook's signature, once-only events, an older event never winning) and `v54-account-ui` (new, 96; failing first on
+  v10.53.0: `v69/logs/ff-v54-account-ui.log`); updated with comments: entitlement-tiers (the tier read by `entitled` and
+  `acctTierCheck`), connect-client (18 `memberLink()` guard sites), registration (the Account button styled as Change). Full suite:
+  141 suites · 10,166 passed · 0 failed. Samples (stand-ins, test mode): `~/Downloads/Terrain-v10.54.0-samples/` (`v69/shots14.mjs`).
 
 **v10.53.0 (6 Oct 2026) — the Community Survey's needs list made by Claude.** The pastor: *"it should actually do that for the first
 list because I want the best list ever and it's not always going to be the best list if it's just using a database … I really want
@@ -2113,7 +2168,9 @@ Search for these by name in `index.html`.
 
 **Paid tier seam**
 - `FEATURES` — which tier each feature is in
-- `currentTier()` — **the one line that changes when auth arrives**; today returns `'full'`
+- `currentTier()` — v10.54.0: 'full' on a member's page and while payments are off; else the plan (`acctFull()`); block "ACCOUNTS AND PLANS"
+  (`ACCT`, `acctBoot`, `acctProbe`, `acctRefresh`, `acctFirebase`, `acctFromUser`, `acctBuy`, `acctPortal`, `acctAwaitPlan`, `acctShow`,
+  `acctTierCheck` / `acctApplyTier`, `acctLockBtnHTML`, `acctBtnHTML`)
 - `entitled(f)` — every paid feature asks this; `lockHTML(f)` draws the lock
 - `?tier=free` on the address previews the free experience
 
@@ -2563,10 +2620,10 @@ Don't relitigate them without a reason he'd accept.
    (`op: id | submit | list`, matching `gfPubId` / `gfSubmit` / `gfPull`) with
    durable storage, so results arrive without pasted codes. Minors take this
    assessment through youth ministry — decide what is stored and for how long.
-5. **Accounts and the paid tier.** Firebase auth + per-user plan, ported from
-   the pastor's Slide Preach app. Replace `currentTier()`; sync `U_STORE` to
-   the account. Billing through Stripe. **Before any of this handles money,
-   fix the Firebase rules issue below** — it is the same pattern.
+5. **Accounts and the paid tier.** Release 1 is v10.54.0 (sign-in, plans, Stripe in test mode, payments off). Next: release 2
+   (the server checks the plan where it costs money, readable after cancelling, Terms / Privacy / Refunds), then "turn it on";
+   later, sync `U_STORE` to the account, and a conference plan. Terrain's account store has no client writes (Netlify Blobs through
+   its own functions), so the Slide Preach rules issue below is not this pattern; still fix it in Slide Preach.
 6. **Metering.** Every AI call spends his credit. There is no per-user quota yet.
 7. **Web-grounded ideas.** Give the moves prompt Anthropic's web search tool so
    each idea can cite a church that has actually done it. The engine does not
