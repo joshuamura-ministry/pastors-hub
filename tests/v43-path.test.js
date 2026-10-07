@@ -14,7 +14,12 @@
 const {JSDOM,VirtualConsole}=require('jsdom');
 const fs=require('fs'), path=require('path');
 const ROOT=path.resolve(__dirname,'..');
-const html=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
+// v10.56.1 — the pastor took "Your path" and the "Gifts first" card off the main menu ("I just want this page to be very simple … the
+// 1234 … doesn't look good there … erase the gifts first nobody has taken it yet"). Their code stays (hubPath, gfFirstCardHTML: the card
+// is still drawn on other screens), so this suite puts the two boxes back on the hub to keep testing it (v56-1-hub-simple holds the
+// hub itself to the new intent).
+const html=fs.readFileSync(path.join(ROOT,'index.html'),'utf8').replace('<div class="tools">','<nav class="hubpath" id="hubpath" aria-label="Your path" hidden></nav>\n    <div class="tools">')
+  .replace('<section class="hubabout"','<div class="hubgifts" id="hubgifts" hidden></div>\n    <section class="hubabout"');
 const FX=require('./fixtures.json');
 const FXD=path.join(__dirname,'average-church');
 const SEED=v=>JSON.parse(fs.readFileSync(path.join(FXD,`seed-${v}.json`),'utf8'));
@@ -58,7 +63,7 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
   console.log('\n-- "Your path" on the hub: four steps above the tools --');
   await sec(async()=>{
     const P=await hub('before');
-    c('the strip sits above the four tools, below the welcome and the quote', P.qa('#hub > *').map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,hubgifts');
+    c('the strip sits above the tools, below the welcome and the quote (where this suite puts it back)', P.qa('#hub > *').map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,hubgifts,hubabout');
     c('a nav, named "Your path", shown', [P.q('#hubpath').tagName,P.q('#hubpath').getAttribute('aria-label'),P.q('#hubpath').hidden,P.txt('#hubpath .hp-k')], ['NAV','Your path',false,'Your path']);
     c('the average church before (an address, 0 of 46, an empty plan, an opening night): four steps in order, the gifts step glows', steps(P), [
       ['Map your neighborhood','Done ✓','','done'],

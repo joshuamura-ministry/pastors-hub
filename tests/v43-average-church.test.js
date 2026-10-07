@@ -173,7 +173,9 @@ const DATA = { ...FX.DATA, geo: { ...FX.DATA.geo, matched: ADDRESS } };
   console.log('\n-- section 5 on this church: "Your path" and "What\'s next" --');
   for (const [PP, lang] of [[P, 'en'], [Pes, 'es']]) {
     PP.E(`showHub(); 1`); await sleep(50);
-    c(`${lang}: Your path: done · 40 of 46 · 3 ministries in your plan · done`, PP.qa('#hubpath .hp-step small').map(s => s.textContent),
+    // v10.56.1 (stale, not a regression): the pastor took "Your path" off the main menu ("I just want this page to be very simple"); its
+    // steps are still worked out (hubPathSteps) for wherever they are shown again, so the story is read from there
+    c(`${lang}: Your path: done · 40 of 46 · 3 ministries in your plan · done`, PP.J('hubPathSteps().map(s=>s.state)'),
       lang === 'en' ? ['Done ✓', '40 of 46', '3 ministries in your plan', 'Done ✓'] : ['Hecho ✓', '40 de 46', '3 ministerios en su plan', 'Hecho ✓']);
     PP.E(`openTool('survey'); render(); 1`); await sleep(150);
     // v10.47.1 — the pastor: "What's next … Does that even have to be there?" It is no longer drawn in the survey (was: one

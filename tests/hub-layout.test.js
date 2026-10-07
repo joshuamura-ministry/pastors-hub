@@ -12,7 +12,8 @@ setTimeout(()=>{
   console.log('\n-- the welcome, as drawn --');
   c('eyebrow reads Pastors Hub', D().querySelector('.hubk').textContent, 'Pastors Hub');
   c('headline is "Welcome to Terrain"', D().querySelector('.hubwelcome h2').textContent, 'Welcome to Terrain');
-  c('sub is the short instruction', D().querySelector('.hubwelcome .sub').textContent, 'Choose a tool to begin.');
+  // v10.56.1 (stale, not a regression): the pastor, "under welcome to terrain just something that says your journey begins"
+  c('sub is the short instruction', D().querySelector('.hubwelcome .sub').textContent, 'Your journey begins here. Choose a tool to begin.');
   c('headline is lit', /\.hubwelcome h2\{[^}]*text-shadow:0 0 46px/.test(html));
 
   console.log('\n-- the cards --');
@@ -49,7 +50,7 @@ setTimeout(()=>{
 
   console.log('\n-- Spanish --');
   c('new headline translated', w.eval("ES['Welcome to Terrain']"), 'Bienvenido a Terrain');
-  c('new sub translated', w.eval("ES['Choose a tool to begin.']"), 'Elija una herramienta para comenzar.');
+  c('new sub translated', w.eval("ES['Your journey begins here. Choose a tool to begin.']"), 'Su camino comienza aquí. Elija una herramienta para comenzar.');   // v10.56.1
   c('all four blurbs translated', [ 'Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
     'Proposals for ministries, projects and purchases.',
