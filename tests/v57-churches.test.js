@@ -111,7 +111,7 @@ async function twoChurches(P){
   console.log('\n-- the main menu: a sixth tool, 3 + 3 --');
   P.E('showHub()'); await sleep(30);
   // v10.57.1: the order (the pastor: "compare your churches on the bottom left"); the stamps read as "the six agree"
-  c('six tools, the sixth Compare your churches', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','churches','planner','compare']);
+  c('six tools, the sixth Compare your churches', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   c('…its name, line and button', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare your churches','Your churches side by side: needs, people and gifts.','Compare churches']);
   P.q('#hub .tool[data-tool="churches"]').click(); await sleep(40);
   c('…opens the comparison', [P.E('TOOL'),P.q('#chc').hidden,P.qa('#chc .chc-sec').length], ['churches',false,5]);

@@ -48,7 +48,7 @@ for the tract, town and county, explains the neighborhood in plain English,
 takes an honest inventory of what the church can field, and matches ministries
 to both — checked against real volunteers, hours, rooms and money.
 
-Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026; the sixth, **Compare your churches**, since v10.57.0; since v10.57.1 the second row reads Compare your churches · Evangelism Planner · Learn from other conferences):
+Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026; the sixth, **Compare your churches**, since v10.57.0; since v10.59.2 the second row reads Evangelism Planner · Learn from other conferences · Compare your churches):
 
 | Tool | What it does | Tier |
 |---|---|---|
@@ -190,6 +190,12 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.59.2 (8 Oct 2026, quick lane) — Compare your churches last on the main menu.** The pastor: *"put compare your churches to the very
+bottom right instead because it's the weakest one"*. The second row is now Evangelism Planner · Learn from other conferences · Compare your
+churches (the tile moved in the page's markup; nothing else changed). Folded into PR #29 (still open). Tests: the eight order checks updated
+with his words (hub-alignment, hub-icons, hub-layout, hub-glow, v56-1-hub-simple, v57-churches, v57-1-gifts-clean, v44-integration). Checked
+in Chrome (`v76/shots31.mjs`): computer 1366 and phone 390. Full suite: 156 suites · 10,708 passed · 0 failed (the full run 10,705 and three stale checks of the old order and stamps: registration, entitlement-tiers, and vocab.json rebuilt for v44-sabbath-leftovers; rerun: 158). Samples `Terrain-v10.59.2-samples`.
 
 **v10.59.1 (8 Oct 2026, quick lane) — the two new sections glow; the kinds as tabs; the ministries folded by kind.** The pastor, on the
 foot of Learn from other conferences: *"with ministries that come to your church maybe put it not in huge blocks … in categories beautiful

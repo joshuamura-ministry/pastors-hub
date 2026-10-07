@@ -80,7 +80,7 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
 await T.sec(async()=>{
   console.log('\n-- the main menu: Compare your churches · Evangelism Planner · Learn from other conferences --');
   const P=page(); await ready(P); P.E('showHub()'); await sleep(40);
-  c('the order', P.qa('#hub .tools .tool').map(t=>t.dataset.tool), ['survey','gifts','case','churches','planner','compare']);
+  c('the order', P.qa('#hub .tools .tool').map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   c('Learn from other conferences: resources for your church', [P.txt('#hub .tool[data-tool="compare"] b'),P.txt('#hub .tool[data-tool="compare"] .td'),P.txt('#hub .tool[data-tool="compare"] .tgo')],
     ['Learn from other conferences','Ideas and resources from other conferences, for your church.','Find resources']);
   const S=page({lang:'es'}); await ready(S); S.E('showHub()'); await sleep(40);

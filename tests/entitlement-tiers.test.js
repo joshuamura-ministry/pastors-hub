@@ -37,7 +37,7 @@ setTimeout(async()=>{
   // v56 (B2): the fifth tile, Learn from other conferences, is a full-version tool like the other three
 // v10.57.0 (stale, not a regression): the pastor (7 Oct 2026), "maybe we could also have a comparison between churches": the sixth tile is paid like the others
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-  c('hub tags the paid tools, not the survey', tags, [['survey',false],['gifts',true],['case',true],['churches',true],['planner',true],['compare',true]]);
+  c('hub tags the paid tools, not the survey', tags, [['survey',false],['gifts',true],['case',true],['planner',true],['compare',true],['churches',true]]);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   G.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave('+JSON.stringify(H.MEDIUM)+'); render(); openTool("survey");');
   const shown=[...G.document.querySelectorAll('#sections section.blk')].filter(s=>!s.classList.contains('offtab')).map(s=>s.querySelector('h2').textContent);
   console.log('    free survey shows:',shown.join(' · '));

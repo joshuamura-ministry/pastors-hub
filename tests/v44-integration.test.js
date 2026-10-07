@@ -64,7 +64,7 @@ const phoneLines = w => Object.defineProperty(w.HTMLTextAreaElement.prototype, '
   P.E(`showHub()`); await sleep(100);
 // v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-  c('the hub: six tiles, the conferences\' comparison fifth', P.J(`[...document.querySelectorAll('#hub .tool')].map(t=>t.dataset.tool)`), ['survey', 'gifts', 'case', 'churches', 'planner', 'compare']);
+  c('the hub: six tiles, the conferences\' comparison fifth', P.J(`[...document.querySelectorAll('#hub .tool')].map(t=>t.dataset.tool)`), ['survey', 'gifts', 'case', 'planner', 'compare', 'churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   P.E(`caseSetPrefs({path:'ministry',ministry:'plan-series',type:'conference',group:'conference'}); openTool('case'); render();`); await sleep(300);
   c('Make the Case for a ministry, to Conference leaders: the switch above, and step 2\'s door to the comparison',
     P.J(`[!!document.querySelector('#cs-switch [data-bx-path="buy"]'),!!document.querySelector('#cs-s2 [data-cs-cmpdoor], #cs-s2 .cs-cmpdoor')]`), [true, true]);

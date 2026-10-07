@@ -24,7 +24,7 @@ setTimeout(()=>{
   c('six of them', tools.length, 6);
   c('each has its own verb', tools.map(t=>t.querySelector('.tgo').textContent.trim()),
     // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-    ['Explore survey','Discover gifts','Build a proposal','Compare churches','Start planning','Find resources']);   // v10.57.0
+    ['Explore survey','Discover gifts','Build a proposal','Start planning','Find resources','Compare churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   c('copy is short now', tools.every(t=>t.querySelector('.td').textContent.length<=70));
   c('no panel background', /\.tool\{[^}]*background:none/.test(html));
   c('no border', /\.tool\{[^}]*border:0/.test(html));
@@ -33,7 +33,7 @@ setTimeout(()=>{
   // the glow now lives in the artwork's own filter rather than in my CSS
   c('and strongly lit', tools.every(t=>/<filter id="glow-/.test(t.innerHTML)&&/filter="url\(#glow-/.test(t.innerHTML)));
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','churches','planner','compare']);   // v56 (B2); v10.57.0: Compare your churches
+  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   // v10.38: the focus ring takes the tool's own colour.
   c('keyboard focus survives losing the border', /\.tool:focus-visible\{outline:2px solid var\(--tc,var\(--acc\)\)/.test(html));
 
