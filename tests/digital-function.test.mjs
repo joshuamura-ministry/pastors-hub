@@ -108,7 +108,8 @@ try {
   c('a forged token: 401', r.status, 401);
   r = await call('GET', '');
   // v10.60.1: digital-1.1 (warm(), the reading started at sign-up: the pastor's "yes as soon as they sign up for sure"); the bare GET is unchanged
-  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.1', 'digital-read-1.0', false, false]);
+  // v10.61.0: digital-read-1.1 (how current a site is, the pastor's photo, how fast it opens: the pastor, "it doesn't even have my picture")
+  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.1', 'digital-read-1.1', false, false]);
   r = await call('GET', '?conf=Atlantis');
   c('a conference the locator does not have: supported false', [r.status, r.j.supported], [200, false]);
   r = await call('GET', '?conf=Pennsylvania');

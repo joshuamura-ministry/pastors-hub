@@ -95,7 +95,7 @@ netlify/functions/digital.mjs        (v10.60.0, digital-1.1 since v10.60.1) Digi
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
                                starts a conference's reading when one of its pastors registers or signs in (register.mjs)
-netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.0) the background reader: the official list (eAdventist, one page each 3 s), each
+netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.1 since v10.61.0: dates a visitor sees, the pastor's photo, speed) the background reader: the official list (eAdventist, one page each 3 s), each
                                church's website as a visitor reads it (TerrainBot, robots.txt obeyed, the words inside a template's scripts), YouTube's
                                feed, Google's listing (Places API (New), GOOGLE_PLACES_KEY), one search (BRAVE_SEARCH_KEY, when set); Facebook never
                                read; under 13 minutes a run, then it wakes itself; store `terrain-digital` (c/ findings, j/ job, e/ entries, r/ readings)
@@ -158,7 +158,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
 - connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
-- v10.60.1: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.0"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
+- v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
   passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://pastorshub.org/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
   `https://pastorshub.org/ideas/index.json` → `"hash":"f7b32cd68d45"`
@@ -205,6 +205,32 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.61.0 (7 Oct 2026, full lane) — Digital footprint says more, and draws it.** The pastor, of his own church's card: *"I thought it was
+gonna say more … on the website … it doesn't even have my picture on there it's hasn't been updated in a long time … once in a while in this
+box we need some kind of graph … circular graph … show which areas are weak which areas can get better which areas are stronger … Pastor's
+name current yeah it may show my name there, but is it showing my picture?"*
+- **The reader (digital-read-1.1):** the dates a visitor sees (`datesIn`: "Oct 18, 2026", "Sept 27th, 2026", "20 March 2024", "10/25/2026",
+  "12 de octubre de 2025"; `datesOf` → `pastDate`, `nextDate`, `ahead`), and it now follows events, calendar, bulletin and sermon pages
+  (`PAGES`); a photo by each pastor's name (`photoBy`: an image named for him, by its file or alt words, else one in the same card as his
+  name; logos, banners and icons never; a template's images inside its scripts too) → `pastors[].photo/photoOn`, `pastorPhoto/pastorPhotoOn`;
+  how long its first page took (`ms`); `events`, `sermons`, `description` (a meta description for search results). **Never a sitemap's
+  date:** tried on six Pennsylvania sites (`v78/try-sites.mjs`), website builders stamp "lastmod" on their own (sites unchanged for years
+  said "last week"). Names with a capital inside (LaCamera, McDonald) read whole (`NW`); "Us" is no name. Google's photos are still not
+  asked for (the field mask unchanged).
+- **The page:** the website says how current it is by those dates ("Lists dates ahead (the next: Oct 17).", "The newest date we found on the
+  site is March 2024, and nothing is dated ahead: it may not have been updated since.", "We found no dates on the pages read …": Needs
+  work), a site slower than 4 s, and online giving, an events calendar, sermons; the pastor's area "Names … with a photo", or "Named, no
+  photo" (Needs work); a reading by digital-read-1.0 is judged as before (`'pastDate' in site`). Fixes: the photo, "Keep the home page
+  current" each week, a description for search results. **The circle chart** (`dfRadar`, `dfRadarFig`, `dfTypical`, `DF_RV`, `DF_RSHORT`):
+  the six areas round a ring, each as far out as it is strong (current at the rim, needs work in the middle, needs help now near the
+  centre), each mark in its state's colour, an area not read or not looked for a hollow mark in the middle (never counted against a church),
+  the conference's typical church (the median of each area) dashed behind, a key, and what it shows for a screen reader; on each of his
+  churches' cards beside "What a visitor sees" (`.df-sum`), on a church opened in the list, and small, side by side.
+- Checked in Chrome with the Pennsylvania findings and seven churches' sites read again by digital-read-1.1 (`v78/make-findings61.mjs`,
+  `v78/shots61df.mjs`, served by `v78/serve61.mjs`): computer 1366, phone 390 EN and ES. Bucks County: named on the staff page, no photo
+  found, no dates on the pages read. Tests: `v61-digital-read` (new, 17) and `v61-digital-depth` (new, 21), failing first on v10.60.1
+  (`v78/logs/ff-v61-*.log`); digital-function updated (digital-read-1.1). Full suite: 164 suites · 10,921 passed · 0 failed.
 
 **v10.60.1 (7 Oct 2026, quick lane) — a conference is read as soon as one of its pastors signs up.** The pastor, told the first reading
 of a conference takes about an hour and asked whether Terrain should read it ahead: *"yes as soon as they sign up for sure"*. register.mjs
