@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.59.3
+     TERRAIN  v10.60.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.59.3" data-theme="dark">
+<html lang="en" data-version="v10.60.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.59.3">
-<title>Community Map — Terrain v10.59.3</title>
+<meta name="terrain-version" content="v10.60.0">
+<title>Community Map — Terrain v10.60.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3558,6 +3558,111 @@ button.cd-rowb:hover{background:var(--panel2)}
   .chc-t thead th:first-child{display:none}
   .chc-t thead tr{padding-top:0}
 }
+/* v10.60.0 — Digital footprint, at the foot of Compare your churches: the green of its tile (var(--m-young)), the three states in the
+   page's own colours (Current mint, Needs work amber, Needs help now red), Terrain's frames. Six areas a church: three across, two on a
+   tablet, one on a phone (never one alone on a row). */
+.df{--dfk:var(--m-young);--ok:var(--m-language);--work:var(--m-hardship);--help:var(--m-veterans);display:grid;gap:18px;margin:26px 0 8px;padding-top:22px;border-top:2px solid color-mix(in srgb,var(--dfk) 45%,var(--line2))}
+.df-top{display:grid;gap:6px}
+.df-crumb{font-size:.74rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3)}
+.df-top h2{font-family:var(--disp);font-size:clamp(1.5rem,3.6vw,2rem);margin:0;color:var(--ink)}
+.df-lead{color:var(--ink2);max-width:68ch;margin:0}
+.df-verse{font-family:var(--script);font-style:italic;font-size:1.12rem;color:var(--ink2);margin:0;max-width:62ch}
+.df-verse span{font-family:var(--font);font-style:normal;font-size:.76rem;color:var(--ink3);margin-left:6px}
+.df-pills{display:flex;flex-wrap:wrap;gap:8px}
+.df-pills span{border:1px solid var(--line2);border-radius:999px;padding:3px 12px;font-size:.82rem;color:var(--ink2);background:var(--panel)}
+.df-pills b{color:var(--ink);font-variant-numeric:tabular-nums}
+.df-msg{color:var(--ink2);margin:0}
+.df-part{border:1px solid color-mix(in srgb,var(--dfk) 38%,var(--line2));border-radius:14px;background:var(--panel);padding:16px;display:grid;gap:12px;min-width:0}
+.df-glow{background:linear-gradient(color-mix(in srgb,var(--dfk) 7%,transparent),color-mix(in srgb,var(--dfk) 7%,transparent)),var(--panel)}
+.df-h{display:flex;gap:10px;align-items:center;font-family:var(--disp);font-size:1.15rem;margin:0;color:var(--ink)}
+.df-h span{flex:none;display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--dfk);color:var(--panel);font-size:.85rem}
+.df-intro{margin:0;color:var(--ink2);font-size:.92rem;max-width:72ch}
+.df-faint{color:var(--ink3);font-size:.84rem}
+.df-own{border:1px solid var(--line2);border-radius:12px;padding:14px;display:grid;gap:10px;background:var(--panel)}
+.df-own header{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between;align-items:flex-start}
+.df-own h3{font-family:var(--disp);font-size:1.12rem;margin:0}
+.df-sees{margin:0;color:var(--ink2);font-size:.9rem}
+.df-areas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.df-areas{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.df-areas{grid-template-columns:1fr}.df-part{padding:12px}}
+.df-area{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--panel2);display:grid;gap:4px;align-content:start;min-width:0}
+.df-area p{margin:0;font-size:.85rem;color:var(--ink2);line-height:1.45;overflow-wrap:anywhere}
+.df-area .df-note{color:var(--ink3);font-size:.78rem;font-style:italic}
+.df-ah{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.df-ah b{font-family:var(--disp);font-size:.9rem;margin-right:auto}
+.df-ahead{font-weight:700;font-size:.9rem;color:var(--ink)}
+.df-ai{width:18px;height:18px;flex:none;fill:none;stroke:var(--dfk);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;vertical-align:-3px;margin-right:6px}
+.df-ah .df-ai{margin:0}
+.df-src{font-size:.8rem;text-decoration:none;overflow-wrap:anywhere;color:var(--acc)}
+.df-st{display:inline-flex;align-items:center;gap:6px;border-radius:999px;padding:2px 9px 2px 7px;font-size:.74rem;font-weight:700;line-height:1.5;max-width:100%}
+.df-st i{width:8px;height:8px;border-radius:50%;flex:none;background:currentColor}
+.df-st-ok{color:var(--ok);background:color-mix(in srgb,var(--ok) 13%,transparent)}
+.df-st-work{color:var(--work);background:color-mix(in srgb,var(--work) 14%,transparent)}
+.df-st-help{color:var(--help);background:color-mix(in srgb,var(--help) 13%,transparent)}
+.df-st-none,.df-st-unread,.df-st-na{color:var(--ink3);background:color-mix(in srgb,var(--ink3) 12%,transparent)}
+.df-go{display:flex;flex-wrap:wrap;gap:8px 16px;padding:8px 10px;border-radius:10px;background:color-mix(in srgb,var(--dfk) 8%,var(--panel2))}
+.df-go .df-src{font-weight:600;font-size:.86rem}
+.df-foot{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--ink3)}
+.df-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:12px}
+.df table{border-collapse:collapse;width:100%;font-size:.86rem}
+.df th,.df td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.df thead th{font-family:var(--disp);font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);background:var(--panel2)}
+.df-side tbody th{white-space:nowrap;font-family:var(--disp);color:var(--ink2)}
+.df-all{min-width:900px}
+.df-all tbody th{min-width:200px;font-weight:600;color:var(--ink)}
+.df-row{cursor:pointer}
+.df-row:hover td,.df-row:hover th,.df-row:focus-visible td,.df-row:focus-visible th{background:var(--acc-dim)}
+.df-row:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
+.df-row.mine th{box-shadow:inset 3px 0 0 var(--dfk)}
+.df-you{margin-left:8px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dfk);border:1px solid var(--dfk);border-radius:999px;padding:0 7px;vertical-align:2px}
+.df-detail td{background:var(--panel2)}
+.df-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.df-f{font:600 .84rem var(--font);border:1px solid var(--line2);background:var(--panel);color:var(--ink2);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
+.df-f span{font-variant-numeric:tabular-nums;color:var(--ink3);margin-left:4px}
+.df-f.on{background:var(--dfk);border-color:var(--dfk);color:var(--panel)}
+.df-f.on span{color:inherit;opacity:.85}
+#df-q{flex:1 1 200px;min-width:0;font:inherit;font-size:.88rem;padding:7px 12px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--ink);min-height:36px}
+.df-needs{display:grid;grid-template-columns:repeat(var(--n,2),minmax(0,1fr));gap:12px}
+@media (max-width:760px){.df-needs{grid-template-columns:1fr}}
+.df-needs section{border:1px solid var(--line);border-radius:12px;padding:12px 14px;background:var(--panel2);min-width:0}
+.df-needs h4{font-family:var(--disp);font-size:.98rem;display:flex;gap:8px;align-items:center;margin:0 0 6px}
+.df-cnt{font:700 .74rem var(--font);color:var(--help);background:color-mix(in srgb,var(--help) 13%,transparent);border-radius:999px;padding:1px 8px}
+.df-needs ul{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.df-needs li a{font-weight:700;text-decoration:none;color:var(--acc)}
+.df-why{font-size:.82rem;color:var(--ink2);line-height:1.4}
+.df-hows{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:900px){.df-hows{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.df-hows{grid-template-columns:1fr}}
+.df-hows article{border:1px solid var(--line);border-radius:12px;padding:12px;background:var(--panel2);display:grid;gap:8px;align-content:start;min-width:0}
+.df-hows h4{font-family:var(--disp);font-size:.98rem;margin:0}
+.df-hows p{margin:0;font-size:.86rem;color:var(--ink2)}
+.df-hows ul{margin:0;padding:0;list-style:none;display:grid;gap:8px;font-size:.84rem}
+.df-hows li{border-top:1px solid var(--line);padding-top:8px}
+.df-hows li a{font-weight:700;color:var(--acc)}
+.df-cost{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--ok);margin-left:6px}
+.df-tabs{display:flex;gap:8px;flex-wrap:wrap}
+.df-tab{font:600 .88rem var(--font);border:1px solid var(--line2);background:var(--panel);color:var(--ink2);border-radius:10px;padding:7px 14px;cursor:pointer;min-height:38px}
+.df-tab[aria-selected="true"]{border-color:var(--dfk);color:var(--ink);box-shadow:inset 0 -3px 0 var(--dfk)}
+.df-doc{border:1px solid var(--line2);border-radius:12px;padding:20px clamp(14px,4vw,32px);background:var(--panel);max-width:780px;display:grid;gap:8px}
+.df-doc h3{font-family:var(--disp);font-size:1.25rem;margin:0}
+.df-doc h4{font-family:var(--disp);font-size:.94rem;margin:8px 0 0;color:var(--ink)}
+.df-doc p,.df-doc li{font-size:.9rem;color:var(--ink2)}
+.df-doc p{margin:0}
+.df-doc ul,.df-doc ol{margin:0;padding-left:20px;display:grid;gap:6px}
+.df-doc dl{display:grid;gap:2px;margin:4px 0 0;font-size:.86rem}
+.df-doc dl div{display:flex;gap:10px}
+.df-doc dt{width:54px;flex:none;color:var(--ink3)}
+.df-doc dd{margin:0;color:var(--ink2)}
+.df-kick{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.df-words{display:grid;gap:8px;justify-items:start}
+.df-words pre{margin:0;white-space:pre-wrap;font:inherit;font-size:.86rem;color:var(--ink);background:var(--panel2);border:1px dashed var(--line2);border-radius:10px;padding:10px 12px;width:100%}
+.df-acts{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:6px}
+.df-reading{display:grid;gap:8px;border:1px dashed color-mix(in srgb,var(--dfk) 50%,var(--line2));border-radius:12px;padding:14px;background:var(--panel)}
+.df-reading p{margin:0;color:var(--ink2)}
+.df-bar{height:8px;border-radius:4px;background:color-mix(in srgb,var(--dfk) 15%,var(--panel2));overflow:hidden}
+.df-bar i{display:block;height:100%;background:var(--dfk);border-radius:4px}
+.df-limits p{margin:0;font-size:.86rem;color:var(--ink2)}
+@media print{.df-go,.df-acts,.df-filters,[data-df-again]{display:none}}
 @media print{.chbtn{display:none}.chc-wrap{overflow:visible}}
 .hubabout{max-width:62ch;margin:46px auto 10px;padding:22px 4px 0;border-top:1px solid var(--line2);text-align:center}
 .hubabout h3{margin:0 0 10px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
@@ -4644,13 +4749,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.3</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.60.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.59.3';
+const VERSION = 'v10.60.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -42810,7 +42915,7 @@ function chcRender(){
   const host=$('chc'); if(!host) return;
   const L0=chList();
   if(L0.length<2){ host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div><div class="card chc-one"><p>${esc(chT('one'))}</p><button type="button" class="btn" data-ch-add>+ ${esc(chT('add'))}</button></div>`;
-    host.querySelector('[data-ch-add]').onclick=()=>{ try{ homeChange(); }catch(e){ openTool('survey'); } }; return; }
+    host.querySelector('[data-ch-add]').onclick=()=>{ try{ homeChange(); }catch(e){ openTool('survey'); } }; dfMount(host); return; }   // v10.60.0: Digital footprint below
   const F=L0.map(chFacts).filter(Boolean);
   // one width for every section, so the churches' columns line up from top to bottom
   const head=`<tr><th scope="col"></th>${F.map(f=>`<th scope="col"><b>${esc(f.name)}</b><span>${esc(f.town||'')}</span></th>`).join('')}</tr>`;
@@ -42838,11 +42943,457 @@ function chcRender(){
     <section class="chc-sec chc-so" style="--k:var(--m-hardship)" aria-labelledby="chc-stand"><h2 id="chc-stand">${esc(chT('stand'))}</h2><ul>${so.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></section>
     ${sec('hood','var(--m-housing)',hoodRows)}${sec('church','var(--acc)',churchRows)}${sec('gifts','var(--gfv)',giftRows)}${sec('plan','var(--m-hardship)',planRows)}`;
   host.querySelectorAll('[data-chc-open]').forEach(b=>b.onclick=()=>uSwitch(b.dataset.chcOpen));
+  dfMount(host);   // v10.60.0: Digital footprint, at the foot
 }
 function chcOpen(){
   const host=$('chc'); if(!host) return;
   if(gated()||memberLink()||!entitled('churches')){ host.hidden=true; host.innerHTML=''; return; }
   host.hidden=false; chcRender();
+}
+/* ================= v10.60.0 — DIGITAL FOOTPRINT (at the foot of Compare your churches) =================
+   The pastor (7–8 Oct 2026): "Under compare your churches we need to have some value there. I would like to see all the churches in the
+   conference … websites Facebook pages social media Instagram … YouTube … checked to see if they're up-to-date if their current if they
+   need work if they're in bad shape … our own churches will be prioritized on the top and then underneath may be a box that talks about
+   comparing the digital footprint … which churches are in great need of … a new website or updating"; "Where do we show up in Google
+   search in maps and ratings … I need a section how to fix it"; "no feeling no fill-in just maybe a proposal to the communications person
+   … this should know the name already of the pastor"; "make sure we're not missing something so we don't accuse them"; and, after the
+   sample (Terrain-work/v77): labels and who sees what "yes", "the website is huge … Google search and maps are very very important more
+   than Facebook … a little information on Facebook Instagram without breaching anything", and the "take me there, with the words
+   ready" buttons ("okay please proceed").
+   The findings come from digital.mjs (registered pastors only; read monthly on the server by digital-read.mjs: the official church list,
+   each website, Google's listing, YouTube's feed, one search when a key is set; Facebook is never read). Here they are judged
+   (dfJudge: the rules the sample proved, area by area, Current · Needs work · Needs help now), never accusing: "no website" only after
+   the double check, and said "we could not find". His own churches: by his registration's name (the listing's pastor) or a church of his
+   by name; the pastor of record there is his registration. Everything the page writes is English or Spanish (DF_T, L). */
+const DF_FN='/.netlify/functions/digital', DF_POLL_MS=20000;
+const DF={conf:'',data:null,state:'',err:'',busy:false,timer:0,f:'all',q:'',open:{},rep:'',msg:{},tries:0};
+const DF_T={
+  title:{en:'Digital footprint',es:'Huella digital'},
+  lead:{en:'What a visitor finds of each church online: the website, the pastor’s name, Google and Maps, Facebook and Instagram, YouTube and the live stream, and a way in for a neighbor. Your churches first, then every church in the conference.',
+        es:'Lo que un visitante encuentra de cada iglesia en internet: el sitio web, el nombre del pastor, Google y Maps, Facebook e Instagram, YouTube y la transmisión, y una puerta para el vecino. Primero sus iglesias, luego cada iglesia de la asociación.'},
+  checked:{en:'Read from public pages on {date} · updated monthly',es:'Leído de páginas públicas el {date} · se actualiza cada mes'},
+  count:{en:'{n} churches, companies and groups',es:'{n} iglesias, compañías y grupos'},
+  conf:{en:'{conf} Conference',es:'Asociación de {conf}'},
+  reading:{en:'Reading the churches of the {conf} Conference from public pages… The first reading takes about an hour; it keeps going if you close Terrain.',
+           es:'Leyendo las iglesias de la Asociación de {conf} en páginas públicas… La primera lectura toma alrededor de una hora; sigue aunque cierre Terrain.'},
+  progress:{en:'{done} of {total} read',es:'{done} de {total} leídas'},
+  listing:{en:'Reading the official church list…',es:'Leyendo la lista oficial de iglesias…'},
+  start:{en:'Read the churches of my conference',es:'Leer las iglesias de mi asociación'},
+  notYet:{en:'Digital footprint reads the Pennsylvania Conference first; the {conf} Conference comes next.',es:'La huella digital lee primero la Asociación de Pensilvania; la de {conf} viene después.'},
+  noConf:{en:'Register with your conference to see its churches.',es:'Regístrese con su asociación para ver sus iglesias.'},
+  failed:{en:'The churches could not be read just now. Try again in a few hours.',es:'No se pudieron leer las iglesias ahora. Inténtelo de nuevo en unas horas.'},
+  offline:{en:'Digital footprint could not be loaded. Check your connection and try again.',es:'No se pudo cargar la huella digital. Revise su conexión e inténtelo de nuevo.'},
+  again:{en:'Try again',es:'Intentar de nuevo'},
+  s1:{en:'Your churches',es:'Sus iglesias'},
+  s1i:{en:'Read as a visitor would find them. The pastor’s name is checked against your registration.',es:'Leídas como las encontraría un visitante. El nombre del pastor se compara con su registro.'},
+  noOwn:{en:'None of your churches was found in the official list by your name or theirs. They are in the list below.',es:'Ninguna de sus iglesias apareció en la lista oficial por su nombre o el de ellas. Están en la lista de abajo.'},
+  s2:{en:'Side by side',es:'Lado a lado'},
+  s3:{en:'Who needs help most',es:'Quién necesita más ayuda'},
+  s3i:{en:'Where a visitor would struggle most. “No website” is said only after a double check.',es:'Donde un visitante tendría más dificultad. “Sin sitio web” se dice solo después de verificarlo dos veces.'},
+  s4:{en:'Every church in the {conf} Conference',es:'Cada iglesia de la Asociación de {conf}'},
+  s4i:{en:'From the official church directory (eAdventist): yours first, then those that need help most. Tap a church to see what was found.',es:'Del directorio oficial de iglesias (eAdventist): primero las suyas, luego las que más ayuda necesitan. Toque una iglesia para ver lo encontrado.'},
+  s5:{en:'How to fix it',es:'Cómo arreglarlo'},
+  s5i:{en:'What to do first for each kind of problem, and the places that help. Most of it is free.',es:'Qué hacer primero en cada caso, y quién ayuda. Casi todo es gratis.'},
+  s6:{en:'The report for your communication team',es:'El informe para su equipo de comunicación'},
+  s6i:{en:'One page per church: what a visitor sees today and what to fix first. It names no other church.',es:'Una página por iglesia: lo que ve un visitante hoy y qué arreglar primero. No nombra a ninguna otra iglesia.'},
+  limits:{en:'What this can and cannot see',es:'Lo que esto puede y no puede ver'},
+  lim1:{en:'Read: the official church list, each church’s website (the pages a visitor looks at), Google’s listing on Maps, the YouTube channel’s last videos{search}. Nothing is posted and no one is contacted.',
+        es:'Se lee: la lista oficial, el sitio web de cada iglesia (las páginas que mira un visitante), la ficha de Google en Maps, los últimos videos del canal de YouTube{search}. No se publica nada ni se contacta a nadie.'},
+  limS:{en:', and one web search for each church’s name',es:' y una búsqueda en internet del nombre de cada iglesia'},
+  lim2:{en:'Not read: Facebook and Instagram (only a page’s link and, when a search result shows them, its followers); Google’s own search order (no program may read it); YouTube comments.',
+        es:'No se lee: Facebook ni Instagram (solo el enlace de la página y, cuando una búsqueda los muestra, sus seguidores); el orden de búsqueda de Google (ningún programa puede leerlo); los comentarios de YouTube.'},
+  lim3:{en:'A site that asks programs not to read it, or does not let our reader in, is said so, never counted against the church.',es:'Un sitio que pide no ser leído por programas, o no deja entrar a nuestro lector, se dice así, nunca cuenta en contra de la iglesia.'},
+  ok:{en:'Current',es:'Al día'}, work:{en:'Needs work',es:'Necesita trabajo'}, help:{en:'Needs help now',es:'Necesita ayuda ya'}, none:{en:'None found',es:'No se encontró'}, unread:{en:'Not read',es:'No leído'}, na:{en:'—',es:'—'},
+  aWebsite:{en:'Website',es:'Sitio web'}, aPastor:{en:'Pastor’s name',es:'Nombre del pastor'}, aGoogle:{en:'Google & Maps',es:'Google y Maps'},
+  aSocial:{en:'Facebook & Instagram',es:'Facebook e Instagram'}, aYoutube:{en:'YouTube & live stream',es:'YouTube y transmisión'}, aReach:{en:'Reaching out',es:'Alcance'},
+  sees:{en:'What a visitor sees:',es:'Lo que ve un visitante:'},
+  fAll:{en:'All',es:'Todas'}, fHelp:{en:'Needs help now',es:'Necesita ayuda ya'}, fSite:{en:'No website found',es:'Sin sitio web'}, fPastor:{en:'Pastor’s name to check',es:'Revisar el pastor'},
+  fGoogle:{en:'Google to fix',es:'Google por arreglar'}, find:{en:'Find a church or town',es:'Buscar una iglesia o ciudad'}, none2:{en:'No church matches.',es:'Ninguna iglesia coincide.'},
+  yours:{en:'Yours',es:'Suya'}, members:{en:'{n} members',es:'{n} miembros'},
+  checkAgain:{en:'Check again',es:'Revisar de nuevo'}, checking:{en:'Reading this church again… a minute or two.',es:'Leyendo esta iglesia de nuevo… uno o dos minutos.'},
+  limitAgain:{en:'Three checks a day: try again tomorrow.',es:'Tres revisiones al día: inténtelo mañana.'},
+  readOn:{en:'Read from public pages on {date}.',es:'Leído de páginas públicas el {date}.'},
+  report:{en:'Report for the communication team',es:'Informe para el equipo de comunicación'},
+  kicker:{en:'Report for the communication team',es:'Informe para el equipo de comunicación'},
+  to:{en:'To',es:'Para'}, toV:{en:'The communication leader, the webmaster and the digital evangelism team',es:'El líder de comunicación, el encargado del sitio web y el equipo de evangelismo digital'},
+  from:{en:'From',es:'De'}, date:{en:'Date',es:'Fecha'},
+  rSees:{en:'What a visitor sees today',es:'Lo que ve un visitante hoy'}, rGood:{en:'Already current: {list}. Thank you to everyone who keeps these going.',es:'Ya al día: {list}. Gracias a todos los que lo mantienen.'},
+  rFirst:{en:'Fix first',es:'Arreglar primero'}, rThen:{en:'Then',es:'Después'},
+  rHelp:{en:'Free help',es:'Ayuda gratuita'}, rHelpT:{en:'Frame (the NAD’s free website builder), Google Business Profile, Meta Business Suite, YouTube Studio, and the conference’s communication department: see “How to fix it”.',es:'Frame (el creador gratuito de sitios web de la NAD), el Perfil de Empresa de Google, Meta Business Suite, YouTube Studio y el departamento de comunicación de la asociación: vea “Cómo arreglarlo”.'},
+  who:{en:'Who',es:'Quién'}, when:{en:'When',es:'Cuándo'}, cost:{en:'Cost',es:'Costo'}, free:{en:'Free',es:'Gratis'},
+  pdf:{en:'Download PDF',es:'Descargar PDF'}, proposal:{en:'Make it a proposal',es:'Convertirlo en propuesta'}, pdfFail:{en:'The PDF could not be made just now.',es:'No se pudo hacer el PDF ahora.'},
+  copy:{en:'Copy the words',es:'Copiar el texto'}, copied:{en:'Copied',es:'Copiado'}, copyHint:{en:'Select the words below and copy them.',es:'Seleccione el texto de abajo y cópielo.'},
+  openMaps:{en:'Open on Google Maps',es:'Abrir en Google Maps'}, addGoogle:{en:'Put the church on Google',es:'Poner la iglesia en Google'},
+  claimHow:{en:'On Google Maps, “Own this business?” means no one has claimed it: claim it with a church email; Google confirms by phone, email or a short video.',es:'En Google Maps, “¿Es el propietario?” significa que nadie la ha reclamado: reclámela con un correo de la iglesia; Google confirma por teléfono, correo o un video corto.'},
+  frame:{en:'Start a free church website (Frame)',es:'Crear un sitio web gratuito (Frame)'}, listingLink:{en:'The official listing (“Request changes”)',es:'La ficha oficial (“Request changes”)'},
+  fixAt:{en:'Correct it on {where}',es:'Corregirlo en {where}'}, openFb:{en:'Open the Facebook page',es:'Abrir la página de Facebook'}, makeFb:{en:'Make a Facebook page',es:'Crear una página de Facebook'},
+  studio:{en:'Open YouTube Studio',es:'Abrir YouTube Studio'},
+  wordsFor:{en:'The words, ready to paste',es:'El texto, listo para pegar'},
+};
+const dfT=(k,o)=>{ const v=DF_T[k]; let s=v?(LANG==='es'?v.es:v.en):k; if(o) for(const x in o) s=s.split('{'+x+'}').join(o[x]); return s; };
+const DF_AREAS=['website','pastor','google','social','youtube','reach'];
+const DF_AREA_KEY={website:'aWebsite',pastor:'aPastor',google:'aGoogle',social:'aSocial',youtube:'aYoutube',reach:'aReach'};
+const dfFold=s=>String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'');
+const dfHost=u=>{ try{ return new URL(/^https?:/i.test(u)?u:'https://'+u).host.toLowerCase().replace(/^www\./,''); }catch(e){ return String(u||''); } };
+const dfDigits=s=>String(s||'').replace(/\D/g,'').replace(/^1(?=\d{10}$)/,'');
+const dfNf=n=>n==null?'—':Number(n).toLocaleString(LANG==='es'?'es-US':'en-US');
+const dfPl=(n,en,ens,es,ess)=>`${dfNf(n)} ${n===1?L(en,es):L(ens,ess)}`;
+const dfDay=d=>{ try{ return new Date(d+'T12:00').toLocaleDateString(LANG==='es'?'es-US':'en-GB',{day:'numeric',month:'short',year:'numeric'}); }catch(e){ return d; } };
+const dfMd=d=>{ try{ return new Date(d+'T12:00').toLocaleDateString(LANG==='es'?'es-US':'en-US',{month:'short',day:'numeric'}); }catch(e){ return d; } };
+const dfDays=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
+const dfSurname=n=>{ const w=String(n||'').replace(/\b(Jr|Sr|II|III|IV)\.?$/i,'').replace(/[.,]/g,' ').trim().split(/\s+/).filter(Boolean); return w.length?w[w.length-1]:''; };
+const dfWords=n=>dfFold(n).toLowerCase().replace(/[.,()]/g,' ').split(/\s+/).filter(x=>x.length>1&&!/^(jr|sr|ii|iii|iv)$/.test(x));
+/* one person, however a page writes the name ("Josh Mura" is Joshua Mura; "Zabdiel Brígido" is Zabdiel Brigido) */
+function dfSame(a,b){ if(!a||!b) return false; const A=dfWords(a),B=dfWords(b); if(!A.length||!B.length) return false; const sa=A[A.length-1],sb=B[B.length-1];
+  return B.includes(sa)||A.includes(sb)||(A[0]===B[0]&&A.filter(x=>B.includes(x)).length>=2); }
+const DF_NOTNAME=/^(Discipleship|Tel[eé]fono|Telephone|Phone|Email|Chaplain|Years?|Ministry|Ministries|Pastor|Office|Cell|Mobile|Bio|Welcome|Contact|Senior|Lead|Associate|District|Youth|Head|Lay|Elder|And|Of|The|Our|Home|About|Sermons?|Message|Notes|Live|Watch|Church|Adventist|Seventh-day|SDA|Mr|Mrs|Dr|Rev|January|February|March|April|May|June|July|August|September|October|November|December|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday|Sabbath|Services?|Worship|Prayer|Bible|Events?|Calendar|Team|Staff|Leaders?|Horarios?|Iglesia|Direcci[oó]n|Contacto|Bienvenidos?|Culto|S[aá]bado|Escuela|Ministerios?|Eventos?|Anuncios|Nosotros|Inicio|Ver|M[aá]s|Correo|Llamar|Pastora?|Anciano|Location|Address|Directions|Give|Giving|Online|Read|More|Click|Here|Today|Now|New|Join|Us)\.?$/i;
+const DF_COMMON=new Set('mission statement humanity series potluck lunch communication director radio love greater no social socials media use contacts contact estate tube channel gravado saturdays sundays psalm psalms times first second third hispanic haitian korean spanish brazilian english you ucc schedule preaching dan bulletin gallery resources notes slides sermon sermons team members member board family families community center centre ministry ministries health school academy conference union division church churches temple fellowship company group network simple home house hope faith grace glory peace joy life light word truth way gospel news good kingdom heaven holy spirit lord god jesus christ savior saviour bible study studies class classes music choir youth kids children women men seniors singles young adults adult couples marriage prayer praise worship service services hour day days week weekly monthly annual camp meeting revival evangelism outreach crusade seminar series event events calendar program programs welcome visit visitors guest guests speaker speakers special greetings message messages office secretary treasurer clerk elder elders deacon deacons deaconess head lead senior associate assistant district lay interim retired former new old north south east west central greater area valley hill hills mount mountain lake river park street road avenue city county state pennsylvania philadelphia pittsburgh live online stream streaming video videos audio watch listen read more click here learn view give giving donate tithe offering store shop sabbath saturday sunday friday wednesday'.split(' '));
+const DF_FAMOUS=/\b(Doug Batchelor|Mark Finley|Ellen (G\.? )?White|Ted Wilson|John Bradshaw|Dwight Nelson|Randy Skeete|Ty Gibson|David Asscherick|Shawn Boonstra|Carlton Byrd|Alex Bryan|Cami Oetman|Lyle Albrecht|Wintley Phipps|Charles Bradford|C\.? D\.? Brooks|Hyveth Williams|Walter Pearson|Jack Blanco|Morris Venden|Clifford Goldstein|Mike Tucker|Jim Ayer)\b/i;
+function dfPersonLike(n){ const w=String(n||'').split(/\s+/); if(w.length<2||w.length>3||DF_FAMOUS.test(n)) return false;
+  return w.every(x=>/^([A-ZÁÉÍÓÚÑ][a-záéíóúñü]+(-[A-Z][a-záéíóúñü]+)?|[A-Z]\.?)$/.test(x)&&!DF_COMMON.has(dfFold(x).toLowerCase()))&&!/^[A-Z]\.?$/.test(w[w.length-1])&&!/^[A-Z]\.?$/.test(w[0]); }   // a middle initial with or without its period ("Keith E Ingram")
+function dfCleanName(n,drop){ n=String(n||'').replace(/[-–,;:]+$/,'').replace(/[-–]\s/g,' '); const tw=new Set(dfFold(drop||'').toLowerCase().split(/\s+/));
+  const w=n.split(/\s+/).filter(x=>x&&!DF_NOTNAME.test(x)&&!tw.has(dfFold(x).toLowerCase())&&!/['’]/.test(x)); for(let i=w.length-1;i>1&&w[i]===w[i-1];i--) w.splice(i,1);
+  return w.length>=2?w.slice(0,/^[A-Z]\.?$/.test(w[1])?3:w.length>3?2:w.length).join(' '):''; }
+const DF_MAIN=/^\/$|about|pastor|staff|leader|team|contact|welcome|who-we-are|meet|new-here|visit|join|connect/i;
+const DF_AGG=/(thechurchmap|churchmap|findachurchnearme|churchdirectoryusa|churchdirectory|nearfaith|faithalarm|psalmlog|alluschurches|chamberofcommerce|superpages|yellowpages|gospelchannel|churchfinder|faithstreet|joinmychurch|unitedstateschurches|adventistguide|adventistdirectory|eadventist|yelp|mapquest|manta|bbb\.org|nextdoor|usachurches|churchangel|findachurch|dexknows|cylex|hotfrog|brownbook|citysquares|ezlocal|opendi|birdeye|buzzfile|dnb\.com|zoominfo|opencorporates|guidestar|causeiq|charitynavigator|propublica|legacy\.com|wikipedia|google\.|bing\.|apple\.com|waze|tripadvisor|foursquare|churchstaffing|allbiz|seventhdayadventistchurches|mychurchevents|sermonaudio|sermonview|eventbrite|patch\.com|meetup)/i;
+const DF_GENERIC=/^(church|seventh|day|adventist|adventists|sda|company|group|mission|gp|the|of|de|del|la|el|and)$/;
+const DF_SPANISH={hispanic:/hispan|spanish|espanol|iglesia/,haitian:/haiti/,korean:/korea/,brazilian:/brasil|brazil|igreja/};
+const DF_STATES='al|ak|az|ar|ca|co|ct|de|fl|ga|hi|id|il|in|ia|ks|ky|la|me|md|ma|mi|mn|ms|mo|mt|ne|nv|nh|nj|nm|ny|nc|nd|oh|ok|or|pa|ri|sc|sd|tn|tx|ut|vt|va|wa|wv|wi|wy';
+/* a site found by search is the church's ('yes'), may be ('maybe'), or is not (false): its title or address carries the church's
+   distinguishing words, no "II" the name lacks, a phone of the conference's own area codes (or none), never a directory */
+function dfChurchSite(u,c,title,phones,areas){
+  const h=dfHost(u); if(!h||DF_AGG.test(h)) return false;
+  const town=new Set(dfFold(c.town).toLowerCase().split(/[^a-z]+/).filter(Boolean));
+  const w=dfFold(c.name).toLowerCase().replace(/seventh-day/g,' ').split(/[^a-z]+/).filter(x=>x.length>1&&!DF_GENERIC.test(x)&&!/^(i|ii|iii|iv)$/.test(x));
+  const need=w.filter(x=>!town.has(x)).length?w.filter(x=>!town.has(x)):w;
+  const hc=h.replace(/[^a-z]/g,''), t=dfFold(title).toLowerCase(), tc=t.replace(/[^a-z]/g,'');
+  const has=x=>hc.includes(x)||tc.includes(x)||(DF_SPANISH[x]&&(DF_SPANISH[x].test(hc)||DF_SPANISH[x].test(t)));
+  const own=String(c.state||'').toLowerCase(), states=DF_STATES.split('|').filter(s=>s!==own).join('|');
+  if(need.some(x=>h.split('.').some(l=>new RegExp(x+'('+states+')$').test(l)))) return false;
+  const ordT=(t.match(/\b(ii|iii|iv)\b/i)||[])[1]||(/(ii|iii|iv)pa\b|(ii|iii|iv)\./i.test(h)?'x':''), ordN=(dfFold(c.name).match(/\b(ii|iii|iv)\b/i)||[])[1]||'';
+  if((ordT||'').toLowerCase()!==(ordN||'').toLowerCase()&&!(ordN&&t.includes(ordN.toLowerCase()))) return false;   // "Hispanic II" is another congregation, either way
+  if((phones||[]).length&&areas&&areas.size&&!(phones||[]).some(x=>areas.has(x.slice(0,3)))) return false;
+  if(title&&!/church|sda|adventist|iglesia|eglise|église|igreja|fellowship|company|mission|iasd/i.test(t+' '+h)) return false;
+  if(need.length&&need.every(has)) return 'yes';
+  if(need.filter(has).length>=Math.min(2,need.length)&&/adventist|sda|iasd/.test(hc+tc)) return 'maybe';
+  return false;
+}
+/* the conference's context for the judge: its own area codes (from the official phones), numbers printed on many sites (a website maker's,
+   not the church's), sites claimed by two churches (no one's for certain) */
+function dfContext(F){
+  const areas=new Set(), use=new Map(), claims=new Map();
+  for(const c of F.churches){ String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).forEach(p=>{ const d=dfDigits(p); if(d.length===10) areas.add(d.slice(0,3)); });
+    for(const p of new Set([...((c.site&&c.site.phones)||[]),...((c.otherSite&&c.otherSite.phones)||[])])) use.set(p,(use.get(p)||0)+1);
+    if(c.otherSite&&c.otherSite.url){ const h=dfHost(c.otherSite.url); claims.set(h,(claims.get(h)||0)+1); } }
+  return {areas,ignore:new Set([...use].filter(([p,n])=>n>=3&&!areas.has(p.slice(0,3))).map(([p])=>p)),shared:new Set([...claims].filter(([,n])=>n>=2).map(([h])=>h)),places:!!F.places,search:!!F.search};
+}
+const dfPagesWord=ps=>[...new Set(ps||[])].map(p=>p==='/'?L('home page','página principal'):L(p.replace(/^\/|\/$/g,'').replace(/-\d+$/,'').replace(/[-_]/g,' ').replace(/\//g,' › ')+' page','página '+p.replace(/^\/|\/$/g,'').replace(/-\d+$/,'').replace(/[-_]/g,' ').replace(/\//g,' › '))).slice(0,3).join(', ');
+/* the judge: one church, six areas */
+function dfJudge(c,X,today,own,myName){
+  const A={}, o=c.otherSite&&c.otherSite.url&&!X.shared.has(dfHost(c.otherSite.url))?dfChurchSite(c.otherSite.url,c,c.otherSite.title,c.otherSite.phones,X.areas):false;
+  const otherOk=o==='yes'?c.otherSite:null, otherMaybe=o==='maybe'?c.otherSite:null, g=c.google||{}, sr=c.search||{};
+  const listedOk=c.site&&c.site.opens&&!c.site.blocked, site=listedOk?c.site:otherOk, listedDead=c.site&&!c.site.opens&&!c.site.refused;
+  const root=h=>dfHost(h).split('.').slice(-2).join('.'), sameRoot=listedOk&&otherOk&&root(c.site.url)===root(otherOk.url)&&!/adventistchurch\.org$|seventhdayadventist\.church$/.test(root(otherOk.url));
+  const other=listedOk&&!sameRoot?otherOk:null, gWeb=g.found&&g.website?g.website:null;
+  const checked=[L('the official church listing','la ficha oficial')+(c.website?` (${dfHost(c.website)})`:L(' (no website given)',' (sin sitio web)')),
+    ...(g.read?[L('Google’s listing','la ficha de Google')+(gWeb?` (${dfHost(gWeb)})`:'')]:[]), ...(sr.read?[L('a web search for its name','una búsqueda de su nombre')]:[])];
+  // ---- Website
+  if(c.site&&c.site.blocked) A.website={s:'unread',head:L('Not read','No leído'),lines:[L(`${dfHost(c.site.url)} asks programs not to read it, so it was not read.`,`${dfHost(c.site.url)} pide que los programas no lo lean, así que no se leyó.`)],url:c.site.url};
+  else if(c.site&&!c.site.opens&&c.site.refused&&!otherOk) A.website={s:'unread',head:L('Not read','No leído'),lines:[L(`${dfHost(c.site.listed)} did not let our reader in today. A person may still see it.`,`${dfHost(c.site.listed)} no dejó entrar a nuestro lector hoy. Una persona quizá sí lo vea.`)]};
+  else if(!site&&otherMaybe) A.website={s:'work',head:L('Website not confirmed','Sitio web sin confirmar'),lines:[(listedDead?L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open today.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre hoy.`):L('The official listing gives no website.','La ficha oficial no da sitio web.'))+' '+L(`A search found ${otherMaybe.title?'“'+otherMaybe.title+'” ':''}(${dfHost(otherMaybe.url)}), which may be this church’s: if so, put it in the official listing.`,`Una búsqueda encontró ${otherMaybe.title?'“'+otherMaybe.title+'” ':''}(${dfHost(otherMaybe.url)}), que quizá sea de esta iglesia: si lo es, póngalo en la ficha oficial.`)],url:otherMaybe.url};
+  else if(!site&&gWeb&&dfHost(gWeb)!==dfHost(c.website||'')) A.website={s:'work',head:L('Only on Google','Solo en Google'),lines:[(listedDead?L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open today.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre hoy.`):L('The official listing gives no website.','La ficha oficial no da sitio web.'))+' '+L(`Google’s listing shows ${dfHost(gWeb)}: put it in the official listing too.`,`La ficha de Google muestra ${dfHost(gWeb)}: póngalo también en la ficha oficial.`)],url:gWeb};
+  else if(!site){ const fb=c.facebook&&c.facebook.url, yt=c.youtube&&c.youtube.read;
+    A.website={s:'help',head:listedDead?L('Website does not open','El sitio web no abre'):L('No website found','No se encontró sitio web'),
+      lines:[listedDead?L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open today, and nothing else was found.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre hoy, y no se encontró otra.`):L('We could not find a website for this church.','No pudimos encontrar un sitio web para esta iglesia.'),
+        L('Checked: ','Se revisó: ')+checked.join('; ')+'.', ...(fb||yt?[L(`It does have ${[fb&&'a Facebook page',yt&&'a YouTube channel'].filter(Boolean).join(' and ')}: a good place to start from.`,`Sí tiene ${[fb&&'una página de Facebook',yt&&'un canal de YouTube'].filter(Boolean).join(' y ')}: un buen punto de partida.`)]:[])]}; }
+  else {
+    const issues=[], good=[];
+    if(listedDead) issues.push(L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open; the church’s site is ${dfHost(site.url)}.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre; el sitio de la iglesia es ${dfHost(site.url)}.`));
+    if(other){ const on=[...new Set((other.pastors||[]).filter(p=>(p.pages||[]).some(pg=>DF_MAIN.test(pg))).map(p=>dfCleanName(p.name,c.town+' '+c.name)).filter(n=>n&&dfPersonLike(n)))];
+      issues.push(/seventhdayadventist\.church$/.test(dfHost(other.url))?L(`Another page for the church is also online, on the Adventist church-website platform: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Link it to the church’s site, or choose one.`,`Hay otra página de la iglesia en la plataforma adventista de sitios web: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Enlácela al sitio de la iglesia, o elija uno.`)
+        :L(`A second website is also online: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Visitors may find either one.`,`Hay un segundo sitio web en línea: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Los visitantes pueden encontrar cualquiera.`)); }
+    if(!site.https) issues.push(L('The site is not secure (its address starts with http, not https): browsers warn visitors.','El sitio no es seguro (su dirección empieza con http, no https): los navegadores advierten a los visitantes.'));
+    if(!site.serviceTimes) issues.push(L('We did not find service times on the pages read.','No encontramos los horarios de culto en las páginas leídas.'));
+    const sitePh=(site.phones||[]).filter(p=>!X.ignore.has(p)), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10), sp=sitePh.map(dfDigits);
+    if(dps.length&&sp.length&&!sp.some(x=>dps.includes(x))) issues.push(L(`The phone on the site (${sitePh[0]}) is not the one in the official listing (${c.phone}): check which one rings at the church.`,`El teléfono del sitio (${sitePh[0]}) no es el de la ficha oficial (${c.phone}): verifique cuál suena en la iglesia.`));
+    const tmpl=(site.phones||[]).filter(p=>X.ignore.has(p));
+    if(!sp.length) issues.push(tmpl.length?L(`The only phone on the site is ${tmpl[0]}, a number printed on many church sites, not the church’s own${c.phone?` (the official listing has ${c.phone})`:''}.`,`El único teléfono del sitio es ${tmpl[0]}, un número que aparece en muchos sitios, no el de la iglesia${c.phone?` (la ficha oficial tiene ${c.phone})`:''}.`):L('We did not find a phone number on the pages read.','No encontramos un número de teléfono en las páginas leídas.'));
+    if(site.https) good.push(L('secure','seguro')); if(site.mobile) good.push(L('fits a phone','se ve bien en el teléfono')); if(site.serviceTimes) good.push(L('shows service times','muestra los horarios')); if(site.visitors) good.push(L('has a page for visitors','tiene una página para visitantes'));
+    A.website={s:issues.length?'work':'ok',head:issues.length?(other?(/seventhdayadventist\.church$/.test(dfHost(other.url))?L('Another page online','Otra página en línea'):L('Two websites','Dos sitios web')):listedDead?L('Listed address is out of date','La dirección de la ficha está vencida'):L('Opens, with things to fix','Abre, con cosas por arreglar')):L('Current','Al día'),
+      lines:[`${dfHost(site.url)}${good.length?': '+good.join(', '):''}.`,...issues],url:site.url,two:!!other,dead:listedDead};
+  }
+  // ---- Pastor's name (his registration on his churches; the official listing elsewhere)
+  const rec=own&&myName?myName:c.pastor;
+  if(!site) A.pastor={s:'na',head:L('No website to show it','Sin sitio web donde mostrarlo'),lines:rec?[L(`Pastor of record: ${rec}.`,`Pastor registrado: ${rec}.`)]:[]};
+  else if(!rec) A.pastor={s:'unread',head:L('No pastor in the listing','Sin pastor en la ficha'),lines:[L('The official listing names no pastor, so there is nothing to check the site against.','La ficha oficial no nombra pastor, así que no hay con qué comparar el sitio.')]};
+  else {
+    const staff=String(c.staff||'').split(/\s*·\s*(?:Lay Pastor|Associate Pastor|Pastor|Bible Worker|Youth Pastor)?\s*[,;]?\s*/).map(x=>x.trim()).filter(x=>/\s/.test(x));
+    const all=[...(site.pastors||[]),...((other&&other.pastors)||[]).map(p=>({...p,other:true}))].map(p=>({...p,name:dfCleanName(p.name,c.town+' '+c.name),pages:[...new Set((p.pages||[]).filter(pg=>DF_MAIN.test(pg)))]}))
+      .filter(p=>p.name&&p.pages.length&&dfPersonLike(p.name)).filter((p,i,a)=>a.findIndex(q=>dfSame(q.name,p.name)&&!!q.other===!!p.other)===i);
+    const mine=all.filter(p=>!p.other&&dfSame(p.name,rec)), others=all.filter(p=>!dfSame(p.name,rec)&&!p.former&&!staff.some(x=>dfSame(p.name,x)));
+    const namedPages=dfSame(rec,c.pastor)?(site.pastorNamed||[]):mine.flatMap(p=>p.pages), onMain=[...new Set([...namedPages.filter(p=>DF_MAIN.test(p)),...mine.flatMap(p=>p.pages)])];
+    const othersMain=others.filter(p=>!p.other), dirs=(c.dirPastors||[]).filter(x=>dfPersonLike(x.name)&&!dfSame(x.name,rec));
+    const lines=[];
+    if(onMain.length) lines.push(L(`Names ${rec} (${dfPagesWord(onMain)}).`,`Nombra a ${rec} (${dfPagesWord(onMain)}).`));
+    else if(namedPages.length) lines.push(L(`Names ${rec} only on the ${dfPagesWord(namedPages)} (in a sermon or video title), not where a visitor looks for the pastor.`,`Nombra a ${rec} solo en la ${dfPagesWord(namedPages)} (en el título de un sermón o video), no donde un visitante busca al pastor.`));
+    else lines.push(L(`We did not find ${rec}’s name where a visitor looks for the pastor.`,`No encontramos el nombre de ${rec} donde un visitante busca al pastor.`));
+    for(const p of all.filter(p=>staff.some(x=>dfSame(p.name,x))).slice(0,2)) lines.push(L(`Also names ${p.name}, listed as staff in the official directory.`,`También nombra a ${p.name}, que figura como personal en el directorio oficial.`));
+    for(const p of others.slice(0,3)) lines.push(L(`${p.other?'The older site':'It'} names Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': either the site or the official listing is out of date'}.`,`${p.other?'El sitio antiguo':'Nombra'} ${p.other?'nombra ':''}al Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': el sitio o la ficha oficial está desactualizado'}.`));
+    for(const x of dirs.slice(0,3)) lines.push(L(`${x.where} still names Pastor ${x.name}.`,`${x.where} todavía nombra al Pastor ${x.name}.`));
+    const dirDiffers=own&&c.pastor&&!dfSame(c.pastor,rec); if(dirDiffers) lines.push(L(`The official church directory lists ${c.pastor}.`,`El directorio oficial de iglesias tiene a ${c.pastor}.`));
+    const s=!onMain.length&&othersMain.length?'help':!onMain.length?'work':others.length||dirs.length||dirDiffers?'work':'ok';
+    A.pastor={s,head:s==='ok'?L('Current','Al día'):!onMain.length&&othersMain.length?(own?L('Shows another pastor','Muestra a otro pastor'):L('Site and listing disagree','El sitio y la ficha no coinciden')):!onMain.length?L('Pastor not named','No nombra al pastor'):L('Also shows earlier names','También muestra nombres anteriores'),
+      lines,siteNeeds:!onMain.length,otherNames:othersMain.map(p=>p.name).join(L(' and ',' y ')),dirs,dirDiffers};
+  }
+  // ---- Google & Maps (the weight: the pastor's "Google search and maps are very very important")
+  if(!g.read) A.google={s:'unread',head:L('Not read yet','Aún no leído'),lines:[g.why==='cap'?L('This month’s free Google lookups are used: it is read next month.','Las consultas gratuitas de Google de este mes se agotaron: se lee el mes que viene.'):g.why==='error'?L('Google did not answer today.','Google no respondió hoy.'):L('Google’s listing is read once Google is connected.','La ficha de Google se lee cuando Google esté conectado.')]};
+  else if(!g.found) A.google={s:'help',head:L('Not found on Google Maps','No aparece en Google Maps'),lines:[L(`We found no Google listing for the church at ${c.address||c.town||'its address'}.`,`No encontramos una ficha de Google de la iglesia en ${c.address||c.town||'su dirección'}.`),L('Checked: Google Maps, by the church’s name and address.','Se revisó: Google Maps, por el nombre y la dirección de la iglesia.')]};
+  else {
+    const issues=[], st=String(g.status||'');
+    if(/CLOSED_PERMANENTLY/.test(st)) issues.push(['help',L('Google shows the church as permanently closed.','Google muestra la iglesia como cerrada permanentemente.')]);
+    else if(/CLOSED_TEMPORARILY/.test(st)) issues.push(['help',L('Google shows the church as temporarily closed.','Google muestra la iglesia como cerrada temporalmente.')]);
+    const sw=site&&site.url;
+    if(!g.website) issues.push(['work',L('Google shows no website.','Google no muestra sitio web.')+(sw?L(` Add ${dfHost(sw)}.`,` Agregue ${dfHost(sw)}.`):'')]);
+    else if(sw&&dfHost(g.website)!==dfHost(sw)&&!(otherOk&&dfHost(g.website)===dfHost(otherOk.url))) issues.push(['work',L(`Google shows ${dfHost(g.website)}; the church’s site is ${dfHost(sw)}.`,`Google muestra ${dfHost(g.website)}; el sitio de la iglesia es ${dfHost(sw)}.`)]);
+    const gp=dfDigits(g.phone), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10);
+    if(!g.phone) issues.push(['work',L('Google shows no phone.','Google no muestra teléfono.')]); else if(dps.length&&!dps.includes(gp)) issues.push(['work',L(`Google shows the phone ${g.phone}; the official listing has ${c.phone}.`,`Google muestra el teléfono ${g.phone}; la ficha oficial tiene ${c.phone}.`)]);
+    if(!g.hours||!g.hours.length) issues.push(['work',L('No hours on Google: add the service times.','Sin horario en Google: agregue los horarios de culto.')]);
+    if((g.reviews||0)<5) issues.push(['work',L(`Only ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} on Google: invite members to leave an honest one.`,`Solo ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} en Google: invite a los miembros a dejar una sincera.`)]);
+    else if(g.rating!=null&&g.rating<4) issues.push(['work',L(`${g.rating} stars on Google.`,`${g.rating} estrellas en Google.`)]);
+    const s=issues.some(i=>i[0]==='help')?'help':issues.length?'work':'ok';
+    A.google={s,head:/CLOSED/.test(st)?L('Marked closed on Google','Marcada cerrada en Google'):g.rating!=null?`★ ${g.rating} · ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:L('On Google Maps','En Google Maps'),
+      lines:[L(`On Google Maps as “${g.name}”${g.rating!=null?`: ${g.rating} stars from ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`,`En Google Maps como “${g.name}”${g.rating!=null?`: ${g.rating} estrellas de ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`),...issues.map(i=>i[1]),
+        ...(sr.read&&sr.ownAt&&site?[L(`In a web search for its name, its own site comes ${sr.ownAt<=3?'near the top':'in place '+sr.ownAt}.`,`En una búsqueda de su nombre, su propio sitio aparece ${sr.ownAt<=3?'entre los primeros':'en el lugar '+sr.ownAt}.`)]:[])],url:g.maps,note:L('From Google. Google’s own search order cannot be read by any program.','De Google. Ningún programa puede leer el orden de búsqueda de Google.')};
+  }
+  // ---- Facebook & Instagram (never read: a link, and followers when a search result states them)
+  const fb=c.facebook, ig=c.instagram, igLine=ig?L(`Instagram: ${ig.url.replace(/^https?:\/\/(www\.)?/,'')}${ig.followers?`, ${dfPl(ig.followers,'follower','followers','seguidor','seguidores')}`:''}.`,`Instagram: ${ig.url.replace(/^https?:\/\/(www\.)?/,'')}${ig.followers?`, ${dfPl(ig.followers,'follower','followers','seguidor','seguidores')}`:''}.`):L('Instagram: none found (not every church needs it; it reaches younger neighbors).','Instagram: no se encontró (no toda iglesia lo necesita; llega a vecinos más jóvenes).');
+  if(fb) A.social={s:fb.from==='site'?'ok':'work',head:fb.from==='site'?L('Facebook page linked','Página de Facebook enlazada'):L('Not linked from the website','Sin enlace desde el sitio'),
+    lines:[L(`Facebook page: ${fb.url.replace(/^https?:\/\/(www\.)?facebook\.com/,'facebook.com')}${fb.followers?`, ${dfPl(fb.followers,'follower','followers','seguidor','seguidores')}`:''}.`,`Página de Facebook: ${fb.url.replace(/^https?:\/\/(www\.)?facebook\.com/,'facebook.com')}${fb.followers?`, ${dfPl(fb.followers,'follower','followers','seguidor','seguidores')}`:''}.`),
+      ...(fb.from==='site'?[]:[L('The church’s website does not link to it: we found it by searching.','El sitio de la iglesia no la enlaza: la encontramos buscando.')]),igLine],url:fb.url,note:L('Facebook and Instagram are not read: open the page to see the last post and who responds.','Facebook e Instagram no se leen: abra la página para ver la última publicación y quién responde.')};
+  else if(sr.read) A.social={s:'help',head:L('No Facebook page found','No se encontró página de Facebook'),lines:[L(`We could not find a Facebook page: ${site?'the website links to none, and ':''}a search for its name found none.`,`No pudimos encontrar una página de Facebook: ${site?'el sitio no enlaza ninguna, y ':''}una búsqueda de su nombre no encontró ninguna.`),igLine]};
+  else A.social={s:'none',head:L('Not linked from the website','Sin enlace desde el sitio'),lines:[site?L('The website links to no Facebook page (no search was run).','El sitio no enlaza ninguna página de Facebook (no se hizo búsqueda).'):L('No Facebook page was looked for: there is no website to link one.','No se buscó Facebook: no hay sitio que lo enlace.'),igLine]};
+  // ---- YouTube & live stream
+  const yt=c.youtube, live=site&&site.social&&site.social.livestream;
+  if(!yt||!yt.read) A.youtube={s:'work',head:live?L('Live page, no channel found','Página en vivo, sin canal'):L('No video found','No se encontró video'),lines:[live?L(`The website has a live-stream page (${dfHost(live)}), but no YouTube channel was found: it may stream on Facebook.`,`El sitio tiene una página de transmisión (${dfHost(live)}), pero no se encontró canal de YouTube: quizá transmite por Facebook.`):L('We found no YouTube channel or live stream.','No encontramos canal de YouTube ni transmisión.')]};
+  else { const Lv=yt.latest, ago=Lv?dfDays(Lv.d,today):null, k=yt.kinds||{}, s=ago==null?'work':ago<=8?'ok':ago<=60?'work':'help';
+    const kinds=[k.sermon&&dfPl(k.sermon,'sermon','sermons','sermón','sermones'),k.series&&L(`${dfNf(k.series)} from an evangelistic series`,`${dfNf(k.series)} de una serie evangelística`),k.worship&&dfPl(k.worship,'worship service','worship services','culto','cultos'),k.event&&dfPl(k.event,'event','events','evento','eventos')].filter(Boolean);
+    A.youtube={s,head:ago==null?L('No videos','Sin videos'):ago<=60?L(`Last video ${ago} day${ago===1?'':'s'} ago`,`Último video hace ${ago} día${ago===1?'':'s'}`):L(`Idle since ${dfMd(Lv.d)}`,`Inactivo desde ${dfMd(Lv.d)}`),
+      lines:[Lv?L(`Last video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`,`Último video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`):L('No videos in its feed.','Sin videos.'),
+        L(`${dfPl(yt.last30,'video','videos','video','videos')} in the last 30 days, about ${dfPl(yt.avgViews,'view','views','vista','vistas')} each${c.members?` (members: ${dfNf(c.members)})`:''}.`,`${dfPl(yt.last30,'video','videos','video','videos')} en los últimos 30 días, unas ${dfPl(yt.avgViews,'vista','vistas','vista','vistas')} cada uno${c.members?` (miembros: ${dfNf(c.members)})`:''}.`),
+        ...(kinds.length?[L(`The last ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`,`Los últimos ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`)]:[])],url:yt.url}; }
+  // ---- Reaching out ("evangelistic in nature or just showing what they're doing")
+  if(!site) A.reach={s:'na',head:L('No website','Sin sitio web'),lines:[],miss:[]};
+  else { const has=[site.visitors&&L('a page for visitors','una página para visitantes'),site.bibleStudy&&L('an offer of Bible studies','una oferta de estudios bíblicos'),site.prayerRequest&&L('a way to ask for prayer','una manera de pedir oración'),yt&&yt.read&&yt.kinds&&yt.kinds.series&&L('an evangelistic series on video','una serie evangelística en video')].filter(Boolean);
+    const miss=[!site.visitors&&'visitors',!site.bibleStudy&&'bible',!site.prayerRequest&&'prayer'].filter(Boolean);
+    const MW={visitors:L('a page for first-time visitors','una página para quienes visitan por primera vez'),bible:L('an offer of Bible studies','una oferta de estudios bíblicos'),prayer:L('a way to ask for prayer','una manera de pedir oración')};
+    A.reach={s:has.length>=3?'ok':has.length>=1?'work':'help',head:has.length?L(`${has.length} of 4 ways in`,`${has.length} de 4 puertas`):L('No way in for a neighbor','Ninguna puerta para el vecino'),
+      lines:[has.length?L(`It has ${has.join(', ')}.`,`Tiene ${has.join(', ')}.`):L('We found nothing that invites a neighbor in.','No encontramos nada que invite al vecino.'),...(miss.length?[L('Not found: ','No se encontró: ')+miss.map(m=>MW[m]).join(', ')+'.']:[])],miss}; }
+  const score=DF_AREAS.reduce((a,k)=>a+(A[k].s==='help'?10:A[k].s==='work'?1:0),0)+(A.website.s==='help'?100:0)+(A.google.s==='help'?40:0)+(A.pastor.s==='help'?20:0);
+  const worst=A.website.s==='help'||A.pastor.s==='help'||A.google.s==='help'?3:DF_AREAS.some(k=>['help','work'].includes(A[k].s))?2:0;
+  return {areas:A,score,worst};
+}
+/* the fixes for the report, each with who, when and what it costs; and "take me there, with the words ready" */
+function dfFixes(c,J,myName){
+  const A=J.areas, out=[], add=(k,what,who,when)=>out.push({k,what,who,when});
+  if(A.website.s==='help') add('website',L('Start a website (Frame, the NAD’s free builder): service times, the address, a phone, the pastor’s name and a page for visitors.','Crear un sitio web (Frame, el creador gratuito de la NAD): horarios, dirección, teléfono, el nombre del pastor y una página para visitantes.'),L('Communication leader, with the conference','Líder de comunicación, con la asociación'),L('This month','Este mes'));
+  if(A.google.s==='help') add('google',/CLOSED/.test(A.google.head)||/cerrada/i.test(A.google.head)?L('Correct Google’s listing: it shows the church as closed. Claim the listing and mark it open.','Corregir la ficha de Google: muestra la iglesia como cerrada. Reclame la ficha y márquela abierta.'):L('Put the church on Google Maps (Google Business Profile): name, address, service times, website, phone, a few photos.','Poner la iglesia en Google Maps (Perfil de Empresa de Google): nombre, dirección, horarios, sitio web, teléfono y unas fotos.'),L('Communication leader','Líder de comunicación'),L('This week','Esta semana'));
+  else if(A.google.s==='work') add('google',L('Claim the church on Google (if “Own this business?” shows) and correct it: ','Reclamar la iglesia en Google (si aparece “¿Es el propietario?”) y corregir: ')+A.google.lines.slice(1).filter(l=>!/search|búsqueda/i.test(l)).join(' '),L('Communication leader','Líder de comunicación'),L('This week','Esta semana'));
+  if(A.pastor.s==='help'||A.pastor.s==='work'){ const P=A.pastor, dirs=[...new Set((P.dirs||[]).map(x=>x.where))], parts=[], rec=myName||c.pastor;
+    if(P.siteNeeds) parts.push(L(`Put ${rec}’s name and photo on the pastor or staff page${P.otherNames?' and take '+P.otherNames+' off':''}`,`Poner el nombre y la foto de ${rec} en la página del pastor o del personal${P.otherNames?' y quitar a '+P.otherNames:''}`));
+    else if(P.otherNames) parts.push(L(`Take ${P.otherNames} off the website`,`Quitar a ${P.otherNames} del sitio web`));
+    if(dirs.length) parts.push(L(`ask ${dirs.join(' and ')} to correct the pastor’s name (each has a “suggest a correction” link)`,`pedir a ${dirs.join(' y ')} que corrijan el nombre del pastor (cada uno tiene un enlace para sugerir correcciones)`));
+    if(P.dirDiffers) parts.push(L('ask the conference to update the official listing','pedir a la asociación que actualice la ficha oficial'));
+    if(parts.length) add('pastor',parts.join('; ').replace(/^./,x=>x.toUpperCase())+'.',P.siteNeeds||P.otherNames?L('Webmaster','Encargado del sitio'):L('Communication leader','Líder de comunicación'),L('This week','Esta semana')); }
+  if(A.website.two||A.website.dead) add('website2',L('Choose one website: take the other down or have it forward to the current one, and correct the address in the official listing.','Elegir un solo sitio web: quitar el otro o redirigirlo al actual, y corregir la dirección en la ficha oficial.'),L('Webmaster','Encargado del sitio'),L('This month','Este mes'));
+  if(A.reach.s!=='ok'&&A.reach.s!=='na'&&(A.reach.miss||[]).length) add('reach',L('Add what invites a neighbor in: ','Agregar lo que invita al vecino: ')+A.reach.lines[A.reach.lines.length-1].replace(/^Not found: |^No se encontró: /,''),L('Webmaster, with the pastor','Encargado del sitio, con el pastor'),L('This month','Este mes'));
+  if(A.social.s==='help') add('social',L('Start a Facebook page for the church, link it from the website, and post twice a week with one invitation in each.','Crear una página de Facebook para la iglesia, enlazarla desde el sitio y publicar dos veces por semana con una invitación cada vez.'),L('Communication leader','Líder de comunicación'),L('This month','Este mes'));
+  else if(A.social.s==='work') add('social',L('Link the Facebook page from the church’s website.','Enlazar la página de Facebook desde el sitio de la iglesia.'),L('Webmaster','Encargado del sitio'),L('This week','Esta semana'));
+  if(A.youtube.s==='help'||A.youtube.s==='work') add('youtube',L('Post each Sabbath’s sermon the same day with a clear title; on a live stream, have one person welcome viewers and answer comments.','Publicar el sermón de cada sábado el mismo día con un título claro; en la transmisión, que una persona salude a quienes miran y responda los comentarios.'),L('Media team','Equipo de medios'),L('Every Sabbath','Cada sábado'));
+  const W={website:0,google:1,pastor:2,website2:3,reach:4,social:5,youtube:6};
+  return out.sort((a,b)=>W[a.k]-W[b.k]);
+}
+/* the words, ready to paste: what Google, the official listing and the website should all say */
+function dfWordsFor(c,J,myName){
+  const pastor=myName||c.pastor||'', site=(c.site&&c.site.opens&&c.site.url)||(c.google&&c.google.website)||'';
+  return [c.name.replace(/\bSDA\b/,'Seventh-day Adventist'), c.address||'', c.phone?L('Phone: ','Teléfono: ')+c.phone:'', site?L('Website: ','Sitio web: ')+site:'', pastor?L('Pastor: ','Pastor: ')+pastor:'',
+    L('Sabbath School and worship: (write the times)','Escuela Sabática y culto: (escriba los horarios)'),'',
+    L('First time here? You are welcome: plan your visit, ask for prayer, or request free Bible studies.','¿Es su primera visita? Bienvenido: planee su visita, pida oración o solicite estudios bíblicos gratuitos.')].filter((x,i)=>x||i===6).join('\n');
+}
+const DF_HOW=()=>[
+  ['website',L('No website, or one that does not open','Sin sitio web, o uno que no abre'),[['Frame','adventistconnect.org/frame','https://adventistconnect.org/frame/',L('A free website builder for Adventist churches, hosted by the North American Division: pages for service times, the pastor, beliefs and visitors.','Un creador gratuito de sitios web para iglesias adventistas, alojado por la División Norteamericana: páginas para horarios, el pastor, creencias y visitantes.'),true]],L('Start with five pages: Home (service times, address, a phone), Our pastor, Plan your visit, What we believe, Watch. Put the address in the official listing and on Google.','Empiece con cinco páginas: Inicio (horarios, dirección, teléfono), Nuestro pastor, Planee su visita, Lo que creemos, Mire en vivo. Ponga la dirección en la ficha oficial y en Google.')],
+  ['google',L('Not on Google Maps, out of date, or few reviews','No está en Google Maps, desactualizada o con pocas reseñas'),[['Google Business Profile','business.google.com','https://business.google.com/us/business-profile/',L('The church’s listing on Google Search and Maps: hours, service times, photos, website, phone and reviews.','La ficha de la iglesia en Google y Maps: horario, cultos, fotos, sitio web, teléfono y reseñas.'),true]],dfT('claimHow')+' '+L('Then add the service times and photos, and invite members to leave an honest review.','Luego agregue los horarios y fotos, e invite a los miembros a dejar una reseña sincera.')],
+  ['pastor',L('The pastor’s name is missing or out of date','Falta el nombre del pastor o está desactualizado'),[['eAdventist','eadventist.net','https://www.eadventist.net/',L('The official listing: each church’s entry has “Request changes”, which writes to the conference’s records office.','La ficha oficial: cada iglesia tiene “Request changes”, que escribe a la oficina de registros de la asociación.'),true]],L('Put the pastor’s name and photo on the home page and the pastor or staff page; take earlier names off; ask the directories that still show an earlier pastor to correct it.','Ponga el nombre y la foto del pastor en la página principal y en la del pastor o personal; quite los nombres anteriores; pida a los directorios que aún muestran a un pastor anterior que lo corrijan.')],
+  ['social',L('No Facebook page, or one the website does not link','Sin página de Facebook, o sin enlace desde el sitio'),[['Meta Business Suite','facebook.com/business','https://www.facebook.com/business/tools/meta-business-suite',L('Facebook and Instagram in one place; plan a week of posts at once.','Facebook e Instagram en un solo lugar; planee una semana de publicaciones a la vez.'),true]],L('Two posts a week, each with one invitation (a Bible study, a prayer request, a coming event). Answer every comment the same day.','Dos publicaciones por semana, cada una con una invitación (un estudio bíblico, un pedido de oración, un evento). Responda cada comentario el mismo día.')],
+  ['youtube',L('YouTube and the live stream','YouTube y la transmisión'),[['YouTube Studio','studio.youtube.com','https://studio.youtube.com/',L('The church’s channel: live streams, titles, and replying to comments.','El canal de la iglesia: transmisiones, títulos y respuestas a comentarios.'),true]],L('Post the sermon the same day with a clear title. During a live stream, one person greets viewers and answers comments; at the end, offer a Bible study or prayer.','Publique el sermón el mismo día con un título claro. Durante la transmisión, una persona saluda y responde comentarios; al final, ofrezca un estudio bíblico u oración.')],
+  ['reach',L('A way in for a neighbor','Una puerta para el vecino'),[[L('Your conference’s communication department','El departamento de comunicación de su asociación'),'','',L('Help with a site, training for the person who keeps it, and invitations for a series.','Ayuda con un sitio, capacitación para quien lo mantiene, e invitaciones para una serie.'),true],['SermonView','sermonview.com','https://sermonview.com/websites/',L('Evangelism websites, mailers and invitations for a series.','Sitios de evangelismo, correo e invitaciones para una serie.'),false]],L('Every site needs three doors: Plan your visit, Ask for prayer, Request Bible studies. A neighbor who knocks hears back within a day.','Todo sitio necesita tres puertas: Planee su visita, Pida oración, Solicite estudios bíblicos. El vecino que llama recibe respuesta en un día.')],
+];
+const DF_ICON={website:'<path d="M3 5h18v14H3z M3 9h18 M6 7h.01 M8.5 7h.01"/>',pastor:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"/>',
+  google:'<path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/>',social:'<path d="M14 21v-7h2.5l.5-3H14V9.2c0-.9.3-1.6 1.6-1.6H17V5.1c-.4 0-1.3-.1-2.4-.1-2.4 0-3.9 1.4-3.9 4V11H8v3h2.7v7"/>',
+  youtube:'<rect x="3" y="6" width="18" height="12" rx="3.5"/><path d="M10.5 9.5v5l4-2.5z"/>',reach:'<path d="M4 12h9 M10 8l4 4-4 4 M17 5v14"/>'};
+const dfIco=k=>`<svg class="df-ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${DF_ICON[k]||DF_ICON.reach}</svg>`;
+const dfChip=(a,short)=>`<span class="df-st df-st-${a.s}"><i aria-hidden="true"></i>${esc(short?a.head:dfT(a.s))}</span>`;
+const dfLink=(u,t)=>u&&/^https?:\/\//i.test(u)?`<a class="df-src" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t||u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'').slice(0,48))} ↗</a>`:'';
+function dfArea(k,a){ return `<div class="df-area"><div class="df-ah">${dfIco(k)}<b>${esc(dfT(DF_AREA_KEY[k]))}</b>${dfChip(a)}</div><div class="df-ahead">${esc(a.head)}</div>${a.lines.map(l=>`<p>${esc(l)}</p>`).join('')}${a.note?`<p class="df-note">${esc(a.note)}</p>`:''}${dfLink(a.url)}</div>`; }
+/* the "take me there" buttons of one church: links that go straight to the right place, and the words ready to paste */
+function dfActs(c,J){
+  const A=J.areas, b=[];
+  if(A.google.s!=='ok'&&A.google.s!=='unread') b.push(c.google&&c.google.maps?dfLink(c.google.maps,dfT('openMaps')):dfLink('https://business.google.com/us/business-profile/',dfT('addGoogle')));
+  if(A.website.s==='help') b.push(dfLink('https://adventistconnect.org/frame/',dfT('frame')));
+  if((A.pastor.dirs||[]).length) for(const x of A.pastor.dirs.slice(0,2)) if(x.url) b.push(dfLink(x.url,dfT('fixAt',{where:x.where})));
+  if(A.pastor.dirDiffers||A.website.dead) b.push(dfLink('https://www.eadventist.net/search/organization?locale=en&org='+encodeURIComponent(c.org),dfT('listingLink')));
+  if(A.social.s==='help') b.push(dfLink('https://www.facebook.com/pages/create',dfT('makeFb'))); else if(c.facebook&&c.facebook.url) b.push(dfLink(c.facebook.url,dfT('openFb')));
+  if(A.youtube.s!=='ok'&&c.youtube&&c.youtube.read) b.push(dfLink('https://studio.youtube.com/',dfT('studio')));
+  return b.filter(Boolean);
+}
+function dfMine(F,X){
+  const reg=typeof regGet==='function'?regGet():null, my=reg&&reg.name?String(reg.name):'';
+  const names=(typeof chList==='function'?chList():[]).map(ch=>{ try{ return chName(ch); }catch(e){ return ''; } }).concat(reg&&reg.church?[reg.church]:[]).filter(Boolean);
+  const key=s=>dfFold(s).toLowerCase().replace(/seventh-day adventist|seventh day adventist|\bsda\b|church|iglesia|company/g,' ').replace(/[^a-z0-9]+/g,' ').trim();
+  return F.churches.filter(c=>(my&&c.pastor&&dfSame(c.pastor,my))||names.some(n=>key(n)&&key(n)===key(c.name)));
+}
+/* ---------------- loading: the findings from the server (registered pastors only), read once, refreshed while a reading runs */
+async function dfLoad(force){
+  const conf=typeof myConf==='function'?myConf():'';
+  if(!conf){ DF.state='noconf'; dfPaint(); return; }
+  if(DF.busy) return;
+  if(!force&&DF.conf===conf&&DF.data&&DF.state==='ready') { dfPaint(); return; }
+  DF.busy=true; DF.conf=conf;
+  try{
+    const tok=typeof regTok==='function'?regTok():'';
+    const r=await fetch(DF_FN+'?conf='+encodeURIComponent(conf),{headers:tok?{'x-terrain-reg':tok}:{}});
+    const j=await r.json().catch(()=>null);
+    if(!r.ok||!j||!j.ok){ DF.state=r.status===401?'noreg':'offline'; }
+    else if(!j.supported){ DF.state='unsupported'; }
+    else { DF.data=j.findings||null; DF.reading=j.reading||null;
+      DF.state=j.state==='reading'?'reading':j.findings?'ready':j.enabled?'none':'notyet';
+      if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
+  }catch(e){ DF.state='offline'; }
+  DF.busy=false; dfPaint();
+  clearTimeout(DF.timer);
+  if(DF.state==='reading'||(DF.reading&&DF.reading.only)) DF.timer=setTimeout(()=>{ const h=$('chc'); if(h&&!h.hidden&&document.visibilityState!=='hidden') dfLoad(true); },DF_POLL_MS);
+}
+function dfMount(host){
+  let box=host.querySelector('#chc-df'); if(!box){ box=document.createElement('section'); box.id='chc-df'; box.className='df'; box.setAttribute('aria-labelledby','df-h'); host.appendChild(box); }
+  dfPaint(); dfLoad(false);
+}
+async function dfAgain(org){
+  const tok=typeof regTok==='function'?regTok():'';
+  try{ const r=await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'again',conf:DF.conf,org})});
+    DF.msg[org]=r.status===429?dfT('limitAgain'):dfT('checking'); }catch(e){ DF.msg[org]=dfT('offline'); }
+  dfPaint(); setTimeout(()=>dfLoad(true),DF_POLL_MS);
+}
+async function dfCopy(btn,text){
+  try{ await navigator.clipboard.writeText(text); btn.textContent=dfT('copied'); setTimeout(()=>{ btn.textContent=dfT('copy'); },1600); }
+  catch(e){ const pre=btn.parentElement&&btn.parentElement.querySelector('pre'); if(pre){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(pre); s.removeAllRanges(); s.addRange(rg); } btn.textContent=dfT('copyHint'); }
+}
+function dfReportText(c,J,myName,F){
+  const A=J.areas, good=DF_AREAS.filter(k=>A[k].s==='ok').map(k=>dfT(DF_AREA_KEY[k])), fx=dfFixes(c,J,myName);
+  return {title:c.name.replace(/\bSDA\b/,'Seventh-day Adventist'),from:myName,date:dfDay(F.read),good,
+    sees:DF_AREAS.filter(k=>['help','work'].includes(A[k].s)).map(k=>({k,h:A[k].head,l:A[k].lines.slice(0,k==='pastor'?4:2).join(' ')})),first:fx.slice(0,3),then:fx.slice(3)};
+}
+function dfReportHTML(c,J,myName,F){
+  const R=dfReportText(c,J,myName,F), v=(typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null);
+  const vv=v?(LANG==='es'?v.es:v.en):null;
+  return `<div class="df-doc" id="df-rep-${esc(c.org)}" role="tabpanel"><div class="df-kick">${esc(dfT('kicker'))}</div><h3>${esc(R.title)}</h3>
+    <dl><div><dt>${esc(dfT('to'))}</dt><dd>${esc(dfT('toV'))}</dd></div><div><dt>${esc(dfT('from'))}</dt><dd>${esc(R.from?L('Pastor ','Pastor ')+R.from:'')}</dd></div><div><dt>${esc(dfT('date'))}</dt><dd>${esc(R.date)}</dd></div></dl>
+    <h4>${esc(dfT('rSees'))}</h4>${R.good.length?`<p>${esc(dfT('rGood',{list:R.good.join(', ')}))}</p>`:''}<ul>${R.sees.map(x=>`<li><b>${esc(dfT(DF_AREA_KEY[x.k]))}:</b> ${esc(x.h)}. ${esc(x.l)}</li>`).join('')}</ul>
+    <h4>${esc(dfT('rFirst'))}</h4><ol>${R.first.map(f=>`<li><div>${esc(f.what)}</div><div class="df-faint">${esc(dfT('who'))}: ${esc(f.who)} · ${esc(dfT('when'))}: ${esc(f.when)} · ${esc(dfT('cost'))}: ${esc(dfT('free'))}</div></li>`).join('')}</ol>
+    ${R.then.length?`<h4>${esc(dfT('rThen'))}</h4><ul>${R.then.map(f=>`<li>${esc(f.what)}</li>`).join('')}</ul>`:''}
+    <h4>${esc(dfT('wordsFor'))}</h4><div class="df-words"><pre>${esc(dfWordsFor(c,J,myName))}</pre><button type="button" class="btn ghost gfsm" data-df-copy="${esc(c.org)}">${esc(dfT('copy'))}</button></div>
+    <h4>${esc(dfT('rHelp'))}</h4><p>${esc(dfT('rHelpT'))}</p>
+    ${vv?`<p class="df-verse">“${esc(vv.text)}” <span>${esc(vv.ref)}</span></p>`:''}
+    <div class="df-acts"><button type="button" class="btn" data-df-pdf="${esc(c.org)}">${esc(dfT('pdf'))}</button><button type="button" class="btn ghost" data-df-prop="${esc(c.org)}">${esc(dfT('proposal'))}</button><span class="df-faint" data-df-pdfmsg="${esc(c.org)}"></span></div></div>`;
+}
+async function dfPdf(c,J,myName,F){
+  const J2=await gfLoadJsPDF(); const doc=new J2({unit:'pt',format:'letter'}), R=dfReportText(c,J,myName,F), W=612, M=54; let y=60;
+  const line=(t,size,bold,gap)=>{ doc.setFont('helvetica',bold?'bold':'normal'); doc.setFontSize(size); for(const l of doc.splitTextToSize(String(t),W-2*M)){ if(y>740){ doc.addPage(); y=60; } doc.text(l,M,y); y+=size*1.35; } y+=gap||0; };
+  line(dfT('kicker').toUpperCase(),8.5,true,4); line(R.title,16,true,6);
+  line(`${dfT('to')}: ${dfT('toV')}`,9.5,false); if(R.from) line(`${dfT('from')}: ${L('Pastor ','Pastor ')}${R.from}`,9.5,false); line(`${dfT('date')}: ${R.date}`,9.5,false,10);
+  line(dfT('rSees'),11.5,true,2); if(R.good.length) line(dfT('rGood',{list:R.good.join(', ')}),10,false,2); R.sees.forEach(x=>line(`• ${dfT(DF_AREA_KEY[x.k])}: ${x.h}. ${x.l}`,10,false,1)); y+=6;
+  line(dfT('rFirst'),11.5,true,2); R.first.forEach((f,i)=>{ line(`${i+1}. ${f.what}`,10,false); line(`   ${dfT('who')}: ${f.who} · ${dfT('when')}: ${f.when} · ${dfT('cost')}: ${dfT('free')}`,8.5,false,3); }); y+=4;
+  if(R.then.length){ line(dfT('rThen'),11.5,true,2); R.then.forEach(f=>line(`• ${f.what}`,10,false,1)); y+=4; }
+  line(dfT('rHelp'),11.5,true,2); line(dfT('rHelpT'),10,false,8);
+  const v=typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null; if(v){ const vv=LANG==='es'?v.es:v.en; line(`“${vv.text}” ${vv.ref}`,10,false,6); }
+  line('Made with Terrain · terrain.church',8,false);
+  doc.save(`Digital-footprint-${R.title.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')}-${F.read}.pdf`);
+}
+/* ---------------- drawing */
+function dfPaint(){
+  const box=$('chc-df'); if(!box) return;
+  const head=`<div class="df-top"><div class="df-crumb">${esc(chT('title'))}</div><h2 id="df-h">${esc(dfT('title'))}</h2><p class="df-lead">${esc(dfT('lead'))}</p></div>`;
+  const conf=DF.conf||'';
+  if(DF.state==='noconf'||DF.state==='unsupported'){ box.innerHTML=head+`<p class="df-msg">${esc(dfT('noConf'))}</p>`; return; }
+  if(DF.state==='notyet'){ box.innerHTML=head+`<p class="df-msg">${esc(dfT('notYet',{conf}))}</p>`; return; }
+  if(DF.state==='noreg'){ box.innerHTML=head+`<p class="df-msg">${esc(L('Register on the first page to see this.','Regístrese en la primera página para ver esto.'))}</p>`; return; }
+  if(DF.state==='offline'){ box.innerHTML=head+`<p class="df-msg">${esc(dfT('offline'))}</p><button type="button" class="btn ghost" data-df-retry>${esc(dfT('again'))}</button>`; box.querySelector('[data-df-retry]').onclick=()=>dfLoad(true); return; }
+  if(!DF.state&&!DF.data){ box.innerHTML=head+`<p class="df-msg" role="status">${esc(L('Loading the churches…','Cargando las iglesias…'))}</p>`; return; }
+  if(!DF.data&&(DF.state==='reading'||DF.state==='none')){
+    const R=DF.reading, pct=R&&R.total&&R.phase==='read'?Math.round(100*R.done/R.total):R&&R.phase==='entries'?8:3;
+    box.innerHTML=head+`<div class="df-reading" role="status"><p>${esc(dfT('reading',{conf}))}</p><div class="df-bar"><i style="width:${Math.max(3,pct)}%"></i></div><p class="df-faint">${esc(R&&R.phase==='read'&&R.total?dfT('progress',{done:R.done,total:R.total}):dfT('listing'))}</p></div>`; return; }
+  const F=DF.data, X=dfContext(F), reg=typeof regGet==='function'?regGet():null, myName=reg&&reg.name?reg.name:'', mineSet=new Set(dfMine(F,X).map(c=>c.org));
+  const rows=F.churches.map(c=>{ const own=mineSet.has(c.org), J=dfJudge(c,X,F.read,own,myName); return {c,J,own,name:String(c.name).replace(/\bSDA\b\s*/,'').replace(/\s+(Church|Company)$/,'').trim()||c.name}; })
+    .sort((a,b)=>(b.own-a.own)||(a.own&&b.own?a.name.localeCompare(b.name):0)||(b.J.score-a.J.score)||a.name.localeCompare(b.name));   // his own in a steady order; the rest by need
+  const mine=rows.filter(r=>r.own), others=rows.filter(r=>!r.own), n=k=>rows.filter(r=>r.fl.includes(k)).length;
+  rows.forEach(r=>{ const A=r.J.areas; r.fl=['all',r.J.worst===3&&'help',A.website.s==='help'&&'site',['help','work'].includes(A.pastor.s)&&'pastor',['help','work'].includes(A.google.s)&&'google'].filter(Boolean); });
+  const pills=`<div class="df-pills"><span>${esc(dfT('conf',{conf}))}</span><span><b>${dfNf(F.churches.length)}</b> ${esc(dfT('count',{n:''}).trim())}</span><span>${esc(dfT('checked',{date:dfDay(F.read)}))}</span></div>`;
+  const v=typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null, vv=v?(LANG==='es'?v.es:v.en):null;
+  const sees=r=>{ const A=r.J.areas, g=DF_AREAS.filter(k=>A[k].s==='ok'), b=DF_AREAS.filter(k=>A[k].s==='help'), w=DF_AREAS.filter(k=>A[k].s==='work');
+    return [g.length&&`${dfT('ok')}: ${g.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,b.length&&`${dfT('help')}: ${b.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,w.length&&`${dfT('work')}: ${w.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`].filter(Boolean).join(' '); };
+  const card=r=>{ const acts=dfActs(r.c,r.J);
+    return `<article class="df-own"><header><div><h3>${esc(r.name)}</h3><div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''} · ${esc(L('pastor of record: ','pastor registrado: '))}<b>${esc(myName||r.c.pastor||'—')}</b></div></div>
+      <a class="btn ghost gfsm" href="#df-report" data-df-torep="${esc(r.c.org)}">${esc(dfT('report'))}</a></header>
+      <p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>
+      ${acts.length?`<div class="df-go">${acts.join('')}</div>`:''}
+      <div class="df-foot"><span>${esc(dfT('readOn',{date:dfDay(r.c.read||F.read)}))}</span>${DF.msg[r.c.org]?`<span>${esc(DF.msg[r.c.org])}</span>`:`<button type="button" class="btn ghost gfsm" data-df-again="${esc(r.c.org)}">${esc(dfT('checkAgain'))}</button>`}</div></article>`; };
+  const side=mine.length>=2?`<section class="df-part"><h3 class="df-h"><span>2</span>${esc(dfT('s2'))}</h3><div class="df-wrap"><table class="df-side" style="min-width:${180+mine.length*220}px"><thead><tr><th></th>${mine.map(r=>`<th scope="col">${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
+      ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${esc(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
+  const P=n=>mine.length>=2?n:n-1;
+  const groups=[[L('We could not find a working website','No pudimos encontrar un sitio web que funcione'),others.filter(r=>r.J.areas.website.s==='help'),r=>r.J.areas.website.lines.find(l=>/does have|Sí tiene|does not open|no abre/.test(l))||r.J.areas.website.lines[1]||''],
+    [L('Not found on Google Maps, or marked closed','No aparece en Google Maps, o figura cerrada'),others.filter(r=>r.J.areas.google.s==='help'),r=>r.J.areas.google.lines[0]],
+    [L('The site and the listing name different pastors','El sitio y la ficha nombran pastores distintos'),others.filter(r=>r.J.areas.pastor.s==='help'),r=>r.J.areas.pastor.lines.slice(0,2).join(' ')],
+    [L('Two websites online','Dos sitios web en línea'),others.filter(r=>r.J.areas.website.two),r=>r.J.areas.website.lines.find(l=>/second|segundo|Another|otra/.test(l))||'']].filter(g=>g[1].length);
+  const needs=groups.length?`<div class="df-needs" style="--n:${groups.length===3?3:2}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,10).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a><span class="df-faint"> · ${esc(r.c.town||'')}</span><div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>10?`<p class="df-faint">${esc(L(`and ${list.length-10} more below`,`y ${list.length-10} más abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
+  const F0=[['all','fAll'],['help','fHelp'],['site','fSite'],['pastor','fPastor'],['google','fGoogle']];
+  const table=`<div class="df-filters" role="group">${F0.map(([k,l])=>`<button type="button" class="df-f${DF.f===k?' on':''}" data-df-f="${k}" aria-pressed="${DF.f===k}">${esc(dfT(l))} <span>${n(k)}</span></button>`).join('')}<input id="df-q" type="search" value="${esc(DF.q)}" placeholder="${esc(dfT('find'))}" aria-label="${esc(dfT('find'))}"></div>
+    <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
+    ${rows.map(r=>{ const q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase(), show=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())), open=!!DF.open[r.c.org];
+      return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''}${r.c.kind&&r.c.kind!=='church'?' · '+esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo')):''}</div></th>
+        ${DF_AREAS.map(k=>`<td>${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div></td></tr>`; }).join('')}
+    </tbody></table></div><p class="df-faint" id="df-none" hidden>${esc(dfT('none2'))}</p>`;
+  const how=`<div class="df-hows">${DF_HOW().map(([k,h,places,what])=>`<article><h4>${dfIco(k)}${esc(h)}</h4><p>${esc(what)}</p>${places.length?`<ul>${places.map(([nm,d,u,t,free])=>`<li>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(nm)}</a>`:`<b>${esc(nm)}</b>`} <span class="df-cost">${esc(free?dfT('free'):L('Paid','De pago'))}</span>${d?`<div class="df-faint">${esc(d)}</div>`:''}<div>${esc(t)}</div></li>`).join('')}</ul>`:''}</article>`).join('')}</div>`;
+  if(!DF.rep||!mine.some(r=>r.c.org===DF.rep)) DF.rep=mine.length?mine[0].c.org:'';
+  const rep=mine.length?`<section class="df-part df-glow" id="df-report"><h3 class="df-h"><span>${P(6)}</span>${esc(dfT('s6'))}</h3><p class="df-intro">${esc(dfT('s6i'))}</p>
+    <div class="df-tabs" role="tablist">${mine.map(r=>`<button type="button" role="tab" class="df-tab" aria-selected="${DF.rep===r.c.org}" data-df-rep="${esc(r.c.org)}">${esc(r.name)}</button>`).join('')}</div>
+    ${mine.filter(r=>r.c.org===DF.rep).map(r=>dfReportHTML(r.c,r.J,myName,F)).join('')}</section>`:'';
+  box.innerHTML=head+pills+(vv?`<p class="df-verse">“${esc(vv.text)}” <span>${esc(vv.ref)}</span></p>`:'')
+    +`<section class="df-part df-glow"><h3 class="df-h"><span>1</span>${esc(dfT('s1'))}</h3><p class="df-intro">${esc(mine.length?dfT('s1i'):dfT('noOwn'))}</p>${mine.map(card).join('')}</section>`
+    +side
+    +`<section class="df-part"><h3 class="df-h"><span>${P(3)}</span>${esc(dfT('s3'))}</h3><p class="df-intro">${esc(dfT('s3i'))}</p>${needs}</section>`
+    +`<section class="df-part"><h3 class="df-h"><span>${P(4)}</span>${esc(dfT('s4',{conf}))}</h3><p class="df-intro">${esc(dfT('s4i'))}</p>${table}</section>`
+    +`<section class="df-part"><h3 class="df-h"><span>${P(5)}</span>${esc(dfT('s5'))}</h3><p class="df-intro">${esc(dfT('s5i'))}</p>${how}</section>`
+    +rep
+    +`<section class="df-part df-limits"><h3 class="df-h">${esc(dfT('limits'))}</h3><p>${esc(dfT('lim1',{search:F.search?dfT('limS'):''}))}</p><p>${esc(dfT('lim2'))}</p><p>${esc(dfT('lim3'))}</p></section>`;
+  dfWire(box,rows,myName,F);
+}
+function dfWire(box,rows,myName,F){
+  const by=o=>rows.find(r=>r.c.org===o);
+  const refilter=()=>{ let shown=0; box.querySelectorAll('tr.df-row').forEach(tr=>{ const r=by(tr.dataset.dfRow), q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase();
+    const ok=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())); tr.hidden=!ok; const d=tr.nextElementSibling; if(d) d.hidden=!ok||!DF.open[r.c.org]; if(ok) shown++; });
+    const none=box.querySelector('#df-none'); if(none) none.hidden=shown>0; };
+  box.querySelectorAll('[data-df-f]').forEach(b=>b.onclick=()=>{ DF.f=b.dataset.dfF; box.querySelectorAll('[data-df-f]').forEach(x=>{ const on=x===b; x.classList.toggle('on',on); x.setAttribute('aria-pressed',String(on)); }); refilter(); });
+  const q=box.querySelector('#df-q'); if(q) q.oninput=()=>{ DF.q=q.value; refilter(); };
+  const toggle=(tr,open)=>{ const o=tr.dataset.dfRow, now=open==null?!DF.open[o]:open; DF.open[o]=now; tr.setAttribute('aria-expanded',String(now)); const d=tr.nextElementSibling; if(d) d.hidden=!now||tr.hidden; };
+  box.querySelectorAll('tr.df-row').forEach(tr=>{ tr.onclick=e=>{ if(e.target.closest('a')) return; toggle(tr); }; tr.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); toggle(tr); } }; });
+  box.querySelectorAll('[data-df-open]').forEach(a=>a.onclick=e=>{ e.preventDefault(); DF.f='all'; DF.q=''; const qq=box.querySelector('#df-q'); if(qq) qq.value='';
+    box.querySelectorAll('[data-df-f]').forEach(x=>{ const on=x.dataset.dfF==='all'; x.classList.toggle('on',on); x.setAttribute('aria-pressed',String(on)); }); refilter();
+    const tr=box.querySelector('#df-row-'+CSS.escape(a.dataset.dfOpen)); if(tr){ toggle(tr,true); tr.scrollIntoView({block:'center'}); tr.focus({preventScroll:true}); } });
+  box.querySelectorAll('[data-df-again]').forEach(b=>b.onclick=()=>dfAgain(b.dataset.dfAgain));
+  box.querySelectorAll('[data-df-rep]').forEach(b=>b.onclick=()=>{ DF.rep=b.dataset.dfRep; dfPaint(); });
+  box.querySelectorAll('[data-df-torep]').forEach(a=>a.onclick=e=>{ e.preventDefault(); DF.rep=a.dataset.dfTorep; dfPaint(); const r=$('df-report'); if(r) r.scrollIntoView({block:'start'}); });
+  box.querySelectorAll('[data-df-copy]').forEach(b=>b.onclick=()=>{ const r=by(b.dataset.dfCopy); if(r) dfCopy(b,dfWordsFor(r.c,r.J,myName)); });
+  box.querySelectorAll('[data-df-pdf]').forEach(b=>b.onclick=async()=>{ const r=by(b.dataset.dfPdf), m=box.querySelector(`[data-df-pdfmsg="${CSS.escape(b.dataset.dfPdf)}"]`);
+    try{ await dfPdf(r.c,r.J,myName,F); if(m) m.textContent=''; }catch(e){ if(m) m.textContent=dfT('pdfFail'); } });
+  box.querySelectorAll('[data-df-prop]').forEach(b=>b.onclick=()=>{ try{ openTool('case'); caseChooseGroup('media'); }catch(e){} });
 }
 /* ================= LEARN FROM OTHER CONFERENCES (the conference comparison and the year ahead) =================
    The pastor: "statements are different than what's actually happening … calendars speak more than mission statements",
