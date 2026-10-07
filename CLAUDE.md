@@ -91,9 +91,10 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
-netlify/functions/digital.mjs        (v10.60.0, digital-1.0) Digital footprint for registered pastors (the registration token, as census/gifts):
+netlify/functions/digital.mjs        (v10.60.0, digital-1.1 since v10.60.1) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
-                               registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania)
+                               registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
+                               starts a conference's reading when one of its pastors registers or signs in (register.mjs)
 netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.0) the background reader: the official list (eAdventist, one page each 3 s), each
                                church's website as a visitor reads it (TerrainBot, robots.txt obeyed, the words inside a template's scripts), YouTube's
                                feed, Google's listing (Places API (New), GOOGLE_PLACES_KEY), one search (BRAVE_SEARCH_KEY, when set); Facebook never
@@ -115,7 +116,7 @@ tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the id
                                vocab.json, validate.mjs, selftest.mjs, examples.json, SCHEMA.md (fields, search), WRITERS.md (quality bar)
 netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.3: 200 results an hour from one address; Netlify Blobs)
 netlify/functions/gifts-sweep.mjs  daily scheduled purge of expired gifts results
-netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.1
+netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.3 (1.2: sign-in; 1.3, v10.60.1: the conference read at sign-up)
 netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.4: his handout and the proposal to vote on as PDFs for phones, op putpdf / GET op=pdf, the `how` slide, the gifts deck; 1.3: how phones move, `mode` follow|free, and `pdf`; 1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
 netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms and their PDFs (present-sweep-1.1)
 netlify/functions/connect.mjs   connection cards (v10.43, connect-1.0): a card per event or series (secret key for the pastor, public id), the phone's answers
@@ -157,7 +158,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
 - connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
-- v10.60.0: `/.netlify/functions/digital` → `"fn":"digital-1.0"`, `"readFn":"digital-read-1.0"`, `"places":true` (the key is set); the first time a pastor of Pennsylvania opens Compare your churches, the reading starts (about an hour; `?conf=Pennsylvania` with his token shows its progress)
+- v10.60.1: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.0"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
   passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://pastorshub.org/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
   `https://pastorshub.org/ideas/index.json` → `"hash":"f7b32cd68d45"`
@@ -197,13 +198,27 @@ values are never in the repo):
 | `PLACES_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Google lookups a month for the whole site, default 900 (under the free 1,000). |
 | `BRAVE_SEARCH_KEY` | digital-read.mjs | Optional (v10.60.0, not set). One search a church: the double check (a site, a Facebook page or a YouTube channel the listing does not give; directories that still name an earlier pastor; where its own site comes). Brave Search API: 1,000 free a month, then $5 per 1,000. Without it the double check is the listing and Google's listing, and the page never says "no Facebook page" (none was looked for). |
 | `SEARCH_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Searches a month, default 900. |
-| `DIGITAL_CONFS` | digital.mjs, digital-sweep.mjs | Optional (v10.60.0). The conferences that may be read, comma-separated (their names as registered: "Pennsylvania,Ohio"); "*" every NAD conference (CONF_ORG has all 52). Default "Pennsylvania". |
+| `DIGITAL_CONFS` | digital.mjs, digital-sweep.mjs | Optional (v10.60.0). The conferences that may be read, comma-separated (their names as registered: "Pennsylvania,Ohio"); "*" every NAD conference (CONF_ORG has all 51 Terrain registers: the 50 US conferences and, since v10.60.1, Guam-Micronesia Mission). Default "Pennsylvania". |
 
 v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registration token like gifts and present, and Netlify Blobs.
 
 ---
 
 ## Current state
+
+**v10.60.1 (7 Oct 2026, quick lane) — a conference is read as soon as one of its pastors signs up.** The pastor, told the first reading
+of a conference takes about an hour and asked whether Terrain should read it ahead: *"yes as soon as they sign up for sure"*. register.mjs
+(**register-1.3**) calls digital.mjs's new `warm(store, base, conf)` (**digital-1.1**) after every registration and sign-in: when the
+conference may be read (`DIGITAL_CONFS`) and has no findings under 25 days, no reading running and no failure within 6 hours (the same rule
+as op read, now `readIfNeeded`), the reading starts; the conference is noted as opened today (`o/`, so the monthly sweep keeps it and forgets
+it after 180 days unused). It is given the conference's name only, never delays the answer (`context.waitUntil` when the runtime gives one,
+else at most 2.5 s: the page waits 8 s for a registration) and never fails or logs anything. One reading a conference serves every pastor
+of it. Also: **Guam-Micronesia Mission** has its locator code (`ANNG11`, read 7 Oct 2026), so every conference Terrain registers (51) can be
+read; the notes said "52" (wrong). The Community Survey cannot read Guam and the Micronesian islands (the American Community Survey does not
+cover them; only the 2020 Island Areas census does): a survey there would be its own build. eAdventist's NAD totals (7 Oct 2026): 5,801
+churches, 871 companies, 536 groups. Tests: `v60-1-signup-read` (new, 23; failing first on v10.60.0: `~/Ministry Work/Terrain-work/v78/logs/ff-v60-1.log`);
+updated with comments: digital-function (digital-1.1), register-function (register-1.3), v60-digital (the stamps agree, v10.60.0 or later). Full suite:
+161 suites · 10,862 passed · 0 failed.
 
 **v10.60.0 (7 Oct 2026, full lane) — Digital footprint, at the foot of Compare your churches.** The pastor: *"Under compare your churches we
 need to have some value there. I would like to see all the churches in the conference that you choose … websites Facebook pages social

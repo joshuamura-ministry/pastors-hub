@@ -43,7 +43,8 @@ export const BUDGET_MS = 12.5 * 60e3;
 const RE_SLUG = /^[a-z][a-z-]{1,40}$/, RE_TOKEN = /^[A-Za-z0-9_-]{43}$/, RE_ORG = /^AN[A-Z0-9]{4}$/;
 const EAD_GAP = 3000, EAD_WAIT = 30000;
 
-/* the church locator's code of each NAD conference, by the name Terrain registers pastors under (eAdventist, read 7 Oct 2026) */
+/* the church locator's code of each NAD conference, by the name Terrain registers pastors under (eAdventist, read 7 Oct 2026; Guam-Micronesia
+   Mission, attached to the NAD itself, read 7 Oct 2026 for v10.60.1): all 51 that Terrain registers */
 export const CONF_ORG = {
   'Greater New York': 'AN4811', 'New York': 'AN4B11', 'Northeastern': 'AN4F11', 'Northern New England': 'AN4I11', 'Southern New England': 'AN4M11',
   'Allegheny East': 'ANB411', 'Allegheny West': 'ANB611', 'Chesapeake': 'ANB811', 'Mountain View': 'ANB911', 'New Jersey': 'ANBB11',
@@ -54,7 +55,8 @@ export const CONF_ORG = {
   'Hawaii': 'ANPB11', 'Nevada-Utah': 'ANPF11', 'Northern California': 'ANPI11', 'Southeastern California': 'ANPM11',
   'Southern California': 'ANPP11', 'Carolina': 'ANT811', 'Florida': 'ANTB11', 'Georgia-Cumberland': 'ANTF11', 'Gulf States': 'ANTG11',
   'Kentucky-Tennessee': 'ANTI11', 'South Atlantic': 'ANTM11', 'South Central': 'ANTP11', 'Southeastern': 'ANTT11',
-  'Arkansas-Louisiana': 'ANW411', 'Oklahoma': 'ANW811', 'Southwest Region': 'ANWB11', 'Texas': 'ANWF11', 'Texico': 'ANWI11' };
+  'Arkansas-Louisiana': 'ANW411', 'Oklahoma': 'ANW811', 'Southwest Region': 'ANWB11', 'Texas': 'ANWF11', 'Texico': 'ANWI11',
+  'Guam-Micronesia Mission': 'ANNG11' };
 export const slugOf = name => String(name || '').toLowerCase().replace(/[^a-z]+/g, '-').replace(/^-|-$/g, '');
 
 // ---------------------------------------------------------------- helpers
