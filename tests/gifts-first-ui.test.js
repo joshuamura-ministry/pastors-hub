@@ -69,18 +69,20 @@ function makeStore(){ const m=new Map(); return { m,
   // v10.45.0 review #18: "Your church" now sits between this card and the two doors
   // v10.50.0 — the pastor (6 Oct 2026): "it doesn't have to say nobody has taken it yet take that box away … it has to start with your church":
   // the landing has no Gifts-first card; the three steps come first, then Your church (the hub keeps its card)
-  c('the Spiritual Gifts landing: no Gifts-first card; the three steps, then Your church, then the invitation', [P.qa('#gifts [data-gf-first]').length,P.q('.gfhead').nextElementSibling.classList.contains('gfsteps'),P.q('.gfsteps').nextElementSibling.id,P.q('#gf-church').nextElementSibling.id],
-    [0,true,'gf-church','gf-invite']);
+  // v10.55.0 — the pastor: "when they go to spiritual gifts that's all it's gonna be about just spiritual gifts": no church card here
+  c('the Spiritual Gifts landing: no Gifts-first card; the two steps, then the invitation; no church card', [P.qa('#gifts [data-gf-first]').length,P.q('.gfhead').nextElementSibling.classList.contains('gfsteps'),P.q('.gfsteps').nextElementSibling.id,!!P.q('#gifts #gf-church')],
+    [0,true,'gf-invite',false]);
   c('…“about 15 minutes” on the landing', /about 15 minutes/.test(P.txt('.gfhead .sub')), true);
   // v10.45.0 (stale): the profile lives in "Your church" on this landing, under the card at the landing's top: it is not repeated there
-  c('"Your church" on the landing: the form, and no second card inside it', [!!P.q('#gf-church #u-cap-form'),P.qa('#gf-church [data-gf-first]').length], [true,0]);
+  // v10.55.0 — the pastor: "when they go to spiritual gifts that's all it's gonna be about just spiritual gifts": no church form on the landing
+  c('no church form on the landing (it is the survey\'s "Your church")', [!!P.q('#gifts #u-cap-form'),P.qa('#gifts #gf-church [data-gf-first]').length], [false,0]);
   // …while a profile host anywhere else still opens with the card (none on the page now: one made here, the landing's own taken away)
   P.E(`(()=>{ const f=document.getElementById('gf-church'); if(f) f.remove(); const d=document.createElement('div'); d.id='capslot'; document.body.appendChild(d); capRender(); })()`);
-  c('the church profile: the card first, above the form (outside it)', [P.qa('#capslot [data-gf-first]').length,P.q('#capslot').firstElementChild.matches('[data-gf-first="profile"]'),!!P.q('#capslot [data-gf-first] + #u-cap-form'),P.txt('#capslot [data-gf-first] .gff-n')],
-    [1,true,true,'18 of 46 adults have discovered their gifts']);
+  // v10.55.0: no card inside the church form either: the survey's "Your church" has its own Spiritual Gifts line under the form
+  c('the church profile: no Gifts-first card inside it', [P.qa('#capslot [data-gf-first]').length,!!P.q('#capslot #u-cap-form')], [0,true]);
   // v10.50.0: none on the Spiritual Gifts landing any more ("take that box away"); the hub and the profile keep theirs
-  c('one card in each place, one button each (none on the landing)', ['hub','landing','profile'].map(w=>[P.qa(`[data-gf-first="${w}"]`).length,P.qa(`[data-gf-first="${w}"] button`).length]), [[1,1],[0,0],[1,1]]);   // (the landing stays drawn behind the other tools)
-  c('(the demo badge the seed carries is said on the source line)', /\(demo profile\)\.$/.test(P.txt('#capslot .gff-src')), true);
+  c('one card in each place, one button each (none on the landing)', ['hub','landing','profile'].map(w=>[P.qa(`[data-gf-first="${w}"]`).length,P.qa(`[data-gf-first="${w}"] button`).length]), [[1,1],[0,0],[0,0]]);   // v10.55.0: none in the profile   // (the landing stays drawn behind the other tools)
+  c('(the demo badge the seed carries is said on the source line)', /\(demo profile\)\.$/.test(P.txt('[data-gf-first="hub"] .gff-src')), true);   // v10.55.0: the hub's card (none in the profile now)
 
   console.log('\n-- B. when the card shows, and its words --');
   { const M=page('https://pastorshub.org/#gifts=QLvn7p0Tqzd5',{seed:'partial'}); await ready(M); M.E('showHub()');
@@ -103,7 +105,7 @@ function makeStore(){ const m=new Map(); return { m,
       ['18 of the 55 in worship have discovered their gifts','Average Sabbath attendance from Your church, children included. Add the number of adults there for a truer count (demo profile).']);   // v10.45.0 review #18: one name, "Your church"
     c('…nor attendance: the members on the books', (await L('partial',null,`(()=>{ const c=uChurch().capacity; delete c.adults; delete c.members; uPersist(); CAP=null; })()`))[0], '18 of 80 members have discovered their gifts');
     c('…nothing at all, and nobody yet: “Nobody has taken it yet”', await L('before',null,`(()=>{ const c=uChurch().capacity; delete c.adults; delete c.members; delete c.membership; uPersist(); CAP=null; })()`),
-      ['Nobody has taken it yet','Add your average Sabbath attendance under Your church, on the Spiritual Gifts page, to see how far the church has come (demo profile).']);   // v10.45.0 review #18: one name, "Your church"
+      ['Nobody has taken it yet','Add your average Sabbath attendance under Your church, in the Community Survey, to see how far the church has come (demo profile).']);   // v10.45.0 review #18: one name, "Your church"
     c('more results than the profile says: capped at 100%, and “update the number there”', await L('after',null,`(()=>{ uChurch().capacity.adults=20; uPersist(); CAP=null; })()`),
       ['40 of 20 adults have discovered their gifts','More than the 20 under Your church: update the number there (demo profile).']); }   // v10.45.0 review #18: one name, "Your church"
 

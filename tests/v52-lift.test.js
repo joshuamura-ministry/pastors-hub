@@ -75,10 +75,10 @@ const T=checker(), c=T.c;
   R.q('#ns-sheet [data-ns-propose]').click();
   await until(()=>R.E('TOOL')==='case'&&R.q('#cs-prop'));
   R.q('#cs-s1 [data-cs-group="board"]').click(); await sleep(60);
-  c('the Proposal page: Size starts at the lift it was chosen at, nothing saved', [R.qa('#cs-size [data-cs-lift][aria-pressed="true"]').map(b=>+b.dataset.csLift),R.J(`(()=>{ const o=uChurch().overrides||{}, k=Object.keys(o).find(k=>o[k]&&o[k].lift); return k||null; })()`)], [[LIFT],null]);
-  const other=LIFT===3?1:3;
-  R.q(`#cs-size [data-cs-lift="${other}"]`).click(); await sleep(60);
-  c('a tap there sizes the proposal card\'s lift line too', R.txt('#cs-prop .ns-liftline > span:not(.lift) > b'), other===3?'Heavy lift':'Light lift');
+  // v10.55.0 — the pastor (6 Oct 2026): "because you're already choosing light lift moderate lift heavy lift we don't have to put it again
+  // there": the Proposal page (from a need) has no Size row; the lift is the one it was chosen at, and nothing is saved
+  c('the Proposal page: no Size row (the lift was chosen with the idea), nothing saved', [R.qa('#cs-size').length,R.J(`(()=>{ const o=uChurch().overrides||{}; return Object.keys(o).some(k=>o[k]&&o[k].lift); })()`)], [0,false]);
+  c('…the proposal card keeps the lift it was chosen at', R.txt('#cs-prop .ns-liftline > span:not(.lift) > b'), ['Light lift','Moderate lift','Heavy lift'][LIFT-1]);
   R.w.close();
 
   console.log('\n-- in Spanish --');

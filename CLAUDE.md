@@ -220,6 +220,44 @@ the time"*. Design `~/Downloads/Terrain-work/v72/DESIGN-IDEAS.md`.
   145 suites · 10,284 passed · 0 failed. Samples (a
   MADE-UP answer, to show the layout): `~/Downloads/Terrain-v10.55.0-samples/` (`v72/shots17.mjs`, `v72/sample-ideas.json`).
 
+**v10.55.1 (6 Oct 2026) — the Proposal page cleaner; "Your church" back in the survey, before the needs; Spiritual Gifts only
+gifts.** The pastor, on the Proposal page: *"I click CHURCH board it jumps down … doesn't have to … you're already choosing light lift moderate
+lift heavy lift we don't have to put it again … what would you like this to accomplish? We don't need that either … short by 10 volunteers …
+because the spiritual gifts and information hasn't been put in yet, right"*; then *"maybe there can be a button under the proposal box before
+who are you proposing to just to remind … the people when they see spiritual gifts they're not gonna know that that's where you put in the
+information for your church … right after the community resources maybe a section because that's gonna come right before the community
+needs … a very clear section that allows the Pastor to fill out that part … a button that will … send him to the spiritual gifts section …
+it's best to plan the proposal after the spiritual gifts results come in"*; and *"you can remove the … fill-in information in the spiritual
+gifts … that's all it's gonna be about just spiritual gifts"*.
+- **The Proposal page** (from a need, `casePropMode()`): choosing who it is for no longer scrolls (Make the Case on its own still brings
+  step 2 into view); no Size row and no goal box (both stay in Make the Case on its own; the slides keep the suggested goal); under the
+  proposal card, before step 1, `caseReadyNudgeHTML`: "Fill in your church first…" + **Fill in Your church** (when empty, `gfChurchEmpty`)
+  and "A proposal is stronger with your members' Spiritual Gifts results…" + **Send the Spiritual Gifts survey** (`gfInviteChurch`, while
+  `gfReadiness().state` is none, low or unknown below `CASE_GIFTS_MIN`). Step 3's "Still to settle" is one line and a button while the
+  church is empty (`.cs-fillchurch`), never a list of shortfalls.
+- **"Your church" in the survey** (`uChurchSecHTML`, `#u-church`, between Community resources and the needs; full tier only): its line
+  ("Fill this in before you choose a ministry below…"), the church card (`gfChurchCardHTML`: the same three-step form, open while empty,
+  "People, rooms and skills"), and the Spiritual Gifts line (`uGiftsNoteInner`: send the survey first, the count, **Send the Spiritual Gifts
+  survey**). One live card: `render()` lifts it out and puts it back (what he typed survives a redraw, as the needs node does);
+  `gfChurchHome` places it; `openTool('survey')` brings it home. Every way to the church form (`gfChurchOpen` → `uChurchGo`) leads to the
+  survey's section (no survey yet: the survey, its address first). No Gifts-first card inside the form any more.
+- **"Your church" stands out** (same release, his next message: *"this section needs to be glowing or pulsating … slow pulsate and
+  glowing … right now it just looks like blended into all the other stuff … all green mint color … a colored [line] go around the edge
+  all the way around like it's moving … and also the spiritual gifts should be a very important button"*): the section is a framed
+  panel (4 px edge, a faint violet ground); while something is left to do (`uChurchTodo`: the church empty, or Spiritual Gifts results
+  below the Proposal page's rule) it says **Start here** (`.u-chstart`) and three gold bands chase round its violet edge
+  (`@property --uca`, `ucSpin` 9 s a turn) while the frame breathes (`ucGlow` 6 s); once both are done the frame stays, still.
+  `uChurchSecMark` (from `gfFirstRefresh`, so after a save or new results) follows without drawing the survey again. Reduced motion:
+  still, a steady glow; print: a plain line. **Send the Spiritual Gifts survey** is a solid violet button (`.btn.u-gfgo`), there and in
+  the Proposal page's reminder.
+- **The Spiritual Gifts landing**: two steps (Invite your members → See the results), no church card. Old lines that said "on the Spiritual
+  Gifts page" for the church's information now say "in the Community Survey".
+- Tests: `v55-proposal-clean` (new, 16; failing first on v10.55.0's first commit: `v72/ff-v55-proposal-clean.log`); `v45-profile-move`
+  rewritten for the new home (43); `v55-1-church-glow` (new, 18; failing first on 77f44ef: `v73/ff-v55-1-church-glow.log`; the motion
+  itself checked in Chrome, `v73/shots20.mjs`: the angle 48° → 172° in 3 s, computer and phone, both themes); updated with comments:
+  v52-lift, v47-clean, gifts-first-ui, v42-core, v45-1-survey, v45-handoff, v45-needs-ui, v45-review, connect-client (20 `memberLink()`
+  guard sites). Full suite: 147 suites · 10,321 passed · 0 failed. Samples `~/Downloads/Terrain-v10.55.1-samples/`.
+
 **v10.54.2 (6 Oct 2026, quick lane) — the member's report ends simply: how to get involved, sent by itself.** The pastor, of the end of a
 member's Spiritual Gifts report: *"the first 90 days, I don't know what that is. The main thing is just a very simple steps on how to get
 involved … pray about how much you can commit to serving the church … go to your pastor go to a church leader ask to serve in … that
@@ -2436,7 +2474,8 @@ Don't relitigate them without a reason he'd accept.
   Spiritual Gifts sections each carry their own colour. v10.54.1: each lift, Light mint, Moderate blue, Heavy violet, everywhere a lift is shown.)
 - **Nothing animates on its own** except the breathing button on the church
   profile — the one control that needs the pastor — and (v10.38, his request) the slow breathing glow of the
-  four hub tiles. Reduced motion stops both.
+  four hub tiles, and (v10.55.1, his request) the survey's "Your church" while something is left to do (its edge turning, its
+  glow breathing). Reduced motion stops them all.
 - **Symmetry matters to him.** Equal-height cards, one-line links, two-line
   blurbs. Check wrapping in Spanish too; every string is longer.
 - **Twenty ministries per level**, three levels. Not a ten-rung slider.
