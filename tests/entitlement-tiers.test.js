@@ -35,7 +35,8 @@ setTimeout(async()=>{
   G.eval('wireHub()');
   const tags=[...G.document.querySelectorAll('.tool')].map(t=>[t.dataset.tool,!!t.querySelector('.tlock')]);
   // v56 (B2): the fifth tile, Learn from other conferences, is a full-version tool like the other three
-  c('hub tags the four paid tools, not the survey', tags, [['survey',false],['gifts',true],['case',true],['planner',true],['compare',true]]);
+// v10.57.0 (stale, not a regression): the pastor (7 Oct 2026), "maybe we could also have a comparison between churches": the sixth tile is paid like the others
+  c('hub tags the paid tools, not the survey', tags, [['survey',false],['gifts',true],['case',true],['planner',true],['compare',true],['churches',true]]);
   G.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave('+JSON.stringify(H.MEDIUM)+'); render(); openTool("survey");');
   const shown=[...G.document.querySelectorAll('#sections section.blk')].filter(s=>!s.classList.contains('offtab')).map(s=>s.querySelector('h2').textContent);
   console.log('    free survey shows:',shown.join(' · '));

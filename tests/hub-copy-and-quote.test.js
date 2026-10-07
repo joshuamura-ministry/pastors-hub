@@ -54,8 +54,9 @@ setTimeout(()=>{
   console.log('\n-- nothing else disturbed --');
   const tools=[...D.querySelectorAll('.tool')];
 // v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
-  c('five icons', tools.filter(t=>t.querySelector('svg.tsvg')).length, 5);
-  c('five links', tools.filter(t=>t.querySelector('.tgo')).length, 5);
+// v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
+  c('six icons', tools.filter(t=>t.querySelector('svg.tsvg')).length, 6);
+  c('six links', tools.filter(t=>t.querySelector('.tgo')).length, 6);
   c('links still bottom-aligned', /\.tool \.tgo\{margin-top:auto/.test(html));
   c('quote still under the welcome',
     [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,tools,hubabout');   // v10.56.1 (stale, not a regression): the pastor, "I just want this page to be very simple": no Your path, no Gifts first; what Terrain is for under the tools   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E); v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see"): "Your path" above the tools

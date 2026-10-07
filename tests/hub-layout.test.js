@@ -19,9 +19,10 @@ setTimeout(()=>{
   console.log('\n-- the cards --');
   const tools=[...D().querySelectorAll('.tool')];
 // v56 (B2): five tiles. The pastor accepted the design's default (DESIGN-COMPARE Q1): a new hub tile, "Learn from other conferences".
-  c('five of them', tools.length, 5);
+// v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
+  c('six of them', tools.length, 6);
   c('each has its own verb', tools.map(t=>t.querySelector('.tgo').textContent.trim()),
-    ['Explore survey','Discover gifts','Build a proposal','Start planning','Compare calendars']);
+    ['Explore survey','Discover gifts','Build a proposal','Start planning','Compare calendars','Compare churches']);   // v10.57.0
   c('copy is short now', tools.every(t=>t.querySelector('.td').textContent.length<=70));
   c('no panel background', /\.tool\{[^}]*background:none/.test(html));
   c('no border', /\.tool\{[^}]*border:0/.test(html));
@@ -29,7 +30,7 @@ setTimeout(()=>{
   c('icons at mockup scale', /\.tool \.tsvg\{width:clamp\(9\dpx,1\d(?:\.\d)?vw,12\dpx\)/.test(html));
   // the glow now lives in the artwork's own filter rather than in my CSS
   c('and strongly lit', tools.every(t=>/<filter id="glow-/.test(t.innerHTML)&&/filter="url\(#glow-/.test(t.innerHTML)));
-  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare']);   // v56 (B2)
+  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v56 (B2); v10.57.0: Compare your churches
   // v10.38: the focus ring takes the tool's own colour.
   c('keyboard focus survives losing the border', /\.tool:focus-visible\{outline:2px solid var\(--tc,var\(--acc\)\)/.test(html));
 

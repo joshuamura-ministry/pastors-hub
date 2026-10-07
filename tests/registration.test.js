@@ -136,7 +136,8 @@ function makeStore(){
   c('and saved on the device', JSON.parse(A.w.localStorage.getItem('terrain-churches-v1')||'{}').churches[A.E('uChurch().id')].name, 'Bucks County SDA');
   c('straight to the hub', [A.gateUp(),A.hubUp(),A.E('gated()')], [false,true,false]);
   const who=A.D.getElementById('whoami');
-  c('the header chip: name · conference, and Change', [who&&who.querySelector('.whotxt').textContent,who&&who.querySelector('button').textContent], ['Joshua Mura · Pennsylvania','Change']);
+  // v10.57.0 (stale, not a regression): the church's own button comes first in the header now ("they can click a button and say which church"), so Change is found by its id
+  c('the header chip: name · conference, and Change', [who&&who.querySelector('.whotxt').textContent,who&&who.querySelector('#regchange').textContent], ['Joshua Mura · Pennsylvania','Change']);
   c('no email was sent: nothing but the registration went out', A.mine.length, 1);
 
   console.log('\n-- a church that already has a name keeps it --');
@@ -274,12 +275,14 @@ function makeStore(){
   fill(S,{name:'Ana López',email:'ana.lopez@example.org',church:'Iglesia Hispana de Filadelfia'}); submit(S);
   await until(()=>!S.gateUp());
   c('registered in Spanish: the record says so', store.peekEmail('ana.lopez@example.org').lang, 'es');
-  c('the chip says Cambiar', S.D.querySelector('#whoami button').textContent, 'Cambiar');
+  // v10.57.0 (stale): Change by its id (the church's button comes first)
+  c('the chip says Cambiar', S.D.querySelector('#whoami #regchange').textContent, 'Cambiar');
   // Seen in the render after registering in Spanish: the hub's verbs and its
   // fourth title were still English, and "Planificador de evangelismo" wrapped.
   c('the hub it lands on is Spanish too: titles and verbs', [[...S.D.querySelectorAll('.tool b')].map(b=>b.textContent.trim()),[...S.D.querySelectorAll('.tool .tgo')].map(t=>t.textContent.trim())],
     // v56 (B2): the fifth tile, "Learn from other conferences" (his accepted default), in Spanish too
-    [['Encuesta comunitaria','Dones espirituales','Presentar el caso','Plan de evangelismo','Aprender de otras asociaciones'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar','Comparar calendarios']]);
+    // v10.57.0: the sixth tile, Compare your churches, in Spanish too
+    [['Encuesta comunitaria','Dones espirituales','Presentar el caso','Plan de evangelismo','Aprender de otras asociaciones','Compare sus iglesias'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar','Comparar calendarios','Comparar iglesias']]);
   // Updated in the v10.38.0 review (S3): "Welcome back" comes from this
   // device (after Change), not from the server.
   S.D.getElementById('regchange').click();

@@ -62,7 +62,8 @@ const phoneLines = w => Object.defineProperty(w.HTMLTextAreaElement.prototype, '
 
   console.log('\n-- 2. both new paths, side by side --');
   P.E(`showHub()`); await sleep(100);
-  c('the hub: five tiles, the comparison last', P.J(`[...document.querySelectorAll('#hub .tool')].map(t=>t.dataset.tool)`), ['survey', 'gifts', 'case', 'planner', 'compare']);
+// v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
+  c('the hub: six tiles, the conferences\' comparison fifth', P.J(`[...document.querySelectorAll('#hub .tool')].map(t=>t.dataset.tool)`), ['survey', 'gifts', 'case', 'planner', 'compare', 'churches']);
   P.E(`caseSetPrefs({path:'ministry',ministry:'plan-series',type:'conference',group:'conference'}); openTool('case'); render();`); await sleep(300);
   c('Make the Case for a ministry, to Conference leaders: the switch above, and step 2\'s door to the comparison',
     P.J(`[!!document.querySelector('#cs-switch [data-bx-path="buy"]'),!!document.querySelector('#cs-s2 [data-cs-cmpdoor], #cs-s2 .cs-cmpdoor')]`), [true, true]);

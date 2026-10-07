@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.56.2
+     TERRAIN  v10.57.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.56.2" data-theme="dark">
+<html lang="en" data-version="v10.57.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.56.2">
-<title>Community Map — Terrain v10.56.2</title>
+<meta name="terrain-version" content="v10.57.0">
+<title>Community Map — Terrain v10.57.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3398,6 +3398,59 @@ button.cd-rowb:hover{background:var(--panel2)}
 .gff-go .btn{min-height:44px}
 .hubgifts{margin-top:22px}
 /* v10.56.1: what the app is for, under the five tools: quiet, centred, one reading width */
+/* v10.57.0: the church chip in the header, its sheet, and Compare your churches */
+.whoami .chbtn{display:inline-flex;align-items:center;gap:6px;flex:0 1 auto;min-width:0;max-width:220px;min-height:40px;padding:0 12px;border:1px solid color-mix(in srgb,#A8E28A 55%,var(--line2));border-radius:999px;background:var(--panel);color:var(--ink);font:inherit;font-weight:600;text-decoration:none;cursor:pointer}
+.whoami .chbtn:hover,.whoami .chbtn:focus-visible{border-color:#A8E28A}
+.chbtn svg{width:16px;height:16px;flex:none;color:#7FCF6A}
+.chb-n{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
+.chb-c{font-size:.72rem;font-weight:700;color:var(--panel);background:#A8E28A;border-radius:999px;padding:0 6px;line-height:1.5}
+.chb-v{color:var(--ink3);font-size:.7rem}
+@media (max-width:520px){.whoami .chbtn{max-width:160px}}
+/* v10.57.0: with the church's button the header row is wider than a phone: the row may shrink, and the name and the church end in "…" */
+@media(max-width:699px){ .whoami{min-width:0} .whoami .whotxt{flex:0 1 auto} }
+@media (min-width:521px){ dialog.ch-sheet{max-width:min(560px,calc(100vw - 24px))} }
+.ch-b{padding:4px 18px 18px;display:grid;gap:12px}
+.ch-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ch-row{display:flex;gap:8px;align-items:stretch}
+.ch-go{flex:1;min-width:0;text-align:left;display:grid;gap:2px;padding:10px 14px;border:1px solid var(--line2);border-radius:12px;background:var(--panel2);color:var(--ink);font:inherit;cursor:pointer}
+.ch-go b{font-weight:700}.ch-go span{color:var(--ink2);font-size:.85rem;overflow-wrap:anywhere}
+.ch-go em{font-style:normal;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#7FCF6A}
+.ch-row.on .ch-go{border-color:#7FCF6A}
+.ch-ren{display:flex;gap:8px;align-items:flex-end;flex:1}.ch-ren .u-field{flex:1}
+.ch-acts{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:8px}
+#ch-t:focus{outline:none}
+.ch-row .ch-ren-b{align-self:center}
+.ch-addn{margin:0;font-size:.82rem}
+.chc{padding:8px 0 30px}
+.chc-top h1{font-family:var(--disp);font-size:clamp(1.6rem,4vw,2.2rem);margin:6px 0 6px}
+.chc-top .sub{color:var(--ink2);max-width:65ch;margin:0 0 18px}
+.chc-one{padding:18px;display:grid;gap:12px;justify-items:start}
+.chc-sec{margin:0 0 22px;padding:16px 16px 12px;border:1px solid color-mix(in srgb,var(--k) 40%,var(--line2));border-left:4px solid var(--k);border-radius:14px;background:var(--panel)}
+.chc-sec h2{font-family:var(--disp);font-size:1.05rem;margin:0 0 10px;color:var(--k);letter-spacing:.02em}
+.chc-so ul{margin:0;padding-left:18px;display:grid;gap:6px;color:var(--ink);line-height:1.5}
+.chc-wrap{overflow-x:auto}
+.chc-t{width:100%;border-collapse:collapse;font-size:.88rem;table-layout:fixed}
+.chc-t thead th:first-child{width:28%}
+.chc-t th,.chc-t td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+.chc-t thead th{font-weight:700;color:var(--ink)}.chc-t thead th span{display:block;font-weight:400;font-size:.78rem;color:var(--ink3)}
+.chc-t tbody th{font-weight:600;color:var(--ink2);width:30%;min-width:120px}
+.chc-v{font-variant-numeric:tabular-nums;font-weight:700;color:var(--ink)}
+.chc-bar{display:block;height:6px;border-radius:3px;background:color-mix(in srgb,var(--k) 14%,var(--panel2));margin-top:5px;overflow:hidden}
+.chc-bar i{display:block;height:100%;background:var(--k);border-radius:3px}
+.chc-miss{color:var(--ink3);font-size:.82rem}
+.chc-needs{margin:0;padding-left:18px;display:grid;gap:2px}
+@media (max-width:520px){ .ch-acts{grid-template-columns:1fr} }
+/* a phone: each row's label on its own line, the churches side by side under it (a wide set of churches still scrolls in its box) */
+@media (max-width:560px){
+  .chc-t{display:block;min-width:0!important;width:max(100%,calc(var(--n) * 104px));table-layout:auto}
+  .chc-t thead,.chc-t tbody{display:block}
+  .chc-t tr{display:grid;grid-template-columns:repeat(var(--n),minmax(0,1fr));column-gap:14px;padding:10px 0;border-bottom:1px solid var(--line)}
+  .chc-t th,.chc-t td{display:block;padding:0;border:0;width:auto;min-width:0}
+  .chc-t tbody th[scope="row"]{grid-column:1/-1;padding-bottom:6px;width:auto;min-width:0}
+  .chc-t thead th:first-child{display:none}
+  .chc-t thead tr{padding-top:0}
+}
+@media print{.chbtn{display:none}.chc-wrap{overflow:visible}}
 .hubabout{max-width:62ch;margin:46px auto 10px;padding:22px 4px 0;border-top:1px solid var(--line2);text-align:center}
 .hubabout h3{margin:0 0 10px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
 .hubabout p{margin:0 0 10px;color:var(--ink2);line-height:1.65;font-size:clamp(.95rem,2.2vw,1.02rem);text-wrap:pretty}
@@ -4231,6 +4284,14 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
         <span class="td">What other conferences’ calendars hold, side by side.</span>
         <span class="tgo">Compare calendars <i></i></span>
       </button>
+      <!-- v10.57.0 — the pastor (7 Oct 2026): "some pastors have multiple churches … maybe we could also have a comparison between churches
+           … kinda like how conferences compare each other … they can compare it and see … the differences": the sixth tile (3 + 3) -->
+      <button class="tool" data-tool="churches" style="--tc:#A8E28A;--tglow:rgba(168,226,138,.44);--td:-7s">
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-churches" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#E2F7D6"/><stop offset="0.48" stop-color="#A8E28A"/><stop offset="1" stop-color="#6FB85A"/></linearGradient><filter id="glow-churches" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-churches)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-churches)"><path d="M24 118l48-40 48 40"/><path d="M34 110v94h76v-94"/><path d="M72 78V40M60 52h24"/><path d="M62 204v-26a10 10 0 0 1 20 0v26"/><path d="M136 118l48-40 48 40"/><path d="M146 110v94h76v-94"/><path d="M184 78V40M172 52h24"/><path d="M174 204v-26a10 10 0 0 1 20 0v26"/><path d="M14 216h228"/><g fill="url(#ink-churches)" stroke="none"><circle cx="72" cy="140" r="10"/><circle cx="184" cy="140" r="10"/></g></g></svg></span>
+        <b>Compare your churches</b>
+        <span class="td">Your churches side by side: needs, people and gifts.</span>
+        <span class="tgo">Compare churches <i></i></span>
+      </button>
     </div>
     <section class="hubabout" id="hubabout" aria-labelledby="hubabout-h">
       <h3 id="hubabout-h">What Terrain is for</h3>
@@ -4259,6 +4320,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
 
   <!-- ===== v56 (B2): Learn from other conferences (the conference comparison and the year ahead) ===== -->
   <div class="cmp" id="cmp" hidden data-notr></div>
+  <div class="chc" id="chc" hidden data-notr></div>
+  <dialog id="ch-sheet" class="ns-sheet ch-sheet" aria-labelledby="ch-t" data-notr></dialog>
   <!-- ===== Evangelism Planner: the countdown calendar ===== -->
   <div class="planner" id="planner" hidden>
     <div class="pmode" id="pmode" hidden>
@@ -4346,13 +4409,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.57.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.56.2';
+const VERSION = 'v10.57.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9054,6 +9117,7 @@ const ES={
  'Brief':'Resumen',
  'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
  'Pastors Hub':'Pastors Hub','At a glance':'De un vistazo',
+ 'Compare your churches':'Compare sus iglesias','Your churches side by side: needs, people and gifts.':'Sus iglesias lado a lado: necesidades, gente y dones.','Compare churches':'Comparar iglesias',
  'Your journey begins here. Choose a tool to begin.':'Su camino comienza aquí. Elija una herramienta para comenzar.',
  'What Terrain is for':'Para qué sirve Terrain',
  'Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.':'Terrain ayuda al pastor a ver el vecindario donde Dios ha puesto a la iglesia y a responder con un ministerio a su medida. Conozca su vecindario y lo que necesita, ayude a sus miembros a descubrir sus dones, convierta las mejores ideas en una propuesta que su iglesia pueda votar y planifique su evangelismo, de la preparación al seguimiento.',
@@ -9700,7 +9764,8 @@ const FEATURES={
   gifts:   {tier:'full', name:'Spiritual Gifts',        blurb:'Send members a link; their gifts and the ministries that fit come back to you.'},
   ideas:   {tier:'full', name:'fresh ministry ideas',   blurb:'Ideas invented for this neighborhood and this church, with the steps to start each one.'},
   connect: {tier:'full', name:'connection cards',       blurb:'A card for your event: people ask for what they want, and you follow up.'},
-  compare: {tier:'full', name:'Learn from other conferences', blurb:'What other conferences’ calendars hold, side by side, and the year ahead.'}
+  compare: {tier:'full', name:'Learn from other conferences', blurb:'What other conferences’ calendars hold, side by side, and the year ahead.'},
+  churches:{tier:'full', name:'Compare your churches', blurb:'Your churches side by side: their neighborhoods, their people, their gifts and their plans.'}
 };
 function currentTier(){
   // ?tier=free lets the pastor preview the free experience before it exists.
@@ -10159,7 +10224,9 @@ const TOOLS={
   case:   {name:'Make the Case',     tabs:['case'], feature:'case'},
   planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner', feature:'planner'},
   // v56 (B2): Learn from other conferences, a tool of its own (no address, no Census)
-  compare:{name:'Learn from other conferences',tabs:[], standalone:true, panel:'cmp', feature:'compare'}
+  compare:{name:'Learn from other conferences',tabs:[], standalone:true, panel:'cmp', feature:'compare'},
+  // v10.57.0: Compare your churches (each church's own snapshot, survey, profile, gifts and plan; no Census call)
+  churches:{name:'Compare your churches',tabs:[], standalone:true, panel:'chc', feature:'churches'}
 };
 function showHub(){
   // A member, observer or emailed-report page is one page with one job: the
@@ -10171,6 +10238,7 @@ function showHub(){
   const pl=$('planner'); if(pl) pl.hidden=true;
   const gp=$('gifts'); if(gp) gp.hidden=true;
   try{ cmpClose(); }catch(e){}   // v56: Learn from other conferences
+  { const cc=$('chc'); if(cc){ cc.hidden=true; cc.innerHTML=''; } }   // v10.57.0: Compare your churches
   { const cp=$('casep'); if(cp){ cp.hidden=true; cp.innerHTML=''; } }
   { const hl=$('homeline'); if(hl){ hl.hidden=true; hl.innerHTML=''; } }
   // In flat view there is no hub — everything is on one page already.
@@ -10190,6 +10258,7 @@ function showHub(){
 function openTool(id){
   if((GIFTS_LINK.on&&id!=='gifts')||WATCH_LINK.on||CONNECT_LINK.on) return;
   if(id!=='compare'){ try{ cmpClose(); }catch(e){} }   // v56: Learn from other conferences
+  if(id!=='churches'){ const cc=$('chc'); if(cc){ cc.hidden=true; cc.innerHTML=''; } }   // v10.57.0
   uChrome();
   const feat=(TOOLS[id]||{}).feature;
   if(feat&&!entitled(feat)){
@@ -10222,13 +10291,13 @@ function openTool(id){
     $('report').classList.remove('show');
     const nav=$('secnav'); if(nav) nav.hidden=true;
     const ch=$('changech'); if(ch) ch.hidden=true;
-    ['planner','gifts','cmp'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
+    ['planner','gifts','cmp','chc'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
     caseToolShown();
     const which=TOOLS[id].panel||'planner';
     const pe=$(which);
-    if(pe){ pe.hidden=false; if(which==='gifts') giftsOpen(); else if(which==='cmp') cmpOpen(); else plannerOpen(); }
+    if(pe){ pe.hidden=false; if(which==='gifts') giftsOpen(); else if(which==='cmp') cmpOpen(); else if(which==='chc') chcOpen(); else plannerOpen(); }
     homeLine();
-    if(which!=='cmp') setTimeout(homeEnsure,0);   // the Planner's place, and Gifts' neighbourhood, from the remembered church (the comparison needs none)
+    if(which!=='cmp'&&which!=='chc') setTimeout(homeEnsure,0);   // the Planner's place, and Gifts' neighbourhood, from the remembered church (the comparison needs none)
     window.scrollTo({top:0,behavior:'auto'});
     return;
   }
@@ -12601,9 +12670,10 @@ function showWho(){
       try{ location.reload(); }catch(e){}
     };
   } else {
-    d.innerHTML=`<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>${acctBtnHTML()}`;
+    d.innerHTML=`${chChipHTML()}<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>${acctBtnHTML()}`;
     nav.appendChild(d);
     document.getElementById('regchange').onclick=regChange;
+    { const cb=document.getElementById('chbtn'); if(cb) cb.onclick=chSheetOpen; }   // v10.57.0: the church chip
   }
   { const ab=document.getElementById('acctbtn'); if(ab) ab.onclick=acctOpen; }   // v10.54.0
   measureTop();
@@ -14460,6 +14530,7 @@ function render(){
     const cs=document.getElementById('u-churchslot'); if(chEl&&cs) cs.appendChild(chEl); }
   gfChurchHome($('u-churchslot')); uChurchSecWire();   // v10.55.0: "Your church", before the needs
   nsDraw();   // v10.45.0: what this neighborhood needs from our church (#u-needs)
+  try{ chSnapSave(); }catch(e){}   // v10.57.0: the figures Compare your churches reads, kept with this church
   balanceGrids($('sections'));
   /* No per-section hue any more. --sec stays mint for the whole report, which
      is what makes the two or three amber rings in the brief mean something. */
@@ -21313,6 +21384,7 @@ function uSwitch(id){
   else{openTool('survey');const a=document.querySelector('.ask');if(a)a.style.display='';$('addr').value=uChurch().address||'';}
 }
 function uChrome(){
+  try{ chChipPaint(); }catch(e){}   // v10.57.0: the church chip in the header
   const host=document.getElementById('churchbar');if(!host)return;
   host.hidden=memberLink()||gated();
   if(host.hidden)return;
@@ -42269,6 +42341,199 @@ $('ver').textContent=VERSION;
       const f=$('ver'); if(f){ f.textContent=VERSION+' ⚠'; f.title='Version tags disagree; see console.'; }
     }
   }catch(e){}
+/* ================= YOUR CHURCHES: switch between them, and compare them (v10.57.0) =================
+   The pastor (7 Oct 2026): "some pastors have multiple churches … they need to have them saved so they can click a button and say which
+   church so they click one church. It'll show them everything for that CHURCH … Also, maybe we could also have a comparison between
+   churches … kinda like how conferences compare each other but when they put the information for all the churches say three churches,
+   they can compare it and see … the differences." Every church is already kept apart (uStore().churches; a new address surveyed is a new
+   church, uEnsureChurch; uSwitch). Here: a chip in the header (chChipHTML) and its sheet (#ch-sheet: switch, rename, add, compare), a
+   snapshot of each church's neighborhood (chSnapSave, kept with the church each time its survey draws), and the tool "Compare your
+   churches" (#chc, chcOpen): the neighborhoods, the churches, Spiritual Gifts, the plans, and what stands out. Counts only, never a name,
+   never a ranking. Design: Terrain-work/v74/DESIGN-CHURCHES.md. */
+const CH_T={
+  chip:{en:'Your churches',es:'Sus iglesias'}, lead:{en:'Tap a church to see everything for it.',es:'Toque una iglesia para ver todo lo suyo.'},
+  now:{en:'Open now',es:'Abierta ahora'}, noAddr:{en:'No address yet',es:'Sin dirección todavía'},
+  add:{en:'Add a church',es:'Añadir una iglesia'}, addN:{en:'Map its address in the Community Survey: it is kept as a church of its own.',es:'Ubique su dirección en la Encuesta Comunitaria: se guarda como una iglesia aparte.'},
+  compare:{en:'Compare your churches',es:'Compare sus iglesias'}, rename:{en:'Rename',es:'Renombrar'}, save:{en:'Save',es:'Guardar'},
+  close:{en:'Close',es:'Cerrar'}, name:{en:'Church name',es:'Nombre de la iglesia'},
+  title:{en:'Compare your churches',es:'Compare sus iglesias'},
+  sub:{en:'Your churches side by side: their neighborhoods, their people, their gifts and their plans. Differences, never a ranking.',es:'Sus iglesias lado a lado: sus vecindarios, su gente, sus dones y sus planes. Diferencias, nunca una clasificación.'},
+  one:{en:'Add a second church to compare: map its address in the Community Survey.',es:'Añada una segunda iglesia para comparar: ubique su dirección en la Encuesta Comunitaria.'},
+  hood:{en:'The neighborhoods',es:'Los vecindarios'}, church:{en:'The churches',es:'Las iglesias'}, gifts:{en:'Spiritual Gifts',es:'Dones espirituales'},
+  plan:{en:'The plans',es:'Los planes'}, stand:{en:'What stands out',es:'Lo que se destaca'},
+  noSnap:{en:'Open its survey once to include its neighborhood.',es:'Abra su encuesta una vez para incluir su vecindario.'}, openSurvey:{en:'Open its survey',es:'Abrir su encuesta'},
+  topNeeds:{en:'Top needs',es:'Necesidades principales'}, checked:{en:'Figures from its survey of {date}',es:'Cifras de su encuesta del {date}'},
+  members:{en:'Members on the books',es:'Miembros en los libros'}, attending:{en:'Attending',es:'Asistencia'}, adults:{en:'Adults attending',es:'Adultos que asisten'},
+  volunteers:{en:'Volunteers',es:'Voluntarios'}, leaders:{en:'Leaders',es:'Líderes'}, hours:{en:'Hours a month',es:'Horas al mes'}, rooms:{en:'Rooms',es:'Salones'},
+  skills:{en:'Strongest skills',es:'Habilidades principales'}, free:{en:'Free to serve',es:'Libres para servir'},
+  results:{en:'Results in',es:'Resultados recibidos'}, of:{en:'{n} of {d}',es:'{n} de {d}'}, strongest:{en:'Strongest gifts',es:'Dones más fuertes'},
+  inPlan:{en:'Ministries in the plan',es:'Ministerios en el plan'}, decided:{en:'Proposals decided',es:'Propuestas decididas'},
+  notYet:{en:'Not filled in yet',es:'Todavía sin llenar'}, none:{en:'None yet',es:'Ninguno todavía'},
+  sOnly:{en:'Spiritual Gifts results so far only at {a}.',es:'Hasta ahora solo {a} tiene resultados de Dones espirituales.'},
+  sNone:{en:'No church has Spiritual Gifts results yet.',es:'Ninguna iglesia tiene todavía resultados de Dones espirituales.'},
+  sFig:{en:'{label}: {list}.',es:'{label}: {list}.'}, sCount:{en:'{label}: {list}.',es:'{label}: {list}.'},
+  sSame:{en:'Their neighborhoods look much alike on these figures.',es:'Sus vecindarios se parecen mucho en estas cifras.'}};
+function chT(k,o){ const e=CH_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+const CH_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 21V12l8-6 8 6v9"/><path d="M12 6V2M10 4h4"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg>';
+/* The churches he has: those with an address, a name of their own, or "Your church" filled in (never the empty placeholder). */
+function chList(){
+  let all=[]; try{ all=Object.values(uStore().churches||{}); }catch(e){ all=[]; }
+  return all.filter(c=>c&&(String(c.address||'').trim()||(String(c.name||'').trim()&&!/^my church$/i.test(String(c.name).trim()))||(c.capacity&&c.capacity.confirmed)));
+}
+function chName(c){
+  let n=''; try{ n=homeName(c,c&&c.address); }catch(e){ n=''; }
+  if(n) return n;
+  if(chList().length<=1){ try{ const r=regGet(); if(r&&String(r.church||'').trim()) return String(r.church).trim(); }catch(e){} }
+  const a=String((c&&(c.label||c.address))||'').split(',')[0].trim();
+  return a||L('Our church','Nuestra iglesia');
+}
+function chTown(c){ const s=c&&c.snap; if(s&&s.town) return s.town; const a=String(c&&c.address||''); const m=/,\s*([^,]+),\s*[A-Z]{2}\b/.exec(a); return m?m[1].trim():''; }
+function chChipHTML(){
+  try{ if(memberLink()||gated()) return ''; }catch(e){ return ''; }
+  const L0=chList(); if(!L0.length) return '';
+  let cur=null; try{ cur=uChurch(); }catch(e){ cur=null; }
+  const nm=cur&&L0.includes(cur)?chName(cur):chName(L0[0]);
+  return `<button type="button" id="chbtn" class="chbtn" aria-haspopup="dialog" title="${esc(chT('chip'))}">${CH_SVG}<span class="chb-n">${esc(nm)}</span>${L0.length>1?`<span class="chb-c">${L0.length}</span>`:''}<span class="chb-v" aria-hidden="true">▾</span></button>`;
+}
+function chChipPaint(){
+  const who=document.getElementById('whoami'); if(!who) return;
+  const old=document.getElementById('chbtn'), html=chChipHTML();
+  if(old){ if(!html){ old.remove(); return; } const t=document.createElement('div'); t.innerHTML=html; old.replaceWith(t.firstElementChild); }
+  else if(html) who.insertAdjacentHTML('afterbegin',html);
+  const b=document.getElementById('chbtn'); if(b) b.onclick=chSheetOpen;
+}
+const CH_ST={rename:''};
+function chSheetHTML(){
+  const L0=chList(); let cur=null; try{ cur=uChurch(); }catch(e){ cur=null; }
+  const rows=L0.map(c=>{ const on=c===cur, town=chTown(c);
+    if(CH_ST.rename===c.id) return `<li class="ch-row on"><form class="ch-ren" data-ch-renform="${esc(c.id)}"><label class="u-field"><span>${esc(chT('name'))}</span><input name="nm" maxlength="80" value="${esc(chName(c))}" autocomplete="off"></label><button type="submit" class="btn gfsm">${esc(chT('save'))}</button></form></li>`;
+    return `<li class="ch-row${on?' on':''}"><button type="button" class="ch-go" data-ch-go="${esc(c.id)}"${on?' aria-current="true"':''}><b>${esc(chName(c))}</b><span>${esc(town||c.address||chT('noAddr'))}</span>${on?`<em>${esc(chT('now'))}</em>`:''}</button><button type="button" class="btn ghost gfsm ch-ren-b" data-ch-ren="${esc(c.id)}">${esc(chT('rename'))}</button></li>`; }).join('');
+  return `<div class="ns-sh"><div class="ns-shtop"><h2 id="ch-t" tabindex="-1">${esc(chT('chip'))}</h2><button type="button" class="ns-x" data-ch-x aria-label="${esc(chT('close'))}">✕</button></div>
+    <div class="ch-b"><p class="note">${esc(chT('lead'))}</p><ul class="ch-list">${rows}</ul>
+    <div class="ch-acts">${L0.length>1?`<button type="button" class="btn" data-ch-cmp>${esc(chT('compare'))}</button>`:''}<button type="button" class="btn ghost" data-ch-add>+ ${esc(chT('add'))}</button></div>
+    <p class="note ch-addn">${esc(chT('addN'))}</p></div></div>`;
+}
+function chSheetDraw(){ const d=$('ch-sheet'); if(!d) return; d.innerHTML=chSheetHTML(); const f=d.querySelector('[data-ch-renform] input'); if(f) try{ f.focus(); f.select(); }catch(e){} }
+function chSheetClose(){ const d=$('ch-sheet'); if(!d) return; CH_ST.rename=''; if(d.hasAttribute('open')){ if(typeof d.close==='function'){ try{ d.close(); }catch(e){ d.removeAttribute('open'); } } else d.removeAttribute('open'); } }
+function chSheetOpen(){
+  const d=$('ch-sheet'); if(!d) return;
+  if(!d.dataset.wired){ d.dataset.wired='1';
+    d.addEventListener('click',e=>{
+      if(e.target===d){ chSheetClose(); return; }
+      const b=e.target.closest&&e.target.closest('button'); if(!b) return;
+      if(b.hasAttribute('data-ch-x')){ chSheetClose(); return; }
+      // the church open now, tapped from the main menu or the comparison: its survey ("It'll show them everything for that CHURCH")
+      if(b.dataset.chGo){ const id=b.dataset.chGo; chSheetClose(); let cur=null; try{ cur=uChurch(); }catch(e2){} if(!cur||cur.id!==id) uSwitch(id); else if(!TOOL||TOOL==='churches') openTool('survey'); return; }
+      if(b.dataset.chRen){ CH_ST.rename=b.dataset.chRen; chSheetDraw(); return; }
+      if(b.hasAttribute('data-ch-add')){ chSheetClose(); try{ homeChange(); }catch(e2){ openTool('survey'); } return; }
+      if(b.hasAttribute('data-ch-cmp')){ chSheetClose(); openTool('churches'); return; }
+    });
+    d.addEventListener('submit',e=>{ e.preventDefault(); const f=e.target.closest('[data-ch-renform]'); if(!f) return;
+      const c=(uStore().churches||{})[f.dataset.chRenform], v=String(f.querySelector('input').value||'').replace(/\s+/g,' ').trim().slice(0,80);
+      if(c&&v){ c.name=v; uPersist(); }
+      CH_ST.rename=''; chSheetDraw(); uChrome(); try{ if(TOOL==='churches') chcRender(); }catch(e2){} });
+    d.addEventListener('close',()=>{ CH_ST.rename=''; });
+  }
+  CH_ST.rename=''; chSheetDraw();
+  if(!d.hasAttribute('open')){ if(typeof d.showModal==='function'){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } } else d.setAttribute('open',''); }
+  const t=$('ch-t'); if(t) try{ t.focus({preventScroll:true}); }catch(e){}
+}
+/* The neighborhood, kept with its church each time its survey draws: the figures Compare your churches reads (no Census call there). */
+const CH_SNAP_KEYS=['pop','poverty','kidsShare','seniorsShare','noCar','foreign','limEng','renters','uninsured','medInc'];
+function chSnapSave(){
+  if(memberLink()||typeof DATA==='undefined'||!DATA||!DATA.M||!DATA.M.tract) return;
+  const ch=uChurch(); if(!ch) return;
+  const M=DATA.M, lv=DATA.levels||{}, figs={};
+  CH_SNAP_KEYS.forEach(k=>{ const v=[M.tract[k],(M.cousub||{})[k],(M.county||{})[k]].map(x=>typeof x==='number'&&isFinite(x)?Math.round(x*10)/10:null); if(v[0]!=null) figs[k]=v; });
+  let needs=[]; try{ needs=((NSM&&NSM.needs)||[]).slice(0,5).map(n=>String(n.title||n.topic||'').trim()).filter(Boolean); }catch(e){ needs=[]; }
+  let town=''; try{ town=libTown(); }catch(e){ town=''; }
+  const snap={v:1,at:new Date().toISOString().slice(0,10),tract:String((lv.tract&&lv.tract.name)||''),town:String(town||''),county:String((lv.county&&lv.county.name)||''),figs,needs,lang:LANG==='es'?'es':'en'};
+  if(JSON.stringify({...ch.snap,at:0})===JSON.stringify({...snap,at:0})) return;
+  ch.snap=snap; uPersist();
+}
+/* One church's figures, read with the very functions the tools use, the app pointed at that church for a moment (nothing saved). */
+function chWith(id,fn){
+  const s=uStore(); if(!s.churches||!s.churches[id]) return null;
+  const was=s.active; s.active=id; CAP=null;
+  try{ return fn(s.churches[id]); }catch(e){ return null; } finally{ s.active=was; CAP=null; }
+}
+function chFacts(c){
+  return chWith(c.id,ch=>{
+    const m=capMerged(), raw=capGet()||{};
+    const n=v=>{ const x=uNum(v); return x==null?null:x; };
+    let rooms=0; try{ rooms=U_FAC.filter(f=>m.hasFacility(f.k)).length; }catch(e){ rooms=0; }
+    let skills=[]; try{ skills=U_SKILLS.filter(k=>m.skills&&m.skills[k.k]>0).sort((a,b)=>m.skills[b.k]-m.skills[a.k]).slice(0,3).map(k=>(LANG==='es'&&typeof U_SKILLS_ES!=='undefined'&&U_SKILLS_ES[k.k])||k.n); }catch(e){ skills=[]; }
+    let g=null; try{ g=gfReadiness(); }catch(e){ g=null; }
+    let plan=0; try{ plan=uSelected().length; }catch(e){ plan=0; }
+    const dec=ch.caseDecisions&&typeof ch.caseDecisions==='object'?Object.keys(ch.caseDecisions).filter(k=>ch.caseDecisions[k]&&Object.keys(ch.caseDecisions[k]).length).length:0;
+    return {id:ch.id,name:chName(ch),town:chTown(ch),snap:ch.snap&&ch.snap.v===1?ch.snap:null,ready:!!(raw.confirmed&&m.ready),
+      membership:n(m.membership),members:n(m.members),adults:n(m.adults),volunteers:n(m.volunteers),leaders:n(m.leaders),hours:n(raw.hours),rooms,skills,
+      slots:(m.slots||[]).slice(),gifts:g?{n:g.n,pct:g.pct,d:g.den&&g.den.d||null,strongest:(g.strongest||[]).map(x=>x.name)}:{n:0,pct:null,d:null,strongest:[]},plan,dec};
+  });
+}
+const CH_FIG={pop:['n',{en:'Population',es:'Población'}],poverty:['p',{en:'Below the poverty line',es:'Bajo la línea de pobreza'}],kidsShare:['p',{en:'Children',es:'Niños'}],
+  seniorsShare:['p',{en:'Age 65 and over',es:'De 65 años o más'}],noCar:['p',{en:'Homes without a car',es:'Hogares sin auto'}],foreign:['p',{en:'Born outside the U.S.',es:'Nacidos fuera de EE. UU.'}],
+  limEng:['p',{en:'Limited-English homes',es:'Hogares con inglés limitado'}],renters:['p',{en:'Renter homes',es:'Hogares que alquilan'}],uninsured:['p',{en:'No health insurance',es:'Sin seguro médico'}],
+  medInc:['$',{en:'Median household income',es:'Ingreso medio del hogar'}]};
+const chLab=o=>LANG==='es'?o.es:o.en;
+function chFmt(v,u){ if(v==null) return '—'; if(u==='p') return (Math.round(v*10)/10).toLocaleString(LANG==='es'?'es-US':'en-US')+'%'; if(u==='$') return '$'+Math.round(v).toLocaleString('en-US'); return Math.round(v).toLocaleString(LANG==='es'?'es-US':'en-US'); }
+/* What stands out: plain sentences from the figures, the largest differences first; never a ranking. */
+function chStandOut(F){
+  const out=[], withSnap=F.filter(f=>f.snap);
+  const figD=[];
+  if(withSnap.length>=2) Object.keys(CH_FIG).forEach(k=>{ const [u,lab]=CH_FIG[k]; if(u!=='p') return;
+    const vals=withSnap.map(f=>({f,v:f.snap.figs[k]&&f.snap.figs[k][0]})).filter(x=>x.v!=null); if(vals.length<2) return;
+    const hi=vals.reduce((a,b)=>b.v>a.v?b:a), lo=vals.reduce((a,b)=>b.v<a.v?b:a);
+    if(hi.v-lo.v>=5&&hi.v>=1.5*Math.max(lo.v,0.5)) figD.push({d:(hi.v-lo.v)/Math.max(hi.v,1),txt:chT('sFig',{label:chLab(lab),list:vals.slice().sort((a,b)=>b.v-a.v).map(x=>`${x.f.name} ${chFmt(x.v,'p')}`).join(', ')})}); });
+  figD.sort((a,b)=>b.d-a.d).slice(0,4).forEach(x=>out.push(x.txt));
+  if(withSnap.length>=2&&!figD.length) out.push(chT('sSame'));
+  [['volunteers','volunteers'],['leaders','leaders']].forEach(([k,lk])=>{ const vals=F.filter(f=>f[k]!=null); if(vals.length<2) return;
+    const hi=Math.max(...vals.map(f=>f[k])), lo=Math.min(...vals.map(f=>f[k])); if(hi>=2*Math.max(lo,1)&&hi-lo>=3) out.push(chT('sCount',{label:chT(lk),list:vals.slice().sort((a,b)=>b[k]-a[k]).map(f=>`${f.name} ${f[k]}`).join(', ')})); });
+  const g=F.filter(f=>f.gifts.n>0);
+  if(!g.length) out.push(chT('sNone')); else if(g.length<F.length) out.push(chT('sOnly',{a:g.map(f=>f.name).join(', ')}));
+  return out.slice(0,7);
+}
+/* A row no church has a figure for is left out (few words); a church whose "Your church" is empty says so where others have figures. */
+function chcRowHTML(label,cells,empty){ return empty?'':`<tr><th scope="row">${esc(label)}</th>${cells.map(c=>`<td>${c}</td>`).join('')}</tr>`; }
+function chcBar(v,max,u,text){ if(v==null) return `<span class="chc-v">—</span>`; const w=max>0?Math.max(3,Math.round(v*100/max)):0; return `<span class="chc-v">${esc(text||chFmt(v,u))}</span><span class="chc-bar" aria-hidden="true"><i style="width:${w}%"></i></span>`; }
+function chcRender(){
+  const host=$('chc'); if(!host) return;
+  const L0=chList();
+  if(L0.length<2){ host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div><div class="card chc-one"><p>${esc(chT('one'))}</p><button type="button" class="btn" data-ch-add>+ ${esc(chT('add'))}</button></div>`;
+    host.querySelector('[data-ch-add]').onclick=()=>{ try{ homeChange(); }catch(e){ openTool('survey'); } }; return; }
+  const F=L0.map(chFacts).filter(Boolean);
+  // one width for every section, so the churches' columns line up from top to bottom
+  const head=`<tr><th scope="col"></th>${F.map(f=>`<th scope="col"><b>${esc(f.name)}</b><span>${esc(f.town||'')}</span></th>`).join('')}</tr>`;
+  const sec=(key,col,rows)=>`<section class="chc-sec" style="--k:${col}" aria-labelledby="chc-${key}"><h2 id="chc-${key}">${esc(chT(key))}</h2><div class="chc-wrap"><table class="chc-t" style="--n:${F.length};min-width:${130+F.length*120}px"><thead>${head}</thead><tbody>${rows}</tbody></table></div></section>`;
+  const none=v=>v==null;
+  // the neighborhoods (a church never surveyed: its button, on the first row)
+  const noSnap=F.some(f=>!f.snap);
+  const hoodRows=Object.keys(CH_FIG).map(k=>{ const [u,lab]=CH_FIG[k]; const vals=F.map(f=>f.snap&&f.snap.figs[k]?f.snap.figs[k][0]:null), max=Math.max(0,...vals.filter(v=>v!=null));
+      return chcRowHTML(chLab(lab),F.map((f,i)=>f.snap?chcBar(vals[i],u==='$'||u==='n'?max:Math.max(max,1),u):(k==='pop'?`<span class="chc-miss">${esc(chT('noSnap'))}</span> <button type="button" class="btn ghost gfsm" data-chc-open="${esc(f.id)}">${esc(chT('openSurvey'))}</button>`:'')),
+        vals.every(none)&&!(k==='pop'&&noSnap)); }).join('')
+    +chcRowHTML(chT('topNeeds'),F.map(f=>f.snap&&f.snap.needs.length?`<ol class="chc-needs">${f.snap.needs.slice(0,3).map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:'—'),F.every(f=>!(f.snap&&f.snap.needs.length)));
+  const num=(k,lab)=>{ const vals=F.map(f=>f[k]), max=Math.max(0,...vals.filter(v=>v!=null));
+    return chcRowHTML(chT(lab),F.map((f,i)=>f.ready||vals[i]!=null?chcBar(vals[i],max,'n'):`<span class="chc-miss">${esc(chT('notYet'))}</span>`),vals.every(none)); };
+  let churchRows=[['members','membership'],['attending','members'],['adults','adults'],['volunteers','volunteers'],['leaders','leaders'],['hours','hours'],['rooms','rooms']].map(([lab,k])=>num(k,lab)).join('')
+    +chcRowHTML(chT('skills'),F.map(f=>f.skills.length?esc(f.skills.join(', ')):'—'),F.every(f=>!f.skills.length))
+    +chcRowHTML(chT('free'),F.map(f=>f.slots.length?esc(f.slots.map(x=>typeof uSlotName==='function'?uSlotName(x):x).join(', ')):'—'),F.every(f=>!f.slots.length));
+  if(!churchRows) churchRows=chcRowHTML(chT('church'),F.map(()=>`<span class="chc-miss">${esc(chT('notYet'))}</span>`));
+  // Spiritual Gifts: "24 of 135", the bar their share of the church's count (adults, else attending, else members)
+  const gN=F.map(f=>f.gifts.n), gMax=Math.max(0,...gN);
+  const giftRows=chcRowHTML(chT('results'),F.map((f,i)=>{ const d=f.gifts.d; return d?chcBar(f.gifts.pct||0,100,'p',chT('of',{n:gN[i],d})):chcBar(gN[i],gMax,'n'); }))
+    +chcRowHTML(chT('strongest'),F.map(f=>f.gifts.strongest.length?esc(f.gifts.strongest.join(', ')):'—'),F.every(f=>!f.gifts.strongest.length));
+  const planRows=num('plan','inPlan')+num('dec','decided');
+  const so=chStandOut(F);
+  host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div>
+    <section class="chc-sec chc-so" style="--k:var(--m-hardship)" aria-labelledby="chc-stand"><h2 id="chc-stand">${esc(chT('stand'))}</h2><ul>${so.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></section>
+    ${sec('hood','var(--m-housing)',hoodRows)}${sec('church','var(--acc)',churchRows)}${sec('gifts','var(--gfv)',giftRows)}${sec('plan','var(--m-hardship)',planRows)}`;
+  host.querySelectorAll('[data-chc-open]').forEach(b=>b.onclick=()=>uSwitch(b.dataset.chcOpen));
+}
+function chcOpen(){
+  const host=$('chc'); if(!host) return;
+  if(gated()||memberLink()||!entitled('churches')){ host.hidden=true; host.innerHTML=''; return; }
+  host.hidden=false; chcRender();
+}
 /* ================= LEARN FROM OTHER CONFERENCES (the conference comparison and the year ahead) =================
    The pastor: "statements are different than what's actually happening … calendars speak more than mission statements",
    and (1 Oct 2026) "Do you want to do a year in advance instead of six months so that we can prepare for the next year".
