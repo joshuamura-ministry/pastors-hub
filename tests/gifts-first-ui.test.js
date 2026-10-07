@@ -116,13 +116,13 @@ function makeStore(){ const m=new Map(); return { m,
 
   console.log('\n-- B. "Invite the whole church" --');
   { const X=page('https://pastorshub.org/',{seed:'partial'}); await ready(X); X.E('showHub()'); calls.length=0;
-    X.q('#hubgifts [data-gf-invite]').click();
+    X.E('gfInviteChurch()');   // v10.56.2: from another tool the card's button opens the main page; the invitation itself is tested here
     await until(()=>X.q('#gfready')&&!X.q('#gfready').hidden&&X.w.__scrolled.includes('gfready'),8000);
     const ids=calls.filter(k=>k.fn==='gifts'&&k.op==='id').length;
     c('no campaign yet: the setup’s share panel, exactly one campaign made (op id), the ready block shown and scrolled to', [X.J('TOOL'),X.J('GF_VIEW'),ids,!X.q('#gfready').hidden,X.w.__scrolled.includes('gfready')], ['gifts','setup',1,true,true]);
     const pub=X.J('uChurch().share.pub');
     c('…the short link, the church’s own', [/^[A-Za-z0-9_-]{12}$/.test(pub),X.q('#gflinkbox2').value.endsWith('#gifts='+pub)], [true,true]);
-    X.E('showHub()'); calls.length=0; X.q('#hubgifts [data-gf-invite]').click();
+    X.E('showHub()'); calls.length=0; X.E('gfInviteChurch()');   // v10.56.2: from another tool the card's button opens the main page; the invitation itself is tested here
     await until(()=>X.q('#gfready')&&!X.q('#gfready').hidden,8000);
     c('a campaign already: no new one (results already in keep counting), the same pub', [calls.filter(k=>k.fn==='gifts'&&k.op==='id').length,X.J('uChurch().share.pub')], [0,pub]);
     // quiet sync: at most once every ten minutes per church

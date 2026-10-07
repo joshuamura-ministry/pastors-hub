@@ -14,7 +14,8 @@ const T=checker(), c=T.c;
   c('no "Your path", no "Gifts first" card', [!!P.q('#hubpath'),!!P.q('#hubgifts'),/Your path|Gifts first|Nobody has taken it yet/.test(P.txt('#hub'))], [false,false,false]);
   c('"Welcome to Terrain", then "Your journey begins here."', [P.txt('.hubwelcome h2'),P.txt('.hubwelcome .sub')], ['Welcome to Terrain','Your journey begins here. Choose a tool to begin.']);
   c('the Community Survey is the first thing under the quote', [P.q('#hub .egw').nextElementSibling.className,P.q('#hub .tools .tool').dataset.tool], ['rule','survey']);
-  c('the five tools', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','planner','compare']);
+// v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
+  c('the six tools', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','planner','compare','churches']);
   c('under them: what Terrain is for', [P.txt('#hubabout h3'),/^Terrain helps a pastor see the neighborhood God has placed the church in/.test(P.qa('#hubabout p')[0].textContent),P.qa('#hubabout p')[1].textContent],
     ['What Terrain is for',true,'Neighbors are neighbors, never targets: every tool points to Christ.']);
 

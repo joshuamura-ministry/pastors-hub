@@ -65,7 +65,8 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
 
   console.log('\n-- v10.49.0: "Your church" without money; the room boxes in their place --');
   { const Y=page(); await ready(Y); survey(Y); Y.E(`openTool('gifts')`); await sleep(60);
-    c('three steps: Your church, Your building, Skills (Money moved to the proposal)', Y.qa('#u-steps-nav li span').map(x=>x.textContent), ['Your church','Your building','Skills']);
+    // v10.56.2 (stale, not a regression): and "At a glance", the summary as the slider's last page
+    c('three steps: Your church, Your building, Skills (Money moved to the proposal), then At a glance', Y.qa('#u-steps-nav li span').map(x=>x.textContent), ['Your church','Your building','Skills','At a glance']);
     c('no money boxes in the form, and no Money group in the summary', [Y.qa('#u-cap-form [name="startupBudget"],#u-cap-form [name="monthlyBudget"],#u-cap-form [name="pendingBudget"]').length,/Startup funds|Monthly funds/.test(Y.txt('#capsumslot')||'')], [0,false]);
     c('what the church has holds no money any more (capMerged reads none)', [Y.J('capMerged().startup'),Y.J('capMerged().monthly')], [null,null]);
     // v10.55.0: the card's note, under its heading (the card is the survey's "Your church" now)
@@ -107,15 +108,16 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   { const G=page(); await ready(G); survey(G); G.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
     // v10.55.0 — the pastor: "you can remove the … fill-in information in the spiritual gifts … that's all it's gonna be about just spiritual
     // gifts": two steps; "Your church" is the survey's
-    c('two steps at the top: Invite your members → See the results', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite your members','See the results']);
-    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&G.q('#gf-results .gfresults').nextElementSibling.id,!!G.q('#gifts #gf-church')], ['gf-invite','1Spiritual Gifts: invite your members','2See the results','gfsample',false]);
+    // v10.56.2 (stale, not a regression): the pastor, "a three invite your members see the results and then one more step like fill the position"
+    c('three steps at the top: Invite your members → See the results → Fill the positions', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite your members','See the results','Fill the positions']);
+    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&(G.q('#gf-results .gfresults').nextElementSibling||{}).id||null,!!G.q('#gifts #gf-church')], ['gf-invite','1Spiritual Gifts: invite your members','2See the results',null,false]);   // v10.56.2 (stale): the sample report only with the demo ("if you click complete a demo … then the sample report will show")
     c('no "Nobody has taken it yet" card, and no code box', [G.qa('#giftbody [data-gf-first]').length,G.qa('#gfpaste,#gfadd').length], [0,0]);
     G.q('[data-gf-step="invite"]').click();
     c('the first step goes to the invitation', G.w.__scrolled.slice(-1)[0].id, 'gf-invite');
     G.q('[data-gf-step="results"]').click();
     c('the second goes to the results', G.w.__scrolled.slice(-1)[0].id, 'gf-results');
     const GS=page({lang:'es'}); await ready(GS); survey(GS); GS.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
-    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados']);
+    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados','Llene los puestos']);
     c('no page error', [G.errs,GS.errs], [[],[]]); }
   c('no page error', [P.errs,S.errs,Q.errs,QS.errs], [[],[],[],[]]);
 }); T.done(); })();

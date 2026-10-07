@@ -126,6 +126,8 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     console.log('-- Spiritual Gifts --');
     P.E('openTool("gifts")'); await sleep(200);
     scan(P,'Spiritual Gifts landing');
+    P.E('gfDemoFill({quiet:true}); gfRender();'); await sleep(100);   // v10.56.2: the sample report shows with the demo (the pastor: "if you click complete a demo … then the sample report will show")
+    scan(P,'Spiritual Gifts landing with the demo');
     P.q('#gfsample').click(); await sleep(400);
     scan(P,'the sample report');
     { const t=P.E(`(()=>{ try{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++) a[g.id+'.'+k]=['teach','shep','helps'].includes(g.id)?4:2; });

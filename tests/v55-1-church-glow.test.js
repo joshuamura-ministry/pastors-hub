@@ -29,7 +29,8 @@ const css=(HTML.match(/<style[^>]*>([\s\S]*?)<\/style>/g)||[]).join('\n');
   const b=P.q('#u-gfnote [data-u-gifts]');
   c('the Spiritual Gifts button is the violet one, not a ghost', [b.classList.contains('u-gfgo'),b.classList.contains('ghost'),b.textContent], [true,false,'Send the Spiritual Gifts survey']);
   b.click(); await sleep(150);
-  c('…and it still opens the invitation', [P.E('TOOL'),P.E('GF_VIEW')], ['gifts','setup']);
+  // v10.56.2 (stale, not a regression): the pastor, "if there's a button that points to spiritual gifts, just send the person to the main page for spiritual gifts. Don't send them to like any other spot"
+  c('…and it opens the Spiritual Gifts main page', [P.E('TOOL'),P.E('GF_VIEW')], ['gifts','roster']);
   P.E(`openTool('survey')`); await sleep(150);
 
   console.log('\n-- the church filled in, still no results: still something to do (the Spiritual Gifts survey) --');

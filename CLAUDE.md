@@ -48,7 +48,7 @@ for the tract, town and county, explains the neighborhood in plain English,
 takes an honest inventory of what the church can field, and matches ministries
 to both — checked against real volunteers, hours, rooms and money.
 
-Five tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026):
+Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026; the sixth, **Compare your churches**, since v10.57.0):
 
 | Tool | What it does | Tier |
 |---|---|---|
@@ -57,6 +57,7 @@ Five tools on the hub (the fifth, **Learn from other conferences**, since v10.44
 | **Make the Case** | Turns the findings into a proposal for a named board or ministry; since v10.44, also for **a project or purchase** (sound, a camera, a roof, a van…: three options, how we'll pay without tithe, who decides) | full |
 | **Evangelism Planner** | 18-month countdown to opening night, with a benchmark per phase | full |
 | **Learn from other conferences** | What each US conference's published calendar holds, side by side (the past 12 months), and the year ahead for his conference, union, the NAD and the world church (next 12 months, for planning) | full |
+| **Compare your churches** | (v10.57.0) A pastor's churches side by side: their neighborhoods, "Your church", Spiritual Gifts and plans, and what stands out; the header's church button switches between them | full |
 
 **Mission, in his words:** everything points to Christ; features are frames,
 the gospel is the picture. Neighbours are neighbours, never targets.
@@ -189,6 +190,72 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.57.0 (7 Oct 2026, full lane) — your churches: switch between them, and compare them.** The pastor: *"some pastors have multiple
+churches where they … need to have them saved so they can click a button and say which church so they click one church. It'll show them
+everything for that CHURCH … Also, maybe we could also have a comparison between churches … kinda like how conferences compare each other
+but when they put the information for all the churches say three churches, they can compare it and see … the differences."* Design
+`~/Ministry Work/Terrain-work/v74/DESIGN-CHURCHES.md`. Folded into PR #28 with v10.56.2 (his rule: an open PR takes the next work).
+- **The churches were already kept apart** (`uStore().churches`, a new address surveyed is a new church: `uEnsureChurch`; `uSwitch`); what
+  was missing was a way to see and switch (the old `#churchbar` is drawn into nothing) and any comparison.
+- **The chip** in the header, before his name (`chChipHTML`, `#chbtn`; painted by `showWho` and again by `uChrome` → `chChipPaint`): the
+  church icon, the open church's name (`chName`: "Your church"'s name, else the registration's while there is one church, else the address's
+  first part), the count when there are two or more, ▾. Never on a member's page or before registration; none until a church has an
+  address, a name of its own or "Your church" saved (`chList`). On a phone the header row shrinks and the names end in "…".
+- **Its sheet** (`#ch-sheet`, the idea sheet's frame; `chSheetOpen` / `chSheetDraw` / `chSheetClose`, `CH_ST`): every church (name, town,
+  "Open now"), a tap switches (`uSwitch`: its survey, or Spiritual Gifts / the Planner as before; the open church tapped from the
+  main menu or the comparison opens its survey); **Rename** in place (the name is text,
+  never markup); **Compare your churches** (two or more; first, the main button); **+ Add a church** (`homeChange`: the survey's address
+  box; the next address mapped is a church of its own). Removing a church is not offered (data loss); Clear all stays per church.
+- **The snapshot** (`chSnapSave`, from `render()` after `nsDraw`): each time a church's survey draws, its figures are kept with it,
+  `uChurch().snap = {v:1, at, tract, town, county, figs:{key:[tract,town,county]}, needs:[top 5 titles], lang}` for `CH_SNAP_KEYS`
+  (population, poverty, children, 65 and over, no car, born abroad, limited English, renters, uninsured, median income); a few hundred
+  bytes, no address. Never on a member's page. So the comparison asks the Census nothing.
+- **Compare your churches**, the sixth tool on the main menu (3 + 3; `TOOLS.churches`, standalone, panel `#chc`, `FEATURES.churches`
+  full; green `#A8E28A`, its own ink and glow like the others): `chcOpen` → `chcRender`. Each church a column, in his order; five framed
+  parts in their colours: **What stands out** (`chStandOut`: plain sentences, the largest differences first — a share at least 5 points
+  apart and half again as large, volunteers or leaders twice as many, who has Spiritual Gifts results; never a ranking or a score),
+  **The neighborhoods** (the snapshot's figures with bars, the top three needs; a church never surveyed: "Open its survey once…" and a
+  button that opens it), **The churches** ("Your church": members, attending, adults, volunteers, leaders, hours, rooms, skills, free
+  times), **Spiritual Gifts** ("24 of 135", the strongest gifts once enough are in), **The plans** (ministries in the plan, proposals
+  decided). Each church's figures are read by the tools' own functions with the app pointed at it for a moment (`chWith`: `capMerged`,
+  `gfReadiness`, `uSelected`; nothing saved, the open church unchanged). Counts only, never a member's name. A row no church has a figure
+  for is left out; the columns line up from part to part (`table-layout:fixed`); on a phone each row's label sits over the churches.
+  One church: "Add a second church to compare". Spanish throughout (`CH_T`, `chT`; the tile through `ES`).
+- Tests: `v57-churches` (new, 55; failing first on v10.56.2: `v74/ff-v57-churches.log`, 12 failed); updated with comments: hub-glow,
+  hub-icons, hub-alignment, hub-layout, hub-copy-and-quote, header-nav-collision, entitlement-tiers, v44-integration, v56-1-hub-simple
+  (six tiles), registration (Change found by its id; the Spanish tile), connect-client (26 `memberLink()` guard sites). Checked in Chrome
+  (`v74/shots25.mjs`, served by `v74/serve57.mjs`): computer 1366, phone 390 EN and ES, no sideways scroll, no page errors. Full suite:
+  152 suites · 10,531 passed · 0 failed (the full run 10,530; then the open church tapped from the main menu opens its survey, and `v57-churches` was rerun alone with that check: 55). Samples `Terrain-v10.57.0-samples` (the second church's figures made up for the sample).
+
+**v10.56.2 (7 Oct 2026, quick lane) — "Your church" ends on its summary; a demo of Spiritual Gifts; every way into Spiritual Gifts opens
+its main page, in three coloured steps.** The pastor: *"[the summary box] should be at the bottom as like the results of filling it in it
+shouldn't jump to the top … when I finished it jumped to the top, which is very jolting … it should just scroll to the right and be one full
+page that shows all the information"*; *"it would be good to have a demo spiritual gifts. It'll say test a tester … so when I am or someone
+else is showing them the app … I don't have to go through the whole thing"*; *"so that the demo CHURCH can also be connected with the demo
+spiritual gift … the sample report shouldn't just be there … if you click complete a demo … then the sample report will show"*; *"if there's
+a button that points to spiritual gifts, just send the person to the main page … a three invite your members see the results and then one
+more step like fill the position and make those steps like maybe different colors"*.
+- **"Your church"**: the summary (`capSummaryHTML`) is the slider's fourth page, **At a glance** (`U_SUM`, `#u-sumbody`, `.u-sumpanel`; the
+  track 400%, a panel a quarter); the box above the form (`#capsumslot`) is gone. Save and Demo slide the card to it (`capToSummary`, via
+  `CAP_SHOW`, the slider's own `show`) and **never move the page** (`capShowSaved` is no longer called by them). A church already saved
+  opens on its summary (`U_STEP_I` starts null); Save sits on Skills; on At a glance only Back.
+- **The demo of Spiritual Gifts** (`GF_DEMO_PEOPLE`, `gfDemoSet`, `gfDemoFill`, `gfDemoClear`, `gfDemoOn`, `gfDemoRedraw`): 24 sample members of
+  this church, each "(sample)", the first the sample report's own (Alex Rivera, `GF_SAMPLE`'s answers), stored as results are (the roster,
+  no server id, memberId `demo-NN`), so the counts, Across the church, the slides and "Who to ask" read them as real (24 of the demo
+  church's 46 adults: `gfReadiness` "half"). **Fill in demo results** / **Clear demo results**: in the survey's Spiritual Gifts line and on
+  the results card. Filling either demo fills the other when it is empty; **Clear all** takes the demo results out too; a real member's
+  result is never touched. **See a sample report** shows only while the demo is in.
+- **Spiritual Gifts' main page** (`gfOpenLanding`): every button from another tool opens it at its top (Send the Spiritual Gifts survey,
+  Review members, the Proposal page's reminder, Who to ask's invite, the Gifts first card); inside the tool the invitation (`gfInviteChurch`)
+  is unchanged. Three steps (`GF_STEP_K`: Invite your members pink, See the results mint, **Fill the positions** gold), each part's number in
+  its colour; step 3 (`#gf-positions`): who fits where, Across the church, Who to ask (Make the Case), and the Volunteers fold.
+- Tests: `v56-2-church-and-gifts-demo` (new, 27; failing first on v10.56.1: `v73/ff-v56-2-church-and-gifts-demo.log`); updated with
+  comments: profile-slider, scroll-to-church, church-summary-box, v45-profile-move, v47-clean, v55-1-church-glow, v55-proposal-clean,
+  gifts-sample, gifts-first-ui, no-ai-words (it fills the demo before opening the sample report). Full suite: 151 suites · 10,476
+  passed · 0 failed (no-ai-words and v45-profile-move rerun alone after test-only fixes: the first needed the demo, the second now
+  waits for the slide to At a glance instead of a fixed 120 ms, which failed once under the full run's load). Samples
+  `Terrain-v10.56.2-samples` (`v73/shots24.mjs`).
 
 **v10.56.1 (7 Oct 2026, quick lane) — the main menu, very simple.** The pastor, with a screenshot of the hub: *"I just want this page to
 be very simple. The 1234 is nice but … it doesn't look good there. I'd say the community survey should just be right under the quote from
@@ -2446,6 +2513,11 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
   (build · debt · review, Church Manual p. 153) and `buyConfAsk`, `buyRiskSix` (a slide's six safeguards), `buyEventNote` / `buyLineRule`
   (a sale or an event under "Something else"), `buyPricesResume`, `buyBoxFit`, `BUY_CM.editionSlide`, `BUY_P.heads.sop`, `BUY_SL.askWork`
 
+**Your churches** (v10.57.0; block "YOUR CHURCHES" before "LEARN FROM OTHER CONFERENCES")
+- `CH_T` / `chT`, `chList`, `chName`, `chTown`; the chip `chChipHTML` / `chChipPaint` (`#chbtn`); the sheet `chSheetOpen` / `chSheetHTML` /
+  `chSheetDraw` / `chSheetClose` (`#ch-sheet`, `CH_ST`); the snapshot `chSnapSave` (`CH_SNAP_KEYS`, `uChurch().snap`); the comparison
+  `chcOpen` / `chcRender` (`#chc`), `chWith` (another church's figures, nothing saved), `chFacts`, `CH_FIG`, `chStandOut`, `chcRowHTML`, `chcBar`
+
 **Learn from other conferences** (v10.44; block "LEARN FROM OTHER CONFERENCES" before `boot`; `cmpShy`: a soft hyphen in a heat table's long word)
 - Data: `conferences/` (generated by `tools/conferences/build.mjs` from `tools/conferences/src`; README there), `CMP_DIR`, `cmpLoadIndex` / `cmpLoadDetail` / `cmpLoadAhead` (`?v=` the index's version)
 - `CMP_UI` / `cU`, `CMP`, `cmpReg` / `cmpState` / `cmpSave` (`terrain-compare`), `cmpOpen` / `cmpClose` / `cmpRender` / `cmpDetails`, `cmpPicker`, `cmpCards`, `cmpCharts`,
@@ -2614,7 +2686,10 @@ Don't relitigate them without a reason he'd accept.
   (choices 9 pt); one language a side, at the same size and ink; a card too full for one side goes two-sided, never smaller.
 - **The neighbour's page asks no other website** (DESIGN S22): no web fonts, scripts or images from elsewhere on `#connect=`.
 - **The main menu is very simple** (v10.56.1, his words: "the only thing that should be here is welcome to terrain … the Ellen White
-  quote and then … the five icons"): the welcome, the quote, the five tools, and what Terrain is for. Nothing else.
+  quote and then … the five icons"): the welcome, the quote, the tools (six since v10.57.0, his "a comparison between churches"), and
+  what Terrain is for. Nothing else.
+- **Each church is its own, and they are compared, never ranked** (v10.57.0): one button in the header switches; the comparison shows
+  differences in plain sentences and counts only.
 - **Clear next steps** (his request, v10.43 §5; v10.56.1 took "Your path" off the hub at his word): "What's next" at the very bottom of the survey (Make the case for each ministry in
   the plan, a connection card for events and series, Gifts first beside it) and "Your path" on the hub; the gifts never block
   making the case. The path's next step breathes gently: one more exception to "nothing animates on its own" (reduced motion

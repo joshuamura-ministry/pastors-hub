@@ -21,13 +21,14 @@ setTimeout(()=>{
   const stage=D.querySelector('.u-stage'), track=D.getElementById('u-track');
   c('a track inside the stage', !!track && track.parentElement===stage);
   // v10.49.0 — the pastor: "take the money part out of your church section": three steps now (was four, Money second)
-  c('three panels on the track', track.querySelectorAll('.u-panel').length, 3);
+  // v10.56.2 (stale, not a regression): the summary is the slider's fourth page, "At a glance" (the pastor: "it should just scroll to the right and be one full page that shows all the information")
+  c('four panels on the track (three steps and At a glance)', track.querySelectorAll('.u-panel').length, 4);
   c('the stage has one fixed height', /\.u-stage\{[^}]*height:clamp\(380px,58vh,600px\)/.test(html));
   c('and hides overflow', /\.u-stage\{[^}]*overflow:hidden/.test(html));
-  c('the track is three panels wide', /\.u-track\{[^}]*width:300%/.test(html));
+  c('the track is four panels wide', /\.u-track\{[^}]*width:400%/.test(html));
   c('and animates its transform', /\.u-track\{[^}]*transition:transform/.test(html));
   c('each panel scrolls inside itself', /\.u-panel\{[^}]*overflow-y:auto/.test(html));
-  c('each panel is a third of the track', /\.u-panel\{[^}]*flex:0 0 calc\(100% \/ 3\)/.test(html));
+  c('each panel is a quarter of the track', /\.u-panel\{[^}]*flex:0 0 calc\(100% \/ 4\)/.test(html));
   c('no panel is display:none any more', /\.u-panel\{display:none/.test(html), false);
   c('the old entry animations are gone', /@keyframes uInR/.test(html), false);
   c('reduced motion turns the slide off', /prefers-reduced-motion:reduce\)\{\.u-track\{transition:none\}\}/.test(html));
@@ -36,19 +37,20 @@ setTimeout(()=>{
   const panels=[...track.querySelectorAll('.u-panel')];
   const pos=()=>track.style.transform;
   c('starts on step one', pos(), 'translateX(-0%)');
-  c('only step one is live', panels.map(p=>p.hasAttribute('inert')), [false,true,true]);
+  c('only step one is live', panels.map(p=>p.hasAttribute('inert')), [false,true,true,true]);
   pageScrolls=0;
   D.querySelector('[name="churchName"]').value='Test Church';
   D.getElementById('u-next').click();
-  c('Next slides the track one panel left', pos(), 'translateX(-33.3333%)');
-  c('step two is now live, the others inert', panels.map(p=>p.hasAttribute('inert')), [true,false,true]);
-  c('screen readers see only the live step', panels.map(p=>p.getAttribute('aria-hidden')), ['true','false','true']);
+  c('Next slides the track one panel left', pos(), 'translateX(-25%)');
+  c('step two is now live, the others inert', panels.map(p=>p.hasAttribute('inert')), [true,false,true,true]);
+  c('screen readers see only the live step', panels.map(p=>p.getAttribute('aria-hidden')), ['true','false','true','true']);
   c('the page was NOT scrolled', pageScrolls, 0);
   D.getElementById('u-next').click();
-  c('one more Next reaches the last step', pos(), 'translateX(-66.6667%)');
+  c('one more Next reaches the last step of the form', pos(), 'translateX(-50%)');
   c('Next is hidden on the last step and Save shown', D.getElementById('u-next').hidden && !D.getElementById('cap-done').hidden);
   D.getElementById('u-back').click();
-  c('Back slides right', pos(), 'translateX(-33.3333%)');
+  // v10.56.2: four pages, a quarter each (At a glance the last)
+  c('Back slides right', pos(), 'translateX(-25%)');
   c('still no page scroll after three moves', pageScrolls, 0);
   D.querySelector('#u-steps-nav [data-goto="0"]').click();
   c('the step markers jump directly', pos(), 'translateX(-0%)');
@@ -67,7 +69,7 @@ setTimeout(()=>{
   // clear the required church name (step 1; the money boxes that were required on step 2 are gone), go to the last step, press Save
   D.querySelector('[name="churchName"]').value='';
   D.querySelector('#u-steps-nav [data-goto="2"]').click();
-  c('on step three', track.style.transform, 'translateX(-66.6667%)');
+  c('on step three', track.style.transform, 'translateX(-50%)');
   let reported=0; w.HTMLFormElement.prototype.reportValidity=function(){reported++;return false;};
   D.getElementById('cap-done').click();
   c('Save slides back to step one, where the empty required field is', track.style.transform, 'translateX(-0%)');

@@ -42,7 +42,8 @@ const T=checker(), c=T.c;
   console.log('\n-- the survey\'s "Your church": its Spiritual Gifts line and button --');
   c('the line says to send the survey first, with the count', [/Proposals are strongest once your members’ Spiritual Gifts results are in/.test(P.txt('#u-gfnote')),P.txt('#u-gfnote .u-gfcount')], [true,'No results yet.']);
   P.q('#u-gfnote [data-u-gifts]').click(); await sleep(200);
-  c('…its button opens the Spiritual Gifts invitation', [P.E('TOOL'),P.E('GF_VIEW')], ['gifts','setup']);
+  // v10.56.2 (stale, not a regression): the pastor, "if there's a button that points to spiritual gifts, just send the person to the main page for spiritual gifts. Don't send them to like any other spot"
+  c('…its button opens the Spiritual Gifts main page', [P.E('TOOL'),P.E('GF_VIEW')], ['gifts','roster']);
   P.E(`openTool('case')`); await sleep(100);
 
   console.log('\n-- with "Your church" filled in: the real list --');
