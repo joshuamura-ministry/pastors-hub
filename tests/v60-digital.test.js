@@ -55,7 +55,10 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
 
 (async()=>{ await T.sec(async()=>{
   const P=page(); await ready(P);
-  c('the six stamps say v10.60.0', [P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver'),P.E('VERSION')], ['v10.60.0','v10.60.0','v10.60.0','v10.60.0']);
+  // v10.60.1 (the conference read at sign-up) moved the stamps on: the check now reads "the stamps agree, at v10.60.0 or later".
+  { const st=[P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver'),P.E('VERSION')];
+    const ge=v=>{ const m=/^v10\.(\d+)\.(\d+)$/.exec(v); return !!m&&(+m[1]>60||(+m[1]===60&&+m[2]>=0)); };
+    c('the stamps agree, at v10.60.0 or later', [new Set(st).size, ge(st[0])], [1, true]); }
 
   console.log('\n-- the judge: never accuse --');
   let a=J(P,'ANBZ03');

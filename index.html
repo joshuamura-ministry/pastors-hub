@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.60.0
+     TERRAIN  v10.60.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.60.0" data-theme="dark">
+<html lang="en" data-version="v10.60.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.60.0">
-<title>Community Map — Terrain v10.60.0</title>
+<meta name="terrain-version" content="v10.60.1">
+<title>Community Map — Terrain v10.60.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1644,12 +1644,26 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfcovn{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .gfrosterrow{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0;flex-wrap:wrap}
 /* v10.57.1: a result's row is one button: the name, the three strongest gifts, a small wheel */
-.gfrosterrow.gfrow2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) 192px;align-items:center;gap:16px;width:100%;margin:0;padding:10px 6px;
+/* v10.60.1, the pastor: "make everything one line and the circle charts even all the way up and down … symmetry is important": the
+   name and the date one line each (the list is this church's: no church line), the three gifts one line starting at the same place in
+   every row, the wheel in one column; on a narrower card the gifts sit under the name, beside the wheel; on a phone under both */
+.gfresults{container-type:inline-size}
+.gfrosterrow.gfrow2{display:grid;grid-template-columns:minmax(0,1fr) 192px;grid-template-areas:"n w" "t w";align-items:center;gap:6px 16px;width:100%;margin:0;padding:10px 6px;
   background:none;border:0;border-top:1px solid var(--line);border-radius:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .gfrosterrow.gfrow2:first-of-type{border-top:0}
 @media (hover:hover){ .gfrosterrow.gfrow2:hover{background:color-mix(in srgb,var(--acc) 6%,transparent)} }
 .gfrosterrow.gfrow2:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .gftop3{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.gfrow2 .gfrw{grid-area:n;min-width:0;align-self:end}
+.gfrow2 .gfrw>b,.gfrow2 .gfrw>.note{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.gfrow2 .gfrw>.note{margin-top:2px}
+.gfrow2 .gftop3{grid-area:t;flex-wrap:nowrap;justify-content:flex-start;align-self:start;min-width:0}
+.gfrow2 .gftg{white-space:nowrap}
+.gfrow2 .gfmw{grid-area:w}
+@container (min-width:860px){
+  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 384px 192px;grid-template-areas:"n t w"}
+  .gfrow2 .gfrw,.gfrow2 .gftop3{align-self:center}
+}
 .gftg{font-size:.8rem;font-weight:700;line-height:1.2;padding:5px 11px;border-radius:999px;color:var(--k);background:color-mix(in srgb,var(--k) 13%,transparent);border:1px solid color-mix(in srgb,var(--k) 42%,transparent)}
 .gfmw{display:block;width:192px;height:80px}   /* v10.59.3: room for the three names beside the ring */
 .gfmw svg{display:block}
@@ -1659,9 +1673,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfmw-l{font:600 7.5px var(--font);letter-spacing:.01em}
 .gfmw-ln{fill:none;stroke-width:.7;opacity:.55}
 @media (max-width:600px){
-  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 150px;grid-template-areas:"n w" "t w";row-gap:8px}
-  .gfrosterrow.gfrow2 .gfrw{grid-area:n}.gfrosterrow.gfrow2 .gftop3{grid-area:t;justify-content:flex-start}.gfrosterrow.gfrow2 .gfmw{grid-area:w;width:150px;height:62px}
-  .gfmw svg{width:150px;height:62px}
+  /* v10.60.1 on a phone: the name and the date beside the ring alone (the gifts are named in the chips just under, in the same colours),
+     the three gifts on one line under both (a rare three longest names may take two) */
+  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 72px;grid-template-areas:"n w" "t t";row-gap:8px;padding:10px 0}
+  .gfrosterrow.gfrow2 .gfrw{grid-area:n;align-self:center}.gfrosterrow.gfrow2 .gftop3{grid-area:t;justify-content:flex-start;flex-wrap:wrap;gap:4px}
+  .gfrosterrow.gfrow2 .gfmw{grid-area:w;width:72px;height:72px;position:relative;overflow:hidden}
+  .gfrow2 .gftg{font-size:.69rem;padding:3px 7px}
+  .gfmw svg{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:173px;height:72px}
+  .gfmw .gfmw-l,.gfmw .gfmw-ln{display:none}
 }
 .gfdoors.gfdoors1{grid-template-columns:1fr}
 .gfcong{margin:4px 0 14px}
@@ -2082,6 +2101,38 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .u-heading{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap}.u-heading h3{font-family:var(--disp);font-size:1.18rem;line-height:1.35;margin-bottom:6px}.u-badge{display:inline-block;flex-shrink:0;font-size:.73rem;font-weight:700;color:var(--acc);border:1px solid var(--line2);background:var(--acc-dim);padding:5px 10px;border-radius:999px}
 .u-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:13px;margin:14px 0}.u-field{display:flex;flex-direction:column;gap:6px;font-size:.83rem;font-weight:600;min-width:0;flex:1 1 190px}
 .u-field select,.u-field input{height:44px;width:100%}
+/* v10.60.1 (symmetry): in a row of boxes the boxes line up even when one label takes two lines (Spanish, a narrow window) */
+.u-grid>.u-field{justify-content:flex-end}
+/* "Your church": nine boxes, three by three (never two and two with one left alone); one column on a phone */
+.u-grid.u-grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:620px){ .u-grid.u-grid3{grid-template-columns:1fr} }
+/* the serving times as a week (uWeek): the days across, daytime over evening, one box each, every cell the same size */
+.u-weekbox{container-type:inline-size}
+.u-week{display:grid;grid-template-columns:auto repeat(7,minmax(0,1fr));gap:6px;align-items:center;max-width:540px;margin-top:8px}
+.u-week>*{grid-column:var(--cw);grid-row:var(--rw)}
+@container (max-width:419px){
+  .u-week{grid-template-columns:auto repeat(2,minmax(0,1fr));max-width:300px}
+  .u-week>*{grid-column:var(--cn);grid-row:var(--rn)}
+  .u-week .u-wd{text-align:left;padding-right:10px}
+  .u-week .u-wr{text-align:center;padding-right:0}
+}
+.u-week .u-wd{font-size:.74rem;font-weight:700;color:var(--ink2);text-align:center}
+.u-week .u-wr{font-size:.78rem;font-weight:600;padding-right:6px;white-space:nowrap}
+.u-week .u-wc{display:flex;align-items:center;justify-content:center;min-height:36px;border:1px solid var(--line2);border-radius:8px;cursor:pointer;background:var(--panel2)}
+.u-week .u-wc input{width:18px;height:18px;margin:0;accent-color:var(--acc);cursor:pointer}
+.u-week .u-wc:has(input:checked){background:color-mix(in srgb,var(--acc) 16%,transparent);border-color:color-mix(in srgb,var(--acc) 55%,transparent)}
+.u-week .u-wc:has(input:focus-visible){outline:2px solid var(--acc);outline-offset:1px}
+.u-wnote{margin:6px 0 0;font-size:.74rem}
+/* v10.60.1 on a phone: "Your church" sat five boxes deep, each with its own padding, leaving the form a third of the screen; the
+   frames stay, their padding goes down, so the boxes and the week have room */
+@media (max-width:520px){
+  #u-church.u-churchsec{padding:18px 10px 14px}
+  #u-church #gf-church{padding-left:10px;padding-right:10px}
+  #u-church .askpanel{padding:12px 8px}
+  #u-church .u-profile{padding:0}
+  #u-church .u-panel{padding:12px 10px 16px}
+  #u-church .u-profile fieldset{padding:10px 8px}
+}
 .u-actions{align-items:flex-end}
 .u-seg{display:flex;height:44px;border:1px solid var(--line2);border-radius:10px;overflow:hidden;background:var(--panel2)}
 .u-seg button{flex:1 1 0;background:transparent;border:0;color:var(--ink2);font:inherit;font-size:.86rem;
@@ -4749,13 +4800,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.60.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.60.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.60.0';
+const VERSION = 'v10.60.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9297,17 +9348,17 @@ const ES={
   "Skills":"Habilidades",
   "Step 1 of 4 — Your church":"Paso 1 de 4: Su iglesia",
   "Step 1 of 3 — Your church":"Paso 1 de 3: Su iglesia","Step 2 of 3 — Your building":"Paso 2 de 3: Su edificio","Step 3 of 3 — Your people’s skills":"Paso 3 de 3: Las habilidades de su gente",
-  "Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.":"Con quiénes cuenta realmente. Cuente a cada persona una sola vez. Escriba cero si no hay nadie disponible; deje la casilla vacía si todavía no lo sabe.",
+  "Who you actually have, members on your Spiritual Gifts list included. Count each person once; hours are a month. Enter zero when none are available; leave a box empty if you do not know yet.":"Con quiénes cuenta realmente, incluidos los miembros de su lista de Dones Espirituales. Cuente a cada persona una sola vez; las horas son al mes. Escriba cero si no hay nadie disponible; deje la casilla vacía si todavía no lo sabe.",
   "Church name":"Nombre de la iglesia",
-  "Members on the church books":"Miembros en los libros de la iglesia",
+  "Members on the books":"Miembros en los libros",
   "Average Sabbath attendance":"Asistencia promedio del sábado",
-  "Adults (18 and over) in that attendance":"Adultos (18 años o más) en esa asistencia",
-  "Willing volunteers, including roster members":"Voluntarios dispuestos, incluidos los de la lista",
-  "Available ministry leaders, including roster members":"Líderes de ministerio disponibles, incluidos los de la lista",
-  "Monthly volunteer-hour capacity before existing commitments":"Horas de voluntariado al mes, antes de los compromisos actuales",
-  "Volunteers already committed elsewhere":"Voluntarios ya comprometidos en otra parte",
-  "Leaders already committed elsewhere":"Líderes ya comprometidos en otra parte",
-  "Monthly hours already committed elsewhere":"Horas al mes ya comprometidas en otra parte",
+  "Adults (18+) attending":"Adultos (18+) que asisten",
+  "Willing volunteers":"Voluntarios dispuestos",
+  "Available leaders":"Líderes disponibles",
+  "Volunteer hours a month":"Horas de voluntariado al mes",
+  "Volunteers serving elsewhere":"Voluntarios ya ocupados",
+  "Leaders serving elsewhere":"Líderes ya ocupados",
+  "Hours given elsewhere":"Horas ya ocupadas",
   "When can the team serve?":"¿Cuándo puede servir el equipo?",
   "Mon daytime":"Lunes de día",
   "Mon evening":"Lunes de noche",
@@ -9334,7 +9385,7 @@ const ES={
   "Check resources you can actually use. For rooms, enter participant capacity and available times. For a van, enter seats. For AV, enter the audience size the equipment supports.":"Marque los recursos que realmente puede usar. Para los salones, escriba cuántas personas caben y los horarios disponibles. Para una camioneta, los asientos. Para el equipo audiovisual, el tamaño del público que admite.",
   "Kitchen / fellowship hall":"Cocina / salón de confraternidad",
   "Capacity":"Capacidad",
-  "Confirmed partner or host, if provided elsewhere":"Colaborador o anfitrión confirmado, si es en otro lugar",
+  "Partner or host, if elsewhere":"Colaborador o anfitrión, si es fuera",
   "Classrooms":"Aulas",
   "Gym / indoor court":"Gimnasio / cancha techada",
   "Field / playground":"Campo / área de juegos",
@@ -21534,8 +21585,8 @@ function gfRenderRoster(h){
       let S=null; try{ S=d.a?gfScores(d.a,gfObsFrom(r.observers)):null; }catch(e){ S=null; }
       const top=S?gfProfile(S).ranked.slice(0,3):[];
       return `<button type="button" class="gfrosterrow gfrow2" data-gf-open="${i}" aria-label="${esc(L('Open the report of '+r.name,'Abrir el informe de '+r.name))}">
-        <span class="gfrw"><b>${esc(r.name)}</b>${minor?` <span class="gfb u18">${L('Under 18','Menor de 18')}</span>`:''}${obs?` <span class="gfb obs">${L('Confirmed by '+obs,'Confirmado por '+obs)}</span>`:''}
-        <span class="note">${esc(r.church||L('church not recorded','iglesia no registrada'))}${r.date?' · '+esc(r.date):''}</span></span>
+        <span class="gfrw"><b>${esc(r.name)}</b>
+        <span class="note">${r.date?esc(gfDateText(r.date)):''}${minor?` <span class="gfb u18">${L('Under 18','Menor de 18')}</span>`:''}${obs?` <span class="gfb obs">${L('Confirmed by '+obs,'Confirmado por '+obs)}</span>`:''}</span></span>
         <span class="gftop3">${top.map(t=>{ const g=GIFTS.find(x=>x.id===t.id)||{}; return `<span class="gftg" style="--k:var(${GF_FAM_VAR[g.fam]||'--acc'})">${esc(gfShort(t.id))}</span>`; }).join('')}</span>
         <span class="gfmw">${S?gfMiniWheelSVG(S,top.map(t=>t.id)):''}</span></button>`;}).join('')
       :`<p class="note">${L('Nothing yet. Share the link with a few members and check back here.','Todavía nada. Comparta el enlace con algunos miembros y vuelva a revisar aquí.')}</p>`}
@@ -23142,14 +23193,30 @@ function uBelongs(d,ch,r){
 }
 
 const U_FIELDS=[
- ['membership','Members on the church books'],['members','Average Sabbath attendance'],['adults','Adults (18 and over) in that attendance'],['volunteers','Willing volunteers, including roster members'],['leaders','Available ministry leaders, including roster members'],
- ['hours','Monthly volunteer-hour capacity before existing commitments'],['busyVolunteers','Volunteers already committed elsewhere'],['busyLeaders','Leaders already committed elsewhere'],['busyHours','Monthly hours already committed elsewhere'],
+ ['membership','Members on the books'],['members','Average Sabbath attendance'],['adults','Adults (18+) attending'],['volunteers','Willing volunteers'],['leaders','Available leaders'],
+ ['hours','Volunteer hours a month'],['busyVolunteers','Volunteers serving elsewhere'],['busyLeaders','Leaders serving elsewhere'],['busyHours','Hours given elsewhere'],
+ /* v10.60.1, the pastor: "symmetry throughout the whole app … compact the wording because when it's two lines … the boxes [are] off":
+    every label one line; what the long ones said ("including roster members", "a month") is in the step's line above them */
  ['startupBudget','Approved startup funds available ($)'],['monthlyBudget','Approved monthly funds available ($)'],['pendingBudget','Additional funds awaiting approval ($)']
 ];
 function uChecks(values,selected,name,show){return values.map(v=>`<label class="u-check"><input type="checkbox" name="${name}" value="${esc(v)}" ${(selected||[]).includes(v)?'checked':''}>${esc(show?show(v):v)}</label>`).join('');}
 /* Display words only: the stored values stay the English keys. */
 const U_SLOTS_ES={Mon:'Lunes',Tue:'Martes',Wed:'Mi\u00e9rcoles',Thu:'Jueves',Fri:'Viernes',Sat:'S\u00e1bado',Sun:'Domingo',daytime:'de d\u00eda',evening:'por la noche',afternoon:'por la tarde'};
 const uSlotName=v=>LANG==='es'?String(v).split(' ').map(w=>U_SLOTS_ES[w]||w).join(' '):v;
+/* v10.60.1, the pastor: "symmetry throughout the whole app": the serving times as a week, the days across, daytime over evening, one box
+   each (Saturday's daytime box is its afternoon). The boxes stay in U_SLOTS order in the page (placed on the grid), so the form reads them
+   as before; each says its own time to a screen reader. */
+function uWeek(selected,name){
+  const sel=selected||[], days=['Mon','Tue','Wed','Thu','Fri','Sat','Sun'];
+  const DN=LANG==='es'?['Lun','Mar','Mié','Jue','Vie','Sáb','Dom']:days;
+  // each cell's place both ways: the week across (days in columns), or, in a narrow box, the days down (times in columns)
+  const at=(c,t)=>`--cw:${c+1};--rw:${t+1};--cn:${t+1};--rn:${c+1}`;
+  const head=days.map((d,i)=>`<span class="u-wd" style="${at(i+1,0)}" aria-hidden="true">${DN[i]}</span>`).join('');
+  const rows=`<span class="u-wr" style="${at(0,1)}" aria-hidden="true">${L('Day','De día')}</span><span class="u-wr" style="${at(0,2)}" aria-hidden="true">${L('Evening','Noche')}</span>`;
+  const boxes=U_SLOTS.map(v=>{ const [d,t]=v.split(' ');
+    return `<label class="u-wc" style="${at(days.indexOf(d)+1,t==='evening'?2:1)}" title="${esc(uSlotName(v))}"><input type="checkbox" name="${name}" value="${esc(v)}" aria-label="${esc(uSlotName(v))}"${sel.includes(v)?' checked':''}></label>`; }).join('');
+  return `<div class="u-weekbox"><div class="u-week">${head}${rows}${boxes}</div></div><p class="note u-wnote">${L('Saturday’s daytime box is the afternoon.','La casilla del sábado de día es por la tarde.')}</p>`;
+}
 const U_SKILLS_ES={lead:'Puede dirigir un grupo o dar un estudio',medical:'Enfermeros o profesionales de la salud',teach:'Maestros o tutores',kids:'Buen trato con los ni\u00f1os',cook:'Puede cocinar para muchas personas',music:'M\u00fasicos',lang:'Miembros biling\u00fces',trade:'Habilidades pr\u00e1cticas o de oficio',vehicle:'Una camioneta, o conductores dispuestos',weekday:'Libre durante el d\u00eda',admin:'Un organizador: formularios, listas, computadora',av:'Sonido, video o proyecci\u00f3n',support:'Facilitador capacitado de grupos de apoyo'};
 const uSkillName=s=>(LANG==='es'&&U_SKILLS_ES[s.k])||s.n;
 function uValues(form,name){return [...form.querySelectorAll(`[name="${name}"]:checked`)].map(e=>e.value);}
@@ -23364,10 +23431,10 @@ function capRender(){
     <div class="u-stage">
      <div class="u-track" id="u-track">
       <section class="u-panel" data-panel="0"><h4>Step 1 of 3 — Your church</h4>
-        <p class="note">Who you actually have. Count each person once. Enter zero when none are available; leave a box empty if you simply do not know yet.</p>
+        <p class="note">Who you actually have, members on your Spiritual Gifts list included. Count each person once; hours are a month. Enter zero when none are available; leave a box empty if you do not know yet.</p>
 <label class="u-field">Church name<input name="churchName" required maxlength="160" value="${esc(capName(ch))}"></label>
-<div class="u-grid">${U_FIELDS.filter(([k])=>!/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':L('Not recorded','Sin registrar')}"></label>`).join('')}</div>
-<fieldset><legend>${L('When can the team serve?','¿Cuándo puede servir el equipo?')}</legend><div class="u-checks">${uChecks(U_SLOTS,c.slots,'teamSlot')}</div></fieldset>
+<div class="u-grid u-grid3">${U_FIELDS.filter(([k])=>!/Budget|pending|funds/i.test(k)).map(([key,label])=>`<label class="u-field">${label}<input type="number" name="${key}" min="0" max="10000000" step="${/Budget/.test(key)?'0.01':'1'}" ${/startupBudget|monthlyBudget/.test(key)?'required':''} value="${c[key]??''}" placeholder="${/busy|pending/.test(key)?'0':L('Not recorded','Sin registrar')}"></label>`).join('')}</div>
+<fieldset><legend>${L('When can the team serve?','¿Cuándo puede servir el equipo?')}</legend>${uWeek(c.slots,'teamSlot')}</fieldset>
       </section>
       <!-- v10.49.0 — the pastor (5 Oct 2026): "take the money part out of your church section … and add it in the proposal section":
            a proposal states what its ministry needs (caseMoneyHTML); funds will be entered in the Evangelism Planner. -->
@@ -23377,7 +23444,7 @@ function capRender(){
         
         
 <p class="note">Check resources you can actually use. For rooms, enter participant capacity and available times. For a van, enter seats. For AV, enter the audience size the equipment supports.</p>
-    <div class="u-facilities">${U_FAC.map(f=>{const v=c.facilities?.[f.k]||{};return `<fieldset><legend><label><input type="checkbox" name="fac-${f.k}" ${v.available||v===true?'checked':''}> ${esc(f.n)}</label></legend><div class="u-grid"><label class="u-field">Capacity<input type="number" name="room-${f.k}" min="0" value="${v.capacity??''}"></label><label class="u-field">Confirmed partner or host, if provided elsewhere<input name="partner-${f.k}" maxlength="160" value="${esc(v.partner||'')}"></label></div><div class="u-checks">${uChecks(U_SLOTS,v.slots,'slot-'+f.k)}</div></fieldset>`;}).join('')}</div>
+    <div class="u-facilities">${U_FAC.map(f=>{const v=c.facilities?.[f.k]||{};return `<fieldset><legend><label><input type="checkbox" name="fac-${f.k}" ${v.available||v===true?'checked':''}> ${esc(f.n)}</label></legend><div class="u-grid"><label class="u-field">Capacity<input type="number" name="room-${f.k}" min="0" value="${v.capacity??''}"></label><label class="u-field">Partner or host, if elsewhere<input name="partner-${f.k}" maxlength="160" value="${esc(v.partner||'')}"></label></div>${uWeek(v.slots,'slot-'+f.k)}</fieldset>`;}).join('')}</div>
       
       </section>
       <section class="u-panel" data-panel="2"><h4>Step 3 of 3 — Your people’s skills</h4>
@@ -24061,7 +24128,7 @@ function buildReport(M,levels,scope,geo,focusCatSet,focusName){
 }
 function zoneFirstMove(){return 'Ask residents what would help, then use the ministry list below to choose a response that fits the church’s confirmed people, facilities, skills and funding.';}
 
-function uResourceForm(r={},admin=false){return `<div class="u-grid">${admin?`<label class="u-field">${L('Name','Nombre')}<input name="memberName" required value="${esc(r.name||'')}"></label>`:''}<label class="u-field">${L('Hours available per month','Horas disponibles por mes')}<input name="memberHours" type="number" min="0" max="744" value="${uNum(r.hours)??''}"></label><label class="u-field">${L('Languages and proficiency','Idiomas y nivel de dominio')}<input name="memberLanguages" maxlength="500" value="${esc(r.languages||'')}"></label></div><label class="u-check"><input name="memberWilling" type="checkbox" ${r.willing?'checked':''}>${L('Willing to discuss a ministry assignment','Dispuesto a conversar sobre una tarea en un ministerio')}</label><label class="u-check"><input name="memberLeader" type="checkbox" ${r.leader?'checked':''}>${L('Willing and able to coordinate a team','Dispuesto y capaz de coordinar un equipo')}</label><fieldset><legend>${L('Practical skills and experience','Habilidades prácticas y experiencia')}</legend><div class="u-checks">${U_SKILLS.map(s=>`<label class="u-check"><input name="memberSkill" type="checkbox" value="${s.k}" ${(r.skills||[]).includes(s.k)?'checked':''}>${esc(uSkillName(s))}</label>`).join('')}</div></fieldset><fieldset><legend>${L('Available times','Horarios disponibles')}</legend><div class="u-checks">${uChecks(U_SLOTS,r.slots,'memberSlot',uSlotName)}</div></fieldset><label class="u-field">${L('Relevant experience, training, and existing commitments','Experiencia y formación pertinentes, y compromisos actuales')}<textarea name="memberExperience" rows="3" maxlength="2000">${esc(r.experience||'')}</textarea></label>${admin?`<label class="u-check"><input name="memberConfirmed" type="checkbox" ${r.confirmed?'checked':''}>${L('I have reviewed this person’s willingness, availability and practical qualifications.','He revisado la disposición, la disponibilidad y las capacidades prácticas de esta persona.')}</label>`:`<p class="note">${L('These details help your pastor discuss a suitable role with you. They do not enroll you in a ministry. Share only information you want your pastor to see.','Estos datos ayudan a su pastor a conversar con usted sobre una función adecuada. No le inscriben en ningún ministerio. Comparta solo la información que desee que su pastor vea.')}</p>`}`;}
+function uResourceForm(r={},admin=false){return `<div class="u-grid">${admin?`<label class="u-field">${L('Name','Nombre')}<input name="memberName" required value="${esc(r.name||'')}"></label>`:''}<label class="u-field">${L('Hours available per month','Horas disponibles por mes')}<input name="memberHours" type="number" min="0" max="744" value="${uNum(r.hours)??''}"></label><label class="u-field">${L('Languages and proficiency','Idiomas y nivel de dominio')}<input name="memberLanguages" maxlength="500" value="${esc(r.languages||'')}"></label></div><label class="u-check"><input name="memberWilling" type="checkbox" ${r.willing?'checked':''}>${L('Willing to discuss a ministry assignment','Dispuesto a conversar sobre una tarea en un ministerio')}</label><label class="u-check"><input name="memberLeader" type="checkbox" ${r.leader?'checked':''}>${L('Willing and able to coordinate a team','Dispuesto y capaz de coordinar un equipo')}</label><fieldset><legend>${L('Practical skills and experience','Habilidades prácticas y experiencia')}</legend><div class="u-checks">${U_SKILLS.map(s=>`<label class="u-check"><input name="memberSkill" type="checkbox" value="${s.k}" ${(r.skills||[]).includes(s.k)?'checked':''}>${esc(uSkillName(s))}</label>`).join('')}</div></fieldset><fieldset><legend>${L('Available times','Horarios disponibles')}</legend>${uWeek(r.slots,'memberSlot')}</fieldset><label class="u-field">${L('Relevant experience, training, and existing commitments','Experiencia y formación pertinentes, y compromisos actuales')}<textarea name="memberExperience" rows="3" maxlength="2000">${esc(r.experience||'')}</textarea></label>${admin?`<label class="u-check"><input name="memberConfirmed" type="checkbox" ${r.confirmed?'checked':''}>${L('I have reviewed this person’s willingness, availability and practical qualifications.','He revisado la disposición, la disponibilidad y las capacidades prácticas de esta persona.')}</label>`:`<p class="note">${L('These details help your pastor discuss a suitable role with you. They do not enroll you in a ministry. Share only information you want your pastor to see.','Estos datos ayudan a su pastor a conversar con usted sobre una función adecuada. No le inscriben en ningún ministerio. Comparta solo la información que desee que su pastor vea.')}</p>`}`;}
 function uReadResource(form){const d=new FormData(form);return {name:String(d.get('memberName')||''),hours:uNum(d.get('memberHours')),languages:String(d.get('memberLanguages')||''),willing:d.has('memberWilling'),leader:d.has('memberLeader'),skills:uValues(form,'memberSkill'),slots:uValues(form,'memberSlot'),experience:String(d.get('memberExperience')||''),confirmed:d.has('memberConfirmed')};}
 /* v10.54.2: the member's own skills-and-availability forms are gone (the pastor: "do we really need your skills and availability … the
    person who takes this is gonna know when they can serve"). A result sent before keeps what it carried; the pastor records a
@@ -35028,8 +35095,9 @@ function tdeckRender(deck,host,opts){
       if(locked()){
         if(st.p!==st.i&&holdOn(st.i)){ holdHere(); refresh(); return; }
         if(st.hold) unhold(st.p!==st.i); st.hold=false; st.following=true;   // (he came back to the answer: it stays open)
-        if(st.swipe){ st.defer=true; refresh(); return; }
-        jump(st.p); return;
+        // v10.60.1, the pastor: "It takes like 10 seconds sometimes … I need [it] to be more rapid". Locked, a finger moves nothing,
+        // so the presenter's move never waits for one to lift (a thumb holding the phone; a touch iOS never ends)
+        st.defer=false; jump(st.p); return;
       }
       // A member writing an "I'm in" answer stays with it; the pill offers the way back.
       if(st.following&&!st.ended&&st.p!==st.i&&busyAt[st.i]&&busyAt[st.i]()){ st.following=false; refresh(); return; }
@@ -35047,7 +35115,7 @@ function tdeckRender(deck,host,opts){
       const was=locked(); st.lock=mode==='follow'&&!!on;
       if(locked()&&!was){ say.textContent=U.lockOn;
         if(st.p!=null){ if(st.p!==st.i&&holdOn(st.i)) holdHere();
-          else { st.hold=false; st.following=true; if(st.touch||st.swipe) st.defer=true; else jump(st.p); } } }
+          else { st.hold=false; st.following=true; st.defer=false; jump(st.p); } } }   // v10.60.1: locked, never waits for a finger
       if(!locked()&&was){ clearInterval(st.holdT); st.holdT=null; st.hold=false; st.following=st.p==null||st.i===st.p; }
       refresh(); },
     relayout(){ layout(true); },
@@ -41330,14 +41398,16 @@ function watchPhonesFrom(j){ let ch=false; if(!j||typeof j!=='object') return ch
 function watchPhonesApply(){ if(WA.ctl&&WA.ctl.setLock) WA.ctl.setLock(watchLocked()); watchWatchdog(); watchBannerPaint(); }
 /* A phone that follows must not sit on a dead stream (iOS can leave one "open" with nothing coming): with no
    event, not even a keep-alive, for 75 s, it asks the server instead. Only while following (free phones swipe). */
-const WA_SILENT_MS=75*1000;
+const WA_SILENT_MS=45*1000;   // v10.60.1 (was 75 s): a silent stream is opened again sooner
 function watchWatchdog(){
   const want=!!WA.room&&!WA.gone&&!WA.ended&&!!WA.live&&WA.pmode==='follow';
   if(!want){ clearInterval(WA.wd); WA.wd=null; return; }
   if(WA.wd) return;
   WA.wd=setInterval(()=>{
     if(!WA.room||WA.gone||WA.ended){ clearInterval(WA.wd); WA.wd=null; return; }
-    if(!document.hidden&&WA.mode==='stream'&&Date.now()-WA.lastEv>WA_SILENT_MS) watchPollStart();
+    // v10.60.1: silent too long: first a fresh stream (its first word is the presenter's slide); silent again within a minute: polling
+    if(!document.hidden&&WA.mode==='stream'&&Date.now()-WA.lastEv>WA_SILENT_MS){
+      if(Date.now()-(WA.reopened||0)<60000) watchPollStart(); else { WA.reopened=Date.now(); watchStream(); } return; }
     // v10.42 part 3: 30 minutes with no word from the presenter: the phone is freed (and locked again at his next move)
     const s=watchStale(); if(s!==WA.staleWas){ WA.staleWas=s; watchPhonesApply(); }
   },5000);
@@ -41738,9 +41808,12 @@ function watchRefetch(){
   },e=>{ if(e.code==='not-found') watchGone(); }).finally(()=>{ WA_REFETCH=null; });
 }
 function watchVisible(){
-  if(document.hidden||!WA.room||WA.gone) return;
+  if(document.hidden){ WA.hiddenAt=Date.now(); return; }
+  const away=WA.hiddenAt?Date.now()-WA.hiddenAt:0; WA.hiddenAt=0;
+  if(!WA.room||WA.gone) return;
   if(!WA.live||WA.ended){ watchCheck({visible:true}); return; }          // no stream: ask once (at most once a minute)
-  if(WA.mode==='stream'&&Date.now()-WA.lastEv>45000) watchStream();      // iOS can leave a dead stream "open"
+  // iOS pauses (or leaves dead) a stream while the phone is away: v10.60.1, back after more than 3 s, a fresh one at once
+  if(WA.mode==='stream'&&(away>3000||Date.now()-WA.lastEv>45000)) watchStream();
   else if(WA.mode==='poll'){ clearTimeout(WA.poll); WA.poll=setTimeout(watchPollOnce,0); }
 }
 function watchEnded(t){

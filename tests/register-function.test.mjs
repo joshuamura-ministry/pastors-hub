@@ -58,9 +58,11 @@ const recs=()=>[...S.m.keys()].filter(k=>k.startsWith('e/'));
 
 console.log('-- status --');
 let r=await call(new Request(URL0,{method:'GET'}));
-c('GET answers status', [r.status,r.j], [200,{ok:true,fn:'register-1.2'}]);
+// v10.60.1: register-1.3 (the pastor's conference read for Digital footprint at sign-up: "yes as soon as they sign up for sure";
+// its own checks are in v60-1-signup-read.test.mjs). Everything this suite checks is unchanged.
+c('GET answers status', [r.status,r.j], [200,{ok:true,fn:'register-1.3'}]);
 r=await post({op:'status'});
-c('POST op:status too', r.j, {ok:true,fn:'register-1.2'});
+c('POST op:status too', r.j, {ok:true,fn:'register-1.3'});
 r=await call(new Request(URL0,{method:'PUT',body:'{}'}));
 c('other methods → 405', r.status, 405);
 r=await post('{nope');

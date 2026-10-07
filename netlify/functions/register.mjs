@@ -1,4 +1,4 @@
-// Terrain · pastor registration.                                   register-1.2
+// Terrain · pastor registration.                                   register-1.3
 //
 // The first page asks a pastor for a name, an email address, the church and a
 // role, once per device, after they have found their conference. This function
@@ -87,13 +87,33 @@
 //   signin   {email}            → {ok, name, church, role, conf, union, news, lang, tok?} | 404 not-found
 //   list     {after?, limit?}   +x-terrain-admin header  → {ok, items:[record…], total, next?}
 //
+// THE CONFERENCE IS READ AT ONCE (register-1.3, v10.60.1). The pastor (7 Oct
+// 2026), of the hour Digital footprint takes to read a conference the first
+// time: "yes as soon as they sign up for sure". After a registration or a
+// sign-in, digital.mjs's warm() starts that reading when the conference may be
+// read (DIGITAL_CONFS) and has no fresh findings; it is given the conference's
+// name only. It never delays or fails the answer: handed to the platform's
+// context.waitUntil when there is one, else given at most 2.5 seconds, and any
+// error is swallowed without a word.
+//
 // LOGGING. Nothing a pastor typed is ever logged. Only the op name on an
 // unexpected failure, and one line when a secret is set but too short.
 
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
+import { warm as digitalWarm } from './digital.mjs';
+import { theStore as digitalStore } from './digital-read.mjs';
 
-const FN_VERSION = 'register-1.2';
+const FN_VERSION = 'register-1.3';
+const WARM_WAIT_MS = 2500;
+
+// The pastor's conference, read for Digital footprint now (see THE CONFERENCE IS READ AT ONCE).
+function readConference(conf, request, context) {
+  const p = (async () => { try { await digitalWarm(digitalStore(), request.url, conf); } catch { /* never the registration's concern */ } })();
+  if (context && typeof context.waitUntil === 'function') { try { context.waitUntil(p); return null; } catch { /* fall through */ } }
+  let timer;
+  return Promise.race([p, new Promise(r => { timer = setTimeout(r, WARM_WAIT_MS); })]).finally(() => clearTimeout(timer));
+}
 const STORE_NAME = 'terrain-registrations';
 
 const MAX_BODY = 8 * 1024;          // a registration is a few hundred bytes
@@ -310,6 +330,7 @@ const OPS = {
       const value = { ...typed, email, id: fresh, verified: false, created: now, updated: now, count: 1, claims: [] };
       return { value: order(value), result: fresh };
     });
+    await readConference(conf, request, context);
     // The same shape for a new address and a known one.
     const secret = regSecret();
     return secret ? { ok: true, tok: mintToken(secret, id, now) } : { ok: true };
@@ -333,6 +354,7 @@ const OPS = {
     const r = order(cur);
     const res = { ok: true, name: r.name, church: r.church, role: ROLES.has(r.role) ? r.role : 'pastor',
       conf: r.conf, union: r.union, news: r.news, lang: r.lang };
+    await readConference(r.conf, request, context);
     const secret = regSecret();
     if (secret) res.tok = mintToken(secret, r.id, now);
     return res;

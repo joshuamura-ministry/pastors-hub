@@ -1,4 +1,4 @@
-// Terrain · Digital footprint, what registered pastors ask for.          digital-1.0
+// Terrain · Digital footprint, what registered pastors ask for.          digital-1.1
 //
 // v10.60.0 (DESIGN-DIGITAL.md). The page's part of "Compare your churches": every church of the pastor's conference, read from public
 // pages by digital-read.mjs (a background function) and kept in Netlify Blobs (store "terrain-digital"). The findings name real
@@ -10,6 +10,9 @@
 //   POST { op:'again', conf, org }             → 202 one church read again ("Check again"; 3 a registration a day)
 //   GET  (no conf)                             → { ok, fn, places, search } (is Google's listing read? is the search set?)
 //
+// v10.60.1 (digital-1.1): `warm(store, base, conf)` starts the same reading when a pastor registers or signs in (register.mjs), so the
+// first pastor of a conference never waits the hour on Compare your churches (the pastor: "yes as soon as they sign up for sure").
+//
 // Store keys: c/<slug> findings · j/<slug> the job (see digital-read.mjs) · e/<org> an official entry · r/<slug>/<org> a reading ·
 // o/<slug> the day a conference was last opened (the monthly sweep reads those opened in 60 days) · t/<slug> the last start ·
 // a/<day>/<reg> "Check again" counts · m/<month>/places, m/<month>/search the month's paid lookups.
@@ -20,7 +23,7 @@
 import { createHmac, timingSafeEqual, randomBytes } from 'node:crypto';
 import { CONF_ORG, slugOf, sha, theStore, FN as READ_FN } from './digital-read.mjs';
 
-export const FN = 'digital-1.0';
+export const FN = 'digital-1.1';
 const FRESH_DAYS = 25, START_GAP_MS = 6 * 3600e3, STALL_MS = 4 * 60e3, AGAIN_DAY_MAX = 3;
 const now = () => (globalThis.__terrainDigitalNow ? globalThis.__terrainDigitalNow() : Date.now());
 const isPlain = v => !!v && typeof v === 'object' && !Array.isArray(v);
@@ -77,6 +80,33 @@ export async function start(store, base, conf, extra = {}) {
   return 'queued';
 }
 
+/* a reading when one is due: 'ready' (findings under 25 days), 'reading' (one running, or started now), 'later' (one failed within 6
+   hours: never a loop of failures). The page's op read and the sign-up's warm both ask here. */
+async function readIfNeeded(store, base, conf, t) {
+  const slug = slugOf(conf);
+  const c = await store.get('c/' + slug, { type: 'json' });
+  if (c && c.at && t - c.at < FRESH_DAYS * 864e5) return 'ready';
+  const last = await store.get('t/' + slug, { type: 'json' });
+  const j = await getM(store, 'j/' + slug);
+  if (j && running(j.data)) { await rescue(store, base, slug, j); return 'reading'; }
+  if (last && last.at && t - last.at < START_GAP_MS && j && j.data.status === 'failed') return 'later';
+  await start(store, base, conf);
+  return 'reading';
+}
+const markOpened = async (store, slug, t) => {
+  const day = new Date(t).toISOString().slice(0, 10), o = await store.get('o/' + slug, { type: 'json' });
+  if (!o || o.at !== day) await store.setJSON('o/' + slug, { at: day });
+};
+/* v10.60.1: a pastor registered (or signed in): read the conference now, when it may be read and is not already fresh. Noted as opened
+   today, so the monthly refresh keeps it and the sweep forgets it after 180 days unused. Never given the pastor's name or address. */
+export async function warm(store, base, conf) {
+  conf = String(conf || '').trim();
+  if (!Object.prototype.hasOwnProperty.call(CONF_ORG, conf) || !allowed(conf)) return 'off';
+  const t = now();
+  await markOpened(store, slugOf(conf), t);
+  return readIfNeeded(store, base, conf, t);
+}
+
 export default async (request) => {
   try {
     const store = theStore(), url = new URL(request.url), t = now();
@@ -99,8 +129,7 @@ export default async (request) => {
     if (request.method === 'GET') {
       const [c, j] = await Promise.all([store.get('c/' + slug, { type: 'json' }), getM(store, 'j/' + slug)]);
       if (j && running(j.data)) await rescue(store, request.url, slug, j);
-      const day = new Date(t).toISOString().slice(0, 10), o = await store.get('o/' + slug, { type: 'json' });
-      if (!o || o.at !== day) await store.setJSON('o/' + slug, { at: day });
+      await markOpened(store, slug, t);
       const jd = j && j.data, reading = running(jd)
         ? { phase: jd.phase, done: jd.phase === 'read' ? jd.i : 0, total: (jd.list || []).length || null, only: jd.only || null } : null;
       return reply({ ok: true, fn: FN, conf, supported: true, enabled, state: reading && !jd.only ? 'reading' : c ? 'ready' : 'none', reading,
@@ -109,14 +138,9 @@ export default async (request) => {
     if (!enabled) return reply({ ok: false, code: 'not-yet', conf }, 403);
 
     if (b.op === 'read') {
-      const c = await store.get('c/' + slug, { type: 'json' });
-      if (c && c.at && t - c.at < FRESH_DAYS * 864e5) return reply({ ok: true, state: 'ready' });
-      const last = await store.get('t/' + slug, { type: 'json' });
-      const j = await getM(store, 'j/' + slug);
-      if (j && running(j.data)) { await rescue(store, request.url, slug, j); return reply({ ok: true, state: 'reading' }, 202); }
-      // a reading that failed is not started again for 6 hours (never a loop of failures)
-      if (last && last.at && t - last.at < START_GAP_MS && j && j.data.status === 'failed') return reply({ ok: false, code: 'later' }, 503);
-      await start(store, request.url, conf);
+      const r = await readIfNeeded(store, request.url, conf, t);
+      if (r === 'ready') return reply({ ok: true, state: 'ready' });
+      if (r === 'later') return reply({ ok: false, code: 'later' }, 503);
       return reply({ ok: true, state: 'reading' }, 202);
     }
     if (b.op === 'again') {
