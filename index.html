@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.59.0
+     TERRAIN  v10.59.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.59.0" data-theme="dark">
+<html lang="en" data-version="v10.59.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.59.0">
-<title>Community Map — Terrain v10.59.0</title>
+<meta name="terrain-version" content="v10.59.1">
+<title>Community Map — Terrain v10.59.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3989,6 +3989,51 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .ts-sheet .ts-q{font-size:1rem}
 @media (prefers-reduced-motion:reduce){ .ts-pop,.ts-sheet{animation:none} .ts-sel::after{transition:none} }
 @media print{ .ts-pop{display:none!important} .ts-sel{box-shadow:none;background:none} }
+/* v10.59.1 — the two sections glow; the kinds as tabs; the ministries folded by kind */
+.cmp-step.cmp-glow{border-color:color-mix(in srgb,var(--k) 45%,var(--line2));background:linear-gradient(180deg,color-mix(in srgb,var(--k) 8%,var(--panel)),var(--panel) 260px);animation:cmpGlow 6s ease-in-out infinite}
+.cmp-step.cmp-glow::before{width:5px;box-shadow:0 0 16px 1px var(--k)}
+.cmp-step.cmp-glow .cmp-num{background:var(--k);color:var(--btn-ink);box-shadow:0 0 18px -2px var(--k)}
+@keyframes cmpGlow{0%,100%{box-shadow:var(--shadow),0 0 0 1px color-mix(in srgb,var(--k) 22%,transparent),0 0 26px -8px color-mix(in srgb,var(--k) 45%,transparent)}
+  50%{box-shadow:var(--shadow),0 0 0 1px color-mix(in srgb,var(--k) 40%,transparent),0 0 52px -6px color-mix(in srgb,var(--k) 62%,transparent)}}
+.cmp-rtabs{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:2px 0 16px}
+.cmp-rtab{--k:var(--acc);position:relative;display:flex;align-items:center;gap:10px;min-width:0;min-height:60px;padding:10px 12px;border:1px solid var(--line2);border-radius:14px;
+  background:var(--panel2);color:var(--ink);font:inherit;font-size:.9rem;font-weight:600;line-height:1.25;text-align:left;cursor:pointer;transition:border-color .15s,box-shadow .2s,background-color .2s}
+.cmp-rtab .ic,.cmp-mgic{flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--k);transition:background-color .2s,color .2s}
+.cmp-rtab .ic{width:36px;height:36px;border-radius:11px}
+.cmp-rtab svg,.cmp-mgic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.cmp-rtab .lb{flex:1 1 auto;min-width:0}
+.cmp-rtab .n,.cmp-mgn{flex:none;min-width:28px;padding:2px 8px;border-radius:999px;background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--k);font-size:.78rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
+.cmp-rtab[aria-selected=true]{border-color:var(--k);background:linear-gradient(180deg,color-mix(in srgb,var(--k) 22%,var(--panel2)),color-mix(in srgb,var(--k) 8%,var(--panel2)));box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 40%,transparent),0 12px 30px -14px var(--k)}
+.cmp-rtab[aria-selected=true] .ic{background:var(--k);color:var(--btn-ink)}
+.cmp-rtab[aria-selected=true]::after{content:"";position:absolute;left:18px;right:18px;bottom:-1px;height:3px;border-radius:3px 3px 0 0;background:var(--k)}
+@media (hover:hover){ .cmp-rtab:hover,.cmp-mghead:hover{border-color:color-mix(in srgb,var(--k) 60%,var(--line2))} .cmp-mihead:hover{background:color-mix(in srgb,var(--k) 7%,transparent)} }
+.cmp-rtab:focus-visible,.cmp-mghead:focus-visible,.cmp-mihead:focus-visible{outline:2px solid var(--k);outline-offset:2px}
+.cmp-mhint{margin:0 0 12px;font-size:.88rem;color:var(--ink2)}
+.cmp-mgroups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;align-items:start}
+.cmp-mgroup{--k:var(--acc);min-width:0;border:1px solid var(--line2);border-radius:14px;background:var(--panel2);overflow:hidden;transition:border-color .15s,box-shadow .2s}
+.cmp-mgroup.on{grid-column:1/-1;border-color:color-mix(in srgb,var(--k) 55%,var(--line2));box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 25%,transparent),0 14px 36px -18px var(--k)}
+.cmp-mghead{display:flex;align-items:center;gap:12px;width:100%;min-height:62px;padding:10px 14px;border:0;background:transparent;color:var(--ink);font:inherit;text-align:left;cursor:pointer}
+.cmp-mgic{width:40px;height:40px;border-radius:12px}
+.cmp-mgic svg{width:22px;height:22px}
+.cmp-mgroup.on .cmp-mgic{background:var(--k);color:var(--btn-ink)}
+.cmp-mgname{flex:1 1 auto;min-width:0;font-family:var(--disp);font-size:1.02rem;font-weight:700;line-height:1.25}
+.cmp-chev{flex:none;width:8px;height:8px;margin:0 6px 3px 2px;border-right:2px solid var(--ink3);border-bottom:2px solid var(--ink3);transform:rotate(45deg);transition:transform .18s,margin .18s}
+[aria-expanded=true]>.cmp-chev{transform:rotate(-135deg);margin-bottom:-3px;border-color:var(--k)}
+.cmp-mglist{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:0 10px 12px;align-items:start}
+.cmp-mglist[hidden],.cmp-mibody[hidden]{display:none}
+.cmp-mitem{min-width:0;border:1px solid var(--line);border-radius:11px;background:var(--panel);overflow:hidden}
+.cmp-mitem.on{grid-column:1/-1;border-color:color-mix(in srgb,var(--k) 50%,var(--line))}
+.cmp-mihead{display:flex;align-items:center;gap:8px;width:100%;min-height:48px;padding:9px 12px 9px 14px;border:0;background:transparent;color:var(--ink);font:inherit;font-size:.93rem;font-weight:600;line-height:1.3;text-align:left;cursor:pointer}
+.cmp-miname{flex:1 1 auto;min-width:0}
+.cmp-micat{display:block;margin-top:2px;font-size:.74rem;font-weight:600;color:var(--ink3)}
+.cmp-mibody{display:flex;flex-direction:column;gap:3px;padding:10px 14px 14px;border-top:1px solid var(--line);font-variant-ligatures:none;font-feature-settings:"liga" 0,"calt" 0}
+.cmp-mibody .cmp-rlinks{margin-top:4px}
+.cmp-ming .cmp-minwarn,#cmp-ming .cmp-minwarn{margin:14px 0 0}
+@media (max-width:720px){ .cmp-rtabs{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px} .cmp-mgroups,.cmp-mglist{grid-template-columns:minmax(0,1fr)}
+  /* a phone's tab: the picture above the words, the count in the corner, the words on two lines at most */
+  .cmp-rtab{flex-direction:column;align-items:flex-start;gap:8px;min-height:0;padding:12px 12px 12px;font-size:.86rem} .cmp-rtab .ic{width:34px;height:34px} .cmp-rtab .lb{text-wrap:balance} .cmp-rtab .n{position:absolute;top:10px;right:10px} }
+@media (prefers-reduced-motion:reduce){ .cmp-step.cmp-glow{animation:none;box-shadow:var(--shadow),0 0 0 1px color-mix(in srgb,var(--k) 30%,transparent),0 0 36px -8px color-mix(in srgb,var(--k) 50%,transparent)} .cmp-chev{transition:none} }
+@media print{ .cmp-step.cmp-glow{animation:none;box-shadow:none} }
 /* v10.58.0 — Resources for your church; ministries that come to your church */
 .cmp-pill.cmp-resgo{cursor:pointer;font:inherit;font-size:.78rem;font-weight:700;min-height:30px;border-color:color-mix(in srgb,var(--m-hardship) 55%,var(--line2));color:var(--m-hardship);background:color-mix(in srgb,var(--m-hardship) 10%,var(--panel))}
 .cmp-pill.cmp-resgo:hover,.cmp-pill.cmp-resgo:focus-visible{background:color-mix(in srgb,var(--m-hardship) 20%,var(--panel))}
@@ -4581,13 +4626,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.59.0';
+const VERSION = 'v10.59.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -42920,7 +42965,7 @@ const CMP_UI={
   nMin:{en:'Recognized ministries that travel to churches: school choirs and bands, speakers, the life-size sanctuary, health and family programs.',es:'Ministerios reconocidos que visitan iglesias: coros y bandas escolares, oradores, el santuario en tamaño real, programas de salud y de familia.'},
   minWarn:{en:'Each listing is from the ministry’s own public pages. Ask your conference about a ministry before you invite it, and agree on dates and costs in writing.',
     es:'Cada ministerio se tomó de sus propias páginas públicas. Consulte con su asociación antes de invitarlo y acuerden por escrito las fechas y los costos.'},
-  mc_all:{en:'All',es:'Todos'}, mc_sanctuary:{en:'The sanctuary',es:'El santuario'}, 'mc_music-school':{en:'School choirs and bands',es:'Coros y bandas escolares'},
+  mc_near:{en:'Near you',es:'Cerca de usted'}, mc_sanctuary:{en:'The sanctuary',es:'El santuario'}, 'mc_music-school':{en:'School choirs and bands',es:'Coros y bandas escolares'},
   'mc_music-group':{en:'Music groups',es:'Grupos musicales'}, mc_evangelism:{en:'Evangelism and speakers',es:'Evangelismo y oradores'}, mc_health:{en:'Health',es:'Salud'},
   'mc_children-youth':{en:'Children and youth',es:'Niños y jóvenes'}, mc_family:{en:'Family',es:'Familia'}, mc_other:{en:'Other',es:'Otros'},
   'ms_church-entity':{en:'A ministry of the church',es:'Un ministerio de la iglesia'}, 'ms_asi-member':{en:'ASI member',es:'Miembro de ASI'}, 'ms_church-listed':{en:'Listed by the church',es:'Reconocido por la iglesia'},
@@ -42929,6 +42974,8 @@ const CMP_UI={
   minWho:{en:'Run by: {w}',es:'A cargo de: {w}'}, minTravels:{en:'Travels: {r}',es:'Viaja: {r}'}, minCost:{en:'Cost: {c}',es:'Costo: {c}'},
   minFoot:{en:'Checked {d}.',es:'Revisado el {d}.'},
   minNote:{en:'Good to know: {n}',es:'Para tener en cuenta: {n}'}, near:{en:'Near you',es:'Cerca de usted'},
+  // v10.59.1: the ministries by kind, folded (the pastor: "in categories beautiful categories and you click the categories and they will open up")
+  minHint:{en:'Tap a kind to see its ministries; tap one to see what it does and how to invite it.',es:'Toque un tipo para ver sus ministerios; toque uno para ver qué hace y cómo invitarlo.'},
   foot:{en:'Calendars and initiatives checked {d} · updated monthly. Official statistics: General Conference Annual Statistical Report (latest year {y}).',
     es:'Calendarios e iniciativas revisados el {d} · se actualizan cada mes. Estadísticas oficiales: Informe Estadístico Anual de la Asociación General (último año {y}).'}
 };
@@ -43492,6 +43539,22 @@ function cmpSaid(){
 const CMP_RES_TABS=['money','free','training','now'], CMP_RES_PAGE=12;
 const CMP_MIN_CATS=['sanctuary','music-school','music-group','evangelism','health','children-youth','family','other'];
 const CMP_LV_K={conference:'--acc',union:'--m-housing',nad:'--m-children',world:'--m-hardship'};
+/* v10.59.1: each kind its colour and a small line picture (24 × 24, stroked) */
+const CMP_RES_HUE={money:'--m-hardship',free:'--acc',training:'--m-housing',now:'--m-children'};
+const CMP_RES_ICON={money:'<circle cx="12" cy="12" r="9"/><path d="M15 9.2c-.6-1-1.7-1.6-3-1.6-1.7 0-3 .9-3 2.2 0 3.1 6 1.7 6 4.6 0 1.3-1.3 2.2-3 2.2-1.4 0-2.6-.6-3.2-1.7M12 6v1.6M12 16.6V18"/>',
+  free:'<rect x="3.5" y="9" width="17" height="11" rx="1.5"/><path d="M2.5 9h19V6.5h-19zM12 6.5V20M12 6.5C10.5 3.5 7 3.6 7 5.4 7 6.5 9 6.5 12 6.5c3 0 5 0 5-1.1 0-1.8-3.5-1.9-5 1.1"/>',
+  training:'<path d="M2 9.5 12 5l10 4.5L12 14z"/><path d="M6.5 11.6V16c3 2.2 8 2.2 11 0v-4.4M21 10v5"/>',
+  now:'<rect x="3.5" y="5" width="17" height="15" rx="2"/><path d="M3.5 9.5h17M8 3v4M16 3v4M8.5 14l2.2 2.2L15.5 12"/>'};
+const CMP_MIN_HUE={near:'--acc',sanctuary:'--m-hardship','music-school':'--m-children','music-group':'--m-people',evangelism:'--m-housing',health:'--m-language','children-youth':'--m-young',family:'--m-seniors',other:'--m-work'};
+const CMP_MIN_ICON={near:'<path d="M12 21s-6.5-5.8-6.5-10.5a6.5 6.5 0 0 1 13 0C18.5 15.2 12 21 12 21z"/><circle cx="12" cy="10.5" r="2.3"/>',
+  sanctuary:'<path d="M3 20h18M4.5 20V9.5L12 4l7.5 5.5V20"/><path d="M9.5 20v-5.5h5V20M12 7.5v3M10.5 9h3"/>',
+  'music-school':'<path d="M2 9 12 4.5 22 9l-10 4.5z"/><path d="M6.5 11v4.5c3 2 8 2 11 0V11"/><path d="M22 9v6"/>',
+  'music-group':'<path d="M9 18V5.5l11-2V16"/><circle cx="6.5" cy="18" r="2.6"/><circle cx="17.5" cy="16" r="2.6"/>',
+  evangelism:'<path d="M3 5.5h6.5A2.5 2.5 0 0 1 12 8v12a2 2 0 0 0-2-2H3z"/><path d="M21 5.5h-6.5A2.5 2.5 0 0 0 12 8v12a2 2 0 0 1 2-2h7z"/>',
+  health:'<path d="M20.5 8.8A4.8 4.8 0 0 0 12 5.6a4.8 4.8 0 0 0-8.5 3.2C3.5 14 12 19.5 12 19.5s8.5-5.5 8.5-10.7z"/><path d="M7 11h2.5l1.2-2 2 4 1.3-2H17"/>',
+  'children-youth':'<circle cx="8" cy="7.5" r="2.8"/><circle cx="17" cy="9.5" r="2.2"/><path d="M3 20c0-3.4 2.2-6 5-6s5 2.6 5 6M13.5 20c.3-2.6 1.6-4.4 3.5-4.4s3.2 1.8 3.5 4.4"/>',
+  family:'<path d="M3 11 12 4l9 7"/><path d="M5.5 9.5V20h13V9.5"/><path d="M12 17.5s-3-1.9-3-3.9a1.6 1.6 0 0 1 3-.8 1.6 1.6 0 0 1 3 .8c0 2-3 3.9-3 3.9z"/>',
+  other:'<circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5z"/>'};
 const CMP_EMAIL=/^[^\s@<>"?#&=%\/]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
 function cmpLoadRes(){
   if(CMP.res) return Promise.resolve(CMP.res);
@@ -43505,8 +43568,10 @@ function cmpLoadRes(){
 function cmpResFrames(n){
   const S=CMP.st, p=S&&S.mine?CMP.conf[S.mine]:null;
   const from=p?cU('resFrom',{conf:p.name,union:p.union}):cU('resFromNone');
-  return cmpFrame('cmp-res',n,'amber',cU('tRes'),cU('nRes',{from}),`<div id="cmp-resg">${cmpWaitHTML()}</div>`)
-    +cmpFrame('cmp-min',n+1,'violet',cU('tMin'),cU('nMin'),`<div id="cmp-ming">${cmpWaitHTML()}</div>`);
+  // v10.59.1: both glow (the pastor: "these two sections need to be really important … nice beautiful glowing sections")
+  const glow=h=>h.replace('<section class="cmp-step"','<section class="cmp-step cmp-glow"');
+  return glow(cmpFrame('cmp-res',n,'amber',cU('tRes'),cU('nRes',{from}),`<div id="cmp-resg">${cmpWaitHTML()}</div>`))
+    +glow(cmpFrame('cmp-min',n+1,'violet',cU('tMin'),cU('nMin'),`<div id="cmp-ming">${cmpWaitHTML()}</div>`));
 }
 function cmpRes(){
   if(!$('cmp-resg')) return;
@@ -43547,11 +43612,14 @@ function cmpResDraw(){
   const list=(tab==='money'&&help?[{help}]:[]).concat(by[tab]);
   const cnt=t=>by[t].length+(t==='money'&&help?1:0);
   const shown=CMP.resAll===tab?list:list.slice(0,CMP_RES_PAGE);
-  host.innerHTML=`<div class="cmp-seg cmp-rtabs" role="group" aria-label="${esc(cU('tRes'))}">${CMP_RES_TABS.map(t=>`<button type="button" data-cmp-rtab="${t}" aria-pressed="${t===tab}">${esc(cU('rt_'+t))}<span class="n">${cnt(t)}</span></button>`).join('')}</div>
+  // v10.59.1: the four kinds as tabs of their own colour and picture ("make … money you can ask for, free materials, training, what the church
+  // is doing now more appealing as tabs")
+  host.innerHTML=`<div class="cmp-rtabs" role="tablist" aria-label="${esc(cU('tRes'))}">${CMP_RES_TABS.map(t=>`<button type="button" class="cmp-rtab" role="tab" id="cmp-rt-${t}" data-cmp-rtab="${t}" aria-selected="${t===tab}" aria-controls="cmp-rpanel" style="--k:var(${CMP_RES_HUE[t]})"><span class="ic" aria-hidden="true"><svg viewBox="0 0 24 24">${CMP_RES_ICON[t]}</svg></span><span class="lb">${esc(cU('rt_'+t))}</span><span class="n">${cnt(t)}</span></button>`).join('')}</div>
+    <div id="cmp-rpanel" role="tabpanel" aria-labelledby="cmp-rt-${tab}">
     ${LANG==='es'?`<p class="note">${esc(cU('resEs'))}</p>`:''}
     ${list.length?`<div class="cmp-rgrid">${shown.map((x,i)=>{ const h=x.help?cmpHelpCard(x.help,p):cmpResCard(x,p), rest=shown.length-(help&&tab==='money'?1:0);
       return !x.help&&i===shown.length-1&&rest%2?h.replace('<article class="cmp-rcard','<article class="cmp-rcard wide'):h; }).join('')}</div>`:`<div class="cmp-box">${esc(cU('resNone'))}</div>`}
-    ${list.length>shown.length?`<p class="cmp-rmore"><button type="button" class="btn ghost" data-cmp-rall>${esc(cU('more',{n:list.length}))}</button></p>`:''}
+    ${list.length>shown.length?`<p class="cmp-rmore"><button type="button" class="btn ghost" data-cmp-rall>${esc(cU('more',{n:list.length}))}</button></p>`:''}</div>
     <p class="note cmp-rfoot">${esc(cU('resFoot',{d:cmpFdate(R.checked||CMP.idx.checked)}))}</p>`;
   host.querySelectorAll('[data-cmp-rtab]').forEach(b=>b.onclick=()=>{ CMP.resTab=b.getAttribute('data-cmp-rtab'); CMP.resAll=null; cmpResDraw(); });
   const m=host.querySelector('[data-cmp-rall]'); if(m) m.onclick=()=>{ CMP.resAll=tab; cmpResDraw(); };
@@ -43563,29 +43631,43 @@ function cmpMinTier(m){
     if(names.some(n=>n&&t.indexOf(n)>=0)) return 2; }
   return /\bnational|\bNAD-wide|\bUnited States|\bU\.S\.|across the country/i.test(m.r||'')?1:0;
 }
-function cmpMinCard(m,near){
+/* One ministry's details, shown when its name is tapped */
+function cmpMinBody(m){
   const what=LANG==='es'&&m.we?m.we:m.w;
   const lines=[m.who&&cU('minWho',{w:m.who}),m.r&&cU('minTravels',{r:m.r}),m.cost&&cU('minCost',{c:m.cost})].filter(Boolean);
   const em=typeof m.em==='string'&&CMP_EMAIL.test(m.em)?m.em:'', tel=typeof m.tel==='string'&&/^\+?[0-9]{7,15}(?:,[0-9]{1,6})?$/.test(m.tel)?m.tel:'';
-  const cat=CMP_MIN_CATS.indexOf(m.c)>=0?m.c:'other', st=CMP_UI['ms_'+m.st]?m.st:'';
-  return `<article class="cmp-rcard cmp-mcard" style="--k:var(--m-children)"><div class="cmp-rtop"><span class="cmp-lv">${esc(cU('mc_'+cat))}</span>${near?`<span class="cmp-near">${esc(cU('near'))}</span>`:''}${st?(cmpHttps(m.su)?`<a class="cmp-stand" href="${esc(m.su)}" target="_blank" rel="noopener" title="${esc(cU('standWhy'))}">${esc(cU('ms_'+st))}</a>`:`<span class="cmp-stand">${esc(cU('ms_'+st))}</span>`):''}</div>
-    <h4>${esc(m.n)}</h4><p class="cmp-rw">${esc(what||'')}</p>${lines.map(t=>`<p class="cmp-ry">${esc(t)}</p>`).join('')}${m.note?`<p class="cmp-ry cmp-mnote">${esc(cU('minNote',{n:m.note}))}</p>`:''}
+  const st=CMP_UI['ms_'+m.st]?m.st:'';
+  return `${st?`<div class="cmp-rtop">${cmpHttps(m.su)?`<a class="cmp-stand" href="${esc(m.su)}" target="_blank" rel="noopener" title="${esc(cU('standWhy'))}">${esc(cU('ms_'+st))}</a>`:`<span class="cmp-stand">${esc(cU('ms_'+st))}</span>`}</div>`:''}
+    <p class="cmp-rw">${esc(what||'')}</p>${lines.map(t=>`<p class="cmp-ry">${esc(t)}</p>`).join('')}${m.note?`<p class="cmp-ry cmp-mnote">${esc(cU('minNote',{n:m.note}))}</p>`:''}
     <div class="cmp-rlinks">${cmpHttps(m.site)?`<a href="${esc(m.site)}" target="_blank" rel="noopener">${esc(cU('minWebsite'))} <span aria-hidden="true">↗</span></a>`:''}${cmpHttps(m.inv)?`<a href="${esc(m.inv)}" target="_blank" rel="noopener">${esc(cU('minInvite'))} <span aria-hidden="true">↗</span></a>`:''}</div>
-    ${em||tel?`<p class="cmp-contact">${em?`<a href="mailto:${esc(em)}">${esc(em)}</a>`:''}${tel?`<a href="tel:${esc(tel)}">${esc(m.ph)}</a>`:''}</p>`:''}</article>`;
+    ${em||tel?`<p class="cmp-contact">${em?`<a href="mailto:${esc(em)}">${esc(em)}</a>`:''}${tel?`<a href="tel:${esc(tel)}">${esc(m.ph)}</a>`:''}</p>`:''}`;
 }
+/* v10.59.1: the ministries folded by kind. The pastor: "not in huge blocks … in categories beautiful categories and you click the categories
+   and they will open up … like HEALTH and it will have AMEN free clinics, Chef Mark Anthony, Nedley Health … it won't show all the
+   information until you click it … just show the title". Near him first, as their own kind when there are any; each kind a coloured
+   heading with its picture and count; under it the names; a name opens what it does, where it travels and how to reach it. What is open
+   stays open while he is on the page (CMP.minOpen, CMP.minItem). */
 function cmpMinDraw(){
   const slot=$('cmp-ming'), R=CMP.res; if(!slot||!R) return;
-  const M=(R.ministries||[]).filter(m=>m&&typeof m.n==='string');
+  const M=(R.ministries||[]).filter(m=>m&&typeof m.n==='string'&&/^[a-z0-9-]+$/.test(m.id||''));
   if(!M.length){ const f=$('cmp-min'); if(f) f.remove(); return; }   // no list yet: no frame
-  const cats=CMP_MIN_CATS.filter(c=>M.some(m=>m.c===c));
-  const cat=cats.indexOf(CMP.minCat)>=0?CMP.minCat:'all';
   const tier=new Map(M.map(m=>[m,cmpMinTier(m)]));
-  const list=(cat==='all'?M:M.filter(m=>m.c===cat)).map((m,i)=>[m,i]).sort((a,b)=>tier.get(b[0])-tier.get(a[0])||a[1]-b[1]).map(x=>x[0]);
-  slot.innerHTML=`<div class="cmp-seg cmp-mcats" role="group" aria-label="${esc(cU('tMin'))}">${['all'].concat(cats).map(c=>`<button type="button" data-cmp-mcat="${c}" aria-pressed="${c===cat}">${esc(cU('mc_'+c))}<span class="n">${c==='all'?M.length:M.filter(m=>m.c===c).length}</span></button>`).join('')}</div>
+  const order=L=>L.map((m,i)=>[m,i]).sort((x,y)=>tier.get(y[0])-tier.get(x[0])||x[1]-y[1]).map(x=>x[0]);
+  const near=M.filter(m=>tier.get(m)===2);
+  const groups=(near.length?[['near',near]]:[]).concat(CMP_MIN_CATS.map(c=>[c,order(M.filter(m=>(CMP_MIN_CATS.indexOf(m.c)>=0?m.c:'other')===c))]).filter(g=>g[1].length));
+  const open=CMP.minOpen||(CMP.minOpen={}), item=CMP.minItem||(CMP.minItem={});
+  const row=(m,c)=>{ const k=c+'|'+m.id, on=!!item[k], id='cmp-mi-'+c+'-'+m.id;
+    return `<div class="cmp-mitem${on?' on':''}"><button type="button" class="cmp-mihead" data-cmp-mi="${esc(k)}" aria-expanded="${on}" aria-controls="${esc(id)}"><span class="cmp-miname">${esc(m.n)}${c==='near'?`<span class="cmp-micat">${esc(cU('mc_'+(CMP_MIN_CATS.indexOf(m.c)>=0?m.c:'other')))}</span>`:''}</span>${c!=='near'&&tier.get(m)===2?`<span class="cmp-near">${esc(cU('near'))}</span>`:''}<span class="cmp-chev" aria-hidden="true"></span></button>
+      <div class="cmp-mibody" id="${esc(id)}"${on?'':' hidden'}>${cmpMinBody(m)}</div></div>`; };
+  slot.innerHTML=`<p class="cmp-mhint">${esc(cU('minHint'))}</p>
+    <div class="cmp-mgroups">${groups.map(([c,list])=>{ const on=!!open[c];
+      return `<section class="cmp-mgroup${on?' on':''}" style="--k:var(${CMP_MIN_HUE[c]})"><button type="button" class="cmp-mghead" data-cmp-mg="${c}" aria-expanded="${on}" aria-controls="cmp-mg-${c}"><span class="cmp-mgic" aria-hidden="true"><svg viewBox="0 0 24 24">${CMP_MIN_ICON[c]}</svg></span><span class="cmp-mgname">${esc(cU('mc_'+c))}</span><span class="cmp-mgn">${list.length}</span><span class="cmp-chev" aria-hidden="true"></span></button>
+        <div class="cmp-mglist" id="cmp-mg-${c}"${on?'':' hidden'}>${list.map(m=>row(m,c)).join('')}</div></section>`; }).join('')}</div>
     <div class="cmp-warn cmp-minwarn">${esc(cU('minWarn'))}</div>
-    <div class="cmp-rgrid">${list.map((m,i)=>cmpMinCard(m,tier.get(m)===2).replace('<article class="cmp-rcard','<article class="cmp-rcard'+(i===list.length-1&&list.length%2?' wide':''))).join('')}</div>
     <p class="note cmp-rfoot">${esc(cU('minFoot',{d:cmpFdate(R.ministriesChecked||R.checked||CMP.idx.checked)}))}</p>`;
-  slot.querySelectorAll('[data-cmp-mcat]').forEach(b=>b.onclick=()=>{ CMP.minCat=b.getAttribute('data-cmp-mcat'); cmpMinDraw(); });
+  const flip=(b,on,panel)=>{ b.setAttribute('aria-expanded',String(on)); b.parentElement.classList.toggle('on',on); if(panel) panel.hidden=!on; };
+  slot.querySelectorAll('[data-cmp-mg]').forEach(b=>b.onclick=()=>{ const c=b.getAttribute('data-cmp-mg'); open[c]=!open[c]; flip(b,open[c],$('cmp-mg-'+c)); });
+  slot.querySelectorAll('[data-cmp-mi]').forEach(b=>b.onclick=()=>{ const k=b.getAttribute('data-cmp-mi'); item[k]=!item[k]; flip(b,item[k],b.nextElementSibling); });
 }
 function cmpCaveats(){
   const host=$('cmp-caveats'); if(!host) return; const I=CMP.idx, P=I.months.slice(0,I.past);

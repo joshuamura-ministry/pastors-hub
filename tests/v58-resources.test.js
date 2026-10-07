@@ -79,8 +79,9 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
   c('the box names where it is from: his conference, his union, the NAD and the world church', [P.txt('#cmp-res h3'), /the Pennsylvania Conference, the Columbia Union, the North American Division and the world church/.test(P.txt('#cmp-res .cmp-sh .note'))], ['Resources for your church',true]);
   console.log('\n-- the box: money first, his conference first --');
   const tabs=P.qa('[data-cmp-rtab]');
-  c('four kinds, each with its count', tabs.map(b=>b.firstChild.textContent), ['Money you can ask for','Free materials','Training','What the church is doing now']);
-  c('…money open', tabs.map(b=>b.getAttribute('aria-pressed')), ['true','false','false','false']);
+  // v10.59.1: the kinds as tabs of their own colour and picture (the pastor: "make … more appealing as tabs")
+  c('four kinds, each with its count', tabs.map(b=>b.querySelector('.lb').textContent), ['Money you can ask for','Free materials','Training','What the church is doing now']);
+  c('…money open; each a tab with its own colour and a picture', [tabs.map(b=>b.getAttribute('aria-selected')), tabs.every(b=>b.getAttribute('role')==='tab'&&b.querySelector('.ic svg')&&/--k:var\(--/.test(b.getAttribute('style')||''))], [['true','false','false','false'],true]);
   const money=cards(P,'#cmp-resg');
   c('first his conference\'s evangelism help, the width of the box', [money[0].querySelector('h4').textContent, money[0].classList.contains('cmp-help'), money[0].querySelector('.cmp-lv').textContent], ['Evangelism help from the Pennsylvania Conference',true,'Your conference']);
   c('…its share, its deadline, how to ask, its conditions, its links', [[...money[0].querySelectorAll('.cmp-facts span')].map(s=>s.textContent), money[0].querySelectorAll('li').length, money[0].querySelectorAll('.cmp-rlinks a').length], [['Share: up to 50%','Deadline: 30 September'],4,2]);
@@ -93,7 +94,7 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
   c('every link opens apart', P.qa('#cmp-resg a').every(a=>a.target==='_blank'&&a.rel==='noopener'&&/^https:\/\//.test(a.getAttribute('href'))));
   tabs[1].click(); await sleep(20);
   const free=cards(P,'#cmp-resg');
-  c('Free materials: the NAD\'s (Frame websites among them)', [P.qa('[data-cmp-rtab]')[1].getAttribute('aria-pressed'), free.some(x=>/Frame website/.test(x.textContent)), free.every(x=>!x.classList.contains('cmp-help'))], ['true',true,true]);
+  c('Free materials: the NAD\'s (Frame websites among them)', [P.qa('[data-cmp-rtab]')[1].getAttribute('aria-selected'), free.some(x=>/Frame website/.test(x.textContent)), free.every(x=>!x.classList.contains('cmp-help'))], ['true',true,true]);
   P.q('[data-cmp-rtab="now"]').click(); await sleep(20);
   const nowN=+P.q('[data-cmp-rtab="now"] .n').textContent;
   c('What the church is doing now: 12 at first, then "Show all"', [cards(P,'#cmp-resg').length, P.txt('[data-cmp-rall]')], [Math.min(12,nowN),'Show all '+nowN]);
@@ -103,29 +104,41 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
 
   console.log('\n-- ministries that come to your church --');
   c('its words, and the care to take', [P.txt('#cmp-min h3'), /Ask your conference about a ministry before you invite it/.test(P.txt('#cmp-min .cmp-minwarn'))], ['Ministries that come to your church',true]);
-  const cats=P.qa('[data-cmp-mcat]');
-  c('All, then each kind with its count', cats.map(b=>b.firstChild.textContent), ['All','The sanctuary','School choirs and bands','Music groups','Evangelism and speakers','Health','Children and youth','Family','Other']);
-  c('…All: 67', [+cats[0].querySelector('.n').textContent, cards(P,'#cmp-ming').length], [67,67]);
-  const first=cards(P,'#cmp-ming').slice(0,2);
-  c('near him first: the ministries whose own words name Pennsylvania or the Columbia Union, marked "Near you"', first.map(x=>[x.querySelector('h4').textContent,!!x.querySelector('.cmp-near')]), [['Blue Mountain Academy tour groups',true],['Pine Forge Academy Choir',true]]);
-  c('…the others are not marked', cards(P,'#cmp-ming').slice(2).every(x=>!x.querySelector('.cmp-near')));
-  P.q('[data-cmp-mcat="sanctuary"]').click(); await sleep(20);
-  const mm=cards(P,'#cmp-ming');
-  c('The sanctuary: Messiah\'s Mansion, the width of the box', [mm.length, mm[0].querySelector('h4').textContent, mm[0].classList.contains('wide')], [1,'Messiah’s Mansion'.replace('’',"'"),true]);
-  c('…its kind and its standing (a link to where it is shown)', [mm[0].querySelector('.cmp-lv').textContent, mm[0].querySelector('a.cmp-stand').textContent, /^https:/.test(mm[0].querySelector('a.cmp-stand').getAttribute('href'))], ['The sanctuary','Listed by the church',true]);
-  c('…who runs it, where it travels, the cost and what to know', [/Run by: Mosaic Sanctuary/.test(mm[0].textContent), /Travels: National/.test(mm[0].textContent), /Cost: Tours are free/.test(mm[0].textContent), /Good to know: Plan about a year ahead/.test(mm[0].textContent)], [true,true,true,true]);
-  c('…how to reach it: its website, how to invite it, its email and its phone', [[...mm[0].querySelectorAll('.cmp-rlinks a')].map(a=>a.textContent.replace(/\s*↗/,'').trim()), [...mm[0].querySelectorAll('.cmp-contact a')].map(a=>a.getAttribute('href'))],
+  // v10.59.1: folded by kind (the pastor: "in categories beautiful categories and you click the categories and they will open up … like
+  // HEALTH and it will have AMEN free clinics, Chef Mark Anthony, Nedley Health … it won't show all the information until you click it")
+  const groups=P.qa('#cmp-ming [data-cmp-mg]');
+  c('the kinds, folded, each with its picture and count; Near you first', groups.map(b=>b.querySelector('.cmp-mgname').textContent), ['Near you','The sanctuary','School choirs and bands','Music groups','Evangelism and speakers','Health','Children and youth','Family','Other']);
+  c('…all closed at first; the counts add up to 67 (Near you counts its two again)', [groups.every(b=>b.getAttribute('aria-expanded')==='false'&&b.nextElementSibling.hidden&&b.querySelector('.cmp-mgic svg')), groups.slice(1).reduce((n,b)=>n+ +b.querySelector('.cmp-mgn').textContent,0), P.qa('#cmp-ming .cmp-mitem').length], [true,67,69]);
+  c('…a line says how it works', P.txt('#cmp-ming .cmp-mhint'), 'Tap a kind to see its ministries; tap one to see what it does and how to invite it.');
+  const near=P.qa('#cmp-mg-near .cmp-miname');
+  c('Near you: the ministries whose own words name Pennsylvania or the Columbia Union, with their kind', near.map(x=>x.textContent), ['Blue Mountain Academy tour groupsSchool choirs and bands','Pine Forge Academy ChoirSchool choirs and bands']);
+  c('…and marked "Near you" under their own kind', P.qa('#cmp-mg-music-school .cmp-mitem').filter(x=>x.querySelector('.cmp-near')).map(x=>x.querySelector('.cmp-miname').textContent), ['Blue Mountain Academy tour groups','Pine Forge Academy Choir']);
+  P.q('[data-cmp-mg="health"]').click(); await sleep(20);
+  c('Health opens: its five, names only', [P.q('[data-cmp-mg="health"]').getAttribute('aria-expanded'), P.q('#cmp-mg-health').hidden, P.qa('#cmp-mg-health .cmp-miname').map(x=>x.textContent.replace(/ \(.*$/,'').replace(/ –.*$/,'')), P.qa('#cmp-mg-health .cmp-mibody').every(b=>b.hidden)],
+    ['true',false,['AMEN Free Clinics','Chef Mark Anthony','Nedley Health','Uchee Pines Institute','Wildwood Health Institute'],true]);
+  P.q('[data-cmp-mg="health"]').click(); await sleep(20);
+  c('…and closes again', [P.q('[data-cmp-mg="health"]').getAttribute('aria-expanded'), P.q('#cmp-mg-health').hidden], ['false',true]);
+  P.q('[data-cmp-mg="sanctuary"]').click(); await sleep(20);
+  const mi=P.q('#cmp-mg-sanctuary .cmp-mitem');
+  c('The sanctuary: Messiah\'s Mansion, its details shut', [P.qa('#cmp-mg-sanctuary .cmp-mitem').length, mi.querySelector('.cmp-miname').textContent, mi.querySelector('.cmp-mibody').hidden], [1,'Messiah’s Mansion'.replace('’',"'"),true]);
+  mi.querySelector('[data-cmp-mi]').click(); await sleep(20);
+  const mb=mi.querySelector('.cmp-mibody');
+  c('…a tap on the name opens them', [mi.querySelector('[data-cmp-mi]').getAttribute('aria-expanded'), mb.hidden, mi.classList.contains('on')], ['true',false,true]);
+  c('…its standing (a link to where it is shown)', [mb.querySelector('a.cmp-stand').textContent, /^https:/.test(mb.querySelector('a.cmp-stand').getAttribute('href'))], ['Listed by the church',true]);
+  c('…who runs it, where it travels, the cost and what to know', [/Run by: Mosaic Sanctuary/.test(mb.textContent), /Travels: National/.test(mb.textContent), /Cost: Tours are free/.test(mb.textContent), /Good to know: Plan about a year ahead/.test(mb.textContent)], [true,true,true,true]);
+  c('…how to reach it: its website, how to invite it, its email and its phone', [[...mb.querySelectorAll('.cmp-rlinks a')].map(a=>a.textContent.replace(/\s*↗/,'').trim()), [...mb.querySelectorAll('.cmp-contact a')].map(a=>a.getAttribute('href'))],
     [['Website','How to invite them'],['mailto:messiahsmansion@hotmail.com','tel:4054543590']]);
+  c('both sections glow (the pastor: "nice beautiful glowing sections")', [P.q('#cmp-res').classList.contains('cmp-glow'), P.q('#cmp-min').classList.contains('cmp-glow')], [true,true]);
   c('no page errors', P.errs, []);
 
   console.log('\n-- in Spanish --');
   { const S=page({lang:'es'}); await openRes(S);
-    c('the way down, the titles, the kinds', [S.txt('[data-cmp-resgo]'), S.txt('#cmp-res h3'), S.txt('#cmp-min h3'), S.qa('[data-cmp-rtab]').map(b=>b.firstChild.textContent)],
+    c('the way down, the titles, the kinds', [S.txt('[data-cmp-resgo]'), S.txt('#cmp-res h3'), S.txt('#cmp-min h3'), S.qa('[data-cmp-rtab]').map(b=>b.querySelector('.lb').textContent)],
       ['Recursos para su iglesia ↓','Recursos para su iglesia','Ministerios que visitan su iglesia',['Dinero que puede solicitar','Materiales gratuitos','Capacitación','Lo que la iglesia está haciendo ahora']]);
     c('the help card in Spanish; the published words say they are English', [S.txt('#cmp-resg .cmp-help h4'), /Parte: up to 50%/.test(S.txt('#cmp-resg .cmp-help')), /están en inglés, como se publicaron/.test(S.txt('#cmp-resg'))], ['Ayuda para evangelismo de la Asociación de Pennsylvania',true,true]);
-    S.q('[data-cmp-mcat="sanctuary"]').click(); await sleep(20);
-    c('a ministry says what it is in Spanish', /Una réplica del santuario de Moisés a tamaño real/.test(S.txt('#cmp-ming .cmp-rcard')));
-    c('…its standing in Spanish, "Cerca de usted" for near ones', [S.txt('#cmp-ming .cmp-stand'), (S.q('[data-cmp-mcat="all"]').click(), S.txt('#cmp-ming .cmp-near'))], ['Reconocido por la iglesia','Cerca de usted']);
+    c('the kinds in Spanish, Cerca de usted first', S.qa('#cmp-ming .cmp-mgname').map(x=>x.textContent).slice(0,3), ['Cerca de usted','El santuario','Coros y bandas escolares']);
+    c('a ministry says what it is in Spanish', /Una réplica del santuario de Moisés a tamaño real/.test(S.txt('#cmp-mg-sanctuary .cmp-mibody')));
+    c('…its standing in Spanish; the line that says how it works', [S.txt('#cmp-mg-sanctuary .cmp-stand'), S.txt('#cmp-ming .cmp-mhint')], ['Reconocido por la iglesia','Toque un tipo para ver sus ministerios; toque uno para ver qué hace y cómo invitarlo.']);
     c('no page errors', S.errs, []);
   }
 
@@ -133,7 +146,7 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
   { const Q=page({reg:'Bermuda'}); await until(()=>Q.E('ACCESS_CHECKED')); await sleep(60); Q.E("openTool('compare')");
     await until(()=>Q.q('#cmp-resg .cmp-rcard')); await sleep(30);
     c('the box still shows: the NAD\'s and the world church\'s, numbered 2 and 3', [Q.txt('#cmp-res .cmp-num'), Q.txt('#cmp-min .cmp-num'), /the North American Division and the world church \(choose your conference above/.test(Q.txt('#cmp-res .cmp-sh .note'))], ['2','3',true]);
-    c('…no conference\'s help, nobody marked near', [!!Q.q('#cmp-resg .cmp-help'), cards(Q,'#cmp-resg').every(x=>['nad','world'].includes(x.dataset.lv)), !!Q.q('#cmp-ming .cmp-near')], [false,true,false]);
+    c('…no conference\'s help, nobody marked near', [!!Q.q('#cmp-resg .cmp-help'), cards(Q,'#cmp-resg').every(x=>['nad','world'].includes(x.dataset.lv)), !!Q.q('[data-cmp-mg="near"]')], [false,true,false]);
   }
 
   console.log('\n-- words from the web stay words --');
@@ -146,8 +159,8 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
     c('nothing made from the data runs or becomes an element', [res.querySelectorAll('img,script,b[onclick]').length, min.querySelectorAll('img,script').length, T.E('window.__x===undefined')], [0,0,true]);
     c('…the names shown as words', [/<img src=x onerror="window.__x=1">Funding/.test(res.textContent), /<b onclick="window.__x=1">ask<\/b>/.test(res.textContent)], [true,true]);
     c('a link that is not https is dropped; the https one stays', [[...res.querySelectorAll('a')].some(a=>/^javascript:/i.test(a.getAttribute('href'))), [...res.querySelectorAll('a')].some(a=>a.getAttribute('href')==='https://ok.example.org/x')], [false,true]);
-    T.q('[data-cmp-mcat="sanctuary"]').click(); await sleep(20);
-    const m=T.q('#cmp-ming .cmp-rcard');
+    const m=T.q('#cmp-mg-sanctuary .cmp-mitem');
+    c('the ministry\'s name shown as words', /<script>window\.__x=1<\/script>Mansion/.test(m.querySelector('.cmp-miname').textContent));
     c('a bad email, a bad phone and a plain-http site are not linked', [!!m.querySelector('.cmp-contact'), [...m.querySelectorAll('a')].map(a=>a.getAttribute('href')).filter(h=>!/^https:\/\//.test(h))], [false,[]]);
   }
 

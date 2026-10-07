@@ -191,6 +191,30 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.59.1 (8 Oct 2026, quick lane) — the two new sections glow; the kinds as tabs; the ministries folded by kind.** The pastor, on the
+foot of Learn from other conferences: *"with ministries that come to your church maybe put it not in huge blocks … in categories beautiful
+categories and you click the categories and they will open up … like HEALTH and it will have AMEN free clinics, Chef Mark Anthony, Nedley
+Health … it won't show all the information until you click it … these two sections need to be really important … nice beautiful glowing
+sections … make the clickable like money you can ask for, free materials, training, what the church is doing now more appealing as tabs …
+just have the top just show the title of it and the categories and when you click it, it will open up all the information"*. Folded into
+PR #29 (still open).
+- **Both frames glow** (`.cmp-step.cmp-glow`, set by `cmpResFrames`): a tinted ground, a wider lit edge, the number filled with the frame's
+  colour, a slow breathing shadow (`cmpGlow`, 6 s; still under reduced motion; none in print): one more exception to "nothing animates on
+  its own", at his word.
+- **The four kinds as tabs** (`.cmp-rtabs`, `role=tablist`; `CMP_RES_HUE`, `CMP_RES_ICON`): each its own colour and a small line picture
+  (a coin, a gift, a cap, a calendar), the count in a pill; the open one lit, its picture filled, a bar under it; four across, two by two
+  on a phone with the picture above the words.
+- **The ministries folded by kind** (`cmpMinDraw` rewritten; `cmpMinBody`; `CMP.minOpen`, `CMP.minItem`; `CMP_MIN_HUE`, `CMP_MIN_ICON`): a
+  line saying how it works, then one closed card per kind (its colour, picture, name and count; two across, one on a phone): **Near you**
+  first when any ministry's own words name his conference, union or states (they stay in their own kind too, marked "Near you"), then The
+  sanctuary, School choirs and bands, Music groups, Evangelism and speakers, Health, Children and youth, Family, Other. A tap opens the
+  kind to the names only (two across), the open card the full width; a tap on a name opens that ministry's details (its standing, what it
+  does, who runs it, where it travels, the cost, "Good to know", Website, How to invite them, email and phone), the open one the full
+  width. What is open stays open while he is on the page. The caution line and the check date sit under the cards. No "All" filter.
+- Tests: `v58-resources` updated to the folded list and the tabs (61; the old checks replaced, with his words), `conferences-view`
+  unchanged (110). Checked in Chrome (`v76/shots30.mjs`): computer 1366, phone 390 EN and ES. Full suite: 156 suites · 10,723 passed · 0 failed (the full run 10,707 and one stale check, vocab.json rebuilt for the stamps and v44-sabbath-leftovers rerun: 16).
+  Samples `Terrain-v10.59.1-samples`.
+
 **v10.59.0 (8 Oct 2026, full lane) — Terrain lives at terrain.church; each device's saved work moves with it.** The pastor: *"So I have
 terrain.church url option … I'm thinking of changing the name"*, *"apps name and url to terrain.church"*, *"Pastor's hub is actually another
 URL I bought"*, *"i bought it"*. A browser keeps saved work (the churches, the registration, Spiritual Gifts results, connection-card keys…:
@@ -2638,8 +2662,9 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
   `cmpAhead` (`cmpPrepList`, `cmpHintText`, `cmpWhen`, `CMP_LANES`), `cmpLearn` (`cmpLearnCards`), `cmpSW`, `cmpSaid`, `cmpTable`, `cmpSources`, `cmpCaveats`;
   `cmpLink` / `cmpHttps` (https only), `cmpToday` (never before the check date), `CMP_STALE_DAYS`; Make the Case's door `caseCmpDoorHTML` / `caseCmpDoorWire`
 - Review (v10.44): `CMP_UI.why_other` ("another part of the country"); in the builders `profiles.mjs` `boardOrSession` and `pack.mjs` `WRITE_OUT` / `noAiWords`
-- v10.58.0: `cmpLoadRes`, `cmpResFrames`, `cmpRes`, `cmpResDraw`, `cmpHelpCard`, `cmpResCard`, `cmpMinDraw`, `cmpMinCard`, `cmpMinTier` (resources.json, from
-  `tools/conferences/resources.mjs`)
+- v10.58.0: `cmpLoadRes`, `cmpResFrames`, `cmpRes`, `cmpResDraw`, `cmpHelpCard`, `cmpResCard`, `cmpMinDraw`, `cmpMinTier` (resources.json, from
+  `tools/conferences/resources.mjs`); v10.59.1: `cmpMinBody` (one ministry's details), `CMP_RES_HUE` / `CMP_RES_ICON`, `CMP_MIN_HUE` / `CMP_MIN_ICON`,
+  `CMP.minOpen` / `CMP.minItem` (what he has opened)
 
 **Drop-downs** (v10.58.0; block before `boot`): `TS_SEL`, `tsSelOn` (not in jsdom), `tsSelEnhance`, `tsSelOpen`, `tsSelPick`, `tsSelPlace`, `tsSelClose`,
   `tsSelHook` (the select's value setters), `tsSelSync`; `data-native` on a select keeps it native
