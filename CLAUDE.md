@@ -48,7 +48,7 @@ for the tract, town and county, explains the neighborhood in plain English,
 takes an honest inventory of what the church can field, and matches ministries
 to both — checked against real volunteers, hours, rooms and money.
 
-Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026; the sixth, **Compare your churches**, since v10.57.0):
+Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.0, 2 Oct 2026; the sixth, **Compare your churches**, since v10.57.0; since v10.57.1 the second row reads Compare your churches · Evangelism Planner · Learn from other conferences):
 
 | Tool | What it does | Tier |
 |---|---|---|
@@ -190,6 +190,41 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.57.1 (7 Oct 2026) — Spiritual Gifts' main page without the clutter; the main menu's second row reordered.** The pastor, with
+screenshots of "See the results" and "Across the congregation": *"you don't need what that check for new results that should just populate
+whenever someone finishes … We don't need across the church button … instead of having Open And delete I would prefer having that circular
+graph to the right and smaller … between the name and Open And delete … the most highest gift … three … right in the middle … we don't
+need the sample report anymore because if you push open all those are sample reports … in the fill positions … it should just show across
+the congregation … it will just continue to populate … take it myself doesn't need to be there results tab doesn't need to be there …
+across the church button doesn't need to be there either … we need to clear out the clutter"*; then *"compare your churches on the bottom
+left … EVANGELISM planner … bottom middle … learn from other conferences … on the right and underneath … there are resources available …
+for your church and find resources"*; and of the conferences page, *"what is every number has a source does that have to be there?"*
+- **Results come in by themselves** (`gfPollStart` / `gfPollTick` / `gfPollStop`, `GF_POLL_MS` 90 s): when the main page opens (unless asked
+  within 30 s), then every 90 s while it is on screen and the tab is visible, and when the tab comes back; only for a church with a link;
+  the time is set before each ask, so the redraw a new result brings never asks again at once; a redraw keeps the part he is reading where
+  it was (`gfKeepPlace`); never on a member's page (`gfPollOn`). No "Check for new results" (`#gfpull` gone).
+- **Each result one row, one button** (`.gfrow2`, `data-gf-open`, `gfOpenRow`): the name and church · date; in the middle the three
+  strongest gifts (`gfProfile(...).ranked`, short names `gfShort`) in their families' colours (`.gftg`, `GF_FAM_VAR`); on the right a small
+  gift wheel (`gfMiniWheelSVG`: the report's wheel in miniature, 64 px, 56 on a phone, the three strongest in full colour, a picture
+  only). A tap opens the report with "← Back to all results" above it; Delete is the report's own (`#gfpdel`, two taps). No Open or Delete
+  on the list.
+- **No sample report button** (`#gfsample` gone; `GF_VIEW='sample'` still draws it, nothing links there now); **one door in step 1**
+  (Share it with your members; no "Take it yourself", the way itself still works for a restored page); **no tabs** anywhere
+  (`gfChurchNav` is now one "← Back to Spiritual Gifts", on the share page and the Sabbath slides).
+- **Step 3, Fill the positions, holds Across the congregation** (`gfChurchHTML`: the counts, your congregation against your
+  neighborhood, strong in, present but untested, missing, who could staff what), always open, redrawn with the page; then Who to ask and
+  the Volunteers fold. No Print button, no "Using this with the rest of Terrain". `GF_VIEW='church'` lands on the main page.
+- **The main menu:** Community Survey · Spiritual Gifts · Make the Case / Compare your churches · Evangelism Planner · Learn from other
+  conferences; the conferences tile says "Ideas and resources from other conferences, for your church." and **Find resources** (ES "Ideas y
+  recursos de otras asociaciones, para su iglesia." / "Buscar recursos"). The tool keeps its name.
+- **Learn from other conferences:** no "Every number has a source" pill (`CMP_UI.sourced` gone).
+- Tests: `v57-1-gifts-clean` (new, 34; failing first on v10.57.0: `v75/ff-v57-1-gifts-clean.log`, 12 failed); updated with comments:
+  gifts-engine, gifts-journeys, gifts-shortlink (the page's own sync for the button), gifts-report, gifts-review-copy (a row opens the
+  report; its own Delete), gifts-landing (one door), gifts-sample (the sample's own view), no-ai-words, v56-2-church-and-gifts-demo,
+  email-off, the hub suites, entitlement-tiers, registration, conferences-view, v44-integration, v56-1-hub-simple, v57-churches (the order;
+  the stamps "agree"), connect-client (27 `memberLink()` guard sites). Checked in Chrome (`v75/shots26.mjs`, `v75/serve571.mjs`): computer
+  1366 and phone 390, no sideways scroll, no page errors. Full suite: 153 suites · 10,564 passed · 0 failed. Samples `Terrain-v10.57.1-samples`.
 
 **v10.57.0 (7 Oct 2026, full lane) — your churches: switch between them, and compare them.** The pastor: *"some pastors have multiple
 churches where they … need to have them saved so they can click a button and say which church so they click one church. It'll show them
@@ -2539,7 +2574,7 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
 - `GF_HEART` (12), `GF_NEEDS` (38 survey needs → gifts/heart/role), `GF_NEEDS_YOUTH`, `GF_YOUTH_MIN`, `GF_TRY` / `GF_TRY_YOUTH`
 - `gfReportModel()` → `gfReportHTML()` / `gfReportPDF()`; `gfChurchNeeds()` + `gfRenderChurch()` for the congregation grid
 - Server client: `gfStatus`, `gfCampaign`, `gfSubmit`, `gfSync`/`gfPull`, `gfInvite`/`gfPeek`/`gfConfirm`, `gfGet`, `gfEmailReport`, `gfMailPdf`; routes `#gifts=`, `#gifts-confirm=`, `#gifts-report=`
-- `gfRenderRoster()` — the pastor's landing: two doors, results, folded back-office
+- `gfRenderRoster()` — the pastor's landing: three steps (one door; the results as rows with the three strongest gifts and a small wheel, `gfMiniWheelSVG`, `gfOpenRow`; step 3 holds `gfChurchHTML`), results by themselves (`gfPollTick`)
 - `gfEncode()` / `gfDecode()` — the `TG1-` result code members can paste
 - `GF_FN` = `/.netlify/functions/gifts` — exists from v10.37.0; without it everything falls back to pasted `TG1-` codes (v1–v4 all decode)
 

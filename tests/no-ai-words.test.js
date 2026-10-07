@@ -128,7 +128,7 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     scan(P,'Spiritual Gifts landing');
     P.E('gfDemoFill({quiet:true}); gfRender();'); await sleep(100);   // v10.56.2: the sample report shows with the demo (the pastor: "if you click complete a demo … then the sample report will show")
     scan(P,'Spiritual Gifts landing with the demo');
-    P.q('#gfsample').click(); await sleep(400);
+    P.E("GF_VIEW='sample'; gfRender();"); await sleep(400);   // v10.57.1: the sample report's own view (its button is gone)
     scan(P,'the sample report');
     { const t=P.E(`(()=>{ try{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++) a[g.id+'.'+k]=['teach','shep','helps'].includes(g.id)?4:2; });
         const M=gfReportModel(gfScores(a),null,{own:true,name:'Sam Ortiz',date:'2026-09-28',heart:{children:2},minor:false,flags:gfFlags(a),ctx:null});

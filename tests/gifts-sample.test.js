@@ -110,12 +110,8 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   h.querySelector('[data-gf-demo="fill"]').click();
   h=D.getElementById('giftbody');
   c('…the demo filled: its first member is the sample report\'s', [E('gfRoster().length'),E('gfRoster().some(r=>gfDecode(r.code).name==="Alex Rivera (sample)")')], [24,true]);
-  const sb=h.querySelector('#gfsample');
-  c('"See a sample report" is on the landing', !!sb&&sb.querySelector('b').textContent, 'See a sample report');
-  c('with its one line', sb&&sb.querySelector('.gfstx>span').textContent, 'What a member receives when they finish — for showing people before they take it.');
-  // v10.50.0 — the pastor: "sample report should be below results"
-  c('below the results (step 3), not a door', [sb.parentNode.id,sb.previousElementSibling&&sb.previousElementSibling.classList.contains('gfresults'),
-    h.querySelectorAll('.gfdoor').length,sb.classList.contains('gfdoor'),sb.hasAttribute('data-gv')], ['gf-results',true,2,false,false]);
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
+  c('no "See a sample report" on the landing, even with the demo (every result opens as a report)', !!h.querySelector('#gfsample'), false);
   c('the results still sit beneath the doors', !!(h.querySelector('.gfdoors').compareDocumentPosition(h.querySelector('.gfresults'))&4), true);
 
   console.log('-- opening it touches nothing --');
@@ -132,7 +128,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   A.writes.length=0; E(`sessionStorage.setItem('spy-check','1'); sessionStorage.removeItem('spy-check')`);
   c('the storage spy sees writes, and the fetch spy saw the boot', [A.writes,A.fetches.length>0], [['setItem:spy-check','removeItem:spy-check'],true]);
   A.writes.length=0; const f0=A.fetches.length;
-  h.querySelector('#gfsample').click();
+  E("GF_VIEW='sample'; gfRender();");   // v10.57.1: the sample report's own view, its button gone
   c('the sample view is open', E('GF_VIEW'), 'sample');
   h=D.getElementById('giftbody');
   c('no storage writes and no fetches while it renders', [A.writes,A.fetches.slice(f0)], [[],[]]);
@@ -192,11 +188,11 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   h.querySelector('[data-sampback="top"]').click();
   h=D.getElementById('giftbody');
   c('Back at the top returns to the landing', [E('GF_VIEW'),!!h.querySelector('.gfdoors'),!!h.querySelector('.gfrep')], ['roster',true,false]);
-  h.querySelector('#gfsample').click(); h=D.getElementById('giftbody');
+  E("GF_VIEW='sample'; gfRender();"); h=D.getElementById('giftbody');
   h.querySelector('[data-sampback="foot"]').click(); h=D.getElementById('giftbody');
-  c('…and so does the one at the foot', [E('GF_VIEW'),!!h.querySelector('#gfsample')], ['roster',true]);
+  c('…and so does the one at the foot', [E('GF_VIEW'),!!h.querySelector('#gf-results')], ['roster',true]);
   // A redraw while it is open (gfRender from anywhere) keeps the sample on screen.
-  h.querySelector('#gfsample').click(); E('gfRender()'); h=D.getElementById('giftbody');
+  E("GF_VIEW='sample'; gfRender();"); E('gfRender()'); h=D.getElementById('giftbody');
   c('a redraw keeps the sample open', !!h.querySelector('#gfsampbar'), true);
 
   console.log('-- the pastor\'s own church, when it has one --');
@@ -241,7 +237,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   const pdfHeads=()=>{ const p=[]; for(let i=1;i<=saved.n;i++) p.push(saved.log.filter(l=>l.p===i&&l.hf).map(l=>l.t)); return p; };
   C.E('GF_VIEW="roster"; gfRender();');
   let hc=C.D.getElementById('giftbody');
-  hc.querySelector('.gfopen').click(); hc=C.D.getElementById('giftbody');
+  hc.querySelector('.gfrosterrow[data-gf-open]').click(); hc=C.D.getElementById('giftbody');   // v10.57.1: results come in by themselves; a row opens its report (no "Check for new results", no Open)
   c('the pastor\'s copy of a member\'s result: no banner, no Back to the sample, the ordinary kicker, no "Sample" anywhere',
     marks(hc), {bar:false,back:false,kick:'Spiritual gifts report',sample:false});
   saved=null; hc.querySelector('#gfpdf').click(); await until(()=>saved);
@@ -256,7 +252,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   C.E('GF_VIEW="roster"; gfRender();'); hc=C.D.getElementById('giftbody');
   C.E('gfDemoFill({quiet:true}); gfRender();'); hc=C.D.getElementById('giftbody');   // v10.56.2: the sample report shows with the demo
   C.writes.length=0;
-  hc.querySelector('#gfsample').click(); hc=C.D.getElementById('giftbody');
+  C.E("GF_VIEW='sample'; gfRender();"); hc=C.D.getElementById('giftbody');
   c('the sample opens beside it…', [C.E('GF_VIEW'),!!hc.querySelector('#gfsampbar')], ['sample',true]);
   c('…without taking the place of his report as the one the email paths read', C.J('[GF_REPORT_MODEL&&GF_REPORT_MODEL.name,GF_REPORT_MODEL&&GF_REPORT_MODEL.sample]'), ['Joshua Mura',false]);
   hc.querySelector('[data-sampback="top"]').click();
@@ -271,10 +267,10 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   hc=C.D.getElementById('giftbody');
   const part0=C.E('JSON.stringify(GFS)');
   C.writes.length=0;
-  hc.querySelector('#gfsample').click(); hc=C.D.getElementById('giftbody');
+  C.E("GF_VIEW='sample'; gfRender();"); hc=C.D.getElementById('giftbody');
   hc.querySelector('[data-sampback="foot"]').click(); hc=C.D.getElementById('giftbody');
   c('part-way: opening and leaving the sample writes nothing and leaves his answers as they were', [C.writes,C.E('JSON.stringify(GFS)')===part0], [[],true]);
-  hc.querySelector('.gfdoor[data-gv="take"]').click(); hc=C.D.getElementById('giftbody');
+  C.E("GF_VIEW='take'; GFS.self=true; gfSave(); gfRender();"); hc=C.D.getElementById('giftbody');   // v10.57.1: no take door; the way itself still works
   c('…and Take it yourself offers to carry on from statement 41', [/Welcome back, Joshua/.test(hc.textContent),/40 of 105 answered/.test(hc.textContent),/Carry on from statement 41/.test(hc.textContent)], [true,true,true]);
   c('no errors on the real-report page', C.errs, []);
 
@@ -287,11 +283,9 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   B.E('openTool("gifts")');
   let hb=B.D.getElementById('giftbody');
   hb.querySelector('[data-gf-demo="fill"]').click(); hb=B.D.getElementById('giftbody');   // v10.56.2: the sample report shows with the demo
-  const sbe=hb.querySelector('#gfsample');
-  c('"Ver un informe de ejemplo", with its line in Spanish', [sbe&&sbe.querySelector('b').textContent,sbe&&sbe.querySelector('.gfstx>span').textContent],
-    ['Ver un informe de ejemplo','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.']);
+  c('no sample report button (es)', !!hb.querySelector('#gfsample'), false);   // v10.57.1
   B.writes.length=0; const g0=B.fetches.length;
-  sbe.click(); hb=B.D.getElementById('giftbody');
+  B.E("GF_VIEW='sample'; gfRender();"); hb=B.D.getElementById('giftbody');
   c('nothing written, nothing fetched (es)', [B.writes,B.fetches.slice(g0)], [[],[]]);
   const hs=[...hb.querySelectorAll('h3.gfr-h')].map(x=>x.textContent);
   c('every section, in Spanish', HEADS_ES.filter(t=>!hs.includes(t)), []);

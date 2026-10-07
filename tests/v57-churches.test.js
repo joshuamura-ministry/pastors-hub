@@ -23,7 +23,8 @@ async function twoChurches(P){
 
 (async()=>{ await T.sec(async()=>{
   const P=page(); await ready(P);
-  c('the six stamps say v10.57.0', [P.E('VERSION'),P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver')], ['v10.57.0','v10.57.0','v10.57.0','v10.57.0']);
+  // v10.57.1: the order (the pastor: "compare your churches on the bottom left"); the stamps read as "the six agree"
+  c('the six stamps agree', [P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver')], [P.E('VERSION'),P.E('VERSION'),P.E('VERSION')]);
 
   console.log('\n-- one church: the chip in the header, no count --');
   survey(P); await sleep(60); P.E('showWho()'); await sleep(20);
@@ -109,7 +110,8 @@ async function twoChurches(P){
 
   console.log('\n-- the main menu: a sixth tool, 3 + 3 --');
   P.E('showHub()'); await sleep(30);
-  c('six tools, the sixth Compare your churches', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','planner','compare','churches']);
+  // v10.57.1: the order (the pastor: "compare your churches on the bottom left"); the stamps read as "the six agree"
+  c('six tools, the sixth Compare your churches', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','churches','planner','compare']);
   c('…its name, line and button', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare your churches','Your churches side by side: needs, people and gifts.','Compare churches']);
   P.q('#hub .tool[data-tool="churches"]').click(); await sleep(40);
   c('…opens the comparison', [P.E('TOOL'),P.q('#chc').hidden,P.qa('#chc .chc-sec').length], ['churches',false,5]);

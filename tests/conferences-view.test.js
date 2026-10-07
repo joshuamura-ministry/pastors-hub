@@ -56,7 +56,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   { const P=page(); await ready(P);
     const t=P.q('.hub .tool[data-tool="compare"]');
     c('a fifth tile, "Learn from other conferences"', t?t.querySelector('b').textContent:null, 'Learn from other conferences');
-    c('…with one short line and its link', t?[t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['What other conferences’ calendars hold, side by side.','Compare calendars']);
+    // v10.57.1 (stale): the pastor, "underneath … there are resources available … for your church and find resources"
+    c('…with one short line and its link', t?[t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Ideas and resources from other conferences, for your church.','Find resources']);
     c('…its own icon, ink and glow', !!(t&&t.querySelector('svg.tsvg')&&t.querySelector('#ink-compare')&&t.querySelector('#glow-compare')));
     // v10.51.1 — the pastor: "learn from other conferences should be kind of similar to the other icons … the same format as the others
     // … maybe we can add one more later and have six": no full row of its own; three across on a computer (a sixth spot left open)
@@ -67,7 +68,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   }
   { const P=page({lang:'es'}); await ready(P);
     const t=P.q('.hub .tool[data-tool="compare"]');
-    c('Spanish tile', t?[t.querySelector('b').textContent,t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Aprender de otras asociaciones','Lo que muestran los calendarios de otras asociaciones.','Comparar calendarios']);
+    // v10.57.1 (stale): the pastor, "underneath … there are resources available … for your church and find resources"
+    c('Spanish tile', t?[t.querySelector('b').textContent,t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Aprender de otras asociaciones','Ideas y recursos de otras asociaciones, para su iglesia.','Buscar recursos']);
   }
 
   console.log('\n-- registered pastors only --');

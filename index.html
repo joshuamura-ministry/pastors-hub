@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.57.0
+     TERRAIN  v10.57.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.57.0" data-theme="dark">
+<html lang="en" data-version="v10.57.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.57.0">
-<title>Community Map — Terrain v10.57.0</title>
+<meta name="terrain-version" content="v10.57.1">
+<title>Community Map — Terrain v10.57.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1558,6 +1558,27 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfcov:first-of-type{border-top:0}
 .gfcovn{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .gfrosterrow{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0;flex-wrap:wrap}
+/* v10.57.1: a result's row is one button: the name, the three strongest gifts, a small wheel */
+.gfrosterrow.gfrow2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) 64px;align-items:center;gap:16px;width:100%;margin:0;padding:10px 6px;
+  background:none;border:0;border-top:1px solid var(--line);border-radius:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
+.gfrosterrow.gfrow2:first-of-type{border-top:0}
+@media (hover:hover){ .gfrosterrow.gfrow2:hover{background:color-mix(in srgb,var(--acc) 6%,transparent)} }
+.gfrosterrow.gfrow2:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.gftop3{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
+.gftg{font-size:.8rem;font-weight:700;line-height:1.2;padding:5px 11px;border-radius:999px;color:var(--k);background:color-mix(in srgb,var(--k) 13%,transparent);border:1px solid color-mix(in srgb,var(--k) 42%,transparent)}
+.gfmw{display:block;width:64px;height:64px}
+.gfmw svg{display:block}
+.gfmw-tr{fill:var(--panel2)}
+.gfmw-c{fill:none;stroke:var(--line2);stroke-width:1}
+.gfmw-b.lo{opacity:.42}
+@media (max-width:600px){
+  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 56px;grid-template-areas:"n w" "t w";row-gap:8px}
+  .gfrosterrow.gfrow2 .gfrw{grid-area:n}.gfrosterrow.gfrow2 .gftop3{grid-area:t;justify-content:flex-start}.gfrosterrow.gfrow2 .gfmw{grid-area:w;width:56px;height:56px}
+  .gfmw svg{width:56px;height:56px}
+}
+.gfdoors.gfdoors1{grid-template-columns:1fr}
+.gfcong{margin:4px 0 14px}
+.gfcongh h4{font-family:var(--disp);font-size:1.1rem;margin:0 0 4px}
 .gfrosterrow:first-of-type{border-top:0}
 .gfrw{flex:1 1 220px;min-width:0}
 .gfrw .note{display:block;margin-top:2px}
@@ -4270,6 +4291,16 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
         <span class="td">Proposals for ministries, projects and purchases.</span>
         <span class="tgo">Build a proposal <i></i></span>
       </button>
+      <!-- v10.57.1 — the pastor (7 Oct 2026): "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from
+           other conferences … on the right": the second row is Compare your churches · Evangelism Planner · Learn from other conferences -->
+      <!-- v10.57.0 — the pastor (7 Oct 2026): "some pastors have multiple churches … maybe we could also have a comparison between churches
+           … kinda like how conferences compare each other … they can compare it and see … the differences": the sixth tile (3 + 3) -->
+      <button class="tool" data-tool="churches" style="--tc:#A8E28A;--tglow:rgba(168,226,138,.44);--td:-7s">
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-churches" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#E2F7D6"/><stop offset="0.48" stop-color="#A8E28A"/><stop offset="1" stop-color="#6FB85A"/></linearGradient><filter id="glow-churches" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-churches)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-churches)"><path d="M24 118l48-40 48 40"/><path d="M34 110v94h76v-94"/><path d="M72 78V40M60 52h24"/><path d="M62 204v-26a10 10 0 0 1 20 0v26"/><path d="M136 118l48-40 48 40"/><path d="M146 110v94h76v-94"/><path d="M184 78V40M172 52h24"/><path d="M174 204v-26a10 10 0 0 1 20 0v26"/><path d="M14 216h228"/><g fill="url(#ink-churches)" stroke="none"><circle cx="72" cy="140" r="10"/><circle cx="184" cy="140" r="10"/></g></g></svg></span>
+        <b>Compare your churches</b>
+        <span class="td">Your churches side by side: needs, people and gifts.</span>
+        <span class="tgo">Compare churches <i></i></span>
+      </button>
       <button class="tool" data-tool="planner" style="--tc:#F29CBC;--tglow:rgba(242,156,188,.46);--td:-4.5s">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-planner" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#FFD3E2"/><stop offset="0.48" stop-color="#F29CBC"/><stop offset="1" stop-color="#D8729A"/></linearGradient><filter id="glow-planner" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-planner)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-planner)"><path d="M67 49H46a17 17 0 0 0-17 17v143a17 17 0 0 0 17 17h164a17 17 0 0 0 17-17V66a17 17 0 0 0-17-17h-21M83 49h90M29 95h198"/><rect x="67" y="28" width="16" height="44" rx="8"/><rect x="173" y="28" width="16" height="44" rx="8"/><circle cx="65" cy="128" r="8"/><circle cx="97" cy="128" r="8"/><circle cx="129" cy="128" r="8"/><path d="M36 216c24-12 28-42 57-47 25-4 40 18 63 4 9-5 14-12 20-23"/><path d="m185 113 5.9 13 14.1 1.5-10.5 9.7 2.8 13.9-12.3-7.1-12.3 7.1 2.8-13.9-10.5-9.7 14.1-1.5Z" fill="url(#ink-planner)" stroke-width="2"/></g></svg></span>
         <b>Evangelism Planner</b>
@@ -4281,16 +4312,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       <button class="tool" data-tool="compare" style="--tc:#8CC4FF;--tglow:rgba(140,196,255,.44);--td:-5.25s">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-compare" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#D6ECFF"/><stop offset="0.48" stop-color="#8CC4FF"/><stop offset="1" stop-color="#5E9BE0"/></linearGradient><filter id="glow-compare" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-compare)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-compare)"><rect x="24" y="52" width="96" height="114" rx="13"/><path d="M24 84h96M48 38v26M96 38v26"/><rect x="136" y="84" width="96" height="114" rx="13"/><path d="M136 116h96M160 70v26M208 70v26"/><g fill="url(#ink-compare)" stroke="none"><rect x="42" y="132" width="13" height="22" rx="2"/><rect x="65" y="116" width="13" height="38" rx="2"/><rect x="88" y="100" width="13" height="54" rx="2"/><rect x="154" y="140" width="13" height="46" rx="2"/><rect x="177" y="158" width="13" height="28" rx="2"/><rect x="200" y="128" width="13" height="58" rx="2"/></g><path d="M72 182c6 30 40 46 74 40 18-3 32-12 40-22"/><path d="m174 196 12 4 2-13"/></g></svg></span>
         <b>Learn from other conferences</b>
-        <span class="td">What other conferences’ calendars hold, side by side.</span>
-        <span class="tgo">Compare calendars <i></i></span>
-      </button>
-      <!-- v10.57.0 — the pastor (7 Oct 2026): "some pastors have multiple churches … maybe we could also have a comparison between churches
-           … kinda like how conferences compare each other … they can compare it and see … the differences": the sixth tile (3 + 3) -->
-      <button class="tool" data-tool="churches" style="--tc:#A8E28A;--tglow:rgba(168,226,138,.44);--td:-7s">
-        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-churches" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#E2F7D6"/><stop offset="0.48" stop-color="#A8E28A"/><stop offset="1" stop-color="#6FB85A"/></linearGradient><filter id="glow-churches" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-churches)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-churches)"><path d="M24 118l48-40 48 40"/><path d="M34 110v94h76v-94"/><path d="M72 78V40M60 52h24"/><path d="M62 204v-26a10 10 0 0 1 20 0v26"/><path d="M136 118l48-40 48 40"/><path d="M146 110v94h76v-94"/><path d="M184 78V40M172 52h24"/><path d="M174 204v-26a10 10 0 0 1 20 0v26"/><path d="M14 216h228"/><g fill="url(#ink-churches)" stroke="none"><circle cx="72" cy="140" r="10"/><circle cx="184" cy="140" r="10"/></g></g></svg></span>
-        <b>Compare your churches</b>
-        <span class="td">Your churches side by side: needs, people and gifts.</span>
-        <span class="tgo">Compare churches <i></i></span>
+        <span class="td">Ideas and resources from other conferences, for your church.</span>
+        <span class="tgo">Find resources <i></i></span>
       </button>
     </div>
     <section class="hubabout" id="hubabout" aria-labelledby="hubabout-h">
@@ -4409,13 +4432,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.57.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.57.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.57.0';
+const VERSION = 'v10.57.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9139,6 +9162,7 @@ const ES={
  // v56 (B2): the fifth tile
  'Learn from other conferences':'Aprender de otras asociaciones','What other conferences’ calendars hold, side by side.':'Lo que muestran los calendarios de otras asociaciones.',
  'Compare calendars':'Comparar calendarios',
+ 'Ideas and resources from other conferences, for your church.':'Ideas y recursos de otras asociaciones, para su iglesia.','Find resources':'Buscar recursos',
  
  
  '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Pastors Hub':'Pastors Hub','Created by Joshua Mura':'Creado por Joshua Mura',
@@ -15644,14 +15668,13 @@ function gfChurchNeeds(people){
   return {rows,area:nd.area||'',year:nd.year||null,date:nd.date||''};
 }
 
-function gfRenderChurch(h){
+/* v10.57.1: "Across the congregation" is part of the main page's step 3, always open, filling in as results arrive. The pastor (7 Oct 2026):
+   "in the fill positions … it should just show across the congregation or it should be opened anyway so it will just continue to populate
+   … as new people submit their … spiritual gifts results … so this will always be open. This will be … a section on the page". */
+function gfRenderChurch(h){ if(h&&!h.isConnected){ h.innerHTML=gfChurchHTML(); return; } GF_VIEW='roster'; gfRenderRoster(h); }
+function gfChurchHTML(){
   const people=gfEveryone();
-  if(!people.length){
-    h.innerHTML=`${gfChurchNav()}
-      <div class="card gfcard"><h3>${L('Nothing to read yet','Todavía no hay nada que leer')}</h3>
-      <p class="note">${L('Once members start sending results in, this page shows what the congregation has as a body — which gifts are covered, which are missing, and who could staff each ministry.','Cuando los miembros empiecen a enviar sus resultados, esta página mostrará lo que la congregación tiene como cuerpo: qué dones están cubiertos, cuáles faltan y quién podría atender cada ministerio.')}</p></div>`;
-    gfWireChurchNav(h); return;
-  }
+  if(!people.length) return '';
   const es=LANG==='es';
   const cov=gfCoverage(people);
   const strong=cov.filter(c=>c.state==='strong').sort((a,b)=>b.dem.length-a.dem.length);
@@ -15672,9 +15695,9 @@ function gfRenderChurch(h){
   const acs=NB&&NB.year?`ACS ${NB.year-4}–${NB.year}`:'ACS';
   const adult=x=>x.minor?L('with an adult','con un adulto'):'';   // an under-18 in a staffing list
 
-  h.innerHTML=`${gfChurchNav()}
-  <div class="gfhead">
-    <h2>${L('Across the congregation','En toda la congregación')}</h2>
+  return `<div class="gfcong">
+  <div class="gfhead gfcongh">
+    <h4>${L('Across the congregation','En toda la congregación')}</h4>
     <p class="sub">${es
       ?`${n===1?'1 miembro':n+' miembros'} hasta ahora. ${strong.length} de los veintiún dones ${strong.length===1?'está demostrado':'están demostrados'} en alguna parte del cuerpo${gaps.length?`, y ${gaps.length===1?'1 falta':gaps.length+' faltan'} por completo`:''}.`
       :`${n} member${n===1?'':'s'} so far. ${strong.length} of the twenty-one gifts are proven somewhere in the body${gaps.length?`, and ${gaps.length} ${gaps.length===1?'is':'are'} missing entirely`:''}.`}</p>
@@ -15756,23 +15779,13 @@ function gfRenderChurch(h){
     <p class="note">${esc(none.map(s=>gfMinName(s.n)).join(' · '))}</p>
   </div>`:''}
 
-  <div class="card gfcard">
-    <h3>${L('Using this with the rest of Terrain','Cómo usar esto con el resto de Terrain')}</h3>
-    <p class="note">${L('The Where-to-look report tells you what your neighborhood needs. This tells you who you have. Read them together: a move the area badly needs, with nobody proven to run it, is a recruiting and training decision — not a scheduling one.','El informe de la Encuesta Comunitaria le dice lo que necesita su vecindario. Esta página le dice con quiénes cuenta. Léalos juntos: una iniciativa que la zona necesita mucho, sin nadie con experiencia comprobada para dirigirla, es una decisión de reclutamiento y formación, no de calendario.')}</p>
-    <button class="btn ghost" id="gfprintchurch">${L('Print this page','Imprimir esta página')}</button>
   </div>`;
-  gfWireChurchNav(h);
-  const pr=document.getElementById('gfprintchurch');
-  if(pr) pr.onclick=()=>window.print();
 }
 
+// v10.57.1: no tabs (Results, Across the church, Share link, Take it myself). The pastor: "take it myself doesn't need to be there results
+// tab doesn't need to be there … across the church button doesn't need to be there either … we need to clear out the clutter". One way back.
 function gfChurchNav(){
-  return `<div class="gfnav gftabs">
-    <button class="btn ghost${GF_VIEW==='roster'?' on':''}" data-gv="roster">${L('Results','Resultados')}</button>
-    <button class="btn ghost${GF_VIEW==='church'?' on':''}" data-gv="church">${L('Across the church','En toda la iglesia')}</button>
-    <button class="btn ghost${GF_VIEW==='setup'?' on':''}" data-gv="setup">${L('Share link','Enlace para compartir')}</button>
-    <button class="btn ghost" data-gv="take">${L('Take it myself','Hacerla yo')}</button>
-  </div>`;
+  return `<div class="gfnav gftabs"><button class="btn ghost gfbackr" data-gv="roster">\u2190 ${L('Back to Spiritual Gifts','Volver a Dones espirituales')}</button></div>`;
 }
 function gfWireChurchNav(h){
   h.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>{
@@ -16027,7 +16040,7 @@ function gfRenderSetup(h){
     gfCopy(box.value,box);
     n.innerHTML=(canCopy?L('Copied. ','Copiado. '):L('Copy the link above. ','Copie el enlace de arriba. '))+where;
     if(pub){
-      n.innerHTML+=' <br>'+L('Results come straight back to you here: open <b>Results</b> and tap <b>Check for new results</b>.','Los resultados le llegan directamente aquí: abra <b>Resultados</b> y toque <b>Buscar resultados nuevos</b>.');
+      n.innerHTML+=' <br>'+L('Results come straight back to you on the Spiritual Gifts page, as members finish.','Los resultados le llegan directamente aquí: abra <b>Resultados</b> y toque <b>Buscar resultados nuevos</b>.');
       // Whether members will be offered "Email me my report" (the server says
       // so), so a site without the mail service set up is not a silent gap.
       n.innerHTML+=' <span class="gfemailstate">'+(!GF_EMAIL_ENABLED
@@ -16963,7 +16976,7 @@ function gfRenderResume(h){
 function gfRender(){
   const h=gfHost(); if(!h) return;
   if(GF_VIEW==='setup'){ gfRenderSetup(h); return; }
-  if(GF_VIEW==='church'){ gfRenderChurch(h); return; }
+  if(GF_VIEW==='church'){ gfRenderChurch(h); return; }   // v10.57.1: the main page (step 3 holds it)
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GF_VIEW==='sample'){ gfRenderSample(h); return; }
   if(GF_VIEW==='sabbath'){ gfRenderSabbath(h); return; }   // v10.42 part 3: Discover your gifts
@@ -21102,18 +21115,12 @@ function gfRenderRoster(h){
   ${gfStepsHTML()}
   <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h" style="--k:${GF_STEP_K.invite}">
   <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">1</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
-  <div class="gfdoors">
+  <div class="gfdoors gfdoors1">
     <button class="gfdoor" data-gv="setup" style="--k:var(--m-people)">
       <span class="gfdk">${L('For your members','Para sus miembros')}</span>
       <b>${L('Share it with your members','Compártala con sus miembros')}</b>
       <span>${L(`Send ${esc(churchNameInSentence())} a link. Each member answers on their own phone, and their gifts — and the ministries that fit — come back to you here.`,`Envíe un enlace a ${esc(churchNameInSentence())}. Cada miembro responde en su propio teléfono, y sus dones (y los ministerios que les corresponden) le llegan a usted aquí.`)}</span>
       <span class="gfgo">${L('Set up the link','Preparar el enlace')} <i></i></span>
-    </button>
-    <button class="gfdoor" data-gv="take" style="--k:var(--m-children)">
-      <span class="gfdk">${L('For you','Para usted')}</span>
-      <b>${L('Take it yourself','Hágala usted')}</b>
-      <span>${L('See your own profile first. It is the quickest way to know what your members will be shown, and pastors are members too.','Vea primero su propio perfil. Es la forma más rápida de saber lo que verán sus miembros, y los pastores también son miembros.')}</span>
-      <span class="gfgo">${L('Begin','Comenzar')} <i></i></span>
     </button>
   </div>
   </section>
@@ -21122,7 +21129,7 @@ function gfRenderRoster(h){
   <h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">2</span>${L('See the results','Vea los resultados')}</h3>
   <div class="card gfcard gfresults" style="--k:var(--acc)">
     <div class="gfrh"><h3>${nres?L(nres+' result'+(nres===1?'':'s')+' in',nres+' resultado'+(nres===1?' recibido':'s recibidos')):L('Results','Resultados')}</h3>
-      <div class="gfnav" style="margin:0"><button class="btn ghost gfsm" id="gfpull">${L('Check for new results','Buscar resultados nuevos')}</button>${nres?`<button class="btn ghost gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button>`:''}${gfDemoOn()?`<button class="btn ghost gfsm" data-gf-demo="clear">${L('Clear demo results','Borrar los resultados de ejemplo')}</button>`:`<button class="btn ghost gfsm" data-gf-demo="fill">${L('Fill in demo results','Llenar resultados de ejemplo')}</button>`}</div></div>
+      <div class="gfnav" style="margin:0">${gfDemoOn()?`<button class="btn ghost gfsm" data-gf-demo="clear">${L('Clear demo results','Borrar los resultados de ejemplo')}</button>`:`<button class="btn ghost gfsm" data-gf-demo="fill">${L('Fill in demo results','Llenar resultados de ejemplo')}</button>`}</div></div>
     <p class="note" id="gflinknote" role="status"></p>
     ${gfCampaigns().filter(c=>!c.current).map(c=>{ const k=list.filter(r=>r.pub===c.pub&&r.rid).length; return k?`<div class="gfclosedrow"><p class="note">${L(`${k} result${k===1?'':'s'} on this list came in through a link you closed${c.closed?' on '+esc(gfDateText(new Date(c.closed).toISOString().slice(0,10))):''}.`,`${k} resultado${k===1?'':'s'} de esta lista ${k===1?'llegó':'llegaron'} por un enlace que usted cerró${c.closed?' el '+esc(gfDateText(new Date(c.closed).toISOString().slice(0,10))):''}.`)}</p>
       <button class="btn ghost gfsm gfpurge" data-pub="${esc(c.pub)}">${L('Delete everything from that link','Eliminar todo lo de ese enlace')}</button></div>`:''; }).join('')}
@@ -21130,24 +21137,24 @@ function gfRenderRoster(h){
       const d=gfDecode(r.code)||{};
       const minor=r.minor===true||d.minor===true;
       const obs=Array.isArray(r.observers)?r.observers.length:0;
-      return `<div class="gfrosterrow"><div class="gfrw"><b>${esc(r.name)}</b>${minor?` <span class="gfb u18">${L('Under 18','Menor de 18')}</span>`:''}${obs?` <span class="gfb obs">${L('Confirmed by '+obs,'Confirmado por '+obs)}</span>`:''}
-        <span class="note">${esc(r.church||L('church not recorded','iglesia no registrada'))}${r.date?' · '+esc(r.date):''}</span></div>
-        <div class="gfrbtns"><button class="btn ghost gfopen" data-i="${i}">${L('Open','Abrir')}</button>
-        <button class="btn ghost gfdel" data-i="${i}">${L('Delete','Eliminar')}</button></div></div>`;}).join('')
+      // v10.57.1: the pastor, "between the name and Open and delete … the most highest gift … three … right in the middle … and that
+      // circular graph to the right and smaller": the three strongest gifts in their families' colours, and a small gift wheel
+      let S=null; try{ S=d.a?gfScores(d.a,gfObsFrom(r.observers)):null; }catch(e){ S=null; }
+      const top=S?gfProfile(S).ranked.slice(0,3):[];
+      return `<button type="button" class="gfrosterrow gfrow2" data-gf-open="${i}" aria-label="${esc(L('Open the report of '+r.name,'Abrir el informe de '+r.name))}">
+        <span class="gfrw"><b>${esc(r.name)}</b>${minor?` <span class="gfb u18">${L('Under 18','Menor de 18')}</span>`:''}${obs?` <span class="gfb obs">${L('Confirmed by '+obs,'Confirmado por '+obs)}</span>`:''}
+        <span class="note">${esc(r.church||L('church not recorded','iglesia no registrada'))}${r.date?' · '+esc(r.date):''}</span></span>
+        <span class="gftop3">${top.map(t=>{ const g=GIFTS.find(x=>x.id===t.id)||{}; return `<span class="gftg" style="--k:var(${GF_FAM_VAR[g.fam]||'--acc'})">${esc(gfShort(t.id))}</span>`; }).join('')}</span>
+        <span class="gfmw">${S?gfMiniWheelSVG(S,top.map(t=>t.id)):''}</span></button>`;}).join('')
       :`<p class="note">${L('Nothing yet. Share the link with a few members and check back here.','Todavía nada. Comparta el enlace con algunos miembros y vuelva a revisar aquí.')}</p>`}
   </div>
-    ${gfDemoOn()?`<button type="button" class="gfsample" id="gfsample">
-      <span class="gfsico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
-      <span class="gfstx"><b>${L('See a sample report','Ver un informe de ejemplo')}</b>
-        <span>${L('What a member receives when they finish — for showing people before they take it.','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.')}</span></span>
-      <span class="gfgo" aria-hidden="true"><i></i></span>
-    </button>`:''}
   </section>
   <section class="gfpart" id="gf-positions" aria-labelledby="gf-positions-h" style="--k:${GF_STEP_K.positions}">
   <h3 class="gfpart-h" id="gf-positions-h"><span class="gfpn">3</span>${L('Fill the positions','Llene los puestos')}</h3>
   <p class="note gfposn">${nres?L('See who fits where: your members’ gifts beside your church’s ministries and your neighborhood’s needs. Then ask each one in person.','Vea quién encaja dónde: los dones de sus miembros junto a los ministerios de su iglesia y las necesidades de su vecindario. Luego invite a cada uno en persona.')
     :L('Once results are in, you see here who fits where, and whom to ask for each ministry.','Cuando lleguen los resultados, aquí verá quién encaja dónde y a quién invitar para cada ministerio.')}</p>
-  ${nres?`<div class="gfnav gfposnav"><button class="btn gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button><button class="btn ghost gfsm" data-gf-tocase>${L('Who to ask, in Make the Case','A quién invitar, en Presentar el caso')}</button></div>`:''}
+  ${nres?gfChurchHTML():''}
+  ${nres?`<div class="gfnav gfposnav"><button class="btn ghost gfsm" data-gf-tocase>${L('Who to ask, in Make the Case','A quién invitar, en Presentar el caso')}</button></div>`:''}
   <div id="gfteamslot"></div>
   </section>`;
 
@@ -21161,22 +21168,6 @@ function gfRenderRoster(h){
   gfStepsWire(h);   // v10.50.0: 1 Your church → 2 Invite your members → 3 See the results; v10.56.2: 1 Invite → 2 Results → 3 Fill the positions
   h.querySelectorAll('[data-gf-demo]').forEach(b=>b.onclick=()=>{ if(b.dataset.gfDemo==='clear'){ gfDemoClear(); gfDemoRedraw(false); } else gfDemoFill(); });
   h.querySelectorAll('[data-gf-tocase]').forEach(b=>b.onclick=()=>{ try{ openTool('case'); }catch(e){} });
-  { const sb=h.querySelector('#gfsample');
-    if(sb) sb.onclick=()=>{ GF_VIEW='sample'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); }; }
-  document.getElementById('gfpull').onclick=async()=>{
-    const n=document.getElementById('gflinknote');
-    const sh=uChurch().share||{};
-    if(!sh.pub||!sh.key){
-      n.textContent=L('No link has been made for this church on the results server yet, so there is nothing to check. Set up the link first; until then, members’ codes can be pasted in below.','Todavía no se ha creado un enlace para esta iglesia en el servidor de resultados, así que no hay nada que buscar. Primero prepare el enlace; mientras tanto, puede pegar abajo los códigos de los miembros.');
-      return;
-    }
-    n.textContent=L('Checking…','Buscando…');
-    try{
-      const x=await gfSync(), msg=gfSyncText(x);
-      if(msg){ gfRenderRoster(h); const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=msg; }
-      else n.textContent=L('No new results.','No hay resultados nuevos.');
-    }catch(e){ n.textContent=gfErrText(e); }
-  };
   // Everything that came in through a closed link: listed from the server and
   // deleted there and here (two taps). For a link that was flooded with junk.
   h.querySelectorAll('.gfpurge').forEach(b=>b.onclick=async()=>{
@@ -21195,14 +21186,9 @@ function gfRenderRoster(h){
       const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=L(`${rids.length} deleted.`,`${rids.length} eliminado${rids.length===1?'':'s'}.`);
     }catch(e){ b.disabled=false; b.classList.remove('gfdanger'); b.textContent=L('Delete everything from that link','Eliminar todo lo de ese enlace'); n.textContent=gfErrText(e); }
   });
-  // A quiet check when the list opens (at most every ten minutes), so a result
-  // a member deleted, or one past its keep date, leaves this device without
-  // anyone having to remember to press the button.
-  { const cid=uChurch().id, camps=gfCampaigns();
-    if(camps.length&&gfRoster().some(r=>r.rid&&camps.some(c=>c.pub===r.pub))&&Date.now()-(GF_LAST_SYNC[cid]||0)>10*60*1000){
-      gfSync().then(x=>{ const msg=gfSyncText(x);
-        if(msg&&uChurch().id===cid&&h.querySelector('#gfpull')){ gfRenderRoster(h); const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=msg; } }).catch(()=>{});
-    } }
+  // v10.57.1: results come in by themselves. The pastor: "you don't need … check for new results that should just populate whenever someone
+  // finishes". Asked when the page opens, then every 90 seconds while it is on screen and the tab is visible (gfPollTick).
+  gfPollStart();
   if(document.getElementById('gfadd')) document.getElementById('gfadd').onclick=()=>{   // v10.47: the code box left the landing
     const v=document.getElementById('gfpaste').value.trim();
     const n=document.getElementById('gfaddnote');
@@ -21225,40 +21211,66 @@ function gfRenderRoster(h){
     gfRenderRoster(h);
     if(said){ const n2=document.getElementById('gfaddnote'); if(n2){ n2.textContent=said; const f=n2.closest('details'); if(f) f.open=true; } }
   };
-  h.querySelectorAll('.gfopen').forEach(b=>b.onclick=()=>{
-    const r=gfRoster()[+b.dataset.i];
-    const d=gfDecode(r.code); if(!d) return;
-    gfRenderResult(h,gfScores(d.a,gfObsFrom(r.observers)),d.name,false,
-      {minor:r.minor===true||d.minor===true,heart:d.h,observers:r.observers||[],flags:gfFlags(d.a),
-       date:d.date,church:d.church,record:{code:r.code,rid:r.rid,pub:r.pub,name:d.name}});
-    const back=document.createElement('button');
-    back.className='btn ghost'; back.textContent='← '+L('Back to all results','Volver a todos los resultados');
-    back.onclick=()=>gfRenderRoster(h);
-    h.prepend(back);
-    window.scrollTo({top:0,behavior:'auto'});
-  });
-  h.querySelectorAll('.gfdel').forEach(b=>b.onclick=async()=>{
-    const r=gfRoster()[+b.dataset.i]; if(!r) return;
-    const n=document.getElementById('gflinknote');
-    if(b.dataset.armed!=='1'){
-      b.dataset.armed='1'; b.classList.add('gfdanger'); b.textContent=L('Tap again','Toque otra vez');
-      const warn=r.rid?L(`This deletes ${r.name}’s result from the server and from this device. It cannot be undone.`,`Esto elimina el resultado de ${r.name} del servidor y de este dispositivo. No se puede deshacer.`)
-        :L(`This removes ${r.name}’s result from this device.`,`Esto quita el resultado de ${r.name} de este dispositivo.`);
-      n.textContent=warn;
-      // Disarmed: the warning goes too (the note is shared, so only if it is still ours).
-      setTimeout(()=>{ if(b.dataset.armed==='1'){ b.dataset.armed=''; b.classList.remove('gfdanger'); b.textContent=L('Delete','Eliminar');
-        const n2=document.getElementById('gflinknote'); if(n2&&n2.textContent===warn) n2.textContent=''; } },5000);
-      return;
-    }
-    b.disabled=true;
-    if(r.rid&&r.pub){
-      try{ await gfDeleteResult(r.pub,r.rid); }
-      catch(e){ if(!(e&&e.code==='not-found')){ b.disabled=false; b.dataset.armed=''; b.classList.remove('gfdanger'); b.textContent=L('Delete','Eliminar'); n.textContent=gfErrText(e); return; } }
-    }
-    gfRosterRemove(r.code);
-    gfRenderRoster(h);
-    const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=L('Deleted.','Eliminado.');
-  });
+  h.querySelectorAll('[data-gf-open]').forEach(b=>b.onclick=()=>gfOpenRow(h,+b.dataset.gfOpen));
+}
+/* One member's report, opened from the list (its own Delete is in the report, two taps): the way back above it. */
+function gfOpenRow(h,i){
+  const r=gfRoster()[i]; if(!r) return;
+  const d=gfDecode(r.code); if(!d) return;
+  gfRenderResult(h,gfScores(d.a,gfObsFrom(r.observers)),d.name,false,
+    {minor:r.minor===true||d.minor===true,heart:d.h,observers:r.observers||[],flags:gfFlags(d.a),
+     date:d.date,church:d.church,record:{code:r.code,rid:r.rid,pub:r.pub,name:d.name}});
+  const back=document.createElement('button');
+  back.type='button'; back.className='btn ghost gfbackr'; back.setAttribute('data-gf-back','');
+  back.textContent='\u2190 '+L('Back to all results','Volver a todos los resultados');
+  back.onclick=()=>{ gfRenderRoster(h); window.scrollTo({top:0,behavior:'auto'}); };
+  h.prepend(back);
+  window.scrollTo({top:0,behavior:'auto'});
+}
+/* The small gift wheel on a result's row: the report's wheel (gfWheelSVG) in miniature, no labels; the three strongest in full colour. */
+function gfMiniWheelSVG(S,topIds){
+  const by={}; (S||[]).forEach(x=>{ by[x.id]=x; });
+  const fams=GF_FAMS.map(f=>f.id), GAP=0.7, R0=9, R1=30;
+  const list=[]; fams.forEach(f=>GIFTS.filter(g=>g.fam===f).forEach(g=>list.push({id:g.id,fam:f,score:by[g.id]&&typeof by[g.id].score==='number'?by[g.id].score:null})));
+  const step=2*Math.PI/(list.length+fams.length*GAP); let pos=0; const segs=[];
+  fams.forEach(f=>{ pos+=GAP/2; list.filter(g=>g.fam===f).forEach(g=>{ segs.push({...g,a:(pos+0.5)*step-Math.PI/2}); pos+=1; }); pos+=GAP/2; });
+  const r2=v=>Math.round(v*100)/100, P2=(r,a)=>[r2(r*Math.cos(a)),r2(r*Math.sin(a))];
+  const wedge=(ra,rb,a0,a1)=>{ const [x0,y0]=P2(rb,a0),[x1,y1]=P2(rb,a1),[x2,y2]=P2(ra,a1),[x3,y3]=P2(ra,a0);
+    return `M${x0} ${y0}A${rb} ${rb} 0 0 1 ${x1} ${y1}L${x2} ${y2}A${ra} ${ra} 0 0 0 ${x3} ${y3}Z`; };
+  const rOf=v=>R0+(R1-R0)*Math.max(3,Math.min(100,v))/100, half=step*0.39, tops=new Set(topIds||[]);
+  const parts=[`<circle class="gfmw-c" cx="0" cy="0" r="${R0-2}"/>`];
+  segs.forEach(g=>{ parts.push(`<path class="gfmw-tr" d="${wedge(R0,R1,g.a-half,g.a+half)}"/>`);
+    if(g.score!=null) parts.push(`<path class="gfmw-b${tops.has(g.id)?'':' lo'}" style="fill:var(${GF_FAM_VAR[g.fam]||'--acc'})" d="${wedge(R0,rOf(g.score),g.a-half,g.a+half)}"/>`); });
+  return `<svg viewBox="-32 -32 64 64" width="64" height="64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">${parts.join('')}</svg>`;
+}
+/* Results by themselves (v10.57.1): when the main page opens (unless asked within 30 s), then every 90 s while it is on screen and the tab
+   is visible; a new result redraws the page where the pastor is (gfKeepPlace). Only for a church with a link (demo results never sync). */
+const GF_POLL_MS=90000;
+let GF_POLL_T=null, GF_POLL_VIS=false;
+function gfPollOn(){ return TOOL==='gifts'&&GF_VIEW==='roster'&&!!document.getElementById('gf-results')&&!memberLink(); }
+function gfPollStop(){ if(GF_POLL_T){ clearInterval(GF_POLL_T); GF_POLL_T=null; } }
+function gfPollTick(wait){
+  if(!gfPollOn()){ gfPollStop(); return; }
+  if(document.visibilityState==='hidden') return;
+  let camps=[]; try{ camps=gfCampaigns(); }catch(e){ camps=[]; }
+  if(!camps.length) return;
+  const cid=uChurch().id;
+  if(Date.now()-(GF_LAST_SYNC[cid]||0)<wait) return;
+  GF_LAST_SYNC[cid]=Date.now();   // asked now: the redraw a new result brings never asks again at once
+  gfSync().then(x=>{ const msg=gfSyncText(x);
+    if(msg&&uChurch().id===cid&&gfPollOn()){ const h=gfHost(); if(!h) return; gfKeepPlace(()=>gfRenderRoster(h)); const nn=document.getElementById('gflinknote'); if(nn) nn.textContent=msg; } }).catch(()=>{});
+}
+function gfPollStart(){
+  if(!GF_POLL_VIS){ GF_POLL_VIS=true; document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') gfPollTick(30000); }); }
+  if(!GF_POLL_T) GF_POLL_T=setInterval(()=>gfPollTick(GF_POLL_MS-2000),GF_POLL_MS);
+  gfPollTick(30000);
+}
+/* A redraw while he reads: the part of the page he is in stays where it was on the screen. */
+function gfKeepPlace(fn){
+  let id=null, t0=0;
+  for(const k of ['gf-positions','gf-results','gf-invite']){ const e=document.getElementById(k); if(e&&e.getBoundingClientRect().top<=80){ id=k; t0=e.getBoundingClientRect().top; break; } }
+  fn();
+  if(id){ const e=document.getElementById(id); if(e){ const d=e.getBoundingClientRect().top-t0; if(Math.abs(d)>1) window.scrollBy(0,d); } }
 }
 
 /* ---- a sample report, for showing people before they take it -------------
@@ -42554,7 +42566,7 @@ const CMP_UI={
   lead:{en:"What each conference's calendar holds, side by side.",es:'Lo que muestra el calendario de cada asociación, lado a lado.'},
   checked:{en:'Checked {date} · updated monthly',es:'Revisado el {date} · se actualiza cada mes'},
   stale:{en:'Some calendars may have changed since {date}.',es:'Algunos calendarios pueden haber cambiado desde el {date}.'},
-  sourced:{en:'Every number has a source',es:'Cada cifra tiene su fuente'},
+  // v10.57.1: no "Every number has a source" pill (the pastor: "what is every number has a source does that have to be there?")
   loading:{en:'Loading the calendars…',es:'Cargando los calendarios…'},
   wait:{en:'Loading…',es:'Cargando…'},
   fail:{en:'The calendars could not load just now. Check the connection and try again.',es:'Los calendarios no se pudieron cargar ahora. Revise la conexión e inténtelo de nuevo.'},
@@ -42881,7 +42893,7 @@ function cmpHead(){
   const I=CMP.idx, today=cmpToday(), date=cmpFdate(I.checked);
   const stale=cmpDays(I.checked,today)>CMP_STALE_DAYS;
   return `<div class="cmp-top"><h1>${esc(cU('title'))}</h1><p class="lead">${esc(cU('lead'))}</p>
-    <div class="cmp-pills"><span class="cmp-pill" id="cmp-checked">${esc(cU('checked',{date}))}</span><span class="cmp-pill">${esc(cU('sourced'))}</span></div>
+    <div class="cmp-pills"><span class="cmp-pill" id="cmp-checked">${esc(cU('checked',{date}))}</span></div>
     ${stale?`<p class="note cmp-stale">${esc(cU('stale',{date}))}</p>`:''}</div>`;
 }
 /* The whole page. Frames that need the chosen conferences' own files fill in when those arrive. */
