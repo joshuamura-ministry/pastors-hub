@@ -10,7 +10,8 @@ setTimeout(()=>{
   c('version stamps agree', w.eval('VERSION'), (html.match(/<meta name="terrain-version" content="([^"]+)"/)||[])[1]);
   c('no boot errors', errs.length, 0);
   console.log('\n-- the welcome, as drawn --');
-  c('eyebrow reads Pastors Hub', D().querySelector('.hubk').textContent, 'Pastors Hub');
+  // v10.59.0 (stale): the pastor, "apps name and url to terrain.church" (Pastors Hub was another address he bought)
+  c('eyebrow reads terrain.church', D().querySelector('.hubk').textContent, 'terrain.church');
   c('headline is "Welcome to Terrain"', D().querySelector('.hubwelcome h2').textContent, 'Welcome to Terrain');
   // v10.56.1 (stale, not a regression): the pastor, "under welcome to terrain just something that says your journey begins"
   c('sub is the short instruction', D().querySelector('.hubwelcome .sub').textContent, 'Your journey begins here. Choose a tool to begin.');
@@ -22,7 +23,8 @@ setTimeout(()=>{
 // v10.57.0 (stale, not a regression): six tiles. The pastor (7 Oct 2026): "maybe we could also have a comparison between churches … kinda like how conferences compare each other"
   c('six of them', tools.length, 6);
   c('each has its own verb', tools.map(t=>t.querySelector('.tgo').textContent.trim()),
-    ['Explore survey','Discover gifts','Build a proposal','Start planning','Compare calendars','Compare churches']);   // v10.57.0
+    // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+    ['Explore survey','Discover gifts','Build a proposal','Start planning','Find resources','Compare churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   c('copy is short now', tools.every(t=>t.querySelector('.td').textContent.length<=70));
   c('no panel background', /\.tool\{[^}]*background:none/.test(html));
   c('no border', /\.tool\{[^}]*border:0/.test(html));
@@ -30,7 +32,8 @@ setTimeout(()=>{
   c('icons at mockup scale', /\.tool \.tsvg\{width:clamp\(9\dpx,1\d(?:\.\d)?vw,12\dpx\)/.test(html));
   // the glow now lives in the artwork's own filter rather than in my CSS
   c('and strongly lit', tools.every(t=>/<filter id="glow-/.test(t.innerHTML)&&/filter="url\(#glow-/.test(t.innerHTML)));
-  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v56 (B2); v10.57.0: Compare your churches
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+  c('still routes correctly', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   // v10.38: the focus ring takes the tool's own colour.
   c('keyboard focus survives losing the border', /\.tool:focus-visible\{outline:2px solid var\(--tc,var\(--acc\)\)/.test(html));
 

@@ -1,0 +1,951 @@
+{
+ "checked": "2026-10-07",
+ "how": "Grants, loans and free help a local church can use, found for v10.58.0 on the official pages of the bodies that run them (each with a quote checked word for word); read on 7 Oct 2026. Not here: scholarships for one member, and what initiatives.json already lists (Frame websites, the Discover Bible School through the Discovery Centers). Versacare is an Adventist foundation, listed with the division-wide items.",
+ "items": [
+  {
+   "id": "nad-acs-seed-grant",
+   "level": "nad",
+   "owner": "Adventist Community Services",
+   "union": null,
+   "conference": null,
+   "name": "ACS Seed Grant",
+   "kind": "funding",
+   "status": "current",
+   "years": "Portal opens on set dates; next date 26 October 2026 (opens 12 pm Eastern for 3 hours)",
+   "aims": [
+    {
+     "text": "Pays up to 75% (max $10,000) of equipment or supply costs to start or improve a church-based community service (ACS) ministry, such as food pantry fridges, shelving or computers.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Talk first with your conference ACS director; the application needs endorsement letters from the ACS director and a conference administrator.",
+    "NAD pays up to 75% (max $10,000); your church and conference together cover at least 25%. Capital items only: no salaries, rent, utilities, labor or permits.",
+    "Portal open 26 Oct 2026 for 3 hours; money goes through the conference; report due within 6 months; a funded program can apply again after 3 full years."
+   ],
+   "resources": [
+    {
+     "title": "Seed Grant page (dates, template, portal link)",
+     "url": "https://www.communityservices.org/resources/grantprograms/seedgrant/"
+    },
+    {
+     "title": "Seed Grant guidelines (PDF)",
+     "url": "https://www.communityservices.org/ag3ieS/uploads/2025/06/SEED-GRANT.pdf"
+    }
+   ],
+   "sources": [
+    {
+     "title": "ACS Grants Program",
+     "publisher": "Adventist Community Services (NAD)",
+     "url": "https://www.communityservices.org/resources/grantprograms/",
+     "quote": "Covers 75% (up to $10,000) of capital improvement costs for new or existing ACS centers. Church based ministries may apply in partnership with their Conference ACS Director.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "ACS Seed Grant",
+     "publisher": "Adventist Community Services (NAD)",
+     "url": "https://www.communityservices.org/resources/grantprograms/seedgrant/",
+     "quote": "The portal will open at 12 pm Eastern time for 3 hours on these dates above for 2026.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Seed Grant Application Requirements (PDF)",
+     "publisher": "Adventist Community Services (NAD)",
+     "url": "https://www.communityservices.org/ag3ieS/uploads/2025/06/SEED-GRANT.pdf",
+     "quote": "Eligible ACS programs must be a church-based ministry associated with one or more local Adventist churches.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-acs-thrift-store-loan",
+   "level": "nad",
+   "owner": "Adventist Community Services",
+   "union": null,
+   "conference": null,
+   "name": "ACS Thrift Store Investment Fund (no-interest loan)",
+   "kind": "funding",
+   "status": "current",
+   "years": "Applications reviewed as they come in (no deadline)",
+   "aims": [
+    {
+     "text": "A 0% loan of up to $20,000 to open a new church thrift store or grow an existing one as an ACS ministry.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Loans up to $20,000 at 0% interest with no collateral.",
+    "Fill in the Thrift Store Financial Worksheet and get recommendation letters from your conference ACS director and one other conference administrator.",
+    "If approved, NAD ACS, the conference and the church sign an agreement; the check goes to the conference to pass on."
+   ],
+   "resources": [
+    {
+     "title": "Thrift Store Investment Fund page",
+     "url": "https://www.communityservices.org/thriftstoreloan/"
+    },
+    {
+     "title": "Loan application (PDF)",
+     "url": "https://www.communityservices.org/ag3ieS/uploads/2023/02/2022-4_4_Thrift-Store-Loan_Application_Fillable.pdf"
+    }
+   ],
+   "sources": [
+    {
+     "title": "ACS Grants Program",
+     "publisher": "Adventist Community Services (NAD)",
+     "url": "https://www.communityservices.org/resources/grantprograms/",
+     "quote": "The ACS Thrift Investment Fund loans up to $20,000 for starting or expanding church-based ACS thrift store ministries.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Thrift Store Investment Fund",
+     "publisher": "Adventist Community Services (NAD)",
+     "url": "https://www.communityservices.org/thriftstoreloan/",
+     "quote": "Stores may request loans of up to $20,000. The loans are 0% interest and require no collateral.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-church-revitalization-funding",
+   "level": "nad",
+   "owner": "North American Division Ministerial Association",
+   "union": null,
+   "conference": null,
+   "name": "NAD Church Revitalization Funding",
+   "kind": "funding",
+   "status": "current",
+   "years": "No deadline posted; the online application form was open on 7 Oct 2026",
+   "aims": [
+    {
+     "text": "$3,000 to help a church start a revitalization journey, shared equally by the NAD, the union and the conference.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "$3,000 per church: $1,000 each from the NAD, your union and your conference.",
+    "Church board votes a revitalization plan and runs a church-health check (eAdventist Church Vitality tool, NCD, or one agreed with the conference revitalization coordinator).",
+    "Must send a leadership team (pastor plus elders) to an NAD Church Revitalization BootCamp; then apply on the NAD online form."
+   ],
+   "resources": [
+    {
+     "title": "Application form (NAD)",
+     "url": "https://sec.naddocs.org/Forms/Church-Revitalization"
+    },
+    {
+     "title": "Revitalization funding rules and resources",
+     "url": "https://www.nadmultiply.org/revitalize-resources"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Revitalize Resources (Church Revitalization Funding)",
+     "publisher": "North American Division Ministerial Association",
+     "url": "https://www.nadmultiply.org/revitalize-resources",
+     "quote": "The Revitalization Funding is for $3,000.00 per church (NAD: $1,000.00 / Union: $1,000.00 / Conference: $1,000.00).",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-versacare-catalyst-venture",
+   "level": "nad",
+   "owner": "Versacare Foundation",
+   "union": null,
+   "conference": null,
+   "name": "Versacare Catalyst and Venture Grants",
+   "kind": "funding",
+   "status": "current",
+   "years": "Catalyst: apply any time, awards April, July, October, January. Venture: portal 1 July to 31 December, awards in April",
+   "aims": [
+    {
+     "text": "Grants for Adventist ministries working in church community engagement, health, youth, women and children, education and humanitarian service in the NAD.",
+     "source": 0
+    },
+    {
+     "text": "Local churches have received them, e.g. a Georgia church got $9,000 for its personal ministries.",
+     "source": 1
+    }
+   ],
+   "localChurch": [
+    "Catalyst $2,500 to $10,000 (best for a first grant); Venture $10,001 to $40,000; Impact (over $40,000) by invitation only.",
+    "Open to Adventist church entities and Adventist-affiliated ministries running at least two years; one Catalyst grant per organization per year.",
+    "Not funded: buildings or renovations, mission trips, salaries, debt, scholarships, start-ups. Have a budget and last year's financial statement ready."
+   ],
+   "resources": [
+    {
+     "title": "Versacare grants: guidelines and eligibility",
+     "url": "https://www.versacare.org/our-grants/"
+    },
+    {
+     "title": "Catalyst Grant: what the application asks",
+     "url": "https://www.versacare.org/our-grants/grant-catalyst/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Our Grants",
+     "publisher": "Versacare Foundation",
+     "url": "https://www.versacare.org/our-grants/",
+     "quote": "Catalyst applications are now accepted year-round from Seventh-day Adventist denomination entities or Seventh-day Adventist affiliated ministries and charities, with funds awarded quarterly.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Voice of Hope $9,000 Grant",
+     "publisher": "South Atlantic Conference",
+     "url": "https://www.sacsda.org/voice-of-hope-9000-grant/",
+     "quote": "celebrated receiving a $9,000 grant from Versacare Foundation to further its personal ministries.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-versacare-k12-grant",
+   "level": "nad",
+   "owner": "Versacare Foundation",
+   "union": null,
+   "conference": null,
+   "name": "Versacare K-12 School Grants",
+   "kind": "funding",
+   "status": "current",
+   "years": "Apply any time; awards in July and January",
+   "aims": [
+    {
+     "text": "Grants for church- or conference-sponsored Adventist schools, including STEM and STEAM projects.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Up to $5,000 for schools with three classrooms or fewer; up to $10,000 for four or more.",
+    "STEM/STEAM requests need a board-approved technology plan; other requests need a board-signed letter.",
+    "A school can be funded once every three years; no building or renovation costs."
+   ],
+   "resources": [
+    {
+     "title": "K-12 grant guidelines and application",
+     "url": "https://www.versacare.org/our-grants/k-12-grants/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "K-12 Grants",
+     "publisher": "Versacare Foundation",
+     "url": "https://www.versacare.org/our-grants/k-12-grants/",
+     "quote": "K-12, STEM and STEAM applications are accepted year-round from Seventh-day Adventist Conference- or congregation-sponsored K-12, primary, middle or high schools.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-asi-project-funding",
+   "level": "nad",
+   "owner": "ASI",
+   "union": null,
+   "conference": null,
+   "name": "ASI Convention Projects Offering",
+   "kind": "funding",
+   "status": "current",
+   "years": "Apply by 31 December 2026 for the 2027 convention offering (every year)",
+   "aims": [
+    {
+     "text": "Each year ASI takes an offering at its convention and gives it to mission projects chosen ahead of time.",
+     "source": 0
+    },
+    {
+     "text": "In 2026, 36 projects were chosen to receive grants.",
+     "source": 1
+    }
+   ],
+   "localChurch": [
+    "Apply by 31 December of the year before the convention (31 Dec 2026 for 2027).",
+    "The online application asks you to log in to an ASI account; call ASI (443-391-7235) to ask whether your church ministry qualifies.",
+    "Funded projects must send progress reports to ASI."
+   ],
+   "resources": [
+    {
+     "title": "ASI funding application",
+     "url": "https://asiministries.org/projects/funding-application/"
+    },
+    {
+     "title": "Current ASI projects",
+     "url": "https://asiministries.org/projects/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Funding Application",
+     "publisher": "ASI Ministries",
+     "url": "https://asiministries.org/projects/funding-application/",
+     "quote": "ASI collects a special projects offering that is used to sponsor preselected ministry projects. Ministries must apply for sponsorship on or before December 31 of the prior year.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Projects",
+     "publisher": "ASI Ministries",
+     "url": "https://asiministries.org/projects/",
+     "quote": "The ASI Missions Inc. Board has selected 36 projects to receive grants from the offering gathered at the 2026 ASI International Convention.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "auc-revolving-fund",
+   "level": "union",
+   "owner": "Atlantic Union Conference",
+   "union": "Atlantic Union",
+   "conference": null,
+   "name": "Atlantic Union Revolving Fund (building loans)",
+   "kind": "funding",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Loans for church, school and institution building projects in the Atlantic Union.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Capital project loans for churches, schools and institutions in the Atlantic Union.",
+    "Contact the Revolving Fund office by phone or email (listed on the page)."
+   ],
+   "resources": [
+    {
+     "title": "Atlantic Union Revolving Fund",
+     "url": "https://atlantic-union.org/services/treasury/revolving-fund/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Atlantic Union Revolving Fund (AURF)",
+     "publisher": "Atlantic Union Conference",
+     "url": "https://atlantic-union.org/services/treasury/revolving-fund/",
+     "quote": "The Atlantic Union Revolving Fund (AURF) provides capital project loans to denominational churches, schools, and institutions within the Atlantic Union territory.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "cuc-revolving-fund",
+   "level": "union",
+   "owner": "Columbia Union Revolving Fund",
+   "union": "Columbia Union",
+   "conference": null,
+   "name": "Columbia Union Revolving Fund (CURF) church loans",
+   "kind": "funding",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Loans so churches can buy, build, renovate, repair or buy equipment such as sound systems.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Borrow up to 65% of project cost or your average yearly tithe for the last three years, whichever is lower.",
+    "Board votes, fills in the CURF loan application, and sends it to the conference treasurer; the conference forwards it to CURF.",
+    "If approved, the church signs a promissory note; money is drawn as the project needs it."
+   ],
+   "resources": [
+    {
+     "title": "Entity loans (churches)",
+     "url": "https://columbiaunionrevolvingfund.org/borrowers/entity-loans"
+    },
+    {
+     "title": "How the conference process works",
+     "url": "https://columbiaunionrevolvingfund.org/conference-process"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Become a Borrower of an Entity Loan",
+     "publisher": "Columbia Union Revolving Fund",
+     "url": "https://columbiaunionrevolvingfund.org/borrowers/entity-loans",
+     "quote": "CURF is here to help with Entity Loans available to churches and other eligible non-education entities in the Columbia Union.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Conference Involvement in the Loan Process",
+     "publisher": "Columbia Union Revolving Fund",
+     "url": "https://columbiaunionrevolvingfund.org/conference-process",
+     "quote": "Entities interested in getting a CURF loan and becoming borrowers must apply through their local conference.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "npuc-revolving-fund",
+   "level": "union",
+   "owner": "North Pacific Union Conference Association",
+   "union": "North Pacific Union",
+   "conference": null,
+   "name": "NPUC Revolving Fund (building loans)",
+   "kind": "funding",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Loans for church and school construction, purchase, renovation and other capital improvements in Alaska, Idaho, Montana, Oregon and Washington.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Get approval to apply through your conference treasurer.",
+    "Loan money can be used for construction, buying property, renovation and other capital improvements."
+   ],
+   "resources": [
+    {
+     "title": "Revolving Fund forms and information",
+     "url": "https://npuc.org/ministries/association/revolving-fund-forms"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Revolving Fund Forms",
+     "publisher": "North Pacific Union Conference",
+     "url": "https://npuc.org/ministries/association/revolving-fund-forms",
+     "quote": "The North Pacific Union Conference Association Revolving Fund lends money to Adventist churches, schools and other denominational institutions located in the NPUC territory (Alaska, Idaho, Montana, Oregon and Washington).",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "suc-revolving-fund",
+   "level": "union",
+   "owner": "Southern Union Conference",
+   "union": "Southern Union",
+   "conference": null,
+   "name": "Southern Union Revolving Fund (SURF) church loans",
+   "kind": "funding",
+   "status": "current",
+   "years": "Ongoing; loan rate 5.0% from 1 February 2026",
+   "aims": [
+    {
+     "text": "Low-cost loans when churches build or buy, or schools expand, across the Southern Union.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Loans at 5.0% (rate effective 1 Feb 2026).",
+    "Ask your local conference or the Southern Union treasury to start a loan request."
+   ],
+   "resources": [
+    {
+     "title": "Southern Union Revolving Fund",
+     "url": "https://www.southernunion.com/ministries-services/revolving-fund/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Revolving Fund",
+     "publisher": "Southern Union Conference",
+     "url": "https://www.southernunion.com/ministries-services/revolving-fund/",
+     "quote": "The purpose of SURF is to provide low-cost loans to churches and other institutions across the Southern Union Conference while providing a reasonable rate of return to investors.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "ucc-serve-one-more-fund",
+   "level": "conference",
+   "owner": "Upper Columbia Conference",
+   "union": "North Pacific Union",
+   "conference": "Upper Columbia",
+   "name": "Serve One More Project Fund",
+   "kind": "funding",
+   "status": "current",
+   "years": "Applications open (no deadline posted); fall revitalization training 16-17 October 2026",
+   "aims": [
+    {
+     "text": "Helps churches and schools start new ways of serving their neighbors, then build bridges to deeper friendship.",
+     "source": 1
+    }
+   ],
+   "localChurch": [
+    "The conference pays up to 70% of the cost of a new community project and its follow-up 'bridge' steps.",
+    "Plan must meet a need named by community leaders, be new for your church or school, put members in direct contact with people, and be board-approved.",
+    "Churches in the conference revitalization track (training 16-17 Oct 2026) go to the head of the line for this funding."
+   ],
+   "resources": [
+    {
+     "title": "Funding application",
+     "url": "https://www.serveonemore.org/apply"
+    },
+    {
+     "title": "Serve One More (conference page)",
+     "url": "https://www.uccsda.org/serveonemore"
+    },
+    {
+     "title": "Church revitalization track",
+     "url": "https://www.uccsda.org/church-revitalization"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Serve One More funding application",
+     "publisher": "Serve One More (Upper Columbia Conference)",
+     "url": "https://www.serveonemore.org/apply",
+     "quote": "Upper Columbia Conference will participate with the local church/school in up to 70% of the total cost of your project steps and bridge steps.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Serve One More",
+     "publisher": "Upper Columbia Conference",
+     "url": "https://www.uccsda.org/serveonemore",
+     "quote": "The Serve One More initiative helps churches and schools across our conference discover the joy of serving their neighbors in meaningful ways.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Church Revitalization",
+     "publisher": "Upper Columbia Conference",
+     "url": "https://www.uccsda.org/church-revitalization",
+     "quote": "connect with a trained revitalization coach, and jump to the head of the line to receive Serve One More Community Engagement Funding.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-all-things-new-toolkit",
+   "level": "nad",
+   "owner": "North American Division",
+   "union": null,
+   "conference": null,
+   "name": "All Things New (OneVoice27) church toolkit",
+   "kind": "resource",
+   "status": "current",
+   "years": "5 September 2026 to September 2027",
+   "aims": [
+    {
+     "text": "A year-long NAD outreach with ready-made social media content, training, a Desire of Ages reading plan and a sharing book.",
+     "source": 0
+    },
+    {
+     "text": "Launched 5 Sept 2026 and runs to September 2027.",
+     "source": 1
+    }
+   ],
+   "localChurch": [
+    "Download the shareable presentation and reading plan to introduce it to your church board.",
+    "Use the four phases (Pray, Serve, Share, Follow Jesus) to plan the church year; ask your conference about copies of the sharing book."
+   ],
+   "resources": [
+    {
+     "title": "All Things New site and downloads",
+     "url": "https://allthingsnew2027.com/"
+    },
+    {
+     "title": "NAD overview",
+     "url": "https://www.nadadventist.org/initiatives/all-things-new/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "All Things New",
+     "publisher": "North American Division",
+     "url": "https://allthingsnew2027.com/",
+     "quote": "All Things New will support a coordinated year-long digital witness with quality content, practical training, and tools that help churches respond to interest with personal care.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "All Things New",
+     "publisher": "North American Division",
+     "url": "https://www.nadadventist.org/initiatives/all-things-new/",
+     "quote": "The OneVoice27 initiative officially launches Sept. 5, 2026, beginning a year-long mobilization effort leading to September 2027.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "gc-ten-days-of-prayer-2027",
+   "level": "world",
+   "owner": "General Conference Ministerial Association",
+   "union": null,
+   "conference": null,
+   "name": "Ten Days of Prayer 2027 materials",
+   "kind": "resource",
+   "status": "current",
+   "years": "Every January; 2027 materials are already posted",
+   "aims": [
+    {
+     "text": "Daily prayer guides and a closing-Sabbath plan for churches to start 2027 in prayer, tied to OneVoice27.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Download the 2027 materials and plan ten days of prayer meetings plus a closing celebration Sabbath.",
+    "Theme for 2027: All Things New: Hope Starts Here."
+   ],
+   "resources": [
+    {
+     "title": "Ten Days of Prayer 2027",
+     "url": "https://www.tendaysofprayer.org/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Ten Days of Prayer 2027",
+     "publisher": "General Conference Ministerial Association",
+     "url": "https://www.tendaysofprayer.org/",
+     "quote": "Ten Days of Prayer materials were prepared by the Ministerial Association of the General Conference of Seventh-day Adventists.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-asi-new-beginnings",
+   "level": "nad",
+   "owner": "ASI",
+   "union": null,
+   "conference": null,
+   "name": "New Beginnings evangelism series (free download)",
+   "kind": "resource",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "A complete lay evangelism series with presentations, sermon notes and children's series, free in many languages.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Download the slides and notes free; works with the Discover Bible lessons.",
+    "Includes children's series (ages 4-12) and Abundant Living health presentations."
+   ],
+   "resources": [
+    {
+     "title": "New Beginnings downloads",
+     "url": "https://asiministries.org/newbeginnings/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "New Beginnings",
+     "publisher": "ASI Ministries",
+     "url": "https://asiministries.org/newbeginnings/",
+     "quote": "All materials can be downloaded free of charge. New Beginnings can also be used with the Discover Bible Lessons by Voice of Prophecy.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-asi-bibleconnect",
+   "level": "nad",
+   "owner": "ASI",
+   "union": null,
+   "conference": null,
+   "name": "ASI BibleConnect (online Bible study matching)",
+   "kind": "training",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Trains members to give Bible studies and pairs them with people waiting to study online by Zoom.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Members sign up to be paired with a student or to get training first."
+   ],
+   "resources": [
+    {
+     "title": "BibleConnect sign-up",
+     "url": "https://asiministries.org/bibleconnect/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "BibleConnect",
+     "publisher": "ASI Ministries",
+     "url": "https://asiministries.org/bibleconnect/",
+     "quote": "ASI BibleConnect empowers Adventists to share the truth of Scripture through online Bible studies.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-arm-safety-sabbath",
+   "level": "nad",
+   "owner": "Adventist Risk Management, Inc.",
+   "union": null,
+   "conference": null,
+   "name": "Safety Sabbath resources",
+   "kind": "resource",
+   "status": "current",
+   "years": "Every year; 2026 date was 28 March (fourth Sabbath of March); watch for the 2027 topic",
+   "aims": [
+    {
+     "text": "Free yearly safety kit for churches: risk check, drill planning (fire, tornado, missing child, active shooter) and safety officer articles.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Register the church on the Safety Sabbath page to get the resources.",
+    "Pick and run one drill that fits your church's biggest risk."
+   ],
+   "resources": [
+    {
+     "title": "Safety Sabbath",
+     "url": "https://adventistrisk.org/en-US/Safety-Resources/Safety-Sabbath"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Safety Sabbath",
+     "publisher": "Adventist Risk Management",
+     "url": "https://adventistrisk.org/en-US/Safety-Resources/Safety-Sabbath",
+     "quote": "Each year Adventist Risk Management®, Inc. provides churches with resources to help them focus on a specific area of safety.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Safety Sabbath",
+     "publisher": "Adventist Risk Management",
+     "url": "https://adventistrisk.org/en-US/Safety-Resources/Safety-Sabbath",
+     "quote": "Register your church today to take part in Safety Sabbath® on March 28, 2026 — the fourth Sabbath of March",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-arm-risk-training-center",
+   "level": "nad",
+   "owner": "Adventist Risk Management, Inc.",
+   "union": null,
+   "conference": null,
+   "name": "ARM Risk Training Center (free safety courses)",
+   "kind": "training",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Free online safety and risk courses for pastors, safety officers and club leaders, in English and Spanish, with certificates.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Have your safety officer and Pathfinder/Adventurer leaders take the free courses."
+   ],
+   "resources": [
+    {
+     "title": "Risk Training Center",
+     "url": "https://adventistrisk.org/en-US/Safety-Resources/Risk-Training-Center"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Risk Training Center",
+     "publisher": "Adventist Risk Management",
+     "url": "https://adventistrisk.org/en-US/Safety-Resources/Risk-Training-Center",
+     "quote": "These courses are completely free of charge and learners will receive a certificate of completion after they finish each course.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-planned-giving-free-wills",
+   "level": "nad",
+   "owner": "Planned Giving and Trust Services",
+   "union": null,
+   "conference": null,
+   "name": "Free wills and estate planning for members",
+   "kind": "resource",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Local Adventist planned-giving staff help members with wills, trusts and gift plans, generally at no charge.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Invite your conference Planned Giving office to hold a wills seminar or meet members.",
+    "Find the nearest office on willplan.us."
+   ],
+   "resources": [
+    {
+     "title": "Find your Planned Giving office",
+     "url": "https://www.willplan.us/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Will Plan (United States)",
+     "publisher": "Planned Giving and Trust Services (NAD)",
+     "url": "https://www.willplan.us/",
+     "quote": "The information on this website pertains to our services within the United States and are generally free of charge to members of the Seventh-day Adventist Church.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Planned Giving and Trust Services",
+     "publisher": "North American Division",
+     "url": "https://www.nadadventist.org/departments/planned-giving-and-trust-services/",
+     "quote": "Administered locally by people who worship right beside you, our services generally are free—so every church member can effectively manage the resources God entrusts to them.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-psi-grant-help",
+   "level": "nad",
+   "owner": "Philanthropic Service for Institutions",
+   "union": null,
+   "conference": null,
+   "name": "PSI help finding and writing grants",
+   "kind": "resource",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "The NAD's fundraising office helps Adventist organizations find corporate, foundation and government grants and write proposals.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Ask your conference to connect you with PSI for grant search and proposal help (cost not stated).",
+    "PSI's five fundraising courses are on Adventist Learning Community."
+   ],
+   "resources": [
+    {
+     "title": "PSI (NAD page)",
+     "url": "https://www.nadadventist.org/departments/philanthropic-service-institutions-psi/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Philanthropic Service for Institutions",
+     "publisher": "North American Division",
+     "url": "https://www.nadadventist.org/departments/philanthropic-service-institutions-psi/",
+     "quote": "Assistance in identifying and securing corporate, foundation, and governmental grants, emphasizing their expertise in proposal writing and efficient funder identification.",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "luc-community-health-initiative",
+   "level": "union",
+   "owner": "Lake Union Conference",
+   "union": "Lake Union",
+   "conference": null,
+   "name": "Adventist Community Health Initiative (free clinics with churches)",
+   "kind": "resource",
+   "status": "current",
+   "years": "Ongoing",
+   "aims": [
+    {
+     "text": "Helps local churches put on free medical, dental and vision clinics and health screenings for their communities.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Contact the Lake Union Adventist Community Health department to plan a clinic or screening with your church.",
+    "Clinics offer free medical, dental and eye care to the community."
+   ],
+   "resources": [
+    {
+     "title": "Adventist Community Health (Lake Union)",
+     "url": "https://lakeunion.org/directories/departments/adventist-community-health/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Adventist Community Health Initiative",
+     "publisher": "Lake Union Conference",
+     "url": "https://lakeunion.org/directories/departments/adventist-community-health/",
+     "quote": "We are here to provide resources to local churches to enable them to offer medical evangelism outreach to their communities",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "nad-nadei-church-planting-equipping",
+   "level": "nad",
+   "owner": "North American Division Evangelism Institute",
+   "union": null,
+   "conference": null,
+   "name": "Seeds and ACTS church-planting training",
+   "kind": "training",
+   "status": "current",
+   "years": "Seeds hosted by conferences through the year; Adventist pre-conference at Exponential, Orlando, 14-15 March 2027",
+   "aims": [
+    {
+     "text": "Two-day Seeds events and the ACTS coaching track that train members and pastors to start new groups and churches.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Ask your conference when its next Seeds event or ACTS cohort runs.",
+    "NADEI's Adventist pre-conference at Exponential is 14-15 March 2027 (ticketed)."
+   ],
+   "resources": [
+    {
+     "title": "NADEI church planting",
+     "url": "https://nadei.org/nadequipping/church-planting/"
+    },
+    {
+     "title": "Exponential 2027 Adventist pre-conference",
+     "url": "https://nadei.org/events/exponential-2027-sda-pre-conference/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Church Planting",
+     "publisher": "North American Division Evangelism Institute",
+     "url": "https://nadei.org/nadequipping/church-planting/",
+     "quote": "Going Wide–Seeds is a two-day Equipping Experience adapted to your Conference context.",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Exponential 2027 SDA Pre Conference",
+     "publisher": "North American Division Evangelism Institute",
+     "url": "https://nadei.org/events/exponential-2027-sda-pre-conference/",
+     "quote": "Come and connect with like-minded people in the church planting world!",
+     "check": "2026-10-07"
+    }
+   ]
+  },
+  {
+   "id": "wa-seeds-2026",
+   "level": "conference",
+   "owner": "Washington Conference with NADEI",
+   "union": "North Pacific Union",
+   "conference": "Washington",
+   "name": "Seeds Conference 2026 (free)",
+   "kind": "training",
+   "status": "current",
+   "years": "6-7 November 2026, Kirkland SDA Church",
+   "aims": [
+    {
+     "text": "A free weekend on making disciples, missional small groups and planting churches, with kids' program and meals.",
+     "source": 0
+    }
+   ],
+   "localChurch": [
+    "Free, but you must register to get meals and materials.",
+    "Bring a team from your church; children's program for ages 4-12."
+   ],
+   "resources": [
+    {
+     "title": "Seeds 2026 (Washington Conference)",
+     "url": "https://washingtonconference.org/ministries/churchplanting/"
+    },
+    {
+     "title": "Registration (NADEI)",
+     "url": "https://nadei.org/events/washington-conference-seeds-2026/"
+    }
+   ],
+   "sources": [
+    {
+     "title": "Seeds Conference 2026",
+     "publisher": "Washington Conference",
+     "url": "https://washingtonconference.org/ministries/churchplanting/",
+     "quote": "Gather with us at Seeds, Nov. 6-7 at Kirkland SDA Church!",
+     "check": "2026-10-07"
+    },
+    {
+     "title": "Washington Seeds 2026",
+     "publisher": "North American Division Evangelism Institute",
+     "url": "https://nadei.org/events/washington-conference-seeds-2026/",
+     "quote": "You must register (FREE) to receive meals and materials.",
+     "check": "2026-10-07"
+    }
+   ]
+  }
+ ]
+}

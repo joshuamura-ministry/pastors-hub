@@ -302,7 +302,8 @@ function makeStore(){
 
   // the pastor pulls
   E('GF_VIEW="roster"; gfRender();');
-  w.document.getElementById('gfpull').click();
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
+  E('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');
   await until(()=>w.document.querySelectorAll('.gfrosterrow').length===1);
   const row=w.document.querySelector('.gfrosterrow');
   c('the result arrives without a pasted code', row&&/Sam Youth/.test(row.textContent), true);
@@ -313,7 +314,7 @@ function makeStore(){
   E('GF_VIEW="church"; gfRender();');
   c('"Across the church" still reads the new labels', [/Across the congregation/.test(w.document.getElementById('giftbody').textContent),/undefined|NaN/.test(w.document.getElementById('giftbody').textContent)], [true,false]);
   E('GF_VIEW="roster"; gfRender();');
-  w.document.querySelector('.gfrosterrow .gfopen').click();
+  w.document.querySelector('.gfrosterrow[data-gf-open]').click();   // v10.57.1: results come in by themselves; a row opens its report (no "Check for new results", no Open)
   c('opening it shows "Confirmed by 1 person" on teaching', /Confirmed by 1 person/.test(w.document.getElementById('giftbody').textContent), true);
   // the member sees the confirmation too
   M.w.eval('gfHost().dataset.obsChecked=""; gfRender();');
@@ -327,9 +328,10 @@ function makeStore(){
   c('#gifts-report opens the result read-only, skipping the gate', [R.w.eval('ACCESS.ok'),/Your spiritual gifts/.test(RT),!!R.w.document.getElementById('gfsend'),!!R.w.document.getElementById('gfredo')], [true,true,false,false]);
   // the pastor deletes
   E('GF_VIEW="roster"; gfRender();');
-  const del=w.document.querySelector('.gfdel');
+  w.document.querySelector('.gfrosterrow[data-gf-open]').click();   // v10.57.1: the row opens the report; its own Delete is there
+  const del=w.document.getElementById('gfpdel');
   del.click(); del.click();
-  await until(()=>w.document.querySelectorAll('.gfrosterrow').length===0);
+  await until(()=>w.document.getElementById('gf-results')&&w.document.querySelectorAll('.gfrosterrow').length===0);   // back on the list
   c('the pastor can delete a result: gone here and on the server', [w.document.querySelectorAll('.gfrosterrow').length,calls.filter(x=>x.op==='delete').pop().key===E('uChurch().share.key'),[...globalThis.__terrainGiftsStore.m.keys()].filter(k=>k.startsWith('r/')).length], [0,true,0]);
 
   console.log('-- an adult with email, and the observer page from a stubbed peek --');

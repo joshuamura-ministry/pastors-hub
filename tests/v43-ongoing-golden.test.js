@@ -340,7 +340,9 @@ const sha = s => crypto.createHash('sha1').update(s).digest('hex');
   // v10.43.0 (integration): the handout and the Proposal carry the app's own version ("version":"v10.43.0"), which moved with the six
   // stamps; it is said back as the base's before hashing, so every word an ongoing idea's slides, handout and Proposal say still counts.
   const VER = pages.en.eval('VERSION'), BASE_VER = 'v10.42.1';
-  const asBase = s => s.split(`"version":"${VER}"`).join(`"version":"${BASE_VER}"`);
+  // v10.59.0: the site the handouts name moved too (pastorshub.org → terrain.church, the pastor: "apps name and url to terrain.church");
+  // it is said back the same way, and nothing else is
+  const asBase = s => s.split(`"version":"${VER}"`).join(`"version":"${BASE_VER}"`).split('terrain.church').join('pastorshub.org');
   c('the version is the only thing said back (one field, in the handout and the Proposal)', [VER !== BASE_VER, (asBase(await build(pages.en, 'food-pantry', 'board', 'options')).match(/v10\.4\d\.\d/g) || []).length], [true, 2]);
   const diff = [];
   for (const k of keys) { const [id, g, t, l] = k.split('|'); const s = asBase(await build(pages[l], id, g, t)); if (sha(s) !== G.hash[k]) diff.push(k); }

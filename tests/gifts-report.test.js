@@ -300,12 +300,13 @@ setTimeout(async()=>{ try{
     GFS={name:'Sam Youth',a:__T.answers('allhigh'),h:{teens:2},minor:true,memberId:'m9',i:GF_TOTAL,done:true}; const code=gfEncode(); GF_CTX=null;
     gfRosterAdd(code,{minor:true,observers:[{name:'Pat',ratings:{teach:4}}]});
     GFS={name:'',a:{},h:{},i:0,sect:-1,done:false,sent:false,ov:GF_TOTAL}; GF_VIEW='roster'; gfRender(); })()`);
-  D.querySelector('.gfrosterrow .gfopen').click();
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
+  D.querySelector('.gfrosterrow[data-gf-open]').click();
   const PT=D.getElementById('giftbody').textContent;
   c('pastor view: For the pastor, Under 18, the neighbourhood from his own survey', [/For the pastor/.test(PT),/Under 18/.test(PT),/Where your gifts meet your neighborhood/.test(PT),/Confirmed by 1 person/.test(PT)], [true,true,true,true]);
   c('pastor view: delete, no send box', [has('gfpdel'),has('gfsendbox'),has('gfpdf')], [true,false,true]);
   D.getElementById('gfpdel').click(); D.getElementById('gfpdel').click();
-  c('two taps delete it from this device and return to the roster', [E('gfRoster().length'),!!D.getElementById('gfpull')], [0,true]);
+  c('two taps delete it from this device and return to the roster', [E('gfRoster().length'),!!D.getElementById('gf-results')], [0,true]);
 
   console.log('-- your congregation against your neighbourhood --');
   E(String.raw`(()=>{ const add=(name,kind,minor,mid,heart)=>{ GF_CTX={church:'Bucks County SDA',churchId:uChurch().id,fac:[],min:{}};

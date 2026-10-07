@@ -246,7 +246,7 @@ function makeStore(){
   // ======================================================= SEC-2 / E2E-1: the pastor's list follows the server
   console.log('-- the pastor\'s list follows the server (SEC-2, E2E-1) --');
   P.E(`GF_VIEW='roster'; gfRender();`);
-  P.D.getElementById('gfpull').click();
+  P.E('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');   // v10.57.1: no "Check for new results"; results come in by themselves (the page's own sync)
   await until(()=>P.D.querySelectorAll('.gfrosterrow').length===2);
   const rows=()=>[...P.D.querySelectorAll('.gfrosterrow b')].map(b=>b.textContent).sort();
   c('Alice and Bob arrive', rows(), ['Alice Adams','Bob Brown']);
@@ -258,14 +258,14 @@ function makeStore(){
   // Bob deletes his own result from his phone
   await srv({op:'delete',pub,rid:bobRid,key});   // as if Bob deleted it (his phone has moved on to Carol)
   P.E(`GF_VIEW='roster'; gfRender();`);
-  P.D.getElementById('gfpull').click();
+  P.E('GF_LAST_SYNC={}; gfPollTick(0)');   // v10.57.1: no "Check for new results": the page's own check, which says what changed
   await until(()=>/removed/.test(P.D.getElementById('gflinknote').textContent));
   c('a result the member deleted leaves the list, and says so', [rows().includes('Bob Brown'),/1 removed: deleted by the member or past their keep date/.test(P.D.getElementById('gflinknote').textContent)], [false,true]);
   c('its roster entry and the pastor\'s review of Bob are gone from this device', [P.E(`uRead(GF_ROSTER,[]).some(r=>r.name==='Bob Brown')`),P.E(`!!(uChurch().memberReviews||{})[${JSON.stringify(bobMid)}]`)], [false,false]);
   c('a pasted code (no rid) is left alone', P.E(`gfRoster().some(r=>r.code===${JSON.stringify(pasted)})`), true);
   // past its keep date on the server
   { const k='r/'+pub+'/'+recs(pub).find(x=>x.name==='Alice Adams').rid, rec=store.peek(k); rec.expires=Date.now()-1000; store.poke(k,rec); }
-  P.D.getElementById('gfpull').click();
+  P.E('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');   // v10.57.1: no "Check for new results"; results come in by themselves (the page's own sync)
   await until(()=>!rows().includes('Alice Adams'));
   c('a result past its keep date on the server leaves the list', rows().includes('Alice Adams'), false);
   // past its keep date on this device, with no connection at all
@@ -292,7 +292,7 @@ function makeStore(){
   console.log('-- close a link and make a new one; delete everything from it (SEC-5) --');
   const J=page(link); await takeIt(J,{name:'Junk One'}); await send(J);
   const J2=page(link); await takeIt(J2,{name:'Junk Two'}); await send(J2);
-  P.E(`GF_VIEW='roster'; gfRender();`); P.D.getElementById('gfpull').click();
+  P.E(`GF_VIEW='roster'; gfRender();`); P.E('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');   // v10.57.1: results come in by themselves; a row opens its report (no "Check for new results", no Open)
   await until(()=>rows().includes('Junk One')&&rows().includes('Junk Two'));
   P.E(`GF_VIEW='setup'; gfRender();`);
   c('the setup offers to close the link', !!P.D.getElementById('gfcloselink'), true);
@@ -305,9 +305,11 @@ function makeStore(){
   c('a member on it is told plainly', J.E(`gfErrText({code:'closed'})`), 'The church has closed this link. Ask your pastor for the new one; your answers are still on this phone.');
   P.E(`GF_VIEW='roster'; gfRender();`);
   c('what came through the old link is still listed, with a way to delete it all', [rows().includes('Junk One'),!!P.D.querySelector('.gfpurge')], [true,true]);
-  { const i2=[...P.D.querySelectorAll('.gfrosterrow')].findIndex(x=>/Junk Two/.test(x.textContent)); const d2=P.D.querySelectorAll('.gfrosterrow .gfdel')[i2];
+  { const i2=[...P.D.querySelectorAll('.gfrosterrow')].findIndex(x=>/Junk Two/.test(x.textContent));
+    P.D.querySelectorAll('.gfrosterrow[data-gf-open]')[i2].click();   // v10.57.1: the row opens the report; its own Delete is there
+    const d2=P.D.getElementById('gfpdel');
     d2.click(); d2.click();
-    await until(()=>!rows().includes('Junk Two'));
+    await until(()=>P.D.getElementById('gf-results')&&!rows().includes('Junk Two'));   // back on the list
     c('one result from the closed link can still be deleted on its own row', [rows().includes('Junk Two'),recs(pub).some(x=>x.name==='Junk Two')], [false,false]); }
   P.D.querySelector('.gfpurge').click(); P.D.querySelector('.gfpurge').click();
   await until(()=>!rows().includes('Junk One'));
@@ -407,10 +409,10 @@ function makeStore(){
   OB.D.getElementById('gfobnote').value='She teaches with real <b>patience</b>.';
   OB.D.getElementById('gfobsend').click();
   await until(()=>/Thank you/.test(giftbody(OB)));
-  P.E(`GF_VIEW='roster'; gfRender();`); P.D.getElementById('gfpull').click();
+  P.E(`GF_VIEW='roster'; gfRender();`); P.E('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');   // v10.57.1: results come in by themselves; a row opens its report (no "Check for new results", no Open)
   await until(()=>rows().includes('Ana Ruiz'));
   const idx=[...P.D.querySelectorAll('.gfrosterrow')].findIndex(x=>/Ana Ruiz/.test(x.textContent));
-  P.D.querySelectorAll('.gfrosterrow .gfopen')[idx].click();
+  P.D.querySelectorAll('.gfrosterrow[data-gf-open]')[idx].click();   // v10.57.1: results come in by themselves; a row opens its report (no "Check for new results", no Open)
   const note=[...P.D.querySelectorAll('.gfr-onote')];
   c('the pastor reads the observer\'s name and note, as text (markup stays text)', [note.some(n=>n.textContent==='— John Carter: “She teaches with real <b>patience</b>.”'),note.some(n=>n.querySelector('b'))], [true,false]);
   c('the member\'s own report shows only the initial', /John|Carter|patience/.test(giftbody(Sp)), false);

@@ -48,7 +48,8 @@ setTimeout(()=>{
 
   console.log('\n-- nothing else moved --');
   c('six icons there', tools.filter(t=>t.querySelector('svg.tsvg')).length, 6);   // v56 (B2): five tiles; v10.57.0: six
-  c('still routing', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v56 (B2); v10.57.0: Compare your churches
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+  c('still routing', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },1800);

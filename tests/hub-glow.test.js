@@ -21,14 +21,17 @@ setTimeout(()=>{
   // are now per-tool inks (mint, violet, amber, rose) instead of all mint.
   c('icons are stroked, not filled', [...w.document.querySelectorAll('.tool svg')].every(s=>s.getAttribute('fill')==='none'&&/stroke="url\(#ink-/.test(s.innerHTML)));
   c('each icon carries its own ink', [...w.document.querySelectorAll('.tool svg')].map(s=>(s.innerHTML.match(/offset="0\.48" stop-color="(#[0-9A-F]{6})"/)||[])[1]),
-    ['#86E3CC','#B9A2FB','#FBC27C','#F29CBC','#8CC4FF','#A8E28A']);   // v56 (B2): the fifth tile's ink, blue; v10.57.0: the sixth, green
+    // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+    ['#86E3CC','#B9A2FB','#FBC27C','#F29CBC','#8CC4FF','#A8E28A']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   c('each tool names its colour for the halo and link', tools.every(t=>/--tc:#[0-9A-F]{6}/.test(t.getAttribute('style')||'')&&/--tglow:rgba\(/.test(t.getAttribute('style')||'')));
   c('the six colours are all different', new Set(tools.map(t=>(t.getAttribute('style').match(/--tc:(#[0-9A-F]{6})/)||[])[1])).size, 6);   // v56 (B2); v10.57.0: six
   c('icons glow', [...w.document.querySelectorAll('.tool svg')].every(s=>/feGaussianBlur/.test(s.innerHTML)));
   c('icons hidden from screen readers (the label carries it)', tools.every(t=>t.querySelector('svg').getAttribute('aria-hidden')==='true'));
   c('every card still names its tool', tools.map(t=>t.querySelector('b').textContent),
-    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v56 (B2); v10.57.0: the sixth tile
-  c('every card still routes somewhere', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.57.0: Compare your churches
+    // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+  c('every card still routes somewhere', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
 
   console.log('\n-- inviting --');
   c('a halo sits behind each card', /\.tool::before\{[^}]*radial-gradient/.test(html));

@@ -130,12 +130,14 @@ setTimeout(async()=>{ try{
     c('"Each bar is the average…" prints under the bars, in their column (a)', [r.cap2,!!r.cap,r.cap&&r.bar&&r.cap.p===r.bar.p,r.cap&&r.bar&&Math.abs(r.cap.x0-r.bar.x0)<2,r.cap&&r.bar&&r.cap.y>r.bar.y], [true,true,true,true,true]); }
 
   console.log('-- a disarmed delete takes its warning with it (V13) --');
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter" (Delete is in the report itself)
   E(String.raw`(()=>{ LANG='en'; GF_VIEW='roster'; gfRender(); })()`);
-  const del=w.document.querySelector('.gfdel');
+  w.document.querySelector('.gfrosterrow[data-gf-open]').click();
+  const del=w.document.getElementById('gfpdel'), label=del.textContent;
   del.click();
-  c('armed: the warning is shown', /from this device/.test(w.document.getElementById('gflinknote').textContent), true);
+  c('armed: the warning is shown', /from this device/.test(w.document.getElementById('giftbody').textContent), true);
   await sleep(5200);
-  c('five seconds later: the button and the warning both reset', [del.textContent,w.document.getElementById('gflinknote').textContent], ['Delete','']);
+  c('five seconds later: the button and the warning both reset', [del.textContent,/from this device/.test(w.document.getElementById('giftbody').textContent)], [label,false]);
 
   console.log('-- the report\'s print rules, only while the gifts panel is shown (tests F5) --');
   const print=(html.match(/@media print\{[\s\S]*?\n\}/g)||[]).join('\n');

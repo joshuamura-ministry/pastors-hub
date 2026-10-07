@@ -56,7 +56,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   { const P=page(); await ready(P);
     const t=P.q('.hub .tool[data-tool="compare"]');
     c('a fifth tile, "Learn from other conferences"', t?t.querySelector('b').textContent:null, 'Learn from other conferences');
-    c('…with one short line and its link', t?[t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['What other conferences’ calendars hold, side by side.','Compare calendars']);
+    // v10.57.1 (stale): the pastor, "underneath … there are resources available … for your church and find resources"
+    c('…with one short line and its link', t?[t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Ideas and resources from other conferences, for your church.','Find resources']);
     c('…its own icon, ink and glow', !!(t&&t.querySelector('svg.tsvg')&&t.querySelector('#ink-compare')&&t.querySelector('#glow-compare')));
     // v10.51.1 — the pastor: "learn from other conferences should be kind of similar to the other icons … the same format as the others
     // … maybe we can add one more later and have six": no full row of its own; three across on a computer (a sixth spot left open)
@@ -67,7 +68,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   }
   { const P=page({lang:'es'}); await ready(P);
     const t=P.q('.hub .tool[data-tool="compare"]');
-    c('Spanish tile', t?[t.querySelector('b').textContent,t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Aprender de otras asociaciones','Lo que muestran los calendarios de otras asociaciones.','Comparar calendarios']);
+    // v10.57.1 (stale): the pastor, "underneath … there are resources available … for your church and find resources"
+    c('Spanish tile', t?[t.querySelector('b').textContent,t.querySelector('.td').textContent,t.querySelector('.tgo').textContent.trim()]:null, ['Aprender de otras asociaciones','Ideas y recursos de otras asociaciones, para su iglesia.','Buscar recursos']);
   }
 
   console.log('\n-- registered pastors only --');
@@ -85,9 +87,11 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   const P=page({now:'2026-10-01'}); await openCmp(P);
   const reqs=P.net.filter(u=>/conferences\//.test(u));
   c('index.json first', reqs[0], '/conferences/index.json');
-  c('then the year ahead above the conference and the chosen five, each with the data\'s version', reqs.slice(1).map(u=>u.replace(/\?v=.*/,'')).sort(),
-    ['/conferences/ahead.json','/conferences/c/arkansas-louisiana.json','/conferences/c/central-california.json','/conferences/c/nevada-utah.json','/conferences/c/ohio.json','/conferences/c/pennsylvania.json']);
-  c('…and nothing else', reqs.length, 7);
+  c('then the year ahead above the conference, the chosen five and (v10.58.0) the resources, each with the data\'s version', reqs.slice(1).map(u=>u.replace(/\?v=.*/,'')).sort(),
+    ['/conferences/ahead.json','/conferences/c/arkansas-louisiana.json','/conferences/c/central-california.json','/conferences/c/nevada-utah.json','/conferences/c/ohio.json','/conferences/c/pennsylvania.json','/conferences/resources.json']);
+  // v10.58.0 (stale): the pastor, "put all the different resources and grants … into one concentrated area … at the bottom of the compare
+  // conferences page": resources.json is asked for too (Resources for your church; Ministries that come to your church)
+  c('…and nothing else', reqs.length, 8);
   c('every later file asks for this version', reqs.slice(1).every(u=>u.endsWith('?v='+idx.v)));
   c('the tool bar names it', P.txt('#toolname'), 'Learn from other conferences');
   c('his conference is the one he registered with', P.J('CMP.st.mine'), 'pennsylvania');
@@ -101,8 +105,9 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('the page never claims to read calendars live or automatically (its own words, EN and ES)', /\blive\b|automatic|real[- ]time|re-reads|en vivo|autom[aá]tic|tiempo real/i.test(own), false);
   c('no stale line on the check day', !!P.q('.cmp-stale'), false);
   const titles=P.qa('#cmp .cmp-step h3').map(h=>h.textContent);
-  c('every frame, in order', titles, ['Choose','At a glance','The year ahead','Where the calendar\'s energy goes','Ministry by ministry','By part of the country','Evangelism and pastoral care','Young people','Size and growth','What we could learn','Strengths and room to grow','What they say, what the calendar shows','Month by month','How to read this']);
-  c('numbered 1 to 13, colour on every frame', [P.qa('#cmp .cmp-num').map(n=>n.textContent).join(','), P.qa('#cmp .cmp-step').every(s=>/--k:var\(--/.test(s.getAttribute('style')||''))], ['1,2,3,4,5,6,7,8,9,10,11,12,13', true]);
+  c('every frame, in order', titles, ['Choose','At a glance','The year ahead','Where the calendar\'s energy goes','Ministry by ministry','By part of the country','Evangelism and pastoral care','Young people','Size and growth','What we could learn','Strengths and room to grow','What they say, what the calendar shows','Month by month','Resources for your church','Ministries that come to your church','How to read this']);
+  // v10.58.0 (stale): 14 Resources for your church, 15 Ministries that come to your church, at the foot of the page
+  c('numbered 1 to 15, colour on every frame', [P.qa('#cmp .cmp-num').map(n=>n.textContent).join(','), P.qa('#cmp .cmp-step').every(s=>/--k:var\(--/.test(s.getAttribute('style')||''))], ['1,2,3,4,5,6,7,8,9,10,11,12,13,14,15', true]);
   c('five cards at a glance, in his order', P.qa('.cmp-card h4').map(h=>h.childNodes[0].textContent.trim()), ['Pennsylvania','Ohio','Arkansas-Louisiana','Nevada-Utah','Central California']);
   const pa=idx.conferences.find(x=>x.slug==='pennsylvania');
   c('the badge counts the past year only', P.txt('.cmp-card.mine .cmp-badge'), `Partial calendar · grade B · ${pa.counts.ministryEvents} events in the past year`);
@@ -119,7 +124,11 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('sources name the statistics and the calendar links', /Annual Statistical Report|ASR/.test(P.txt('#cmp-sources'))&&P.qa('#cmp-sources a').length>5);
   c('footer: checked · updated monthly', /checked 1 Oct 2026 · updated monthly/.test(P.txt('.cmp-foot')));
   c('no "AI" anywhere on the page', BAD.test(all), false);
-  c('every link is https, opens a new tab with rel=noopener', P.qa('#cmp a[href]').every(a=>/^https:\/\//.test(a.getAttribute('href'))&&a.getAttribute('rel')==='noopener'&&a.getAttribute('target')==='_blank'));
+  // v10.58.0: a ministry's own email and phone ("it will show their contact and how to get a hold of them") are mailto: and tel:, in its
+  // contact line only, a checked address and digits only; every other link is https, in a new tab
+  const webLinks=P.qa('#cmp a[href]').filter(a=>!a.closest('.cmp-contact'));
+  c('every link is https, opens a new tab with rel=noopener', webLinks.every(a=>/^https:\/\//.test(a.getAttribute('href'))&&a.getAttribute('rel')==='noopener'&&a.getAttribute('target')==='_blank'));
+  c('…a ministry\'s contact line holds only mailto: (a checked address) and tel: (digits) links', P.qa('#cmp .cmp-contact a').length>0&&P.qa('#cmp .cmp-contact a').every(a=>/^mailto:[^\s@<>"?#&=%\/]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(a.getAttribute('href'))||/^tel:\+?[0-9]{7,15}(,[0-9]{1,6})?$/.test(a.getAttribute('href'))));
 
   console.log('\n-- the year ahead --');
   c('the sub-line names the year ahead', P.txt('#cmp-ahead .cmp-sh .note'), 'Oct 2026 to Sep 2027: what’s coming, so you can prepare in time.');
@@ -182,9 +191,9 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   { const Q=page({reg:'Ohio',saved:{reg:'pennsylvania',mine:'potomac',others:['texico']}}); await openCmp(Q);
     c('registered with another conference: that one, with its own suggestions', [Q.J('CMP.st.mine'),Q.J('CMP.st.others').length], ['ohio',4]); }
   { const Q=page({reg:'Bermuda'}); await ready(Q); Q.E("openTool('compare')"); await until(()=>Q.q('#cmp-mine')); await sleep(30);
-    c('a conference outside the 50: asked to choose, nothing else drawn', [Q.J('CMP.st.mine'), /Bermuda, which is not in this comparison/.test(Q.txt('#cmp-pick')), Q.qa('#cmp .cmp-step').length], [null,true,1]);
+    c('a conference outside the 50: asked to choose, nothing else drawn', [Q.J('CMP.st.mine'), /Bermuda, which is not in this comparison/.test(Q.txt('#cmp-pick')), Q.qa('#cmp .cmp-step').length], [null,true,3]);   // v10.58.0: and the resources of the NAD and the world church, and the ministries
     Q.E("(()=>{ const s=document.getElementById('cmp-mine'); s.value='florida'; s.dispatchEvent(new Event('change')); })()");
-    await until(()=>Q.q('#cmp-ya .cmp-tl')); c('choosing one draws every frame with its suggested set', [Q.qa('#cmp .cmp-step').length, Q.J('CMP.st.others').length], [14,4]); }
+    await until(()=>Q.q('#cmp-ya .cmp-tl')); c('choosing one draws every frame with its suggested set', [Q.qa('#cmp .cmp-step').length, Q.J('CMP.st.others').length], [16,4]); }   // v10.58.0: two frames more
 
   console.log('\n-- Spanish --');
   { const S=page({lang:'es',now:'2026-10-01'}); await openCmp(S);
@@ -193,7 +202,7 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('v10.51.1: "Añadir asociaciones", its headings, the count and Listo', [S.txt('#cmp-addbtn'),S.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),S.txt('#cmp-addp .cmp-cnt'),S.txt('#cmp-addp [data-cmp-done]')],
       ['Añadir asociaciones',['Este','Medio Oeste','Sur','Oeste'],'4 de 9 elegidas','Listo']);
     S.q('#cmp-addp [data-cmp-done]').click();
-    c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Cómo leer esto']);
+    c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Recursos para su iglesia','Ministerios que visitan su iglesia','Cómo leer esto']);
     c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el 1 oct 2026 · se actualiza cada mes');
     c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De oct 2026 a sep 2027: lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
     c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya','Pennsylvania: calendario publicado hasta dic 2026. El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27.']);
@@ -223,7 +232,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('no handler attribute anywhere in the page', [...cmp.querySelectorAll('*')].some(e=>[...e.attributes].some(a=>/^on/i.test(a.name))), false);
     c('nothing ran', T.E('window.__x===undefined'));
     c('the words are shown as words', /<img src=x onerror="window.__x=1">Leaders/.test(cmp.textContent)&&/Potomac <em>x<\/em>/.test(cmp.textContent));
-    c('no javascript:, data: or http: link', [...cmp.querySelectorAll('a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^https:\/\//.test(h)), []);
+    // v10.58.0: a ministry's mailto: and tel: (its contact line) are checked above; nothing else but https
+    c('no javascript:, data: or http: link', [...cmp.querySelectorAll('a[href]')].filter(a=>!a.closest('.cmp-contact')).map(a=>a.getAttribute('href')).filter(h=>!/^https:\/\//.test(h)), []);
     c('a quote cannot leave its attribute', [...cmp.querySelectorAll('a[href]')].every(a=>!a.hasAttribute('onmouseover')));
     c('the https calendar link still shows', [...cmp.querySelectorAll('#cmp-sources a')].some(a=>a.getAttribute('href')==='https://ok.example.org/cal'));
   }

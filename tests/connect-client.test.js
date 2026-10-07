@@ -188,7 +188,8 @@ function makeStore(){ const m=new Map(); return { m,
     // creation") adds three: a group's study in step 2 (cgiDraw), the proposal's words' line and their request (cwStatusHTML, cwAuto)
     // v10.57.0 (stale count, not a regression): your churches ("they can click a button and say which church … a comparison between churches")
     // adds three: the church chip (chChipHTML), the snapshot (chSnapSave) and the comparison (chcOpen), none on a member's page
-    c('memberLink() at every guard: 26 sites (8 that read both links, 1 that read neither, section 5\'s page check, Learn from other conferences, the Main menu button, the needs list, five for accounts and plans, the work for each need, the way to Your church, a group’s study, the words’ line and their request, the church chip, the snapshot, the comparison), openTool reads all three; the old pair only in its definition', [(outside.match(/memberLink\(\)/g)||[]).length,(src.match(/GIFTS_LINK\.on\|\|WATCH_LINK\.on/g)||[]).length,(src.match(/WATCH_LINK\.on\|\|CONNECT_LINK\.on/g)||[]).length], [26,1,2]); }
+    // v10.57.1 (stale count): the results that come in by themselves (gfPollOn) are never asked on a member's page: a 27th site
+    c('memberLink() at every guard: 27 sites (8 that read both links, 1 that read neither, section 5\'s page check, Learn from other conferences, the Main menu button, the needs list, five for accounts and plans, the work for each need, the way to Your church, a group’s study, the words’ line and their request, the church chip, the snapshot, the comparison, the results by themselves), openTool reads all three; the old pair only in its definition', [(outside.match(/memberLink\(\)/g)||[]).length,(src.match(/GIFTS_LINK\.on\|\|WATCH_LINK\.on/g)||[]).length,(src.match(/WATCH_LINK\.on\|\|CONNECT_LINK\.on/g)||[]).length], [27,1,2]); }
   c('FEATURES.connect, full tier', /connect: \{tier:'full', name:'connection cards'/.test(src));
   c('D6: no #cs-connect (step 3 has one "After the day" card, section 2\'s)', /cs-connect/.test(src), false);
   const P=page('https://deploy-preview-12--pastorshub.netlify.app/',{seed:'after'});
@@ -214,14 +215,16 @@ function makeStore(){ const m=new Map(); return { m,
   const cr=reqs.filter(r=>/"op":"create"/.test(r.body)&&r.page.startsWith('https://deploy')).slice(-1)[0]||{headers:{}};
   const cur=P.J('cnCardFor("health-expo")');
   c('Make the card: op create with his registration; the card and its key kept on this device', [!!cr.headers['x-terrain-reg']===!!reg.tok,/^[A-Z0-9]{10}$/.test(cur.id),/^[A-Za-z0-9_-]{43}$/.test(cur.key),cur.look], [true,true,true,'health']);
-  c('D19: the printed link is always pastorshub.org, never the page\'s own address (a deploy preview)', [P.txt('.cn-linkv'),/deploy-preview/.test(P.txt('#cn-sheet'))], ['pastorshub.org/#connect='+cur.id,false]);
+  // v10.59.0 (stale): the live site is terrain.church now ("apps name and url to terrain.church"); a card printed before says pastorshub.org,
+  // whose page takes the phone to the same card at terrain.church (v59-move)
+  c('D19: the printed link is always the live site, terrain.church, never the page\'s own address (a deploy preview)', [P.txt('.cn-linkv'),/deploy-preview/.test(P.txt('#cn-sheet'))], ['terrain.church/#connect='+cur.id,false]);
   P.q('#cn-sheet [data-cn-copy-link]').click(); await sleep(20);
-  c('Copy link: the live site\'s link', P.J('window.__clip||[]').slice(-1)[0], 'https://pastorshub.org/#connect='+cur.id);
+  c('Copy link: the live site\'s link', P.J('window.__clip||[]').slice(-1)[0], 'https://terrain.church/#connect='+cur.id);
   P.q('#cn-sheet [data-cn-qr]').click(); await until(()=>(P.J('window.__dl||[]')).length);
-  c('Download QR code: the code of the live link (an English card opens in English: ~en), under a file name of its own', [P.J('window.__qr||[]').slice(-1)[0],P.J('window.__dl||[]').slice(-1)[0]], ['https://pastorshub.org/#connect='+cur.id+'~en','Sampleton-SDA-SAMPLE-Full-health-expo-connection-QR.png']);
+  c('Download QR code: the code of the live link (an English card opens in English: ~en), under a file name of its own', [P.J('window.__qr||[]').slice(-1)[0],P.J('window.__dl||[]').slice(-1)[0]], ['https://terrain.church/#connect='+cur.id+'~en','Sampleton-SDA-SAMPLE-Full-health-expo-connection-QR.png']);
   P.q('#cn-sheet [data-cn-pdf]').click(); await until(()=>(P.J('window.__pdf?__pdf.map(x=>x.n):[]')).length,8000);
   const pdf=P.E('window.__pdf?window.__pdf.slice(-1)[0].s:""'), pdfn=P.E('window.__pdf?window.__pdf.slice(-1)[0].n:""');
-  c('Printable card (PDF): made on this device, the live link printed, the fonts\' fallback when fonts/ cannot load', [/connection-card-half/.test(pdfn),pdf.includes('pastorshub.org/#connect='+cur.id),/deploy-preview/.test(pdf),/\/(Image|URI|Annots)(?![A-Za-z])/.test(pdf)], [true,true,false,false]);
+  c('Printable card (PDF): made on this device, the live link printed, the fonts\' fallback when fonts/ cannot load', [/connection-card-half/.test(pdfn),pdf.includes('terrain.church/#connect='+cur.id),/deploy-preview/.test(pdf),/\/(Image|URI|Annots)(?![A-Za-z])/.test(pdf)], [true,true,false,false]);
   c('the choices read as words (his language, the other beneath), until he taps "Change the words"', [!!P.q('#cn-sheet [data-cn-w]'),P.txt('#cn-sheet .cn-opt .cn-optt')], [false,'Tell me about the plant-based cooking school']);
   P.q('#cn-sheet [data-cn-edit]').click(); await sleep(10);
   P.q('#cn-sheet [data-cn-w="1"][data-l="en"]').value='Send me the recipes'; P.q('#cn-sheet [data-cn-w="1"][data-l="en"]').dispatchEvent(new P.w.Event('input'));

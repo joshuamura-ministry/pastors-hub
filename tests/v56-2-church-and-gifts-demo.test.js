@@ -63,8 +63,9 @@ const ADDR="D.geo={...D.geo,matched:'118 Bristol Rd, Warminster, PA, 18974'}";
   c('three steps, each its own colour: Invite your members, See the results, Fill the positions', Q.qa('#giftbody .gfsteps .gfstep').map(b=>[b.querySelector('span').textContent,b.style.getPropertyValue('--k')]),
     [['Invite your members','var(--m-people)'],['See the results','var(--acc)'],['Fill the positions','var(--m-hardship)']]);
   c('…their parts numbered in the same colours', ['gf-invite','gf-results','gf-positions'].map(id=>Q.q('#'+id).style.getPropertyValue('--k')), ['var(--m-people)','var(--acc)','var(--m-hardship)']);
-  c('step 3: who fits where, Across the church, Who to ask, and the members (Volunteers, skills and availability)', [/See who fits where/.test(Q.txt('#gf-positions')),!!Q.q('#gf-positions [data-gv="church"]'),!!Q.q('#gf-positions [data-gf-tocase]'),!!Q.q('#gf-positions #gfteamslot details')], [true,true,true,true]);
-  c('the sample report shows with the demo, under the results', [!!Q.q('#gf-results #gfsample'),Q.txt('#gf-results [data-gf-demo]')], [true,'Clear demo results']);
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
+  c('step 3: who fits where, Across the congregation itself, Who to ask, and the members (Volunteers, skills and availability)', [/See who fits where/.test(Q.txt('#gf-positions')),!!Q.q('#gf-positions .gfcong'),!!Q.q('#gf-positions [data-gf-tocase]'),!!Q.q('#gf-positions #gfteamslot details')], [true,true,true,true]);
+  c('no sample report on the page (every result opens as one); the demo can be cleared', [!!Q.q('#gfsample'),Q.txt('#gf-results [data-gf-demo]')], [false,'Clear demo results']);
   Q.q('#gf-results [data-gf-demo]').click(); await sleep(60);
   c('cleared on the main page: no sample report, the demo offered', [!!Q.q('#gfsample'),Q.txt('#gf-results [data-gf-demo]'),Q.E('gfRoster().length')], [false,'Fill in demo results',0]);
   Q.E(`openTool('case')`); await sleep(80); Q.E(`gfOpenLanding()`); await sleep(60);

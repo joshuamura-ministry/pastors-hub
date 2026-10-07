@@ -51,8 +51,10 @@ setTimeout(()=>{
   c('charts and maps keep theirs, correctly', /class="mapsvg"[^>]*role="img"/.test(html));
   c('no title/desc to be read out twice', tools.every(t=>!t.querySelector('svg title')&&!t.querySelector('svg desc')));
   c('the button text still carries the name', tools.map(t=>t.querySelector('b').textContent),
-    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v56 (B2); v10.57.0: the sixth tile
-  c('and still routes', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.57.0: Compare your churches
+    // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
+  c('and still routes', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);

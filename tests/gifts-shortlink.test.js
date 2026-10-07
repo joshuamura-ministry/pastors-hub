@@ -116,7 +116,8 @@ const FAKE_QR=`window.qrcode=function(t,ec){ return {s:'',addData(x){this.s=Stri
   const dec=JSON.parse(M.w.eval(`JSON.stringify(gfDecode(${JSON.stringify(sub.code)}))`));
   c('the result carries the church and its id', [dec.church,dec.churchId===own.churchId], ['Bucks County SDA',true]);
   P.w.eval('GF_VIEW="roster"; gfRender();');
-  P.w.document.getElementById('gfpull').click();
+  // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
+  P.w.eval('GF_LAST_SYNC={}; gfSync().then(()=>gfRender())');
   await until(()=>P.w.document.querySelectorAll('.gfrosterrow').length===1);
   c('it reaches the pastor\'s roster', /Ana Ruiz/.test(P.w.document.querySelector('.gfrosterrow').textContent), true);
 

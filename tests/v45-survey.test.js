@@ -92,7 +92,8 @@ const sha=s=>crypto.createHash('sha1').update(s).digest('hex');
   console.log('\n-- the golden outputs: changed only by these words --');
   const G=JSON.parse(fs.readFileSync(path.join(ROOT,'tests','v43-ongoing-golden.json'),'utf8')).hash;
   const pages={en:gpage('en'),es:gpage('es')}; await sleep(400);
-  const VER=pages.en.eval('VERSION'), asBase=s=>s.split(`"version":"${VER}"`).join('"version":"v10.42.1"');
+  // v10.59.0: the handouts' site moved to terrain.church ("apps name and url to terrain.church"): said back as the golden file's
+  const VER=pages.en.eval('VERSION'), asBase=s=>s.split(`"version":"${VER}"`).join('"version":"v10.42.1"').split('terrain.church').join('pastorshub.org');
   const now={}, changed=[];
   for(const k of Object.keys(GOLD_1044)){ const [id,g,t,l]=k.split('|'); now[k]=sha(asBase(build(pages[l],id,g,t))); if(now[k]!==GOLD_1044[k]) changed.push(k); }
   c('the golden file holds today\'s outputs for these keys (re-written for them only)', Object.keys(GOLD_1044).filter(k=>G[k]!==now[k]), []);

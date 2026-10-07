@@ -11,6 +11,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 import { buildYearAhead } from './year-ahead.mjs';
 import { buildProfiles } from './profiles.mjs';
 import { packServed } from './pack.mjs';
+import { packResources } from './resources.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const SRC = join(HERE, 'src');
@@ -21,8 +22,11 @@ export const OUT = resolve(HERE, '..', '..', 'conferences');
 export function buildAll(src = SRC, cfg) {
   const ya = buildYearAhead(src, cfg);
   const pr = buildProfiles(src, ya.out, cfg);
-  const files = packServed(pr.out, ya.out);
-  return { files, review: pr.review, lines: ya.lines.concat(pr.lines), profiles: pr.out, yearAhead: ya.out };
+  // v10.58.0: "Resources for your church", for the conferences and unions the comparison serves
+  const slugs = new Map(pr.out.conferences.map(c => [c.name, c.slug])), unions = new Set(pr.out.conferences.map(c => c.union));
+  const res = packResources(src, n => slugs.get(n) || null, unions);
+  const files = packServed(pr.out, ya.out, { 'resources.json': res.data });
+  return { files, review: pr.review, lines: ya.lines.concat(pr.lines, res.lines), profiles: pr.out, yearAhead: ya.out };
 }
 
 // The files in conferences/ now, as {relative path: text}.

@@ -57,7 +57,8 @@ const EV_LONG='9% speak another Indo-European language at home, about 500 people
   let audit=[]; let d=W.nsPdfDoc(jsPDF,v,need,O('en',{audit}));
   c('US Letter portrait, one page', [d.getNumberOfPages(),Math.round(d.internal.pageSize.getWidth()),Math.round(d.internal.pageSize.getHeight())], [1,612,792]);
   const said=audit.map(a=>a.t);
-  c('the kicker, the name, the need, how to get started, what it needs, the foot', ['MINISTRY IDEA','For the need: Food insecurity is measurable here','HOW TO GET STARTED','WHAT IT NEEDS FROM OUR CHURCH','Made with Terrain · pastorshub.org'].map(t=>said.some(s=>s.startsWith(t))), [true,true,true,true,true]);
+  // v10.59.0 (stale): the foot names terrain.church ("apps name and url to terrain.church")
+  c('the kicker, the name, the need, how to get started, what it needs, the foot', ['MINISTRY IDEA','For the need: Food insecurity is measurable here','HOW TO GET STARTED','WHAT IT NEEDS FROM OUR CHURCH','Made with Terrain · terrain.church'].map(t=>said.some(s=>s.startsWith(t))), [true,true,true,true,true]);
   c('the head: the church, the town and the month', [said[0],said[1]], ['Warminster · October 2026','Bucks County Seventh-day Adventist Church']);
   // the review round (#19): the source on one line, the tract and county on the next beside "Made with Terrain" (never wrapped)
   const foot=audit.filter(a=>a.y>=750&&!/^Made with/.test(a.t)).map(a=>[a.t,a.y]);
@@ -88,7 +89,7 @@ const EV_LONG='9% speak another Indo-European language at home, about 500 people
   const ve=PE.J(`nsView('immigrants-welcome-card-in-lang',{name:'Chinese',share:24})`);
   audit=[]; d=PE.w.nsPdfDoc(jsPDF,ve,{id:'lang-primary',title:'Materiales y bienvenida en chino',evidence:'El 24% habla chino en casa — unas 1,396 personas.',kind:'language'},O('es',{audit}));
   const saidEs=audit.map(a=>a.t);
-  c('every label in Spanish', ['IDEA DE MINISTERIO','Para la necesidad: Materiales y bienvenida en chino','CÓMO EMPEZAR','LO QUE NECESITA DE NUESTRA IGLESIA','PERSONAS','PARA EMPEZAR','CADA MES','Hecho con Terrain · pastorshub.org'].map(t=>saidEs.some(s=>s.startsWith(t))), Array(8).fill(true));
+  c('every label in Spanish', ['IDEA DE MINISTERIO','Para la necesidad: Materiales y bienvenida en chino','CÓMO EMPEZAR','LO QUE NECESITA DE NUESTRA IGLESIA','PERSONAS','PARA EMPEZAR','CADA MES','Hecho con Terrain · terrain.church'].map(t=>saidEs.some(s=>s.startsWith(t))), Array(8).fill(true));
   c('…the ask-for line, the month, the source', [saidEs.some(s=>/^Si nuestra iglesia todavía no tiene todo esto/.test(s)),saidEs[0],saidEs.some(s=>/^Cifras: Oficina del Censo de EE\. UU\., Encuesta sobre la Comunidad Estadounidense 2020–2024/.test(s))], [true,'Warminster · octubre de 2026',true]);
   // the review round (#19): the foot in Spanish; the labels never run into their values ("PARA EMPEZAR$375")
   c('…the tract and the county in Spanish', saidEs.includes('Sección censal 1016.11, condado de Bucks'), true);
