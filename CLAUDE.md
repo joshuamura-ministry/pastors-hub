@@ -231,6 +231,8 @@ name current yeah it may show my name there, but is it showing my picture?"*
   `v78/shots61df.mjs`, served by `v78/serve61.mjs`): computer 1366, phone 390 EN and ES. Bucks County: named on the staff page, no photo
   found, no dates on the pages read. Tests: `v61-digital-read` (new, 17) and `v61-digital-depth` (new, 21), failing first on v10.60.1
   (`v78/logs/ff-v61-*.log`); digital-function updated (digital-read-1.1). Full suite: 164 suites · 10,921 passed · 0 failed.
+- **Wording** (same release; the pastor: *"reword your church against the community … against … doesn't sound so good"*): Spiritual Gifts' grid
+  "Your congregation against your neighborhood" is **"Your people for your neighborhood"** / "Su gente para su vecindario".
 
 **v10.60.1 (7 Oct 2026, quick lane) — a conference is read as soon as one of its pastors signs up.** The pastor, told the first reading
 of a conference takes about an hour and asked whether Terrain should read it ahead: *"yes as soon as they sign up for sure"*. register.mjs

@@ -336,7 +336,8 @@ setTimeout(async()=>{ try{
   c('no NaN / undefined / null on the church page', /\b(NaN|undefined|null)\b/.test(CT.textContent), false);
   E(`LANG='es'; gfRender();`);
   const CE=D.getElementById('giftbody').textContent;
-  c('the church page in Spanish', [/Su congregación frente a su vecindario/.test(CE),/En qué es fuerte esta iglesia/.test(CE),/menores de 18/.test(CE)], [true,true,true]);
+  // v10.61.0, the pastor: "reword your church against the community … against … doesn't sound so good": "Your people for your neighborhood"
+  c('the church page in Spanish', [/Su gente para su vecindario/.test(CE),/En qué es fuerte esta iglesia/.test(CE),/menores de 18/.test(CE)], [true,true,true]);
   c('no English left on the Spanish church page', /Across the congregation|What this church is strong in|Who could staff what|Gifted and drawn|Well covered|Thin\b|A real gap|members so far|proven\b/.test(CE), false);
   E(`LANG='en'`);
   c('no page errors', errs, []);

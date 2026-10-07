@@ -16139,7 +16139,7 @@ function gfChurchHTML(){
   ${n<6?`<div class="card gfcard"><p class="note">⚠ ${L(`Only ${n} ${n===1?'result':'results'} in. Read the gaps below as “nobody who has taken this yet”, not as “nobody in the church” — with a small sample the missing gifts are usually just members who have not filled it in.`,`Solo ${n===1?'hay 1 resultado':'hay '+n+' resultados'}. Lea las brechas de abajo como «nadie de quienes la han hecho», no como «nadie en la iglesia»: con una muestra pequeña, los dones que faltan suelen ser de miembros que todavía no la han completado.`)}</p></div>`:''}
 
   ${NB&&NB.rows.length?`<div class="card gfcard gfr-cvn">
-    <h3>${L('Your congregation against your neighborhood','Su congregación frente a su vecindario')}</h3>
+    <h3>${L('Your people for your neighborhood','Su gente para su vecindario')}</h3>
     <p class="note">${L(`For each need the Community Survey found around ${esc(church)}: members whose gifts fit it well (60% or more) and who said they are drawn to the people it concerns, and members whose gifts fit it but who did not say so.`,`Para cada necesidad que la Encuesta Comunitaria encontró alrededor de ${esc(church)}: los miembros cuyos dones encajan bien (60% o más) y que dijeron que su corazón se inclina hacia esas personas, y los miembros cuyos dones encajan pero que no lo dijeron.`)}</p>
     <div class="gfscroll"><table class="gfr-cvt">
       <thead><tr><th scope="col">${L('Neighborhood need','Necesidad del vecindario')}</th><th scope="col">${L('Gifted and drawn','Con el don y el corazón')}</th><th scope="col">${L('Could, if asked','Podrían, si se les pide')}</th><th scope="col">${L('Reading','Lectura')}</th></tr></thead>
@@ -16154,7 +16154,7 @@ function gfChurchHTML(){
       all.some(x=>!x.minor&&x.allHigh)?L('* Answered high almost everywhere; not counted in the reading.','* Respondió alto en casi todo; no se cuenta en la lectura.'):''].filter(Boolean);
       return k.length?`<p class="note gfr-cvkey">${esc(k.join(' '))}</p>`:''; })()}
     <p class="gfr-src">${esc([L('Community Survey','Encuesta Comunitaria'),gfAreaName(NB.area),acs].filter(Boolean).join(' · '))}</p>
-  </div>`:`<div class="card gfcard gfr-cvn"><h3>${L('Your congregation against your neighborhood','Su congregación frente a su vecindario')}</h3>
+  </div>`:`<div class="card gfcard gfr-cvn"><h3>${L('Your people for your neighborhood','Su gente para su vecindario')}</h3>
     <p class="note">${L(`Run the Community Survey for ${esc(church)}’s own address, then open Share link once. This page will then show, need by need, who in the congregation is gifted for it and drawn to it.`,`Haga la Encuesta Comunitaria con la dirección de ${esc(church)} y luego abra una vez «Enlace para compartir». Entonces esta página mostrará, necesidad por necesidad, quién en la congregación tiene el don y el corazón para atenderla.`)}</p></div>`}
 
   <div class="card gfcard">
