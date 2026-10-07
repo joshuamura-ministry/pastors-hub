@@ -57,7 +57,7 @@ Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.
 | **Make the Case** | Turns the findings into a proposal for a named board or ministry; since v10.44, also for **a project or purchase** (sound, a camera, a roof, a van…: three options, how we'll pay without tithe, who decides) | full |
 | **Evangelism Planner** | 18-month countdown to opening night, with a benchmark per phase | full |
 | **Learn from other conferences** | What each US conference's published calendar holds, side by side (the past 12 months), and the year ahead for his conference, union, the NAD and the world church (next 12 months, for planning); since v10.58.0, at its foot, Resources for your church (money, free materials, training) and Ministries that come to your church | full |
-| **Compare your churches** | (v10.57.0) A pastor's churches side by side: their neighborhoods, "Your church", Spiritual Gifts and plans, and what stands out; the header's church button switches between them | full |
+| **Compare your churches** | (v10.57.0) A pastor's churches side by side: their neighborhoods, "Your church", Spiritual Gifts and plans, and what stands out; the header's church button switches between them. (v10.60.0) At its foot, **Digital footprint**: every church of his conference online (website, the pastor's name, Google's listing, Facebook and Instagram lightly, YouTube, a way in), his first, who needs help most, how to fix it, and a report for his communication team | full |
 
 **Mission, in his words:** everything points to Christ; features are frames,
 the gospel is the picture. Neighbours are neighbours, never targets.
@@ -91,6 +91,14 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+netlify/functions/digital.mjs        (v10.60.0, digital-1.0) Digital footprint for registered pastors (the registration token, as census/gifts):
+                               GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
+                               registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania)
+netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.0) the background reader: the official list (eAdventist, one page each 3 s), each
+                               church's website as a visitor reads it (TerrainBot, robots.txt obeyed, the words inside a template's scripts), YouTube's
+                               feed, Google's listing (Places API (New), GOOGLE_PLACES_KEY), one search (BRAVE_SEARCH_KEY, when set); Facebook never
+                               read; under 13 minutes a run, then it wakes itself; store `terrain-digital` (c/ findings, j/ job, e/ entries, r/ readings)
+netlify/functions/digital-sweep.mjs  (v10.60.0, digital-sweep-1.0) monthly (the 1st): conferences opened in 60 days read again; unopened in 180 forgotten
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
@@ -149,6 +157,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
 - connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.60.0: `/.netlify/functions/digital` → `"fn":"digital-1.0"`, `"readFn":"digital-read-1.0"`, `"places":true` (the key is set); the first time a pastor of Pennsylvania opens Compare your churches, the reading starts (about an hour; `?conf=Pennsylvania` with his token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
   passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://pastorshub.org/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
   `https://pastorshub.org/ideas/index.json` → `"hash":"f7b32cd68d45"`
@@ -184,12 +193,75 @@ values are never in the repo):
 | `RESEND_API_KEY` | gifts.mjs | Resend API key. With `GIFTS_FROM`, switches on "Email me my report". Also keys the hashed per-inbox send counter. |
 | `GIFTS_FROM` | gifts.mjs | Sender, e.g. `Terrain <reports@pastorshub.org>`. The domain must be verified in Resend (DNS records on pastorshub.org). |
 | `SITE_URL` | gifts.mjs | Optional. Base of the private report link in emails; defaults to the Netlify site URL. |
+| `GOOGLE_PLACES_KEY` | digital-read.mjs | (v10.60.0, **set 7 Oct 2026**, secret) Google's listing of each church (Places API (New), Text Search, the Enterprise fields). Made by him in Google Cloud (Muraworks, "My First Project"), restricted to Places API (New) only; a $5 budget alert. 1,000 free a month; Pennsylvania's 129 a month is free. The free trial ends 6 Jan 2027: he must activate the full account then. |
+| `PLACES_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Google lookups a month for the whole site, default 900 (under the free 1,000). |
+| `BRAVE_SEARCH_KEY` | digital-read.mjs | Optional (v10.60.0, not set). One search a church: the double check (a site, a Facebook page or a YouTube channel the listing does not give; directories that still name an earlier pastor; where its own site comes). Brave Search API: 1,000 free a month, then $5 per 1,000. Without it the double check is the listing and Google's listing, and the page never says "no Facebook page" (none was looked for). |
+| `SEARCH_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Searches a month, default 900. |
+| `DIGITAL_CONFS` | digital.mjs, digital-sweep.mjs | Optional (v10.60.0). The conferences that may be read, comma-separated (their names as registered: "Pennsylvania,Ohio"); "*" every NAD conference (CONF_ORG has all 52). Default "Pennsylvania". |
 
 v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registration token like gifts and present, and Netlify Blobs.
 
 ---
 
 ## Current state
+
+**v10.60.0 (7 Oct 2026, full lane) — Digital footprint, at the foot of Compare your churches.** The pastor: *"Under compare your churches we
+need to have some value there. I would like to see all the churches in the conference that you choose … websites Facebook pages social
+media Instagram … YouTube … checked to see if they're up-to-date if their current if they need work if they're in bad shape … our own
+churches will be prioritized on the top … a box that talks about comparing the digital footprint … which churches are in great need of … a
+new website or updating"*; *"Where do we show up in Google search in maps and ratings … I need a section how to fix it"*; *"Even the live
+stream"*; *"no feeling no fill-in just maybe a proposal to the communications person … this should know the name already of the pastor and
+it will search whether the pastor's name is actually even there"*; *"make sure we're not missing something so we don't accuse them"*; after
+the sample (https://claude.ai/artifact/8pX1hcrw74gEBahGAMeKhW): the labels and who sees what *"yes"*, *"the website is huge … Google search and
+maps are very very important more than Facebook … a little information on Facebook Instagram without breaching anything"*, and the "take me
+there, with the words ready" buttons *"okay please proceed"* (one-tap Google editing later, once Google approves Terrain: his "bigger
+option"). Design `~/Ministry Work/Terrain-work/v77/DESIGN-DIGITAL.md` (the sample: all 129 Pennsylvania congregations read 7 Oct 2026, the
+second look changed 85 would-be false findings). Folded into PR #30 (his rule).
+- **The server** (registered pastors only; never a public file: the findings name real churches): `digital.mjs`, `digital-read.mjs`,
+  `digital-sweep.mjs` (repo map above). A conference is read when one of its pastors first opens Compare your churches (about an hour; it
+  keeps going if he closes Terrain), then monthly. `CONF_ORG`: every NAD conference's code in eAdventist (only `DIGITAL_CONFS` are read).
+- **The page** (block "v10.60.0 — DIGITAL FOOTPRINT" before LEARN FROM OTHER CONFERENCES; `chcRender` calls `dfMount`): `DF`, `DF_T`/`dfT`
+  (EN + ES), `dfLoad` (GET, POST read once, a poll every 20 s while reading), `dfContext` (the conference's area codes, numbers printed on
+  3+ sites, sites two churches claim), **`dfJudge`** (six areas: Website, Pastor's name, Google & Maps, Facebook & Instagram, YouTube & live
+  stream, Reaching out; Current · Needs work · Needs help now; "Not read" / "None found" grey), `dfChurchSite` (a found site is the
+  church's only by its own title or address, never a directory, no "II" either way, a phone of the conference), `dfPersonLike` /
+  `dfCleanName` / `dfSame` (people's names only, where a visitor looks: home, about, pastor, staff, leaders, contact, visit), `dfMine` (his
+  churches: the listing's pastor is his registration's name, or a church of his by name; there the pastor of record is his registration),
+  `dfFixes` (the fix for what was found, who, when, free), `dfWordsFor` (the words, ready to paste), `dfActs` (Open on Google Maps · Put the
+  church on Google · Frame · Correct it on {directory} · the official listing · Facebook · YouTube Studio), `dfReportHTML` / `dfPdf` (jsPDF),
+  "Make it a proposal" (Make the Case, Media & communication). Parts: 1 Your churches (Check again) · 2 Side by side (two or more) · 3 Who
+  needs help most · 4 Every church (filters, search, a tap opens it) · 5 How to fix it · 6 The report · What this can and cannot see.
+- **Never accuse** (his rule): "no website" only after the listing, its address variants, Google's listing and (with the key) a search, said
+  "we could not find" with "Checked: …"; a site that refuses our reader or asks robots.txt not to be read is "Not read"; a template site's
+  words inside its scripts are read (Lansdale's service times); a business directory is never a church's site; for another church a pastor
+  mismatch is "Site and listing disagree" (either may be stale); Facebook unsearched is "Not linked", never "no Facebook page".
+- Tests: `digital-function` (new, 46) and `v60-digital` (new, 44), failing first on v10.59.3 (`v77/logs/ff-v60-digital.log`; the functions did
+  not exist). Checked in Chrome with the sample's real findings (`v77/shots60.mjs`, `v77/serve60.mjs`, `v77/to-findings.mjs`): computer 1366,
+  phone 390 EN and ES, no sideways scroll, no page errors. Full suite: 160 suites · 10,839 passed · 0 failed (then the tests' pastor names made up, a public repo: the two new suites rerun, 46 and 44). Samples `Terrain-v10.60.0-samples` (Google "Not read yet" in
+  them: the key lives only in Netlify).
+
+**v10.59.3 (8 Oct 2026, quick lane) — a way out of a member's Spiritual Gifts page.** The pastor, on his own report opened from the share
+link on his own device: *"I noticed there's no way out of your spiritual gifts report … no way to get out of it. It's just stuck there."* On a
+member's link the header hides every way into the app on purpose; now it shows one door (`gfMemberDoor`, `gfDoorPaint`, `gfDoorGo`,
+`gfRenderDone`, `GF_DONE_VIEW`; the report's actions `done` / `back`): on a device holding the pastor's own registration (`regGet()`: he is
+trying the link himself) **← Back to Terrain** ("← Terrain" on a phone's narrow header), in the header (`#gfdoor`, where the main-menu button sits) and at the end of the report
+(`#gfback`), which drops the link and reloads into the app (`gfLeaveToTerrain`; tests stub `window.__gfLeave`); on a member's phone **Done**,
+once the report is drawn (`#gfdoor`, `#gfdone`), a short thank-you page by first name ("Your result has gone to your pastor." when sent;
+"Your report stays on this phone: open this link again whenever you want to read it.") with **See my report again**. Nothing sends, saves or
+deletes; the brand link stays hidden; never inside the app, on the sample report or on a confirmer's link. Also in this release: **the three strongest gifts named on the small
+wheel** (the pastor, of the results list: *"on the very right circular chart if you can put like teaching and whatever in tiny words that would
+look better … just the 3 main ones"*; and the chips already run strongest first, left to right): `gfMiniWheelSVG` draws each of the three
+in tiny words in a column right or left of the ring (the side its wedge points to), in its family's colour, a thin line from the wedge's
+tip to the name, names on a side kept 8 apart and inside the drawing (viewBox 192 × 80; the row's wheel column 192 px, 150 on a phone); `v57-1-gifts-clean` checks the names and the spacing. **The survey's section chips slide** (the pastor, of the chip bar
+on a computer: *"one of them or a couple of them are hidden behind and I don't want them to be necessarily two lines … maybe if you bring
+your cursor or you can just swipe and it will scroll left"*; `snWire`, `snArrows`): one line as before; a phone swipes as before; with a
+mouse the wheel over the bar slides it sideways (only when chips are off an edge), a drag slides it without opening the chip under the
+mouse, and a small arrow (`.sn-arrow`, a `span` with `role=button`, never a `<button>`: the tests count the bar's buttons as its sections)
+at an end where chips are off that edge slides a screenful; never on a touch screen (`hover:none`). `v59-3-chips-slide` (new, failing
+first on v10.59.2: `v76/ff-v59-3-chips.log`) stands the bar's widths in. And the
+`v42-lock` check that failed once on GitHub's slower runner (the lock and his slide arrive as two stream events) waits for both. Tests:
+`v59-3-report-door` (new; failing first on v10.59.2: `v76/ff-v59-3.log`). Checked in Chrome (`v76/shots32.mjs`, phone 390): a member's
+report, the thank-you page, the pastor's device. Full suite: 158 suites · 10,749 passed · 0 failed. Samples `Terrain-v10.59.3-samples`. Its own PR (PR #29 was merged).
 
 **v10.59.2 (8 Oct 2026, quick lane) — Compare your churches last on the main menu.** The pastor: *"put compare your churches to the very
 bottom right instead because it's the weakest one"*. The second row is now Evangelism Planner · Learn from other conferences · Compare your
@@ -2657,6 +2729,11 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
   (build · debt · review, Church Manual p. 153) and `buyConfAsk`, `buyRiskSix` (a slide's six safeguards), `buyEventNote` / `buyLineRule`
   (a sale or an event under "Something else"), `buyPricesResume`, `buyBoxFit`, `BUY_CM.editionSlide`, `BUY_P.heads.sop`, `BUY_SL.askWork`
 
+**Digital footprint** (v10.60.0; block "v10.60.0 — DIGITAL FOOTPRINT" before "LEARN FROM OTHER CONFERENCES"; the server `digital*.mjs`)
+- `DF`, `DF_T`/`dfT`, `dfLoad`, `dfMount` (from `chcRender`), `dfPaint`/`dfWire`, `dfContext`, `dfJudge`, `dfChurchSite`, `dfPersonLike`, `dfCleanName`, `dfSame`, `dfMine`,
+  `dfFixes`, `dfWordsFor`, `dfActs`, `dfReportText`/`dfReportHTML`/`dfPdf`, `dfAgain`, `DF_HOW`; server: `CONF_ORG`, `parseEntry`, `website`, `textOf`, `pastorsIn`,
+  `robotsRules`/`robotsAllow`, `youtube`, `google`/`pickPlace`, `search`/`sift`, `readChurch`, `runJob`; `start`/`rescue` in digital.mjs; `sweep`
+
 **Your churches** (v10.57.0; block "YOUR CHURCHES" before "LEARN FROM OTHER CONFERENCES")
 - `CH_T` / `chT`, `chList`, `chName`, `chTown`; the chip `chChipHTML` / `chChipPaint` (`#chbtn`); the sheet `chSheetOpen` / `chSheetHTML` /
   `chSheetDraw` / `chSheetClose` (`#ch-sheet`, `CH_ST`); the snapshot `chSnapSave` (`CH_SNAP_KEYS`, `uChurch().snap`); the comparison
@@ -2838,6 +2915,9 @@ Don't relitigate them without a reason he'd accept.
 - **The main menu is very simple** (v10.56.1, his words: "the only thing that should be here is welcome to terrain … the Ellen White
   quote and then … the five icons"): the welcome, the quote, the tools (six since v10.57.0, his "a comparison between churches"), and
   what Terrain is for. Nothing else.
+- **Digital footprint never accuses** (v10.60.0, his rule: "make sure we're not missing something so we don't accuse them"): "no website" only after a
+  double check, said "we could not find" with what was checked; a refusal or a robots.txt is "Not read"; Facebook and Instagram are never read; Google's
+  listing and the website carry the weight (his words); every registered pastor of a conference sees all its churches, the report only for his own.
 - **Each church is its own, and they are compared, never ranked** (v10.57.0): one button in the header switches; the comparison shows
   differences in plain sentences and counts only.
 - **Clear next steps** (his request, v10.43 §5; v10.56.1 took "Your path" off the hub at his word): "What's next" at the very bottom of the survey (Make the case for each ministry in
