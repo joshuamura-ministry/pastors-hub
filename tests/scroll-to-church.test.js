@@ -30,8 +30,12 @@ setTimeout(async()=>{
 
   console.log('\n-- Demo: the page goes to "Your church" --');
   scrolledTo=[]; D.getElementById('u-demo').click(); await wait(80);
-  c('the page was taken to "Your church"', scrolledTo.some(t=>t[0]==='gf-church'));
-  c('instantly, never animated', scrolledTo.filter(t=>t[0]==='gf-church').every(t=>t[1]==='auto')&&scrolledTo.every(t=>t[1]!=='smooth'));
+  // v10.56.2 (stale, not a regression): the pastor, "when I finished it jumped to the top, which is very jolting … it should just scroll
+  // to the right and be one full page that shows all the information": Demo and Save never move the page; the card slides to its last
+  // page, "At a glance" (was: the page jumped to "Your church", instantly)
+  c('the page did not move', scrolledTo.filter(t=>t[0]==='gf-church').length, 0);
+  c('never animated anywhere', scrolledTo.every(t=>t[1]!=='smooth'));
+  c('…the card slid to "At a glance"', w.eval('U_STEP_I'), 3);
   c('the fold is open on the sample church', [D.getElementById('gf-church').open,w.eval('capGet().demo')], [true,true]);
   await wait(300);
   c('no background ideas were asked for (Q3)', [calls.length,w.eval('(uChurch().drafts||[]).length')], [0,0]);
@@ -41,8 +45,8 @@ setTimeout(async()=>{
   scrolledTo=[]; D.querySelector('[name="churchName"]').value='Test';   // v10.49.0: no money boxes in "Your church" any more
   w.HTMLFormElement.prototype.reportValidity=()=>true;
   D.getElementById('cap-done').click(); await wait(80);
-  c('Save took the page to "Your church"', scrolledTo.some(t=>t[0]==='gf-church'));
-  c('also instantly', scrolledTo.filter(t=>t[0]==='gf-church').every(t=>t[1]==='auto'));
+  c('Save did not move the page (v10.56.2)', scrolledTo.filter(t=>t[0]==='gf-church').length, 0);
+  c('…it slid to "At a glance"', w.eval('U_STEP_I'), 3);
   c('nothing asked of the server on Save either', calls.length, 0);
   c('the old name still makes the same jump (goToMobilization → capShowSaved)', (scrolledTo=[],w.eval('goToMobilization()'),scrolledTo.some(t=>t[0]==='gf-church'&&t[1]==='auto')), true);
   console.log(`\n${pass} passed, ${fail} failed`);

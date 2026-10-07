@@ -104,6 +104,12 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   console.log('-- the landing --');
   E('openTool("gifts")');
   let h=D.getElementById('giftbody');
+  // v10.56.2 (stale, not a regression): the pastor, "the sample report shouldn't just be there … if you click complete a demo … then the
+  // sample report will show": none before the demo; "Fill in demo results" brings it (its member is one of the demo members)
+  c('no sample report before the demo', !!h.querySelector('#gfsample'), false);
+  h.querySelector('[data-gf-demo="fill"]').click();
+  h=D.getElementById('giftbody');
+  c('…the demo filled: its first member is the sample report\'s', [E('gfRoster().length'),E('gfRoster().some(r=>gfDecode(r.code).name==="Alex Rivera (sample)")')], [24,true]);
   const sb=h.querySelector('#gfsample');
   c('"See a sample report" is on the landing', !!sb&&sb.querySelector('b').textContent, 'See a sample report');
   c('with its one line', sb&&sb.querySelector('.gfstx>span').textContent, 'What a member receives when they finish — for showing people before they take it.');
@@ -248,6 +254,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   c('…its PDF named for him, SAMPLE in no head', [!!saved&&/^Joshua-Mura-Spiritual-Gifts-\d{4}-\d{2}-\d{2}\.pdf$/.test(saved.name),!!saved&&pdfHeads().every(p=>p.length&&!p.includes('SAMPLE'))], [true,true]);
   const mine0=C.E('JSON.stringify(GFS)');
   C.E('GF_VIEW="roster"; gfRender();'); hc=C.D.getElementById('giftbody');
+  C.E('gfDemoFill({quiet:true}); gfRender();'); hc=C.D.getElementById('giftbody');   // v10.56.2: the sample report shows with the demo
   C.writes.length=0;
   hc.querySelector('#gfsample').click(); hc=C.D.getElementById('giftbody');
   c('the sample opens beside it…', [C.E('GF_VIEW'),!!hc.querySelector('#gfsampbar')], ['sample',true]);
@@ -279,6 +286,7 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   c('no boot errors (es)', B.errs, []);
   B.E('openTool("gifts")');
   let hb=B.D.getElementById('giftbody');
+  hb.querySelector('[data-gf-demo="fill"]').click(); hb=B.D.getElementById('giftbody');   // v10.56.2: the sample report shows with the demo
   const sbe=hb.querySelector('#gfsample');
   c('"Ver un informe de ejemplo", with its line in Spanish', [sbe&&sbe.querySelector('b').textContent,sbe&&sbe.querySelector('.gfstx>span').textContent],
     ['Ver un informe de ejemplo','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.']);

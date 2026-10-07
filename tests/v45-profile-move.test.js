@@ -43,37 +43,41 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   c('…its words: what it holds, and that the money is on the proposal', P.txt('#gf-church > summary'), 'People, rooms and skills The money for a ministry is on its proposal.');   // v10.49.0: money moved to the proposal
   c('…the form calls it by the church\'s name and "What your church has", never "One profile for My church"', [P.txt('#u-cap-form .u-heading h3'),/One profile for|My church/.test(P.txt('#u-cap-form .u-heading')||''),/^For Sampleton SDA/.test(P.txt('#u-cap-form .u-heading p.note')||'')], ['What your church has',false,true]);
   c('…closed when the church has its information (the average church)', P.q('#gf-church').open, false);
-  c('…the summary box first (#capsumslot), then the three-step form (#capslot; v10.49.0: Money moved to the proposal)', [!!P.q('#gf-church #capsumslot .capsum'),!!P.q('#gf-church #capslot #u-cap-form'),P.qa('#gf-church .u-steps-nav li').length], [true,true,3]);
+  // v10.56.2 (stale, not a regression): the summary is the slider's fourth page, "At a glance" (#u-sumbody), and Demo and Save slide to it
+  // without moving the page (the pastor: "when I finished it jumped to the top, which is very jolting … it should just scroll to the right")
+  c('…the form (#capslot) with its three steps and At a glance, the summary its last page (no box above it)', [!!P.q('#gf-church #capsumslot'),!!P.q('#gf-church #capslot #u-cap-form #u-sumbody .capsum'),P.qa('#gf-church .u-steps-nav li').length], [false,true,4]);
   c('one #capslot on the page (the id stays unique)', P.qa('[id="capslot"]').length, 1);
   c('no Gifts first card inside (the section\'s own Spiritual Gifts line says it), and none on the landing (v10.50.0: "take that box away")', [P.qa('#gf-church [data-gf-first]').length,P.qa('#gifts [data-gf-first="landing"]').length,!!P.q('#u-gfnote [data-u-gifts]')], [0,0,true]);
   // v10.49.0: as v10.44.1 did, but for money (startup and monthly are null: a proposal states what its ministry needs)
   c('capMerged() reads the average church as v10.44.1 did, without the money (Make the Case, the Planner, gfReadiness)', crypto.createHash('sha1').update(P.E('JSON.stringify(capMerged())')).digest('hex'), CAP_1049);
   c('the Save button and the status, true now', [P.txt('#cap-done'),P.txt('#u-cap-status')], ['Save church','Saved for this church.']);
-  c('the summary\'s foot line (the average church is a sample): Clear all is above it now', P.txt('#capsumslot .capsumfoot'), 'The sample church: press Clear all above when you are done.');
+  c('the summary\'s foot line (the average church is a sample): Clear all is above it now', P.txt('#u-sumbody .capsumfoot'), 'The sample church: press Clear all above when you are done.');
   P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`);
-  c('…for his own church: who reads these numbers', P.txt('#capsumslot .capsumfoot'), 'Make the Case and the Evangelism Planner read these numbers.');
+  c('…for his own church: who reads these numbers', P.txt('#u-sumbody .capsumfoot'), 'Make the Case and the Evangelism Planner read these numbers.');
 
   console.log('\n-- Demo and Save land on "Your church", at once --');
   P=page(); await ready(P); survey(P); home(P); counted(P); await sleep(30);
   c('an empty church: "Finish the three steps to save your church." (v10.50.0: three steps since v10.49.0)', P.txt('#u-cap-status'), 'Finish the three steps to save your church.');
   P.w.__scrolled.length=0;
-  P.q('#u-demo').click(); await sleep(120);
-  c('Demo: the sample church, the fold open, the page jumped to it instantly (never smooth)',
-    // v10.55.0: in the survey the section chips slide the active chip into view (inline, smooth; no id): the page's own jumps are instant
-    [P.J('capGet().demo'),P.q('#gf-church').open,P.w.__scrolled.filter(s=>s.id==='gf-church').map(s=>s.how).slice(-1)[0],P.w.__scrolled.filter(s=>s.id).every(s=>s.how!=='smooth')], [true,true,'auto',true]);
-  c('…the summary box fills in, its foot line for the sample', [!!P.q('#capsumslot .capsum.demo'),P.txt('#capsumslot .capsumfoot')], [true,'The sample church: press Clear all above when you are done.']);
+  P.q('#u-demo').click(); await until(()=>P.E('U_STEP_I')===3,3000); await sleep(80);
+  // v10.56.2 (stale): Demo slides the card to "At a glance"; the page does not move (was: the page jumped to the card, instantly)
+  c('Demo: the sample church, the fold open, the page not moved, nothing smooth',
+    [P.J('capGet().demo'),P.q('#gf-church').open,P.w.__scrolled.filter(s=>s.id==='gf-church').length,P.w.__scrolled.filter(s=>s.id).every(s=>s.how!=='smooth')], [true,true,0,true]);
+  c('…the summary (At a glance) fills in, its foot line for the sample', [!!P.q('#u-sumbody .capsum.demo'),P.txt('#u-sumbody .capsumfoot'),P.E('U_STEP_I')], [true,'The sample church: press Clear all above when you are done.',3]);
   c('…and nothing is asked of the server: no background ideas', P.E('window.__auto'), 0);
   c('…still the survey', [P.E('TOOL'),P.q('#report').classList.contains('show')], ['survey',true]);
   P.w.__scrolled.length=0;
   P.q('#u-cap-form [name="churchName"]').value='Bucks County SDA';
   P.q('#u-cap-form').dispatchEvent(new P.w.Event('submit',{cancelable:true}));
-  await sleep(120);
-  c('Save: saved, the fold open, the jump to it instant, no background ideas', [P.J('capGet().confirmed'),P.q('#gf-church').open,P.w.__scrolled.filter(s=>s.id==='gf-church').map(s=>s.how).slice(-1)[0],P.E('window.__auto')], [true,true,'auto',0]);
+  // the slide to At a glance runs two animation frames after Save: wait for it (a fixed 120 ms failed once under the full suite's load)
+  await until(()=>P.E('U_STEP_I')===3,3000); await sleep(40);
+  c('Save: saved, the fold open, the page not moved, on At a glance, no background ideas (v10.56.2)', [P.J('capGet().confirmed'),P.q('#gf-church').open,P.w.__scrolled.filter(s=>s.id==='gf-church').length,P.E('U_STEP_I'),P.E('window.__auto')], [true,true,0,3,0]);
   c('goToMobilization is the same jump, by its old name', P.E(`goToMobilization.toString().includes('capShowSaved')`), true);
   survey(P); await sleep(40);
   c('a survey drawn after it asks for no ideas either', P.E('window.__auto'), 0);
   c('the survey\'s load (run) no longer starts them', /setTimeout\(autoIdeas/.test(P.E('run.toString()')), false);
-  c('"Review members in Spiritual Gifts" opens the Volunteers fold on the Spiritual Gifts page', (home(P),P.q('#u-team-link').click(),[P.E('TOOL'),!!(P.q('#gfteamslot details')&&P.q('#gfteamslot details').open)]), ['gifts',true]);
+  // v10.56.2 (stale, not a regression): the pastor, "if there's a button that points to spiritual gifts, just send the person to the main page for spiritual gifts. Don't send them to like any other spot"
+  c('"Review members in Spiritual Gifts" opens the Spiritual Gifts main page (the members are its step 3)', (home(P),P.q('#u-team-link').click(),[P.E('TOOL'),P.E('GF_VIEW'),!!P.q('#gf-positions #gfteamslot details')]), ['gifts','roster',true]);
 
   console.log('\n-- a half-typed profile survives the survey\'s own redraws, and a trip to another tool --');
   P=page({store:STORE}); await ready(P); home(P); await sleep(30);
@@ -110,7 +114,7 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
       'When can the team serve?','Fill in a demo church','Refill the demo church','Church name','Step 1 of 4','Save church','Next step','Nothing to add here','Kitchen / fellowship hall','bilingual members',
       'Tue evening','Mostly older members','Review needed','Not recorded','What your church has','One profile for'];
     c('…and its form and summary in Spanish too: none of their English words left inside "Su iglesia"', EN.filter(w=>t.includes(w)), []); }
-  c('…the summary\'s foot lines', [P.txt('#capsumslot .capsumfoot'),(P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`),P.txt('#capsumslot .capsumfoot'))],
+  c('…the summary\'s foot lines', [P.txt('#u-sumbody .capsumfoot'),(P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`),P.txt('#u-sumbody .capsumfoot'))],
     ['La iglesia de ejemplo: toque Borrar todo arriba cuando termine.','Presentar el caso y el Planificador de evangelismo usan estas cifras.']);
   c('…the hub tile', (P.E(`showHub()`),P.txt('[data-tool="survey"] .td')), 'Conozca a sus vecinos y lo que más necesitan.');
   c('no page error along the way', P.errs, []);

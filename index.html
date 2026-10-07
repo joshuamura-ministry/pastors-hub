@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.56.1
+     TERRAIN  v10.56.2
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.56.1" data-theme="dark">
+<html lang="en" data-version="v10.56.2" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.56.1">
-<title>Community Map — Terrain v10.56.1</title>
+<meta name="terrain-version" content="v10.56.2">
+<title>Community Map — Terrain v10.56.2</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -97,9 +97,9 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
    can be clipped by a measurement that came back wrong. */
 .u-stage{position:relative;overflow:hidden;height:clamp(380px,58vh,600px);
   border:1px solid var(--line);border-radius:12px;background:var(--panel)}
-.u-track{display:flex;width:300%;height:100%;   /* v10.49.0: three steps (Money moved to the proposal) */
+.u-track{display:flex;width:400%;height:100%;   /* v10.49.0: three steps (Money moved to the proposal); v10.56.2: and "At a glance" */
   transition:transform .48s cubic-bezier(.22,.8,.3,1);will-change:transform}
-.u-panel{display:block;flex:0 0 calc(100% / 3);width:calc(100% / 3);min-width:0;height:100%;overflow-y:auto;
+.u-panel{display:block;flex:0 0 calc(100% / 4);width:calc(100% / 4);min-width:0;height:100%;overflow-y:auto;
   overscroll-behavior:contain;padding:16px 18px 20px;box-sizing:border-box;scrollbar-width:thin}
 .u-panel[inert]{pointer-events:none}
 /* a soft fade at the foot of a panel, so it is obvious there is more below */
@@ -597,6 +597,9 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .capsumleft{font-size:.8rem;color:var(--ink2);margin:8px 0 0;padding-top:7px;border-top:1px dashed var(--line)}
 .capsumleft b{color:var(--acc)}
 .capsumfoot{margin:12px 0 0;font-size:.8rem}
+/* v10.56.2: the summary is the slider's last page, not a box above it */
+.u-sumpanel .capsum{border:0;box-shadow:none;background:none;padding:0;margin:0}
+.u-steps-nav li.u-sumtab b{font-size:.9em}
 @media print{.capsum{box-shadow:none;break-inside:avoid}.capsumg{border-left-color:#999}.capsumg h4{color:#333}}
 .u-quick{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:6px 0 14px}
 .u-quick .note{flex:1 1 260px;font-size:.8rem}
@@ -1447,8 +1450,14 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfsteps{list-style:none;margin:6px 0 18px;padding:0;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .gfsteps>li{display:flex}
 .gfstep{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:8px 16px 8px 10px;border:1px solid var(--line2);border-radius:999px;background:var(--panel);color:var(--ink);font:inherit;font-weight:650;cursor:pointer}
-.gfstep b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--acc) 22%,var(--panel2));color:var(--acc);font-family:var(--disp)}
-@media (hover:hover){.gfstep:hover{border-color:var(--acc)}}
+.gfstep b{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:color-mix(in srgb,var(--k,var(--acc)) 22%,var(--panel2));color:var(--k,var(--acc));font-family:var(--disp)}
+/* v10.56.2: each step in its own colour (GF_STEP_K), its border too, and its part's number */
+.gfstep[style*="--k"]{border-color:color-mix(in srgb,var(--k) 55%,var(--line2))}
+.gfpart[style*="--k"] .gfpn{background:color-mix(in srgb,var(--k) 22%,var(--panel2));color:var(--k)}
+.gfposn{margin:0 0 12px}
+.gfposnav{gap:8px;flex-wrap:wrap;margin:0 0 14px}
+.u-gfbtns{display:flex;flex-wrap:wrap;gap:8px 10px;align-items:center}
+@media (hover:hover){.gfstep:hover{border-color:var(--k,var(--acc))}}
 .gfstep:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .gfarrow{color:var(--ink3);font-size:1.1rem}
 @media (max-width:560px){.gfsteps{flex-direction:column;align-items:stretch}.gfsteps .gfarrow{display:none}.gfstep{width:100%}}
@@ -4337,13 +4346,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.56.1';
+const VERSION = 'v10.56.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9044,7 +9053,8 @@ const ES={
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
  'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
- 'Pastors Hub':'Pastors Hub','Your journey begins here. Choose a tool to begin.':'Su camino comienza aquí. Elija una herramienta para comenzar.',
+ 'Pastors Hub':'Pastors Hub','At a glance':'De un vistazo',
+ 'Your journey begins here. Choose a tool to begin.':'Su camino comienza aquí. Elija una herramienta para comenzar.',
  'What Terrain is for':'Para qué sirve Terrain',
  'Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.':'Terrain ayuda al pastor a ver el vecindario donde Dios ha puesto a la iglesia y a responder con un ministerio a su medida. Conozca su vecindario y lo que necesita, ayude a sus miembros a descubrir sus dones, convierta las mejores ideas en una propuesta que su iglesia pueda votar y planifique su evangelismo, de la preparación al seguimiento.',
  'Neighbors are neighbors, never targets: every tool points to Christ.':'Los vecinos son nuestros vecinos, nunca un objetivo: cada herramienta apunta a Cristo.',
@@ -14268,7 +14278,9 @@ function uGiftsNoteInner(){
   const count=n===0?L('No results yet.','Aún no hay resultados.'):d?L(`${fmtNum(n)} of ${fmtNum(d)} adults have answered.`,`${fmtNum(n)} de ${fmtNum(d)} adultos han respondido.`)
     :L(`${fmtNum(n)} have answered.`,`${fmtNum(n)} han respondido.`);
   return `<p><b>${L('Spiritual Gifts','Dones espirituales')}</b> ${L('Proposals are strongest once your members’ Spiritual Gifts results are in: send them the survey first, then choose a ministry and make the proposal.','Las propuestas son más sólidas cuando ya llegaron los resultados de Dones Espirituales de sus miembros: envíeles primero la encuesta y luego elija un ministerio y haga la propuesta.')} <span class="u-gfcount">${esc(count)}</span></p>
-    <p><button type="button" class="btn u-gfgo" data-u-gifts>${L('Send the Spiritual Gifts survey','Enviar la encuesta de Dones Espirituales')}</button></p>`;
+    <p class="u-gfbtns"><button type="button" class="btn u-gfgo" data-u-gifts>${L('Send the Spiritual Gifts survey','Enviar la encuesta de Dones Espirituales')}</button>
+      ${gfDemoOn()?`<button type="button" class="btn ghost" data-u-gfdemo="clear">${L('Clear demo results','Borrar los resultados de ejemplo')}</button>`
+        :`<button type="button" class="btn ghost" data-u-gfdemo="fill">${L('Fill in demo results','Llenar resultados de ejemplo')}</button>`}</p>`;
 }
 /* v10.55.1: something is left to do while the church is empty or the Spiritual Gifts results are too few for a proposal (the
    Proposal page's own rule, caseReadyNudgeHTML): the section then says "Start here" and its edge moves and glows. */
@@ -14278,7 +14290,8 @@ function uChurchTodo(){
   const few=!r||r.state==='none'||r.state==='low'||(r.state==='unknown'&&r.n<CASE_GIFTS_MIN);
   return empty||few;
 }
-function uChurchSecWire(){ const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>{ try{ gfInviteChurch(); }catch(e){ openTool('gifts'); } }; }
+function uChurchSecWire(){ const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
+  const d=document.querySelector('#u-gfnote [data-u-gfdemo]'); if(d) d.onclick=()=>{ if(d.dataset.uGfdemo==='clear'){ gfDemoClear(); gfDemoRedraw(false); } else gfDemoFill(); }; }
 /* After a save or new results (gfFirstRefresh): the frame, "Start here" and the count follow, without drawing the survey again. */
 function uChurchSecMark(){
   const s=document.getElementById('u-church'); if(!s||!s.classList.contains('u-churchsec')) return;
@@ -20993,13 +21006,16 @@ let GF_PUB_TARGET=null;   // set from the share link when a member opens it
 /* v10.55.0 — the pastor (6 Oct 2026): "you can remove the … fill-in information in the spiritual gifts when they go to spiritual gifts
    that's all it's gonna be about just spiritual gifts … just keep the spiritual gifts survey portion and … the results": two steps;
    "Your church" is in the Community Survey, before the neighborhood's needs (#u-church). */
+/* v10.56.2 — the pastor: "maybe we can have a three invite your members see the results and then one more step like fill the position and
+   make those steps like maybe different colors to be nice": each step, and its part's number, in its own colour. */
+const GF_STEP_K={invite:'var(--m-people)',results:'var(--acc)',positions:'var(--m-hardship)'};
 function gfStepsHTML(){
-  const st=[['invite',L('Invite your members','Invite a sus miembros')],['results',L('See the results','Vea los resultados')]];
-  return `<ol class="gfsteps" aria-label="${esc(L('Two steps','Dos pasos'))}">${st.map(([k,t],i)=>`<li><button type="button" class="gfstep" data-gf-step="${k}"><b>${i+1}</b><span>${esc(t)}</span></button></li>`).join('<li class="gfarrow" aria-hidden="true">→</li>')}</ol>`;
+  const st=[['invite',L('Invite your members','Invite a sus miembros')],['results',L('See the results','Vea los resultados')],['positions',L('Fill the positions','Llene los puestos')]];
+  return `<ol class="gfsteps" aria-label="${esc(L('Three steps','Tres pasos'))}">${st.map(([k,t],i)=>`<li><button type="button" class="gfstep" data-gf-step="${k}" style="--k:${GF_STEP_K[k]}"><b>${i+1}</b><span>${esc(t)}</span></button></li>`).join('<li class="gfarrow" aria-hidden="true">→</li>')}</ol>`;
 }
 function gfStepsWire(h){
   h.querySelectorAll('[data-gf-step]').forEach(b=>b.onclick=()=>{
-    const k=b.dataset.gfStep, el=document.getElementById(k==='invite'?'gf-invite':'gf-results'); if(!el) return;
+    const k=b.dataset.gfStep, el=document.getElementById(k==='invite'?'gf-invite':k==='positions'?'gf-positions':'gf-results'); if(!el) return;
     el.scrollIntoView({block:'start',behavior:'auto'}); });
 }
 function gfRenderRoster(h){
@@ -21013,7 +21029,7 @@ function gfRenderRoster(h){
     <p class="sub">${L(`Twenty-one gifts, a hundred and five statements, about ${GF_MINUTES} minutes. Members discover where they fit; you see who you have.`,`Veintiún dones, ciento cinco afirmaciones, unos ${GF_MINUTES} minutos. Los miembros descubren dónde encajan; usted ve con quiénes cuenta.`)}</p>
   </div>
   ${gfStepsHTML()}
-  <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h">
+  <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h" style="--k:${GF_STEP_K.invite}">
   <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">1</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
   <div class="gfdoors">
     <button class="gfdoor" data-gv="setup" style="--k:var(--m-people)">
@@ -21031,11 +21047,11 @@ function gfRenderRoster(h){
   </div>
   </section>
 
-  <section class="gfpart" id="gf-results" aria-labelledby="gf-results-h">
+  <section class="gfpart" id="gf-results" aria-labelledby="gf-results-h" style="--k:${GF_STEP_K.results}">
   <h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">2</span>${L('See the results','Vea los resultados')}</h3>
   <div class="card gfcard gfresults" style="--k:var(--acc)">
     <div class="gfrh"><h3>${nres?L(nres+' result'+(nres===1?'':'s')+' in',nres+' resultado'+(nres===1?' recibido':'s recibidos')):L('Results','Resultados')}</h3>
-      <div class="gfnav" style="margin:0"><button class="btn ghost gfsm" id="gfpull">${L('Check for new results','Buscar resultados nuevos')}</button>${nres?`<button class="btn ghost gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button>`:''}</div></div>
+      <div class="gfnav" style="margin:0"><button class="btn ghost gfsm" id="gfpull">${L('Check for new results','Buscar resultados nuevos')}</button>${nres?`<button class="btn ghost gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button>`:''}${gfDemoOn()?`<button class="btn ghost gfsm" data-gf-demo="clear">${L('Clear demo results','Borrar los resultados de ejemplo')}</button>`:`<button class="btn ghost gfsm" data-gf-demo="fill">${L('Fill in demo results','Llenar resultados de ejemplo')}</button>`}</div></div>
     <p class="note" id="gflinknote" role="status"></p>
     ${gfCampaigns().filter(c=>!c.current).map(c=>{ const k=list.filter(r=>r.pub===c.pub&&r.rid).length; return k?`<div class="gfclosedrow"><p class="note">${L(`${k} result${k===1?'':'s'} on this list came in through a link you closed${c.closed?' on '+esc(gfDateText(new Date(c.closed).toISOString().slice(0,10))):''}.`,`${k} resultado${k===1?'':'s'} de esta lista ${k===1?'llegó':'llegaron'} por un enlace que usted cerró${c.closed?' el '+esc(gfDateText(new Date(c.closed).toISOString().slice(0,10))):''}.`)}</p>
       <button class="btn ghost gfsm gfpurge" data-pub="${esc(c.pub)}">${L('Delete everything from that link','Eliminar todo lo de ese enlace')}</button></div>`:''; }).join('')}
@@ -21049,14 +21065,20 @@ function gfRenderRoster(h){
         <button class="btn ghost gfdel" data-i="${i}">${L('Delete','Eliminar')}</button></div></div>`;}).join('')
       :`<p class="note">${L('Nothing yet. Share the link with a few members and check back here.','Todavía nada. Comparta el enlace con algunos miembros y vuelva a revisar aquí.')}</p>`}
   </div>
-    <button type="button" class="gfsample" id="gfsample">
+    ${gfDemoOn()?`<button type="button" class="gfsample" id="gfsample">
       <span class="gfsico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h4"/></svg></span>
       <span class="gfstx"><b>${L('See a sample report','Ver un informe de ejemplo')}</b>
         <span>${L('What a member receives when they finish — for showing people before they take it.','Lo que recibe un miembro al terminar, para mostrárselo a otros antes de que la hagan.')}</span></span>
       <span class="gfgo" aria-hidden="true"><i></i></span>
-    </button>
+    </button>`:''}
   </section>
-  <div id="gfteamslot"></div>`;
+  <section class="gfpart" id="gf-positions" aria-labelledby="gf-positions-h" style="--k:${GF_STEP_K.positions}">
+  <h3 class="gfpart-h" id="gf-positions-h"><span class="gfpn">3</span>${L('Fill the positions','Llene los puestos')}</h3>
+  <p class="note gfposn">${nres?L('See who fits where: your members’ gifts beside your church’s ministries and your neighborhood’s needs. Then ask each one in person.','Vea quién encaja dónde: los dones de sus miembros junto a los ministerios de su iglesia y las necesidades de su vecindario. Luego invite a cada uno en persona.')
+    :L('Once results are in, you see here who fits where, and whom to ask for each ministry.','Cuando lleguen los resultados, aquí verá quién encaja dónde y a quién invitar para cada ministerio.')}</p>
+  ${nres?`<div class="gfnav gfposnav"><button class="btn gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button><button class="btn ghost gfsm" data-gf-tocase>${L('Who to ask, in Make the Case','A quién invitar, en Presentar el caso')}</button></div>`:''}
+  <div id="gfteamslot"></div>
+  </section>`;
 
   // The volunteer roster is back-office; it folds under the results. It is
   // mounted LIVE inside the fold, because uTeamMount looks its buttons up by
@@ -21065,7 +21087,9 @@ function gfRenderRoster(h){
     if(slot){ slot.innerHTML=`<details class="u-details gfback"><summary>${L('Volunteers, skills and availability','Voluntarios, habilidades y disponibilidad')}</summary><div id="gfteam"></div></details>`;
       uTeamMount(slot.querySelector('#gfteam')); } }
   gfWireChurchNav(h);
-  gfStepsWire(h);   // v10.50.0: 1 Your church → 2 Invite your members → 3 See the results
+  gfStepsWire(h);   // v10.50.0: 1 Your church → 2 Invite your members → 3 See the results; v10.56.2: 1 Invite → 2 Results → 3 Fill the positions
+  h.querySelectorAll('[data-gf-demo]').forEach(b=>b.onclick=()=>{ if(b.dataset.gfDemo==='clear'){ gfDemoClear(); gfDemoRedraw(false); } else gfDemoFill(); });
+  h.querySelectorAll('[data-gf-tocase]').forEach(b=>b.onclick=()=>{ try{ openTool('case'); }catch(e){} });
   { const sb=h.querySelector('#gfsample');
     if(sb) sb.onclick=()=>{ GF_VIEW='sample'; gfRender(); window.scrollTo({top:0,behavior:'auto'}); }; }
   document.getElementById('gfpull').onclick=async()=>{
@@ -22643,8 +22667,29 @@ const U_SKILLS_ES={lead:'Puede dirigir un grupo o dar un estudio',medical:'Enfer
 const uSkillName=s=>(LANG==='es'&&U_SKILLS_ES[s.k])||s.n;
 function uValues(form,name){return [...form.querySelectorAll(`[name="${name}"]:checked`)].map(e=>e.value);}
 
-let U_STEP_I=0;
+let U_STEP_I=null;   // v10.56.2: null until the card is first drawn (then the summary for a church already saved, else step 1)
 const U_WIZ=['Your church','Your building','Skills'];   // v10.49.0: Money moved to the proposal
+/* v10.56.2 — the pastor (7 Oct 2026), of the summary box above the form ("The sample church, as filled in"): "should be at the bottom as
+   like the results of filling it in it shouldn't jump to the top like that … when I finished it jumped to the top, which is very jolting
+   … it should just scroll to the right and be one full page that shows all the information … so when you finish filling in the
+   information, it will just go. It will scroll right just like everything else does and it will be that page … right under that will be
+   … the send the spiritual gift survey and under that neighborhood needs that that's gonna save some space too". The summary is the
+   slider's fourth page, "At a glance" (U_SUM); Save and Demo slide to it (capToSummary) and never scroll the page. */
+const U_SUM=3, U_SUM_T={en:'At a glance',es:'De un vistazo'};
+let CAP_SHOW=null;
+/* The survey drawn again around the card (render) can shift what is above it: the card is kept where it was on the screen, so nothing
+   seems to move (measured in Chrome: Demo moved it 440 px on a computer, 1,119 on a phone, before this). */
+function capKeepPlace(fn){
+  const el=document.getElementById('gf-church'), t0=el&&el.isConnected?el.getBoundingClientRect().top:null;
+  try{ fn(); } finally{
+    if(t0!=null){ const el2=document.getElementById('gf-church'); if(el2&&el2.isConnected){ const d=el2.getBoundingClientRect().top-t0; if(Math.abs(d)>1) window.scrollBy(0,d); } }
+  }
+}
+function capToSummary(){
+  const f=$('gf-church'); if(f&&!f.open) f.open=true;
+  const go=()=>{ if(typeof CAP_SHOW==='function') CAP_SHOW(U_SUM,false,true); };
+  requestAnimationFrame(()=>requestAnimationFrame(go));
+}
 
 /* v10.42: "Fill in a demo church" fills the realistic average church (the pastor, 29 Sep 2026: "Yes" to Q3; section D's
    Sampleton SDA): about 80 members on the books, 55 in average Sabbath attendance (46 adults), one fellowship hall (60) and two
@@ -22692,9 +22737,13 @@ const CASE_SAMPLE_CHURCH={
 };
 function capFillDemo(){
   capSave(JSON.parse(JSON.stringify(DEMO_CHURCH)));
-  CAP_DONE=true; U_FILTER='auto'; U_STEP_I=0;
-  if(DATA&&TOOL==='survey') render();
-  capRender(); gfChurchSum(); uChrome(); capShowSaved();   // v10.45.0: no background ideas (Q3)
+  if(!gfDemoOn()) gfDemoFill({noChurch:true,quiet:true});   // v10.56.2: the demo church and its members' demo results, one demonstration
+  // v10.56.2: from the step he is on, the card slides to "At a glance" (already there: it stays); the page never moves
+  const at=U_STEP_I===U_SUM; if(!at) U_STEP_I=Math.max(0,Math.min(U_SUM-1,U_STEP_I==null?0:U_STEP_I));
+  CAP_DONE=true; U_FILTER='auto';
+  capKeepPlace(()=>{ if(DATA&&TOOL==='survey') render();
+    capRender(); gfChurchSum(); uChrome(); try{ gfFirstRefresh(); }catch(e){} });
+  if(!at) capToSummary();   // v10.45.0: no background ideas (Q3)
 }
 /* v10.45.0: the profile lives on the Spiritual Gifts landing ("Your church", #gf-church). After Save or Demo the fold opens and
    the page jumps to it: instant, not smooth (a smooth scroll from wherever the redraw left the page "starts at the bottom"), and
@@ -22706,14 +22755,14 @@ function capShowSaved(){
   requestAnimationFrame(()=>{ jump(); requestAnimationFrame(()=>jump()); });
 }
 function goToMobilization(){ capShowSaved(); }
-/* The summary box above the form, in the card. */
-function gfChurchSum(){ const s=$('capsumslot'); if(s) s.innerHTML=capSummaryHTML(); }
+/* The summary, the slider's last page (v10.56.2; it was a box above the form). */
+function capSumPanelInner(){ return capSummaryHTML()||`<p class="note">${L('Save your church, and everything you entered shows here, on one page.','Guarde su iglesia, y todo lo que escribió aparece aquí, en una sola página.')}</p>`; }
+function gfChurchSum(){ const s=$('u-sumbody'); if(s) s.innerHTML=capSumPanelInner(); }
 /* v10.55.0: the church card, in the Community Survey before the neighborhood's needs (#u-church): open while nothing is filled in,
    its one-line summary once it is. Kept live across the survey's redraws (gfChurchHome), so what he typed and his step stay. */
 function gfChurchCardHTML(ch){
   return `<details class="card gfcard gf-church" id="gf-church" data-church="${esc(String(ch.id))}" style="--k:var(--acc)"${gfChurchEmpty()?' open':''}>
     <summary><b>${L('People, rooms and skills','Personas, salones y habilidades')}</b> <span class="note">${L('The money for a ministry is on its proposal.','El dinero de cada ministerio está en su propuesta.')}</span></summary>
-    <div id="capsumslot"></div>
     <div class="askpanel" style="margin:14px 0"><div id="capslot"></div></div>
   </details>`;
 }
@@ -22749,6 +22798,7 @@ function capClearAll(){
   delete ch.followUp; delete ch.cadence;   // v10.43 (D14): his next steps and "Runs as"; the Connections list (connect) is kept: people are not plans
   ch.lib={}; ch.fresh={};   // v10.40: library ideas saved with the plan, and the fresh AI ideas (drafts, as above)
   LIB_UI.survey=LIB_UI_BLANK(); LIB_UI.case=LIB_UI_BLANK();
+  try{ gfDemoClear(); }catch(e){}   // v10.56.2: the demo results go with the demo; a real member's result stays
   CAP=null; CAP_DONE=false; U_FILTER='auto'; U_STEP_I=0; U_PROP=null; U_COMPARE=[]; U_BAND=''; U_CAD=''; U_QUERY=''; U_GEN_NOTICE='';
   uPersist(); uRefresh();
 }
@@ -22814,6 +22864,7 @@ function capSummaryHTML(){
 function capName(ch){ const n=String(ch&&ch.name||'').trim(); if(n&&!/^my church$/i.test(n)) return n; let r=''; try{ r=libChurch(); }catch(e){ r=''; } return r&&r!==libT('ourChurch')?r:(n||libT('ourChurch')); }
 function capRender(){
   const host=$('capslot');if(!host)return;const ch=uChurch(),c=capGet(),m=capMerged();
+  if(U_STEP_I==null) U_STEP_I=c.confirmed&&m.ready?U_SUM:0;   // v10.56.2: a church already saved opens on its summary
   host.innerHTML=`<form id="u-cap-form" class="u-profile" novalidate>
 <div class="u-heading"><div><h3>What your church has</h3><p class="note">${L(`For ${esc(capName(ch))}. Count each person once. Enter zero when none are available. Blank people or hours fields use only confirmed, willing members in Spiritual Gifts.`,`Para ${esc(capName(ch))}. Cuente a cada persona una sola vez. Escriba cero si no hay nadie disponible. Si deja en blanco las personas o las horas, se usan solo los miembros confirmados y dispuestos de Dones espirituales.`)}</p></div><span class="u-badge${c.demo?' u-badge-demo':''}">${c.demo?'Demo data \u2014 clear when done':c.confirmed?'Profile reviewed':'Review needed'}</span></div>
     <div class="u-quick">
@@ -22822,7 +22873,7 @@ function capRender(){
       <span class="note">Demo fills every step with a sample congregation so you can see what the tool does. Clear all removes everything under Your church, with the plan, drafts and projects \u2014 it keeps the name, the address and your members\u2019 gift results.</span>
     </div>
     ${ch.legacy?'<p class="u-warning">Your earlier church details were preserved. Confirm the congregation and review the new fields before using these recommendations.</p>':''}
-    <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}</ol>
+    <ol class="u-steps-nav" id="u-steps-nav">${U_WIZ.map((w,i)=>`<li data-goto="${i}"><b>${i+1}</b><span>${esc(w)}</span></li>`).join('')}<li data-goto="${U_SUM}" class="u-sumtab"><b>&#10003;</b><span>${esc(LANG==='es'?U_SUM_T.es:U_SUM_T.en)}</span></li></ol>
     <div class="u-stage">
      <div class="u-track" id="u-track">
       <section class="u-panel" data-panel="0"><h4>Step 1 of 3 — Your church</h4>
@@ -22851,6 +22902,7 @@ function capRender(){
 
       
       </section>
+      <section class="u-panel u-sumpanel" data-panel="3" aria-label="${esc(LANG==='es'?U_SUM_T.es:U_SUM_T.en)}"><div id="u-sumbody">${capSumPanelInner()}</div></section>
      </div>
     </div>
     <div class="u-wiznav">
@@ -22902,13 +22954,16 @@ function capRender(){
       if(on){ p.removeAttribute('inert'); p.setAttribute('aria-hidden','false'); if(moved) p.scrollTop=0; }
       else { p.setAttribute('inert',''); p.setAttribute('aria-hidden','true'); }
     });
-    if(nav) [...nav.children].forEach((li,n)=>{ li.className = n===U_STEP_I?'on':(n<U_STEP_I?'done':''); });
-    const last=U_STEP_I===panels.length-1;
-    const bk=$('u-back'), nx=$('u-next'), dn=$('cap-done');
+    if(nav) [...nav.children].forEach((li,n)=>{ li.className = (n===U_STEP_I?'on':(n<U_STEP_I?'done':''))+(n===U_SUM?' u-sumtab':''); });
+    // v10.56.2: Save on the last step of the form (Skills); on "At a glance" only Back
+    const last=U_STEP_I===U_SUM-1, sum=U_STEP_I===U_SUM;
+    const bk=$('u-back'), nx=$('u-next'), dn=$('cap-done'), sk=$('u-skip');
     if(bk) bk.disabled=U_STEP_I===0;
-    if(nx) nx.hidden=last;
+    if(nx) nx.hidden=last||sum;
     if(dn) dn.hidden=!last;
+    if(sk) sk.hidden=sum;
   };
+  CAP_SHOW=show;
   const nx=$('u-next'); if(nx) nx.onclick=()=>{
     const nb=form.querySelector('[name="churchName"]');
     if(U_STEP_I===0&&nb&&!nb.value.trim()){ nb.focus(); return; }
@@ -22917,7 +22972,7 @@ function capRender(){
   const bk=$('u-back'); if(bk) bk.onclick=()=>show(U_STEP_I-1,true,true);
   const sk=$('u-skip'); if(sk) sk.onclick=()=>{
     // Writes nothing: a skipped step records absence of information, never a zero.
-    if(U_STEP_I<panels.length-1) show(U_STEP_I+1,false,true);
+    if(U_STEP_I<U_SUM-1) show(U_STEP_I+1,false,true);
     else form.requestSubmit ? form.requestSubmit() : form.dispatchEvent(new Event('submit'));
   };
   if(nav) nav.onclick=e=>{ const li=e.target.closest('[data-goto]'); if(li) show(+li.dataset.goto, +li.dataset.goto<U_STEP_I, true); };
@@ -22925,7 +22980,7 @@ function capRender(){
   if(LANG==='es'&&typeof translateDOM==='function') translateDOM();   // review #18: the form in Spanish (ES, whole strings)
 
   // v10.45.0: on the Spiritual Gifts landing already: open the Volunteers fold and go to it
-  $('u-team-link').onclick=()=>{ if(TOOL!=='gifts') openTool('gifts'); const t=document.querySelector('#gfteamslot details'); if(t){ t.open=true; t.scrollIntoView({behavior:'auto',block:'start'}); } };
+  $('u-team-link').onclick=()=>gfOpenLanding();   // v10.56.2: the main page (the members are its step 3)
   form.onsubmit=e=>{
     e.preventDefault();
     // review B1: the active church changed under this form (two churches, one district): draw it again for the right one, never save
@@ -22949,9 +23004,11 @@ function capRender(){
     U_SKILLS.forEach(s=>{const n=uNum(d.get('skill-'+s.k));if(n!==null)next.skillCounts[s.k]=n;});
     U_FAC.forEach(f=>{if(d.has('fac-'+f.k))next.facilities[f.k]={available:true,capacity:uNum(d.get('room-'+f.k)),partner:String(d.get('partner-'+f.k)||'').trim(),slots:uValues(form,'slot-'+f.k)};});
     next.confirmed=true;uLinkLegacy();ch.name=String(d.get('churchName')).trim();ch.legacy=false;capSave(next);CAP_DONE=true;U_FILTER='auto';
-    // v10.45.0: the form lives on the Spiritual Gifts landing: draw it and its summary again and stay there (no background ideas, Q3)
-    if(DATA&&TOOL==='survey') render();
-    capRender(); gfChurchSum(); uChrome(); capShowSaved();
+    // v10.45.0: no background ideas (Q3). v10.56.2: drawn again on the Skills page, then it slides right to "At a glance"; the page
+    // never moves (it jumped the card to the top: "very jolting")
+    U_STEP_I=U_SUM-1;
+    capKeepPlace(()=>{ if(DATA&&TOOL==='survey') render(); capRender(); gfChurchSum(); uChrome(); });
+    capToSummary();
   };
   // v10.42 part 3 (SPEC-FOCUS E): the Gifts first card, first in the profile, above the form
   // v10.45.0: not repeated on the Spiritual Gifts landing, which shows the card at its top
@@ -35598,7 +35655,7 @@ async function caseAct(k,btn){
     p.innerHTML=CASE_ST.ask?caseAskHTML(CASE_ST.model):''; p.hidden=!CASE_ST.ask;
     const g=p.querySelector('[data-cs-gifts]'); if(g) g.onclick=()=>openTool('gifts');
     // v10.42 part 3 (GIFTS.md §8): B2's gfInviteChurch() when it is there (the hub card's button), else Spiritual Gifts
-    const iv=p.querySelector('[data-cs-invite]'); if(iv) iv.onclick=()=>{ if(typeof gfInviteChurch==='function') gfInviteChurch(); else openTool('gifts'); };
+    const iv=p.querySelector('[data-cs-invite]'); if(iv) iv.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
     if(CASE_ST.ask) caseYesWire(p,CASE_ST.model&&CASE_ST.model.ministry&&CASE_ST.model.ministry.id);
     if(CASE_ST.ask&&p.scrollIntoView) p.scrollIntoView({block:'nearest'});
   }
@@ -35991,7 +36048,7 @@ const L_PROP=k=>({big:['Proposal','Propuesta'],who:['Who are you proposing to?',
 function casePropWire(host){
   const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack;
   host.querySelectorAll('[data-cs-church]').forEach(b=>b.onclick=()=>uChurchGo());   // v10.55.0
-  host.querySelectorAll('[data-cs-gifts]').forEach(b=>b.onclick=()=>{ try{ gfInviteChurch(); }catch(e){ openTool('gifts'); } });
+  host.querySelectorAll('[data-cs-gifts]').forEach(b=>b.onclick=()=>gfOpenLanding());   // v10.56.2: the main page
   const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need); };
   const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const s2=$('cs-s2'); if(s2) s2.scrollIntoView({block:'start'}); } };
 }
@@ -41717,7 +41774,7 @@ function gfFirstCardHTML(where){
 }
 function gfFirstWire(host){
   if(!host) return;
-  host.querySelectorAll('[data-gf-invite]').forEach(b=>b.onclick=()=>gfInviteChurch());
+  host.querySelectorAll('[data-gf-invite]').forEach(b=>b.onclick=()=>{ if(typeof TOOL!=='undefined'&&TOOL==='gifts') gfInviteChurch(); else gfOpenLanding(); });   // v10.56.2: from another tool, the main page
   gfFirstQuietSync();
 }
 /* The hub's card shows once the church is his: a real name, a saved profile, or a result in. Never on a member's page, in
@@ -41762,6 +41819,95 @@ function gfFirstQuietSync(){
 }
 /* "Invite the whole church": the Spiritual Gifts setup's share panel, the church's one campaign made if there is none (an
    existing one is reused, so results already in keep counting); a church with no name yet is asked for one first. */
+/* v10.56.2 — the pastor (7 Oct 2026): "it would be good to have a demo spiritual gifts … test a tester … it would populate too so when I
+   am or someone else is showing them the app … I don't have to go through the whole thing in order to show them the results and how it
+   fits into everything"; and "so that the demo CHURCH can also be connected with the demo spiritual gift so that all of it can work as if
+   someone really put everything in … the sample report shouldn't just be there … if you click complete a demo … then the sample report
+   will show". Twenty-four sample members of this church, each "(sample)", stored as results are (the roster, no server id, so a sync
+   never touches them; memberId demo-NN), so the counts, Across the church, the slides and "Who to ask" read them as real. The first is the
+   sample report's own member (GF_SAMPLE). Filling either demo fills the other when it is empty (gfDemoFill, capFillDemo); Clear demo
+   results and Clear all take them out; a real member's result is never touched. */
+const GF_DEMO_PEOPLE=[
+  // name, strong gifts, middle gifts, heart (2), hours a month, leader, skills, free
+  ['Sam Tester',['helps','serve','hosp'],['mercy','giving','encour'],['newcomers','families'],8,false,['cook','trade'],['Tue evening','Sat afternoon']],
+  ['Ruth Ames',['teach','wisdom','shep'],['encour','knowl','faith'],['children','families'],10,true,['teach','kids'],['Wed evening','Sat afternoon']],
+  ['David Cole',['leader','admin','faith'],['wisdom','proclaim','giving'],['youngadults','seekers'],6,true,['lead','admin'],['Tue evening','Thu evening']],
+  ['Maria Santos',['mercy','hosp','inter'],['helps','encour','serve'],['poor','newcomers'],12,false,['lang','cook'],['Tue evening','Wed evening']],
+  ['James Okoro',['evang','proclaim','mission'],['faith','teach','leader'],['seekers','youngadults'],8,true,['lead','music'],['Thu evening','Sat afternoon']],
+  ['Linda Park',['healing','mercy','inter'],['helps','faith','encour'],['sick','seniors'],6,false,['medical','support'],['Wed evening','Thu evening']],
+  ['Peter Grant',['serve','helps','giving'],['admin','hosp','creative'],['seniors','poor'],10,false,['trade','vehicle'],['Tue evening','Sat afternoon']],
+  ['Grace Hill',['encour','shep','reconcile'],['mercy','wisdom','inter'],['lonely','grieving'],8,false,['support','weekday'],['Wed evening','Thu evening']],
+  ['Daniel Kim',['knowl','teach','discern'],['wisdom','proclaim','admin'],['teens','youngadults'],6,false,['teach','av'],['Thu evening','Sat afternoon']],
+  ['Esther Brown',['hosp','encour','helps'],['serve','giving','mercy'],['newcomers','lonely'],8,false,['cook','weekday'],['Tue evening','Wed evening']],
+  ['Michael Reyes',['creative','serve','helps'],['encour','evang','hosp'],['teens','children'],6,false,['music','av'],['Thu evening','Sat afternoon']],
+  ['Hannah Lee',['inter','faith','mercy'],['discern','encour','shep'],['sick','grieving'],10,false,['support'],['Tue evening','Wed evening']],
+  ['Joseph Adams',['admin','giving','wisdom'],['leader','serve','knowl'],['families','poor'],4,true,['admin','lead'],['Wed evening']],
+  ['Naomi Evans',['shep','teach','encour'],['hosp','mercy','wisdom'],['children','teens'],8,false,['kids','teach'],['Wed evening','Sat afternoon']],
+  ['Samuel Diaz',['evang','hosp','encour'],['serve','inter','faith'],['seekers','newcomers'],8,false,['lang','vehicle'],['Tue evening','Thu evening']],
+  ['Lydia Moore',['giving','helps','mercy'],['admin','hosp','serve'],['poor','families'],6,false,['cook','weekday'],['Tue evening','Sat afternoon']],
+  ['Caleb Ward',['leader','proclaim','evang'],['teach','faith','mission'],['youngadults','teens'],6,true,['lead','music'],['Thu evening','Sat afternoon']],
+  ['Ruth Ellis',['mercy','encour','helps'],['inter','hosp','healing'],['seniors','lonely'],10,false,['support','weekday','vehicle'],['Tue evening','Wed evening']],
+  ['Aaron Fox',['serve','creative','helps'],['admin','giving','hosp'],['families','children'],6,false,['trade','av'],['Sat afternoon']],
+  ['Miriam Ortiz',['teach','mission','inter'],['encour','knowl','evang'],['newcomers','seekers'],8,false,['lang','teach'],['Wed evening','Thu evening']],
+  ['Philip Shaw',['wisdom','discern','reconcile'],['shep','teach','leader'],['grieving','recovery'],4,false,['support'],['Thu evening']],
+  ['Martha Young',['hosp','serve','admin'],['helps','giving','encour'],['families','newcomers'],10,false,['cook','admin'],['Tue evening','Sat afternoon']],
+  ['Titus Green',['helps','faith','serve'],['mercy','encour','creative'],['poor','recovery'],6,false,['trade','vehicle'],['Tue evening','Thu evening']]];
+const gfDemoId=i=>'demo-'+String(i).padStart(2,'0');
+const gfDemoMine=d=>!!d&&/^demo-\d\d$/.test(String(d.memberId||''));
+function gfDemoCode(o,ch){
+  const raw=JSON.stringify({v:4,date:new Date().toISOString().slice(0,10),chars:o.chars,heart:o.heart,minor:false,church:capName(ch),churchId:ch.id,name:o.name+' (sample)',
+    memberId:o.memberId,resources:o.resources});
+  return 'TG1-'+btoa(unescape(encodeURIComponent(raw))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+function gfDemoSet(ch){
+  const out=[];
+  // the sample report's own member first (its answers and heart), then the others
+  { const A=GF_SAMPLE.answers, H=GF_SAMPLE.heart;
+    out.push({name:GF_SAMPLE.name,memberId:gfDemoId(0),chars:GIFTS.map(g=>[0,1,2,3,4].map(k=>{ const v=A[g.id+'.'+k]; return v===undefined?'.':v===-1?'x':String(v); }).join('')).join(''),
+      heart:GF_HEART.map(q=>{ const v=H[q.k]; return v===0||v===1||v===2?String(v):'.'; }).join(''),
+      resources:{hours:8,willing:true,leader:true,skills:['teach','lead'],slots:['Wed evening','Sat afternoon'],languages:'',experience:''}}); }
+  GF_DEMO_PEOPLE.forEach(([name,strong,mid,heart,hours,leader,skills,slots],i)=>{
+    const row=id=>strong.includes(id)?'44344':mid.includes(id)?'33323':((i+id.length)%3===0?'21112':'12121');
+    out.push({name,memberId:gfDemoId(i+1),chars:GIFTS.map(g=>row(g.id)).join(''),heart:GF_HEART.map(q=>heart.includes(q.k)?'2':'0').join(''),
+      resources:{hours,willing:true,leader,skills,slots,languages:'',experience:''}});
+  });
+  return out.map(o=>gfDemoCode(o,ch));
+}
+function gfDemoOn(){ try{ return gfRoster().some(r=>gfDemoMine(gfDecode(r.code))); }catch(e){ return false; } }
+function gfDemoClear(){
+  const ch=uChurch(); let all=[]; try{ all=uRead(GF_ROSTER,[]); }catch(e){ all=[]; }
+  const keep=all.filter(r=>{ const d=gfDecode(r.code); return !(gfDemoMine(d)&&uBelongs(d,ch,r)); });
+  if(keep.length!==all.length) localStorage.setItem(GF_ROSTER,JSON.stringify(keep));
+  return all.length-keep.length;
+}
+function gfDemoFill(o){
+  o=o||{};
+  const ch=uChurch(); if(!ch) return 0;
+  // the demo church too, when "Your church" is empty: the two demos are one demonstration
+  let empty=false; try{ empty=gfChurchEmpty(); }catch(e){ empty=false; }
+  if(empty&&!o.noChurch){ capSave(JSON.parse(JSON.stringify(DEMO_CHURCH))); CAP_DONE=true; }
+  gfDemoClear();
+  gfDemoSet(ch).reverse().forEach(code=>gfRosterAdd(code,{}));
+  if(!o.quiet) gfDemoRedraw(empty&&!o.noChurch);
+  return GF_DEMO_PEOPLE.length+1;
+}
+/* Everything that shows results or the church, drawn again where it is on screen; the page never moves. */
+function gfDemoRedraw(church){
+  let at=true;
+  capKeepPlace(()=>{
+    try{ if(church&&typeof DATA!=='undefined'&&DATA&&TOOL==='survey') render(); }catch(e){}
+    try{ if(church){ at=U_STEP_I===U_SUM; if(!at) U_STEP_I=Math.max(0,Math.min(U_SUM-1,U_STEP_I==null?0:U_STEP_I)); capRender(); gfChurchSum(); } }catch(e){}
+    try{ gfFirstRefresh(); }catch(e){} });
+  if(church&&!at) capToSummary();   // the demo church, as its own button: the card slides to its summary
+  try{ if(TOOL==='gifts'&&(GF_VIEW==='roster'||!GF_VIEW)) gfRender(); }catch(e){}
+  try{ if(TOOL==='case'&&typeof caseDraw3==='function'&&$('cs-s3')) caseDraw3(); }catch(e){}
+}
+/* v10.56.2 — the pastor: "if there's a button that points to spiritual gifts, just send the person to the main page for spiritual gifts.
+   Don't send them to like any other spot." Every way in from another tool opens the landing, at its top. */
+function gfOpenLanding(){
+  try{ if(typeof TOOL==='undefined'||TOOL!=='gifts') openTool('gifts'); }catch(e){}
+  GF_VIEW='roster'; gfRender(); window.scrollTo({top:0,behavior:'auto'});
+}
 function gfInviteChurch(){
   try{ if(typeof TOOL==='undefined'||TOOL!=='gifts') openTool('gifts'); }catch(e){}
   GF_VIEW='setup'; gfRender();
@@ -41958,7 +42104,7 @@ function caseGiftsBanner(){
   el.hidden=false;
   el.innerHTML=`<p><span>${esc(t)}</span> <button type="button" class="gff-l" data-gff-invite>${esc(gfU('invite'))}</button> · <button type="button" class="gff-l" data-gff-sabbath>${esc(gfU('sabbathOpen'))}</button></p>
     <button type="button" class="gff-x" data-gff-hide aria-label="${esc(gfU('hide2w'))}" title="${esc(gfU('hide2w'))}">×</button>`;
-  el.querySelector('[data-gff-invite]').onclick=()=>gfInviteChurch();
+  el.querySelector('[data-gff-invite]').onclick=()=>gfOpenLanding();   // v10.56.2: the main page
   el.querySelector('[data-gff-sabbath]').onclick=()=>gfOpenSabbath();
   el.querySelector('[data-gff-hide]').onclick=()=>{ gfFirstPrefsSave({hideUntil:Date.now()+14*864e5}); el.hidden=true; el.innerHTML=''; };
 }

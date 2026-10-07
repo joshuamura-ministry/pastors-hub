@@ -23,7 +23,9 @@ setTimeout(()=>{
   const box=D.querySelector('.capsum');
   c('the box appears', !!box);
   // v10.45.0 (stale): the box is in "Your church" on the Spiritual Gifts landing, above the form (it was at the top of Mobilization)
-  c('in "Your church" on the Spiritual Gifts landing, above the form', !!box.closest('#gf-church #capsumslot') && !!(box.compareDocumentPosition(D.getElementById('capslot'))&4));
+  // v10.56.2 (stale, not a regression): the summary is the form's last page, "At a glance" (the pastor: "it should just scroll to the right
+  // and be one full page that shows all the information"); it was a box above the form
+  c('in "Your church", the form\'s last page (At a glance)', !!box.closest('#gf-church #capslot .u-sumpanel #u-sumbody'));
   c('labelled as the sample', /sample church, as filled in/.test(box.querySelector('.capsumk').textContent));
   const groups=[...box.querySelectorAll('.capsumg h4')].map(h=>h.textContent);
   // v10.49.0 — the pastor: "take the money part out of your church section": three groups, matching the three steps

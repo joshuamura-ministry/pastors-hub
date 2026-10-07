@@ -190,6 +190,35 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.56.2 (7 Oct 2026, quick lane) — "Your church" ends on its summary; a demo of Spiritual Gifts; every way into Spiritual Gifts opens
+its main page, in three coloured steps.** The pastor: *"[the summary box] should be at the bottom as like the results of filling it in it
+shouldn't jump to the top … when I finished it jumped to the top, which is very jolting … it should just scroll to the right and be one full
+page that shows all the information"*; *"it would be good to have a demo spiritual gifts. It'll say test a tester … so when I am or someone
+else is showing them the app … I don't have to go through the whole thing"*; *"so that the demo CHURCH can also be connected with the demo
+spiritual gift … the sample report shouldn't just be there … if you click complete a demo … then the sample report will show"*; *"if there's
+a button that points to spiritual gifts, just send the person to the main page … a three invite your members see the results and then one
+more step like fill the position and make those steps like maybe different colors"*.
+- **"Your church"**: the summary (`capSummaryHTML`) is the slider's fourth page, **At a glance** (`U_SUM`, `#u-sumbody`, `.u-sumpanel`; the
+  track 400%, a panel a quarter); the box above the form (`#capsumslot`) is gone. Save and Demo slide the card to it (`capToSummary`, via
+  `CAP_SHOW`, the slider's own `show`) and **never move the page** (`capShowSaved` is no longer called by them). A church already saved
+  opens on its summary (`U_STEP_I` starts null); Save sits on Skills; on At a glance only Back.
+- **The demo of Spiritual Gifts** (`GF_DEMO_PEOPLE`, `gfDemoSet`, `gfDemoFill`, `gfDemoClear`, `gfDemoOn`, `gfDemoRedraw`): 24 sample members of
+  this church, each "(sample)", the first the sample report's own (Alex Rivera, `GF_SAMPLE`'s answers), stored as results are (the roster,
+  no server id, memberId `demo-NN`), so the counts, Across the church, the slides and "Who to ask" read them as real (24 of the demo
+  church's 46 adults: `gfReadiness` "half"). **Fill in demo results** / **Clear demo results**: in the survey's Spiritual Gifts line and on
+  the results card. Filling either demo fills the other when it is empty; **Clear all** takes the demo results out too; a real member's
+  result is never touched. **See a sample report** shows only while the demo is in.
+- **Spiritual Gifts' main page** (`gfOpenLanding`): every button from another tool opens it at its top (Send the Spiritual Gifts survey,
+  Review members, the Proposal page's reminder, Who to ask's invite, the Gifts first card); inside the tool the invitation (`gfInviteChurch`)
+  is unchanged. Three steps (`GF_STEP_K`: Invite your members pink, See the results mint, **Fill the positions** gold), each part's number in
+  its colour; step 3 (`#gf-positions`): who fits where, Across the church, Who to ask (Make the Case), and the Volunteers fold.
+- Tests: `v56-2-church-and-gifts-demo` (new, 27; failing first on v10.56.1: `v73/ff-v56-2-church-and-gifts-demo.log`); updated with
+  comments: profile-slider, scroll-to-church, church-summary-box, v45-profile-move, v47-clean, v55-1-church-glow, v55-proposal-clean,
+  gifts-sample, gifts-first-ui, no-ai-words (it fills the demo before opening the sample report). Full suite: 151 suites · 10,476
+  passed · 0 failed (no-ai-words and v45-profile-move rerun alone after test-only fixes: the first needed the demo, the second now
+  waits for the slide to At a glance instead of a fixed 120 ms, which failed once under the full run's load). Samples
+  `Terrain-v10.56.2-samples` (`v73/shots24.mjs`).
+
 **v10.56.1 (7 Oct 2026, quick lane) — the main menu, very simple.** The pastor, with a screenshot of the hub: *"I just want this page to
 be very simple. The 1234 is nice but … it doesn't look good there. I'd say the community survey should just be right under the quote from
 Ellen White … erase the gifts first nobody has taken it yet that whole section … under welcome to terrain just something that says your
