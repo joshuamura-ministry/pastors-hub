@@ -220,6 +220,33 @@ the time"*. Design `~/Downloads/Terrain-work/v72/DESIGN-IDEAS.md`.
   145 suites · 10,284 passed · 0 failed. Samples (a
   MADE-UP answer, to show the layout): `~/Downloads/Terrain-v10.55.0-samples/` (`v72/shots17.mjs`, `v72/sample-ideas.json`).
 
+**v10.55.0, also (6 Oct 2026) — the Proposal page cleaner; "Your church" back in the survey, before the needs; Spiritual Gifts only
+gifts.** The pastor, on the Proposal page: *"I click CHURCH board it jumps down … doesn't have to … you're already choosing light lift moderate
+lift heavy lift we don't have to put it again … what would you like this to accomplish? We don't need that either … short by 10 volunteers …
+because the spiritual gifts and information hasn't been put in yet, right"*; then *"maybe there can be a button under the proposal box before
+who are you proposing to just to remind … the people when they see spiritual gifts they're not gonna know that that's where you put in the
+information for your church … right after the community resources maybe a section because that's gonna come right before the community
+needs … a very clear section that allows the Pastor to fill out that part … a button that will … send him to the spiritual gifts section …
+it's best to plan the proposal after the spiritual gifts results come in"*; and *"you can remove the … fill-in information in the spiritual
+gifts … that's all it's gonna be about just spiritual gifts"*.
+- **The Proposal page** (from a need, `casePropMode()`): choosing who it is for no longer scrolls (Make the Case on its own still brings
+  step 2 into view); no Size row and no goal box (both stay in Make the Case on its own; the slides keep the suggested goal); under the
+  proposal card, before step 1, `caseReadyNudgeHTML`: "Fill in your church first…" + **Fill in Your church** (when empty, `gfChurchEmpty`)
+  and "A proposal is stronger with your members' Spiritual Gifts results…" + **Send the Spiritual Gifts survey** (`gfInviteChurch`, while
+  `gfReadiness().state` is none, low or unknown below `CASE_GIFTS_MIN`). Step 3's "Still to settle" is one line and a button while the
+  church is empty (`.cs-fillchurch`), never a list of shortfalls.
+- **"Your church" in the survey** (`uChurchSecHTML`, `#u-church`, between Community resources and the needs; full tier only): its line
+  ("Fill this in before you choose a ministry below…"), the church card (`gfChurchCardHTML`: the same three-step form, open while empty,
+  "People, rooms and skills"), and the Spiritual Gifts line (`uGiftsNoteInner`: send the survey first, the count, **Send the Spiritual Gifts
+  survey**). One live card: `render()` lifts it out and puts it back (what he typed survives a redraw, as the needs node does);
+  `gfChurchHome` places it; `openTool('survey')` brings it home. Every way to the church form (`gfChurchOpen` → `uChurchGo`) leads to the
+  survey's section (no survey yet: the survey, its address first). No Gifts-first card inside the form any more.
+- **The Spiritual Gifts landing**: two steps (Invite your members → See the results), no church card. Old lines that said "on the Spiritual
+  Gifts page" for the church's information now say "in the Community Survey".
+- Tests: `v55-proposal-clean` (new, 16; failing first on v10.55.0's first commit: `v72/ff-v55-proposal-clean.log`); `v45-profile-move`
+  rewritten for the new home (43); updated with comments: v52-lift, v47-clean, gifts-first-ui, v42-core, v45-1-survey, v45-handoff,
+  v45-needs-ui, v45-review, connect-client (20 `memberLink()` guard sites). Full suite: 146 suites · 10,303 passed · 0 failed.
+
 **v10.54.2 (6 Oct 2026, quick lane) — the member's report ends simply: how to get involved, sent by itself.** The pastor, of the end of a
 member's Spiritual Gifts report: *"the first 90 days, I don't know what that is. The main thing is just a very simple steps on how to get
 involved … pray about how much you can commit to serving the church … go to your pastor go to a church leader ask to serve in … that

@@ -2740,6 +2740,16 @@ button.td-opt:disabled{cursor:default}
   background:color-mix(in srgb,var(--m-hardship) 7%,var(--panel));border-radius:var(--r);padding:12px 16px;margin:0 0 16px;font-size:.86rem;color:var(--ink)}
 .cs-warn b{display:block;color:var(--m-hardship);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px}
 .cs-warn ul{margin:0;padding:0 0 0 18px;display:grid;gap:3px;color:var(--ink2)}
+.cs-fillchurch p{margin:0 0 8px;color:var(--ink2);line-height:1.5}   /* v10.55.0: an empty "Your church", said once */
+/* v10.55.0: "Your church" in the survey (before the needs), its gifts line, and the Proposal page's reminders */
+#u-church .gfpn{display:none}
+#u-church .gf-church{margin:0}
+.u-gfnote{margin-top:14px;padding:12px 14px;border:1px solid color-mix(in srgb,var(--gfv) 45%,var(--line2));border-left:3px solid var(--gfv);border-radius:12px;display:grid;gap:8px;color:var(--ink2);line-height:1.55}
+.u-gfnote p{margin:0}
+.u-gfnote b{color:var(--ink);margin-right:4px}
+.u-gfcount{color:var(--ink);font-weight:600}
+.cs-nudge{margin:12px 0 0;padding:12px 14px;border:1px dashed color-mix(in srgb,var(--m-hardship) 60%,var(--line2));border-radius:12px;display:grid;gap:8px;color:var(--ink2)}
+.cs-nudge p{margin:0;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;line-height:1.5}
 .cs-info{border-left:3px solid var(--line2);padding-left:10px;margin:0 0 16px}
 .cs-about{margin:0 0 16px}.cs-about .cs-info{margin:2px 0 14px}
 .cs-pv{display:grid;grid-template-columns:360px minmax(0,1fr);gap:26px;align-items:start}
@@ -10174,7 +10184,7 @@ function openTool(id){
   // Its "Change church" is on the church's own line (homeLine), not in the tool bar.
   const ch=$('changech'); if(ch) ch.hidden=!DATA||id==='case';
   const ask=document.querySelector('.ask'); if(ask) ask.style.display=(DATA||id==='case')?'none':'';
-  if(DATA){ $('report').classList.add('show'); applyTool(); if(id==='case') caseMount(true); }
+  if(DATA){ $('report').classList.add('show'); applyTool(); if(id==='case') caseMount(true); if(id==='survey') gfChurchHome($('u-churchslot')); }   // v10.55.0
   caseToolShown();   // Make the Case before a survey: loading the church, or the first-time card, and the sample
   homeLine();
   // Deferred a tick: a permalink opens the tool and then starts its own lookup, which
@@ -12840,7 +12850,7 @@ const NS_UI={
   chip:['Needs','Necesidades'],
   // review #27f: short on a phone; the church's information is a link on its own line
   nofill:['Nothing to fill in. Tap a need, then its ideas.','No hay nada que llenar. Toque una necesidad y luego sus ideas.'],
-  churchLink:['Your church’s information is on the Spiritual Gifts page.','La información de su iglesia está en la página de Dones espirituales.'],
+  churchLink:['Your church’s information is in the Community Survey, just before the neighborhood’s needs.','La información de su iglesia está en la Encuesta Comunitaria, justo antes de las necesidades del vecindario.'],
   light:['Light lift','Esfuerzo ligero'], moderate:['Moderate lift','Esfuerzo moderado'], heavy:['Heavy lift','Esfuerzo grande'],
   lightG:['A few people, this week, little or no money','Pocas personas, esta semana, poco o ningún dinero'],
   moderateG:['A small team, about a month','Un equipo pequeño, alrededor de un mes'],
@@ -14089,6 +14099,23 @@ async function nsPdf(id,needId){
   }catch(e){ log('needs pdf: '+(e&&e.message||e)); nsStatus(nsU('pdfFail')); }
 }
 
+/* v10.55.0: the survey's "Your church" section (before the needs) and its line about the Spiritual Gifts survey */
+function uChurchSecHTML(){
+  return `<section class="blk u-churchsec" id="u-church" data-tab="strategy" data-theme="faith"><h2>${L('Your church','Su iglesia')}</h2>
+    <p class="note" style="margin-bottom:12px">${L('Fill this in before you choose a ministry below: every idea and every proposal is checked against your people, rooms and skills.','Complete esto antes de elegir un ministerio abajo: cada idea y cada propuesta se comparan con sus personas, salones y habilidades.')}</p>
+    <div id="u-churchslot"></div>
+    <div class="u-gfnote" id="u-gfnote">${uGiftsNoteInner()}</div>
+  </section>`;
+}
+function uGiftsNoteInner(){
+  let r=null; try{ r=gfReadiness(); }catch(e){ r=null; }
+  const n=r?r.n:0, d=r&&r.den?r.den.d:null;
+  const count=n===0?L('No results yet.','Aún no hay resultados.'):d?L(`${fmtNum(n)} of ${fmtNum(d)} adults have answered.`,`${fmtNum(n)} de ${fmtNum(d)} adultos han respondido.`)
+    :L(`${fmtNum(n)} have answered.`,`${fmtNum(n)} han respondido.`);
+  return `<p><b>${L('Spiritual Gifts','Dones espirituales')}</b> ${L('Proposals are strongest once your members’ Spiritual Gifts results are in: send them the survey first, then choose a ministry and make the proposal.','Las propuestas son más sólidas cuando ya llegaron los resultados de Dones Espirituales de sus miembros: envíeles primero la encuesta y luego elija un ministerio y haga la propuesta.')} <span class="u-gfcount">${esc(count)}</span></p>
+    <p><button type="button" class="btn ghost" data-u-gifts>${L('Send the Spiritual Gifts survey','Enviar la encuesta de Dones Espirituales')}</button></p>`;
+}
+function uChurchSecWire(){ const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>{ try{ gfInviteChurch(); }catch(e){ openTool('gifts'); } }; }
 function render(){
   if(DATA)uEnsureChurch();uChrome();
   if(!DATA) return; const {M,levels,geo}=DATA; const me=M[SCOPE]; const cty=M.county;
@@ -14227,6 +14254,13 @@ function render(){
   }
   secs.push(SEC_WHERE);
   secs.push(SEC_HELP);
+  /* v10.55.0 — the pastor (6 Oct 2026): "if we're gonna send a proposal, we want the church's information already in it so the Pastor
+     needs to fill that out sometime before … right after the community resources maybe a section because that's gonna come right before
+     the community needs. It needs to be a very clear section that allows the Pastor to fill out that part … and also there should be a
+     button that will … send him to the spiritual gifts section so he can send out the spiritual gifts survey to his members and maybe an
+     explanation … it's best to plan the proposal after the spiritual gifts results come in". The church card (the same as on the
+     Spiritual Gifts landing) and the gifts line, before the needs. */
+  if(entitled('plan')) secs.push(uChurchSecHTML());
   if(entitled('plan')) secs.push('<div id="ns-slot"></div>');   // v10.46.1: the needs at the bottom, after Community resources
   // v10.45.0: "What's next" follows Community resources (it followed the ministries list)
   // v10.43 (SPEC §5): "What's next" at the very bottom of the survey (make the case for each ministry in the plan, Gifts first)
@@ -14236,9 +14270,12 @@ function render(){
 
   // Make the Case: the screens draw themselves into #casebody (caseMount).
   secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
-  { const nsEl=document.getElementById('u-needs');
+  { const nsEl=document.getElementById('u-needs'), chEl=document.getElementById('gf-church');
+    if(chEl) chEl.remove();   // v10.55.0: the live church card is kept across the redraw (what he typed, his step, the fold), as the needs are
     $('sections').innerHTML=secs.join('');
-    const slot=document.getElementById('ns-slot'); if(nsEl&&slot) slot.replaceWith(nsEl); }
+    const slot=document.getElementById('ns-slot'); if(nsEl&&slot) slot.replaceWith(nsEl);
+    const cs=document.getElementById('u-churchslot'); if(chEl&&cs) cs.appendChild(chEl); }
+  gfChurchHome($('u-churchslot')); uChurchSecWire();   // v10.55.0: "Your church", before the needs
   nsDraw();   // v10.45.0: what this neighborhood needs from our church (#u-needs)
   balanceGrids($('sections'));
   /* No per-section hue any more. --sec stays mint for the whole report, which
@@ -15619,7 +15656,7 @@ function gfRenderSetup(h){
     <h3>2. ${L('What the building has','Lo que tiene el edificio')}</h3>
     ${facs.length
       ? `<p class="note">${L('Taken from Your church','Tomado de Su iglesia')}: <b>${esc(facs.map(gfFacName).join(', '))}</b>. ${L('Ministries that need something you do not have are still shown, but marked honestly.','Los ministerios que necesitan algo que ustedes no tienen se muestran igual, pero señalados con honestidad.')}</p>`
-      : `<p class="note">${L('No facilities recorded yet. Tick them under Your church, on the Spiritual Gifts page, and they will be carried into the link automatically — otherwise members may be pointed at a food ministry when there is no kitchen.','Todavía no hay instalaciones registradas. Márquelas en Su iglesia, en la página de Dones espirituales, y pasarán al enlace automáticamente; de lo contrario, a un miembro se le podría sugerir un ministerio de alimentos donde no hay cocina.')}</p>`}
+      : `<p class="note">${L('No facilities recorded yet. Tick them under Your church, in the Community Survey, and they will be carried into the link automatically — otherwise members may be pointed at a food ministry when there is no kitchen.','Todavía no hay instalaciones registradas. Márquelas en Su iglesia, en la Encuesta Comunitaria, y pasarán al enlace automáticamente; de lo contrario, a un miembro se le podría sugerir un ministerio de alimentos donde no hay cocina.')}</p>`}
   </div>
 
   <div class="card gfcard" id="gfsurveycard">
@@ -20783,39 +20820,31 @@ let GF_PUB_TARGET=null;   // set from the share link when a member opens it
    it doesn't have to say nobody has taken it yet take that box away … it has to start with your church … underneath that it should be
    very clear that this next part is the spiritual gifts part … sample report should be below results … why would a member send me a
    code? Don't need that." Three steps across the top, each taking him to its part; the parts numbered to match. */
+/* v10.55.0 — the pastor (6 Oct 2026): "you can remove the … fill-in information in the spiritual gifts when they go to spiritual gifts
+   that's all it's gonna be about just spiritual gifts … just keep the spiritual gifts survey portion and … the results": two steps;
+   "Your church" is in the Community Survey, before the neighborhood's needs (#u-church). */
 function gfStepsHTML(){
-  const st=[['church',L('Your church','Su iglesia')],['invite',L('Invite your members','Invite a sus miembros')],['results',L('See the results','Vea los resultados')]];
-  return `<ol class="gfsteps" aria-label="${esc(L('Three steps','Tres pasos'))}">${st.map(([k,t],i)=>`<li><button type="button" class="gfstep" data-gf-step="${k}"><b>${i+1}</b><span>${esc(t)}</span></button></li>`).join('<li class="gfarrow" aria-hidden="true">→</li>')}</ol>`;
+  const st=[['invite',L('Invite your members','Invite a sus miembros')],['results',L('See the results','Vea los resultados')]];
+  return `<ol class="gfsteps" aria-label="${esc(L('Two steps','Dos pasos'))}">${st.map(([k,t],i)=>`<li><button type="button" class="gfstep" data-gf-step="${k}"><b>${i+1}</b><span>${esc(t)}</span></button></li>`).join('<li class="gfarrow" aria-hidden="true">→</li>')}</ol>`;
 }
 function gfStepsWire(h){
   h.querySelectorAll('[data-gf-step]').forEach(b=>b.onclick=()=>{
-    const k=b.dataset.gfStep, el=document.getElementById(k==='church'?'gf-church':k==='invite'?'gf-invite':'gf-results'); if(!el) return;
-    if(k==='church') el.open=true;
+    const k=b.dataset.gfStep, el=document.getElementById(k==='invite'?'gf-invite':'gf-results'); if(!el) return;
     el.scrollIntoView({block:'start',behavior:'auto'}); });
 }
 function gfRenderRoster(h){
   gfRosterPrune();
   const list=gfRoster(), ch=uChurch();
   const nres=list.length;
-  // v10.45.0: the church profile lives here now (#gf-church). The landing redraws itself when results arrive: the live card is
-  // taken out first and put back in place of the new empty one, so what he typed, his step and the card's state are kept, but only
-  // for the church it was drawn for (review B1: another church's form must never be saved into this one).
-  const keep0=$('gf-church'); if(keep0) keep0.remove();
-  const keep=keep0&&keep0.dataset.church===String(ch.id)?keep0:null;
+  // v10.55.0: no church card here any more (it is the survey's "Your church"); v10.45.0 to v10.54 kept it on this landing
   h.innerHTML=`
   <div class="gfhead">
     <h2>${L('Spiritual Gifts','Dones espirituales')}</h2>
     <p class="sub">${L(`Twenty-one gifts, a hundred and five statements, about ${GF_MINUTES} minutes. Members discover where they fit; you see who you have.`,`Veintiún dones, ciento cinco afirmaciones, unos ${GF_MINUTES} minutos. Los miembros descubren dónde encajan; usted ve con quiénes cuenta.`)}</p>
   </div>
   ${gfStepsHTML()}
-  <details class="card gfcard gf-church" id="gf-church" data-church="${esc(String(ch.id))}" style="--k:var(--acc)"${gfChurchEmpty()?' open':''}>
-    <summary><b><span class="gfpn">1</span>${L('Your church','Su iglesia')}</b> <span class="note">${L('Moved here from the Community Survey.','Se trasladó aquí desde la Encuesta Comunitaria.')}</span></summary>
-    <p class="note">${L('People, rooms and skills. The money for a ministry is on its proposal.','Personas, salones y habilidades. El dinero de cada ministerio está en su propuesta.')}</p>
-    <div id="capsumslot"></div>
-    <div class="askpanel" style="margin:14px 0"><div id="capslot"></div></div>
-  </details>
   <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h">
-  <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">2</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
+  <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">1</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
   <div class="gfdoors">
     <button class="gfdoor" data-gv="setup" style="--k:var(--m-people)">
       <span class="gfdk">${L('For your members','Para sus miembros')}</span>
@@ -20833,7 +20862,7 @@ function gfRenderRoster(h){
   </section>
 
   <section class="gfpart" id="gf-results" aria-labelledby="gf-results-h">
-  <h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">3</span>${L('See the results','Vea los resultados')}</h3>
+  <h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">2</span>${L('See the results','Vea los resultados')}</h3>
   <div class="card gfcard gfresults" style="--k:var(--acc)">
     <div class="gfrh"><h3>${nres?L(nres+' result'+(nres===1?'':'s')+' in',nres+' resultado'+(nres===1?' recibido':'s recibidos')):L('Results','Resultados')}</h3>
       <div class="gfnav" style="margin:0"><button class="btn ghost gfsm" id="gfpull">${L('Check for new results','Buscar resultados nuevos')}</button>${nres?`<button class="btn ghost gfsm" data-gv="church">${L('Across the church','En toda la iglesia')}</button>`:''}</div></div>
@@ -20865,8 +20894,6 @@ function gfRenderRoster(h){
   { const slot=h.querySelector('#gfteamslot');
     if(slot){ slot.innerHTML=`<details class="u-details gfback"><summary>${L('Volunteers, skills and availability','Voluntarios, habilidades y disponibilidad')}</summary><div id="gfteam"></div></details>`;
       uTeamMount(slot.querySelector('#gfteam')); } }
-  { const fresh=h.querySelector('#gf-church');
-    if(keep&&fresh){ fresh.replaceWith(keep); gfChurchSum(); } else { capRender(); gfChurchSum(); } }
   gfWireChurchNav(h);
   gfStepsWire(h);   // v10.50.0: 1 Your church → 2 Invite your members → 3 See the results
   { const sb=h.querySelector('#gfsample');
@@ -22502,18 +22529,36 @@ function capShowSaved(){
 function goToMobilization(){ capShowSaved(); }
 /* The summary box above the form, in the card. */
 function gfChurchSum(){ const s=$('capsumslot'); if(s) s.innerHTML=capSummaryHTML(); }
+/* v10.55.0: the church card, in the Community Survey before the neighborhood's needs (#u-church): open while nothing is filled in,
+   its one-line summary once it is. Kept live across the survey's redraws (gfChurchHome), so what he typed and his step stay. */
+function gfChurchCardHTML(ch){
+  return `<details class="card gfcard gf-church" id="gf-church" data-church="${esc(String(ch.id))}" style="--k:var(--acc)"${gfChurchEmpty()?' open':''}>
+    <summary><b>${L('People, rooms and skills','Personas, salones y habilidades')}</b> <span class="note">${L('The money for a ministry is on its proposal.','El dinero de cada ministerio está en su propuesta.')}</span></summary>
+    <div id="capsumslot"></div>
+    <div class="askpanel" style="margin:14px 0"><div id="capslot"></div></div>
+  </details>`;
+}
+function gfChurchHome(slot){
+  if(!slot) return;
+  const ch=uChurch(); let card=$('gf-church');
+  if(card&&card.dataset.church!==String(ch.id)){ card.remove(); card=null; }   // review B1: never another church's form
+  if(!card){ slot.innerHTML=gfChurchCardHTML(ch); capRender(); gfChurchSum(); return; }
+  if(card.parentNode!==slot){ slot.innerHTML=''; slot.appendChild(card); }
+}
+/* v10.55.0: every "fill in your church" goes to the survey's section when there is a survey, else to the Spiritual Gifts landing */
+function uChurchGo(){
+  if(typeof memberLink==='function'&&memberLink()) return;
+  try{ openTool('survey'); }catch(e){ return; }
+  if(typeof DATA==='undefined'||!DATA) return;   // no survey yet: the survey asks for the church's address first
+  gfChurchHome($('u-churchslot'));
+  const f=$('gf-church'); if(f) f.open=true;
+  const t=$('u-church'); if(t){ t.scrollIntoView({block:'start',behavior:'auto'}); requestAnimationFrame(()=>t.scrollIntoView({block:'start',behavior:'auto'})); }
+}
 /* No information yet: nothing saved, nothing typed (the card then opens by itself). */
 function gfChurchEmpty(){ let c={}; try{ c=capGet()||{}; }catch(e){ c={}; } if(c.confirmed||c.demo) return false;
   return U_FIELDS.every(([k])=>c[k]==null||c[k]===''); }
 /* Every way to the church profile now leads here: the Spiritual Gifts landing, "Your church" open, its summary focused. */
-function gfChurchOpen(){
-  try{ openTool('gifts'); }catch(e){}
-  if(!$('gf-church')&&typeof GF_VIEW!=='undefined'&&GF_VIEW!=='roster'){ GF_VIEW='roster'; try{ gfRender(); }catch(e){} }
-  const f=$('gf-church'); if(!f) return;
-  f.open=true;
-  const jump=()=>{ const t=$('gf-church'); if(t) t.scrollIntoView({behavior:'auto',block:'start'}); };
-  jump(); requestAnimationFrame(()=>{ jump(); const sm=f.querySelector('summary'); if(sm) try{ sm.focus({preventScroll:true}); }catch(e){} });
-}
+function gfChurchOpen(){ uChurchGo(); }   // v10.55.0: the church form is the survey's ("Your church", before the needs)
 /* Clears the church's working data and nothing that is not the church's to
    clear: the name and address stay, and the members' own gift results stay. */
 function capClearAll(){
@@ -22731,7 +22776,7 @@ function capRender(){
   };
   // v10.42 part 3 (SPEC-FOCUS E): the Gifts first card, first in the profile, above the form
   // v10.45.0: not repeated on the Spiritual Gifts landing, which shows the card at its top
-  try{ const card=host.closest('#gifts')?'':gfFirstCardHTML('profile'); if(card){ host.insertAdjacentHTML('afterbegin',card); gfFirstWire(host); } }catch(e){}
+  // v10.55.0: not in the survey's "Your church" either: the section's own Spiritual Gifts line says it (uGiftsNoteInner)
 }
 function uReqHTML(r){return `<dl class="u-stats"><div><dt>Volunteers / leaders</dt><dd>${r.people} / ${r.leaders}</dd></div><div><dt>Hours in first month</dt><dd>${r.firstMonthHours}</dd></div><div><dt>Startup / monthly</dt><dd>${fmtMoney(r.startup)} / ${fmtMoney(r.monthly)}</dd></div><div><dt>Initial trial</dt><dd>${r.weeks} weeks · ${r.participants} people served</dd></div></dl>`;}
 function uMoneyTable(r){return `<div class="u-table"><table><thead><tr><th>Planning allowance</th><th>Startup</th><th>Monthly</th></tr></thead><tbody>${r.lines.map(l=>`<tr><td>${esc(l.name)}</td><td>${fmtMoney(l.startup)}</td><td>${fmtMoney(l.monthly)}</td></tr>`).join('')}</tbody><tfoot><tr><th>Total</th><td>${fmtMoney(r.startup)}</td><td>${fmtMoney(r.monthly)}</td></tr></tfoot></table></div><p class="note">Estimated ${r.weeks}-week trial: ${fmtMoney(r.trialCost)}. Recurring allowances are reserved in full four-week blocks. ${esc(r.source||'Review these estimates against local quotes.')}</p>`;}
@@ -34337,6 +34382,9 @@ const CASE_UI={
   adjust:{en:'Adjust scope and budget',es:'Ajustar alcance y presupuesto'},
   about:{en:'About these slides',es:'Sobre estas diapositivas'},
   settle:{en:'Still to settle before you present',es:'Falta resolver antes de presentar'},
+  fillChurch:{en:'Fill in “Your church” in the Community Survey, just before the neighborhood’s needs: your volunteers, leaders, rooms and free times. Until then every number here looks short.',
+    es:'Complete “Su iglesia” en la Encuesta Comunitaria, justo antes de las necesidades del vecindario: sus voluntarios, líderes, salones y horarios libres. Hasta entonces, todo aquí parece faltar.'},
+  fillChurchGo:{en:'Open Your church',es:'Abrir Su iglesia'},
   say:{en:'What to say · {group}',es:'Qué decir · {group}'},
   sayNote:{en:'For you, not on the slides: words written for this group.',es:'Para usted, no para las diapositivas: palabras escritas para este grupo.'},
   sayOpen:{en:'To open',es:'Para empezar'},
@@ -34697,7 +34745,11 @@ function caseChooseGroup(id){
   const h=$('cs-s1');
   if(h) h.querySelectorAll('[data-cs-group]').forEach(b=>{ const on=b.dataset.csGroup===G.id; b.classList.toggle('on',on); b.setAttribute('aria-pressed',String(on)); });
   caseDraw2(); caseDraw3(); caseStepBar();
-  const s=$(casePropMode()&&!CASE_ST.propList?'cs-s3':'cs-s2'); if(s) s.scrollIntoView({block:'start'});
+  /* v10.55.0 — the pastor (6 Oct 2026), on the Proposal page: "I click church board it jumps down … it doesn't have to jump down …
+     it's just one line … you just kinda scroll to … your slides": the Proposal page stays where it is; Make the Case on its own still
+     brings its list (step 2) into view */
+  if(casePropMode()&&!CASE_ST.propList) return;
+  const s=$('cs-s2'); if(s) s.scrollIntoView({block:'start'});
 }
 /* v10.40 fix, kept: every group tile as tall as the tallest (measured, so it holds in both languages
    at any width; again on resize). */
@@ -34997,7 +35049,11 @@ function caseWarnHTML(m){
   const out=[];
   // For his eyes: his own to-dos first (never on a shared slide), then what the board will see.
   const all=[...(m.capacity.todo||[]),...m.capacity.gaps];
-  if(all.length) out.push(`<div class="cs-warn" role="note"><b>${esc(caseU('settle'))}</b><ul>${all.slice(0,8).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`);
+  /* v10.55.0 — the pastor: "short by 10 volunteers short by 2 L short by 82 volunteer hours … that is the reason … because the spiritual
+     gifts and information hasn't been put in yet, right": with nothing in "Your church" every line is short; one line says so instead */
+  let empty=false; try{ empty=!m.sample&&gfChurchEmpty(); }catch(e){ empty=false; }
+  if(empty) out.push(`<div class="cs-warn cs-fillchurch" role="note"><b>${esc(caseU('settle'))}</b><p>${esc(caseU('fillChurch'))}</p><p><button type="button" class="btn ghost gfsm" data-cs-church>${esc(caseU('fillChurchGo'))}</button></p></div>`);
+  else if(all.length) out.push(`<div class="cs-warn" role="note"><b>${esc(caseU('settle'))}</b><ul>${all.slice(0,8).map(g=>`<li>${esc(g)}</li>`).join('')}</ul></div>`);
   // v10.41 ("a lot of words, almost overwhelming"): what only explains the slides is folded, one tap away
   const info=[];
   if(m.gifts.few) info.push(`<p class="note cs-info">${esc(caseU('fewGifts',{n:fmtNum(CASE_GIFTS_MIN)}))}</p>`);
@@ -35063,7 +35119,10 @@ function caseDraw3(){
   CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
   const n=CASE_ST.deck.slides.length;
   h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
-    +caseSizeHTML(model)+caseGoalHTML(P,model)+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
+    /* v10.55.0 — the pastor, on the Proposal page: "because you're already choosing light lift moderate lift heavy lift we don't have to
+       put it again there … and what would you like this to accomplish? We don't need that either because it's already understood": no
+       Size and no goal box there (the slides keep the suggested goal); Make the Case on its own keeps both */
+    +(casePropMode()?'':caseSizeHTML(model)+caseGoalHTML(P,model))+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
     /* v10.51.0 — the pastor (6 Oct 2026): "I don't know if we really need the how it is being decided … you don't need it to have it on
        the bottom again", and "how it is to be decided I don't think that even needs to be there": no #cs-dec in step 3 (a decision is
        still recorded in the presenter view, its Decision button). "The your church ready to serve probably needs to be at the end":
@@ -35077,6 +35136,7 @@ function caseDraw3(){
   h.querySelector('[data-cs-adjust]').onclick=()=>P.ministry===CASE_PLAN_ID?openTool('planner'):uEditMinistry(P.ministry);
   h.querySelectorAll('[data-cs-act]').forEach(b=>b.onclick=()=>caseAct(b.dataset.csAct,b));
   h.querySelectorAll('#cs-size [data-cs-lift]').forEach(b=>b.onclick=()=>caseSizeSet(+b.dataset.csLift));   // v10.52.0
+  h.querySelectorAll('[data-cs-church]').forEach(b=>b.onclick=()=>uChurchGo());   // v10.55.0: "Your church", open (the survey's, before the needs)
   caseGoalWire(h); caseNamedWire(h);
   prRoomPaint();
   // v10.42 part 3: the presenter builder's mounts (DESIGN §9.2), when they are there
@@ -35543,13 +35603,27 @@ function casePropHTML(){
       <div class="cs-pacts">${n?`<button type="button" class="btn ghost gfsm" data-cs-pdf>${esc(nsU('pdf'))}</button>`:''}<button type="button" class="btn ghost gfsm" data-cs-from>${esc(L_PROP('back'))}</button>
         <button type="button" class="btn ghost gfsm" data-cs-other aria-expanded="${!!CASE_ST.propList}" aria-controls="cs-s2">${esc(L_PROP(CASE_ST.propList?'hide':'other'))}</button></div>
       <p class="note ns-status" role="status"></p>
-    </div>`;
+    </div>${caseReadyNudgeHTML()}`;
+}
+/* v10.55.0 — the pastor (6 Oct 2026): "maybe there can be a button under the proposal box before who are you proposing to just to remind
+   … must fill in … the spiritual gifts and church information". Only what is missing: "Your church" empty, then few gifts results. */
+function caseReadyNudgeHTML(){
+  const out=[];
+  let empty=false; try{ empty=gfChurchEmpty(); }catch(e){ empty=false; }
+  if(empty) out.push(`<p>${esc(L('Fill in your church first, so this proposal shows what your church can do.','Complete primero su iglesia, para que esta propuesta muestre lo que su iglesia puede hacer.'))} <button type="button" class="btn ghost gfsm" data-cs-church>${esc(L('Fill in Your church','Completar Su iglesia'))}</button></p>`);
+  let r=null; try{ r=gfReadiness(); }catch(e){ r=null; }
+  if(r&&(r.state==='none'||r.state==='low'||(r.state==='unknown'&&r.n<CASE_GIFTS_MIN)))
+    out.push(`<p>${esc(r.n?L(`A proposal is stronger with your members’ Spiritual Gifts results (${fmtNum(r.n)} so far).`,`Una propuesta es más sólida con los resultados de Dones Espirituales de sus miembros (${fmtNum(r.n)} hasta ahora).`)
+      :L('A proposal is stronger with your members’ Spiritual Gifts results.','Una propuesta es más sólida con los resultados de Dones Espirituales de sus miembros.'))} <button type="button" class="btn ghost gfsm" data-cs-gifts>${esc(L('Send the Spiritual Gifts survey','Enviar la encuesta de Dones Espirituales'))}</button></p>`);
+  return out.length?`<div class="cs-nudge" role="note">${out.join('')}</div>`:'';
 }
 const L_PROP=k=>({big:['Proposal','Propuesta'],who:['Who are you proposing to?','¿A quién le presenta la propuesta?'],whoN:['Tap the group that will decide.','Toque el grupo que va a decidir.'],
   k:['Your proposal','Su propuesta'],need:['For the need:','Para la necesidad:'],back:['← Back to the need','← Volver a la necesidad'],
   other:['Choose a different ministry','Elegir otro ministerio'],hide:['Keep this ministry','Mantener este ministerio']}[k]||['',''])[LANG==='es'?1:0];
 function casePropWire(host){
   const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack;
+  host.querySelectorAll('[data-cs-church]').forEach(b=>b.onclick=()=>uChurchGo());   // v10.55.0
+  host.querySelectorAll('[data-cs-gifts]').forEach(b=>b.onclick=()=>{ try{ gfInviteChurch(); }catch(e){ openTool('gifts'); } });
   const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need); };
   const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const s2=$('cs-s2'); if(s2) s2.scrollIntoView({block:'start'}); } };
 }
@@ -41218,7 +41292,7 @@ const GF_FIRST_UI={
   vHours:{en:'{hands} with {hours} hours a month still free',es:'{hands} con {hours} horas al mes disponibles'},
   vHands:{en:'{hands} still free',es:'{hands} disponibles'},
   lFree:{en:'{n} free to lead',es:'{n} disponibles para dirigir'},
-  saveProfile:{en:'Save Your church, on the Spiritual Gifts page, to see the whole picture.',es:'Guarde Su iglesia, en la página de Dones espirituales, para ver el panorama completo.'},
+  saveProfile:{en:'Save Your church, in the Community Survey, to see the whole picture.',es:'Guarde Su iglesia, en la Encuesta Comunitaria, para ver el panorama completo.'},
   openProfile:{en:'Church profile',es:'Perfil de la iglesia'},
   sabbathQuiet:{en:'Discover your gifts · Sabbath slides',es:'Descubra sus dones · diapositivas para el sábado'},
   // the number line (GIFTS.md §2.3): the fraction in bold, then the verb
@@ -41231,7 +41305,7 @@ const GF_FIRST_UI={
   sAdults:{en:'Adults in worship on an average Sabbath, from Your church.',es:'Adultos que asisten un sábado promedio, según Su iglesia.'},
   sWorship:{en:'Average Sabbath attendance from Your church, children included. Add the number of adults there for a truer count.',es:'Asistencia promedio del sábado según Su iglesia, niños incluidos. Agregue allí el número de adultos para una cifra más exacta.'},
   sMembers:{en:'Members on the church books, from Your church.',es:'Miembros en los libros de la iglesia, según Su iglesia.'},
-  sNone:{en:'Add your average Sabbath attendance under Your church, on the Spiritual Gifts page, to see how far the church has come.',es:'Agregue su asistencia promedio del sábado en Su iglesia, en la página de Dones espirituales, para ver cuánto ha avanzado la iglesia.'},
+  sNone:{en:'Add your average Sabbath attendance under Your church, in the Community Survey, to see how far the church has come.',es:'Agregue su asistencia promedio del sábado en Su iglesia, en la Encuesta Comunitaria, para ver cuánto ha avanzado la iglesia.'},
   sOver:{en:'More than the {d} under Your church: update the number there.',es:'Más que los {d} de Su iglesia: actualice allí la cifra.'},
   demo:{en:' (demo profile)',es:' (perfil de demostración)'},
   bSoFar:{en:'Gifts first: {frac} {has} so far.',es:'Primero, los dones: {frac} {has} hasta ahora.'},
