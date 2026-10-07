@@ -217,8 +217,28 @@ of it. Also: **Guam-Micronesia Mission** has its locator code (`ANNG11`, read 7 
 read; the notes said "52" (wrong). The Community Survey cannot read Guam and the Micronesian islands (the American Community Survey does not
 cover them; only the 2020 Island Areas census does): a survey there would be its own build. eAdventist's NAD totals (7 Oct 2026): 5,801
 churches, 871 companies, 536 groups. Tests: `v60-1-signup-read` (new, 23; failing first on v10.60.0: `~/Ministry Work/Terrain-work/v78/logs/ff-v60-1.log`);
-updated with comments: digital-function (digital-1.1), register-function (register-1.3), v60-digital (the stamps agree, v10.60.0 or later). Full suite:
-161 suites · 10,862 passed · 0 failed.
+updated with comments: digital-function (digital-1.1), register-function (register-1.3), v60-digital (the stamps agree, v10.60.0 or later).
+- **Phones follow at once** (same release; the pastor: *"the delay … when their phone slides is too long. It takes like 10 seconds sometimes
+  … I need [it] to be more rapid"*). The slides were already on the phone; the move waited on the phone: a following (locked) phone held the
+  presenter's move until any finger on its screen lifted (`st.swipe` / `st.touch`: a thumb holding the phone, or a touch iOS never ends).
+  Locked, a finger moves nothing, so `setIndex` and `setLock` jump at once (swipe mode still waits for a finger). The stream: Firebase sends
+  a keep-alive every 30 s (measured 7 Oct 2026), so a phone silent for 45 s (`WA_SILENT_MS`, was 75) opens a fresh stream (its first word
+  is the presenter's slide; `WA.reopened`), and polls only when that one goes silent within a minute; a phone back in the hand after more
+  than 3 s away (`WA.hiddenAt`, `watchVisible`) opens a fresh stream at once. present.mjs unchanged. `v42-phones` gained the checks (5
+  failing first: `v78/logs/ff-v60-1-phones.log`); its silent-stream check updated with a comment.
+- **Symmetry** (same release; the pastor, with pictures: *"make everything one line and the circle charts even all the way up and down …
+  symmetry is important"*; *"symmetry throughout the whole app … compact the wording because when it's two lines … the boxes [are] off"*):
+  the Spiritual Gifts results rows (name, date: one line each, no church line (the list is this church's, and the church was an address
+  when it had no name); the three gifts on one line starting together, the wheel in one column: `.gfresults` a container, three columns
+  from 860 px, else the gifts under the name beside the wheel; on a phone the ring alone (its labels hidden; the chips name them) and the
+  gifts under both); "Your church" step 1: nine short labels (`U_FIELDS`, ES too; "including roster members" and "a month" moved into the
+  step's line), three by three (`.u-grid3`, one column on a phone), a box at the foot of its label (`.u-grid>.u-field`); the serving times
+  a week (`uWeek`: days across, Day and Evening down, one box each, in U_SLOTS order; in a box under 420 px the days down), for the team,
+  each room and a member's details; on a phone the boxes around the form keep their frames with less padding. Checked in Chrome
+  (`v78/shots61.mjs`): 1366, 820, 390, EN + ES. Tests: `v60-1-symmetry` (new, 15; failing first on v10.60.0:
+  `v78/logs/ff-v60-1-symmetry.log`). **Still to do (his "throughout the whole app"):** the same check over every screen.
+- Full suite: 162 suites · 10,883 passed · 0 failed. terrain.church's certificate was issued 7 Oct 2026 (16:22 ET; Netlify needed "Renew
+  certificate" in Domain management → HTTPS after the alias was added).
 
 **v10.60.0 (7 Oct 2026, full lane) — Digital footprint, at the foot of Compare your churches.** The pastor: *"Under compare your churches we
 need to have some value there. I would like to see all the churches in the conference that you choose … websites Facebook pages social

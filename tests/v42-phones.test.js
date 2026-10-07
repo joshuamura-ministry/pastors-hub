@@ -186,6 +186,29 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     c('…and never the pill or "Back to live"', [M.q('#watchp .td-pill').hidden,M.J('WA.ctl.following()')], [true,true]); }
   P.E('PR_ST.ctl.go(4)'); await until(()=>M.E('WA.ctl.index()')===4);
   c('the presenter moves on: the phone goes with him', [M.E('WA.ctl.index()'),M.E('WA.ctl.locked()')], [4,true]);
+  { // v10.60.1, the pastor: "the delay … when their phone slides is too long. It takes like 10 seconds sometimes … I need [it] to be more
+    // rapid". A following phone waited for any finger on its screen to lift (a thumb holding the phone, or a touch iOS never ends) before
+    // taking the presenter's move. Locked, a finger moves nothing, so nothing waits for it.
+    const sc=widen(M);
+    const tev=(type,x)=>{ const e=new M.w.Event(type,{bubbles:true,cancelable:true}); Object.defineProperty(e,'touches',{value:type==='touchend'?[]:[{clientX:x,clientY:400}]});
+      Object.defineProperty(e,'changedTouches',{value:[{clientX:x,clientY:400}]}); sc.dispatchEvent(e); };
+    tev('touchstart',200);
+    P.E('PR_ST.ctl.go(5)'); await until(()=>RTDB[room.room].i===5); await sleep(60);
+    c('a thumb resting on a following phone: the presenter\'s move lands at once, the finger still down', [M.E('WA.ctl.index()'),sc.scrollLeft], [5,5*390]);
+    P.E('PR_ST.ctl.go(6)'); await until(()=>RTDB[room.room].i===6); await sleep(60);
+    c('…and the next one too', M.E('WA.ctl.index()'), 6);
+    tev('touchend',200); sc.dispatchEvent(new M.w.Event('scrollend')); await sleep(200);
+    c('…the finger lifted: still on his slide', M.E('WA.ctl.index()'), 6);
+    P.E('PR_ST.ctl.go(4)'); await until(()=>M.E('WA.ctl.index()')===4); }
+  { // the phone put down and picked up again (iOS pauses a page's stream while it is away): it asks for the presenter's slide at once
+    const before=FakeES.all.length;
+    Object.defineProperty(M.D,'hidden',{value:true,configurable:true}); M.D.dispatchEvent(new M.w.Event('visibilitychange'));
+    M.E('WA.hiddenAt=Date.now()-8000');
+    Object.defineProperty(M.D,'hidden',{value:false,configurable:true}); M.D.dispatchEvent(new M.w.Event('visibilitychange'));
+    const es=FakeES.all.slice(before).find(e=>e.url===`${FB}/live/${room.room}.json`);
+    c('a phone back in the hand after a few seconds away opens a fresh stream right away (its first word is where the presenter is)', [!!es,M.E('WA.mode')], [true,'stream']);
+    if(es){ es.seen=true; M.es=es; es.open(); es.emit('put',{path:'/',data:{...RTDB[room.room],i:5}}); await sleep(30);
+      c('…and lands on his slide', M.E('WA.ctl.index()'), 5); es.emit('put',{path:'/',data:RTDB[room.room]}); await sleep(30); } }
   const MS=await joinPhone(room.room,{lang:'es'});
   c('a Spanish phone: “Siguiendo al presentador”, on his slide', [MS.E('WA.ctl.index()'),MS.txt('#watchp .td-slide[data-i="4"] .td-flk')], [4,'Siguiendo al presentador']);
   { const t=await tryMove(MS);
@@ -262,11 +285,15 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     c('a stream Firebase closes → polling, still locked', [MF.E('WA.mode'),MF.E('WA.ctl.locked()')], ['poll',true]);
     P.E('PR_ST.ctl.go(5)'); await until(()=>MF.E('WA.ctl.index()')===5&&MP.E('WA.ctl.index()')===5,3000);
     c('…and in step with the presenter', [MF.E('WA.ctl.index()'),MP.E('WA.ctl.index()'),M.E('WA.ctl.index()')], [5,5,5]);
-    // a stream that goes silent (no event, not even a keep-alive, for 75 s) is left for polling
+    // a stream that goes silent (no event, not even a keep-alive) is opened again (v10.60.1: after 45 s, was 75 s, and first a fresh
+    // stream, whose first word is the presenter's slide: the pastor, "I need [it] to be more rapid"); a fresh one that stays silent too: polling
     const MQ=await joinPhone(room.room,{fast:true});
     c('(a fresh phone on the stream)', MQ.E('WA.mode'), 'stream');
-    MQ.E('WA.lastEv=Date.now()-80000'); await until(()=>MQ.E('WA.mode')==='poll',2000);
-    c('a silent stream (75 s) is dropped for polling while following', [MQ.E('WA.mode'),MQ.E('WA.ctl.locked()'),MQ.E('WA.ctl.index()')], ['poll',true,5]);
+    const nQ=FakeES.all.length;
+    MQ.E('WA.lastEv=Date.now()-50000'); await until(()=>FakeES.all.slice(nQ).some(e=>e.url===`${FB}/live/${room.room}.json`),7000);
+    c('a stream silent for 45 s is opened again while following', [MQ.E('WA.mode'),FakeES.all.slice(nQ).filter(e=>e.url===`${FB}/live/${room.room}.json`).length], ['stream',1]);
+    MQ.E('WA.lastEv=Date.now()-50000'); MQ.E('WA.reopened=Date.now()-1000'); await until(()=>MQ.E('WA.mode')==='poll',7000);
+    c('…silent again straight after: left for polling', [MQ.E('WA.mode'),MQ.E('WA.ctl.locked()'),MQ.E('WA.ctl.index()')], ['poll',true,5]);
     // contact lost: after 20 s with no answer, the member may swipe, and is told why
     stateFail=true; MP.E('WA.failSince=Date.now()-21000'); await until(()=>MP.E('WA.lost'),3000);
     c('no answer for 20 s: unlocked, “No connection. Swipe to move through the slides.”', [MP.E('WA.lost'),MP.E('WA.ctl.locked()'),MP.txt('#watchp .wa-banner')], [true,false,'No connection. Swipe to move through the slides.']);
