@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.58.0
+     TERRAIN  v10.59.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.58.0" data-theme="dark">
+<html lang="en" data-version="v10.59.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.58.0">
-<title>Community Map — Terrain v10.58.0</title>
+<meta name="terrain-version" content="v10.59.0">
+<title>Community Map — Terrain v10.59.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -21,6 +21,77 @@
 function a(r,u,c){var l=d.createElement('link');l.rel=r;l.href=u;if(c)l.crossOrigin='anonymous';h.appendChild(l);}
 a('preconnect','https://fonts.googleapis.com');a('preconnect','https://fonts.gstatic.com',1);
 a('stylesheet','https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');})();</script>
+<script>/* v10.59.0 — Terrain lives at terrain.church. The pastor (7 Oct 2026): "apps name and url to terrain.church". A browser keeps saved
+   work under the address it was made at, so the first time a device opens pastorshub.org it carries that work over (every "terrain-" key,
+   in the address after #tr-move=, which no server ever receives) and goes on at terrain.church with the same path and link (#gifts=,
+   #connect=, #watch=…). Only once terrain.church answers as Terrain (its 3×2 picture tr-here.png loads); until then pastorshub.org works as
+   before. pastorshub.org keeps its copy (and "terrain-moved"); #tr-again there sends it once more. On terrain.church the work is taken in
+   before the app reads it: a key it already has is kept (an empty one is filled), a church store holding only empty churches is replaced,
+   else the churches it lacks are added. Taken in only when the page came from pastorshub.org (the referrer); else it asks first. */
+(function(){
+var NEW='https://terrain.church', OLD=/^(www\.)?pastorshub\.org$/i, PRE='terrain-', FLAG='terrain-moved', STORE='terrain-churches-v1', MAX=1900000;
+var W=window, D=document, L=null, es=false;
+if(/jsdom/i.test(navigator.userAgent||'')&&!W.__trTest) return;   // the test runner: only the suite that asks for it (v59-move)
+try{ L=W.localStorage; L.getItem(FLAG); es=L.getItem('terrain-lang')==='es'; }catch(e){ L=null; }
+var go=W.__trGo||function(u){ location.replace(u); }, reload=W.__trReload||function(){ location.reload(); };
+function b64(t){ return btoa(unescape(encodeURIComponent(t))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,''); }
+function unb64(t){ t=t.replace(/-/g,'+').replace(/_/g,'/'); while(t.length%4) t+='='; return decodeURIComponent(escape(atob(t))); }
+function empty(v){ return v==null||v===''||v==='[]'||v==='{}'||v==='null'; }
+function ready(f){ if(D.readyState==='loading') D.addEventListener('DOMContentLoaded',f); else f(); }
+function blank(c){ if(!c||typeof c!=='object') return true; var cap=c.capacity||{}, k;
+  for(k in cap) if(k!=='confirmed'&&cap[k]!=null&&cap[k]!==''&&!(Array.isArray(cap[k])&&!cap[k].length)) return false;
+  return !c.address&&!(c.members&&c.members.length)&&!(c.selected&&c.selected.length)&&!(c.lib&&Object.keys(c.lib).length)&&!c.snap; }
+function take(d){ var n=0, k, v;
+  for(k in d){ if(!Object.prototype.hasOwnProperty.call(d,k)||k.indexOf(PRE)!==0||k===FLAG||typeof d[k]!=='string') continue;
+    v=d[k]; var have=L.getItem(k);
+    if(k===STORE&&!empty(have)){ try{ var a=JSON.parse(have), b=JSON.parse(v), id, all=true;
+        if(a&&a.churches&&b&&b.churches){ for(id in a.churches) if(!blank(a.churches[id])) all=false;
+          if(all) L.setItem(k,v); else { for(id in b.churches) if(!a.churches[id]) a.churches[id]=b.churches[id]; L.setItem(k,JSON.stringify(a)); } n++; } }catch(e){} continue; }
+    if(empty(have)){ try{ L.setItem(k,v); n++; }catch(e){} } }
+  try{ L.setItem('terrain-moved-in',new Date().toISOString()); }catch(e){}
+  return n; }
+function ask(d){ ready(function(){
+  var bar=D.createElement('div'); bar.id='tr-ask'; bar.setAttribute('role','dialog');
+  bar.style.cssText='position:fixed;left:12px;right:12px;bottom:12px;z-index:2147483600;max-width:560px;margin:0 auto;padding:14px 16px;border-radius:14px;background:#101a26;color:#e8eef5;border:1px solid #2f4a63;box-shadow:0 18px 50px rgba(0,0,0,.5);font:15px/1.45 system-ui,-apple-system,sans-serif';
+  var t=D.createElement('p'); t.style.margin='0 0 10px'; t.textContent=es?'¿Traer a este dispositivo el trabajo guardado de Terrain desde pastorshub.org?':'Bring this device’s saved Terrain work over from pastorshub.org?';
+  function btn(label,main,f){ var b=D.createElement('button'); b.type='button'; b.textContent=label; b.style.cssText='margin-right:8px;min-height:40px;padding:8px 14px;border-radius:10px;font:inherit;cursor:pointer;border:1px solid '+(main?'#3ccf9b':'#2f4a63')+';background:'+(main?'#3ccf9b':'transparent')+';color:'+(main?'#06231a':'#e8eef5'); b.onclick=f; return b; }
+  bar.appendChild(t); bar.appendChild(btn(es?'Traerlo':'Bring it',true,function(){ take(d); bar.remove(); reload(); }));
+  bar.appendChild(btn(es?'No, gracias':'No, thank you',false,function(){ bar.remove(); })); D.body.appendChild(bar); }); }
+var hash=location.hash||'', m=/^#tr-move=([^&]*)(?:&then=([^]*))?$/.exec(hash);
+/* terrain.church (or any address but pastorshub.org): take in what arrived */
+if(!OLD.test(location.hostname)){
+  if(!m) return;
+  var then=''; try{ then=m[2]?decodeURIComponent(m[2]):''; }catch(e){ then=''; }
+  if(then.charAt(0)!=='#') then='';
+  var data=null; try{ if(/^[A-Za-z0-9_-]+$/.test(m[1])) data=JSON.parse(unb64(m[1])); }catch(e){ data=null; }
+  try{ history.replaceState(null,'',location.pathname+location.search+then); }catch(e){}
+  if(!data||!data.d||typeof data.d!=='object'||!L) return;
+  if(/^https:\/\/(www\.)?pastorshub\.org\//.test(D.referrer||'')) take(data.d); else ask(data.d);
+  return;
+}
+/* pastorshub.org: once terrain.church answers as Terrain, carry this device's work over and go on there */
+if(m) return;
+var again=hash==='#tr-again'; if(again) hash='';
+var R=D.documentElement, st=D.createElement('style'), done=false;
+st.textContent='html.tr-wait body{visibility:hidden}'; D.head.appendChild(st); R.className+=' tr-wait';
+function stay(){ if(done) return; done=true; R.className=R.className.replace(/\s*\btr-wait\b/g,''); }
+function leave(){
+  var url=NEW+location.pathname+location.search, d={}, n=0, i, k;
+  if(L&&(again||!L.getItem(FLAG))) for(i=0;i<L.length;i++){ k=L.key(i); if(k&&k.indexOf(PRE)===0&&k!==FLAG&&k!=='terrain-moved-in'){ d[k]=L.getItem(k); n++; } }
+  if(!n){ go(url+hash); return; }
+  var p=b64(JSON.stringify({v:1,at:new Date().toISOString(),d:d}));
+  if(p.length>MAX){ stay(); ready(function(){ var b=D.createElement('p'); b.id='tr-big';
+      b.style.cssText='margin:0;padding:10px 16px;background:#3a2a08;color:#ffe2a8;font:14px/1.4 system-ui,sans-serif;text-align:center';
+      b.textContent=es?'Terrain ahora está en terrain.church. Este dispositivo guarda demasiado trabajo para llevarlo solo; por ahora sigue aquí.':'Terrain now lives at terrain.church. This device holds too much saved work to carry over by itself, so it stays here for now.';
+      D.body.insertBefore(b,D.body.firstChild); }); return; }
+  try{ L.setItem(FLAG,new Date().toISOString()); }catch(e){}
+  go(url+'#tr-move='+p+(hash?'&then='+encodeURIComponent(hash):''));
+}
+var tm=setTimeout(stay,5000), im=new Image();
+im.onload=function(){ clearTimeout(tm); if(done) return; if(im.naturalWidth===3&&im.naturalHeight===2){ done=true; leave(); } else stay(); };
+im.onerror=function(){ clearTimeout(tm); stay(); };
+im.src=NEW+'/tr-here.png?'+Math.floor(Date.now()/36e5);
+})();</script>
 <style>
 /* ============================================================
    TERRAIN · Community Map · v1.0
@@ -4301,7 +4372,7 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
 <body>
 <header class="top"><div class="in">
   <div class="wordmark"><i></i>TERRAIN<span class="vtag" id="vtag"></span></div>
-  <nav class="tools"><a class="on" href="#" id="brandlink">Pastors Hub</a></nav>
+  <nav class="tools"><a class="on" href="#" id="brandlink">Main menu</a></nav>
   <button class="themebtn" id="langbtn" aria-label="English / Español">ES</button>
 </div></header>
 
@@ -4335,7 +4406,7 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
 
   <div class="hub" id="hub" hidden>
     <div class="hubwelcome">
-      <p class="hubk">Pastors Hub</p>
+      <p class="hubk">terrain.church</p>
       <h2>Welcome to Terrain</h2>
       <p class="sub">Your journey begins here. Choose a tool to begin.</p>
     </div>
@@ -4509,14 +4580,14 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <!-- v10.47.1: "keep that [Top] and then also … main menu which will bring you to the main menu" -->
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
-    <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.58.0</span></div>
+    <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.58.0';
+const VERSION = 'v10.59.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9217,7 +9288,7 @@ const ES={
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
  'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
- 'Pastors Hub':'Pastors Hub','At a glance':'De un vistazo',
+ 'Main menu':'Menú principal','At a glance':'De un vistazo',
  'Compare your churches':'Compare sus iglesias','Your churches side by side: needs, people and gifts.':'Sus iglesias lado a lado: necesidades, gente y dones.','Compare churches':'Comparar iglesias',
  'Your journey begins here. Choose a tool to begin.':'Su camino comienza aquí. Elija una herramienta para comenzar.',
  'What Terrain is for':'Para qué sirve Terrain',
@@ -9243,7 +9314,7 @@ const ES={
  'Ideas and resources from other conferences, for your church.':'Ideas y recursos de otras asociaciones, para su iglesia.','Find resources':'Buscar recursos',
  
  
- '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Pastors Hub':'Pastors Hub','Created by Joshua Mura':'Creado por Joshua Mura',
+ '← Tools':'← Herramientas','Change church':'Cambiar de iglesia','Recent:':'Recientes:','Main menu':'Menú principal','Created by Joshua Mura':'Creado por Joshua Mura',
  'Who lives here':'Quién vive aquí',
  
  
@@ -14275,11 +14346,11 @@ document.addEventListener('click',e=>{ const a=e.target&&e.target.closest&&e.tar
 /* ---- the one-page PDF (§4) ---- */
 const NS_PDF={
   en:{kicker:'MINISTRY IDEA',forNeed:'For the need:',how:'HOW TO GET STARTED',needs:'WHAT IT NEEDS FROM OUR CHURCH',
-    figures:'Figures: U.S. Census Bureau, American Community Survey',made:'Made with Terrain · pastorshub.org',kjv:'KJV',
+    figures:'Figures: U.S. Census Bureau, American Community Survey',made:'Made with Terrain · terrain.church',kjv:'KJV',
     // review #25a: room to write the decision on the page
     write:['Our next step','Who will lead','Start date'],ourChurch:'Our church'},
   es:{kicker:'IDEA DE MINISTERIO',forNeed:'Para la necesidad:',how:'CÓMO EMPEZAR',needs:'LO QUE NECESITA DE NUESTRA IGLESIA',
-    figures:'Cifras: Oficina del Censo de EE. UU., Encuesta sobre la Comunidad Estadounidense',made:'Hecho con Terrain · pastorshub.org',kjv:'RVA 1909',
+    figures:'Cifras: Oficina del Censo de EE. UU., Encuesta sobre la Comunidad Estadounidense',made:'Hecho con Terrain · terrain.church',kjv:'RVA 1909',
     write:['Nuestro próximo paso','Quién lo dirige','Fecha de inicio'],ourChurch:'Nuestra iglesia'}
 };
 /* the tract and the county as a Spanish page says them (review #19): "Sección censal 114, condado de Collier" */
@@ -23979,7 +24050,7 @@ const CASE_PLACEHOLDERS={
  n:           {d:'Number of slides',                               en:'9', es:'9'},
  opened:      {d:'Phones that opened the slides',                  en:'23', es:'23'},
  until:       {d:'Date the room expires',                          en:'5 Oct', es:'5 oct'},
- site:        {d:'Short site address',                             en:'pastorshub.org', es:'pastorshub.org'},
+ site:        {d:'Short site address',                             en:'terrain.church', es:'terrain.church'},
  code:        {d:'Six-letter join code',                           en:'K7M2QX', es:'K7M2QX'},
  count:       {d:'A plain count',                                  en:'4', es:'4'},
  version:     {d:'Terrain version',                                en:'v10.40.0', es:'v10.40.0'},
@@ -27090,7 +27161,7 @@ function cnPaper(f,card,now){
    touch", tiles with small icons, a warm thank-you that names the next step. Nothing childish, no faces, no stock photos,
    nothing that reads as an advert. Nothing animates. */
 /* The printed link and QR always point at the live site, never at a deploy preview (DESIGN D19). */
-const CN_SITE='https://pastorshub.org';
+const CN_SITE='https://terrain.church';   // v10.59.0: the address on every new card (pastorshub.org's still lead here)
 const CN_FN='/.netlify/functions/connect';
 const CN_RE_ID=/^[ABCDEFGHJKMNPQRSTUVWXYZ23456789]{10}$/;
 const cnLink=(id,lang)=>`${CN_SITE}/#connect=${id}${lang==='es'||lang==='en'?'~'+lang:''}`;
@@ -29330,12 +29401,12 @@ function caseGoalSet(P,lang,text,x){
 }
 
 /* ---- the church's Spiritual Gifts readiness (section E): one object every card, banner, panel and proposal reads ----------- */
-/* The campaign's link written short for a slide: "pastorshub.org/#gifts=QLvn7p0Tqzd5" (+ "~es"), or null. */
+/* The campaign's link written short for a slide: "terrain.church/#gifts=QLvn7p0Tqzd5" (+ "~es"), or null. */
 function gfShortLink(lang){
   let sh=null; try{ sh=uChurch().share||{}; }catch(e){ sh={}; }
   if(!sh||!sh.pub) return null;
   let host=''; try{ host=location.host.replace(/^www\./,''); }catch(e){ host=''; }
-  return (host||'pastorshub.org')+'/#gifts='+sh.pub+(lang==='es'?'~es':'');
+  return (host||'terrain.church')+'/#gifts='+sh.pub+(lang==='es'?'~es':'');
 }
 function gfReadiness(){
   const c=capMerged();
@@ -39346,7 +39417,7 @@ function caseHandout(model,deck,o){
         total:L('Total','Total'),ceiling:L('Spending ceiling','Tope de gasto'),left:L('Left after this','Queda después de esto'),
         fund:L('Paid from','Se paga con'),scripture:L('Scripture','Escritura'),source:L('Source','Fuente'),
         counts:T(CASE_COPY.notes.counts),minors:T(CASE_COPY.notes.minors),moeNote:T(CASE_COPY.notes.moe),cmNote:lang==='es'?T(CASE_COPY.notes.cm):'',
-        madeUp:T(CASE_X.sampleFigures),yes:L('Three sizes of yes','Tres maneras de decir sí'),page:L('Page','Página'),of:L('of','de'),site:'pastorshub.org',
+        madeUp:T(CASE_X.sampleFigures),yes:L('Three sizes of yes','Tres maneras de decir sí'),page:L('Page','Página'),of:L('of','de'),site:'terrain.church',
         win:L('What counts as success','Qué se considerará un éxito'),scriptureCase:T(CASE_PLACE.pdf.scripture)}};
     if(model&&model.ok){
       const m=model, hero=m.need&&m.need.hero;
@@ -40587,7 +40658,7 @@ function caseProposal(model,deck,o){
       next:nx?caseF(A.next,{body:T(CASE_DEC.body[nx])}):''};
     Pz.labels={run:T(X.run),motion:T(X.head.motion),why:T(X.head.why),plan:T(X.head.plan),budget:T(X.head.budget),safeguards:T(X.head.safeguards),review:T(X.head.review),
       again:T(X.head.again),moved:T(X.moved),seconded:T(X.seconded),date:T(A.date),vote:T(A.vote),voteLine:T(A.voteLine),amend:T(A.amend),
-      start:T(Bx.start),month:m.ask&&m.ask.cad?T(CASE_CAD_T.mw.col[caseCadMW(m.ask.cad)]):T(Bx.month),total:T(Bx.total),sample:T(CASE_X.sample),page:L('Page','Página'),of:L('of','de'),site:'pastorshub.org',
+      start:T(Bx.start),month:m.ask&&m.ask.cad?T(CASE_CAD_T.mw.col[caseCadMW(m.ask.cad)]):T(Bx.month),total:T(Bx.total),sample:T(CASE_X.sample),page:L('Page','Página'),of:L('of','de'),site:'terrain.church',
       notes:[T(CASE_COPY.notes.counts),T(CASE_COPY.notes.minors),es?T(CASE_COPY.notes.cm):''].filter(Boolean).join(' '),
       notesShort:[T(CASE_COPY.notes.counts),T(CASE_COPY.notes.minors)].join(' ')};
     return Pz;

@@ -42,7 +42,7 @@ Pennsylvania (Bucks County SDA, Warminster; Fairview Village SDA). Brand:
 *Joshua Mura*. Company name for the eventual product: **Mura Works**
 (muraworks.com, registered at Porkbun).
 
-**Terrain** (this repo, live at **pastorshub.org**) is a ministry-planning tool
+**Terrain** (this repo, live at **terrain.church** since v10.59.0; **pastorshub.org** keeps serving it and moves each device's saved work over) is a ministry-planning tool
 for pastors. A pastor types a church address; Terrain reads the U.S. Census
 for the tract, town and county, explains the neighborhood in plain English,
 takes an honest inventory of what the church can field, and matches ministries
@@ -190,6 +190,35 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.59.0 (8 Oct 2026, full lane) — Terrain lives at terrain.church; each device's saved work moves with it.** The pastor: *"So I have
+terrain.church url option … I'm thinking of changing the name"*, *"apps name and url to terrain.church"*, *"Pastor's hub is actually another
+URL I bought"*, *"i bought it"*. A browser keeps saved work (the churches, the registration, Spiritual Gifts results, connection-card keys…:
+every `terrain-` key in localStorage) under the address it was made at, so terrain.church would open empty: hence the move.
+- **The move** (the second script in the head, before the app reads anything; off inside jsdom unless `__trTest`): on **pastorshub.org** the
+  page waits unseen (`html.tr-wait`, at most 5 s) until terrain.church shows it is Terrain (its 3×2 picture **`tr-here.png`**, a new file in
+  the site's copy command; a parking page's picture or none leaves pastorshub.org as it was), then goes to terrain.church with the same path,
+  question and link, carrying every `terrain-` key (not `terrain-moved`) in the address after `#tr-move=` (base64url JSON `{v,at,d}`; the part
+  after # never reaches a server; the old link after `&then=`). Once: it notes `terrain-moved` and keeps its own copy; after that only the link
+  goes. **`#tr-again`** on pastorshub.org sends the work once more. More than 1.9 MB in the address: it stays and says so (`#tr-big`). On
+  **terrain.church** (any other address) the work is taken in before the app runs, the address given back its link at once
+  (`history.replaceState`), only from a page that came from pastorshub.org (the referrer; else `#tr-ask` asks first: Bring it / No, thank
+  you): a key it already has is kept, an empty one (`[]`, `{}`, `null`, "") filled; the church store (`terrain-churches-v1`) replaced when it
+  holds only blank churches, else the churches it lacks added (its open church kept); only `terrain-` keys with text values; `terrain-moved-in`
+  notes it. Checked end to end in Chrome with both names served over HTTPS on this Mac (`v76/serve-two.mjs`, `v76/move-e2e.mjs`): the device's
+  registration and two churches arrived, an old `#connect=` link landed on the same card, the server never saw the work; with a parking page
+  at terrain.church, pastorshub.org stayed as it was.
+- **The address and the name in the page:** `CN_SITE` = `https://terrain.church` (every new connection card and its QR code), the short
+  Spiritual Gifts link on slides, "Made with Terrain · terrain.church" on the PDFs, the handouts' site line; the header's "Pastors Hub" is
+  **Main menu** / **Menú principal**, the main menu's small heading and the foot say **terrain.church**. pastorshub.org's links (printed
+  cards, gifts links, presentations) still work: the move takes them to the same place.
+- **His side (not in the repo):** Netlify → Domain management: terrain.church added with Netlify DNS, its four name servers set at Porkbun;
+  Firebase `terrain-live` → Authentication → Authorized domains: terrain.church. **After this release is live and checked:** set terrain.church
+  as the **primary domain** (then Netlify's `URL`, which gifts.mjs and present.mjs use for their links, is terrain.church; if `SITE_URL` is
+  set in Netlify, change it to `https://terrain.church`). **Keep pastorshub.org renewed and serving the site (never a server redirect: the
+  move runs in its page).** Stripe's webhook may stay at pastorshub.org (it keeps answering there). Checkout's return pages follow the page's
+  own address (account.mjs `siteOf`).
+- Tests: `v59-move` (new, 37; failing first on v10.58.0: `v76/ff-v59-move.log`). Full suite: 156 suites · 10,701 passed · 0 failed (the full run 10,690 and 11 stale checks of the old address and name, updated with notes and rerun: v43-ongoing-golden and v45-survey say the handouts' site back as the golden files', connect-client, hub-layout, v45-pdf; and vocab.json rebuilt for the stamps). Samples `Terrain-v10.59.0-samples`.
 
 **v10.58.0 (7 Oct 2026) — Resources for your church, Ministries that come to your church, and every drop-down redrawn.** Folded into
 PR #29 with v10.57.1 (his rule: an open PR takes the next work). The pastor: *"did you put the box or section where I asked you to put all

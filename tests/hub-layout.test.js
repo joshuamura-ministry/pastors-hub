@@ -10,7 +10,8 @@ setTimeout(()=>{
   c('version stamps agree', w.eval('VERSION'), (html.match(/<meta name="terrain-version" content="([^"]+)"/)||[])[1]);
   c('no boot errors', errs.length, 0);
   console.log('\n-- the welcome, as drawn --');
-  c('eyebrow reads Pastors Hub', D().querySelector('.hubk').textContent, 'Pastors Hub');
+  // v10.59.0 (stale): the pastor, "apps name and url to terrain.church" (Pastors Hub was another address he bought)
+  c('eyebrow reads terrain.church', D().querySelector('.hubk').textContent, 'terrain.church');
   c('headline is "Welcome to Terrain"', D().querySelector('.hubwelcome h2').textContent, 'Welcome to Terrain');
   // v10.56.1 (stale, not a regression): the pastor, "under welcome to terrain just something that says your journey begins"
   c('sub is the short instruction', D().querySelector('.hubwelcome .sub').textContent, 'Your journey begins here. Choose a tool to begin.');
