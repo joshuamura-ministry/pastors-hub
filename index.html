@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.55.1
+     TERRAIN  v10.56.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.55.1" data-theme="dark">
+<html lang="en" data-version="v10.56.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.55.1">
-<title>Community Map — Terrain v10.55.1</title>
+<meta name="terrain-version" content="v10.56.0">
+<title>Community Map — Terrain v10.56.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -2770,6 +2770,13 @@ section.blk.u-churchsec.u-todo{animation:ucSpin 9s linear infinite,ucGlow 6s eas
 .btn.u-gfgo:hover,.btn.u-gfgo:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--gfv) 80%,transparent),0 10px 32px -6px var(--gfv)}
 @media (max-width:520px){.u-churchsec .btn.u-gfgo{width:100%}}
 .cs-nudge .btn.u-gfgo{font-size:.9rem;padding:9px 16px}
+/* v10.56.0: Claude in Make the Case: the words' line under step 3's heading, the group study's line in step 2's section head */
+.ns-aistat.cs-wstat{margin:4px 0 16px}
+.ns-aistat.cs-gistat{margin:0}
+.lib-seen ul{margin:4px 0 8px;padding-left:18px;font-size:.86rem;line-height:1.5;color:var(--ink2)}
+.lib-seen a{color:var(--acc)}
+.cs-sayh{margin:20px 0 8px;padding-top:12px;border-top:1px solid var(--line2);font-weight:700;font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+.cs-sayby dt{font-weight:600}
 .cs-nudge{margin:12px 0 0;padding:12px 14px;border:1px dashed color-mix(in srgb,var(--m-hardship) 60%,var(--line2));border-radius:12px;display:grid;gap:8px;color:var(--ink2)}
 .cs-nudge p{margin:0;display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;line-height:1.5}
 .cs-info{border-left:3px solid var(--line2);padding-left:10px;margin:0 0 16px}
@@ -4318,13 +4325,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.55.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.55.1';
+const VERSION = 'v10.56.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -13393,8 +13400,8 @@ function nsAiT(k,o){ const e=NS_AI_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o
 async function nsAiProbe(){
   if(NS_AI.info) return NS_AI.info;
   if(NS_AI.probing) return NS_AI.probing;
-  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true),ideas:!!(j&&j.ideas===true)}; }
-    catch(e){ NS_AI.info={needs:false,ideas:false}; } NS_AI.probing=null; return NS_AI.info; })();   // v10.55.0: and the work for each need
+  NS_AI.probing=(async()=>{ try{ const r=await fetch('/.netlify/functions/advise'); const j=await r.json(); NS_AI.info={needs:!!(j&&j.needs===true),ideas:!!(j&&j.ideas===true),case:!!(j&&j.case===true)}; }
+    catch(e){ NS_AI.info={needs:false,ideas:false,case:false}; } NS_AI.probing=null; return NS_AI.info; })();   // v10.55.0: and the work for each need
   return NS_AI.probing;
 }
 function nsAiState(){ const g=(DATA&&DATA.geo)||{}, t=String(g.matched||g.label||''); const m=/,\s*([A-Z]{2})\s*(?:,\s*)?(?:\d{5}(?:-\d{4})?)?\s*$/.exec(t); return m?m[1]:null; }
@@ -13611,12 +13618,12 @@ function nsClInput(n){
       why:String(n.evidence||'').replace(/\s+/g,' ').trim().slice(0,400),themes:nsClThemes(n,lib)},tags,have};
 }
 // one idea from the server, checked again: its words, its numbers, its links, and Make the Case must be able to take it
-function nsClOk(raw,I,pool){
+function nsClOk(raw,I,pool,reach){   // v10.56.0: reach, a group's side ('in' for God's people); a need's ideas are 'out'
   if(!raw||typeof raw!=='object'||!/^cl-[0-9a-f]{14}$/.test(String(raw.id))||![1,2,3].includes(raw.tier)) return null;
   const lg=I.lang, T=raw[lg]; if(!T||typeof T!=='object') return null;
   const n=nsAiSafe(T.n,60), d=nsAiSafe(T.d,420), how=Array.isArray(T.how)&&T.how.length===4?T.how.map(s=>nsAiSafe(s,140)):null;
   if(!n||!d||!how||how.some(s=>!s)) return null;
-  const why=nsAiSafe(raw.why,240), x={...raw,[lg]:{n,d,how},seen:(Array.isArray(raw.seen)?raw.seen:[]).map(nsAiLink).filter(Boolean).slice(0,2),reach:'out',ai:true};
+  const why=nsAiSafe(raw.why,240), x={...raw,[lg]:{n,d,how},seen:(Array.isArray(raw.seen)?raw.seen:[]).map(nsAiLink).filter(Boolean).slice(0,2),reach:reach==='in'?'in':'out',ai:true};
   if(why&&nsAiNumsOk(why,pool)) x.why=why; else delete x.why;
   delete x[lg==='en'?'es':'en'];
   let ok=null; try{ ok=libToCatalog(x); }catch(e){ ok=null; }
@@ -13692,6 +13699,116 @@ function nsClPick(id){
   const e=nsClSetOf(id); if(!e||!e.set) return;
   try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
     body:JSON.stringify({mode:'ideas-pick',device:buyDevice(),set:e.set,id}),signal:AbortSignal.timeout(15000)}).catch(()=>{}); }catch(e2){}
+}
+/* ---- v10.56.0 — step 2's ideas for one group, by the same deep study (DESIGN-CASE-CLAUDE.md, Terrain-work/v73) --------------------
+   The pastor (6 Oct 2026): "And this also carries into make the case right and the proposal creation because [it] shouldn't be Claude."
+   In Make the Case's step 2, with a group chosen, the section on screen (For God's people / For our community) asks advise.mjs (mode
+   ideas, a group instead of a need) once a page load: the place and its figures (nsAiInput), the group (id, name, the side, up to three
+   of its themes), the census tags that fire and the names of the group's ideas already listed (never written again). Never the church,
+   its address or the pastor. Twelve ideas, four a size, in the library's shape (cl-<14 hex>), each with its own "why" and where it is
+   "seen working"; checked again here (nsClOk) and kept where "More ideas" kept its ideas (uChurch().fresh['group:<id>:<side>']), so
+   libDrawList draws them first in the section; a new study's set takes the place of the last. "Choose this" on one is a pick
+   (ideas-pick). Where the study is off (no ideas:true, a locked device), the quick "More ideas" button stays. */
+const CASE_GI={runs:new Map(),status:new Map(),tried:new Set(),picked:new Set(),poll:4000,max:480000};
+const CASE_GI_T={
+  working:{en:'Studying what works for {group}… a minute or two.',es:'Estudiando lo que funciona para {group}… uno o dos minutos.'},
+  done:{en:'Written for {group} on {date}',es:'Escritas para {group} el {date}'}};
+function cgiT(k,o){ const e=CASE_GI_T[k]; if(!e) return nsClT(k,o); let t=LANG==='es'?e.es:e.en; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+function cgiKey(G,sec){ const pl=nsAiPlace(); return pl&&G&&(sec==='in'||sec==='out')?nsAiKey(pl)+'|'+G.key[sec]:''; }
+function cgiEntry(G,sec){ const f=uChurch().fresh, e=f&&typeof f==='object'&&G?f[G.key[sec]]:null; return e&&e.study&&typeof e.study==='object'&&Array.isArray(e.ideas)?e:null; }
+function cgiThemes(G,sec){
+  const ok=new Set(((LIB.idx&&LIB.idx.themes)||[]).map(t=>t&&t.id).filter(Boolean));
+  return [...new Set([G.topic(sec).theme,...(sec==='in'?G.homeIn:G.homeOut)].filter(t=>t&&ok.has(t)))].slice(0,3);
+}
+function cgiInput(G,sec){
+  const A=nsAiInput(); if(!A) return null;
+  const themes=cgiThemes(G,sec); if(!themes.length) return null;
+  let tags=[]; try{ tags=[...profile(DATA.M.tract,DATA.M.county,trendOf(DATA.M,'tract'))].filter(t=>typeof t==='string').slice(0,80); }catch(e){ tags=[]; }
+  const lg=LANG==='es'?'es':'en', want=sec==='in'?libIn:libOut, home=new Set(sec==='in'?G.homeIn:G.homeOut);
+  let rows=[]; try{ rows=G.rows()||[]; }catch(e){ rows=[]; }
+  const have=rows.filter(r=>want(libReach(r))&&(home.has(r.theme)||(r.alsoIds||[]).some(t=>home.has(t)))).slice(0,40)
+    .map(r=>({id:r.id,name:String(libFill(lg==='es'?r.ne:r.n,lg)||'').replace(/\s+/g,' ').trim().slice(0,120),lift:Math.max(1,Math.min(3,+r.tier||2))}))
+    .filter(h=>/^[a-z0-9]+(-[a-z0-9]+)*(--[a-z0-9]+(-[a-z0-9]+)*)?$/.test(h.id)&&h.id.length<=110&&h.name.length>=3);
+  return {lang:A.lang,place:A.place,figs:A.figs,langs:A.langs,origins:A.origins,
+    group:{id:G.id,name:String(G.name||'').replace(/\s+/g,' ').trim().slice(0,80),reach:sec,themes},tags,have};
+}
+function cgiFail(G,sec,key){ if(CASE_GI.status.get(key)!=='done') CASE_GI.status.set(key,'failed'); cgiPaint(G,sec); return false; }
+function cgiAccept(G,sec,key,I,j){
+  if(cgiKey(G,sec)!==key) return false;
+  // an idea for the church family speaks of the church family: its "why" carries no number (as the server)
+  const pool=sec==='in'?new Set():nsAiPool({figs:I.figs,langs:I.langs,origins:I.origins,cands:[]});
+  const ideas=(Array.isArray(j.ideas)?j.ideas:[]).map(x=>nsClOk(x,I,pool,sec)).filter(Boolean);
+  const per=t=>ideas.filter(x=>x.tier===t).length;
+  if(ideas.length<6||[1,2,3].some(t=>per(t)<2)) return cgiFail(G,sec,key);   // as the server: six at least, two in each size
+  const made=/^\d{4}-\d{2}-\d{2}$/.test(String(j.made||''))?j.made:new Date().toISOString().slice(0,10);
+  const set=typeof j.set==='string'&&/^[0-9a-f]{32}\/(en|es)$/.test(j.set)?j.set:'', topic=G.topic(sec).label;
+  const ch=uChurch(); if(!ch.fresh||typeof ch.fresh!=='object') ch.fresh={};
+  const old=ch.fresh[G.key[sec]], quick=old&&Array.isArray(old.ideas)?old.ideas.filter(x=>x&&!/^cl-/.test(String(x.id))):[];
+  ch.fresh[G.key[sec]]={topic,ideas:[...ideas.map(x=>({...x,topic,clSet:set})),...quick].slice(0,LIB_AI_MAX),asks:(old&&old.asks)||0,at:Date.now(),study:{made,set,key,lang:I.lang}};
+  uPersist(); CASE_GI.status.set(key,'done');
+  if(typeof TOOL!=='undefined'&&TOOL==='case'&&$('cs-lib')) libMount('case'); else cgiPaint(G,sec);
+  return true;
+}
+function cgiStatusInner(G,sec){
+  const key=cgiKey(G,sec), st=CASE_GI.status.get(key)||'', e=cgiEntry(G,sec), group=String(G.name||'');
+  const btn=k=>`<button type="button" class="btn ghost gfsm" data-cgi-gen="${sec}">${esc(nsClT(k))}</button>`;
+  if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(cgiT('working',{group}))}</span>`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}</span>${btn(e?'again':'retry')}`;
+  if(e&&e.study.key===key) return `<span class="ns-aiwhen">${esc(cgiT('done',{group,date:nsAiDate(e.study.made)}))}</span>${btn('again')}`;
+  return '';
+}
+function cgiPaint(G,sec){ const b=document.getElementById('case-lib-ai-'+sec); if(b&&b.dataset.cgi==='1'){ const p=b.querySelector('.ns-aistat'); if(p) p.innerHTML=cgiStatusInner(G,sec); } }
+/* The section's head box: the study's line instead of the quick button, when the study is on. False: the quick button as before. */
+function cgiDraw(box,sec){
+  const G=typeof caseGroupList==='function'?caseGroupList():null;
+  if(!G||!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return false;
+  const info=NS_AI.info;
+  if(!info){ nsAiProbe().then(i=>{ if(i&&i.ideas&&box.isConnected) cgiDraw(box,sec); }); return false; }
+  if(!info.ideas||(typeof entitled==='function'&&!entitled('ideas'))) return false;
+  box.dataset.cgi='1';
+  box.innerHTML=`<p class="ns-aistat cs-gistat" role="status">${cgiStatusInner(G,sec)}</p>`;
+  cgiAuto(G,sec);
+  return true;
+}
+/* Once a page load, only for the section on screen (the other starts when he switches to it). */
+function cgiAuto(G,sec){
+  const U=LIB_UI.case, tab=U.tab==='in'||U.tab==='out'?U.tab:caseDefaultTab(G); if(sec!==tab) return;
+  const key=cgiKey(G,sec); if(!key||CASE_GI.runs.has(key)||CASE_GI.tried.has(key)) return;
+  const e=cgiEntry(G,sec); if(e&&e.study.key===key) return;
+  if(!NS_AI.info||!NS_AI.info.ideas) return;
+  CASE_GI.tried.add(key); cgiStart(G,sec,false);
+}
+async function cgiStart(G,sec,fresh){
+  const key=cgiKey(G,sec); if(!key) return false;
+  if(CASE_GI.runs.has(key)) return CASE_GI.runs.get(key);
+  CASE_GI.status.set(key,'working'); cgiPaint(G,sec);
+  const run=(async()=>{
+    const I=cgiInput(G,sec); if(!I) return cgiFail(G,sec,key);
+    let r=null,j=null;
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+      body:JSON.stringify({mode:'ideas',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.ideas)) return cgiAccept(G,sec,key,I,j);
+    if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.ideas=false; return cgiFail(G,sec,key); }
+    const t0=Date.now();
+    while(Date.now()-t0<CASE_GI.max){
+      await new Promise(res=>setTimeout(res,CASE_GI.poll));
+      if(cgiKey(G,sec)!==key) return false;
+      let q=null,qj=null;
+      try{ q=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'ideas-status',job:j.job,key:j.key}),signal:AbortSignal.timeout(15000)});
+        qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return cgiAccept(G,sec,key,I,qj);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return cgiFail(G,sec,key);
+    }
+    return cgiFail(G,sec,key);
+  })();
+  CASE_GI.runs.set(key,run);
+  try{ return await run; } finally{ CASE_GI.runs.delete(key); }
+}
+// "Choose this" on one of Claude's ideas for a group: the server copies it from its own set into the pool (once a page an idea)
+function cgiPick(raw){
+  if(!raw||!/^cl-/.test(String(raw.id))||!raw.clSet||CASE_GI.picked.has(raw.id)||!aiPass()) return; CASE_GI.picked.add(raw.id);
+  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    body:JSON.stringify({mode:'ideas-pick',device:buyDevice(),set:raw.clSet,id:raw.id}),signal:AbortSignal.timeout(15000)}).catch(()=>{}); }catch(e){}
 }
 function nsCardEl(id){ const h=$('u-needs'); return h?h.querySelector(`.ns-need[data-need="${id}"]`):null; }
 /* Every open ideas list drawn again (the map arrived, or failed); every closed one's count. */
@@ -21999,6 +22116,10 @@ function libCardHTML(ctx,raw,x,env,S,o){
   // v10.41: an idea for God's people is argued from the church family, not the census: no "Why here" figure
   const inReach=libReach(libRowOf(x.id)||raw)==='in';
   let why=''; try{ why=env.m&&!inReach?libWhyText(x,env.m,env.tags):''; }catch(e){ why=''; }
+  // v10.56.0: an idea of Claude's for a group says its own "why" (checked: its numbers the Census's, none for the church family)
+  const cl=/^cl-[0-9a-f]{14}$/.test(String(raw.id));
+  if(cl&&typeof raw.why==='string'&&raw.why) why=raw.why;
+  const seenH=cl&&Array.isArray(raw.seen)&&raw.seen.length?`<div class="lib-seen"><p class="lib-howh">${esc(nsClT('seen'))}</p><ul>${raw.seen.filter(z=>z&&/^https:\/\//.test(String(z.url))).map(z=>`<li>${esc(z.text)} <a href="${esc(z.url)}" target="_blank" rel="noopener noreferrer">${esc(z.host)}</a></li>`).join('')}</ul></div>`:'';
   let f=null; try{ f=uCheck(x); }catch(e){ f=null; }
   const selected=uSelected().includes(x.id);
   const gaps=f?f.gaps.filter(g=>!/^Review and save the church profile|^Confirm the connection to a published local statistic|^Review this draft/.test(g)):[];
@@ -22014,8 +22135,8 @@ function libCardHTML(ctx,raw,x,env,S,o){
   const acts=libActsHTML(ctx,x.id,selected,addOk,o), compact=ctx==='case'&&!(o&&o.chosen);
   const ptH=pt?`<p class="lib-pt"><b>${esc(libT('partner'))}</b> ${esc(pt)}</p>`:'', whyH=why?`<p class="lib-why"><b>${esc(libT('why'))}</b> ${esc(why)}</p>`:'';
   const kidsH=x.minors?`<p class="lib-kids">${esc(libT('kids'))}</p>`:'';
-  const tail=compact?((ptH||whyH||fit||how.length)?`${kidsH}<details class="lib-how lib-more"><summary>${esc(libT('moreAbout'))}</summary>${ptH}${whyH}${fit}${how.length?`<p class="lib-howh">${esc(libT('steps'))}</p><ol>${how.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:''}</details>`:kidsH)
-    :`${ptH}${kidsH}${whyH}${fit}${how.length?`<details class="lib-how"><summary>${esc(libT('steps'))}</summary><ol>${how.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></details>`:''}`;
+  const tail=compact?((ptH||whyH||fit||how.length)?`${kidsH}<details class="lib-how lib-more"><summary>${esc(libT('moreAbout'))}</summary>${ptH}${whyH}${seenH}${fit}${how.length?`<p class="lib-howh">${esc(libT('steps'))}</p><ol>${how.map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:''}</details>`:kidsH)
+    :`${ptH}${kidsH}${whyH}${seenH}${fit}${how.length?`<details class="lib-how"><summary>${esc(libT('steps'))}</summary><ol>${how.map(t=>`<li>${esc(t)}</li>`).join('')}</ol></details>`:''}`;
   return `<article class="lib-card" data-lib-id="${esc(x.id)}" style="--k:var(--m-${LIB_KIND_HUE[raw.k]||'language'})">
     <div class="lib-top"><span class="lib-kind">${esc(libKindName(raw.k))}</span>${theme?`<span class="lib-theme" style="--t:var(--m-${esc(theme.hue||'language')})">${esc(es?theme.es:theme.en)}</span>`:''}${x.ai?`<i class="u-ai">${esc(libT('fresh'))}</i>`:''}</div>
     <h4>${esc(name)}</h4><p class="lib-d">${esc(d)}</p>
@@ -22073,9 +22194,12 @@ function libWire(ctx){
     if(b.hasAttribute('data-lib-retry')){ again(); return; }
     if(b.dataset.libTheme){ U.theme=b.dataset.libTheme; U.browse=true; U.shown={in:LIB_PAGE,out:LIB_PAGE}; U.aiMsg=''; libClearQuery(ctx); again(); libShow(ctx); return; }
     if(b.hasAttribute('data-lib-chip')){ U.chip=b.dataset.libChip||''; fresh(); again(); return; }
+    if(b.dataset.cgiGen){ const G=typeof caseGroupList==='function'?caseGroupList():null; if(G) cgiStart(G,b.dataset.cgiGen==='in'?'in':'out',true); return; }   // v10.56.0
     if(b.dataset.libTab){ U.tab=b.dataset.libTab==='out'?'out':'in';
       h.querySelectorAll('[data-lib-tab]').forEach(t=>{ const on=t.dataset.libTab===U.tab; t.classList.toggle('on',on); t.setAttribute('aria-selected',String(on)); });
-      h.querySelectorAll('.lib-group .lib-sec[data-lib-sec]').forEach(s=>{ s.hidden=s.dataset.libSec!==U.tab; }); return; }
+      h.querySelectorAll('.lib-group .lib-sec[data-lib-sec]').forEach(s=>{ s.hidden=s.dataset.libSec!==U.tab; });
+      if(ctx==='case'&&typeof cgiAuto==='function'){ const G=caseGroupList(); if(G&&document.querySelector(`#case-lib-ai-${U.tab}[data-cgi="1"]`)) cgiAuto(G,U.tab); }   // v10.56.0
+      return; }
     if(b.hasAttribute('data-lib-more')){ const k=b.dataset.libMore==='in'?'in':'out'; U.shown[k]+=LIB_PAGE; again(); return; }
     if(b.dataset.libTog){ const k=b.dataset.libTog; U.f[k]=!U.f[k]; U.shown={in:LIB_PAGE,out:LIB_PAGE}; again(); return; }
     if(b.dataset.libAdd){ libAdd(ctx,b.dataset.libAdd); return; }
@@ -22129,6 +22253,7 @@ function libLibAgain(ctx,id,sel){
 /* "Make the case for this": Make the Case with this idea chosen. */
 function libCase(ctx,id){
   const raw=libRawOf(id); if(!raw) return;
+  if(raw.clSet&&typeof cgiPick==='function') cgiPick(raw);   // v10.56.0: one of Claude's ideas for a group, chosen
   const x=libSave(raw); if(!x) return;
   const keep=LIB_UI.case; LIB_UI.case=LIB_UI_BLANK(); LIB_UI.case.chip=ctx==='case'?keep.chip||'':'';
   if(ctx==='case'){ caseChoose(x.id); return; }   // v10.45.0 S2: the saved copy's id
@@ -22146,13 +22271,14 @@ function libCase(ctx,id){
    Never labelled AI, and the server's own error words are never shown (they are in the console). */
 function libAiDraw(ctx,topic,have,boxId){
   const box=document.getElementById(boxId||ctx+'-lib-ai'); if(!box||!topic) return;
+  if(ctx==='case'&&topic.reach&&typeof cgiDraw==='function'&&cgiDraw(box,topic.reach)) return;   // v10.56.0: the group's deep study
   const U=LIB_UI[ctx], key=uChurch().id+'|'+topic.key, busy=LIB_AI_RUNNING.has(key), town=topic.reach==='in'?libChurch():libTown();
   const mine=!topic.reach||U.aiSec===topic.reach;
   const msg=U.aiMsg&&mine?`<p class="note lib-aimsg${U.aiErr?' err':''}" role="status">${esc(U.aiMsg)}</p>`:'';
   if(busy){ box.innerHTML=`<p class="note" role="status">${esc(topic.reach?libT('aiBusyShort'):libT('aiBusy',town))}</p>`; return; }
   box.innerHTML=msg;
   aiProbe().then(info=>{
-    if(!box.isConnected||LIB_AI_RUNNING.has(key)) return;
+    if(!box.isConnected||LIB_AI_RUNNING.has(key)||box.dataset.cgi==='1') return;
     if(!info||!info.enabled) return;                                // no key on the server: no button, as elsewhere
     if(typeof entitled==='function'&&!entitled('ideas')){ box.innerHTML=topic.reach==='in'?msg:msg+lockHTML('ideas'); return; }
     if(info.locked&&!aiPass()){ box.innerHTML=topic.reach&&topic.reach!=='out'?'':`<p class="note lib-aimsg">${esc(libT('aiLocked'))}</p>`; return; }
@@ -35108,7 +35234,7 @@ function caseWarnHTML(m){
    line (when no slide carries it), how many the trial reaches against how many need it, and
    what counts as success at the review. caseBuild writes all of it per group; none of it is
    on a slide or the handout. */
-function caseSayHTML(m){
+function caseSayHTML(m,cw){
   if(!m||!m.ok) return '';
   const onSlide=[m.closeQuote,m.timeline&&m.timeline.quote].filter(Boolean).map(z=>z.text);
   const q=m.quote&&m.quote.text&&!onSlide.includes(m.quote.text)?m.quote:null;
@@ -35119,12 +35245,15 @@ function caseSayHTML(m){
     reach?[caseU('sayReach'),esc(gfCap(reach))]:null,
     [caseU('sayWin'),esc(m.timeline&&m.timeline.win||'')],
     [caseU('sayClose'),esc(m.close||'')]].filter(r=>r&&r[1]);
-  if(!rows.length) return '';
-  return `<details class="cs-qs cs-say"><summary>${esc(caseU('say',{group:m.group.name}))}</summary><p class="note cs-sayn">${esc(caseU('sayNote'))}</p><dl>${rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl></details>`;
+  // v10.56.0: Claude's words for each slide, under the app's rows
+  const by=cw&&cw.say&&cw.say.length?`<p class="cs-sayh">${esc(cwT('bySlide'))}</p><dl class="cs-sayby">${cw.say.map(x=>`<dt>${esc(x.n+'. '+x.head)}</dt><dd>${esc(x.text)}</dd>`).join('')}</dl>`:'';
+  if(!rows.length&&!by) return '';
+  return `<details class="cs-qs cs-say"><summary>${esc(caseU('say',{group:m.group.name}))}</summary><p class="note cs-sayn">${esc(caseU('sayNote'))}</p><dl>${rows.map(([k,v])=>`<dt>${esc(k)}</dt><dd>${v}</dd>`).join('')}</dl>${by}</details>`;
 }
-function caseQuestionsHTML(m){
-  if(!m.questions||!m.questions.length) return '';
-  return `<details class="cs-qs"><summary>${esc(caseT(CASE_COPY.builder.questions))} (${m.questions.length})</summary><dl>${m.questions.map(q=>`<dt>${esc(q.q)}</dt><dd>${esc(q.a)}</dd>`).join('')}</dl></details>`;
+function caseQuestionsHTML(m,cw){
+  const qs=cw&&cw.qa&&cw.qa.length?cw.qa:m.questions;   // v10.56.0: Claude's questions for this ministry, when they are in
+  if(!qs||!qs.length) return '';
+  return `<details class="cs-qs"><summary>${esc(caseT(CASE_COPY.builder.questions))} (${qs.length})</summary><dl>${qs.map(q=>`<dt>${esc(q.q)}</dt><dd>${esc(q.a)}</dd>`).join('')}</dl></details>`;
 }
 function caseActsHTML(sample,type){
   const b=(k,cls,extra)=>`<button type="button" class="btn${cls?' '+cls:''}" data-cs-act="${k}"${extra||''}>${esc(caseU(k==='ask'?'askList':k))}</button>`;
@@ -35140,6 +35269,186 @@ function caseActsHTML(sample,type){
   return `<div class="cs-acts${sample?' cs-a3':''}${n===6?' cs-a6':n===4?' cs-a4':''}" role="group" aria-label="${esc(caseU('actsLabel'))}">${b('present','')}${b('share','ghost')}${b('pdf','ghost')}${prop?b('proposal','ghost'):''}${sample?'':b('ask','ghost',' aria-expanded="false" aria-controls="cs-ask"')+b('sample','ghost')}</div>
     <p class="note cs-status" id="${sample?'cs-sstatus':'cs-status'}" role="status"></p>`;
 }
+/* ---- v10.56.0 — the proposal's words, written by Claude (DESIGN-CASE-CLAUDE.md, Terrain-work/v73) ---------------------------------
+   The pastor (6 Oct 2026): "And this also carries into make the case right and the proposal creation because [it] shouldn't be Claude."
+   The app builds the slides (their facts, their order, their verses); on an unlocked device whose server has the words on (GET case),
+   step 3 asks advise.mjs (mode case) once a page load for this ministry, group and language: the group, the idea, the goal, the town and
+   state, and each slide's words (cwLines), with the church's, the pastor's and the coordinator's names put as {church}, {pastor},
+   {coordinator} (cwRedact). What comes back: a headline for each slide he may reword, what to say on each slide, and the questions the
+   group will ask. Kept with the church (uChurch().caseWords[caseEditKey], the last 40) with a fingerprint of every slide it read (cwSig):
+   a headline or a slide's note is used only while that slide still says what Claude read, a headline never with more lines than the
+   app's own (caseWrapN at CASE_FIT.head.cpl, so every slide still fits), and only when every number it says is on the slides now.
+   His own words (caseEdits) stay on top; "Undo my changes" goes back to Claude's. Never the sample, never a member's page. */
+const CASE_WD={runs:new Map(),status:new Map(),tried:new Set(),poll:4000,max:300000};
+const CASE_W_T={
+  working:{en:'Writing the words for {group}… about a minute.',es:'Escribiendo las palabras para {group}… alrededor de un minuto.'},
+  done:{en:'Words written for {group} on {date}',es:'Palabras escritas para {group} el {date}'},
+  again:{en:'Write them again',es:'Escribirlas de nuevo'},
+  failed:{en:'The words could not be written just now.',es:'No se pudieron escribir las palabras ahora.'},
+  retry:{en:'Try again',es:'Intentar de nuevo'},
+  stale:{en:'Some slides changed since the words were written.',es:'Algunas diapositivas cambiaron después de escribir las palabras.'},
+  bySlide:{en:'Slide by slide',es:'Diapositiva por diapositiva'}};
+function cwT(k,o){ const e=CASE_W_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
+const CW_SKIP=new Set(['type','part','kicker','headline','verse','quote','qrUrl','code6','source','hue','dots','goal','sample','moe','sig']);
+/* A slide's words, as lines (the server's view of it, and its fingerprint). */
+function cwLines(s){
+  // ten lines a slide, 300 characters a line: a whole deck stays well inside the server's size (30,000 characters)
+  const out=[], add=t=>{ t=String(t==null?'':t).replace(/\s+/g,' ').trim(); if(t&&out.length<10) out.push(t.slice(0,300)); };
+  if(!s||typeof s!=='object') return out;
+  if(s.type==='stat'){ add([s.value,s.unit].filter(v=>v!=null&&v!=='').join('')); add(s.freq); add(s.count); add(s.label);
+    if(s.compare&&typeof s.compare==='object'){ if(s.compare.here!=null) add('Here: '+s.compare.here); if(s.compare.label) add(s.compare.label+': '+s.compare.county); }
+    add(s.note); return out; }
+  const walk=(v,depth)=>{ if(depth>4||v==null||typeof v==='boolean') return;
+    if(typeof v==='string'||typeof v==='number'){ add(v); return; }
+    if(Array.isArray(v)){ if(v.length===2&&v.every(z=>typeof z==='string'||typeof z==='number')){ add(v[0]+': '+v[1]); return; } v.forEach(z=>walk(z,depth+1)); return; }
+    if(typeof v==='object'){
+      if(typeof v.label==='string'&&('have' in v||'need' in v)){ add(`${v.label}: have ${v.have==null?'':v.have}${v.unit||''}, need ${v.need==null?'':v.need}${v.unit||''}`); return; }
+      if(v.value!=null&&typeof v.label==='string'){ add(v.value+' '+v.label); return; }
+      Object.keys(v).forEach(k=>{ if(!CW_SKIP.has(k)) walk(v[k],depth+1); }); } };
+  Object.keys(s).forEach(k=>{ if(!CW_SKIP.has(k)) walk(s[k],0); });
+  return out;
+}
+function cwSig(s){ const t=JSON.stringify([s&&s.type,s&&s.part,s&&s.kicker,s&&s.headline,cwLines(s)]); let h=5381; for(let i=0;i<t.length;i++) h=((h*33)^t.charCodeAt(i))>>>0; return h.toString(36)+'.'+t.length.toString(36); }
+/* The names a slide may carry, to send as placeholders and to put back. */
+function cwNames(P){
+  const reg=(typeof regGet==='function'&&regGet())||{}, ch=uChurch()||{}, clean=v=>typeof v==='string'?v.replace(/\s+/g,' ').trim():'';
+  let owner=''; try{ const x=caseItemOf((P||casePrefs()).ministry); const r=x?uReq(x):null; owner=clean(r&&r.owner); }catch(e){ owner=''; }
+  return {church:[...new Set([clean(ch.name),clean(reg.church)])].filter(v=>v.length>=3&&!/^my church$/i.test(v)),
+    pastor:[clean(reg.name)].filter(v=>v.length>=3),coordinator:owner.length>=2?[owner]:[]};
+}
+function cwRedact(t,N){
+  let s=String(t==null?'':t);
+  const pairs=[]; Object.keys(N).forEach(ph=>N[ph].forEach(v=>pairs.push([v,ph])));
+  pairs.sort((a,b)=>b[0].length-a[0].length).forEach(([v,ph])=>{ s=s.split(v).join('\u0001'+ph+'\u0002'); });
+  return s.replace(/[{}<>]/g,'').replace(/\u0001(\w+)\u0002/g,'{$1}');
+}
+function cwRestore(t,N){ let ok=true; const s=String(t).replace(/\{(church|pastor|coordinator)\}/g,(m,ph)=>{ const v=N[ph]&&N[ph][0]; if(!v){ ok=false; return m; } return v; }); return ok&&!/[{}]/.test(s)?s:null; }
+function cwPool(deck){
+  const pool=new Set(), add=t=>(String(t==null?'':t).match(/\d[\d,]*(?:\.\d+)?/g)||[]).forEach(m=>{ const x=+m.replace(/,/g,''); if(isFinite(x)) pool.add(Math.round(x*100)/100); });
+  ((deck&&deck.slides)||[]).forEach(s=>{ add(s.kicker); add(s.headline); add(s.goal); cwLines(s).forEach(add); });
+  return pool;
+}
+function cwSlidesOf(deck,N){
+  const keys=caseSlotKeys(deck);
+  return deck.slides.map((s,i)=>({slot:keys[i],type:String(s.type||''),kicker:cwRedact(s.kicker||'',N).slice(0,80),head:cwRedact(s.headline||'',N).slice(0,200),
+    lines:cwLines(s).map(l=>cwRedact(l,N).trim()).filter(Boolean).slice(0,14),verse:String((s.verse&&s.verse.ref)||(s.quote&&s.quote.ref)||'').slice(0,60)}))
+    .filter(x=>/^[a-z]{2,12}:\d{1,2}$/.test(x.slot)&&/^[a-z]{2,12}$/.test(x.type)).slice(0,14);
+}
+function cwInput(P,m,deck){
+  const pl=nsAiPlace(), G=CASE_GROUPS.find(g=>g.id===P.group), x=caseItemOf(P.ministry); if(!pl||!G||!x||!deck) return null;
+  const N=cwNames(P), lg=caseLang();
+  const raw=x.lib?libRawOf(x.id):null, T=raw?(libLang(raw,lg)||libLang(raw,lg==='es'?'en':'es')):null;
+  const d=T?T.d:(lg==='es'?(tr(x.d||'')!==(x.d||'')?tr(x.d):''):(x.d||''));
+  const how=(T&&Array.isArray(T.how)?T.how:Array.isArray(x.how)?x.how.map(h=>lg==='es'?tr(h):h):[]).slice(0,4).map(h=>cwRedact(h,N).slice(0,220)).filter(h=>h.length>=3);
+  let runs=''; try{ runs=caseCadLabel(x)||''; }catch(e){ runs=''; }
+  let size=null; try{ size=caseLiftOf(x); }catch(e){ size=null; }
+  return {lang:lg,group:{id:G.id,name:String((m.group&&m.group.name)||caseT(G)).slice(0,80),type:G.type},
+    idea:{name:cwRedact(gfCap(caseMinName(x)||x.n||''),N).slice(0,120),d:cwRedact(d,N).slice(0,600),how,runs:String(runs).slice(0,80),size:[1,2,3].includes(size)?size:null},
+    goal:cwRedact((m.goal&&m.goal.text)||'',N).slice(0,400),place:{town:String((typeof libTown==='function'&&libTown())||pl.town).slice(0,80),state:pl.state},
+    slides:cwSlidesOf(deck,N),questions:(m.questions||[]).map(q=>cwRedact(q.q,N).slice(0,200)).filter(q=>q.length>=3).slice(0,8)};
+}
+function cwStore(){ const ch=uChurch(); if(!ch.caseWords||typeof ch.caseWords!=='object') ch.caseWords={}; return ch.caseWords; }
+function cwKept(k){ try{ const all=uChurch().caseWords, e=all&&typeof all==='object'&&k?all[k]:null; return e&&typeof e==='object'&&e.heads&&typeof e.heads==='object'?e:null; }catch(e){ return null; } }
+function cwKeyNow(){ const P=casePrefs(); return P&&P.ministry&&P.group?caseEditKey(P):''; }
+/* Claude's headlines on the app's slides (the deck the app built, before his own words). */
+function cwOn(deck,P){
+  if(!deck||!Array.isArray(deck.slides)) return deck;
+  P=P||casePrefs(); if(!P||!P.ministry||!P.group) return deck;
+  if(deck.ministry&&deck.ministry.id&&deck.ministry.id!==P.ministry) return deck;
+  if(deck.audience&&deck.audience.group&&deck.audience.group!==P.group) return deck;
+  const W=cwKept(caseEditKey(P)); if(!W||!W.sig) return deck;
+  const N=cwNames(P), keys=caseSlotKeys(deck), pool=cwPool(deck), lg=deck.lang==='es'||(!deck.lang&&caseLang()==='es')?'es':'en', cpl=CASE_FIT.head.cpl[lg]||21;
+  const d=JSON.parse(JSON.stringify(deck));
+  d.slides.forEach((s,i)=>{ const k=keys[i], t=W.heads[k];
+    if(typeof t!=='string'||!(CASE_EDIT_FIELDS[s.type]||[]).includes('headline')||W.sig[k]!==cwSig(deck.slides[i])) return;
+    const v=cwRestore(t,N); if(!v||!nsAiNumsOk(v,pool)||v.length>caseFieldMax('headline',s.part)) return;
+    if(caseWrapN(v,cpl)>Math.max(1,caseWrapN(s.headline||'',cpl))) return;
+    if(s.part==='after'&&v.length>String(s.headline||'').length) return;   // the After slide gives up a row for a long headline (CASE_FU_HEAD_ROOM)
+    s.headline=v; });
+  return d;
+}
+/* What step 3 shows of them: what to say, slide by slide; the questions; whether a slide changed since. */
+function cwView(P,app,shown){
+  const W=P&&P.ministry&&P.group?cwKept(caseEditKey(P)):null; if(!W||!app) return null;
+  const N=cwNames(P), keys=caseSlotKeys(app), pool=cwPool(app), sig=W.sig||{};
+  let stale=keys.some((k,i)=>!(k in sig)||sig[k]!==cwSig(app.slides[i]))||Object.keys(sig).some(k=>!keys.includes(k));
+  const say=[];
+  app.slides.forEach((s,i)=>{ const k=keys[i], t=W.say&&W.say[k]; if(typeof t!=='string'||sig[k]!==cwSig(s)) return;
+    const v=cwRestore(t,N); if(!v||!nsAiNumsOk(v,pool)) return;
+    let head=(shown&&shown.slides[i]&&shown.slides[i].headline)||s.headline||''; if(!head){ try{ head=caseSlideLabel(s,app)[0]||''; }catch(e){ head=''; } }
+    say.push({n:i+1,head,text:v}); });
+  const qa=(Array.isArray(W.qa)?W.qa:[]).map(x=>({q:cwRestore(x&&x.q,N),a:cwRestore(x&&x.a,N)})).filter(x=>x.q&&x.a&&nsAiNumsOk(x.q,pool)&&nsAiNumsOk(x.a,pool));
+  return {made:W.made,say,qa:qa.length>=3?qa:[],stale};
+}
+function cwStatusInner(){
+  const k=cwKeyNow(), st=CASE_WD.status.get(k)||'', V=CASE_ST.cw, m=CASE_ST.model, g=m&&m.group?caseGroupFor(m.group.id,m.group.name):'';
+  const btn=t=>`<button type="button" class="btn ghost gfsm" data-cw-gen>${esc(cwT(t))}</button>`;
+  if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(cwT('working',{group:g}))}</span>`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(cwT('failed'))}</span>${btn(V?'again':'retry')}`;
+  if(V&&V.stale) return `<span class="ns-aiwhen">${esc(cwT('stale'))}</span>${btn('again')}`;
+  if(V) return `<span class="ns-aiwhen">${esc(cwT('done',{group:g,date:nsAiDate(V.made)}))}</span>${btn('again')}`;
+  return '';
+}
+function cwStatusHTML(){ return aiPass()&&!memberLink()?`<p class="ns-aistat cs-wstat" id="cs-wstat" role="status">${cwStatusInner()}</p>`:''; }
+function cwPaint(){ const p=$('cs-wstat'); if(p) p.innerHTML=cwStatusInner(); }
+function cwFail(k){ if(CASE_WD.status.get(k)!=='done') CASE_WD.status.set(k,'failed'); cwPaint(); return false; }
+function cwAccept(k,I,sig,j){
+  const W=j&&j.words; if(!W||typeof W!=='object') return cwFail(k);
+  const slots=new Set(I.slides.map(s=>s.slot)), clean=(t,max)=>{ const v=nsAiSafe(t,max); return v&&!/[{}]/.test(v.replace(/\{(church|pastor|coordinator)\}/g,''))?v:null; };
+  const heads={}, say={};
+  Object.keys(W.heads&&typeof W.heads==='object'?W.heads:{}).forEach(s=>{ const t=clean(W.heads[s],140); if(t&&slots.has(s)) heads[s]=t; });
+  Object.keys(W.say&&typeof W.say==='object'?W.say:{}).forEach(s=>{ const t=clean(W.say[s],400); if(t&&slots.has(s)) say[s]=t; });
+  const qa=(Array.isArray(W.qa)?W.qa:[]).map(x=>x&&typeof x==='object'?{q:clean(x.q,180),a:clean(x.a,450)}:null).filter(x=>x&&x.q&&x.a).slice(0,8);
+  if(Object.keys(heads).length<3&&Object.keys(say).length<3&&qa.length<3) return cwFail(k);
+  const made=/^\d{4}-\d{2}-\d{2}$/.test(String(j.made||''))?j.made:new Date().toISOString().slice(0,10);
+  const all=cwStore(); all[k]={made,at:Date.now(),lang:I.lang,sig,heads,say,qa};
+  Object.keys(all).sort((a,b)=>(all[b].at||0)-(all[a].at||0)).slice(40).forEach(x=>delete all[x]);
+  uPersist(); CASE_WD.status.set(k,'done');
+  cwRedraw(); return true;
+}
+/* The slides again with the words: never under his typing, never while he presents (as casePlaceArrived). */
+function cwRedraw(){
+  if(typeof TOOL==='undefined'||TOOL!=='case'||CASE_ST.view!=='build'||!$('cs-s3')){ cwPaint(); return; }
+  const pres=$('casepres'); if(pres&&!pres.hidden){ cwPaint(); return; }
+  const a=document.activeElement;
+  if(a&&$('cs-s3').contains(a)&&/^(INPUT|TEXTAREA)$/.test(a.tagName)){ a.addEventListener('blur',cwRedraw,{once:true}); cwPaint(); return; }
+  caseDraw3();
+}
+async function cwAuto(){
+  if(!aiPass()||memberLink()||(typeof entitled==='function'&&!entitled('case'))) return;
+  const m=CASE_ST.model; if(!m||!m.ok||m.sample||CASE_ST.view!=='build') return;
+  const k=cwKeyNow(); if(!k) return;
+  const info=await nsAiProbe(); if(!info||!info.case||cwKeyNow()!==k) return;
+  if(CASE_WD.runs.has(k)||cwKept(k)||CASE_WD.tried.has(k)){ cwPaint(); return; }
+  CASE_WD.tried.add(k); cwStart(false);
+}
+async function cwStart(fresh){
+  const P=casePrefs(), k=cwKeyNow(); if(!k) return false;
+  if(CASE_WD.runs.has(k)) return CASE_WD.runs.get(k);
+  const m=CASE_ST.model, app=CASE_ST.app; if(!m||!m.ok||m.sample||!app) return false;
+  const I=cwInput(P,m,app); if(!I||I.slides.length<3) return cwFail(k);
+  const sig={}; caseSlotKeys(app).forEach((s,i)=>{ sig[s]=cwSig(app.slides[i]); });
+  CASE_WD.status.set(k,'working'); cwPaint();
+  const run=(async()=>{
+    let r=null,j=null;
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+      body:JSON.stringify({mode:'case',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(r&&r.status===200&&j&&j.cached&&j.words) return cwAccept(k,I,sig,j);
+    if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.case=false; return cwFail(k); }
+    const t0=Date.now();
+    while(Date.now()-t0<CASE_WD.max){
+      await new Promise(res=>setTimeout(res,CASE_WD.poll));
+      let q=null,qj=null;
+      try{ q=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'case-status',job:j.job,key:j.key}),signal:AbortSignal.timeout(15000)});
+        qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return cwAccept(k,I,sig,qj);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return cwFail(k);
+    }
+    return cwFail(k);
+  })();
+  CASE_WD.runs.set(k,run);
+  try{ return await run; } finally{ CASE_WD.runs.delete(k); }
+}
 function caseDraw3(){
   try{ caseMoneyDraw(); }catch(e){}   // v10.49.0: the Money box follows the ministry chosen (at the foot of step 2)
   const h=$('cs-s3'); if(!h) return;
@@ -35154,18 +35463,21 @@ function caseDraw3(){
   if(!P.ministry||!P.group){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT(P.ministry?'n3group':'n3none'))+door; wireDoor(); return; }
   let model=null; try{ model=caseModel(P.ministry,{type:P.type,group:P.group},{respond:caseRespondDefault(P),timing:caseTimingOf(P)}); }catch(e){ model=null; }   // v10.42: timing
   if(!model||!model.ok){ CASE_ST.model=CASE_ST.base=CASE_ST.deck=null; h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),'')+`<div class="u-empty">${esc(caseU('failed'))}</div>`+door; wireDoor(); return; }
-  CASE_ST.model=model; CASE_ST.base=caseDeck(model); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
+  // v10.56.0: the app's slides (CASE_ST.app), Claude's headlines on them (CASE_ST.base), then his own words (CASE_ST.deck)
+  CASE_ST.model=model; CASE_ST.app=caseDeck(model); CASE_ST.base=cwOn(CASE_ST.app,P); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
+  CASE_ST.cw=model.sample?null:cwView(P,CASE_ST.app,CASE_ST.deck);
   const n=CASE_ST.deck.slides.length;
   h.innerHTML=caseStepHead(caseStepNo(3),caseStepT('t3'),caseStepT('n3',{n:fmtNum(n),group:caseGroupFor(model.group.id,model.group.name).replace(/^(The|Toda) /,w=>w.toLowerCase())}),`<button type="button" class="btn ghost gfsm" data-cs-adjust>${esc(caseU('adjust'))}</button>`)
     /* v10.55.0 — the pastor, on the Proposal page: "because you're already choosing light lift moderate lift heavy lift we don't have to
        put it again there … and what would you like this to accomplish? We don't need that either because it's already understood": no
        Size and no goal box there (the slides keep the suggested goal); Make the Case on its own keeps both */
+    +(model.sample?'':cwStatusHTML())
     +(casePropMode()?'':caseSizeHTML(model)+caseGoalHTML(P,model))+caseWarnHTML(model)+caseNamedHTML(model)+casePvHTML('cs-pv',true)+caseActsHTML(false,model.type)+`<div class="cs-room" id="cs-room" hidden></div><section class="cs-pz" id="cs-pz" hidden aria-labelledby="cs-pz-h"></section>`+`<section class="cs-fu" id="cs-fu" aria-label="${esc(model.followup?model.followup.kicker:'')}" hidden></section>`
     /* v10.51.0 — the pastor (6 Oct 2026): "I don't know if we really need the how it is being decided … you don't need it to have it on
        the bottom again", and "how it is to be decided I don't think that even needs to be there": no #cs-dec in step 3 (a decision is
        still recorded in the presenter view, its Decision button). "The your church ready to serve probably needs to be at the end":
        last, a small card (gfReadyPanelMount), its "Who to ask" opening the private ask list under it. */
-    +caseSayHTML(model)+caseQuestionsHTML(model)
+    +caseSayHTML(model,CASE_ST.cw)+caseQuestionsHTML(model,CASE_ST.cw)
     +`<section id="cs-ready" class="cs-ready" hidden></section>`
     +`<section class="card gfcard cs-ask" id="cs-ask" hidden aria-label="${esc(caseU('askList'))}"></section>`;
   CASE_ST.slide=Math.max(0,Math.min(CASE_ST.slide,n-1));
@@ -35182,7 +35494,10 @@ function caseDraw3(){
   if(typeof caseDecCardMount==='function') try{ caseDecCardMount($('cs-dec'),model); }catch(e){}
   if(typeof gfReadyPanelMount==='function') try{ gfReadyPanelMount($('cs-ready')); }catch(e){}
   try{ casePzDraw(); }catch(e){}   // v10.51.0: the Proposal to vote on, under the buttons
+  // v10.56.0: "Write them again" (its line is painted again as the study goes, so one listener on the step, set once)
+  if(!h.dataset.cwWired){ h.dataset.cwWired='1'; h.addEventListener('click',e=>{ const b=e.target.closest('[data-cw-gen]'); if(b&&h.contains(b)) cwStart(true); }); }
   caseStepBar();
+  if(!model.sample) cwAuto();
 }
 /* v10.43 fix (2 Oct 2026, "there's a detach somewhere"): the time the idea names itself, said plainly above his slides when the slides
    offer other days (model.timing.named: 'sab' Sabbath hours, not marked "Fits the Sabbath"; 'profile' no room or team free then), with
@@ -35447,7 +35762,7 @@ function caseConfRebuild(api){
   const P=casePrefs(); let m=null;
   try{ m=caseModel(P.ministry,{type:P.type,group:P.group},{respond:caseRespondDefault(P),timing:caseTimingOf(P)}); }catch(e){ m=null; }
   if(!m||!m.ok) return;
-  CASE_ST.model=m; CASE_ST.base=caseDeck(m); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
+  CASE_ST.model=m; CASE_ST.app=caseDeck(m); CASE_ST.base=cwOn(CASE_ST.app,P); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));   // v10.56.0
   if(api) api.set(CASE_ST.deck);
 }
 /* Restore on or off, the "figures changed since you edited" and "no longer fits" notes. */
@@ -38029,7 +38344,7 @@ function prDeckOut(deck,model,respond,sample){
   if(model&&model.ok&&model.yes){
     const m={...model,yes:{...model.yes,respond:on}};
     let d=caseDeck(m);
-    if(d&&!sample){ try{ d=caseApplyEdits(d,caseEdits()); }catch(e){} }
+    if(d&&!sample){ try{ d=caseApplyEdits(cwOn(d),caseEdits()); }catch(e){} }   // v10.56.0: Claude's headlines, then his
     if(d) return d;
   }
   const d=JSON.parse(JSON.stringify(deck));
@@ -40373,7 +40688,7 @@ function caseGoalRebuild(){
   const P=casePrefs(); let m=null;
   try{ m=caseModel(P.ministry,{type:P.type,group:P.group},{respond:caseRespondDefault(P),timing:caseTimingOf(P)}); }catch(e){ m=null; }
   if(!m||!m.ok) return;
-  CASE_ST.model=m; CASE_ST.base=caseDeck(m); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));
+  CASE_ST.model=m; CASE_ST.app=caseDeck(m); CASE_ST.base=cwOn(CASE_ST.app,P); CASE_ST.deck=caseApplyEdits(CASE_ST.base,caseEdits(P));   // v10.56.0
   if(CASE_ST.pv&&typeof CASE_ST.pv.set==='function') CASE_ST.pv.set(CASE_ST.deck);
   const r=document.querySelector('[data-cs-goalreset]'); if(r) r.hidden=!!(m.goal&&m.goal.suggested);
   const say=document.querySelector('#cs-s3 [data-cs-saygoal]'); if(say) say.textContent=m.goal&&m.goal.text||'';
@@ -41157,9 +41472,9 @@ async function caseDecPush(mid,skip){
       const built=mid.startsWith('buy-')?buyBuilt(mid,buyAudOfGroup(buyGet(mid),group),lang,r.respond===true):caseInLang(lang,()=>{   // v56: a purchase
         const model=caseModel(mid,{type,group},{lang,respond:r.respond===true,timing:caseTimingOf(pf)});
         if(!model||!model.ok) return null;
-        const deck=caseApplyEdits(caseDeck(model),caseEdits(pf));
+        const deck=caseApplyEdits(cwOn(caseDeck(model),pf),caseEdits(pf));   // v10.56.0: each room in its own group's words
         const on=r.respond===true&&prHasYes(deck)&&!prYouth(deck,model);
-        let o2=caseDeck({...model,yes:model.yes?{...model.yes,respond:on}:model.yes}); if(o2) o2=caseApplyEdits(o2,caseEdits(pf));
+        let o2=caseDeck({...model,yes:model.yes?{...model.yes,respond:on}:model.yes}); if(o2) o2=caseApplyEdits(cwOn(o2,pf),caseEdits(pf));
         return {model,deck,out:o2||deck};
       });
       if(!built) continue;
@@ -41200,9 +41515,9 @@ async function prDecideSaved(P,rec,host){
     const built=mid.startsWith('buy-')?buyBuilt(mid,buyAudOfGroup(buyGet(mid),pf.group),lang,P.r.respond===true):caseInLang(lang,()=>{   // v56: a purchase
       const model=caseModel(mid,{type:pf.type,group:pf.group},{lang,respond:P.r.respond===true,timing:caseTimingOf(pf)});
       if(!model||!model.ok) return null;
-      const deck=caseApplyEdits(caseDeck(model),caseEdits(pf));
+      const deck=caseApplyEdits(cwOn(caseDeck(model),pf),caseEdits(pf));   // v10.56.0
       const on=P.r.respond===true&&prHasYes(deck)&&!prYouth(deck,model);
-      let out=caseDeck({...model,yes:model.yes?{...model.yes,respond:on}:model.yes}); if(out) out=caseApplyEdits(out,caseEdits(pf));
+      let out=caseDeck({...model,yes:model.yes?{...model.yes,respond:on}:model.yes}); if(out) out=caseApplyEdits(cwOn(out,pf),caseEdits(pf));
       return {model,deck,out:out||deck};
     });
     if(built){
