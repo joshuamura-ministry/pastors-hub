@@ -12,7 +12,12 @@
 // in-memory stores, no network. present.mjs's side of the gifts deck (items 30–33) is in present-pdf.test.mjs.
 const {JSDOM,VirtualConsole}=require('jsdom');
 const fs=require('fs'), path=require('path');
-const html=fs.readFileSync(path.resolve(__dirname,'..','index.html'),'utf8');
+// v10.56.1 — the pastor took "Your path" and the "Gifts first" card off the main menu ("I just want this page to be very simple … the
+// 1234 … doesn't look good there … erase the gifts first nobody has taken it yet"). Their code stays (hubPath, gfFirstCardHTML: the card
+// is still drawn on other screens), so this suite puts the two boxes back on the hub to keep testing it (v56-1-hub-simple holds the
+// hub itself to the new intent).
+const html=fs.readFileSync(path.resolve(__dirname,'..','index.html'),'utf8').replace('<div class="tools">','<nav class="hubpath" id="hubpath" aria-label="Your path" hidden></nav>\n    <div class="tools">')
+  .replace('<section class="hubabout"','<div class="hubgifts" id="hubgifts" hidden></div>\n    <section class="hubabout"');
 const FX=require('./fixtures.json');
 const BG=require('./scripture-bg.json').passages;
 const FXD=path.join(__dirname,'average-church');

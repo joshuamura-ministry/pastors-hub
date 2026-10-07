@@ -190,6 +190,18 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.56.1 (7 Oct 2026, quick lane) — the main menu, very simple.** The pastor, with a screenshot of the hub: *"I just want this page to
+be very simple. The 1234 is nice but … it doesn't look good there. I'd say the community survey should just be right under the quote from
+Ellen White … erase the gifts first nobody has taken it yet that whole section … under welcome to terrain just something that says your
+journey begins … underneath the icons there can be an explanation of … what this app actually is for"*. The hub is now: Welcome to
+Terrain, "Your journey begins here. Choose a tool to begin.", the Ellen White quote and its rule, the five tools, and **What Terrain is
+for** (`#hubabout`: one paragraph and "Neighbors are neighbors, never targets: every tool points to Christ.", EN + ES through `ES`). No
+"Your path" (`#hubpath`) and no "Gifts first" card (`#hubgifts`) on the hub: `hubPath()` and `gfFirstHub()` find no box and draw nothing;
+their code stays (the gifts card is still drawn elsewhere; `hubPathSteps` still counts). Tests: `v56-1-hub-simple` (new, 10; failing first
+on v10.56.0: `v73/ff-v56-1-hub-simple.log`); v43-path and gifts-first-ui put the two boxes back on the hub to keep testing their code (a
+comment says so); hub-copy-and-quote, hub-alignment, hub-layout and v43-average-church updated with comments. Full suite: 150 suites ·
+10,444 passed · 0 failed. Samples `Terrain-v10.56.1-samples` (`v73/shots23.mjs`).
+
 **v10.56.0 (6 Oct 2026) — Claude in Make the Case: a group's ideas, and the proposal's words.** The pastor, after the needs and the
 work for each need became Claude's: *"And this also carries into make the case right and the proposal creation because [it] shouldn't be
 Claude. Also work on that as well."* Design `~/Downloads/Terrain-work/v73/DESIGN-CASE-CLAUDE.md`. Full lane. Folded into PR #26 with
@@ -2601,7 +2613,9 @@ Don't relitigate them without a reason he'd accept.
 - **A printed card is readable and balanced** (review of v10.43: "a bilingual layout option that stays balanced"): never under 7.5 pt
   (choices 9 pt); one language a side, at the same size and ink; a card too full for one side goes two-sided, never smaller.
 - **The neighbour's page asks no other website** (DESIGN S22): no web fonts, scripts or images from elsewhere on `#connect=`.
-- **Clear next steps** (his request, v10.43 §5): "What's next" at the very bottom of the survey (Make the case for each ministry in
+- **The main menu is very simple** (v10.56.1, his words: "the only thing that should be here is welcome to terrain … the Ellen White
+  quote and then … the five icons"): the welcome, the quote, the five tools, and what Terrain is for. Nothing else.
+- **Clear next steps** (his request, v10.43 §5; v10.56.1 took "Your path" off the hub at his word): "What's next" at the very bottom of the survey (Make the case for each ministry in
   the plan, a connection card for events and series, Gifts first beside it) and "Your path" on the hub; the gifts never block
   making the case. The path's next step breathes gently: one more exception to "nothing animates on its own" (reduced motion
   stops it).

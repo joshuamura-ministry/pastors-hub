@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.56.0
+     TERRAIN  v10.56.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.56.0" data-theme="dark">
+<html lang="en" data-version="v10.56.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.56.0">
-<title>Community Map — Terrain v10.56.0</title>
+<meta name="terrain-version" content="v10.56.1">
+<title>Community Map — Terrain v10.56.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3388,6 +3388,11 @@ button.cd-rowb:hover{background:var(--panel2)}
 .gff-go{margin-top:12px}
 .gff-go .btn{min-height:44px}
 .hubgifts{margin-top:22px}
+/* v10.56.1: what the app is for, under the five tools: quiet, centred, one reading width */
+.hubabout{max-width:62ch;margin:46px auto 10px;padding:22px 4px 0;border-top:1px solid var(--line2);text-align:center}
+.hubabout h3{margin:0 0 10px;font-size:.78rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--acc)}
+.hubabout p{margin:0 0 10px;color:var(--ink2);line-height:1.65;font-size:clamp(.95rem,2.2vw,1.02rem);text-wrap:pretty}
+.hubabout p:last-child{color:var(--ink);font-weight:600}
 .hubgifts .gff{margin:0}
 /* v10.43 (SPEC §5, the pastor: "easy to see and understand that this should be the next step"): "Your path" on the hub, four
    equal steps in order, each in its tool's colour family; the first one not done breathes gently (reduced motion and print stop
@@ -4171,15 +4176,19 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
     <div class="hubwelcome">
       <p class="hubk">Pastors Hub</p>
       <h2>Welcome to Terrain</h2>
-      <p class="sub">Choose a tool to begin.</p>
+      <p class="sub">Your journey begins here. Choose a tool to begin.</p>
     </div>
     <div class="egw">
       <q>Much careful thought and fervent prayer are required to know how to approach men and women upon the great subject of truth.</q>
       <cite>Ellen G. White &middot; Testimonies for the Church, vol. 4, p. 67</cite>
     </div>
     <div class="rule"><span>&#10022;</span></div>
-    <!-- v10.43 (SPEC §5): "Your path", four steps above the tools (hubPath) -->
-    <nav class="hubpath" id="hubpath" aria-label="Your path" hidden></nav>
+    <!-- v10.56.1 — the pastor (7 Oct 2026): "I just want this page to be very simple. The 1234 is nice but … it doesn't look good there.
+         I'd say the community survey should just be right under the quote from Ellen White … erase the gifts first nobody has taken it
+         yet … the only thing that should be here is welcome to terrain choose a tool to begin the Ellen White quote and then … the five
+         icons … under welcome to terrain … your journey begins … underneath the icons … an explanation of … what this app actually is
+         for": no "Your path" (#hubpath) and no "Gifts first" card (#hubgifts) on the hub; hubPath() and gfFirstHub() find no box and
+         draw nothing. "What Terrain is for" (#hubabout) under the tools. -->
     <div class="tools">
       <button class="tool" data-tool="survey" style="--tc:#86E3CC;--tglow:rgba(134,227,204,.46);--td:0s">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-survey" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#B9F2DF"/><stop offset="0.48" stop-color="#86E3CC"/><stop offset="1" stop-color="#74C7B8"/></linearGradient><filter id="glow-survey" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-survey)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-survey)"><path d="M28 111 82 86 104 96M152 96l22-10 54 25v114l-54-23-46 23-46-23-54 23V111"/><path d="M82 86v37m0 69v10m92-116v37m0 69v10"/><path d="M128 119c-8-15-33-41-33-63a33 33 0 0 1 66 0c0 22-25 48-33 63Z"/><circle cx="128" cy="56" r="12"/><path d="m46 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="m164 158 22-21 22 21m-38-5v30h31v-30m-20 30v-15h10v15"/><path d="M28 191c26-13 45-15 68-10m64 0c22-6 46-3 68 10M28 211c16-8 30-11 44-10m111 0c17 0 31 4 45 10"/><path d="M121 154c-7 7-13 14-8 21-10 17 1 25 20 31l26 10m-33-31c-5 8 8 11 20 15l28 11"/><path d="M120 143c-2 8-9 11-9 19a10 10 0 0 0 20 0c0-8-8-14-11-19Zm1 29v9"/></g></svg></span>
@@ -4214,8 +4223,11 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
         <span class="tgo">Compare calendars <i></i></span>
       </button>
     </div>
-    <!-- v10.42 part 3: "Gifts first", one number and one button, below the four tools (gfFirstHub) -->
-    <div class="hubgifts" id="hubgifts" hidden></div>
+    <section class="hubabout" id="hubabout" aria-labelledby="hubabout-h">
+      <h3 id="hubabout-h">What Terrain is for</h3>
+      <p>Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.</p>
+      <p>Neighbors are neighbors, never targets: every tool points to Christ.</p>
+    </section>
   </div>
 
   <div class="toolbar" id="toolbar" hidden>
@@ -4325,13 +4337,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · Pastors Hub · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.56.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.56.0';
+const VERSION = 'v10.56.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9032,7 +9044,10 @@ const ES={
  'Words that work':'Palabras que funcionan','Then':'Después',
  'Brief':'Resumen',
  'Welcome':'Bienvenido','Welcome to Terrain':'Bienvenido a Terrain',
- 'Pastors Hub':'Pastors Hub','Choose a tool to begin.':'Elija una herramienta para comenzar.',
+ 'Pastors Hub':'Pastors Hub','Your journey begins here. Choose a tool to begin.':'Su camino comienza aquí. Elija una herramienta para comenzar.',
+ 'What Terrain is for':'Para qué sirve Terrain',
+ 'Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.':'Terrain ayuda al pastor a ver el vecindario donde Dios ha puesto a la iglesia y a responder con un ministerio a su medida. Conozca su vecindario y lo que necesita, ayude a sus miembros a descubrir sus dones, convierta las mejores ideas en una propuesta que su iglesia pueda votar y planifique su evangelismo, de la preparación al seguimiento.',
+ 'Neighbors are neighbors, never targets: every tool points to Christ.':'Los vecinos son nuestros vecinos, nunca un objetivo: cada herramienta apunta a Cristo.',
  'Know who lives nearby and where to reach first.':'Conozca su vecindario y por dónde empezar.',
  'Know your neighbors and what they need most.':'Conozca a sus vecinos y lo que más necesitan.',
  'Help members discover their gifts and find a place to serve.':'Ayude a los miembros a hallar sus dones y dónde servir.',
