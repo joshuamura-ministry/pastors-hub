@@ -94,7 +94,8 @@ const DONE = rec => ({ stop_reason: 'tool_use', usage: { input_tokens: 9000, out
 console.log('-- GET says whether the ideas are on: a key AND a passphrase --');
 { let fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   let g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
-  c('advise-2.6, ideas true, ideasFn ideas-1.0 (the needs list still on)', [g.fn, g.ideas, g.ideasFn, g.needs], ['advise-2.6', true, 'ideas-1.0', true]);
+  // v10.56.0 (stale, not a regression): Claude in Make the Case makes it advise-2.7 and ideas-1.1 (a group's study; a need's is unchanged)
+  c('advise-2.7, ideas true, ideasFn ideas-1.1 (the needs list still on)', [g.fn, g.ideas, g.ideasFn, g.needs], ['advise-2.7', true, 'ideas-1.1', true]);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: ideas false', g.ideas, false);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV, IDEAS_DAY_MAX: '0' }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -127,7 +128,7 @@ console.log('\n-- 202: the job, kept as hashes; the worker woken; no church, no 
 let JOB = null, KEY1 = null, REC = null;
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(10), ip: '203.0.113.7', tags: ['snap', 'poor', 'not-a-tag', 'no-car'], extra: { church: 'Bucks County SDA', pastor: 'Joshua Mura', address: '10 Greene Rd' } }));
-  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.6', true, true, 4000]);
+  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.7', true, true, 4000]);   // v10.56.0 (stale): advise-2.7
   JOB = r.job; KEY1 = r.key; REC = S.peek('j/' + r.job);
   c('the record: queued, hashes only, kept by its place, need and figures', [REC.status, REC.keyHash === sha(r.key), /^i\/[0-9a-f]{32}\/en$/.test(REC.cacheKey)], ['queued', true, true]);
   const txt = JSON.stringify(REC);

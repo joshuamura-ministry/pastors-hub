@@ -258,7 +258,8 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
     c('…"Nuestra iglesia" in Spanish', ae.filter(a=>a.y===57&&a.x===48).map(a=>a.t), ['Nuestra iglesia']); }
   c('"2 people, no leader needed" (never "none to lead"), and one person', [P.J(`nsU('pplNone',2)`),P.J(`nsU('pplNone',1)`)], ['2 people, no leader needed','1 person, no leader needed']);
   c('…in Spanish', [Pes.J(`nsU('pplNone',2)`),Pes.J(`nsU('pplNone',1)`)], ['2 personas, no hace falta un líder','1 persona, no hace falta un líder']);
-  P.E(`openTool('gifts'); if(GF_VIEW!=='roster'){ GF_VIEW='roster'; gfRender(); }`); await sleep(40);
+  // v10.55.0: the card is the survey's "Your church" now (no longer "moved here" on the Spiritual Gifts page); its note says where the money is
+  P.E(`openTool('survey'); render();`); await sleep(40);
   const note=P.q('#gf-church > summary .note');
-  c('"Your church": "Moved here from the Community Survey." is a small note on its own line under the heading', [note&&note.textContent,note&&P.w.getComputedStyle(note).display], ['Moved here from the Community Survey.','block']);
+  c('"Your church": its note is a small line of its own under the heading', [note&&note.textContent,note&&P.w.getComputedStyle(note).display], ['The money for a ministry is on its proposal.','block']);
 }); T.done(); })();

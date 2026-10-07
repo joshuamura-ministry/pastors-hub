@@ -68,7 +68,8 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     c('three steps: Your church, Your building, Skills (Money moved to the proposal)', Y.qa('#u-steps-nav li span').map(x=>x.textContent), ['Your church','Your building','Skills']);
     c('no money boxes in the form, and no Money group in the summary', [Y.qa('#u-cap-form [name="startupBudget"],#u-cap-form [name="monthlyBudget"],#u-cap-form [name="pendingBudget"]').length,/Startup funds|Monthly funds/.test(Y.txt('#capsumslot')||'')], [0,false]);
     c('what the church has holds no money any more (capMerged reads none)', [Y.J('capMerged().startup'),Y.J('capMerged().monthly')], [null,null]);
-    c('the description says where the money is now', Y.txt('#gf-church > p.note'), 'People, rooms and skills. The money for a ministry is on its proposal.');
+    // v10.55.0: the card's note, under its heading (the card is the survey's "Your church" now)
+    c('the description says where the money is now', Y.txt('#gf-church > summary .note'), 'The money for a ministry is on its proposal.');
     c('the room boxes: the checkbox, the name and the + inside each box (the legend floats inside its fieldset)', /\.u-facilities>fieldset>legend\{float:left;width:100%/.test(HTML), true); }
 
   console.log('\n-- the Community Survey\'s top: the church, then Neighborhood · Town · County on the Brief --');
@@ -104,15 +105,17 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
 
   console.log('\n-- v10.50.0: Spiritual Gifts, in three steps --');
   { const G=page(); await ready(G); survey(G); G.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
-    c('three steps at the top: Your church → Invite your members → See the results', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Your church','Invite your members','See the results']);
-    c('…then Your church (1), the invitation (2), the results (3) with the sample report under them', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&G.q('#gf-results .gfresults').nextElementSibling.id], ['gf-church','2Spiritual Gifts: invite your members','3See the results','gfsample']);
+    // v10.55.0 — the pastor: "you can remove the … fill-in information in the spiritual gifts … that's all it's gonna be about just spiritual
+    // gifts": two steps; "Your church" is the survey's
+    c('two steps at the top: Invite your members → See the results', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite your members','See the results']);
+    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&G.q('#gf-results .gfresults').nextElementSibling.id,!!G.q('#gifts #gf-church')], ['gf-invite','1Spiritual Gifts: invite your members','2See the results','gfsample',false]);
     c('no "Nobody has taken it yet" card, and no code box', [G.qa('#giftbody [data-gf-first]').length,G.qa('#gfpaste,#gfadd').length], [0,0]);
-    G.q('#gf-church').open=false; G.q('[data-gf-step="church"]').click();
-    c('the first step opens Your church and goes there', G.q('#gf-church').open, true);
+    G.q('[data-gf-step="invite"]').click();
+    c('the first step goes to the invitation', G.w.__scrolled.slice(-1)[0].id, 'gf-invite');
     G.q('[data-gf-step="results"]').click();
-    c('the third goes to the results', G.w.__scrolled.slice(-1)[0].id, 'gf-results');
+    c('the second goes to the results', G.w.__scrolled.slice(-1)[0].id, 'gf-results');
     const GS=page({lang:'es'}); await ready(GS); survey(GS); GS.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
-    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Su iglesia','Invite a sus miembros','Vea los resultados']);
+    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados']);
     c('no page error', [G.errs,GS.errs], [[],[]]); }
   c('no page error', [P.errs,S.errs,Q.errs,QS.errs], [[],[],[],[]]);
 }); T.done(); })();

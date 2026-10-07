@@ -1,10 +1,10 @@
-// Terrain · optional AI ministry planner.                            advise-2.6
+// Terrain · optional AI ministry planner.                            advise-2.7
 //
 // The API key lives ONLY in Netlify's encrypted environment variables:
 //   Netlify → Project configuration → Environment variables → ANTHROPIC_API_KEY
 // It is never in this repository and never reaches the browser.
 //
-// GET  → { enabled, model, fn, locked, prices, pricesFn, needs, needsFn, ideas, ideasFn }   the page asks this first and only
+// GET  → { enabled, model, fn, locked, prices, pricesFn, needs, needsFn, ideas, ideasFn, case, caseFn }   the page asks this first and only
 //                                          shows the button when a key exists
 //                                          (prices: Find prices is on: a key AND a passphrase)
 // POST { summary }                         → { text }   a prose plan (unchanged)
@@ -32,6 +32,20 @@
 // POST { mode:'ideas-status', job, key }   → { status, made?, ideas?, keep?, set?, code? }
 // POST { mode:'ideas-pick', device, set, id }   → { ok, counted }   a pastor picked an idea (its proposal or its PDF): the idea is
 //                                          copied from the server's own kept set into the pool (p/<need>/<id>), never from the page
+//                                          (advise-2.7) mode 'ideas' also takes group: {id, name, reach, themes} instead of need: step 2's
+//                                          ideas for one group of the church, for God's people (reach in) or for the community (out)
+// POST { mode:'case', lang, device, fresh, group, idea, goal, place, slides, questions }   (advise-2.7) the proposal's words: the same
+//                                          lock, then the kept words for exactly this input (200 { cached, made, words }) or a study queued
+//                                          for advise-case.mjs (202 { job, key, poll })
+// POST { mode:'case-status', job, key }    → { status, made?, words?, code? }
+//
+// 2.7 (v10.56.0, 6 Oct 2026). Claude in Make the Case (DESIGN-CASE-CLAUDE.md, v73). The pastor: "this also carries into make the case
+// right and the proposal creation". (1) Step 2's ideas for a group come from the same deep study as a need's (advise-ideas.mjs ideas-1.1:
+// twelve, four a size; in-reach ideas are for the church family, where the "waits at the church building" rule does not apply). (2) The
+// proposal's words (advise-case.mjs case-1.0): a headline for each slide he may reword, what to say on each slide and the questions the
+// group will ask, every number one the slides already say, names only as {church} / {pastor} / {coordinator}. Store "terrain-case": jobs,
+// kept words w/<sha(input)>/<lang> (60 days), counters; limits 20 a device a UTC day, 30 a registration, 15 an address an hour,
+// CASE_DAY_MAX (150) for the site.
 //
 // 2.6 (v10.55.0, 6 Oct 2026). The work for each need (DESIGN-IDEAS.md, v72). The pastor: "if Claude is generating the community needs
 // then it also needs to generate the work to meet those needs", and "the great ideas … selected we should consider … to put them in the
@@ -84,7 +98,7 @@ import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
-const FN_VERSION = 'advise-2.6';   // 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
+const FN_VERSION = 'advise-2.7';   // 2.7: Claude in Make the Case (v10.56.0); 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
 function passOk(given){
@@ -175,7 +189,10 @@ Return ONLY a JSON array, nothing else, no markdown fence, no preamble. Each ite
 const LIB_TAGS = new Set(['affluent','car-dependent','changing','child-poverty','crowded','dense','divided','families','family-heavy','food-insecure','growing','homeowners','immigrant','jobless','k12','limited-english','low-income','many-kids','multilingual','newcomers','no-car','older','poor','professional','recent-arrivals','rent-burdened','renters','schools-near','seniors-alone','service-work','settled','single-parents','snap','spanish','students','unemp','uninsured','very-immigrant','very-old','very-poor','very-uninsured','veterans','young']);
 const LIB_SKILLS = new Set(['lead','medical','teach','kids','cook','music','lang','trade','vehicle','weekday','admin','av','support']);
 const LIB_FACS = new Set(['kitchen','classrooms','gym','field','center','parking','stage','av','nursery','library','vehicle','grounds','home']);
-const LIB_THEMES = new Set(['prayer','hunger','homeless','children','youth','young-adults','seniors','families','marriage','single-parents','health','mental-health','addiction','grief','immigrants','jobs-money','education','prison','veterans','disability','women','men','personal-evangelism','public-evangelism','hospitality','neighbors','music-arts','sports-outdoors','clothing-practical','disaster-relief','creation-care','media','literature','schools','first-responders','foster-care','abuse-survivors','transport','holidays','small-groups','sabbath-rest','workplaces']);
+const LIB_THEMES = new Set(['prayer','hunger','homeless','children','youth','young-adults','seniors','families','marriage','single-parents','health','mental-health','addiction','grief','immigrants','jobs-money','education','prison','veterans','disability','women','men','personal-evangelism','public-evangelism','hospitality','neighbors','music-arts','sports-outdoors','clothing-practical','disaster-relief','creation-care','media','literature','schools','first-responders','foster-care','abuse-survivors','transport','holidays','small-groups','sabbath-rest','workplaces',
+  // v10.56.0: the fifteen themes v10.41 added (the church family and the Adventist departments), so a group's study and a need's may name them
+  'member-care','spiritual-care','deacons','stewardship','involvement','sabbath-school','fellowship','worship-music','childrens-ministries',
+  'pathfinders','adventurers','ay-youth','interests','religious-liberty','global-mission']);
 const LIB_KINDS = ['serve','equip','belong','invite'], LIB_AGES = ['all','children','youth','adults','seniors','families'];
 const LIB_WHERE = ['church','streets','homes','online','schools','parks','community','workplaces'], LIB_STAGES = ['open','trust','deeper','decide'];
 const LIB_TIER = {
@@ -363,7 +380,8 @@ function libCheckIdea(x, lang, ctx) {
     const re = lang === 'es' ? reEs : reEn, un = lang === 'es' ? unEs : unEn;
     if (re.test(txt) && !un.test(txt)) return no(label);
   }
-  if ((tier === 1 || tier === 2) && where === 'church' && !LIB_REACH[lang].test(txt)) return no('waits at the church building');
+  // v10.56.0: an idea for the church family (in-reach, step 2's "For God's people") meets members where they are: at church
+  if ((tier === 1 || tier === 2) && where === 'church' && ctx.reach !== 'in' && !LIB_REACH[lang].test(txt)) return no('waits at the church building');
   let sabbath = x.sabbath === true;
   if (sabbath && libSabbathOff(txt, lang)) sabbath = false;            // SABBATH-GUIDELINE.md: commerce, fairs, entertainment, sport
   const theme = LIB_THEMES.has(ctx.theme) ? ctx.theme : LIB_THEMES.has(x.theme) ? x.theme : null;
@@ -375,7 +393,7 @@ function libCheckIdea(x, lang, ctx) {
 }
 
 // v10.55.0: advise-ideas.mjs holds Claude's ideas for a need to the very same checks
-export { libCheckIdea, LIB_TAGS, LIB_THEMES, LIB_KINDS, LIB_AGES, LIB_WHERE, libFold };
+export { libCheckIdea, LIB_TAGS, LIB_THEMES, LIB_KINDS, LIB_AGES, LIB_WHERE, libFold, quotesScripture };   // v10.56.0: and the Scripture check, for advise-case.mjs
 
 const TOPIC_SYSTEM = (lang) => `You are inventing ministry ideas for a Seventh-day Adventist pastor of a small or medium church (20 to 150 members, few paid staff, a modest budget) in the United States. You receive: one TOPIC the pastor searched for, a census report on the neighbourhood around the church, the census tags that fire there, the church's honest inventory, and the names of ideas he already has on this topic ("do not repeat").
 
@@ -825,7 +843,7 @@ async function needsStatus(p) {
 }
 
 // ============================================================ THE WORK FOR EACH NEED (advise-2.6, v10.55.0)
-const IDEAS_FN = 'ideas-1.0';
+const IDEAS_FN = 'ideas-1.1';   // v10.56.0: the group target
 const IDEAS_STORE = 'terrain-ideas';
 const IDEAS_DEV_DAY = 20, IDEAS_REG_DAY = 30, IDEAS_IP_HOUR = 15, IDEAS_CACHE_MS = 60 * 864e5, PICK_DEV_DAY = 60;
 const ideasDayMax = () => { const n = parseInt(process.env.IDEAS_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 2000 ? n : 150; };
@@ -839,9 +857,23 @@ function ideasStore() {
 function ideasLog(code) { try { console.log('[ideas] ' + JSON.stringify({ fn: FN_VERSION, code })); } catch { /* never throws */ } }
 const iReply = (code, status, extra) => { ideasLog(code); return reply({ ok: false, code, ...(extra || {}) }, status); };
 // → {input} or {field}: the place and its figures (placeInput), the need, the census tags that fire, the library's ideas for it (names)
+const RE_GID = /^[a-z]{2,20}$/;
 function ideasInput(p) {
   const base = placeInput(p); if (!base.input) return base;
-  const N = p.need; if (!nPlain(N)) return { field: 'need' };
+  // v10.56.0: step 2's ideas for one group (the target is a "need" of its own, g-<group>-<in|out>, so the kept set, the job, the pool and
+  // ideas-pick work unchanged); exactly one of need and group
+  if (p.group != null && p.need != null) return { field: 'target' };
+  let target = 'need', G = null, N = p.need;
+  if (p.group != null) {
+    const g = p.group; if (!nPlain(g)) return { field: 'group' };
+    if (!RE_GID.test(String(g.id || ''))) return { field: 'group.id' };
+    const gname = pText(g.name, 2, 80); if (!gname) return { field: 'group.name' };
+    if (g.reach !== 'in' && g.reach !== 'out') return { field: 'group.reach' };
+    if (!Array.isArray(g.themes) || g.themes.length < 1 || g.themes.length > 3 || g.themes.some(t => !LIB_THEMES.has(t))) return { field: 'group.themes' };
+    target = 'group'; G = { id: g.id, name: gname, reach: g.reach };
+    N = { id: 'g-' + g.id + '-' + g.reach, title: gname + (g.reach === 'in' ? ' · for the church family' : ' · for the community'), cat: 'group', why: '', themes: g.themes };
+  }
+  if (!nPlain(N)) return { field: 'need' };
   if (!RE_NID.test(String(N.id || ''))) return { field: 'need.id' };
   const title = pText(N.title, 3, 140); if (!title) return { field: 'need.title' };
   const cat = pText(N.cat, 2, 60); if (!cat) return { field: 'need.cat' };
@@ -857,7 +889,8 @@ function ideasInput(p) {
     have.push({ id: h.id, name, lift: h.lift });
   }
   if (new Set(have.map(h => h.id)).size !== have.length) return { field: 'have.id' };
-  return { input: { ...base.input, need: { id: N.id, title, cat, why, themes: [...new Set(N.themes)] }, tags: [...new Set(p.tags.filter(t => LIB_TAGS.has(t)))], have } };
+  return { input: { ...base.input, need: { id: N.id, title, cat, why, themes: [...new Set(N.themes)] }, tags: [...new Set(p.tags.filter(t => LIB_TAGS.has(t)))], have,
+    ...(G ? { target, group: G } : {}) } };
 }
 async function ideasRoute(request, context, p) {
   if (p.mode === 'ideas-status') return ideasStatus(p);
@@ -974,6 +1007,148 @@ async function ideasPick(p) {
   return reply({ ok: true, fn: FN_VERSION, counted });
 }
 
+// ============================================================ THE PROPOSAL'S WORDS (advise-2.7, v10.56.0)
+const CASE_FN = 'case-1.0';
+const CASE_STORE = 'terrain-case';
+const CASE_DEV_DAY = 20, CASE_REG_DAY = 30, CASE_IP_HOUR = 15, CASE_CACHE_MS = 60 * 864e5;
+const caseDayMax = () => { const n = parseInt(process.env.CASE_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 2000 ? n : 150; };
+const CASE_MODEL = () => (process.env.CASE_MODEL || 'claude-opus-5-5').trim();
+const CASE_EFFORT = () => { const e = (process.env.CASE_EFFORT || 'medium').trim(); return ['low', 'medium', 'high', 'xhigh', 'max'].includes(e) ? e : 'medium'; };
+const CASE_TYPES = new Set(['board', 'team', 'congregation', 'conference']);
+const RE_SLOT = /^[a-z]{2,12}:\d{1,2}$/, RE_STYPE = /^[a-z]{2,12}$/;
+const CASE_NAMES = ['church', 'pastor', 'coordinator'];
+function caseStore() {
+  if (globalThis.__terrainCaseStore) return globalThis.__terrainCaseStore;
+  return getStore({ name: CASE_STORE, consistency: 'strong' });
+}
+function caseLog(code) { try { console.log('[case] ' + JSON.stringify({ fn: FN_VERSION, code })); } catch { /* never throws */ } }
+const cReply = (code, status, extra) => { caseLog(code); return reply({ ok: false, code, ...(extra || {}) }, status); };
+// a text of the slides: no markup (pText), and braces only as the three names the page puts in place of real ones
+const cBraces = s => !/[{}]/.test(String(s).replace(/\{(church|pastor|coordinator)\}/g, ''));
+const cText = (v, min, max) => { const s = pText(v, min, max); return s != null && cBraces(s) ? s : null; };
+const cOpt = (v, max) => v == null || v === '' ? '' : cText(v, 1, max);
+// → {input} or {field}. The group, the idea, the goal, the town and state, the slides' words (names replaced on the page). Nothing else.
+function caseInput(p) {
+  const lang = p.lang === 'es' ? 'es' : 'en';
+  const g = p.group; if (!nPlain(g)) return { field: 'group' };
+  if (!RE_GID.test(String(g.id || ''))) return { field: 'group.id' };
+  const gname = cText(g.name, 2, 80); if (!gname) return { field: 'group.name' };
+  if (!CASE_TYPES.has(g.type)) return { field: 'group.type' };
+  const I = p.idea; if (!nPlain(I)) return { field: 'idea' };
+  const iname = cText(I.name, 3, 120); if (!iname) return { field: 'idea.name' };
+  const d = cOpt(I.d, 600); if (d == null) return { field: 'idea.d' };
+  if (!Array.isArray(I.how) || I.how.length > 6) return { field: 'idea.how' };
+  const how = []; for (const h of I.how) { const t = cText(h, 3, 220); if (!t) return { field: 'idea.how' }; how.push(t); }
+  const runs = cOpt(I.runs, 80); if (runs == null) return { field: 'idea.runs' };
+  const size = I.size == null ? null : [1, 2, 3].includes(I.size) ? I.size : undefined; if (size === undefined) return { field: 'idea.size' };
+  const goal = cOpt(p.goal, 400); if (goal == null) return { field: 'goal' };
+  const P = p.place; if (!nPlain(P)) return { field: 'place' };
+  const town = pText(P.town, 2, 80); if (!town) return { field: 'place.town' };
+  const st = typeof P.state === 'string' && /^[A-Za-z]{2}$/.test(P.state) ? P.state.toUpperCase() : null; if (!st || !US_STATES[st]) return { field: 'place.state' };
+  if (!Array.isArray(p.slides) || p.slides.length < 3 || p.slides.length > 14) return { field: 'slides' };
+  const slides = [];
+  for (const x of p.slides) {
+    if (!nPlain(x) || !RE_SLOT.test(String(x.slot || '')) || !RE_STYPE.test(String(x.type || ''))) return { field: 'slides.slot' };
+    const kicker = cOpt(x.kicker, 80), head = cOpt(x.head, 200), verse = cOpt(x.verse, 60);
+    if (kicker == null || head == null || verse == null) return { field: 'slides.text' };
+    if (!Array.isArray(x.lines) || x.lines.length > 14) return { field: 'slides.lines' };
+    const lines = []; for (const l of x.lines) { const t = cText(l, 1, 400); if (!t) return { field: 'slides.lines' }; lines.push(t); }
+    slides.push({ slot: x.slot, type: x.type, kicker, head, lines, verse });
+  }
+  if (new Set(slides.map(x => x.slot)).size !== slides.length) return { field: 'slides.slot' };
+  if (!Array.isArray(p.questions) || p.questions.length > 8) return { field: 'questions' };
+  const questions = []; for (const q of p.questions) { const t = cText(q, 3, 200); if (!t) return { field: 'questions' }; questions.push(t); }
+  const input = { lang, group: { id: g.id, name: gname, type: g.type }, idea: { name: iname, d, how, runs, size }, goal, place: { town, state: st }, slides, questions };
+  const all = JSON.stringify(input);
+  if (all.length > 30000) return { field: 'size' };
+  input.names = CASE_NAMES.filter(n => all.includes('{' + n + '}'));
+  return { input };
+}
+async function caseRoute(request, context, p) {
+  if (p.mode === 'case-status') return caseStatus(p);
+  if (!KEY) return cReply('nokey', 503);
+  if (!PASS || caseDayMax() === 0) return cReply('disabled', 403);
+  if (!passOk(request.headers.get('x-terrain-pass'))) return cReply('locked', 401);
+  const secret = pRegSecret();
+  let rid = null;
+  if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return cReply('noreg', 401); }
+  if (typeof p.device !== 'string' || !RE_DEVICE.test(p.device)) return cReply('bad-input', 400, { field: 'device' });
+  const got = caseInput(p);
+  if (!got.input) return cReply('bad-input', 400, { field: got.field });
+  const I = got.input, store = caseStore(), now = Date.now();
+  // kept for exactly this input: the same slides, words and names; anything else is its own study
+  const cacheKey = 'w/' + pSha('terrain-case|' + JSON.stringify(I)).slice(0, 32) + '/' + I.lang;
+  if (p.fresh !== true) {
+    let hit = null; try { hit = await store.get(cacheKey, { type: 'json' }); } catch { hit = null; }
+    if (hit && nPlain(hit.words) && typeof hit.at === 'number' && now - hit.at < CASE_CACHE_MS) {
+      caseLog('cached');
+      return reply({ ok: true, fn: FN_VERSION, cached: true, made: hit.made, words: hit.words });
+    }
+  }
+  const day = new Date(now).toISOString().slice(0, 10), hour = new Date(now).toISOString().slice(0, 13);
+  const bucket = pClientIp(request, context);
+  const keys = { dev: 'c/dev/' + day + '/' + pSha('terrain-case-dev|' + p.device).slice(0, 16), reg: rid ? 'c/reg/' + day + '/' + rid : null,
+    ip: bucket ? await pIpKey(store, hour, bucket) : null, site: 'c/site/' + day };
+  const plan = [['dev', CASE_DEV_DAY, 'limit-device', nextUtcDay(now)], ['reg', CASE_REG_DAY, 'limit-reg', nextUtcDay(now)],
+    ['ip', CASE_IP_HOUR, 'limit-ip', nextUtcHour(now)], ['site', caseDayMax(), 'limit-site', nextUtcDay(now)]];
+  const taken = [];
+  for (const [k, max, code, until] of plan) {
+    if (!keys[k]) continue;
+    if (!(await pBump(store, keys[k], max, now))) {
+      for (const t of taken) await pGiveBack(store, keys[t]);
+      return cReply(code, 429, { retryAfter: Math.max(1, Math.ceil((until - now) / 1000)) });
+    }
+    taken.push(k);
+  }
+  const job = pRand(16), key = pRand(32), worker = pRand(32);
+  const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
+    model: CASE_MODEL(), effort: CASE_EFFORT(), counts: { dev: keys.dev } };
+  const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return cReply('busy', 503); }
+  let woke = false;
+  try {
+    const res = await fetch(new URL('/.netlify/functions/advise-case', request.url), {
+      method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ job, worker }), signal: AbortSignal.timeout(5000) });
+    woke = res && res.status === 202;
+  } catch { woke = false; }
+  if (!woke) {
+    let lost = false;
+    try {
+      const failed = { ...rec, status: 'failed', code: 'unavailable', finished: Date.now() };
+      let f;
+      if (w && w.etag) f = await store.setJSON('j/' + job, failed, { onlyIfMatch: w.etag });
+      else { const cur = await store.get('j/' + job, { type: 'json' }); f = cur && cur.status === 'queued' ? await store.setJSON('j/' + job, failed) : { modified: false }; }
+      lost = !!(f && f.modified === false);
+    } catch { /* the sweep tidies it */ }
+    if (lost) { caseLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
+    for (const t of taken) await pGiveBack(store, keys[t]);
+    return cReply('unavailable', 502);
+  }
+  caseLog('queued');
+  return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202);
+}
+async function caseStatus(p) {
+  if (typeof p.job !== 'string' || !RE_JOB.test(p.job)) return reply({ ok: false, code: 'gone' }, 404);
+  if (typeof p.key !== 'string' || !RE_JKEY.test(p.key)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const store = caseStore(), now = Date.now();
+  const cas = typeof store.getWithMetadata === 'function';
+  let rec = null, etag = null;
+  if (cas) { const r = await store.getWithMetadata('j/' + p.job, { type: 'json' }); if (r) { rec = r.data; etag = r.etag; } }
+  else rec = await store.get('j/' + p.job, { type: 'json' });
+  if (!rec || typeof rec !== 'object' || typeof rec.created !== 'number' || now - rec.created > JOB_KEEP_MS) return reply({ ok: false, code: 'gone' }, 404);
+  if (!pHashOk(p.key, rec.keyHash)) return reply({ ok: false, code: 'bad-key' }, 403);
+  const stuck = (rec.status === 'running' && now - (rec.started || rec.created) > STUCK_MS) || (rec.status === 'queued' && now - rec.created > STUCK_MS);
+  if (stuck) {
+    const next = { ...rec, status: 'failed', code: rec.status === 'running' ? 'timeout' : 'unavailable', finished: now };
+    const w = await store.setJSON('j/' + p.job, next, cas && etag ? { onlyIfMatch: etag } : undefined);
+    if (!w || w.modified !== false) { rec = next; if (rec.counts) await pGiveBack(store, rec.counts.dev); }
+  }
+  const out = { ok: true, status: rec.status, ms: (rec.finished || now) - rec.created };
+  if (rec.status === 'done') Object.assign(out, { made: rec.made, words: nPlain(rec.words) ? rec.words : null });
+  if (rec.status === 'failed') out.code = typeof rec.code === 'string' ? rec.code : 'unavailable';
+  return reply(out);
+}
+
 async function callClaude(key, body){
   const res = await fetch('https://api.anthropic.com/v1/messages', {
     method: 'POST',
@@ -1043,7 +1218,8 @@ export default async (request, context) => {
       maxIdeasPerCall: MAX_IDEAS_PER_CALL, kinds: Object.keys(KINDS), topic: true,
       prices: !!KEY && !!PASS && pricesDayMax() > 0, pricesFn: PRICES_FN,   // v10.44 review: PRICES_DAY_MAX=0 turns the button off too
       needs: !!KEY && !!PASS && needsDayMax() > 0, needsFn: NEEDS_FN,       // v10.53.0: the needs list (NEEDS_DAY_MAX=0 turns it off)
-      ideas: !!KEY && !!PASS && ideasDayMax() > 0, ideasFn: IDEAS_FN        // v10.55.0: the work for each need (IDEAS_DAY_MAX=0 turns it off)
+      ideas: !!KEY && !!PASS && ideasDayMax() > 0, ideasFn: IDEAS_FN,       // v10.55.0: the work for each need (IDEAS_DAY_MAX=0 turns it off)
+      case: !!KEY && !!PASS && caseDayMax() > 0, caseFn: CASE_FN            // v10.56.0: the proposal's words (CASE_DAY_MAX=0 turns them off)
     });
   }
   if (request.method !== 'POST') return reply({ error: 'Use GET or POST.' }, 405);
@@ -1059,6 +1235,10 @@ export default async (request, context) => {
   if (early && (early.mode === 'ideas' || early.mode === 'ideas-status' || early.mode === 'ideas-pick')) {
     try { return await ideasRoute(request, context, early); }
     catch (e) { ideasLog('error'); return reply({ error: 'The ideas could not be made just now.', code: 'unavailable' }, 502); }
+  }
+  if (early && (early.mode === 'case' || early.mode === 'case-status')) {
+    try { return await caseRoute(request, context, early); }
+    catch (e) { caseLog('error'); return reply({ error: 'The words could not be written just now.', code: 'unavailable' }, 502); }
   }
   if (early && (early.mode === 'prices' || early.mode === 'prices-status')) {
     try { return await pricesRoute(request, context, early); }

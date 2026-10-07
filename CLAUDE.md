@@ -24,7 +24,12 @@ in commit messages. See [Security](#security--this-repo-is-public).
    `npm test`. 131 suites, 9,759 assertions, all green at v10.45.0 (5 Oct 2026: the Community Survey says what the neighborhood needs, and its review round; v10.44.1 had 123 · 9,403; v10.44: Make the Case for a project or purchase, "Find prices", Learn from other conferences, the Sabbath leftovers; before it v10.43: ongoing · series · one-day events, the follow-up plan, connection cards, "What's next" and "Your path"; about 20 minutes).
 4. **Every version change updates six stamps** — see [Versioning](#versioning).
    The app warns in the console at boot if they disagree.
-5. **The pastor is not a developer.** He tests on the live site, often on his
+5. **Where the work files are** (6 Oct 2026: his Downloads was filed onto his external drive, on purpose). Every
+   `~/Downloads/Terrain-work/vNN` and `~/Downloads/Terrain-vX-samples` named below now lives on the T7 drive:
+   `/Volumes/T7/Ministry Files/1 Apps/Terrain/` (`Work files/Terrain-work/vNN`; the newest samples in `Current`, older ones in
+   `Older versions`). The active work folder is on the Mac, so it works with the drive unplugged: `~/Ministry Work/Terrain-work`
+   (v72, v73, and `h/cdp.mjs`, the headless Chrome helper). Keep `~/Downloads` empty.
+6. **The pastor is not a developer.** He tests on the live site, often on his
    phone, and reports by screenshot and voice-to-text (expect typos). Verify
    against the live site and the repo, not against his description alone.
 
@@ -71,10 +76,13 @@ netlify/functions/prices-sweep.mjs   (v10.44, prices-sweep-1.0) daily purge of p
 netlify/functions/advise-needs.mjs   (v10.53.0, needs-1.0) the background worker behind the Community Survey's needs list made by Claude: web search
                                and web fetch, one strict tool (record_needs), every number checked against the Census figures sent, every link
                                the search's own; Netlify Blobs store `terrain-needs` (jobs j/, the place's kept list n/<hash>/<lang>, counters c/)
-netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.1 since v10.55.0) daily purge of both stores: jobs after 7 days, counters
-                               after 2, kept lists and idea sets after 60; never the pool of picked ideas (p/)
-netlify/functions/advise-ideas.mjs   (v10.55.0, ideas-1.0) the background worker behind the work for each need: web search and fetch,
-                               twelve ideas a need (four a size) through the library's own checker; store `terrain-ideas` (j/, i/, c/, p/ the pool)
+netlify/functions/needs-sweep.mjs    (v10.53.0, needs-sweep-1.2 since v10.56.0) daily purge of three stores (terrain-needs, terrain-ideas,
+                               terrain-case): jobs after 7 days, counters after 2, kept lists, idea sets and words after 60; never the pool (p/)
+netlify/functions/advise-ideas.mjs   (v10.55.0, ideas-1.1 since v10.56.0) the background worker behind the work for each need (eighteen, six
+                               a size) and, since v10.56.0, Make the Case's step 2 for one group (twelve, four a size): web search and fetch,
+                               through the library's own checker; store `terrain-ideas` (j/, i/, c/, p/ the pool)
+netlify/functions/advise-case.mjs    (v10.56.0, case-1.0) the background worker behind the proposal's words: one request, no web, the strict
+                               tool record_words (headlines, what to say, questions), `cleanWords`; store `terrain-case` (j/, w/ kept words, c/)
 netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans: GET (sign-in settings, billing on/off, test or live, the
                                two prices read from Stripe), POST op session (Firebase's ID token checked here: Google's keys, RS256, the
                                project, email verified → Terrain's own 30-day session) / plan / checkout (Stripe Checkout, 14 days free the
@@ -161,6 +169,8 @@ values are never in the repo):
 | `TERRAIN_BILLING` | account.mjs | (v10.54.0) **Unset = payments off: everyone has the full version.** `on` (with a key and both prices) turns the paid version on for everyone. Only when he says "turn it on", after release 2. |
 | `TERRAIN_COMP_EMAILS` | account.mjs | (v10.54.0) Optional. Comma-separated addresses that always have the full version ("complimentary"). |
 | `IDEAS_DAY_MAX` | advise.mjs | Optional (v10.55.0). Idea studies a day for the whole site, default 150 (0 turns them off: GET says `ideas:false`). Also 20 a device, 30 a registration a day and 15 an address an hour. A kept set (60 days) is given again at no cost. |
+| `CASE_DAY_MAX` | advise.mjs | Optional (v10.56.0). Proposal-word studies a day for the whole site, default 150 (0 turns them off: GET says `case:false`). Also 20 a device, 30 a registration a day and 15 an address an hour. Kept words (60 days) for the very same slides are given again at no cost. |
+| `CASE_MODEL` / `CASE_EFFORT` | advise-case.mjs | Optional (v10.56.0). Default `claude-opus-5-5` at effort `medium`. Needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `IDEAS_MODEL` / `IDEAS_EFFORT` | advise-ideas.mjs | Optional (v10.55.0). Default `claude-opus-5-5` at effort `medium`. Needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `NEEDS_MODEL` / `NEEDS_EFFORT` | advise-needs.mjs | Optional (v10.53.0). Default `claude-opus-5-5` at effort `medium`. The needs list needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`). |
 | `PRICES_MODEL` / `PRICES_EFFORT` | advise.mjs, advise-prices.mjs | Optional (v10.44). Default `claude-opus-5-5` at effort `low`. Find prices needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`; without the passphrase the page never shows it. |
@@ -179,6 +189,48 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.56.0 (6 Oct 2026) — Claude in Make the Case: a group's ideas, and the proposal's words.** The pastor, after the needs and the
+work for each need became Claude's: *"And this also carries into make the case right and the proposal creation because [it] shouldn't be
+Claude. Also work on that as well."* Design `~/Downloads/Terrain-work/v73/DESIGN-CASE-CLAUDE.md`. Full lane. Folded into PR #26 with
+v10.55.1 (his rule: an open PR takes the next work).
+- **Who:** the same lock as the needs list and the ideas (server `ANTHROPIC_API_KEY` + `TERRAIN_AI_PASS`; the device unlocked with
+  `?ideas=`); `IDEAS_DAY_MAX` for the group studies, `CASE_DAY_MAX` for the words. Everyone else sees Make the Case as before. Never the
+  sample, never a member's page.
+- **Part A, step 2's ideas for a group** (block after `nsClPick`: `CASE_GI`, `cgiKey`, `cgiInput`, `cgiAccept`, `cgiDraw`, `cgiAuto`,
+  `cgiStart`, `cgiPick`): with a group chosen, the section on screen (For God's people / For our community) studies by itself once a page
+  load (the other when he switches to it); `libAiDraw` draws the study's line in the section's head instead of the quick "More ideas"
+  button ("Studying what works for {group}… a minute or two." → "Written for {group} on {date}" + Generate new ideas, or "New ideas
+  could not be made just now." + Try again). Sent: the place and figures (`nsAiInput`), the group (id, name, side, up to three of its
+  themes), the tags, the group's listed ideas (never repeated). Twelve back, four a size, kept where "More ideas" kept its own
+  (`uChurch().fresh['group:<id>:<side>']`, with `study`), so `libDrawList` draws them first; a new study replaces the last; each card
+  shows its own "why" and "Seen working" (`libCardHTML`); "Choose this" on one is a pick (`libCase` → `cgiPick` → ideas-pick). In-reach
+  ideas meet members at church (no "waits at the church building") and their "why" carries no number.
+- **Part B, the proposal's words** (block before `caseDraw3`: `CASE_WD`, `cwLines`, `cwSig`, `cwNames`, `cwRedact`/`cwRestore`,
+  `cwInput`, `cwOn`, `cwView`, `cwAccept`, `cwAuto`, `cwStart`, `cwRedraw`): when step 3 has slides (Make the Case or the Proposal
+  page), by itself once a page load per ministry, group and language: the group, the idea, the goal, the town and state, and every
+  slide's words with the church's, the pastor's and the coordinator's names as `{church}` / `{pastor}` / `{coordinator}`. Back:
+  headlines (only for slides whose headline he may reword), what to say slide by slide (step 3's "What to say", under the app's rows),
+  and the questions (step 3's "Questions", in place of the app's). Kept in `uChurch().caseWords[caseEditKey]` (the last 40) with a
+  fingerprint of every slide read (`cwSig`). **`CASE_ST.app`** is the app's deck, **`CASE_ST.base`** = `cwOn(app)` (Claude's headlines),
+  **`CASE_ST.deck`** = his edits on top; the same at every rebuild (the timing, the goal, `caseDecPush`'s rooms, the yes slide).
+  A headline is used only when its slide still says what Claude read, never with more lines than the app's (`caseWrapN` at
+  `CASE_FIT.head.cpl`), within `caseFieldMax`, and every number in it on the slides now; else the app's. The line under step 3's
+  heading: "Writing the words for {group}… about a minute." → "Words written for {group} on {date}" + Write them again → "Some slides
+  changed since the words were written." + Write them again (never by itself: a changed slide costs a study only on his tap). The
+  Proposal to vote on and the handout keep the app's formal words.
+- **The servers:** advise.mjs **advise-2.7** (mode `ideas` takes `group` instead of `need`, the target `g-<group>-<in|out>`; modes
+  `case` / `case-status`; `LIB_THEMES` now all 57 of `themes.json`: the 15 of v10.41 were missing, so a need naming one was refused;
+  `quotesScripture` exported); **advise-ideas.mjs ideas-1.1** (the group's prompt; a need's prompt byte for byte unchanged);
+  **advise-case.mjs case-1.0** (one request, no web, `record_words`, `cleanWords`: a headline only for an editable slide and no longer
+  than the slide's by more than two words, every number in the input's words, names only the placeholders the input used, no Scripture
+  quoted, no markup, web address, emoji, "AI" or "targets"; at least three of one kind or no result); **needs-sweep-1.2**.
+- Verify after deploy: `/.netlify/functions/advise` → `"fn":"advise-2.7"`, `"ideasFn":"ideas-1.1"`, `"case":true`, `"caseFn":"case-1.0"`.
+  **Never run against the real service** (every test stubs it); watch the first real studies (each job record keeps its tokens).
+- Tests: `case-claude-function` (new, 73) and `v56-case-claude` (new, 40), both failing first on v10.55.1 (`v73/ff-*.log`); updated with
+  comments: advise-function, advise-topic, advise-prices, needs-function, ideas-function (advise-2.7, ideas-1.1), connect-client (23
+  `memberLink()` guard sites). Full suite: 149 suites · 10,434 passed · 0 failed. Samples (a MADE-UP answer, to show the layout):
+  `Terrain-v10.56.0-samples` (`v73/shots22.mjs`, served by `v73/serve56.mjs`).
 
 **v10.55.0 (6 Oct 2026) — Claude writes the work for each need.** The pastor, asked whether Claude now makes the Light / Moderate / Heavy
 lift ideas: *"a lot of the ideas are gonna all be the same … because it's coming from the library … bring in some even better ideas …
@@ -219,6 +271,44 @@ the time"*. Design `~/Downloads/Terrain-work/v72/DESIGN-IDEAS.md`.
   advise-function, advise-prices, advise-topic, needs-function (advise-2.6), connect-client (19 `memberLink()` guard sites). Full suite:
   145 suites · 10,284 passed · 0 failed. Samples (a
   MADE-UP answer, to show the layout): `~/Downloads/Terrain-v10.55.0-samples/` (`v72/shots17.mjs`, `v72/sample-ideas.json`).
+
+**v10.55.1 (6 Oct 2026) — the Proposal page cleaner; "Your church" back in the survey, before the needs; Spiritual Gifts only
+gifts.** The pastor, on the Proposal page: *"I click CHURCH board it jumps down … doesn't have to … you're already choosing light lift moderate
+lift heavy lift we don't have to put it again … what would you like this to accomplish? We don't need that either … short by 10 volunteers …
+because the spiritual gifts and information hasn't been put in yet, right"*; then *"maybe there can be a button under the proposal box before
+who are you proposing to just to remind … the people when they see spiritual gifts they're not gonna know that that's where you put in the
+information for your church … right after the community resources maybe a section because that's gonna come right before the community
+needs … a very clear section that allows the Pastor to fill out that part … a button that will … send him to the spiritual gifts section …
+it's best to plan the proposal after the spiritual gifts results come in"*; and *"you can remove the … fill-in information in the spiritual
+gifts … that's all it's gonna be about just spiritual gifts"*.
+- **The Proposal page** (from a need, `casePropMode()`): choosing who it is for no longer scrolls (Make the Case on its own still brings
+  step 2 into view); no Size row and no goal box (both stay in Make the Case on its own; the slides keep the suggested goal); under the
+  proposal card, before step 1, `caseReadyNudgeHTML`: "Fill in your church first…" + **Fill in Your church** (when empty, `gfChurchEmpty`)
+  and "A proposal is stronger with your members' Spiritual Gifts results…" + **Send the Spiritual Gifts survey** (`gfInviteChurch`, while
+  `gfReadiness().state` is none, low or unknown below `CASE_GIFTS_MIN`). Step 3's "Still to settle" is one line and a button while the
+  church is empty (`.cs-fillchurch`), never a list of shortfalls.
+- **"Your church" in the survey** (`uChurchSecHTML`, `#u-church`, between Community resources and the needs; full tier only): its line
+  ("Fill this in before you choose a ministry below…"), the church card (`gfChurchCardHTML`: the same three-step form, open while empty,
+  "People, rooms and skills"), and the Spiritual Gifts line (`uGiftsNoteInner`: send the survey first, the count, **Send the Spiritual Gifts
+  survey**). One live card: `render()` lifts it out and puts it back (what he typed survives a redraw, as the needs node does);
+  `gfChurchHome` places it; `openTool('survey')` brings it home. Every way to the church form (`gfChurchOpen` → `uChurchGo`) leads to the
+  survey's section (no survey yet: the survey, its address first). No Gifts-first card inside the form any more.
+- **"Your church" stands out** (same release, his next message: *"this section needs to be glowing or pulsating … slow pulsate and
+  glowing … right now it just looks like blended into all the other stuff … all green mint color … a colored [line] go around the edge
+  all the way around like it's moving … and also the spiritual gifts should be a very important button"*): the section is a framed
+  panel (4 px edge, a faint violet ground); while something is left to do (`uChurchTodo`: the church empty, or Spiritual Gifts results
+  below the Proposal page's rule) it says **Start here** (`.u-chstart`) and three gold bands chase round its violet edge
+  (`@property --uca`, `ucSpin` 9 s a turn) while the frame breathes (`ucGlow` 6 s); once both are done the frame stays, still.
+  `uChurchSecMark` (from `gfFirstRefresh`, so after a save or new results) follows without drawing the survey again. Reduced motion:
+  still, a steady glow; print: a plain line. **Send the Spiritual Gifts survey** is a solid violet button (`.btn.u-gfgo`), there and in
+  the Proposal page's reminder.
+- **The Spiritual Gifts landing**: two steps (Invite your members → See the results), no church card. Old lines that said "on the Spiritual
+  Gifts page" for the church's information now say "in the Community Survey".
+- Tests: `v55-proposal-clean` (new, 16; failing first on v10.55.0's first commit: `v72/ff-v55-proposal-clean.log`); `v45-profile-move`
+  rewritten for the new home (43); `v55-1-church-glow` (new, 18; failing first on 77f44ef: `v73/ff-v55-1-church-glow.log`; the motion
+  itself checked in Chrome, `v73/shots20.mjs`: the angle 48° → 172° in 3 s, computer and phone, both themes); updated with comments:
+  v52-lift, v47-clean, gifts-first-ui, v42-core, v45-1-survey, v45-handoff, v45-needs-ui, v45-review, connect-client (20 `memberLink()`
+  guard sites). Full suite: 147 suites · 10,321 passed · 0 failed. Samples `~/Downloads/Terrain-v10.55.1-samples/`.
 
 **v10.54.2 (6 Oct 2026, quick lane) — the member's report ends simply: how to get involved, sent by itself.** The pastor, of the end of a
 member's Spiritual Gifts report: *"the first 90 days, I don't know what that is. The main thing is just a very simple steps on how to get
@@ -2358,7 +2448,7 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
 - In Make the Case: `caseChildOk(x,gid)` (final review: `CASE_CHILD_THEMES`, no census tag; v10.41.1: the built-ins by `caseBuiltinKids`, `CASE_CHILD_TAGS`, `CASE_CHILD_BUILTINS`), `CASE_CHILD_VERSES`, `CASE_LIB_THEME_VERSE` (a library idea's theme verses, tag `lib:<theme>` in `caseVersePlan`)
 - Screens: `libMount('survey'|'case')` into `#u-lib` / `#cs-lib`, `libDrawTiles` (grouped under the two headings), `libDrawList` (every list in two sections, `.lib-sec`), `libCardHTML`, `libSigCardHTML` (a built-in as a library card), `libWire`; `LIB_UI`
 - Reach (v10.41): `libReach` / `libThemeReach` (the index's `reach`; a theme's `inside` / `reach`), `libIn` / `libOut`, `LIB_BUILTIN_THEMES`, `LIB_BUILTIN_REACH`, `libBuiltinsFor`, `libOrder`
-- "More ideas for {town}" (never labelled AI on screen): `libAiMore` → advise.mjs `mode:'topic'` (`libCheckIdea`, `TOPIC_SYSTEM` there), `libFreshAccept`, `uChurch().fresh[topic]`; in Make the Case one per section (topic `group:<id>:in|out`); `ideasServerNote` logs the server's words, the page shows its own sentence; unlock `aiClaimPass` (`?ideas=` / `?ai=`)
+- "More ideas for {town}" (never labelled AI on screen): `libAiMore` → advise.mjs `mode:'topic'` (`libCheckIdea`, `TOPIC_SYSTEM` there), `libFreshAccept`, `uChurch().fresh[topic]`; in Make the Case one per section (topic `group:<id>:in|out`); `ideasServerNote` logs the server's words, the page shows its own sentence; unlock `aiClaimPass` (`?ideas=` / `?ai=`). v10.56.0: where the server has the ideas on and the device is unlocked, a group's section studies instead (`cgiDraw` and the `CASE_GI` block)
 
 **Spiritual Gifts**
 - `GIFTS` (21, 5 statements each; ES in `GIFTS_ES`), `GF_ORDER` (105 interleaved statements), `gfScores(a, obs)`, `gfProfile()`, `gfFlags()`
@@ -2436,7 +2526,8 @@ Don't relitigate them without a reason he'd accept.
   Spiritual Gifts sections each carry their own colour. v10.54.1: each lift, Light mint, Moderate blue, Heavy violet, everywhere a lift is shown.)
 - **Nothing animates on its own** except the breathing button on the church
   profile — the one control that needs the pastor — and (v10.38, his request) the slow breathing glow of the
-  four hub tiles. Reduced motion stops both.
+  four hub tiles, and (v10.55.1, his request) the survey's "Your church" while something is left to do (its edge turning, its
+  glow breathing). Reduced motion stops them all.
 - **Symmetry matters to him.** Equal-height cards, one-line links, two-line
   blurbs. Check wrapping in Spanish too; every string is longer.
 - **Twenty ministries per level**, three levels. Not a ten-rung slider.
@@ -2539,6 +2630,9 @@ Don't relitigate them without a reason he'd accept.
   needs, first, above THE BRIEF; the church's numbers live on the Spiritual Gifts landing ("Your church").
 - **Lift = the library's tier** (a built-in's `bandOf(load)`), Light · Moderate · Heavy, one rule everywhere (`nsLift`). An idea sheet
   says what the idea needs from our church in general words, with no capacity check: "if we don't have it, then we don't have it."
+- **Claude writes around the app's facts, never over his words** (v10.56.0): the slides' facts, order and verses are the app's; Claude's
+  headlines, notes and questions only say what the slides say (every number checked twice), never take more lines on a slide, and
+  his own edits always win. A changed slide falls back to the app's words until he asks for new ones.
 - **One page, always,** for an idea's PDF (`nsPdfFit` steps the type down, then shows the verse as a reference only).
 - **The hand-off:** "Create a proposal for this ministry" is the sheet's only primary button; it lands on the chosen idea in Make the Case
   (path "A ministry"), and "← Back to the need" returns. Make the Case is otherwise unchanged.
