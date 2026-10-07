@@ -78,7 +78,8 @@ function noAiWords(name, v, k = '') {
   if (Array.isArray(v)) { v.forEach(x => noAiWords(name, x, k)); return; }
   if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) noAiWords(name, x, kk);
 }
-export function packServed(P, YA) {
+// extra: more served files made beside the comparison (v10.58.0: resources.json), checked for "AI" words and hashed into the version
+export function packServed(P, YA, extra = {}) {
   const months = P.window.months, ahead12 = P.window.ahead12;
   if (months.length !== 24 || ahead12.length !== 12) throw new Error('window must be 24 months (12 past, 12 ahead)');
   const lensIds = P.lenses.map(l => l.id);
@@ -168,6 +169,7 @@ export function packServed(P, YA) {
   files['ahead.json'] = JSON.stringify(ahead);
   for (const [slug, d] of Object.entries(details)) { details[slug] = writeOut(d, slug); noAiWords('c/' + slug + '.json', details[slug]); }
   noAiWords('ahead.json', ahead);
+  for (const [k, v] of Object.entries(extra)) { noAiWords(k, v); files[k] = JSON.stringify(v); }
   for (const [slug, d] of Object.entries(details)) files[`c/${slug}.json`] = JSON.stringify(d);
   const h = createHash('sha256');
   for (const k of Object.keys(files).sort()) h.update(k + '\n' + files[k] + '\n');

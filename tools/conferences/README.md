@@ -11,6 +11,7 @@ tools/conferences/
   year-ahead.mjs     the next 12 months for every conference: five lanes, hints, "not published yet", last year
   profiles.mjs       one comparable profile per conference: shares, typical, strengths, said vs shown, suggestions
   pack.mjs           the served files: conferences/index.json, ahead.json, c/<slug>.json
+  resources.mjs      (v10.58.0) conferences/resources.json: "Resources for your church" and "Ministries that come to your church"
   window.mjs         the months, from the check date
   feed.mjs, ics.cjs  Chesapeake's public .ics feed → src/feeds/chesapeake.json (title, start, end, status only)
   MATCH-REVIEW.txt   every stated initiative checked against the calendars (made by build.mjs; read it in the pull request)
@@ -23,7 +24,21 @@ tools/conferences/
     stats.json       the official Annual Statistical Report figures, 2019–2024, with edition, table and PDF page
     registry/*.json  the conference registry (evangelism help and its sources), by union
     initiatives.json the stated initiatives of conferences and unions, each with where it is stated
+    funding.json     (v10.58.0, optional) more grants and free help for the resources box, in initiatives.json's shape (kept apart:
+                     the calendars' matching never reads it)
+    ministries.json  (v10.58.0, optional) ministries that come to a church: kind, standing (a church entity, an ASI member, or listed
+                     by a church body) and where that is shown, the ministry's own site, invite page, email and phone, cost, notes
 ```
+
+**Resources for your church** (v10.58.0, `resources.mjs`): from `initiatives.json` and `funding.json` the items a local church can use
+(funding → money, resource → free, training, and what is current or coming up → now; ended ones left out), each conference's
+evangelism help from `registry/*.json` (subsidy, grant, budget line, help in kind: share, cap, deadline, how to ask, up to four
+conditions), and `ministries.json`. The page shows his conference's, his union's, the NAD's and the world church's, by kind. Every link
+https (an apostrophe written %27), an email an address, a phone dialled as digits (a word number on the keypad; an extension after a
+pause): anything else stops the build. A conference or union the comparison does not serve is left out with a line in the report.
+Ministries: only organisational contact details printed on the ministry's own pages; never a staff member's own email; notes are
+practical (when to book, what the church provides), never a person's name. Re-check the ministries' links when the calendars are
+refreshed (a link that no longer opens: mend or drop the entry).
 
 The builders were moved here from the approved sample (`Terrain-work/v52/compare`, 1 Oct 2026) with their logic unchanged;
 on the same inputs they make exactly the sample's data.

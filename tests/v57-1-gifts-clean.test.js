@@ -17,7 +17,8 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
 
 (async()=>{ await T.sec(async()=>{
   const P=page({needs:'file'}); await ready(P);
-  c('the six stamps say v10.57.1', [P.E('VERSION'),P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver')], ['v10.57.1','v10.57.1','v10.57.1','v10.57.1']);
+  // v10.58.0 (stale): the next release moved the stamps; what this suite holds is that they agree
+  { const v=P.E('VERSION'); c('the stamps agree', [P.q('meta[name="terrain-version"]').content,P.q('html').dataset.version,P.txt('#ver')], [v,v,v]); }
   survey(P,{mod:ADDR}); await sleep(150);
   P.E(`(()=>{ capSave(${JSON.stringify(FX.MEDIUM)}); gfDemoFill({quiet:true}); gfOpenLanding(); })()`); await sleep(150);
 
