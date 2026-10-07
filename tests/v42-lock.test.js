@@ -226,7 +226,9 @@ function relay(room,type,data){ for(const es of STREAMS) if(es.url===`${FB}/live
     await until(()=>ops('go').length>0);
     const iMode=sent.findIndex(x=>x.op==='mode'), iGo=sent.findIndex(x=>x.op==='go');
     c('its panel’s Present live: op mode follow before the first slide change', [iMode>=0,iMode<iGo,sent[iMode]&&sent[iMode].body.mode,store.peek('r/'+r3.room).mode], [true,true,'follow','follow']);
-    await until(()=>MS.E('WA.ctl.locked()'));
+    // v10.59.2: the lock (op mode) and his slide (op go) reach the phone as two stream events a moment apart; on GitHub's slower runner the
+    // check once landed between them (locked, still on slide 2). Wait for both: a measuring fault, not a change of mind.
+    await until(()=>MS.E('WA.ctl.locked()')&&MS.E('WA.ctl.index()')===0,15000);
     c('…the phone is locked on his slide now', [MS.E('WA.ctl.locked()'),MS.E('WA.ctl.index()')], [true,0]);
 
     console.log('\n-- the heartbeat, and 30 minutes of silence --');

@@ -40,6 +40,10 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
   c('every row has three gifts and a wheel', P.qa('#gf-results .gfrow2').every(r=>r.querySelectorAll('.gftg').length===3&&r.querySelector('.gfmw svg')), true);
   c('the wheel: the 21 gifts, the three strongest in full colour', [P.qa('#gf-results .gfrow2:first-of-type .gfmw-b').length,P.qa('#gf-results .gfrow2:first-of-type .gfmw-b:not(.lo)').length], [21,3]);
   c('…a picture only (the row says the gifts in words)', P.q('#gf-results .gfrow2 .gfmw svg').getAttribute('aria-hidden'), 'true');
+  // v10.59.3: the pastor, "put like teaching and whatever in tiny words … just the 3 main ones": the three strongest named beside their wedges
+  c('…with the three strongest named in tiny words beside their wedges, the same three as the chips', P.qa('#gf-results .gfrow2:first-of-type .gfmw text').map(t=>t.textContent).sort(), want.slice().sort());   // in the wheel's own order round the ring
+  c('…in their families\' colours, and no label collides with another on its side', [P.qa('#gf-results .gfrow2:first-of-type .gfmw text').every(t=>/--k|--m-|--acc|--gfv/.test(t.getAttribute('style')||'')),
+    P.qa('#gf-results .gfrow2').every(r=>{ const L=[...r.querySelectorAll('.gfmw text')].map(t=>({s:t.getAttribute('text-anchor'),y:+t.getAttribute('y')})); return ['start','end'].every(s=>{ const ys=L.filter(l=>l.s===s).map(l=>l.y).sort((a,b)=>a-b); return ys.every((y,i)=>!i||y-ys[i-1]>=8); }); })], [true,true]);
   P.q('#gf-results .gfrow2').click(); await sleep(80);
   c('tapping the row opens the report, with the way back above it and its own Delete', [/Alex Rivera/.test(P.txt('#gifts')),!!P.q('#gifts [data-gf-back]'),!!P.q('#gifts #gfpdel')], [true,true,true]);
   P.q('#gifts #gfpdel').click(); await sleep(20);

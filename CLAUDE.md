@@ -191,6 +191,29 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.59.3 (8 Oct 2026, quick lane) — a way out of a member's Spiritual Gifts page.** The pastor, on his own report opened from the share
+link on his own device: *"I noticed there's no way out of your spiritual gifts report … no way to get out of it. It's just stuck there."* On a
+member's link the header hides every way into the app on purpose; now it shows one door (`gfMemberDoor`, `gfDoorPaint`, `gfDoorGo`,
+`gfRenderDone`, `GF_DONE_VIEW`; the report's actions `done` / `back`): on a device holding the pastor's own registration (`regGet()`: he is
+trying the link himself) **← Back to Terrain** ("← Terrain" on a phone's narrow header), in the header (`#gfdoor`, where the main-menu button sits) and at the end of the report
+(`#gfback`), which drops the link and reloads into the app (`gfLeaveToTerrain`; tests stub `window.__gfLeave`); on a member's phone **Done**,
+once the report is drawn (`#gfdoor`, `#gfdone`), a short thank-you page by first name ("Your result has gone to your pastor." when sent;
+"Your report stays on this phone: open this link again whenever you want to read it.") with **See my report again**. Nothing sends, saves or
+deletes; the brand link stays hidden; never inside the app, on the sample report or on a confirmer's link. Also in this release: **the three strongest gifts named on the small
+wheel** (the pastor, of the results list: *"on the very right circular chart if you can put like teaching and whatever in tiny words that would
+look better … just the 3 main ones"*; and the chips already run strongest first, left to right): `gfMiniWheelSVG` draws each of the three
+in tiny words in a column right or left of the ring (the side its wedge points to), in its family's colour, a thin line from the wedge's
+tip to the name, names on a side kept 8 apart and inside the drawing (viewBox 192 × 80; the row's wheel column 192 px, 150 on a phone); `v57-1-gifts-clean` checks the names and the spacing. **The survey's section chips slide** (the pastor, of the chip bar
+on a computer: *"one of them or a couple of them are hidden behind and I don't want them to be necessarily two lines … maybe if you bring
+your cursor or you can just swipe and it will scroll left"*; `snWire`, `snArrows`): one line as before; a phone swipes as before; with a
+mouse the wheel over the bar slides it sideways (only when chips are off an edge), a drag slides it without opening the chip under the
+mouse, and a small arrow (`.sn-arrow`, a `span` with `role=button`, never a `<button>`: the tests count the bar's buttons as its sections)
+at an end where chips are off that edge slides a screenful; never on a touch screen (`hover:none`). `v59-3-chips-slide` (new, failing
+first on v10.59.2: `v76/ff-v59-3-chips.log`) stands the bar's widths in. And the
+`v42-lock` check that failed once on GitHub's slower runner (the lock and his slide arrive as two stream events) waits for both. Tests:
+`v59-3-report-door` (new; failing first on v10.59.2: `v76/ff-v59-3.log`). Checked in Chrome (`v76/shots32.mjs`, phone 390): a member's
+report, the thank-you page, the pastor's device. Full suite: 158 suites · 10,749 passed · 0 failed. Samples `Terrain-v10.59.3-samples`. Its own PR (PR #29 was merged).
+
 **v10.59.2 (8 Oct 2026, quick lane) — Compare your churches last on the main menu.** The pastor: *"put compare your churches to the very
 bottom right instead because it's the weakest one"*. The second row is now Evangelism Planner · Learn from other conferences · Compare your
 churches (the tile moved in the page's markup; nothing else changed). Folded into PR #29 (still open). Tests: the eight order checks updated

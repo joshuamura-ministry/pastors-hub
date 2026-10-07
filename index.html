@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.59.2
+     TERRAIN  v10.59.3
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.59.2" data-theme="dark">
+<html lang="en" data-version="v10.59.3" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.59.2">
-<title>Community Map — Terrain v10.59.2</title>
+<meta name="terrain-version" content="v10.59.3">
+<title>Community Map — Terrain v10.59.3</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -683,6 +683,19 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   background:color-mix(in srgb, var(--bg) 92%, transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
   border-bottom:1px solid var(--line)}
 .secnav::-webkit-scrollbar{display:none}
+/* v10.59.3 — the chips slide (the pastor: "one of them or a couple of them are hidden behind … I don't want them to be … two lines …
+   maybe if you bring your cursor or you can just swipe and it will scroll left"): on a phone a swipe, as before; with a mouse the wheel
+   and a drag slide them, and a small arrow at an end where more chips are off the edge slides a screenful (never on a touch screen). */
+.sn-arrow{position:sticky;flex:none;z-index:2;display:grid;place-items:center;width:34px;min-height:38px;border-radius:999px;cursor:pointer;
+  color:var(--acc);background:color-mix(in srgb,var(--bg) 90%,transparent);border:1px solid var(--line2);font-size:1.1rem;line-height:1;user-select:none;-webkit-user-select:none;
+  box-shadow:0 0 0 5px color-mix(in srgb,var(--bg) 78%,transparent)}
+.sn-arrow.l{left:0}
+.sn-arrow.r{right:0}
+.sn-arrow[hidden]{display:none}
+.sn-arrow:hover,.sn-arrow:focus-visible{border-color:var(--acc);outline:none}
+.secnav.sn-drag{cursor:grabbing}
+.secnav.sn-drag button{pointer-events:none}
+@media (hover:none){ .sn-arrow{display:none!important} }
 .secnav button{flex:none;background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:8px 13px;
   font-size:.79rem;font-weight:600;color:var(--ink2);cursor:pointer;white-space:nowrap;min-height:38px}
 .secnav button.on{background:var(--acc-dim);border-color:var(--acc);color:var(--acc)}
@@ -1564,6 +1577,7 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfnavnote{margin-top:7px;color:var(--acc)}
 .gfbig{height:46px;margin-top:12px}
 .gfbackr{margin-bottom:10px}
+#gfdoor{margin-left:4px;white-space:nowrap}   /* v10.59.3: the member page's one door, where the main-menu button sits for the pastor */
 .gflab{display:block;font-size:.8rem;font-weight:700;color:var(--ink2);margin-bottom:5px}
 .gifts input[type=text],.gifts input[type=email],.gifts textarea{width:100%;background:var(--panel2);border:1px solid var(--line2);
   border-radius:10px;color:var(--ink);font:inherit;padding:11px 12px;margin-bottom:8px}
@@ -1630,22 +1644,24 @@ footer b{color:var(--ink2);font-weight:600;font-family:var(--disp);letter-spacin
 .gfcovn{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
 .gfrosterrow{display:flex;align-items:center;gap:10px;border-top:1px solid var(--line);padding:9px 0;flex-wrap:wrap}
 /* v10.57.1: a result's row is one button: the name, the three strongest gifts, a small wheel */
-.gfrosterrow.gfrow2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) 64px;align-items:center;gap:16px;width:100%;margin:0;padding:10px 6px;
+.gfrosterrow.gfrow2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1.5fr) 192px;align-items:center;gap:16px;width:100%;margin:0;padding:10px 6px;
   background:none;border:0;border-top:1px solid var(--line);border-radius:0;color:inherit;font:inherit;text-align:left;cursor:pointer}
 .gfrosterrow.gfrow2:first-of-type{border-top:0}
 @media (hover:hover){ .gfrosterrow.gfrow2:hover{background:color-mix(in srgb,var(--acc) 6%,transparent)} }
 .gfrosterrow.gfrow2:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 .gftop3{display:flex;flex-wrap:wrap;gap:6px;justify-content:center}
 .gftg{font-size:.8rem;font-weight:700;line-height:1.2;padding:5px 11px;border-radius:999px;color:var(--k);background:color-mix(in srgb,var(--k) 13%,transparent);border:1px solid color-mix(in srgb,var(--k) 42%,transparent)}
-.gfmw{display:block;width:64px;height:64px}
+.gfmw{display:block;width:192px;height:80px}   /* v10.59.3: room for the three names beside the ring */
 .gfmw svg{display:block}
 .gfmw-tr{fill:var(--panel2)}
 .gfmw-c{fill:none;stroke:var(--line2);stroke-width:1}
 .gfmw-b.lo{opacity:.42}
+.gfmw-l{font:600 7.5px var(--font);letter-spacing:.01em}
+.gfmw-ln{fill:none;stroke-width:.7;opacity:.55}
 @media (max-width:600px){
-  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 56px;grid-template-areas:"n w" "t w";row-gap:8px}
-  .gfrosterrow.gfrow2 .gfrw{grid-area:n}.gfrosterrow.gfrow2 .gftop3{grid-area:t;justify-content:flex-start}.gfrosterrow.gfrow2 .gfmw{grid-area:w;width:56px;height:56px}
-  .gfmw svg{width:56px;height:56px}
+  .gfrosterrow.gfrow2{grid-template-columns:minmax(0,1fr) 150px;grid-template-areas:"n w" "t w";row-gap:8px}
+  .gfrosterrow.gfrow2 .gfrw{grid-area:n}.gfrosterrow.gfrow2 .gftop3{grid-area:t;justify-content:flex-start}.gfrosterrow.gfrow2 .gfmw{grid-area:w;width:150px;height:62px}
+  .gfmw svg{width:150px;height:62px}
 }
 .gfdoors.gfdoors1{grid-template-columns:1fr}
 .gfcong{margin:4px 0 14px}
@@ -4628,13 +4644,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.59.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.59.2';
+const VERSION = 'v10.59.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -12323,9 +12339,13 @@ function buildSecNavInner(){
   secs.forEach(x=>{ if(!x.id){ const h=x.querySelector('h2'); x.id='sec-'+(h?h.textContent:'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); } });
   nav.hidden=false;
   const briefShown=FLAT||TOOL==='survey';
-  nav.innerHTML=(briefShown?`<button data-t="brief">${L('Brief','Resumen')}</button>`:'')+
-    secs.map(x=>`<button data-t="${x.id}">${esc(x.dataset.chip||x.querySelector('h2').textContent)}</button>`).join('');
+  // v10.59.3: an arrow at each end (not a <button>: the chips are the bar's buttons), shown only where more chips are off that edge
+  nav.innerHTML=`<span class="sn-arrow l" role="button" tabindex="0" aria-label="${L('Earlier sections','Secciones anteriores')}" hidden>\u2039</span>`+
+    (briefShown?`<button data-t="brief">${L('Brief','Resumen')}</button>`:'')+
+    secs.map(x=>`<button data-t="${x.id}">${esc(x.dataset.chip||x.querySelector('h2').textContent)}</button>`).join('')+
+    `<span class="sn-arrow r" role="button" tabindex="0" aria-label="${L('More sections','Más secciones')}" hidden>\u203a</span>`;
   nav.scrollLeft=0;      // always start at the first section, not wherever it was
+  snWire(nav); snArrows(nav);
   nav.querySelectorAll('button').forEach(b=>b.onclick=()=>{
     const el=document.getElementById(b.dataset.t)||document.getElementById('brief');
     if(!el) return;
@@ -12336,6 +12356,31 @@ function buildSecNavInner(){
     setTimeout(markSection,far?60:420);
   });
   markSection();
+}
+/* v10.59.3: the chips slide. The arrows show where chips are off an edge; the wheel over the bar slides it; a mouse drag slides it (and
+   the chip under the mouse is not opened by that drag). A phone swipes as it always did. */
+function snArrows(nav){
+  const l=nav.querySelector('.sn-arrow.l'), r=nav.querySelector('.sn-arrow.r'); if(!l||!r) return;
+  const more=nav.scrollWidth-nav.clientWidth;
+  l.hidden=!(more>4&&nav.scrollLeft>4); r.hidden=!(more>4&&nav.scrollLeft<more-4);
+}
+function snWire(nav){
+  if(nav.dataset.snWired) return; nav.dataset.snWired='1';
+  const page=dir=>nav.scrollBy({left:dir*Math.max(120,nav.clientWidth-80),behavior:'smooth'});
+  nav.addEventListener('click',e=>{ const a=e.target.closest&&e.target.closest('.sn-arrow'); if(a){ e.preventDefault(); page(a.classList.contains('l')?-1:1); return; }
+    if(nav.dataset.snDragged){ delete nav.dataset.snDragged; e.stopPropagation(); e.preventDefault(); } },true);
+  nav.addEventListener('keydown',e=>{ const a=e.target.closest&&e.target.closest('.sn-arrow'); if(a&&(e.key==='Enter'||e.key===' ')){ e.preventDefault(); page(a.classList.contains('l')?-1:1); } });
+  nav.addEventListener('scroll',()=>snArrows(nav),{passive:true});
+  window.addEventListener('resize',()=>snArrows(nav));
+  nav.addEventListener('wheel',e=>{ if(nav.scrollWidth-nav.clientWidth<=4) return; const d=Math.abs(e.deltaY)>Math.abs(e.deltaX)?e.deltaY:e.deltaX; if(!d) return;
+    nav.scrollLeft+=d; e.preventDefault(); },{passive:false});
+  let drag=null;
+  nav.addEventListener('pointerdown',e=>{ if(e.pointerType!=='mouse'||e.button!==0||nav.scrollWidth-nav.clientWidth<=4||(e.target.closest&&e.target.closest('.sn-arrow'))) return;
+    drag={x:e.clientX,left:nav.scrollLeft,moved:false}; });
+  const end=()=>{ if(drag&&drag.moved){ nav.dataset.snDragged='1'; setTimeout(()=>{ delete nav.dataset.snDragged; },0); } drag=null; nav.classList.remove('sn-drag'); };
+  nav.addEventListener('pointermove',e=>{ if(!drag) return; const dx=e.clientX-drag.x; if(!drag.moved&&Math.abs(dx)<5) return;
+    if(!drag.moved){ drag.moved=true; nav.classList.add('sn-drag'); } nav.scrollLeft=drag.left-dx; });
+  nav.addEventListener('pointerup',end); nav.addEventListener('pointercancel',end); nav.addEventListener('pointerleave',end);
 }
 function markSection(){
   const nav=document.getElementById('secnav'); if(!nav||nav.hidden) return;
@@ -17077,6 +17122,46 @@ function giftsOpen(){
 function gfHost(){ return document.getElementById('giftbody'); }
 /* A member on a share link, as against the pastor in his own copy. */
 function gfIsMember(){ return !!(GIFTS_LINK.on||GF_PUB_TARGET); }
+/* v10.59.3 — a way out of a member's page. The pastor (8 Oct 2026), on his own report from the share link: "there's no way out of your
+   spiritual gifts report … It's just stuck there." On a member's link the header hides every way into the app on purpose; now it shows
+   one door: on a device that holds the pastor's own registration (he is trying the link himself), "← Back to Terrain", which drops the
+   link and opens the app; on a member's phone, "Done" once the report is drawn, which closes it on a short thank-you page that keeps
+   "See my report again" (the report stays on the phone; the link opens it again). Nothing sends, saves or deletes. */
+let GF_DONE_VIEW=false;
+function gfMemberDoor(){
+  if(!GIFTS_LINK.on||GIFTS_LINK.mode==='confirm') return null;
+  let reg=null; try{ reg=regGet(); }catch(e){ reg=null; }
+  if(reg) return 'back';
+  return GFS&&GFS.done?'done':null;
+}
+function gfLeaveToTerrain(){
+  try{ history.replaceState(null,'',location.pathname+location.search); }catch(e){}
+  const go=window.__gfLeave||(()=>location.reload()); go();
+}
+function gfDoorGo(kind){
+  if(kind==='back'){ gfLeaveToTerrain(); return; }
+  GF_DONE_VIEW=true; gfRender(); window.scrollTo({top:0,behavior:'auto'});
+}
+function gfDoorPaint(){
+  const kind=gfMemberDoor(), top=document.querySelector('header.top .in');
+  let b=document.getElementById('gfdoor');
+  if(!kind||!top){ if(b) b.remove(); return; }
+  if(!b){ b=document.createElement('button'); b.type='button'; b.id='gfdoor'; b.className='btn ghost gfsm';
+    const nav=top.querySelector('nav.tools'); if(nav&&nav.parentNode===top) top.insertBefore(b,nav.nextSibling); else top.appendChild(b); }
+  let narrow=false; try{ narrow=!!(window.matchMedia&&matchMedia('(max-width:480px)').matches); }catch(e){ narrow=false; }   // a phone's header has room for a short word
+  b.textContent=kind==='back'?(narrow?'← Terrain':L('← Back to Terrain','← Volver a Terrain')):L('Done','Listo');
+  b.hidden=kind==='done'&&GF_DONE_VIEW;   // on the thank-you page itself, no second Done
+  b.onclick=()=>gfDoorGo(kind);
+}
+function gfRenderDone(h){
+  const first=(GFS&&GFS.name||'').trim().split(/\s+/)[0]||'';
+  const sent=!!(GFS&&GFS.sent);
+  h.innerHTML=`<div class="gfhead"><h2>${L('Thank you'+(first?', '+esc(first):'')+'.','Gracias'+(first?', '+esc(first):'')+'.')}</h2>
+    <p class="sub">${sent?L('Your result has gone to your pastor. ','Su resultado ya llegó a su pastor. '):''}${L('Your report stays on this phone: open this link again whenever you want to read it.','Su informe queda en este teléfono: abra este enlace de nuevo cuando quiera leerlo.')}</p></div>
+    <div class="gfnav"><button type="button" class="btn ghost" id="gfdoneback">${L('See my report again','Ver mi informe otra vez')}</button></div>`;
+  const b=document.getElementById('gfdoneback'); if(b) b.onclick=()=>{ GF_DONE_VIEW=false; gfRender(); window.scrollTo({top:0,behavior:'auto'}); };
+  gfDoorPaint();
+}
 /* On the heart page: past the last statement, not yet finished. */
 function gfOnHeart(){ return !!GFS&&!GFS.done&&typeof GFS.i==='number'&&GFS.i>=GF_TOTAL; }
 
@@ -17176,6 +17261,8 @@ function gfRender(){
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GF_VIEW==='sample'){ gfRenderSample(h); return; }
   if(GF_VIEW==='sabbath'){ gfRenderSabbath(h); return; }   // v10.42 part 3: Discover your gifts
+  gfDoorPaint();   // v10.59.3: the member page's one door
+  if(GF_DONE_VIEW&&GFS.done&&gfIsMember()){ gfRenderDone(h); return; }
   if(GFS.done){ gfRenderResult(h,gfScores(GFS.a,GFS.observers),GFS.name,true); return; }
   if(!GFS.i&&gfAnswered()===0){ gfRenderIntro(h); return; }
   // Part-way through from a previous visit: offer to carry on or wipe, rather
@@ -19423,7 +19510,8 @@ function gfReportModel(S,P,opts){
     invite:L('Ask people who know you','Pregunte a quienes le conocen'),
     redo:L('Start again','Empezar de nuevo'),
     del:L('Delete my result','Eliminar mi resultado'),
-    pdel:L('Delete this result','Eliminar este resultado')
+    pdel:L('Delete this result','Eliminar este resultado'),
+    done:L('Done','Listo'), back:L('\u2190 Back to Terrain','\u2190 Volver a Terrain')   // v10.59.3
   };
 
   // ---- cover
@@ -19889,7 +19977,7 @@ function gfReportHTML(M,own){
   if(M.next&&M.next.length) out.push(`<section class="card gfcard gfr-next"><h3 class="gfr-h">${e(Lb.next)}</h3>${M.next.map(para).join('')}</section>`);
   const A=M.actions||{};
   out.push(`<section class="card gfcard gfr-actions" id="gfactions"><h3 class="gfr-h">${e(Lb.actions)}</h3>
-    <div class="gfnav">${A.pdf!==false?`<button class="btn" id="gfpdf">${e(Lb.pdf)}</button>`:''}${A.email?`<button class="btn ghost" id="gfemail">${e(Lb.email)}</button>`:''}${A.invite?`<button class="btn ghost" id="gfinvite">${e(Lb.invite)}</button>`:''}${A.redo?`<button class="btn ghost" id="gfredo">${e(Lb.redo)}</button>`:''}${A.deleteMine?`<button class="btn ghost" id="gfdelmine">${e(Lb.del)}</button>`:''}${A.deleteResult?`<button class="btn ghost" id="gfpdel">${e(Lb.pdel)}</button>`:''}${M.sample&&M.sampleBar?`<button type="button" class="btn ghost" data-sampback="foot">← ${e(M.sampleBar.backLong)}</button>`:''}</div>
+    <div class="gfnav">${A.pdf!==false?`<button class="btn" id="gfpdf">${e(Lb.pdf)}</button>`:''}${A.email?`<button class="btn ghost" id="gfemail">${e(Lb.email)}</button>`:''}${A.invite?`<button class="btn ghost" id="gfinvite">${e(Lb.invite)}</button>`:''}${A.redo?`<button class="btn ghost" id="gfredo">${e(Lb.redo)}</button>`:''}${A.deleteMine?`<button class="btn ghost" id="gfdelmine">${e(Lb.del)}</button>`:''}${A.deleteResult?`<button class="btn ghost" id="gfpdel">${e(Lb.pdel)}</button>`:''}${A.done?`<button type="button" class="btn ghost" id="gfdone">${e(Lb.done)}</button>`:''}${A.back?`<button type="button" class="btn ghost" id="gfback">${e(Lb.back)}</button>`:''}${M.sample&&M.sampleBar?`<button type="button" class="btn ghost" data-sampback="foot">← ${e(M.sampleBar.backLong)}</button>`:''}</div>
     <p class="note" id="${A.deleteMine?'gfdelnote':'gfactnote'}" role="status"></p></section>`);
   if(A.send) out.push(`<div class="card gfcard" id="gfsendbox"></div><div class="card gfcard gfask" id="gfaskbox" hidden></div>`);
   return `<div class="gfrep" lang="${M.lang}">${out.join('')}</div>`;
@@ -20722,7 +20810,8 @@ function gfRenderResult(h,S,name,own,opts){
   const actions=sample?{pdf:true}:{pdf:true,
     email:mine&&gfEmailEligible(),
     invite:!!(mine&&srv&&(GF_PUB_TARGET||(GFS&&GFS.pub))),
-    redo:mine,send:mine,deleteMine:ro&&!!opts.link,deleteResult:!own&&!!opts.record};
+    redo:mine,send:mine,deleteMine:ro&&!!opts.link,deleteResult:!own&&!!opts.record,
+    done:gfMemberDoor()==='done',back:gfMemberDoor()==='back'};   // v10.59.3: the way out
   const P=gfProfile(S);
   const M=gfReportModel(S,P,{own,name,church:opts.church,date:opts.date,sample,sampleNote:opts.sampleNote,
     heart:opts.heart||(mine&&GFS?GFS.h:null)||{},
@@ -20732,6 +20821,7 @@ function gfRenderResult(h,S,name,own,opts){
     flags:opts.flags||(mine&&GFS?gfFlags(GFS.a):null),ctx:opts.ctx,actions});
   h.innerHTML=gfReportHTML(M,own);
   gfWireReport(h,M,own,opts);
+  gfDoorPaint();   // v10.59.3: the emailed report's page draws this way too
   // The server's status may not have answered yet; when it does, redraw once
   // so the email and invite buttons can appear.
   if(mine&&!GF_SERVER&&GF_STATUS_P&&GF_STATUS_P.then) GF_STATUS_P.then(()=>{
@@ -20766,6 +20856,7 @@ function gfWireReport(h,M,own,opts){
     $$('gfredono').onclick=()=>{ n.textContent=''; };
   };
   if(opts.readonly) gfWireDeleteMine($$('gfdelmine'),$$('gfdelnote'),opts.link,()=>{ gfTabVtok(opts.link,null); gfRenderDeleted(h); });
+  { const d=$$('gfdone'); if(d) d.onclick=()=>gfDoorGo('done'); const bk=$$('gfback'); if(bk) bk.onclick=()=>gfDoorGo('back'); }   // v10.59.3
   const pd=$$('gfpdel');
   if(pd){ const label=pd.textContent;
     pd.onclick=async()=>{
@@ -21437,7 +21528,18 @@ function gfMiniWheelSVG(S,topIds){
   const parts=[`<circle class="gfmw-c" cx="0" cy="0" r="${R0-2}"/>`];
   segs.forEach(g=>{ parts.push(`<path class="gfmw-tr" d="${wedge(R0,R1,g.a-half,g.a+half)}"/>`);
     if(g.score!=null) parts.push(`<path class="gfmw-b${tops.has(g.id)?'':' lo'}" style="fill:var(${GF_FAM_VAR[g.fam]||'--acc'})" d="${wedge(R0,rOf(g.score),g.a-half,g.a+half)}"/>`); });
-  return `<svg viewBox="-32 -32 64 64" width="64" height="64" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">${parts.join('')}</svg>`;
+  // v10.59.3: the three strongest named in tiny words (the pastor: "put like teaching and whatever in tiny words … just the 3 main ones").
+  // Each name stands in a column to the right or the left of the ring (the side its wedge points to), level with its wedge where it can
+  // be, names on a side kept 8 apart and inside the drawing, a thin line from the wedge's tip to the name.
+  const LX=R1+7, labs=segs.filter(g=>tops.has(g.id)).map(g=>{ const [tx,ty]=P2(rOf(g.score==null?3:g.score)+1,g.a); return {g,tx,ty,y:ty,side:Math.cos(g.a)>=0?1:-1}; });
+  [1,-1].forEach(side=>{ const L=labs.filter(l=>l.side===side).sort((a,b)=>a.y-b.y);
+    for(let i=1;i<L.length;i++) if(L[i].y-L[i-1].y<8) L[i].y=L[i-1].y+8;
+    for(let i=L.length-1;i>=0;i--){ const top=i===L.length-1?34:L[i+1].y-8; if(L[i].y>top) L[i].y=top; }
+    for(let i=0;i<L.length;i++){ const low=i===0?-34:L[i-1].y+8; if(L[i].y<low) L[i].y=low; } });
+  labs.forEach(l=>{ const x=l.side*LX, col=`var(${GF_FAM_VAR[l.g.fam]||'--acc'})`;
+    parts.push(`<polyline class="gfmw-ln" style="stroke:${col}" points="${r2(l.tx)},${r2(l.ty)} ${r2(l.side*(R1+3))},${r2(l.y)} ${r2(x-l.side*2)},${r2(l.y)}"/>`);
+    parts.push(`<text class="gfmw-l" x="${r2(x)}" y="${r2(l.y+2.6)}" text-anchor="${l.side>0?'start':'end'}" style="fill:${col}">${esc(gfShort(l.g.id))}</text>`); });
+  return `<svg viewBox="-96 -40 192 80" width="192" height="80" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">${parts.join('')}</svg>`;
 }
 /* Results by themselves (v10.57.1): when the main page opens (unless asked within 30 s), then every 90 s while it is on screen and the tab
    is visible; a new result redraws the page where the pastor is (gfKeepPlace). Only for a church with a link (demo results never sync). */
