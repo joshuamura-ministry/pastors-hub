@@ -109,7 +109,8 @@ try {
   r = await call('GET', '');
   // v10.60.1: digital-1.1 (warm(), the reading started at sign-up: the pastor's "yes as soon as they sign up for sure"); the bare GET is unchanged
   // v10.61.0: digital-read-1.1 (how current a site is, the pastor's photo, how fast it opens: the pastor, "it doesn't even have my picture")
-  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.1', 'digital-read-1.1', false, false]);
+  // v10.62.0: digital-read-1.2 (the whole site read: the pastor, "survey the whole website and see its deficiencies as well")
+  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.1', 'digital-read-1.2', false, false]);
   r = await call('GET', '?conf=Atlantis');
   c('a conference the locator does not have: supported false', [r.status, r.j.supported], [200, false]);
   r = await call('GET', '?conf=Pennsylvania');
@@ -151,7 +152,10 @@ try {
   const g = by('ANBICG').google;
   c('Google\'s listing: matched by its street number and ZIP (not the first answer), with stars, reviews, website, phone, Maps link, hours',
     [g.found, g.name, g.rating, g.reviews, g.website, g.phone, g.maps, g.hours], [true, 'Bucks County Seventh-day Adventist Church', 4.7, 38, 'http://www.bcadventistchurch.org/', '(215) 672-3011', 'https://maps.google.com/?cid=123', ['Saturday: 9:30 AM – 1:00 PM']]);
-  c('…asked once a church with the key in a header, and only the fields named', [placesCalls.length, placesCalls.every(x => x.key === 'places-test-key'), /places\.rating/.test(placesCalls[0].mask), /reviews\b|photos/.test(placesCalls[0].mask)], [5, true, true, false]);
+  // v10.62.0 (digital-read-1.2): the mask now asks for places.photos too. Google's pricing page, read 8 Oct 2026: photos is the Pro tier, inside
+  // the Enterprise call Text Search already makes, so no new charge; reviews would need Enterprise + Atmosphere ($40 per 1,000 after the free
+  // 1,000) and carry no owner reply, so they still stay out. (Before: neither photos nor reviews was asked for.)
+  c('…asked once a church with the key in a header, and only the fields named (photos yes, reviews no)', [placesCalls.length, placesCalls.every(x => x.key === 'places-test-key'), /places\.rating/.test(placesCalls[0].mask), /\breviews\b/.test(placesCalls[0].mask), /places\.photos/.test(placesCalls[0].mask)], [5, true, true, false, true]);
   c('…no listing at the church\'s address: found false (said carefully on the page)', by('ANBIHL').google, { read: true, found: false });
   c('the month\'s paid lookups are counted', [S.peek('m/2026-10/places').n, S.peek('m/2026-10/search').n], [5, 5]);
   c('no key, no API value in the findings', JSON.stringify(F).includes('places-test-key') || JSON.stringify(F).includes('brave-test-key'), false);

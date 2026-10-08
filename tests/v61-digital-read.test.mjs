@@ -53,6 +53,7 @@ try {
   c('…the banner on his page is not his photo', [w.pastorPhoto, (w.pastors || [])[0] && (w.pastors || [])[0].photo || null], [null, null]);
   w = await RD.website('named.test', 13, 'Dee Fox');
   c('a photo whose words name her (alt): "named"', w.pastorPhoto, 'named');
-  c('digital-read-1.1', RD.FN, 'digital-read-1.1');
+  // v10.62.0: digital-read-1.2 (the whole site read; the pastor, 8 Oct 2026: "survey the whole website and see its deficiencies as well")
+  c('digital-read-1.2 (was 1.1)', RD.FN, 'digital-read-1.2');
 } catch (e) { console.log('  FAIL  crashed: ' + String(e && e.stack || e).split('\n').slice(0, 4).join(' | ')); fail++; }
 console.log(`\n${pass} passed, ${fail} failed`); process.exit(fail ? 1 : 0);

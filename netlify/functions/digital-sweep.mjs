@@ -1,15 +1,16 @@
-// Terrain · Digital footprint, the monthly refresh.                       digital-sweep-1.0
+// Terrain · Digital footprint, the monthly refresh.                       digital-sweep-1.1
 //
 // v10.60.0. On the 1st of each month (Netlify's scheduler, the `config` export below; no URL reaches it in production) every conference
 // a registered pastor opened in the last 60 days is read again (o/<slug>), when its findings are older than 25 days and no reading
 // is running; Google's data is kept no longer than that month (its rule). Conferences nobody opened in 180 days are forgotten (their
 // findings and readings deleted); the month counters older than two months go. Scheduled functions get 30 s: it stops at 20.
+// v10.62.0 (digital-sweep-1.1): a forgotten conference's texts for the in-depth review (x/<slug>/<org>, digital-read-1.2) go with its findings.
 
 import { CONF_ORG, slugOf, theStore } from './digital-read.mjs';
 import { start, allowed } from './digital.mjs';
 
 export const config = { schedule: '0 7 1 * *' };
-export const FN = 'digital-sweep-1.0';
+export const FN = 'digital-sweep-1.1';
 const BUDGET_MS = 20000;
 const now = () => (globalThis.__terrainDigitalNow ? globalThis.__terrainDigitalNow() : Date.now());
 
@@ -25,6 +26,7 @@ export async function sweep(base) {
     if (o.at < day(180)) {
       for (const p of ['c/' + slug, 'j/' + slug, 't/' + slug, key]) await store.delete(p);
       const r = await store.list({ prefix: `r/${slug}/` }); for (const x of r.blobs) await store.delete(x.key);
+      const x = await store.list({ prefix: `x/${slug}/` }); for (const y of x.blobs) await store.delete(y.key);   // v10.62.0: the review's texts
       out.forgotten++; continue;
     }
     if (o.at < day(60) || !allowed(conf)) continue;
