@@ -119,8 +119,10 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   c('On Sabbath: the whole church; The conference: conference leaders', [inSec('sabbath'),inSec('conference')], [['congregation'],['conference']]);
   c('one short line where the name alone could mislead', ['business','congregation','conference'].map(id=>P.txt(`[data-cs-group="${id}"] em`)), ['the whole church votes','a 6–8 minute presentation','an evangelism proposal']);
   c('tiles: a coloured dot and the name, nothing else to read', P.qa('#cs-s1 .cs-atile').every(b=>b.querySelector('.cs-adot')&&b.querySelector('b')&&!b.querySelector('svg')), true);
-  c('equal tiles, 4 a row on a computer and 2 on a phone (the rules; widths are checked in Chrome)',
-    [/\.cs-agrid\{display:grid;grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(html),/@media\(max-width:760px\)\{[^@]*\.cs-agrid\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(html),/min-height:var\(--atile-h,54px\)/.test(html)], [true,true,true]);
+  // v10.61.0 (the audit, the pastor: "symmetry … everything in its right place"): five tiles go five across, never four and one alone;
+  // the phone's rule names the five-tile grid too
+  c('equal tiles, 4 a row on a computer (5 when there are five) and 2 on a phone (the rules; widths are checked in Chrome)',
+    [/\.cs-agrid\{display:grid;grid-template-columns:repeat\(4,minmax\(0,1fr\)\)/.test(html),/\.cs-agrid:has\(> :nth-child\(5\):last-child\)\{grid-template-columns:repeat\(5,minmax\(0,1fr\)\)\}/.test(html),/@media\(max-width:760px\)\{[^@]*\.cs-agrid,\.cs-agrid:has\(> :nth-child\(5\):last-child\)\{grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(html),/min-height:var\(--atile-h,54px\)/.test(html)], [true,true,true,true]);
 
   console.log('\n-- step 2: one list for the Prayer ministry --');
   P.q('[data-cs-group="prayer"]').click();
@@ -274,7 +276,8 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   console.log('\n-- Spanish --');
   { const S=page({lang:'es'}); await sleep(1300); addGroups(S); setup(S);
     c('titles in Spanish', S.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['¿Para quién es?','¿Qué va a proponer?','Sus diapositivas']);
-    c('sections in Spanish', S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Liderazgo','Departamentos de ministerio','En sábado','La asociación']);   // v10.47.0
+  // v10.61.0 (the audit): "Departamentos", one line on a phone (was "Departamentos de ministerio")
+    c('sections in Spanish', S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent), ['Liderazgo','Departamentos','En sábado','La asociación']);   // v10.47.0
     c('sub-headings and notes in Spanish', [S.qa('#cs-s1 .cs-asub').map(h=>h.textContent).slice(0,4),S.txt('[data-cs-group="business"] em')],
       [['Adoración y enseñanza','Niños y jóvenes','Alcance y evangelismo','Cuidado y familia'],'vota toda la iglesia']);
     S.q('[data-cs-group="prayer"]').click(); await until(()=>S.qa('#cs-lib .lib-sec').length===2); await sleep(60);

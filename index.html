@@ -306,7 +306,7 @@ button,input{font-family:inherit;font-size:1rem;color:inherit}
 .stat::before{content:'';position:absolute;inset:0 auto 0 0;width:3px;background:var(--hue);opacity:.9}
 .statval{font-family:var(--disp);font-weight:800;font-size:1.65rem;line-height:1;letter-spacing:-.02em;color:var(--ink)}
 .statlab{font-size:.86rem;font-weight:600;color:var(--ink2);margin-top:4px}
-.stat{display:flex;align-items:center;gap:13px}
+.stat{display:flex;align-items:flex-start;gap:13px}   /* v10.61.0: top, so a row's numbers line up */
 .stat .ring{flex:none;width:62px;height:62px}
 .stat .ring .trk{fill:none;stroke:var(--panel2);stroke-width:8}
 .stat .ring .arc{fill:none;stroke:var(--hue);stroke-width:8;stroke-linecap:round}
@@ -616,7 +616,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .tool .td{font-size:.85rem;color:var(--ink2);line-height:1.6}
 .toolbar{display:flex;align-items:center;gap:10px;margin:18px 0 2px}
 .toolbar[hidden]{display:none}
-.backtools{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;
+.backtools{background:var(--panel);border:1px solid var(--line2);border-radius:999px;padding:9px 14px;white-space:nowrap;
   font-size:.82rem;font-weight:600;color:var(--ink2);cursor:pointer;min-height:42px}
 .backtools:hover{border-color:var(--acc);color:var(--acc)}
 .toolname{font-family:var(--disp);font-size:1.05rem;font-weight:600;color:var(--ink)}
@@ -630,6 +630,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .homeline .hl-pin svg{width:16px;height:16px;display:block}
 .homeline .hl-t b{color:var(--ink);font-weight:700}
 .homeline .hl-dot{color:var(--ink3)}
+.homeline .hl-end,.gff-pair{white-space:nowrap}   /* v10.61.0 (the audit): a separator never ends a line alone */
 .homeline .hl-ch{display:inline;background:none;border:0;padding:12px 6px;margin:-12px -6px;font:inherit;font-weight:700;color:var(--acc);cursor:pointer;
   text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
 .homeline .hl-ch:hover{color:var(--ink)}
@@ -691,6 +692,9 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
   box-shadow:0 0 0 5px color-mix(in srgb,var(--bg) 78%,transparent)}
 .sn-arrow.l{left:0}
 .sn-arrow.r{right:0}
+.sn-arrow::before{content:"";position:absolute;top:-6px;bottom:-6px;width:30px;pointer-events:none}
+.sn-arrow.r::before{right:100%;background:linear-gradient(to right,transparent,var(--bg))}
+.sn-arrow.l::before{left:100%;background:linear-gradient(to left,transparent,var(--bg))}   /* v10.61.0: chips fade out under the arrows */
 .sn-arrow[hidden]{display:none}
 .sn-arrow:hover,.sn-arrow:focus-visible{border-color:var(--acc);outline:none}
 .secnav.sn-drag{cursor:grabbing}
@@ -732,7 +736,9 @@ section.blk,#brief,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
   .brief{padding:19px 16px 16px}
   .field input{padding:15px 14px;font-size:1.02rem}
   .brief .acts{gap:7px}
-  .brief .acts button{flex:1 1 auto;min-width:calc(50% - 4px)}
+  .brief .acts{display:grid;grid-template-columns:1fr 1fr}
+  .brief .acts button{min-width:0}
+  .brief .acts button:last-child:nth-child(odd){grid-column:1/-1}   /* v10.61.0: two by two, the odd last the whole row */
 }
 
 /* ---- ask ---- */
@@ -2886,7 +2892,7 @@ button.td-opt:disabled{cursor:default}
 .cs-acat[aria-expanded="true"]{border-color:var(--g);background:color-mix(in srgb,var(--g) 16%,var(--panel2));box-shadow:inset 0 -3px 0 var(--g)}
 @media (hover:hover){.cs-acat:hover{border-color:var(--g)}}
 .cs-acat:focus-visible{outline:2px solid var(--g);outline-offset:2px}
-@media (max-width:560px){.cs-acats{grid-auto-flow:row;grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.cs-acats{grid-auto-flow:row;grid-template-columns:1fr 1fr}.cs-acat{font-size:.82rem;padding:10px 6px}}
 .cs-aud[hidden]{display:none}
 .cs-aud>h4{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 .cs-auds{display:grid;gap:22px}
@@ -2894,6 +2900,7 @@ button.td-opt:disabled{cursor:default}
 .cs-aud h4{font-family:var(--disp);font-size:.92rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--g);margin:0;line-height:1.3}
 .cs-asub{font-size:.8rem;font-weight:650;color:var(--ink2);margin:4px 0 -2px;line-height:1.3}
 .cs-agrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.cs-agrid:has(> :nth-child(5):last-child){grid-template-columns:repeat(5,minmax(0,1fr))}   /* v10.61.0: five tiles, five across (never four and one alone) */
 .cs-atile{display:flex;align-items:center;gap:10px;min-height:var(--atile-h,54px);padding:8px 12px;text-align:left;font:inherit;color:var(--ink);cursor:pointer;min-width:0;height:100%;
   background:var(--panel2);border:1px solid var(--line2);border-radius:12px;transition:border-color .18s,background-color .18s}
 @media (hover:hover){ .cs-atile:hover{border-color:var(--g)} }
@@ -3057,6 +3064,7 @@ section.blk.u-churchsec.u-todo{animation:ucSpin 9s linear infinite,ucGlow 6s eas
 /* v10.51.0 — "present live should probably be a different color and highlighted and glowing … that's the important button":
    Present live alone on the first row, gold and glowing; Share and the handout under it; the sample a quiet link */
 .cs-acts.cs-acts2{grid-template-columns:repeat(2,minmax(0,1fr));max-width:760px;margin-left:auto;margin-right:auto}
+@media (max-width:560px){ .cs-acts.cs-acts2{grid-template-columns:minmax(0,1fr)} }   /* v10.61.0: "Download PDF handout" one line on a phone */
 .cs-acts.cs-acts2 .btn.cs-live{grid-column:1/-1;min-height:58px;font-size:1.04rem;background:var(--m-hardship);color:var(--panel);
   box-shadow:0 0 0 1px color-mix(in srgb,var(--m-hardship) 55%,transparent),0 0 30px -2px color-mix(in srgb,var(--m-hardship) 58%,transparent)}
 .cs-acts.cs-acts2 .btn.cs-live:hover,.cs-acts.cs-acts2 .btn.cs-live:focus-visible{box-shadow:0 0 0 2px color-mix(in srgb,var(--m-hardship) 72%,transparent),0 0 40px 0 color-mix(in srgb,var(--m-hardship) 66%,transparent)}
@@ -3167,7 +3175,7 @@ section.blk.u-churchsec.u-todo{animation:ucSpin 9s linear infinite,ucGlow 6s eas
   .cs-sht{flex-basis:calc(100% - 56px)}
   .cs-num{width:36px;height:36px;font-size:1.05rem}
   .cs-aud{padding-left:11px}
-  .cs-agrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .cs-agrid,.cs-agrid:has(> :nth-child(5):last-child){grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
   .cs-atile{padding:8px 10px;gap:8px}
   .cs-atile b{font-size:.84rem}
   .cs-find{grid-template-columns:minmax(0,1fr)}
@@ -3686,7 +3694,8 @@ button.cd-rowb:hover{background:var(--panel2)}
 .df th,.df td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
 .df thead th{font-family:var(--disp);font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);background:var(--panel2)}
 .df-side tbody th{white-space:nowrap;font-family:var(--disp);color:var(--ink2)}
-.df-all{min-width:900px}
+.df-all{min-width:1180px}   /* v10.61.0: wide enough that every pill fits on one line (the table slides in its own box) */
+.df-all .df-st{white-space:nowrap}
 .df-all tbody th{min-width:200px;font-weight:600;color:var(--ink)}
 .df-row{cursor:pointer}
 .df-row:hover td,.df-row:hover th,.df-row:focus-visible td,.df-row:focus-visible th{background:var(--acc-dim)}
@@ -3817,7 +3826,8 @@ button.cd-rowb:hover{background:var(--panel2)}
 .gfd-card .gfd-acts .btn{min-height:44px}
 
 /* ---- the way in for members: the footer, and the first page ---- */
-.joinlink{color:inherit;text-decoration:underline;text-underline-offset:3px}
+.joinlink{color:inherit;text-decoration:underline;text-underline-offset:3px;white-space:nowrap}
+.madeby{white-space:nowrap}   /* v10.61.0: "Join a presentation" never breaks */
 .gjoin{margin:12px 0 0;font-size:.95rem}
 .gjoin a{color:var(--acc);font-weight:700;text-decoration:underline;text-underline-offset:3px}
 @media print{ .casepres,.watchp{display:none!important} }
@@ -4068,6 +4078,7 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-chip button{background:none;border:0;color:var(--ink3);width:28px;height:28px;border-radius:50%;font-size:1rem;line-height:1;cursor:pointer}
 .cmp-chip button:hover{background:var(--line);color:var(--ink)}
 .cmp-seg{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 10px}
+@media (max-width:560px){ #cmp-ya .cmp-seg{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:2px} #cmp-ya .cmp-seg::-webkit-scrollbar{display:none} #cmp-ya .cmp-seg button{flex:none} }   /* v10.61.0: one row that slides, never one left alone */
 .cmp-seg button{background:var(--panel2);border:1px solid var(--line2);color:var(--ink2);border-radius:999px;padding:6px 12px;font-size:.8rem;cursor:pointer;min-height:36px}
 .cmp-seg button[aria-pressed=true]{background:color-mix(in srgb,var(--acc) 16%,transparent);border-color:var(--acc);color:var(--acc)}
 .cmp-addrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
@@ -4321,9 +4332,11 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-prep{background:color-mix(in srgb,var(--m-hardship) 7%,transparent);border:1px solid color-mix(in srgb,var(--m-hardship) 30%,transparent);border-radius:12px;padding:10px 12px 8px;margin:12px 0 12px}
 .cmp-prep h4{font-family:var(--disp);font-size:.92rem;font-weight:700;color:var(--m-hardship);margin:0 0 4px}
 .cmp-prep .note{margin:2px 0 4px}
-.cmp-prep .pi{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:baseline;font-size:.86rem;padding:5px 0;border-top:1px solid color-mix(in srgb,var(--m-hardship) 16%,transparent);overflow-wrap:anywhere}
+.cmp-prep .pi{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:3px 10px;align-items:baseline;font-size:.86rem;padding:6px 0;border-top:1px solid color-mix(in srgb,var(--m-hardship) 16%,transparent);overflow-wrap:anywhere}
+.cmp-prep .pi>.cmp-hint{grid-column:1/-1;justify-self:start}   /* v10.61.0: every item alike: the hint, then the title and its date */
 .cmp-prep .pi:first-of-type{border-top:0}
 .cmp-prep .pi a{color:var(--ink)} .cmp-prep .pi .d{color:var(--ink3);font-size:.78rem}
+.cmp .it .d,.cmp-prep .pi .d{white-space:nowrap}   /* v10.61.0: a date never breaks ("2–4 Oct") */
 .cmp-hint{display:inline-block;font-size:.72rem;font-weight:700;border-radius:999px;padding:1px 8px;white-space:nowrap;border:1px solid;line-height:1.5}
 .cmp-hint.now{background:var(--m-hardship);color:#1A1203;border-color:var(--m-hardship)}
 .cmp-hint.by{color:var(--m-hardship);border-color:color-mix(in srgb,var(--m-hardship) 55%,transparent)}
@@ -4475,7 +4488,7 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .u-needs .ns-lh .lift.l1 b:nth-child(-n+1),.u-needs .ns-lh .lift.l2 b:nth-child(-n+2),.u-needs .ns-lh .lift.l3 b{background:var(--lc)}
 .ns-lcol .ns-gl{margin:2px 0 6px}
 /* v10.50.0 — "for community resources it should have two rows instead of one … two columns that way it's not so long" */
-@media (min-width:760px){#helpslot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:start}#helpslot>.suggroup{margin:0}}
+@media (min-width:760px){#helpslot{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:stretch}#helpslot>.suggroup{margin:0}}
 .u-needs .ns-ltab .lift b{background:var(--line2)}
 .u-needs .ns-ltab .lift.l1 b:nth-child(-n+1),.u-needs .ns-ltab .lift.l2 b:nth-child(-n+2),.u-needs .ns-ltab .lift.l3 b{background:var(--lc)}
 .ns-bulb{width:10px;height:10px;border-radius:50%;background:var(--acc);box-shadow:0 0 10px var(--acc);flex:none}
@@ -4762,8 +4775,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       <label class="pf"><span class="lb">Nights of meetings</span><input id="pl-nights" type="number" inputmode="numeric" min="1" placeholder="20"></label>
       <label class="pf"><span class="lb">Nights per week</span><input id="pl-perweek" type="number" inputmode="numeric" min="1" max="7" value="4"></label>
       <label class="pf"><span class="lb">Seats in the hall</span><input id="pl-seats" type="number" inputmode="numeric" min="1" placeholder="150"></label>
-      <label class="pf"><span class="lb">Names on interest file</span><input id="pl-file" type="number" inputmode="numeric" min="0" placeholder="0 if none yet"></label>
-      <label class="pf"><span class="lb">Budget, if known ($)</span><input id="pl-budget" type="number" inputmode="numeric" min="0" placeholder="optional"></label>
+      <label class="pf"><span class="lb">Interest names</span><input id="pl-file" type="number" inputmode="numeric" min="0" placeholder="0 if none yet"></label>
+      <label class="pf"><span class="lb">Budget ($)</span><input id="pl-budget" type="number" inputmode="numeric" min="0" placeholder="optional"></label>
       <div class="pf pf-wide">
         <span class="lb">Kind of series</span>
         <div class="seg" id="pl-kind" role="radiogroup" aria-label="Kind of series">
@@ -8520,17 +8533,17 @@ const HELP_CATS=[
      every deck's "Here in {town}" slide can name who already serves nearby. Never schools,
      playgrounds or childcare: places the church comes alongside, not places it goes into.
      helpCatOf() decides which category a mapped place belongs to. */
-  {id:'seniors', icon:'🧓', name:'Senior centres & services',
+  {id:'seniors', icon:'🧓', name:'Senior centers & services',
    osm:'nwr["social_facility:for"~"^(senior|elderly)"](around:R,LAT,LON);nwr["community_centre"="senior_centre"](around:R,LAT,LON);',
    links:c=>[
-     {t:'Eldercare Locator', u:'https://eldercare.acl.gov/', d:`The federal directory of help for older people: find the Area Agency on Aging for ${esc(c.county)}, which knows every meal, ride and senior centre.`},
+     {t:'Eldercare Locator', u:'https://eldercare.acl.gov/', d:`The federal directory of help for older people: find the Area Agency on Aging for ${esc(c.county)}, which knows every meal, ride and senior center.`},
      {t:'211 — help for older adults', u:'https://www.211.org/', d:'Dial 211 or search online for meals, transport and care at home in your area.'},
-     {t:`Search: senior centre · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('senior center '+c.short+' '+c.state), d:'Town and county senior centers publish a calendar. Ask what they wish someone would help with.'}
+     {t:`Search: senior center · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('senior center '+c.short+' '+c.state), d:'Town and county senior centers publish a calendar. Ask what they wish someone would help with.'}
    ]},
-  {id:'health', icon:'🩺', name:'Clinics & health centres',
+  {id:'health', icon:'🩺', name:'Clinics & health centers',
    osm:'nwr["amenity"="clinic"](around:R,LAT,LON);nwr["healthcare"="centre"](around:R,LAT,LON);',
    links:c=>[
-     {t:'Find a Health Center (HRSA)', u:'https://findahealthcenter.hrsa.gov/', d:'Federally funded community health centres near any address. Fees follow a sliding scale, so uninsured neighbours can be seen.'},
+     {t:'Find a Health Center (HRSA)', u:'https://findahealthcenter.hrsa.gov/', d:'Federally funded community health centers near any address. Fees follow a sliding scale, so uninsured neighbors can be seen.'},
      {t:'211 — health care', u:'https://www.211.org/', d:'Dial 211 for free and low-cost clinics, screenings and help with insurance.'},
      {t:`Search: free clinic · ${esc(c.county)}`, u:'https://www.google.com/search?q='+encodeURIComponent('free clinic '+c.county+' '+c.state), d:'Free and charitable clinics are often run by volunteers, and many welcome a church that offers people or a room.'}
    ]},
@@ -8549,20 +8562,20 @@ const HELP_CATS=[
      {t:`Search: English classes (ESL) · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('ESL English classes for adults '+c.short+' '+c.state), d:'Libraries, adult schools and literacy councils run most free English classes. Ask whether they need volunteer tutors.'},
      {t:`Search: immigrant services · ${esc(c.county)}`, u:'https://www.google.com/search?q='+encodeURIComponent('immigrant refugee services '+c.county+' '+c.state), d:'Resettlement agencies and immigrant community groups: partners for a welcome, and the people to ask what is needed.'}
    ]},
-  {id:'youth', icon:'🧒', name:'Youth & children’s organisations',
+  {id:'youth', icon:'🧒', name:'Youth & children’s organizations',
    osm:'nwr["community_centre"="youth_centre"](around:R,LAT,LON);nwr["club"~"^(scout|youth|youth_movement)$"](around:R,LAT,LON);nwr["leisure"="sports_centre"]["name"~"YMCA|YWCA",i](around:R,LAT,LON);',
-   note:'Work with children only through the organisation’s own screening and alongside its staff, and follow your church’s child-protection policy as well.',
+   note:'Work with children only through the organization’s own screening and alongside its staff, and follow your church’s child-protection policy as well.',
    links:c=>[
-     {t:'Boys & Girls Clubs — find a club', u:'https://www.bgca.org/get-involved/find-a-club/', d:'After-school clubs near any ZIP code, many in the neighbourhoods with the greatest need.'},
+     {t:'Boys & Girls Clubs — find a club', u:'https://www.bgca.org/get-involved/find-a-club/', d:'After-school clubs near any ZIP code, many in the neighborhoods with the greatest need.'},
      {t:'Big Brothers Big Sisters', u:'https://www.bbbs.org/', d:'One-to-one mentoring for children. Local agencies screen and train every volunteer.'},
-     {t:`Search: YMCA and youth programmes · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('YMCA youth programs '+c.short+' '+c.state), d:'YMCAs, 4-H and scouting run most youth programmes outside school.'}
+     {t:`Search: YMCA and youth programs · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('YMCA youth programs '+c.short+' '+c.state), d:'YMCAs, 4-H and scouting run most youth programs outside school.'}
    ]},
-  {id:'library', icon:'📚', name:'Libraries & community centres',
+  {id:'library', icon:'📚', name:'Libraries & community centers',
    osm:'nwr["amenity"="library"](around:R,LAT,LON);nwr["amenity"="community_centre"](around:R,LAT,LON);',
    links:c=>[
      {t:'Library Search & Compare (IMLS)', u:'https://www.imls.gov/search-compare', d:'The federal list of public libraries: find the branches near the church and their websites.'},
      {t:`Search: public library events · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('public library events '+c.short+' '+c.state), d:'Story times, English conversation, job help and meeting rooms: libraries often welcome volunteers and share space.'},
-     {t:`Search: community centre · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('community center '+c.short+' '+c.state), d:'Town and community centers host programmes for every age, and many let rooms at low cost.'}
+     {t:`Search: community center · ${esc(c.short)}`, u:'https://www.google.com/search?q='+encodeURIComponent('community center '+c.short+' '+c.state), d:'Town and community centers host programs for every age, and many let rooms at low cost.'}
    ]},
   {id:'civic', icon:'🏛️', name:'Town, city & county offices',
    osm:'nwr["amenity"="townhall"](around:R,LAT,LON);nwr["office"="government"](around:R,LAT,LON);',
@@ -8572,7 +8585,7 @@ const HELP_CATS=[
      {t:`Search: ${esc(c.county)} county government`, u:'https://www.google.com/search?q='+encodeURIComponent(c.county+' '+c.state+' county government offices human services'), d:'County human services, emergency management and ageing offices — the partners for anything larger than one town.'},
      {t:`Search: ${esc(c.short)} special event permit`, u:'https://www.google.com/search?q='+encodeURIComponent(c.short+' '+c.state+' special event permit application'), d:'Most municipalities publish the form and the notice period. Read the lead time before you set a date.'}
    ]},
-  {id:'honour', icon:'🎖️', name:'Honouring community leaders',
+  {id:'honour', icon:'🎖️', name:'Honoring community leaders',
    osm:'nwr["amenity"="fire_station"](around:R,LAT,LON);nwr["amenity"="police"](around:R,LAT,LON);',
    note:'Not a directory — a playbook. Thanking the people who serve the town costs almost nothing, asks nothing of them, and is remembered for years. <b>How it runs:</b> pick one Sabbath. Write to the fire chief, police chief and mayor or town manager six weeks out, by letter, naming what you are honouring them for. Have plaques made — a local trophy shop, roughly $30 each. Invite their families. Give ten minutes in the service, not forty. Photograph it and send the picture to them and to the local paper. Serve lunch afterwards. Do not preach at them, do not ask them for anything, and do not mention it again. Then do it every year, and vary who you honour: ambulance crews, road crews, teachers, librarians, nurses.',
    links:c=>[
@@ -9428,19 +9441,19 @@ const ES={
   "Step 4 of 4 — Your people’s skills":"Paso 4 de 4: Las habilidades de su gente",
   "Skills, languages and what your congregation is already carrying.":"Habilidades, idiomas y lo que su congregación ya lleva sobre sus hombros.",
   "Leave blank to use confirmed members from Spiritual Gifts. A number here is the total for that skill, including those members. A checked box from the previous version needs a confirmed count.":"Déjelo en blanco para usar los miembros confirmados en Dones espirituales. Un número aquí es el total para esa habilidad, incluidos esos miembros. Una casilla marcada en la versión anterior necesita una cifra confirmada.",
-  "Can lead a group or give a study":"Pueden dirigir un grupo o dar un estudio",
-  "Nurses or health professionals":"Enfermeras o profesionales de la salud",
+  "Can lead a group or give a study":"Dirigen un grupo o un estudio",
+  "Nurses or health professionals":"Enfermeras o personal de salud",
   "Teachers or tutors":"Maestros o tutores",
   "Good with children":"Buenos con los niños",
   "Can cook for a crowd":"Pueden cocinar para muchos",
   "Musicians":"Músicos",
   "Bilingual members":"Miembros bilingües",
   "Practical or trade skills":"Habilidades prácticas o de oficio",
-  "A van, or willing drivers":"Una camioneta, o conductores dispuestos",
+  "A van, or willing drivers":"Camioneta o conductores",
   "Free in the daytime":"Libres durante el día",
-  "An organiser — forms, lists, a computer":"Alguien que organice: formularios, listas, una computadora",
+  "An organiser — forms, lists, a computer":"Organizador: formularios, listas",
   "Sound, video or projection":"Sonido, video o proyección",
-  "Trained support-group facilitator":"Facilitador capacitado de grupos de apoyo",
+  "Trained support-group facilitator":"Facilitador de grupos de apoyo",
   "Languages available, with proficiency":"Idiomas disponibles, con su nivel",
   "Count professional or trained roles only after confirming the person’s relevant experience. A spiritual gift alone does not confirm a practical qualification.":"Cuente los roles profesionales o capacitados solo después de confirmar la experiencia de la persona. Un don espiritual por sí solo no confirma una preparación práctica.",
   "Review members in Spiritual Gifts":"Revisar los miembros en Dones espirituales",
@@ -10724,6 +10737,9 @@ function openTool(id){
   // screen it loads the church remembered on this device (homeEnsure), or asks, once,
   // for the neighbourhood to be mapped in the Community Survey (caseDrawLanding).
   // Its "Change church" is on the church's own line (homeLine), not in the tool bar.
+  // v10.61.0 (found by the audit): a tool reached straight from Spiritual Gifts or the Planner (a button there, not the main menu) left
+  // that tool's page open above it; the survey and Make the Case close them, as the standalone tools close each other
+  ['planner','gifts'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
   const ch=$('changech'); if(ch) ch.hidden=!DATA||id==='case';
   const ask=document.querySelector('.ask'); if(ask) ask.style.display=(DATA||id==='case')?'none':'';
   if(DATA){ $('report').classList.add('show'); applyTool(); if(id==='case') caseMount(true); if(id==='survey') gfChurchHome($('u-churchslot')); }   // v10.55.0
@@ -10908,7 +10924,7 @@ function homeLine(){
   el.hidden=false;
   el.innerHTML=`<span class="hl-pin" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" focusable="false"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.4"/></svg></span>`
     +`<span class="hl-t">${name?`<b>${esc(name)}</b><span class="hl-dot"> · </span>`:''}<span class="hl-a">${esc(addr)}</span></span>`
-    +`<span class="hl-dot" aria-hidden="true"> · </span><button type="button" class="hl-ch" data-home-act="change">${esc(homeU('change'))}</button>`;
+    +`<span class="hl-end"><span class="hl-dot" aria-hidden="true"> · </span><button type="button" class="hl-ch" data-home-act="change">${esc(homeU('change'))}</button></span>`;   // v10.61.0: the dot travels with its link
 }
 /* The loading line or the failure (one sentence, Try again, Change church) for any tool. */
 function homeStatusHTML(opt){
@@ -14889,8 +14905,8 @@ function render(){
     const fb=(shiftSrc.foreign??0)-(shiftSrc.past.foreign??0);
     const raceName=k=>L(k,({'White':'Blanca','Hispanic / Latino':'Hispana / latina','Black':'Negra','Asian':'Asiática','Two or more':'Dos o más','Other':'Otra'}[k])||k);
     shift=`<div class="card wide"><div class="l">${L('Ten-year shift','Cambio en diez años')}, ${ACS_PAST-4}–${ACS_PAST} → ${ACS_YEAR-4}–${ACS_YEAR} <span class="sub">· ${S==='tract'?L('shown for the town (tract lines were redrawn in 2020)','se muestra el municipio (los límites de los sectores censales se redibujaron en 2020)'):L('this area','esta zona')}</span></div>
-      <div class="shift">${ch.length?ch.map(([k,d])=>`<span class="chip ${d>0?'up':''}">${esc(raceName(k))} <b>${d>0?'+':'−'}${Math.abs(d).toFixed(0)} pts</b></span>`).join(''):`<span class="chip">${L('Little change in ethnic makeup','Poco cambio en la composición étnica')}</span>`}
-      ${Math.abs(fb)>=1?`<span class="chip ${fb>0?'up':''}">${L('Born abroad','Nacidos fuera')} <b>${fb>0?'+':'−'}${Math.abs(fb).toFixed(0)} pts</b></span>`:''}
+      <div class="shift">${ch.length?ch.map(([k,d])=>`<span class="chip ${d>0?'up':''}">${esc(raceName(k))} <b>${d>0?'+':'−'}${Math.abs(d).toFixed(0)} ${Math.abs(d).toFixed(0)==='1'?'pt':'pts'}</b></span>`).join(''):`<span class="chip">${L('Little change in ethnic makeup','Poco cambio en la composición étnica')}</span>`}
+      ${Math.abs(fb)>=1?`<span class="chip ${fb>0?'up':''}">${L('Born abroad','Nacidos fuera')} <b>${fb>0?'+':'−'}${Math.abs(fb).toFixed(0)} ${Math.abs(fb).toFixed(0)==='1'?'pt':'pts'}</b></span>`:''}
       ${shiftSrc.past.pop&&shiftSrc.pop?`<span class="chip">${L('Population','Población')} <b>${shiftSrc.pop>=shiftSrc.past.pop?'+':'−'}${fmtNum(Math.abs(shiftSrc.pop-shiftSrc.past.pop))}</b></span>`:''}</div></div>`;
   }
   secs.push(`<section class="blk" data-theme="people change language"><h2>People</h2>${verseHTML('people')}<div class="grid">
@@ -21584,12 +21600,12 @@ function gfRenderRoster(h){
   </div>
   ${gfStepsHTML()}
   <section class="gfpart" id="gf-invite" aria-labelledby="gf-invite-h" style="--k:${GF_STEP_K.invite}">
-  <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">1</span>${L('Spiritual Gifts: invite your members','Dones espirituales: invite a sus miembros')}</h3>
+  <h3 class="gfpart-h" id="gf-invite-h"><span class="gfpn">1</span>${L('Invite your members','Invite a sus miembros')}</h3>
   <div class="gfdoors gfdoors1">
     <button class="gfdoor" data-gv="setup" style="--k:var(--m-people)">
       <span class="gfdk">${L('For your members','Para sus miembros')}</span>
       <b>${L('Share it with your members','Compártala con sus miembros')}</b>
-      <span>${L(`Send ${esc(churchNameInSentence())} a link. Each member answers on their own phone, and their gifts — and the ministries that fit — come back to you here.`,`Envíe un enlace a ${esc(churchNameInSentence())}. Cada miembro responde en su propio teléfono, y sus dones (y los ministerios que les corresponden) le llegan a usted aquí.`)}</span>
+      <span>${L(`Send your members a link. Each member answers on their own phone, and their gifts — and the ministries that fit — come back to you here.`,`Envíe un enlace a sus miembros. Cada miembro responde en su propio teléfono, y sus dones (y los ministerios que les corresponden) le llegan a usted aquí.`)}</span>
       <span class="gfgo">${L('Set up the link','Preparar el enlace')} <i></i></span>
     </button>
   </div>
@@ -24130,7 +24146,7 @@ function ringsHTML(me,cty,town,scope){
       ? `${cty?`El anillo es ${scope==='cousub'?'este municipio':'este vecindario'}; la marca sobre él es el condado.`:'Estos anillos son el condado entero, así que aquí no hay con qué compararlos \u2014 cambie a Vecindario o Municipio para ver dónde destaca esta zona.'} El color indica el tipo de cifra: ámbar, dinero y necesidad; azul, vivienda; morado, niños y familias; rosa, personas; menta, idioma. ${!cty?'':lit.size?(lit.size===1?'El anillo que brilla es la cifra':'Los '+lit.size+' anillos que brillan son las cifras')+' más por encima del condado \u2014 empiece la conversación por ahí.':'Nada aquí se aleja mucho del promedio del condado.'}`
       : `${cty
       ? `The ring is ${scope==='cousub'?'this town':'this neighborhood'}; the notch on it is the county.`
-      : 'These rings are the county as a whole, so there is nothing to compare them with here \u2014 switch to Neighborhood or Town to see where this area stands out.'} Colour is the kind of figure: amber money and hardship, blue housing, purple children and families, pink people, mint language. ${!cty?'':lit.size?'The '+(lit.size===1?'glowing ring is the one figure':lit.size+' glowing rings are the figures')+' furthest above the county \u2014 start the conversation there.':'Nothing here is far from the county average.'}`}</p></div>`:'';
+      : 'These rings are the county as a whole, so there is nothing to compare them with here \u2014 switch to Neighborhood or Town to see where this area stands out.'} Color is the kind of figure: amber money and hardship, blue housing, purple children and families, pink people, mint language. ${!cty?'':lit.size?'The '+(lit.size===1?'glowing ring is the one figure':lit.size+' glowing rings are the figures')+' furthest above the county \u2014 start the conversation there.':'Nothing here is far from the county average.'}`}</p></div>`:'';
 }
 
 function buildReport(M,levels,scope,geo,focusCatSet,focusName){
@@ -35490,7 +35506,7 @@ function caseDefaultTab(G){ return G&&CASE_TAB_OUT.has(G.id)?'out':'in'; }
 const CASE_AUD_SECTIONS=[
   // v10.47.0 — the pastor (5 Oct 2026): "decide … should be leadership … then Ministry departments"
   {id:'decide',hue:'hardship',en:'Leadership',es:'Liderazgo'},
-  {id:'teams',hue:'children',en:'Ministry departments',es:'Departamentos de ministerio'},
+  {id:'teams',hue:'children',en:'Ministry departments',es:'Departamentos'},   // v10.61.0: one line on a phone
   {id:'sabbath',hue:'language',en:'On Sabbath',es:'En sábado'},
   {id:'conference',hue:'housing',en:'The conference',es:'La asociación'}];
 const CASE_AUD_SUBS={worship:{en:'Worship & learning',es:'Adoración y enseñanza'},young:{en:'Children & youth',es:'Niños y jóvenes'},
@@ -42689,7 +42705,7 @@ function caseGiftsBanner(){
   const line=gfFirstLine(R);
   const t=R.state==='unknown'?gfU('bUnknown',{n:fmtNum(R.n)}):(R.den&&R.den.d)?gfU('bSoFar',{frac:line.frac,has:line.has}):gfU('bNobody');
   el.hidden=false;
-  el.innerHTML=`<p><span>${esc(t)}</span> <button type="button" class="gff-l" data-gff-invite>${esc(gfU('invite'))}</button> · <button type="button" class="gff-l" data-gff-sabbath>${esc(gfU('sabbathOpen'))}</button></p>
+  el.innerHTML=`<p><span>${esc(t)}</span> <button type="button" class="gff-l" data-gff-invite>${esc(gfU('invite'))}</button><span class="gff-pair"> · <button type="button" class="gff-l" data-gff-sabbath>${esc(gfU('sabbathOpen'))}</button></span></p>
     <button type="button" class="gff-x" data-gff-hide aria-label="${esc(gfU('hide2w'))}" title="${esc(gfU('hide2w'))}">×</button>`;
   el.querySelector('[data-gff-invite]').onclick=()=>gfOpenLanding();   // v10.56.2: the main page
   el.querySelector('[data-gff-sabbath]').onclick=()=>gfOpenSabbath();
@@ -43010,7 +43026,9 @@ function chStandOut(F){
 }
 /* A row no church has a figure for is left out (few words); a church whose "Your church" is empty says so where others have figures. */
 function chcRowHTML(label,cells,empty){ return empty?'':`<tr><th scope="row">${esc(label)}</th>${cells.map(c=>`<td>${c}</td>`).join('')}</tr>`; }
-function chcBar(v,max,u,text){ if(v==null) return `<span class="chc-v">—</span>`; const w=max>0?Math.max(3,Math.round(v*100/max)):0; return `<span class="chc-v">${esc(text||chFmt(v,u))}</span><span class="chc-bar" aria-hidden="true"><i style="width:${w}%"></i></span>`; }
+/* v10.61.0 (the audit): a missing figure is "—" everywhere; a bar only when there is something to compare it with (two churches or more
+   with the figure: one alone would always fill its bar) */
+function chcBar(v,max,u,text){ if(v==null) return `<span class="chc-v">—</span>`; if(max==null) return `<span class="chc-v">${esc(text||chFmt(v,u))}</span>`; const w=max>0?Math.max(3,Math.round(v*100/max)):0; return `<span class="chc-v">${esc(text||chFmt(v,u))}</span><span class="chc-bar" aria-hidden="true"><i style="width:${w}%"></i></span>`; }
 function chcRender(){
   const host=$('chc'); if(!host) return;
   const L0=chList();
@@ -43023,12 +43041,15 @@ function chcRender(){
   const none=v=>v==null;
   // the neighborhoods (a church never surveyed: its button, on the first row)
   const noSnap=F.some(f=>!f.snap);
-  const hoodRows=Object.keys(CH_FIG).map(k=>{ const [u,lab]=CH_FIG[k]; const vals=F.map(f=>f.snap&&f.snap.figs[k]?f.snap.figs[k][0]:null), max=Math.max(0,...vals.filter(v=>v!=null));
-      return chcRowHTML(chLab(lab),F.map((f,i)=>f.snap?chcBar(vals[i],u==='$'||u==='n'?max:Math.max(max,1),u):(k==='pop'?`<span class="chc-miss">${esc(chT('noSnap'))}</span> <button type="button" class="btn ghost gfsm" data-chc-open="${esc(f.id)}">${esc(chT('openSurvey'))}</button>`:'')),
+  const hoodRows=Object.keys(CH_FIG).map(k=>{ const [u,lab]=CH_FIG[k]; const vals=F.map(f=>f.snap&&f.snap.figs[k]?f.snap.figs[k][0]:null), max=Math.max(0,...vals.filter(v=>v!=null)), two=vals.filter(v=>v!=null).length>1;
+      return chcRowHTML(chLab(lab),F.map((f,i)=>f.snap?chcBar(vals[i],two?(u==='$'||u==='n'?max:Math.max(max,1)):null,u):(k==='pop'?`<span class="chc-miss">${esc(chT('noSnap'))}</span> <button type="button" class="btn ghost gfsm" data-chc-open="${esc(f.id)}">${esc(chT('openSurvey'))}</button>`:`<span class="chc-v">—</span>`)),
         vals.every(none)&&!(k==='pop'&&noSnap)); }).join('')
     +chcRowHTML(chT('topNeeds'),F.map(f=>f.snap&&f.snap.needs.length?`<ol class="chc-needs">${f.snap.needs.slice(0,3).map(t=>`<li>${esc(t)}</li>`).join('')}</ol>`:'—'),F.every(f=>!(f.snap&&f.snap.needs.length)));
-  const num=(k,lab)=>{ const vals=F.map(f=>f[k]), max=Math.max(0,...vals.filter(v=>v!=null));
-    return chcRowHTML(chT(lab),F.map((f,i)=>f.ready||vals[i]!=null?chcBar(vals[i],max,'n'):`<span class="chc-miss">${esc(chT('notYet'))}</span>`),vals.every(none)); };
+  // a church not filled in says so once (its first row), then "—"
+  const said=new Set();
+  const num=(k,lab)=>{ const vals=F.map(f=>f[k]), max=Math.max(0,...vals.filter(v=>v!=null)), two=vals.filter(v=>v!=null).length>1;
+    if(vals.every(none)) return '';   // a row no church has is left out (and says nothing for anyone)
+    return chcRowHTML(chT(lab),F.map((f,i)=>f.ready||vals[i]!=null?chcBar(vals[i],two?max:null,'n'):said.has(f.id)?`<span class="chc-v">—</span>`:(said.add(f.id),`<span class="chc-miss">${esc(chT('notYet'))}</span>`)),vals.every(none)); };
   let churchRows=[['members','membership'],['attending','members'],['adults','adults'],['volunteers','volunteers'],['leaders','leaders'],['hours','hours'],['rooms','rooms']].map(([lab,k])=>num(k,lab)).join('')
     +chcRowHTML(chT('skills'),F.map(f=>f.skills.length?esc(f.skills.join(', ')):'—'),F.every(f=>!f.skills.length))
     +chcRowHTML(chT('free'),F.map(f=>f.slots.length?esc(f.slots.map(x=>typeof uSlotName==='function'?uSlotName(x):x).join(', ')):'—'),F.every(f=>!f.slots.length));
@@ -43320,7 +43341,7 @@ function dfJudge(c,X,today,own,myName){
   if(!yt||!yt.read) A.youtube={s:'work',head:live?L('Live page, no channel found','Página en vivo, sin canal'):L('No video found','No se encontró video'),lines:[live?L(`The website has a live-stream page (${dfHost(live)}), but no YouTube channel was found: it may stream on Facebook.`,`El sitio tiene una página de transmisión (${dfHost(live)}), pero no se encontró canal de YouTube: quizá transmite por Facebook.`):L('We found no YouTube channel or live stream.','No encontramos canal de YouTube ni transmisión.')]};
   else { const Lv=yt.latest, ago=Lv?dfDays(Lv.d,today):null, k=yt.kinds||{}, s=ago==null?'work':ago<=8?'ok':ago<=60?'work':'help';
     const kinds=[k.sermon&&dfPl(k.sermon,'sermon','sermons','sermón','sermones'),k.series&&L(`${dfNf(k.series)} from an evangelistic series`,`${dfNf(k.series)} de una serie evangelística`),k.worship&&dfPl(k.worship,'worship service','worship services','culto','cultos'),k.event&&dfPl(k.event,'event','events','evento','eventos')].filter(Boolean);
-    A.youtube={s,head:ago==null?L('No videos','Sin videos'):ago<=60?L(`Last video ${ago} day${ago===1?'':'s'} ago`,`Último video hace ${ago} día${ago===1?'':'s'}`):L(`Idle since ${dfMd(Lv.d)}`,`Inactivo desde ${dfMd(Lv.d)}`),
+    A.youtube={s,head:ago==null?L('No videos','Sin videos'):ago<=60?L(`Last video ${ago} day${ago===1?'':'s'} ago`,`Último video hace ${ago} día${ago===1?'':'s'}`):L(`Idle since ${dfMy(Lv.d)}`,`Inactivo desde ${dfMy(Lv.d)}`),
       lines:[Lv?L(`Last video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`,`Último video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`):L('No videos in its feed.','Sin videos.'),
         L(`${dfPl(yt.last30,'video','videos','video','videos')} in the last 30 days, about ${dfPl(yt.avgViews,'view','views','vista','vistas')} each${c.members?` (members: ${dfNf(c.members)})`:''}.`,`${dfPl(yt.last30,'video','videos','video','videos')} en los últimos 30 días, unas ${dfPl(yt.avgViews,'vista','vistas','vista','vistas')} cada uno${c.members?` (miembros: ${dfNf(c.members)})`:''}.`),
         ...(kinds.length?[L(`The last ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`,`Los últimos ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`)]:[])],url:yt.url}; }
@@ -43496,11 +43517,12 @@ function dfPaint(){
       <tr class="df-side-chart"><th scope="row">${esc(dfT('chart'))}</th>${mine.map(r=>`<td>${dfRadarFig(r.J,typ,conf,{small:true})}</td>`).join('')}</tr>
       ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${esc(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
   const P=n=>mine.length>=2?n:n-1;
-  const groups=[[L('We could not find a working website','No pudimos encontrar un sitio web que funcione'),others.filter(r=>r.J.areas.website.s==='help'),r=>r.J.areas.website.lines.find(l=>/does have|Sí tiene|does not open|no abre/.test(l))||r.J.areas.website.lines[1]||''],
-    [L('Not found on Google Maps, or marked closed','No aparece en Google Maps, o figura cerrada'),others.filter(r=>r.J.areas.google.s==='help'),r=>r.J.areas.google.lines[0]],
-    [L('The site and the listing name different pastors','El sitio y la ficha nombran pastores distintos'),others.filter(r=>r.J.areas.pastor.s==='help'),r=>r.J.areas.pastor.lines.slice(0,2).join(' ')],
+  const groups=[[L('No working website found','Sin sitio web que funcione'),others.filter(r=>r.J.areas.website.s==='help'),r=>r.J.areas.website.lines.find(l=>/does have|Sí tiene|does not open|no abre/.test(l))||r.J.areas.website.lines[1]||''],
+    [L('Not on Google Maps, or closed','No está en Google Maps, o cerrada'),others.filter(r=>r.J.areas.google.s==='help'),r=>r.J.areas.google.lines[0]],
+    [L('Different pastors named','Pastores distintos'),others.filter(r=>r.J.areas.pastor.s==='help'),r=>r.J.areas.pastor.lines.slice(0,2).join(' ')],
     [L('Two websites online','Dos sitios web en línea'),others.filter(r=>r.J.areas.website.two),r=>r.J.areas.website.lines.find(l=>/second|segundo|Another|otra/.test(l))||'']].filter(g=>g[1].length);
-  const needs=groups.length?`<div class="df-needs" style="--n:${groups.length===3?3:2}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,10).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a><span class="df-faint"> · ${esc(r.c.town||'')}</span><div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>10?`<p class="df-faint">${esc(L(`and ${list.length-10} more below`,`y ${list.length-10} más abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
+    // v10.61.0 (the audit): five a box, so the boxes stay alike in height; the rest are in Every church, below
+const needs=groups.length?`<div class="df-needs" style="--n:${groups.length===3?3:2}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,5).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a><span class="df-faint"> · ${esc(r.c.town||'')}</span><div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>5?`<p class="df-faint">${esc(L(`and ${list.length-5} more, in “Every church” below`,`y ${list.length-5} más, en “Cada iglesia” abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
   const F0=[['all','fAll'],['help','fHelp'],['site','fSite'],['pastor','fPastor'],['google','fGoogle']];
   const table=`<div class="df-filters" role="group">${F0.map(([k,l])=>`<button type="button" class="df-f${DF.f===k?' on':''}" data-df-f="${k}" aria-pressed="${DF.f===k}">${esc(dfT(l))} <span>${n(k)}</span></button>`).join('')}<input id="df-q" type="search" value="${esc(DF.q)}" placeholder="${esc(dfT('find'))}" aria-label="${esc(dfT('find'))}"></div>
     <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
@@ -43762,7 +43784,7 @@ const CMP_UI={
   how:{en:'How to ask',es:'Cómo solicitarla'}, cond:{en:'Conditions',es:'Condiciones'},
   resNone:{en:'Nothing is listed here yet for your conference. Your conference office can tell you what it offers.',es:'Todavía no hay nada aquí para su asociación. La oficina de su asociación puede decirle lo que ofrece.'},
   resEs:{en:'Names and descriptions are in English, as published.',es:'Los nombres y las descripciones están en inglés, como se publicaron.'},   // shown on the Spanish page only
-  more:{en:'Show all {n}',es:'Mostrar los {n}'},
+  more:{en:'Show all {n}',es:'Mostrar los {n}'}, moreN:{en:'Show {n} more',es:'Mostrar {n} más'},
   resFoot:{en:'Checked {d}. Amounts and deadlines change: confirm them on the linked page before you apply.',es:'Revisado el {d}. Los montos y las fechas cambian: confírmelos en la página enlazada antes de solicitar.'},
   tMin:{en:'Ministries that come to your church',es:'Ministerios que visitan su iglesia'},
   nMin:{en:'Recognized ministries that travel to churches: school choirs and bands, speakers, the life-size sanctuary, health and family programs.',es:'Ministerios reconocidos que visitan iglesias: coros y bandas escolares, oradores, el santuario en tamaño real, programas de salud y de familia.'},
@@ -44091,11 +44113,12 @@ function cmpSingle(id,valueOf,ref,refLabel,unit,extra){
   let mx=ref||0; rows.forEach(s=>{ const v=valueOf(CMP.conf[s]); if(v!=null) mx=Math.max(mx,v); });
   const step=mx>30?10:mx>8?2:1, max=cmpNiceMax(mx,step), ticks=[]; for(let t=0;t<=max+1e-9;t+=step*(max/step>6?2:1)) ticks.push(Math.round(t*10)/10);
   let s=`<svg viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(unit)}">`+cmpAxis(LW,RX,top,top+rows.length*RH,ticks,max,t=>String(t));
+  // v10.61.0 (the audit): the typical line first, so the bars and their numbers sit over it and it never cuts through a number
+  if(ref!=null){ const rx=LW+(RX-LW)*ref/max; s+=`<line x1="${rx}" x2="${rx}" y1="${top-6}" y2="${top+rows.length*RH}" stroke="${CMP_C.ref}" stroke-width="1"/><text x="${rx}" y="${top-9}" fill="${CMP_C.ref}" font-size="11" text-anchor="middle">${esc(refLabel)}</text>`; }
   rows.forEach((slug,i)=>{ const p=CMP.conf[slug], v=valueOf(p), y=top+i*RH+(RH-BH)/2;
     s+=`<text x="${LW-8}" y="${y+BH/2+4}" fill="${i===0?CMP_C.mine:CMP_C.ink2}" font-size="12.5" text-anchor="end">${esc(cmpRowLabel(p,i,W))}</text>`;
     if(v==null) return; const w=Math.max(2,(RX-LW)*v/max), t=cmpTipId([String(v)+' '+unit,p.name].concat(extra?extra(p):[]));
-    s+=`<rect class="cmp-mark" tabindex="0" data-tip="${t}" x="${LW}" y="${y}" width="${w}" height="${BH}" rx="3" fill="${i===0?CMP_C.mine:CMP_C.them}" aria-label="${esc(p.name+': '+v+' '+unit)}"/><text x="${LW+w+5}" y="${y+BH/2+4}" fill="${CMP_C.ink}" font-size="11.5">${esc(v)}</text>`; });
-  if(ref!=null){ const rx=LW+(RX-LW)*ref/max; s+=`<line x1="${rx}" x2="${rx}" y1="${top-6}" y2="${top+rows.length*RH}" stroke="${CMP_C.ref}" stroke-width="1"/><text x="${rx}" y="${top-9}" fill="${CMP_C.ref}" font-size="11" text-anchor="middle">${esc(refLabel)}</text>`; }
+    s+=`<rect class="cmp-mark" tabindex="0" data-tip="${t}" x="${LW}" y="${y}" width="${w}" height="${BH}" rx="3" fill="${i===0?CMP_C.mine:CMP_C.them}" aria-label="${esc(p.name+': '+v+' '+unit)}"/><text x="${LW+w+5}" y="${y+BH/2+4}" fill="${CMP_C.ink}" style="paint-order:stroke;stroke:var(--panel);stroke-width:4px;stroke-linejoin:round" font-size="11.5">${esc(v)}</text>`; });
   const el=$(id); if(!el) return; el.innerHTML=s+'</svg>'; cmpBindTips(el);
 }
 const CMP_RAMP0=[17,24,33], CMP_RAMP1=[94,233,181];
@@ -44168,7 +44191,7 @@ function cmpCharts(){
     (p,pt)=>p.categories[pt.id].share,{total:true,max:ym,ticks:[0,ym/2,ym].map(Math.round),aria:cU('t8'),count:(p,pt)=>p.categories[pt.id].n});
   cmpSingle('cmp-ch-e1k',p=>p.perMembers.eventsPer1000MembersPerYear,I.baseline.eventsPer1000,cU('typicalT',{v:I.baseline.eventsPer1000}),cU('u9a'),
     p=>[cU('perYear',{n:p.perMembers.ministryEventsPerYear}),cU('membersN',{m:cmpFmt(p.official.members)})]);
-  cmpSingle('cmp-ch-join',p=>p.official.joinedPer1000_3yr,I.baseline.joined,cU('medianV',{v:I.baseline.joined}),cU('u9b'),
+  cmpSingle('cmp-ch-join',p=>p.official.joinedPer1000_3yr,I.baseline.joined,cU('typicalT',{v:I.baseline.joined}),cU('u9b'),
     p=>[cU('bap',{y:I.stats.year,b:cmpFmt(p.official.baptisms2024),p:cmpFmt(p.official.professions2024)})].concat(p.official.flags.length?[cU('audit',{y:p.official.flags.join(', ')})]:[]));
   cmpMonths();
 }
@@ -44214,7 +44237,7 @@ function cmpCellHTML(list,todayM){
   const main=list.filter(x=>!cmpHas(x,'m')), minor=list.filter(x=>cmpHas(x,'m'));
   let h=main.slice(0,4).map(x=>cmpItemHTML(x,todayM)).join(''); const rest=main.slice(4);
   if(rest.length||minor.length){
-    const lab=[rest.length?cU('more',{n:rest.length}):'',minor.length?cU(minor.length===1?'special1':'specialN',{n:minor.length}):''].filter(Boolean).join(' · ');
+    const lab=[rest.length?cU('moreN',{n:rest.length}):'',minor.length?cU(minor.length===1?'special1':'specialN',{n:minor.length}):''].filter(Boolean).join(' · ');
     h+=`<details class="more"><summary>${esc(lab)}</summary>${rest.concat(minor).map(x=>cmpItemHTML(x,todayM)).join('')}</details>`;
   }
   return h;
@@ -44255,7 +44278,7 @@ function cmpAhead(){
   const prepLine=x=>{
     if(x.d) return `<div class="pi">${cmpHintHTML({k:x.d.k,d:x.d.s,p:x.d.p,from:x.d.t,unc:cmpHas(x.d,'u')},todayM)}${cmpLink(x.d.u,cmpShortT(cmpDlTitle(x.d.t,p)),x.d.t+' · '+cU('source'))}${cmpHas(x.d,'u')?`<span class="d">${esc(cU('tg_u'))}</span>`:''}</div>`;
     const it=x.it; return `<div class="pi">${cmpHintHTML(x.h,todayM)}${cmpLink(it.u,cmpShortT(it.t),it.t+' · '+cU('source'))}<span class="d">${esc(it.p==='m'?cmpMY(it.s.slice(0,7)):it.p==='s'?cmpSeason(it.s)+' '+it.s.slice(0,4):cmpDMY(it.s))}</span></div>`; };
-  h+=`<div class="cmp-prep" id="cmp-prep"><h4>${esc(cU('prep'))}</h4>`+(prep.length?prep.slice(0,5).map(prepLine).join('')+(prep.length>5?`<details class="more"><summary>${esc(cU('more',{n:prep.length-5}))}</summary>${prep.slice(5).map(prepLine).join('')}</details>`:''):`<p class="note">${esc(cU('prepNone'))}</p>`)+'</div>';
+  h+=`<div class="cmp-prep" id="cmp-prep"><h4>${esc(cU('prep'))}</h4>`+(prep.length?prep.slice(0,5).map(prepLine).join('')+(prep.length>5?`<details class="more"><summary>${esc(cU('moreN',{n:prep.length-5}))}</summary>${prep.slice(5).map(prepLine).join('')}</details>`:''):`<p class="note">${esc(cU('prepNone'))}</p>`)+'</div>';
   // the timeline: a row a month, five lanes
   const laneL=L=>L.id==='conf'&&!mineView?p.name:L.id==='union'&&!mineView?p.union:cU('l_'+L.id);
   h+=`<div class="cmp-legend">${CMP_LANES.map(L=>`<span><b style="background:${L.color}"></b>${esc(laneL(L))}</span>`).join('')}</div>`;
@@ -44530,6 +44553,27 @@ function cmpClose(){ const host=$('cmp'); CMP.gen++; cmpHideTip(); if(host){ hos
 Object.assign(CASE_STEP_UI,{cmpDoor:{en:'Ideas from other conferences →',es:'Ideas de otras asociaciones →'}});
 function caseCmpDoorHTML(G){ return G&&G.type==='conference'?`<p class="cs-cmpdoor"><button type="button" class="btn ghost gfsm" data-cs-cmp>${esc(caseStepT('cmpDoor'))}</button></p>`:''; }
 function caseCmpDoorWire(h){ const b=h&&h.querySelector('[data-cs-cmp]'); if(b) b.onclick=()=>openTool('compare'); }
+
+/* ==== v10.61.0 — no card alone on a row ====
+   The pastor (8 Oct 2026): "symmetry throughout the whole app … everything in its right place". A grid of cards never leaves one card
+   alone on its last row: that card takes the whole row (the pattern the ministries and the resources already use). Measured from the
+   grid's own rows, so it holds at every width and with a card opened full width; run after each draw and when the window changes. */
+const TS_NOLONE='.pform,.cs-agrid,.cmp-cards,.cmp-learng,.cmp-cols,.cmp-mgroups,.cmp-tiles,.df-areas,.df-needs,.gfdoors,.ns-lcols';
+function tsNoLone(){
+  try{ document.querySelectorAll(TS_NOLONE).forEach(g=>{
+    const kids=[...g.children].filter(k=>k.getClientRects().length);
+    kids.forEach(k=>{ if(k.dataset.tsLone){ k.style.gridColumn=''; delete k.dataset.tsLone; } });
+    if(kids.length<2||!/grid/.test(getComputedStyle(g).display)) return;
+    const cols=getComputedStyle(g).gridTemplateColumns.split(' ').filter(Boolean).length; if(cols<2) return;
+    const last=kids[kids.length-1], r=last.getBoundingClientRect();
+    const alone=kids.filter(k=>Math.abs(k.getBoundingClientRect().top-r.top)<4).length===1;
+    if(alone&&r.width<g.clientWidth*0.7){ last.style.gridColumn='1 / -1'; last.dataset.tsLone='1'; } }); }catch(e){}
+}
+let TS_NOLONE_T=null;
+function tsNoLoneSoon(){ if(TS_NOLONE_T) return; TS_NOLONE_T=requestAnimationFrame(()=>{ TS_NOLONE_T=null; tsNoLone(); }); }
+if(typeof window!=='undefined'&&typeof MutationObserver==='function'&&typeof requestAnimationFrame==='function'){
+  try{ new MutationObserver(ms=>{ if(ms.some(m=>m.type==='childList')) tsNoLoneSoon(); }).observe(document.documentElement,{childList:true,subtree:true}); window.addEventListener('resize',tsNoLoneSoon); }catch(e){}
+}
 
 /* ==== v10.58.0 — every drop-down, drawn by the app ====
    The pastor (7 Oct 2026), with a picture of the conference list open: "if you can go through all the drop downs and make the drop-down,

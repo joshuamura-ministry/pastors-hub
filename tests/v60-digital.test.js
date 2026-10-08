@@ -122,8 +122,9 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
     P.qa('#chc-df .df-h').map(h=>h.textContent.replace(/^\d/,'')), ['Your churches','Side by side','Who needs help most','Every church in the Pennsylvania Conference','How to fix it','The report for your communication team','What this can and cannot see']);
   c('his two churches first (by his registration\'s name), each with six areas', [P.qa('#chc-df .df-own h3').map(h=>h.textContent),P.qa('#chc-df .df-own:first-of-type .df-area').length], [['Brookfield','Sampleton'],6]);
   c('every church in the list, his first, marked Yours', [P.qa('#chc-df tr.df-row').length,P.qa('#chc-df tr.df-row.mine').length,P.txt('#chc-df tr.df-row .df-you')], [16,2,'Yours']);
+  // v10.61.0 (the audit, the pastor: "compact the wording because when it's two lines …"): the four headings, one line each
   c('who needs help most: the church with no website found (never the refused or blocked ones), Google, the pastor', [P.qa('#chc-df .df-needs h4').map(h=>h.textContent.replace(/\s*\d+$/,'')), P.qa('#chc-df .df-needs section:first-child li a').map(a=>a.textContent)],
-    [['We could not find a working website','Not found on Google Maps, or marked closed','The site and the listing name different pastors','Two websites online'],['Lonely']]);
+    [['No working website found','Not on Google Maps, or closed','Different pastors named','Two websites online'],['Lonely']]);
   c('the "take me there" buttons: Google Maps, the directory\'s own correction page', [P.qa('#chc-df .df-own:nth-of-type(2) .df-go a').map(a=>[a.textContent.replace(/ ↗$/,''),a.href]).filter(x=>/ChurchFinder/.test(x[0]))], [[['Correct it on ChurchFinder','https://www.churchfinder.com/churches/pa/x']]]);
   c('no "AI" anywhere in it', /\bAI\b|\bIA\b|artificial intelligence/.test(T0), false);
 

@@ -104,7 +104,8 @@ async function twoChurches(P){
   console.log('\n-- a church with no snapshot --');
   P.E(`(()=>{ const s=uStore(); s.churches['ch-c']={id:'ch-c',name:'Pottstown SDA',address:'1 High St, Pottstown, PA 19464',capacity:{},members:[],linked:[],drafts:[],selected:[],overrides:{},share:{}}; uPersist(); chcRender(); })()`); await sleep(20);
   c('three columns; Pottstown: "Open its survey once…" and a button', [P.qa('#chc section[aria-labelledby="chc-hood"] thead th b').length,/Open its survey once to include its neighborhood\./.test(P.txt('#chc section[aria-labelledby="chc-hood"]')),!!P.q('#chc [data-chc-open="ch-c"]')], [3,true,true]);
-  c('…its church figures say "Not filled in yet"', row('church','Volunteers')[2], 'Not filled in yet');
+  // v10.61.0 (the audit, "symmetry … everything in its right place"): a church not filled in says so once, on its first row, then "—"
+  c('…its church figures say "Not filled in yet" once (its first row), then "—"', [(()=>{ const tr=P.q('#chc section[aria-labelledby="chc-church"] tbody tr'); const td=tr&&tr.querySelectorAll('td')[2]; return td?td.textContent.replace(/\s+/g,' ').trim():null; })(),row('church','Volunteers')[2]], ['Not filled in yet','—']);
   P.q('#chc [data-chc-open="ch-c"]').click(); await sleep(40);
   c('…the button opens that church\'s survey', [P.E('uStore().active'),P.E('TOOL'),!!P.q('#chc')&&P.q('#chc').hidden], ['ch-c','survey',true]);
 

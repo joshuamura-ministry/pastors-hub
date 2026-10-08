@@ -231,6 +231,31 @@ name current yeah it may show my name there, but is it showing my picture?"*
   `v78/shots61df.mjs`, served by `v78/serve61.mjs`): computer 1366, phone 390 EN and ES. Bucks County: named on the staff page, no photo
   found, no dates on the pages read. Tests: `v61-digital-read` (new, 17) and `v61-digital-depth` (new, 21), failing first on v10.60.1
   (`v78/logs/ff-v61-*.log`); digital-function updated (digital-read-1.1). Full suite: 164 suites · 10,921 passed · 0 failed.
+- **The whole-app audit** (same release; the pastor: *"can you do a full audit? Make sure everything is solid and symmetrical and everything is
+  in its right place"*). Every screen measured in Chrome at 1366, 820 and 390, EN + ES, on the made-up average church (`v78/audit.mjs` +
+  `audit-measure.js`: the page wider than the screen, anything off the edge, boxes in a row of different heights, a box alone on a row,
+  fields not level, button words that wrap (a Range's line boxes), text cut off, page errors), then every screen read by eye
+  (`v78/tour.mjs`, four reviewers). **A bug:** a tool reached straight from Spiritual Gifts or the Planner (a button there, not the main
+  menu) left that page open above it; the survey and Make the Case now close them (`openTool`). **Symmetry:** `tsNoLone` (a grid's
+  lone last card takes the row, measured at every width: `TS_NOLONE`), five Leadership tiles five across (`.cs-agrid:has(…)`), the
+  survey's figure cards top-aligned, Community resources' cards one height, the Brief's buttons two by two on a phone, the slides'
+  buttons one a row on a phone, the tool bar's and the footer's words never wrap, chips fade under the strip's arrows, the Planner's
+  lone Budget the whole row; Digital footprint's table wide enough for one-line pills, "Who needs help most" five a box with one-line
+  headings ("No working website found", "Not on Google Maps, or closed", "Different pastors named"); Learn from other conferences'
+  dates never break, "Prepare now" items laid out alike, the typical line under the bars (each number with a halo) and "Typical" in both
+  charts, "Show 1 more" (never "Show all 1"), the year-ahead chooser one sliding row on a phone. **Words:** Gifts step 1 "Invite your
+  members" / "Send your members a link." (never an address), the Planner's "Interest names" / "Budget ($)", shorter Spanish skills,
+  "Departamentos", Community resources in American spelling (OpenStreetMap's tags kept as it spells them), "+1 pt", "Idle since July
+  2026"; Compare your churches: a missing figure "—", "Not filled in yet" once a church, a bar only with something to compare.
+  Tests: `v61-audit` (new, 20; failing first: `v78/logs/ff-v61-audit.log`); updated with comments: case-steps, case-screens,
+  v47-clean, home-church ("Departamentos"), v57-churches (said once), v60-digital (the headings), v40-accuracy (the spelling).
+  **Found, not changed (his to decide):** the Evangelism Planner is English only in Spanish; the phone header (the church chip and
+  "name · conference" both cut short); each tool's name twice (tool bar and heading); a few figures with two names in the survey
+  ("Two or more" / "2+ races", "Born abroad" / "Born outside the U.S."); the toolbar's "Change church" beside the header's chip.
+  Also: a separator never ends a line alone ("· Change church", "· Sabbath slides" travel with their links). Full suite: 165 suites ·
+  10,942 passed · 0 failed (the full run 10,940, then two checks updated and rerun: v47-clean's step 1 heading; v42-core's agreed timing,
+  stale by the calendar: its start is two weeks from today, and on 8 Oct 2026 its six Thursdays reach Thanksgiving, whose Note the app
+  rightly adds).
 - **Wording** (same release; the pastor: *"reword your church against the community … against … doesn't sound so good"*): Spiritual Gifts' grid
   "Your congregation against your neighborhood" is **"Your people for your neighborhood"** / "Su gente para su vecindario".
 
