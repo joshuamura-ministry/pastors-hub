@@ -149,8 +149,10 @@ await sec('embedded videos', async () => {
   c('videosIn: an iframe, an escaped-JSON embed, youtu.be, watch?v=, a nocookie embed, Vimeo; never a playlist\'s "videoseries"; each once',
     RD.videosIn(SITES['https://www.whole.test/sermons'] + SITES['https://www.whole.test/']).map(v => v.on + ':' + v.id),
     ['youtube:vidBBBBBBBB', 'youtube:vidCCCCCCCC', 'youtube:vidDDDDDDDD', 'vimeo:123456789', 'youtube:vidFFFFFFFF', 'youtube:vidGGGGGGGG', 'youtube:vidAAAAAAAA']);
+  // integration (v10.62.0): `kind` is the provider; `on` is the page the video sits on (the page judges a video on the home, about, pastor or
+  // staff pages: DF_MAIN), as the design's `on` meant
   c('the site keeps six, the home page\'s first; each with its title and channel from oEmbed, its date and live stream from the watch page',
-    W.videos.map(v => [v.id, v.on, v.title, v.by, v.date, v.live]),
+    W.videos.map(v => [v.id, v.kind, v.title, v.by, v.date, v.live]),
     [['vidAAAAAAAA', 'youtube', 'Worship Service || Pastor Sample Previous', 'Wholeton SDA Church', '2023-05-06', false],
      ['vidBBBBBBBB', 'youtube', 'Unity in Diversity || Pastor Joshua Mura', 'Wholeton SDA Church', '2026-09-26', true],
      ['vidCCCCCCCC', 'youtube', 'Prophecy Night 3 with Elder Sample Guest', 'Other Channel', '2026-09-12', false],
@@ -159,6 +161,8 @@ await sec('embedded videos', async () => {
      ['vidFFFFFFFF', 'youtube', null, null, null, false]]);
   c('a person\'s name in a title or description: Pastor X, Elder X, "with X" (the name reader\'s own rules), never a service word', W.videos.map(v => v.names), [['Sample Previous'], ['Joshua Mura'], ['Sample Guest'], [], [], []]);
   c('the latest sermon on the site: the newest embedded video\'s date', W.latestVideo, '2026-10-03');
+  c('each video says the page it sits on (the home page\'s first, then the sermons page\'s)', W.videos.map(v => v.on), ['/', '/sermons', '/sermons', '/sermons', '/sermons', '/sermons']);
+  c('what to expect on a first visit (parking, children, how long, what to wear) is read as its own field', [typeof W.expect, W.expect], ['boolean', /what to expect|parking|nursery|dress code|how long (is|does|will)/i.test(Object.values(SITES).filter(x => typeof x === 'string').join(' '))]);
   c('per page: the home page one video, the sermons page six', [W.pages.find(p => p.path === '/').videos, W.pages.find(p => p.path === '/sermons').videos], [1, 6]);
   c('oEmbed and the watch page are fetched as TerrainBot (never a key); a video oEmbed cannot name gets no watch page: at most 12 fetches a church',
     [fetched.filter(x => /oembed/.test(x.u)).length, fetched.filter(x => /youtube\.com\/watch\?v=/.test(x.u)).length, fetched.filter(x => /oembed|watch\?v=/.test(x.u)).every(x => /TerrainBot/.test(x.ua || ''))], [5, 4, true]);

@@ -70,7 +70,9 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   a=J(P,'ANBZ05');
   c('a site whose robots.txt asks programs not to read it: "Not read", said so', [a.website.s,/asks programs not to read it/.test(a.website.lines[0])], ['unread',true]);
   a=J(P,'ANBZ01');
-  c('the template site\'s service times (read inside its scripts by the server) count: Current', [a.website.s,a.website.head], ['ok','Current']);
+  // v10.62.0 (the bar raised; the pastor: "when it says like current, it doesn't really mean that it's a good website"): the service times still
+  // count (a passed mark), but "Current" now needs nine in ten of the marks met; this reading's one miss (no live-stream link) is said
+  c('the template site\'s service times (read inside its scripts by the server) count: a met mark; the one miss said, so "Needs work"', [a.website.s,a.website.head,a.website.lines.includes('No live-stream link on the site.'),a.website.lines.some(l=>/^Good: .*shows service times/.test(l))], ['work','Opens, with things to fix',true,true]);
 
   console.log('\n-- the pastor\'s name --');
   a=J(P,'ANBZ01',true);
@@ -95,17 +97,19 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
 
   console.log('\n-- Facebook & Instagram: light, never read --');
   a=J(P,'ANBZ03');
-  c('found by the search, not linked from the site: its followers from the result\'s own line', [a.social.s,a.social.lines[0],a.social.lines[1]], ['work','Facebook page: facebook.com/p/Willowby-SDA, 306 followers.','The church’s website does not link to it: we found it by searching.']);
+  // v10.62.0: Facebook is never read, so it is never "Current" nor "Needs work": "Not read" (grey, hollow on the chart), its lines as before
+  c('found by the search, not linked from the site: its followers from the result\'s own line; Not read', [a.social.s,a.social.lines[0],a.social.lines[1]], ['unread','Facebook page: facebook.com/p/Willowby-SDA, 306 followers.','The church’s website does not link to it: we found it by searching.']);
   a=J(P,'ANBZ06');
   c('none after the search: Needs help now', [a.social.s,a.social.head], ['help','No Facebook page found']);
   const noSearch=P.J(`(()=>{ const F=${JSON.stringify({...FIND,search:false})}; F.churches.forEach(c=>c.search={read:false}); const c=F.churches.find(x=>x.org==='ANBZ04'); return dfJudge(c,dfContext(F),'2026-10-08',false,'').areas.social; })()`);
-  c('no search set: never "no Facebook page" (none was looked for), a grey "Not linked"', [noSearch.s,noSearch.head], ['none','Not linked from the website']);
+  c('no search set: never "no Facebook page" (none was looked for), a grey "Not linked"', [noSearch.s,noSearch.head], ['unread','Not linked']);   // v10.62.0: the state is "unread", the head "Not linked"
 
   console.log('\n-- second sites and phones --');
-  c('"Lancaster Hispanic II" is not Lancaster Hispanic\'s second site, nor the other way round; York, South Carolina is not York\'s', [J(P,'ANBZ11').website.s,J(P,'ANBZ16').website.s,J(P,'ANBZ12').website.s], ['ok','ok','ok']);
+  // v10.62.0: these sites name no pastor, so they are "Needs work" under the raised bar; the point here is that no second website is claimed
+  c('"Lancaster Hispanic II" is not Lancaster Hispanic\'s second site, nor the other way round; York, South Carolina is not York\'s', [J(P,'ANBZ11').website.head,J(P,'ANBZ16').website.head,J(P,'ANBZ12').website.head].map(h=>/Two websites|Another page/.test(h)), [false,false,false]);
   a=J(P,'ANBZ13');
-  c('a real second site (its title and address carry the church\'s name, a phone of the conference) is said, with the pastor it names', [a.website.head,a.website.lines[1]], ['Two websites','A second website is also online: pottsbysda.org, naming Pastor Evan Bell. Visitors may find either one.']);
-  c('the church\'s own bulletin under its own address is no second website', J(P,'ANBZ14').website.head, 'Current');
+  c('a real second site (its title and address carry the church\'s name, a phone of the conference) is said, with the pastor it names', [a.website.head,a.website.lines[0]], ['Two websites','A second website is also online: pottsbysda.org, naming Pastor Evan Bell. Visitors may find either one.']);   // v10.62.0: first line (the host line is gone; the marks' lines follow)
+  c('the church\'s own bulletin under its own address is no second website', /Two websites|Another page/.test(J(P,'ANBZ14').website.head), false);   // v10.62.0: the head says the marks now (this site names no pastor)
   a=J(P,'ANBZ08');
   c('a number printed on three sites with another area code is the website maker\'s: said so, with the listing\'s', a.website.lines.includes('The only phone on the site is 530-649-2940, a number printed on many church sites, not the church’s own (the official listing has 610-555-0001 or 484-555-0002).'), true);
   c('…a listing with two phones ("or") matches Google\'s first', J(P,'ANBZ08').google.lines.some(l=>/Google shows the phone/.test(l)), false);

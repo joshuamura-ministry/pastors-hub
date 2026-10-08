@@ -212,6 +212,14 @@ const type=(P,sel,v)=>{ const e=P.q(sel); e.value=v; e.dispatchEvent(new P.w.Eve
     P.E('openTool("planner")'); await sleep(200);
     scan(P,'Evangelism Planner');
 
+    // v10.62.0 (the bar raised): Digital footprint with the marks' words, "Website up, but not working", How to fix it's new boxes and an
+    // in-depth review (a made-up one; the server stubbed), on an unlocked device; then a church opened in the list, and the report
+    { const {dfFetch62}=require('./v62-digital-helpers.js'); const D=page({lang,pass:'x'}); await sleep(1300); dfFetch62(D,{review:'kept'});
+      D.E('openTool("churches")'); await until(()=>D.qa('#chc-df .df-own .df-deep .df-deep-done').length===2,8000);
+      c('Digital footprint is up, with the in-depth review of his two churches', D.qa('#chc-df .df-own .df-deep .df-deep-done').length, 2);
+      D.E(`document.querySelector('#chc-df tr.df-row[data-df-row="ANBZ03"]').click()`); await sleep(30);
+      scan(D,'Digital footprint: his churches with the review, a church opened, the report'); }
+
     { const M=page({lang,hash:'#watch'}); await sleep(1300);
       scan(M,'a member\'s #watch page'); }
     { const K=page({lang,hash:'#connect=HK7QM4RTZP'}); await until(()=>K.q('.cn-age'),6000);

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.61.1
+     TERRAIN  v10.62.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.61.1" data-theme="dark">
+<html lang="en" data-version="v10.62.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.61.1">
-<title>Community Map — Terrain v10.61.1</title>
+<meta name="terrain-version" content="v10.62.0">
+<title>Community Map — Terrain v10.62.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3768,6 +3768,35 @@ button.cd-rowb:hover{background:var(--panel2)}
 .df-bar{height:8px;border-radius:4px;background:color-mix(in srgb,var(--dfk) 15%,var(--panel2));overflow:hidden}
 .df-bar i{display:block;height:100%;background:var(--dfk);border-radius:4px}
 .df-limits p{margin:0;font-size:.86rem;color:var(--ink2)}
+/* v10.62.0 — the bar raised: the fixes folded on a card, the In depth block, the review's parts; "Who needs help most" two across with
+   the odd last box the whole row; How to fix it's nine boxes three by three (two by two on a tablet, the ninth the whole row) */
+.df-fixd summary{cursor:pointer;font-family:var(--disp);font-size:.92rem;color:var(--ink)}
+.df-fixd ol{margin:8px 0 0;padding-left:20px;display:grid;gap:6px;font-size:.86rem;color:var(--ink2);line-height:1.45}
+.df-deep{border:1px solid color-mix(in srgb,var(--dfk) 45%,var(--line2));border-radius:12px;padding:12px 14px;background:color-mix(in srgb,var(--dfk) 6%,var(--panel2));display:grid;gap:10px;min-width:0}
+.df-deep-h{font-family:var(--disp);font-size:1rem;color:var(--ink);display:flex;align-items:center;gap:8px}
+.df-deep-h::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--dfk);flex:none}
+.df-deep-lock,.df-deep-fail,.df-deep-work,.df-deep-go{margin:0;font-size:.88rem;color:var(--ink2);display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.df-deep-done{display:grid;gap:12px}
+.df-deep-sec{display:grid;gap:6px;min-width:0}
+.df-deep-sec h5{font-family:var(--disp);font-size:.9rem;margin:0;color:var(--ink)}
+.df-deep-sec p,.df-deep-sec li{margin:0;font-size:.88rem;color:var(--ink2);line-height:1.5;overflow-wrap:anywhere}
+.df-deep-sec ul{margin:0;padding-left:18px;display:grid;gap:4px}
+.df-gap{border-left:3px solid var(--help);padding:2px 0 2px 10px;display:grid;gap:2px}
+.df-gap[data-p="2"]{border-color:var(--work)}.df-gap[data-p="3"]{border-color:var(--ink3)}
+.df-gap b{color:var(--ink);font-size:.92rem}
+.df-gap-why{font-style:italic;color:var(--ink3)}
+.df-gap-who{color:var(--ink3);font-size:.8rem}
+.df-deep-words{display:grid;gap:10px}
+.df-word{display:grid;gap:6px;justify-items:start;min-width:0}
+.df-word pre{margin:0;white-space:pre-wrap;font:inherit;font-size:.86rem;color:var(--ink);background:var(--panel);border:1px dashed var(--line2);border-radius:10px;padding:10px 12px;width:100%;box-sizing:border-box;overflow-wrap:anywhere}
+.df-wfor{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.df-deep-foot{display:flex;flex-wrap:wrap;gap:8px 14px;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--ink3)}
+.df-rep-deep{display:grid;gap:8px}
+.df-rep-deep .df-word{margin-top:4px}
+.df-dwrap{position:sticky;left:0;width:var(--dfvw,auto);max-width:100%;box-sizing:border-box;display:grid;gap:10px}
+.df-needs.n2 section:last-child:nth-child(odd){grid-column:1/-1}
+@media (max-width:900px){.df-hows article:last-child:nth-child(odd){grid-column:1/-1}}
+@media print{[data-df-deepgo],[data-df-deepagain],[data-df-copyw]{display:none}}
 @media print{.df-go,.df-acts,.df-filters,[data-df-again]{display:none}}
 @media print{.chbtn{display:none}.chc-wrap{overflow:visible}}
 .hubabout{max-width:62ch;margin:46px auto 10px;padding:22px 4px 0;border-top:1px solid var(--line2);text-align:center}
@@ -4864,13 +4893,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.61.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.61.1';
+const VERSION = 'v10.62.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -43113,7 +43142,7 @@ function chcOpen(){
    the double check, and said "we could not find". His own churches: by his registration's name (the listing's pastor) or a church of his
    by name; the pastor of record there is his registration. Everything the page writes is English or Spanish (DF_T, L). */
 const DF_FN='/.netlify/functions/digital', DF_POLL_MS=20000;
-const DF={conf:'',data:null,state:'',err:'',busy:false,timer:0,f:'all',q:'',open:{},rep:'',msg:{},tries:0};
+const DF={conf:'',data:null,state:'',err:'',busy:false,timer:0,f:'all',q:'',open:{},rep:'',msg:{},tries:0,review:false,rows:null,my:''};   // v10.62.0: review = the server has the in-depth review on
 const DF_T={
   title:{en:'Digital footprint',es:'Huella digital'},
   lead:{en:'What a visitor finds of each church online: the website, the pastor’s name, Google and Maps, Facebook and Instagram, YouTube and the live stream, and a way in for a neighbor. Your churches first, then every church in the conference.',
@@ -43178,6 +43207,27 @@ const DF_T={
   fixAt:{en:'Correct it on {where}',es:'Corregirlo en {where}'}, openFb:{en:'Open the Facebook page',es:'Abrir la página de Facebook'}, makeFb:{en:'Make a Facebook page',es:'Crear una página de Facebook'},
   studio:{en:'Open YouTube Studio',es:'Abrir YouTube Studio'},
   wordsFor:{en:'The words, ready to paste',es:'El texto, listo para pegar'},
+  // v10.62.0 — the bar raised: the marks' words, "Website up, but not working", the In depth review
+  good:{en:'Good: ',es:'Bien: '}, of:{en:'{met} of {n}',es:'{met} de {n}'}, fixes:{en:'What to fix, heaviest first · {n}',es:'Qué arreglar, lo más grave primero · {n}'},
+  linkedUnread:{en:'Linked, not read',es:'Enlazada, no leída'}, notLinked:{en:'Not linked',es:'Sin enlace'},
+  upNotWorking:{en:'Website up, but not working',es:'Sitio web en línea, pero no funciona'},
+  deepTitle:{en:'In depth',es:'A fondo'},
+  deepLock:{en:'An in-depth review by Terrain is available on an unlocked device.',es:'Una revisión a fondo por Terrain está disponible en un dispositivo desbloqueado.'},
+  deepWork:{en:'Reviewing {church}’s digital front door… a minute or two.',es:'Revisando la puerta digital de {church}… uno o dos minutos.'},
+  deepFail:{en:'The review could not be made just now.',es:'La revisión no se pudo hacer ahora.'},
+  deepLimit:{en:'Three in-depth reviews a day: try again tomorrow.',es:'Tres revisiones a fondo al día: inténtelo mañana.'},
+  deepLimitSite:{en:'Today’s in-depth reviews are all used: try again tomorrow.',es:'Las revisiones a fondo de hoy se agotaron: inténtelo mañana.'},
+  deepAgain:{en:'Review again',es:'Revisar de nuevo'}, deepGo:{en:'Review in depth',es:'Revisar a fondo'}, deepOn:{en:'Reviewed {date}',es:'Revisado el {date}'},
+  dSees:{en:'What a first-time visitor experiences',es:'Lo que vive un visitante la primera vez'}, dStr:{en:'Strengths',es:'Fortalezas'},
+  dP1:{en:'What keeps a neighbor out',es:'Lo que deja fuera al vecino'}, dP2:{en:'Would help',es:'Ayudaría'}, dP3:{en:'Polish',es:'Pulir'},
+  dPics:{en:'The pictures',es:'Las fotos'}, dAppeal:{en:'Does it make an appeal?',es:'¿Hace un llamado?'}, dPastor:{en:'The pastor a visitor meets',es:'El pastor que encuentra un visitante'},
+  dWords:{en:'Words ready to paste',es:'Texto listo para pegar'},
+  ap0:{en:'None',es:'Ninguno'}, ap1:{en:'A hint',es:'Un indicio'}, ap2:{en:'A clear invitation',es:'Una invitación clara'}, ap3:{en:'Appeals throughout',es:'Llamados en todo el sitio'},
+  shYes:{en:'Yes, the pastor of record',es:'Sí, el pastor registrado'}, shNo:{en:'No',es:'No'}, shUnclear:{en:'Unclear',es:'No está claro'},
+  wWelcome:{en:'A welcome for the home page',es:'Una bienvenida para la página principal'}, wVisit:{en:'Plan your visit',es:'Planee su visita'}, wChannel:{en:'The channel’s About',es:'El Acerca de del canal'},
+  wGoogle:{en:'The Google listing’s description',es:'La descripción de la ficha de Google'}, wPrayer:{en:'The prayer request page',es:'La página para pedir oración'},
+  efHour:{en:'about an hour',es:'cerca de una hora'}, efDay:{en:'a day',es:'un día'}, efWeek:{en:'a week',es:'una semana'},
+  copyS:{en:'Copy',es:'Copiar'}, fixW:{en:'Fix: ',es:'Arreglo: '},
 };
 const dfT=(k,o)=>{ const v=DF_T[k]; let s=v?(LANG==='es'?v.es:v.en):k; if(o) for(const x in o) s=s.split('{'+x+'}').join(o[x]); return s; };
 const DF_AREAS=['website','pastor','google','social','youtube','reach'];
@@ -43195,7 +43245,7 @@ const dfMd=d=>{ try{ return new Date(d+'T12:00').toLocaleDateString(LANG==='es'?
    middle (never counted against a church); the conference's typical church a dashed line behind. */
 const DF_RV={ok:3,work:2,help:1,na:1};
 const DF_RSHORT={website:['Website','Sitio web'],pastor:['Pastor','Pastor'],google:['Google','Google'],social:['Facebook','Facebook'],youtube:['YouTube','YouTube'],reach:['Ways in','Puertas']};
-const dfVal=a=>a&&DF_RV[a.s]!=null?DF_RV[a.s]:null;
+const dfVal=a=>a?(a.share!=null?1+2*a.share:DF_RV[a.s]!=null?DF_RV[a.s]:null):null;   // v10.62.0: an area with marks sits by its share (U·(1+2·share)); the rest by state
 function dfTypical(rows){ return DF_AREAS.map(k=>{ const v=rows.map(r=>dfVal(r.J.areas[k])).filter(x=>x!=null).sort((a,b)=>a-b); return v.length?v[Math.floor(v.length/2)]:null; }); }
 function dfRadar(J,typ,o){
   o=o||{}; const A=J.areas, cx=150, cy=124, U=28, R=3*U, n=DF_AREAS.length;
@@ -43264,15 +43314,155 @@ function dfContext(F){
   return {areas,ignore:new Set([...use].filter(([p,n])=>n>=3&&!areas.has(p.slice(0,3))).map(([p])=>p)),shared:new Set([...claims].filter(([,n])=>n>=2).map(([h])=>h)),places:!!F.places,search:!!F.search};
 }
 const dfPagesWord=ps=>[...new Set(ps||[])].map(p=>p==='/'?L('home page','página principal'):L(p.replace(/^\/|\/$/g,'').replace(/-\d+$/,'').replace(/[-_]/g,' ').replace(/\//g,' › ')+' page','página '+p.replace(/^\/|\/$/g,'').replace(/-\d+$/,'').replace(/[-_]/g,' ').replace(/\//g,' › '))).slice(0,3).join(', ');
-/* the judge: one church, six areas */
-function dfJudge(c,X,today,own,myName){
-  const A={}, o=c.otherSite&&c.otherSite.url&&!X.shared.has(dfHost(c.otherSite.url))?dfChurchSite(c.otherSite.url,c,c.otherSite.title,c.otherSite.phones,X.areas):false;
+/* v10.62.0 — the bar raised (DESIGN-DIGITAL-2.md, Terrain-work/v79). The pastor (8 Oct 2026): "when it says like current, it doesn't really
+   mean that it's a good website doesn't mean that it's doing its work as a website. A lot of websites are up, but they're horrible";
+   "It needs to show really the deficiencies and where things can improve"; "I want to set the bar high". Each area is judged against a
+   checklist of marks (dfMarks: k, ok true | false | null = not read and never counted, w 1 | 2 heavy, say = the line a visitor meets,
+   good = the short word for the "Good:" line, fix = the group its fix belongs to). An area is "Current" only when every heavy mark passes
+   and nine in ten of the counted marks pass; "Needs help now" when a fatal mark fails (the site does not open; not on Google Maps or
+   closed; no way in at all; the pastor not named and another named); "Needs work" otherwise. The share met/counted places the dot on the
+   chart and the chip says the count. A reading by an older reader (digital-read-1.0 / 1.1) lacks the new fields: those marks are null. */
+function dfSiteOf(c,X){
+  const o=c.otherSite&&c.otherSite.url&&!X.shared.has(dfHost(c.otherSite.url))?dfChurchSite(c.otherSite.url,c,c.otherSite.title,c.otherSite.phones,X.areas):false;
   const otherOk=o==='yes'?c.otherSite:null, otherMaybe=o==='maybe'?c.otherSite:null, g=c.google||{}, sr=c.search||{};
   const listedOk=c.site&&c.site.opens&&!c.site.blocked, site=listedOk?c.site:otherOk, listedDead=c.site&&!c.site.opens&&!c.site.refused;
   const root=h=>dfHost(h).split('.').slice(-2).join('.'), sameRoot=listedOk&&otherOk&&root(c.site.url)===root(otherOk.url)&&!/adventistchurch\.org$|seventhdayadventist\.church$/.test(root(otherOk.url));
   const other=listedOk&&!sameRoot?otherOk:null, gWeb=g.found&&g.website?g.website:null;
+  const unread=!!(c.site&&c.site.blocked)||!!(c.site&&!c.site.opens&&c.site.refused&&!otherOk);
+  return {site,other,otherOk,otherMaybe,listedOk,listedDead,g,sr,gWeb,unread};
+}
+const dfHas=(o,k)=>!!o&&typeof o==='object'&&Object.prototype.hasOwnProperty.call(o,k)&&o[k]!==undefined;
+const dfQuote=t=>String(t||'').replace(/["“”]/g,'');
+/* the pastor of record and what the site shows of him (his registration on his churches; the official listing elsewhere): the pages that
+   name him where a visitor looks, a photo by the name, others named on those pages, and (v10.62.0) an embedded video on such a page that
+   names someone else ("you see another pastor preaching and not myself it's a previous pastor") */
+function dfPastorRead(c,S,own,myName){
+  const site=S.site, other=S.other, rec=own&&myName?myName:c.pastor, none={rec,site,none:true,onMain:[],namedPages:[],mine:[],others:[],othersMain:[],dirs:[],staff:[],all:[],dirDiffers:false,photoKnown:false,photo:false,noPhoto:false,videos:[]};
+  if(!site||!rec) return none;
+  const staff=String(c.staff||'').split(/\s*·\s*(?:Lay Pastor|Associate Pastor|Pastor|Bible Worker|Youth Pastor)?\s*[,;]?\s*/).map(x=>x.trim()).filter(x=>/\s/.test(x));
+  const all=[...(site.pastors||[]),...((other&&other.pastors)||[]).map(p=>({...p,other:true}))].map(p=>({...p,name:dfCleanName(p.name,c.town+' '+c.name),pages:[...new Set((p.pages||[]).filter(pg=>DF_MAIN.test(pg)))]}))
+    .filter(p=>p.name&&p.pages.length&&dfPersonLike(p.name)).filter((p,i,a)=>a.findIndex(q=>dfSame(q.name,p.name)&&!!q.other===!!p.other)===i);
+  const mine=all.filter(p=>!p.other&&dfSame(p.name,rec)), others=all.filter(p=>!dfSame(p.name,rec)&&!p.former&&!staff.some(x=>dfSame(p.name,x)));
+  const namedPages=dfSame(rec,c.pastor)?(site.pastorNamed||[]):mine.flatMap(p=>p.pages), onMain=[...new Set([...namedPages.filter(p=>DF_MAIN.test(p)),...mine.flatMap(p=>p.pages)])];
+  const othersMain=others.filter(p=>!p.other), dirs=(c.dirPastors||[]).filter(x=>dfPersonLike(x.name)&&!dfSame(x.name,rec));
+  const photoKnown='pastorPhoto' in site, photo=!!(mine.some(p=>p.photo&&DF_MAIN.test(p.photoOn||''))||(dfSame(rec,c.pastor)&&site.pastorPhoto&&DF_MAIN.test(site.pastorPhotoOn||'')));
+  const noPhoto=!!onMain.length&&photoKnown&&!photo;
+  const videos=(Array.isArray(site.videos)?site.videos:[]).filter(v=>v&&DF_MAIN.test(String(v.on||'/'))).map(v=>{ const n=(Array.isArray(v.names)?v.names:[]).map(x=>dfCleanName(String(x||''),c.town+' '+c.name)).filter(x=>x&&dfPersonLike(x)&&!dfSame(x,rec)&&!staff.some(s=>dfSame(x,s)));
+    return n.length?{name:n[0],title:dfQuote(v.title),date:String(v.date||''),on:String(v.on||'/')}:null; }).filter(Boolean);
+  const dirDiffers=!!(own&&c.pastor&&!dfSame(c.pastor,rec));
+  return {rec,site,none:false,staff,all,mine,others,othersMain,namedPages,onMain,dirs,photoKnown,photo,noPhoto,videos,dirDiffers};
+}
+/* the names a channel's titles and descriptions carry: [{name,n}], ['Name'] or {Name:n}; null when the reader did not look */
+function dfYtNames(yt){ const v=yt&&yt.names; if(v==null) return null; if(Array.isArray(v)) return v.map(x=>x&&typeof x==='object'?String(x.name||''):String(x||'')).filter(Boolean); if(typeof v==='object') return Object.keys(v); return null; }
+const DF_WEAK_T=/\b(service|worship|culto)\b/i, DF_WEAK_D=/\d{1,2}[\/.-]\d{1,2}|\b\d{4}\b/;
+const dfWeakTitle=t=>{ t=String(t||''); return DF_WEAK_T.test(t)&&DF_WEAK_D.test(t)&&t.trim().split(/\s+/).length<=7; };
+/* the marks: website (24), ways in (8), YouTube & live stream (10), Google & Maps (8) */
+function dfMarks(c,X,today,own,myName){
+  const S=dfSiteOf(c,X), site=S.site, g=S.g, yt=c.youtube, PR=dfPastorRead(c,S,own,myName), rec=PR.rec;
+  const mk=(k,w,ok,say,good,fix,short)=>({k,w,ok:ok===true?true:ok===false?false:null,say:ok===false?String(say||''):'',good:ok===true?String(good||''):'',fix:ok===false?(fix||null):null,short:ok===false?String(short||''):''});
+  const pw=p=>dfPagesWord([p]), nul=(ks)=>ks.map(([k,w])=>mk(k,w,null));
+  const WK=[['opens',2],['https',2],['mobile',2],['fast',1],['desc',1],['name',1],['words',1],['address',2],['phone',1],['times',2],['named',2],['photo',1],['other',2],['stale',1],['current',2],['events',1],['sermons',1],['latest',1],['giving',1],['form',1],['pics',1],['own',1],['links',1],['live',1]];
+  const RK=[['visitors',2],['expect',1],['bible',2],['bibleForm',1],['prayer',2],['contact',1],['news',1],['map',1]];
+  const YK=[['recent',2],['four',1],['views',2],['titles',1],['desc',1],['live',1],['series',1],['pastor',1],['subs',1],['about',1]];
+  const GK=[['found',2],['open',2],['website',2],['phone',1],['hours',2],['reviews',1],['stars',1],['photos',1]];
+  const M={website:[],reach:[],youtube:[],google:[]};
+  // ---- Website and Ways in
+  if(S.unread){ M.website=nul(WK); M.reach=nul(RK); }
+  else if(!site){ M.website=[mk('opens',2,false,L('The site does not open.','El sitio no abre.'),'', 'website',L('does not open','no abre')),...nul(WK.slice(1))]; M.reach=nul(RK); }
+  else {
+    const rd=k=>dfHas(site,k), W=M.website;
+    W.push(mk('opens',2,true,'','','website'));
+    W.push(mk('https',2,!!site.https,L('The site is not secure (its address starts with http, not https): browsers warn visitors.','El sitio no es seguro (su dirección empieza con http, no https): los navegadores advierten a los visitantes.'),L('secure','seguro'),'https',L('not secure','no es seguro')));
+    W.push(mk('mobile',2,!!site.mobile,L('The site does not fit a phone: a visitor must pinch and scroll sideways.','El sitio no se adapta al teléfono: el visitante tiene que ampliar y desplazarse de lado.'),L('fits a phone','se ve bien en el teléfono'),'mobile',L('does not fit a phone','no se adapta al teléfono')));
+    W.push(mk('fast',1,site.ms!=null?site.ms<=4000:null,L(`It took ${(site.ms/1000).toFixed(1)} seconds to open for our reader: slow on a phone.`,`Tardó ${(site.ms/1000).toFixed(1)} segundos en abrir para nuestro lector: lento en un teléfono.`),L('opens quickly','abre rápido'),'fast'));
+    W.push(mk('desc',1,rd('description')?!!site.description:null,L('No description for search results: Google shows the first words it finds.','Sin descripción para los resultados de búsqueda: Google muestra las primeras palabras que encuentra.'),L('a description for search results','una descripción para los buscadores'),'desc'));
+    const words=Array.isArray(site.words)?site.words.filter(w=>w&&w.t):null, isName=w=>/seventh.{0,3}day.{0,3}adventist/i.test(w.t), nameBad=words?words.filter(isName):[], wordsBad=words?words.filter(w=>!isName(w)):[];
+    W.push(mk('name',1,words?!nameBad.length:null,nameBad.length?L(`The name is written “${nameBad[0].t}” on the ${pw(nameBad[0].on||'/')}; the denomination writes “Seventh-day Adventist”.`,`El nombre aparece como “${nameBad[0].t}” en la ${pw(nameBad[0].on||'/')}; la iglesia lo escribe “Seventh-day Adventist”.`):'',L('the name as the denomination writes it','el nombre como lo escribe la iglesia'),'words'));
+    W.push(mk('words',1,words?!wordsBad.length:null,wordsBad.length?L('Misspelled where a visitor reads: ','Mal escrito donde lee un visitante: ')+wordsBad.slice(0,4).map(w=>`“${w.t}” (${pw(w.on||'/')})`).join(', ')+'.':'',L('no misspelling found','sin errores de ortografía'),'words'));
+    W.push(mk('address',2,rd('address')?!!site.address:null,L('The church’s street address is not on the pages read.','La dirección de la iglesia no está en las páginas leídas.'),L('the address','la dirección'),'address',L('no address','sin dirección')));
+    const sitePh=(site.phones||[]).filter(p=>!X.ignore.has(p)), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10), sp=sitePh.map(dfDigits), tmpl=(site.phones||[]).filter(p=>X.ignore.has(p));
+    const phOk=!sp.length?false:(dps.length&&!sp.some(x=>dps.includes(x)))?false:true;
+    const phSay=!sp.length?(tmpl.length?L(`The only phone on the site is ${tmpl[0]}, a number printed on many church sites, not the church’s own${c.phone?` (the official listing has ${c.phone})`:''}.`,`El único teléfono del sitio es ${tmpl[0]}, un número que aparece en muchos sitios, no el de la iglesia${c.phone?` (la ficha oficial tiene ${c.phone})`:''}.`):L('We did not find a phone number on the pages read.','No encontramos un número de teléfono en las páginas leídas.'))
+      :L(`The phone on the site (${sitePh[0]}) is not the one in the official listing (${c.phone}): check which one rings at the church.`,`El teléfono del sitio (${sitePh[0]}) no es el de la ficha oficial (${c.phone}): verifique cuál suena en la iglesia.`);
+    W.push(mk('phone',1,phOk,phSay,L('the phone','el teléfono'),'phone'));
+    W.push(mk('times',2,!!site.serviceTimes,L('We did not find service times on the pages read.','No encontramos los horarios de culto en las páginas leídas.'),L('shows service times','muestra los horarios'),'times',L('no service times','sin horarios')));
+    W.push(mk('named',2,PR.none?null:PR.onMain.length>0,L('The pastor is not named where a visitor looks (see Pastor’s name).','No nombra al pastor donde mira un visitante (vea Nombre del pastor).'),L('names the pastor','nombra al pastor'),'pastor',L('the pastor not named','el pastor sin nombrar')));
+    W.push(mk('photo',1,PR.none||!PR.onMain.length||!PR.photoKnown?null:PR.photo,L('No photo beside the pastor’s name.','Sin foto junto al nombre del pastor.'),L('the pastor’s photo','la foto del pastor'),'pastor'));
+    W.push(mk('other',2,PR.none?null:!(PR.othersMain.length||PR.videos.length),L('Another pastor is shown (see Pastor’s name).','Muestra a otro pastor (vea Nombre del pastor).'),L('no other pastor shown','no muestra a otro pastor'),'pastor',L('another pastor shown','muestra a otro pastor')));
+    const stale=Array.isArray(site.stale)?site.stale.filter(p=>p&&p.path):null, stList=()=>stale.slice(0,3).map(p=>`${pw(p.path)} (${dfMy(p.date)})`).join(', ');
+    W.push(mk('stale',1,stale?!stale.length:null,stale&&stale.length?(stale.length===1?L(`A page a year out of date is still up: ${stList()}.`,`Sigue en línea una página con más de un año: ${stList()}.`):L(`Pages a year out of date are still up: ${stList()}.`,`Siguen en línea páginas con más de un año: ${stList()}.`)):'',L('no page a year out of date','ninguna página vencida'),'stale'));
+    const vidOk=!!(site.latestVideo&&dfDays(site.latestVideo,today)<=30), curOk=rd('pastDate')?!!(site.nextDate||vidOk):null;
+    const curSay=site.pastDate&&dfDays(site.pastDate,today)>183?L(`The newest date we found on the site is ${dfMy(site.pastDate)}, and nothing is dated ahead: it may not have been updated since.`,`La fecha más reciente que encontramos en el sitio es ${dfMy(site.pastDate)}, y nada tiene fecha próxima: quizá no se ha actualizado desde entonces.`)
+      :site.pastDate?L(`The newest date on the site is ${dfMd(site.pastDate)}, and nothing is dated ahead or embedded this month: a visitor cannot tell it is current.`,`La fecha más reciente del sitio es ${dfMd(site.pastDate)}, y nada tiene fecha próxima ni video de este mes: un visitante no puede saber si está al día.`)
+      :L('We found no dates on the pages read (no events, sermons or news with a date): a visitor cannot tell it is current.','No encontramos fechas en las páginas leídas (ni eventos, ni sermones, ni noticias con fecha): un visitante no puede saber si está al día.');
+    W.push(mk('current',2,curOk,curSay,L('something current','algo al día'),'fresh',L('nothing current','nada al día')));
+    W.push(mk('events',1,rd('events')?!!site.events:null,L('No events page with dates ahead.','Sin página de eventos con fechas próximas.'),L('an events calendar','un calendario de eventos'),'events'));
+    W.push(mk('sermons',1,rd('sermons')?!!site.sermons:null,L('No sermons or watch page.','Sin página de sermones o para ver en vivo.'),L('sermons or a live stream','sermones o transmisión'),'sermons'));
+    W.push(mk('latest',1,rd('latestVideo')?vidOk:null,site.latestVideo?L(`The newest sermon on the site is from ${dfMy(site.latestVideo)}.`,`El sermón más reciente del sitio es de ${dfMy(site.latestVideo)}.`):L('No sermon video is embedded on the site.','Ningún video de sermón está en el sitio.'),L('the latest sermon within 30 days','el último sermón del mes'),'latest'));
+    W.push(mk('giving',1,rd('giving')?!!site.giving:null,L('No online giving.','Sin donaciones en línea.'),L('online giving','donaciones en línea'),'giving'));
+    const forms=site.forms&&typeof site.forms==='object'?site.forms:null;
+    W.push(mk('form',1,forms?(forms.n||0)>0:null,L('No form a visitor can send from the site: every door is a link out or an email address.','Ningún formulario que un visitante pueda enviar: cada puerta es un enlace externo o un correo.'),L('a form a visitor can send','un formulario para el visitante'),'forms'));
+    const P=site.pics&&typeof site.pics==='object'&&site.pics.n>0?site.pics:null;
+    W.push(mk('pics',1,P?(P.unnamed||0)*3<=P.n:null,P?L(`${dfNf(P.unnamed)} of ${dfNf(P.n)} pictures have no description (a file name, or none): a screen reader and Google see nothing.`,`${dfNf(P.unnamed)} de ${dfNf(P.n)} fotos no tienen descripción (un nombre de archivo, o nada): un lector de pantalla y Google no ven nada.`):'',L('pictures described','fotos descritas'),'pics'));
+    W.push(mk('own',1,P?!((P.generated||0)>0):null,P?L(`${dfNf(P.generated)} picture${P.generated===1?' looks':'s look'} generated or stock-named: visitors look for real people.`,`${dfNf(P.generated)} foto${P.generated===1?' parece':'s parecen'} generada${P.generated===1?'':'s'} o de catálogo: los visitantes buscan personas reales.`):'',L('real photographs','fotos reales'),'pics'));
+    const pages=Array.isArray(site.pages)?site.pages:null, broken=pages?pages.filter(p=>p&&(p.status===404||p.status===410)):[], bl=()=>broken.slice(0,4).map(p=>pw(p.path)).join(', ');
+    W.push(mk('links',1,pages?!broken.length:null,broken.length===1?L(`A menu link leads nowhere: ${bl()}.`,`Un enlace del menú no lleva a nada: ${bl()}.`):L(`Menu links lead nowhere: ${bl()}.`,`Enlaces del menú que no llevan a nada: ${bl()}.`),L('every menu link works','todos los enlaces del menú funcionan'),'links'));
+    W.push(mk('live',1,site.social&&typeof site.social==='object'?!!site.social.livestream:null,L('No live-stream link on the site.','Sin enlace a la transmisión en vivo.'),L('a live-stream link','un enlace a la transmisión'),'live'));
+    const R=M.reach, em=site.email&&typeof site.email==='object'?site.email:null;
+    R.push(mk('visitors',2,!!site.visitors,L('No page for first-time visitors (Plan your visit).','Sin página para quienes visitan por primera vez (Planee su visita).'),L('a page for first-time visitors','una página para quienes visitan por primera vez'),'visit'));
+    R.push(mk('expect',1,rd('expect')?!!site.expect:null,L('Nothing on what to expect: parking, children, how long, what to wear.','Nada sobre qué esperar: estacionamiento, niños, cuánto dura, cómo vestir.'),L('what to expect','qué esperar'),'visit'));
+    R.push(mk('bible',2,!!site.bibleStudy,L('No offer of Bible studies.','Sin oferta de estudios bíblicos.'),L('Bible studies offered','estudios bíblicos ofrecidos'),'bible'));
+    R.push(mk('bibleForm',1,forms?!!forms.bible:null,L('No form to ask for Bible studies on the site: a neighbor must write an email or go to another site.','Ningún formulario para pedir estudios bíblicos en el sitio: el vecino tiene que escribir un correo o ir a otro sitio.'),L('a form to ask for Bible studies','un formulario para pedir estudios bíblicos'),'forms'));
+    R.push(mk('prayer',2,!!site.prayerRequest,L('No way to ask for prayer.','Ninguna manera de pedir oración.'),L('a way to ask for prayer','una manera de pedir oración'),'forms'));
+    R.push(mk('contact',1,forms?!!forms.contact:null,em?(em.generic?L(`No contact form: only a ${em.host} email address.`,`Sin formulario de contacto: solo un correo de ${em.host}.`):L('No contact form: only an email address.','Sin formulario de contacto: solo un correo electrónico.')):L('No contact form.','Sin formulario de contacto.'),L('a contact form','un formulario de contacto'),'forms'));
+    R.push(mk('news',1,forms?!!forms.news:null,L('No newsletter or text-message sign-up.','Sin suscripción a un boletín o a mensajes de texto.'),L('a newsletter or text sign-up','una suscripción al boletín'),'forms'));
+    R.push(mk('map',1,rd('map')?!!site.map:null,L('No directions or map.','Sin indicaciones ni mapa.'),L('directions or a map','indicaciones o un mapa'),'map'));
+  }
+  // ---- YouTube & live stream
+  if(!yt||!yt.read) M.youtube=nul(YK);
+  else { const Y=M.youtube, Lv=yt.latest, ago=Lv?dfDays(Lv.d,today):null, mem=c.members||0;
+    Y.push(mk('recent',2,Lv?ago<=8:false,Lv?L(`The last video is from ${dfMd(Lv.d)} (${dfNf(ago)} days ago).`,`El último video es del ${dfMd(Lv.d)} (hace ${dfNf(ago)} días).`):L('No videos in its feed.','Sin videos.'),L('a video this week','un video esta semana'),'youtube'));
+    Y.push(mk('four',1,yt.last30!=null?yt.last30>=4:null,L(`${dfNf(yt.last30)} video${yt.last30===1?'':'s'} in the last 30 days (four or more keeps a channel alive).`,`${dfNf(yt.last30)} video${yt.last30===1?'':'s'} en los últimos 30 días (cuatro o más mantienen vivo el canal).`),L('four or more a month','cuatro o más al mes'),'youtube'));
+    Y.push(mk('views',2,mem&&yt.avgViews!=null?yt.avgViews*2>=mem:null,L(`About ${dfNf(yt.avgViews)} views a video, with ${dfNf(mem)} members: fewer than half the members watch.`,`Unas ${dfNf(yt.avgViews)} vistas por video, con ${dfNf(mem)} miembros: menos de la mitad de los miembros lo ven.`),L('views past half the members','vistas de más de la mitad de los miembros'),'yt-share'));
+    const weakN=Array.isArray(yt.weak)?yt.weak.length:typeof yt.weak==='number'?yt.weak:null, ex=Array.isArray(yt.weak)&&yt.weak.length?String(yt.weak[0]):[...(yt.recent||[]).map(x=>x&&x.t),...(yt.titles||[]).map(x=>x&&(x.t||x)),Lv&&Lv.t].find(dfWeakTitle)||'';
+    Y.push(mk('titles',1,weakN==null||!yt.inFeed?null:weakN*2<=yt.inFeed,L(`${dfNf(weakN)} of ${dfNf(yt.inFeed)} titles are only a service word and a date${ex?` (“${dfQuote(ex)}”)`:''}.`,`${dfNf(weakN)} de ${dfNf(yt.inFeed)} títulos son solo un nombre de culto y una fecha${ex?` (“${dfQuote(ex)}”)`:''}.`),L('titles that say the topic','títulos que dicen el tema'),'yt-words'));
+    const D=yt.desc&&typeof yt.desc==='object'&&yt.desc.n>0?yt.desc:null, dk=D?Math.max(D.link||0,D.address||0,D.times||0):0;
+    Y.push(mk('desc',1,D?dk*2>=D.n:null,D?L(`Only ${dfNf(dk)} of ${dfNf(D.n)} descriptions carry a link, the address or the service times.`,`Solo ${dfNf(dk)} de ${dfNf(D.n)} descripciones llevan un enlace, la dirección o los horarios.`):'',L('descriptions that invite','descripciones que invitan'),'yt-words'));
+    const liveSite=!!(site&&Array.isArray(site.videos)&&site.videos.some(v=>v&&v.live&&v.date&&dfDays(v.date,today)<=14));
+    Y.push(mk('live',1,dfHas(yt,'upcoming')?!!(yt.upcoming||liveSite):null,L('No live stream scheduled, and none in the last 14 days.','Ninguna transmisión programada ni en los últimos 14 días.'),L('a live stream scheduled','una transmisión programada'),'yt-live'));
+    const k=yt.kinds&&typeof yt.kinds==='object'?yt.kinds:null;
+    Y.push(mk('series',1,k?(k.series||0)>0:null,L('No evangelistic series in the last 90 days.','Sin serie evangelística en los últimos 90 días.'),L('an evangelistic series','una serie evangelística'),'yt-series'));
+    const names=dfYtNames(yt);
+    Y.push(mk('pastor',1,names==null||!rec?null:names.some(n=>dfSame(dfCleanName(n,c.town+' '+c.name)||n,rec)),L(`${rec} is not named in the titles or descriptions.`,`${rec} no aparece en los títulos ni en las descripciones.`),L('names the pastor','nombra al pastor'),'yt-words'));
+    Y.push(mk('subs',1,yt.subscribers!=null&&mem?yt.subscribers*2>=mem:null,L(`${dfNf(yt.subscribers)} subscribers, with ${dfNf(mem)} members.`,`${dfNf(yt.subscribers)} suscriptores, con ${dfNf(mem)} miembros.`),L('subscribers past half the members','suscriptores de más de la mitad de los miembros'),'yt-subs'));
+    Y.push(mk('about',1,dfHas(yt,'aboutSite')?!!yt.aboutSite:null,L('The channel’s About page does not name the website.','La página Acerca de del canal no nombra el sitio web.'),L('the website in About','el sitio web en Acerca de'),'yt-words')); }
+  // ---- Google & Maps
+  if(!g.read) M.google=nul(GK);
+  else if(!g.found) M.google=[mk('found',2,false,L(`We found no Google listing for the church at ${c.address||c.town||'its address'}.`,`No encontramos una ficha de Google de la iglesia en ${c.address||c.town||'su dirección'}.`),'','google'),...nul(GK.slice(1))];
+  else { const G=M.google, st=String(g.status||''), sw=site&&site.url, gp=dfDigits(g.phone), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10);
+    G.push(mk('found',2,true,'','','google'));
+    G.push(mk('open',2,!/CLOSED/.test(st),/CLOSED_PERMANENTLY/.test(st)?L('Google shows the church as permanently closed.','Google muestra la iglesia como cerrada permanentemente.'):L('Google shows the church as temporarily closed.','Google muestra la iglesia como cerrada temporalmente.'),'','google'));
+    const webOk=!g.website?false:(sw&&dfHost(g.website)!==dfHost(sw)&&!(S.otherOk&&dfHost(g.website)===dfHost(S.otherOk.url)))?false:true;
+    G.push(mk('website',2,webOk,!g.website?L('Google shows no website.','Google no muestra sitio web.')+(sw?L(` Add ${dfHost(sw)}.`,` Agregue ${dfHost(sw)}.`):''):L(`Google shows ${dfHost(g.website)}; the church’s site is ${dfHost(sw)}.`,`Google muestra ${dfHost(g.website)}; el sitio de la iglesia es ${dfHost(sw)}.`),L('the website','el sitio web'),'google'));
+    G.push(mk('phone',1,!g.phone?false:!(dps.length&&!dps.includes(gp)),!g.phone?L('Google shows no phone.','Google no muestra teléfono.'):L(`Google shows the phone ${g.phone}; the official listing has ${c.phone}.`,`Google muestra el teléfono ${g.phone}; la ficha oficial tiene ${c.phone}.`),L('the phone','el teléfono'),'google'));
+    G.push(mk('hours',2,!!(g.hours&&g.hours.length),L('No hours on Google: add the service times.','Sin horario en Google: agregue los horarios de culto.'),L('hours','el horario'),'google'));
+    G.push(mk('reviews',1,(g.reviews||0)>=5,L(`Only ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} on Google: invite members to leave an honest one.`,`Solo ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} en Google: invite a los miembros a dejar una sincera.`),L('5 or more reviews','5 reseñas o más'),'google'));
+    G.push(mk('stars',1,g.rating==null?null:g.rating>=4,L(`${g.rating} stars on Google.`,`${g.rating} estrellas en Google.`),L('4 stars or more','4 estrellas o más'),'google'));
+    G.push(mk('photos',1,dfHas(g,'photos')?(g.photos||0)>=3:null,L(`Only ${dfPl(g.photos||0,'photo','photos','foto','fotos')} on Google: add a few of the building and the people.`,`Solo ${dfPl(g.photos||0,'photo','photos','foto','fotos')} en Google: agregue algunas del edificio y de la gente.`),L('3 or more photos','3 fotos o más'),'google')); }
+  return M;
+}
+/* the state of an area from its marks: the counted ones, the met ones, the share, and the words */
+function dfState(marks,fatal){
+  const cnt=marks.filter(m=>m.ok!==null), met=cnt.filter(m=>m.ok===true), heavy=cnt.filter(m=>m.w===2&&m.ok===false).length, n=cnt.length;
+  return {n,met:met.length,share:n?met.length/n:null,heavy,s:fatal?'help':n&&!heavy&&met.length*10>=n*9?'ok':'work',lines:cnt.filter(m=>m.ok===false&&m.say).map(m=>m.say),good:met.map(m=>m.good).filter(Boolean)};
+}
+const dfGood=st=>st.good.length?[dfT('good')+st.good.join(', ')+'.']:[];
+/* the judge: one church, six areas */
+function dfJudge(c,X,today,own,myName){
+  const A={}, S=dfSiteOf(c,X), {site,other,otherOk,otherMaybe,listedDead,g,sr,gWeb}=S, MK=dfMarks(c,X,today,own,myName), PR=dfPastorRead(c,S,own,myName);
   const checked=[L('the official church listing','la ficha oficial')+(c.website?` (${dfHost(c.website)})`:L(' (no website given)',' (sin sitio web)')),
     ...(g.read?[L('Google’s listing','la ficha de Google')+(gWeb?` (${dfHost(gWeb)})`:'')]:[]), ...(sr.read?[L('a web search for its name','una búsqueda de su nombre')]:[])];
+  const counts=(a,st,marks)=>Object.assign(a,{n:st.n,met:st.met,share:st.share,heavy:st.heavy,marks});
   // ---- Website
   if(c.site&&c.site.blocked) A.website={s:'unread',head:L('Not read','No leído'),lines:[L(`${dfHost(c.site.url)} asks programs not to read it, so it was not read.`,`${dfHost(c.site.url)} pide que los programas no lo lean, así que no se leyó.`)],url:c.site.url};
   else if(c.site&&!c.site.opens&&c.site.refused&&!otherOk) A.website={s:'unread',head:L('Not read','No leído'),lines:[L(`${dfHost(c.site.listed)} did not let our reader in today. A person may still see it.`,`${dfHost(c.site.listed)} no dejó entrar a nuestro lector hoy. Una persona quizá sí lo vea.`)]};
@@ -43281,130 +43471,130 @@ function dfJudge(c,X,today,own,myName){
   else if(!site){ const fb=c.facebook&&c.facebook.url, yt=c.youtube&&c.youtube.read;
     A.website={s:'help',head:listedDead?L('Website does not open','El sitio web no abre'):L('No website found','No se encontró sitio web'),
       lines:[listedDead?L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open today, and nothing else was found.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre hoy, y no se encontró otra.`):L('We could not find a website for this church.','No pudimos encontrar un sitio web para esta iglesia.'),
-        L('Checked: ','Se revisó: ')+checked.join('; ')+'.', ...(fb||yt?[L(`It does have ${[fb&&'a Facebook page',yt&&'a YouTube channel'].filter(Boolean).join(' and ')}: a good place to start from.`,`Sí tiene ${[fb&&'una página de Facebook',yt&&'un canal de YouTube'].filter(Boolean).join(' y ')}: un buen punto de partida.`)]:[])]}; }
+        L('Checked: ','Se revisó: ')+checked.join('; ')+'.', ...(fb||yt?[L(`It does have ${[fb&&'a Facebook page',yt&&'a YouTube channel'].filter(Boolean).join(' and ')}: a good place to start from.`,`Sí tiene ${[fb&&'una página de Facebook',yt&&'un canal de YouTube'].filter(Boolean).join(' y ')}: un buen punto de partida.`)]:[])],dead:listedDead}; }
   else {
-    const issues=[], good=[];
-    if(listedDead) issues.push(L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open; the church’s site is ${dfHost(site.url)}.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre; el sitio de la iglesia es ${dfHost(site.url)}.`));
+    const extra=[], W=MK.website, st=dfState(W,false);
+    if(listedDead) extra.push(L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open; the church’s site is ${dfHost(site.url)}.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre; el sitio de la iglesia es ${dfHost(site.url)}.`));
     if(other){ const on=[...new Set((other.pastors||[]).filter(p=>(p.pages||[]).some(pg=>DF_MAIN.test(pg))).map(p=>dfCleanName(p.name,c.town+' '+c.name)).filter(n=>n&&dfPersonLike(n)))];
-      issues.push(/seventhdayadventist\.church$/.test(dfHost(other.url))?L(`Another page for the church is also online, on the Adventist church-website platform: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Link it to the church’s site, or choose one.`,`Hay otra página de la iglesia en la plataforma adventista de sitios web: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Enlácela al sitio de la iglesia, o elija uno.`)
+      extra.push(/seventhdayadventist\.church$/.test(dfHost(other.url))?L(`Another page for the church is also online, on the Adventist church-website platform: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Link it to the church’s site, or choose one.`,`Hay otra página de la iglesia en la plataforma adventista de sitios web: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Enlácela al sitio de la iglesia, o elija uno.`)
         :L(`A second website is also online: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Visitors may find either one.`,`Hay un segundo sitio web en línea: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Los visitantes pueden encontrar cualquiera.`)); }
-    if(!site.https) issues.push(L('The site is not secure (its address starts with http, not https): browsers warn visitors.','El sitio no es seguro (su dirección empieza con http, no https): los navegadores advierten a los visitantes.'));
-    if(!site.serviceTimes) issues.push(L('We did not find service times on the pages read.','No encontramos los horarios de culto en las páginas leídas.'));
-    const sitePh=(site.phones||[]).filter(p=>!X.ignore.has(p)), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10), sp=sitePh.map(dfDigits);
-    if(dps.length&&sp.length&&!sp.some(x=>dps.includes(x))) issues.push(L(`The phone on the site (${sitePh[0]}) is not the one in the official listing (${c.phone}): check which one rings at the church.`,`El teléfono del sitio (${sitePh[0]}) no es el de la ficha oficial (${c.phone}): verifique cuál suena en la iglesia.`));
-    const tmpl=(site.phones||[]).filter(p=>X.ignore.has(p));
-    if(!sp.length) issues.push(tmpl.length?L(`The only phone on the site is ${tmpl[0]}, a number printed on many church sites, not the church’s own${c.phone?` (the official listing has ${c.phone})`:''}.`,`El único teléfono del sitio es ${tmpl[0]}, un número que aparece en muchos sitios, no el de la iglesia${c.phone?` (la ficha oficial tiene ${c.phone})`:''}.`):L('We did not find a phone number on the pages read.','No encontramos un número de teléfono en las páginas leídas.'));
-    if(site.https) good.push(L('secure','seguro')); if(site.mobile) good.push(L('fits a phone','se ve bien en el teléfono')); if(site.serviceTimes) good.push(L('shows service times','muestra los horarios')); if(site.visitors) good.push(L('has a page for visitors','tiene una página para visitantes'));
-    // v10.61.0, the pastor: "hasn't been updated in a long time … I was hoping for much more information": how current by the dates a visitor
-    // sees (never a sitemap's stamp), how fast it opened, and what it offers (a reading by digital-read-1.1 says pastDate; an older one never)
-    const extra=[];
-    if('pastDate' in site){
-      if(site.nextDate) extra.push(L(`Lists dates ahead (the next: ${dfMd(site.nextDate)}).`,`Anuncia fechas próximas (la siguiente: ${dfMd(site.nextDate)}).`));
-      else if(site.pastDate&&dfDays(site.pastDate,today)>183) issues.push(L(`The newest date we found on the site is ${dfMy(site.pastDate)}, and nothing is dated ahead: it may not have been updated since.`,`La fecha más reciente que encontramos en el sitio es ${dfMy(site.pastDate)}, y nada tiene fecha próxima: quizá no se ha actualizado desde entonces.`));
-      else if(site.pastDate) extra.push(L(`The newest date on the site: ${dfMd(site.pastDate)}.`,`La fecha más reciente del sitio: ${dfMd(site.pastDate)}.`));
-      else issues.push(L('We found no dates on the pages read (no events, sermons or news with a date): a visitor cannot tell it is current.','No encontramos fechas en las páginas leídas (ni eventos, ni sermones, ni noticias con fecha): un visitante no puede saber si está al día.'));
-      if(site.ms!=null&&site.ms>4000) issues.push(L(`It took ${(site.ms/1000).toFixed(1)} seconds to open for our reader: slow on a phone.`,`Tardó ${(site.ms/1000).toFixed(1)} segundos en abrir para nuestro lector: lento en un teléfono.`));
-      if(site.giving) good.push(L('online giving','donaciones en línea')); if(site.events) good.push(L('an events calendar','un calendario de eventos')); if(site.sermons) good.push(L('sermons or a live stream','sermones o transmisión'));
-    }
-    A.website={s:issues.length?'work':'ok',head:issues.length?(other?(/seventhdayadventist\.church$/.test(dfHost(other.url))?L('Another page online','Otra página en línea'):L('Two websites','Dos sitios web')):listedDead?L('Listed address is out of date','La dirección de la ficha está vencida'):L('Opens, with things to fix','Abre, con cosas por arreglar')):L('Current','Al día'),
-      lines:[`${dfHost(site.url)}${good.length?': '+good.join(', '):''}.`,...extra,...issues],url:site.url,two:!!other,dead:listedDead,noDesc:'pastDate' in site&&!site.description,stale:issues.some(t=>/newest date|no dates|fecha más reciente|No encontramos fechas/.test(t))};
+    const info=[]; if('pastDate' in site&&site.nextDate) info.push(L(`Lists dates ahead (the next: ${dfMd(site.nextDate)}).`,`Anuncia fechas próximas (la siguiente: ${dfMd(site.nextDate)}).`));
+    const s=extra.length&&st.s==='ok'?'work':st.s;
+    A.website=counts({s,head:s==='ok'?L('Current','Al día'):other?(/seventhdayadventist\.church$/.test(dfHost(other.url))?L('Another page online','Otra página en línea'):L('Two websites','Dos sitios web')):listedDead?L('Listed address is out of date','La dirección de la ficha está vencida'):L('Opens, with things to fix','Abre, con cosas por arreglar'),
+      lines:[...info,...extra,...st.lines,...dfGood(st)],url:site.url,two:!!other,dead:listedDead},st,W);
   }
   // ---- Pastor's name (his registration on his churches; the official listing elsewhere)
-  const rec=own&&myName?myName:c.pastor;
+  const rec=PR.rec;
   if(!site) A.pastor={s:'na',head:L('No website to show it','Sin sitio web donde mostrarlo'),lines:rec?[L(`Pastor of record: ${rec}.`,`Pastor registrado: ${rec}.`)]:[]};
   else if(!rec) A.pastor={s:'unread',head:L('No pastor in the listing','Sin pastor en la ficha'),lines:[L('The official listing names no pastor, so there is nothing to check the site against.','La ficha oficial no nombra pastor, así que no hay con qué comparar el sitio.')]};
   else {
-    const staff=String(c.staff||'').split(/\s*·\s*(?:Lay Pastor|Associate Pastor|Pastor|Bible Worker|Youth Pastor)?\s*[,;]?\s*/).map(x=>x.trim()).filter(x=>/\s/.test(x));
-    const all=[...(site.pastors||[]),...((other&&other.pastors)||[]).map(p=>({...p,other:true}))].map(p=>({...p,name:dfCleanName(p.name,c.town+' '+c.name),pages:[...new Set((p.pages||[]).filter(pg=>DF_MAIN.test(pg)))]}))
-      .filter(p=>p.name&&p.pages.length&&dfPersonLike(p.name)).filter((p,i,a)=>a.findIndex(q=>dfSame(q.name,p.name)&&!!q.other===!!p.other)===i);
-    const mine=all.filter(p=>!p.other&&dfSame(p.name,rec)), others=all.filter(p=>!dfSame(p.name,rec)&&!p.former&&!staff.some(x=>dfSame(p.name,x)));
-    const namedPages=dfSame(rec,c.pastor)?(site.pastorNamed||[]):mine.flatMap(p=>p.pages), onMain=[...new Set([...namedPages.filter(p=>DF_MAIN.test(p)),...mine.flatMap(p=>p.pages)])];
-    const othersMain=others.filter(p=>!p.other), dirs=(c.dirPastors||[]).filter(x=>dfPersonLike(x.name)&&!dfSame(x.name,rec));
-    const lines=[];
-    // v10.61.0, the pastor: "it may show my name there, but is it showing my picture?": a photo by the name, where a visitor looks
-    const photoKnown='pastorPhoto' in site, photo=!!(mine.some(p=>p.photo&&DF_MAIN.test(p.photoOn||''))||(dfSame(rec,c.pastor)&&site.pastorPhoto&&DF_MAIN.test(site.pastorPhotoOn||'')));
-    const noPhoto=!!onMain.length&&photoKnown&&!photo;
+    const {all,staff,mine,others,othersMain,namedPages,onMain,dirs,noPhoto,photo,videos,dirDiffers}=PR, lines=[];
     if(onMain.length) lines.push(L(`Names ${rec} (${dfPagesWord(onMain)})${photo?', with a photo':''}.`,`Nombra a ${rec} (${dfPagesWord(onMain)})${photo?', con una foto':''}.`)+(noPhoto?' '+L('We found no photo beside the name.','No encontramos una foto junto al nombre.'):''));
     else if(namedPages.length) lines.push(L(`Names ${rec} only on the ${dfPagesWord(namedPages)} (in a sermon or video title), not where a visitor looks for the pastor.`,`Nombra a ${rec} solo en la ${dfPagesWord(namedPages)} (en el título de un sermón o video), no donde un visitante busca al pastor.`));
     else lines.push(L(`We did not find ${rec}’s name where a visitor looks for the pastor.`,`No encontramos el nombre de ${rec} donde un visitante busca al pastor.`));
     for(const p of all.filter(p=>staff.some(x=>dfSame(p.name,x))).slice(0,2)) lines.push(L(`Also names ${p.name}, listed as staff in the official directory.`,`También nombra a ${p.name}, que figura como personal en el directorio oficial.`));
     for(const p of others.slice(0,3)) lines.push(L(`${p.other?'The older site':'It'} names Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': either the site or the official listing is out of date'}.`,`${p.other?'El sitio antiguo':'Nombra'} ${p.other?'nombra ':''}al Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': el sitio o la ficha oficial está desactualizado'}.`));
+    // v10.62.0: an embedded video on a page a visitor looks at, naming someone else (the title and date quoted)
+    for(const v of videos.slice(0,2)) lines.push(L(`A video on the ${dfPagesWord([v.on])} names ${v.name}, not the pastor of record: “${v.title}” (${dfDay(v.date)}).`,`Un video en la ${dfPagesWord([v.on])} nombra a ${v.name}, no al pastor registrado: “${v.title}” (${dfDay(v.date)}).`));
     for(const x of dirs.slice(0,3)) lines.push(L(`${x.where} still names Pastor ${x.name}.`,`${x.where} todavía nombra al Pastor ${x.name}.`));
-    const dirDiffers=own&&c.pastor&&!dfSame(c.pastor,rec); if(dirDiffers) lines.push(L(`The official church directory lists ${c.pastor}.`,`El directorio oficial de iglesias tiene a ${c.pastor}.`));
-    const s=!onMain.length&&othersMain.length?'help':!onMain.length?'work':others.length||dirs.length||dirDiffers||noPhoto?'work':'ok';
-    A.pastor={s,head:s==='ok'?L('Current','Al día'):!onMain.length&&othersMain.length?(own?L('Shows another pastor','Muestra a otro pastor'):L('Site and listing disagree','El sitio y la ficha no coinciden')):!onMain.length?L('Pastor not named','No nombra al pastor'):others.length||dirs.length||dirDiffers?L('Also shows earlier names','También muestra nombres anteriores'):L('Named, no photo','Nombrado, sin foto'),
-      lines,siteNeeds:!onMain.length,noPhoto,otherNames:othersMain.map(p=>p.name).join(L(' and ',' y ')),dirs,dirDiffers};
+    if(dirDiffers) lines.push(L(`The official church directory lists ${c.pastor}.`,`El directorio oficial de iglesias tiene a ${c.pastor}.`));
+    const vid=videos.length>0, s=!onMain.length&&(othersMain.length||vid)?'help':!onMain.length?'work':others.length||dirs.length||dirDiffers||noPhoto||vid?'work':'ok';
+    A.pastor={s,head:s==='ok'?L('Current','Al día'):!onMain.length&&(othersMain.length||vid)?(own?L('Shows another pastor','Muestra a otro pastor'):L('Site and listing disagree','El sitio y la ficha no coinciden')):!onMain.length?L('Pastor not named','No nombra al pastor'):vid?L('Another pastor in a video','Otro pastor en un video'):others.length||dirs.length||dirDiffers?L('Also shows earlier names','También muestra nombres anteriores'):L('Named, no photo','Nombrado, sin foto'),
+      lines,siteNeeds:!onMain.length,noPhoto,otherNames:othersMain.map(p=>p.name).join(L(' and ',' y ')),videos,dirs,dirDiffers};
   }
   // ---- Google & Maps (the weight: the pastor's "Google search and maps are very very important")
   if(!g.read) A.google={s:'unread',head:L('Not read yet','Aún no leído'),lines:[g.why==='cap'?L('This month’s free Google lookups are used: it is read next month.','Las consultas gratuitas de Google de este mes se agotaron: se lee el mes que viene.'):g.why==='error'?L('Google did not answer today.','Google no respondió hoy.'):L('Google’s listing is read once Google is connected.','La ficha de Google se lee cuando Google esté conectado.')]};
-  else if(!g.found) A.google={s:'help',head:L('Not found on Google Maps','No aparece en Google Maps'),lines:[L(`We found no Google listing for the church at ${c.address||c.town||'its address'}.`,`No encontramos una ficha de Google de la iglesia en ${c.address||c.town||'su dirección'}.`),L('Checked: Google Maps, by the church’s name and address.','Se revisó: Google Maps, por el nombre y la dirección de la iglesia.')]};
+  else if(!g.found) A.google={s:'help',head:L('Not found on Google Maps','No aparece en Google Maps'),lines:[MK.google[0].say,L('Checked: Google Maps, by the church’s name and address.','Se revisó: Google Maps, por el nombre y la dirección de la iglesia.')]};
   else {
-    const issues=[], st=String(g.status||'');
-    if(/CLOSED_PERMANENTLY/.test(st)) issues.push(['help',L('Google shows the church as permanently closed.','Google muestra la iglesia como cerrada permanentemente.')]);
-    else if(/CLOSED_TEMPORARILY/.test(st)) issues.push(['help',L('Google shows the church as temporarily closed.','Google muestra la iglesia como cerrada temporalmente.')]);
-    const sw=site&&site.url;
-    if(!g.website) issues.push(['work',L('Google shows no website.','Google no muestra sitio web.')+(sw?L(` Add ${dfHost(sw)}.`,` Agregue ${dfHost(sw)}.`):'')]);
-    else if(sw&&dfHost(g.website)!==dfHost(sw)&&!(otherOk&&dfHost(g.website)===dfHost(otherOk.url))) issues.push(['work',L(`Google shows ${dfHost(g.website)}; the church’s site is ${dfHost(sw)}.`,`Google muestra ${dfHost(g.website)}; el sitio de la iglesia es ${dfHost(sw)}.`)]);
-    const gp=dfDigits(g.phone), dps=String(c.phone||'').split(/\s*(?:\bor\b|,|;|\/|&)\s*/).map(dfDigits).filter(x=>x.length===10);
-    if(!g.phone) issues.push(['work',L('Google shows no phone.','Google no muestra teléfono.')]); else if(dps.length&&!dps.includes(gp)) issues.push(['work',L(`Google shows the phone ${g.phone}; the official listing has ${c.phone}.`,`Google muestra el teléfono ${g.phone}; la ficha oficial tiene ${c.phone}.`)]);
-    if(!g.hours||!g.hours.length) issues.push(['work',L('No hours on Google: add the service times.','Sin horario en Google: agregue los horarios de culto.')]);
-    if((g.reviews||0)<5) issues.push(['work',L(`Only ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} on Google: invite members to leave an honest one.`,`Solo ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')} en Google: invite a los miembros a dejar una sincera.`)]);
-    else if(g.rating!=null&&g.rating<4) issues.push(['work',L(`${g.rating} stars on Google.`,`${g.rating} estrellas en Google.`)]);
-    const s=issues.some(i=>i[0]==='help')?'help':issues.length?'work':'ok';
-    A.google={s,head:/CLOSED/.test(st)?L('Marked closed on Google','Marcada cerrada en Google'):g.rating!=null?`★ ${g.rating} · ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:L('On Google Maps','En Google Maps'),
-      lines:[L(`On Google Maps as “${g.name}”${g.rating!=null?`: ${g.rating} stars from ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`,`En Google Maps como “${g.name}”${g.rating!=null?`: ${g.rating} estrellas de ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`),...issues.map(i=>i[1]),
-        ...(sr.read&&sr.ownAt&&site?[L(`In a web search for its name, its own site comes ${sr.ownAt<=3?'near the top':'in place '+sr.ownAt}.`,`En una búsqueda de su nombre, su propio sitio aparece ${sr.ownAt<=3?'entre los primeros':'en el lugar '+sr.ownAt}.`)]:[])],url:g.maps,note:L('From Google. Google’s own search order cannot be read by any program.','De Google. Ningún programa puede leer el orden de búsqueda de Google.')};
+    const G=MK.google, st0=String(g.status||''), st=dfState(G,/CLOSED/.test(st0));
+    A.google=counts({s:st.s,head:/CLOSED/.test(st0)?L('Marked closed on Google','Marcada cerrada en Google'):g.rating!=null?`★ ${g.rating} · ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:L('On Google Maps','En Google Maps'),
+      lines:[L(`On Google Maps as “${g.name}”${g.rating!=null?`: ${g.rating} stars from ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`,`En Google Maps como “${g.name}”${g.rating!=null?`: ${g.rating} estrellas de ${dfPl(g.reviews||0,'review','reviews','reseña','reseñas')}`:''}.`),...st.lines,
+        ...(sr.read&&sr.ownAt&&site?[L(`In a web search for its name, its own site comes ${sr.ownAt<=3?'near the top':'in place '+sr.ownAt}.`,`En una búsqueda de su nombre, su propio sitio aparece ${sr.ownAt<=3?'entre los primeros':'en el lugar '+sr.ownAt}.`)]:[]),...dfGood(st)],url:g.maps,note:L('From Google. Google’s own search order cannot be read by any program.','De Google. Ningún programa puede leer el orden de búsqueda de Google.')},st,G);
   }
-  // ---- Facebook & Instagram (never read: a link, and followers when a search result states them)
+  // ---- Facebook & Instagram (never read, so never "Current": a link, and followers when a search result states them; the pastor:
+  //      "if it's not perfect then don't show that it's perfect")
   const fb=c.facebook, ig=c.instagram, igLine=ig?L(`Instagram: ${ig.url.replace(/^https?:\/\/(www\.)?/,'')}${ig.followers?`, ${dfPl(ig.followers,'follower','followers','seguidor','seguidores')}`:''}.`,`Instagram: ${ig.url.replace(/^https?:\/\/(www\.)?/,'')}${ig.followers?`, ${dfPl(ig.followers,'follower','followers','seguidor','seguidores')}`:''}.`):L('Instagram: none found (not every church needs it; it reaches younger neighbors).','Instagram: no se encontró (no toda iglesia lo necesita; llega a vecinos más jóvenes).');
-  if(fb) A.social={s:fb.from==='site'?'ok':'work',head:fb.from==='site'?L('Facebook page linked','Página de Facebook enlazada'):L('Not linked from the website','Sin enlace desde el sitio'),
+  if(fb) A.social={s:'unread',head:fb.from==='site'?dfT('linkedUnread'):L('Not linked from the website','Sin enlace desde el sitio'),
     lines:[L(`Facebook page: ${fb.url.replace(/^https?:\/\/(www\.)?facebook\.com/,'facebook.com')}${fb.followers?`, ${dfPl(fb.followers,'follower','followers','seguidor','seguidores')}`:''}.`,`Página de Facebook: ${fb.url.replace(/^https?:\/\/(www\.)?facebook\.com/,'facebook.com')}${fb.followers?`, ${dfPl(fb.followers,'follower','followers','seguidor','seguidores')}`:''}.`),
       ...(fb.from==='site'?[]:[L('The church’s website does not link to it: we found it by searching.','El sitio de la iglesia no la enlaza: la encontramos buscando.')]),igLine],url:fb.url,note:L('Facebook and Instagram are not read: open the page to see the last post and who responds.','Facebook e Instagram no se leen: abra la página para ver la última publicación y quién responde.')};
   else if(sr.read) A.social={s:'help',head:L('No Facebook page found','No se encontró página de Facebook'),lines:[L(`We could not find a Facebook page: ${site?'the website links to none, and ':''}a search for its name found none.`,`No pudimos encontrar una página de Facebook: ${site?'el sitio no enlaza ninguna, y ':''}una búsqueda de su nombre no encontró ninguna.`),igLine]};
-  else A.social={s:'none',head:L('Not linked from the website','Sin enlace desde el sitio'),lines:[site?L('The website links to no Facebook page (no search was run).','El sitio no enlaza ninguna página de Facebook (no se hizo búsqueda).'):L('No Facebook page was looked for: there is no website to link one.','No se buscó Facebook: no hay sitio que lo enlace.'),igLine]};
+  else A.social={s:'unread',head:dfT('notLinked'),lines:[site?L('The website links to no Facebook page (no search was run).','El sitio no enlaza ninguna página de Facebook (no se hizo búsqueda).'):L('No Facebook page was looked for: there is no website to link one.','No se buscó Facebook: no hay sitio que lo enlace.'),igLine]};
   // ---- YouTube & live stream
   const yt=c.youtube, live=site&&site.social&&site.social.livestream;
   if(!yt||!yt.read) A.youtube={s:'work',head:live?L('Live page, no channel found','Página en vivo, sin canal'):L('No video found','No se encontró video'),lines:[live?L(`The website has a live-stream page (${dfHost(live)}), but no YouTube channel was found: it may stream on Facebook.`,`El sitio tiene una página de transmisión (${dfHost(live)}), pero no se encontró canal de YouTube: quizá transmite por Facebook.`):L('We found no YouTube channel or live stream.','No encontramos canal de YouTube ni transmisión.')]};
-  else { const Lv=yt.latest, ago=Lv?dfDays(Lv.d,today):null, k=yt.kinds||{}, s=ago==null?'work':ago<=8?'ok':ago<=60?'work':'help';
-    const kinds=[k.sermon&&dfPl(k.sermon,'sermon','sermons','sermón','sermones'),k.series&&L(`${dfNf(k.series)} from an evangelistic series`,`${dfNf(k.series)} de una serie evangelística`),k.worship&&dfPl(k.worship,'worship service','worship services','culto','cultos'),k.event&&dfPl(k.event,'event','events','evento','eventos')].filter(Boolean);
-    A.youtube={s,head:ago==null?L('No videos','Sin videos'):ago<=60?L(`Last video ${ago} day${ago===1?'':'s'} ago`,`Último video hace ${ago} día${ago===1?'':'s'}`):L(`Idle since ${dfMy(Lv.d)}`,`Inactivo desde ${dfMy(Lv.d)}`),
-      lines:[Lv?L(`Last video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`,`Último video ${dfMd(Lv.d)}: “${String(Lv.t).replace(/["“”]/g,'')}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`):L('No videos in its feed.','Sin videos.'),
-        L(`${dfPl(yt.last30,'video','videos','video','videos')} in the last 30 days, about ${dfPl(yt.avgViews,'view','views','vista','vistas')} each${c.members?` (members: ${dfNf(c.members)})`:''}.`,`${dfPl(yt.last30,'video','videos','video','videos')} en los últimos 30 días, unas ${dfPl(yt.avgViews,'vista','vistas','vista','vistas')} cada uno${c.members?` (miembros: ${dfNf(c.members)})`:''}.`),
-        ...(kinds.length?[L(`The last ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`,`Los últimos ${dfPl(yt.inFeed,'video','videos','video','videos')}: ${kinds.join(', ')}.`)]:[])],url:yt.url}; }
+  else { const Lv=yt.latest, ago=Lv?dfDays(Lv.d,today):null, Y=MK.youtube, st=dfState(Y,false);
+    A.youtube=counts({s:st.s,head:ago==null?L('No videos','Sin videos'):ago<=60?L(`Last video ${ago} day${ago===1?'':'s'} ago`,`Último video hace ${ago} día${ago===1?'':'s'}`):L(`Idle since ${dfMy(Lv.d)}`,`Inactivo desde ${dfMy(Lv.d)}`),
+      lines:[Lv?L(`Last video ${dfMd(Lv.d)}: “${dfQuote(Lv.t)}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`,`Último video ${dfMd(Lv.d)}: “${dfQuote(Lv.t)}” (${dfPl(Lv.v,'view','views','vista','vistas')}).`):L('No videos in its feed.','Sin videos.'),...st.lines,...dfGood(st)],url:yt.url},st,Y); }
   // ---- Reaching out ("evangelistic in nature or just showing what they're doing")
-  if(!site) A.reach={s:'na',head:L('No website','Sin sitio web'),lines:[],miss:[]};
-  else { const has=[site.visitors&&L('a page for visitors','una página para visitantes'),site.bibleStudy&&L('an offer of Bible studies','una oferta de estudios bíblicos'),site.prayerRequest&&L('a way to ask for prayer','una manera de pedir oración'),yt&&yt.read&&yt.kinds&&yt.kinds.series&&L('an evangelistic series on video','una serie evangelística en video')].filter(Boolean);
-    const miss=[!site.visitors&&'visitors',!site.bibleStudy&&'bible',!site.prayerRequest&&'prayer'].filter(Boolean);
-    const MW={visitors:L('a page for first-time visitors','una página para quienes visitan por primera vez'),bible:L('an offer of Bible studies','una oferta de estudios bíblicos'),prayer:L('a way to ask for prayer','una manera de pedir oración')};
-    A.reach={s:has.length>=3?'ok':has.length>=1?'work':'help',head:has.length?L(`${has.length} of 4 ways in`,`${has.length} de 4 puertas`):L('No way in for a neighbor','Ninguna puerta para el vecino'),
-      lines:[has.length?L(`It has ${has.join(', ')}.`,`Tiene ${has.join(', ')}.`):L('We found nothing that invites a neighbor in.','No encontramos nada que invite al vecino.'),...(miss.length?[L('Not found: ','No se encontró: ')+miss.map(m=>MW[m]).join(', ')+'.']:[])],miss}; }
+  if(!site) A.reach={s:'na',head:L('No website','Sin sitio web'),lines:[]};
+  else { const R=MK.reach, st0=dfState(R,false), st=dfState(R,st0.n>0&&st0.met===0);
+    A.reach=counts({s:st.s,head:st.s==='help'?L('No way in for a neighbor','Ninguna puerta para el vecino'):L(`${st.met} of ${st.n} ways in`,`${st.met} de ${st.n} puertas`),lines:[...st.lines,...dfGood(st)]},st,R); }
   const score=DF_AREAS.reduce((a,k)=>a+(A[k].s==='help'?10:A[k].s==='work'?1:0),0)+(A.website.s==='help'?100:0)+(A.google.s==='help'?40:0)+(A.pastor.s==='help'?20:0);
   const worst=A.website.s==='help'||A.pastor.s==='help'||A.google.s==='help'?3:DF_AREAS.some(k=>['help','work'].includes(A[k].s))?2:0;
-  return {areas:A,score,worst};
+  return {areas:A,score,worst,marks:MK};
 }
-/* the fixes for the report, each with who, when and what it costs; and "take me there, with the words ready" */
+/* the fixes for the report: one per failed mark (grouped: one for the forms, one for the pictures, one for the stale pages, one for the
+   words, one for Google's listing), each with who and when (and what it costs: free), the heaviest first; and "take me there, with the
+   words ready" */
+const DF_FIX_ORDER=['website','pastor','fresh','forms','visit','google','bible','address','times','https','mobile','stale','website2','map','fast','phone','desc','words','events','sermons','latest','giving','pics','links','live','social','youtube','yt-share','yt-words','yt-live','yt-series','yt-subs'];
 function dfFixes(c,J,myName){
-  const A=J.areas, out=[], add=(k,what,who,when)=>out.push({k,what,who,when});
-  if(A.website.s==='help') add('website',L('Start a website (Frame, the NAD’s free builder): service times, the address, a phone, the pastor’s name and a page for visitors.','Crear un sitio web (Frame, el creador gratuito de la NAD): horarios, dirección, teléfono, el nombre del pastor y una página para visitantes.'),L('Communication leader, with the conference','Líder de comunicación, con la asociación'),L('This month','Este mes'));
-  if(A.google.s==='help') add('google',/CLOSED/.test(A.google.head)||/cerrada/i.test(A.google.head)?L('Correct Google’s listing: it shows the church as closed. Claim the listing and mark it open.','Corregir la ficha de Google: muestra la iglesia como cerrada. Reclame la ficha y márquela abierta.'):L('Put the church on Google Maps (Google Business Profile): name, address, service times, website, phone, a few photos.','Poner la iglesia en Google Maps (Perfil de Empresa de Google): nombre, dirección, horarios, sitio web, teléfono y unas fotos.'),L('Communication leader','Líder de comunicación'),L('This week','Esta semana'));
-  else if(A.google.s==='work') add('google',L('Claim the church on Google (if “Own this business?” shows) and correct it: ','Reclamar la iglesia en Google (si aparece “¿Es el propietario?”) y corregir: ')+A.google.lines.slice(1).filter(l=>!/search|búsqueda/i.test(l)).join(' '),L('Communication leader','Líder de comunicación'),L('This week','Esta semana'));
-  if(A.pastor.s==='help'||A.pastor.s==='work'){ const P=A.pastor, dirs=[...new Set((P.dirs||[]).map(x=>x.where))], parts=[], rec=myName||c.pastor;
+  const A=J.areas, MK=J.marks||{}, out=[], add=(k,w,what,who,when)=>out.push({k,w,what,who,when});
+  const f=(area,k)=>(MK[area]||[]).find(m=>m.k===k&&m.ok===false)||null, failed=area=>(MK[area]||[]).filter(m=>m.ok===false), wOf=ms=>Math.max(1,...ms.map(m=>m.w));
+  const WM=L('Webmaster','Encargado del sitio'), CL=L('Communication leader','Líder de comunicación'), MT=L('Media team','Equipo de medios'), PW=L('Webmaster, with the pastor','Encargado del sitio, con el pastor');
+  const TW=L('This week','Esta semana'), TM=L('This month','Este mes'), ES_=L('Every Sabbath','Cada sábado'), EW=L('Every week','Cada semana');
+  if(A.website.s==='help') add('website',2,L('Start a website (Frame, the NAD’s free builder): service times, the address, a phone, the pastor’s name and a page for visitors.','Crear un sitio web (Frame, el creador gratuito de la NAD): horarios, dirección, teléfono, el nombre del pastor y una página para visitantes.'),L('Communication leader, with the conference','Líder de comunicación, con la asociación'),TM);
+  if(A.google.s==='help') add('google',2,/CLOSED/.test(A.google.head)||/cerrada/i.test(A.google.head)?L('Correct Google’s listing: it shows the church as closed. Claim the listing and mark it open.','Corregir la ficha de Google: muestra la iglesia como cerrada. Reclame la ficha y márquela abierta.'):L('Put the church on Google Maps (Google Business Profile): name, address, service times, website, phone, a few photos.','Poner la iglesia en Google Maps (Perfil de Empresa de Google): nombre, dirección, horarios, sitio web, teléfono y unas fotos.'),CL,TW);
+  else if(A.google.s==='work'&&failed('google').length) add('google',wOf(failed('google')),L('Claim the church on Google (if “Own this business?” shows) and correct it: ','Reclamar la iglesia en Google (si aparece “¿Es el propietario?”) y corregir: ')+failed('google').map(m=>m.say).join(' '),CL,TW);
+  if(A.pastor.s==='help'||A.pastor.s==='work'){ const P=A.pastor, dirs=[...new Set((P.dirs||[]).map(x=>x.where))], parts=[], rec=myName||c.pastor, vids=P.videos||[];
     if(P.siteNeeds) parts.push(L(`Put ${rec}’s name and photo on the pastor or staff page${P.otherNames?' and take '+P.otherNames+' off':''}`,`Poner el nombre y la foto de ${rec} en la página del pastor o del personal${P.otherNames?' y quitar a '+P.otherNames:''}`));
     else if(P.noPhoto) parts.push(L(`Add ${rec}’s photo beside the name on the pastor or staff page: a friendly, recent picture`,`Agregar la foto de ${rec} junto al nombre en la página del pastor o del personal: una foto reciente y amable`));
     else if(P.otherNames) parts.push(L(`Take ${P.otherNames} off the website`,`Quitar a ${P.otherNames} del sitio web`));
+    if(vids.length) parts.push(L(`replace the video naming ${[...new Set(vids.map(v=>v.name))].join(' and ')} (${dfPagesWord([vids[0].on])}) with this month’s sermon`,`reemplazar el video que nombra a ${[...new Set(vids.map(v=>v.name))].join(' y ')} (${dfPagesWord([vids[0].on])}) por el sermón de este mes`));
     if(dirs.length) parts.push(L(`ask ${dirs.join(' and ')} to correct the pastor’s name (each has a “suggest a correction” link)`,`pedir a ${dirs.join(' y ')} que corrijan el nombre del pastor (cada uno tiene un enlace para sugerir correcciones)`));
     if(P.dirDiffers) parts.push(L('ask the conference to update the official listing','pedir a la asociación que actualice la ficha oficial'));
-    if(parts.length) add('pastor',parts.join('; ').replace(/^./,x=>x.toUpperCase())+'.',P.siteNeeds||P.otherNames?L('Webmaster','Encargado del sitio'):L('Communication leader','Líder de comunicación'),L('This week','Esta semana')); }
-  // v10.61.0: a site that shows nothing current; a description for search results
-  if(A.website.stale) add('fresh',L('Keep the home page current: each week the coming Sabbath’s sermon title, and events with their dates; take down what is past.','Mantener la página principal al día: cada semana el título del sermón del próximo sábado y los eventos con sus fechas; quitar lo pasado.'),L('Webmaster','Encargado del sitio'),L('Every week','Cada semana'));
-  if(A.website.noDesc) add('desc',L('Give the site a short description for search results (in the site builder’s SEO or search settings): the church’s name, town, Sabbath times and a welcome.','Dar al sitio una breve descripción para los resultados de búsqueda (en la configuración de SEO o de búsqueda del creador del sitio): nombre de la iglesia, ciudad, horarios del sábado y una bienvenida.'),L('Webmaster','Encargado del sitio'),L('This month','Este mes'));
-  if(A.website.two||A.website.dead) add('website2',L('Choose one website: take the other down or have it forward to the current one, and correct the address in the official listing.','Elegir un solo sitio web: quitar el otro o redirigirlo al actual, y corregir la dirección en la ficha oficial.'),L('Webmaster','Encargado del sitio'),L('This month','Este mes'));
-  if(A.reach.s!=='ok'&&A.reach.s!=='na'&&(A.reach.miss||[]).length) add('reach',L('Add what invites a neighbor in: ','Agregar lo que invita al vecino: ')+A.reach.lines[A.reach.lines.length-1].replace(/^Not found: |^No se encontró: /,''),L('Webmaster, with the pastor','Encargado del sitio, con el pastor'),L('This month','Este mes'));
-  if(A.social.s==='help') add('social',L('Start a Facebook page for the church, link it from the website, and post twice a week with one invitation in each.','Crear una página de Facebook para la iglesia, enlazarla desde el sitio y publicar dos veces por semana con una invitación cada vez.'),L('Communication leader','Líder de comunicación'),L('This month','Este mes'));
-  else if(A.social.s==='work') add('social',L('Link the Facebook page from the church’s website.','Enlazar la página de Facebook desde el sitio de la iglesia.'),L('Webmaster','Encargado del sitio'),L('This week','Esta semana'));
-  if(A.youtube.s==='help'||A.youtube.s==='work') add('youtube',L('Post each Sabbath’s sermon the same day with a clear title; on a live stream, have one person welcome viewers and answer comments.','Publicar el sermón de cada sábado el mismo día con un título claro; en la transmisión, que una persona salude a quienes miran y responda los comentarios.'),L('Media team','Equipo de medios'),L('Every Sabbath','Cada sábado'));
-  const W={website:0,google:1,pastor:2,fresh:3,website2:4,reach:5,desc:6,social:7,youtube:8};
-  return out.sort((a,b)=>W[a.k]-W[b.k]);
+    if(parts.length) add('pastor',P.siteNeeds||P.otherNames||vids.length?2:1,parts.join('; ').replace(/^./,x=>x.toUpperCase())+'.',P.siteNeeds||P.otherNames||vids.length?WM:CL,TW); }
+  if(f('website','current')) add('fresh',2,L('Keep the home page current: each week the coming Sabbath’s sermon title, and events with their dates; take down what is past.','Mantener la página principal al día: cada semana el título del sermón del próximo sábado y los eventos con sus fechas; quitar lo pasado.'),WM,EW);
+  const forms=[f('website','form'),f('reach','bibleForm'),f('reach','prayer'),f('reach','contact'),f('reach','news')].filter(Boolean);
+  if(forms.length) add('forms',wOf(forms),L('Add forms a visitor can send from the site, each a door: Ask for prayer, Request Bible studies, Contact us, and a newsletter sign-up (the site builder’s own form, Google Forms or Jotform, free). Someone answers within a day.','Agregar formularios que un visitante pueda enviar desde el sitio, cada uno una puerta: Pida oración, Solicite estudios bíblicos, Contáctenos, y una suscripción al boletín (el formulario del creador del sitio, Google Forms o Jotform, gratis). Alguien responde en un día.'),WM,TM);
+  const visit=[f('reach','visitors'),f('reach','expect')].filter(Boolean);
+  if(visit.length) add('visit',wOf(visit),L('Add a page for first-time visitors (Plan your visit): what to expect, parking, children, how long the service is, what to wear.','Agregar una página para quienes visitan por primera vez (Planee su visita): qué esperar, estacionamiento, niños, cuánto dura el culto, cómo vestir.'),PW,TM);
+  if(f('reach','bible')) add('bible',2,L('Offer Bible studies on the site, with a form to ask for them.','Ofrecer estudios bíblicos en el sitio, con un formulario para pedirlos.'),L('Pastor','Pastor'),TM);
+  if(f('website','address')) add('address',2,L('Put the church’s street address on the home page and the contact page.','Poner la dirección de la iglesia en la página principal y en la de contacto.'),WM,TW);
+  if(f('website','times')) add('times',2,L('Put the Sabbath School and worship times on the home page.','Poner los horarios de Escuela Sabática y del culto en la página principal.'),WM,TW);
+  if(f('website','https')) add('https',2,L('Turn on HTTPS at the site’s host (free: Let’s Encrypt is built into most builders) and set the site to open on https.','Activar HTTPS en el proveedor del sitio (gratis: Let’s Encrypt viene en casi todos los creadores) y hacer que el sitio abra en https.'),WM,TW);
+  if(f('website','mobile')) add('mobile',2,L('Make the site fit a phone: a responsive theme in the site builder; check every page on a phone.','Hacer que el sitio se adapte al teléfono: un tema adaptable en el creador del sitio; revisar cada página en un teléfono.'),WM,TM);
+  if(f('website','stale')){ const st=(c.site&&Array.isArray(c.site.stale)?c.site.stale:[]).filter(p=>p&&p.path), ls=st.slice(0,3).map(p=>`${dfPagesWord([p.path])}, ${dfMy(p.date)}`).join('; ');
+    add('stale',1,st.length===1?L(`Take down the page a year out of date (${ls}), or bring it up to date.`,`Quitar la página con más de un año (${ls}), o ponerla al día.`):L(`Take down the pages a year out of date (${ls}), or bring them up to date.`,`Quitar las páginas con más de un año (${ls}), o ponerlas al día.`),WM,TW); }
+  if(A.website.two||A.website.dead) add('website2',1,L('Choose one website: take the other down or have it forward to the current one, and correct the address in the official listing.','Elegir un solo sitio web: quitar el otro o redirigirlo al actual, y corregir la dirección en la ficha oficial.'),WM,TM);
+  if(f('reach','map')) add('map',1,L('Add directions and a map (a Google Maps link or embed) on the contact page.','Agregar indicaciones y un mapa (un enlace o mapa de Google Maps) en la página de contacto.'),WM,TW);
+  if(f('website','fast')) add('fast',1,L('Make the site open in under 4 seconds: smaller pictures (under 300 KB each), fewer scripts; ask the host.','Hacer que el sitio abra en menos de 4 segundos: fotos más pequeñas (menos de 300 KB cada una), menos scripts; pregunte al proveedor.'),WM,TM);
+  if(f('website','phone')) add('phone',1,L('Put the church’s own phone number on the site, the one in the official listing.','Poner en el sitio el teléfono propio de la iglesia, el de la ficha oficial.'),WM,TW);
+  if(f('website','desc')) add('desc',1,L('Give the site a short description for search results (in the site builder’s SEO or search settings): the church’s name, town, Sabbath times and a welcome.','Dar al sitio una breve descripción para los resultados de búsqueda (en la configuración de SEO o de búsqueda del creador del sitio): nombre de la iglesia, ciudad, horarios del sábado y una bienvenida.'),WM,TM);
+  const nm=f('website','name'), wd=f('website','words');
+  if(nm||wd){ const bad=(c.site&&Array.isArray(c.site.words)?c.site.words:[]).filter(w=>w&&w.t&&!/seventh.{0,3}day.{0,3}adventist/i.test(w.t)).slice(0,4).map(w=>`“${w.t}”`).join(', ');
+    add('words',1,(nm&&wd?L(`Write the church’s name as the denomination does, “Seventh-day Adventist”, and fix the words with errors (${bad})`,`Escribir el nombre de la iglesia como lo escribe la denominación, “Seventh-day Adventist”, y corregir las palabras con errores (${bad})`)
+      :nm?L('Write the church’s name as the denomination does, “Seventh-day Adventist”','Escribir el nombre de la iglesia como lo escribe la denominación, “Seventh-day Adventist”'):L(`Fix the words with errors (${bad})`,`Corregir las palabras con errores (${bad})`))+L('; read every page aloud once a quarter.','; leer cada página en voz alta una vez por trimestre.'),WM,TW); }
+  if(f('website','events')) add('events',1,L('Add an events page with dated events, and take down what is past.','Agregar una página de eventos con fechas, y quitar lo pasado.'),WM,TM);
+  if(f('website','sermons')) add('sermons',1,L('Add a Watch page: this Sabbath’s sermon embedded, and the live stream with its time.','Agregar una página para ver: el sermón de este sábado incrustado, y la transmisión con su hora.'),MT,TM);
+  if(f('website','latest')) add('latest',1,L('Put each Sabbath’s sermon on the site the same week (embed the YouTube video on the Watch page).','Poner el sermón de cada sábado en el sitio la misma semana (incrustar el video de YouTube en la página para ver).'),MT,ES_);
+  if(f('website','giving')) add('giving',1,L('Add online giving (Adventist Giving, free for churches) and link it from the menu.','Agregar donaciones en línea (Adventist Giving, gratis para las iglesias) y enlazarlas desde el menú.'),L('Treasurer','Tesorero'),TM);
+  const own=f('website','own'), pics=f('website','pics');
+  if(own||pics){ const n=(c.site&&c.site.pics&&c.site.pics.generated)||0;
+    add('pics',1,own?L(`Use real photographs of the church’s own people, each described in a few words (the alt text); take down the ${dfNf(n)} generated or stock picture${n===1?'':'s'}.`,`Usar fotos reales de la gente de la iglesia, cada una descrita en pocas palabras (el texto alternativo); quitar la${n===1?'':'s'} ${dfNf(n)} foto${n===1?'':'s'} generada${n===1?'':'s'} o de catálogo.`):L('Describe every picture in a few words (the alt text: “Members greeting a visitor at the door”): a screen reader and Google read it.','Describir cada foto en pocas palabras (el texto alternativo: “Miembros saludando a un visitante en la puerta”): un lector de pantalla y Google lo leen.'),WM,TM); }
+  if(f('website','links')){ const br=(c.site&&Array.isArray(c.site.pages)?c.site.pages:[]).filter(p=>p&&(p.status===404||p.status===410)).slice(0,4).map(p=>dfPagesWord([p.path])).join(', ');
+    add('links',1,L(`Fix the menu link${br.includes(',')?'s':''} that lead${br.includes(',')?'':'s'} nowhere (${br}).`,`Corregir ${br.includes(',')?'los enlaces':'el enlace'} del menú que no lleva${br.includes(',')?'n':''} a nada (${br}).`),WM,TW); }
+  if(f('website','live')) add('live',1,L('Link the live stream from the menu (Watch live), with the time it starts.','Enlazar la transmisión en vivo desde el menú (Ver en vivo), con la hora en que empieza.'),MT,TW);
+  if(A.social.s==='help') add('social',1,L('Start a Facebook page for the church, link it from the website, and post twice a week with one invitation in each.','Crear una página de Facebook para la iglesia, enlazarla desde el sitio y publicar dos veces por semana con una invitación cada vez.'),CL,TM);
+  else if(c.facebook&&c.facebook.url&&c.facebook.from!=='site'&&c.site&&c.site.opens) add('social',1,L('Link the Facebook page from the church’s website.','Enlazar la página de Facebook desde el sitio de la iglesia.'),WM,TW);
+  if(!(c.youtube&&c.youtube.read)) add('youtube',1,L('Start a YouTube channel and post each Sabbath’s sermon the same day with a clear title; on a live stream, have one person welcome viewers and answer comments.','Abrir un canal de YouTube y publicar el sermón de cada sábado el mismo día con un título claro; en la transmisión, que una persona salude a quienes miran y responda los comentarios.'),MT,ES_);
+  else { const rc=[f('youtube','recent'),f('youtube','four')].filter(Boolean);
+    if(rc.length) add('youtube',wOf(rc),L('Post each Sabbath’s sermon the same day with a clear title; on a live stream, have one person welcome viewers and answer comments.','Publicar el sermón de cada sábado el mismo día con un título claro; en la transmisión, que una persona salude a quienes miran y responda los comentarios.'),MT,ES_);
+    if(f('youtube','views')) add('yt-share',2,L('Share each sermon with the members the same day (the church’s text or WhatsApp group, Facebook), so views grow past half the membership.','Compartir cada sermón con los miembros el mismo día (el grupo de mensajes o WhatsApp de la iglesia, Facebook), para que las vistas pasen de la mitad de la membresía.'),MT,ES_);
+    if([f('youtube','titles'),f('youtube','desc'),f('youtube','pastor'),f('youtube','about')].some(Boolean)) add('yt-words',1,L('Give each video a title that says the topic (“Why God allows suffering”, not “Worship Service 10/10”) and a description that invites: the address, the service times, the pastor’s name and a link to the site; put the website in the channel’s About.','Dar a cada video un título que diga el tema (“Por qué Dios permite el sufrimiento”, no “Culto 10/10”) y una descripción que invite: la dirección, los horarios, el nombre del pastor y un enlace al sitio; poner el sitio web en el Acerca de del canal.'),MT,TW);
+    if(f('youtube','live')) add('yt-live',1,L('Schedule the live stream in YouTube Studio each week, so the channel shows it ahead.','Programar la transmisión en YouTube Studio cada semana, para que el canal la muestre por adelantado.'),MT,EW);
+    if(f('youtube','series')) add('yt-series',1,L('Plan an evangelistic series on video (four to eight short talks) in the next 90 days.','Planear una serie evangelística en video (de cuatro a ocho charlas cortas) en los próximos 90 días.'),L('Pastor, with the media team','Pastor, con el equipo de medios'),L('This quarter','Este trimestre'));
+    if(f('youtube','subs')) add('yt-subs',1,L('Invite every member to subscribe to the channel: from the pulpit, in the bulletin and on the website.','Invitar a cada miembro a suscribirse al canal: desde el púlpito, en el boletín y en el sitio web.'),MT,TM); }
+  return out.sort((a,b)=>(b.w-a.w)||(DF_FIX_ORDER.indexOf(a.k)-DF_FIX_ORDER.indexOf(b.k)));
 }
 /* the words, ready to paste: what Google, the official listing and the website should all say */
 function dfWordsFor(c,J,myName){
@@ -43415,17 +43605,22 @@ function dfWordsFor(c,J,myName){
 }
 const DF_HOW=()=>[
   ['website',L('No website, or one that does not open','Sin sitio web, o uno que no abre'),[['Frame','adventistconnect.org/frame','https://adventistconnect.org/frame/',L('A free website builder for Adventist churches, hosted by the North American Division: pages for service times, the pastor, beliefs and visitors.','Un creador gratuito de sitios web para iglesias adventistas, alojado por la División Norteamericana: páginas para horarios, el pastor, creencias y visitantes.'),true]],L('Start with five pages: Home (service times, address, a phone), Our pastor, Plan your visit, What we believe, Watch. Put the address in the official listing and on Google.','Empiece con cinco páginas: Inicio (horarios, dirección, teléfono), Nuestro pastor, Planee su visita, Lo que creemos, Mire en vivo. Ponga la dirección en la ficha oficial y en Google.')],
-  ['google',L('Not on Google Maps, out of date, or few reviews','No está en Google Maps, desactualizada o con pocas reseñas'),[['Google Business Profile','business.google.com','https://business.google.com/us/business-profile/',L('The church’s listing on Google Search and Maps: hours, service times, photos, website, phone and reviews.','La ficha de la iglesia en Google y Maps: horario, cultos, fotos, sitio web, teléfono y reseñas.'),true]],dfT('claimHow')+' '+L('Then add the service times and photos, and invite members to leave an honest review.','Luego agregue los horarios y fotos, e invite a los miembros a dejar una reseña sincera.')],
-  ['pastor',L('The pastor’s name is missing or out of date','Falta el nombre del pastor o está desactualizado'),[['eAdventist','eadventist.net','https://www.eadventist.net/',L('The official listing: each church’s entry has “Request changes”, which writes to the conference’s records office.','La ficha oficial: cada iglesia tiene “Request changes”, que escribe a la oficina de registros de la asociación.'),true]],L('Put the pastor’s name and photo on the home page and the pastor or staff page; take earlier names off; ask the directories that still show an earlier pastor to correct it.','Ponga el nombre y la foto del pastor en la página principal y en la del pastor o personal; quite los nombres anteriores; pida a los directorios que aún muestran a un pastor anterior que lo corrijan.')],
+  ['google',L('Not on Google Maps, out of date, or few reviews','No está en Google Maps, desactualizada o con pocas reseñas'),[['Google Business Profile','business.google.com','https://business.google.com/us/business-profile/',L('The church’s listing on Google Search and Maps: hours, service times, photos, website, phone and reviews.','La ficha de la iglesia en Google y Maps: horario, cultos, fotos, sitio web, teléfono y reseñas.'),true]],dfT('claimHow')+' '+L('Then add the service times and a few photos of the building and the people, and invite members to leave an honest review.','Luego agregue los horarios y unas fotos del edificio y de la gente, e invite a los miembros a dejar una reseña sincera.')],
+  ['pastor',L('The pastor’s name is missing or out of date','Falta el nombre del pastor o está desactualizado'),[['eAdventist','eadventist.net','https://www.eadventist.net/',L('The official listing: each church’s entry has “Request changes”, which writes to the conference’s records office.','La ficha oficial: cada iglesia tiene “Request changes”, que escribe a la oficina de registros de la asociación.'),true]],L('Put the pastor’s name and a recent photo on the home page and the pastor or staff page; take earlier names and their videos off; ask the directories that still show an earlier pastor to correct it.','Ponga el nombre del pastor y una foto reciente en la página principal y en la del pastor o personal; quite los nombres anteriores y sus videos; pida a los directorios que aún muestran a un pastor anterior que lo corrijan.')],
+  // v10.62.0 (the bar raised): the forms, the pictures, the words
+  ['forms',L('No form a visitor can send','Ningún formulario para el visitante'),[['Google Forms','forms.google.com','https://forms.google.com/',L('A free form in minutes; the answers go to a church email or a sheet.','Un formulario gratuito en minutos; las respuestas llegan a un correo de la iglesia o a una hoja.'),true],['Jotform','jotform.com','https://www.jotform.com/',L('Free for a few forms; it embeds in any site builder.','Gratis para unos pocos formularios; se inserta en cualquier creador de sitios.'),true]],L('Most site builders have their own form: use it first. Three doors, one form each: Ask for prayer, Request Bible studies, Contact us; and a newsletter sign-up. Someone answers within a day.','La mayoría de los creadores de sitios tienen su propio formulario: úselo primero. Tres puertas, un formulario cada una: Pida oración, Solicite estudios bíblicos, Contáctenos; y una suscripción al boletín. Alguien responde en un día.')],
+  ['pics',L('Pictures undescribed, or generated','Fotos sin descripción, o generadas'),[],L('Real photographs of the church’s own people, each described in a few words (the alt text: “Members greeting a visitor at the door”). No generated pictures of people, no stock photos standing in for them: a phone camera at one Sabbath lunch is enough.','Fotos reales de la gente de la iglesia, cada una descrita en pocas palabras (el texto alternativo: “Miembros saludando a un visitante en la puerta”). Sin fotos generadas de personas ni fotos de catálogo en su lugar: basta la cámara de un teléfono en un almuerzo de sábado.')],
+  ['words',L('The name misspelled, or words with errors','El nombre mal escrito, o palabras con errores'),[],L('The denomination writes “Seventh-day Adventist” (a small d). Read every page aloud once a quarter; fix “All Rights Served” and its kind; one person owns the words.','La denominación escribe “Seventh-day Adventist” (la d minúscula). Lea cada página en voz alta una vez por trimestre; corrija “All Rights Served” y los de su clase; una persona cuida las palabras.')],
   ['social',L('No Facebook page, or one the website does not link','Sin página de Facebook, o sin enlace desde el sitio'),[['Meta Business Suite','facebook.com/business','https://www.facebook.com/business/tools/meta-business-suite',L('Facebook and Instagram in one place; plan a week of posts at once.','Facebook e Instagram en un solo lugar; planee una semana de publicaciones a la vez.'),true]],L('Two posts a week, each with one invitation (a Bible study, a prayer request, a coming event). Answer every comment the same day.','Dos publicaciones por semana, cada una con una invitación (un estudio bíblico, un pedido de oración, un evento). Responda cada comentario el mismo día.')],
-  ['youtube',L('YouTube and the live stream','YouTube y la transmisión'),[['YouTube Studio','studio.youtube.com','https://studio.youtube.com/',L('The church’s channel: live streams, titles, and replying to comments.','El canal de la iglesia: transmisiones, títulos y respuestas a comentarios.'),true]],L('Post the sermon the same day with a clear title. During a live stream, one person greets viewers and answers comments; at the end, offer a Bible study or prayer.','Publique el sermón el mismo día con un título claro. Durante la transmisión, una persona saluda y responde comentarios; al final, ofrezca un estudio bíblico u oración.')],
+  ['youtube',L('YouTube and the live stream','YouTube y la transmisión'),[['YouTube Studio','studio.youtube.com','https://studio.youtube.com/',L('The church’s channel: live streams, titles, descriptions, and replying to comments.','El canal de la iglesia: transmisiones, títulos, descripciones y respuestas a comentarios.'),true]],L('Post the sermon the same day with a title that says the topic (“Why God allows suffering”, not “Worship Service 10/10”) and a description that invites: the address, the service times, the pastor’s name and a link to the site. Schedule the live stream each week; during it, one person greets viewers and answers comments; at the end, offer a Bible study or prayer.','Publique el sermón el mismo día con un título que diga el tema (“Por qué Dios permite el sufrimiento”, no “Culto 10/10”) y una descripción que invite: la dirección, los horarios, el nombre del pastor y un enlace al sitio. Programe la transmisión cada semana; durante ella, una persona saluda y responde comentarios; al final, ofrezca un estudio bíblico u oración.')],
   ['reach',L('A way in for a neighbor','Una puerta para el vecino'),[[L('Your conference’s communication department','El departamento de comunicación de su asociación'),'','',L('Help with a site, training for the person who keeps it, and invitations for a series.','Ayuda con un sitio, capacitación para quien lo mantiene, e invitaciones para una serie.'),true],['SermonView','sermonview.com','https://sermonview.com/websites/',L('Evangelism websites, mailers and invitations for a series.','Sitios de evangelismo, correo e invitaciones para una serie.'),false]],L('Every site needs three doors: Plan your visit, Ask for prayer, Request Bible studies. A neighbor who knocks hears back within a day.','Todo sitio necesita tres puertas: Planee su visita, Pida oración, Solicite estudios bíblicos. El vecino que llama recibe respuesta en un día.')],
 ];
 const DF_ICON={website:'<path d="M3 5h18v14H3z M3 9h18 M6 7h.01 M8.5 7h.01"/>',pastor:'<circle cx="12" cy="8" r="3.5"/><path d="M5 20c1.2-3.6 3.8-5.5 7-5.5s5.8 1.9 7 5.5"/>',
   google:'<path d="M12 21s-6.5-6.2-6.5-11a6.5 6.5 0 0 1 13 0C18.5 14.8 12 21 12 21z"/><circle cx="12" cy="10" r="2.3"/>',social:'<path d="M14 21v-7h2.5l.5-3H14V9.2c0-.9.3-1.6 1.6-1.6H17V5.1c-.4 0-1.3-.1-2.4-.1-2.4 0-3.9 1.4-3.9 4V11H8v3h2.7v7"/>',
-  youtube:'<rect x="3" y="6" width="18" height="12" rx="3.5"/><path d="M10.5 9.5v5l4-2.5z"/>',reach:'<path d="M4 12h9 M10 8l4 4-4 4 M17 5v14"/>'};
+  youtube:'<rect x="3" y="6" width="18" height="12" rx="3.5"/><path d="M10.5 9.5v5l4-2.5z"/>',reach:'<path d="M4 12h9 M10 8l4 4-4 4 M17 5v14"/>',
+  forms:'<path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 11h6 M9 15h6"/>',pics:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-7 8"/>',words:'<path d="M4 18L9 6l5 12 M6 14h6 M15 10h5 M15 14h5 M15 18h3"/>'};
 const dfIco=k=>`<svg class="df-ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${DF_ICON[k]||DF_ICON.reach}</svg>`;
-const dfChip=(a,short)=>`<span class="df-st df-st-${a.s}"><i aria-hidden="true"></i>${esc(short?a.head:dfT(a.s))}</span>`;
+const dfChip=(a,short)=>`<span class="df-st df-st-${a.s}"><i aria-hidden="true"></i>${esc(short?a.head:a.n?`${dfT(a.s)} · ${dfT('of',{met:a.met,n:a.n})}`:dfT(a.s))}</span>`;   // v10.62.0: the state and the count
 const dfLink=(u,t)=>u&&/^https?:\/\//i.test(u)?`<a class="df-src" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t||u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'').slice(0,48))} ↗</a>`:'';
 function dfArea(k,a){ return `<div class="df-area"><div class="df-ah">${dfIco(k)}<b>${esc(dfT(DF_AREA_KEY[k]))}</b>${dfChip(a)}</div><div class="df-ahead">${esc(a.head)}</div>${a.lines.map(l=>`<p>${esc(l)}</p>`).join('')}${a.note?`<p class="df-note">${esc(a.note)}</p>`:''}${dfLink(a.url)}</div>`; }
 /* the "take me there" buttons of one church: links that go straight to the right place, and the words ready to paste */
@@ -43458,7 +43653,7 @@ async function dfLoad(force){
     const j=await r.json().catch(()=>null);
     if(!r.ok||!j||!j.ok){ DF.state=r.status===401?'noreg':'offline'; }
     else if(!j.supported){ DF.state='unsupported'; }
-    else { DF.data=j.findings||null; DF.reading=j.reading||null;
+    else { DF.data=j.findings||null; DF.reading=j.reading||null; DF.review=!!j.review;
       DF.state=j.state==='reading'?'reading':j.findings?'ready':j.enabled?'none':'notyet';
       if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
   }catch(e){ DF.state='offline'; }
@@ -43476,14 +43671,24 @@ async function dfAgain(org){
     DF.msg[org]=r.status===429?dfT('limitAgain'):dfT('checking'); }catch(e){ DF.msg[org]=dfT('offline'); }
   dfPaint(); setTimeout(()=>dfLoad(true),DF_POLL_MS);
 }
-async function dfCopy(btn,text){
-  try{ await navigator.clipboard.writeText(text); btn.textContent=dfT('copied'); setTimeout(()=>{ btn.textContent=dfT('copy'); },1600); }
+async function dfCopy(btn,text,back){
+  try{ await navigator.clipboard.writeText(text); btn.textContent=dfT('copied'); setTimeout(()=>{ btn.textContent=back||dfT('copy'); },1600); }
   catch(e){ const pre=btn.parentElement&&btn.parentElement.querySelector('pre'); if(pre){ const s=window.getSelection(), rg=document.createRange(); rg.selectNodeContents(pre); s.removeAllRanges(); s.addRange(rg); } btn.textContent=dfT('copyHint'); }
+}
+/* v10.62.0: the in-depth review's words for the report (the sees line, the priority-1 and 2 gaps as rows, the words) */
+const DF_EFFORT={hour:'efHour',day:'efDay',week:'efWeek'}, DF_WFOR={welcome:'wWelcome',visit:'wVisit',channel:'wChannel',google:'wGoogle',prayer:'wPrayer'};
+const dfEffort=e=>DF_EFFORT[e]?dfT(DF_EFFORT[e]):String(e||'');
+const dfWordFor=w=>DF_WFOR[w]?dfT(DF_WFOR[w]):String(w||'');
+function dfReportDeep(org){
+  const st=typeof dfDeepState==='function'?dfDeepState(org):null, R=st&&st.status==='done'&&st.review?st.review:null; if(!R) return null;
+  const gaps=(Array.isArray(R.gaps)?R.gaps:[]).filter(g=>g&&+g.priority<=2).sort((a,b)=>(+a.priority)-(+b.priority));
+  return {sees:String(R.sees||''),rows:gaps.map(g=>({title:String(g.title||''),what:String(g.what||''),fix:String(g.fix||''),who:String(g.who||''),effort:dfEffort(g.effort)})),
+    words:(Array.isArray(R.words)?R.words:[]).filter(w=>w&&w.text).map(w=>({for:String(w.for||''),label:dfWordFor(w.for),text:String(w.text)}))};
 }
 function dfReportText(c,J,myName,F){
   const A=J.areas, good=DF_AREAS.filter(k=>A[k].s==='ok').map(k=>dfT(DF_AREA_KEY[k])), fx=dfFixes(c,J,myName);
   return {title:c.name.replace(/\bSDA\b/,'Seventh-day Adventist'),from:myName,date:dfDay(F.read),good,
-    sees:DF_AREAS.filter(k=>['help','work'].includes(A[k].s)).map(k=>({k,h:A[k].head,l:A[k].lines.slice(0,k==='pastor'||k==='website'?4:2).join(' ')})),first:fx.slice(0,3),then:fx.slice(3)};
+    sees:DF_AREAS.filter(k=>['help','work'].includes(A[k].s)).map(k=>({k,h:A[k].head,l:A[k].lines.slice(0,k==='pastor'||k==='website'?4:2).join(' ')})),first:fx.slice(0,3),then:fx.slice(3),deep:dfReportDeep(c.org)};
 }
 function dfReportHTML(c,J,myName,F){
   const R=dfReportText(c,J,myName,F), v=(typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null);
@@ -43493,23 +43698,34 @@ function dfReportHTML(c,J,myName,F){
     <h4>${esc(dfT('rSees'))}</h4>${R.good.length?`<p>${esc(dfT('rGood',{list:R.good.join(', ')}))}</p>`:''}<ul>${R.sees.map(x=>`<li><b>${esc(dfT(DF_AREA_KEY[x.k]))}:</b> ${esc(x.h)}. ${esc(x.l)}</li>`).join('')}</ul>
     <h4>${esc(dfT('rFirst'))}</h4><ol>${R.first.map(f=>`<li><div>${esc(f.what)}</div><div class="df-faint">${esc(dfT('who'))}: ${esc(f.who)} · ${esc(dfT('when'))}: ${esc(f.when)} · ${esc(dfT('cost'))}: ${esc(dfT('free'))}</div></li>`).join('')}</ol>
     ${R.then.length?`<h4>${esc(dfT('rThen'))}</h4><ul>${R.then.map(f=>`<li>${esc(f.what)}</li>`).join('')}</ul>`:''}
+    ${R.deep?`<div class="df-rep-deep"><h4>${esc(dfT('deepTitle'))}</h4><p>${esc(R.deep.sees)}</p><ul>${R.deep.rows.map(x=>`<li>${esc(x.what)} <b>${esc(dfT('fixW'))}</b>${esc(x.fix)} <span class="df-faint">${esc([x.who,x.effort].filter(Boolean).join(' · '))}</span></li>`).join('')}</ul>
+      ${R.deep.words.map((w,i)=>`<div class="df-word"><div class="df-wfor">${esc(w.label)}</div><pre>${esc(w.text)}</pre><button type="button" class="btn ghost gfsm" data-df-copyw="${esc(c.org)}:${i}">${esc(dfT('copyS'))}</button></div>`).join('')}</div>`:''}
     <h4>${esc(dfT('wordsFor'))}</h4><div class="df-words"><pre>${esc(dfWordsFor(c,J,myName))}</pre><button type="button" class="btn ghost gfsm" data-df-copy="${esc(c.org)}">${esc(dfT('copy'))}</button></div>
     <h4>${esc(dfT('rHelp'))}</h4><p>${esc(dfT('rHelpT'))}</p>
     ${vv?`<p class="df-verse">“${esc(vv.text)}” <span>${esc(vv.ref)}</span></p>`:''}
     <div class="df-acts"><button type="button" class="btn" data-df-pdf="${esc(c.org)}">${esc(dfT('pdf'))}</button><button type="button" class="btn ghost" data-df-prop="${esc(c.org)}">${esc(dfT('proposal'))}</button><span class="df-faint" data-df-pdfmsg="${esc(c.org)}"></span></div></div>`;
 }
-async function dfPdf(c,J,myName,F){
-  const J2=await gfLoadJsPDF(); const doc=new J2({unit:'pt',format:'letter'}), R=dfReportText(c,J,myName,F), W=612, M=54; let y=60;
-  const line=(t,size,bold,gap)=>{ doc.setFont('helvetica',bold?'bold':'normal'); doc.setFontSize(size); for(const l of doc.splitTextToSize(String(t),W-2*M)){ if(y>740){ doc.addPage(); y=60; } doc.text(l,M,y); y+=size*1.35; } y+=gap||0; };
+/* the PDF (pure: the jsPDF class given, so tests draw it in node and read __dfLog) */
+function dfPdfDoc(J2,c,J,myName,F){
+  const doc=new J2({unit:'pt',format:'letter'}), R=dfReportText(c,J,myName,F), W=612, M=54; let y=60; doc.__dfLog=[];
+  const line=(t,size,bold,gap)=>{ doc.__dfLog.push(String(t)); doc.setFont('helvetica',bold?'bold':'normal'); doc.setFontSize(size); for(const l of doc.splitTextToSize(String(t),W-2*M)){ if(y>740){ doc.addPage(); y=60; } doc.text(l,M,y); y+=size*1.35; } y+=gap||0; };
   line(dfT('kicker').toUpperCase(),8.5,true,4); line(R.title,16,true,6);
   line(`${dfT('to')}: ${dfT('toV')}`,9.5,false); if(R.from) line(`${dfT('from')}: ${L('Pastor ','Pastor ')}${R.from}`,9.5,false); line(`${dfT('date')}: ${R.date}`,9.5,false,10);
   line(dfT('rSees'),11.5,true,2); if(R.good.length) line(dfT('rGood',{list:R.good.join(', ')}),10,false,2); R.sees.forEach(x=>line(`• ${dfT(DF_AREA_KEY[x.k])}: ${x.h}. ${x.l}`,10,false,1)); y+=6;
   line(dfT('rFirst'),11.5,true,2); R.first.forEach((f,i)=>{ line(`${i+1}. ${f.what}`,10,false); line(`   ${dfT('who')}: ${f.who} · ${dfT('when')}: ${f.when} · ${dfT('cost')}: ${dfT('free')}`,8.5,false,3); }); y+=4;
   if(R.then.length){ line(dfT('rThen'),11.5,true,2); R.then.forEach(f=>line(`• ${f.what}`,10,false,1)); y+=4; }
+  if(R.deep){ line(dfT('deepTitle'),11.5,true,2); if(R.deep.sees) line(R.deep.sees,10,false,3);
+    R.deep.rows.forEach(x=>{ line(`• ${x.what}`,10,false); line(`   ${dfT('fixW')}${x.fix}`,10,false); line(`   ${[x.who,x.effort].filter(Boolean).join(' · ')}`,8.5,false,3); });
+    R.deep.words.forEach(w=>{ line(w.label,9,true,1); line(w.text,10,false,4); }); y+=4; }
   line(dfT('rHelp'),11.5,true,2); line(dfT('rHelpT'),10,false,8);
   const v=typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null; if(v){ const vv=LANG==='es'?v.es:v.en; line(`“${vv.text}” ${vv.ref}`,10,false,6); }
   line('Made with Terrain · terrain.church',8,false);
-  doc.save(`Digital-footprint-${R.title.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')}-${F.read}.pdf`);
+  doc.__dfName=`Digital-footprint-${R.title.replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'')}-${F.read}.pdf`;
+  return doc;
+}
+async function dfPdf(c,J,myName,F){
+  const J2=await gfLoadJsPDF(); const doc=dfPdfDoc(J2,c,J,myName,F);
+  doc.save(doc.__dfName);
 }
 /* ---------------- drawing */
 function dfPaint(){
@@ -43529,32 +43745,40 @@ function dfPaint(){
     .sort((a,b)=>(b.own-a.own)||(a.own&&b.own?a.name.localeCompare(b.name):0)||(b.J.score-a.J.score)||a.name.localeCompare(b.name));   // his own in a steady order; the rest by need
   const mine=rows.filter(r=>r.own), others=rows.filter(r=>!r.own), n=k=>rows.filter(r=>r.fl.includes(k)).length, typ=dfTypical(rows);
   rows.forEach(r=>{ const A=r.J.areas; r.fl=['all',r.J.worst===3&&'help',A.website.s==='help'&&'site',['help','work'].includes(A.pastor.s)&&'pastor',['help','work'].includes(A.google.s)&&'google'].filter(Boolean); });
+  DF.rows=rows; DF.my=myName;   // v10.62.0: for the In depth blocks drawn later
   const pills=`<div class="df-pills"><span>${esc(dfT('conf',{conf}))}</span><span><b>${dfNf(F.churches.length)}</b> ${esc(dfT('count',{n:''}).trim())}</span><span>${esc(dfT('checked',{date:dfDay(F.read)}))}</span></div>`;
   const v=typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null, vv=v?(LANG==='es'?v.es:v.en):null;
   const sees=r=>{ const A=r.J.areas, g=DF_AREAS.filter(k=>A[k].s==='ok'), b=DF_AREAS.filter(k=>A[k].s==='help'), w=DF_AREAS.filter(k=>A[k].s==='work');
     return [g.length&&`${dfT('ok')}: ${g.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,b.length&&`${dfT('help')}: ${b.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,w.length&&`${dfT('work')}: ${w.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`].filter(Boolean).join(' '); };
+  // v10.62.0: the fixes on the card (heaviest first), folded; then the In depth block
+  const fixes=r=>{ const fx=dfFixes(r.c,r.J,myName); return fx.length?`<details class="df-fixd"><summary>${esc(dfT('fixes',{n:fx.length}))}</summary><ol>${fx.map(f=>`<li>${esc(f.what)} <span class="df-faint">${esc(f.who)} · ${esc(f.when)}</span></li>`).join('')}</ol></details>`:''; };
   const card=r=>{ const acts=dfActs(r.c,r.J);
     return `<article class="df-own"><header><div><h3>${esc(r.name)}</h3><div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''} · ${esc(L('pastor of record: ','pastor registrado: '))}<b>${esc(myName||r.c.pastor||'—')}</b></div></div>
       <a class="btn ghost gfsm" href="#df-report" data-df-torep="${esc(r.c.org)}">${esc(dfT('report'))}</a></header>
       <div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>
-      ${acts.length?`<div class="df-go">${acts.join('')}</div>`:''}
+      ${acts.length?`<div class="df-go">${acts.join('')}</div>`:''}${fixes(r)}${dfDeepHTML(r,true)}
       <div class="df-foot"><span>${esc(dfT('readOn',{date:dfDay(r.c.read||F.read)}))}</span>${DF.msg[r.c.org]?`<span>${esc(DF.msg[r.c.org])}</span>`:`<button type="button" class="btn ghost gfsm" data-df-again="${esc(r.c.org)}">${esc(dfT('checkAgain'))}</button>`}</div></article>`; };
   const side=mine.length>=2?`<section class="df-part"><h3 class="df-h"><span>2</span>${esc(dfT('s2'))}</h3><div class="df-wrap"><table class="df-side" style="min-width:${180+mine.length*220}px"><thead><tr><th></th>${mine.map(r=>`<th scope="col">${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
       <tr class="df-side-chart"><th scope="row">${esc(dfT('chart'))}</th>${mine.map(r=>`<td>${dfRadarFig(r.J,typ,conf,{small:true})}</td>`).join('')}</tr>
       ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${esc(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
   const P=n=>mine.length>=2?n:n-1;
+  // v10.62.0: "Website up, but not working": a site that opens with three or more heavy marks failed, and what they are
+  const heavyWhy=r=>{ const h=(r.J.marks&&r.J.marks.website||[]).filter(m=>m.w===2&&m.ok===false).map(m=>m.short).filter(Boolean); return h.join(', ').replace(/^./,x=>x.toUpperCase())+'.'; };
   const groups=[[L('No working website found','Sin sitio web que funcione'),others.filter(r=>r.J.areas.website.s==='help'),r=>r.J.areas.website.lines.find(l=>/does have|Sí tiene|does not open|no abre/.test(l))||r.J.areas.website.lines[1]||''],
-    [L('Not on Google Maps, or closed','No está en Google Maps, o cerrada'),others.filter(r=>r.J.areas.google.s==='help'),r=>r.J.areas.google.lines[0]],
+    [dfT('upNotWorking'),others.filter(r=>(r.J.areas.website.heavy||0)>=3),heavyWhy],
+    [L('Not on Google Maps, or closed','No está en Google Maps, o cerrada'),others.filter(r=>r.J.areas.google.s==='help'),r=>r.J.areas.google.lines.find(l=>/closed|cerrada/i.test(l))||r.J.areas.google.lines[0]],
     [L('Different pastors named','Pastores distintos'),others.filter(r=>r.J.areas.pastor.s==='help'),r=>r.J.areas.pastor.lines.slice(0,2).join(' ')],
     [L('Two websites online','Dos sitios web en línea'),others.filter(r=>r.J.areas.website.two),r=>r.J.areas.website.lines.find(l=>/second|segundo|Another|otra/.test(l))||'']].filter(g=>g[1].length);
-    // v10.61.0 (the audit): five a box, so the boxes stay alike in height; the rest are in Every church, below
-const needs=groups.length?`<div class="df-needs" style="--n:${groups.length===3?3:2}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,5).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a><span class="df-faint"> · ${esc(r.c.town||'')}</span><div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>5?`<p class="df-faint">${esc(L(`and ${list.length-5} more, in “Every church” below`,`y ${list.length-5} más, en “Cada iglesia” abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
+    // v10.61.0 (the audit): five a box, so the boxes stay alike in height; the rest are in Every church, below. v10.62.0: two across (three
+    // when three), the odd last box the whole row
+  const ncol=groups.length===3?3:2;
+const needs=groups.length?`<div class="df-needs${ncol===2?' n2':''}" style="--n:${ncol}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,5).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a><span class="df-faint"> · ${esc(r.c.town||'')}</span><div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>5?`<p class="df-faint">${esc(L(`and ${list.length-5} more, in “Every church” below`,`y ${list.length-5} más, en “Cada iglesia” abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
   const F0=[['all','fAll'],['help','fHelp'],['site','fSite'],['pastor','fPastor'],['google','fGoogle']];
   const table=`<div class="df-filters" role="group">${F0.map(([k,l])=>`<button type="button" class="df-f${DF.f===k?' on':''}" data-df-f="${k}" aria-pressed="${DF.f===k}">${esc(dfT(l))} <span>${n(k)}</span></button>`).join('')}<input id="df-q" type="search" value="${esc(DF.q)}" placeholder="${esc(dfT('find'))}" aria-label="${esc(dfT('find'))}"></div>
     <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
     ${rows.map(r=>{ const q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase(), show=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())), open=!!DF.open[r.c.org];
       return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''}${r.c.kind&&r.c.kind!=='church'?' · '+esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo')):''}</div></th>
-        ${DF_AREAS.map(k=>`<td>${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div></td></tr>`; }).join('')}
+        ${DF_AREAS.map(k=>`<td>${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-dwrap"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>${r.own?'':dfDeepHTML(r,false)}</div></td></tr>`; }).join('')}
     </tbody></table></div><p class="df-faint" id="df-none" hidden>${esc(dfT('none2'))}</p>`;
   const how=`<div class="df-hows">${DF_HOW().map(([k,h,places,what])=>`<article><h4>${dfIco(k)}${esc(h)}</h4><p>${esc(what)}</p>${places.length?`<ul>${places.map(([nm,d,u,t,free])=>`<li>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(nm)}</a>`:`<b>${esc(nm)}</b>`} <span class="df-cost">${esc(free?dfT('free'):L('Paid','De pago'))}</span>${d?`<div class="df-faint">${esc(d)}</div>`:''}<div>${esc(t)}</div></li>`).join('')}</ul>`:''}</article>`).join('')}</div>`;
   if(!DF.rep||!mine.some(r=>r.c.org===DF.rep)) DF.rep=mine.length?mine[0].c.org:'';
@@ -43570,9 +43794,13 @@ const needs=groups.length?`<div class="df-needs" style="--n:${groups.length===3?
     +rep
     +`<section class="df-part df-limits"><h3 class="df-h">${esc(dfT('limits'))}</h3><p>${esc(dfT('lim1',{search:F.search?dfT('limS'):''}))}</p><p>${esc(dfT('lim2'))}</p><p>${esc(dfT('lim3'))}</p></section>`;
   dfWire(box,rows,myName,F);
+  dfDeepAuto(rows);
 }
 function dfWire(box,rows,myName,F){
   const by=o=>rows.find(r=>r.c.org===o);
+  // v10.62.0: an opened row's findings stay inside the visible part of the table's box (the table itself is wider, for one-line pills)
+  const fit=()=>box.querySelectorAll('.df-wrap').forEach(w=>{ if(w.clientWidth>0) w.style.setProperty('--dfvw',(w.clientWidth-22)+'px'); }); fit();
+  if(!DF.resized){ DF.resized=true; window.addEventListener('resize',()=>{ const b=$('chc-df'); if(b) b.querySelectorAll('.df-wrap').forEach(w=>{ if(w.clientWidth>0) w.style.setProperty('--dfvw',(w.clientWidth-22)+'px'); }); }); }
   const refilter=()=>{ let shown=0; box.querySelectorAll('tr.df-row').forEach(tr=>{ const r=by(tr.dataset.dfRow), q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase();
     const ok=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())); tr.hidden=!ok; const d=tr.nextElementSibling; if(d) d.hidden=!ok||!DF.open[r.c.org]; if(ok) shown++; });
     const none=box.querySelector('#df-none'); if(none) none.hidden=shown>0; };
@@ -43589,7 +43817,93 @@ function dfWire(box,rows,myName,F){
   box.querySelectorAll('[data-df-copy]').forEach(b=>b.onclick=()=>{ const r=by(b.dataset.dfCopy); if(r) dfCopy(b,dfWordsFor(r.c,r.J,myName)); });
   box.querySelectorAll('[data-df-pdf]').forEach(b=>b.onclick=async()=>{ const r=by(b.dataset.dfPdf), m=box.querySelector(`[data-df-pdfmsg="${CSS.escape(b.dataset.dfPdf)}"]`);
     try{ await dfPdf(r.c,r.J,myName,F); if(m) m.textContent=''; }catch(e){ if(m) m.textContent=dfT('pdfFail'); } });
-  box.querySelectorAll('[data-df-prop]').forEach(b=>b.onclick=()=>{ try{ openTool('case'); caseChooseGroup('media'); }catch(e){} });
+  // v10.62.0: "Make it a proposal" carries the top three gaps of the in-depth review (sessionStorage, for Make the Case to pick up)
+  box.querySelectorAll('[data-df-prop]').forEach(b=>b.onclick=()=>{ try{ const r=by(b.dataset.dfProp), D=r?dfReportDeep(r.c.org):null;
+      if(D&&D.rows.length) sessionStorage.setItem('terrain-df-gaps',JSON.stringify({org:r.c.org,name:r.name,gaps:D.rows.slice(0,3).map(g=>({title:g.title,fix:g.fix,who:g.who}))})); }catch(e){}
+    try{ openTool('case'); caseChooseGroup('media'); }catch(e){} });
+  box.querySelectorAll('[data-df-deepgo],[data-df-deepagain]').forEach(b=>b.onclick=()=>{ const r=by(b.dataset.dfDeepgo||b.dataset.dfDeepagain); if(r) dfDeepStart(r,!!b.dataset.dfDeepagain); });
+  box.querySelectorAll('[data-df-copyw]').forEach(b=>b.onclick=()=>{ const [o,i]=String(b.dataset.dfCopyw).split(':'), st=dfDeepState(o), w=st&&st.review&&Array.isArray(st.review.words)?st.review.words[+i]:null; if(w) dfCopy(b,String(w.text||''),dfT('copyS')); });
+}
+/* ---------------- v10.62.0: In depth, the review by Claude (digital.mjs op review / review-status; server-side, never a word of the
+   model's on this page without the server's checks). His own churches: by itself once per reading, on an unlocked device (aiPass, the
+   ?ideas= passphrase, as the needs list and the proposal's words) when the server has the review on (GET review:true). Any other church:
+   on his tap, "Review in depth". The kept review comes back at once (200); a new one is a job (202) polled with review-status. Never
+   "AI" on screen: without the lock, one line. */
+const DF_DEEP={st:{},runs:new Map(),poll:4000,max:300000};
+const dfDeepKey=org=>`${org}|${DF.conf}|${(DF.data&&DF.data.read)||''}|${LANG==='es'?'es':'en'}`;
+function dfDeepState(org){ return DF_DEEP.st[dfDeepKey(org)]||null; }
+function dfDeepOn(){ return !!DF.review&&!(typeof memberLink==='function'&&memberLink()); }
+function dfDeepHTML(r,own){
+  if(!dfDeepOn()) return '';
+  const org=r.c.org, st=dfDeepState(org), lock=!aiPass()||(st&&st.status==='locked');
+  if(lock) return own||st?`<div class="df-deep" data-df-deep="${esc(org)}"><div class="df-deep-h">${esc(dfT('deepTitle'))}</div><p class="df-deep-lock">${esc(dfT('deepLock'))}</p></div>`:'';
+  return `<div class="df-deep" data-df-deep="${esc(org)}"><div class="df-deep-h">${esc(dfT('deepTitle'))}</div>${dfDeepInner(r,st,own)}</div>`;
+}
+function dfDeepInner(r,st,own){
+  const org=r.c.org, again=`<button type="button" class="btn ghost gfsm" data-df-deepagain="${esc(org)}">${esc(dfT('deepAgain'))}</button>`;
+  if(!st) return own?'':`<p class="df-deep-go"><button type="button" class="btn gfsm" data-df-deepgo="${esc(org)}">${esc(dfT('deepGo'))}</button></p>`;
+  if(st.status==='working') return `<p class="df-deep-work" role="status"><span class="ns-aispin" aria-hidden="true"></span><span>${esc(dfT('deepWork',{church:r.name}))}</span></p>`;
+  if(st.status==='failed') return `<p class="df-deep-fail">${esc(st.code==='limit'?dfT('deepLimit'):st.code==='limitSite'?dfT('deepLimitSite'):dfT('deepFail'))}</p><p>${again}</p>`;
+  if(st.status==='done'&&st.review) return dfReviewHTML(r,st.review)+`<div class="df-deep-foot"><span>${esc(dfT('deepOn',{date:dfDay(String(st.review.made||'').slice(0,10))}))}</span>${again}</div>`;
+  return '';
+}
+function dfReviewHTML(r,R){
+  const gaps=(Array.isArray(R.gaps)?R.gaps:[]).filter(g=>g&&typeof g==='object'), byP=p=>gaps.filter(g=>+g.priority===p);
+  const gap=g=>`<div class="df-gap" data-p="${esc(String(g.priority))}"><b>${esc(g.title||'')}</b><p class="df-gap-what">${esc(g.what||'')}</p>${g.why?`<p class="df-gap-why">${esc(g.why)}</p>`:''}<p class="df-gap-fix">${esc(g.fix||'')}</p><p class="df-gap-who">${esc([g.who,dfEffort(g.effort)].filter(Boolean).join(' · '))}</p></div>`;
+  const sec=(k,body)=>body?`<section class="df-deep-sec"><h5>${esc(dfT(k))}</h5>${body}</section>`:'';
+  const ap=R.appeal&&typeof R.appeal==='object'?R.appeal:null, lv=ap&&[0,1,2,3].includes(+ap.level)?dfT('ap'+(+ap.level)):'';
+  const ps=R.pastor&&typeof R.pastor==='object'?R.pastor:null, sh=ps?{yes:'shYes',no:'shNo',unclear:'shUnclear'}[ps.shown]:null;
+  return `<div class="df-deep-done">`
+    +sec('dSees',R.sees?`<p class="df-deep-sees">${esc(R.sees)}</p>`:'')
+    +sec('dStr',Array.isArray(R.strengths)&&R.strengths.length?`<ul class="df-deep-str">${R.strengths.filter(s=>s&&s.what).map(s=>`<li>${esc(s.what)}${s.where?` (${esc(s.where)})`:''}</li>`).join('')}</ul>`:'')
+    +sec('dP1',byP(1).map(gap).join(''))+sec('dP2',byP(2).map(gap).join(''))+sec('dP3',byP(3).map(gap).join(''))
+    +sec('dPics',Array.isArray(R.pictures)&&R.pictures.length?`<ul class="df-deep-pics">${R.pictures.filter(p=>p&&p.shows).map(p=>`<li>${esc(p.on||'')}: ${esc(p.shows)}${p.note?'. '+esc(p.note):''}</li>`).join('')}</ul>`:'')
+    +sec('dAppeal',ap?`<p class="df-deep-appeal">${lv?`<b>${esc(lv)}.</b> `:''}${esc(ap.note||'')}</p>`:'')
+    +sec('dPastor',ps?`<p class="df-deep-pastor">${sh?`<b>${esc(dfT(sh))}.</b> `:''}${esc(ps.note||'')}</p>`:'')
+    +sec('dWords',Array.isArray(R.words)&&R.words.length?`<div class="df-deep-words">${R.words.map((w,i)=>w&&w.text?`<div class="df-word"><div class="df-wfor">${esc(dfWordFor(w.for))}</div><pre>${esc(w.text)}</pre><button type="button" class="btn ghost gfsm" data-df-copyw="${esc(r.c.org)}:${i}">${esc(dfT('copyS'))}</button></div>`:'').join('')}</div>`:'')
+    +`</div>`;
+}
+/* the blocks of one church drawn again (its card, its row, the report when it is open), nothing else moved */
+function dfDeepPaint(org){
+  const box=$('chc-df'); if(!box||!DF.rows) return; const r=DF.rows.find(x=>x.c.org===org); if(!r) return;
+  box.querySelectorAll('[data-df-deep]').forEach(el=>{ if(el.dataset.dfDeep!==org) return; const own=!!el.closest('.df-own'), h=dfDeepHTML(r,own); if(!h){ el.remove(); return; } const d=document.createElement('div'); d.innerHTML=h; el.replaceWith(d.firstElementChild); });
+  const doc=[...box.querySelectorAll('.df-doc')].find(d=>d.id==='df-rep-'+org); if(doc){ const d=document.createElement('div'); d.innerHTML=dfReportHTML(r.c,r.J,DF.my,DF.data); doc.replaceWith(d.firstElementChild); }
+  dfWire(box,DF.rows,DF.my,DF.data);
+}
+/* his own churches: once per reading, by itself */
+function dfDeepAuto(rows){ if(!dfDeepOn()||!aiPass()) return; (rows||[]).filter(r=>r.own).forEach(r=>{ const k=dfDeepKey(r.c.org); if(DF_DEEP.st[k]||DF_DEEP.runs.has(k)) return; dfDeepStart(r,false); }); }
+async function dfDeepStart(r,fresh){
+  const org=r.c.org, k=dfDeepKey(org); if(DF_DEEP.runs.has(k)) return DF_DEEP.runs.get(k);
+  const prev=DF_DEEP.st[k], keep=prev&&prev.review||null; DF_DEEP.st[k]={status:'working',review:keep}; dfDeepPaint(org);
+  const tok=typeof regTok==='function'?regTok():'', H={'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})};
+  const post=b=>fetch(DF_FN,{method:'POST',headers:H,body:JSON.stringify(b),signal:AbortSignal.timeout(20000)}), wait=ms=>new Promise(res=>setTimeout(res,ms));
+  const fail=code=>{ code=/^limit-site/.test(code||'')?'limitSite':/^limit/.test(code||'')?'limit':code;   // integration: the server says limit-reg / limit-site
+    if(dfDeepKey(org)===k) DF_DEEP.st[k]={status:code==='locked'?'locked':'failed',code,review:keep}; dfDeepPaint(org); return false; };
+  const done=rv=>{ if(!rv||typeof rv!=='object'||!Array.isArray(rv.gaps)) return fail('bad'); if(dfDeepKey(org)===k) DF_DEEP.st[k]={status:'done',review:rv}; dfDeepPaint(org); return true; };
+  const run=(async()=>{
+    const t0=Date.now(); let job=null;
+    while(Date.now()-t0<DF_DEEP.max){
+      let r0=null,j=null;
+      try{ r0=await post({op:'review',conf:DF.conf,org,key:aiPass(),lang:LANG==='es'?'es':'en',own:!!r.own,myName:DF.my||'',fresh:!!fresh}); j=await r0.json().catch(()=>null); }catch(e){ r0=null; }
+      if(r0&&r0.status===200&&j&&j.ok&&j.review) return done(j.review);
+      if(r0&&r0.ok&&j&&j.ok&&j.job){ job=j.job; break; }   // 202 (a job queued); a 200 with a job is taken the same way
+      const code=(j&&j.code)||'';
+      if(code==='busy'){ fresh=false; await wait(DF_DEEP.poll); continue; }   // a review is being made for this church now: wait for it
+      if(code==='nokey'||code==='disabled'){ DF.review=false; delete DF_DEEP.st[k]; dfPaint(); return false; }
+      return fail(code||'error');
+    }
+    if(!job) return fail('slow');
+    while(Date.now()-t0<DF_DEEP.max){
+      await wait(DF_DEEP.poll);
+      let q=null,qj=null;
+      try{ q=await post({op:'review-status',conf:DF.conf,org,job}); qj=await q.json().catch(()=>null); }catch(e){ q=null; }
+      if(q&&q.ok&&qj&&qj.status==='done') return done(qj.review);
+      if((q&&q.ok&&qj&&qj.status==='failed')||(q&&(q.status===404||q.status===403))) return fail((qj&&qj.code)||'failed');
+    }
+    return fail('slow');
+  })();
+  DF_DEEP.runs.set(k,run);
+  try{ return await run; } finally{ DF_DEEP.runs.delete(k); }
 }
 /* ================= LEARN FROM OTHER CONFERENCES (the conference comparison and the year ahead) =================
    The pastor: "statements are different than what's actually happening … calendars speak more than mission statements",

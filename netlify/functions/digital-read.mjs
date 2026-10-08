@@ -471,7 +471,7 @@ export async function website(listed, maxPages = 30, pastorName = '', opts = {})
       forms: f, videos: vids.length, imgs: { n: im.n, unnamed: im.unnamed, generated: im.generated } });
     forms.n += f.n; for (const k of ['prayer', 'bible', 'contact', 'news']) forms[k] = forms[k] || f[k];
     for (const x of im.pics) if (!picsAll.has(x.key)) picsAll.set(x.key, x);
-    for (const x of vids) if (!vidsAll.some(y => y.id === x.id)) vidsAll.push(x);
+    for (const x of vids) if (!vidsAll.some(y => y.id === x.id)) vidsAll.push({ ...x, path: p.path });   // integration: the page it sits on
   }
   const txt = per.map(p => p.t).join(' \n '), all = pages.filter(p => p.h).map(p => p.h).join('\n');
   const vis = per.map(p => p.v).join(' \n ') + ' ' + [...all.matchAll(/href="tel:([^"]+)"/gi)].map(m => ' ' + decodeURIComponent(m[1]).replace(/^\+?1/, '') + ' ').join(' ');
@@ -492,7 +492,8 @@ export async function website(listed, maxPages = 30, pastorName = '', opts = {})
   const videos = [];
   for (const x of vidsAll.slice(0, VID_MAX)) {
     const i = x.on === 'youtube' ? await videoInfo(x.id) : { title: null, by: null, date: null, live: false, ch: null, desc: '' };
-    videos.push({ id: x.id, on: x.on, title: i.title, by: i.by, date: i.date, live: i.live, mine: false, ch: i.ch, names: namesIn((i.title || '') + ' · ' + i.desc) });
+    // `on` is the page the video sits on (the page judges a video on the home, about, pastor or staff pages); `kind` its provider
+    videos.push({ id: x.id, on: x.path, kind: x.on, title: i.title, by: i.by, date: i.date, live: i.live, mine: false, ch: i.ch, names: namesIn((i.title || '') + ' · ' + i.desc) });
   }
   const oldest = daysAgo(365), stale = recs.filter(p => 'newest' in p && p.newest && p.newest < oldest && !p.next).slice(0, 5).map(p => ({ path: p.path, date: p.newest }));
   const picList = [...picsAll.values()], st = streetRe(opts.address);
@@ -513,6 +514,8 @@ export async function website(listed, maxPages = 30, pastorName = '', opts = {})
     prayerRequest: /prayer request|request (a )?prayer|how can we pray|need prayer/i.test(txt),
     giving: /adventistgiving|give online|online giving|tithe|donate/i.test(all) || pages.some(p => /adventistgiving/i.test(p.to || '')),
     visitors: /plan (a|your) (first )?visit|new here|first time|visitor|what to expect/i.test(txt),
+    // v10.62.0: what to expect on a first visit (parking, children, how long, what to wear): the page's "what to expect" mark
+    expect: /what to expect|qu[eé] esperar|\bparking\b|estacionamiento|child ?care|nursery|guarder[ií]a|dress code|what (should|do|to) i wear|come as you are|how long (is|does|will)|vestimenta/i.test(txt),
     social: social(all, base),
     // the pages that name the listing's pastor (his surname); the page checks a registered pastor's own name against "pastors"
     pastorNamed: named, pastorPhoto: lp ? lp.photo : null, pastorPhotoOn: lp ? lp.on : null,
