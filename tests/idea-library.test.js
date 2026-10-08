@@ -208,7 +208,9 @@ const expectOf=ids=>{ const T=new Set(ids.map(i=>TI[i])); return IDX.ideas.filte
   c('choosing one closes the list and shows it chosen', [P.J('casePrefs()').ministry,!P.q('#cs-lib'),P.txt('#cs-s2 .cs-chosen h4')], [pid,true,THEME('prayer').ideas.find(x=>x.id===pid).en.n]);
 
   console.log('\n-- browse: the themes as tiles --');
-  P.E(`CASE_ST.pick=true; CASE_ST.q=''; caseDraw2();`); await sleep(40);
+  // v10.61.1 — the pastor (8 Oct 2026: "any redundancy … is unnecessary"): with a group chosen its own theme chips are step 2's one
+  // theme filter, and "All themes" shows only before a group is chosen; the tiles are browsed from there
+  P.E(`caseSetPrefs({group:null}); CASE_ST.pick=true; CASE_ST.q=''; caseDraw2();`); await sleep(40);
   P.q('#cs-s2 [data-cs-browse]').click(); await until(()=>P.qa('#cs-lib .lib-tile').length>0);
   const tiles=P.qa('#cs-lib .lib-tile');
   // v10.41 integration: the tiles are grouped under the two headings (a theme under its own side, and under the
