@@ -101,6 +101,7 @@ netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.1 since v10.61.0:
                                read; under 13 minutes a run, then it wakes itself; store `terrain-digital` (c/ findings, j/ job, e/ entries, r/ readings)
 netlify/functions/digital-sweep.mjs  (v10.60.0, digital-sweep-1.0) monthly (the 1st): conferences opened in 60 days read again; unopened in 180 forgotten
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
+AUDIT.md                       (v10.61.1) the checklist every full audit follows (set up, measured, read by eye, solid, fix and prove, report)
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
 conferences/                   (v10.44) "Learn from other conferences" as the page loads it: index.json (the chooser and every comparison, 50
@@ -156,12 +157,12 @@ every pull request (free on a public repo).
 Verify both halves after any deploy:
 
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
-- function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
-- connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
+- connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
 - v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
-  passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://pastorshub.org/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
-  `https://pastorshub.org/ideas/index.json` → `"hash":"f7b32cd68d45"`
+  passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://terrain.church/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
+  `https://terrain.church/ideas/index.json` → `"hash":"f7b32cd68d45"`
 
 **Server settings** (Netlify → Project configuration → Environment variables;
 values are never in the repo):
@@ -206,6 +207,24 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.61.1 (8 Oct 2026, quick lane) — one way to each place, under one name.** The pastor, 8 Oct 2026, answering the audit's open questions: *"keep the EVANGELISM planner in
+  English for now yes [hide] name conference for number two. We don't need to show twice. Just show the most important one skip four
+  and five yes remove survey button any redundancy too like that is unnecessary. We need this app to be efficient"*. The Planner stays
+  English for now; the two names of a figure stay (his "skip four"). **The phone header** (under 560 px): no "name · conference"; the
+  church button and Change, drawn as a person (`#regchange .rc-i`, its name "Change your name or conference") so it never reads as
+  "change church" beside the church button. **Each tool's name once** (`tbSync`, `TB_HEADS`, run by `openTool` and by the observer
+  `tsNoLoneSoon` already keeps): where a page opens with its own heading in the tool bar's words (Spiritual Gifts, Learn from other
+  conferences, Compare your churches, the Proposal's big "Proposal"), the bar's name steps aside (`.tb-dup`) and the empty bar with it
+  (`.tb-empty`); every tool's title one size (`.toolname,.gfhead h2,.chc-top h1,.cmp-top h1`; the Proposal keeps its big letters).
+  **One way to the main menu:** no "← Tools" (`#backtools` gone): "Main menu" in the header, and at the foot with Top. **One way to change
+  church:** the header's church button (his churches, + Add a church); the survey's tool-bar "Change church" (`#changech`) and Make the
+  Case's line's own link (`.homeline .hl-end`) are hidden whenever that button is there (`body:has(#chbtn)`), kept only without one (the
+  old access-code sign-in). **One theme filter** in Make the Case's step 2: with a group chosen its own theme chips; "All themes" only
+  before a group. Kept on purpose: the survey's donut legends (they are the circles' key). Checked in Chrome (`v78/redund.mjs`): phone
+  390 EN + ES and computer 1366, every tool, no sideways scroll, no page errors. Tests: `v61-answers` (new, 17; failing first on the
+  audit's commit: `v78/logs/ff-v61-answers.log`). New in the repo: `AUDIT.md`, the checklist every full audit follows (his "Give me the
+  steps … every detail of what you focus on when you audit"). Its own PR (PR #32, v10.61.0, was merged first). Full suite: 166 suites · 10,959 passed · 0 failed (the full run 10,937 with one stale check, idea-library's browse of the themes with a group chosen, updated with a comment for the one theme filter and rerun: 92).
+
 **v10.61.0 (7 Oct 2026, full lane) — Digital footprint says more, and draws it.** The pastor, of his own church's card: *"I thought it was
 gonna say more … on the website … it doesn't even have my picture on there it's hasn't been updated in a long time … once in a while in this
 box we need some kind of graph … circular graph … show which areas are weak which areas can get better which areas are stronger … Pastor's
@@ -249,7 +268,7 @@ name current yeah it may show my name there, but is it showing my picture?"*
   2026"; Compare your churches: a missing figure "—", "Not filled in yet" once a church, a bar only with something to compare.
   Tests: `v61-audit` (new, 20; failing first: `v78/logs/ff-v61-audit.log`); updated with comments: case-steps, case-screens,
   v47-clean, home-church ("Departamentos"), v57-churches (said once), v60-digital (the headings), v40-accuracy (the spelling).
-  **Found, not changed (his to decide):** the Evangelism Planner is English only in Spanish; the phone header (the church chip and
+  **Found, not changed (his to decide; his answers: v10.61.1):** the Evangelism Planner is English only in Spanish; the phone header (the church chip and
   "name · conference" both cut short); each tool's name twice (tool bar and heading); a few figures with two names in the survey
   ("Two or more" / "2+ races", "Born abroad" / "Born outside the U.S."); the toolbar's "Change church" beside the header's chip.
   Also: a separator never ends a line alone ("· Change church", "· Sabbath slides" travel with their links). Full suite: 165 suites ·
@@ -3006,6 +3025,9 @@ Don't relitigate them without a reason he'd accept.
 - **Digital footprint never accuses** (v10.60.0, his rule: "make sure we're not missing something so we don't accuse them"): "no website" only after a
   double check, said "we could not find" with what was checked; a refusal or a robots.txt is "Not read"; Facebook and Instagram are never read; Google's
   listing and the website carry the weight (his words); every registered pastor of a conference sees all its churches, the report only for his own.
+- **One way to each place, under one name** (v10.61.1, his words: "any redundancy … is unnecessary. We need this app to be efficient"):
+  one button for the main menu ("Main menu"), one for changing church (the header's church button), each tool's name once, one theme
+  filter. Before adding a button, check nothing on the same screen already does it.
 - **Each church is its own, and they are compared, never ranked** (v10.57.0): one button in the header switches; the comparison shows
   differences in plain sentences and counts only.
 - **Clear next steps** (his request, v10.43 §5; v10.56.1 took "Your path" off the hub at his word): "What's next" at the very bottom of the survey (Make the case for each ministry in

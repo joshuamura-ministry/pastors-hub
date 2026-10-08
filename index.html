@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.61.0
+     TERRAIN  v10.61.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.61.0" data-theme="dark">
+<html lang="en" data-version="v10.61.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.61.0">
-<title>Community Map — Terrain v10.61.0</title>
+<meta name="terrain-version" content="v10.61.1">
+<title>Community Map — Terrain v10.61.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -426,7 +426,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .whoami .whotxt{min-width:0;max-width:min(44ch,62vw);overflow:hidden;text-overflow:ellipsis}
 .whoami .whoname{color:var(--ink2);font-weight:600}
 .whoami #signout,.whoami #regchange,.whoami #acctbtn{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
-/* The chip sits after Pastors Hub and ES, set off by a hairline, rather than
+/* The chip sits after Main menu and ES, set off by a hairline, rather than
    splitting the free space with them; the same height as they are. */
 .whoami #regchange,.whoami #signout,.whoami #acctbtn{min-height:40px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
 /* From 700px the chip never wraps under the others: it takes what room is
@@ -622,6 +622,15 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .toolname{font-family:var(--disp);font-size:1.05rem;font-weight:600;color:var(--ink)}
 .changech{margin-left:auto}
 .changech[hidden]{display:none}
+/* v10.61.1 — the pastor (8 Oct 2026): "remove survey button any redundancy too like that is unnecessary". One way to change church: the
+   church button in the header (#chbtn: his churches, + Add a church). The survey's tool-bar "Change church" and Make the Case's line's
+   own link stay only where there is no such button (the old access-code sign-in). */
+body:has(#chbtn) #changech,body:has(#chbtn) .homeline .hl-end{display:none!important}
+/* …and each tool's name once ("We don't need to show twice. Just show the most important one"): where the page opens with its own heading
+   in the same words (Spiritual Gifts, Learn from other conferences, Compare your churches, the Proposal), the tool bar's name steps
+   aside, and the bar with it when nothing else is on it (tbSync) */
+.toolname.tb-dup{display:none}
+.toolbar.tb-empty{display:none}
 /* v10.40.0: "{church} · {address} · Change church", one quiet line of text under the
    tool bar that wraps like a sentence (the link's tap area reaches past its words) */
 .homeline{margin:14px 0 0;font-size:.88rem;line-height:1.55;color:var(--ink2);overflow-wrap:anywhere}
@@ -3575,6 +3584,16 @@ button.cd-rowb:hover{background:var(--panel2)}
 @media (max-width:520px){.whoami .chbtn{max-width:160px}}
 /* v10.57.0: with the church's button the header row is wider than a phone: the row may shrink, and the name and the church end in "…" */
 @media(max-width:699px){ .whoami{min-width:0} .whoami .whotxt{flex:0 1 auto} }
+/* v10.61.1 — the pastor (8 Oct 2026), of the phone header (the church button and "name · conference" both cut short): "hide name
+   conference". On a phone the row is the church button and Change, drawn as a person so it never reads as "change church" beside it. */
+#regchange .rc-i{display:none;width:18px;height:18px;flex:none}
+@media(max-width:560px){
+  .whoami .whotxt{display:none}
+  .whoami #regchange .rc-t{display:none}
+  .whoami #regchange .rc-i{display:block}
+  .whoami #regchange{padding:0 11px}
+  .whoami .chbtn{max-width:min(320px,calc(100vw - 110px))}
+}
 @media (min-width:521px){ dialog.ch-sheet{max-width:min(560px,calc(100vw - 24px))} }
 .ch-b{padding:4px 18px 18px;display:grid;gap:12px}
 .ch-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
@@ -4046,6 +4065,10 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp[hidden]{display:none}
 .cmp-top{padding:6px 0 4px}
 .cmp-top h1{font-family:var(--disp);font-size:clamp(1.5rem,5vw,2rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
+/* v10.61.1 — each tool's name once, and every tool's title the same (the pastor, 8 Oct 2026: "We don't need to show twice. Just show the
+   most important one"; "symmetry throughout the whole app"): the survey's, Make the Case's and the Planner's in the tool bar, Spiritual
+   Gifts', the conferences' and the churches' at the top of their page, one size and weight. The Proposal keeps its big letters (v10.48.0). */
+.toolname,.gfhead h2,.chc-top h1,.cmp-top h1{font-family:var(--disp);font-size:clamp(1.5rem,4vw,2rem);font-weight:700;letter-spacing:-.02em;line-height:1.15;color:var(--ink)}
 .cmp-top .lead{color:var(--ink2);margin:6px 0 0;font-size:.98rem}
 .cmp-pills{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .cmp-pill{display:inline-flex;align-items:center;border:1px solid var(--line2);border-radius:999px;padding:3px 11px;font-size:.78rem;color:var(--ink2);background:var(--panel)}
@@ -4732,7 +4755,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   </div>
 
   <div class="toolbar" id="toolbar" hidden>
-    <button class="backtools" id="backtools">← Tools</button>
+    <!-- v10.61.1 — the pastor (8 Oct 2026): "any redundancy … is unnecessary. We need this app to be efficient": no "← Tools" here;
+         "Main menu" at the top (and at the foot, with Top) goes to the same place, under one name -->
     <span class="toolname" id="toolname"></span>
     <button class="backtools changech" id="changech" hidden>Change church</button>
   </div>
@@ -4840,13 +4864,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.61.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.61.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.61.0';
+const VERSION = 'v10.61.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10702,7 +10726,7 @@ function openTool(id){
     $('report').classList.remove('show');
     ['planner','gifts','secnav','changech','casep','homeline'].forEach(x=>{ const e=$(x); if(e) e.hidden=true; });
     let L=$('locked'); if(!L){ L=document.createElement('div'); L.id='locked'; $('toolbar').after(L); }
-    L.hidden=false; L.innerHTML=lockHTML(feat);
+    L.hidden=false; L.innerHTML=lockHTML(feat); tbSync();
     window.scrollTo({top:0,behavior:'auto'});
     return;
   }
@@ -10728,7 +10752,7 @@ function openTool(id){
     const which=TOOLS[id].panel||'planner';
     const pe=$(which);
     if(pe){ pe.hidden=false; if(which==='gifts') giftsOpen(); else if(which==='cmp') cmpOpen(); else if(which==='chc') chcOpen(); else plannerOpen(); }
-    homeLine();
+    homeLine(); tbSync();
     if(which!=='cmp'&&which!=='chc') setTimeout(homeEnsure,0);   // the Planner's place, and Gifts' neighbourhood, from the remembered church (the comparison needs none)
     window.scrollTo({top:0,behavior:'auto'});
     return;
@@ -10748,6 +10772,7 @@ function openTool(id){
   // Deferred a tick: a permalink opens the tool and then starts its own lookup, which
   // homeEnsure then waits for instead of starting a second one.
   if(id==='case') setTimeout(homeEnsure,0);
+  tbSync();
   window.scrollTo({top:0,behavior:'auto'});
 }
 /* The place line: inside a single-purpose tool the church address leads, because
@@ -12516,7 +12541,6 @@ function wireHub(){
       const t=document.createElement('span'); t.className='tlock'; t.textContent='Full version'; b.querySelector('b').after(t);
     }
   });
-  const back=$('backtools'); if(back) back.onclick=showHub;
   const ch=$('changech'); if(ch) ch.onclick=showAddressForm;
   const brand=$('brandlink');
   if(brand) brand.onclick=e=>{ e.preventDefault(); if(memberLink()) return; if(!gated()) showHub(); };
@@ -13134,7 +13158,7 @@ function showWho(){
       try{ location.reload(); }catch(e){}
     };
   } else {
-    d.innerHTML=`${chChipHTML()}<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange">${L('Change','Cambiar')}</button>${acctBtnHTML()}`;
+    d.innerHTML=`${chChipHTML()}<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange" title="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}" aria-label="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}"><svg class="rc-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="rc-t">${L('Change','Cambiar')}</span></button>${acctBtnHTML()}`;
     nav.appendChild(d);
     document.getElementById('regchange').onclick=regChange;
     { const cb=document.getElementById('chbtn'); if(cb) cb.onclick=chSheetOpen; }   // v10.57.0: the church chip
@@ -13178,7 +13202,7 @@ async function initAccess(){
     hideGate();
     const g=$('gate'); if(g) g.hidden=true;
     ['hub','toolbar','secnav','changech'].forEach(id=>{ const e=$(id); if(e) e.hidden=true; });
-    // No "Pastors Hub" in the header either: nothing here leads out of the page.
+    // No "Main menu" in the header either: nothing here leads out of the page.
     { const bl=$('brandlink'); if(bl){ const nav=bl.closest('nav'); (nav||bl).hidden=true; } }
     const ask=document.querySelector('.ask'); if(ask) ask.style.display='none';
     const setup=$('setup'); if(setup) setup.style.display='none';
@@ -35720,8 +35744,10 @@ function caseDraw2(){
     h.querySelectorAll('[data-lib-addx]').forEach(b=>b.onclick=()=>libAddX('case',b.dataset.libAddx));
     return;
   }
+  // v10.61.1 — the audit (two theme filters, one above the other) and the pastor (8 Oct 2026: "any redundancy … is unnecessary"): with a
+  // group chosen its own theme chips are the one theme filter (the search still reaches every idea); "All themes" only before a group
   const find=`<div class="cs-find"><label class="cs-search"><span class="cs-vh">${esc(caseStepT('search'))}</span><input type="search" id="cs-q" value="${esc(CASE_ST.q)}" placeholder="${esc(caseStepT('searchPh'))}" autocomplete="off" maxlength="60"></label>
-      <button type="button" class="btn ghost gfsm" data-cs-browse>${esc(caseStepT('browse'))}</button></div>
+      ${G?'':`<button type="button" class="btn ghost gfsm" data-cs-browse>${esc(caseStepT('browse'))}</button>`}</div>
     <div id="cs-lib"></div>`;
   // v10.42 (section F): with a group, "From your plan" first, then "More ideas for {group}" (the search and the list)
   const group=G?caseGroupFor(G.id,caseT(G)):'';
@@ -35734,7 +35760,7 @@ function caseDraw2(){
   const k=h.querySelector('[data-cs-keep]'); if(k) k.onclick=()=>{ CASE_ST.pick=false; CASE_ST.q=''; caseDraw2(); caseStepBar(); };
   caseCmpDoorWire(h);
   $('cs-q').oninput=e=>{ CASE_ST.q=e.target.value; libQueue('case'); };
-  h.querySelector('[data-cs-browse]').onclick=()=>{ const U=LIB_UI.case; U.browse=true; U.theme=null; libClearQuery('case'); libMount('case'); };
+  { const br=h.querySelector('[data-cs-browse]'); if(br) br.onclick=()=>{ const U=LIB_UI.case; U.browse=true; U.theme=null; libClearQuery('case'); libMount('case'); }; }
   if(G) casePlanDraw();
   libMount('case');
   // v10.43: how it runs, for "From your plan" and "More ideas" (kept for the session, across groups)
@@ -44569,8 +44595,24 @@ function tsNoLone(){
     const alone=kids.filter(k=>Math.abs(k.getBoundingClientRect().top-r.top)<4).length===1;
     if(alone&&r.width<g.clientWidth*0.7){ last.style.gridColumn='1 / -1'; last.dataset.tsLone='1'; } }); }catch(e){}
 }
+/* v10.61.1 — the pastor (8 Oct 2026): "each tool's name … We don't need to show twice. Just show the most important one". The page's own
+   heading is the one shown: where a tool opens with a heading in the tool bar's words, the bar's name steps aside (.tb-dup), and the bar
+   itself when nothing else is on it (.tb-empty: "Change church" is the header's church button's). */
+const TB_HEADS='#gifts .gfhead h2,#cmp .cmp-top h1,#chc .chc-top h1,#cs-prop-h';
+function tbFold(t){ return String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,' ').trim().toLowerCase(); }
+function tbSync(){
+  try{
+    const bar=$('toolbar'), nm=$('toolname'); if(!bar||!nm) return;
+    const t=tbFold(nm.textContent);
+    const shown=h=>!h.closest('[hidden]')&&!h.closest('#report:not(.show)');
+    const dup=!!t&&[...document.querySelectorAll(TB_HEADS)].some(h=>shown(h)&&tbFold(h.textContent)===t);
+    nm.classList.toggle('tb-dup',dup);
+    const ch=$('changech'), chOn=!!ch&&!ch.hidden&&!document.getElementById('chbtn');
+    bar.classList.toggle('tb-empty',(dup||!t)&&!chOn);
+  }catch(e){}
+}
 let TS_NOLONE_T=null;
-function tsNoLoneSoon(){ if(TS_NOLONE_T) return; TS_NOLONE_T=requestAnimationFrame(()=>{ TS_NOLONE_T=null; tsNoLone(); }); }
+function tsNoLoneSoon(){ if(TS_NOLONE_T) return; TS_NOLONE_T=requestAnimationFrame(()=>{ TS_NOLONE_T=null; tsNoLone(); tbSync(); }); }
 if(typeof window!=='undefined'&&typeof MutationObserver==='function'&&typeof requestAnimationFrame==='function'){
   try{ new MutationObserver(ms=>{ if(ms.some(m=>m.type==='childList')) tsNoLoneSoon(); }).observe(document.documentElement,{childList:true,subtree:true}); window.addEventListener('resize',tsNoLoneSoon); }catch(e){}
 }
