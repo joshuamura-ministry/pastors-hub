@@ -45,6 +45,9 @@ th{background:var(--panel2);color:var(--ink);font-weight:700}
 tr:last-child td{border-bottom:0}
 td{color:var(--ink2)}
 .foot{color:var(--ink3);font-size:.85rem;margin-top:40px;border-top:1px solid var(--line);padding-top:16px}
+.legalnav{display:flex;flex-wrap:wrap;gap:6px 16px;justify-content:center;margin-top:28px;padding-top:16px;border-top:1px solid var(--line);font-size:.9rem}
+.legalnav a{text-decoration:none;font-weight:600}
+.legalnav a[aria-current="page"]{color:var(--ink);pointer-events:none}
 /* on a phone each row of a table is its own small card, its labels beside its words (data-th, set by the script below) */
 @media (max-width:640px){
   .tw{border:0;overflow:visible}
@@ -210,6 +213,8 @@ td{color:var(--ink2)}
 
 <h2 id="contact">14. Contact</h2>
 <p>Muraworks, Pennsylvania, United States · <a href="mailto:privacy@terrain.church" data-contact>privacy@terrain.church</a></p>
+<p class="foot">If this English version and the Spanish translation differ, the English version governs.</p>
+<nav class="legalnav" aria-label="Terrain pages"><a href="/about">About Terrain</a><a href="/privacy" aria-current="page">Privacy</a><a href="/terms">Terms</a><a href="/refunds">Refunds</a><a href="/">Open Terrain</a></nav>
 </article>
 
 <!-- ============================================================ ESPAÑOL -->
@@ -352,9 +357,9 @@ td{color:var(--ink2)}
 <h2 id="contacto">14. Contacto</h2>
 <p>Muraworks, Pensilvania, Estados Unidos · <a href="mailto:privacy@terrain.church" data-contact>privacy@terrain.church</a></p>
 <p class="foot">Si esta traducción y la versión en inglés difieren, rige la versión en inglés.</p>
+<nav class="legalnav" aria-label="Páginas de Terrain"><a href="/about">Acerca de Terrain</a><a href="/privacy" aria-current="page">Privacidad</a><a href="/terms">Términos</a><a href="/refunds">Reembolsos</a><a href="/">Abrir Terrain</a></nav>
 </article>
 
-<p class="foot" lang="en" data-l="en">If this English version and the Spanish translation differ, the English version governs. · <a href="/">terrain.church</a></p>
 </main>
 
 <script>
