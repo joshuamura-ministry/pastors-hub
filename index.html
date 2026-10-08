@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.62.0
+     TERRAIN  v10.62.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.62.0" data-theme="dark">
+<html lang="en" data-version="v10.62.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.62.0">
-<title>Community Map — Terrain v10.62.0</title>
+<meta name="terrain-version" content="v10.62.1">
+<title>Community Map — Terrain v10.62.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -3988,6 +3988,7 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cn-lines p{margin:4px 0}
 .cn-nw{white-space:nowrap}
 .cn-promise{display:flex;gap:8px;align-items:flex-start;margin:16px 22px 0;color:var(--cn-ink3);font-size:13px;line-height:1.5}
+.cn-promise .cn-plink{color:inherit;text-decoration:underline;white-space:nowrap}   /* v10.62.1: the privacy policy, same site */
 .cn-plock{width:16px;height:16px;margin-top:2px;color:var(--cn-l)}
 .cn-done{outline:none}
 .cn-done p,p.cn-done{font-size:18px;line-height:1.5;margin:0 0 10px}
@@ -4862,6 +4863,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       </div>
     </div>
     <p class="gjoin"><a href="#watch" id="gatejoin">Here to follow a presentation? Enter its code</a></p>
+    <!-- v10.62.1: the privacy policy, open to anyone without registering (terrain.church/privacy) -->
+    <p class="gjoin gpriv"><a href="/privacy" id="gatepriv">How Terrain handles your information</a></p>
     <p class="status err" id="gmsg" role="alert" hidden></p>
     <div class="usmapwrap"><div id="usmap"></div></div>
     <div class="field" style="margin-top:16px">
@@ -4892,14 +4895,14 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <!-- v10.47.1: "keep that [Top] and then also … main menu which will bring you to the main menu" -->
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
-    <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.0</span></div>
+    <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.62.0';
+const VERSION = 'v10.62.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9614,7 +9617,7 @@ const ES={
  
  
  'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso','Spiritual Gifts':'Dones espirituales',
- 'Join a presentation':'Unirse a una presentación',
+ 'Join a presentation':'Unirse a una presentación','Privacy':'Privacidad',
  // the hub's fourth title and the four verbs under the cards (v10.38.0: seen
  // straight after registering in Spanish, and they were still English)
  'Evangelism Planner':'Plan de evangelismo',
@@ -13095,6 +13098,7 @@ function openGate(mode,msg){
   if(sub) sub.textContent=code
     ?L('Tap your state on the map, or search the list. Then enter the access code for your conference.','Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.')
     :L('Tap your state on the map, or search the list. Then register with your name, email and church.','Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.');
+  { const gp=$('gatepriv'); if(gp) gp.textContent=L('How Terrain handles your information','Cómo maneja Terrain su información'); }   // v10.62.1
   { const gj=$('gatejoin'); if(gj) gj.textContent=L('Here to follow a presentation? Enter its code','¿Viene a seguir una presentación? Escriba su código'); }
   // v10.46.0: the sign-in, only while the first page asks for a registration (never with codes)
   { const gs=$('gsignin'), sb=$('gsignbtn'), sf=$('signform');
@@ -27105,6 +27109,7 @@ const CN_TEXT={
   startsLine: {en:'It starts: {when}',             es:'Comienza: {when}'},
   prayLine:   {en:'We will pray for you.',         es:'Oraremos por usted.'},
   withdraw:   {en:'Changed your mind? Remove what I sent', es:'¿Cambió de opinión? Borrar lo que envié'},
+  privacy:    {en:'Privacy policy', es:'Política de privacidad'},   // v10.62.1: the promise line links terrain.church/privacy (same site)
   withdrawn:  {en:'Removed. Nothing you sent is kept.', es:'Borrado. No se guarda nada de lo que envió.'},
   minor:      {en:'Thank you for coming! This card is for adults. If you’d like to hear from us, please ask a parent or guardian to fill it in.',
                es:'¡Gracias por venir! Esta tarjeta es para adultos. Si quiere saber de nosotros, pídale a su padre, madre o tutor que la llene.'},
@@ -27372,7 +27377,8 @@ function cnWords(card,lang){
   if(CN_LINES[card.kind]) lines.push(CN_LINES[card.kind][lang==='es'?'es':'en']);
   return {head,sub,title,noteLabel,noteWho:L('noteWho'),kidsHint:cnKidsHint(card)?L('kidsHint'):'',lines,
     nameLabel:card.kind==='abuse'?L('nameAbuse'):L('name'),quickExit:card.kind==='abuse',gentle,
-    promise:cnFill(L('promise'),{church:card.church}),promisePaper:cnFill(L('promisePaper'),{church:card.church}),consent:L('consent')};
+    promise:cnFill(L('promise'),{church:card.church}),promisePaper:cnFill(L('promisePaper'),{church:card.church}),consent:L('consent'),
+    privacy:L('privacy'),privacyHref:'/privacy?lang='+(lang==='es'?'es':'en')};
 }
 /* A choice's words in a language, the other language when it has none. */
 const cnOptText=(o,lang)=>(lang==='es'?o.es||o.en:o.en||o.es)||'';
@@ -28123,7 +28129,7 @@ function cnBandHTML(card,L,o){
 function cnLangHTML(L){
   return `<div class="cn-lang" role="group" aria-label="${L==='es'?'Idioma':'Language'}"><button type="button" data-cn-lang="en" aria-pressed="${L==='en'}" lang="en">English</button><button type="button" data-cn-lang="es" aria-pressed="${L==='es'}" lang="es">Español</button></div>`;
 }
-function cnPromiseHTML(W){ return `<p class="cn-promise">${cnIconSVG('lock','cn-ico cn-plock')}<span>${esc(W.promise)}</span></p>`; }
+function cnPromiseHTML(W){ return `<p class="cn-promise">${cnIconSVG('lock','cn-ico cn-plock')}<span>${esc(W.promise)}${W.privacy?` <a class="cn-plink" href="${esc(W.privacyHref||'/privacy')}" target="_blank" rel="noopener">${esc(W.privacy)}</a>`:''}</span></p>`; }
 /* The professional lines; a phone number never breaks across two lines (someone may need it in a hurry). */
 function cnLinesHTML(W,L){ return W.lines.length?`<aside class="cn-lines" aria-label="${L==='es'?'Ayuda':'Help'}">${W.lines.map(t=>`<p>${esc(t).replace(/(\+?\d[\d().-]{5,}\d)/g,'<span class="cn-nw">$1</span>')}</p>`).join('')}</aside>`:''; }
 
