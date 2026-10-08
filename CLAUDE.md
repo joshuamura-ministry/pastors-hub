@@ -275,7 +275,7 @@ server's `limit-reg` / `limit-site` codes read by the page).
   v61-digital-read, v60-1-signup-read, v60-digital (the states under the bar; Facebook unread), v61-digital-depth (the chart by share),
   no-ai-words (133: Digital footprint with a review, a row open, the report). Checked in Chrome on the integrated build (`v79/make-findings62.mjs`,
   `serve62.mjs`, `shots62.mjs`, 66 pictures `v79/shots62/`): computer 1366 and phone 390, EN + ES, no sideways scroll, no page errors, rows level.
-  Full suite: FULLSUITE62. Samples `Terrain-v10.62.0-samples` (made-up findings: Sampleton's site opens but fails 14 of 24, an embedded video
+  Full suite: 169 suites · 11,229 passed · 0 failed (the full run 11,228 and one stale count, connect-client's memberLink() guard sites, 28 with the in-depth review's, updated with a comment and rerun: 88). Samples `Terrain-v10.62.0-samples` (made-up findings: Sampleton's site opens but fails 14 of 24, an embedded video
   naming "Pastor Sample Previous" from 2023; a made-up review).
 - **Open / his to decide** (the design's defaults): which marks are heavy and the 9-in-10 line; the review by itself for his churches, others
   on tap (cost); Claude describes pictures, never who is in them; Facebook and Instagram unread; Google reviews' text out. Not checked live:
