@@ -209,8 +209,17 @@ try {
   S.poke('o/pennsylvania', { at: '2026-10-01' }); S.poke('c/pennsylvania', { ...S.peek('c/pennsylvania'), at: T - 40 * 864e5 }); S.poke('j/pennsylvania', { status: 'done' });
   S.poke('o/ohio', { at: '2026-01-01' }); S.poke('c/ohio', { at: 1 }); S.poke('r/ohio/ANBF99', {});
   S.poke('m/2026-06/places', { n: 3 }); S.poke('a/2026-09-01/AbCd', { n: 1 });
+  // v10.62.0 (digital-sweep-1.1): the in-depth review's keys (digital-1.2): a forgotten conference's kept reviews go with its findings;
+  // a job older than 7 days, a lock older than a day, a day counter older than 2 days go; a fresh job and a kept review stay
+  S.poke('v/ohio/ANBF99/en', { v: 1 }); S.poke('x/ohio/ANBF99', { at: 1 }); S.poke('v/pennsylvania/ANBICG/en', { v: 1, at: T });
+  S.poke('q/oldjobAAAAAAAAAAAAAAAA', { status: 'done', created: T - 8 * 864e5 }); S.poke('q/newjobAAAAAAAAAAAAAAAA', { status: 'queued', created: T - 3600e3 });
+  S.poke('l/pennsylvania/ANBICG', { created: T - 2 * 864e5 }); S.poke('l/pennsylvania/ANBIHL', { created: T - 3600e3 });
+  S.poke('c/site/2026-10-05', { n: 4 }); S.poke('c/reg/2026-10-05/AbCd', { n: 1 }); S.poke('c/site/2026-10-08', { n: 1 });
   wakes = [];
   const sw = await SW.sweep('https://terrain.church');
+  c('the review\'s keys swept: a forgotten conference\'s reviews and texts, old jobs, old locks, old day counters; the fresh ones kept',
+    [S.peek('v/ohio/ANBF99/en'), S.peek('x/ohio/ANBF99'), !!S.peek('v/pennsylvania/ANBICG/en'), S.peek('q/oldjobAAAAAAAAAAAAAAAA'), !!S.peek('q/newjobAAAAAAAAAAAAAAAA'), S.peek('l/pennsylvania/ANBICG'), !!S.peek('l/pennsylvania/ANBIHL'), S.peek('c/site/2026-10-05'), S.peek('c/reg/2026-10-05/AbCd'), !!S.peek('c/site/2026-10-08'), S.peek('c/pennsylvania') !== null],
+    [null, null, true, null, true, null, true, null, null, true, true]);
   c('opened lately and old findings: read again; unopened for 180 days: forgotten; old counters gone',
     [sw.started, sw.forgotten, S.peek('c/ohio'), S.keys('r/ohio/').length, S.peek('m/2026-06/places'), S.peek('a/2026-09-01/AbCd'), wakes.length], [1, 1, null, 0, null, null, 1]);
   c('the sweep runs on the 1st of each month', SW.config.schedule, '0 7 1 * *');

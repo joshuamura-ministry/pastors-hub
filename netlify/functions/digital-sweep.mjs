@@ -4,7 +4,8 @@
 // a registered pastor opened in the last 60 days is read again (o/<slug>), when its findings are older than 25 days and no reading
 // is running; Google's data is kept no longer than that month (its rule). Conferences nobody opened in 180 days are forgotten (their
 // findings and readings deleted); the month counters older than two months go. Scheduled functions get 30 s: it stops at 20.
-// v10.62.0 (digital-sweep-1.1): a forgotten conference's texts for the in-depth review (x/<slug>/<org>, digital-read-1.2) go with its findings.
+// v10.62.0 (digital-sweep-1.1): a forgotten conference's texts (x/<slug>/<org>, digital-read-1.2) and kept reviews (v/<slug>/<org>/<lang>,
+// digital-1.2) go with its findings; the review's jobs (q/) after 7 days, its locks (l/) after a day, its day counters (c/site/, c/reg/) after 2.
 
 import { CONF_ORG, slugOf, theStore } from './digital-read.mjs';
 import { start, allowed } from './digital.mjs';
@@ -27,6 +28,7 @@ export async function sweep(base) {
       for (const p of ['c/' + slug, 'j/' + slug, 't/' + slug, key]) await store.delete(p);
       const r = await store.list({ prefix: `r/${slug}/` }); for (const x of r.blobs) await store.delete(x.key);
       const x = await store.list({ prefix: `x/${slug}/` }); for (const y of x.blobs) await store.delete(y.key);   // v10.62.0: the review's texts
+      const v = await store.list({ prefix: `v/${slug}/` }); for (const y of v.blobs) await store.delete(y.key);   // v10.62.0: its kept reviews
       out.forgotten++; continue;
     }
     if (o.at < day(60) || !allowed(conf)) continue;
@@ -38,6 +40,12 @@ export async function sweep(base) {
   for (const { key } of m.blobs) if (key.slice(2, 9) < keepFrom) { await store.delete(key); out.counters++; }
   const a = await store.list({ prefix: 'a/' });
   for (const { key } of a.blobs) if (key.slice(2, 12) < day(2)) await store.delete(key);
+  // v10.62.0: the in-depth review's jobs, locks and day counters (digital-1.2); the findings' own c/<slug> keys are never under these prefixes
+  for (const [prefix, days, field] of [['q/', 7, 'created'], ['l/', 1, 'created']]) {
+    const { blobs } = await store.list({ prefix });
+    for (const { key } of blobs) { if (now() - t0 > BUDGET_MS) break; const j = await store.get(key, { type: 'json' }); if (!j || !(j[field] > t0 - days * 864e5)) await store.delete(key); }
+  }
+  for (const prefix of ['c/site/', 'c/reg/']) { const { blobs } = await store.list({ prefix }); for (const { key } of blobs) if (key.slice(prefix.length, prefix.length + 10) < day(2)) await store.delete(key); }
   return out;
 }
 
