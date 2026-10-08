@@ -116,7 +116,8 @@ try {
   globalThis.__terrainDigitalStore = D;
 
   console.log('\n-- the pieces --');
-  c('register-1.3, digital-1.1', [(await (await REG.default(new Request(URL0))).json()).fn, DG.FN], ['register-1.3', 'digital-1.1']);
+  // v10.62.0: digital-1.2 (the in-depth review's ops; digital-review.test.mjs); warm() and the sign-up's reading are unchanged
+  c('register-1.3, digital-1.2', [(await (await REG.default(new Request(URL0))).json()).fn, DG.FN], ['register-1.3', 'digital-1.2']);
   c('warm is exported for the sign-up', typeof DG.warm, 'function');
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const confs = Object.keys(eval('(' + html.match(/const CONF_STATES\s*=\s*(\{[\s\S]*?\});/)[1] + ')'));

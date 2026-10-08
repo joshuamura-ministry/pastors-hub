@@ -40,14 +40,15 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   console.log('\n-- the website: how current, how fast, what it offers --');
   let A=J(P,'ANBZ01',true);
   c('no dates on the pages read: "Needs work", and why (a visitor cannot tell it is current)', [A.website.s,A.website.lines.some(l=>/We found no dates on the pages read/.test(l))], ['work',true]);
-  c('…what it offers is said with what is good', /online giving, an events calendar, sermons or a live stream/.test(A.website.lines[0]), true);
+  c('…what it offers is said with what is good (v10.62.0: one "Good:" line, last)', /^Good: .*an events calendar, sermons or a live stream, online giving/.test(A.website.lines[A.website.lines.length-1]), true);
   A=J(P,'ANBZ02',true);
   c('dates ahead: current, "Lists dates ahead (the next: Oct 17)."', [A.website.s,A.website.lines.includes('Lists dates ahead (the next: Oct 17).')], ['ok',true]);
   A=J(P,'ANBZ03',false);
   c('the newest date long past, nothing ahead: said as found, never "abandoned"', [A.website.s,A.website.lines.find(l=>/newest date/.test(l))], ['work','The newest date we found on the site is March 2024, and nothing is dated ahead: it may not have been updated since.']);
   c('slow to open: said with the seconds', A.website.lines.includes('It took 6.2 seconds to open for our reader: slow on a phone.'), true);
   A=J(P,'ANBZ04',false);
-  c('a reading by the older reader is judged as before (no word on dates or speed)', [A.website.s,A.website.lines.some(l=>/date|seconds/.test(l))], ['ok',false]);
+  // v10.62.0 (the bar raised): judged on the marks it has (no word on dates or speed); this reading's one miss, no live-stream link, is said
+  c('a reading by the older reader is judged on the marks it has (no word on dates or speed)', [A.website.s,A.website.lines.some(l=>/date|seconds/.test(l)),A.website.lines.includes('No live-stream link on the site.')], ['work',false,true]);
 
   console.log('\n-- the pastor: his name, and his photo --');
   A=J(P,'ANBZ01',true);
@@ -65,12 +66,15 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   const fig=P.qa('#chc-df .df-own').find(a=>/Sampleton/.test(a.querySelector('h3').textContent)).querySelector('.df-radar');
   c('each of his churches has a chart beside what a visitor sees', [P.qa('#chc-df .df-own .df-radar').length,!!P.q('#chc-df .df-own .df-sum .df-sees')], [2,true]);
   c('six areas round the ring, in the order of the cards', [...fig.querySelectorAll('.df-rl')].map(t=>t.textContent), ['Website','Pastor','Google','Facebook','YouTube','Ways in']);
-  c('each mark in its state\'s colour: the website and the pastor needing work, the rest current', [...fig.querySelectorAll('.df-dot')].map(d=>d.getAttribute('class').replace('df-dot ','')), ['df-dot-work','df-dot-work','df-dot-ok','df-dot-ok','df-dot-ok','df-dot-ok']);
+  // v10.62.0: Facebook is never read, so its mark is hollow; YouTube needs work (no evangelistic series in its feed)
+  c('each mark in its state\'s colour: the website, the pastor and YouTube needing work, Google and the ways in current, Facebook hollow', [...fig.querySelectorAll('.df-dot')].map(d=>d.getAttribute('class').replace('df-dot ','')), ['df-dot-work','df-dot-work','df-dot-ok','df-dot-u','df-dot-work','df-dot-ok']);
   const pts=s=>s.trim().split(/\s+/).map(p=>p.split(',').map(Number)), dist=([x,y])=>Math.round(Math.hypot(x-150,y-124));
-  c('as far out as it is strong: current at the rim (84), needs work in the middle (56)', pts(fig.querySelector('.df-me-l').getAttribute('points')).map(dist), [56,56,84,84,84,84]);
+  // v10.62.0: an area with marks sits by its share of marks met, U·(1+2·share): the website 11 of 15 (69), Google 8 of 8 (84), YouTube 4 of 5
+  // (70), the ways in 3 of 3 (84); the pastor by its state (needs work, 56); Facebook hollow in the middle (56)
+  c('as far out as it is strong: by the share of marks met; the rim at 84, the middle at 56', pts(fig.querySelector('.df-me-l').getAttribute('points')).map(dist), [69,56,84,56,70,84]);
   c('the conference\'s typical church drawn dashed behind', !!fig.querySelector('.df-typ'), true);
   c('a key: Current, Needs work, Needs help now, Not read, the typical church in Pennsylvania', [...fig.querySelectorAll('figcaption .df-k')].map(k=>k.textContent), ['Current','Needs work','Needs help now','Not read','the typical church in Pennsylvania']);
-  c('it says what it shows to a screen reader', fig.querySelector('svg').getAttribute('aria-label'), 'Current: Google & Maps, Facebook & Instagram, YouTube & live stream, Reaching out. Needs work: Website, Pastor’s name');
+  c('it says what it shows to a screen reader', fig.querySelector('svg').getAttribute('aria-label'), 'Current: Google & Maps, Reaching out. Needs work: Website, Pastor’s name, YouTube & live stream');   // v10.62.0: Facebook unread, YouTube needs work
   const nog=P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContext(F); const c=F.churches.find(x=>x.org==='ANBZ05'); const d=document.createElement('div'); d.innerHTML=dfRadar(dfJudge(c,X,'2026-10-08',false,''),null); return [...d.querySelectorAll('.df-dot')].map(x=>x.getAttribute('class')); })()`);
   c('an area not read (Google, no key) is a hollow mark in the middle, never counted against the church', nog[2], 'df-dot df-dot-u');
   c('side by side: a small chart for each of his churches', P.qa('#chc-df .df-side .df-side-chart .df-radar-s').length, 2);

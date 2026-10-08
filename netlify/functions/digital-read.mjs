@@ -1,4 +1,4 @@
-// Terrain · Digital footprint, the reader (background).                    digital-read-1.1
+// Terrain · Digital footprint, the reader (background).                    digital-read-1.2
 //
 // v10.60.0 (DESIGN-DIGITAL.md, Terrain-work/v77). The pastor (7 Oct 2026): "I would like to see all the churches in the conference
 // that you choose … websites, Facebook pages … YouTube … checked to see if they're up-to-date … Where do we show up in Google search
@@ -7,13 +7,31 @@
 // huge, Google search and maps are very very important more than Facebook … a little information on Facebook Instagram without
 // breaching anything".
 //
+// v10.62.0 (digital-read-1.2, DESIGN-DIGITAL-2.md, Terrain-work/v79): the reader reads the whole site. The pastor (8 Oct 2026): "on the
+// website you say that it looks it's current but what about its content because on the website you see another pastor preaching and not
+// myself it's a previous pastor. Are you able to survey the whole website and see its deficiencies as well because this is not enough and
+// when it says like current, it doesn't really mean that it's a good website doesn't mean that it's doing its work as a website. A lot of
+// websites are up, but they're horrible."; "I want to set the bar high when it comes to our digital footprint." So `website()` follows the
+// whole menu (every same-site link in the header, navigation and footer, plus the pages the old list matched; up to 30 pages, the Give page
+// among them) and says, per page, its dates, forms, pictures and videos (site.pages[]); the embedded videos with their title, channel, date
+// and live stream (oEmbed and the watch page, no key; a person's name in a title; up to six: site.videos[], site.latestVideo); the pages a
+// year out of date that announce nothing ahead (site.stale[]); the forms by kind (site.forms: prayer, Bible studies, contact, newsletter);
+// the pictures (site.pics: unnamed, generated); the home page for the review (site.home); the name as written and a short list of common
+// misspellings (site.words[]: only that list, never a spell-checker); the email's host, never the address (site.email); the listed street on
+// the site and a map (site.address, site.map). `youtube()` adds the subscribers, the About text, whether it names the site, what the
+// descriptions carry (a link, the address, the times), an upcoming stream, the names in titles, the weak titles ("Worship Service || Oct 10,
+// 2026"), and 15 recent videos for the review. `google()` asks for places.photos (Pro tier: inside the Enterprise call already made, no new
+// charge; Google's pricing page read 8 Oct 2026; reviews would cost more and carry no owner reply, so they stay out). The pages' texts for
+// the in-depth review are kept apart (store key x/<slug>/<org>, written only when the server has ANTHROPIC_API_KEY, swept with the
+// findings), never inside a reading or the findings.
+//
 // What it reads, for one conference (digital.mjs queues the job in Netlify Blobs, store "terrain-digital", key j/<slug>, and wakes this
 // function with { slug, worker }):
 //  1. the official list: every church, company and group of the conference on eAdventist (the North American Division's church
 //     locator) and each one's entry (pastor, staff, website, phone, address, members, the date it was updated). The locator allows a
 //     page every few seconds: one page each 3 s, a pause when it says "retry later";
-//  2. each church's website as a visitor reads it (the home page and up to 13 pages a visitor looks at, and the words a template site
-//     keeps inside its scripts), obeying robots.txt, under its own name (TerrainBot);
+//  2. each church's website as a visitor reads it (the home page and, since v10.62.0, up to 29 more: its whole menu and the pages a
+//     visitor looks at, and the words a template site keeps inside its scripts), obeying robots.txt, under its own name (TerrainBot);
 //  3. its YouTube channel's public feed (the last 15 videos: dates, titles, views), no key;
 //  4. Google's listing for it (Places API (New), Text Search) when GOOGLE_PLACES_KEY is set: found or not, stars, reviews, status,
 //     the website and phone Google shows, the Maps link; at most PLACES_MONTH_MAX (900) a month for the whole site;
@@ -35,7 +53,7 @@ import { createHash, timingSafeEqual } from 'node:crypto';
 
 export const config = { background: true };
 
-export const FN = 'digital-read-1.1';
+export const FN = 'digital-read-1.2';
 const STORE_NAME = 'terrain-digital';
 export const UA = 'Mozilla/5.0 (compatible; TerrainBot/1.0; +https://terrain.church)';
 const EAD = 'https://www.eadventist.net/search/organization?locale=en&org=';
@@ -153,14 +171,20 @@ const surname = n => { const w = String(n || '').replace(/\b(Jr|Sr|II|III|IV)\.?
 const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '');
 const NW = "(?:[A-Z][a-zà-ÿ'’\\-]+(?:[A-Z][a-zà-ÿ'’\\-]+)?|[A-Z]\\.)";   // v10.61.0: LaCamera, McDonald
 const STOP = /^(Our|Us|Meet|The|Welcome|Contact|Your|From|With|About|Senior|Lead|District|Local|Associate|Youth|Head|Former|Dear|Message|Corner|Page|Appreciation|Search|Pastors?|Church|Sabbath|Elder|Bible|Women|Men|Ministry|Ministries|Prayer|Team|Home|Staff|Leaders?|Online|Join|Visit|Resources|Services|Phone|Email|Office|Mobile|Location|Website|Site|Address)$/;
+/* a name as the reader keeps it (two or three words, no title or stop word), or null: shared by the pastor reader and, since v10.62.0, the
+   video-title reader (namesIn) */
+const cleanName = n => {
+  const w = String(n || '').replace(/\s+/g, ' ').trim().split(' ');
+  while (w.length && STOP.test(w[w.length - 1])) w.pop();
+  if (w.length < 2 || w.some(x => STOP.test(x)) || w.every(x => /^[A-Z]\.$/.test(x))) return null;
+  return w.slice(0, 3).join(' ');
+};
 /* people called pastor on a page, and the pages they are named on */
 export function pastorsIn(per) {
   const found = new Map();
   const add = (n, former, path) => {
-    let w = n.replace(/\s+/g, ' ').trim().split(' ');
-    while (w.length && STOP.test(w[w.length - 1])) w.pop();
-    if (w.length < 2 || w.some(x => STOP.test(x)) || w.every(x => /^[A-Z]\.$/.test(x))) return;
-    const name = w.slice(0, 3).join(' '), k = fold(surname(name)).toLowerCase(), o = found.get(k) || { name, former: false, pages: new Set() };
+    const name = cleanName(n); if (!name) return;
+    const k = fold(surname(name)).toLowerCase(), o = found.get(k) || { name, former: false, pages: new Set() };
     if (name.length > o.name.length && name.split(' ').length <= 3) o.name = name;
     o.former = o.former || !!former; o.pages.add(path); found.set(k, o);
   };
@@ -239,7 +263,178 @@ export function photoBy(html, sn) {
   }
   return null;
 }
-export async function website(listed, maxPages = 13, pastorName = '') {
+// ---------------------------------------------------------------- v10.62.0 (digital-read-1.2): the whole site, as a visitor reads it
+const esc = s => String(s).replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+/* no email address and no phone number in any words kept from a page (a person's own may be printed there): each becomes a token */
+const scrub = s => String(s || '').replace(/\b[\w.+-]+@[\w-]+(?:\.[\w-]+)+\b/g, '[email]').replace(/\(?\b\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}\b/g, '[phone]');
+const titleOf = h => scrub(clip(ent((String(h).match(/<title[^>]*>([^<]*)/i) || [])[1] || ''), 160));
+const h1Of = h => scrub(clip(ent(((String(h).match(/<h1\b[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '').replace(/<[^>]+>/g, ' ')), 160)) || null;
+const noMenu = h => String(h).replace(/<(header|nav|footer)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+const TIME_RE = /\b\d{1,2}(?::\d\d)?\s*(?:a\.?m|p\.?m)\b/i;
+const MAP_RE = /maps\.google\.|google\.[a-z.]+\/maps|goo\.gl\/maps|maps\.app\.goo\.gl|maps\.apple\.com|openstreetmap\.org|bing\.com\/maps|waze\.com\/|mapbox|leaflet/i;
+const PRI = /pastor|staff|leader|team|contact|join|visit/;
+const RE_RES = /\.(css|js|png|jpe?g|gif|svg|webp|avif|xml|json|pdf|ico|mp3|mp4|m4a|zip|docx?|pptx?|xlsx?)(\?|$)|\/(wp-json|xmlrpc\.php|wp-login\.php|wp-admin|feed)(\/|$)/i;
+const VID_MAX = 6;
+/* the listed street as a visitor would write it: its number and first word ("10 Greene"; a direction letter skipped: "1234 N Main") */
+export function streetRe(address) {
+  const w = fold(String(address || '')).replace(/[.,#]/g, ' ').trim().split(/\s+/).filter(Boolean); if (w.length < 2) return null;
+  const i = /^(N|S|E|W|NE|NW|SE|SW|North|South|East|West)$/i.test(w[1]) && w.length > 2 ? 2 : 1;
+  return new RegExp('\\b' + esc(w[0]) + (i === 2 ? '(?:\\s+\\S+)?' : '') + '\\s+' + esc(w[i]) + '\\b', 'i');
+}
+/* every link inside the page's header, navigation and footer (<nav>, <header>, <footer>, or any element whose class, id or role says nav /
+   menu / header / footer): the menu as a visitor sees it. A small tag walk, tolerant of unclosed tags; scripts, styles and comments skipped. */
+const VOID_TAG = /^(area|base|br|col|embed|hr|img|input|link|meta|param|source|track|wbr)$/, MENU_TAG = /^(nav|header|footer)$/, MENU_WORD = /nav|menu|header|footer/i;
+export function menuLinks(html, base) {
+  const h = String(html || '').replace(/<!--[\s\S]*?-->/g, ' ').replace(/<(script|style|noscript|svg)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  const out = [], stack = []; let depth = 0;
+  for (const m of h.matchAll(/<(\/?)([a-zA-Z][\w:-]*)([^>]*)>/g)) {
+    const close = !!m[1], tag = m[2].toLowerCase(), attrs = m[3];
+    if (close) { let i = stack.length - 1; while (i >= 0 && stack[i].tag !== tag) i--; if (i >= 0) { for (let k = stack.length - 1; k >= i; k--) if (stack[k].menu) depth--; stack.length = i; } continue; }
+    if (tag === 'a' && depth > 0) { const href = (attrs.match(/\bhref\s*=\s*["']?([^"'\s#>]+)/i) || [])[1]; if (href) out.push(href); }
+    if (VOID_TAG.test(tag) || /\/\s*$/.test(attrs)) continue;
+    const menu = MENU_TAG.test(tag) || MENU_WORD.test([...attrs.matchAll(/\b(?:class|id|role)\s*=\s*["']([^"']*)/gi)].map(x => x[1]).join(' '));
+    stack.push({ tag, menu }); if (menu) depth++;
+  }
+  return [...new Set(out.map(u => safeUrl(u, base)).filter(Boolean))];
+}
+/* the videos a page embeds: a YouTube id in an iframe, an embed/, watch?v=, youtu.be/, live/ or shorts/ address in any attribute or in
+   escaped JSON (\/ unescaped first), or a Vimeo id; each once, in the order found; never a playlist's "videoseries" */
+const VID_RES = [[/youtube(?:-nocookie)?\.com\/embed\/([\w-]{11})(?![\w-])/g, 'youtube'], [/youtube\.com\/watch\?(?:[^"'\s<>&]*&)*v=([\w-]{11})(?![\w-])/g, 'youtube'],
+  [/youtu\.be\/([\w-]{11})(?![\w-])/g, 'youtube'], [/youtube\.com\/(?:live|shorts)\/([\w-]{11})(?![\w-])/g, 'youtube'], [/(?:player\.vimeo\.com\/video|vimeo\.com)\/(\d{6,12})(?!\d)/g, 'vimeo']];
+export function videosIn(html) {
+  const h = String(html || '').replace(/\\\//g, '/').replace(/\\u002[fF]/g, '/').replace(/&amp;/g, '&'), found = [];
+  for (const [re, on] of VID_RES) for (const m of h.matchAll(re)) if (m[1] !== 'videoseries') found.push({ id: m[1], on, i: m.index });
+  found.sort((a, b) => a.i - b.i);
+  const out = []; for (const f of found) if (!out.some(x => x.id === f.id)) out.push({ id: f.id, on: f.on });
+  return out;
+}
+/* a YouTube video's title and channel (oEmbed, no key) and, from the watch page, its date, whether it is a live stream, its channel's id
+   and its description; a video oEmbed cannot name (private, removed) gets no second fetch */
+async function videoInfo(id) {
+  const out = { title: null, by: null, date: null, live: false, ch: null, desc: '' };
+  const o = await get('https://www.youtube.com/oembed?url=' + encodeURIComponent('https://www.youtube.com/watch?v=' + id) + '&format=json', { ms: 10000, max: 20000 });
+  let j = null; if (o.ok) { try { j = JSON.parse(o.text); } catch { j = null; } }
+  if (!isPlain(j)) return out;
+  out.title = j.title ? scrub(clip(ent(String(j.title)), 140)) || null : null; out.by = j.author_name ? clip(ent(String(j.author_name)), 80) || null : null;
+  const w = await get('https://www.youtube.com/watch?v=' + id, { ms: 15000, max: 1.2e6 });
+  if (w.ok) {
+    const d = ((w.text.match(/itemprop="datePublished"\s+content="([^"]+)"/) || w.text.match(/"publishDate":"([^"]+)"/) || [])[1] || '').slice(0, 10);
+    out.date = /^20\d\d-\d\d-\d\d$/.test(d) ? d : null;
+    out.live = /"isLiveContent":\s*true/.test(w.text);
+    out.ch = (w.text.match(/"channelId":"(UC[\w-]{22})"/) || [])[1] || null;
+    out.desc = scrub(clip(ent(((w.text.match(/"shortDescription":"((?:[^"\\]|\\.)*)"/) || [])[1] || '').replace(/\\n/g, ' ').replace(/\\"/g, '"').replace(/\\u0026/g, '&')), 500));
+  }
+  return out;
+}
+/* the people a video's title or description names ("Pastor X", "Pr. X", "Elder X", "with X", "by X"): the pastor reader's own rules (NW,
+   STOP, cleanName), plus the words a title carries that are no name ("with Special Guest") */
+const TITLE_STOP = /^(Special|Music|Praise|Worship|Service|Services|Live|Stream|Livestream|Full|Sermon|Message|Part|Week|Night|Program|Divine|Hour|Communion|Baptism|Series|Study|Speaker|Friends|Family|Us|Choir|Band|Quartet|Singers|Youth|Children|Kids|Jesus|Christ|God|Lord|Holy|Spirit|Prophecy|Saturday|Sunday|Wednesday|Friday|Vespers|Online|Video|Audio|Podcast|Dr|Mr|Mrs|Ms)$/;
+const TITLES = '(?:Senior |Lead |Associate |District |Youth |Head )?(?:Pastor|Pastora|Pr\\.|Ptr\\.|Ps\\.|Elder|Dr\\.?)';
+export function namesIn(t) {
+  const out = [], s = String(t || '');
+  const add = n => { const name = cleanName(n); if (!name || name.split(' ').some(w => TITLE_STOP.test(w))) return; const k = fold(name).toLowerCase(); if (!out.some(x => fold(x).toLowerCase() === k)) out.push(name); };
+  for (const m of s.matchAll(new RegExp('\\b' + TITLES + '\\s*:?\\s+(?:Dr\\.?\\s+)?(' + NW + '(?:\\s+' + NW + '){1,3})', 'g'))) add(m[1]);
+  for (const m of s.matchAll(new RegExp('\\b(?:[Ww]ith|[Bb]y)\\s+(?!' + TITLES + '(?:\\s|:))(' + NW + '(?:\\s+' + NW + '){1,3})', 'g'))) add(m[1]);
+  for (const m of s.matchAll(new RegExp('(' + NW + '(?:\\s+' + NW + '){1,2})\\s*[,–-]?\\s*(?:Senior |Lead |Associate |District |Head )?Pastor\\b', 'g'))) add(m[1]);
+  return out.slice(0, 5);
+}
+/* the forms a page holds, by kind: a <form> with a text or email field (never a search box), its kind from its own words and field names and
+   the words just before it (prayer; Bible / study / lesson; newsletter / subscribe; contact / message); an embedded form service counts too */
+const FORM_HOSTS = /docs\.google\.com\/forms|forms\.gle|jotform|forms\.office|typeform|formstack|wufoo|cognitoforms|churchcenter\.com|planningcenteronline|formspree|123formbuilder|surveymonkey|tfaforms|hsforms|list-manage|constantcontact/i;
+const NO_FIELD = /type\s*=\s*["']?(?:hidden|submit|button|checkbox|radio|search|password|file|image|reset)/i;
+function formKind(words) {
+  const f = fold(words).toLowerCase();
+  if (/\bpray(?:er|ers|ing)?\b|oraci[oó]n/.test(f)) return 'prayer';
+  if (/\bbible\b|\bbiblia\b|\bstud(?:y|ies)\b|\blessons?\b|\bestudio/.test(f)) return 'bible';
+  if (/newsletter|subscribe|suscrib|mailing list|sign up for|text (?:updates|messages?|alerts)|bolet[ií]n/.test(f)) return 'news';
+  if (/\bcontact\b|\bmessage\b|\bmensaje\b|contacto|reach us|get in touch/.test(f)) return 'contact';
+  return 'other';
+}
+export function formsIn(html) {
+  const body = rawOf(String(html || '')).replace(/<(style|noscript)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  const out = { n: 0, prayer: false, bible: false, contact: false, news: false };
+  const take = k => { out.n++; if (k !== 'other') out[k] = true; };
+  const around = i => body.slice(Math.max(0, i - 400), i).replace(/<[^>]+>/g, ' ');
+  for (const m of body.matchAll(/<form\b([^>]*)>([\s\S]*?)<\/form>/gi)) {
+    const attrs = m[1], inner = m[2];
+    if (/search/i.test(attrs) || /type\s*=\s*["']?search/i.test(inner)) continue;
+    const fields = [...inner.matchAll(/<input\b[^>]*>|<textarea\b/gi)].map(x => x[0]).filter(x => !NO_FIELD.test(x));
+    if (!fields.length) continue;
+    const names = [...inner.matchAll(/\b(?:name|id|placeholder|aria-label)\s*=\s*["']([^"']*)/gi)].map(x => x[1]).join(' ');
+    take(formKind(attrs + ' ' + inner.replace(/<[^>]+>/g, ' ') + ' ' + names + ' ' + around(m.index)));
+  }
+  for (const m of body.matchAll(/<iframe\b[^>]*\bsrc\s*=\s*["']([^"']*)/gi)) if (FORM_HOSTS.test(m[1])) take(formKind(m[1] + ' ' + around(m.index)));
+  return out;
+}
+/* the pictures a page shows (logos, icons, banners and pixels left out, as NOT_PHOTO says; each once): unnamed = no alt, or an alt that is a
+   file name; generated = a file name or alt naming ChatGPT, DALL·E, Midjourney, "generated" or a stock-photo site */
+const UNNAMED = /\.(?:jpe?g|png|gif|webp|avif|svg)$|^IMG[_-]?\d|^DSC|^\d{8}|^ChatGPT Image|^(?:image|photo|picture|img|untitled|screenshot)[\s\d_-]*$/i;
+const GENERATED = /chatgpt|dall[·.\- ]?e|midjourney|\bgenerated\b|\bstock\b|shutterstock|istock|unsplash|pexels|freepik/i;
+export function picsIn(html, base) {
+  const body = rawOf(String(html || '')).replace(/<(style|noscript)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  const pics = [], seen = new Set();
+  for (const m of body.matchAll(/<img\b[^>]*>/gi)) {
+    const tag = m[0], attr = a => ent((tag.match(new RegExp('\\b' + a + '\\s*=\\s*["\']([^"\']*)', 'i')) || [])[1] || '');
+    let src = attr('src'); if (!src || /^data:/i.test(src)) src = attr('data-src') || attr('data-lazy-src') || (attr('srcset') || attr('data-srcset')).split(',')[0].trim().split(/\s+/)[0] || '';
+    if (!src || /^data:/i.test(src) || seen.has(src)) continue;
+    const alt = attr('alt').trim(), w = parseInt(attr('width'), 10) || 0, hh = parseInt(attr('height'), 10) || 0;
+    let file = src.split(/[?#]/)[0].split('/').pop() || ''; try { file = decodeURIComponent(file); } catch { /* as is */ }
+    if (NOT_PHOTO.test(src + ' ' + alt) || (w && w <= 2) || (hh && hh <= 2)) continue;
+    seen.add(src);
+    pics.push({ key: src, url: safeUrl(src, base), alt: clip(alt, 160), unnamed: !alt || UNNAMED.test(alt), generated: GENERATED.test(file + ' ' + alt), small: (w > 0 && w < 120) || (hh > 0 && hh < 120) });
+  }
+  return { n: pics.length, unnamed: pics.filter(p => p.unnamed).length, generated: pics.filter(p => p.generated).length, pics };
+}
+/* the home page for the in-depth review: its h1, the first 700 characters after the menu, the first eight link or button texts, up to six
+   main pictures (in order; no logo, nothing small) as addresses with their alt */
+export function homeOf(html, base) {
+  const h = String(html || ''), body = (h.match(/<body\b[^>]*>([\s\S]*?)<\/body>/i) || [, h])[1], main = noMenu(body), ctas = [];
+  for (const m of main.replace(/<(script|style|noscript)\b[^>]*>[\s\S]*?<\/\1>/gi, ' ').matchAll(/<(a|button)\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    const t = scrub(clip(ent(m[2].replace(/<[^>]+>/g, ' ')), 60)); if (t && !ctas.includes(t)) ctas.push(t); if (ctas.length >= 8) break;
+  }
+  // the pictures from the whole body: a hero picture often sits inside <header> (logos, icons and banners are left out by name)
+  return { h1: h1Of(h), first: scrub(visOf(main)).slice(0, 700), ctas, pics: picsIn(body, base).pics.filter(p => p.url && !p.small).slice(0, 6).map(p => ({ url: p.url, alt: p.alt })) };
+}
+/* the name as written where the denomination writes "Seventh-day Adventist" (the home page's title or body), and this short list of common
+   misspellings in the visible text: never a spell-checker, only the list; each once, with the page it is on; up to six */
+const NAME_WRONG = /\bSeventh[-\s]Day Adventist\b|\bSeventh day Adventist\b/;
+const MISSPELT = /\bAll Rights Served\b|\brecieve\b|\bseperate\b|\boccassion\b|\baccomodate\b|\bcalender\b|\bwich\b|\buntill\b|\badress\b|\bcomittee\b|\bbegining\b|\bdefinately\b|\bneccessary\b|\bSabath\b|\bAdvenitst\b|\bChruch\b/gi;
+export function wordsIn(pages) {
+  const out = [], seen = new Set(), home = pages[0];
+  if (home) { const m = ((home.title || '') + ' ' + (home.t || '')).match(NAME_WRONG); if (m) out.push({ t: m[0], on: home.path }); }
+  for (const p of pages) for (const m of String(p.t || '').matchAll(MISSPELT)) {
+    const k = m[0].toLowerCase(); if (seen.has(k)) continue; seen.add(k); out.push({ t: m[0], on: p.path }); if (out.length >= 6) return out;
+  }
+  return out;
+}
+/* the email's host (a mailto: link, else an address in the visible text) and whether it is a personal mailbox; never the address itself */
+const GENERIC_MAIL = /^(?:gmail|googlemail|yahoo|ymail|hotmail|live|msn|outlook|aol|icloud|me|mac|comcast|verizon|protonmail|proton)\.(?:com|net|me)$/i;
+export function emailOf(html, vis) {
+  let m = String(html || '').match(/href\s*=\s*["']\s*mailto:([^"'?&\s]+)/i), addr = m ? ent(m[1]).trim() : '';
+  if (!addr) { m = String(vis || '').match(/\b[\w.+-]+@([\w-]+(?:\.[\w-]+)+)\b/); addr = m ? m[0] : ''; }
+  if (!addr || !addr.includes('@')) return null;
+  const host = addr.split('@').pop().toLowerCase().replace(/[.,;:]+$/, ''); if (!host.includes('.')) return null;
+  return { host: clip(host, 80), generic: GENERIC_MAIL.test(host) };
+}
+/* a title that is only a service word and a date ("Worship Service || Oct 10, 2026", "Sabbath Service 10/10", "Culto Divino 10/10/2026") */
+const MON_RE = '(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|Ene|Abr|Ago|Dic)[a-z]*\\.?';
+const SERVICE_WORD = /^(?:\d+|sabbath|worship|service|services|divine|hour|church|live|stream|livestream|streaming|morning|program|programme|sermon|message|school|online|weekly|saturday|sat|the|and|of|for|at|am|pm|sda|adventist|seventh|day|full|replay|recording|video|&|culto|divino|servicio|adoraci[oó]n|s[aá]bado|iglesia|en|vivo|de|el|la|los|las|y|programa|serm[oó]n|mensaje|escuela|sab[aá]tica|transmisi[oó]n|directo)$/i;
+export function weakTitle(t) {
+  const s = String(t || '')
+    .replace(new RegExp('\\b' + MON_RE + '\\s+\\d{1,2}(?:st|nd|rd|th)?,?(?:\\s+\\d{4})?\\b', 'gi'), ' ')
+    .replace(new RegExp('\\b\\d{1,2}(?:st|nd|rd|th)?\\s+(?:de\\s+)?' + MON_RE + '(?:\\s+de)?(?:,?\\s+\\d{4})?\\b', 'gi'), ' ')
+    .replace(/\b\d{1,2}[/.-]\d{1,2}(?:[/.-]\d{2,4})?\b/g, ' ').replace(/\b(?:19|20)\d\d\b/g, ' ').replace(new RegExp(TIME_RE.source, 'gi'), ' ')
+    .replace(new RegExp('\\b' + MON_RE + '\\b', 'gi'), ' ').replace(/[|–—\-:·•,.()[\]"'“”¡!¿?#]+/g, ' ').replace(/\s+/g, ' ').trim();
+  const w = s.split(' ').filter(Boolean);
+  return w.length > 0 && w.every(x => SERVICE_WORD.test(x));
+}
+/* what a visitor finds; "does not open" only when no address variant answers at all (never for a refusal: that is "not let in").
+   v10.62.0 (digital-read-1.2; the pastor: "Are you able to survey the whole website and see its deficiencies as well … when it says like
+   current, it doesn't really mean that it's a good website"): the whole menu (every same-site link in the home page's header, navigation and
+   footer) plus the pages the old list matched, de-duplicated, pastor/staff/contact/visit/join first, up to `maxPages` pages (the home page
+   one of them), each with the same 150 ms pause; a page over 1.5 MB skipped; a menu link that fails keeps its code (a broken link).
+   `opts.address` is the listed street, looked for in the visible text. */
+export async function website(listed, maxPages = 30, pastorName = '', opts = {}) {
   let r = null, ms = null; const tried = [];
   for (const u of variants(listed)) { tried.push(u); const t0 = Date.now(); r = await get(u); ms = Date.now() - t0; if (r.ok && r.text.trim().length > 20) break; }   // any page with words opens
   if (!r || !r.ok || r.text.trim().length <= 20) {
@@ -248,19 +443,43 @@ export async function website(listed, maxPages = 13, pastorName = '') {
   }
   const base = r.url, rules = await robotsFor(base);
   if (!robotsAllow(rules, '/')) return { listed: clip(listed, 200), url: base, opens: true, blocked: true };
-  const pages = [{ path: new URL(base).pathname || '/', h: r.text }];
-  const links = [...new Set([...r.text.matchAll(/href="([^"#]+)"/gi)].map(m => safeUrl(m[1], base)).filter(Boolean).map(u => u.replace(/\/+$/, ''))
+  const home0 = base.replace(/\/+$/, ''), pathOf = u => ((new URL(u).pathname || '/').replace(/\/+$/, '') || '/');
+  const pages = [{ path: pathOf(base), h: r.text, status: r.status }];
+  // the pages a visitor looks at (v10.60.0's list), and since v10.62.0 every link in the menu (header, navigation, footer)
+  const oldList = [...r.text.matchAll(/href="([^"#]+)"/gi)].map(m => safeUrl(m[1], base)).filter(Boolean).map(u => u.replace(/\/+$/, ''))
     .filter(u => hostOf(u) === hostOf(base) && PAGES.test(new URL(u).pathname) && !/\.(css|js|png|jpe?g|gif|svg|webp|xml|json|php|pdf|ico)$|wp-json|feed|xmlrpc/i.test(u)
-      && !/\/(20\d\d|blog|news|post|posts|tag|category|author|page|feed|wp-|events?\/\d)/.test(new URL(u).pathname) && robotsAllow(rules, new URL(u).pathname)))]
-    .sort((a, b) => (/pastor|staff|leader|team|contact|join|visit/.test(b) ? 1 : 0) - (/pastor|staff|leader|team|contact|join|visit/.test(a) ? 1 : 0)).slice(0, maxPages);
-  for (const u of links) { const p = await get(u, { max: 1.5e6 }); if (p.ok) pages.push({ path: new URL(p.url).pathname, h: p.text }); await pause(150); }
-  const per = pages.map(p => ({ path: p.path.replace(/\/+$/, '') || '/', t: textOf(p.h) })), txt = per.map(p => p.t).join(' \n '), all = pages.map(p => p.h).join('\n');
-  const vis = pages.map(p => visOf(p.h)).join(' \n ') + ' ' + [...all.matchAll(/href="tel:([^"]+)"/gi)].map(m => ' ' + decodeURIComponent(m[1]).replace(/^\+?1/, '') + ' ').join(' ');
+      && !/\/(20\d\d|blog|news|post|posts|tag|category|author|page|feed|wp-|events?\/\d)/.test(new URL(u).pathname));
+  const menu = menuLinks(r.text, base).map(u => u.replace(/\/+$/, '')).filter(u => hostOf(u) === hostOf(base) && !RE_RES.test(u) && !/^\/(index\.(html?|php)|home)$/i.test(new URL(u).pathname));
+  const links = [...new Set([...menu, ...oldList])].filter(u => u !== home0 && robotsAllow(rules, new URL(u).pathname))
+    .sort((a, b) => (PRI.test(b) ? 1 : 0) - (PRI.test(a) ? 1 : 0)).slice(0, Math.max(0, maxPages - 1));
+  for (const u of links) {
+    const p = await get(u, { max: 1.5e6 + 1 }); await pause(150);
+    const path = pathOf(u);
+    if (p.ok && p.text.length > 1.5e6) continue;                                                                 // over 1.5 MB: skipped
+    if (!p.ok) { pages.push({ path, status: p.status }); continue; }                                              // a broken menu link (404, 410), or a refusal: its code kept
+    if (hostOf(p.url) !== hostOf(base)) { pages.push({ path, status: p.status, to: hostOf(p.url) }); continue; }  // sent to another site (a giving site)
+    const fin = pathOf(p.url); if (pages.some(x => x.h && x.path === fin)) continue;
+    pages.push({ path: fin, h: p.text, status: p.status });
+  }
+  // per page: the words, the dates, the forms, the pictures, the videos (v10.62.0)
+  const per = [], recs = [], vidsAll = [], picsAll = new Map(), forms = { n: 0, prayer: false, bible: false, contact: false, news: false };
+  for (const p of pages) {
+    if (!p.h) { recs.push(p.to ? { path: p.path, status: p.status, to: p.to } : { path: p.path, status: p.status }); continue; }
+    const t = textOf(p.h), v = visOf(p.h), dt = datesOf(t), f = formsIn(p.h), im = picsIn(p.h, base), vids = videosIn(p.h);
+    per.push({ path: p.path, t, v, title: titleOf(p.h) });
+    recs.push({ path: p.path, status: p.status, title: titleOf(p.h), h1: h1Of(p.h), words: v ? v.split(' ').length : 0, newest: dt.past, next: dt.next,
+      forms: f, videos: vids.length, imgs: { n: im.n, unnamed: im.unnamed, generated: im.generated } });
+    forms.n += f.n; for (const k of ['prayer', 'bible', 'contact', 'news']) forms[k] = forms[k] || f[k];
+    for (const x of im.pics) if (!picsAll.has(x.key)) picsAll.set(x.key, x);
+    for (const x of vids) if (!vidsAll.some(y => y.id === x.id)) vidsAll.push({ ...x, path: p.path });   // integration: the page it sits on
+  }
+  const txt = per.map(p => p.t).join(' \n '), all = pages.filter(p => p.h).map(p => p.h).join('\n');
+  const vis = per.map(p => p.v).join(' \n ') + ' ' + [...all.matchAll(/href="tel:([^"]+)"/gi)].map(m => ' ' + decodeURIComponent(m[1]).replace(/^\+?1/, '') + ' ').join(' ');
   const phones = [...new Set([...vis.matchAll(/\(?\b(\d{3})\)?[\s.-](\d{3})[\s.-](\d{4})\b/g)].map(m => `${m[1]}-${m[2]}-${m[3]}`))].slice(0, 6);
   const snw = fold(surname(pastorName)).replace(/[^A-Za-z'’-]/g, ''), sn = snw.length > 1 ? new RegExp('\\b' + snw + '\\b', 'i') : null;
   const years = [...new Set([...txt.matchAll(/(?:©|copyright)\s*(?:\d{4}\s*[-–]\s*)?(20\d\d)/gi)].map(m => m[1]))].sort();
   // v10.61.0: a photo by each pastor's name (the pages he is named on), and by the listing's pastor's
-  const byPath = new Map(pages.map(p => [p.path.replace(/\/+$/, '') || '/', p.h]));
+  const byPath = new Map(pages.filter(p => p.h).map(p => [p.path, p.h]));
   const snOf = n => { const w = fold(surname(n)).replace(/[^A-Za-z'’-]/g, ''); return w.length > 1 ? new RegExp('\\b' + w + '\\b', 'i') : null; };
   const photoOf = (n, paths) => { const re = snOf(n); for (const pa of paths || []) { const ph = photoBy(byPath.get(pa) || '', re); if (ph) return { photo: ph, on: pa }; } return null; };
   const pastors = pastorsIn(per).map(p => { const ph = photoOf(p.name, p.pages); return ph ? { ...p, photo: ph.photo, photoOn: ph.on } : p; });
@@ -268,10 +487,22 @@ export async function website(listed, maxPages = 13, pastorName = '') {
   const lp = named && named.length ? photoOf(pastorName, named) : null;
   const when = datesOf(txt);
   const home = r.text, hrefs = [...all.matchAll(/href="([^"#]+)"/gi)].map(m => m[1]).join(' ');
-  return {
+  // v10.62.0: the embedded videos (oEmbed and the watch page, at most six), the stale pages, the words, the email's host, the address and map,
+  // and the pages' texts for the review (kept apart from the reading: never in the findings)
+  const videos = [];
+  for (const x of vidsAll.slice(0, VID_MAX)) {
+    const i = x.on === 'youtube' ? await videoInfo(x.id) : { title: null, by: null, date: null, live: false, ch: null, desc: '' };
+    // `on` is the page the video sits on (the page judges a video on the home, about, pastor or staff pages); `kind` its provider
+    videos.push({ id: x.id, on: x.path, kind: x.on, title: i.title, by: i.by, date: i.date, live: i.live, mine: false, ch: i.ch, names: namesIn((i.title || '') + ' · ' + i.desc) });
+  }
+  const oldest = daysAgo(365), stale = recs.filter(p => 'newest' in p && p.newest && p.newest < oldest && !p.next).slice(0, 5).map(p => ({ path: p.path, date: p.newest }));
+  const picList = [...picsAll.values()], st = streetRe(opts.address);
+  const texts = { at: now(), pages: [] }; let total = 0;
+  for (const p of per.slice(0, 14)) { const room = Math.min(2500, 22000 - total); if (room <= 0) break; const text = scrub(p.t).slice(0, room); total += text.length; texts.pages.push({ path: p.path, title: p.title, text }); }
+  const site = {
     listed: clip(listed, 200), url: base, opens: true, https: base.startsWith('https:'), mobile: /name=["']viewport["']/i.test(r.text),
     title: clip(ent((r.text.match(/<title[^>]*>([^<]*)/i) || [])[1] || ''), 160), template: /\/_next\//.test(r.text) ? 'scripts' : /acc-themes/.test(r.text) ? 'frame' : null,
-    pagesRead: per.map(p => p.path).slice(0, 14), pastors, newestDate: newestDate(txt), copyright: years.pop() || null,
+    pagesRead: per.map(p => p.path).slice(0, 30), pastors, newestDate: newestDate(txt), copyright: years.pop() || null,
     // v10.61.0: how current (the newest date in its words already past, the next one ahead; never a sitemap's "lastmod", which website
     // builders stamp on their own) and how fast its first page answered
     pastDate: when.past, nextDate: when.next, ahead: when.ahead, ms: Number.isFinite(ms) ? ms : null,
@@ -281,31 +512,64 @@ export async function website(listed, maxPages = 13, pastorName = '') {
     serviceTimes: /\b(8|9|10|11|12):\d\d\s*(a\.?\s?m)/i.test(txt) || /\b(9|10|11)\s*(a\.?\s?m)\b/i.test(txt), phones,
     bibleStudy: /bible (study|studies|class|school|info)|free bible|request (a )?bible|discover (the )?bible|bible guide|bible lessons/i.test(txt),
     prayerRequest: /prayer request|request (a )?prayer|how can we pray|need prayer/i.test(txt),
-    giving: /adventistgiving|give online|online giving|tithe|donate/i.test(all), visitors: /plan (a|your) (first )?visit|new here|first time|visitor|what to expect/i.test(txt),
+    giving: /adventistgiving|give online|online giving|tithe|donate/i.test(all) || pages.some(p => /adventistgiving/i.test(p.to || '')),
+    visitors: /plan (a|your) (first )?visit|new here|first time|visitor|what to expect/i.test(txt),
+    // v10.62.0: what to expect on a first visit (parking, children, how long, what to wear): the page's "what to expect" mark
+    expect: /what to expect|qu[eé] esperar|\bparking\b|estacionamiento|child ?care|nursery|guarder[ií]a|dress code|what (should|do|to) i wear|come as you are|how long (is|does|will)|vestimenta/i.test(txt),
     social: social(all, base),
     // the pages that name the listing's pastor (his surname); the page checks a registered pastor's own name against "pastors"
-    pastorNamed: named, pastorPhoto: lp ? lp.photo : null, pastorPhotoOn: lp ? lp.on : null
+    pastorNamed: named, pastorPhoto: lp ? lp.photo : null, pastorPhotoOn: lp ? lp.on : null,
+    // v10.62.0 (digital-read-1.2): the whole site; a reading without `pages` is one by an older reader, judged as before
+    pages: recs.slice(0, 30), videos, latestVideo: videos.map(v => v.date).filter(Boolean).sort().pop() || null, stale, forms,
+    pics: { n: picList.length, unnamed: picList.filter(x => x.unnamed).length, generated: picList.filter(x => x.generated).length },
+    home: homeOf(r.text, base), words: wordsIn(per.map(p => ({ path: p.path, title: p.title, t: p.v }))), email: emailOf(all, vis),
+    address: st ? st.test(fold(vis)) : null, map: MAP_RE.test(all)
   };
+  Object.defineProperty(site, 'texts', { value: texts, enumerable: false, configurable: true });   // for the review (x/<slug>/<org>); never stored with the reading
+  return site;
 }
 
 // ---------------------------------------------------------------- YouTube (the public feed: no key)
 const KIND = [['series', /revelation|daniel|prophec|second coming|seminar|bible study|discover|series|evangelis|night \d|\b\d{1,2}\s*-\s/i],
   ['worship', /praise|worship|divine (hour|service)|sabbath (service|worship)|livestream|live stream|\blive\b|song service|hymn/i],
   ['event', /festival|baptism|wedding|funeral|memorial|concert|graduation|pathfinder|vbs|camp|day\b/i]];
-export async function youtube(u) {
+/* v10.62.0 (digital-read-1.2): the channel page already fetched gives the subscribers, the About text and whether it names the church's site
+   (`o.siteHost`); the feed's descriptions say whether each carries a web address, the listed street or ZIP (`o.address`, `o.zip`) and a time of
+   day; an upcoming stream; the names in titles and descriptions; the weak titles; 15 recent videos for the review. The pastor (8 Oct 2026):
+   "Website should actually make appeals and be evangelistic in nature, same with YouTube, same with Google." */
+export async function youtube(u, o = {}) {
   const r = await get(u); if (!r.ok) return { url: u, read: false };
   const id = (r.text.match(/"externalId":"(UC[\w-]{22})"/) || r.text.match(/channel\/(UC[\w-]{22})/) || [])[1]; if (!id) return { url: u, read: false };
   const f = await get('https://www.youtube.com/feeds/videos.xml?channel_id=' + id); if (!f.ok) return { url: u, read: false, id };
-  const vids = [...f.text.matchAll(/<entry>[\s\S]*?<\/entry>/g)].map(m => ({ t: clip(ent((m[0].match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''), 140),
-    d: ((m[0].match(/<published>([^<]+)/) || [])[1] || '').slice(0, 10), v: +((m[0].match(/views="(\d+)"/) || [])[1] || 0) }));
+  const vids = [...f.text.matchAll(/<entry>[\s\S]*?<\/entry>/g)].map(m => ({ t: scrub(clip(ent((m[0].match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''), 140)),
+    d: ((m[0].match(/<published>([^<]+)/) || [])[1] || '').slice(0, 10), v: +((m[0].match(/views="(\d+)"/) || [])[1] || 0),
+    desc: clip(ent((m[0].match(/<media:description>([\s\S]*?)<\/media:description>/) || [])[1] || ''), 600) }));   // desc: counted, never kept
   const kinds = { sermon: 0, series: 0, worship: 0, event: 0 }; for (const v of vids) kinds[(KIND.find(([, re]) => re.test(v.t)) || ['sermon'])[0]]++;
-  return { url: u, read: true, id, latest: vids[0] || null, inFeed: vids.length, last30: vids.filter(x => x.d >= daysAgo(30)).length,
+  const tdv = ({ t, d, v }) => ({ t, d, v });
+  const sm = r.text.match(/\b([\d.,]+)\s*(K|M|thousand|million)?\s+(?:subscribers|suscriptores)\b/i);
+  const subscribers = sm ? Math.round(parseFloat(sm[1].replace(/,/g, '')) * (/^(K|thousand)$/i.test(sm[2] || '') ? 1000 : /^(M|million)$/i.test(sm[2] || '') ? 1e6 : 1)) || null : null;
+  const about = scrub(clip(ent((r.text.match(/<meta\s+property=["']og:description["']\s+content=["']([^"']*)/i) || r.text.match(/<meta\s+name=["']description["']\s+content=["']([^"']*)/i) || [])[1] || ''), 300)) || null;
+  const aboutSite = o.siteHost ? new RegExp(esc(o.siteHost), 'i').test(r.text) : null;
+  const name = clip(ent((f.text.match(/<title>([\s\S]*?)<\/title>/) || [])[1] || ''), 120) || null;
+  const st = streetRe(o.address), zip = o.zip ? new RegExp('\\b' + esc(String(o.zip)) + '\\b') : null, desc = { n: 0, link: 0, address: 0, times: 0 };
+  for (const v of vids) {
+    if (!v.desc) continue; desc.n++;
+    if (/https?:\/\/|\bwww\.|\b[a-z0-9-]+\.(?:com|org|net|church|info|us|tv)\b/i.test(v.desc)) desc.link++;
+    if ((st && st.test(fold(v.desc))) || (zip && zip.test(v.desc))) desc.address++;
+    if (TIME_RE.test(v.desc)) desc.times++;
+  }
+  const td = today(), upcoming = vids.some(v => v.d >= td || (v.v === 0 && datesIn(v.t).some(d => d > td)));
+  const counts = new Map(); for (const v of vids) for (const n of namesIn(v.t + ' · ' + v.desc)) counts.set(n, (counts.get(n) || 0) + 1);
+  const names = [...counts].sort((a, b) => b[1] - a[1]).slice(0, 5).map(([nm, n]) => ({ name: nm, n }));
+  return { url: u, read: true, id, name, latest: vids[0] ? tdv(vids[0]) : null, inFeed: vids.length, last30: vids.filter(x => x.d >= daysAgo(30)).length,
     last90: vids.filter(x => x.d >= daysAgo(90)).length, avgViews: vids.length ? Math.round(vids.reduce((a, x) => a + x.v, 0) / vids.length) : null, kinds,
-    titles: vids.slice(0, 3) };
+    titles: vids.slice(0, 3).map(tdv), subscribers, about, aboutSite, desc, upcoming, names, weak: vids.filter(v => weakTitle(v.t)).length, recent: vids.slice(0, 15).map(tdv) };
 }
 
 // ---------------------------------------------------------------- Google's listing (Places API (New), Text Search)
-const PLACES_FIELDS = 'places.id,places.displayName,places.formattedAddress,places.types,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.businessStatus,places.googleMapsUri,places.regularOpeningHours.weekdayDescriptions';
+// v10.62.0: places.photos added (Pro tier, inside the Enterprise call Text Search already makes: no new charge; Google's pricing page read 8 Oct
+// 2026: Text Search Enterprise 1,000 free a month, $35 per 1,000 after; reviews would need Enterprise + Atmosphere, $40, and carry no owner reply)
+const PLACES_FIELDS = 'places.id,places.displayName,places.formattedAddress,places.types,places.rating,places.userRatingCount,places.websiteUri,places.nationalPhoneNumber,places.businessStatus,places.googleMapsUri,places.regularOpeningHours.weekdayDescriptions,places.photos';
 const PLACES_KEY = () => (process.env.GOOGLE_PLACES_KEY || '').trim();
 const SEARCH_KEY = () => (process.env.BRAVE_SEARCH_KEY || '').trim();
 const capOf = (name, d) => { const n = parseInt(process.env[name] || '', 10); return Number.isFinite(n) && n >= 0 ? n : d; };
@@ -348,7 +612,8 @@ export async function google(e, store) {
     rating: typeof p.rating === 'number' ? p.rating : null, reviews: typeof p.userRatingCount === 'number' ? p.userRatingCount : 0,
     status: clip(p.businessStatus || '', 30), website: p.websiteUri ? clip(p.websiteUri, 300) : null, phone: p.nationalPhoneNumber ? clip(p.nationalPhoneNumber, 30) : null,
     maps: p.googleMapsUri && /^https:\/\/(www\.|maps\.)?google\.[a-z.]+\//.test(p.googleMapsUri) ? clip(p.googleMapsUri, 300) : null,
-    hours: Array.isArray(p.regularOpeningHours && p.regularOpeningHours.weekdayDescriptions) ? p.regularOpeningHours.weekdayDescriptions.slice(0, 7).map(x => clip(x, 60)) : null };
+    hours: Array.isArray(p.regularOpeningHours && p.regularOpeningHours.weekdayDescriptions) ? p.regularOpeningHours.weekdayDescriptions.slice(0, 7).map(x => clip(x, 60)) : null,
+    photos: Array.isArray(p.photos) ? Math.min(10, p.photos.length) : 0 };   // v10.62.0: how many pictures the listing shows (Google gives up to 10)
 }
 
 // ---------------------------------------------------------------- the double check (a search for the church's name), when a key is set
@@ -386,9 +651,12 @@ export function sift(sr, e, siteHost) {
 }
 
 // ---------------------------------------------------------------- one church
-export async function readChurch(e, store) {
+/* v10.62.0: `slug` names the job's conference; with it, and only when the server has ANTHROPIC_API_KEY (the in-depth review may run), the
+   pages' texts go to x/<slug>/<org>, never into the reading itself. An embedded video is the church's own when its channel is the one in the
+   feed (by id), else when the channel's name is the same. */
+export async function readChurch(e, store, slug = '') {
   const res = { org: e.org, read: today() };
-  res.site = e.website ? await website(e.website, 13, e.pastor || '') : null;
+  res.site = e.website ? await website(e.website, 30, e.pastor || '', { address: e.address }) : null;
   const siteHost = res.site && res.site.opens && res.site.url ? hostOf(res.site.url) : null;
   const sr = await search(e, store); res.search = sr.read ? { read: true } : { read: false, why: sr.why };
   const f = sift(sr, e, siteHost); res.search.ownAt = f.ownAt; res.dirPastors = f.dirPastors;
@@ -396,8 +664,13 @@ export async function readChurch(e, store) {
   const s = (res.site && res.site.opens && res.site.social) || (res.otherSite && res.otherSite.social) || {};
   res.facebook = s.facebook ? { url: s.facebook, from: 'site', followers: f.facebook && hostOf(f.facebook.url) === hostOf(s.facebook) ? f.facebook.followers : null } : f.facebook ? { ...f.facebook, from: 'search' } : null;
   res.instagram = s.instagram ? { url: s.instagram, from: 'site' } : f.instagram ? { ...f.instagram, from: 'search' } : null;
-  const yt = s.youtube || f.youtube; res.youtube = yt ? { ...(await youtube(yt)), from: s.youtube ? 'site' : 'search' } : null;
+  const yt = s.youtube || f.youtube; res.youtube = yt ? { ...(await youtube(yt, { siteHost, address: e.address, zip: e.zip })), from: s.youtube ? 'site' : 'search' } : null;
+  if (res.site && Array.isArray(res.site.videos) && res.youtube && res.youtube.read) {
+    const y = res.youtube, nm = fold(y.name || '').toLowerCase();
+    for (const v of res.site.videos) v.mine = !!((v.ch && y.id && v.ch === y.id) || (nm && v.by && fold(v.by).toLowerCase() === nm));
+  }
   res.google = await google(e, store);
+  if (slug && res.site && res.site.texts && (process.env.ANTHROPIC_API_KEY || '').trim()) await store.setJSON('x/' + slug + '/' + e.org, res.site.texts);
   return res;
 }
 
@@ -454,7 +727,7 @@ export async function runJob(slug, worker, base) {
         const todo = job.only ? job.list.filter(o => o.org === job.only) : job.list;
         if (job.i >= todo.length) { job.phase = 'pack'; await keep(); continue; }
         const o = todo[job.i], e = await store.get('e/' + o.org, { type: 'json' });
-        if (e && !e.missing) await store.setJSON(`r/${slug}/${o.org}`, await readChurch(e, store));
+        if (e && !e.missing) await store.setJSON(`r/${slug}/${o.org}`, await readChurch(e, store, slug));
         counts.churches++; job.i++; await keep(); continue;
       }
       if (job.phase === 'pack') {

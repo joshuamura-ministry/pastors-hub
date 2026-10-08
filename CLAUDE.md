@@ -91,15 +91,19 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
-netlify/functions/digital.mjs        (v10.60.0, digital-1.1 since v10.60.1) Digital footprint for registered pastors (the registration token, as census/gifts):
+netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
                                starts a conference's reading when one of its pastors registers or signs in (register.mjs)
-netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.1 since v10.61.0: dates a visitor sees, the pastor's photo, speed) the background reader: the official list (eAdventist, one page each 3 s), each
+netlify/functions/digital-read.mjs   (v10.60.0; digital-read-1.1 v10.61.0: dates, the pastor's photo, speed; digital-read-1.2 v10.62.0: the whole site, below) the background reader: the official list (eAdventist, one page each 3 s), each
                                church's website as a visitor reads it (TerrainBot, robots.txt obeyed, the words inside a template's scripts), YouTube's
                                feed, Google's listing (Places API (New), GOOGLE_PLACES_KEY), one search (BRAVE_SEARCH_KEY, when set); Facebook never
                                read; under 13 minutes a run, then it wakes itself; store `terrain-digital` (c/ findings, j/ job, e/ entries, r/ readings)
-netlify/functions/digital-sweep.mjs  (v10.60.0, digital-sweep-1.0) monthly (the 1st): conferences opened in 60 days read again; unopened in 180 forgotten
+netlify/functions/digital-sweep.mjs  (v10.60.0; digital-sweep-1.1 since v10.62.0) monthly (the 1st): conferences opened in 60 days read again; unopened in 180
+                               forgotten (with their texts x/ and kept reviews v/); the review's jobs q/ after 7 days, locks l/ after a day, day counters after 2
+netlify/functions/digital-review.mjs (v10.62.0, review-1.0) the background worker behind Digital footprint's in-depth review: one request, no web, the pages'
+                               texts and up to six home-page pictures (image URLs), the strict tool record_review, `cleanReview` (every quote on the pages,
+                               every number in the input, no name not in the input, no other church, no "AI"); woken by digital.mjs (op review)
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
 AUDIT.md                       (v10.61.1) the checklist every full audit follows (set up, measured, read by eye, solid, fix and prove, report)
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
@@ -159,6 +163,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.62.0: `/.netlify/functions/digital` → `"fn":"digital-1.2"`, `"readFn":"digital-read-1.2"`, `"reviewFn":"review-1.0"`, `"review":true` (the Anthropic key and `TERRAIN_AI_PASS` are set), `"places":true`; the next reading (his "Check again", or the monthly refresh) brings the marks; his own churches' in-depth review runs by itself on his unlocked device (`?ideas=`)
 - v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
   passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://terrain.church/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
@@ -199,6 +204,7 @@ values are never in the repo):
 | `PLACES_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Google lookups a month for the whole site, default 900 (under the free 1,000). |
 | `BRAVE_SEARCH_KEY` | digital-read.mjs | Optional (v10.60.0, not set). One search a church: the double check (a site, a Facebook page or a YouTube channel the listing does not give; directories that still name an earlier pastor; where its own site comes). Brave Search API: 1,000 free a month, then $5 per 1,000. Without it the double check is the listing and Google's listing, and the page never says "no Facebook page" (none was looked for). |
 | `SEARCH_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Searches a month, default 900. |
+| `REVIEW_MODEL` / `REVIEW_EFFORT` / `REVIEW_DAY_MAX` | digital.mjs, digital-review.mjs | Optional (v10.62.0). The in-depth review's model (default `claude-opus-5-5`), effort (`medium`) and the site's reviews a day (default 40; 0 turns it off: GET says `review:false`). It needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`), as every Claude feature. 3 a registration a day for another church or "Review again"; a church's kept review is given again at no cost until it is read again. About $0.30–0.60 a review (25–40K tokens in, with six pictures). |
 | `DIGITAL_CONFS` | digital.mjs, digital-sweep.mjs | Optional (v10.60.0). The conferences that may be read, comma-separated (their names as registered: "Pennsylvania,Ohio"); "*" every NAD conference (CONF_ORG has all 51 Terrain registers: the 50 US conferences and, since v10.60.1, Guam-Micronesia Mission). Default "Pennsylvania". |
 
 v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registration token like gifts and present, and Netlify Blobs.
@@ -206,6 +212,75 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.62.0 (8 Oct 2026, full lane) — Digital footprint, the bar raised: "Current" means a site that does its work; every deficiency with its fix;
+an in-depth review.** The pastor, of his own church's card: *"on the website you say that it looks it's current but what about its content because
+on the website you see another pastor preaching … Are you able to survey the whole website and see its deficiencies as well because this is not
+enough … A lot of websites are up, but they're horrible … Website should actually make appeals and be evangelistic in nature same with YouTube
+same with Google … I don't want things to be perfect. If it's not perfect then don't show that it's perfect … right now it's capped at a very,
+very low level"*; *"I want to set the bar high when it comes to our digital footprint."* Design `~/Ministry Work/Terrain-work/v79/DESIGN-DIGITAL-2.md`
+(with what was seen on his own site on 8 Oct 2026: a photo slideshow for a home page, the newsletter's last issue 2 July 2023, "All Rights Served",
+"Seventh-Day", a hero picture named "ChatGPT Image…", no forms, the Give page unread). Built by three builders in parallel (B1 the reader, B2 the
+review server, B3 the page) and integrated here (the seams: a video's `on` is the page it sits on and `kind` its provider; `site.expect`; the
+server's `limit-reg` / `limit-site` codes read by the page).
+- **The reader (digital-read-1.2)** reads the whole menu (header, nav, footer links plus the old list; up to 30 pages, the Give page among them),
+  and keeps per page `site.pages[]` {path, status (404/410 a broken link), title, h1, words, newest, next, forms, videos, imgs}; the embedded
+  videos `site.videos[]` (iframe, escaped JSON, youtu.be, nocookie, Vimeo; up to six; oEmbed gives the title and channel, the watch page the
+  date and whether it is a live stream, no key; `names` by the name reader: "Pastor X", "Elder X", "with X"), `site.latestVideo`; `site.stale[]`
+  (a page a year out of date with nothing ahead); `site.forms` {n, prayer, bible, contact, news} (forms inside Google Forms / Jotform frames count);
+  `site.pics` {n, unnamed (no alt, or a file name, or "ChatGPT Image…"), generated (a file name or alt naming ChatGPT, DALL·E, Midjourney, "stock",
+  a stock site)}; `site.words[]` (the name written "Seventh-Day" / "Seventh Day" where the denomination writes "Seventh-day"; a short list of
+  misspellings: "All Rights Served", recieve, calender…; never a spell-checker); `site.email` {host, generic} (never the address); `site.address`,
+  `site.map`, `site.expect`; `site.home` {h1, first, ctas, pics[≤6]} for the review; every new free text scrubbed of emails and phone numbers.
+  The pages' texts for the review (≤14 pages, 2,500 chars each, 22,000 in all) are a non-enumerable `site.texts`, written to `x/<slug>/<org>` only
+  when the server has `ANTHROPIC_API_KEY`, never into the findings. `youtube()`: `subscribers`, `about`, `aboutSite`, `desc` {n, link, address,
+  times}, `upcoming`, `names`, `weak`, `recent[15]`. `google()`: `places.photos` in the mask → `photos` (Pro tier, inside the Enterprise call
+  already made: no new charge; Google's pricing page read 8 Oct 2026; `reviews` would cost more and carry no owner reply, so they stay out).
+- **The marks (the page, `dfMarks`)**: Website 24 (opens, secure, fits a phone, under 4 s, a description for search, the name's spelling, no
+  misspelling, the address, the phone matches, service times, the pastor named, his photo, no other pastor shown (a video or page naming another),
+  no stale page, something current (a date ahead or a video within 30 days), an events calendar, sermons/watch, the latest sermon within 30 days,
+  giving, a form, pictures described, pictures of real people, no broken menu link, a live-stream link); Ways in 8 (first-time visitors, what to
+  expect, Bible studies, a form for them, prayer, a contact form, a sign-up, directions); YouTube 10; Google 8. Heavy marks (`w:2`): opens, https,
+  mobile, address, times, named, no other pastor, current, visitors, bible, prayer, a recent video, views, found, open, website, hours. A missing
+  field (an older reading) is `null`, never counted. **"Current" only when every heavy mark passes and 9 in 10 of all** (`dfState`); the chip says
+  "Needs work · 10 of 24"; the chart's dot sits by the share (`U*(1+2*share)`); YouTube has no fatal mark (an idle channel is "Needs work").
+  **Facebook & Instagram are never "Current"** (`unread`: "Linked, not read" / "Not linked"; hollow on the chart), his "if it's not perfect then
+  don't show that it's perfect". Each area lists its failed marks as lines ("No form a visitor can send from the site: every door is a link out
+  or an email address."), then one "Good: …" line; `dfFixes` one fix per failed mark, grouped (the forms, the pictures, the stale pages, the
+  words), heaviest first, folded on the card ("What to fix, heaviest first · n"), whole in the report. Pastor's name: "Another pastor in a video"
+  when an embedded video on the home, about, pastor or staff pages names another ("Sabbath Worship with Pastor X" (3 Jun 2023)).
+- **The in-depth review** (`digital-review.mjs` review-1.0; `digital.mjs` digital-1.2: `POST {op:'review', conf, org, key, lang, own, myName,
+  fresh}` → 200 `{review}` kept · 202 `{job, poll}` · refusals nokey 503 → disabled 403 → locked 401 → noreg 401 → bad 400 → not-yet 403 →
+  unknown 404 → limit-reg / limit-site 429 → busy 409; `{op:'review-status', conf, org}` → queued | running | done `{made, review}` | failed
+  `{code}`; the bare GET says `review`, `reviewFn`). The input is built on the server (`reviewInput`: the church's name and town, the pastor
+  of record (his registration's on his own), the listing's staff names, the facts in words, the texts from `x/`, the home page and up to six of
+  its pictures as image URLs, the YouTube facts, Google's; never an address, a phone, an email, another church). One request, no web, the strict
+  tool `record_review` → `{sees, strengths[], gaps[] {area, title, what, why, fix, who, effort, priority 1–3}, pictures[] {on, shows, note},
+  appeal {level 0–3, note}, pastor {shown, note}, words[] {for, text}}`; `cleanReview`: every quoted phrase a folded substring of one page's
+  text, every number in the input, a capitalized name not the pastor's/staff's/church's/town's and not in the texts refuses the item, "shows"
+  refuses any name (never who is in a picture), no "AI", no markup or address, fewer than 3 gaps → none; the raw reply never stored. Keys:
+  `v/<slug>/<org>/<lang>` the kept review (given again at no cost until the church is read again), `q/<job>`, `l/<slug>/<org>`, `c/site/<day>`,
+  `c/reg/<day>/<reg>`. **His own churches: by themselves** once per reading when Digital footprint opens on his unlocked device; any other
+  church on "Review in depth" (3 a registration a day). The system prompt: a seasoned Adventist communication director reviewing one church's
+  digital front door, honest, never harsh; the raised bar in words. **Never run against the real service** (every test stubs it); the first real
+  review is his: watch the job record (tokens, ms, rejected).
+- **The page**: each of his churches' cards shows the chart, the six areas with counts and lines, the fixes, then **In depth** (working → done:
+  "What a first-time visitor experiences", "Strengths", "What keeps a neighbor out" (1), "Would help" (2), "Polish" (3), "The pictures", "Does it
+  make an appeal?", "The pastor a visitor meets", "Words ready to paste" with Copy; "Reviewed {date} · Review again"; without the lock one line,
+  never "AI"); an opened row in Every church the same, with "Review in depth"; the report (screen and PDF) gains "In depth"; "Who needs help
+  most" gains "Website up, but not working"; How to fix it is nine boxes (3 × 3; YouTube's titles and descriptions inside the YouTube box).
+  "Make it a proposal" keeps the top three gaps in sessionStorage `terrain-df-gaps`; Make the Case does not read them yet (open).
+- Tests: `digital-read-2` (new, 61), `digital-review` (new, 122), `v62-digital-bar` (new, 82; helper `v62-digital-helpers.js`), each failing
+  first on v10.61.1 (`v79/logs/ff-*.log`); updated with comments: digital-function (47: the stamps, photos in the mask, the sweep's new keys),
+  v61-digital-read, v60-1-signup-read, v60-digital (the states under the bar; Facebook unread), v61-digital-depth (the chart by share),
+  no-ai-words (133: Digital footprint with a review, a row open, the report). Checked in Chrome on the integrated build (`v79/make-findings62.mjs`,
+  `serve62.mjs`, `shots62.mjs`, 66 pictures `v79/shots62/`): computer 1366 and phone 390, EN + ES, no sideways scroll, no page errors, rows level.
+  Full suite: 169 suites · 11,229 passed · 0 failed (the full run 11,228 and one stale count, connect-client's memberLink() guard sites, 28 with the in-depth review's, updated with a comment and rerun: 88). Samples `Terrain-v10.62.0-samples` (made-up findings: Sampleton's site opens but fails 14 of 24, an embedded video
+  naming "Pastor Sample Previous" from 2023; a made-up review).
+- **Open / his to decide** (the design's defaults): which marks are heavy and the 9-in-10 line; the review by itself for his churches, others
+  on tap (cost); Claude describes pictures, never who is in them; Facebook and Instagram unread; Google reviews' text out. Not checked live:
+  YouTube's oEmbed and watch pages from Netlify's addresses (a refusal leaves the title and date empty, never a false finding); the reading's
+  time with 30 pages a church (about 35 minutes over the chained runs, estimated).
 
 **v10.61.1 (8 Oct 2026, quick lane) — one way to each place, under one name.** The pastor, 8 Oct 2026, answering the audit's open questions: *"keep the EVANGELISM planner in
   English for now yes [hide] name conference for number two. We don't need to show twice. Just show the most important one skip four
@@ -2836,7 +2911,7 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
   (build · debt · review, Church Manual p. 153) and `buyConfAsk`, `buyRiskSix` (a slide's six safeguards), `buyEventNote` / `buyLineRule`
   (a sale or an event under "Something else"), `buyPricesResume`, `buyBoxFit`, `BUY_CM.editionSlide`, `BUY_P.heads.sop`, `BUY_SL.askWork`
 
-**Digital footprint** (v10.60.0; block "v10.60.0 — DIGITAL FOOTPRINT" before "LEARN FROM OTHER CONFERENCES"; the server `digital*.mjs`)
+**Digital footprint** (v10.60.0; block "v10.60.0 — DIGITAL FOOTPRINT" before "LEARN FROM OTHER CONFERENCES"; the server `digital*.mjs`; v10.62.0: `dfMarks`, `dfState`, `dfSiteOf`, `dfPastorRead`, `dfYtNames`, `dfWeakTitle`, `DF_FIX_ORDER`, the In depth block `DF_DEEP` / `dfDeepKey` / `dfDeepOn` / `dfDeepHTML` / `dfReviewHTML` / `dfDeepPaint` / `dfDeepAuto` / `dfDeepStart`, `dfReportDeep`, `dfCopy`; the server's `reviewInput`, `cleanReview`, `recordSchema`, `REVIEW_SYSTEM`, `runStudy`, `runJob` in digital-review.mjs; the reader's `menuLinks`, `videosIn`, `videoInfo`, `namesIn`, `formsIn`, `picsIn`, `homeOf`, `wordsIn`, `emailOf`, `weakTitle`)
 - `DF`, `DF_T`/`dfT`, `dfLoad`, `dfMount` (from `chcRender`), `dfPaint`/`dfWire`, `dfContext`, `dfJudge`, `dfChurchSite`, `dfPersonLike`, `dfCleanName`, `dfSame`, `dfMine`,
   `dfFixes`, `dfWordsFor`, `dfActs`, `dfReportText`/`dfReportHTML`/`dfPdf`, `dfAgain`, `DF_HOW`; server: `CONF_ORG`, `parseEntry`, `website`, `textOf`, `pastorsIn`,
   `robotsRules`/`robotsAllow`, `youtube`, `google`/`pickPlace`, `search`/`sift`, `readChurch`, `runJob`; `start`/`rescue` in digital.mjs; `sweep`
@@ -3022,6 +3097,9 @@ Don't relitigate them without a reason he'd accept.
 - **The main menu is very simple** (v10.56.1, his words: "the only thing that should be here is welcome to terrain … the Ellen White
   quote and then … the five icons"): the welcome, the quote, the tools (six since v10.57.0, his "a comparison between churches"), and
   what Terrain is for. Nothing else.
+- **Digital footprint sets the bar high** (v10.62.0, his words: "if it's not perfect then don't show that it's perfect"; "I want to set the bar high"): "Current" means a
+  site that does its work (every heavy mark and nine in ten of all); every failed mark is said with its fix; Facebook and Instagram, unread, are never
+  "Current"; the in-depth review quotes only the pages, names only who the pages name, and never says who is in a picture.
 - **Digital footprint never accuses** (v10.60.0, his rule: "make sure we're not missing something so we don't accuse them"): "no website" only after a
   double check, said "we could not find" with what was checked; a refusal or a robots.txt is "Not read"; Facebook and Instagram are never read; Google's
   listing and the website carry the weight (his words); every registered pastor of a conference sees all its churches, the report only for his own.
