@@ -288,7 +288,8 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
     await until(()=>!!S.q('#cs-s1 .cs-atile'));
     const es=S.J(`CASE_GROUPS.map(g=>g.es)`);
     c('the heading, the sections and every tile', [S.q('#cs-s1 h3').lastChild.textContent,S.qa('#cs-s1 .cs-aud h4').map(h=>h.textContent),S.qa('#cs-s1 .cs-atile b').map(b=>b.textContent).sort()],
-      ['¿Para quién es?',['Liderazgo','Departamentos de ministerio','En sábado','La asociación'],es.slice().sort()]);   // v10.47.0   // v10.41 integration: the conference section
+  // v10.61.0 (the audit): "Departamentos", one line on a phone (was "Departamentos de ministerio")
+      ['¿Para quién es?',['Liderazgo','Departamentos','En sábado','La asociación'],es.slice().sort()]);   // v10.47.0   // v10.41 integration: the conference section
     c('…the church line', S.txt('#homeline'), 'Bucks County SDA · 10 Greene Rd, Warminster, PA 18974 · Cambiar de iglesia');
     const txt=S.txt('#cs-s1')+' '+S.txt('#homeline');
     c('…no English left in step 1 or the line', ['Who ','Board &','Ministry teams','The whole church','Tap the group','A decision','An invitation','On Sabbath','Change church','Decide'].filter(t=>txt.includes(t)), []);

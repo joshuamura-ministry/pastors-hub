@@ -138,7 +138,10 @@ const dayOff=n=>{ const d=new Date(TODAY.getFullYear(),TODAY.getMonth(),TODAY.ge
     c('the vote: "by consensus", "1 abstained", "2 abstained"; ES "1 abstención", "2 abstenciones"', J(`[caseDecVoteText({for:null,against:null,abstain:null,consensus:true}),caseDecVoteText({for:3,against:0,abstain:1,consensus:false}),caseDecVoteText({for:3,against:null,abstain:2,consensus:false}),
       caseInLang('es',()=>caseDecVoteText({for:3,against:0,abstain:1,consensus:false})),caseInLang('es',()=>caseDecVoteText({for:null,against:null,abstain:2,consensus:true}))]`),
       ['by consensus','3 for · 0 against · 1 abstained','3 for · 2 abstained','3 a favor · 0 en contra · 1 abstención','2 abstenciones · por consenso']);
-    c('the agreed timing in words: headline, rows and one line (EN)', J(`caseDecTimingText(caseDecAgreed(${JSON.stringify(recs)},['team','finance','board']))`),
+    // v10.61.0 (stale by the calendar, not a regression): the start is two weeks from today, so on some days its six Thursdays reach a
+    // holiday (8 Oct 2026: Thanksgiving, 26 Nov) and the app rightly adds its Note (v42-fixes holds the Note itself); this check reads the rest
+    const noHoliday=t=>({head:t.head,rows:t.rows.filter(r=>r[0]!=='Note'),line:t.line.replace(/ · A session falls on [^·]*$/,'')});
+    c('the agreed timing in words: headline, rows and one line (EN)', noHoliday(J(`caseDecTimingText(caseDecAgreed(${JSON.stringify(recs)},['team','finance','board']))`)),
       {head:`Agreed: Thursday evening, from ${J(`caseDate(caseDecDay(${JSON.stringify(dayOff(14))}))`)}`,
        rows:[['Day','Thursday evening'],['Time','6:00 pm'],['Starts',Y(dayOff(14))],['Length','6-week trial'],['Room','Fellowship hall'],['Agreed by','Church board · '+Y(recs.board.date)]],
        line:`Agreed: Thursday evening · 6:00 pm · ${Y(dayOff(14))} · 6-week trial · Fellowship hall`});

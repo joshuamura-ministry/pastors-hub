@@ -1,4 +1,4 @@
-// Terrain · Digital footprint, the reader (background).                    digital-read-1.0
+// Terrain · Digital footprint, the reader (background).                    digital-read-1.1
 //
 // v10.60.0 (DESIGN-DIGITAL.md, Terrain-work/v77). The pastor (7 Oct 2026): "I would like to see all the churches in the conference
 // that you choose … websites, Facebook pages … YouTube … checked to see if they're up-to-date … Where do we show up in Google search
@@ -35,7 +35,7 @@ import { createHash, timingSafeEqual } from 'node:crypto';
 
 export const config = { background: true };
 
-export const FN = 'digital-read-1.0';
+export const FN = 'digital-read-1.1';
 const STORE_NAME = 'terrain-digital';
 export const UA = 'Mozilla/5.0 (compatible; TerrainBot/1.0; +https://terrain.church)';
 const EAD = 'https://www.eadventist.net/search/organization?locale=en&org=';
@@ -131,16 +131,28 @@ export function textOf(h) {
   return (visOf(h) + ' \n ' + ent(scripts.join(' \n '))).replace(/\s+/g, ' ').trim();
 }
 const MON = { jan: 1, feb: 2, mar: 3, apr: 4, may: 5, jun: 6, jul: 7, aug: 8, sep: 9, oct: 10, nov: 11, dec: 12 };
-function newestDate(t) {
-  const out = [];
-  for (const m of t.matchAll(/\b(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\.?\s+(\d{1,2}),?\s+(20\d\d)\b/gi)) out.push(`${m[3]}-${String(MON[m[1].toLowerCase().slice(0, 3)]).padStart(2, '0')}-${m[2].padStart(2, '0')}`);
-  const lim = daysAgo(-366);
-  return out.filter(d => /^20\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(d) && d <= lim).sort().pop() || null;
+/* v10.61.0: the dates a site's words carry ("Oct 12, 2025", "12 October 2025", "10/12/2025", "12 de octubre de 2025") */
+const MES = { enero: 1, febrero: 2, marzo: 3, abril: 4, mayo: 5, junio: 6, julio: 7, agosto: 8, septiembre: 9, setiembre: 9, octubre: 10, noviembre: 11, diciembre: 12 };
+const iso = (y, m, d) => `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+export function datesIn(t) {
+  const out = [], M = '(Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]*\\.?';
+  for (const m of t.matchAll(new RegExp(`\\b${M}\\s+(\\d{1,2})(?:st|nd|rd|th)?,?\\s+(20\\d\\d)\\b`, 'gi'))) out.push(iso(m[3], MON[m[1].toLowerCase().slice(0, 3)], m[2]));
+  for (const m of t.matchAll(new RegExp(`\\b(\\d{1,2})(?:st|nd|rd|th)?\\s+${M},?\\s+(20\\d\\d)\\b`, 'gi'))) out.push(iso(m[3], MON[m[2].toLowerCase().slice(0, 3)], m[1]));
+  for (const m of t.matchAll(/\b(\d{1,2})\/(\d{1,2})\/(20\d\d)\b/g)) out.push(iso(m[3], m[1], m[2]));
+  for (const m of t.matchAll(/\b(\d{1,2})\s+de\s+(enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|setiembre|octubre|noviembre|diciembre)(?:\s+de)?\s+(20\d\d)\b/gi)) out.push(iso(m[3], MES[m[2].toLowerCase()], m[1]));
+  return out.filter(d => /^20\d\d-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/.test(d));
+}
+function newestDate(t) { const lim = daysAgo(-366); return datesIn(t).filter(d => d <= lim).sort().pop() || null; }
+/* the newest date already past, and what is still ahead (within a year: events, a series) */
+export function datesOf(t) {
+  const today = daysAgo(0), lim = daysAgo(-366), all = [...new Set(datesIn(t))].sort();
+  const past = all.filter(d => d <= today), ahead = all.filter(d => d > today && d <= lim);
+  return { past: past.pop() || null, next: ahead[0] || null, ahead: ahead.length };
 }
 const surname = n => { const w = String(n || '').replace(/\b(Jr|Sr|II|III|IV)\.?$/i, '').replace(/[.,]/g, ' ').trim().split(/\s+/).filter(Boolean); return w.length ? w[w.length - 1] : ''; };
 const fold = s => String(s || '').normalize('NFD').replace(/[̀-ͯ]/g, '');
-const NW = "(?:[A-Z][a-zà-ÿ'’\\-]+|[A-Z]\\.)";
-const STOP = /^(Our|Meet|The|Welcome|Contact|Your|From|With|About|Senior|Lead|District|Local|Associate|Youth|Head|Former|Dear|Message|Corner|Page|Appreciation|Search|Pastors?|Church|Sabbath|Elder|Bible|Women|Men|Ministry|Ministries|Prayer|Team|Home|Staff|Leaders?|Online|Join|Visit|Resources|Services|Phone|Email|Office|Mobile|Location|Website|Site|Address)$/;
+const NW = "(?:[A-Z][a-zà-ÿ'’\\-]+(?:[A-Z][a-zà-ÿ'’\\-]+)?|[A-Z]\\.)";   // v10.61.0: LaCamera, McDonald
+const STOP = /^(Our|Us|Meet|The|Welcome|Contact|Your|From|With|About|Senior|Lead|District|Local|Associate|Youth|Head|Former|Dear|Message|Corner|Page|Appreciation|Search|Pastors?|Church|Sabbath|Elder|Bible|Women|Men|Ministry|Ministries|Prayer|Team|Home|Staff|Leaders?|Online|Join|Visit|Resources|Services|Phone|Email|Office|Mobile|Location|Website|Site|Address)$/;
 /* people called pastor on a page, and the pages they are named on */
 export function pastorsIn(per) {
   const found = new Map();
@@ -188,7 +200,7 @@ export function robotsAllow(rules, path) {
   for (const r of rules) { const p = r.path.replace(/\*$/, ''); if (path.startsWith(p) && (!best || p.length > best.p.length)) best = { p, allow: r.allow }; }
   return !best || best.allow;
 }
-const PAGES = /(about|pastor|staff|leader|team|who-we-are|our-church|meet|contact|visit|new-here|welcome|live|watch|online|join|location|directions|find-us|connect|info|prayer|bible|services|worship|times|beliefs?)/i;
+const PAGES = /(about|pastor|staff|leader|team|who-we-are|our-church|meet|contact|visit|new-here|welcome|live|watch|online|join|location|directions|find-us|connect|info|prayer|bible|services|worship|times|beliefs?|events?|calendar|bulletin|sermons?)/i;   // v10.61.0: and where dates live
 function variants(w) {
   const bare = String(w || '').trim().replace(/^https?:\/\//i, '').replace(/\/+$/, ''); if (!bare) return [];
   const host = bare.split('/')[0], path = bare.slice(host.length);
@@ -203,9 +215,33 @@ async function robotsFor(base) {
   robotsCache.set(origin, rules); return rules;
 }
 /* what a visitor finds; "does not open" only when no address variant answers at all (never for a refusal: that is "not let in") */
+/* v10.61.0 (the pastor: "it doesn't even have my picture on there … hasn't been updated in a long time"): a photo by a pastor's name, in
+   the page's markup or in a template's scripts: an image named for him (alt, title, file name), else one in the same card (an <img> or a
+   background image just before or after his name). Logos, icons and banners never count. null: none found. */
+const rawOf = h => h + ' ' + [...h.matchAll(/<script[^>]*>([\s\S]*?)<\/script>/gi)].map(m => m[1]).filter(x => /\\u003c/.test(x))
+  .map(x => x.replace(/\\u003c/g, '<').replace(/\\u003e/g, '>').replace(/\\"/g, '"').replace(/\\\//g, '/')).join(' ');
+const NOT_PHOTO = /logo|icon|favicon|sprite|banner|header|footer|badge|button|arrow|placeholder|spacer|pixel|blank|\.svg\b/i;
+export function photoBy(html, sn) {
+  if (!sn) return null;
+  const body = rawOf(String(html || '')).replace(/<(style|noscript)[^>]*>[\s\S]*?<\/\1>/gi, ' ');
+  const attr = (tag, a) => (tag.match(new RegExp('\\b' + a + '\\s*=\\s*["\']([^"\']*)', 'i')) || [])[1] || '';
+  for (const m of body.matchAll(/<img\b[^>]*>/gi)) {
+    const src = attr(m[0], 'src') || attr(m[0], 'data-src') || attr(m[0], 'srcset'), alt = ent(attr(m[0], 'alt') + ' ' + attr(m[0], 'title'));
+    if (NOT_PHOTO.test(src + ' ' + alt)) continue;
+    let file = src; try { file = decodeURIComponent(src); } catch { /* as is */ }
+    if (sn.test(fold(alt)) || sn.test(fold(file.split('/').pop()).replace(/[-_.]+/g, ' '))) return 'named';
+  }
+  const text = body.replace(/<script[^>]*>[\s\S]*?<\/script>/gi, m => /\\u003c/.test(m) ? m : ' ');
+  for (const m of text.matchAll(new RegExp(sn.source, 'gi'))) {
+    const near = text.slice(Math.max(0, m.index - 700), m.index + 400);
+    const imgs = [...near.matchAll(/<img\b[^>]*>|background-image\s*:\s*url\(([^)]*)\)/gi)].filter(x => !NOT_PHOTO.test(x[0]));
+    if (imgs.length) return 'near';
+  }
+  return null;
+}
 export async function website(listed, maxPages = 13, pastorName = '') {
-  let r = null; const tried = [];
-  for (const u of variants(listed)) { tried.push(u); r = await get(u); if (r.ok && r.text.trim().length > 20) break; }   // any page with words opens
+  let r = null, ms = null; const tried = [];
+  for (const u of variants(listed)) { tried.push(u); const t0 = Date.now(); r = await get(u); ms = Date.now() - t0; if (r.ok && r.text.trim().length > 20) break; }   // any page with words opens
   if (!r || !r.ok || r.text.trim().length <= 20) {
     const refused = r && [401, 403, 429, 503].includes(r.status);
     return { listed: clip(listed, 200), opens: false, refused, status: r ? r.status : 0, err: r && r.err ? clip(r.err, 30) : null };
@@ -223,17 +259,32 @@ export async function website(listed, maxPages = 13, pastorName = '') {
   const phones = [...new Set([...vis.matchAll(/\(?\b(\d{3})\)?[\s.-](\d{3})[\s.-](\d{4})\b/g)].map(m => `${m[1]}-${m[2]}-${m[3]}`))].slice(0, 6);
   const snw = fold(surname(pastorName)).replace(/[^A-Za-z'’-]/g, ''), sn = snw.length > 1 ? new RegExp('\\b' + snw + '\\b', 'i') : null;
   const years = [...new Set([...txt.matchAll(/(?:©|copyright)\s*(?:\d{4}\s*[-–]\s*)?(20\d\d)/gi)].map(m => m[1]))].sort();
+  // v10.61.0: a photo by each pastor's name (the pages he is named on), and by the listing's pastor's
+  const byPath = new Map(pages.map(p => [p.path.replace(/\/+$/, '') || '/', p.h]));
+  const snOf = n => { const w = fold(surname(n)).replace(/[^A-Za-z'’-]/g, ''); return w.length > 1 ? new RegExp('\\b' + w + '\\b', 'i') : null; };
+  const photoOf = (n, paths) => { const re = snOf(n); for (const pa of paths || []) { const ph = photoBy(byPath.get(pa) || '', re); if (ph) return { photo: ph, on: pa }; } return null; };
+  const pastors = pastorsIn(per).map(p => { const ph = photoOf(p.name, p.pages); return ph ? { ...p, photo: ph.photo, photoOn: ph.on } : p; });
+  const named = sn ? per.filter(p => sn.test(fold(p.t))).map(p => p.path).slice(0, 8) : null;
+  const lp = named && named.length ? photoOf(pastorName, named) : null;
+  const when = datesOf(txt);
+  const home = r.text, hrefs = [...all.matchAll(/href="([^"#]+)"/gi)].map(m => m[1]).join(' ');
   return {
     listed: clip(listed, 200), url: base, opens: true, https: base.startsWith('https:'), mobile: /name=["']viewport["']/i.test(r.text),
     title: clip(ent((r.text.match(/<title[^>]*>([^<]*)/i) || [])[1] || ''), 160), template: /\/_next\//.test(r.text) ? 'scripts' : /acc-themes/.test(r.text) ? 'frame' : null,
-    pagesRead: per.map(p => p.path).slice(0, 14), pastors: pastorsIn(per), newestDate: newestDate(txt), copyright: years.pop() || null,
+    pagesRead: per.map(p => p.path).slice(0, 14), pastors, newestDate: newestDate(txt), copyright: years.pop() || null,
+    // v10.61.0: how current (the newest date in its words already past, the next one ahead; never a sitemap's "lastmod", which website
+    // builders stamp on their own) and how fast its first page answered
+    pastDate: when.past, nextDate: when.next, ahead: when.ahead, ms: Number.isFinite(ms) ? ms : null,
+    description: /<meta[^>]+name=["']description["'][^>]*content=["'][^"']{20,}/i.test(home) || /<meta[^>]+content=["'][^"']{20,}["'][^>]*name=["']description["']/i.test(home),
+    events: /\/(events?|calendar)\b/i.test(hrefs) || /upcoming events|events calendar|church calendar/i.test(txt),
+    sermons: /sermon|\/messages?\b|\/watch\b|livestream|live-stream|\/media\b|youtube\.com|vimeo\.com/i.test(hrefs),
     serviceTimes: /\b(8|9|10|11|12):\d\d\s*(a\.?\s?m)/i.test(txt) || /\b(9|10|11)\s*(a\.?\s?m)\b/i.test(txt), phones,
     bibleStudy: /bible (study|studies|class|school|info)|free bible|request (a )?bible|discover (the )?bible|bible guide|bible lessons/i.test(txt),
     prayerRequest: /prayer request|request (a )?prayer|how can we pray|need prayer/i.test(txt),
     giving: /adventistgiving|give online|online giving|tithe|donate/i.test(all), visitors: /plan (a|your) (first )?visit|new here|first time|visitor|what to expect/i.test(txt),
     social: social(all, base),
     // the pages that name the listing's pastor (his surname); the page checks a registered pastor's own name against "pastors"
-    pastorNamed: sn ? per.filter(p => sn.test(fold(p.t))).map(p => p.path).slice(0, 8) : null
+    pastorNamed: named, pastorPhoto: lp ? lp.photo : null, pastorPhotoOn: lp ? lp.on : null
   };
 }
 

@@ -95,7 +95,7 @@ netlify/functions/digital.mjs        (v10.60.0, digital-1.1 since v10.60.1) Digi
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
                                starts a conference's reading when one of its pastors registers or signs in (register.mjs)
-netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.0) the background reader: the official list (eAdventist, one page each 3 s), each
+netlify/functions/digital-read.mjs   (v10.60.0, digital-read-1.1 since v10.61.0: dates a visitor sees, the pastor's photo, speed) the background reader: the official list (eAdventist, one page each 3 s), each
                                church's website as a visitor reads it (TerrainBot, robots.txt obeyed, the words inside a template's scripts), YouTube's
                                feed, Google's listing (Places API (New), GOOGLE_PLACES_KEY), one search (BRAVE_SEARCH_KEY, when set); Facebook never
                                read; under 13 minutes a run, then it wakes itself; store `terrain-digital` (c/ findings, j/ job, e/ entries, r/ readings)
@@ -158,7 +158,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://pastorshub.org/.netlify/functions/advise` → `"fn"` field
 - connection cards (v10.43): `https://pastorshub.org/.netlify/functions/connect` → `"fn":"connect-1.0"`
-- v10.60.1: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.0"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
+- v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
   passphrase are set, and `PRICES_DAY_MAX` is not 0); `https://pastorshub.org/conferences/index.json` → `"v":"0c46f5b3c1db"`, `"checked":"2026-10-01"`;
   `https://pastorshub.org/ideas/index.json` → `"hash":"f7b32cd68d45"`
@@ -205,6 +205,59 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.61.0 (7 Oct 2026, full lane) — Digital footprint says more, and draws it.** The pastor, of his own church's card: *"I thought it was
+gonna say more … on the website … it doesn't even have my picture on there it's hasn't been updated in a long time … once in a while in this
+box we need some kind of graph … circular graph … show which areas are weak which areas can get better which areas are stronger … Pastor's
+name current yeah it may show my name there, but is it showing my picture?"*
+- **The reader (digital-read-1.1):** the dates a visitor sees (`datesIn`: "Oct 18, 2026", "Sept 27th, 2026", "20 March 2024", "10/25/2026",
+  "12 de octubre de 2025"; `datesOf` → `pastDate`, `nextDate`, `ahead`), and it now follows events, calendar, bulletin and sermon pages
+  (`PAGES`); a photo by each pastor's name (`photoBy`: an image named for him, by its file or alt words, else one in the same card as his
+  name; logos, banners and icons never; a template's images inside its scripts too) → `pastors[].photo/photoOn`, `pastorPhoto/pastorPhotoOn`;
+  how long its first page took (`ms`); `events`, `sermons`, `description` (a meta description for search results). **Never a sitemap's
+  date:** tried on six Pennsylvania sites (`v78/try-sites.mjs`), website builders stamp "lastmod" on their own (sites unchanged for years
+  said "last week"). Names with a capital inside (LaCamera, McDonald) read whole (`NW`); "Us" is no name. Google's photos are still not
+  asked for (the field mask unchanged).
+- **The page:** the website says how current it is by those dates ("Lists dates ahead (the next: Oct 17).", "The newest date we found on the
+  site is March 2024, and nothing is dated ahead: it may not have been updated since.", "We found no dates on the pages read …": Needs
+  work), a site slower than 4 s, and online giving, an events calendar, sermons; the pastor's area "Names … with a photo", or "Named, no
+  photo" (Needs work); a reading by digital-read-1.0 is judged as before (`'pastDate' in site`). Fixes: the photo, "Keep the home page
+  current" each week, a description for search results. **The circle chart** (`dfRadar`, `dfRadarFig`, `dfTypical`, `DF_RV`, `DF_RSHORT`):
+  the six areas round a ring, each as far out as it is strong (current at the rim, needs work in the middle, needs help now near the
+  centre), each mark in its state's colour, an area not read or not looked for a hollow mark in the middle (never counted against a church),
+  the conference's typical church (the median of each area) dashed behind, a key, and what it shows for a screen reader; on each of his
+  churches' cards beside "What a visitor sees" (`.df-sum`), on a church opened in the list, and small, side by side.
+- Checked in Chrome with the Pennsylvania findings and seven churches' sites read again by digital-read-1.1 (`v78/make-findings61.mjs`,
+  `v78/shots61df.mjs`, served by `v78/serve61.mjs`): computer 1366, phone 390 EN and ES. Bucks County: named on the staff page, no photo
+  found, no dates on the pages read. Tests: `v61-digital-read` (new, 17) and `v61-digital-depth` (new, 21), failing first on v10.60.1
+  (`v78/logs/ff-v61-*.log`); digital-function updated (digital-read-1.1). Full suite: 164 suites · 10,921 passed · 0 failed.
+- **The whole-app audit** (same release; the pastor: *"can you do a full audit? Make sure everything is solid and symmetrical and everything is
+  in its right place"*). Every screen measured in Chrome at 1366, 820 and 390, EN + ES, on the made-up average church (`v78/audit.mjs` +
+  `audit-measure.js`: the page wider than the screen, anything off the edge, boxes in a row of different heights, a box alone on a row,
+  fields not level, button words that wrap (a Range's line boxes), text cut off, page errors), then every screen read by eye
+  (`v78/tour.mjs`, four reviewers). **A bug:** a tool reached straight from Spiritual Gifts or the Planner (a button there, not the main
+  menu) left that page open above it; the survey and Make the Case now close them (`openTool`). **Symmetry:** `tsNoLone` (a grid's
+  lone last card takes the row, measured at every width: `TS_NOLONE`), five Leadership tiles five across (`.cs-agrid:has(…)`), the
+  survey's figure cards top-aligned, Community resources' cards one height, the Brief's buttons two by two on a phone, the slides'
+  buttons one a row on a phone, the tool bar's and the footer's words never wrap, chips fade under the strip's arrows, the Planner's
+  lone Budget the whole row; Digital footprint's table wide enough for one-line pills, "Who needs help most" five a box with one-line
+  headings ("No working website found", "Not on Google Maps, or closed", "Different pastors named"); Learn from other conferences'
+  dates never break, "Prepare now" items laid out alike, the typical line under the bars (each number with a halo) and "Typical" in both
+  charts, "Show 1 more" (never "Show all 1"), the year-ahead chooser one sliding row on a phone. **Words:** Gifts step 1 "Invite your
+  members" / "Send your members a link." (never an address), the Planner's "Interest names" / "Budget ($)", shorter Spanish skills,
+  "Departamentos", Community resources in American spelling (OpenStreetMap's tags kept as it spells them), "+1 pt", "Idle since July
+  2026"; Compare your churches: a missing figure "—", "Not filled in yet" once a church, a bar only with something to compare.
+  Tests: `v61-audit` (new, 20; failing first: `v78/logs/ff-v61-audit.log`); updated with comments: case-steps, case-screens,
+  v47-clean, home-church ("Departamentos"), v57-churches (said once), v60-digital (the headings), v40-accuracy (the spelling).
+  **Found, not changed (his to decide):** the Evangelism Planner is English only in Spanish; the phone header (the church chip and
+  "name · conference" both cut short); each tool's name twice (tool bar and heading); a few figures with two names in the survey
+  ("Two or more" / "2+ races", "Born abroad" / "Born outside the U.S."); the toolbar's "Change church" beside the header's chip.
+  Also: a separator never ends a line alone ("· Change church", "· Sabbath slides" travel with their links). Full suite: 165 suites ·
+  10,942 passed · 0 failed (the full run 10,940, then two checks updated and rerun: v47-clean's step 1 heading; v42-core's agreed timing,
+  stale by the calendar: its start is two weeks from today, and on 8 Oct 2026 its six Thursdays reach Thanksgiving, whose Note the app
+  rightly adds).
+- **Wording** (same release; the pastor: *"reword your church against the community … against … doesn't sound so good"*): Spiritual Gifts' grid
+  "Your congregation against your neighborhood" is **"Your people for your neighborhood"** / "Su gente para su vecindario".
 
 **v10.60.1 (7 Oct 2026, quick lane) — a conference is read as soon as one of its pastors signs up.** The pastor, told the first reading
 of a conference takes about an hour and asked whether Terrain should read it ahead: *"yes as soon as they sign up for sure"*. register.mjs

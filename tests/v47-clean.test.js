@@ -25,7 +25,8 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   c('…the whole church: On Sabbath open', shown(), ['sabbath']);
   c('each button names the section it opens; each section keeps its colour', P.qa('#cs-s1 .cs-acat').every(b=>{ const s=P.q('#'+b.getAttribute('aria-controls')); return s&&s.dataset.csSec===b.dataset.csAsec&&b.getAttribute('style')===s.getAttribute('style'); }), true);
   const S=page({lang:'es'}); await ready(S); survey(S); S.E(`openTool('case')`); await sleep(80);
-  c('in Spanish', S.qa('#cs-s1 .cs-acat').map(b=>b.textContent), ['Liderazgo','Departamentos de ministerio','En sábado','La asociación']);
+  // v10.61.0 (the audit): "Departamentos", one line on a phone (was "Departamentos de ministerio")
+  c('in Spanish', S.qa('#cs-s1 .cs-acat').map(b=>b.textContent), ['Liderazgo','Departamentos','En sábado','La asociación']);
 
   console.log('\n-- v10.48.0: the Proposal page (from "Create a proposal for this ministry") --');
   // "I don't like make the case I just want it to [say] proposal … big letters above that says proposal … this beautiful thing should
@@ -110,7 +111,8 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     // gifts": two steps; "Your church" is the survey's
     // v10.56.2 (stale, not a regression): the pastor, "a three invite your members see the results and then one more step like fill the position"
     c('three steps at the top: Invite your members → See the results → Fill the positions', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite your members','See the results','Fill the positions']);
-    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&(G.q('#gf-results .gfresults').nextElementSibling||{}).id||null,!!G.q('#gifts #gf-church')], ['gf-invite','1Spiritual Gifts: invite your members','2See the results',null,false]);   // v10.56.2 (stale): the sample report only with the demo ("if you click complete a demo … then the sample report will show")
+    // v10.61.0 (the audit): step 1 is "Invite your members" (the page's own name no longer repeated in it)
+    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&(G.q('#gf-results .gfresults').nextElementSibling||{}).id||null,!!G.q('#gifts #gf-church')], ['gf-invite','1Invite your members','2See the results',null,false]);   // v10.56.2 (stale): the sample report only with the demo ("if you click complete a demo … then the sample report will show")
     c('no "Nobody has taken it yet" card, and no code box', [G.qa('#giftbody [data-gf-first]').length,G.qa('#gfpaste,#gfadd').length], [0,0]);
     G.q('[data-gf-step="invite"]').click();
     c('the first step goes to the invitation', G.w.__scrolled.slice(-1)[0].id, 'gf-invite');
