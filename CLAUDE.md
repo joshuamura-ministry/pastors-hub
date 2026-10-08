@@ -105,6 +105,7 @@ netlify/functions/digital-review.mjs (v10.62.0, review-1.0) the background worke
                                texts and up to six home-page pictures (image URLs), the strict tool record_review, `cleanReview` (every quote on the pages,
                                every number in the input, no name not in the input, no other church, no "AI"); woken by digital.mjs (op review)
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
+privacy.html                   (v10.62.1) the privacy policy, served at terrain.church/privacy (English and Spanish; must be in the site's copy)
 AUDIT.md                       (v10.61.1) the checklist every full audit follows (set up, measured, read by eye, solid, fix and prove, report)
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
@@ -212,6 +213,30 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.62.1 (8 Oct 2026, quick lane) — the privacy policy, at terrain.church/privacy.** The pastor: *"We need the definitely privacy policy.
+Please write that now."* (Meta's App Review asks for a public privacy policy address, and paid plans need one.) **`privacy.html`**, a page of its
+own (no registration, no outside request: system fonts, one small inline script for the language and the phone's stacked tables), English and
+Spanish (the language from `?lang=`, else the app's `terrain-lang`, else the browser; "If they differ, the English version governs"), served at
+`/privacy` (netlify.toml: `cp privacy.html site/` and a 200 redirect). Fourteen sections, written from what the code does: who we are (Muraworks,
+a business based in Pennsylvania; never a person, as Slide Preach's), whom it is about (pastors, members, neighbors, churches in Digital
+footprint), what is collected (registration; account and Stripe; the church's work on the device; the Census and OpenStreetMap; Spiritual
+Gifts; presentations; connection cards; writing by Claude (never members' or neighbors' names, never the street address); Digital footprint's
+public sources, emails and personal phones removed; technical logs and coded counters), how it is used (no selling, no advertising, no
+analytics, no training of any model), the providers table, what others can see, how long (gifts 2 years / 1 year under 18, unused links 30
+days; presentations 1/7/30 days; cards 30 days after the pastor's device takes them, never over a year; Claude requests 7 days, answers 60;
+Digital footprint 180 days after last opened; payment events 30 days; counters 2 days), children (13 and older for Spiritual Gifts; under 13
+deleted on learning; cards adults only), choices and deletion (`#delete` / `#borrar`: the app's own buttons "Delete my result", "Remove what I
+sent", "Clear all"), Facebook and Instagram (not read today; what connecting would read; disconnect and deletion in 30 days), security, where
+(the United States), changes, contact **privacy@terrain.church** (his choice). No "AI" in it (his rule: "not used to train any computer
+model"). Linked from the footer ("Privacy" / "Privacidad"), the first page ("How Terrain handles your information"), and a neighbor's card (its
+promise line: "Privacy policy" / "Política de privacidad", `/privacy?lang=`, a new tab, same site). **His side:** privacy@terrain.church must
+receive mail before it is relied on: Porkbun's free email forwarding to his inbox, with Porkbun's two MX records (fwd1.porkbun.com 10,
+fwd2.porkbun.com 20) and its SPF TXT (`v=spf1 mx include:_spf.porkbun.com ~all`) added in Netlify DNS (terrain.church's DNS is Netlify's).
+Not a lawyer's review: his to have read before paid plans begin. Tests: `v62-1-privacy` (new, 19; failing first on v10.62.0:
+`v79/logs/ff-v62-1-privacy.log`): the page, the build, no outside request, both languages' fourteen sections, Muraworks, the contact, the
+retention it states held to each function's own constant, the button names held to the app's, the links. Checked in Chrome
+(`v79/shots-privacy.mjs`): phone 390 EN + ES, computer 1366, no sideways scroll, no outside request. Full suite: 170 suites · 11,248 passed · 0 failed.
 
 **v10.62.0 (8 Oct 2026, full lane) — Digital footprint, the bar raised: "Current" means a site that does its work; every deficiency with its fix;
 an in-depth review.** The pastor, of his own church's card: *"on the website you say that it looks it's current but what about its content because

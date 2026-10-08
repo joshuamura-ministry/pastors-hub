@@ -6,7 +6,7 @@
   # conference calendars ("Learn from other conferences": conferences/, built by tools/conferences/build.mjs; its source,
   # tools/conferences/src, is never copied), and tr-here.png (v10.59.0: the 3×2 picture pastorshub.org looks for at terrain.church before it
   # carries a device's saved work there). If any copy fails, the deploy fails and the live site stays exactly as it was.
-  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/ && cp -R conferences site/ && cp tr-here.png site/"
+  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/ && cp -R conferences site/ && cp tr-here.png site/ && cp privacy.html site/"
   publish = "site"
 
   # Skip a LIVE deploy only when every change since the last live build is inside tests/, tools/,
@@ -14,6 +14,12 @@
   # It never skips pull-request previews, first or "Clear cache and deploy" builds, build hooks,
   # or any case where git cannot answer. Exit 0 = skip; any other exit code = build.
   ignore = '[ "$PULL_REQUEST" = "false" ] && [ -n "$CACHED_COMMIT_REF" ] && [ "$CACHED_COMMIT_REF" != "$COMMIT_REF" ] && git diff --quiet "$CACHED_COMMIT_REF" "$COMMIT_REF" -- . ":(exclude)tests" ":(exclude)tools" ":(exclude)*.md" ":(exclude)FIREBASE-RULES-TERRAIN.txt" ":(exclude).github" ":(exclude).gitignore"'
+
+# v10.62.1: the privacy policy at terrain.church/privacy (the file is privacy.html; Meta's App Review asks for this address)
+[[redirects]]
+  from = "/privacy"
+  to = "/privacy.html"
+  status = 200
 
 [functions]
   # The server programs, same place as today: advise, census, gifts, present, register, and the two daily sweeps.
