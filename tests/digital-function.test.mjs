@@ -109,8 +109,9 @@ try {
   r = await call('GET', '');
   // v10.60.1: digital-1.1 (warm(), the reading started at sign-up: the pastor's "yes as soon as they sign up for sure"); the bare GET is unchanged
   // v10.61.0: digital-read-1.1 (how current a site is, the pastor's photo, how fast it opens: the pastor, "it doesn't even have my picture")
-  // v10.62.0: digital-read-1.2 (the whole site read: the pastor, "survey the whole website and see its deficiencies as well")
-  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.1', 'digital-read-1.2', false, false]);
+  // v10.62.0: digital-read-1.2 (the whole site read: the pastor, "survey the whole website and see its deficiencies as well") and
+  // digital-1.2 (the in-depth review: ops review / review-status; digital-review.test.mjs); the bare GET also says `review`
+  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.2', 'digital-read-1.2', false, false]);
   r = await call('GET', '?conf=Atlantis');
   c('a conference the locator does not have: supported false', [r.status, r.j.supported], [200, false]);
   r = await call('GET', '?conf=Pennsylvania');
