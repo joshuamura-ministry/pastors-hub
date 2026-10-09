@@ -12,6 +12,7 @@ import { buildYearAhead } from './year-ahead.mjs';
 import { buildProfiles } from './profiles.mjs';
 import { packServed } from './pack.mjs';
 import { packResources } from './resources.mjs';
+import { loadMissions } from './missions.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 export const SRC = join(HERE, 'src');
@@ -25,8 +26,10 @@ export function buildAll(src = SRC, cfg) {
   // v10.58.0: "Resources for your church", for the conferences and unions the comparison serves
   const slugs = new Map(pr.out.conferences.map(c => [c.name, c.slug])), unions = new Set(pr.out.conferences.map(c => c.union));
   const res = packResources(src, n => slugs.get(n) || null, unions);
-  const files = packServed(pr.out, ya.out, { 'resources.json': res.data });
-  return { files, review: pr.review, lines: ya.lines.concat(pr.lines, res.lines), profiles: pr.out, yearAhead: ya.out };
+  // v10.63.0: the mission statements (src/missions.json), for the brief and "Mission and calendar"
+  const mis = loadMissions(src, pr.out.conferences.map(c => c.slug));
+  const files = packServed(pr.out, ya.out, { 'resources.json': res.data }, mis);
+  return { files, review: pr.review, lines: ya.lines.concat(pr.lines, res.lines, mis ? mis.lines : []), profiles: pr.out, yearAhead: ya.out };
 }
 
 // The files in conferences/ now, as {relative path: text}.

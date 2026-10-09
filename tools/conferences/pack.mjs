@@ -79,7 +79,8 @@ function noAiWords(name, v, k = '') {
   if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) noAiWords(name, x, kk);
 }
 // extra: more served files made beside the comparison (v10.58.0: resources.json), checked for "AI" words and hashed into the version
-export function packServed(P, YA, extra = {}) {
+// v10.63.0: missions (missions.mjs): each conference's mission statement and the areas its words name; null = none found on its site
+export function packServed(P, YA, extra = {}, missions = null) {
   const months = P.window.months, ahead12 = P.window.ahead12;
   if (months.length !== 24 || ahead12.length !== 12) throw new Error('window must be 24 months (12 past, 12 ahead)');
   const lensIds = P.lenses.map(l => l.id);
@@ -106,6 +107,7 @@ export function packServed(P, YA, extra = {}) {
       strengths: p.strengths.map(s => ({ lens: s.lens, n: s.n, share: s.share, median: s.median })),
       roomToGrow: p.roomToGrow.map(s => ({ lens: s.lens, n: s.n, share: s.share, median: s.median })),
       suggest: p.defaultCompare.map(d => suggestOf(p, d)),
+      ...(missions ? { mission: missions.by[p.slug] } : {}),
     });
     const ly = {};
     for (const [m, v] of Object.entries(ya.months)) if (v.lastYear) ly[m] = v.lastYear.map(x => { const o = { t: x.title, s: x.start, u: httpsOnly(x.url, W + ' last year') }; if (x.end) o.e = x.end; return o; });
@@ -155,6 +157,7 @@ export function packServed(P, YA, extra = {}) {
       joined: bl.joinedPer1000_3yr.median, eventsPer1000: bl.eventsPer1000.median,
     },
     unions: Object.fromEntries(Object.entries(P.unions).map(([u, v]) => [u, v.initiatives.filter(i => i.status !== 'ended').map(i => ({ name: i.name, url: i.url ? httpsOnly(i.url, u + ' initiative') : null }))])),
+    ...(missions ? { missionChecked: missions.checked } : {}),
     conferences: confs,
   };
   const ahead = {

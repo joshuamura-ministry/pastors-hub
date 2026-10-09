@@ -75,7 +75,8 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
   P.E('window.__into=[]'); go.click();
   c('…it brings the box into view', P.J('window.__into'), ['cmp-res']);
   c('at the foot of the page, after Month by month and before How to read this', P.qa('#cmp .cmp-step').map(s=>s.id).slice(-4), ['cmp-months','cmp-res','cmp-min','cmp-read']);
-  c('numbered 14 and 15', [P.txt('#cmp-res .cmp-num'),P.txt('#cmp-min .cmp-num')], ['14','15']);
+  // v10.63.0 (stale): the brief and Mission and calendar come second and third, so these two are 16 and 17
+  c('numbered 16 and 17', [P.txt('#cmp-res .cmp-num'),P.txt('#cmp-min .cmp-num')], ['16','17']);
   c('the box names where it is from: his conference, his union, the NAD and the world church', [P.txt('#cmp-res h3'), /the Pennsylvania Conference, the Columbia Union, the North American Division and the world church/.test(P.txt('#cmp-res .cmp-sh .note'))], ['Resources for your church',true]);
   console.log('\n-- the box: money first, his conference first --');
   const tabs=P.qa('[data-cmp-rtab]');

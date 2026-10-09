@@ -105,9 +105,11 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('the page never claims to read calendars live or automatically (its own words, EN and ES)', /\blive\b|automatic|real[- ]time|re-reads|en vivo|autom[aá]tic|tiempo real/i.test(own), false);
   c('no stale line on the check day', !!P.q('.cmp-stale'), false);
   const titles=P.qa('#cmp .cmp-step h3').map(h=>h.textContent);
-  c('every frame, in order', titles, ['Choose','At a glance','The year ahead','Where the calendar\'s energy goes','Ministry by ministry','By part of the country','Evangelism and pastoral care','Young people','Size and growth','What we could learn','Strengths and room to grow','What they say, what the calendar shows','Month by month','Resources for your church','Ministries that come to your church','How to read this']);
+  // v10.63.0 (stale): the pastor, "there should be like a graph maybe a circular graph … like a brief for the conference … a section where it
+  // compares your mission statement and what the calendar is actually saying": the brief and Mission and calendar come second and third
+  c('every frame, in order', titles, ['Choose','Your conference in brief','Mission and calendar','At a glance','The year ahead','Where the calendar\'s energy goes','Ministry by ministry','By part of the country','Evangelism and pastoral care','Young people','Size and growth','What we could learn','Strengths and room to grow','What they say, what the calendar shows','Month by month','Resources for your church','Ministries that come to your church','How to read this']);
   // v10.58.0 (stale): 14 Resources for your church, 15 Ministries that come to your church, at the foot of the page
-  c('numbered 1 to 15, colour on every frame', [P.qa('#cmp .cmp-num').map(n=>n.textContent).join(','), P.qa('#cmp .cmp-step').every(s=>/--k:var\(--/.test(s.getAttribute('style')||''))], ['1,2,3,4,5,6,7,8,9,10,11,12,13,14,15', true]);
+  c('numbered 1 to 17, colour on every frame', [P.qa('#cmp .cmp-num').map(n=>n.textContent).join(','), P.qa('#cmp .cmp-step').every(s=>/--k:var\(--/.test(s.getAttribute('style')||''))], ['1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17', true]);
   c('five cards at a glance, in his order', P.qa('.cmp-card h4').map(h=>h.childNodes[0].textContent.trim()), ['Pennsylvania','Ohio','Arkansas-Louisiana','Nevada-Utah','Central California']);
   const pa=idx.conferences.find(x=>x.slug==='pennsylvania');
   c('the badge counts the past year only', P.txt('.cmp-card.mine .cmp-badge'), `Partial calendar · grade B · ${pa.counts.ministryEvents} events in the past year`);
@@ -193,7 +195,7 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   { const Q=page({reg:'Bermuda'}); await ready(Q); Q.E("openTool('compare')"); await until(()=>Q.q('#cmp-mine')); await sleep(30);
     c('a conference outside the 50: asked to choose, nothing else drawn', [Q.J('CMP.st.mine'), /Bermuda, which is not in this comparison/.test(Q.txt('#cmp-pick')), Q.qa('#cmp .cmp-step').length], [null,true,3]);   // v10.58.0: and the resources of the NAD and the world church, and the ministries
     Q.E("(()=>{ const s=document.getElementById('cmp-mine'); s.value='florida'; s.dispatchEvent(new Event('change')); })()");
-    await until(()=>Q.q('#cmp-ya .cmp-tl')); c('choosing one draws every frame with its suggested set', [Q.qa('#cmp .cmp-step').length, Q.J('CMP.st.others').length], [16,4]); }   // v10.58.0: two frames more
+    await until(()=>Q.q('#cmp-ya .cmp-tl')); c('choosing one draws every frame with its suggested set', [Q.qa('#cmp .cmp-step').length, Q.J('CMP.st.others').length], [18,4]); }   // v10.58.0: two frames more; v10.63.0 (stale): two more, the brief and Mission and calendar
 
   console.log('\n-- Spanish --');
   { const S=page({lang:'es',now:'2026-10-01'}); await openCmp(S);
@@ -202,7 +204,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('v10.51.1: "Añadir asociaciones", its headings, the count and Listo', [S.txt('#cmp-addbtn'),S.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),S.txt('#cmp-addp .cmp-cnt'),S.txt('#cmp-addp [data-cmp-done]')],
       ['Añadir asociaciones',['Este','Medio Oeste','Sur','Oeste'],'4 de 9 elegidas','Listo']);
     S.q('#cmp-addp [data-cmp-done]').click();
-    c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Recursos para su iglesia','Ministerios que visitan su iglesia','Cómo leer esto']);
+    // v10.63.0 (stale): the brief and Mission and calendar, second and third
+    c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','Su asociación en resumen','Misión y calendario','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Recursos para su iglesia','Ministerios que visitan su iglesia','Cómo leer esto']);
     c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el 1 oct 2026 · se actualiza cada mes');
     c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De oct 2026 a sep 2027: lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
     c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya','Pennsylvania: calendario publicado hasta dic 2026. El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27.']);
