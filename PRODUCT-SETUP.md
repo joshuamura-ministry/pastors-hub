@@ -40,7 +40,7 @@ is charged.
 
 10. Open **Developers**, then **Webhooks**, then **+ Add endpoint** (newer screens: **+ Add destination**, then **Webhook endpoint**).
 11. If it asks for the payload style, choose **Snapshot** (not "Thin").
-12. Endpoint URL: `https://pastorshub.org/.netlify/functions/stripe-webhook`
+12. Endpoint URL: `https://terrain.church/.netlify/functions/stripe-webhook` (Terrain moved there on 8 Oct 2026; an endpoint made earlier at pastorshub.org can be changed to this one under the endpoint’s **Update details**)
 13. Events to send: choose these four, and only these:
     - `checkout.session.completed`
     - `customer.subscription.created`
@@ -55,7 +55,7 @@ is charged.
 16. Open **Settings** (the gear), then **Billing**, then **Customer portal**.
 17. Turn on: **Invoice history**, **Update payment methods**, **Cancel subscriptions** (choose **At the end of the billing period**),
     and **Switch plans** (add the Terrain product, both prices).
-18. Business information: the name **Mura Works**, and a link to pastorshub.org. Click **Save** (in test mode it may say **Activate
+18. Business information: the name **Mura Works**, and a link to terrain.church (and terrain.church/terms, /privacy and /refunds where Stripe asks). Click **Save** (in test mode it may say **Activate
     test link**: click it).
 
 ### Emails Stripe sends for you
@@ -74,7 +74,7 @@ is charged.
     - Click **Google**, turn on **Enable**, choose your email as the support email, **Save**.
     - Click **Email/Password**, turn on **Email link (passwordless sign-in)** (the first switch, for passwords, can stay off),
       **Save**.
-24. **Settings** tab, then **Authorized domains**, then **Add domain**: `pastorshub.org`. (Leave `localhost` and the
+24. **Settings** tab, then **Authorized domains**, then **Add domain**: `terrain.church` (keep `pastorshub.org` if it is already there). (Leave `localhost` and the
     `firebaseapp.com` one as they are.)
 25. Click the gear beside **Project Overview**, then **Project settings**, **General** tab.
 26. Note the **Project ID** (for example `terrain-live`, or with a few letters after it). It goes into Netlify as
@@ -95,7 +95,7 @@ is charged.
 
 ## D. Netlify
 
-30. Go to **app.netlify.com**, open the pastorshub.org project, then **Project configuration**, **Environment variables**.
+30. Go to **app.netlify.com**, open the terrain-church project, then **Project configuration**, **Environment variables**.
 31. Click **Add a variable** for each of these (scope: at least **Functions**):
 
 | Key | Value from |
@@ -114,9 +114,9 @@ is charged.
 
 ## E. Try it with a test card
 
-35. Check the server: open `https://pastorshub.org/.netlify/functions/account`. It should say `"fn":"account-1.0"`, `"auth":true`,
+35. Check the server: open `https://terrain.church/.netlify/functions/account`. It should say `"fn":"account-1.0"`, `"auth":true`,
     `"billing":"off"`, `"mode":"test"`, `"checkout":true`, and the two prices (`15000` and `1500`: Stripe counts in cents).
-36. On your computer open `https://pastorshub.org/?billing=test`. This turns on the paid version **on this device only**, in test mode.
+36. On your computer open `https://terrain.church/?billing=test`. This turns on the paid version **on this device only**, in test mode.
     An **Account** button appears beside Change, and the paid tools say **Full version**.
 37. Open **Make the Case**, then **Start your 14-day free trial**, then **Sign in with Google**.
 38. The plans appear: Yearly first. Click **Start free trial** on Yearly. Stripe's own page opens.
@@ -126,7 +126,7 @@ is charged.
     and nothing is charged.
 42. Also try **Email me a sign-in link** (sign out first from Account), and open the email on the same computer.
 43. In Stripe, **Developers**, **Webhooks**, your endpoint: every delivery should show **200**.
-44. When you are done testing on that device, open `https://pastorshub.org/?billing=off` (or Account, **Stop testing**).
+44. When you are done testing on that device, open `https://terrain.church/?billing=off` (or Account, **Stop testing**).
 
 ## F. Turning it on
 
