@@ -181,7 +181,7 @@ values are never in the repo):
 |---|---|---|
 | `ANTHROPIC_API_KEY` | advise.mjs | Anthropic **platform** key (console.anthropic.com), billed per use. Not a claude.ai subscription. |
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
-| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. |
+| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does, or (v10.63.1) types it in the header's Tester code box; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
@@ -218,6 +218,18 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.63.1 (9 Oct 2026, quick lane) — a Tester code box.** The pastor: *"Can you just put a tester code box on the top somewhere and he can
+click it and then he'll put the code in and then it will unlock everything for him"*. Beside Change in the header, **Tester code** (`#codebtn`,
+`codeBtnHTML`; a key on a phone), shown to a registered device not yet unlocked (never on a member's page). It opens a box (`#code-sheet`,
+`codeOpen`, `codeCheck`): the code, **Unlock**; `guest-pass.mjs` (**guest-pass-1.1**) answers POST {code} with the registration token as
+{ok, unlocked, open}, 12 tries an hour from one connection (`g/code/<hour>/<tag>` in terrain-registrations, the address hashed with the
+registration secret; `gifts-sweep` removes them daily). A code that works is kept as `?ideas=` keeps it (`terrain-ai-pass`), "Unlocked on this
+device.", and the page starts again; the button is then gone. Wrong: "That code did not work. Check the code, and that you registered with the
+email address it was set up for." The `?ideas=` link still works. Tests: `v63-1-code-box` (new, 17; failing first on v10.63.0:
+`v81/ff-v63-1-code-box.log`); updated with comments: v62-2-guest-pass (guest-pass-1.1), registration (the header buttons' rule), connect-client (29 `memberLink()` guard sites), and v62-2-guest-pass's damaged token made
+always damaged (its last letter could already be the one put in). Checked in Chrome (`v81/shots631.mjs`): computer 1366 and phone 390, the
+button in the row at Change's height, no sideways scroll. Full suite: 177 suites · 11,413 passed · 0 failed (the full run 11,410 and three checks, two stale and one by chance, fixed and their suites rerun).
 
 **v10.63.0 (9 Oct 2026, full lane) — Learn from other conferences: the brief and Mission and calendar; the Evangelism Planner's demo,
 nursery, Bible workers and a year of follow-up; Digital footprint's table in view.** Its own PR (PR #37, v10.62.2 with the guest code, was merged first).

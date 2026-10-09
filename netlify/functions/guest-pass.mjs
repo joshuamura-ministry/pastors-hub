@@ -1,4 +1,4 @@
-// Terrain · the unlock for the parts Claude writes: the pastor's passphrase, and guest codes.        guest-pass-1.0
+// Terrain · the unlock for the parts Claude writes: the pastor's passphrase, and guest codes.        guest-pass-1.1
 //
 // v10.62.2. The pastor (9 Oct 2026), of his conference's ministerial director: "Just give him the unlock link but have him add like a secret
 // code that only he can use". The parts Claude writes (the needs list, the ideas, the proposal's words, Find prices, "More ideas", the
@@ -18,13 +18,18 @@
 //   secret, a token or the record, a guest code unlocks nothing (it fails closed).
 // - The guest's own limits apply as for anyone (a day's studies a registration, a device, an address, the site's).
 // - Nothing here logs, and the GET below says only which version this is: never whether any guest is set.
+// - v10.63.1 (guest-pass-1.1), the pastor: "Can you just put a tester code box on the top somewhere and he can click it and then he'll put
+//   the code in and then it will unlock everything for him": POST {code} with the registration token answers {ok, unlocked} so the page
+//   can say at once whether the code works on this registration. 12 tries an hour from one connection (its address hashed with the
+//   registration secret: g/code/<hour>/<tag> in terrain-registrations, swept daily by gifts-sweep), so codes cannot be guessed by trying.
 //
 // Functions import this file as the others import digital.mjs; as a file in netlify/functions it is also a function of its own.
 
 import { createHash, createHmac, timingSafeEqual } from 'node:crypto';
 import { getStore } from '@netlify/blobs';
 
-export const FN = 'guest-pass-1.0';
+export const FN = 'guest-pass-1.1';
+const TRIES_HOUR = 12;
 const RE_REGTOK = /^r1\.([A-Za-z0-9_-]{12})\.([0-9a-z]{1,9})\.([A-Za-z0-9_-]{32})$/;
 const RE_EMAIL = /^[^@\s,;=]{1,64}@[^@\s,;=]{3,190}$/;
 const CODE_MIN = 12, GUESTS_MAX = 25, KEEP_MS = 10 * 60e3, KEEP_NONE_MS = 60e3;
@@ -91,5 +96,30 @@ export async function unlockOf(given, regToken, pass = process.env.TERRAIN_AI_PA
 }
 export async function passCheck(given, regToken, pass) { return (await unlockOf(given, regToken, pass)) !== ''; }
 
-export default async () => new Response(JSON.stringify({ ok: true, fn: FN }), {
-  status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
+const reply = (o, status = 200) => new Response(JSON.stringify(o), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
+function clientIp(request, context) {
+  const ip = context && typeof context.ip === 'string' ? context.ip : (request.headers.get('x-nf-client-connection-ip') || '');
+  return String(ip).trim().toLowerCase().slice(0, 64);
+}
+// one connection's tries this hour: true while under the limit (the count is kept even when the code is right)
+async function tryOk(ip) {
+  const t = now(), hour = new Date(t).toISOString().slice(0, 13);
+  const secret = (process.env.TERRAIN_REG_SECRET || '').trim();
+  const tag = createHmac('sha256', secret || 'terrain-guest').update('code|' + (ip || 'none'), 'utf8').digest('base64url').slice(0, 22);
+  const key = 'g/code/' + hour + '/' + tag;
+  try {
+    const st = regStore(), cur = await st.get(key, { type: 'json' }), n = cur && typeof cur.n === 'number' ? cur.n : 0;
+    if (n >= TRIES_HOUR) return false;
+    await st.setJSON(key, { n: n + 1 });
+  } catch { /* a counter that cannot be kept never locks a person out */ }
+  return true;
+}
+export default async (request, context) => {
+  if (request.method !== 'POST') return reply({ ok: true, fn: FN });
+  let b = null; try { b = await request.json(); } catch { b = null; }
+  const code = b && typeof b.code === 'string' ? b.code.trim() : '';
+  if (!code || code.length > 200 || /[\s<>]/.test(code)) return reply({ ok: false, code: 'bad' }, 400);
+  if (!(await tryOk(clientIp(request, context)))) return reply({ ok: false, code: 'limit' }, 429);
+  const st = await unlockOf(code, request.headers.get('x-terrain-reg'));
+  return reply({ ok: true, unlocked: st === 'pass' || st === 'guest', open: st === 'open' });
+};
