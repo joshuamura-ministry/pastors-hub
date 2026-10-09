@@ -28,9 +28,10 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
   c('no tab bar', !!P.q('#gifts .gftabs'), false);
   c('no "Check for new results"', [!!P.q('#gfpull'),bt.some(t=>/Check for new results/.test(t))], [false,false]);
   c('no "Across the church" button', bt.some(t=>/Across the church/.test(t)), false);
-  c('no "Take it yourself" / "Take it myself"', [!!P.q('#gifts [data-gv="take"]'),bt.some(t=>/Take it (yourself|myself)/.test(t))], [false,false]);
+  // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
+  c('"Take it yourself" is back, as the second big button', [!!P.q('#gifts [data-gv="take"]'),bt.some(t=>/Take it yourself/.test(t))], [true,true]);
   c('no "See a sample report" (every result opens as a report)', [!!P.q('#gfsample'),bt.some(t=>/sample report/i.test(t))], [false,false]);
-  c('step 1: one door, Share it with your members, the width of the page', [P.qa('#gf-invite .gfdoor').length,P.txt('#gf-invite .gfdoor b'),P.q('#gf-invite .gfdoors').classList.contains('gfdoors1')], [1,'Share it with your members',true]);
+  c('step 1: two big buttons, Send Spiritual Gifts to your members and Take it yourself', P.qa('#gf-invite .gfbigb b').map(b=>b.textContent), ['Send Spiritual Gifts to your members','Take it yourself']);
 
   console.log('\n-- each result: the name, the three strongest gifts in their colours, a small wheel; the row opens the report --');
   c('24 rows, each one button, no Open or Delete beside it', [P.qa('#gf-results .gfrow2').length,P.qa('#gf-results .gfrow2').every(r=>r.tagName==='BUTTON'),P.qa('#gf-results .gfopen, #gf-results .gfdel').length], [24,true,0]);
@@ -62,7 +63,7 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
   c('an old way to "Across the church" lands on the main page', [P.E('GF_VIEW'),!!P.q('#gf-positions .gfcong')], ['roster',true]);
 
   console.log('\n-- the share page: one way back, no tabs --');
-  P.q('#gf-invite .gfdoor').click(); await sleep(80);
+  P.q('#gf-invite [data-gv="setup"]').click(); await sleep(80);   // v10.63.2: the first big button
   c('the share page has one button back and no tabs', [P.E('GF_VIEW'),P.qa('#gifts .gftabs button').map(b=>b.textContent.trim())], ['setup',['← Back to Spiritual Gifts']]);
   P.q('#gifts .gftabs button').click(); await sleep(80);
   c('…back to the main page', [P.E('GF_VIEW'),!!P.q('#gf-results')], ['roster',true]);

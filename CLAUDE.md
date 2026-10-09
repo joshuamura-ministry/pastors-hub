@@ -219,6 +219,26 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.63.2 (9 Oct 2026, quick lane) — Spiritual Gifts' main page: a verse and Ellen White, the three steps as a picture, two big
+glowing buttons.** The pastor: *"it would be nice to have a Bible verse about spiritual gifts … maybe a quote from Ellen White … I don't need
+it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I
+want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself … side-by-side on a computer … and then
+a phone will be different … pulsating, glowing"*. Under the heading (`gfRenderRoster`): **the verse** (`gfWhyHTML`, `figure.gfword`): 1 Peter
+4:10 (KJV; RVA 1909 in Spanish) and Ellen White's "The church of Christ is organized for service. Its watchword is ministry." (The Ministry of
+Healing, p. 148; El Ministerio de Curación, p. 107), both from the verified library through `gfdVerse` (`case:1pet4_10`, `egw:mh148_4`), the
+page number never alone on a line; **the three steps** (`gfStepsHTML`, `ol.gfflow`, `li.gfflow-s` in `GF_STEP_K`'s colours: Invite your
+members · See the results · Fill the positions, each with one line), a picture only: nothing in them can be tapped (`gfStepsWire` is now
+empty); three across, on a phone the titles only so the buttons come into the first screen; **two big buttons** (`gfBigHTML`, `#gf-invite.gfpair`,
+`button.gfbigb`): **Send Spiritual Gifts to your members** ("A link and a QR code for your church", pink, `data-gv="setup"`) and **Take it
+yourself** ("About 15 minutes", violet, `data-gv="take"`: back at his word, v10.57.1 had taken it out), side by side from 641 px, one under the
+other on a phone, always the same height; they glow slowly, a beat apart (`gfBigGlow`, 5 s; still under reduced motion; none in print): one
+more exception to "nothing animates on its own", at his word. The results come in below them as before (`#gf-results`, then step 3). Two
+older classes had the names first chosen (`.gfwhy`, `.gfbig`: the report's lines and the assessment's Begin button), so the new ones are
+`.gfword` and `.gfpair`. Tests: `v63-2-gifts-landing` (new, 23; failing first on v10.63.1: `v81/ff-v63-2-gifts-landing.log`); updated with
+comments: gifts-landing, gifts-sample, gifts-first-ui, v47-clean (the steps are not buttons; their old click retired), v57-1-gifts-clean,
+v56-2-church-and-gifts-demo, v61-audit (step 1's line). Checked in Chrome (`v81/shots632.mjs`): computer 1366, tablet 820, phone 390, EN + ES, no sideways scroll, the
+buttons level and of one height, no page errors. Full suite: 178 suites · 11,435 passed · 0 failed (the full run 11,433 and two checks rerun alone: v61-audit's step-1 line, stale, updated with a comment; v44-sabbath-leftovers' selftest, which failed once under the full run's load and passes alone: 21 and 16). Samples `Terrain-v10.63.2-samples`.
+
 **v10.63.1 (9 Oct 2026, quick lane) — a Tester code box.** The pastor: *"Can you just put a tester code box on the top somewhere and he can
 click it and then he'll put the code in and then it will unlock everything for him"*. Beside Change in the header, **Tester code** (`#codebtn`,
 `codeBtnHTML`; a key on a phone), shown to a registered device not yet unlocked (never on a member's page). It opens a box (`#code-sheet`,
@@ -3162,7 +3182,7 @@ Don't relitigate them without a reason he'd accept.
 - **Nothing animates on its own** except the breathing button on the church
   profile — the one control that needs the pastor — and (v10.38, his request) the slow breathing glow of the
   four hub tiles, and (v10.55.1, his request) the survey's "Your church" while something is left to do (its edge turning, its
-  glow breathing). Reduced motion stops them all.
+  glow breathing), and (v10.63.2, his request) Spiritual Gifts' two big buttons glowing slowly. Reduced motion stops them all.
 - **Symmetry matters to him.** Equal-height cards, one-line links, two-line
   blurbs. Check wrapping in Spanish too; every string is longer.
 - **Twenty ministries per level**, three levels. Not a ten-rung slider.

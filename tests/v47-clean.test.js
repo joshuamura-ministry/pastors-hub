@@ -110,16 +110,15 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     // v10.55.0 — the pastor: "you can remove the … fill-in information in the spiritual gifts … that's all it's gonna be about just spiritual
     // gifts": two steps; "Your church" is the survey's
     // v10.56.2 (stale, not a regression): the pastor, "a three invite your members see the results and then one more step like fill the position"
-    c('three steps at the top: Invite your members → See the results → Fill the positions', G.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite your members','See the results','Fill the positions']);
+    // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
+    c('three steps at the top: Invite your members → See the results → Fill the positions', G.qa('#giftbody .gfflow .gfflow-s strong').map(x=>x.textContent), ['Invite your members','See the results','Fill the positions']);
     // v10.61.0 (the audit): step 1 is "Invite your members" (the page's own name no longer repeated in it)
-    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfsteps').nextElementSibling.id,G.txt('#gf-invite .gfpart-h'),G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&(G.q('#gf-results .gfresults').nextElementSibling||{}).id||null,!!G.q('#gifts #gf-church')], ['gf-invite','1Invite your members','2See the results',null,false]);   // v10.56.2 (stale): the sample report only with the demo ("if you click complete a demo … then the sample report will show")
+    c('…then the invitation (1), the results (2) with the sample report under them; no church card', [G.q('.gfflow').nextElementSibling.id,G.qa('#gf-invite .gfbigb').length,G.txt('#gf-results .gfpart-h'),G.q('#gf-results .gfresults')&&(G.q('#gf-results .gfresults').nextElementSibling||{}).id||null,!!G.q('#gifts #gf-church')], ['gf-invite',2,'2See the results',null,false]);   // v10.56.2 (stale): the sample report only with the demo ("if you click complete a demo … then the sample report will show")
     c('no "Nobody has taken it yet" card, and no code box', [G.qa('#giftbody [data-gf-first]').length,G.qa('#gfpaste,#gfadd').length], [0,0]);
-    G.q('[data-gf-step="invite"]').click();
-    c('the first step goes to the invitation', G.w.__scrolled.slice(-1)[0].id, 'gf-invite');
-    G.q('[data-gf-step="results"]').click();
-    c('the second goes to the results', G.w.__scrolled.slice(-1)[0].id, 'gf-results');
+    // v10.63.2 (stale): the steps are a picture now, not buttons (the pastor: "I don't need it to be buttons clickable")
+    c('the steps are not buttons; the invitation is the two big buttons under them', [G.qa('#giftbody .gfflow button,[data-gf-step]').length,G.q('.gfflow').nextElementSibling.id], [0,'gf-invite']);
     const GS=page({lang:'es'}); await ready(GS); survey(GS); GS.E(`openTool('gifts'); GF_VIEW='roster'; gfRender();`); await sleep(40);
-    c('…in Spanish', GS.qa('#giftbody .gfsteps .gfstep span').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados','Llene los puestos']);
+    c('…in Spanish', GS.qa('#giftbody .gfflow .gfflow-s strong').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados','Llene los puestos']);
     c('no page error', [G.errs,GS.errs], [[],[]]); }
   c('no page error', [P.errs,S.errs,Q.errs,QS.errs], [[],[],[],[]]);
 }); T.done(); })();

@@ -75,8 +75,9 @@ function makeStore(){ const m=new Map(); return { m,
   // v10.50.0 — the pastor (6 Oct 2026): "it doesn't have to say nobody has taken it yet take that box away … it has to start with your church":
   // the landing has no Gifts-first card; the three steps come first, then Your church (the hub keeps its card)
   // v10.55.0 — the pastor: "when they go to spiritual gifts that's all it's gonna be about just spiritual gifts": no church card here
-  c('the Spiritual Gifts landing: no Gifts-first card; the two steps, then the invitation; no church card', [P.qa('#gifts [data-gf-first]').length,P.q('.gfhead').nextElementSibling.classList.contains('gfsteps'),P.q('.gfsteps').nextElementSibling.id,!!P.q('#gifts #gf-church')],
-    [0,true,'gf-invite',false]);
+  // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
+  c('the Spiritual Gifts landing: no Gifts-first card; the verse, the steps, then the two buttons; no church card', [P.qa('#gifts [data-gf-first]').length,P.q('.gfhead').nextElementSibling.classList.contains('gfword'),P.q('.gfword').nextElementSibling.classList.contains('gfflow'),P.q('.gfflow').nextElementSibling.id,!!P.q('#gifts #gf-church')],
+    [0,true,true,'gf-invite',false]);
   c('…“about 15 minutes” on the landing', /about 15 minutes/.test(P.txt('.gfhead .sub')), true);
   // v10.45.0 (stale): the profile lives in "Your church" on this landing, under the card at the landing's top: it is not repeated there
   // v10.55.0 — the pastor: "when they go to spiritual gifts that's all it's gonna be about just spiritual gifts": no church form on the landing
