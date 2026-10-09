@@ -32,8 +32,10 @@ const V=find('1pet4_10'), E=find('mh148_4');
 
   console.log('\n-- the two big buttons --');
   const bb=P.qa('#gf-invite .gfbigb');
-  c('two buttons: Send Spiritual Gifts to your members · Take it yourself', bb.map(b=>[b.tagName,b.querySelector('b').textContent]), [['BUTTON','Send Spiritual Gifts to your members'],['BUTTON','Take it yourself']]);
-  c('…each with a line and a picture', bb.map(b=>[b.querySelector('span').textContent,!!b.querySelector('svg[aria-hidden="true"]')]), [['A link and a QR code for your church',true],['About 15 minutes',true]]);
+  // v10.63.3 (stale, not a regression): The pastor (9 Oct 2026), "Too many words we need to make it simple like the one on the right it doesn't look symmetrical at all": the left button's words short, like the right one's
+  c('two buttons: Send to members · Take it yourself', bb.map(b=>[b.tagName,b.querySelector('b').textContent]), [['BUTTON','Send to members'],['BUTTON','Take it yourself']]);
+  c('…both titles short, so each stays on one line, and both lines under them short too', bb.map(b=>[b.querySelector('b').textContent.length<=24,b.querySelector('span').textContent.length<=20]), [[true,true],[true,true]]);
+  c('…each with a line and a picture', bb.map(b=>[b.querySelector('span').textContent,!!b.querySelector('svg[aria-hidden="true"]')]), [['A link and a QR code',true],['About 15 minutes',true]]);
   c('…pink and violet', bb.map(b=>b.getAttribute('style')), ['--k:var(--m-people)','--k:var(--gfv,var(--m-children))']);
   const css=(HTML.match(/<style[^>]*>([\s\S]*?)<\/style>/g)||[]).join('\n');
   c('side by side on a computer, one under the other on a phone', [/\.gfpair\{display:grid;grid-template-columns:repeat\(2,minmax\(0,1fr\)\)/.test(css),/@media \(max-width:640px\)\{\.gfpair\{grid-template-columns:minmax\(0,1fr\)\}\}/.test(css)], [true,true]);
@@ -43,7 +45,7 @@ const V=find('1pet4_10'), E=find('mh148_4');
 
   console.log('\n-- what the buttons do --');
   bb[0].click(); await sleep(40);
-  c('Send Spiritual Gifts to your members opens the link and the QR code', P.E('GF_VIEW'), 'setup');
+  c('Send to members opens the link and the QR code', P.E('GF_VIEW'), 'setup');
   P.E("GF_VIEW='roster'; gfRender()"); await sleep(40);
   P.q('#gf-invite [data-gv="take"]').click(); await sleep(40);
   c('Take it yourself starts the assessment, as his own', [P.E('GF_VIEW'),P.E('!!GFS.self')], ['take',true]);
@@ -53,6 +55,6 @@ const V=find('1pet4_10'), E=find('mh148_4');
   const S=page({lang:'es'}); await ready(S); S.E("openTool('gifts')"); await sleep(80);
   c('1 Pedro 4:10 (RVA 1909) and El Ministerio de Curación, p. 107', [S.txt('.gfword blockquote'),S.txt('.gfword figcaption'),S.txt('.gfword .gfword-egw span')], ['“'+V.es.text+'”',V.es.ref+' · RVA',E.es.ref]);
   c('the steps', S.qa('.gfflow .gfflow-s strong').map(x=>x.textContent), ['Invite a sus miembros','Vea los resultados','Llene los puestos']);
-  c('the buttons', S.qa('#gf-invite .gfbigb b').map(x=>x.textContent), ['Envíe Dones espirituales a sus miembros','Hágala usted mismo']);
+  c('the buttons', S.qa('#gf-invite .gfbigb b').map(x=>x.textContent), ['Envíela a los miembros','Hágala usted mismo']);
   c('no page errors', S.errs, []);
 }); T.done(); })();

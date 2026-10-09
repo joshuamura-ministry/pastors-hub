@@ -151,6 +151,11 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('registration hints', P.J("[cmpHintText({k:'register',d:'2027-03-01'},'2026-10'),cmpHintText({k:'apply',d:'2026-10',p:'m'},'2026-10'),cmpHintText({k:'opens',d:'2026-10-01',from:'lodging links open'},'2026-10')]"), ['Register by 1 Mar 2027','Apply by Oct 2026','Booking opens 1 Oct 2026']);
   P.E("document.querySelector('#cmp-ya [data-cmp-ahead=\"central-california\"]').click()");
   c('another conference\'s year ahead, one at a time', [P.J('CMP.st.ahead'), /^Central California:/.test(P.txt('.cmp-yasum')), P.qa('#cmp-ya .tl-h div')[1].textContent], ['central-california',true,'Central California']);
+  // v10.63.3 — the pastor (9 Oct 2026): "When I click … the tabs there yours PA Ohio, Arkansas CCC … it doesn't change what's right
+  // underneath … if not, those tabs should go underneath and then Pennsylvania should just be": Prepare now is his own conference's,
+  // first, named; the conference buttons come under it, with a line saying what they show
+  c('Prepare now first, named for his conference; then the line and the buttons; then the chosen conference\'s year', [P.qa('#cmp-ya > *').slice(0,4).map(e=>e.id||e.className), P.txt('#cmp-prep h4'), P.txt('#cmp-ya .cmp-segl')], [['cmp-prep','cmp-segl','cmp-seg','cmp-yasum'],'Prepare now for Pennsylvania','Show the year ahead for']);
+  c('…and it stays his own while another conference\'s year is shown (Pennsylvania\'s OneVoice27 series; no Pacific Union deadline)', [P.qa('#cmp-prep .pi').concat(P.qa('#cmp-prep details .pi')).some(x=>/OneVoice27 evangelistic series/.test(x.textContent)), /Pacific Union evangelism endowment/.test(P.txt('#cmp-prep'))], [true,false]);
 
   console.log('\n-- his choices --');
   P.E("document.querySelector('[data-cmp-rm=\"nevada-utah\"]').click()"); await sleep(30);
@@ -208,6 +213,7 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','Su asociación en resumen','Misión y calendario','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Recursos para su iglesia','Ministerios que visitan su iglesia','Cómo leer esto']);
     c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el 1 oct 2026 · se actualiza cada mes');
     c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De oct 2026 a sep 2027: lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
+    c('Prepare now in Spanish, named for his conference; the line over the buttons', [S.txt('#cmp-prep h4'), S.txt('#cmp-ya .cmp-segl')], ['Prepárese ya en Pennsylvania','Mostrar el año que viene de']);
     c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya','Pennsylvania: calendario publicado hasta dic 2026. El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27.']);
     c('aún no publicado', S.qa('#cmp-ya .nyp-l')[0].textContent, 'aún no publicado');
     c('Spanish hints', S.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'register',d:'2027-03-01'},'2026-10')]"), ['Empiece a más tardar en dic 2026','Inscripción: hasta 1 mar 2027']);

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.63.2
+     TERRAIN  v10.63.3
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.63.2" data-theme="dark">
+<html lang="en" data-version="v10.63.3" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.63.2">
-<title>Community Map — Terrain v10.63.2</title>
+<meta name="terrain-version" content="v10.63.3">
+<title>Community Map — Terrain v10.63.3</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -4483,6 +4483,8 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-tip .k{display:inline-block;width:12px;height:2px;margin-right:6px;vertical-align:middle}
 /* 3 the year ahead */
 .cmp-yasum{font-size:.86rem;color:var(--ink2);margin:4px 0 0}
+#cmp-ya>.cmp-prep{margin-top:4px}
+.cmp-segl{font-size:.8rem;letter-spacing:.04em;color:var(--ink3);margin:16px 0 6px}
 .cmp-yasum b{color:var(--ink);font-weight:600}
 .cmp-yasum .note{display:block;margin-top:2px}
 .cmp-prep{background:color-mix(in srgb,var(--m-hardship) 7%,transparent);border:1px solid color-mix(in srgb,var(--m-hardship) 30%,transparent);border-radius:12px;padding:10px 12px 8px;margin:12px 0 12px}
@@ -5002,13 +5004,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.63.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.63.3</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.63.2';
+const VERSION = 'v10.63.3';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -21842,11 +21844,13 @@ function gfWhyHTML(){
   if(!v) return '';
   return `<figure class="gfword"><blockquote>“${esc(v.text)}”</blockquote><figcaption>${esc(v.ref)}</figcaption>${e?`<p class="gfword-egw">“${esc(e.text)}” <span>${esc(e.ref).replace(/ (p\.|pp\.) /g,' $1\u00a0')}</span></p>`:''}</figure>`;
 }
+/* v10.63.3 — the pastor (9 Oct 2026), of the left button: "Too many words we need to make it simple like the one on the right it
+   doesn't look symmetrical at all", then "How about send to members?": both titles short, one line each, as alike as "Take it yourself". */
 function gfBigHTML(){
   const ic={send:'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 11.5 21 3l-7.5 18-2.8-7.7L3 11.5Z"/><path d="m10.7 13.3 4.6-4.6"/></svg>',
     self:'<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/><path d="m16.5 4.5 1.2-1.6M19 7.2l1.9-.5"/></svg>'};
   return `<div class="gfpair" id="gf-invite">
-    <button type="button" class="gfbigb" data-gv="setup" style="--k:var(--m-people)">${ic.send}<b>${esc(L('Send Spiritual Gifts to your members','Envíe Dones espirituales a sus miembros'))}</b><span>${esc(L('A link and a QR code for your church','Un enlace y un código QR para su iglesia'))}</span></button>
+    <button type="button" class="gfbigb" data-gv="setup" style="--k:var(--m-people)">${ic.send}<b>${esc(L('Send to members','Envíela a los miembros'))}</b><span>${esc(L('A link and a QR code','Un enlace y un código QR'))}</span></button>
     <button type="button" class="gfbigb" data-gv="take" style="--k:var(--gfv,var(--m-children))">${ic.self}<b>${esc(L('Take it yourself','Hágala usted mismo'))}</b><span>${esc(L('About '+GF_MINUTES+' minutes','Unos '+GF_MINUTES+' minutos'))}</span></button>
   </div>`;
 }
@@ -44170,7 +44174,7 @@ const CMP_UI={
   pubAll:{en:'calendar published for the whole year ahead',es:'calendario publicado para todo el año que viene'},
   pubNone:{en:'nothing published ahead yet',es:'aún no hay nada publicado por delante'},
   pubTo:{en:'calendar published to {m}',es:'calendario publicado hasta {m}'},
-  prep:{en:'Prepare now',es:'Prepárese ya'}, prepNone:{en:'Nothing needs action in the next three months.',es:'Nada requiere acción en los próximos tres meses.'},
+  prep:{en:'Prepare now',es:'Prepárese ya'}, prepFor:{en:'Prepare now for {name}',es:'Prepárese ya en {name}'}, prepNone:{en:'Nothing needs action in the next three months.',es:'Nada requiere acción en los próximos tres meses.'},
   more:{en:'+{n} more',es:'+{n} más'}, special1:{en:'{n} special day',es:'{n} día especial'}, specialN:{en:'{n} special days',es:'{n} días especiales'},
   l_conf:{en:'Your conference',es:'Su asociación'}, l_union:{en:'Your union',es:'Su unión'}, l_nad:{en:'North American Division',es:'División Norteamericana'},
   l_world:{en:'World church',es:'Iglesia mundial'}, l_dl:{en:'Deadlines',es:'Fechas límite'},
@@ -44954,7 +44958,16 @@ function cmpAhead(){
   const thr=ya.through, last=AM[AM.length-1];
   const pub=!thr?'':thr>=last?cU('pubAll'):thr<AM[0]?cU('pubNone'):cU('pubTo',{m:cmpMY(thr)});
   const note=ya.note?(LANG==='es'?ya.note.es:ya.note.en):'';
-  let h=`<div class="cmp-seg" role="group" aria-label="${esc(cU('aheadFor'))}">${sel.map((s,i)=>{ const q=CMP.conf[s];
+  /* v10.63.3 — the pastor (9 Oct 2026): "When I click … the tabs there yours PA Ohio, Arkansas CCC … it doesn't change what's right
+     underneath … if not, those tabs should go underneath and then Pennsylvania should just be": Prepare now is his own conference's
+     (most of it is the NAD's and the world church's, the same for every conference), first; the buttons under it change the year below. */
+  const pM=CMP.conf[S.mine]&&CMP.det[S.mine]?CMP.conf[S.mine]:p, yaM=CMP.det[S.mine]?CMP.det[S.mine].ahead:ya;
+  const prep=cmpPrepList(pM,yaM,A,today);
+  const prepLine=x=>{
+    if(x.d) return `<div class="pi">${cmpHintHTML({k:x.d.k,d:x.d.s,p:x.d.p,from:x.d.t,unc:cmpHas(x.d,'u')},todayM)}${cmpLink(x.d.u,cmpShortT(cmpDlTitle(x.d.t,pM)),x.d.t+' · '+cU('source'))}${cmpHas(x.d,'u')?`<span class="d">${esc(cU('tg_u'))}</span>`:''}</div>`;
+    const it=x.it; return `<div class="pi">${cmpHintHTML(x.h,todayM)}${cmpLink(it.u,cmpShortT(it.t),it.t+' · '+cU('source'))}<span class="d">${esc(it.p==='m'?cmpMY(it.s.slice(0,7)):it.p==='s'?cmpSeason(it.s)+' '+it.s.slice(0,4):cmpDMY(it.s))}</span></div>`; };
+  let h=`<div class="cmp-prep" id="cmp-prep"><h4>${esc(cU('prepFor',{name:pM.name}))}</h4>`+(prep.length?prep.slice(0,5).map(prepLine).join('')+(prep.length>5?`<details class="more"><summary>${esc(cU('moreN',{n:prep.length-5}))}</summary>${prep.slice(5).map(prepLine).join('')}</details>`:''):`<p class="note">${esc(cU('prepNone'))}</p>`)+'</div>';
+  h+=`<p class="cmp-segl">${esc(cU('aheadFor'))}</p><div class="cmp-seg" role="group" aria-label="${esc(cU('aheadFor'))}">${sel.map((s,i)=>{ const q=CMP.conf[s];
     return `<button type="button" aria-pressed="${s===S.ahead}" data-cmp-ahead="${esc(s)}" title="${esc(q.name)}">${esc(i===0?cU('yoursCode',{code:cmpShort(q)}):cmpShort(q))}</button>`; }).join('')}</div>`;
   h+=`<p class="cmp-yasum"><b>${esc(p.name)}</b>: ${pub?esc(pub)+'. <span class="note">'+esc(note)+'</span>':esc(note)}</p>`;
   // what needs a start now
@@ -44965,11 +44978,6 @@ function cmpAhead(){
   ya.own.forEach(it=>put(it,it.lane==='world'?'world':'nad'));
   ya.dl.forEach(d=>{ const m=String(d.s).slice(0,7); if(byM[m]) byM[m].dl.push(d); });
   AM.forEach(m=>['conf','union','nad','world'].forEach(l=>byM[m][l].sort((a,b)=>(a.since?'0':a.s).localeCompare(b.since?'0':b.s))));
-  const prep=cmpPrepList(p,ya,A,today);
-  const prepLine=x=>{
-    if(x.d) return `<div class="pi">${cmpHintHTML({k:x.d.k,d:x.d.s,p:x.d.p,from:x.d.t,unc:cmpHas(x.d,'u')},todayM)}${cmpLink(x.d.u,cmpShortT(cmpDlTitle(x.d.t,p)),x.d.t+' · '+cU('source'))}${cmpHas(x.d,'u')?`<span class="d">${esc(cU('tg_u'))}</span>`:''}</div>`;
-    const it=x.it; return `<div class="pi">${cmpHintHTML(x.h,todayM)}${cmpLink(it.u,cmpShortT(it.t),it.t+' · '+cU('source'))}<span class="d">${esc(it.p==='m'?cmpMY(it.s.slice(0,7)):it.p==='s'?cmpSeason(it.s)+' '+it.s.slice(0,4):cmpDMY(it.s))}</span></div>`; };
-  h+=`<div class="cmp-prep" id="cmp-prep"><h4>${esc(cU('prep'))}</h4>`+(prep.length?prep.slice(0,5).map(prepLine).join('')+(prep.length>5?`<details class="more"><summary>${esc(cU('moreN',{n:prep.length-5}))}</summary>${prep.slice(5).map(prepLine).join('')}</details>`:''):`<p class="note">${esc(cU('prepNone'))}</p>`)+'</div>';
   // the timeline: a row a month, five lanes
   const laneL=L=>L.id==='conf'&&!mineView?p.name:L.id==='union'&&!mineView?p.union:cU('l_'+L.id);
   h+=`<div class="cmp-legend">${CMP_LANES.map(L=>`<span><b style="background:${L.color}"></b>${esc(laneL(L))}</span>`).join('')}</div>`;

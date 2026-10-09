@@ -185,7 +185,8 @@ const share = [
 share.forEach(([label, expect, mutate]) => {
   fs.writeFileSync(tf, JSON.stringify({theme: 'prayer', ideas: mutate(clone(good))}));
   const {code, out} = run(tf);
-  const themeReview = /^REVIEW \S+ \(theme\) \d+ of \d+ ideas for neighbors/m.test(out);
+  // v10.63.3: the file's path may hold a space (a folder named "Ministry Work"), so it is read up to " (theme)", never as one word
+  const themeReview = /^REVIEW .+? \(theme\) \d+ of \d+ ideas for neighbors/m.test(out);
   const ok = code === 0 && (expect === 'review' ? themeReview : !themeReview);
   if (!ok) { bad++; console.log(`WRONG  ${label}: expected ${expect}\n${out.slice(0, 2000)}`); } else console.log(`right  ${label}`);
 });
