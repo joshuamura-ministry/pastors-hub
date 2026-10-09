@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.63.0
+     TERRAIN  v10.63.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.63.0" data-theme="dark">
+<html lang="en" data-version="v10.63.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.63.0">
-<title>Community Map — Terrain v10.63.0</title>
+<meta name="terrain-version" content="v10.63.1">
+<title>Community Map — Terrain v10.63.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -426,15 +426,15 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .whoami{font-size:.8rem;color:var(--ink3);margin-left:auto;white-space:nowrap;display:flex;align-items:center;gap:8px}
 .whoami .whotxt{min-width:0;max-width:min(44ch,62vw);overflow:hidden;text-overflow:ellipsis}
 .whoami .whoname{color:var(--ink2);font-weight:600}
-.whoami #signout,.whoami #regchange,.whoami #acctbtn{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
+.whoami #signout,.whoami #regchange,.whoami #acctbtn,.whoami #codebtn{font:inherit;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;padding:5px 10px;cursor:pointer;min-height:32px}
 /* The chip sits after Main menu and ES, set off by a hairline, rather than
    splitting the free space with them; the same height as they are. */
-.whoami #regchange,.whoami #signout,.whoami #acctbtn{min-height:40px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
+.whoami #regchange,.whoami #signout,.whoami #acctbtn,.whoami #codebtn{min-height:40px;padding:0 12px;text-decoration:none;display:inline-flex;align-items:center}
 /* From 700px the chip never wraps under the others: it takes what room is
    left (up to its own width) and the name ends in an ellipsis. Narrower, it
    has a row of its own, right-aligned, with no hairline. */
 @media(min-width:700px){ .themebtn+.whoami{margin-left:4px;padding-left:14px;border-left:1px solid var(--line);min-height:40px;flex:1 1 0;min-width:0;max-width:max-content} }
-.whoami #regchange,.whoami #signout,.whoami #acctbtn{flex:none}
+.whoami #regchange,.whoami #signout,.whoami #acctbtn,.whoami #codebtn{flex:none}
 @media(max-width:699px){
   .top .in{gap:10px 12px}
   .whoami{margin-left:0;flex-basis:100%;justify-content:flex-end;order:9}
@@ -3591,12 +3591,21 @@ button.cd-rowb:hover{background:var(--panel2)}
 @media(max-width:699px){ .whoami{min-width:0} .whoami .whotxt{flex:0 1 auto} }
 /* v10.61.1 — the pastor (8 Oct 2026), of the phone header (the church button and "name · conference" both cut short): "hide name
    conference". On a phone the row is the church button and Change, drawn as a person so it never reads as "change church" beside it. */
-#regchange .rc-i{display:none;width:18px;height:18px;flex:none}
+#regchange .rc-i,#codebtn .cb-i{display:none;width:18px;height:18px;flex:none}
+.code-f{display:grid;gap:12px;padding:4px 18px 18px}
+.code-f input{font:inherit;font-size:1rem;letter-spacing:.02em}
+.code-row{display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.code-st{font-size:.9rem;color:var(--ink2)}
+.code-st.ok{color:var(--acc);font-weight:600}
+.code-st.no{color:var(--m-hardship)}
 @media(max-width:560px){
   .whoami .whotxt{display:none}
   .whoami #regchange .rc-t{display:none}
   .whoami #regchange .rc-i{display:block}
   .whoami #regchange{padding:0 11px}
+  .whoami #codebtn .cb-t{display:none}
+  .whoami #codebtn .cb-i{display:block}
+  .whoami #codebtn{padding:0 11px}
   .whoami .chbtn{max-width:min(320px,calc(100vw - 110px))}
 }
 @media (min-width:521px){ dialog.ch-sheet{max-width:min(560px,calc(100vw - 24px))} }
@@ -4874,6 +4883,7 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <div class="cmp" id="cmp" hidden data-notr></div>
   <div class="chc" id="chc" hidden data-notr></div>
   <dialog id="ch-sheet" class="ns-sheet ch-sheet" aria-labelledby="ch-t" data-notr></dialog>
+  <dialog id="code-sheet" class="ns-sheet ch-sheet code-sheet" aria-labelledby="code-t" data-notr></dialog>
   <!-- ===== Evangelism Planner: the countdown calendar ===== -->
   <div class="planner" id="planner" hidden>
     <div class="pmode" id="pmode" hidden>
@@ -4965,13 +4975,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.63.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.63.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.63.0';
+const VERSION = 'v10.63.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10613,6 +10623,46 @@ function acctTierCheck(){
   else ACCT.tierShown=t;
 }
 function acctWho(){ try{ if(!gated()&&!memberLink()) showWho(); }catch(e){} }
+/* v10.63.1 — the pastor (9 Oct 2026): "Can you just put a tester code box on the top somewhere and he can click it and then he'll put the
+   code in and then it will unlock everything for him". Beside Change while this device is not unlocked (a key on a phone): a box, the code,
+   Unlock. guest-pass.mjs checks it with this registration (the pastor's passphrase, or a guest code on its own registration) and says so at
+   once; a code that works is kept as ?ideas= keeps it (terrain-ai-pass) and the page starts again with it. The link still works too. */
+const CODE_KEY='<svg class="cb-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M16 7l3 3M14 9l2 2"/></svg>';
+function codeBtnHTML(){
+  try{ if(memberLink()||aiPass()) return ''; }catch(e){ return ''; }
+  const t=L('Tester code','Código de prueba');
+  return `<button type="button" id="codebtn" title="${esc(L('Enter a tester code','Escribir un código de prueba'))}" aria-label="${esc(L('Enter a tester code','Escribir un código de prueba'))}">${CODE_KEY}<span class="cb-t">${esc(t)}</span></button>`;
+}
+function codeOpen(){
+  const d=$('code-sheet'); if(!d) return;
+  d.innerHTML=`<div class="ns-sh"><div class="ns-shtop"><h2 id="code-t" tabindex="-1">${esc(L('Tester code','Código de prueba'))}</h2><button type="button" class="ns-x" data-code-x aria-label="${esc(L('Close','Cerrar'))}">✕</button></div>
+    <form class="code-f" novalidate><p class="note">${esc(L('If you were given a tester code, type it here. It unlocks the deeper study features on this device, for your registration.','Si recibió un código de prueba, escríbalo aquí. Abre las funciones de estudio más profundas en este dispositivo, para su registro.'))}</p>
+      <label class="u-field"><span>${esc(L('Code','Código'))}</span><input name="code" type="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" maxlength="200"></label>
+      <div class="code-row"><button type="submit" class="btn">${esc(L('Unlock','Abrir'))}</button><span class="code-st" role="status" aria-live="polite"></span></div></form></div>`;
+  d.querySelector('[data-code-x]').onclick=()=>codeClose();
+  d.onclick=e=>{ if(e.target===d) codeClose(); };
+  d.querySelector('form').onsubmit=e=>{ e.preventDefault(); codeCheck(d); };
+  try{ d.showModal(); }catch(e){ d.setAttribute('open',''); }
+  const i=d.querySelector('input'); if(i) try{ i.focus(); }catch(e){}
+}
+function codeClose(){ const d=$('code-sheet'); if(!d) return; try{ d.close(); }catch(e){ d.removeAttribute('open'); } }
+async function codeCheck(d){
+  const inp=d.querySelector('input'), st=d.querySelector('.code-st'), btn=d.querySelector('button[type=submit]');
+  const code=String(inp.value||'').trim();
+  const say=(t,k)=>{ st.textContent=t; st.className='code-st'+(k?' '+k:''); };
+  if(!code||/[\s<>]/.test(code)){ say(L('Please type the code exactly as you received it, without spaces.','Escriba el código tal como lo recibió, sin espacios.'),'no'); return; }
+  btn.disabled=true; say(L('Checking…','Comprobando…'));
+  let r=null, j=null;
+  try{ const tok=typeof regTok==='function'?regTok():''; r=await fetch('/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({code}),signal:AbortSignal.timeout(15000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+  btn.disabled=false;
+  if(r&&r.status===429){ say(L('Too many tries. Please wait an hour and try again.','Demasiados intentos. Espere una hora e inténtelo de nuevo.'),'no'); return; }
+  if(!r||!j||!j.ok){ say(L('The code could not be checked just now. Please try again.','No se pudo comprobar el código ahora. Inténtelo de nuevo.'),'no'); return; }
+  if(j.open){ say(L('Everything is already open: no code is needed.','Todo ya está abierto: no hace falta un código.'),'ok'); return; }
+  if(!j.unlocked){ say(L('That code did not work. Check the code, and that you registered with the email address it was set up for.','Ese código no funcionó. Revise el código, y que se registró con el correo electrónico para el que se preparó.'),'no'); return; }
+  try{ localStorage.setItem('terrain-ai-pass',code); }catch(e){}
+  say(L('Unlocked on this device.','Abierto en este dispositivo.'),'ok');
+  if(!window.__codeNoReload) setTimeout(()=>{ try{ location.reload(); }catch(e){} },1200);   // the tests stay on the page
+}
 function acctBtnHTML(){
   try{ if(memberLink()||(!acctSession()&&!acctBillingOn())) return ''; }catch(e){ return ''; }
   return `<button type="button" id="acctbtn">${esc(L('Account','Cuenta'))}</button>`;
@@ -13303,10 +13353,11 @@ function showWho(){
       try{ location.reload(); }catch(e){}
     };
   } else {
-    d.innerHTML=`${chChipHTML()}<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange" title="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}" aria-label="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}"><svg class="rc-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="rc-t">${L('Change','Cambiar')}</span></button>${acctBtnHTML()}`;
+    d.innerHTML=`${chChipHTML()}<span class="whotxt"><span class="whoname">${esc(reg.name)}</span>${reg.conf?`<span class="whoconf"> · ${esc(reg.conf)}</span>`:''}</span><button type="button" id="regchange" title="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}" aria-label="${esc(L('Change your name or conference','Cambiar su nombre o su asociación'))}"><svg class="rc-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span class="rc-t">${L('Change','Cambiar')}</span></button>${codeBtnHTML()}${acctBtnHTML()}`;
     nav.appendChild(d);
     document.getElementById('regchange').onclick=regChange;
     { const cb=document.getElementById('chbtn'); if(cb) cb.onclick=chSheetOpen; }   // v10.57.0: the church chip
+    { const kb=document.getElementById('codebtn'); if(kb) kb.onclick=codeOpen; }   // v10.63.1: the tester code
   }
   { const ab=document.getElementById('acctbtn'); if(ab) ab.onclick=acctOpen; }   // v10.54.0
   measureTop();

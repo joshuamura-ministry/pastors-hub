@@ -19,7 +19,7 @@
 //     church text it carries, would be kept for ever.
 //   - the per-client counters and day keys of earlier UTC days go, in this
 //     store (g/cid/<day>/…, g/salt/<day>) and in register.mjs's store
-//     "terrain-registrations" (g/reg/<hour>/…, g/adm/<hour>/…, g/sin/<hour>/…, g/salt/<day>).
+//     "terrain-registrations" (g/reg/<hour>/…, g/adm/<hour>/…, g/sin/<hour>/…, g/salt/<day>; v10.63.1: g/code/<hour>/…, guest-pass's tries).
 
 import { getStore } from '@netlify/blobs';
 
@@ -30,7 +30,7 @@ const REG_STORE_NAME = 'terrain-registrations';
 const RE_MARK = /^x\/(\d{4}-\d{2}-\d{2})\/([A-Za-z0-9_-]{12})\/([A-Za-z0-9_-]{12})$/;
 const RE_CAMP = /^c\/([A-Za-z0-9_-]{12})$/;
 // Only these counters: gifts.mjs's own g/ip and g/sends are not by-day keys.
-const RE_COUNTER = /^g\/(?:cid|reg|adm|sin|salt)\/(\d{4}-\d{2}-\d{2})(?:T\d{2})?(?:\/[A-Za-z0-9_-]{1,64})?$/;
+const RE_COUNTER = /^g\/(?:cid|reg|adm|sin|salt|code)\/(\d{4}-\d{2}-\d{2})(?:T\d{2})?(?:\/[A-Za-z0-9_-]{1,64})?$/;
 const UNUSED_DAYS = 30;
 const BUDGET_MS = 20000;   // scheduled functions get 30 s; the rest waits for tomorrow
 

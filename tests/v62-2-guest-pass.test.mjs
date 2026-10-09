@@ -68,7 +68,7 @@ if (G) {
   c('the guest code on the director\'s own registration: "guest"', await U(D_CODE, tokFor(DIRECTOR)), 'guest');
   c('the same code on another registration (the link passed on): locked', [await U(D_CODE, tokFor(STRANGER)), await U(D_CODE, tokFor(PASTOR))], ['', '']);
   c('the code with no registration token: locked', [await U(D_CODE, ''), await U(D_CODE, null)], ['', '']);
-  c('a token signed with another secret, or a damaged one: locked', [await U(D_CODE, tokFor(DIRECTOR, T, OTHER_SECRET)), await U(D_CODE, tokFor(DIRECTOR).slice(0, -1) + 'A')], ['', '']);
+  c('a token signed with another secret, or a damaged one: locked', [await U(D_CODE, tokFor(DIRECTOR, T, OTHER_SECRET)), await U(D_CODE, (t => t.slice(0, -1) + (t.endsWith('A') ? 'B' : 'A'))(tokFor(DIRECTOR)))], ['', '']);   // its last letter changed, always
   c('a token older than 180 days: locked', await U(D_CODE, tokFor(DIRECTOR, T - 181 * 864e5)), '');
   c('part of the code, or the code with more after it: locked', [await U(D_CODE.slice(0, -1), tokFor(DIRECTOR)), await U(D_CODE + 'x', tokFor(DIRECTOR))], ['', '']);
   c('the code with spaces around it (as typed): still "guest"', await U('  ' + D_CODE + ' ', tokFor(DIRECTOR)), 'guest');
@@ -90,7 +90,8 @@ if (G) {
   c('nothing it does is logged (no code, email or id ever in a log)', logs.filter(l => /Sample-Guest|director|DirectorId/i.test(l)).length, 0);
   const res = await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass'));
   const gj = await res.json();
-  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.0']);
+  // v10.63.1 (stale): guest-pass-1.1, with the tester code box's POST
+  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.1']);
 }
 
 console.log('\n-- advise.mjs: every mode behind the lock asks guest-pass --');

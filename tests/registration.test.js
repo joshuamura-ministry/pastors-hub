@@ -346,7 +346,8 @@ function makeStore(){
   c('the chip sits after ES from 700px and shrinks rather than wrap', /@media\(min-width:700px\)\{ \.themebtn\+\.whoami\{margin-left:4px;[^}]*flex:1 1 0;min-width:0;max-width:max-content\}/.test(html), true);
   c('narrower, it has its own row, right-aligned', /@media\(max-width:699px\)\{\s*\.top \.in\{gap:10px 12px\}\s*\.whoami\{margin-left:0;flex-basis:100%;justify-content:flex-end;order:9\}/.test(html), true);
   // v10.54.0 (accounts and plans): the Account button beside Change takes the same rule
-  c('Change (and Account) as tall as Pastors Hub and ES, and not underlined', /\.whoami #regchange,\.whoami #signout,\.whoami #acctbtn\{min-height:40px;[^}]*text-decoration:none/.test(html), true);
+  // v10.63.1 (stale): the tester code button shares the rule
+  c('Change (and Account, and Tester code) as tall as Pastors Hub and ES, and not underlined', /\.whoami #regchange,\.whoami #signout,\.whoami #acctbtn,\.whoami #codebtn\{min-height:40px;[^}]*text-decoration:none/.test(html), true);
 
   console.log('\n-- no page errors --');
   await wait(50);
