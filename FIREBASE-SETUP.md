@@ -88,7 +88,7 @@ Copy the locations from this page; do not count the A's. Check a has 22 A's, and
 
 ## F. Put both into Netlify
 
-21. Go to **app.netlify.com** and open the project that serves **pastorshub.org** (the one Terrain deploys to). Click **Project configuration** (older screens: **Site configuration**), then **Environment variables**.
+21. Go to **app.netlify.com** and open the project that serves **terrain.church** (the one Terrain deploys to). Click **Project configuration** (older screens: **Site configuration**), then **Environment variables**.
 22. Click **Add a variable**, then **Add a single variable**. The address is not a secret, so this one needs no special box:
     - **Key:** `PRESENT_FB_URL`
     - **Scopes:** leave **All scopes** (it must include Functions)
@@ -109,7 +109,7 @@ Type both names exactly: capital letters, with underscores.
 
 ## H. Confirm it works
 
-25. Open **pastorshub.org/.netlify/functions/present**. You want to see **present-1.4**, `"live":true` and `"fb":"ok"`. Terrain has just read the database with your key (it checks at most once a minute), so this proves the address and the key are both right.
+25. Open **terrain.church/.netlify/functions/present**. You want to see **present-1.4**, `"live":true` and `"fb":"ok"`. Terrain has just read the database with your key (it checks at most once a minute), so this proves the address and the key are both right.
     - `"fb":"unset"`: Netlify is not passing both settings on, or the address is not a Firebase database address. Check both names letter by letter, check the address from step 18, and check that the scopes include Functions. Then repeat step 24.
     - `"fb":"bad-key"`: Firebase refused the key. Copy it again (steps 19 and 20). In Netlify, click that variable and choose **Edit**, paste the new value, save, and repeat step 24.
     - `"fb":"unreachable"`: Firebase did not answer just then. Wait a minute and reload the page.
