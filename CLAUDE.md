@@ -91,6 +91,9 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.0) the lock behind every Claude feature: the passphrase, or a guest code (TERRAIN_AI_GUESTS)
+                               on its own registration (the token's id = the id kept for the code's email); advise.mjs and digital.mjs import
+                               `passCheck`; its own GET says only `{ok, fn}`
 netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
@@ -178,6 +181,7 @@ values are never in the repo):
 |---|---|---|
 | `ANTHROPIC_API_KEY` | advise.mjs | Anthropic **platform** key (console.anthropic.com), billed per use. Not a claude.ai subscription. |
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
+| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
@@ -271,6 +275,20 @@ retention it states held to each function's own constant, the button names held 
   menu's order, the terms' rules for young people, the app's links; `v62-1-privacy` updated (the first page's line; the copy command). Checked in
   Chrome (`v80/shots-legal.mjs`): the four pages at phone 390 and computer 1366, EN + ES (16 views): no sideways scroll, no outside request, card rows
   level, no button word wrapping, no page error. Full suite: 171 suites · 11,272 passed · 0 failed.
+- **A guest code** (same release, 9 Oct 2026; the pastor, of his conference's ministerial director trying the app: *"Just give him the unlock
+  link but have him add like a secret code that only he can use"*). `guest-pass.mjs` (**guest-pass-1.0**): `unlockOf(given, regToken, pass)`
+  → 'open' (no passphrase set) · 'pass' · 'guest' · '' (locked); `passCheck`; `guestsOf` (TERRAIN_AI_GUESTS: `email=code` a line or commas,
+  the email kept as register.mjs keeps it; a code under 12 characters, equal to the passphrase, or beside two emails left out; 25 at most);
+  `regIdOf` (the registration token, as `pRegTokenOk`). A guest code unlocks only when the token's id is the id kept for its email
+  (`e/<sha256(email)>` in terrain-registrations), remembered 10 minutes (a minute while there is none: he may be registering); no secret, no
+  token or no record: locked (fails closed). Every code compared whole, both sides hashed. advise.mjs's five lock sites (prices, needs,
+  ideas, case, the main route) and digital.mjs's review ask `passCheck` with their own reading of the passphrase (`passOk` gone from both),
+  so the refusals keep their order (nokey → disabled → locked → noreg). The page's "More ideas" (`libAiMore`) now sends the registration
+  token too. advise-2.7 and digital-1.2 keep their numbers; `/.netlify/functions/guest-pass` → `"fn":"guest-pass-1.0"` proves the deploy.
+  **His side:** he makes up the code (never in the chat or the repo), adds `TERRAIN_AI_GUESTS` in Netlify (secret) as `director's email=code`,
+  redeploys; the director registers on terrain.church with that email, then opens `terrain.church/?ideas=` + the code once on each device.
+  Registration does not check an email, so the code is as safe as the code itself plus his email address: keep the code private.
+  Tests: `v62-2-guest-pass` (new, 38; failing first on the stamp commit: `v80/logs/ff-v62-2-guest-pass.log`).
 
 **v10.62.0 (8 Oct 2026, full lane) — Digital footprint, the bar raised: "Current" means a site that does its work; every deficiency with its fix;
 an in-depth review.** The pastor, of his own church's card: *"on the website you say that it looks it's current but what about its content because

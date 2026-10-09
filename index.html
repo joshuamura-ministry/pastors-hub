@@ -23016,7 +23016,7 @@ async function libAiMore(ctx,sec){
       tags:[...env.tags],avoid};
     if(topic.reach) body.reach=topic.reach;
     let r=null, j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass()},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
       j=await r.json().catch(()=>null); }catch(e){ r=null; }
     if(uChurch().id!==ch.id) return;                        // he switched church meanwhile: nothing saved to the wrong one
     if(r&&r.status===401&&j&&j.code==='locked'){ U.aiMsg=aiPass()?libT('aiWrong'):libT('aiLocked'); U.aiErr=true; return; }
