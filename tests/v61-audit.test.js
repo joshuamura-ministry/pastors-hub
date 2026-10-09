@@ -35,7 +35,8 @@ const HTML=require('fs').readFileSync(require('path').join(__dirname,'..','index
 
   console.log('\n-- words: one line, one name, plain --');
   c('Spiritual Gifts, step 1: "Invite your members" (not "Spiritual Gifts: invite your members"); members are sent the link, never an address',
-    [/L\('Invite your members','Invite a sus miembros'\)/.test(HTML),/Send your members a link\. Each member answers/.test(HTML),/Spiritual Gifts: invite your members/.test(HTML)], [true,true,false]);
+    // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions": step 1's own part is gone; its line now sits in the picture of the three steps
+    [/L\('Invite your members','Invite a sus miembros'\)/.test(HTML),/One link for your church; each member answers on their own phone\./.test(HTML),/Spiritual Gifts: invite your members/.test(HTML)], [true,true,false]);
   c('the Planner\'s labels one line: "Interest names", "Budget ($)"', [/<span class="lb">Interest names<\/span>/.test(HTML),/<span class="lb">Budget \(\$\)<\/span>/.test(HTML)], [true,true]);
   const ES=P.J(`['Can lead a group or give a study','Nurses or health professionals','A van, or willing drivers','An organiser — forms, lists, a computer','Trained support-group facilitator'].map(k=>ES[k])`);
   c('the skills in Spanish, short enough for one line', [ES,ES.every(t=>t.length<=32)], [['Dirigen un grupo o un estudio','Enfermeras o personal de salud','Camioneta o conductores','Organizador: formularios, listas','Facilitador de grupos de apoyo'],true]);

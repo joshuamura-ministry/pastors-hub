@@ -25,12 +25,13 @@ setTimeout(()=>{
   const first=h.firstElementChild;
   c('the first thing is the heading, not the volunteer card', first.classList.contains('gfhead'));
   c('the heading is plain', h.querySelector('.gfhead h2').textContent, 'Spiritual Gifts');
-  const doors=[...h.querySelectorAll('.gfdoor')].map(d=>d.querySelector('b').textContent);
+  const doors=[...h.querySelectorAll('.gfbigb')].map(d=>d.querySelector('b').textContent);
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
-  c('one door: share it with your members', doors, ['Share it with your members']);
-  c('…pink', [...h.querySelectorAll('.gfdoor')].map(d=>d.getAttribute('style')), ['--k:var(--m-people)']);
-  c('…through the existing navigation', [...h.querySelectorAll('.gfdoor')].map(d=>d.dataset.gv), ['setup']);
-  c('results sit beneath the doors', !!(h.querySelector('.gfdoors').compareDocumentPosition(h.querySelector('.gfresults'))&4));
+  // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
+  c('two big buttons: send it to your members, take it yourself', doors, ['Send Spiritual Gifts to your members','Take it yourself']);
+  c('…pink and violet', [...h.querySelectorAll('.gfbigb')].map(d=>d.getAttribute('style')), ['--k:var(--m-people)','--k:var(--gfv,var(--m-children))']);
+  c('…through the existing navigation', [...h.querySelectorAll('.gfbigb')].map(d=>d.dataset.gv), ['setup','take']);
+  c('results sit beneath the buttons', !!(h.querySelector('.gfpair').compareDocumentPosition(h.querySelector('.gfresults'))&4));
   // v10.50.0 — the pastor (6 Oct 2026): "why would a member send me a code? Don't need that": the code box left the landing.
   c('no code box on the landing', h.querySelectorAll('#gfpaste,#gfadd').length, 0);
   c('the volunteer roster is folded away, not first', h.querySelector('#u-team').closest('details')!==null);
@@ -42,8 +43,8 @@ setTimeout(()=>{
   c('share door opens the link setup', w.eval('GF_VIEW'), 'setup');
   c('setup screen renders', /Which church is this link for/.test(D.getElementById('giftbody').textContent));
   w.eval('GF_VIEW="roster"; gfRender();');
-  // v10.57.1: no "Take it yourself" door; the way still works when asked for (a member's link, a page restored)
-  c('no take door on the landing', !!D.getElementById('giftbody').querySelector('[data-gv="take"]'), false);
+  // v10.57.1 had no "Take it yourself" door; v10.63.2 (stale): the pastor wants it back, as the second big button
+  c('the take door is on the landing again', !!D.getElementById('giftbody').querySelector('[data-gv="take"]'), true);
   w.eval("GF_VIEW='take'; GFS.self=true; gfSave(); gfRender();");
   c('the assessment still opens', w.eval('GF_VIEW'), 'take');
   c('the intro renders', /Discover Your Spiritual Gifts/.test(D.getElementById('giftbody').textContent));

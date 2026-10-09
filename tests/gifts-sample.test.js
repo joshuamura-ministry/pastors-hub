@@ -112,7 +112,8 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   c('…the demo filled: its first member is the sample report\'s', [E('gfRoster().length'),E('gfRoster().some(r=>gfDecode(r.code).name==="Alex Rivera (sample)")')], [24,true]);
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
   c('no "See a sample report" on the landing, even with the demo (every result opens as a report)', !!h.querySelector('#gfsample'), false);
-  c('the results still sit beneath the doors', !!(h.querySelector('.gfdoors').compareDocumentPosition(h.querySelector('.gfresults'))&4), true);
+  // v10.63.2 (stale): the doors are now two big buttons (.gfpair)
+  c('the results still sit beneath the buttons', !!(h.querySelector('.gfpair').compareDocumentPosition(h.querySelector('.gfresults'))&4), true);
 
   console.log('-- opening it touches nothing --');
   // The pastor part-way through taking it himself, and one result on his list:
@@ -187,7 +188,8 @@ const HEADS_ES=['Sus dones y la evidencia de cada uno','Su perfil en las cinco f
   console.log('-- Back --');
   h.querySelector('[data-sampback="top"]').click();
   h=D.getElementById('giftbody');
-  c('Back at the top returns to the landing', [E('GF_VIEW'),!!h.querySelector('.gfdoors'),!!h.querySelector('.gfrep')], ['roster',true,false]);
+  // v10.63.2 (stale): the landing's doors are the two big buttons (.gfpair)
+  c('Back at the top returns to the landing', [E('GF_VIEW'),!!h.querySelector('.gfpair'),!!h.querySelector('.gfrep')], ['roster',true,false]);
   E("GF_VIEW='sample'; gfRender();"); h=D.getElementById('giftbody');
   h.querySelector('[data-sampback="foot"]').click(); h=D.getElementById('giftbody');
   c('…and so does the one at the foot', [E('GF_VIEW'),!!h.querySelector('#gf-results')], ['roster',true]);
