@@ -38,5 +38,6 @@ const art=l=>{ const m=new RegExp(`<article lang="${l}"[^>]*>([\\s\\S]*?)</artic
   c('the first page: "Privacy" among About · Privacy · Terms, for anyone before registering', [/<a href="\/privacy" id="gatepriv">Privacy<\/a>/.test(HTML),/\['gatepriv','Privacy','Privacidad'\]/.test(HTML)], [true,true]);
   c('a neighbor\'s card: the promise line links the policy in the card\'s language, same site, a new tab', [P.E(`cnPromiseHTML(cnWords({kind:'general',church:'Sampleton SDA',title:{en:'x'}},'es'))`).includes('<a class="cn-plink" href="/privacy?lang=es" target="_blank" rel="noopener">Política de privacidad</a>'),P.E(`cnPromiseHTML(cnWords({kind:'general',church:'Sampleton SDA',title:{en:'x'}},'en'))`).includes('href="/privacy?lang=en"')], [true,true]);
   { const S=page({lang:'es'}); await ready(S); await sleep(50); c('in Spanish the footer says "Privacidad"', S.txt('#privlink'), 'Privacidad'); }
-  c('the six stamps say v10.62.1', (HTML.match(/v10\.62\.1/g)||[]).length>=6, true);
+  // v10.62.2: the terms, refunds and about pages went in an update of their own (PR #35 merged with the privacy policy alone): the six agree
+  c('the six stamps agree, v10.62.1 or later', (()=>{ const v=[/TERRAIN  (v[\d.]+)/,/data-version="(v[\d.]+)"/,/terrain-version" content="(v[\d.]+)"/,/Terrain (v[\d.]+)<\/title>/,/id="ver">(v[\d.]+)</,/const VERSION = '(v[\d.]+)'/].map(r=>(r.exec(HTML)||[])[1]); return new Set(v).size===1&&/^v10\.(6[2-9]|[7-9]\d)\./.test(v[0]); })(), true);
 }); T.done(); })();

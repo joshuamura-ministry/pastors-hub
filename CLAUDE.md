@@ -238,7 +238,7 @@ Not a lawyer's review: his to have read before paid plans begin. Tests: `v62-1-p
 `v79/logs/ff-v62-1-privacy.log`): the page, the build, no outside request, both languages' fourteen sections, Muraworks, the contact, the
 retention it states held to each function's own constant, the button names held to the app's, the links. Checked in Chrome
 (`v79/shots-privacy.mjs`): phone 390 EN + ES, computer 1366, no sideways scroll, no outside request. Full suite then: 170 suites · 11,248 passed · 0 failed.
-- **The rest of the writing** (same release, folded into PR #35; the pastor: *"Yes all the terms of service refund still need writing. Let's get it
+- **The rest of the writing** (**v10.62.2**, 9 Oct 2026: PR #35 merged with the privacy policy alone, before this was pushed to it, so it went in an update of its own; the pastor: *"Yes all the terms of service refund still need writing. Let's get it
   done. Let's do every all the writing that needs to be done and placed on a product a finished product"*). Three more public pages in the privacy
   policy's look (written once from `Terrain-work/v80/legal-shell.py` with `write-terms.py` and `write-refunds-about.py`; edit the pages directly now),
   each in English and Spanish, each at a short address (netlify.toml: `cp privacy.html terms.html refunds.html about.html site/`, four 200
