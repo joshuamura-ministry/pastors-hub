@@ -219,6 +219,41 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.64.0 (9 Oct 2026, full lane) — the Evangelism Planner gets the word out: where the handbills go, every way to promote, Slide
+Preach.** The pastor: *"marketing … promoting like sending out hand bills going door-to-door using Facebook ads … letting the members go in
+hand them out … banners in concentrated areas like in the most populated areas where people are walking around the most … promoted strongly on
+all social media outlets from the church, which is Facebook Instagram, whatever the church has their website YouTube channel … live streaming
+needs to be promoted to those who are watching on live stream … creating a video if the church members are capable, if the pastor is capable …
+a promo video with me speaking on it … doesn't mean that we can do all of these things, but there should be these options out there if the
+church can … this would be the time to create the video"*; then *"the same map that's in terrain … making sure the most concentrated amount of
+people so that the mail outs are being sent to the right areas not just random and wasting money … hand bills can be tailored to different
+people groups … young families or older people … In this app put a little button that will link them to slide Preach"*.
+- **The handbill territory is where the most people live** (`planPlace`: the four census areas within the reach with the most people per
+  square mile, `ZONES.scored` by `density`, was by `score`; their households `planZoneHH`: the area's own count, else people / 2.6). Every count
+  that reads the territory follows (handbills, visiting pairs, the bench).
+- **Where the handbills go** (`planMailHTML`, `#pl-mail`, before Getting the word out): the survey's own map (`zoneMap` on the "Most people"
+  view, its ids `pl-mapbox` / `pl-mapinner`), the four areas (tract, direction and distance, people per square mile, handbills, Open in Maps),
+  the Post Office's Every Door Direct Mail (choose the carrier routes inside these areas); **a handbill for each kind of neighbor**
+  (`planZoneGroup`, `PLAN_HB`): Young families (children 24% or more), Older neighbors (median age 48 or more, or seniors alone 12% or more),
+  Everyone, and the language where it is spoken (limited English 8% or more, or born abroad 20%), each with what to change and its areas and
+  handbills; and **Build a tract in Slide Preach** (`SLIDEPREACH` = https://slidepreach.com/, a new tab). No survey yet: one line asking for it.
+- **Getting the word out** (`planPromo`, `#pl-word`, after Where the hall fills from): twelve ways, in date order, each dated back from opening
+  night, with who does it, marked **Every church** (a Facebook event at 8 weeks, Instagram, the church website, the screens and the bulletin
+  from the first Sabbath 6 weeks out, the church's Google listing at 4 weeks, the livestream and YouTube the four Sabbaths before, door to door
+  three weekends in the four areas (on the door, never in the mailbox; young people only with two adults), a text from every member the last ten
+  days, during the series) or **If your church can** (a promo video with the pastor or the speaker, filmed by 10 weeks out; banners where people
+  walk, toward the survey's busiest blocks (`planBusiest`), with permission and the town's sign rules; Facebook and Instagram ads the last two
+  weeks, within a 20–30 minute drive); "In both languages" where the neighborhood needs it. **Words ready to share**: a post, a member's text and
+  the livestream announcement, with the church, the nights and the day, "[your sign-up page]" to fill in, each with Copy.
+- **The countdown** (phase 5 and the last two weeks): the series online at 8 weeks and the video by 10, door to door three weekends, the ads and
+  the members' text. **The roster**: Media & publicity (pre-work, not core). **The budget**: banners, yard signs, the video and the ads, if the
+  church can. **Supplies**: banners and yard signs. **The printed plan**: both new parts as tables.
+- **The main menu**: under What Terrain is for, *Also from Muraworks: Slide Preach · Sermon slides, Bible studies and tracts.* (`.hubmw`, a
+  new tab; ES through `ES`). The Planner stays English (his v10.61.1 answer).
+- Tests: `v64-word` (new, 30; failing first on v10.63.3: `v82/ff-v64-word.log`; its census areas made up). Checked in Chrome (`v82/shots640.mjs`,
+  made-up areas round a real Warminster corner so the map shows streets): computer 1366 and phone 390, no sideways scroll, rows level, no page
+  errors. Full suite: 179 suites · 11,469 passed · 0 failed. Samples `Terrain-v10.64.0-samples`.
+
 **v10.63.3 (9 Oct 2026, quick lane) — the two big buttons alike; Prepare now always his own, above the conference buttons.** The pastor, of v10.63.2's left button: *"Too many words we need to
 make it simple like the one on the right it doesn't look symmetrical at all"*, then *"How about send to members?"*. **Send to members**
 ("A link and a QR code"; ES "Envíela a los miembros" / "Un enlace y un código QR") beside **Take it yourself** ("About 15 minutes"): each
@@ -3288,6 +3323,9 @@ Don't relitigate them without a reason he'd accept.
   filter. Before adding a button, check nothing on the same screen already does it.
 - **Each church is its own, and they are compared, never ranked** (v10.57.0): one button in the header switches; the comparison shows
   differences in plain sentences and counts only.
+- **Every way to promote, never required** (v10.64.0, his words: "doesn't mean that we can do all of these things, but there should be
+  these options out there if the church can"): each dated back from opening night, marked Every church or If your church can; the mail goes
+  where the most people live, never everywhere, and the handbill changes with who lives there.
 - **Clear next steps** (his request, v10.43 §5; v10.56.1 took "Your path" off the hub at his word): "What's next" at the very bottom of the survey (Make the case for each ministry in
   the plan, a connection card for events and series, Gifts first beside it) and "Your path" on the hub; the gifts never block
   making the case. The path's next step breathes gently: one more exception to "nothing animates on its own" (reduced motion
