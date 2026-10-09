@@ -219,6 +219,56 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.63.0 (9 Oct 2026, full lane) — Learn from other conferences: the brief and Mission and calendar; the Evangelism Planner's demo,
+nursery, Bible workers and a year of follow-up; Digital footprint's table in view.** Its own PR (PR #37, v10.62.2 with the guest code, was merged first).
+- **The brief** (frame 2, `cmp-brief`; the pastor: *"where it says Pennsylvania right there should be like a graph maybe a circular graph … to
+  show … where the conference is strong where it needs help … like a brief for the conference"*): for his conference, a circle chart
+  (`cmpRadar`, `cmpRadarFig`; the eight areas of `CMP_CORE`, each as far out as its share against the typical conference's: the dashed ring
+  the typical, the edge twice as much or more, the centre none) beside a few sentences (`cmpBriefLines`: members, congregations and union;
+  the calendar's count and how full it is; more than most; less than most, or none published; what the mission names and how many of those
+  the calendar gives room; the dates published ahead). **One rule** for where an area stands (`cmpLensState`: "more" is frame 13's "Gives more
+  room than most to" exactly; "less" half the typical share or under; "none" nothing published; else "about as most"), read by the chart,
+  the brief and the mission frame; the 50 conferences' strengths and room to grow agree with it (tested).
+- **Mission and calendar** (frame 3, `cmp-mission`, `cmpMission` / `cmpMissionBox`; his *"mission statements also need to be seen and
+  collected from each conference … a section where it compares your mission statement and what the calendar is actually saying to see if
+  either the mission statement needs to or the calendar needs to change"*): for each chosen conference its mission word for word (English,
+  "(en inglés, como se registró)" in Spanish; its line breaks kept), a link to its own page, the checked date; each area the mission names
+  with the mission's own words, a bar with the typical share marked, the count; how many of those the calendar gives room; what the
+  calendar gives more room to that the mission does not name; and, where they part, *"should the calendar change, or the statement?"*.
+  None found: "We could not find a mission statement on its website (checked …)", never "has none". The frames after move down two
+  (17 in all; numbered from the data: without missions, 16 and no gap).
+- **The missions' data:** `tools/conferences/src/missions.json` (checked 9 Oct 2026: 37 of 50 found), read by `tools/conferences/missions.mjs`
+  (a line for every conference; the words of each area must be in the mission or the build stops; https; no markup), served as each
+  conference's `mission` {t, u, a:[{l,w}], via?} and the index's `missionChecked`. Research: five agents (public pages only), then each
+  statement fetched again and found word for word on its page (`~/Ministry Work/Terrain-work/v81/assemble-missions.mjs`, its hand review in
+  `AREAS`), except three read by eye (Indiana's and Oklahoma's printed in a picture; Georgia-Cumberland's page drawn by its script). With his
+  OK two PDFs were read: New York's "Mission statement" button opens its 2026 sunset and offering schedule (its president's page's sentence is
+  used); Northern New England's "Vision, Mission and Strategy" booklet names no mission (listed among the pages checked). Hawaii's is under
+  "Our purpose". Re-check missions yearly (README there), not monthly.
+- **The Evangelism Planner** (his *"we need a demo also button for EVANGELISM planner … a midsize evangelistic meeting series maybe 15 nights
+  three weeks say $25,000 … children's care or also infant care … a separate room for mothers with children … all the different benchmarks
+  … Bible worker or Bible workers … the follow up is vital and has to be established even before"*): **Fill in a demo series** (`planDemo`,
+  `PLAN_DEMO`: "Sample church (demo)", 150 members, 25 leaders, 50 workers, 15 nights 5 a week, 200 seats, 150 interest names, $25,000, 2
+  Bible workers, both kinds; opening night a Friday eighteen months out, so the whole countdown shows; `PLAN.demo`, a dashed note with
+  "Clear the demo"; offered only while no plan of his own is saved). **Bible workers** (`pl-bw`, `p.bw`; on a computer beside the kind of
+  series): their own team (`bibleworker`, `staff`: never counted as a leader to find), in place six months out (phase 4's item and
+  benchmark), the nightly decision cards, the follow-up; none: "Ask the conference about a Bible worker" in phase 2. **Children's
+  meetings** (two screened adults, parents sign in and out) and a **Nursery & mothers' room** of its own (the meeting's sound brought in;
+  required where the neighborhood has many children; `nursery` pairs with `children` when leaders are few). **The follow-up built before
+  opening night**: a **Nurture & follow-up coordinator** (core) chosen with the others; in phase 5 the spiritual friends, the new members'
+  class and the Bible class set; in the last two weeks "the follow-up is ready"; the phase after is **Follow-up: the first year** (twelve
+  months, `+12 months` on the rail) in three groups: the newly baptized (a friend, the class thirteen weeks, Sabbath School and a small
+  group, a place to serve within three months through Spiritual Gifts, visits at 1, 3, 6, 12 months), those still studying, those who came.
+  The budget names the Bible workers, the nursery and the new members' class. A plan saved before (no `bw`) builds as before.
+- **Digital footprint's Every church** (his *"it's cut off in YouTube … there's no scroll button … we have to be able to see everything"*):
+  the table as wide as its box (`table-layout:fixed`, the church a fifth, labels may take two lines; v10.61.0's 1,180 px minimum gone);
+  under 900 px each church a card, its six areas named (`data-th` on each cell), three a row on a tablet, two on a phone. Measured in
+  Chrome (`v81/shots63df.mjs`): 1366, 966, 820, 390, no sideways scroll, every cell inside the box.
+- Tests: `v63-conference-brief` (34), `v63-missions-data` (19), `v63-planner-demo` (27), `v63-df-fit` (6), each failing first on v10.62.2
+  (`v81/ff-*.log`); updated with comments: conferences-view (17 frames, the Spanish titles), v58-resources (16 and 17), v61-audit (the table).
+  Checked in Chrome (`v81/shots63.mjs`, `shots63pl.mjs`, `shots63df.mjs`): computer 1366, tablet 820, phone 390, EN + ES, no page errors.
+  Full suite: 176 suites · 11,396 passed · 0 failed. Samples `Terrain-v10.63.0-samples`. Its own PR (PR #37 was merged first).
+
 **v10.62.1 (8 Oct 2026) — the writing a finished product needs: the privacy policy, the terms of service, the refund policy, About Terrain.** The pastor: *"We need the definitely privacy policy.
 Please write that now."* (Meta's App Review asks for a public privacy policy address, and paid plans need one.) **`privacy.html`**, a page of its
 own (no registration, no outside request: system fonts, one small inline script for the language and the phone's stacked tables), English and
@@ -288,7 +338,8 @@ retention it states held to each function's own constant, the button names held 
   **His side:** he makes up the code (never in the chat or the repo), adds `TERRAIN_AI_GUESTS` in Netlify (secret) as `director's email=code`,
   redeploys; the director registers on terrain.church with that email, then opens `terrain.church/?ideas=` + the code once on each device.
   Registration does not check an email, so the code is as safe as the code itself plus his email address: keep the code private.
-  Tests: `v62-2-guest-pass` (new, 38; failing first on the stamp commit: `v80/logs/ff-v62-2-guest-pass.log`).
+  Tests: `v62-2-guest-pass` (new, 38; failing first on the stamp commit: `v80/logs/ff-v62-2-guest-pass.log`). Full suite at that commit:
+  172 suites · 11,310 passed · 0 failed.
 
 **v10.62.0 (8 Oct 2026, full lane) — Digital footprint, the bar raised: "Current" means a site that does its work; every deficiency with its fix;
 an in-depth review.** The pastor, of his own church's card: *"on the website you say that it looks it's current but what about its content because
@@ -3004,6 +3055,8 @@ list), then `v10.43 (C1)`; and `v10.43 (C3, SPEC §5)` after `gfFirstPrefsSave`)
   `cmpAhead` (`cmpPrepList`, `cmpHintText`, `cmpWhen`, `CMP_LANES`), `cmpLearn` (`cmpLearnCards`), `cmpSW`, `cmpSaid`, `cmpTable`, `cmpSources`, `cmpCaveats`;
   `cmpLink` / `cmpHttps` (https only), `cmpToday` (never before the check date), `CMP_STALE_DAYS`; Make the Case's door `caseCmpDoorHTML` / `caseCmpDoorWire`
 - Review (v10.44): `CMP_UI.why_other` ("another part of the country"); in the builders `profiles.mjs` `boardOrSession` and `pack.mjs` `WRITE_OUT` / `noAiWords`
+- v10.63.0: the brief and Mission and calendar: `cmpLensState` (one rule), `cmpRadar` / `cmpRadarFig`, `cmpBriefLines`, `cmpBrief`, `cmpMissionBox`,
+  `cmpMission`, `cmpMisAreas`, `cmpJoinL`; the data `tools/conferences/missions.mjs` → `mission` and `missionChecked` in index.json
 - v10.58.0: `cmpLoadRes`, `cmpResFrames`, `cmpRes`, `cmpResDraw`, `cmpHelpCard`, `cmpResCard`, `cmpMinDraw`, `cmpMinTier` (resources.json, from
   `tools/conferences/resources.mjs`); v10.59.1: `cmpMinBody` (one ministry's details), `CMP_RES_HUE` / `CMP_RES_ICON`, `CMP_MIN_HUE` / `CMP_MIN_ICON`,
   `CMP.minOpen` / `CMP.minItem` (what he has opened)

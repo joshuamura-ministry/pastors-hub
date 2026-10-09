@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.62.2
+     TERRAIN  v10.63.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.62.2" data-theme="dark">
+<html lang="en" data-version="v10.63.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.62.2">
-<title>Community Map — Terrain v10.62.2</title>
+<meta name="terrain-version" content="v10.63.0">
+<title>Community Map — Terrain v10.63.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1268,6 +1268,10 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 .pf input:focus{border-color:var(--acc);outline:none}
 .pf input::placeholder{color:var(--ink3)}
 .pf-wide{grid-column:1/-1}
+/* v10.63.0: on a computer the kind of series sits beside Bible workers, so no field stands alone on its row */
+@media(min-width:640px){.pform .pf-kind{grid-column:span 2}}
+.pdemo{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:0 0 12px;padding:10px 14px;border:1px dashed color-mix(in srgb,var(--m-hardship) 60%,transparent);border-radius:12px;color:var(--ink2);font-size:.9rem}
+.pdemo b{color:var(--m-hardship)}
 .prow{flex-direction:row;flex-wrap:wrap;justify-content:flex-start;align-items:center;gap:8px;margin-top:4px}
 .prow .btn{min-height:46px}
 .seg{display:flex;gap:4px;background:var(--panel2);border:1px solid var(--line2);border-radius:12px;padding:4px}
@@ -3714,9 +3718,29 @@ button.cd-rowb:hover{background:var(--panel2)}
 .df th,.df td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
 .df thead th{font-family:var(--disp);font-size:.76rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);background:var(--panel2)}
 .df-side tbody th{white-space:nowrap;font-family:var(--disp);color:var(--ink2)}
-.df-all{min-width:1180px}   /* v10.61.0: wide enough that every pill fits on one line (the table slides in its own box) */
-.df-all .df-st{white-space:nowrap}
-.df-all tbody th{min-width:200px;font-weight:600;color:var(--ink)}
+.df-all tr[hidden]{display:none}
+/* v10.63.0 — the pastor, of Every church: "it's cut off in YouTube and all that … there's no scroll button at all here … we have to be
+   able to see everything". Every column in view, no sliding: the table as wide as its box, the church a fifth of it, the six areas
+   sharing the rest, a label free to take two lines. Under 900 px each church is a card: its name, then its six areas, each named, three
+   a row on a tablet, two on a phone. (v10.61.0 had made the table wider than the screen so each label kept one line.) */
+.df-all{table-layout:fixed;width:100%}
+.df-all thead th:first-child{width:20%}
+.df-all th,.df-all td{padding:8px 6px}
+.df-all thead th{font-size:.68rem;letter-spacing:.03em;overflow-wrap:anywhere}
+.df-all .df-st{white-space:normal;align-items:flex-start;font-size:.72rem;line-height:1.35;padding:3px 8px 3px 7px}
+.df-all .df-st i{margin-top:4px}
+.df-all tbody th{font-weight:600;color:var(--ink);overflow-wrap:anywhere}
+@media (max-width:900px){
+  .df-all,.df-all tbody,.df-all tr,.df-all th,.df-all td{display:block;width:auto}
+  .df-all thead{display:none}
+  .df-all tr.df-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px 10px;padding:10px 12px;border-bottom:1px solid var(--line)}
+  .df-all tr.df-row>th,.df-all tr.df-row>td{border:0;padding:0}
+  .df-all tr.df-row>th{grid-column:1/-1}
+  .df-all tr.df-row.mine{box-shadow:inset 3px 0 0 var(--dfk)} .df-all tr.df-row.mine>th{box-shadow:none}
+  .df-all tr.df-row>td::before{content:attr(data-th);display:block;font-size:.64rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3);margin-bottom:3px}
+  .df-all tr.df-row[hidden],.df-all tr.df-detail[hidden]{display:none}
+}
+@media (min-width:561px) and (max-width:900px){.df-all tr.df-row{grid-template-columns:repeat(3,minmax(0,1fr))}}
 .df-row{cursor:pointer}
 .df-row:hover td,.df-row:hover th,.df-row:focus-visible td,.df-row:focus-visible th{background:var(--acc-dim)}
 .df-row:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
@@ -4208,6 +4232,48 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-cols{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
 @media (max-width:420px){.cmp-learng,.cmp-cols{grid-template-columns:minmax(0,1fr)}}
 .cmp-lcard,.cmp-box{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0;overflow-wrap:anywhere}
+/* v10.63.0 — the brief (a circle chart beside a few sentences) and Mission and calendar */
+.cmp-brief{display:grid;grid-template-columns:minmax(0,340px) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:700px){.cmp-brief{grid-template-columns:minmax(0,1fr)}.cmp-radar{justify-self:center;width:100%;max-width:360px}}
+.cmp-radar{margin:0;display:grid;gap:6px}
+.cmp-radar-svg{display:block;width:100%;height:auto}
+.cmp-radar .cmp-rg{fill:none;stroke:var(--line2);stroke-width:1;stroke-dasharray:2 3}
+.cmp-radar .cmp-rg2{stroke-dasharray:none}
+.cmp-radar .cmp-rax{stroke:var(--line2);stroke-width:1}
+.cmp-radar .cmp-rtyp{fill:none;stroke:var(--ink3);stroke-width:1.5;stroke-dasharray:6 4}
+.cmp-radar .cmp-rme{fill:color-mix(in srgb,var(--acc) 16%,transparent);stroke:none}
+.cmp-radar .cmp-rme-l{fill:none;stroke:var(--acc);stroke-width:2}
+.cmp-radar .cmp-rd{stroke:var(--panel);stroke-width:1.5}
+.cmp-rd-more{fill:var(--acc)} .cmp-rd-typ{fill:var(--m-housing)} .cmp-rd-less{fill:var(--m-hardship)}
+.cmp-radar .cmp-rd-none{fill:var(--panel);stroke:var(--m-hardship);stroke-width:2}
+.cmp-radar .cmp-rl{font-size:11.5px;font-weight:600;fill:var(--ink2)}
+.cmp-rl-more{fill:var(--acc)!important} .cmp-rl-less,.cmp-rl-none{fill:var(--m-hardship)!important}
+.cmp-radar figcaption{display:flex;flex-wrap:wrap;gap:6px 12px;justify-content:center;font-size:.74rem;color:var(--ink3)}
+.cmp-rk{display:inline-flex;align-items:center;gap:5px;white-space:nowrap}
+.cmp-rk::before{content:'';width:9px;height:9px;border-radius:50%;background:var(--k);flex:none}
+.cmp-rk-more{--k:var(--acc)} .cmp-rk-typ{--k:var(--m-housing)} .cmp-rk-less{--k:var(--m-hardship)}
+.cmp-rk-none::before{background:transparent;border:2px solid var(--m-hardship);width:7px;height:7px}
+.cmp-rk-ring::before{width:14px;height:0;border-radius:0;background:none;border-top:1.5px dashed var(--ink3)}
+.cmp-rhow{font-size:.74rem;text-align:center;margin:0}
+.cmp-btext{min-width:0;display:grid;gap:8px;align-content:start}
+.cmp-btext h4{margin:0;font-size:1.05rem}
+.cmp-btext p{margin:0;line-height:1.55;color:var(--ink2)}
+.cmp-bgo{justify-self:start}
+.cmp-mbox h5{margin:12px 0 6px}
+.cmp-mq{white-space:pre-line;margin:0;padding:8px 12px;border-left:3px solid var(--k,var(--m-children));background:color-mix(in srgb,var(--m-children) 7%,transparent);border-radius:0 8px 8px 0;font-style:italic;line-height:1.5;color:var(--ink)}
+.cmp-mrow{padding:8px 0;border-top:1px solid var(--line)}
+.cmp-mrow:first-of-type{border-top:0}
+.cmp-mrh{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 8px}
+.cmp-mlens{font-weight:600;font-size:.88rem;color:var(--ink)}
+.cmp-rst{display:inline-block;font-size:.72rem;border-radius:999px;padding:1px 8px;border:1px solid color-mix(in srgb,var(--k) 50%,transparent);color:var(--k);white-space:nowrap}
+.cmp-rst-more{--k:var(--acc)} .cmp-rst-typ{--k:var(--m-housing)} .cmp-rst-less,.cmp-rst-none{--k:var(--m-hardship)}
+.cmp-mw{font-size:.78rem;color:var(--ink3);font-style:italic;margin-top:2px}
+.cmp-mbar{position:relative;height:8px;border-radius:4px;background:var(--line);margin:6px 0 4px}
+.cmp-mfill{position:absolute;left:0;top:0;bottom:0;border-radius:4px;background:var(--k)}
+.cmp-mf-more{--k:var(--acc)} .cmp-mf-typ{--k:var(--m-housing)} .cmp-mf-less,.cmp-mf-none{--k:var(--m-hardship)}
+.cmp-mtyp{position:absolute;top:-3px;bottom:-3px;width:0;border-left:2px dashed var(--ink3)}
+.cmp-msum{margin:8px 0 0;font-size:.86rem;color:var(--ink)}
+.cmp-mask{margin:6px 0 0;font-size:.86rem;color:var(--m-hardship);font-weight:600}
 /* v10.58.0 — the drop-downs (tsSel): the page's select stays, unseen; this button and this list are what he sees */
 .ts-native{position:absolute!important;width:1px!important;height:1px!important;min-height:0!important;max-width:1px!important;padding:0!important;margin:0!important;border:0!important;opacity:0!important;pointer-events:none!important;overflow:hidden!important;clip-path:inset(50%)}
 .ts-sel{position:relative;display:inline-flex;align-items:center;min-width:0;max-width:100%;min-height:44px;padding:9px 42px 9px 14px;box-sizing:border-box;
@@ -4832,7 +4898,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       <label class="pf"><span class="lb">Seats in the hall</span><input id="pl-seats" type="number" inputmode="numeric" min="1" placeholder="150"></label>
       <label class="pf"><span class="lb">Interest names</span><input id="pl-file" type="number" inputmode="numeric" min="0" placeholder="0 if none yet"></label>
       <label class="pf"><span class="lb">Budget ($)</span><input id="pl-budget" type="number" inputmode="numeric" min="0" placeholder="optional"></label>
-      <div class="pf pf-wide">
+      <label class="pf"><span class="lb">Bible workers</span><input id="pl-bw" type="number" inputmode="numeric" min="0" max="20" placeholder="0 if none"></label>
+      <div class="pf pf-wide pf-kind">
         <span class="lb">Kind of series</span>
         <div class="seg" id="pl-kind" role="radiogroup" aria-label="Kind of series">
           <button type="button" data-k="prophecy" role="radio" aria-checked="false">Prophecy</button>
@@ -4842,6 +4909,7 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       </div>
       <div class="pf pf-wide prow">
         <button class="btn" id="pl-build">Build the countdown</button>
+        <button class="btn ghost" id="pl-demo">Fill in a demo series</button>
         <button class="btn ghost" id="pl-clear" hidden>Start over</button>
         <span class="hint" id="pl-status"></span>
       </div>
@@ -4897,13 +4965,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.2</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.63.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.62.2';
+const VERSION = 'v10.63.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11143,7 +11211,7 @@ function plannerOpen(){
   if(PLAN){
     $('pl-church').value=PLAN.church||''; $('pl-members').value=PLAN.members||''; $('pl-leaders').value=PLAN.leaders||''; $('pl-workers').value=PLAN.workers||'';
     $('pl-date').value=PLAN.date||''; $('pl-nights').value=PLAN.nights||''; $('pl-perweek').value=PLAN.perweek||4;
-    $('pl-seats').value=PLAN.seats||''; $('pl-file').value=(PLAN.file==null?'':PLAN.file); $('pl-budget').value=PLAN.budget||'';
+    $('pl-seats').value=PLAN.seats||''; $('pl-file').value=(PLAN.file==null?'':PLAN.file); $('pl-budget').value=PLAN.budget||''; $('pl-bw').value=PLAN.bw||'';
     kindBtns.forEach(x=>{ const on=x.dataset.k===(PLAN.kind||'both'); x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); });
     plannerRender(PLAN);
   } else {
@@ -11166,9 +11234,11 @@ function plannerOpen(){
     });
     const on=mode.querySelector('button.on'); if(on&&on.dataset.m==='track'&&PLAN) trackOpen();
   }
-  $('pl-build').onclick=plannerBuild;
-  $('pl-clear').onclick=()=>{ if(!confirm('Clear this plan from this device?')) return; uChurch().plan=null;uPersist(); PLAN=null;
-    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; plannerOpen(); };
+  $('pl-build').onclick=()=>plannerBuild();
+  // v10.63.0: the demo is offered while no plan of his own is saved (it never replaces his plan)
+  $('pl-demo').hidden=!!(PLAN&&!PLAN.demo); $('pl-demo').onclick=planDemo;
+  $('pl-clear').onclick=()=>{ if(!(PLAN&&PLAN.demo)&&!confirm('Clear this plan from this device?')) return; uChurch().plan=null;uPersist(); PLAN=null;
+    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget','pl-bw'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; plannerOpen(); };
 }
 function renderPlaceStrip(){
   const host=$('pplace'); if(!host) return;
@@ -11206,7 +11276,23 @@ function planPlaceRefresh(){
   const pc=$('pl-church'); if(pc&&(!pc.value||pc.value===PL_CHURCH_AUTO)&&DATA.geo&&DATA.geo.matched&&!PLAN){ pc.value=planChurchName(); PL_CHURCH_AUTO=pc.value; }
   if(PLAN&&$('pout')&&$('pout').innerHTML) try{ plannerRender(PLAN); }catch(e){ log('planner: '+e.message); }
 }
-function plannerBuild(){
+/* v10.63.0 — the pastor (9 Oct 2026): "we need a demo also button for EVANGELISM planner on a … midsize evangelistic meeting series maybe
+   15 nights three weeks say $25,000 … with sufficient members to help … children's care or also infant care … it has to also add all the
+   different benchmarks that need to be met prior to leading up to it … the opportunity to have a Bible worker or Bible workers … the follow
+   up is vital and has to be established even before … in with the planning". A midsize series, eighteen months out (the full countdown),
+   marked as a demo; Start over clears it without asking. */
+const PLAN_DEMO={church:'Sample church (demo)',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both'};
+function planDemoDate(){ let d=addMonths(new Date(),18); d.setHours(12,0,0,0); while(d.getDay()!==5) d=addDays(d,1); return d; }
+function planDemo(){
+  const D=PLAN_DEMO, d=planDemoDate();
+  $('pl-church').value=D.church; $('pl-members').value=D.members; $('pl-leaders').value=D.leaders; $('pl-workers').value=D.workers;
+  $('pl-date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+  $('pl-nights').value=D.nights; $('pl-perweek').value=D.perweek; $('pl-seats').value=D.seats; $('pl-file').value=D.file; $('pl-budget').value=D.budget; $('pl-bw').value=D.bw;
+  document.querySelectorAll('#pl-kind button').forEach(x=>{ const on=x.dataset.k===D.kind; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); });
+  plannerBuild({demo:true});
+}
+function plannerBuild(o){
+  o=o||{};
   const church=$('pl-church').value.trim();
   const members=+$('pl-members').value, leaders=+$('pl-leaders').value, workers=+$('pl-workers').value, nights=+$('pl-nights').value, perweek=Math.max(1,Math.min(7,+$('pl-perweek').value||4));
   const date=$('pl-date').value;
@@ -11219,8 +11305,11 @@ function plannerBuild(){
   if(!(nights>0)){ st.textContent='How many nights of meetings?'; $('pl-nights').focus(); return; }
   const seats=+$('pl-seats').value||0, file=$('pl-file').value===''?null:Math.max(0,+$('pl-file').value), budget=+$('pl-budget').value||0;
   if(!(seats>0)){ st.textContent='How many seats in the hall? Pre-work aims to fill half of them.'; $('pl-seats').focus(); return; }
-  PLAN={church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,built:Date.now(),v:3};
-  planSave(PLAN); st.textContent='Saved on this device.'; plannerRender(PLAN);
+  const bw=Math.max(0,Math.min(20,Math.round(+$('pl-bw').value||0)));
+  PLAN={church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,bw,built:Date.now(),v:3};
+  if(o.demo) PLAN.demo=true;
+  planSave(PLAN); st.textContent=o.demo?'':'Saved on this device.'; plannerRender(PLAN);
+  $('pl-demo').hidden=!PLAN.demo;
   const md=$('pmode'); if(md) md.hidden=false;
   setTimeout(()=>{ const o=$('pout'); if(o) o.scrollIntoView({behavior:'smooth',block:'start'}); },50);
 }
@@ -11236,7 +11325,8 @@ function planLeaderRoles(p,pl){
   const kids=T.has('many-kids')||T.has('families')||T.has('single-parents')||T.has('family-heavy');
   const noCar=T.has('no-car')||T.has('seniors-alone')||T.has('very-old');
   const bi=T.has('spanish')||T.has('limited-english')||T.has('multilingual');
-  const seats=p.seats||0, ushers=seats?Math.max(2,Math.ceil(seats/25)*2):null;
+  const seats=p.seats||0, ushers=seats?Math.max(2,Math.ceil(seats/25)*2):null, bw=Math.max(0,p.bw||0);
+  let hasNursery=false; try{ const cp=capMerged(); hasNursery=!!(cp&&cp.facilities&&cp.facilities.nursery); }catch(e){}
   const R=[
     // coordinators — chosen by the pastor
     {g:'coord',id:'coord',n:'Campaign coordinator',who:'the pastor',core:1,d:'Responsible for the organization of the whole campaign; every committee chair reports here. Usually leads the visitation.'},
@@ -11247,8 +11337,11 @@ function planLeaderRoles(p,pl){
     {g:'coord',id:'visit',n:'Visitation coordinator',who:'the pastor or coordinator',core:1,d:'Organizes visiting teams of pastors and lay members, takes the names nightly from the records team — a visitation card for every non-Adventist guest — and runs weekly, systematic visits. Without it many drop out.'},
     {g:'coord',id:'platform',n:'Platform coordinator',who:'',d:'Runs each evening\u2019s program: meets all participants twenty minutes before, reviews announcements with the evangelist, places schedules, gift books and Bible on the podium, and leads the platform prayer.'},
     {g:'coord',id:'music',n:'Music coordinator',who:'',d:'Pianist or organist every night, background music as people come and go, special music and every appeal song, planned with the evangelist to fit the evening\u2019s topic.'},
+    // v10.63.0: the follow-up is built before opening night, so its coordinator is chosen with the others
+    {g:'coord',id:'nurture',n:'Nurture & follow-up coordinator',who:'',core:1,d:'Builds the follow-up before opening night: a spiritual friend for everyone expected to decide, the new members\u2019 class and the Bible class for after the series, with their teachers, rooms and dates. After the meetings, keeps every new member, and everyone still studying, cared for through the first year.'},
     {g:'coord',id:'committees',n:'Committees coordinator',who:'',d:'Organizes all the committees below and sees that each chair has staffed and prepared their piece.'},
     // pre-work teams — from the equipping phase
+    ...(bw?[{g:'pre',id:'bibleworker',n:bw>1?'Bible workers ('+bw+')':'Bible worker',who:'placed by the conference, or paid by the church',core:1,staff:1,d:'In place six months before opening night: works the interest file, gives Bible studies in homes, trains the lay Bible instructors and goes with them. During the series, visits each night\u2019s interests and prepares those who decide for baptism; afterwards stays at least three months with the new members and everyone still studying.'}]:[]),
     {g:'pre',id:'interest',n:'Interest file & Bible school',who:'',core:1,d:'Keeps every name from every source on a computer, runs the four letters, assigns studies, and keeps the Bible School running through and after the series.'},
     {g:'pre',id:'lit',n:'Literature & mailing',who:'',d:'Divides the territory, runs the monthly rounds and the mailings; the handbill distribution in the last two weeks.'},
     {g:'pre',id:'groups',n:'Home Bible groups',who:'',d:'Recruits hosts and leaders, supplies the lessons and DVDs, keeps the groups meeting the full run, and brings every guest to opening night with a ticket.'},
@@ -11262,7 +11355,9 @@ function planLeaderRoles(p,pl){
     {g:'series',id:'records',n:'Attendance records',who:'',d:'Ticket books or scanner cards; a free lecture copy for every night attended; the nightly list of who is eligible for gifts; feeds the visitation team every name.'},
     {g:'series',id:'bibleschool',n:'Bible School',who:'',d:'Lessons during the series that answer the questions the preaching raises; many keep studying after the last night.'},
     {g:'series',id:'parking',n:'Parking attendants',who:'',d:'Visible, with flashlights; guidance and security outside from arrival to departure.'},
-    {g:'series',id:'children',n:'Children\u2019s meetings & babysitting',who:'',req:kids,d:'A program for the children every night'+(kids?' — required here, or the parents cannot come':'')+'.',why:kids?'many children in the neighborhood':''},
+    {g:'series',id:'children',n:'Children\u2019s meetings',who:'',req:kids,d:'A program for the children every night in their own room, by age, with two screened adults always present and parents signing children in and out'+(kids?' \u2014 required here, or the parents cannot come':'')+'.',why:kids?'many children in the neighborhood':''},
+    // v10.63.0: the pastor, "infant care … a separate room for mothers with children so the babies don't scream in the middle of the service"
+    {g:'series',id:'nursery',n:'Nursery & mothers\u2019 room',who:'',req:kids,d:'A room close to the hall for babies and toddlers with a parent, with the meeting\u2019s sound or picture brought in, so a parent can step out with a crying baby and not miss the night, and nobody in the hall is distracted. Rocking chairs, a changing table, two screened adults on duty, a sign on the door'+(hasNursery?' (your church lists a nursery room)':'')+'.',why:kids?'many young families in the neighborhood':''},
     {g:'series',id:'resource',n:'Resource center',who:'',d:'Materials sold and given: books, lessons, recordings; stocked by the materials coordinator.'},
     {g:'series',id:'decoration',n:'Decoration',who:'',d:'The hall looks ready every night: platform, entrance, signage, the reserved seats marked.'},
     {g:'series',id:'transportation',n:'Transportation',who:'',req:noCar,d:'A named drivers schedule with a backup every night'+(noCar?' — in this neighborhood it is the ministry, not a support role':'')+'.',why:noCar?'many households have no car or are seniors alone':''}
@@ -11273,10 +11368,12 @@ function planLeaderRoles(p,pl){
    until the count fits the leaders available. The treasurer is usually the
    church treasurer already and is not counted against the leaders. */
 function planLeaderFit(roles,leaders){
-  const PAIRS=[['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
+  const PAIRS=[['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['nursery','children'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
   let list=roles.map(r=>({...r,names:[r.n],ids:[r.id]}));
   let merged=[];
-  const need=()=>list.filter(r=>r.id!=='treasurer').length;
+  // the treasurer is usually the church treasurer already; Bible workers are placed or hired (v10.63.0): neither is a leader to find
+  const lead=r=>r.id!=='treasurer'&&!r.staff;
+  const need=()=>list.filter(lead).length;
   for(const [a,b] of PAIRS){
     if(need()<=leaders) break;
     const ia=list.findIndex(r=>r.id===a), ib=list.findIndex(r=>r.id===b);
@@ -11284,7 +11381,7 @@ function planLeaderFit(roles,leaders){
     list[ia]={...list[ia],n:list[ia].n+' + '+list[ib].n,names:[...list[ia].names,...list[ib].names],ids:[...list[ia].ids,...list[ib].ids],req:list[ia].req||list[ib].req,why:list[ia].why||list[ib].why,d:list[ia].d+' Also: '+list[ib].d.charAt(0).toLowerCase()+list[ib].d.slice(1)};
     merged.push([a,b]); list.splice(ib,1);
   }
-  return {list,merged,gap:Math.max(0,need()-leaders),full:roles.filter(r=>r.id!=='treasurer').length,need:need()};
+  return {list,merged,gap:Math.max(0,need()-leaders),full:roles.filter(lead).length,need:need()};
 }
 /* ---- targets: floors from the playbook, scaled by the church and the place ---- */
 function planTargets(p,pl){
@@ -11369,6 +11466,7 @@ function planPhases(p,pl){
   const sabbaths=[]; { let d=addDays(D,-1); while(d.getDay()!==6) d=addDays(d,-1); for(let i=0;i<3;i++){ sabbaths.unshift(new Date(d)); d=addDays(d,-7);} }
   const handbillOrder=addMonths(D,-3), lettersOut=addDays(D,-10), membersHandbills=addDays(D,-14);
   const fileN=p.file==null?null:p.file;
+  const bw=Math.max(0,p.bw||0), bwN=bw>1?'Bible workers':'Bible worker', bwBy=addMonths(D,-6);
   return {S,T,fit,phases:[
     ph(0,'Find the leaders and set the date',
       [li('<b>Opening night fixed:</b> '+pDate(D)+'. Every other date on this page hangs on it.',1),
@@ -11382,6 +11480,7 @@ function planPhases(p,pl){
       [li('Revival weekend with the emphasis on the Holy Spirit — prayer, Bible study, service.',1),
        li('Training on the job: lay Bible instructors, small-group leaders, literature teams'+(H?', the health team':'')+(has('spanish','limited-english','multilingual')?', bilingual checkers':'')+'. Members watch the pastor do it, then do it with him.',1),
        li('Build the interest file from every source'+(fileN!=null?' — <b>'+fileN.toLocaleString()+' names</b> today':'')+' and put it on a computer: media interests, past seminar and health-program attendees, former members, correspondence students, members\u2019 friends. First of four letters goes out now (a free book), then '+mailEvery+': lessons offered, a felt-need seminar, and finally the invitation.'),
+       ...(bw?[]:[li('<b>Ask the conference about a Bible worker</b> for the six months before opening night and the three after: a Bible worker carries the studies the outreach opens, trains the lay instructors, and keeps the new members close after the series. Ask early.',1)]),
        li('Literature teams adopt a specific territory and visit it <b>once a month, all year</b> — get to know the people by name, pray for them, bring a book or DVD at Christmas.'),
        li('Ministry teams meet monthly to report — without it they drop out.')],
       `<b>${p.workers} workers</b> in training · <b>${T.instructors} lay Bible instructors</b> chosen · interest file started · first mailing out`),
@@ -11394,14 +11493,16 @@ function planPhases(p,pl){
       [...(H?[li('Health Expo with screening stations and the health-age appraisal; Natural Lifestyle Cooking School, seven nights.',1)]:[]),
        ...(P?[li('Daniel and Revelation home seminars or an archeology seminar — the prophecy on-ramp.',1)]:[]),
        li('Every lay Bible instructor has at least one study running before opening night.',1),
+       ...(bw?[li('<b>The '+bwN+' in place by '+pDate(bwBy)+'</b>, six months before opening night: '+(bw>1?'they take':'it takes')+' the interest file and every request for studies, and go out with the lay Bible instructors each week.',1)]:[]),
        li('Third letter to the interest file — the felt-need seminar invitation. Monthly team reports continue — examine, evaluate, encourage.')],
-      `<b>${T.studies} Bible studies</b> in progress (one per instructor, minimum) · pre-registrations collected at every event`),
+      `<b>${T.studies} Bible studies</b> in progress (one per instructor, minimum)${bw?' and the '+bwN+'\u2019s own':''} · pre-registrations collected at every event`),
     ph(4,'Home Bible groups and committees',
       [li('Form home Bible study groups of 4–6 members; each member invites one friend who is not an Adventist. '+(groupWeeks===15?'Bond and pray as a group for 3 weeks, then 12 weeks of lessons.':'The runway is short: one week to bond, then seven weeks of lessons.')+' <b>Groups begin '+pDate(groupsStart)+'.</b>',1),
        li('<b>Chairpersons chosen by '+pDate(addMonths(D,-4))+'</b> — four months out at the latest. Then the enlistment form goes out on Sabbath morning and members sign up for the committees: prayer, ushers, hosts, registration, records, Bible School, parking, children\u2019s meetings, resource center, decoration'+(has('no-car','seniors-alone','very-old')?', transportation':'')+'.',1),
        li('Set up the campaign web page with pre-registration on it, and print its address on every piece that goes out — a third of pre-registrations can come that way. Ask the media ministries to mail your handbill to their interest lists; that request goes in <b>4–6 weeks before the mailing</b> ('+pDate(addDays(D,-52))+').'),
+       li('<b>The follow-up is built now, before opening night.</b> The nurture coordinator recruits a <b>spiritual friend</b> for everyone expected to decide: a member who sits with them, calls each week, brings them to Sabbath School and home for lunch. The <b>new members\u2019 class</b> has its teacher, room and first date (the Sabbath after the baptism); the <b>Bible class</b> for everyone still studying is set for the week after closing night.',1),
        li('<b>Order the handbills by '+pDate(handbillOrder)+'</b> — three months out is the minimum. Order supplies'+(has('spanish','limited-english','multilingual')?' in both languages':'')+'; lock the venue and the nightly schedule.')],
-      `<b>${T.groups} home groups</b> running with <b>${T.guests} guests</b> · every committee staffed · supplies ordered`),
+      `<b>${T.groups} home groups</b> running with <b>${T.guests} guests</b> · every committee staffed · the follow-up team named · supplies ordered`),
     ph(5,'Advertise and pre-register',
       [li('Handbills, doorknockers and posters'+(T.handbills?' — <b>'+T.handbills.toLocaleString()+' handbills</b>, one per household in the target blocks':'')+' — and every member pre-registers friends and neighbors. Friends inviting friends is the best advertising there is.',1),
        ...(H?[li('Handbills and pre-registration forms go out during the last two weeks of cooking school and at the health-expo booth.')]:[]),
@@ -11419,22 +11520,27 @@ function planPhases(p,pl){
        li('<b>Prayer walk</b> the handbill territory one week out — '+pDate(addDays(D,-7))+' — praying for the people who received them.',1),
        li('<b>'+pDate(addDays(D,-9))+':</b> call the post office to confirm the handbills arrived. <b>'+pDate(addDays(D,-7))+':</b> handbills land in homes; a few members in the target area call when theirs arrives. Same day: confirmation letter and brochure to everyone pre-registered.',1),
        li('If the budget allows: one large newspaper ad five days out ('+pDate(addDays(D,-5))+'), radio 50–100 spots Monday to Friday of opening week, cable TV only if you can afford 34–38 spots in five days.'),
+       li('<b>The follow-up is ready:</b> the spiritual friends listed by name, and the dates of the new members\u2019 class and the Bible class printed for the last night.',1),
+       li('The children\u2019s room and the nursery with its sound set up; two screened adults scheduled in each for every night.'),
        li('Final committee check, supplies laid out, music and media rehearsed'+(has('no-car','seniors-alone','very-old')?', drivers confirmed by name':'')+'. Platform team meets twenty minutes before; prayer team thirty.')],
-     bench:`every member praying by name · every team ready · every pre-registered guest confirmed`},
+     bench:`every member praying by name · every team ready · the follow-up ready · every pre-registered guest confirmed`},
     {name:'The meetings',start:D,end:close,tag:'series',
      items:[li('<b>'+p.nights+' nights</b>, '+p.perweek+' a week — opening '+pDate(D)+', closing '+pDate(close)+'.',1),
        li('Nightly records: attendance, response cards, requests for studies. Every interest visited within days — visit, visit, visit.',1),
+       li('Each night the visitation team'+(bw?' and the '+bwN:'')+' take the decision cards: whoever asks for studies is studying within the week, and each person who decides meets their spiritual friend before the baptism.',1),
        li('Appeals made in earnest; objections answered in the home. Baptism classes #1 and #2 run alongside the meetings.'),
        li('A weekly letter to everyone attending — it keeps attendance steady and brings back people who drifted.'),
        li('Attendance gifts, announced from the first night: a lecture copy every night attended, a book after the three key subjects, a Bible at 18 nights, a large picture at 24, a small picture for everyone who brings a guest — and one for the guest.'),
        li('Prayer bands keep meeting through the series.')],
      bench:`attendance held from opening night to closing · decisions recorded by name`},
-    {name:'Nurture and follow-up',start:addDays(close,1),end:addMonths(close,3),tag:'after',
-     items:[li('Integrate every new believer into a Sabbath School class, a small group and a friend — the apostles\u2019 doctrine, fellowship, bread and prayers.',1),
-       li('Keep studying with those who have not yet decided; the interest file stays alive. New believers get a weekly Bible-study class, a new-believers\u2019 Sabbath class, and books to keep growing — immerse and instruct, never dip and drop.'),
+    // v10.63.0: the follow-up for a year, in three groups, set up before the series (above)
+    {name:'Follow-up: the first year',start:addDays(close,1),end:addMonths(close,12),tag:'after',
+     items:[li('<b>The newly baptized:</b> a spiritual friend from the day of baptism; the new members\u2019 class each week for thirteen weeks; a Sabbath School class and a small group; a place to serve within three months (Spiritual Gifts, in Terrain, helps each one find it); a visit at one, three, six and twelve months.',1),
+       li('<b>Still studying, not yet decided:</b> '+(bw?'the '+bwN+' and ':'')+'the lay Bible instructors keep a weekly study with each one; the Bible class begins the week after closing night; invite them to every baptism and to the next reaping meetings. Immerse and instruct, never dip and drop.',1),
+       li('<b>Came, but have not asked for more:</b> a contact each month, the interest file kept alive, and an invitation to every health and felt-need program.',1),
        li('Celebrate: testimonies, a fellowship meal, the baptisms.'),
        li('Evaluate with every team: what worked, what to change, and the date of the next series.')],
-     bench:`baptisms celebrated · each new believer placed · next opening night set`}
+     bench:`each new member with a friend, a class and a place to serve within three months · still with the church at twelve months · everyone still studying, studying each week · next opening night set`}
   ]};
 }
 /* ---- where the audience comes from: the twelve invitation streams, with a target where one can be derived ---- */
@@ -11470,14 +11576,16 @@ function planBudget(p,pl,T){
        ...(P?['Home Bible seminars: brochures for hand distribution, DVDs and lessons','Archeology program: brochures, outline summaries']:[]),
        ...(H?['Health Expo: panels, advertising, literature','Cooking school: brochures, cookbooks, workbooks, food samples (offset by registration fee)']:[]),
        'Literature outreach: the pieces for the territory'+(T.literature?' (~'+T.literature.toLocaleString()+')':''),
-       ...(bi?['Translation and second-language printing']:[])]},
+       ...(bi?['Translation and second-language printing']:[]),
+       ...(p.bw?[(p.bw>1?'Bible workers':'Bible worker')+': stipend and housing, if the church pays (ask the conference what it covers)']:[])]},
     {n:'The meetings',share:0.50,amt:m(0.50),note:'Advertising is not preaching, but nobody hears preaching they were never told about.',
      lines:[ 'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills and social ads','Newspaper, radio and TV only with extra budget','Personal invitation letters',
        'Auditorium rental, if not in the church','Lecture outlines, Bible lessons, gift Bibles, gift books, lecture magazines','Attendance incentives (gift books, pictures, DVDs)',
        ...(kids?['Children\u2019s meetings: supplies every night']:['Children\u2019s meetings supplies']),
+       'Nursery & mothers\u2019 room: the sound or picture brought in, supplies',
        'Office and records: ticket books or scanner cards, decision cards, visitation cards, labels and postage for weekly letters, offering envelopes']},
     {n:'Nurture and follow-up',share:0.20,amt:m(0.20),note:'Immerse and instruct — never dip and drop.',
-     lines:['Books for new believers (a study guide and a doctrinal companion)','Weekly Bible-study class materials','New-believers\u2019 Sabbath class','Follow-up mailings and visits']},
+     lines:['Books for new believers (a study guide and a doctrinal companion)','Weekly Bible-study class materials','New members\u2019 class: lessons and a Bible for each','Follow-up mailings and visits for the first year']},
     {n:'Income',share:null,amt:B?'balance = conference subsidy requested':'',note:'',
      lines:['Pre-campaign offering','Local church subsidy','Campaign offerings, nightly','Follow-up offering','Program fees (cooking school registration)']}
   ];
@@ -11515,7 +11623,7 @@ function plannerRender(p){
   const rail=phases.map(ph=>{
     const st=ph.start, en=ph.end;
     const past=en<today, now=st<=today&&today<=en;
-    const mo=ph.tag==='series'?'<b>0</b><small>open</small>':ph.tag==='after'?'<b>+3</b><small>after</small>':ph.tag==='final'?'<b>14</b><small>days</small>':`<b>${ph.mo}</b><small>mo out</small>`;
+    const mo=ph.tag==='series'?'<b>0</b><small>open</small>':ph.tag==='after'?'<b>+12</b><small>months</small>':ph.tag==='final'?'<b>14</b><small>days</small>':`<b>${ph.mo}</b><small>mo out</small>`;
     return `<div class="phase${past?' past':''}${now?' now':''}">
       <div class="mo">${mo}</div>
       <div class="pb">
@@ -11525,7 +11633,7 @@ function plannerRender(p){
       </div>
     </div>`;
   }).join('');
-  $('pout').innerHTML=`
+  $('pout').innerHTML=`${p.demo?`<div class="pdemo"><span><b>Demo series.</b> Sample numbers, to show how the Planner works: a midsize series of ${p.nights} nights over ${Math.ceil(p.nights/p.perweek)} weeks, $${(p.budget||0).toLocaleString()}.</span><button type="button" class="btn ghost" id="pl-undemo">Clear the demo</button></div>`:''}
     <div class="tbar"><button class="btn" id="pl-doc">Print the whole plan</button><span class="hint">for the board, the conference, or your own file</span></div>
     <div class="phead"><h2>${esc(p.church||'Your church')} · ${kindName} series</h2><span class="hint">${p.members} members · ${p.leaders} leaders · ${p.workers} workers · ${p.nights} nights · ${p.seats} seats</span></div>
     <p class="note" style="margin-top:6px">${runway}${modeNote}${pl?'':' No survey yet: the neighborhood has not shaped this plan.'}</p>
@@ -11539,6 +11647,7 @@ function plannerRender(p){
     ${planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName)}
     <div class="pnext"><b>Next step</b>The plan is saved on this device and rebuilds from the survey whenever you open it. Print it for the board, print the sign-up sheet for Sabbath morning, and fill the roster as the names come back. Once the meetings begin, tap <b>Track</b> at the top: the nightly grid, the visitation queue and the gift list are generated from the dates you have already entered.</div>`;
   $('pl-clear').hidden=false;
+  const ud=$('pl-undemo'); if(ud) ud.onclick=()=>$('pl-clear').click();
   const pd=$('pl-doc'); if(pd) pd.onclick=()=>{ document.body.dataset.print='plan'; window.print(); setTimeout(()=>delete document.body.dataset.print,600); };
   enlistWire(p,pl);
   // roster names: save as typed, without re-rendering the page under the cursor
@@ -43787,7 +43896,7 @@ const needs=groups.length?`<div class="df-needs${ncol===2?' n2':''}" style="--n:
     <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
     ${rows.map(r=>{ const q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase(), show=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())), open=!!DF.open[r.c.org];
       return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''}${r.c.kind&&r.c.kind!=='church'?' · '+esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo')):''}</div></th>
-        ${DF_AREAS.map(k=>`<td>${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-dwrap"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>${r.own?'':dfDeepHTML(r,false)}</div></td></tr>`; }).join('')}
+        ${DF_AREAS.map(k=>`<td data-th="${esc(dfT(DF_AREA_KEY[k]))}">${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-dwrap"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>${r.own?'':dfDeepHTML(r,false)}</div></td></tr>`; }).join('')}
     </tbody></table></div><p class="df-faint" id="df-none" hidden>${esc(dfT('none2'))}</p>`;
   const how=`<div class="df-hows">${DF_HOW().map(([k,h,places,what])=>`<article><h4>${dfIco(k)}${esc(h)}</h4><p>${esc(what)}</p>${places.length?`<ul>${places.map(([nm,d,u,t,free])=>`<li>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(nm)}</a>`:`<b>${esc(nm)}</b>`} <span class="df-cost">${esc(free?dfT('free'):L('Paid','De pago'))}</span>${d?`<div class="df-faint">${esc(d)}</div>`:''}<div>${esc(t)}</div></li>`).join('')}</ul>`:''}</article>`).join('')}</div>`;
   if(!DF.rep||!mine.some(r=>r.c.org===DF.rep)) DF.rep=mine.length?mine[0].c.org:'';
@@ -44150,6 +44259,53 @@ const CMP_UI={
   minNote:{en:'Good to know: {n}',es:'Para tener en cuenta: {n}'}, near:{en:'Near you',es:'Cerca de usted'},
   // v10.59.1: the ministries by kind, folded (the pastor: "in categories beautiful categories and you click the categories and they will open up")
   minHint:{en:'Tap a kind to see its ministries; tap one to see what it does and how to invite it.',es:'Toque un tipo para ver sus ministerios; toque uno para ver qué hace y cómo invitarlo.'},
+  /* v10.63.0 — the brief and Mission and calendar */
+  tB:{en:'Your conference in brief',es:'Su asociación en resumen'},
+  nB:{en:'Where its calendar gives more room than most conferences, and where less, over the past 12 months.',es:'Dónde su calendario da más espacio que la mayoría de las asociaciones, y dónde menos, en los últimos 12 meses.'},
+  conf:{en:'The {name} Conference',es:'La Asociación {name}'},
+  b_who:{en:'{m} members in {c} congregations ({y}), in the {union}.',es:'{m} miembros en {c} congregaciones ({y}), en la {union}.'},
+  b_cal:{en:'Over the past 12 months its published calendar lists {n} ministry events ({cal}: {mc} of 12 months).',es:'En los últimos 12 meses su calendario publicado muestra {n} eventos de ministerio ({cal}: {mc} de 12 meses).'},
+  b_cal1:{en:'Over the past 12 months its published calendar lists 1 ministry event ({cal}: {mc} of 12 months).',es:'En los últimos 12 meses su calendario publicado muestra 1 evento de ministerio ({cal}: {mc} de 12 meses).'},
+  b_more:{en:'It gives more room than most conferences to {list}.',es:'Da más espacio que la mayoría de las asociaciones a {list}.'},
+  b_moreI:{en:'{lens} ({p}; most: {m})',es:'{lens} ({p}; la mayoría: {m})'},
+  b_less:{en:'Less than most: {list}.',es:'Menos que la mayoría: {list}.'},
+  b_lessI:{en:'{lens} ({n}, {p}; most: {m})',es:'{lens} ({n}, {p}; la mayoría: {m})'},
+  b_noneI:{en:'{lens} (none published)',es:'{lens} (ninguno publicado)'},
+  b_evI1:{en:'1 event',es:'1 evento'}, b_evN:{en:'{n} events',es:'{n} eventos'},
+  b_even:{en:'Its calendar is close to the typical conference’s in every main area.',es:'Su calendario se parece al de la asociación típica en cada área principal.'},
+  b_mis:{en:'Its mission names {areas}; the calendar gives as much room as most conferences, or more, to {k} of them.',es:'Su misión nombra {areas}; el calendario da tanto espacio como la mayoría de las asociaciones, o más, a {k} de ellas.'},
+  b_misAll:{en:'Its mission names {areas}, and the calendar gives each as much room as most conferences, or more.',es:'Su misión nombra {areas}, y el calendario da a cada una tanto espacio como la mayoría de las asociaciones, o más.'},
+  b_misOne:{en:'Its mission names {areas}, and the calendar gives it as much room as most conferences, or more.',es:'Su misión nombra {areas}, y el calendario le da tanto espacio como la mayoría de las asociaciones, o más.'},
+  b_misOne0:{en:'Its mission names {areas}; the calendar gives it less room than most conferences.',es:'Su misión nombra {areas}; el calendario le da menos espacio que la mayoría de las asociaciones.'},
+  b_mis0:{en:'Its mission names {areas}; the calendar gives each of them less room than most conferences.',es:'Su misión nombra {areas}; el calendario les da a todas menos espacio que la mayoría de las asociaciones.'},
+  b_misNone:{en:'Its mission statement names none of these ministry areas by name.',es:'Su declaración de misión no nombra ninguna de estas áreas de ministerio.'},
+  b_misNo:{en:'We could not find a mission statement on its website (checked {d}).',es:'No encontramos una declaración de misión en su sitio web (revisado el {d}).'},
+  b_ahead:{en:'{n} dates are published for the year ahead.',es:'Hay {n} fechas publicadas para el año que viene.'},
+  b_ahead1:{en:'1 date is published for the year ahead.',es:'Hay 1 fecha publicada para el año que viene.'},
+  b_ahead0:{en:'No dates are published for the year ahead yet.',es:'Todavía no hay fechas publicadas para el año que viene.'},
+  b_go:{en:'Mission and calendar ↓',es:'Misión y calendario ↓'},
+  rd_more:{en:'More than most',es:'Más que la mayoría'}, rd_typ:{en:'About as most',es:'Como la mayoría'},
+  rd_less:{en:'Less than most',es:'Menos que la mayoría'}, rd_none:{en:'None published',es:'Ninguno publicado'},
+  rd_ring:{en:'Dashed ring: the typical conference',es:'Anillo de trazos: la asociación típica'},
+  rd_how:{en:'Each area sits as far out as its share of the calendar against the typical conference: on the dashed ring, as most; at the edge, twice as much or more; at the centre, none.',
+    es:'Cada área se aleja del centro según su parte del calendario frente a la asociación típica: en el anillo de trazos, como la mayoría; en el borde, el doble o más; en el centro, ninguno.'},
+  tM:{en:'Mission and calendar',es:'Misión y calendario'},
+  nM:{en:'Each mission statement as published, beside what the past 12 months of the calendar show. A conference calendar shows conference events, and much of a mission is carried out in local churches: read this as a question to ask, not a verdict.',
+    es:'Cada declaración de misión tal como se publicó, junto a lo que muestran los últimos 12 meses del calendario. El calendario de una asociación muestra los eventos de la asociación, y gran parte de una misión se cumple en las iglesias locales: léalo como una pregunta, no como un veredicto.'},
+  m_h:{en:'Its mission',es:'Su misión'}, m_on:{en:'On its website',es:'En su sitio web'}, m_chk:{en:'checked {d}',es:'revisado el {d}'},
+  m_union:{en:'on its union’s website',es:'en el sitio web de su unión'},
+  m_named:{en:'Named in the mission',es:'Nombradas en la misión'},
+  m_row:{en:'{n}, {p} of the calendar (most: {m})',es:'{n}, {p} del calendario (la mayoría: {m})'},
+  m_row0:{en:'None on the published calendar (most: {m})',es:'Ninguno en el calendario publicado (la mayoría: {m})'},
+  m_sum:{en:'The calendar gives as much room as most conferences, or more, to {k} of the {t} areas its mission names.',es:'El calendario da tanto espacio como la mayoría de las asociaciones, o más, a {k} de las {t} áreas que nombra su misión.'},
+  m_sum1:{en:'The calendar gives the one area its mission names {how}.',es:'El calendario da a la única área que nombra su misión {how}.'},
+  m_how_in:{en:'as much room as most conferences, or more',es:'tanto espacio como la mayoría de las asociaciones, o más'},
+  m_how_out:{en:'less room than most conferences',es:'menos espacio que la mayoría de las asociaciones'},
+  m_ask:{en:'Where they part, it is worth asking: should the calendar change, or the statement?',es:'Donde se separan, vale la pena preguntarse: ¿debe cambiar el calendario o la declaración?'},
+  m_extra:{en:'More than most on the calendar, though the mission does not name it: {list}.',es:'Más que la mayoría en el calendario, aunque la misión no lo nombra: {list}.'},
+  m_noArea:{en:'The statement names none of these ministry areas by name, so there is nothing to set beside the calendar.',es:'La declaración no nombra ninguna de estas áreas de ministerio, así que no hay nada que poner junto al calendario.'},
+  m_no:{en:'We could not find a mission statement on {name}’s website (checked {d}).',es:'No encontramos una declaración de misión en el sitio web de {name} (revisado el {d}).'},
+  src_mis:{en:'Mission statements: each conference’s own website (or its union’s, where it says so), copied word for word on {d}.',es:'Declaraciones de misión: el sitio web de cada asociación (o el de su unión, donde se indica), copiadas palabra por palabra el {d}.'},
   foot:{en:'Calendars and initiatives checked {d} · updated monthly. Official statistics: General Conference Annual Statistical Report (latest year {y}).',
     es:'Calendarios e iniciativas revisados el {d} · se actualizan cada mes. Estadísticas oficiales: Informe Estadístico Anual de la Asociación General (último año {y}).'}
 };
@@ -44308,21 +44464,25 @@ function cmpRender(){
   let h=cmpHead()+cmpFrame('cmp-s1',1,'mint',cU('t1'),cU('n1'),'<div class="cmp-pick" id="cmp-pick"></div>');
   if(S.mine){
     const thinNote=`<p class="note cmp-thin">${esc(cU('thinNote'))}</p>`;
-    h+=cmpFrame('cmp-glance',2,'blue',cU('t2'),cU('n2'),'<div class="cmp-cards" id="cmp-cards"></div>')
-      +cmpFrame('cmp-ahead',3,'mint',cU('t3'),ahead,'<div id="cmp-ya">'+cmpWaitHTML()+'</div>')
-      +cmpFrame('cmp-balance',4,'violet',cU('t4'),cU('n4'),`<div class="cmp-legend" id="cmp-lg-balance"></div><div class="cmp-chart" id="cmp-ch-balance"></div>${thinNote}<p class="note">${esc(cU('groupsNote'))}</p>`)
-      +cmpFrame('cmp-heat',5,'amber',cU('t5'),cU('n5'),`<div class="cmp-hscroll"><div class="cmp-heat" id="cmp-heatg"></div></div>${thinNote}<div class="cmp-scale"><span>0%</span><span class="cmp-ramp" id="cmp-ramp"></span><span>35%+</span><span class="cmp-typ">${esc(cU('typNote',{n:I.baseline.basedOn}))}</span></div>`)
-      +cmpFrame('cmp-area',6,'pink',cU('t6'),cU('n6'),'<div class="cmp-hscroll"><div class="cmp-heat" id="cmp-areag"></div></div><p class="note" id="cmp-areanote"></p>')
-      +cmpFrame('cmp-evpas',7,'amber',cU('t7'),cU('n7'),`<div class="cmp-legend" id="cmp-lg-evpas"></div><div class="cmp-chart" id="cmp-ch-evpas"></div>${thinNote}`)
-      +cmpFrame('cmp-young',8,'blue',cU('t8'),cU('n8'),`<div class="cmp-legend" id="cmp-lg-young"></div><div class="cmp-chart" id="cmp-ch-young"></div>${thinNote}`)
-      +cmpFrame('cmp-size',9,'mint',cU('t9'),cU('n9'),`<div class="cmp-two"><div><h4>${esc(cU('h9a'))}</h4><p class="note">${esc(cU('s9a'))}</p><div class="cmp-chart" id="cmp-ch-e1k"></div></div>
+    /* v10.63.0: the brief and Mission and calendar come first; the rest move down two (one, while the data has no missions) */
+    const o=I.missionChecked?0:-1;
+    h+=cmpFrame('cmp-brief',2,'mint',cU('tB'),cU('nB'),'<div class="cmp-brief" id="cmp-briefg"></div>')
+      +(I.missionChecked?cmpFrame('cmp-mission',3,'violet',cU('tM'),cU('nM'),'<div class="cmp-cols" id="cmp-misg"></div>'):'')
+      +cmpFrame('cmp-glance',4+o,'blue',cU('t2'),cU('n2'),'<div class="cmp-cards" id="cmp-cards"></div>')
+      +cmpFrame('cmp-ahead',5+o,'mint',cU('t3'),ahead,'<div id="cmp-ya">'+cmpWaitHTML()+'</div>')
+      +cmpFrame('cmp-balance',6+o,'violet',cU('t4'),cU('n4'),`<div class="cmp-legend" id="cmp-lg-balance"></div><div class="cmp-chart" id="cmp-ch-balance"></div>${thinNote}<p class="note">${esc(cU('groupsNote'))}</p>`)
+      +cmpFrame('cmp-heat',7+o,'amber',cU('t5'),cU('n5'),`<div class="cmp-hscroll"><div class="cmp-heat" id="cmp-heatg"></div></div>${thinNote}<div class="cmp-scale"><span>0%</span><span class="cmp-ramp" id="cmp-ramp"></span><span>35%+</span><span class="cmp-typ">${esc(cU('typNote',{n:I.baseline.basedOn}))}</span></div>`)
+      +cmpFrame('cmp-area',8+o,'pink',cU('t6'),cU('n6'),'<div class="cmp-hscroll"><div class="cmp-heat" id="cmp-areag"></div></div><p class="note" id="cmp-areanote"></p>')
+      +cmpFrame('cmp-evpas',9+o,'amber',cU('t7'),cU('n7'),`<div class="cmp-legend" id="cmp-lg-evpas"></div><div class="cmp-chart" id="cmp-ch-evpas"></div>${thinNote}`)
+      +cmpFrame('cmp-young',10+o,'blue',cU('t8'),cU('n8'),`<div class="cmp-legend" id="cmp-lg-young"></div><div class="cmp-chart" id="cmp-ch-young"></div>${thinNote}`)
+      +cmpFrame('cmp-size',11+o,'mint',cU('t9'),cU('n9'),`<div class="cmp-two"><div><h4>${esc(cU('h9a'))}</h4><p class="note">${esc(cU('s9a'))}</p><div class="cmp-chart" id="cmp-ch-e1k"></div></div>
         <div><h4>${esc(cU('h9b'))}</h4><p class="note">${esc(cU('s9b',{a:I.stats.from,b:I.stats.to}))}</p><div class="cmp-chart" id="cmp-ch-join"></div></div></div>
         <div class="cmp-warn" id="cmp-warn9">${esc(cU('warn9'))}</div>`)
-      +cmpFrame('cmp-learn',10,'amber',cU('t10'),cU('n10',{name:CMP.conf[S.mine].name}),'<div class="cmp-learng" id="cmp-learng">'+cmpWaitHTML()+'</div>')
-      +cmpFrame('cmp-sw',11,'violet',cU('t11'),cU('n11'),'<div class="cmp-cols" id="cmp-swg"></div>')
-      +cmpFrame('cmp-said',12,'blue',cU('t12'),cU('n12'),'<div class="cmp-cols" id="cmp-saidg">'+cmpWaitHTML()+'</div>')
-      +cmpFrame('cmp-months',13,'pink',cU('t13'),cU('n13'),`<div class="cmp-hscroll"><div class="cmp-months" id="cmp-monthsg"></div></div><div class="cmp-mkey" id="cmp-mkey"></div>${thinNote}`)
-      +cmpResFrames(14)
+      +cmpFrame('cmp-learn',12+o,'amber',cU('t10'),cU('n10',{name:CMP.conf[S.mine].name}),'<div class="cmp-learng" id="cmp-learng">'+cmpWaitHTML()+'</div>')
+      +cmpFrame('cmp-sw',13+o,'violet',cU('t11'),cU('n11'),'<div class="cmp-cols" id="cmp-swg"></div>')
+      +cmpFrame('cmp-said',14+o,'blue',cU('t12'),cU('n12'),'<div class="cmp-cols" id="cmp-saidg">'+cmpWaitHTML()+'</div>')
+      +cmpFrame('cmp-months',15+o,'pink',cU('t13'),cU('n13'),`<div class="cmp-hscroll"><div class="cmp-months" id="cmp-monthsg"></div></div><div class="cmp-mkey" id="cmp-mkey"></div>${thinNote}`)
+      +cmpResFrames(16+o)
       +cmpFrame('cmp-read',0,'gray',cU('tR'),'',`<ul class="cmp-src" id="cmp-caveats"></ul><details><summary>${esc(cU('tbl'))}</summary><div class="cmp-hscroll"><table class="cmp-tbl" id="cmp-tbl"></table></div></details><details><summary>${esc(cU('srcs'))}</summary><ul class="cmp-src" id="cmp-sources">${'<li>'+esc(cU('wait'))+'</li>'}</ul></details>`)
       +`<p class="cmp-foot">${esc(cU('foot',{d:cmpFdate(I.checked),y:I.stats.year}))}</p>`;
   }
@@ -44334,7 +44494,7 @@ function cmpRender(){
   if(!S.mine) return;
   const anyThin=cmpSel().some(s=>CMP.conf[s].calendar.confidence==='low');
   host.querySelectorAll('.cmp-thin').forEach(n=>{ n.hidden=!anyThin; });
-  cmpCards(); cmpCharts(); cmpSW(); cmpTable(); cmpCaveats();
+  cmpBrief(); cmpMission(); cmpCards(); cmpCharts(); cmpSW(); cmpTable(); cmpCaveats();
   cmpDetails();
 }
 /* Frames that read the chosen conferences' files (the year ahead, what we could learn, said and shown, sources). */
@@ -44416,6 +44576,102 @@ function cmpCards(){
       <div class="big">${esc(cU('members',{m:cmpFmt(o.members),c:cmpFmt(o.congregations),y:I.stats.year}))}</div>
       <div class="char">${esc(cmpCharacter(p))}</div>
       <div class="cmp-badge ${esc(p.calendar.confidence)}"><i></i>${esc(cU('badge',{label:cmpConfL(p.calendar.confidence),g:p.calendar.grade||'–',n:p.counts.ministryEvents}))}</div></div>`; }).join('');
+}
+/* ==== v10.63.0 — the brief, and Mission and calendar ====
+   The pastor (9 Oct 2026): "when you put in your conference where it says Pennsylvania right there should be like a graph maybe a
+   circular graph if possible to show you know where the conference is strong where it needs help … like a brief for the conference …
+   mission statements also need to be seen and collected from each conference because then you can … have a section where it compares
+   your mission statement and what the calendar is actually saying to see if either the mission statement needs to or the calendar needs
+   to change". One rule says where an area stands (cmpLensState), read by the chart, the brief and Mission and calendar alike: "more" is
+   frame 13's "Gives more room than most to" exactly (4+ events, 1.25 × the typical share and 3 points above it); "less" half the typical
+   share or under; "none" nothing published; else "about as most". Everything frame 13 calls room to grow is "less" or "none" here. */
+const CMP_RD=['more','typ','less','none'];
+const CMP_RD_SHORT={evangelism:['Evangelism','Evangelismo'],pastoral:['Pastors','Pastores'],discipleship:['Discipleship','Discipulado'],family:['Family','Familia'],
+  youth:['Youth','Jóvenes'],clubs:['Pathfinders','Conquistadores'],health:['Health','Salud'],education:['Schools','Escuelas']};
+function cmpLensState(p,lid){
+  const L=p&&p.lenses&&p.lenses[lid], m=CMP.idx&&CMP.idx.baseline.lens[lid];
+  if(!L||m==null) return 'typ';
+  if(!L.n) return 'none';
+  if(L.n>=4&&L.share>=1.25*m&&L.share>=m+3) return 'more';
+  if(L.share<=0.5*m) return 'less';
+  return 'typ';
+}
+const cmpInStep=st=>st==='more'||st==='typ';
+function cmpRadar(p){
+  const ids=CMP_CORE, n=ids.length, cx=175, cy=131, R=86, base=CMP.idx.baseline.lens;
+  const pt=(i,r)=>{ const a=(-90+i*360/n)*Math.PI/180; return [cx+r*Math.cos(a),cy+r*Math.sin(a)]; }, f=x=>x.toFixed(1);
+  const ratio=id=>{ const m=base[id], s=p.lenses[id].share; return m>0?Math.min(s/m,2):(s>0?2:1); };
+  const r=ids.map(id=>ratio(id)/2*R);
+  const poly=rs=>rs.map((v,i)=>pt(i,v).map(f).join(',')).join(' ');
+  const rings=[0.5,1.5,2].map(v=>`<polygon class="cmp-rg${v===2?' cmp-rg2':''}" points="${poly(Array(n).fill(v/2*R))}"/>`).join('');
+  const typ=`<polygon class="cmp-rtyp" points="${poly(Array(n).fill(R/2))}"/>`;
+  const axes=ids.map((id,i)=>{ const [x,y]=pt(i,R); return `<line class="cmp-rax" x1="${cx}" y1="${cy}" x2="${f(x)}" y2="${f(y)}"/>`; }).join('');
+  const st=ids.map(id=>cmpLensState(p,id));
+  const dots=ids.map((id,i)=>{ const [x,y]=pt(i,r[i]); return `<circle class="cmp-rd cmp-rd-${st[i]}" cx="${f(x)}" cy="${f(y)}" r="${st[i]==='none'?4.5:5.5}"/>`; }).join('');
+  const labs=ids.map((id,i)=>{ const [x,y]=pt(i,R+14), an=Math.abs(x-cx)<4?'middle':x>cx?'start':'end';
+    return `<text class="cmp-rl cmp-rl-${st[i]}" x="${f(x)}" y="${f(y+(y<cy-4?-2:y>cy+4?10:4))}" text-anchor="${an}">${esc(CMP_RD_SHORT[id][LANG==='es'?1:0])}</text>`; }).join('');
+  const say=CMP_RD.map(k=>{ const ls=ids.filter((id,i)=>st[i]===k); return ls.length?cU('rd_'+k)+': '+ls.map(cmpLensL).join(', '):''; }).filter(Boolean).join('. ');
+  return `<svg class="cmp-radar-svg" viewBox="0 0 350 262" role="img" aria-label="${esc(say)}">${rings}${axes}<polygon class="cmp-rme" points="${poly(r)}"/>${typ}<polygon class="cmp-rme-l" points="${poly(r)}"/>${dots}${labs}</svg>`;
+}
+function cmpRadarFig(p){
+  return `<figure class="cmp-radar">${cmpRadar(p)}<figcaption>${CMP_RD.map(k=>`<span class="cmp-rk cmp-rk-${k}">${esc(cU('rd_'+k))}</span>`).join('')}<span class="cmp-rk cmp-rk-ring">${esc(cU('rd_ring'))}</span></figcaption><p class="note cmp-rhow">${esc(cU('rd_how'))}</p></figure>`;
+}
+const cmpEv=n=>n===1?cU('b_evI1'):cU('b_evN',{n});
+function cmpJoinL(list){ if(list.length<2) return list.join(''); return LANG==='es'?list.slice(0,-1).join(', ')+' y '+list[list.length-1]:list.length===2?list.join(' and '):list.slice(0,-1).join(', ')+' and '+list[list.length-1]; }
+function cmpMisAreas(p){ const M=p.mission; if(!M||!Array.isArray(M.a)) return []; const seen=new Set(); return CMP_CORE.concat(['gatherings']).filter(id=>M.a.some(x=>x.l===id)&&!seen.has(id)&&seen.add(id)); }
+function cmpBriefLines(p){
+  const I=CMP.idx, base=I.baseline.lens, o=p.official, out=[];
+  out.push(cU('b_who',{conf:cU('conf',{name:p.name}),m:cmpFmt(o.members),c:cmpFmt(o.congregations),y:I.stats.year,union:p.union}));
+  const cal=cmpConfL(p.calendar.confidence);
+  out.push(cU(p.counts.ministryEvents===1?'b_cal1':'b_cal',{n:p.counts.ministryEvents,cal:LANG==='es'?cal.toLowerCase():cal.charAt(0).toLowerCase()+cal.slice(1),mc:p.calendar.monthsCovered}));
+  const more=CMP_CORE.filter(id=>cmpLensState(p,id)==='more').sort((a,b)=>p.lenses[b].share/base[b]-p.lenses[a].share/base[a]).slice(0,3);
+  const less=CMP_CORE.filter(id=>{ const st=cmpLensState(p,id); return st==='less'||st==='none'; }).sort((a,b)=>(base[b]-p.lenses[b].share)-(base[a]-p.lenses[a].share)).slice(0,3);
+  if(more.length) out.push(cU('b_more',{list:cmpJoinL(more.map(id=>cU('b_moreI',{lens:cmpLensLc(id),p:cmpPc(p.lenses[id].share),m:cmpPc(base[id])})))}));
+  if(less.length) out.push(cU('b_less',{list:cmpJoinL(less.map(id=>p.lenses[id].n?cU('b_lessI',{lens:cmpLensLc(id),n:cmpEv(p.lenses[id].n),p:cmpPc(p.lenses[id].share),m:cmpPc(base[id])}):cU('b_noneI',{lens:cmpLensLc(id)})))}));
+  if(!more.length&&!less.length) out.push(cU('b_even'));
+  if(I.missionChecked&&p.mission!==undefined){
+    if(!p.mission) out.push(cU('b_misNo',{d:cmpFdate(I.missionChecked)}));
+    else{ const A=cmpMisAreas(p); const k=A.filter(id=>cmpInStep(cmpLensState(p,id))).length;
+      const areas=cmpJoinL(A.map(cmpLensLc));
+      out.push(!A.length?cU('b_misNone'):A.length===1?cU(k?'b_misOne':'b_misOne0',{areas}):k===A.length?cU('b_misAll',{areas}):k===0?cU('b_mis0',{areas}):cU('b_mis',{areas,k})); }
+  }
+  out.push(p.datesAhead===1?cU('b_ahead1'):p.datesAhead?cU('b_ahead',{n:p.datesAhead}):cU('b_ahead0'));
+  return out;
+}
+function cmpBrief(){
+  const host=$('cmp-briefg'); if(!host||!CMP.st||!CMP.conf[CMP.st.mine]) return; const p=CMP.conf[CMP.st.mine];
+  host.innerHTML=`${cmpRadarFig(p)}<div class="cmp-btext"><h4>${esc(cU('conf',{name:p.name}))}</h4>${cmpBriefLines(p).map(t=>`<p>${esc(t)}</p>`).join('')}`
+    +(p.calendar.confidence==='low'?`<div class="cmp-warn">${esc(cU('thinWarn'))}</div>`:'')
+    +(CMP.idx.missionChecked?`<button type="button" class="btn ghost cmp-bgo" data-cmp-misgo>${esc(cU('b_go'))}</button>`:'')+'</div>';
+  const go=host.querySelector('[data-cmp-misgo]'); if(go) go.onclick=()=>{ const t=$('cmp-mission'); if(t) t.scrollIntoView({block:'start'}); };
+}
+function cmpMissionBox(p,mine){
+  const I=CMP.idx, base=I.baseline.lens, d=cmpFdate(I.missionChecked);
+  let h=`<div class="cmp-box cmp-mbox"><h4>${esc(p.name)}${mine?` <span class="code">${esc(cU('yours'))}</span>`:''}</h4>`;
+  const M=p.mission;
+  if(!M) return h+`<p class="note">${esc(cU('m_no',{name:p.name,d}))}</p></div>`;
+  h+=`<h5>${esc(cU('m_h'))}</h5><blockquote class="cmp-mq" lang="en">“${esc(M.t)}”</blockquote>`
+    +`<div class="s">${esc(cU('inEnglish'))}${cmpLink(M.u,cU('m_on'))}${M.via==='union'?' ('+esc(cU('m_union'))+')':''} · ${esc(cU('m_chk',{d}))}</div>`;
+  const A=cmpMisAreas(p);
+  if(!A.length) return h+`<p class="note">${esc(cU('m_noArea'))}</p></div>`;
+  const rows=A.map(id=>{ const L=p.lenses[id], st=cmpLensState(p,id), m=base[id], w=(M.a.find(x=>x.l===id)||{}).w||'';
+    const pc=x=>Math.max(0,Math.min(100,x/Math.max(2*m,1)*100));
+    return `<div class="cmp-mrow"><div class="cmp-mrh"><span class="cmp-mlens">${esc(cmpLensL(id))}</span><span class="cmp-rst cmp-rst-${st}">${esc(cU('rd_'+st))}</span></div>`
+      +(w?`<div class="cmp-mw" lang="en">“${esc(w)}”</div>`:'')
+      +`<div class="cmp-mbar" aria-hidden="true"><i class="cmp-mfill cmp-mf-${st}" style="width:${pc(L.share).toFixed(1)}%"></i><b class="cmp-mtyp" style="left:${pc(m).toFixed(1)}%"></b></div>`
+      +`<div class="s">${esc(L.n?cU('m_row',{n:cmpEv(L.n),p:cmpPc(L.share),m:cmpPc(m)}):cU('m_row0',{m:cmpPc(m)}))}</div></div>`; }).join('');
+  const k=A.filter(id=>cmpInStep(cmpLensState(p,id))).length;
+  const sum=A.length===1?cU('m_sum1',{how:cU(k?'m_how_in':'m_how_out')}):cU('m_sum',{k,t:A.length});
+  const extra=CMP_CORE.filter(id=>A.indexOf(id)<0&&cmpLensState(p,id)==='more');
+  h+=`<h5>${esc(cU('m_named'))}</h5>${rows}<p class="cmp-msum">${esc(sum)}</p>`
+    +(extra.length?`<p class="note">${esc(cU('m_extra',{list:cmpJoinL(extra.map(cmpLensLc))}))}</p>`:'')
+    +(k<A.length?`<p class="cmp-mask">${esc(cU('m_ask'))}</p>`:'')
+    +(p.calendar.confidence==='low'?`<div class="cmp-warn">${esc(cU('thinWarn'))}</div>`:'');
+  return h+'</div>';
+}
+function cmpMission(){
+  const host=$('cmp-misg'); if(!host) return;
+  host.innerHTML=cmpSel().map((s,i)=>cmpMissionBox(CMP.conf[s],i===0)).join('');
 }
 /* ---- charts (SVG drawn at the frame's own width; colours by kind of area, as the approved sample) ---- */
 const CMP_C={care:'#9C6BF0',out:'#C97C1E',next:'#3B8BEB',other:'#5B6677',youth:'#3B8BEB',clubs:'#D85C93',kids:'#C97C1E',mine:'#5EE9B5',them:'#56616F',ref:'#AEB9C7',grid:'#1E2733',axis:'#7D8A9B',ink:'#E8EEF5',ink2:'#AEB9C7'};
@@ -44872,6 +45128,7 @@ function cmpSources(){
     const stats=d.statsSources.filter(x=>cmpHttps(x.url)).map(x=>cmpLink(x.url,cU('src_pdf',{ed:x.edition,table:x.table,p:x.pdfPage,y:x.year}))).join('; ');
     const why=esc(String(d.gradeReason||'').replace(/[.\s]+$/,''));
     return `<li><b>${esc(p.name)}</b> — ${cU('src_conf',{links:links||'–',d:esc(cmpFdate(d.retrieved)),g:esc(p.calendar.grade||'–'),why:LANG==='es'?`<span lang="en">${why}</span>`:why,stats:stats||'–'})}${p.official.flags.length?esc(cU('src_audit',{y:p.official.flags.join(', ')})):''}.</li>`; }).join('');
+  if(I.missionChecked) s+=`<li>${esc(cU('src_mis',{d:cmpFdate(I.missionChecked)}))}</li>`;
   s+=`<li>${esc(cU('src_ini',{d:cmpFdate(I.checked)}))}</li><li>${esc(cU('src_ahead',{d:cmpFdate(CMP.ahead?CMP.ahead.today:I.checked)}))}</li><li>${esc(cU('src_typ',{n:I.baseline.basedOn,t:I.baseline.total,j:I.baseline.joined}))}</li>`;
   host.innerHTML=s;
 }

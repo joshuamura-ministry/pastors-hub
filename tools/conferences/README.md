@@ -28,7 +28,19 @@ tools/conferences/
                      the calendars' matching never reads it)
     ministries.json  (v10.58.0, optional) ministries that come to a church: kind, standing (a church entity, an ASI member, or listed
                      by a church body) and where that is shown, the ministry's own site, invite page, email and phone, cost, notes
+    missions.json    (v10.63.0, optional) each conference's mission statement as published, its page, and the ministry areas its own
+                     words name (missions.mjs checks it; see below)
+  missions.mjs       (v10.63.0) reads src/missions.json for the brief and "Mission and calendar"
 ```
+
+**Mission statements** (v10.63.0, `missions.mjs` → each conference's `mission` in `index.json`, and `missionChecked`): every
+conference the comparison serves has a line, `found: true` with the mission copied word for word from its own website (its line breaks
+kept; `via: "union"` only when the union's site gives it), or `found: false` with every page checked (the page then says "We could not
+find a mission statement on its website", never that it has none). An area (evangelism, pastoral, discipleship, family, youth, clubs,
+education, health, gatherings) is listed only with words of the mission that name it, and the build finds those words in the mission or
+stops. Checked 9 Oct 2026 (the research and the hand review: `~/Ministry Work/Terrain-work/v80/missions/`, `v81/assemble-missions.mjs`,
+which also fetches each page again and finds the statement on it). Missions change seldom: re-check them once a year, or when a
+conference's site changes, not with each monthly refresh.
 
 **Resources for your church** (v10.58.0, `resources.mjs`): from `initiatives.json` and `funding.json` the items a local church can use
 (funding → money, resource → free, training, and what is current or coming up → now; ended ones left out), each conference's

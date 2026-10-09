@@ -1,0 +1,875 @@
+{
+  "checked": "2026-10-09",
+  "conferences": {
+    "greater-new-york": {
+      "found": true,
+      "mission": "United in mission, we will take Christ to the Community.",
+      "url": "https://gnyc.org/mission-and-strategic-objectives/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "take Christ to the Community"
+        }
+      ]
+    },
+    "new-york": {
+      "found": true,
+      "mission": "To teach the everlasting gospel of our Lord and Savior Jesus Christ, as symbolized by the three angels of Revelation 14. To lovingly evangelize and invite people to become His disciples and responsible members of the Church.",
+      "url": "https://www.nyconf.org/president",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "lovingly evangelize"
+        },
+        {
+          "lens": "discipleship",
+          "words": "become His disciples"
+        }
+      ]
+    },
+    "northeastern": {
+      "found": true,
+      "mission": "To proclaim the gospel of Jesus Christ, to transform all people within its territory and prepare them for His imminent return",
+      "url": "https://www.northeastern.org/about-us/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "proclaim the gospel of Jesus Christ"
+        }
+      ]
+    },
+    "northern-new-england": {
+      "found": false,
+      "checked": [
+        "https://www.nnec.org/",
+        "https://www.nnec.org/about-us",
+        "https://www.nnec.org/conference-history",
+        "https://www.nnec.org/evangelism",
+        "https://www.nnec.org/secretariat",
+        "https://www.nnec.org/ministerial",
+        "https://www.nnec.org/treasury",
+        "https://www.nnec.org/contact-us",
+        "https://www.nnec.org/education/ed",
+        "https://www.nnec.org/missions/home",
+        "https://www.nnec.org/announcements",
+        "https://cdn.prod.website-files.com/6149e20ec96cdd28d0e8ccf9/659ec3d4d8f6c09d4692ad1f_Revival%20in%20the%20East%20-%20compressed.pdf"
+      ]
+    },
+    "southern-new-england": {
+      "found": true,
+      "mission": "Inspiring, Connecting, Equipping, and Supporting our church members, to make Disciples for Christ.",
+      "url": "https://www.sneconline.org/about",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "to make Disciples for Christ"
+        }
+      ]
+    },
+    "allegheny-east": {
+      "found": true,
+      "mission": "The Allegheny East Conference of Seventh-day Adventists exists to promote the sharing of the everlasting gospel of Jesus Christ ethnically [TA ETHNAE - \"to all people groups\"] within its assigned territory through Christ-centered leadership and responsible resource management",
+      "url": "https://www.visitaec.org/about-us",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "promote the sharing of the everlasting gospel"
+        }
+      ]
+    },
+    "allegheny-west": {
+      "found": true,
+      "mission": "Empowered by faith, united in purpose, we move communities forward across the eastern region. Through service, education, and fellowship, we build vibrant spaces where hope flourishes and lives are transformed. We embrace diversity, nurture spiritual growth, and champion compassion, extending a hand of love and support to all in need. Driven by the Seventh-day Adventist message, we strive to create a brighter future, one act of kindness and one life touched at a time.",
+      "url": "https://awconf.org/about-us-2/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "nurture spiritual growth"
+        },
+        {
+          "lens": "education",
+          "words": "education"
+        },
+        {
+          "lens": "health",
+          "words": "extending a hand of love and support to all in need"
+        }
+      ]
+    },
+    "chesapeake": {
+      "found": true,
+      "mission": "To reach the people of the Chesapeake region with the Christ-centered message of the Seventh-day Adventist Church.",
+      "url": "https://ccosda.org/mission/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "reach the people of the Chesapeake region"
+        }
+      ]
+    },
+    "mountain-view": {
+      "found": true,
+      "mission": "We exist to grow healthy churches that reflect Christ’s love and compassion in our communities.",
+      "url": "https://mtviewconf.org/about/",
+      "areas": [
+        {
+          "lens": "health",
+          "words": "compassion in our communities"
+        }
+      ]
+    },
+    "new-jersey": {
+      "found": true,
+      "mission": "Our Mission is to share with all peoples the full, unique and compelling message of Jesus Christ.",
+      "url": "https://njcsda.org/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share with all peoples"
+        }
+      ]
+    },
+    "ohio": {
+      "found": true,
+      "mission": "The vision and mission for Ohio Conference includes prayer, growing healthy churches, and helping others realize the hope found in experiencing a personal relationship with a living God and loving Savior, and to nurture them in preparation for His soon return.",
+      "url": "https://www.ohioadventist.org/who-we-are",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "prayer"
+        }
+      ]
+    },
+    "pennsylvania": {
+      "found": true,
+      "mission": "God has called His last-day people to reach everyone, everywhere with the everlasting gospel of Jesus Christ. (Revelation 14:6-12) As members of Pennsylvania Conference, He has assigned us this corner of Earth as our mission field. The harvest of souls Jesus will reap at His return will in a large part be influenced by our faithful attention to the mission God has entrusted us with. This God-given call unites us together in faithfully fulfilling our mission.",
+      "url": "https://paconference.org/who-we-are/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "reach everyone, everywhere with the everlasting gospel"
+        }
+      ]
+    },
+    "potomac": {
+      "found": true,
+      "mission": "The Potomac Conference Corporation exists to Grow Healthy, Disciple-Making Churches.",
+      "url": "https://pcsda.org/about-us/mission-vision/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "Disciple-Making Churches"
+        }
+      ]
+    },
+    "illinois": {
+      "found": false,
+      "checked": [
+        "https://www.ilcsda.org/",
+        "https://www.ilcsda.org/about-1",
+        "https://www.ilcsda.org/administration",
+        "https://www.ilcsda.org/churches",
+        "https://www.ilcsda.org/contactus",
+        "https://www.ilcsda.org/ministerial",
+        "https://www.ilcsda.org/illinoisfocus",
+        "https://www.ilcsda.org/constituency",
+        "https://www.ilcsda.org/convocation",
+        "https://www.ilcsda.org/sitemap.xml and pages-sitemap.xml (read the full page list; no About / Mission / Who We Are page exists)",
+        "https://lakeunion.org/directories/conferences/"
+      ]
+    },
+    "indiana": {
+      "found": true,
+      "mission": "To reach Indiana and the world with the distinctive, Christ-centered Three Angels’ Messages, which lead people to become fully devoted disciples of Jesus.",
+      "url": "https://indysda.org/our-mission-vision",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "reach Indiana and the world"
+        },
+        {
+          "lens": "discipleship",
+          "words": "fully devoted disciples of Jesus"
+        }
+      ]
+    },
+    "lake-region": {
+      "found": true,
+      "mission": "To make disciples, share the gospel in the context of Rev. 14:6-12, and prepare people for the soon return of Jesus Christ.",
+      "url": "https://www.lrcsda.com/about/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share the gospel in the context of Rev. 14:6-12"
+        },
+        {
+          "lens": "discipleship",
+          "words": "make disciples"
+        }
+      ]
+    },
+    "michigan": {
+      "found": false,
+      "checked": [
+        "https://misda.org/",
+        "https://misda.org/about/",
+        "https://misda.org/about/michigan-conference-history/",
+        "https://misda.org/departments/",
+        "https://misda.org/departments/administration/",
+        "https://misda.org/departments/administration/president/",
+        "https://misda.org/3-angels/",
+        "https://misda.org/contact/",
+        "https://misda.org/locate/",
+        "https://misda.org/wp-sitemap.xml and wp-sitemap-posts-page-1.xml (full page list)",
+        "https://misda.org/?s=mission",
+        "https://misda.org/?s=vision",
+        "https://misda.org/?s=our+mission",
+        "https://misda.org/?s=mission+statement",
+        "https://misda.org/?s=mission+and+vision",
+        "https://misda.org/?s=who+we+are",
+        "https://misda.org/?s=strategic+plan",
+        "https://misda.org/?s=core+values",
+        "https://lakeunion.org/directories/conferences/"
+      ]
+    },
+    "wisconsin": {
+      "found": true,
+      "mission": "To develop a culture of transformational and intergenerational discipleship whereby Jesus is multiplied in the life of every member.",
+      "url": "https://wi.adventist.org/more-about-our-mission/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "intergenerational discipleship"
+        }
+      ]
+    },
+    "central-states": {
+      "found": true,
+      "mission": "Believing in the imminent return of Christ, our mission in Central States Conference is to proclaim the everlasting Gospel* of Jesus Christ to every person in our nine state region inviting them to become fully devoted disciples of Jesus.",
+      "url": "https://central-states.org/?page_id=382",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "proclaim the everlasting Gospel"
+        },
+        {
+          "lens": "discipleship",
+          "words": "fully devoted disciples of Jesus"
+        }
+      ]
+    },
+    "dakota": {
+      "found": true,
+      "mission": "To share the hope of a soon returning Savior, involve the youth of the Conference in mission, and continue a strong camp and educational system for the strengthening of the local, national, and international Adventist movement.",
+      "url": "https://dakotaadventist.org/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share the hope of a soon returning Savior"
+        },
+        {
+          "lens": "youth",
+          "words": "involve the youth of the Conference in mission"
+        },
+        {
+          "lens": "education",
+          "words": "educational system"
+        }
+      ]
+    },
+    "iowa-missouri": {
+      "found": false,
+      "checked": [
+        "https://imsda.org/",
+        "https://imsda.org/about/",
+        "https://imsda.org/history/",
+        "https://imsda.org/departments/",
+        "https://imsda.org/departments/evangelism/",
+        "https://imsda.org/departments/ministerial/",
+        "https://imsda.org/departments/secretariat/",
+        "https://imsda.org/ministries/",
+        "https://imsda.org/resources/",
+        "https://imsda.org/contact-2/",
+        "https://imsda.org/?s=mission+statement",
+        "https://imsda.org/?s=our+mission",
+        "https://imsda.org/wp-sitemap.xml (page list scanned)"
+      ]
+    },
+    "kansas-nebraska": {
+      "found": false,
+      "checked": [
+        "https://www.ks-ne.org/",
+        "https://www.ks-ne.org/about-us",
+        "https://www.ks-ne.org/prayer",
+        "https://www.ks-ne.org/secretariat",
+        "https://www.ks-ne.org/servemore",
+        "https://www.ks-ne.org/departments/ministerial",
+        "https://www.ks-ne.org/departments/communication",
+        "https://www.ks-ne.org/sitemap.xml (page list scanned)"
+      ]
+    },
+    "minnesota": {
+      "found": true,
+      "mission": "We help people realize their acceptance in Jesus Christ and guide them to know, love, serve, and share Him.",
+      "url": "https://mnsda.com/about/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share Him"
+        },
+        {
+          "lens": "discipleship",
+          "words": "guide them to know, love, serve"
+        }
+      ]
+    },
+    "rocky-mountain": {
+      "found": true,
+      "mission": "Enlarge the kingdom of Jesus Christ in our territory",
+      "url": "https://www.rmcsda.org/",
+      "areas": []
+    },
+    "alaska": {
+      "found": false,
+      "checked": [
+        "https://alaskaconference.org/",
+        "https://alaskaconference.org/about/",
+        "https://alaskaconference.org/about/administration/",
+        "https://alaskaconference.org/about/history/",
+        "https://alaskaconference.org/about/staff/",
+        "https://alaskaconference.org/ministries/",
+        "https://alaskaconference.org/ministries/ministerial/",
+        "https://alaskaconference.org/ministries/akc-prayer-initiative/",
+        "https://alaskaconference.org/akc-40-days-of-prayer-visioning-initiative/",
+        "https://alaskaconference.org/native-leadership/",
+        "https://alaskaconference.org/around-the-akc/",
+        "https://alaskaconference.org/resources/",
+        "https://alaskaconference.org/ministries/evangelism/hope-for-humanity-meeting-schedule/",
+        "https://alaskaconference.org/ministries/communications/",
+        "https://alaskaconference.org/ministries/development/",
+        "https://alaskaconference.org/ministries/youthyoung-adults/",
+        "https://alaskaconference.org/education/",
+        "https://alaskaconference.org/churches/",
+        "https://alaskaconference.org/ministries/womens-ministries/",
+        "https://alaskaconference.org/ministries/mens-ministries/",
+        "https://alaskaconference.org/?s=mission+statement",
+        "https://alaskaconference.org/?s=our+mission",
+        "https://alaskaconference.org/wp-sitemap-posts-page-1.xml (page list scanned)",
+        "https://npuc.org/ (union; gives only the union's own mission, not Alaska's)"
+      ]
+    },
+    "idaho": {
+      "found": true,
+      "mission": "Make disciples for Christ by sharing the hope of the Three Angels’ Messages.",
+      "url": "https://idahoadventist.org/who-are-we/about-us/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "Make disciples for Christ"
+        },
+        {
+          "lens": "evangelism",
+          "words": "sharing the hope of the Three Angels’ Messages"
+        }
+      ]
+    },
+    "montana": {
+      "found": false,
+      "checked": [
+        "https://www.mtcsda.org/",
+        "https://www.mtcsda.org/about",
+        "https://www.mtcsda.org/history",
+        "https://www.mtcsda.org/team",
+        "https://www.mtcsda.org/contact",
+        "https://www.mtcsda.org/departments",
+        "https://www.mtcsda.org/education",
+        "https://www.mtcsda.org/resources",
+        "https://www.mtcsda.org/womensministries",
+        "https://www.mtcsda.org/campmeeting",
+        "https://www.mtcsda.org/announcements",
+        "https://www.mtcsda.org/newsletter",
+        "https://npuc.org/ (union; gives only the union's own mission, not Montana's)"
+      ]
+    },
+    "oregon": {
+      "found": true,
+      "mission": "The mission of the Seventh-day Adventist Church is to call all people to become disciples of Jesus Christ, to proclaim the everlasting gospel embraced by the three angels’ messages (Revelation 14:6-12), and to prepare the world for Christ’s soon return.",
+      "url": "https://www.oregonadventist.org/about-us/mission",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "call all people to become disciples of Jesus Christ"
+        },
+        {
+          "lens": "evangelism",
+          "words": "proclaim the everlasting gospel"
+        }
+      ]
+    },
+    "upper-columbia": {
+      "found": true,
+      "mission": "The mission of the Upper Columbia Conference of Seventh-day Adventists is to share the everlasting gospel, in the context of the three angels messages of Revelation 14:6-12, with every person in the Inland Northwest and the world, leading all to love and accept Jesus as their personal savior and to unite with His church, nurturing them in preparation for His soon return.",
+      "url": "https://www.uccsda.org/about",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share the everlasting gospel"
+        },
+        {
+          "lens": "discipleship",
+          "words": "nurturing them in preparation for His soon return"
+        }
+      ]
+    },
+    "washington": {
+      "found": true,
+      "mission": "To reach western Washington with the distinctive, Christ-centered Seventh-day Adventist message of hope and wholeness, encouraging all to become fully devoted disciples of Jesus",
+      "url": "https://washingtonconference.org/about/mission/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "To reach western Washington"
+        },
+        {
+          "lens": "discipleship",
+          "words": "become fully devoted disciples of Jesus"
+        },
+        {
+          "lens": "health",
+          "words": "hope and wholeness"
+        }
+      ]
+    },
+    "arizona": {
+      "found": false,
+      "checked": [
+        "https://www.azconference.org",
+        "https://www.azconference.org/aboutus",
+        "https://www.azconference.org/administration",
+        "https://www.azconference.org/president",
+        "https://www.azconference.org/departments",
+        "https://www.azconference.org/general-7",
+        "https://www.azconference.org/program",
+        "https://www.azconference.org/healthministries",
+        "https://www.azconference.org/youth-ministries",
+        "https://www.azconference.org/copy-of-ministerial-evangelism",
+        "https://www.azconference.org/multilingual-ministries",
+        "https://www.azconference.org/dineadventistradio",
+        "https://www.azconference.org/sitemap.xml",
+        "https://www.azconference.org/pages-sitemap.xml",
+        "https://www.adventistfaith.com/conferences/arizona-conference/ (Pacific Union page, no mission statement)"
+      ]
+    },
+    "central-california": {
+      "found": false,
+      "checked": [
+        "https://www.cccadventist.org",
+        "https://www.cccadventist.org/es",
+        "https://www.cccadventist.org/administration",
+        "https://www.cccadventist.org/president",
+        "https://www.cccadventist.org/about-4",
+        "https://www.cccadventist.org/conference",
+        "https://www.cccadventist.org/officer",
+        "https://www.cccadventist.org/team-3",
+        "https://www.cccadventist.org/post/strategic-shift-for-ccc-s-five-year-vision-to-prioritize-people-over-numbers-healthy-culture",
+        "https://www.cccadventist.org/post/why-god-wants-his-church-to-be-healthy",
+        "https://www.cccadventist.org/sitemap.xml",
+        "https://www.cccadventist.org/pages-sitemap.xml",
+        "https://www.adventistfaith.com/conferences/central-california-conference/ (Pacific Union page, no mission statement)"
+      ]
+    },
+    "hawaii": {
+      "found": true,
+      "mission": "To facilitate the proclamation of the EVERLASTING GOSPEL in the context of the three angels' messages of Revelation 14:6-12 to all peoples within its territory, leading them to accept Jesus as personal Savior and to unite with His church, and nurturing them in preparation for His soon return.",
+      "url": "https://www.hawaiisda.com/officers",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "proclamation of the EVERLASTING GOSPEL"
+        },
+        {
+          "lens": "discipleship",
+          "words": "nurturing them in preparation for His soon return"
+        }
+      ]
+    },
+    "nevada-utah": {
+      "found": false,
+      "checked": [
+        "https://www.nucsda.com",
+        "https://www.nucsda.com/about (redirects to adventist.org/beliefs/fundamental-beliefs/)",
+        "https://www.nucsda.com/administration",
+        "https://www.nucsda.com/president",
+        "https://www.nucsda.com/church",
+        "https://www.nucsda.com/new-page",
+        "https://www.nucsda.com/growth-ministry",
+        "https://www.nucsda.com/communication-ministry",
+        "https://www.nucsda.com/ministerial",
+        "https://www.nucsda.com/secretariat",
+        "https://www.nucsda.com/sitemap.xml",
+        "https://www.adventistfaith.com/conferences/nevada-utah-conference/ (Pacific Union page, no mission statement)"
+      ]
+    },
+    "northern-california": {
+      "found": true,
+      "mission": "The Northern California Conference of Seventh-day Adventists is a network of churches, schools, and ministries dedicated to transforming people through the good news of Jesus Christ and preparing them for His soon return.",
+      "url": "https://nccsda.com/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "transforming people through the good news of Jesus Christ"
+        },
+        {
+          "lens": "education",
+          "words": "schools"
+        }
+      ]
+    },
+    "southeastern-california": {
+      "found": true,
+      "mission": "Our mission is to expand God’s kingdom through the preaching, teaching, publishing, and living of the everlasting gospel by women and men in the cross-cultural communities of our territory.",
+      "url": "https://seccadventist.org/about-us/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "publishing, and living of the everlasting gospel"
+        }
+      ]
+    },
+    "southern-california": {
+      "found": true,
+      "mission": "To exalt Christ by cultivating healthy churches and schools.",
+      "url": "https://scc.adventist.org/about-us/mission-vision/",
+      "areas": [
+        {
+          "lens": "education",
+          "words": "schools"
+        }
+      ]
+    },
+    "carolina": {
+      "found": true,
+      "mission": "To proclaim to all people the everlasting gospel in the context of the Three Angels’ Messages of Revelation 14:6-12, leading them to accept Jesus as personal Savior and to unite with His church, and nurturing them in preparation for His soon return.",
+      "url": "https://www.carolinasda.org/about-us",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "proclaim to all people the everlasting gospel"
+        },
+        {
+          "lens": "discipleship",
+          "words": "nurturing them in preparation for His soon return"
+        }
+      ]
+    },
+    "florida": {
+      "found": true,
+      "mission": "Walking Together in Faith, Hope, and Love.",
+      "url": "https://floridaconference.com/",
+      "areas": []
+    },
+    "georgia-cumberland": {
+      "found": true,
+      "mission": "(1) Kingdom Growth — Evangelism, Publishing, Religious Liberty\nShare the everlasting gospel through personal and public evangelism, church planting, small group fellowship, community involvement, and healing the broken by applying media, technology, and talent to reach all in our territory.\n(2) Discipling Youth — Children's/Junior Youth Ministries, Youth Ministries\nEvery family, church and school is committed to connecting our children and youth to Jesus for service and mission.\n(3) Christian Education — Camp Meetings, Academy/Elementary Schools\nSeek to make quality Christian education available and affordable to all children and youth entrusted to our conference family.\n(4) Spiritual Life — Women's Ministries, Family Ministries, Prayer Ministries, Disability Ministries\nIntimacy with God is nourished by prayer, study and application of the Word, public and private worship, and faithful stewardship that strengthen a personal commitment to serving Jesus as Savior and Lord.\n(5) Shared Leadership — Young Adult Ministries, Men’s Ministries\nFollowing the apostolic model, pastors and teachers partner with each member, resourcing and developing spiritual leaders for effective ministry.\n(6) Serving Others — Adventist Community Services, Personal Ministries, Health Ministries, Prison Ministries\nServe others and build relationships through involvement in a wide variety of community activities and agencies.",
+      "url": "https://www.gccsda.com/administration/30588",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "personal and public evangelism"
+        },
+        {
+          "lens": "pastoral",
+          "words": "developing spiritual leaders for effective ministry"
+        },
+        {
+          "lens": "discipleship",
+          "words": "prayer, study and application of the Word"
+        },
+        {
+          "lens": "family",
+          "words": "Family Ministries"
+        },
+        {
+          "lens": "youth",
+          "words": "Discipling Youth"
+        },
+        {
+          "lens": "clubs",
+          "words": "Children's/Junior Youth Ministries"
+        },
+        {
+          "lens": "education",
+          "words": "Christian education available and affordable"
+        },
+        {
+          "lens": "health",
+          "words": "Health Ministries"
+        },
+        {
+          "lens": "gatherings",
+          "words": "public and private worship"
+        }
+      ]
+    },
+    "gulf-states": {
+      "found": false,
+      "checked": [
+        "https://www.gscsda.org/",
+        "https://www.gscsda.org/search?q=mission",
+        "https://www.gscsda.org/about-us",
+        "https://www.gscsda.org/administration",
+        "https://www.gscsda.org/adult-sabbath-school",
+        "https://www.gscsda.org/adventist-book-center",
+        "https://www.gscsda.org/adventurers",
+        "https://www.gscsda.org/alamisco-camp-meeting",
+        "https://www.gscsda.org/bass-camp-meeting",
+        "https://www.gscsda.org/bma-legacy",
+        "https://www.gscsda.org/bma-transcript",
+        "https://www.gscsda.org/bma-yearbooks",
+        "https://www.gscsda.org/career-opportunities",
+        "https://www.gscsda.org/childrens-ministries",
+        "https://www.gscsda.org/communication",
+        "https://www.gscsda.org/community-services",
+        "https://www.gscsda.org/constituency",
+        "https://www.gscsda.org/contact",
+        "https://www.gscsda.org/departments",
+        "https://www.gscsda.org/directory",
+        "https://www.gscsda.org/education",
+        "https://www.gscsda.org/education-1",
+        "https://www.gscsda.org/employee-resources",
+        "https://www.gscsda.org/events",
+        "https://www.gscsda.org/executive-committee",
+        "https://www.gscsda.org/executive-secretary",
+        "https://www.gscsda.org/gsc-news",
+        "https://www.gscsda.org/hispanic-ministries",
+        "https://www.gscsda.org/human-resources",
+        "https://www.gscsda.org/it-dept",
+        "https://www.gscsda.org/master-guides",
+        "https://www.gscsda.org/mens-ministries",
+        "https://www.gscsda.org/ministries",
+        "https://www.gscsda.org/new-page",
+        "https://www.gscsda.org/news-events",
+        "https://www.gscsda.org/our-schools",
+        "https://www.gscsda.org/pathfinders",
+        "https://www.gscsda.org/photo-video-highlights",
+        "https://www.gscsda.org/prayer-ministries",
+        "https://www.gscsda.org/prison-ministries",
+        "https://www.gscsda.org/publishing",
+        "https://www.gscsda.org/religious-liberty",
+        "https://www.gscsda.org/sda-sterling-volunteers",
+        "https://www.gscsda.org/stewardship",
+        "https://www.gscsda.org/treasury",
+        "https://www.gscsda.org/trust-services",
+        "https://www.gscsda.org/who-we-are",
+        "https://www.gscsda.org/womens-ministries",
+        "https://www.gscsda.org/young-adults-ministries",
+        "https://www.gscsda.org/youth",
+        "https://www.gscsda.org/youth-1",
+        "https://www.gscsda.org/youth-events",
+        "https://www.gscsda.org/youth-resources"
+      ]
+    },
+    "kentucky-tennessee": {
+      "found": true,
+      "mission": "By depending on the Holy Spirit’s guidance to remain true to and further the Three Angel’s Message of Revelation 14, we are a ministry dedicated to the preparation of a people grounded in Scripture and ready for the soon return of Jesus Christ.",
+      "url": "https://www.kytn.net/about-page",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "further the Three Angel’s Message of Revelation 14"
+        },
+        {
+          "lens": "discipleship",
+          "words": "a people grounded in Scripture"
+        }
+      ]
+    },
+    "south-atlantic": {
+      "found": true,
+      "mission": "The South Atlantic Conference empowers and encourages its members to know Jesus and invite others to experience the joy of salvation.",
+      "url": "https://www.sacsda.org/history/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "empowers and encourages its members to know Jesus"
+        },
+        {
+          "lens": "evangelism",
+          "words": "invite others to experience the joy of salvation"
+        }
+      ]
+    },
+    "south-central": {
+      "found": true,
+      "mission": "Make disciples of Jesus Christ who live as His loving witnesses and proclaim to all people the everlasting gospel of the Three Angels’ Messages in preparation for His soon return.",
+      "url": "https://iamsouthcentral.org/mission-first/",
+      "areas": [
+        {
+          "lens": "discipleship",
+          "words": "Make disciples of Jesus Christ"
+        },
+        {
+          "lens": "evangelism",
+          "words": "proclaim to all people the everlasting gospel"
+        }
+      ]
+    },
+    "southeastern": {
+      "found": true,
+      "mission": "To reach communities within Southeastern with a Christ-centered message of hope and wholeness.",
+      "url": "https://www.secsda.org/resources/mission-driven/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "reach communities within Southeastern"
+        },
+        {
+          "lens": "health",
+          "words": "hope and wholeness"
+        }
+      ]
+    },
+    "arkansas-louisiana": {
+      "found": false,
+      "checked": [
+        "https://www.arklac.org/",
+        "https://www.arklac.org/about",
+        "https://www.arklac.org/associations-planned-giving",
+        "https://www.arklac.org/calendar",
+        "https://www.arklac.org/camp-yorktown-bay",
+        "https://www.arklac.org/children-s-ministry",
+        "https://www.arklac.org/children-s-spanish-ministry",
+        "https://www.arklac.org/church-ministries",
+        "https://www.arklac.org/communication",
+        "https://www.arklac.org/community-services",
+        "https://www.arklac.org/contact",
+        "https://www.arklac.org/copy-of-education",
+        "https://www.arklac.org/copy-of-find-a-school",
+        "https://www.arklac.org/documents",
+        "https://www.arklac.org/education",
+        "https://www.arklac.org/evangelism",
+        "https://www.arklac.org/family-ministries",
+        "https://www.arklac.org/find-a-school",
+        "https://www.arklac.org/health-ministry",
+        "https://www.arklac.org/human-resources",
+        "https://www.arklac.org/ministerial",
+        "https://www.arklac.org/multi-lingual",
+        "https://www.arklac.org/nwa-church-events",
+        "https://www.arklac.org/office-team",
+        "https://www.arklac.org/ozark-adventist-academy",
+        "https://www.arklac.org/portfolio",
+        "https://www.arklac.org/prayer-ministry",
+        "https://www.arklac.org/president",
+        "https://www.arklac.org/religious-liberty",
+        "https://www.arklac.org/secretariat",
+        "https://www.arklac.org/stewardship",
+        "https://www.arklac.org/team-4-1",
+        "https://www.arklac.org/team-4",
+        "https://www.arklac.org/treasury",
+        "https://www.arklac.org/women-s-ministries",
+        "https://www.arklac.org/women-s-spanish-ministry",
+        "https://www.arklac.org/youth-young-adult-ministries"
+      ]
+    },
+    "oklahoma": {
+      "found": true,
+      "mission": "By the Grace of God, we will Impact Oklahoma by: Uplifting Christ through the unique Seventh-day Adventist Message, Growing & Restoring Healthy Families, Empowering Spirit-led, Intergenerational Disciples, Transforming Communities, Churches, and Schools in Preparation for the Second Coming of Christ.",
+      "url": "https://www.okadventist.org/vision",
+      "areas": [
+        {
+          "lens": "family",
+          "words": "Growing & Restoring Healthy Families"
+        },
+        {
+          "lens": "discipleship",
+          "words": "Empowering Spirit-led, Intergenerational Disciples"
+        },
+        {
+          "lens": "education",
+          "words": "Schools"
+        }
+      ]
+    },
+    "southwest-region": {
+      "found": true,
+      "mission": "The mission of the Southwest Region Conference is to share the everlasting gospel of Jesus Christ with power, purpose, and compassion. We are committed to reaching every person in our five-state territory with the life-changing message of hope and salvation.",
+      "url": "https://southwestregionsda.org/evangelism/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "share the everlasting gospel of Jesus Christ"
+        }
+      ]
+    },
+    "texas": {
+      "found": false,
+      "checked": [
+        "https://www.texasadventist.org/",
+        "https://www.texasadventist.org/about/",
+        "https://www.texasadventist.org/?s=mission",
+        "https://www.texasadventist.org/together-as-one-26/",
+        "https://www.texasadventist.org/departments/education/",
+        "https://www.texasadventist.org/departments/evangelism/",
+        "https://www.texasadventist.org/departments/evangelismo/",
+        "https://www.texasadventist.org/departments/ministerial-development/",
+        "https://www.texasadventist.org/departments/religious-liberty/",
+        "https://www.texasadventist.org/departments/risk-management/",
+        "https://www.texasadventist.org/departments/sabbath-school/",
+        "https://www.texasadventist.org/departments/treasury/",
+        "https://www.texasadventist.org/educator-resources/",
+        "https://www.texasadventist.org/employee-resources/",
+        "https://www.texasadventist.org/4q-10-days-of-prayer/",
+        "https://www.texasadventist.org/events/",
+        "https://www.texasadventist.org/home/texasnews/",
+        "https://www.texasadventist.org/ministries/childrens-ministries/",
+        "https://www.texasadventist.org/ministries/family-ministries/",
+        "https://www.texasadventist.org/ministries/health-ministries/",
+        "https://www.texasadventist.org/ministries/hispanic-ministries/",
+        "https://www.texasadventist.org/ministries/mens-ministries-english/",
+        "https://www.texasadventist.org/ministries/mens-ministries-spanish/",
+        "https://www.texasadventist.org/ministries/ministerial-spouses/",
+        "https://www.texasadventist.org/ministries/oracion/",
+        "https://www.texasadventist.org/ministries/prayer-ministries-english/",
+        "https://www.texasadventist.org/ministries/prison-ministries/",
+        "https://www.texasadventist.org/ministries/stewardship/",
+        "https://www.texasadventist.org/ministries/womens-ministries-english/",
+        "https://www.texasadventist.org/ministries/womens-ministries-spanish/",
+        "https://www.texasadventist.org/ministries/ya/",
+        "https://www.texasadventist.org/ministries/youth/",
+        "https://www.texasadventist.org/organizer/education/",
+        "https://www.texasadventist.org/organizer/prayer-ministries-english/",
+        "https://www.texasadventist.org/organizer/prayer-ministries-spanish/",
+        "https://www.texasadventist.org/camp-meeting-2026/",
+        "https://www.texasadventist.org/services/adventist-book-center/",
+        "https://www.texasadventist.org/services/adventist-community-services/",
+        "https://www.texasadventist.org/services/digital-communication-production-services/",
+        "https://www.texasadventist.org/services/human-resources/",
+        "https://www.texasadventist.org/services/lake-whitney-ranch/",
+        "https://www.texasadventist.org/services/membership/",
+        "https://www.texasadventist.org/services/planned-giving-trust-services/",
+        "https://www.texasadventist.org/services/print-shop-mailing-services/",
+        "https://www.texasadventist.org/services/property/",
+        "https://www.texasadventist.org/services/public-relations/",
+        "https://www.texasadventist.org/connect/",
+        "https://www.texasadventist.org/services/transportation/",
+        "https://www.texasadventist.org/services/volunteers/",
+        "https://www.texasadventist.org/team/",
+        "https://www.texasadventist.org/connect/church-finder/",
+        "https://www.texasadventist.org/connect/school-finder/",
+        "https://www.texasadventist.org/convocations2026/",
+        "https://www.texasadventist.org/departments/church-planting-volunteer-lay-pastor-church-revitalization/"
+      ]
+    },
+    "texico": {
+      "found": true,
+      "mission": "Our mission is to extend God’s grace and compassion to those who are lost, hurting, and searching, and invite everyone to experience the blessings and joy of life with Jesus.",
+      "url": "https://texico.org/",
+      "areas": [
+        {
+          "lens": "evangelism",
+          "words": "invite everyone to experience the blessings and joy"
+        }
+      ]
+    }
+  }
+}
