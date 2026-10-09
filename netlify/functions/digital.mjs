@@ -35,6 +35,8 @@ import { createHmac, timingSafeEqual, randomBytes } from 'node:crypto';
 import { CONF_ORG, slugOf, sha, theStore, FN as READ_FN, RE_ORG } from './digital-read.mjs';
 import { reviewInput } from './digital-review.mjs';
 import { giveBack } from './advise-needs.mjs';
+// v10.62.2: the lock is the passphrase, or a guest code on its own registration (guest-pass.mjs; TERRAIN_AI_GUESTS)
+import { passCheck } from './guest-pass.mjs';
 
 export const FN = 'digital-1.2';
 const REVIEW_FN = 'review-1.0';   // the worker's own stamp (digital-review.mjs), said back by the bare GET
@@ -132,15 +134,6 @@ const KEY = () => (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = () => (process.env.TERRAIN_AI_PASS || '').trim();
 const reviewDayMax = () => { const n = parseInt(process.env.REVIEW_DAY_MAX, 10); return Number.isInteger(n) && n >= 0 && n <= 1000 ? n : 40; };
 const reviewOn = () => !!KEY() && !!PASS() && reviewDayMax() > 0;
-/* the passphrase, as advise.mjs checks it: the whole string compared in constant time, never a prefix */
-function passOk(given) {
-  const PW = PASS(), g = (given || '').trim();
-  if (!PW) return true;
-  if (g.length !== PW.length) return false;
-  let diff = 0;
-  for (let i = 0; i < PW.length; i++) diff |= PW.charCodeAt(i) ^ g.charCodeAt(i);
-  return diff === 0;
-}
 const utcDay = t => new Date(t).toISOString().slice(0, 10);
 const nextUtcDay = t => { const d = new Date(t); return Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1); };
 const RE_NAME = /^[A-Za-zÀ-ÖØ-öø-ÿ' .’-]+$/;
@@ -201,7 +194,7 @@ async function wakeReview(base, job, worker) {
 async function reviewRoute(store, request, b, t) {
   if (!KEY()) return rReply('nokey', 503);
   if (!PASS() || reviewDayMax() === 0) return rReply('disabled', 403);
-  if (!passOk(typeof b.key === 'string' ? b.key : request.headers.get('x-terrain-pass'))) return rReply('locked', 401);
+  if (!(await passCheck(typeof b.key === 'string' ? b.key : request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS()))) return rReply('locked', 401);
   const reg = regId(request.headers.get('x-terrain-reg'));
   if (!reg) return rReply('noreg', 401, { error: 'Register on the first page to use Terrain.' });
   const got = reviewShape(b);

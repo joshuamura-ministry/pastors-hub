@@ -96,19 +96,13 @@
 
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
+// v10.62.2: the lock is the passphrase, or a guest code on its own registration (guest-pass.mjs; TERRAIN_AI_GUESTS)
+import { passCheck } from './guest-pass.mjs';
 
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
 const FN_VERSION = 'advise-2.7';   // 2.7: Claude in Make the Case (v10.56.0); 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
-function passOk(given){
-  const g = (given || '').trim();
-  if (!PASS) return true;
-  if (g.length !== PASS.length) return false;
-  let diff = 0;
-  for (let i = 0; i < PASS.length; i++) diff |= PASS.charCodeAt(i) ^ g.charCodeAt(i);
-  return diff === 0;
-}
 const MAX_BODY = 40000;
 // Netlify allows 60s. Leave a margin for the response to be written.
 const UPSTREAM_TIMEOUT_MS = 54000;
@@ -608,7 +602,7 @@ async function pricesRoute(request, context, p) {
   if (p.mode === 'prices-status') return pricesStatus(p);
   if (!KEY) return pReply('nokey', 503);
   if (!PASS) return pReply('disabled', 403);
-  if (!passOk(request.headers.get('x-terrain-pass'))) return pReply('locked', 401);
+  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return pReply('locked', 401);
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return pReply('noreg', 401); }
@@ -760,7 +754,7 @@ async function needsRoute(request, context, p) {
   if (p.mode === 'needs-status') return needsStatus(p);
   if (!KEY) return nReply('nokey', 503);
   if (!PASS || needsDayMax() === 0) return nReply('disabled', 403);
-  if (!passOk(request.headers.get('x-terrain-pass'))) return nReply('locked', 401);
+  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return nReply('locked', 401);
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return nReply('noreg', 401); }
@@ -896,7 +890,7 @@ async function ideasRoute(request, context, p) {
   if (p.mode === 'ideas-status') return ideasStatus(p);
   if (!KEY) return iReply('nokey', 503);
   if (!PASS || ideasDayMax() === 0) return iReply('disabled', 403);
-  if (!passOk(request.headers.get('x-terrain-pass'))) return iReply('locked', 401);
+  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return iReply('locked', 401);
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return iReply('noreg', 401); }
@@ -1068,7 +1062,7 @@ async function caseRoute(request, context, p) {
   if (p.mode === 'case-status') return caseStatus(p);
   if (!KEY) return cReply('nokey', 503);
   if (!PASS || caseDayMax() === 0) return cReply('disabled', 403);
-  if (!passOk(request.headers.get('x-terrain-pass'))) return cReply('locked', 401);
+  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return cReply('locked', 401);
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return cReply('noreg', 401); }
@@ -1244,7 +1238,7 @@ export default async (request, context) => {
     try { return await pricesRoute(request, context, early); }
     catch (e) { pricesLog('error'); return reply({ error: 'Prices could not be found just now.', code: 'unavailable' }, 502); }
   }
-  if (!passOk(request.headers.get('x-terrain-pass'))) {
+  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) {
     return reply({ error: 'This ministry planner is private to the pastor who set it up.', code: 'locked' }, 401);
   }
   if (!KEY) return reply({ error: 'No API key is configured on the server, so AI planning is switched off.' }, 503);

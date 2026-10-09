@@ -14,8 +14,8 @@ const art=l=>{ const m=new RegExp(`<article lang="${l}"[^>]*>([\\s\\S]*?)</artic
 (async()=>{ await T.sec(async()=>{
   console.log('\n-- the page --');
   c('privacy.html exists, a page of its own (no registration), its own title', [!!PV,/<title>Privacy Policy · Terrain<\/title>/.test(PV)], [true,true]);
-  c('the site\'s build publishes it, and terrain.church/privacy opens it', [/command\s*=\s*"[^"\n]*\bcp privacy\.html site\//.test(TOML),/\[\[redirects\]\]\s*\n\s*from = "\/privacy"\s*\n\s*to = "\/privacy\.html"\s*\n\s*status = 200/.test(TOML)], [true,true]);
-  c('it asks no other website: no outside script, stylesheet, font or picture', [/<script[^>]+src=/i.test(PV),/<link[^>]+stylesheet/i.test(PV),/@import|url\(\s*['"]?https?:/i.test(PV),/<img/i.test(PV)], [false,false,false,false]);
+  c('the site\'s build publishes it, and terrain.church/privacy opens it', [/command\s*=\s*"[^"\n]*\bcp privacy\.html[^"\n]*site\//.test(TOML),/\[\[redirects\]\]\s*\n\s*from = "\/privacy"\s*\n\s*to = "\/privacy\.html"\s*\n\s*status = 200/.test(TOML)], [true,true]);
+  c('it asks no other website: no outside script, stylesheet, font or picture (its links to the other pages are the site\'s own)', [/<script[^>]+src=/i.test(PV),/<link[^>]+stylesheet/i.test(PV),/@import|url\(\s*['"]?https?:/i.test(PV),/<img/i.test(PV)], [false,false,false,false]);
   c('English and Spanish, each with the same fourteen sections and the short version', [(art('en').match(/<h2 id=/g)||[]).length,(art('es').match(/<h2 id=/g)||[]).length,/class="short"/.test(art('en'))&&/class="short"/.test(art('es'))], [14,14,true]);
   c('Muraworks, a business based in Pennsylvania (never a person)', [/<b>Muraworks<\/b>, a business based in Pennsylvania/.test(PV),/<b>Muraworks<\/b>, una empresa con sede en Pensilvania/.test(PV),/Ryen|Joshua/.test(text(PV))], [true,true,false]);
   c('the contact everywhere is privacy@terrain.church, a mailto link', [(PV.match(/href="mailto:privacy@terrain\.church"/g)||[]).length>=6,(PV.match(/mailto:/g)||[]).length===(PV.match(/mailto:privacy@terrain\.church/g)||[]).length], [true,true]);
@@ -34,8 +34,10 @@ const art=l=>{ const m=new RegExp(`<article lang="${l}"[^>]*>([\\s\\S]*?)</artic
   console.log('\n-- the app links it --');
   const P=page({}); await ready(P); await sleep(50);
   c('the footer: "Privacy", same site', [P.txt('#privlink'),P.q('#privlink').getAttribute('href')], ['Privacy','/privacy']);
-  c('the first page: "How Terrain handles your information", for anyone before registering', [/<a href="\/privacy" id="gatepriv">How Terrain handles your information<\/a>/.test(HTML),/gp\.textContent=L\('How Terrain handles your information','Cómo maneja Terrain su información'\)/.test(HTML)], [true,true]);
+  // v10.62.1 (the same release, with the terms): the first page's one line of links, About · Privacy · Terms
+  c('the first page: "Privacy" among About · Privacy · Terms, for anyone before registering', [/<a href="\/privacy" id="gatepriv">Privacy<\/a>/.test(HTML),/\['gatepriv','Privacy','Privacidad'\]/.test(HTML)], [true,true]);
   c('a neighbor\'s card: the promise line links the policy in the card\'s language, same site, a new tab', [P.E(`cnPromiseHTML(cnWords({kind:'general',church:'Sampleton SDA',title:{en:'x'}},'es'))`).includes('<a class="cn-plink" href="/privacy?lang=es" target="_blank" rel="noopener">Política de privacidad</a>'),P.E(`cnPromiseHTML(cnWords({kind:'general',church:'Sampleton SDA',title:{en:'x'}},'en'))`).includes('href="/privacy?lang=en"')], [true,true]);
   { const S=page({lang:'es'}); await ready(S); await sleep(50); c('in Spanish the footer says "Privacidad"', S.txt('#privlink'), 'Privacidad'); }
-  c('the six stamps say v10.62.1', (HTML.match(/v10\.62\.1/g)||[]).length>=6, true);
+  // v10.62.2: the terms, refunds and about pages went in an update of their own (PR #35 merged with the privacy policy alone): the six agree
+  c('the six stamps agree, v10.62.1 or later', (()=>{ const v=[/TERRAIN  (v[\d.]+)/,/data-version="(v[\d.]+)"/,/terrain-version" content="(v[\d.]+)"/,/Terrain (v[\d.]+)<\/title>/,/id="ver">(v[\d.]+)</,/const VERSION = '(v[\d.]+)'/].map(r=>(r.exec(HTML)||[])[1]); return new Set(v).size===1&&/^v10\.(6[2-9]|[7-9]\d)\./.test(v[0]); })(), true);
 }); T.done(); })();

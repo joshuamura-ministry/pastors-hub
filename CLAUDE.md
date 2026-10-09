@@ -91,6 +91,9 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.0) the lock behind every Claude feature: the passphrase, or a guest code (TERRAIN_AI_GUESTS)
+                               on its own registration (the token's id = the id kept for the code's email); advise.mjs and digital.mjs import
+                               `passCheck`; its own GET says only `{ok, fn}`
 netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
@@ -106,6 +109,7 @@ netlify/functions/digital-review.mjs (v10.62.0, review-1.0) the background worke
                                every number in the input, no name not in the input, no other church, no "AI"); woken by digital.mjs (op review)
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
 privacy.html                   (v10.62.1) the privacy policy, served at terrain.church/privacy (English and Spanish; must be in the site's copy)
+terms.html, refunds.html, about.html  (v10.62.1) the terms of service, the refund policy, About Terrain and its plans (/terms, /refunds, /about; in the copy)
 AUDIT.md                       (v10.61.1) the checklist every full audit follows (set up, measured, read by eye, solid, fix and prove, report)
 ideas/                         the Idea Library as the page loads it: index.json, words.json, <theme>.json (GENERATED, never edit)
 tools/build-ideas.mjs          packs tools/ideas-src into ideas/ after the writers' validator passes (see "Adding or changing ideas")
@@ -177,6 +181,7 @@ values are never in the repo):
 |---|---|---|
 | `ANTHROPIC_API_KEY` | advise.mjs | Anthropic **platform** key (console.anthropic.com), billed per use. Not a claude.ai subscription. |
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
+| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
@@ -214,7 +219,7 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
-**v10.62.1 (8 Oct 2026, quick lane) — the privacy policy, at terrain.church/privacy.** The pastor: *"We need the definitely privacy policy.
+**v10.62.1 (8 Oct 2026) — the writing a finished product needs: the privacy policy, the terms of service, the refund policy, About Terrain.** The pastor: *"We need the definitely privacy policy.
 Please write that now."* (Meta's App Review asks for a public privacy policy address, and paid plans need one.) **`privacy.html`**, a page of its
 own (no registration, no outside request: system fonts, one small inline script for the language and the phone's stacked tables), English and
 Spanish (the language from `?lang=`, else the app's `terrain-lang`, else the browser; "If they differ, the English version governs"), served at
@@ -236,7 +241,54 @@ fwd2.porkbun.com 20) and its SPF TXT (`v=spf1 mx include:_spf.porkbun.com ~all`)
 Not a lawyer's review: his to have read before paid plans begin. Tests: `v62-1-privacy` (new, 19; failing first on v10.62.0:
 `v79/logs/ff-v62-1-privacy.log`): the page, the build, no outside request, both languages' fourteen sections, Muraworks, the contact, the
 retention it states held to each function's own constant, the button names held to the app's, the links. Checked in Chrome
-(`v79/shots-privacy.mjs`): phone 390 EN + ES, computer 1366, no sideways scroll, no outside request. Full suite: 170 suites · 11,248 passed · 0 failed.
+(`v79/shots-privacy.mjs`): phone 390 EN + ES, computer 1366, no sideways scroll, no outside request. Full suite then: 170 suites · 11,248 passed · 0 failed.
+- **The rest of the writing** (**v10.62.2**, 9 Oct 2026: PR #35 merged with the privacy policy alone, before this was pushed to it, so it went in an update of its own; the pastor: *"Yes all the terms of service refund still need writing. Let's get it
+  done. Let's do every all the writing that needs to be done and placed on a product a finished product"*). Three more public pages in the privacy
+  policy's look (written once from `Terrain-work/v80/legal-shell.py` with `write-terms.py` and `write-refunds-about.py`; edit the pages directly now),
+  each in English and Spanish, each at a short address (netlify.toml: `cp privacy.html terms.html refunds.html about.html site/`, four 200
+  redirects), one footer on all four (`.legalnav`: About Terrain · Privacy · Terms · Refunds · Open Terrain, the page itself marked).
+  **`terms.html`** (/terms, 22 sections, in step with Slide Preach's terms, the same company): the agreement; 18 and older, one person a
+  registration; what Terrain does and where its facts come from (Census estimates with margins of error, OpenStreetMap, published calendars, public
+  pages); writing by Claude may be mistaken, check before use, not professional advice, the Church Manual for information; your content stays yours,
+  Output assigned to you, the Idea Library ours (use its ideas, do not republish it); **what members and neighbors send you** (use it only for why it
+  was given, keep it private, remove on request, Spiritual Gifts 13 and older, cards adults only); **Digital footprint** (a help, never a judgment,
+  never to shame a church); acceptable use ("Neighbors are neighbors, never targets"); presentations and shared links; plans (early access free until
+  paid plans begin, with 30 days' notice; the Community Survey free; $150 a year or $15 a month; Stripe; automatic renewal; a reminder before a yearly
+  renewal; the 14-day trial, one for each account; cancel under Account › Manage billing; failed payments end the plan; price changes with 30 days'
+  notice; codes); conference plans by agreement (the organization never given a pastor's church information); changes; leaving (deleted in 30
+  days); other services; suspension; warranties and liability (the greater of 12 months' fees or US$50); indemnity; Pennsylvania law and courts;
+  copyright complaints; changes; general; contact **support@terrain.church**. **`refunds.html`** (/refunds; the defaults, his to change): a trial
+  cancelled before it ends is never charged; the first payment and each yearly renewal refunded in full within 14 days; monthly renewals not; mistakes
+  always; a refunded plan ends and the free version remains; cancel under Account › Manage billing; ask at support@terrain.church; back to the card
+  through Stripe in 5–10 business days; organization plans by their agreement; the law where it gives more. **`about.html`** (/about): what Terrain is
+  in the main menu's own words, the six tools in their colors and order, who it is for, the plans (Free $0 · Monthly $15 · Yearly $150 "Best for a
+  church budget"), early access, your information in three lines, five questions, the contact: the public page a payment provider expects.
+  **The app:** the footer "Terms · Privacy" (`#termslink`, `#privlink`; ES "Términos · Privacidad"); the first page one line "About Terrain · Privacy ·
+  Terms" (`#gateabout`, `#gatepriv`, `#gateterms`); registration "By registering, you agree to Terrain’s Terms of Service and Privacy Policy"
+  (`.regterms`, each a new tab); the plan sheet "Starting a trial or a plan means you agree to the Terms of Service. When a payment is refunded: the
+  Refund Policy" (`.acct-terms`). **His side before paid plans:** forward **support@** as well as privacy@terrain.church (the same Porkbun page, no more
+  DNS); in Stripe the public business details (the terms, privacy and refund addresses, the support email) and the customer emails before a trial
+  ends and before a yearly renewal (the terms promise the yearly reminder); a lawyer's reading. Tests: `v62-1-legal` (new, 24; failing first on the
+  privacy policy's commit: `v80/logs/ff-v62-1-legal.log`): the four pages and their addresses, no outside request, both languages' sections, the
+  footer, Muraworks, no "AI", the contacts, the trial's days held to account.mjs's `TRIAL_DAYS`, one trial an account held to `trialUsed`, the prices,
+  "Best for a church budget" and "Manage billing" held to the plan sheet's words, the refund rules, early access said alike, the six tools in the main
+  menu's order, the terms' rules for young people, the app's links; `v62-1-privacy` updated (the first page's line; the copy command). Checked in
+  Chrome (`v80/shots-legal.mjs`): the four pages at phone 390 and computer 1366, EN + ES (16 views): no sideways scroll, no outside request, card rows
+  level, no button word wrapping, no page error. Full suite: 171 suites · 11,272 passed · 0 failed.
+- **A guest code** (same release, 9 Oct 2026; the pastor, of his conference's ministerial director trying the app: *"Just give him the unlock
+  link but have him add like a secret code that only he can use"*). `guest-pass.mjs` (**guest-pass-1.0**): `unlockOf(given, regToken, pass)`
+  → 'open' (no passphrase set) · 'pass' · 'guest' · '' (locked); `passCheck`; `guestsOf` (TERRAIN_AI_GUESTS: `email=code` a line or commas,
+  the email kept as register.mjs keeps it; a code under 12 characters, equal to the passphrase, or beside two emails left out; 25 at most);
+  `regIdOf` (the registration token, as `pRegTokenOk`). A guest code unlocks only when the token's id is the id kept for its email
+  (`e/<sha256(email)>` in terrain-registrations), remembered 10 minutes (a minute while there is none: he may be registering); no secret, no
+  token or no record: locked (fails closed). Every code compared whole, both sides hashed. advise.mjs's five lock sites (prices, needs,
+  ideas, case, the main route) and digital.mjs's review ask `passCheck` with their own reading of the passphrase (`passOk` gone from both),
+  so the refusals keep their order (nokey → disabled → locked → noreg). The page's "More ideas" (`libAiMore`) now sends the registration
+  token too. advise-2.7 and digital-1.2 keep their numbers; `/.netlify/functions/guest-pass` → `"fn":"guest-pass-1.0"` proves the deploy.
+  **His side:** he makes up the code (never in the chat or the repo), adds `TERRAIN_AI_GUESTS` in Netlify (secret) as `director's email=code`,
+  redeploys; the director registers on terrain.church with that email, then opens `terrain.church/?ideas=` + the code once on each device.
+  Registration does not check an email, so the code is as safe as the code itself plus his email address: keep the code private.
+  Tests: `v62-2-guest-pass` (new, 38; failing first on the stamp commit: `v80/logs/ff-v62-2-guest-pass.log`).
 
 **v10.62.0 (8 Oct 2026, full lane) — Digital footprint, the bar raised: "Current" means a site that does its work; every deficiency with its fix;
 an in-depth review.** The pastor, of his own church's card: *"on the website you say that it looks it's current but what about its content because

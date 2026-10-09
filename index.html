@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.62.1
+     TERRAIN  v10.62.2
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.62.1" data-theme="dark">
+<html lang="en" data-version="v10.62.2" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.62.1">
-<title>Community Map — Terrain v10.62.1</title>
+<meta name="terrain-version" content="v10.62.2">
+<title>Community Map — Terrain v10.62.2</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -413,6 +413,7 @@ nav.tools[hidden]+.themebtn{margin-left:auto}
 .regnews,.regpriv,.regfoot{grid-column:1/-1}
 .regnews{font-size:.86rem;color:var(--ink2)}
 .regpriv{margin:0}
+.regterms a,.acct-terms a{color:var(--acc)}   /* v10.62.1 */
 .regfoot{display:flex;align-items:center;gap:6px 16px;flex-wrap:wrap}
 .regfoot .btn{min-width:160px}
 .regfoot .status{margin-top:0;flex:1 1 220px}
@@ -4863,8 +4864,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       </div>
     </div>
     <p class="gjoin"><a href="#watch" id="gatejoin">Here to follow a presentation? Enter its code</a></p>
-    <!-- v10.62.1: the privacy policy, open to anyone without registering (terrain.church/privacy) -->
-    <p class="gjoin gpriv"><a href="/privacy" id="gatepriv">How Terrain handles your information</a></p>
+    <!-- v10.62.1: what Terrain is, and the privacy policy and terms, open to anyone without registering -->
+    <p class="gjoin gpriv"><a href="/about" id="gateabout">About Terrain</a> · <a href="/privacy" id="gatepriv">Privacy</a> · <a href="/terms" id="gateterms">Terms</a></p>
     <p class="status err" id="gmsg" role="alert" hidden></p>
     <div class="usmapwrap"><div id="usmap"></div></div>
     <div class="field" style="margin-top:16px">
@@ -4895,14 +4896,14 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <!-- v10.47.1: "keep that [Top] and then also … main menu which will bring you to the main menu" -->
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
-    <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.1</span></div>
+    <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.62.2</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.62.1';
+const VERSION = 'v10.62.2';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9617,7 +9618,7 @@ const ES={
  
  
  'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso','Spiritual Gifts':'Dones espirituales',
- 'Join a presentation':'Unirse a una presentación','Privacy':'Privacidad',
+ 'Join a presentation':'Unirse a una presentación','Privacy':'Privacidad','Terms':'Términos',
  // the hub's fourth title and the four verbs under the cards (v10.38.0: seen
  // straight after registering in Spanish, and they were still English)
  'Evangelism Planner':'Plan de evangelismo',
@@ -10607,7 +10608,8 @@ function acctBodyHTML(){
       +`</div>`
       +`<p>${esc(trial?L(`${d} days free, then the plan you choose. Cancel before the trial ends and nothing is charged.`,`${d} días gratis; después, el plan que elija. Cancele antes de que termine la prueba y no se cobra nada.`):L('Cancel anytime in Manage billing.','Cancele cuando quiera en Administrar pagos.'))}</p>`
       +(i.mode==='test'?`<p class="acct-test">${esc(L('Test mode: card 4242 4242 4242 4242, any future date, any three digits. No real money moves.','Modo de prueba: tarjeta 4242 4242 4242 4242, cualquier fecha futura, tres dígitos cualesquiera. No se mueve dinero real.'))}</p>`:'')
-      +err+`<p class="acct-note">${esc(L('Stripe takes the card on its own page. Terrain never sees it.','Stripe recibe la tarjeta en su propia página. Terrain nunca la ve.'))}</p>`;
+      +err+`<p class="acct-note">${esc(L('Stripe takes the card on its own page. Terrain never sees it.','Stripe recibe la tarjeta en su propia página. Terrain nunca la ve.'))}</p>`
+      +`<p class="acct-note acct-terms">${L('Starting a trial or a plan means you agree to the <a href="/terms" target="_blank" rel="noopener">Terms of Service</a>. When a payment is refunded: the <a href="/refunds" target="_blank" rel="noopener">Refund Policy</a>.','Al empezar una prueba o un plan, acepta los <a href="/terms" target="_blank" rel="noopener">Términos de servicio</a>. Cuándo se devuelve un pago: la <a href="/refunds" target="_blank" rel="noopener">Política de reembolsos</a>.')}</p>`;   // v10.62.1
   }
   if(v==='account'){
     const full=acctFull(), on=acctBillingOn();
@@ -12851,6 +12853,7 @@ function regFormHTML(){
         `<button type="button" data-r="${k}" role="radio" aria-checked="${k===role}"${k===role?' class="on"':''}>${t}</button>`).join('')}</div></div>
     <label class="u-check regnews"><input type="checkbox" id="rnews"${p.news===true?' checked':''}>${L('Send me occasional news about Terrain','Envíenme noticias ocasionales sobre Terrain')}</label>
     <p class="note regpriv">${L('We keep your name, email, church, role and conference so we know who is using Terrain and can reach you about it. We never share or sell them.','Guardamos su nombre, su correo electrónico, su iglesia, su cargo y su asociación para saber quién usa Terrain y poder comunicarnos con usted al respecto. Nunca los compartimos ni los vendemos.')}</p>
+    <p class="note regpriv regterms">${L('By registering, you agree to Terrain’s <a href="/terms" target="_blank" rel="noopener">Terms of Service</a> and <a href="/privacy" target="_blank" rel="noopener">Privacy Policy</a>.','Al registrarse, acepta los <a href="/terms" target="_blank" rel="noopener">Términos de servicio</a> y la <a href="/privacy" target="_blank" rel="noopener">Política de privacidad</a> de Terrain.')}</p>
     <div class="regfoot" id="regfoot"><button class="btn" id="rbtn" type="submit">${L('Register','Registrarse')}</button><div class="status" id="gerr" role="alert"></div></div>
   </form>`;
 }
@@ -13098,7 +13101,7 @@ function openGate(mode,msg){
   if(sub) sub.textContent=code
     ?L('Tap your state on the map, or search the list. Then enter the access code for your conference.','Toque su estado en el mapa o busque en la lista. Luego escriba el código de acceso de su asociación.')
     :L('Tap your state on the map, or search the list. Then register with your name, email and church.','Toque su estado en el mapa o busque en la lista. Luego regístrese con su nombre, su correo electrónico y su iglesia.');
-  { const gp=$('gatepriv'); if(gp) gp.textContent=L('How Terrain handles your information','Cómo maneja Terrain su información'); }   // v10.62.1
+  [['gateabout','About Terrain','Acerca de Terrain'],['gatepriv','Privacy','Privacidad'],['gateterms','Terms','Términos']].forEach(([id,en,es])=>{ const a=$(id); if(a) a.textContent=L(en,es); });   // v10.62.1
   { const gj=$('gatejoin'); if(gj) gj.textContent=L('Here to follow a presentation? Enter its code','¿Viene a seguir una presentación? Escriba su código'); }
   // v10.46.0: the sign-in, only while the first page asks for a registration (never with codes)
   { const gs=$('gsignin'), sb=$('gsignbtn'), sf=$('signform');
@@ -23013,7 +23016,7 @@ async function libAiMore(ctx,sec){
       tags:[...env.tags],avoid};
     if(topic.reach) body.reach=topic.reach;
     let r=null, j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass()},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
       j=await r.json().catch(()=>null); }catch(e){ r=null; }
     if(uChurch().id!==ch.id) return;                        // he switched church meanwhile: nothing saved to the wrong one
     if(r&&r.status===401&&j&&j.code==='locked'){ U.aiMsg=aiPass()?libT('aiWrong'):libT('aiLocked'); U.aiErr=true; return; }
