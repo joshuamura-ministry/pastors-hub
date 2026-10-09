@@ -219,6 +219,24 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.63.3 (9 Oct 2026, quick lane) — the two big buttons alike; Prepare now always his own, above the conference buttons.** The pastor, of v10.63.2's left button: *"Too many words we need to
+make it simple like the one on the right it doesn't look symmetrical at all"*, then *"How about send to members?"*. **Send to members**
+("A link and a QR code"; ES "Envíela a los miembros" / "Un enlace y un código QR") beside **Take it yourself** ("About 15 minutes"): each
+title one line, each line under it short, the two buttons the same height. **The year ahead** (Learn from other conferences): the
+pastor, *"When I click … the tabs there yours PA Ohio, Arkansas CCC … it doesn't change what's right underneath … if not, those tabs should go
+underneath and then Pennsylvania should just be"*. The buttons did redraw Prepare now, but nearly all of it is the NAD's and the world church's
+(the same for every conference: only Pennsylvania had an item of its own, the Pacific Union conferences one union deadline), so it looked
+unchanged. Now Prepare now comes first and is always his own conference's (`cmpAhead`: `pM` / `yaM` from `S.mine`; heading "Prepare now for
+Pennsylvania" / "Prepárese ya en Pennsylvania", `prepFor`); under it the line "Show the year ahead for" (`.cmp-segl`) and the conference
+buttons, which change the published-to line, the key and the twelve months below. Tests: `v63-2-gifts-landing` (24; its button checks failing
+first on v10.63.2: `v81/ff-v63-3-gifts-landing.log`; a new check holds both titles to 24 letters and both lines to 20); updated with
+comments: gifts-landing, v57-1-gifts-clean; `conferences-view` (+3: Prepare now first and his own with Central California shown, EN + ES; failing
+first on v10.63.2: `v81/ff-v63-3-year-ahead.log`). Checked in Chrome (`v81/shots633.mjs`, `v82/shots633ya.mjs`: Prepare now with PA and CCC chosen): computer 1366, tablet 820, phone 390, EN + ES, each title
+one line, the buttons one height, no page errors. Also `tools/ideas-src/selftest.mjs`: its theme-review pattern read the file's path as one
+word, so it failed in any folder whose path holds a space (both v10.63.2's and this release's full runs, made in `~/Ministry Work/…`); it now reads
+up to " (theme)". Full suite: 178 suites · 11,439 passed · 0 failed (the full run 11,438 and that one check, rerun after the fix: 16).
+Samples `Terrain-v10.63.3-samples`.
+
 **v10.63.2 (9 Oct 2026, quick lane) — Spiritual Gifts' main page: a verse and Ellen White, the three steps as a picture, two big
 glowing buttons.** The pastor: *"it would be nice to have a Bible verse about spiritual gifts … maybe a quote from Ellen White … I don't need
 it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I
@@ -237,7 +255,7 @@ older classes had the names first chosen (`.gfwhy`, `.gfbig`: the report's lines
 `.gfword` and `.gfpair`. Tests: `v63-2-gifts-landing` (new, 23; failing first on v10.63.1: `v81/ff-v63-2-gifts-landing.log`); updated with
 comments: gifts-landing, gifts-sample, gifts-first-ui, v47-clean (the steps are not buttons; their old click retired), v57-1-gifts-clean,
 v56-2-church-and-gifts-demo, v61-audit (step 1's line). Checked in Chrome (`v81/shots632.mjs`): computer 1366, tablet 820, phone 390, EN + ES, no sideways scroll, the
-buttons level and of one height, no page errors. Full suite: 178 suites · 11,435 passed · 0 failed (the full run 11,433 and two checks rerun alone: v61-audit's step-1 line, stale, updated with a comment; v44-sabbath-leftovers' selftest, which failed once under the full run's load and passes alone: 21 and 16). Samples `Terrain-v10.63.2-samples`.
+buttons level and of one height, no page errors. Full suite: 178 suites · 11,435 passed · 0 failed (the full run 11,433 and two checks rerun alone: v61-audit's step-1 line, stale, updated with a comment; v44-sabbath-leftovers' selftest, which passes alone; the cause, a path with a space, was found and fixed in v10.63.3: 21 and 16). Samples `Terrain-v10.63.2-samples`.
 
 **v10.63.1 (9 Oct 2026, quick lane) — a Tester code box.** The pastor: *"Can you just put a tester code box on the top somewhere and he can
 click it and then he'll put the code in and then it will unlock everything for him"*. Beside Change in the header, **Tester code** (`#codebtn`,

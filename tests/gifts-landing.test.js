@@ -28,7 +28,8 @@ setTimeout(()=>{
   const doors=[...h.querySelectorAll('.gfbigb')].map(d=>d.querySelector('b').textContent);
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "you don't need … check for new results that should just populate whenever someone finishes … instead of having Open And delete … that circular graph … we don't need the sample report anymore … take it myself doesn't need to be there … we need to clear out the clutter"
   // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
-  c('two big buttons: send it to your members, take it yourself', doors, ['Send Spiritual Gifts to your members','Take it yourself']);
+  // v10.63.3 (stale, not a regression): The pastor (9 Oct 2026), "Too many words we need to make it simple like the one on the right it doesn't look symmetrical at all": the left button's words short like the right one's
+  c('two big buttons: send to members, take it yourself', doors, ['Send to members','Take it yourself']);
   c('…pink and violet', [...h.querySelectorAll('.gfbigb')].map(d=>d.getAttribute('style')), ['--k:var(--m-people)','--k:var(--gfv,var(--m-children))']);
   c('…through the existing navigation', [...h.querySelectorAll('.gfbigb')].map(d=>d.dataset.gv), ['setup','take']);
   c('results sit beneath the buttons', !!(h.querySelector('.gfpair').compareDocumentPosition(h.querySelector('.gfresults'))&4));

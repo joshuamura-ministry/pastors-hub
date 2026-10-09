@@ -31,7 +31,8 @@ const btnTexts=P=>P.qa('#gifts button').map(b=>b.textContent.replace(/\s+/g,' ')
   // v10.63.2 (stale, not a regression): the pastor (9 Oct 2026), "I don't need it to be buttons clickable it's just shows that you invite your members you can see the results and then you fill the positions … What I want is a beautiful two big buttons … Send spiritual gifts to your members and then take it yourself": the steps are a picture, then two big buttons
   c('"Take it yourself" is back, as the second big button', [!!P.q('#gifts [data-gv="take"]'),bt.some(t=>/Take it yourself/.test(t))], [true,true]);
   c('no "See a sample report" (every result opens as a report)', [!!P.q('#gfsample'),bt.some(t=>/sample report/i.test(t))], [false,false]);
-  c('step 1: two big buttons, Send Spiritual Gifts to your members and Take it yourself', P.qa('#gf-invite .gfbigb b').map(b=>b.textContent), ['Send Spiritual Gifts to your members','Take it yourself']);
+  // v10.63.3 (stale, not a regression): The pastor (9 Oct 2026), "Too many words we need to make it simple like the one on the right it doesn't look symmetrical at all"
+  c('step 1: two big buttons, Send to members and Take it yourself', P.qa('#gf-invite .gfbigb b').map(b=>b.textContent), ['Send to members','Take it yourself']);
 
   console.log('\n-- each result: the name, the three strongest gifts in their colours, a small wheel; the row opens the report --');
   c('24 rows, each one button, no Open or Delete beside it', [P.qa('#gf-results .gfrow2').length,P.qa('#gf-results .gfrow2').every(r=>r.tagName==='BUTTON'),P.qa('#gf-results .gfopen, #gf-results .gfdel').length], [24,true,0]);
