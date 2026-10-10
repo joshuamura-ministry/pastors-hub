@@ -219,6 +219,48 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.65.0 (10 Oct 2026, full lane) — the Planner plans evangelism meetings or revival meetings, and fits the time left.** The pastor:
+*"maybe the EVANGELISM planner should also should have two options one for EVANGELISM and one for in reach meaning for our members … there
+should be an option to do something big for our own members"*, *"We can put revival meetings … preparing"*; then *"we only want it in two
+months away or three months. Everything has to be adjusted for the three months even for EVANGELISM … with six months not a year … for a three
+months preparation it's not gonna as involved … the main things to get ready and for revival the post is getting our members active and
+prepared for EVANGELISM … taking their spiritual gifts … surveying the community … making connections to backslidden Adventists or those who
+know about Adventism or who were born, but are no longer in the church … restructure preparation and also post work"*.
+- **What are you planning?** (`#pl-type`, `planTypeOf` / `planTypeSet`, the form's `data-pt`): **Evangelism meetings** · Reaching our community
+  (the plan as before; `PLAN.type='evangelism'`, absent = evangelism) or **Revival meetings** · Preparing our church (`PLAN.type='revival'`,
+  v 4). Revival asks for **Members on the books** (`#pl-books`, `.pf-rv`), not the seats, interest names, Bible workers or kind of series
+  (`.pf-ev`); its own intro (`#pl-lead`) and demo (`REV_DEMO`: 150 active, 220 on the books, 9 nights Friday to the next Sabbath, $6,000, about
+  seven months out). Track and Forms stay evangelism's. The main menu's tile: "Evangelism or revival meetings, from planning to follow-up." /
+  "Evangelismo o avivamiento: preparación y seguimiento."
+- **The revival plan** (block "REVIVAL MEETINGS", before `plannerRender`, which hands a revival to `revRender`): `revSchedule`, `revTargets`
+  (on the books, drifted = on the books less active, pairs, prayer bands, small groups, half with gifts), `revRoles` (Revival, Prayer and
+  Reconnection coordinators core; speaker host, Spiritual Gifts, small groups, Media & publicity, music, hospitality, children & youth,
+  communion, transportation; `REV_PAIRS` for `planLeaderFit(roles,leaders,pairs)`), `revPhases` (Pray and plan · Reconnect (every member who has
+  drifted visited, never to reproach; a second list: former Adventists and those raised in the church) · Prepare hearts (small groups, every
+  member's Spiritual Gifts, a team runs the Community Survey) · Invite every member · the last two weeks (ten days of prayer, the phone tree)
+  · the meetings (a last Sabbath of recommitment, communion with the ordinance of humility, baptism or profession of faith; the commissioning)
+  · After: the first year (every member serving within three months, a friend for each who came back, the next evangelism meetings)),
+  `revStreams` (Who comes), `revPromo` (ten ways to the church family, 8 every church, 2 if it can; ready words: a text to a member we miss, a
+  bulletin line, the livestream), `revBudget` (speaker 35 · hospitality 20 · the meetings 20 · inviting 10 · after 15), `revDoc` (the printed
+  revival plan). `planWireCopy` serves both plans' Copy buttons.
+- **The plan fits the time left.** Evangelism (`planSchedule`'s `tier`, `sb`): 17 months or more the full plan; 8–17 months the six phases
+  compressed (as before); **2–8 months** three phases of the main things (Leaders, prayer and names: the names you already have in one list,
+  former Adventists among them, the follow-up chosen first · Reach the names you have: visits, Bible studies, one bridge event from about 3½
+  months, home groups from about 12 weeks, the handbills ordered in the phase that holds their date · Invite); **under 2 months** two (Leaders,
+  prayer and names · Invite); and then "the follow-up carries more" (Bible studies offered within a week, the Bible class at once, a short
+  second series in about six months). Revival (`revSchedule`'s `tier`): six months the full plan; **6 weeks–6 months** three phases (Pray and
+  reconnect, the speaker booked now · Prepare hearts · Invite every member); **under 6 weeks** two, with the Spiritual Gifts, the community
+  survey and the small groups in the first month after; the visits go on after. The letter home goes out the day the invitation phase begins
+  (the countdown and Getting the word out agree). **A promotion date already past** reads "As soon as you can" (`planPromoNow`; a range from
+  today, "Now to …"; the livestream keeps the Sabbaths still ahead). The leaders' note says chairpersons are "chosen now" once their date is
+  past. A lone last card stretches across its row in the budget and the leaders' roles too (`TS_NOLONE` += `.budget`, `.lroles`).
+- Tests: `v65-revival` (new, 43; failing first on v10.64.0: `v82/ff-v65-revival.log`); updated with comments: hub-copy-and-quote, hub-layout,
+  hub-alignment (the tile's line). Checked in Chrome (`v82/shots650.mjs`, `shots650b.mjs`, `shots650c.mjs`): computer 1366 and phone 390, the
+  form both ways, a demo revival, evangelism three months out, revival four weeks out; no sideways scroll, rows level, no page errors. Full
+  suite: 180 suites · 11,512 passed · 0 failed. Samples `Terrain-v10.65.0-samples`.
+- **Open (his to decide):** the church directory with pictures (offered: with Spiritual Gifts, through the members' one link, approved by the
+  pastor, a PDF and a members-only page; photos would be the first church data kept on Terrain's server).
+
 **v10.64.0 (9 Oct 2026, full lane) — the Evangelism Planner gets the word out: where the handbills go, every way to promote, Slide
 Preach.** The pastor: *"marketing … promoting like sending out hand bills going door-to-door using Facebook ads … letting the members go in
 hand them out … banners in concentrated areas like in the most populated areas where people are walking around the most … promoted strongly on
@@ -3323,6 +3365,9 @@ Don't relitigate them without a reason he'd accept.
   filter. Before adding a button, check nothing on the same screen already does it.
 - **Each church is its own, and they are compared, never ranked** (v10.57.0): one button in the header switches; the comparison shows
   differences in plain sentences and counts only.
+- **The Planner fits the time left** (v10.65.0, his words: "it has to adjust … the main things to get ready"): a short runway changes
+  what the plan asks, not only its dates; the follow-up carries what the preparation could not. Revival meetings prepare members for
+  evangelism: every member serving, every member who has drifted and every former Adventist visited.
 - **Every way to promote, never required** (v10.64.0, his words: "doesn't mean that we can do all of these things, but there should be
   these options out there if the church can"): each dated back from opening night, marked Every church or If your church can; the mail goes
   where the most people live, never everywhere, and the handbill changes with who lives there.
