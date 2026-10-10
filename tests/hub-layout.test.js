@@ -55,10 +55,11 @@ setTimeout(()=>{
   console.log('\n-- Spanish --');
   c('new headline translated', w.eval("ES['Welcome to Terrain']"), 'Bienvenido a Terrain');
   c('new sub translated', w.eval("ES['Your journey begins here. Choose a tool to begin.']"), 'Su camino comienza aquí. Elija una herramienta para comenzar.');   // v10.56.1
+  // v10.65.0 (stale, not a regression): the pastor (9 Oct 2026), "two options one for EVANGELISM and one for in reach … We can put revival meetings": the Planner's tile names both
   c('all four blurbs translated', [ 'Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
     'Proposals for ministries, projects and purchases.',
-    'Plan your outreach journey, from preparation to follow-up.'].every(k=>!!w.eval('ES['+JSON.stringify(k)+']')));
+    'Evangelism or revival meetings, from planning to follow-up.'].every(k=>!!w.eval('ES['+JSON.stringify(k)+']')));
 
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);

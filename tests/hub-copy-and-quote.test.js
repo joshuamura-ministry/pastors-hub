@@ -39,10 +39,11 @@ setTimeout(()=>{
   console.log('\n-- blurbs, Spanish --');
   const keys=en.map(t=>t);
   const es=keys.map(k=>w.eval('ES['+JSON.stringify(k)+']')).filter(Boolean);
+  // v10.65.0 (stale, not a regression): the pastor (9 Oct 2026), "two options one for EVANGELISM and one for in reach … We can put revival meetings": the Planner's tile names both
   const esAll=['Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
     'Proposals for ministries, projects and purchases.',
-    'Plan your outreach journey, from preparation to follow-up.',
+    'Evangelism or revival meetings, from planning to follow-up.',
     'What other conferences’ calendars hold, side by side.'].map(k=>w.eval('ES['+JSON.stringify(k)+']'));   // v56 (B2): the fifth tile's line, held to the same budget
   esAll.forEach(t=>console.log('    '+String((t||'').length).padStart(2)+'  '+t));
   c('all five still translated', esAll.every(Boolean));   // v56 (B2)
