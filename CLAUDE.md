@@ -91,6 +91,8 @@ netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans:
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+netlify/functions/places.mjs         (v10.69.0, places-1.0) the church box's suggestions: the conference's Adventist directory (Digital footprint's findings), then
+                               Google's place search (Autocomplete, Place Details), for registered pastors; AC_MONTH_MAX / PD_MONTH_MAX
 netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.0) the lock behind every Claude feature: the passphrase, or a guest code (TERRAIN_AI_GUESTS)
                                on its own registration (the token's id = the id kept for the code's email); advise.mjs and digital.mjs import
                                `passCheck`; its own GET says only `{ok, fn}`
@@ -213,6 +215,7 @@ values are never in the repo):
 | `BRAVE_SEARCH_KEY` | digital-read.mjs | Optional (v10.60.0, not set). One search a church: the double check (a site, a Facebook page or a YouTube channel the listing does not give; directories that still name an earlier pastor; where its own site comes). Brave Search API: 1,000 free a month, then $5 per 1,000. Without it the double check is the listing and Google's listing, and the page never says "no Facebook page" (none was looked for). |
 | `SEARCH_MONTH_MAX` | digital-read.mjs | Optional (v10.60.0). Searches a month, default 900. |
 | `REVIEW_MODEL` / `REVIEW_EFFORT` / `REVIEW_DAY_MAX` | digital.mjs, digital-review.mjs | Optional (v10.62.0). The in-depth review's model (default `claude-opus-5-5`), effort (`medium`) and the site's reviews a day (default 40; 0 turns it off: GET says `review:false`). It needs `ANTHROPIC_API_KEY` **and** `TERRAIN_AI_PASS`, and an unlocked device (`?ideas=`), as every Claude feature. 3 a registration a day for another church or "Review again"; a church's kept review is given again at no cost until it is read again. About $0.30–0.60 a review (25–40K tokens in, with six pictures). |
+| `AC_MONTH_MAX` / `PD_MONTH_MAX` | places.mjs | Optional (v10.69.0). Google's suggestions (Autocomplete) and the places picked (Place Details) a month for the whole site, default 8,000 each (Google gives 10,000 of each free); past them the church box answers from the Adventist directory alone. 0 turns Google's part off. |
 | `DIGITAL_CONFS` | digital.mjs, digital-sweep.mjs | Optional (v10.60.0). The conferences that may be read, comma-separated (their names as registered: "Pennsylvania,Ohio"); "*" every NAD conference (CONF_ORG has all 51 Terrain registers: the 50 US conferences and, since v10.60.1, Guam-Micronesia Mission). Default "Pennsylvania". |
 
 v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registration token like gifts and present, and Netlify Blobs.
@@ -220,6 +223,38 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.69.0 (11 Oct 2026, full lane) — the church box knows the church.** The pastor: *"is there a way to make it so that it actually knows
+like … when you type in Google? It will actually populate or Google maps it will populate so if I say Fairview village seventh day so that I
+won't have to put in exactly … how every single thing should be before. It actually knows what church I'm talking about."*
+- **The server** (`netlify/functions/places.mjs`, **places-1.0**; the registration token, as census and digital ask): `suggest` answers from
+  his conference's **Adventist church directory** first (Digital footprint's findings, `terrain-digital` c/<slug>: each church's official
+  name and address, kept in memory ten minutes; `matchDir`: the denomination's words and "church" dropped from the query, since every church
+  there is Adventist, so "Fairview village seventh day" = fairview + village; each word typed begins a word of the name, other name, town or
+  address; a name match first, then a church before a company or group, then the shorter name), then **Google's place search** (Places API
+  (New) Autocomplete, the same `GOOGLE_PLACES_KEY`; only when the directory has fewer than three; the United States, a 50 km bias round his
+  church, a session token) for any other church or street address; `pick` asks Place Details (Essentials: formattedAddress, location) for the
+  one he picks. Google bills a session's first 12 autocompletes and its Place Details; 10,000 of each free a month: `AC_MONTH_MAX` and
+  `PD_MONTH_MAX` (8,000 each) keep the site under that, then the directory alone. Nothing typed is kept or logged (the store keeps only
+  `m/<month>/ac` and `m/<month>/pd`). 90 requests a minute from one registration.
+- **The page** (block "v10.69.0 — the church box knows the church", after Map it's wiring): `#addr` is a combobox ("Church name or address" /
+  "Nombre o dirección de la iglesia"; `autocomplete=off`), its list `#ac-list` under it (`AC`, `acInput` a quarter second after the last letter,
+  two letters at least; `acAsk`, `acDraw`, `acKeys`: the arrows, Enter, Escape; a tap; `acPick`; `acSession`; `acNear`, the open church's
+  point). A directory church fills in its address and maps it; a Google place asks `pick` first. `acGeo` maps a picked Google place by its
+  point when the Census cannot find its words (the address kept as the church's). The church picked keeps its name (`geo.pick` →
+  `uEnsureChurch`, only while the church has no name of its own). "Google Maps" under the list whenever a Google place is in it (Google's
+  rule). The lead line: "Type the church’s name or address." The privacy policy's Google line says what the box sends, when (11 October 2026).
+- **On a phone** the survey's place line puts the church's address on its own line under the name (`.place .pl-dot+span`): the dot between
+  them was left alone at the end of the first line (seen in this release's pictures; older).
+- Tests: `places-function` (new, 32) and `v69-church-search` (new, 21), both failing first on v10.68.0 (`v83/ff-v69.log`); updated with a
+  comment: v62-1-privacy (the policy's date). Checked in Chrome (`v83/shots69.mjs`, served by `v83/serve69.mjs` on 8880 with places.mjs itself
+  and the Pennsylvania directory, the Census passed through): "Fairview village seventh day" → Fairview Village SDA Church, the down arrow and
+  Enter, the real Census survey, the church saved as "Fairview Village SDA Church" (the header's church button says it); "iglesia adventista
+  bucks" in Spanish; computer 1366 and phone 390, the list as wide as the box, no sideways scroll, no page errors. Google's side is stubbed in
+  every test: the first real Google suggestion is his (a church outside the directory, or a street address).
+- Full suite: 185 suites · 11,648 passed · 0 failed (the church-before-group order and the phone's address line came after the copy was
+  taken: places-function, v69-church-search and the suites round the address box rerun on them, all passing). Samples `Terrain-v10.69.0-samples`.
+- Verify after deploy: `/.netlify/functions/places` → `"fn":"places-1.0"`, `"google":true`.
 
 **v10.68.0 (11 Oct 2026, quick lane) — the app icon; the church directory a tile like the others, beside "More tools".** The pastor: *"Now I
 need a beautiful app icon for my phone when I wanna add it to my home screen and also I need to add it here on my Mac as well as an app icon
@@ -3465,6 +3500,8 @@ Don't relitigate them without a reason he'd accept.
 - **The Planner fits the time left** (v10.65.0, his words: "it has to adjust … the main things to get ready"): a short runway changes
   what the plan asks, not only its dates; the follow-up carries what the preparation could not. Revival meetings prepare members for
   evangelism: every member serving, every member who has drifted and every former Adventist visited.
+- **The church box knows the church** (v10.69.0, his words: "it actually knows what church I'm talking about"): the conference's Adventist
+  directory first, Google's place search for the rest; picking one maps it and keeps its name. Nothing typed is kept.
 - **The app icon is a church lit on a hill** (v10.68.0): the map's open lines below it in the tools' colours, never rings round a point. Every
   icon file is drawn from `tools/icons` by its script. A phone adds Terrain with "Open as Web App" off, so the icon opens where his work is.
 - **The main menu is the six tools, then the directory and More tools** (v10.68.0): every tile drawn alike; the extra two centred under the six.

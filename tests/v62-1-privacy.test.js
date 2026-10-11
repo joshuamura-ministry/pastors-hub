@@ -19,7 +19,8 @@ const art=l=>{ const m=new RegExp(`<article lang="${l}"[^>]*>([\\s\\S]*?)</artic
   c('English and Spanish, each with the same fourteen sections and the short version', [(art('en').match(/<h2 id=/g)||[]).length,(art('es').match(/<h2 id=/g)||[]).length,/class="short"/.test(art('en'))&&/class="short"/.test(art('es'))], [14,14,true]);
   c('Muraworks, a business based in Pennsylvania (never a person)', [/<b>Muraworks<\/b>, a business based in Pennsylvania/.test(PV),/<b>Muraworks<\/b>, una empresa con sede en Pensilvania/.test(PV),/Ryen|Joshua/.test(text(PV))], [true,true,false]);
   c('the contact everywhere is privacy@terrain.church, a mailto link', [(PV.match(/href="mailto:privacy@terrain\.church"/g)||[]).length>=6,(PV.match(/mailto:/g)||[]).length===(PV.match(/mailto:privacy@terrain\.church/g)||[]).length], [true,true]);
-  c('a deletion section anyone can be sent to (#delete, #borrar), and the effective date', [/<h2 id="delete">/.test(PV),/<h2 id="borrar">/.test(PV),/Effective 8 October 2026/.test(PV),/Vigente desde el 8 de octubre de 2026/.test(PV)], [true,true,true,true]);
+  c('a deletion section anyone can be sent to (#delete, #borrar), and the effective date', [/<h2 id="delete">/.test(PV),/<h2 id="borrar">/.test(PV),/Effective 11 October 2026/.test(PV),/Vigente desde el 11 de octubre de 2026/.test(PV)], [true,true,true,true]);
+  // v10.69.0 (stale, not a regression): the policy says what the church box sends to Google (the pastor, 11 Oct 2026: "if I say Fairview village seventh day … It actually knows what church I'm talking about"), so its date moved to 11 October 2026
   c('no "AI" or "IA" anywhere a person reads it (his rule)', /\bAI\b|\bIA\b|artificial/.test(text(PV)), false);
 
   console.log('\n-- what it says is what the code does --');
