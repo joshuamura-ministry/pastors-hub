@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.68.0
+     TERRAIN  v10.69.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.68.0" data-theme="dark">
+<html lang="en" data-version="v10.69.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.68.0">
-<title>Community Map — Terrain v10.68.0</title>
+<meta name="terrain-version" content="v10.69.0">
+<title>Community Map — Terrain v10.69.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -769,6 +769,19 @@ section.blk,#brief,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 .field input{flex:1;min-width:0;background:var(--panel);border:1px solid var(--line2);border-radius:12px;padding:14px 14px;font-size:1rem}
 .field input::placeholder{color:var(--ink3)}
 .field input:focus{border-color:var(--acc);outline:none}
+/* v10.69.0: the church box's suggestions, under it */
+.ask .field{position:relative}
+.ac-list{position:absolute;left:0;right:0;top:calc(100% + 6px);z-index:40;margin:0;padding:6px;list-style:none;background:var(--panel);border:1px solid var(--line2);
+  border-radius:14px;box-shadow:0 16px 40px rgba(0,0,0,.45);max-height:min(60vh,420px);overflow:auto}
+.ac-list[hidden]{display:none}
+.ac-opt{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:10px;cursor:pointer;text-align:left}
+.ac-opt[aria-selected="true"]{background:var(--panel2);box-shadow:inset 0 0 0 1px var(--acc-dim)}
+@media (hover:hover){ .ac-opt:hover{background:var(--panel2)} }
+.ac-i{flex:none;width:22px;height:22px;margin-top:1px;color:var(--acc)}
+.ac-t{min-width:0;display:flex;flex-direction:column;gap:2px}
+.ac-t b{font-weight:600;color:var(--ink);font-size:.95rem;line-height:1.3}
+.ac-t span{font-size:.82rem;color:var(--ink2);line-height:1.4;overflow-wrap:anywhere}
+.ac-g{padding:6px 12px 2px;font-size:.72rem;color:var(--ink3);text-align:right}
 .btn{background:var(--acc);color:var(--btn-ink);border:none;border-radius:12px;font-weight:700;padding:0 18px;cursor:pointer;white-space:nowrap;
   min-height:46px;letter-spacing:-.015em;font-weight:750;
   box-shadow:0 8px 22px -10px var(--acc-glow),0 1px 2px rgba(15,23,42,.18);
@@ -804,6 +817,8 @@ section.blk,#brief,#report{scroll-margin-top:calc(var(--topH,58px) + 70px)}
 .place{gap:6px 8px;align-items:center;font-size:.98rem}
 .place .pl-pin{display:inline-flex;color:var(--acc)}.place .pl-pin svg{width:18px;height:18px}
 .place .pl-dot{color:var(--ink3)}
+/* v10.69.0: on a phone the church's address takes its own line under the name (the dot was left alone at the end of the first) */
+@media (max-width:640px){ .place .pl-dot{display:none} .place .pl-dot+span{flex-basis:100%;padding-left:26px} }
 #focusbar,#focusnote{display:none!important}
 #scope{margin:14px 0 0}
 #report>.brief{margin-top:10px}
@@ -4947,9 +4962,10 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
 <main class="wrap">
   <div class="ask">
     <h1>Who lives around your church?</h1>
-    <p class="lead">Type the church address. Terrain reads the U.S. Census for that block, the town, and the county — and writes the summary in plain English.</p>
+    <p class="lead">Type the church’s name or address. Terrain reads the U.S. Census for that block, the town, and the county — and writes the summary in plain English.</p>
     <div class="field">
-      <input id="addr" type="text" inputmode="text" autocomplete="street-address" placeholder="10 Greene Rd, Warminster, PA" aria-label="Church address">
+      <input id="addr" type="text" inputmode="text" autocomplete="off" placeholder="Church name or address" aria-label="Church name or address" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="ac-list">
+      <ul class="ac-list" id="ac-list" role="listbox" aria-label="Churches and places" hidden></ul>
       <button class="btn" id="go">Map it</button>
     </div>
     <div class="row">
@@ -5196,13 +5212,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.68.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.69.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.68.0';
+const VERSION = 'v10.69.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9854,9 +9870,9 @@ const ES={
  // header and controls
  'Community Map':'Mapa comunitario','sign out':'cerrar sesión',
  'Who lives around your church?':'¿Quién vive alrededor de su iglesia?',
- 'Type the church address. Terrain reads the U.S. Census for that block, the town, and the county — and writes the summary in plain English.':
-   'Escriba la dirección de la iglesia. Terrain consulta el censo de EE. UU. para esa manzana, el municipio y el condado, y redacta el resumen en lenguaje sencillo.',
- 'Map it':'Analizar','Use my location':'Usar mi ubicación',
+ 'Type the church’s name or address. Terrain reads the U.S. Census for that block, the town, and the county — and writes the summary in plain English.':
+   'Escriba el nombre o la dirección de la iglesia. Terrain consulta el censo de EE. UU. para esa manzana, el municipio y el condado, y redacta el resumen en lenguaje sencillo.',
+ 'Map it':'Analizar','Use my location':'Usar mi ubicación','Church name or address':'Nombre o dirección de la iglesia',
  'Standing in the parking lot? Tap this.':'¿Está en el estacionamiento? Toque aquí.',
  'Neighborhood':'Vecindario','Town':'Municipio','County':'Condado',
  'THE BRIEF':'EL RESUMEN',
@@ -16308,8 +16324,82 @@ async function run(getGeo,opt){
   }
   return ok;
 }
-$('go').onclick=()=>{const a=$('addr').value.trim(); if(!a){setStatus('Type an address first.',true);return;} history.replaceState(null,'','#a='+encodeURIComponent(a)); run(()=>geocodeAddress(a));};
-$('addr').addEventListener('keydown',e=>{if(e.key==='Enter')$('go').click()});
+$('go').onclick=()=>{const a=$('addr').value.trim(); if(!a){setStatus('Type an address first.',true);return;} acClose(); history.replaceState(null,'','#a='+encodeURIComponent(a)); run(()=>acGeo(a));};
+$('addr').addEventListener('keydown',e=>{ if(acKeys(e)) return; if(e.key==='Enter')$('go').click(); });
+/* ==== v10.69.0 — the church box knows the church. The pastor (11 Oct 2026): "is there a way to make it so that it actually knows like …
+   when you type in Google? It will actually populate or Google maps it will populate so if I say Fairview village seventh day so that I
+   won't have to put in exactly … how every single thing should be before. It actually knows what church I'm talking about."
+   As he types (two letters or more, a moment after the last), places.mjs answers: his conference's Adventist churches from the official
+   directory first (the one Digital footprint reads), then Google's place search for anything else. A tap, or the arrows and Enter, fills in
+   the address and maps it; a church picked by its name keeps that name (uEnsureChurch, through geo.pick). ==== */
+const AC_FN='/.netlify/functions/places';
+const AC={seq:0,timer:0,list:[],i:-1,session:'',open:false};
+let ADDR_PICK=null;   // the suggestion picked {name, address, lat?, lon?}, until he types again
+const AC_ICON={dir:'<svg class="ac-i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v5M10 4h4"/><path d="M5 12l7-5 7 5"/><path d="M6.5 11v10h11V11"/><path d="M10.5 21v-4a1.5 1.5 0 0 1 3 0v4"/></svg>',
+  g:'<svg class="ac-i" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>'};
+function acSession(){
+  if(!AC.session){ let r=''; try{ const a=new Uint8Array(16); crypto.getRandomValues(a); r=btoa(String.fromCharCode(...a)); }catch(e){ r=String(Math.random()).slice(2)+String(Date.now()); }
+    AC.session=r.replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'').slice(0,40).padEnd(16,'0'); }
+  return AC.session;
+}
+function acNear(){ try{ const h=homeChurch(); if(h&&Number.isFinite(+h.x)&&Number.isFinite(+h.y)&&(+h.x||+h.y)) return {lat:+h.y,lon:+h.x}; }catch(e){} return null; }
+function acClose(){ AC.open=false; AC.i=-1; const l=$('ac-list'), a=$('addr'); if(l){ l.hidden=true; l.innerHTML=''; } if(a){ a.setAttribute('aria-expanded','false'); a.removeAttribute('aria-activedescendant'); } }
+function acDraw(){
+  const l=$('ac-list'), a=$('addr'); if(!l||!a) return;
+  if(!AC.list.length){ acClose(); return; }
+  l.innerHTML=AC.list.map((it,i)=>'<li class="ac-opt" role="option" id="ac-o-'+i+'" data-ac="'+i+'" aria-selected="'+(i===AC.i)+'">'+AC_ICON[it.src==='dir'?'dir':'g']
+    +'<span class="ac-t"><b>'+esc(it.name)+'</b><span>'+esc(it.src==='dir'?it.address:it.place)+'</span></span></li>').join('')
+    +(AC.list.some(it=>it.src==='g')?'<li class="ac-g" role="presentation">Google Maps</li>':'');
+  l.hidden=false; AC.open=true; a.setAttribute('aria-expanded','true');
+  if(AC.i>=0) a.setAttribute('aria-activedescendant','ac-o-'+AC.i); else a.removeAttribute('aria-activedescendant');
+}
+async function acAsk(){
+  const a=$('addr'); if(!a) return; const q=a.value.trim(); if(q.length<2){ acClose(); return; }
+  const seq=++AC.seq, conf=(typeof myConf==='function'&&myConf())||undefined, tok=typeof regTok==='function'?regTok():'';
+  let j=null;
+  try{ const r=await fetch(AC_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},
+      body:JSON.stringify({op:'suggest',q,conf,session:acSession(),near:acNear()||undefined,lang:LANG==='es'?'es':'en'})});
+    j=r.ok?await r.json().catch(()=>null):null; }catch(e){ j=null; }
+  if(seq!==AC.seq||a.value.trim()!==q||document.activeElement!==a) return;
+  AC.list=j&&j.ok&&Array.isArray(j.list)?j.list.filter(it=>it&&typeof it.name==='string'&&(it.src==='dir'?typeof it.address==='string':typeof it.id==='string')).slice(0,10):[];
+  AC.i=-1; acDraw();
+}
+function acInput(){ ADDR_PICK=null; clearTimeout(AC.timer); const q=($('addr').value||'').trim(); if(q.length<2){ AC.seq++; acClose(); return; } AC.timer=setTimeout(acAsk,220); }
+function acKeys(e){
+  if(!AC.open||!AC.list.length) return false;
+  if(e.key==='ArrowDown'||e.key==='ArrowUp'){ e.preventDefault(); const n=AC.list.length; AC.i=e.key==='ArrowDown'?(AC.i+1)%n:(AC.i<=0?n-1:AC.i-1); acDraw();
+    const o=$('ac-o-'+AC.i); if(o&&o.scrollIntoView) o.scrollIntoView({block:'nearest'}); return true; }
+  if(e.key==='Escape'){ e.preventDefault(); acClose(); return true; }
+  if(e.key==='Enter'&&AC.i>=0){ e.preventDefault(); acPick(AC.list[AC.i]); return true; }
+  return false;
+}
+async function acPick(it){
+  const a=$('addr'); if(!a||!it) return;
+  AC.seq++; clearTimeout(AC.timer); acClose();
+  if(it.src==='dir'){ a.value=it.address; ADDR_PICK={name:it.name,address:it.address}; AC.session=''; $('go').click(); return; }
+  a.value=it.name+(it.place?', '+it.place:''); setStatus(L('Finding '+it.name+'…','Buscando '+it.name+'…'));
+  let j=null; const tok=typeof regTok==='function'?regTok():'';
+  try{ const r=await fetch(AC_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'pick',id:it.id,session:acSession(),lang:LANG==='es'?'es':'en'})});
+    j=r.ok?await r.json().catch(()=>null):null; }catch(e){ j=null; }
+  AC.session='';
+  if(j&&j.ok&&j.address){ a.value=j.address; ADDR_PICK={name:it.name,address:j.address,lat:j.lat,lon:j.lon}; }
+  setStatus(''); $('go').click();
+}
+/* the address picked from a suggestion keeps its church's name; a Google place the Census does not find by its words is mapped by its point */
+async function acGeo(a){
+  const pk=ADDR_PICK&&ADDR_PICK.address===a?ADDR_PICK:null;
+  let g;
+  try{ g=await geocodeAddress(a); }
+  catch(e){ if(!pk||!Number.isFinite(pk.lat)||!Number.isFinite(pk.lon)) throw e; g=await geocodePoint(pk.lon,pk.lat); g.matched=a; delete g.label; }
+  if(pk) g.pick={name:pk.name};
+  return g;
+}
+(()=>{ const a=$('addr'), l=$('ac-list'); if(!a||!l) return;
+  a.addEventListener('input',acInput);
+  a.addEventListener('blur',()=>setTimeout(()=>{ if(document.activeElement!==a) acClose(); },160));
+  l.addEventListener('pointerdown',e=>e.preventDefault());
+  l.addEventListener('click',e=>{ const o=e.target.closest('[data-ac]'); if(o) acPick(AC.list[+o.dataset.ac]); });
+})();
 $('loc').onclick=()=>{
   if(!navigator.geolocation){setStatus('This browser cannot share location. Type the address instead.',true);return;}
   setStatus('Asking for your location…');
@@ -22926,6 +23016,8 @@ function uEnsureChurch(){
   let ch=Object.values(s.churches).find(c=>norm(c.address)===norm(address));
   if(!ch){const current=uChurch(); if(!current.address) ch=current;else{const id=uId();ch={id,name:label||address,address,capacity:{},members:[],linked:[],drafts:[],selected:[],overrides:{},share:{}};s.churches[id]=ch;}}
   ch.address=address; if(label) ch.label=label; else delete ch.label;
+  // v10.69.0: a church picked by its name in the church box keeps that name, unless it has a name of its own
+  const pk=DATA.geo.pick; if(pk&&typeof pk.name==='string'&&pk.name.trim()&&!homeName(ch,address)) ch.name=pk.name.trim().slice(0,120);
   s.active=ch.id;CAP=null;uPersist();
 }
 function uSwitch(id){
