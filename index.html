@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.65.0
+     TERRAIN  v10.67.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.65.0" data-theme="dark">
+<html lang="en" data-version="v10.67.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.65.0">
-<title>Community Map — Terrain v10.65.0</title>
+<meta name="terrain-version" content="v10.67.0">
+<title>Community Map — Terrain v10.67.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1281,6 +1281,18 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 .ptype button span{font-size:.8rem;color:var(--ink3)}
 .ptype button.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel2));box-shadow:0 0 0 1px var(--acc)}
 .ptype button.on span{color:var(--ink2)}
+.ptype3{grid-template-columns:minmax(0,1fr)}
+@media(min-width:640px){.ptype3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pspk{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:12px}
+@media(min-width:900px){.pspk{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pspk-c{display:flex;flex-direction:column;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.pspk-c.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.pspk-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.pspk-h b{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:.95rem}
+.pspk-tag{flex:none;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
+.pspk-r span{display:block;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+.pspk-r p{margin:2px 0 0;font-size:.84rem;line-height:1.5;color:var(--ink2)}
+.pspk+.note{margin-top:10px}
 .pform[data-pt="revival"] .pf-ev{display:none}
 .pform:not([data-pt="revival"]) .pf-rv{display:none}
 @media(min-width:640px){.pform[data-pt="revival"] .pf-budget{grid-column:span 2}}
@@ -4737,6 +4749,51 @@ html.ns-modal,html.ns-modal body{overflow:hidden}
 /* review #1: the page's `*{margin:0}` took away the browser's centring of a modal dialog; it is put back (a phone keeps margin:0 below) */
 dialog.ns-sheet{border:0;padding:0;margin:auto;background:transparent;color:var(--ink);max-width:min(720px,calc(100vw - 24px));width:100%;max-height:calc(100% - 24px);overflow:hidden}
 dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
+/* v10.67.0: the church directory: the tab at the top of "Your church", and the builder */
+.u-dirtab{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 14px;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--m-people) 55%,var(--line2));background:color-mix(in srgb,var(--m-people) 10%,var(--panel));color:var(--ink);font:inherit;cursor:pointer;text-align:left;min-width:0}
+.u-dirtab svg{flex:none;width:26px;height:26px;fill:none;stroke:var(--m-people);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.u-dirtab b{font-family:var(--disp);font-weight:700;font-size:1rem;min-width:0}
+.u-dirtab span{margin-left:auto;flex:none;font-size:.8rem;color:var(--ink3)}
+.u-dirtab:hover,.u-dirtab:focus-visible{border-color:var(--m-people);background:color-mix(in srgb,var(--m-people) 16%,var(--panel))}
+dialog.dir-sheet{max-width:min(880px,calc(100vw - 24px))}
+.dir-sh{padding:0 18px 18px}
+.dir-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 4px}
+.dir-top h2{font-family:var(--disp);font-size:1.35rem;margin:0}
+.dir-x{background:var(--panel2);border:1px solid var(--line2);border-radius:50%;width:44px;height:44px;flex:0 0 auto;color:var(--ink2);font-size:1.2rem;cursor:pointer}
+.dir-acts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.dir-acts .btn,.dir-foot .btn{cursor:pointer}
+.dir-msg{font-size:.86rem;color:var(--acc);margin:6px 0}
+.dir-msg:empty{display:none}
+.dir-count{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:8px 0;font-size:.88rem;color:var(--ink2)}
+.dir-count input{margin-left:auto;flex:1 1 180px;max-width:280px;font:inherit;padding:8px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink)}
+.dir-list{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+@media(min-width:640px){.dir-list{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dir-fam{display:flex;align-items:center;gap:10px;padding:8px;border:1px solid var(--line);border-radius:12px;background:var(--panel2);min-width:0}
+.dir-ph{flex:none;width:72px;height:54px;border-radius:8px;background:var(--panel) center/cover no-repeat;border:1px solid var(--line2);display:grid;place-items:center}
+.dir-ph span{font-family:var(--disp);font-weight:700;color:var(--m-people)}
+.dir-ph.big{width:160px;height:120px}
+.dir-ph.big span{font-size:1.6rem}
+.dir-fi{flex:1;min-width:0;display:flex;flex-direction:column;gap:1px}
+.dir-fi b{color:var(--ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dir-fi span,.dir-fi small{font-size:.8rem;color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.dir-ed{flex:none}
+.dir-empty{color:var(--ink3);font-size:.9rem;padding:16px;border:1px dashed var(--line2);border-radius:12px;text-align:center;margin:6px 0}
+.dir-h3{font-family:var(--disp);font-size:1.02rem;margin:14px 0 6px}
+.dir-form{display:grid;grid-template-columns:minmax(0,1fr);gap:10px}
+@media(min-width:640px){.dir-form{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.dir-phw{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:10px}
+.dir-f{display:flex;flex-direction:column;gap:4px;min-width:0}
+.dir-f span{font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink3)}
+.dir-f input,.dir-f textarea,#dir-paste,.dir-off input{font:inherit;padding:9px 10px;border-radius:9px;border:1px solid var(--line2);background:var(--panel2);color:var(--ink);min-width:0;box-sizing:border-box;width:100%}
+.dir-wide{grid-column:1/-1}
+.dir-check{grid-column:1/-1;display:flex;gap:8px;align-items:flex-start;font-size:.88rem;color:var(--ink2)}
+#dir-paste{font-family:ui-monospace,Menlo,monospace;font-size:.82rem}
+.dir-offs{display:grid;gap:6px}
+.dir-off{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.4fr) minmax(0,1fr);gap:6px}
+@media(max-width:520px){.dir-off{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.dir-off input[data-o="phone"]{grid-column:1/-1}}
+.dir-rm{margin-left:auto}
+.dir-foot{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.dir-foot .note{flex:1 1 220px}
 .ns-sh{background:var(--panel);border:1px solid var(--line2);border-radius:16px;max-height:calc(100vh - 24px);overflow:auto;overscroll-behavior:contain}
 .ns-shtop{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding:14px 14px 0 18px}
 .ns-shneed{font-size:.8rem;color:var(--k);letter-spacing:.04em;font-weight:600;padding-top:12px;overflow-wrap:break-word;min-width:0}
@@ -5016,6 +5073,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
           <button type="button" data-k="both" role="radio" aria-checked="true" class="on">Both</button>
         </div>
       </div>
+      <div class="pf pf-wide pf-speak"><span class="lb">Who will speak?</span>
+        <div class="ptype ptype3" id="pl-speak" role="radiogroup" aria-label="Who will speak?">
+          <button type="button" data-sp="pastor" role="radio" aria-checked="false"><b>Our pastor</b><span>Saves the most</span></button>
+          <button type="button" data-sp="conference" role="radio" aria-checked="false"><b>A conference leader or evangelist</b><span>The conference often helps</span></button>
+          <button type="button" data-sp="guest" role="radio" aria-checked="false"><b>A paid evangelist</b><span>Costs the most</span></button>
+        </div>
+      </div>
       <div class="pf pf-wide prow">
         <button class="btn" id="pl-build">Build the countdown</button>
         <button class="btn ghost" id="pl-demo">Fill in a demo series</button>
@@ -5074,13 +5138,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.65.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.67.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.65.0';
+const VERSION = 'v10.67.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11403,6 +11467,8 @@ function plannerOpen(){
   PLAN=planGet();
   const kindBtns=[...document.querySelectorAll('#pl-kind button')];
   document.querySelectorAll('#pl-type button').forEach(b=>b.onclick=()=>planTypeSet(b.dataset.pt));
+  document.querySelectorAll('#pl-speak button').forEach(b=>b.onclick=()=>planSpeakSet(b.dataset.sp));
+  if(PLAN) planSpeakSet(PLAN.speaker||'');
   planTypeSet(PLAN?(PLAN.type==='revival'?'revival':'evangelism'):planTypeOf());
   kindBtns.forEach(b=>b.onclick=()=>{ kindBtns.forEach(x=>{ x.classList.toggle('on',x===b); x.setAttribute('aria-checked',x===b?'true':'false'); }); });
   renderPlaceStrip();
@@ -11436,7 +11502,7 @@ function plannerOpen(){
   // v10.63.0: the demo is offered while no plan of his own is saved (it never replaces his plan)
   $('pl-demo').hidden=!!(PLAN&&!PLAN.demo); $('pl-demo').onclick=planDemo;
   $('pl-clear').onclick=()=>{ if(!(PLAN&&PLAN.demo)&&!confirm('Clear this plan from this device?')) return; uChurch().plan=null;uPersist(); PLAN=null;
-    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget','pl-bw','pl-books'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; plannerOpen(); };
+    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget','pl-bw','pl-books'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; planSpeakSet(''); plannerOpen(); };
 }
 function renderPlaceStrip(){
   const host=$('pplace'); if(!host) return;
@@ -11479,19 +11545,20 @@ function planPlaceRefresh(){
    different benchmarks that need to be met prior to leading up to it … the opportunity to have a Bible worker or Bible workers … the follow
    up is vital and has to be established even before … in with the planning". A midsize series, eighteen months out (the full countdown),
    marked as a demo; Start over clears it without asking. */
-const PLAN_DEMO={church:'Sample church (demo)',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both'};
+const PLAN_DEMO={church:'Sample church (demo)',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both',speaker:'guest'};
 function planDemoDate(){ let d=addMonths(new Date(),18); d.setHours(12,0,0,0); while(d.getDay()!==5) d=addDays(d,1); return d; }
 function planDemo(){
   if(planTypeOf()==='revival'){ const R=REV_DEMO, d=revDemoDate();
     $('pl-church').value=R.church; $('pl-members').value=R.members; $('pl-books').value=R.books; $('pl-leaders').value=R.leaders; $('pl-workers').value=R.workers;
     $('pl-date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    $('pl-nights').value=R.nights; $('pl-perweek').value=R.perweek; $('pl-budget').value=R.budget;
+    $('pl-nights').value=R.nights; $('pl-perweek').value=R.perweek; $('pl-budget').value=R.budget; planSpeakSet(R.speaker);
     plannerBuild({demo:true}); return; }
   const D=PLAN_DEMO, d=planDemoDate();
   $('pl-church').value=D.church; $('pl-members').value=D.members; $('pl-leaders').value=D.leaders; $('pl-workers').value=D.workers;
   $('pl-date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   $('pl-nights').value=D.nights; $('pl-perweek').value=D.perweek; $('pl-seats').value=D.seats; $('pl-file').value=D.file; $('pl-budget').value=D.budget; $('pl-bw').value=D.bw;
   document.querySelectorAll('#pl-kind button').forEach(x=>{ const on=x.dataset.k===D.kind; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); });
+  planSpeakSet(D.speaker);
   plannerBuild({demo:true});
 }
 function plannerBuild(o){
@@ -11508,7 +11575,7 @@ function plannerBuild(o){
   if(!(nights>0)){ st.textContent='How many nights of meetings?'; $('pl-nights').focus(); return; }
   if(planTypeOf()==='revival'){
     const books=Math.max(0,Math.round(+$('pl-books').value||0)), budget=+$('pl-budget').value||0;
-    PLAN={type:'revival',church,members,books:books?Math.max(books,members):0,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,budget,built:Date.now(),v:4};
+    PLAN={type:'revival',church,members,books:books?Math.max(books,members):0,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,budget,speaker:planSpeakOf(),built:Date.now(),v:4};
     if(o.demo) PLAN.demo=true;
     planSave(PLAN); st.textContent=o.demo?'':'Saved on this device.'; plannerRender(PLAN);
     $('pl-demo').hidden=!PLAN.demo;
@@ -11519,7 +11586,7 @@ function plannerBuild(o){
   const seats=+$('pl-seats').value||0, file=$('pl-file').value===''?null:Math.max(0,+$('pl-file').value), budget=+$('pl-budget').value||0;
   if(!(seats>0)){ st.textContent='How many seats in the hall? Pre-work aims to fill half of them.'; $('pl-seats').focus(); return; }
   const bw=Math.max(0,Math.min(20,Math.round(+$('pl-bw').value||0)));
-  PLAN={type:'evangelism',church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,bw,built:Date.now(),v:3};
+  PLAN={type:'evangelism',church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,bw,speaker:planSpeakOf(),built:Date.now(),v:3};
   if(o.demo) PLAN.demo=true;
   planSave(PLAN); st.textContent=o.demo?'':'Saved on this device.'; plannerRender(PLAN);
   $('pl-demo').hidden=!PLAN.demo;
@@ -11552,6 +11619,8 @@ function planLeaderRoles(p,pl){
     {g:'coord',id:'music',n:'Music coordinator',who:'',d:'Pianist or organist every night, background music as people come and go, special music and every appeal song, planned with the evangelist to fit the evening\u2019s topic.'},
     // v10.63.0: the follow-up is built before opening night, so its coordinator is chosen with the others
     {g:'coord',id:'nurture',n:'Nurture & follow-up coordinator',who:'',core:1,d:'Builds the follow-up before opening night: a spiritual friend for everyone expected to decide, the new members\u2019 class and the Bible class for after the series, with their teachers, rooms and dates. After the meetings, keeps every new member, and everyone still studying, cared for through the first year.'},
+    // v10.66.0: a speaker from outside the church needs a host
+    ...(p.speaker==='guest'||p.speaker==='conference'?[{g:'coord',id:'host',n:'Speaker host',who:'',d:'The evangelist\u2019s travel, housing and meals, and each night\u2019s program planned with the evangelist and the platform coordinator.'}]:[]),
     {g:'coord',id:'committees',n:'Committees coordinator',who:'',d:'Organizes all the committees below and sees that each chair has staffed and prepared their piece.'},
     // pre-work teams — from the equipping phase
     ...(bw?[{g:'pre',id:'bibleworker',n:bw>1?'Bible workers ('+bw+')':'Bible worker',who:'placed by the conference, or paid by the church',core:1,staff:1,d:'In place six months before opening night: works the interest file, gives Bible studies in homes, trains the lay Bible instructors and goes with them. During the series, visits each night\u2019s interests and prepares those who decide for baptism; afterwards stays at least three months with the new members and everyone still studying.'}]:[]),
@@ -11583,7 +11652,7 @@ function planLeaderRoles(p,pl){
    until the count fits the leaders available. The treasurer is usually the
    church treasurer already and is not counted against the leaders. */
 function planLeaderFit(roles,leaders,pairs){
-  const PAIRS=pairs||[['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['nursery','children'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
+  const PAIRS=pairs||[['host','platform'],['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['nursery','children'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
   let list=roles.map(r=>({...r,names:[r.n],ids:[r.id]}));
   let merged=[];
   // the treasurer is usually the church treasurer already; Bible workers are placed or hired (v10.63.0): neither is a leader to find
@@ -11686,11 +11755,18 @@ function planPhases(p,pl){
   const handbillOrder=addMonths(D,-3), lettersOut=addDays(D,-10), membersHandbills=addDays(D,-14);
   const fileN=p.file==null?null:p.file;
   const bw=Math.max(0,p.bw||0), bwN=bw>1?'Bible workers':'Bible worker', bwBy=addMonths(D,-6);
+  // v10.66.0: who will speak, decided or booked first
+  const spBy=(()=>{ const d=S.tier==='full'?addMonths(D,-12):S.tier==='year'?addDays(S.bounds[0],30):addDays(S.today,7); return d<S.today?addDays(S.today,7):d; })();
+  const spLine=p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the series planned by '+pDate(spBy)+' (the titles, the order, the appeal each night); a seasoned evangelist asked to coach; the visiting shared with the elders so the pastor has time to prepare.',1)
+    :p.speaker==='conference'?li('<b>Ask the conference for an evangelist by '+pDate(spBy)+'</b>: the ministerial department books a year or more ahead. Ask what it covers (travel, housing, the honorarium) and who carries the follow-up.',1)
+    :p.speaker==='guest'?li('<b>Book the evangelist by '+pDate(spBy)+'</b>: ask churches they preached for whether attendance held to the last night and the new members stayed; then a written agreement: the honorarium, travel, housing and meals, who keeps the names, and the follow-up after they leave.',1)
+    :li('<b>Decide who will speak by '+pDate(spBy)+'</b>: our pastor, a conference leader or evangelist, or a paid evangelist. Everything rides on whether the speaker can hold people night after night: see <b>Who will speak</b>, below.',1);
   const ALL=[
     ph(0,'Find the leaders and set the date',
       [li('<b>Opening night fixed:</b> '+pDate(D)+'. Every other date on this page hangs on it.',1),
        li('<b>Pray over and select the leaders.</b> '+leadLine,1),
        {t:leadersHtml,key:false,plain:true},
+       spLine,
        li('Launch the prayer ministry: a prayer coordinator and assistant; every member keeps a list of 3–5 names and prays daily; prayer bands of 2–4 before and after church and midweek.'),
        li('Hold an evangelistic rally so the whole church hears the vision and the date. Draft the budget with the board — 30% pre-work, 50% meetings, 20% follow-up (see the budget below).'),
        li('Set the church\u2019s effort the same way the playbook does: about half of it on pre-campaign preparation, a fifth on the meetings themselves, and nearly a third on keeping what is won.')],
@@ -11765,6 +11841,7 @@ function planPhases(p,pl){
        li('Evaluate with every team: what worked, what to change, and the date of the next series.')],
      bench:`each new member with a friend, a class and a place to serve within three months · still with the church at twelve months · everyone still studying, studying each week · next opening night set`}
   ];
+  if(p.speaker==='guest'||p.speaker==='conference') ALL[ALL.length-1].items.unshift(li('<b>The evangelist leaves after closing night</b>: the pastor and the elders carry the follow-up, and every decision is visited within the week.',1));
   /* v10.65.0 — the pastor (9 Oct 2026): "we only want it in two months away or three months. Everything has to be adjusted for the three
      months even for EVANGELISM … with six months not a year or eight months … for a three months preparation it's not gonna as involved
      … the main things to get ready … restructure preparation and also post work": under eight months the preparation keeps the main
@@ -11780,6 +11857,7 @@ function planPhases(p,pl){
       li('<b>Opening night fixed:</b> '+pDate(D)+'. With about '+mo+' month'+(mo>1?'s':'')+' to prepare, this plan keeps the main things: leaders and prayer, the names you already have, and the invitation.',1),
       li('<b>Pray over and select the leaders</b> now. '+leadLine,1),
       {t:leadersHtml,key:false,plain:true},
+      spLine,
       li('<b>Prayer</b>: every member keeps a list of 3\u20135 names and prays daily; prayer bands of 2\u20134 meet each week.',1),
       li('<b>The names you already have, in one list</b>: the interest file'+(fileN!=null?' ('+fileN.toLocaleString()+')':'')+', everyone who came to a church program, Bible-school students, media interests, former Adventists and people raised in the church, and members\u2019 own relatives.',1),
       ...(bw?[]:[li('Ask the conference now whether a Bible worker can help in the weeks before and the three months after.')]),
@@ -11917,7 +11995,8 @@ function planBudget(p,pl,T){
        ...(bi?['Translation and second-language printing']:[]),
        ...(p.bw?[(p.bw>1?'Bible workers':'Bible worker')+': stipend and housing, if the church pays (ask the conference what it covers)']:[])]},
     {n:'The meetings',share:0.50,amt:m(0.50),note:'Advertising is not preaching, but nobody hears preaching they were never told about.',
-     lines:[ 'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills; banners and yard signs, and the promo video and social ads, if the church can','Newspaper, radio and TV only with extra budget','Personal invitation letters',
+     lines:[ (p.speaker==='pastor'?'The speaker: our pastor (no honorarium)':p.speaker==='conference'?'The speaker: a conference leader or evangelist (ask what the conference covers: travel, housing, the honorarium)':p.speaker==='guest'?'The speaker: a paid evangelist\u2019s honorarium, travel, housing and meals for every night (a written quote)':'The speaker: decided first (a paid evangelist costs the most)'),
+       'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills; banners and yard signs, and the promo video and social ads, if the church can','Newspaper, radio and TV only with extra budget','Personal invitation letters',
        'Auditorium rental, if not in the church','Lecture outlines, Bible lessons, gift Bibles, gift books, lecture magazines','Attendance incentives (gift books, pictures, DVDs)',
        ...(kids?['Children\u2019s meetings: supplies every night']:['Children\u2019s meetings supplies']),
        'Nursery & mothers\u2019 room: the sound or picture brought in, supplies',
@@ -11935,7 +12014,7 @@ function planBudget(p,pl,T){
    plan, reconnect with every member who has drifted, prepare hearts (small groups, Spiritual Gifts), invite every member, ten days of
    prayer, the meetings with a last Sabbath of recommitment and communion, and a year after it in which every member serves.
    Same look as the evangelism plan (the rail, the roster, who comes, getting the word out, the budget, the printed plan). */
-const REV_DEMO={church:'Sample church (demo)',members:150,books:220,leaders:25,workers:50,nights:9,perweek:7,budget:6000};
+const REV_DEMO={church:'Sample church (demo)',members:150,books:220,leaders:25,workers:50,nights:9,perweek:7,budget:6000,speaker:'guest'};
 function revDemoDate(){ let d=addMonths(new Date(),7); d.setHours(12,0,0,0); while(d.getDay()!==5) d=addDays(d,1); return d; }
 function revClose(p,D){ return p.perweek>=7?addDays(D,p.nights-1):addDays(D,(Math.ceil(p.nights/p.perweek)*7)-1); }
 function revSchedule(p){
@@ -11956,6 +12035,14 @@ function revTargets(p){
   const books=Math.max(p.books||0,p.members), drifted=Math.max(0,books-p.members);
   return {books,drifted,pairs:drifted?Math.max(1,Math.ceil(drifted/10)):0,bands:Math.max(1,Math.round(p.members/3)),groups:Math.max(1,Math.round(p.workers/5)),gifts:Math.ceil(p.members/2)};
 }
+/* who speaks at the revival, decided or booked first (dt: the date to book by; null = now) */
+function revSpeakLine(p,dt){
+  const li=(t,key)=>({t,key:!!key}), by=dt?' by '+dt:' now';
+  return p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the theme and the messages planned'+(dt?' by '+dt:' first')+'; the visiting shared with the elders so there is time to prepare.',1)
+    :p.speaker==='conference'?li('<b>Ask the conference for a speaker'+by+'</b>: a leader or evangelist it recommends; ask what it covers (travel, housing, the honorarium).',1)
+    :p.speaker==='guest'?li('<b>Book the speaker'+by+'</b>: ask churches they spoke for whether members came back and stayed; then a written agreement: the honorarium, travel, housing and meals.',1)
+    :li('<b>Decide who will speak'+by+'</b>: our pastor, a conference leader or evangelist, or a paid evangelist. See <b>Who will speak</b>, below.',1);
+}
 function revRoles(p,pl){
   const T=pl?pl.tags:new Set();
   const kids=T.has('many-kids')||T.has('families')||T.has('single-parents')||T.has('family-heavy');
@@ -11965,7 +12052,7 @@ function revRoles(p,pl){
     {g:'lead',id:'prayer',n:'Prayer coordinator',who:'',core:1,d:'Starts the prayer bands six months out, leads the ten days of prayer before the meetings, and keeps a prayer room open every night.'},
     {g:'lead',id:'reconnect',n:'Reconnection coordinator',who:'usually the head elder',core:1,d:'Makes the list with the clerk: every member on the books, who comes, who has drifted. Divides it among the elders and deacons, so every one is visited before the meetings: to listen and to invite, never to reproach.'},
     {g:'lead',id:'treasurer',n:'Treasurer',who:'usually the church treasurer',d:'Keeps the budget: the speaker, the meals, the printing and the follow-up.'},
-    {g:'prep',id:'speaker',n:'Speaker host',who:'',d:'The speaker’s travel, housing and meals, and each evening’s program planned with the speaker.'},
+    ...(p.speaker==='pastor'?[]:[{g:'prep',id:'speaker',n:'Speaker host',who:'',d:'The speaker’s travel, housing and meals, and each evening’s program planned with the speaker.'}]),
     {g:'prep',id:'gifts',n:'Spiritual Gifts coordinator',who:'',d:'Every member takes the Spiritual Gifts survey before the meetings, with one link for the church; the commissioning on the last Sabbath places each one where they fit.'},
     {g:'prep',id:'groups',n:'Small groups',who:'',d:'Groups of four to six that meet each week for three months before the meetings, on prayer and the Holy Spirit, and keep meeting after.'},
     {g:'prep',id:'publicity',n:'Media & publicity',who:'',d:'The letter to every home, the bulletin and the screens, the livestream, and the members’ group online.'},
@@ -11988,7 +12075,7 @@ function revPhases(p,pl){
   const dr=T.drifted;
   const PP=[
       li('<b>The board votes the meetings and the date</b>; the theme chosen, the coordinators named.',1),
-      li('<b>Book the speaker by '+pDate(addDays(S.bounds[0],21))+'</b>: a guest speaker (ask the conference whom it recommends, and whether it helps with the cost), or the pastor.',1),
+      revSpeakLine(p,pDate(addDays(S.bounds[0],21))),
       li('<b>Prayer bands begin</b>: '+T.bands+' bands of two to four members, meeting each week to pray for revival and, by name, for the members who have drifted.',1),
       li('The clerk and the elders make <b>the list</b>: every member on the books ('+T.books.toLocaleString()+'), who comes, and who has drifted'+(dr?' (about '+dr.toLocaleString()+')':'')+'.'),
       li('Choose the music; set the budget'+(p.budget?' ($'+p.budget.toLocaleString()+')':'')+'.')];
@@ -12004,7 +12091,7 @@ function revPhases(p,pl){
       // v10.65.0 — the pastor: "for revival the post is getting our members active and prepared for EVANGELISM … their surveying the community"
       li('<b>Survey the community together</b>: a team runs the Community Survey and shows the church what its neighborhood needs, so members come to the meetings ready to serve it, and ready for the evangelism that follows.',1),
       li('Plan the children’s and youth part, with two screened adults for every night'+(kids?' (required here: many families with children)':'')+'.'),
-      li('The speaker’s travel, housing and meals arranged; the nightly program outlined with the speaker.')];
+      li(p.speaker==='pastor'?'The pastor outlines the messages; the visiting is shared with the elders so there is time to prepare.':'The speaker’s travel, housing and meals arranged; the nightly program outlined with the speaker.')];
   const IN=[
       li('<b>'+pDate(S.bounds[S.bounds.length-2])+': a letter to every home on the books</b> ('+T.books.toLocaleString()+'), from the pastor: the dates, the theme, and that we want them there.',1),
       li('<b>A personal invitation to every member who has drifted</b>, from the elder who visited them, with a printed card.',1),
@@ -12014,7 +12101,7 @@ function revPhases(p,pl){
      EVANGELISM … restructure preparation and also post work": under six months, three phases (the speaker booked now, the prayer
      and the visits together); under six weeks, two, and the Spiritual Gifts and the community survey move to the first month after. */
   const short=S.tier==='short'||S.tier==='quick', quick=S.tier==='quick';
-  const PR1=[li('<b>The board votes the meetings; book the speaker now</b>: a guest speaker (ask the conference whom it recommends, and whether it helps with the cost), or the pastor.',1),...PP.slice(2,4),...RC.slice(0,1),...RC.slice(3)];
+  const PR1=[li('<b>The board votes the meetings</b>; the theme chosen, the coordinators named.',1),revSpeakLine(p,null),...PP.slice(2,4),...RC.slice(0,1),...RC.slice(3)];
   const bPR1='the speaker booked · '+T.bands+' prayer bands meeting · every member who has drifted, and every former Adventist, visited';
   const prep=!short?[ph(0,'Pray and plan',PP,'the speaker booked · '+T.bands+' prayer bands meeting · the list of every member in hand'),ph(1,'Reconnect',RC,'every member who has drifted visited at least once'+(dr?' ('+dr.toLocaleString()+')':'')),ph(2,'Prepare hearts',PH,T.gifts+' members with Spiritual Gifts results · '+T.groups+' small group'+(T.groups>1?'s':'')+' meeting'),ph(3,'Invite every member',IN,'every member invited personally · rides arranged')]
     :quick?[ph(0,'Pray and reconnect',PR1,bPR1),ph(1,'Invite every member',IN,'every member invited personally · rides arranged')]
@@ -12024,7 +12111,7 @@ function revPhases(p,pl){
       li('<b>Ten days of prayer</b> before the meetings: '+pDate(addDays(D,-10))+' – '+pDate(addDays(D,-1))+'; every member praying daily, a prayer room open.',1),
       li('<b>'+pDate(addDays(D,-3))+': the phone tree</b>: each elder calls everyone on their list.',1),
       li('Music rehearsed; the children’s room ready with two screened adults each night; the communion prepared for the last Sabbath.'),
-      li('The speaker arrives; the welcome team knows the returning members by name.')],
+      li(p.speaker==='pastor'?'The welcome team knows the returning members by name.':'The speaker arrives; the welcome team knows the returning members by name.')],
       bench:'every member called · every team ready'},
     {name:'The meetings',start:D,end:close,tag:'series',items:[
       li('<b>'+p.nights+' nights</b>, opening '+pDate(D)+', closing '+pDate(close)+'.',1),
@@ -12102,8 +12189,15 @@ function revPromo(p,T){
 }
 function revBudget(p){
   const B=p.budget||0, m=x=>B?'$'+Math.round(B*x).toLocaleString():Math.round(x*100)+'%';
+  // v10.66.0: our pastor speaking, the speaker's share goes to the rest
+  if(p.speaker==='pastor') return [
+    {n:'Hospitality',share:0.30,amt:m(0.30),note:'Our pastor speaks: no honorarium. Returning members are greeted at a table, not only a door.',lines:['Fellowship meals on the Sabbaths','Refreshments after the meetings','A gift of thanks to the pastor\u2019s family, if the board wishes']},
+    {n:'The meetings',share:0.30,amt:m(0.30),note:'',lines:['Music','Children’s and youth program supplies','Communion supplies','The prayer room']},
+    {n:'Inviting',share:0.15,amt:m(0.15),note:'',lines:['The letter to every home: printing and postage','Printed invitation cards','The video invitation, if the church can']},
+    {n:'After the meetings',share:0.25,amt:m(0.25),note:'The revival is measured a year later.',lines:['Small-group books (Steps to Christ for every returning member)','Materials for the new places to serve','Follow-up mailings and visits']}
+  ];
   return [
-    {n:'The speaker',share:0.35,amt:m(0.35),note:'Ask the conference first: many help with a revival speaker.',lines:['Honorarium','Travel','Housing and meals']},
+    {n:'The speaker',share:0.35,amt:m(0.35),note:p.speaker==='conference'?'Ask what the conference covers first.':'Ask the conference first: many help with a revival speaker.',lines:['Honorarium','Travel','Housing and meals']},
     {n:'Hospitality',share:0.20,amt:m(0.20),note:'Returning members are greeted at a table, not only a door.',lines:['Fellowship meals on the Sabbaths','Refreshments after the meetings']},
     {n:'The meetings',share:0.20,amt:m(0.20),note:'',lines:['Music','Children’s and youth program supplies','Communion supplies','The prayer room']},
     {n:'Inviting',share:0.10,amt:m(0.10),note:'',lines:['The letter to every home: printing and postage','Printed invitation cards','The video invitation, if the church can']},
@@ -12115,7 +12209,7 @@ function revDoc(p,pl,T,fit,phases,ST,BU,roster,PR){
   const strip=h=>(h||'').replace(/<[^>]+>/g,'');
   return `<div id="plandoc" class="pdoc">
     <h1>${esc(p.church||'Our church')} — revival plan</h1>
-    <div class="dsub">Revival meetings · ${p.nights} nights · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
+    <div class="dsub">Revival meetings · ${p.nights} nights · the speaker: ${p.speaker?esc(PLAN_SPEAK[p.speaker].n.toLowerCase()):'not decided yet'} · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
     <div class="dgrid">
       <div class="dk"><b>${T.books.toLocaleString()}</b><span>members on the books</span></div>
       <div class="dk"><b>${T.drifted.toLocaleString()}</b><span>members to visit</span></div>
@@ -12155,6 +12249,30 @@ function revDoc(p,pl,T,fit,phases,ST,BU,roster,PR){
     <div class="sig"><div>Pastor</div><div>Church board · date</div></div>
   </div>`;
 }
+/* v10.66.0 — the pastor (11 Oct 2026): "A lot of times the local Pastor will be the speaker for these events safe to church a lot of
+   money, but not all pastors. Have the ability to really draw and keep people … whether they wanna put all this effort in and have a
+   mediocre speaker or if they want to bring in a really dynamic speaker who can retain people … a lot of people fall off … the option
+   … who will speak the pastor of the church a conference leader … or paid evangelist … big difference with the budget". Who will speak,
+   for both plans: it changes the countdown, the roster, the budget, and a comparison to choose by. '' = not decided yet. */
+const PLAN_SPEAK={
+  pastor:{n:'Our pastor',d:'Saves the most'},
+  conference:{n:'A conference leader or evangelist',d:'The conference often helps'},
+  guest:{n:'A paid evangelist',d:'Costs the most'}
+};
+function planSpeakOf(){ const b=document.querySelector('#pl-speak button[aria-checked="true"]'); return b?b.dataset.sp:''; }
+function planSpeakSet(v){ document.querySelectorAll('#pl-speak button').forEach(x=>{ const on=x.dataset.sp===v; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); }); }
+function planSpeakHTML(p){
+  const sp=p.speaker||'', n=p.nights;
+  const C={
+    pastor:[['Cost','Nothing extra: no honorarium, no travel.'],['Drawing and keeping people','It depends on the pastor\u2019s gift for preaching night after night. Ask honestly whether they can hold people for '+n+' nights.'],['After the meetings','Stays: knows every name and nurtures every decision.']],
+    conference:[['Cost','Often shared by the conference: ask what it covers (travel, housing, the honorarium).'],['Drawing and keeping people','Experienced in a series. Book early: a year or more ahead for evangelism.'],['After the meetings','Leaves after the last night: the pastor and the elders carry the follow-up.']],
+    guest:[['Cost','The most: an honorarium, travel, housing and meals for every night. Ask for a written quote.'],['Drawing and keeping people','A dynamic speaker can hold a hall to the last night. Ask churches they preached for whether attendance held, and whether the new members stayed.'],['After the meetings','Leaves after the last night: the follow-up must be ready before they come.']]
+  };
+  return `<div class="phead" id="pl-speakw"><h2>Who will speak</h2><span class="hint">${sp?esc(PLAN_SPEAK[sp].n):'not decided yet'}</span></div>
+    <p class="note" style="margin-top:6px">The whole preparation rides on the speaker: a lot of people fall off when the speaker cannot hold them night after night. Choose with the board, honestly; the choice above changes the countdown, the roster and the budget.</p>
+    <div class="pspk">${Object.keys(PLAN_SPEAK).map(k=>`<div class="pspk-c${k===sp?' on':''}" data-sp="${k}"><div class="pspk-h"><b>${esc(PLAN_SPEAK[k].n)}</b>${k===sp?'<span class="pspk-tag">Your choice</span>':''}</div>${C[k].map(r=>`<div class="pspk-r"><span>${esc(r[0])}</span><p>${esc(r[1])}</p></div>`).join('')}</div>`).join('')}</div>
+    <p class="note">A middle way: the pastor preaches, with a guest for the opening weekend; or the guest preaches and the pastor leads the visiting every day.</p>`;
+}
 /* the ready words' Copy buttons, for either plan */
 function planWireCopy(){
   $('pout').querySelectorAll('[data-pl-copy]').forEach(b=>b.onclick=async()=>{
@@ -12190,7 +12308,7 @@ function revRender(p){
     <div class="pwout">${PR.rows.map(r=>`<div class="pwo-row" data-k="${r.k}"><div class="pwo-h"><b>${esc(r.n)}</b><span class="pwo-tag">${r.k==='all'?'Every church':'If your church can'}</span></div><div class="pwo-when">${esc(r.when)}</div><div class="pwo-d">${esc(r.d)}</div><div class="pwo-who">${esc(r.who)}</div></div>`).join('')}</div>
     <h3 class="pwords-h">Words ready to share</h3>
     <div class="pwords">${PR.words.map((w,i)=>`<div class="pword"><b>${esc(w.n)}</b><p id="pl-wd${i}">${esc(w.t)}</p><button type="button" class="btn ghost" data-pl-copy="${i}">Copy</button></div>`).join('')}</div>`;
-  const budgetHtml=`<div class="phead"><h2>The budget</h2><span class="hint">${p.budget?'$'+p.budget.toLocaleString():'35 / 20 / 20 / 10 / 15'}</span></div>
+  const budgetHtml=`<div class="phead"><h2>The budget</h2><span class="hint">${p.budget?'$'+p.budget.toLocaleString():BU.map(b=>Math.round(b.share*100)).join(' / ')}</span></div>
     <p class="note" style="margin-top:6px">A starting split, to change as you plan.${p.budget?'':' Enter a total above and each part becomes a dollar figure.'}</p>
     <div class="budget">${BU.map(b=>`<div class="bud"><div class="bh"><b>${esc(b.n)}</b><span>${esc(b.amt)}</span></div>${b.note?`<div class="bn">${esc(b.note)}</div>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}</div>`;
   const bench=`<div class="pbench">
@@ -12214,6 +12332,7 @@ function revRender(p){
     ${bench}
     <div class="phead"><h2>The countdown</h2><span class="hint">First night ${pDate(D)}</span></div>
     <div class="rail">${rail}</div>
+    ${planSpeakHTML(p)}
     ${rosterHtml}
     ${streamsHtml}
     ${promoHtml}
@@ -12303,6 +12422,7 @@ function plannerRender(p){
     <div class="phead"><h2>The countdown</h2><span class="hint">Opening night ${pDate(D)}</span></div>
     <div class="rail">${rail}</div>
     ${enlistSection(p,pl)}
+    ${planSpeakHTML(p)}
     ${rosterHtml}
     ${streamsHtml}
     ${planMailHTML(p,pl,T)}
@@ -13306,7 +13426,7 @@ function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName,PR){
   const strip=h=>(h||'').replace(/<[^>]+>/g,'');
   return `<div id="plandoc" class="pdoc">
     <h1>${esc(p.church||'Our church')} — evangelistic plan</h1>
-    <div class="dsub">${esc(kindName)} series · ${p.nights} nights, ${p.perweek} a week · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
+    <div class="dsub">${esc(kindName)} series · ${p.nights} nights, ${p.perweek} a week · opening ${pDate(D)}, closing ${pDate(close)} · the speaker: ${p.speaker?esc(PLAN_SPEAK[p.speaker].n.toLowerCase()):'not decided yet'} · prepared ${pDate(new Date())}</div>
     <div class="dgrid">
       <div class="dk"><b>${p.members}</b><span>active members</span></div>
       <div class="dk"><b>${fit.need}</b><span>roles to lead (${p.leaders} leaders)</span></div>
@@ -15656,6 +15776,7 @@ function uChurchSecHTML(){
   const todo=uChurchTodo();
   return `<section class="blk u-churchsec${todo?' u-todo':''}" id="u-church" data-tab="strategy" data-theme="faith"><p class="u-chstart"${todo?'':' hidden'}>${L('Start here','Empiece aquí')}</p><h2>${L('Your church','Su iglesia')}</h2>
     <p class="note" style="margin-bottom:12px">${L('Fill this in before you choose a ministry below: every idea and every proposal is checked against your people, rooms and skills.','Complete esto antes de elegir un ministerio abajo: cada idea y cada propuesta se comparan con sus personas, salones y habilidades.')}</p>
+    ${dirTabHTML()}
     <div id="u-churchslot"></div>
     <div class="u-gfnote" id="u-gfnote">${uGiftsNoteInner()}</div>
   </section>`;
@@ -15678,7 +15799,7 @@ function uChurchTodo(){
   const few=!r||r.state==='none'||r.state==='low'||(r.state==='unknown'&&r.n<CASE_GIFTS_MIN);
   return empty||few;
 }
-function uChurchSecWire(){ const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
+function uChurchSecWire(){ dirTabWire(); const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
   const d=document.querySelector('#u-gfnote [data-u-gfdemo]'); if(d) d.onclick=()=>{ if(d.dataset.uGfdemo==='clear'){ gfDemoClear(); gfDemoRedraw(false); } else gfDemoFill(); }; }
 /* After a save or new results (gfFirstRefresh): the frame, "Start here" and the count follow, without drawing the survey again. */
 function uChurchSecMark(){
@@ -24323,6 +24444,318 @@ function capSummaryHTML(){
 }
 /* review #18: the profile's name is the church's (its own, else the one given at registration), never "My church" */
 function capName(ch){ const n=String(ch&&ch.name||'').trim(); if(n&&!/^my church$/i.test(n)) return n; let r=''; try{ r=libChurch(); }catch(e){ r=''; } return r&&r!==libT('ourChurch')?r:(n||libT('ourChurch')); }
+/* ================= v10.67.0 — THE CHURCH DIRECTORY =================
+   The pastor (10–11 Oct 2026): "the churches need to have a really nice directory with pictures and everything so that we can know each
+   other", then "is it possible to create a CHURCH directory build builder where if I have the photos and the information names and number
+   if I put it all in it can build a printable church directory"; in "Your church", on Letter pages (his two choices), and "It should have a
+   tab on the top that says build your church directory".
+   Everything stays on this device, like the rest of a church's information: the families in the church store (uChurch().directory), their
+   photos in IndexedDB (terrain-photos; kept in memory where there is none), and a copy saved and loaded as a file. Children are shown only
+   when a parent said yes. Every printed page says it is for members only. */
+const DIR_DB={db:null,tried:false,mem:new Map()};
+function dirDb(){
+  if(DIR_DB.db||DIR_DB.tried) return Promise.resolve(DIR_DB.db);
+  DIR_DB.tried=true;
+  if(typeof indexedDB==='undefined') return Promise.resolve(null);
+  return new Promise(res=>{ try{ const r=indexedDB.open('terrain-photos',1);
+    r.onupgradeneeded=()=>{ try{ r.result.createObjectStore('p'); }catch(e){} };
+    r.onsuccess=()=>{ DIR_DB.db=r.result; res(r.result); }; r.onerror=()=>res(null); }catch(e){ res(null); } });
+}
+async function dirPhotoGet(key){ const db=await dirDb(); if(!db) return DIR_DB.mem.get(key)||null;
+  return new Promise(res=>{ try{ const q=db.transaction('p').objectStore('p').get(key); q.onsuccess=()=>res(q.result||null); q.onerror=()=>res(null); }catch(e){ res(DIR_DB.mem.get(key)||null); } }); }
+async function dirPhotoPut(key,url){ DIR_DB.mem.set(key,url); const db=await dirDb(); if(!db) return true;
+  return new Promise(res=>{ try{ const t=db.transaction('p','readwrite'); t.objectStore('p').put(url,key); t.oncomplete=()=>res(true); t.onerror=()=>res(false); }catch(e){ res(false); } }); }
+async function dirPhotoDel(key){ DIR_DB.mem.delete(key); const db=await dirDb(); if(!db) return;
+  return new Promise(res=>{ try{ const t=db.transaction('p','readwrite'); t.objectStore('p').delete(key); t.oncomplete=()=>res(); t.onerror=()=>res(); }catch(e){ res(); } }); }
+function dirKey(id){ return 'dir/'+uChurch().id+'/'+id; }
+function dirGet(){ const ch=uChurch(); if(!ch.directory||ch.directory.v!==1) ch.directory={v:1,title:'',year:'',note:'',families:[],officers:[]}; return ch.directory; }
+function dirSave(){ uPersist(); dirTabPaint(); }
+function dirId(){ return 'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
+function dirTitle(){ const d=dirGet(); return d.title||((uChurch().capacity&&uChurch().capacity.name)||uChurch().name||L('Our church','Nuestra iglesia')); }
+function dirYear(){ return dirGet().year||String(new Date().getFullYear()); }
+function dirSort(fs){ return fs.slice().sort((a,b)=>String(a.family||'').localeCompare(String(b.family||''),undefined,{sensitivity:'base'})||String(a.people||'').localeCompare(String(b.people||''))); }
+function dirInitials(f){ return String(f.family||'?').trim().split(/\s+/).map(w=>w[0]||'').join('').slice(0,2).toUpperCase(); }
+/* a photo from the phone or computer: cropped to 4:3 from the middle, at most 800 × 600, as a JPEG */
+function dirPhotoFrom(file){
+  return new Promise((ok,no)=>{
+    if(!file||!/^image\//.test(file.type||'image/')) return no(new Error('type'));
+    const rd=new FileReader();
+    rd.onload=()=>{ const im=new Image();
+      im.onload=()=>{ try{
+        const W=im.naturalWidth, H=im.naturalHeight, r=4/3; let sw=W, sh=Math.round(W/r); if(sh>H){ sh=H; sw=Math.round(H*r); }
+        const sx=Math.round((W-sw)/2), sy=Math.round((H-sh)/2), ow=Math.min(800,sw), oh=Math.round(ow/r);
+        const cv=document.createElement('canvas'); cv.width=ow; cv.height=oh; cv.getContext('2d').drawImage(im,sx,sy,sw,sh,0,0,ow,oh);
+        ok(cv.toDataURL('image/jpeg',0.82)); }catch(e){ no(e); } };
+      im.onerror=()=>no(new Error('image')); im.src=rd.result; };
+    rd.onerror=()=>no(new Error('read')); rd.readAsDataURL(file);
+  });
+}
+/* the tab at the top of "Your church" */
+function dirTabHTML(){
+  const n=dirGet().families.length;
+  return `<button type="button" class="u-dirtab" id="u-dirtab" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><circle cx="11.5" cy="9" r="2.2"/><path d="M8 14.2c.6-1.6 2-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg><b>${esc(L('Build your church directory','Haga el directorio de su iglesia'))}</b><span id="u-dirtab-n">${esc(dirCountWords(n))}</span></button>`;
+}
+function dirCountWords(n){ return n===0?L('With photos, to print','Con fotos, para imprimir'):n===1?L('1 family','1 familia'):L(n+' families',n+' familias'); }
+function dirTabPaint(){ const s=document.getElementById('u-dirtab-n'); if(s) s.textContent=dirCountWords(dirGet().families.length); }
+function dirTabWire(){ const b=document.getElementById('u-dirtab'); if(b) b.onclick=()=>dirOpen(); }
+/* the builder: one sheet, four views (the list, a family, bring in a list, the details) */
+const DIR_ST={view:'list',edit:null,photo:null,q:'',arm:null,msg:''};
+function dirOpen(){
+  let d=document.getElementById('dir-sheet');
+  if(!d){ d=document.createElement('dialog'); d.id='dir-sheet'; d.className='ns-sheet dir-sheet'; d.setAttribute('data-notr',''); d.setAttribute('aria-labelledby','dir-h'); document.body.appendChild(d);
+    d.addEventListener('close',()=>{ DIR_ST.view='list'; DIR_ST.edit=null; DIR_ST.photo=null; }); }
+  DIR_ST.view='list'; DIR_ST.msg='';
+  if(!d.open){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } }
+  dirDraw();
+}
+function dirClose(){ const d=document.getElementById('dir-sheet'); if(d){ try{ d.close(); }catch(e){ d.removeAttribute('open'); } } }
+function dirDraw(){
+  const d=document.getElementById('dir-sheet'); if(!d) return;
+  const V=DIR_ST.view;
+  const head=`<div class="dir-top"><h2 id="dir-h">${esc(L('Your church directory','El directorio de su iglesia'))}</h2><button type="button" class="dir-x" data-dir="close" aria-label="${esc(L('Close','Cerrar'))}">×</button></div>`;
+  d.innerHTML='<div class="ns-sh dir-sh">'+head+(V==='edit'?dirEditHTML():V==='import'?dirImportHTML():V==='details'?dirDetailsHTML():dirListHTML())+'</div>';
+  dirWire();
+  if(V==='list') dirThumbs();
+}
+function dirListHTML(){
+  const D=dirGet(), fs=dirSort(D.families), q=DIR_ST.q.trim().toLowerCase();
+  const shown=q?fs.filter(f=>[f.family,f.people,f.kids,f.phone,f.email].join(' ').toLowerCase().includes(q)):fs;
+  const ph=fs.filter(f=>f.photo).length;
+  return `<p class="note">${esc(L('Put in each family once, with a photo if you have one; Terrain makes the directory to print. Everything stays on this device.','Ponga cada familia una vez, con una foto si la tiene; Terrain hace el directorio para imprimir. Todo queda en este dispositivo.'))}</p>
+    <div class="dir-acts">
+      <button type="button" class="btn" data-dir="add">${esc(L('+ Add a family','+ Agregar una familia'))}</button>
+      <button type="button" class="btn ghost" data-dir="import">${esc(L('Bring in a list','Traer una lista'))}</button>
+      <button type="button" class="btn ghost" data-dir="details">${esc(L('Cover and officers','Portada y oficiales'))}</button>
+      <button type="button" class="btn dir-pdf" data-dir="pdf"${fs.length?'':' disabled'}>${esc(L('Make the directory (PDF)','Hacer el directorio (PDF)'))}</button>
+    </div>
+    ${DIR_ST.msg?`<p class="dir-msg" role="status">${esc(DIR_ST.msg)}</p>`:''}
+    <div class="dir-count"><b>${esc(dirCountWords(fs.length))}</b>${fs.length?` · ${esc(L(ph+' with photos',ph+' con fotos'))}`:''}${fs.length>8?`<input type="search" id="dir-q" placeholder="${esc(L('Find a family','Buscar una familia'))}" value="${esc(DIR_ST.q)}" aria-label="${esc(L('Find a family','Buscar una familia'))}">`:''}</div>
+    ${fs.length?`<div class="dir-list">${shown.map(f=>`<div class="dir-fam"><div class="dir-ph" data-ph="${esc(f.id)}">${f.photo?'':`<span>${esc(dirInitials(f))}</span>`}</div><div class="dir-fi"><b>${esc(f.family)}</b><span>${esc(f.people||'')}${f.kids?(f.kidsOk?' · '+esc(f.kids):' · '+esc(L('children not shown','niños no mostrados'))):''}</span><small>${esc([f.phone,f.email].filter(Boolean).join(' · '))}</small></div><button type="button" class="btn ghost dir-ed" data-dir="edit" data-id="${esc(f.id)}">${esc(L('Edit','Editar'))}</button></div>`).join('')}</div>`
+      :`<p class="dir-empty">${esc(L('No families yet. Add them one by one, or bring in the clerk’s list and a folder of photos.','Aún no hay familias. Agréguelas una por una, o traiga la lista del secretario y una carpeta de fotos.'))}</p>`}
+    <div class="dir-foot"><button type="button" class="btn ghost" data-dir="save"${fs.length?'':' disabled'}>${esc(L('Save a copy','Guardar una copia'))}</button><label class="btn ghost dir-load">${esc(L('Load a copy','Cargar una copia'))}<input type="file" accept="application/json,.json" data-dir="load" hidden></label><span class="note">${esc(L('A copy moves the directory, with its photos, to another computer.','Una copia lleva el directorio, con sus fotos, a otra computadora.'))}</span></div>`;
+}
+async function dirThumbs(){
+  const d=document.getElementById('dir-sheet'); if(!d) return;
+  for(const el of d.querySelectorAll('.dir-ph[data-ph]')){
+    const f=dirGet().families.find(x=>x.id===el.dataset.ph); if(!f||!f.photo) continue;
+    const u=await dirPhotoGet(dirKey(f.id)); if(u&&el.isConnected){ el.style.backgroundImage='url("'+u+'")'; el.classList.add('has'); }
+  }
+}
+function dirEditHTML(){
+  const f=DIR_ST.edit||{}, isNew=!dirGet().families.some(x=>x.id===f.id);
+  const fld=(id,lb,v,ph,type)=>`<label class="dir-f"><span>${esc(lb)}</span><input id="${id}" type="${type||'text'}" value="${esc(v||'')}"${ph?` placeholder="${esc(ph)}"`:''} autocomplete="off"></label>`;
+  return `<h3 class="dir-h3">${esc(isNew?L('Add a family','Agregar una familia'):L('Edit a family','Editar una familia'))}</h3>
+    <div class="dir-form">
+      <div class="dir-phw"><div class="dir-ph big" id="dir-ph-prev">${DIR_ST.photo||f.photo?'':`<span>${esc(dirInitials(f))}</span>`}</div>
+        <label class="btn ghost">${esc(L('Choose a photo','Elegir una foto'))}<input type="file" accept="image/*" id="dir-photo" hidden></label>
+        ${DIR_ST.photo||f.photo?`<button type="button" class="btn ghost" data-dir="nophoto">${esc(L('Remove the photo','Quitar la foto'))}</button>`:''}</div>
+      ${fld('dir-family',L('Family name','Apellido de la familia'),f.family,L('Smith','Rivera'))}
+      ${fld('dir-people',L('Adults','Adultos'),f.people,L('John and Mary','Juan y María'))}
+      ${fld('dir-kids',L('Children','Niños'),f.kids,L('Sam, Ana','Samuel, Ana'))}
+      <label class="dir-check"><input type="checkbox" id="dir-kidsok"${f.kidsOk?' checked':''}> ${esc(L('A parent said yes to showing the children in the directory','Un padre o una madre aceptó mostrar a los niños en el directorio'))}</label>
+      ${fld('dir-phone',L('Phone','Teléfono'),f.phone,'','tel')}
+      ${fld('dir-email',L('Email','Correo electrónico'),f.email,'','email')}
+      ${fld('dir-address',L('Address (optional)','Dirección (opcional)'),f.address)}
+    </div>
+    <p class="dir-msg" id="dir-emsg" role="status"></p>
+    <div class="dir-acts"><button type="button" class="btn" data-dir="savefam">${esc(L('Save','Guardar'))}</button><button type="button" class="btn ghost" data-dir="back">${esc(L('Cancel','Cancelar'))}</button>
+      ${isNew?'':`<button type="button" class="btn ghost dir-rm" data-dir="rmfam">${esc(DIR_ST.arm==='rm'?L('Tap again to remove','Toque otra vez para quitar'):L('Remove this family','Quitar esta familia'))}</button>`}</div>`;
+}
+function dirImportHTML(){
+  return `<h3 class="dir-h3">${esc(L('Bring in a list','Traer una lista'))}</h3>
+    <p class="note">${esc(L('From the clerk’s spreadsheet: save it as CSV, or copy the rows and paste them here. The first row names the columns: Family, Adults, Children, Phone, Email, Address, Photo. Children are left out of the directory until a parent says yes (Edit, on each family).','De la hoja de cálculo del secretario: guárdela como CSV, o copie las filas y péguelas aquí. La primera fila nombra las columnas: Familia, Adultos, Niños, Teléfono, Correo, Dirección, Foto. Los niños quedan fuera del directorio hasta que un padre acepte (Editar, en cada familia).'))}</p>
+    <div class="dir-acts"><label class="btn ghost">${esc(L('Choose the CSV file','Elegir el archivo CSV'))}<input type="file" accept=".csv,text/csv,text/plain" id="dir-csv" hidden></label></div>
+    <textarea id="dir-paste" rows="6" placeholder="${esc(L('Family\tAdults\tPhone\nSmith\tJohn and Mary\t555-0100','Familia\tAdultos\tTeléfono\nRivera\tJuan y María\t555-0100'))}" aria-label="${esc(L('Paste the rows','Pegue las filas'))}"></textarea>
+    <div class="dir-acts"><button type="button" class="btn" data-dir="dopaste">${esc(L('Add these families','Agregar estas familias'))}</button></div>
+    <h3 class="dir-h3">${esc(L('Photos, all at once','Fotos, todas a la vez'))}</h3>
+    <p class="note">${esc(L('Choose many photos together. Each goes to the family its file name matches: Smith.jpg to Smith; or the name in the list’s Photo column.','Elija muchas fotos juntas. Cada una va a la familia cuyo nombre coincide con el del archivo: Rivera.jpg a Rivera; o el nombre en la columna Foto de la lista.'))}</p>
+    <div class="dir-acts"><label class="btn ghost">${esc(L('Choose the photos','Elegir las fotos'))}<input type="file" accept="image/*" multiple id="dir-photos" hidden></label></div>
+    <p class="dir-msg" id="dir-imsg" role="status">${esc(DIR_ST.msg)}</p>
+    <div class="dir-acts"><button type="button" class="btn ghost" data-dir="back">${esc(L('Back to the families','Volver a las familias'))}</button></div>`;
+}
+function dirDetailsHTML(){
+  const D=dirGet();
+  const offs=(D.officers&&D.officers.length?D.officers:[{role:L('Pastor','Pastor'),name:'',phone:''},{role:L('Head elder','Primer anciano'),name:'',phone:''},{role:L('Clerk','Secretario'),name:'',phone:''},{role:L('Treasurer','Tesorero'),name:'',phone:''}]);
+  return `<h3 class="dir-h3">${esc(L('Cover and officers','Portada y oficiales'))}</h3>
+    <div class="dir-form">
+      <label class="dir-f"><span>${esc(L('Title on the cover','Título en la portada'))}</span><input id="dir-title" value="${esc(D.title||'')}" placeholder="${esc(dirTitle())}"></label>
+      <label class="dir-f"><span>${esc(L('Year','Año'))}</span><input id="dir-year" value="${esc(D.year||'')}" placeholder="${esc(dirYear())}" inputmode="numeric"></label>
+      <label class="dir-f dir-wide"><span>${esc(L('A word from the pastor (optional)','Unas palabras del pastor (opcional)'))}</span><textarea id="dir-note" rows="4">${esc(D.note||'')}</textarea></label>
+    </div>
+    <h3 class="dir-h3">${esc(L('Pastor and officers','Pastor y oficiales'))}</h3>
+    <div class="dir-offs" id="dir-offs">${offs.map((o,i)=>`<div class="dir-off"><input data-o="role" value="${esc(o.role||'')}" aria-label="${esc(L('Role','Cargo'))}" placeholder="${esc(L('Role','Cargo'))}"><input data-o="name" value="${esc(o.name||'')}" aria-label="${esc(L('Name','Nombre'))}" placeholder="${esc(L('Name','Nombre'))}"><input data-o="phone" value="${esc(o.phone||'')}" aria-label="${esc(L('Phone','Teléfono'))}" placeholder="${esc(L('Phone','Teléfono'))}" type="tel"></div>`).join('')}</div>
+    <div class="dir-acts"><button type="button" class="btn ghost" data-dir="addoff">${esc(L('+ Another officer','+ Otro oficial'))}</button></div>
+    <div class="dir-acts"><button type="button" class="btn" data-dir="savedet">${esc(L('Save','Guardar'))}</button><button type="button" class="btn ghost" data-dir="back">${esc(L('Cancel','Cancelar'))}</button></div>`;
+}
+/* the list of families from a pasted table or a CSV file: tabs, commas or semicolons, quotes allowed */
+function dirParse(text){
+  const rows=[]; const s=String(text||'').replace(/\r\n?/g,'\n').trim(); if(!s) return rows;
+  const first=s.split('\n')[0], sep=first.includes('\t')?'\t':(first.split(';').length>first.split(',').length?';':',');
+  let row=[], cell='', q=false;
+  for(let i=0;i<s.length;i++){ const ch=s[i];
+    if(q){ if(ch==='"'){ if(s[i+1]==='"'){ cell+='"'; i++; } else q=false; } else cell+=ch; continue; }
+    if(ch==='"'&&cell==='') { q=true; continue; }
+    if(ch===sep){ row.push(cell.trim()); cell=''; continue; }
+    if(ch==='\n'){ row.push(cell.trim()); rows.push(row); row=[]; cell=''; continue; }
+    cell+=ch; }
+  row.push(cell.trim()); rows.push(row);
+  return rows.filter(r=>r.some(c=>c));
+}
+const DIR_COLS={family:/^(family|last|last ?name|surname|apellido|familia)/i,people:/^(adults?|names?|members?|first ?names?|adultos?|nombres?|miembros?)/i,kids:/^(child|children|kids|ni[nñ]os|hijos)/i,phone:/^(phone|cell|mobile|tel|tel[eé]fono|celular)/i,email:/^(e-?mail|correo)/i,address:/^(address|street|direcci[oó]n)/i,photo:/^(photo|picture|image|foto|imagen)/i};
+function dirFromRows(rows){
+  if(rows.length<2) return [];
+  const hd=rows[0], map={};
+  hd.forEach((h,i)=>{ for(const k in DIR_COLS){ if(map[k]==null&&DIR_COLS[k].test(String(h).trim())) { map[k]=i; break; } } });
+  if(map.family==null) return [];
+  return rows.slice(1).map(r=>({id:dirId(),family:(r[map.family]||'').slice(0,80),people:map.people!=null?(r[map.people]||'').slice(0,160):'',kids:map.kids!=null?(r[map.kids]||'').slice(0,160):'',kidsOk:false,
+    phone:map.phone!=null?(r[map.phone]||'').slice(0,40):'',email:map.email!=null?(r[map.email]||'').slice(0,120):'',address:map.address!=null?(r[map.address]||'').slice(0,200):'',photo:false,photoName:map.photo!=null?(r[map.photo]||'').slice(0,120):''})).filter(f=>f.family);
+}
+function dirFold(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase().replace(/\.[a-z0-9]{2,5}$/,'').replace(/[^a-z0-9]/g,''); }
+function dirAddRows(text){
+  const fs=dirFromRows(dirParse(text));
+  if(!fs.length){ DIR_ST.msg=L('No families found: the first row must name the columns, with a Family column.','No se encontraron familias: la primera fila debe nombrar las columnas, con una columna Familia.'); return 0; }
+  const D=dirGet(); D.families.push(...fs); dirSave();
+  DIR_ST.msg=L(`Added ${fs.length} famil${fs.length>1?'ies':'y'}. Now the photos, if you have them.`,`Se agregaron ${fs.length} familia${fs.length>1?'s':''}. Ahora las fotos, si las tiene.`);
+  return fs.length;
+}
+async function dirAddPhotos(files){
+  const D=dirGet(); let hit=0; const miss=[];
+  for(const file of files){
+    const k=dirFold(file.name);
+    const f=D.families.find(x=>x.photoName&&dirFold(x.photoName)===k)||D.families.find(x=>dirFold(x.family)===k)
+      ||D.families.find(x=>dirFold(x.family+x.people)===k)||D.families.find(x=>k&&dirFold(x.family).length>2&&k.startsWith(dirFold(x.family)));
+    if(!f){ miss.push(file.name); continue; }
+    try{ const u=await dirPhotoFrom(file); await dirPhotoPut(dirKey(f.id),u); f.photo=true; hit++; }catch(e){ miss.push(file.name); }
+  }
+  dirSave();
+  DIR_ST.msg=L(`${hit} photo${hit===1?'':'s'} matched to a family.`,`${hit} foto${hit===1?'':'s'} asignada${hit===1?'':'s'} a una familia.`)+(miss.length?' '+L(`Not matched: ${miss.slice(0,6).join(', ')}${miss.length>6?'…':''} (rename the file to the family's name, or add it with Edit).`,`Sin asignar: ${miss.slice(0,6).join(', ')}${miss.length>6?'…':''} (cambie el nombre del archivo al de la familia, o agréguela con Editar).`):'');
+  return {hit,miss};
+}
+function dirWire(){
+  const d=document.getElementById('dir-sheet'); if(!d) return;
+  d.querySelectorAll('[data-dir]').forEach(b=>{ if(b.tagName==='INPUT') return; b.onclick=async()=>{
+    const a=b.dataset.dir, D=dirGet();
+    if(a==='close'){ dirClose(); return; }
+    if(a==='add'){ DIR_ST.edit={id:dirId(),family:'',people:'',kids:'',kidsOk:false,phone:'',email:'',address:'',photo:false}; DIR_ST.photo=null; DIR_ST.arm=null; DIR_ST.view='edit'; dirDraw(); const i=document.getElementById('dir-family'); if(i) i.focus(); return; }
+    if(a==='edit'){ const f=D.families.find(x=>x.id===b.dataset.id); if(!f) return; DIR_ST.edit={...f}; DIR_ST.photo=null; DIR_ST.arm=null; DIR_ST.view='edit'; dirDraw();
+      if(f.photo){ const u=await dirPhotoGet(dirKey(f.id)); const pv=document.getElementById('dir-ph-prev'); if(u&&pv){ pv.style.backgroundImage='url("'+u+'")'; pv.classList.add('has'); pv.innerHTML=''; } } return; }
+    if(a==='import'){ DIR_ST.view='import'; DIR_ST.msg=''; dirDraw(); return; }
+    if(a==='details'){ DIR_ST.view='details'; dirDraw(); return; }
+    if(a==='back'){ DIR_ST.view='list'; DIR_ST.msg=''; dirDraw(); return; }
+    if(a==='nophoto'){ DIR_ST.photo='none'; const pv=document.getElementById('dir-ph-prev'); if(pv){ pv.style.backgroundImage=''; pv.classList.remove('has'); pv.innerHTML=`<span>${esc(dirInitials(DIR_ST.edit||{}))}</span>`; } b.remove(); return; }
+    if(a==='savefam'){ const v=id=>(document.getElementById(id)||{}).value||'';
+      const fam=v('dir-family').trim(); if(!fam){ const m=document.getElementById('dir-emsg'); if(m) m.textContent=L('The family name, please.','El apellido de la familia, por favor.'); const i=document.getElementById('dir-family'); if(i) i.focus(); return; }
+      const f={...DIR_ST.edit,family:fam.slice(0,80),people:v('dir-people').trim().slice(0,160),kids:v('dir-kids').trim().slice(0,160),kidsOk:!!(document.getElementById('dir-kidsok')||{}).checked,phone:v('dir-phone').trim().slice(0,40),email:v('dir-email').trim().slice(0,120),address:v('dir-address').trim().slice(0,200)};
+      if(DIR_ST.photo==='none'){ await dirPhotoDel(dirKey(f.id)); f.photo=false; }
+      else if(DIR_ST.photo){ await dirPhotoPut(dirKey(f.id),DIR_ST.photo); f.photo=true; }
+      const i=D.families.findIndex(x=>x.id===f.id); if(i<0) D.families.push(f); else D.families[i]=f;
+      dirSave(); DIR_ST.view='list'; DIR_ST.msg=L('Saved: '+f.family+'.','Guardado: '+f.family+'.'); dirDraw(); return; }
+    if(a==='rmfam'){ if(DIR_ST.arm!=='rm'){ DIR_ST.arm='rm'; b.textContent=L('Tap again to remove','Toque otra vez para quitar'); return; }
+      const id=DIR_ST.edit&&DIR_ST.edit.id; D.families=D.families.filter(x=>x.id!==id); await dirPhotoDel(dirKey(id)); dirSave(); DIR_ST.arm=null; DIR_ST.view='list'; DIR_ST.msg=''; dirDraw(); return; }
+    if(a==='dopaste'){ const t=(document.getElementById('dir-paste')||{}).value||''; dirAddRows(t); dirDraw(); return; }
+    if(a==='addoff'){ const box=document.getElementById('dir-offs'); if(box){ const r=document.createElement('div'); r.className='dir-off'; r.innerHTML=`<input data-o="role" placeholder="${esc(L('Role','Cargo'))}" aria-label="${esc(L('Role','Cargo'))}"><input data-o="name" placeholder="${esc(L('Name','Nombre'))}" aria-label="${esc(L('Name','Nombre'))}"><input data-o="phone" type="tel" placeholder="${esc(L('Phone','Teléfono'))}" aria-label="${esc(L('Phone','Teléfono'))}">`; box.appendChild(r); } return; }
+    if(a==='savedet'){ D.title=((document.getElementById('dir-title')||{}).value||'').trim().slice(0,80); D.year=((document.getElementById('dir-year')||{}).value||'').trim().slice(0,12); D.note=((document.getElementById('dir-note')||{}).value||'').trim().slice(0,1200);
+      D.officers=[...d.querySelectorAll('.dir-off')].map(r=>({role:r.querySelector('[data-o="role"]').value.trim().slice(0,60),name:r.querySelector('[data-o="name"]').value.trim().slice(0,80),phone:r.querySelector('[data-o="phone"]').value.trim().slice(0,40)})).filter(o=>o.name);
+      dirSave(); DIR_ST.view='list'; DIR_ST.msg=L('Saved.','Guardado.'); dirDraw(); return; }
+    if(a==='pdf'){ b.disabled=true; const t=b.textContent; b.textContent=L('Making the directory…','Haciendo el directorio…');
+      try{ const JS=await gfLoadJsPDF(); const doc=await dirPdfDoc({jsPDF:JS}); doc.save(dirPdfName()); DIR_ST.msg=L('The directory is ready: '+dirPdfName(),'El directorio está listo: '+dirPdfName()); }
+      catch(e){ DIR_ST.msg=L('The directory could not be made just now. Check the connection and try again.','No se pudo hacer el directorio ahora. Revise la conexión e inténtelo otra vez.'); }
+      b.disabled=false; b.textContent=t; dirDraw(); return; }
+    if(a==='save'){ await dirSaveCopy(); return; }
+  }; });
+  const fi=d.querySelector('#dir-photo'); if(fi) fi.onchange=async()=>{ const f=fi.files&&fi.files[0]; if(!f) return;
+    try{ const u=await dirPhotoFrom(f); DIR_ST.photo=u; const pv=document.getElementById('dir-ph-prev'); if(pv){ pv.style.backgroundImage='url("'+u+'")'; pv.classList.add('has'); pv.innerHTML=''; } }
+    catch(e){ const m=document.getElementById('dir-emsg'); if(m) m.textContent=L('That photo could not be read. Try another.','No se pudo leer esa foto. Pruebe otra.'); } };
+  const csv=d.querySelector('#dir-csv'); if(csv) csv.onchange=()=>{ const f=csv.files&&csv.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=()=>{ dirAddRows(String(rd.result||'')); dirDraw(); }; rd.readAsText(f); };
+  const phs=d.querySelector('#dir-photos'); if(phs) phs.onchange=async()=>{ const files=[...(phs.files||[])]; if(!files.length) return; const m=document.getElementById('dir-imsg'); if(m) m.textContent=L('Reading the photos…','Leyendo las fotos…'); await dirAddPhotos(files); dirDraw(); };
+  const ld=d.querySelector('[data-dir="load"]'); if(ld) ld.onchange=()=>{ const f=ld.files&&ld.files[0]; if(!f) return; const rd=new FileReader(); rd.onload=async()=>{ await dirLoadCopy(String(rd.result||'')); dirDraw(); }; rd.readAsText(f); };
+  const q=d.querySelector('#dir-q'); if(q) q.oninput=()=>{ DIR_ST.q=q.value; const at=q.selectionStart; dirDraw(); const q2=document.getElementById('dir-q'); if(q2){ q2.focus(); try{ q2.setSelectionRange(at,at); }catch(e){} } };
+}
+/* a copy to move to another computer: the families and their photos, as one file */
+async function dirSaveCopy(){
+  const D=dirGet(), photos={};
+  for(const f of D.families){ if(f.photo){ const u=await dirPhotoGet(dirKey(f.id)); if(u) photos[f.id]=u; } }
+  const body=JSON.stringify({kind:'terrain-directory',v:1,church:dirTitle(),saved:new Date().toISOString(),directory:D,photos});
+  const name='Church-directory-'+String(dirTitle()).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)+'-'+new Date().toISOString().slice(0,10)+'.json';
+  try{ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([body],{type:'application/json'})); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{ URL.revokeObjectURL(a.href); a.remove(); },1500); DIR_ST.msg=L('Saved: '+name,'Guardado: '+name); }
+  catch(e){ DIR_ST.msg=L('The copy could not be saved on this device.','No se pudo guardar la copia en este dispositivo.'); }
+  dirDraw(); return name;
+}
+async function dirLoadCopy(text){
+  let j=null; try{ j=JSON.parse(text); }catch(e){ j=null; }
+  if(!j||j.kind!=='terrain-directory'||!j.directory||!Array.isArray(j.directory.families)){ DIR_ST.msg=L('That file is not a Terrain church directory.','Ese archivo no es un directorio de iglesia de Terrain.'); return false; }
+  const D=dirGet(), keep=new Set(D.families.map(f=>f.id)); let added=0;
+  for(const f of j.directory.families){ if(!f||!f.family) continue; const nf={id:keep.has(f.id)?dirId():(f.id||dirId()),family:String(f.family).slice(0,80),people:String(f.people||'').slice(0,160),kids:String(f.kids||'').slice(0,160),kidsOk:!!f.kidsOk,phone:String(f.phone||'').slice(0,40),email:String(f.email||'').slice(0,120),address:String(f.address||'').slice(0,200),photo:false};
+    const u=j.photos&&j.photos[f.id]; if(typeof u==='string'&&/^data:image\/(jpeg|png|webp);base64,/.test(u)){ await dirPhotoPut(dirKey(nf.id),u); nf.photo=true; }
+    D.families.push(nf); added++; }
+  if(!D.title&&j.directory.title) D.title=String(j.directory.title).slice(0,80);
+  if(!D.year&&j.directory.year) D.year=String(j.directory.year).slice(0,12);
+  if(!D.note&&j.directory.note) D.note=String(j.directory.note).slice(0,1200);
+  if(!(D.officers&&D.officers.length)&&Array.isArray(j.directory.officers)) D.officers=j.directory.officers.slice(0,30).map(o=>({role:String(o.role||'').slice(0,60),name:String(o.name||'').slice(0,80),phone:String(o.phone||'').slice(0,40)})).filter(o=>o.name);
+  dirSave(); DIR_ST.msg=L(`Loaded ${added} famil${added===1?'y':'ies'}.`,`Se cargaron ${added} familia${added===1?'':'s'}.`); return added;
+}
+function dirPdfName(){ return 'Church-directory-'+String(dirTitle()).replace(/[^A-Za-z0-9]+/g,'-').replace(/^-|-$/g,'').slice(0,40)+'-'+dirYear()+'.pdf'; }
+/* the printed directory: Letter, a cover, a page from the pastor and the officers (when there is one), eight families a page in
+   alphabetical order with their photos, and who's who (every first name with its family and page). Every page: for members only. */
+async function dirPdfDoc(opts){
+  opts=opts||{};
+  const JS=opts.jsPDF||(window.jspdf&&window.jspdf.jsPDF); if(!JS) throw new Error('jspdf');
+  const D=dirGet(), fs=dirSort(D.families), doc=new JS({unit:'pt',format:'letter'});
+  const W=612, H=792, M=40, title=dirTitle(), year=dirYear();
+  const ink=[30,32,36], soft=[110,116,124], line=[205,210,216], acc=[46,140,110];
+  const foot=n=>{ doc.setFont('helvetica','normal'); doc.setFontSize(8); doc.setTextColor(...soft);
+    doc.text(L('For members only. Please do not share outside the church.','Solo para miembros. Por favor, no lo comparta fuera de la iglesia.'),M,H-24); doc.text(String(n),W-M,H-24,{align:'right'}); };
+  let page=1;
+  // the cover
+  doc.setFillColor(...acc); doc.rect(0,0,W,10,'F');
+  doc.setTextColor(...ink); doc.setFont('helvetica','bold'); doc.setFontSize(30);
+  doc.text(doc.splitTextToSize(title,W-2*M),W/2,H*0.38,{align:'center'});
+  doc.setFont('helvetica','normal'); doc.setFontSize(18); doc.setTextColor(...soft);
+  doc.text(L('Church directory','Directorio de la iglesia')+' · '+year,W/2,H*0.38+56,{align:'center'});
+  doc.setFontSize(11); doc.text(L(fs.length+' families',fs.length+' familias'),W/2,H*0.38+80,{align:'center'});
+  foot(page);
+  // from the pastor, and the officers
+  const offs=(D.officers||[]).filter(o=>o.name);
+  if(D.note||offs.length){ doc.addPage(); page++; let y=M+20;
+    if(D.note){ doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(...ink); doc.text(L('From the pastor','Del pastor'),M,y); y+=22;
+      doc.setFont('helvetica','normal'); doc.setFontSize(11); doc.setTextColor(...ink); const ls=doc.splitTextToSize(D.note,W-2*M); doc.text(ls,M,y); y+=ls.length*15+24; }
+    if(offs.length){ doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(...ink); doc.text(L('Pastor and officers','Pastor y oficiales'),M,y); y+=20;
+      offs.forEach(o=>{ if(y>H-70){ foot(page); doc.addPage(); page++; y=M+20; }
+        doc.setFont('helvetica','bold'); doc.setFontSize(10.5); doc.setTextColor(...soft); doc.text(String(o.role||''),M,y);
+        doc.setFont('helvetica','normal'); doc.setTextColor(...ink); doc.text(String(o.name||''),M+170,y); if(o.phone) doc.text(String(o.phone),W-M,y,{align:'right'});
+        doc.setDrawColor(...line); doc.line(M,y+7,W-M,y+7); y+=22; }); }
+    foot(page); }
+  // the families: two across, four down
+  const who=[]; const cw=(W-2*M-16)/2, chH=(H-2*M-40)/4, pw=128, phh=96;
+  for(let i=0;i<fs.length;i++){
+    if(i%8===0){ doc.addPage(); page++; doc.setFont('helvetica','bold'); doc.setFontSize(10); doc.setTextColor(...acc); doc.text(title+' · '+year,M,M-6); foot(page); }
+    const f=fs[i], col=i%2, row=Math.floor((i%8)/2), x=M+col*(cw+16), y=M+8+row*chH;
+    let img=null; if(f.photo){ try{ img=await dirPhotoGet(dirKey(f.id)); }catch(e){ img=null; } }
+    if(img){ try{ doc.addImage(img,'JPEG',x,y,pw,phh); }catch(e){ img=null; } }
+    if(!img){ doc.setFillColor(236,240,238); doc.roundedRect(x,y,pw,phh,6,6,'F'); doc.setFont('helvetica','bold'); doc.setFontSize(26); doc.setTextColor(...acc); doc.text(dirInitials(f),x+pw/2,y+phh/2+9,{align:'center'}); }
+    const tx=x+pw+10, tw=cw-pw-10; let ty=y+13;
+    doc.setFont('helvetica','bold'); doc.setFontSize(12.5); doc.setTextColor(...ink); doc.splitTextToSize(String(f.family),tw).slice(0,2).forEach(l=>{ doc.text(l,tx,ty); ty+=15; });
+    doc.setFont('helvetica','normal'); doc.setFontSize(10);
+    if(f.people){ doc.splitTextToSize(String(f.people),tw).slice(0,2).forEach(l=>{ doc.text(l,tx,ty); ty+=13; }); }
+    if(f.kids&&f.kidsOk){ doc.setTextColor(...soft); doc.splitTextToSize(String(f.kids),tw).slice(0,2).forEach(l=>{ doc.text(l,tx,ty); ty+=13; }); doc.setTextColor(...ink); }
+    doc.setFontSize(9.5);
+    [f.phone,f.email].filter(Boolean).forEach(v=>{ doc.splitTextToSize(String(v),tw).slice(0,1).forEach(l=>{ doc.text(l,tx,ty); ty+=12; }); });
+    if(f.address){ doc.setTextColor(...soft); doc.splitTextToSize(String(f.address),tw).slice(0,2).forEach(l=>{ doc.text(l,tx,ty); ty+=11.5; }); doc.setTextColor(...ink); }
+    doc.setDrawColor(...line); doc.line(x,y+chH-10,x+cw,y+chH-10);
+    String(f.people||'').split(/,|&|\band\b|\by\b|\//i).map(s=>s.trim()).filter(Boolean).forEach(n=>who.push([n,f.family,page]));
+    if(f.kids&&f.kidsOk) String(f.kids).split(/,|&|\band\b|\by\b|\//i).map(s=>s.trim()).filter(Boolean).forEach(n=>who.push([n,f.family,page]));
+  }
+  // who's who
+  if(who.length){ who.sort((a,b)=>a[0].localeCompare(b[0],undefined,{sensitivity:'base'})||a[1].localeCompare(b[1]));
+    const cols=3, colW=(W-2*M-2*14)/cols, per=Math.floor((H-2*M-50)/14);
+    for(let i=0;i<who.length;i++){
+      if(i%(per*cols)===0){ doc.addPage(); page++; doc.setFont('helvetica','bold'); doc.setFontSize(15); doc.setTextColor(...ink); doc.text(L('Who’s who','Quién es quién'),M,M+14); foot(page); }
+      const k=i%(per*cols), c=Math.floor(k/per), r=k%per, x=M+c*(colW+14), y=M+40+r*14;
+      doc.setFont('helvetica','normal'); doc.setFontSize(9.5); doc.setTextColor(...ink);
+      doc.text(doc.splitTextToSize(who[i][0]+' '+who[i][1],colW-24)[0],x,y); doc.setTextColor(...soft); doc.text(String(who[i][2]),x+colW-4,y,{align:'right'});
+    } }
+  return doc;
+}
 function capRender(){
   const host=$('capslot');if(!host)return;const ch=uChurch(),c=capGet(),m=capMerged();
   if(U_STEP_I==null) U_STEP_I=c.confirmed&&m.ready?U_SUM:0;   // v10.56.2: a church already saved opens on its summary
@@ -45864,7 +46297,7 @@ function caseCmpDoorWire(h){ const b=h&&h.querySelector('[data-cs-cmp]'); if(b) 
    alone on its last row: that card takes the whole row (the pattern the ministries and the resources already use). Measured from the
    grid's own rows, so it holds at every width and with a card opened full width; run after each draw and when the window changes. */
 // v10.65.0: the Planner's budget (a revival plan has five parts)
-const TS_NOLONE='.pform,.cs-agrid,.cmp-cards,.cmp-learng,.cmp-cols,.cmp-mgroups,.cmp-tiles,.df-areas,.df-needs,.gfdoors,.ns-lcols,.budget,.lroles';
+const TS_NOLONE='.pform,.cs-agrid,.cmp-cards,.cmp-learng,.cmp-cols,.cmp-mgroups,.cmp-tiles,.df-areas,.df-needs,.gfdoors,.ns-lcols,.budget,.lroles,.dir-list';
 function tsNoLone(){
   try{ document.querySelectorAll(TS_NOLONE).forEach(g=>{
     const kids=[...g.children].filter(k=>k.getClientRects().length);
