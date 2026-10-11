@@ -219,6 +219,19 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.67.1 (11 Oct 2026, quick lane) — the church directory moves to the main menu: a wide seventh tile across the bottom.** The pastor:
+*"build your directory should not be in that area … maybe we can have a tab that stretches along the bottom that says create your church
+directory a seventh tab that somehow fits symmetrically. I don't think it should fit down there by your church. You can remove it from there."*
+The tab left the survey's "Your church" (`dirTabHTML` / `dirTabWire` / `dirTabPaint` gone; `dirCountWords` kept for the builder). On the main
+menu, after the six tools and still inside their grid, **`#hubdir`** (class `.hubdir`, not `.tool`: the six stay 3 + 3 and every test that counts
+`.tool` still counts six): `grid-column:1/-1`, the whole width of the grid on every screen; a book in a coral circle (`--tc:#FF9F8A`), **Create
+your church directory**, "Photos, names and numbers, printed for your members.", **Build the directory →** (the tiles' own arrow); a row on a
+computer, stacked and centred under 640 px; wired in `wireHub` → `dirOpen`. ES through `ES`. The builder now says which church it is for
+("For {church}", and with several churches, "another church: the church button at the top"). Tests: `v67-directory` updated (31: the tile, its
+width, the six tiles, not in "Your church", ES) and `v45-profile-move` back to the card under the section's line, each with a comment. Checked
+in Chrome (`v82/shots671.mjs`): computer 1366, tablet 820, phone 390: the tile exactly as wide as the grid, no sideways scroll, no page errors.
+Full suite: 182 suites · 11,567 passed · 0 failed. Samples `Terrain-v10.67.1-samples`.
+
 **v10.67.0 (11 Oct 2026, full lane) — the church directory, built in "Your church".** The pastor: *"the churches need to have a really
 nice directory with pictures and everything so that we can know each other"*, then *"is it possible to create a CHURCH directory build builder
 where if I have the photos and the information names and number if I put it all in it can build a printable church directory"*; his choices:

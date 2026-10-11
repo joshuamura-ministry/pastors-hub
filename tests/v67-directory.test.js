@@ -10,11 +10,17 @@ const txt=e=>e?e.textContent.replace(/\s+/g,' ').trim():'';
 // a real 8 × 6 JPEG (made from a screenshot with macOS sips), so the PDF can carry a photo
 const JPG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAACKADAAQAAAABAAAABgAAAAD/7QA4UGhvdG9zaG9wIDMuMAA4QklNBAQAAAAAAAA4QklNBCUAAAAAABDUHYzZjwCyBOmACZjs+EJ+/8AAEQgABgAIAwEiAAIRAQMRAf/EAB8AAAEFAQEBAQEBAAAAAAAAAAABAgMEBQYHCAkKC//EALUQAAIBAwMCBAMFBQQEAAABfQECAwAEEQUSITFBBhNRYQcicRQygZGhCCNCscEVUtHwJDNicoIJChYXGBkaJSYnKCkqNDU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6g4SFhoeIiYqSk5SVlpeYmZqio6Slpqeoqaqys7S1tre4ubrCw8TFxsfIycrS09TV1tfY2drh4uPk5ebn6Onq8fLz9PX29/j5+v/EAB8BAAMBAQEBAQEBAQEAAAAAAAABAgMEBQYHCAkKC//EALURAAIBAgQEAwQHBQQEAAECdwABAgMRBAUhMQYSQVEHYXETIjKBCBRCkaGxwQkjM1LwFWJy0QoWJDThJfEXGBkaJicoKSo1Njc4OTpDREVGR0hJSlNUVVZXWFlaY2RlZmdoaWpzdHV2d3h5eoKDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uLj5OXm5+jp6vLz9PX29/j5+v/bAEMAAgICAgICBAICBAYEBAQGCAYGBgYICggICAgICgwKCgoKCgoMDAwMDAwMDA4ODg4ODhAQEBAQEhISEhISEhISEv/bAEMBAwMDBQQFCAQECBMNCw0TExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTExMTE//dAAQAAf/aAAwDAQACEQMRAD8A/DeS/tZLJLWJDuCBSxA+97Y5xWT5TetNj+9+NWK6DOOx/9k=';
 (async()=>{ await T.sec(async()=>{
-  console.log('\n-- the tab at the top of "Your church" --');
+  // v10.67.1 (stale, not a regression): the pastor (11 Oct 2026), "build your directory should not be in that area … a tab that stretches
+  // along the bottom that says create your church directory a seventh tab that somehow fits symmetrically … You can remove it from there"
+  console.log('\n-- the main menu\'s seventh tile, across the bottom --');
   const P=page({}); await ready(P); survey(P); await sleep(200);
-  const tab=P.q('#u-church #u-dirtab');
-  c('"Build your church directory", at the top of "Your church" (above its card, which folds), with a picture of a book', tab?[txt(tab.querySelector('b')),tab.parentNode.id==='u-church'&&tab.nextElementSibling&&tab.nextElementSibling.id==='u-churchslot',!!tab.querySelector('svg')]:null, ['Build your church directory',true,true]);
-  c('…before any family: "With photos, to print"', txt(tab.querySelector('span')), 'With photos, to print');
+  c('not in "Your church" any more', !!P.q('#u-church #u-dirtab,#u-church .u-dirtab'), false);
+  P.E('showHub()'); await sleep(40);
+  const tab=P.q('#hub .tools #hubdir');
+  c('"Create your church directory", in the main menu\'s grid after the six tools (still six tiles, 3 + 3), with a picture of a book', tab?[txt(tab.querySelector('b')),txt(tab.querySelector('.td')),txt(tab.querySelector('.tgo')),tab.previousElementSibling&&tab.previousElementSibling.dataset.tool,P.qa('#hub .tools .tool').length,!!tab.querySelector('svg')]:null,
+    ['Create your church directory','Photos, names and numbers, printed for your members.','Build the directory','churches',6,true]);
+  const css=P.qa('style').map(x=>x.textContent).join('\n');
+  c('…the whole width of the grid', /\.hub \.tools \.hubdir\{grid-column:1\/-1;/.test(css), true);
   const before=P.w.__fetched.length;
   tab.click(); await sleep(60);
   const d=P.q('#dir-sheet');
@@ -30,7 +36,7 @@ const JPG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKg
   P.q('#dir-sheet [data-dir="savefam"]').click(); await sleep(60);
   const fam=P.J('uChurch().directory.families');
   c('saved with the church on this device: the names, the phone, the email; the children kept but not shown until a parent says yes', [fam.length,fam[0].family,fam[0].kidsOk,/children not shown/.test(P.txt('#dir-sheet .dir-fam'))], [1,'Sample-Rivera',false,true]);
-  c('…the tab counts it', P.txt('#u-dirtab span'), '1 family');
+  c('…the builder counts it', P.txt('#dir-sheet .dir-count b'), '1 family');
 
   console.log('\n-- the clerk\'s list and a folder of photos --');
   P.q('#dir-sheet [data-dir="import"]').click(); await sleep(30);
@@ -86,9 +92,9 @@ const JPG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKg
   c('no page errors', P.errs, []);
 
   console.log('\n-- in Spanish --');
-  const S=page({lang:'es'}); await ready(S); survey(S); await sleep(200);
-  c('the tab', txt(S.q('#u-dirtab b')), 'Haga el directorio de su iglesia');
-  S.q('#u-dirtab').click(); await sleep(40);
+  const S=page({lang:'es'}); await ready(S); S.E('showHub()'); await sleep(40);
+  c('the tile', [txt(S.q('#hubdir b')),txt(S.q('#hubdir .td')),txt(S.q('#hubdir .tgo'))], ['Haga el directorio de su iglesia','Fotos, nombres y teléfonos, impresos para sus miembros.','Hacer el directorio']);
+  S.q('#hubdir').click(); await sleep(40);
   c('the builder', [S.txt('#dir-h'),txt(S.q('#dir-sheet [data-dir="add"]'))], ['El directorio de su iglesia','+ Agregar una familia']);
   c('no page errors', S.errs, []);
 }); T.done(); })();
