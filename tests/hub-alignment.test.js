@@ -38,10 +38,11 @@ setTimeout(()=>{
   c('the survey blurb is no longer the longest', lines.indexOf(Math.max(...lines))!==0);
 
   console.log('\n-- and it holds in Spanish, where every string is longer --');
+  // v10.65.0 (stale, not a regression): the pastor (9 Oct 2026), "two options one for EVANGELISM and one for in reach … We can put revival meetings": the Planner's tile names both
   const es=['Know who lives nearby and where to reach first.',
             'Help members discover their gifts and find a place to serve.',
             'Proposals for ministries, projects and purchases.',
-            'Plan your outreach journey, from preparation to follow-up.']
+            'Evangelism or revival meetings, from planning to follow-up.']
     .map(k=>w.eval('ES['+JSON.stringify(k)+']'));
   c('all four translated', es.every(Boolean));
   console.log('    es lengths:', es.map(x=>x.length).join(', '));
