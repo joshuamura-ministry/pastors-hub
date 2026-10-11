@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.67.0
+     TERRAIN  v10.67.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.67.0" data-theme="dark">
+<html lang="en" data-version="v10.67.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.67.0">
-<title>Community Map — Terrain v10.67.0</title>
+<meta name="terrain-version" content="v10.67.1">
+<title>Community Map — Terrain v10.67.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -4750,11 +4750,23 @@ html.ns-modal,html.ns-modal body{overflow:hidden}
 dialog.ns-sheet{border:0;padding:0;margin:auto;background:transparent;color:var(--ink);max-width:min(720px,calc(100vw - 24px));width:100%;max-height:calc(100% - 24px);overflow:hidden}
 dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
 /* v10.67.0: the church directory: the tab at the top of "Your church", and the builder */
-.u-dirtab{display:flex;align-items:center;gap:10px;width:100%;margin:0 0 14px;padding:12px 14px;border-radius:12px;border:1px solid color-mix(in srgb,var(--m-people) 55%,var(--line2));background:color-mix(in srgb,var(--m-people) 10%,var(--panel));color:var(--ink);font:inherit;cursor:pointer;text-align:left;min-width:0}
-.u-dirtab svg{flex:none;width:26px;height:26px;fill:none;stroke:var(--m-people);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
-.u-dirtab b{font-family:var(--disp);font-weight:700;font-size:1rem;min-width:0}
-.u-dirtab span{margin-left:auto;flex:none;font-size:.8rem;color:var(--ink3)}
-.u-dirtab:hover,.u-dirtab:focus-visible{border-color:var(--m-people);background:color-mix(in srgb,var(--m-people) 16%,var(--panel))}
+.hub .tools .hubdir{grid-column:1/-1;display:flex;align-items:center;gap:18px;margin-top:6px;padding:18px 24px;border-radius:20px;cursor:pointer;font:inherit;text-align:left;color:var(--ink);
+  border:1px solid color-mix(in srgb,var(--tc) 45%,var(--line2));background:linear-gradient(120deg,color-mix(in srgb,var(--tc) 14%,var(--panel)),var(--panel));
+  box-shadow:0 0 0 1px color-mix(in srgb,var(--tc) 18%,transparent),0 0 26px color-mix(in srgb,var(--tglow) 60%,transparent);transition:transform .18s,box-shadow .22s}
+.hubdir-i{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--tc) 18%,transparent)}
+.hubdir-i svg{width:36px;height:36px;fill:none;stroke:var(--tc);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--tglow))}
+.hubdir-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.hubdir-t b{font-size:clamp(1.15rem,2.6vw,1.4rem);font-weight:700;letter-spacing:-.02em}
+.hubdir-t .td{color:var(--ink2)}
+.hubdir .tgo{flex:none;color:var(--tc);font-size:.88rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
+.hubdir .tgo i{width:15px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:transform .18s}
+.hubdir .tgo i::after{content:"";position:absolute;right:-1px;top:-3px;width:8px;height:8px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg);border-radius:1px}
+@media (hover:hover){ .hub .tools .hubdir:hover .tgo i{transform:translateX(5px)} }
+@media print{ .hub .tools .hubdir{box-shadow:none} .hubdir .tgo{display:none} }
+@media (hover:hover){ .hub .tools .hubdir:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--tc),0 0 34px var(--tglow)} }
+.hub .tools .hubdir:focus-visible{outline:2px solid var(--tc);outline-offset:6px}
+@media (max-width:640px){ .hub .tools .hubdir{flex-direction:column;text-align:center;padding:20px 16px} .hubdir-t{align-items:center} }
+.dir-for{margin:0 0 4px;font-size:.88rem;color:var(--ink2)}
 dialog.dir-sheet{max-width:min(880px,calc(100vw - 24px))}
 .dir-sh{padding:0 18px 18px}
 .dir-top{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:14px 0 4px}
@@ -4995,6 +5007,14 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
         <span class="td">Your churches side by side: needs, people and gifts.</span>
         <span class="tgo">Compare churches <i></i></span>
       </button>
+      <!-- v10.67.1 — the pastor (11 Oct 2026): "build your directory should not be in that area … maybe we can have a tab that stretches along
+           the bottom that says create your church directory a seventh tab that somehow fits symmetrically … You can remove it from there":
+           one wide tile under the 3 + 3, the whole width of the grid -->
+      <button type="button" class="hubdir" id="hubdir" style="--tc:#FF9F8A;--tglow:rgba(255,159,138,.42)">
+        <span class="hubdir-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><circle cx="11.5" cy="9" r="2.2"/><path d="M8 14.2c.6-1.6 2-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg></span>
+        <span class="hubdir-t"><b>Create your church directory</b><span class="td">Photos, names and numbers, printed for your members.</span></span>
+        <span class="tgo">Build the directory <i></i></span>
+      </button>
     </div>
     <section class="hubabout" id="hubabout" aria-labelledby="hubabout-h">
       <h3 id="hubabout-h">What Terrain is for</h3>
@@ -5138,13 +5158,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.67.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.67.1</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.67.0';
+const VERSION = 'v10.67.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9851,6 +9871,9 @@ const ES={
  'What Terrain is for':'Para qué sirve Terrain',
  'Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.':'Terrain ayuda al pastor a ver el vecindario donde Dios ha puesto a la iglesia y a responder con un ministerio a su medida. Conozca su vecindario y lo que necesita, ayude a sus miembros a descubrir sus dones, convierta las mejores ideas en una propuesta que su iglesia pueda votar y planifique su evangelismo, de la preparación al seguimiento.',
  'Also from Muraworks:':'También de Muraworks:',
+ 'Create your church directory':'Haga el directorio de su iglesia',
+ 'Photos, names and numbers, printed for your members.':'Fotos, nombres y teléfonos, impresos para sus miembros.',
+ 'Build the directory':'Hacer el directorio',
  'Sermon slides, Bible studies and tracts.':'Diapositivas para sermones, estudios bíblicos y folletos.',
  'Neighbors are neighbors, never targets: every tool points to Christ.':'Los vecinos son nuestros vecinos, nunca un objetivo: cada herramienta apunta a Cristo.',
  'Know who lives nearby and where to reach first.':'Conozca su vecindario y por dónde empezar.',
@@ -13481,6 +13504,7 @@ function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName,PR){
 }
 
 function wireHub(){
+  const hd=$('hubdir'); if(hd) hd.onclick=()=>dirOpen();   // v10.67.1: the church directory, from the main menu
   document.querySelectorAll('.tool').forEach(b=>{
     b.onclick=()=>openTool(b.dataset.tool);
     const feat=(TOOLS[b.dataset.tool]||{}).feature;
@@ -15776,7 +15800,6 @@ function uChurchSecHTML(){
   const todo=uChurchTodo();
   return `<section class="blk u-churchsec${todo?' u-todo':''}" id="u-church" data-tab="strategy" data-theme="faith"><p class="u-chstart"${todo?'':' hidden'}>${L('Start here','Empiece aquí')}</p><h2>${L('Your church','Su iglesia')}</h2>
     <p class="note" style="margin-bottom:12px">${L('Fill this in before you choose a ministry below: every idea and every proposal is checked against your people, rooms and skills.','Complete esto antes de elegir un ministerio abajo: cada idea y cada propuesta se comparan con sus personas, salones y habilidades.')}</p>
-    ${dirTabHTML()}
     <div id="u-churchslot"></div>
     <div class="u-gfnote" id="u-gfnote">${uGiftsNoteInner()}</div>
   </section>`;
@@ -15799,7 +15822,7 @@ function uChurchTodo(){
   const few=!r||r.state==='none'||r.state==='low'||(r.state==='unknown'&&r.n<CASE_GIFTS_MIN);
   return empty||few;
 }
-function uChurchSecWire(){ dirTabWire(); const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
+function uChurchSecWire(){ const b=document.querySelector('#u-gfnote [data-u-gifts]'); if(b) b.onclick=()=>gfOpenLanding();   // v10.56.2: the main page
   const d=document.querySelector('#u-gfnote [data-u-gfdemo]'); if(d) d.onclick=()=>{ if(d.dataset.uGfdemo==='clear'){ gfDemoClear(); gfDemoRedraw(false); } else gfDemoFill(); }; }
 /* After a save or new results (gfFirstRefresh): the frame, "Start here" and the count follow, without drawing the survey again. */
 function uChurchSecMark(){
@@ -24469,7 +24492,7 @@ async function dirPhotoDel(key){ DIR_DB.mem.delete(key); const db=await dirDb();
   return new Promise(res=>{ try{ const t=db.transaction('p','readwrite'); t.objectStore('p').delete(key); t.oncomplete=()=>res(); t.onerror=()=>res(); }catch(e){ res(); } }); }
 function dirKey(id){ return 'dir/'+uChurch().id+'/'+id; }
 function dirGet(){ const ch=uChurch(); if(!ch.directory||ch.directory.v!==1) ch.directory={v:1,title:'',year:'',note:'',families:[],officers:[]}; return ch.directory; }
-function dirSave(){ uPersist(); dirTabPaint(); }
+function dirSave(){ uPersist(); }
 function dirId(){ return 'f'+Date.now().toString(36)+Math.random().toString(36).slice(2,6); }
 function dirTitle(){ const d=dirGet(); return d.title||((uChurch().capacity&&uChurch().capacity.name)||uChurch().name||L('Our church','Nuestra iglesia')); }
 function dirYear(){ return dirGet().year||String(new Date().getFullYear()); }
@@ -24490,14 +24513,8 @@ function dirPhotoFrom(file){
     rd.onerror=()=>no(new Error('read')); rd.readAsDataURL(file);
   });
 }
-/* the tab at the top of "Your church" */
-function dirTabHTML(){
-  const n=dirGet().families.length;
-  return `<button type="button" class="u-dirtab" id="u-dirtab" aria-haspopup="dialog"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><circle cx="11.5" cy="9" r="2.2"/><path d="M8 14.2c.6-1.6 2-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg><b>${esc(L('Build your church directory','Haga el directorio de su iglesia'))}</b><span id="u-dirtab-n">${esc(dirCountWords(n))}</span></button>`;
-}
+/* the families counted, in words */
 function dirCountWords(n){ return n===0?L('With photos, to print','Con fotos, para imprimir'):n===1?L('1 family','1 familia'):L(n+' families',n+' familias'); }
-function dirTabPaint(){ const s=document.getElementById('u-dirtab-n'); if(s) s.textContent=dirCountWords(dirGet().families.length); }
-function dirTabWire(){ const b=document.getElementById('u-dirtab'); if(b) b.onclick=()=>dirOpen(); }
 /* the builder: one sheet, four views (the list, a family, bring in a list, the details) */
 const DIR_ST={view:'list',edit:null,photo:null,q:'',arm:null,msg:''};
 function dirOpen(){
@@ -24521,7 +24538,9 @@ function dirListHTML(){
   const D=dirGet(), fs=dirSort(D.families), q=DIR_ST.q.trim().toLowerCase();
   const shown=q?fs.filter(f=>[f.family,f.people,f.kids,f.phone,f.email].join(' ').toLowerCase().includes(q)):fs;
   const ph=fs.filter(f=>f.photo).length;
-  return `<p class="note">${esc(L('Put in each family once, with a photo if you have one; Terrain makes the directory to print. Everything stays on this device.','Ponga cada familia una vez, con una foto si la tiene; Terrain hace el directorio para imprimir. Todo queda en este dispositivo.'))}</p>
+  let many=false; try{ many=chList().length>1; }catch(e){ many=false; }
+  return `<p class="dir-for">${esc(L('For','Para'))} <b>${esc(dirTitle())}</b>${many?' · '+esc(L('another church: the church button at the top','otra iglesia: el botón de la iglesia arriba')):''}</p>
+    <p class="note">${esc(L('Put in each family once, with a photo if you have one; Terrain makes the directory to print. Everything stays on this device.','Ponga cada familia una vez, con una foto si la tiene; Terrain hace el directorio para imprimir. Todo queda en este dispositivo.'))}</p>
     <div class="dir-acts">
       <button type="button" class="btn" data-dir="add">${esc(L('+ Add a family','+ Agregar una familia'))}</button>
       <button type="button" class="btn ghost" data-dir="import">${esc(L('Bring in a list','Traer una lista'))}</button>
