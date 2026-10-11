@@ -107,6 +107,8 @@ netlify/functions/digital-sweep.mjs  (v10.60.0; digital-sweep-1.1 since v10.62.0
 netlify/functions/digital-review.mjs (v10.62.0, review-1.0) the background worker behind Digital footprint's in-depth review: one request, no web, the pages'
                                texts and up to six home-page pictures (image URLs), the strict tool record_review, `cleanReview` (every quote on the pages,
                                every number in the input, no name not in the input, no other church, no "AI"); woken by digital.mjs (op review)
+manifest.webmanifest           (v10.68.0) the name and icons a phone or computer gives Terrain when it is added (must be in the site's copy)
+icons/, favicon.ico, apple-touch-icon.png  (v10.68.0) the app icon's files, DRAWN by tools/icons/make-icons.mjs from tools/icons/*.svg (in the copy)
 PRODUCT-SETUP.md               (v10.54.0) his click-by-click setup: Stripe (test mode), Firebase sign-in, Netlify, the test run
 privacy.html                   (v10.62.1) the privacy policy, served at terrain.church/privacy (English and Spanish; must be in the site's copy)
 terms.html, refunds.html, about.html  (v10.62.1) the terms of service, the refund policy, About Terrain and its plans (/terms, /refunds, /about; in the copy)
@@ -218,6 +220,40 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.68.0 (11 Oct 2026, quick lane) — the app icon; the church directory a tile like the others, beside "More tools".** The pastor: *"Now I
+need a beautiful app icon for my phone when I wanna add it to my home screen and also I need to add it here on my Mac as well as an app icon
+please embed that in"*; then, of v10.67.1's wide tile, *"it doesn't look good the church create your church directory I just think it should be
+another icon just like the others and then the other open space would be more apps coming soon or more new features coming with a beautiful two
+beautiful tab so the church directory and it will look symmetrical but again the … icon needs to really look good like the others"*.
+- **The icon** (`tools/icons/`): `terrain-icon.svg` (1024: a church lit on a hill at night, a warm halo, three of the map's lines below it in
+  the tools' colours, mint, blue and violet; open lines, never rings round a point: "neighbours are never targets") and `favicon.svg` (64: the
+  same church, simpler, for a tab). `node tools/icons/make-icons.mjs` draws every served file with Chrome (a Mac): `apple-touch-icon.png` (180,
+  the whole square: the phone rounds it), `favicon.ico` (16, 32, 48), `icons/favicon.svg`, `icons/favicon-32.png`, `icons/icon-192.png` and
+  `icon-512.png` (rounded), `icons/icon-maskable-512.png` (the whole square; the church and cross inside Android's safe circle); with `--mac
+  <folder>` also `Terrain.iconset` and `Terrain.icns` (Apple's grid). Never edit the PNGs by hand: change a drawing and run it again.
+- **The page** (`<head>`, and the four public pages): the icon links (all on this site), `<link rel="manifest" href="/manifest.webmanifest">`,
+  `apple-mobile-web-app-title` and `application-name` "Terrain". **`manifest.webmanifest`**: Terrain, `id`/`start_url`/`scope` "/", `display`
+  standalone, `#06080C`, the four icons. `netlify.toml`: `cp -R icons site/ && cp manifest.webmanifest favicon.ico apple-touch-icon.png site/`,
+  and the manifest served as `application/manifest+json` (the site says nosniff). No new environment variable, no function changed.
+- **Where his work lives:** a church's work is kept by the browser, per site. On iOS 26 and later every site added to the Home Screen opens as a
+  web app unless "Open as Web App" is turned off in the Add sheet (WebKit, Safari 26.0; the manifest's `display` no longer decides), and a Home
+  Screen web app keeps its storage apart from Safari: so he adds it with that switch **off**, and the icon opens Terrain in Safari with his work.
+  On a Mac, Chrome's installed app shares Chrome's storage; Safari's "Add to Dock" makes a web app with its own (empty). His Mac has
+  `/Applications/Terrain.app` (not in the repo; made 11 Oct 2026 in `~/Ministry Work/Terrain-work/v83/mac`): it opens terrain.church in his
+  default browser, with the icon.
+- **The main menu** (`#hubmore.tools2`, after `.tools`): **Church Directory** (`#hubdir`, a button, `dirOpen`) and **More tools** (`#hubsoon`,
+  a picture, not a button: "New tools for your church are on the way.", a "Coming soon" pill), each drawn as the six are (`.htile`: the `.tool`
+  rules for their own class, so the six stay the six tools; a 256 line drawing in its own gradient and two-pass glow: an open book with a family
+  photo and a list, coral `#FF9F8A`; a dashed tile with a plus and sparkles in the tools' colours). Two across, each as wide as one of the three,
+  centred, from 760 px; two across where the tools are two; one under the other on a phone. The wide tile's `.hubdir*` rules are gone. ES
+  "Directorio de la iglesia", "Más herramientas", "Nuevas herramientas para su iglesia, en camino.", "Próximamente".
+- Tests: `v68-app-icon` (new, 29; failing first on v10.67.1: `v83/ff-v68-app-icon.log`); `v67-directory` updated with his words (the tile's
+  place and name), and hub-alignment, hub-copy-and-quote, v56-1-hub-simple and v43-path (the main menu's parts: the new row) with comments. Checked in Chrome (`v83/shots68.mjs`, served by `v83/serve68.mjs` on 8879): 1366, 820, 700, 390, EN + ES: the two tiles as
+  wide as a tool, centred to the pixel, the third row as tall as the first, no sideways scroll, no page errors; Chrome reads the manifest with
+  no error (installable but for the test's private window); every icon file served 200 with its type. Full suite: 183 suites · 11,595 passed · 0 failed (the full
+  run 11,590 and five stale checks of the main menu's parts in four suites, updated with comments and rerun: 14, 19, 47, 10). Samples
+  `Terrain-v10.68.0-samples` (the icon on a phone, a Mac and a tab; the main menu at five widths, EN + ES).
 
 **v10.67.1 (11 Oct 2026, quick lane) — the church directory moves to the main menu: a wide seventh tile across the bottom.** The pastor:
 *"build your directory should not be in that area … maybe we can have a tab that stretches along the bottom that says create your church
@@ -3429,6 +3465,9 @@ Don't relitigate them without a reason he'd accept.
 - **The Planner fits the time left** (v10.65.0, his words: "it has to adjust … the main things to get ready"): a short runway changes
   what the plan asks, not only its dates; the follow-up carries what the preparation could not. Revival meetings prepare members for
   evangelism: every member serving, every member who has drifted and every former Adventist visited.
+- **The app icon is a church lit on a hill** (v10.68.0): the map's open lines below it in the tools' colours, never rings round a point. Every
+  icon file is drawn from `tools/icons` by its script. A phone adds Terrain with "Open as Web App" off, so the icon opens where his work is.
+- **The main menu is the six tools, then the directory and More tools** (v10.68.0): every tile drawn alike; the extra two centred under the six.
 - **The church directory stays on the device** (v10.67.0): the pastor or clerk puts the families in; photos never leave the device; children
   only with a parent's yes; every printed page for members only.
 - **Every way to promote, never required** (v10.64.0, his words: "doesn't mean that we can do all of these things, but there should be

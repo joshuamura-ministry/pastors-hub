@@ -18,7 +18,7 @@ setTimeout(()=>{
   // place is last, below the four tools (the design, X13); the quote stays under the welcome
   // v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see and understand
   // that this should be the next step"): the "Your path" strip sits above the tools, below the rule; the quote stays under the welcome
-  c('sits between the welcome and the tools', order.join(','), 'hubwelcome,egw,rule,tools,hubabout');   // v10.56.1 (stale, not a regression): "very simple": no Your path, no Gifts first; what Terrain is for under the tools
+  c('sits between the welcome and the tools', order.join(','), 'hubwelcome,egw,rule,tools,tools2,hubabout');   // v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it should be another icon just like the others and then the other open space would be more apps coming soon": the directory and More tools, a row of their own (tools2) under the six   // v10.56.1 (stale, not a regression): "very simple": no Your path, no Gifts first; what Terrain is for under the tools
   c('exactly one quote on the page', D.querySelectorAll('#hub .egw').length, 1);
   c('text intact', /Much careful thought and fervent prayer/.test(D.querySelector('.egw q').textContent));
   c('citation intact', /Testimonies for the Church, vol\. 4, p\. 67/.test(D.querySelector('.egw cite').textContent));

@@ -5,8 +5,9 @@
   # Make a clean folder holding only what visitors need: the app page, the idea library, the connection-card fonts and the
   # conference calendars ("Learn from other conferences": conferences/, built by tools/conferences/build.mjs; its source,
   # tools/conferences/src, is never copied), and tr-here.png (v10.59.0: the 3×2 picture pastorshub.org looks for at terrain.church before it
-  # carries a device's saved work there). If any copy fails, the deploy fails and the live site stays exactly as it was.
-  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/ && cp -R conferences site/ && cp tr-here.png site/ && cp privacy.html terms.html refunds.html about.html site/"
+  # carries a device's saved work there), and (v10.68.0) the app icon: icons/, favicon.ico and apple-touch-icon.png at the root (browsers ask
+  # there by themselves), manifest.webmanifest (the name and icons a phone or computer gives Terrain when it is added). If any copy fails, the deploy fails and the live site stays exactly as it was.
+  command = "rm -rf site && mkdir site && cp index.html site/ && cp -R ideas site/ && cp -R fonts site/ && cp -R conferences site/ && cp tr-here.png site/ && cp privacy.html terms.html refunds.html about.html site/ && cp -R icons site/ && cp manifest.webmanifest favicon.ico apple-touch-icon.png site/"
   publish = "site"
 
   # Skip a LIVE deploy only when every change since the last live build is inside tests/, tools/,
@@ -44,6 +45,12 @@
 
 # Safe browser headers for every page and file (they do not apply to function replies).
 # No script rules on purpose: the app's inline code and its map, census and font hosts keep working.
+# v10.68.0: the manifest under its own type (the headers below say nosniff)
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=utf-8"
+
 [[headers]]
   for = "/*"
   [headers.values]

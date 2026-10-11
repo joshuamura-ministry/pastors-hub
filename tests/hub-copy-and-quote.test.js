@@ -60,7 +60,7 @@ setTimeout(()=>{
   c('six links', tools.filter(t=>t.querySelector('.tgo')).length, 6);
   c('links still bottom-aligned', /\.tool \.tgo\{margin-top:auto/.test(html));
   c('quote still under the welcome',
-    [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,tools,hubabout');   // v10.56.1 (stale, not a regression): the pastor, "I just want this page to be very simple": no Your path, no Gifts first; what Terrain is for under the tools   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E); v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see"): "Your path" above the tools
+    [...D.getElementById('hub').children].map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,tools,tools2,hubabout');   // v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it should be another icon just like the others and then the other open space would be more apps coming soon": the directory and More tools, a row of their own (tools2) under the six   // v10.56.1 (stale, not a regression): the pastor, "I just want this page to be very simple": no Your path, no Gifts first; what Terrain is for under the tools   // v10.42 part 3: the Gifts first card, below the tools (SPEC-FOCUS E); v10.43 (SPEC §5, the pastor: "Let me know where that could go on the first place, so it's accessible and easy to see"): "Your path" above the tools
   console.log(`\n${pass} passed, ${fail} failed`);
   process.exit(fail?1:0);
 },1800);

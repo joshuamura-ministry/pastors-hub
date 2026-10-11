@@ -12,15 +12,16 @@ const JPG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKg
 (async()=>{ await T.sec(async()=>{
   // v10.67.1 (stale, not a regression): the pastor (11 Oct 2026), "build your directory should not be in that area … a tab that stretches
   // along the bottom that says create your church directory a seventh tab that somehow fits symmetrically … You can remove it from there"
-  console.log('\n-- the main menu\'s seventh tile, across the bottom --');
+  // v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it doesn't look good the church create your church directory I just think it
+  // should be another icon just like the others and then the other open space would be more apps coming soon … two beautiful tab so the church
+  // directory and it will look symmetrical": a tile drawn like the six, "Church Directory", beside "More tools", centred under them
+  console.log('\n-- the main menu\'s directory tile, under the six --');
   const P=page({}); await ready(P); survey(P); await sleep(200);
   c('not in "Your church" any more', !!P.q('#u-church #u-dirtab,#u-church .u-dirtab'), false);
   P.E('showHub()'); await sleep(40);
-  const tab=P.q('#hub .tools #hubdir');
-  c('"Create your church directory", in the main menu\'s grid after the six tools (still six tiles, 3 + 3), with a picture of a book', tab?[txt(tab.querySelector('b')),txt(tab.querySelector('.td')),txt(tab.querySelector('.tgo')),tab.previousElementSibling&&tab.previousElementSibling.dataset.tool,P.qa('#hub .tools .tool').length,!!tab.querySelector('svg')]:null,
-    ['Create your church directory','Photos, names and numbers, printed for your members.','Build the directory','churches',6,true]);
-  const css=P.qa('style').map(x=>x.textContent).join('\n');
-  c('…the whole width of the grid', /\.hub \.tools \.hubdir\{grid-column:1\/-1;/.test(css), true);
+  const tab=P.q('#hub #hubmore #hubdir');
+  c('"Church Directory", the first of the two tiles under the six tools (still six tiles, 3 + 3), with a picture of a book', tab?[txt(tab.querySelector('b')),txt(tab.querySelector('.td')),txt(tab.querySelector('.tgo')),tab.parentElement.previousElementSibling.className,P.qa('#hub .tools .tool').length,!!tab.querySelector('svg')]:null,
+    ['Church Directory','Photos, names and numbers, printed for your members.','Build the directory','tools',6,true]);
   const before=P.w.__fetched.length;
   tab.click(); await sleep(60);
   const d=P.q('#dir-sheet');
@@ -93,7 +94,7 @@ const JPG='data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAASABIAAD/4QBMRXhpZgAATU0AKg
 
   console.log('\n-- in Spanish --');
   const S=page({lang:'es'}); await ready(S); S.E('showHub()'); await sleep(40);
-  c('the tile', [txt(S.q('#hubdir b')),txt(S.q('#hubdir .td')),txt(S.q('#hubdir .tgo'))], ['Haga el directorio de su iglesia','Fotos, nombres y teléfonos, impresos para sus miembros.','Hacer el directorio']);
+  c('the tile', [txt(S.q('#hubdir b')),txt(S.q('#hubdir .td')),txt(S.q('#hubdir .tgo'))], ['Directorio de la iglesia','Fotos, nombres y teléfonos, impresos para sus miembros.','Hacer el directorio']);   // v10.68.0 (stale): the tile's new name
   S.q('#hubdir').click(); await sleep(40);
   c('the builder', [S.txt('#dir-h'),txt(S.q('#dir-sheet [data-dir="add"]'))], ['El directorio de su iglesia','+ Agregar una familia']);
   c('no page errors', S.errs, []);

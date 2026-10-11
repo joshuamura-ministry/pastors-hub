@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#112640"/>
+      <stop offset="0.55" stop-color="#0A1523"/>
+      <stop offset="1" stop-color="#05080D"/>
+    </linearGradient>
+    <radialGradient id="halo" cx="512" cy="470" r="440" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFD9A0" stop-opacity="0.50"/>
+      <stop offset="0.3" stop-color="#FFB86B" stop-opacity="0.15"/>
+      <stop offset="0.62" stop-color="#5EE9B5" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#5EE9B5" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="tower" x1="0" y1="210" x2="0" y2="592" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF"/>
+      <stop offset="0.5" stop-color="#FFF0D2"/>
+      <stop offset="1" stop-color="#FFCE85"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="430" x2="0" y2="592" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFE3B0"/>
+      <stop offset="1" stop-color="#F7B160"/>
+    </linearGradient>
+    <linearGradient id="rA" x1="0" y1="0" x2="1024" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#86E3CC" stop-opacity="0.2"/>
+      <stop offset="0.5" stop-color="#A6F5D9"/>
+      <stop offset="1" stop-color="#86E3CC" stop-opacity="0.2"/>
+    </linearGradient>
+    <linearGradient id="rB" x1="0" y1="0" x2="1024" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#8CC4FF" stop-opacity="0.25"/>
+      <stop offset="0.45" stop-color="#9ACBFF"/>
+      <stop offset="1" stop-color="#8CC4FF" stop-opacity="0.35"/>
+    </linearGradient>
+    <linearGradient id="rC" x1="0" y1="0" x2="1024" y2="0" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#B9A2FB" stop-opacity="0.35"/>
+      <stop offset="0.55" stop-color="#C3B0FC"/>
+      <stop offset="1" stop-color="#F29CBC" stop-opacity="0.45"/>
+    </linearGradient>
+    <filter id="neon" x="-10%" y="-40%" width="120%" height="180%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="16" result="wide"/>
+      <feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.75"/></feComponentTransfer>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="near"/>
+      <feMerge><feMergeNode in="soft"/><feMergeNode in="near"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shine" x="-50%" y="-40%" width="200%" height="180%" color-interpolation-filters="sRGB">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="26" result="wide"/>
+      <feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.6"/></feComponentTransfer>
+      <feGaussianBlur in="SourceGraphic" stdDeviation="7" result="near"/>
+      <feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.55"/></feComponentTransfer>
+      <feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <linearGradient id="hill" x1="0" y1="650" x2="0" y2="1024" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#123A3A"/>
+      <stop offset="0.45" stop-color="#0A1A22"/>
+      <stop offset="1" stop-color="#05080D"/>
+    </linearGradient>
+  </defs>
+  <rect width="1024" height="1024" fill="url(#sky)"/>
+  <rect width="1024" height="1024" fill="url(#halo)"/>
+  <g fill="#DDEBFF">
+    <circle cx="176" cy="214" r="5" opacity=".5"/><circle cx="286" cy="128" r="3.5" opacity=".38"/><circle cx="790" cy="176" r="5" opacity=".48"/>
+    <circle cx="880" cy="300" r="3.5" opacity=".36"/><circle cx="132" cy="384" r="3.5" opacity=".32"/><circle cx="690" cy="92" r="3.5" opacity=".34"/>
+    <circle cx="904" cy="460" r="3" opacity=".28"/><circle cx="330" cy="268" r="3" opacity=".28"/>
+  </g>
+  <path d="M-30 776 C150 760 296 690 404 663 C454 652 484 650 512 650 C540 650 570 652 620 663 C728 690 874 760 1054 776 V1054 H-30 Z" fill="url(#hill)" opacity=".85"/>
+  <g fill="none" stroke-linecap="round" filter="url(#neon)">
+    <path d="M-30 776 C150 760 296 690 404 663 C454 652 484 650 512 650 C540 650 570 652 620 663 C728 690 874 760 1054 776" stroke="url(#rA)" stroke-width="18"/>
+    <path d="M-30 870 C130 842 252 790 376 798 C500 806 566 856 690 838 C806 822 906 788 1054 800" stroke="url(#rB)" stroke-width="16"/>
+    <path d="M-30 960 C150 934 300 908 440 920 C582 932 700 958 842 930 C922 914 982 906 1054 910" stroke="url(#rC)" stroke-width="15"/>
+  </g>
+  <g filter="url(#shine)" transform="translate(512 652) scale(1.32) translate(-512 -592)">
+    <path fill="url(#body)" fill-rule="evenodd" d="M380 592 V504 L512 430 L644 504 V592 Z
+      M410 560 v-34 a13 13 0 0 1 26 0 v34 Z M588 560 v-34 a13 13 0 0 1 26 0 v34 Z"/>
+    <path fill="url(#tower)" fill-rule="evenodd" d="M504 210 h16 v24 h20 v16 h-20 v34 L548 384 V592 H476 V384 L504 284 V250 h-20 v-16 h20 Z
+      M494 592 v-42 a18 18 0 0 1 36 0 v42 Z M500 444 v-26 a12 12 0 0 1 24 0 v26 Z"/>
+  </g>
+</svg>
