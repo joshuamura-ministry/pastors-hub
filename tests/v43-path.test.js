@@ -63,7 +63,7 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
   console.log('\n-- "Your path" on the hub: four steps above the tools --');
   await sec(async()=>{
     const P=await hub('before');
-    c('the strip sits above the tools, below the welcome and the quote (where this suite puts it back)', P.qa('#hub > *').map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,hubgifts,hubabout');
+    c('the strip sits above the tools, below the welcome and the quote (where this suite puts it back)', P.qa('#hub > *').map(e=>e.className.split(' ')[0]).join(','), 'hubwelcome,egw,rule,hubpath,tools,tools2,hubgifts,hubabout' /* v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it should be another icon just like the others and then the other open space would be more apps coming soon": the directory and More tools, a row of their own (tools2) under the six */);
     c('a nav, named "Your path", shown', [P.q('#hubpath').tagName,P.q('#hubpath').getAttribute('aria-label'),P.q('#hubpath').hidden,P.txt('#hubpath .hp-k')], ['NAV','Your path',false,'Your path']);
     c('the average church before (an address, 0 of 46, an empty plan, an opening night): four steps in order, the gifts step glows', steps(P), [
       ['Map your neighborhood','Done ✓','','done'],

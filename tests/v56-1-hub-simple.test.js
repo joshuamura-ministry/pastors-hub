@@ -10,7 +10,7 @@ const T=checker(), c=T.c;
   const P=page({needs:'file'}); await ready(P);
   await until(()=>!P.q('#hub').hidden,6000);
   const kids=[...P.q('#hub').children].map(e=>e.className.split(' ')[0]);
-  c('the hub holds the welcome, the quote, its rule, the five tools and what Terrain is for: nothing else', kids, ['hubwelcome','egw','rule','tools','hubabout']);
+  c('the hub holds the welcome, the quote, its rule, the five tools and what Terrain is for: nothing else', kids, ['hubwelcome','egw','rule','tools','tools2','hubabout']); // v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it should be another icon just like the others and then the other open space would be more apps coming soon": the directory and More tools, a row of their own (tools2) under the six
   c('no "Your path", no "Gifts first" card', [!!P.q('#hubpath'),!!P.q('#hubgifts'),/Your path|Gifts first|Nobody has taken it yet/.test(P.txt('#hub'))], [false,false,false]);
   c('"Welcome to Terrain", then "Your journey begins here."', [P.txt('.hubwelcome h2'),P.txt('.hubwelcome .sub')], ['Welcome to Terrain','Your journey begins here. Choose a tool to begin.']);
   c('the Community Survey is the first thing under the quote', [P.q('#hub .egw').nextElementSibling.className,P.q('#hub .tools .tool').dataset.tool], ['rule','survey']);
@@ -23,7 +23,7 @@ const T=checker(), c=T.c;
   console.log('\n-- with a church mapped and a plan (where "Your path" and "Gifts first" used to show) --');
   survey(P); await sleep(150); P.E(`capSave(${JSON.stringify(FX.MEDIUM)})`); P.E('showHub()'); await sleep(150);
   c('still only the five tools and the explanation; nothing drawn in their place', [[...P.q('#hub').children].map(e=>e.className.split(' ')[0]),/Your path|Gifts first/.test(P.txt('#hub'))],
-    [['hubwelcome','egw','rule','tools','hubabout'],false]);
+    [['hubwelcome','egw','rule','tools','tools2','hubabout'],false]); // v10.68.0 (stale, not a regression): the pastor (11 Oct 2026), "it should be another icon just like the others and then the other open space would be more apps coming soon": the directory and More tools, a row of their own (tools2) under the six
   c('…the gifts card still works where it lives (the Spiritual Gifts landing, Make the Case)', typeof P.E('gfFirstCardHTML'), 'function');
 
   console.log('\n-- Spanish --');

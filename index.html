@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.67.1
+     TERRAIN  v10.68.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.67.1" data-theme="dark">
+<html lang="en" data-version="v10.68.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.67.1">
-<title>Community Map — Terrain v10.67.1</title>
+<meta name="terrain-version" content="v10.68.0">
+<title>Community Map — Terrain v10.68.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
+<!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
+     and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
+     in the tools' colours; the drawings and the script that makes every file: tools/icons. Same site only (a neighbour's card page too). -->
+<link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48">
+<link rel="icon" href="/icons/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/icons/favicon-32.png" type="image/png" sizes="32x32">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="manifest" href="/manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Terrain">
+<meta name="application-name" content="Terrain">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
 (function(){var d=document,h=d.head;if(/^#connect=/i.test(location.hash||'')){d.documentElement.className+=' cn-nofonts';return;}
@@ -4750,22 +4760,39 @@ html.ns-modal,html.ns-modal body{overflow:hidden}
 dialog.ns-sheet{border:0;padding:0;margin:auto;background:transparent;color:var(--ink);max-width:min(720px,calc(100vw - 24px));width:100%;max-height:calc(100% - 24px);overflow:hidden}
 dialog.ns-sheet::backdrop{background:rgba(3,5,8,.72)}
 /* v10.67.0: the church directory: the tab at the top of "Your church", and the builder */
-.hub .tools .hubdir{grid-column:1/-1;display:flex;align-items:center;gap:18px;margin-top:6px;padding:18px 24px;border-radius:20px;cursor:pointer;font:inherit;text-align:left;color:var(--ink);
-  border:1px solid color-mix(in srgb,var(--tc) 45%,var(--line2));background:linear-gradient(120deg,color-mix(in srgb,var(--tc) 14%,var(--panel)),var(--panel));
-  box-shadow:0 0 0 1px color-mix(in srgb,var(--tc) 18%,transparent),0 0 26px color-mix(in srgb,var(--tglow) 60%,transparent);transition:transform .18s,box-shadow .22s}
-.hubdir-i{flex:none;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:color-mix(in srgb,var(--tc) 18%,transparent)}
-.hubdir-i svg{width:36px;height:36px;fill:none;stroke:var(--tc);stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 6px var(--tglow))}
-.hubdir-t{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.hubdir-t b{font-size:clamp(1.15rem,2.6vw,1.4rem);font-weight:700;letter-spacing:-.02em}
-.hubdir-t .td{color:var(--ink2)}
-.hubdir .tgo{flex:none;color:var(--tc);font-size:.88rem;font-weight:700;letter-spacing:.01em;white-space:nowrap;display:inline-flex;align-items:center;gap:8px}
-.hubdir .tgo i{width:15px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:transform .18s}
-.hubdir .tgo i::after{content:"";position:absolute;right:-1px;top:-3px;width:8px;height:8px;border-top:2px solid currentColor;border-right:2px solid currentColor;transform:rotate(45deg);border-radius:1px}
-@media (hover:hover){ .hub .tools .hubdir:hover .tgo i{transform:translateX(5px)} }
-@media print{ .hub .tools .hubdir{box-shadow:none} .hubdir .tgo{display:none} }
-@media (hover:hover){ .hub .tools .hubdir:hover{transform:translateY(-3px);box-shadow:0 0 0 1px var(--tc),0 0 34px var(--tglow)} }
-.hub .tools .hubdir:focus-visible{outline:2px solid var(--tc);outline-offset:6px}
-@media (max-width:640px){ .hub .tools .hubdir{flex-direction:column;text-align:center;padding:20px 16px} .hubdir-t{align-items:center} }
+/* v10.68.0: the church directory and "More tools", drawn like the six tools (the .tool rules, for their own class), centred under them:
+   two across, each as wide as one of the three (one under the other on a phone, two across where the tools are two) */
+.hub .tools2{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px;margin-top:20px}
+@media (min-width:760px){ .hub .tools2{grid-template-columns:repeat(2,calc((100% - 40px) / 3));justify-content:center} }
+.htile{display:flex;flex-direction:column;align-items:center;background:none;border:0;border-radius:var(--r);padding:16px 10px 12px;
+  text-align:center;position:relative;height:100%;justify-content:flex-start;font-family:inherit;font-size:1rem;line-height:normal;color:inherit;transition:transform .18s cubic-bezier(.2,.7,.3,1)}
+button.htile{cursor:pointer}
+.htile::before{content:"";position:absolute;left:50%;top:6px;width:186px;height:186px;margin-left:-93px;border-radius:50%;
+  background:radial-gradient(circle,var(--tglow,var(--acc-dim)),transparent 66%);opacity:.22;transition:opacity .22s;pointer-events:none}
+.htile .tico{line-height:0;position:relative;margin-bottom:20px}
+.htile .tsvg{width:clamp(96px,11.5vw,128px);height:clamp(96px,11.5vw,128px);display:block;overflow:visible;transition:filter .22s,transform .22s}
+.htile b{font-family:var(--disp);font-size:1.15rem;font-weight:600;letter-spacing:-.02em;color:var(--ink)}
+.htile .td{max-width:23ch;margin:8px auto 0;font-size:.85rem;color:var(--ink2);line-height:1.6}
+.htile .tgo{margin-top:auto;padding-top:18px;font-size:.88rem;font-weight:700;letter-spacing:.01em;color:var(--tc);display:inline-flex;
+  align-items:center;gap:8px;transition:color .18s,filter .18s}
+.htile .tgo i{width:15px;height:2px;background:currentColor;border-radius:2px;position:relative;transition:transform .18s}
+.htile .tgo i::after{content:"";position:absolute;right:-1px;top:-3px;width:8px;height:8px;border-top:2px solid currentColor;
+  border-right:2px solid currentColor;transform:rotate(45deg);border-radius:1px}
+.htile-soon .td{margin-bottom:6px}
+@media (max-width:540px){ .htile-soon .td{margin-bottom:14px} }
+.htile .tsoon{margin:auto 0 6px;padding:3px 12px;font-size:.78rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--tc);border:1px solid color-mix(in srgb,var(--tc) 50%,transparent);border-radius:999px;background:color-mix(in srgb,var(--tc) 10%,transparent)}
+@media (hover:hover){
+  button.htile:hover{transform:translateY(-4px)}
+  button.htile:hover::before{opacity:1}
+  button.htile:hover .tsvg{filter:drop-shadow(0 0 20px var(--tglow)) brightness(1.12);transform:scale(1.045)}
+  button.htile:hover .tgo{filter:brightness(1.15)}
+  button.htile:hover .tgo i{transform:translateX(5px)}
+}
+button.htile:active{transform:translateY(-1px) scale(.985)}
+button.htile:focus-visible{outline:2px solid var(--tc);outline-offset:6px;border-radius:18px}
+button.htile:focus-visible::before{opacity:1}
+@media print{ .htile::before{display:none} .htile .tsvg{filter:none} .htile .tgo,.htile .tsoon{display:none} }
 .dir-for{margin:0 0 4px;font-size:.88rem;color:var(--ink2)}
 dialog.dir-sheet{max-width:min(880px,calc(100vw - 24px))}
 .dir-sh{padding:0 18px 18px}
@@ -5007,14 +5034,25 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
         <span class="td">Your churches side by side: needs, people and gifts.</span>
         <span class="tgo">Compare churches <i></i></span>
       </button>
-      <!-- v10.67.1 — the pastor (11 Oct 2026): "build your directory should not be in that area … maybe we can have a tab that stretches along
-           the bottom that says create your church directory a seventh tab that somehow fits symmetrically … You can remove it from there":
-           one wide tile under the 3 + 3, the whole width of the grid -->
-      <button type="button" class="hubdir" id="hubdir" style="--tc:#FF9F8A;--tglow:rgba(255,159,138,.42)">
-        <span class="hubdir-i"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 4.5A1.5 1.5 0 0 1 5.5 3H19v15H5.5A1.5 1.5 0 0 0 4 19.5z"/><path d="M4 19.5A1.5 1.5 0 0 0 5.5 21H19v-3"/><circle cx="11.5" cy="9" r="2.2"/><path d="M8 14.2c.6-1.6 2-2.4 3.5-2.4s2.9.8 3.5 2.4"/></svg></span>
-        <span class="hubdir-t"><b>Create your church directory</b><span class="td">Photos, names and numbers, printed for your members.</span></span>
+    </div>
+    <!-- v10.68.0 — the pastor (11 Oct 2026): "it doesn't look good the church create your church directory I just think it should be another
+         icon just like the others and then the other open space would be more apps coming soon or more new features coming with a beautiful
+         two beautiful tab so the church directory and it will look symmetrical but again the … icon needs to really look good like the
+         others": two tiles drawn like the six, centred under them, each as wide as one of them (their own class, .htile: the six stay
+         the six tools). The directory opens its builder; "More tools" is a picture, not a button. -->
+    <div class="tools2" id="hubmore">
+      <button type="button" class="htile" id="hubdir" style="--tc:#FF9F8A;--tglow:rgba(255,159,138,.46)">
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-directory" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#FFDCD2"/><stop offset="0.48" stop-color="#FF9F8A"/><stop offset="1" stop-color="#E5735C"/></linearGradient><filter id="glow-directory" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-directory)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-directory)"><path d="M20 80v134c42-8 82-6 108 8 26-14 66-16 108-8V80"/><path d="M128 74c-24-16-62-20-94-14v136c32-6 70-2 94 14"/><path d="M128 74c24-16 62-20 94-14v136c-32-6-70-2-94 14"/><path d="M128 74v136"/><rect x="52" y="84" width="56" height="64" rx="10"/><path d="M65 142c2-11 8-17 15-17s13 6 15 17"/><path d="M55 166h50M61 180h38"/><path d="M168 94h38M168 106h24M168 128h38M168 140h24M168 162h38M168 174h24"/><g fill="url(#ink-directory)" stroke="none"><circle cx="80" cy="108" r="9.5"/><circle cx="151" cy="100" r="8"/><circle cx="151" cy="134" r="8"/><circle cx="151" cy="168" r="8"/></g></g></svg></span>
+        <b>Church Directory</b>
+        <span class="td">Photos, names and numbers, printed for your members.</span>
         <span class="tgo">Build the directory <i></i></span>
       </button>
+      <div class="htile htile-soon" id="hubsoon" style="--tc:#B7B6FA;--tglow:rgba(183,182,250,.42)">
+        <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-soon" x1="40" y1="40" x2="220" y2="220" gradientUnits="userSpaceOnUse"><stop stop-color="#86E3CC"/><stop offset="0.36" stop-color="#8CC4FF"/><stop offset="0.68" stop-color="#B9A2FB"/><stop offset="1" stop-color="#F29CBC"/></linearGradient><filter id="glow-soon" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-soon)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-soon)"><rect x="40" y="66" width="150" height="150" rx="32" stroke-dasharray="15 13"/><path d="M115 108v66M82 141h66"/><g fill="url(#ink-soon)" stroke="none"><path d="M200 26c3 22 10 30 32 33-22 3-29 11-32 33-3-22-10-30-32-33 22-3 29-11 32-33Z"/><path d="M224 108c2 12 6 16 17 18-11 2-15 6-17 18-2-12-6-16-17-18 11-2 15-6 17-18Z"/><circle cx="166" cy="34" r="5"/></g></g></svg></span>
+        <b>More tools</b>
+        <span class="td">New tools for your church are on the way.</span>
+        <span class="tsoon">Coming soon</span>
+      </div>
     </div>
     <section class="hubabout" id="hubabout" aria-labelledby="hubabout-h">
       <h3 id="hubabout-h">What Terrain is for</h3>
@@ -5158,13 +5196,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.67.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.68.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.67.1';
+const VERSION = 'v10.68.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -9871,7 +9909,7 @@ const ES={
  'What Terrain is for':'Para qué sirve Terrain',
  'Terrain helps a pastor see the neighborhood God has placed the church in, and answer it with ministry that fits. Map your neighborhood and what it needs, help your members discover their gifts, turn the best ideas into a proposal your church can vote on, and plan your evangelism from preparation to follow-up.':'Terrain ayuda al pastor a ver el vecindario donde Dios ha puesto a la iglesia y a responder con un ministerio a su medida. Conozca su vecindario y lo que necesita, ayude a sus miembros a descubrir sus dones, convierta las mejores ideas en una propuesta que su iglesia pueda votar y planifique su evangelismo, de la preparación al seguimiento.',
  'Also from Muraworks:':'También de Muraworks:',
- 'Create your church directory':'Haga el directorio de su iglesia',
+ 'Church Directory':'Directorio de la iglesia','More tools':'Más herramientas','New tools for your church are on the way.':'Nuevas herramientas para su iglesia, en camino.','Coming soon':'Próximamente',
  'Photos, names and numbers, printed for your members.':'Fotos, nombres y teléfonos, impresos para sus miembros.',
  'Build the directory':'Hacer el directorio',
  'Sermon slides, Bible studies and tracts.':'Diapositivas para sermones, estudios bíblicos y folletos.',
