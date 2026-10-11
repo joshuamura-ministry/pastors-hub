@@ -16,8 +16,9 @@ const days=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
   c('two choices at the top: Evangelism meetings (reaching our community), Revival meetings (preparing our church); evangelism first, chosen', [P.txt('#pform .ptype-w .lb'),types], ['What are you planning?',[['Evangelism meetings','Reaching our community','true'],['Revival meetings','Preparing our church','false']]]);
   const shown=()=>P.qa('#pform .pf').filter(e=>P.w.getComputedStyle(e).display!=='none').map(e=>txt(e.querySelector('.lb'))).filter(Boolean);
   P.q('#pl-type [data-pt="revival"]').click(); await sleep(20);
+  // v10.66.0 (stale, not a regression): the pastor (11 Oct 2026), "the option … who will speak the pastor of the church a conference leader … or paid evangelist": the form asks who will speak
   c('Revival: its own fields (members on the books; no seats, interest names, Bible workers or kind of series), its own words and demo', [shown(),P.txt('#pl-demo'),/^Revival meetings prepare your own members, and ready them for evangelism\. They begin about six months before the first night/.test(P.txt('#pl-lead'))],
-    [['What are you planning?','Church or district','Active members','Members on the books','Can lead a team','Willing workers','Opening night','Nights of meetings','Nights per week','Budget ($)'],'Fill in a demo revival',true]);
+    [['What are you planning?','Church or district','Active members','Members on the books','Can lead a team','Willing workers','Opening night','Nights of meetings','Nights per week','Budget ($)','Who will speak?'],'Fill in a demo revival',true]);
   P.q('#pl-type [data-pt="evangelism"]').click(); await sleep(20);
   c('Evangelism: the fields as before', [shown().includes('Seats in the hall'),shown().includes('Kind of series'),shown().includes('Members on the books'),P.txt('#pl-demo')], [true,true,false,'Fill in a demo series']);
 
@@ -26,7 +27,8 @@ const days=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
   const plan=P.J('uChurch().plan'), D=plan.date+'T12:00:00';
   c('saved as a revival: 9 nights, every night, for 150 active members and 220 on the books, $6,000, a demo', [plan.type,plan.nights,plan.perweek,plan.members,plan.books,plan.budget,plan.demo], ['revival',9,7,150,220,6000,true]);
   c('the first night a Friday about seven months out, so the whole six months shows', [new Date(D).getDay(),days(D,new Date())>=200&&days(D,new Date())<=225], [5,true]);
-  c('the page: Revival meetings, the countdown, the roster, who comes, getting the word out, the budget; no Track or Forms', [P.qa('#pout > .phead h2').map(h=>h.textContent),P.q('#pmode').hidden], [['Sample church (demo) · Revival meetings','The countdown','The roster','Who comes','Getting the word out','The budget'],true]);
+  // v10.66.0 (stale, not a regression): the pastor (11 Oct 2026), "the option … who will speak the pastor of the church a conference leader … or paid evangelist": the plan shows Who will speak
+  c('the page: Revival meetings, the countdown, the roster, who comes, getting the word out, the budget; no Track or Forms', [P.qa('#pout > .phead h2').map(h=>h.textContent),P.q('#pmode').hidden], [['Sample church (demo) · Revival meetings','The countdown','Who will speak','The roster','Who comes','Getting the word out','The budget'],true]);
   const bench=P.qa('#pout .pbench .card').map(k=>[txt(k.querySelector('.n')),txt(k.querySelector('.l'))]);
   c('the bench: 220 members to invite, 70 to visit (on the books less active), 50 prayer bands, the roles and leaders', bench.map(b=>b[1]).slice(0,3).concat([bench[0][0],bench[1][0],bench[2][0]]), ['members to invite','members to visit','prayer bands','220','70','50']);
   const ph=P.qa('#pout .rail .pb').map(b=>[txt(b.querySelector('.pt b')),b]);
@@ -80,7 +82,8 @@ const days=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
   c('…getting the word out says "As soon as you can" for what is already past (never a date behind us)', [r.word.find(w=>w[0]==='A promo video')[1],P.J(`(()=>{ const t=new Date(); t.setHours(0,0,0,0); return planPromo(PLAN,planTargets(PLAN,planPlace()),planPlace()).rows.every(r=>r.at>=t); })()`)], ['As soon as you can',true]);
   r=at('revival',91);
   c('revival in three months: pray and reconnect, prepare hearts, invite every member', [r.ph.slice(0,3),/With less than six months/.test(r.note)], [['Pray and reconnect','Prepare hearts','Invite every member'],true]);
-  c('…the speaker booked now; the visits and the former Adventists in the first phase', [r.items.some(t=>/^The board votes the meetings; book the speaker now/.test(t)),r.items.some(t=>/^A second list: former Adventists/.test(t))], [true,true]);
+  // v10.66.0 (stale, not a regression): the pastor (11 Oct 2026), "the option … who will speak the pastor of the church a conference leader … or paid evangelist": "Decide who will speak now" (no speaker chosen here) after the board's vote
+  c('…the speaker decided now; the visits and the former Adventists in the first phase', [r.items.some(t=>/^Decide who will speak now/.test(t)),r.items.some(t=>/^A second list: former Adventists/.test(t))], [true,true]);
   const inv=P.J(`revPhases(PLAN,planPlace()).phases[2].start.toISOString()`), letter=r.word.find(w=>w[0]==='A letter to every home')[1];
   c('…the letter home goes out the day the invitation phase begins, in the countdown and in getting the word out', [days(new Date(letter.replace('Mailed ','')+' 12:00'),inv),r.items.some(t=>t.startsWith(new Date(inv).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})+': a letter to every home'))], [0,true]);
   r=at('revival',28);

@@ -219,6 +219,28 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.66.0 (11 Oct 2026, quick lane) — the Planner: who will speak.** The pastor: *"A lot of times the local Pastor will be the speaker
+for these events safe to church a lot of money, but not all pastors. Have the ability to really draw and keep people … whether they wanna put
+all this effort in and have a mediocre speaker or if they want to bring in a really dynamic speaker who can retain people … a lot of people fall
+off … the option … who will speak the pastor of the church a conference leader … or paid evangelist … big difference with the budget"*.
+- **Who will speak?** on the form, for both plans (`#pl-speak`, `planSpeakOf` / `planSpeakSet`, `PLAN_SPEAK`; `PLAN.speaker` = `pastor` ·
+  `conference` · `guest`, '' not decided): **Our pastor** (saves the most) · **A conference leader or evangelist** (the conference often helps)
+  · **A paid evangelist** (costs the most). The demos: a paid evangelist (as their budgets were drawn). Start over clears it.
+- **It changes the plan.** Evangelism (`planPhases`' `spLine`, in the first phase of every tier): our pastor preaches (the series planned a
+  year ahead, a coach, the visiting shared) · ask the conference a year or more ahead · book the evangelist a year ahead with references (did
+  attendance hold, did the new members stay) and a written agreement (honorarium, travel, housing and meals, who keeps the names, the
+  follow-up) · or decide who will speak first; a short runway books it this week. A speaker from outside: a **Speaker host** on the roster
+  (paired with the platform coordinator when leaders are few) and "The evangelist leaves after closing night" opening the follow-up. The
+  meetings' budget names the speaker's cost. Revival (`revSpeakLine`): the same four; no speaker host and no "the speaker arrives" when the
+  pastor speaks, and the budget gives the speaker's share to hospitality, the meetings, inviting and after (30 / 30 / 15 / 25).
+- **Who will speak** (`planSpeakHTML`, `#pl-speakw`, both plans, before the roster): the three side by side (cost; drawing and keeping people;
+  after the meetings), his choice marked; "a lot of people fall off when the speaker cannot hold them night after night"; a middle way (the
+  pastor preaches with a guest for the opening weekend, or the guest preaches and the pastor leads the visiting). The printed plans name the
+  speaker.
+- Tests: `v66-speaker` (new, 24; failing first on v10.65.0: `v82/ff-v66-speaker.log`); updated with comments: v65-revival (the form's new
+  question, the new part, "Decide who will speak now"). Checked in Chrome (`v82/shots660.mjs`): computer 1366 and phone 390, the form and the
+  comparison level, no sideways scroll, no page errors. Full suite: 181 suites · 11,536 passed · 0 failed. Samples `Terrain-v10.66.0-samples`.
+
 **v10.65.0 (10 Oct 2026, full lane) — the Planner plans evangelism meetings or revival meetings, and fits the time left.** The pastor:
 *"maybe the EVANGELISM planner should also should have two options one for EVANGELISM and one for in reach meaning for our members … there
 should be an option to do something big for our own members"*, *"We can put revival meetings … preparing"*; then *"we only want it in two

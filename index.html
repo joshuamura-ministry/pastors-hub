@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.65.0
+     TERRAIN  v10.66.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.65.0" data-theme="dark">
+<html lang="en" data-version="v10.66.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.65.0">
-<title>Community Map — Terrain v10.65.0</title>
+<meta name="terrain-version" content="v10.66.0">
+<title>Community Map — Terrain v10.66.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <script>/* v10.43 (DESIGN S22; review, 1 Oct 2026): the neighbour's card page (#connect=) asks nothing of any other site, so the web fonts
    are loaded for the pastor's pages only; the card page draws in the card's own same-origin faces (fonts/, once added) or the phone's. */
@@ -1281,6 +1281,18 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 .ptype button span{font-size:.8rem;color:var(--ink3)}
 .ptype button.on{border-color:var(--acc);background:color-mix(in srgb,var(--acc) 12%,var(--panel2));box-shadow:0 0 0 1px var(--acc)}
 .ptype button.on span{color:var(--ink2)}
+.ptype3{grid-template-columns:minmax(0,1fr)}
+@media(min-width:640px){.ptype3{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pspk{display:grid;grid-template-columns:minmax(0,1fr);gap:8px;margin-top:12px}
+@media(min-width:900px){.pspk{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pspk-c{display:flex;flex-direction:column;gap:8px;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px;min-width:0}
+.pspk-c.on{border-color:var(--acc);box-shadow:0 0 0 1px var(--acc)}
+.pspk-h{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.pspk-h b{font-family:var(--disp);font-weight:600;color:var(--ink);font-size:.95rem}
+.pspk-tag{flex:none;font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:var(--acc)}
+.pspk-r span{display:block;font-size:.7rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink3)}
+.pspk-r p{margin:2px 0 0;font-size:.84rem;line-height:1.5;color:var(--ink2)}
+.pspk+.note{margin-top:10px}
 .pform[data-pt="revival"] .pf-ev{display:none}
 .pform:not([data-pt="revival"]) .pf-rv{display:none}
 @media(min-width:640px){.pform[data-pt="revival"] .pf-budget{grid-column:span 2}}
@@ -5016,6 +5028,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
           <button type="button" data-k="both" role="radio" aria-checked="true" class="on">Both</button>
         </div>
       </div>
+      <div class="pf pf-wide pf-speak"><span class="lb">Who will speak?</span>
+        <div class="ptype ptype3" id="pl-speak" role="radiogroup" aria-label="Who will speak?">
+          <button type="button" data-sp="pastor" role="radio" aria-checked="false"><b>Our pastor</b><span>Saves the most</span></button>
+          <button type="button" data-sp="conference" role="radio" aria-checked="false"><b>A conference leader or evangelist</b><span>The conference often helps</span></button>
+          <button type="button" data-sp="guest" role="radio" aria-checked="false"><b>A paid evangelist</b><span>Costs the most</span></button>
+        </div>
+      </div>
       <div class="pf pf-wide prow">
         <button class="btn" id="pl-build">Build the countdown</button>
         <button class="btn ghost" id="pl-demo">Fill in a demo series</button>
@@ -5074,13 +5093,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.65.0</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.66.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.65.0';
+const VERSION = 'v10.66.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -11403,6 +11422,8 @@ function plannerOpen(){
   PLAN=planGet();
   const kindBtns=[...document.querySelectorAll('#pl-kind button')];
   document.querySelectorAll('#pl-type button').forEach(b=>b.onclick=()=>planTypeSet(b.dataset.pt));
+  document.querySelectorAll('#pl-speak button').forEach(b=>b.onclick=()=>planSpeakSet(b.dataset.sp));
+  if(PLAN) planSpeakSet(PLAN.speaker||'');
   planTypeSet(PLAN?(PLAN.type==='revival'?'revival':'evangelism'):planTypeOf());
   kindBtns.forEach(b=>b.onclick=()=>{ kindBtns.forEach(x=>{ x.classList.toggle('on',x===b); x.setAttribute('aria-checked',x===b?'true':'false'); }); });
   renderPlaceStrip();
@@ -11436,7 +11457,7 @@ function plannerOpen(){
   // v10.63.0: the demo is offered while no plan of his own is saved (it never replaces his plan)
   $('pl-demo').hidden=!!(PLAN&&!PLAN.demo); $('pl-demo').onclick=planDemo;
   $('pl-clear').onclick=()=>{ if(!(PLAN&&PLAN.demo)&&!confirm('Clear this plan from this device?')) return; uChurch().plan=null;uPersist(); PLAN=null;
-    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget','pl-bw','pl-books'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; plannerOpen(); };
+    ['pl-church','pl-members','pl-leaders','pl-workers','pl-date','pl-nights','pl-seats','pl-file','pl-budget','pl-bw','pl-books'].forEach(id=>$(id).value=''); $('pl-perweek').value=4; planSpeakSet(''); plannerOpen(); };
 }
 function renderPlaceStrip(){
   const host=$('pplace'); if(!host) return;
@@ -11479,19 +11500,20 @@ function planPlaceRefresh(){
    different benchmarks that need to be met prior to leading up to it … the opportunity to have a Bible worker or Bible workers … the follow
    up is vital and has to be established even before … in with the planning". A midsize series, eighteen months out (the full countdown),
    marked as a demo; Start over clears it without asking. */
-const PLAN_DEMO={church:'Sample church (demo)',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both'};
+const PLAN_DEMO={church:'Sample church (demo)',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both',speaker:'guest'};
 function planDemoDate(){ let d=addMonths(new Date(),18); d.setHours(12,0,0,0); while(d.getDay()!==5) d=addDays(d,1); return d; }
 function planDemo(){
   if(planTypeOf()==='revival'){ const R=REV_DEMO, d=revDemoDate();
     $('pl-church').value=R.church; $('pl-members').value=R.members; $('pl-books').value=R.books; $('pl-leaders').value=R.leaders; $('pl-workers').value=R.workers;
     $('pl-date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
-    $('pl-nights').value=R.nights; $('pl-perweek').value=R.perweek; $('pl-budget').value=R.budget;
+    $('pl-nights').value=R.nights; $('pl-perweek').value=R.perweek; $('pl-budget').value=R.budget; planSpeakSet(R.speaker);
     plannerBuild({demo:true}); return; }
   const D=PLAN_DEMO, d=planDemoDate();
   $('pl-church').value=D.church; $('pl-members').value=D.members; $('pl-leaders').value=D.leaders; $('pl-workers').value=D.workers;
   $('pl-date').value=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
   $('pl-nights').value=D.nights; $('pl-perweek').value=D.perweek; $('pl-seats').value=D.seats; $('pl-file').value=D.file; $('pl-budget').value=D.budget; $('pl-bw').value=D.bw;
   document.querySelectorAll('#pl-kind button').forEach(x=>{ const on=x.dataset.k===D.kind; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); });
+  planSpeakSet(D.speaker);
   plannerBuild({demo:true});
 }
 function plannerBuild(o){
@@ -11508,7 +11530,7 @@ function plannerBuild(o){
   if(!(nights>0)){ st.textContent='How many nights of meetings?'; $('pl-nights').focus(); return; }
   if(planTypeOf()==='revival'){
     const books=Math.max(0,Math.round(+$('pl-books').value||0)), budget=+$('pl-budget').value||0;
-    PLAN={type:'revival',church,members,books:books?Math.max(books,members):0,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,budget,built:Date.now(),v:4};
+    PLAN={type:'revival',church,members,books:books?Math.max(books,members):0,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,budget,speaker:planSpeakOf(),built:Date.now(),v:4};
     if(o.demo) PLAN.demo=true;
     planSave(PLAN); st.textContent=o.demo?'':'Saved on this device.'; plannerRender(PLAN);
     $('pl-demo').hidden=!PLAN.demo;
@@ -11519,7 +11541,7 @@ function plannerBuild(o){
   const seats=+$('pl-seats').value||0, file=$('pl-file').value===''?null:Math.max(0,+$('pl-file').value), budget=+$('pl-budget').value||0;
   if(!(seats>0)){ st.textContent='How many seats in the hall? Pre-work aims to fill half of them.'; $('pl-seats').focus(); return; }
   const bw=Math.max(0,Math.min(20,Math.round(+$('pl-bw').value||0)));
-  PLAN={type:'evangelism',church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,bw,built:Date.now(),v:3};
+  PLAN={type:'evangelism',church,members,leaders:Math.min(leaders,members),workers:Math.min(workers,members),nights,perweek,date,kind,seats,file,budget,bw,speaker:planSpeakOf(),built:Date.now(),v:3};
   if(o.demo) PLAN.demo=true;
   planSave(PLAN); st.textContent=o.demo?'':'Saved on this device.'; plannerRender(PLAN);
   $('pl-demo').hidden=!PLAN.demo;
@@ -11552,6 +11574,8 @@ function planLeaderRoles(p,pl){
     {g:'coord',id:'music',n:'Music coordinator',who:'',d:'Pianist or organist every night, background music as people come and go, special music and every appeal song, planned with the evangelist to fit the evening\u2019s topic.'},
     // v10.63.0: the follow-up is built before opening night, so its coordinator is chosen with the others
     {g:'coord',id:'nurture',n:'Nurture & follow-up coordinator',who:'',core:1,d:'Builds the follow-up before opening night: a spiritual friend for everyone expected to decide, the new members\u2019 class and the Bible class for after the series, with their teachers, rooms and dates. After the meetings, keeps every new member, and everyone still studying, cared for through the first year.'},
+    // v10.66.0: a speaker from outside the church needs a host
+    ...(p.speaker==='guest'||p.speaker==='conference'?[{g:'coord',id:'host',n:'Speaker host',who:'',d:'The evangelist\u2019s travel, housing and meals, and each night\u2019s program planned with the evangelist and the platform coordinator.'}]:[]),
     {g:'coord',id:'committees',n:'Committees coordinator',who:'',d:'Organizes all the committees below and sees that each chair has staffed and prepared their piece.'},
     // pre-work teams — from the equipping phase
     ...(bw?[{g:'pre',id:'bibleworker',n:bw>1?'Bible workers ('+bw+')':'Bible worker',who:'placed by the conference, or paid by the church',core:1,staff:1,d:'In place six months before opening night: works the interest file, gives Bible studies in homes, trains the lay Bible instructors and goes with them. During the series, visits each night\u2019s interests and prepares those who decide for baptism; afterwards stays at least three months with the new members and everyone still studying.'}]:[]),
@@ -11583,7 +11607,7 @@ function planLeaderRoles(p,pl){
    until the count fits the leaders available. The treasurer is usually the
    church treasurer already and is not counted against the leaders. */
 function planLeaderFit(roles,leaders,pairs){
-  const PAIRS=pairs||[['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['nursery','children'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
+  const PAIRS=pairs||[['host','platform'],['materials','resource'],['platform','music'],['registration','records'],['ushers','parking'],['hosts','decoration'],['lit','groups'],['transportation','parking'],['children','hosts'],['nursery','children'],['health','lang'],['committees','assoc'],['bibleschool','interest']];
   let list=roles.map(r=>({...r,names:[r.n],ids:[r.id]}));
   let merged=[];
   // the treasurer is usually the church treasurer already; Bible workers are placed or hired (v10.63.0): neither is a leader to find
@@ -11686,11 +11710,18 @@ function planPhases(p,pl){
   const handbillOrder=addMonths(D,-3), lettersOut=addDays(D,-10), membersHandbills=addDays(D,-14);
   const fileN=p.file==null?null:p.file;
   const bw=Math.max(0,p.bw||0), bwN=bw>1?'Bible workers':'Bible worker', bwBy=addMonths(D,-6);
+  // v10.66.0: who will speak, decided or booked first
+  const spBy=(()=>{ const d=S.tier==='full'?addMonths(D,-12):S.tier==='year'?addDays(S.bounds[0],30):addDays(S.today,7); return d<S.today?addDays(S.today,7):d; })();
+  const spLine=p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the series planned by '+pDate(spBy)+' (the titles, the order, the appeal each night); a seasoned evangelist asked to coach; the visiting shared with the elders so the pastor has time to prepare.',1)
+    :p.speaker==='conference'?li('<b>Ask the conference for an evangelist by '+pDate(spBy)+'</b>: the ministerial department books a year or more ahead. Ask what it covers (travel, housing, the honorarium) and who carries the follow-up.',1)
+    :p.speaker==='guest'?li('<b>Book the evangelist by '+pDate(spBy)+'</b>: ask churches they preached for whether attendance held to the last night and the new members stayed; then a written agreement: the honorarium, travel, housing and meals, who keeps the names, and the follow-up after they leave.',1)
+    :li('<b>Decide who will speak by '+pDate(spBy)+'</b>: our pastor, a conference leader or evangelist, or a paid evangelist. Everything rides on whether the speaker can hold people night after night: see <b>Who will speak</b>, below.',1);
   const ALL=[
     ph(0,'Find the leaders and set the date',
       [li('<b>Opening night fixed:</b> '+pDate(D)+'. Every other date on this page hangs on it.',1),
        li('<b>Pray over and select the leaders.</b> '+leadLine,1),
        {t:leadersHtml,key:false,plain:true},
+       spLine,
        li('Launch the prayer ministry: a prayer coordinator and assistant; every member keeps a list of 3–5 names and prays daily; prayer bands of 2–4 before and after church and midweek.'),
        li('Hold an evangelistic rally so the whole church hears the vision and the date. Draft the budget with the board — 30% pre-work, 50% meetings, 20% follow-up (see the budget below).'),
        li('Set the church\u2019s effort the same way the playbook does: about half of it on pre-campaign preparation, a fifth on the meetings themselves, and nearly a third on keeping what is won.')],
@@ -11765,6 +11796,7 @@ function planPhases(p,pl){
        li('Evaluate with every team: what worked, what to change, and the date of the next series.')],
      bench:`each new member with a friend, a class and a place to serve within three months · still with the church at twelve months · everyone still studying, studying each week · next opening night set`}
   ];
+  if(p.speaker==='guest'||p.speaker==='conference') ALL[ALL.length-1].items.unshift(li('<b>The evangelist leaves after closing night</b>: the pastor and the elders carry the follow-up, and every decision is visited within the week.',1));
   /* v10.65.0 — the pastor (9 Oct 2026): "we only want it in two months away or three months. Everything has to be adjusted for the three
      months even for EVANGELISM … with six months not a year or eight months … for a three months preparation it's not gonna as involved
      … the main things to get ready … restructure preparation and also post work": under eight months the preparation keeps the main
@@ -11780,6 +11812,7 @@ function planPhases(p,pl){
       li('<b>Opening night fixed:</b> '+pDate(D)+'. With about '+mo+' month'+(mo>1?'s':'')+' to prepare, this plan keeps the main things: leaders and prayer, the names you already have, and the invitation.',1),
       li('<b>Pray over and select the leaders</b> now. '+leadLine,1),
       {t:leadersHtml,key:false,plain:true},
+      spLine,
       li('<b>Prayer</b>: every member keeps a list of 3\u20135 names and prays daily; prayer bands of 2\u20134 meet each week.',1),
       li('<b>The names you already have, in one list</b>: the interest file'+(fileN!=null?' ('+fileN.toLocaleString()+')':'')+', everyone who came to a church program, Bible-school students, media interests, former Adventists and people raised in the church, and members\u2019 own relatives.',1),
       ...(bw?[]:[li('Ask the conference now whether a Bible worker can help in the weeks before and the three months after.')]),
@@ -11917,7 +11950,8 @@ function planBudget(p,pl,T){
        ...(bi?['Translation and second-language printing']:[]),
        ...(p.bw?[(p.bw>1?'Bible workers':'Bible worker')+': stipend and housing, if the church pays (ask the conference what it covers)']:[])]},
     {n:'The meetings',share:0.50,amt:m(0.50),note:'Advertising is not preaching, but nobody hears preaching they were never told about.',
-     lines:[ 'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills; banners and yard signs, and the promo video and social ads, if the church can','Newspaper, radio and TV only with extra budget','Personal invitation letters',
+     lines:[ (p.speaker==='pastor'?'The speaker: our pastor (no honorarium)':p.speaker==='conference'?'The speaker: a conference leader or evangelist (ask what the conference covers: travel, housing, the honorarium)':p.speaker==='guest'?'The speaker: a paid evangelist\u2019s honorarium, travel, housing and meals for every night (a written quote)':'The speaker: decided first (a paid evangelist costs the most)'),
+       'Handbills: printing'+(T.handbills?' (~'+T.handbills.toLocaleString()+')':'')+', postage and labeling','Posters, flyers, electronic handbills; banners and yard signs, and the promo video and social ads, if the church can','Newspaper, radio and TV only with extra budget','Personal invitation letters',
        'Auditorium rental, if not in the church','Lecture outlines, Bible lessons, gift Bibles, gift books, lecture magazines','Attendance incentives (gift books, pictures, DVDs)',
        ...(kids?['Children\u2019s meetings: supplies every night']:['Children\u2019s meetings supplies']),
        'Nursery & mothers\u2019 room: the sound or picture brought in, supplies',
@@ -11935,7 +11969,7 @@ function planBudget(p,pl,T){
    plan, reconnect with every member who has drifted, prepare hearts (small groups, Spiritual Gifts), invite every member, ten days of
    prayer, the meetings with a last Sabbath of recommitment and communion, and a year after it in which every member serves.
    Same look as the evangelism plan (the rail, the roster, who comes, getting the word out, the budget, the printed plan). */
-const REV_DEMO={church:'Sample church (demo)',members:150,books:220,leaders:25,workers:50,nights:9,perweek:7,budget:6000};
+const REV_DEMO={church:'Sample church (demo)',members:150,books:220,leaders:25,workers:50,nights:9,perweek:7,budget:6000,speaker:'guest'};
 function revDemoDate(){ let d=addMonths(new Date(),7); d.setHours(12,0,0,0); while(d.getDay()!==5) d=addDays(d,1); return d; }
 function revClose(p,D){ return p.perweek>=7?addDays(D,p.nights-1):addDays(D,(Math.ceil(p.nights/p.perweek)*7)-1); }
 function revSchedule(p){
@@ -11956,6 +11990,14 @@ function revTargets(p){
   const books=Math.max(p.books||0,p.members), drifted=Math.max(0,books-p.members);
   return {books,drifted,pairs:drifted?Math.max(1,Math.ceil(drifted/10)):0,bands:Math.max(1,Math.round(p.members/3)),groups:Math.max(1,Math.round(p.workers/5)),gifts:Math.ceil(p.members/2)};
 }
+/* who speaks at the revival, decided or booked first (dt: the date to book by; null = now) */
+function revSpeakLine(p,dt){
+  const li=(t,key)=>({t,key:!!key}), by=dt?' by '+dt:' now';
+  return p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the theme and the messages planned'+(dt?' by '+dt:' first')+'; the visiting shared with the elders so there is time to prepare.',1)
+    :p.speaker==='conference'?li('<b>Ask the conference for a speaker'+by+'</b>: a leader or evangelist it recommends; ask what it covers (travel, housing, the honorarium).',1)
+    :p.speaker==='guest'?li('<b>Book the speaker'+by+'</b>: ask churches they spoke for whether members came back and stayed; then a written agreement: the honorarium, travel, housing and meals.',1)
+    :li('<b>Decide who will speak'+by+'</b>: our pastor, a conference leader or evangelist, or a paid evangelist. See <b>Who will speak</b>, below.',1);
+}
 function revRoles(p,pl){
   const T=pl?pl.tags:new Set();
   const kids=T.has('many-kids')||T.has('families')||T.has('single-parents')||T.has('family-heavy');
@@ -11965,7 +12007,7 @@ function revRoles(p,pl){
     {g:'lead',id:'prayer',n:'Prayer coordinator',who:'',core:1,d:'Starts the prayer bands six months out, leads the ten days of prayer before the meetings, and keeps a prayer room open every night.'},
     {g:'lead',id:'reconnect',n:'Reconnection coordinator',who:'usually the head elder',core:1,d:'Makes the list with the clerk: every member on the books, who comes, who has drifted. Divides it among the elders and deacons, so every one is visited before the meetings: to listen and to invite, never to reproach.'},
     {g:'lead',id:'treasurer',n:'Treasurer',who:'usually the church treasurer',d:'Keeps the budget: the speaker, the meals, the printing and the follow-up.'},
-    {g:'prep',id:'speaker',n:'Speaker host',who:'',d:'The speaker’s travel, housing and meals, and each evening’s program planned with the speaker.'},
+    ...(p.speaker==='pastor'?[]:[{g:'prep',id:'speaker',n:'Speaker host',who:'',d:'The speaker’s travel, housing and meals, and each evening’s program planned with the speaker.'}]),
     {g:'prep',id:'gifts',n:'Spiritual Gifts coordinator',who:'',d:'Every member takes the Spiritual Gifts survey before the meetings, with one link for the church; the commissioning on the last Sabbath places each one where they fit.'},
     {g:'prep',id:'groups',n:'Small groups',who:'',d:'Groups of four to six that meet each week for three months before the meetings, on prayer and the Holy Spirit, and keep meeting after.'},
     {g:'prep',id:'publicity',n:'Media & publicity',who:'',d:'The letter to every home, the bulletin and the screens, the livestream, and the members’ group online.'},
@@ -11988,7 +12030,7 @@ function revPhases(p,pl){
   const dr=T.drifted;
   const PP=[
       li('<b>The board votes the meetings and the date</b>; the theme chosen, the coordinators named.',1),
-      li('<b>Book the speaker by '+pDate(addDays(S.bounds[0],21))+'</b>: a guest speaker (ask the conference whom it recommends, and whether it helps with the cost), or the pastor.',1),
+      revSpeakLine(p,pDate(addDays(S.bounds[0],21))),
       li('<b>Prayer bands begin</b>: '+T.bands+' bands of two to four members, meeting each week to pray for revival and, by name, for the members who have drifted.',1),
       li('The clerk and the elders make <b>the list</b>: every member on the books ('+T.books.toLocaleString()+'), who comes, and who has drifted'+(dr?' (about '+dr.toLocaleString()+')':'')+'.'),
       li('Choose the music; set the budget'+(p.budget?' ($'+p.budget.toLocaleString()+')':'')+'.')];
@@ -12004,7 +12046,7 @@ function revPhases(p,pl){
       // v10.65.0 — the pastor: "for revival the post is getting our members active and prepared for EVANGELISM … their surveying the community"
       li('<b>Survey the community together</b>: a team runs the Community Survey and shows the church what its neighborhood needs, so members come to the meetings ready to serve it, and ready for the evangelism that follows.',1),
       li('Plan the children’s and youth part, with two screened adults for every night'+(kids?' (required here: many families with children)':'')+'.'),
-      li('The speaker’s travel, housing and meals arranged; the nightly program outlined with the speaker.')];
+      li(p.speaker==='pastor'?'The pastor outlines the messages; the visiting is shared with the elders so there is time to prepare.':'The speaker’s travel, housing and meals arranged; the nightly program outlined with the speaker.')];
   const IN=[
       li('<b>'+pDate(S.bounds[S.bounds.length-2])+': a letter to every home on the books</b> ('+T.books.toLocaleString()+'), from the pastor: the dates, the theme, and that we want them there.',1),
       li('<b>A personal invitation to every member who has drifted</b>, from the elder who visited them, with a printed card.',1),
@@ -12014,7 +12056,7 @@ function revPhases(p,pl){
      EVANGELISM … restructure preparation and also post work": under six months, three phases (the speaker booked now, the prayer
      and the visits together); under six weeks, two, and the Spiritual Gifts and the community survey move to the first month after. */
   const short=S.tier==='short'||S.tier==='quick', quick=S.tier==='quick';
-  const PR1=[li('<b>The board votes the meetings; book the speaker now</b>: a guest speaker (ask the conference whom it recommends, and whether it helps with the cost), or the pastor.',1),...PP.slice(2,4),...RC.slice(0,1),...RC.slice(3)];
+  const PR1=[li('<b>The board votes the meetings</b>; the theme chosen, the coordinators named.',1),revSpeakLine(p,null),...PP.slice(2,4),...RC.slice(0,1),...RC.slice(3)];
   const bPR1='the speaker booked · '+T.bands+' prayer bands meeting · every member who has drifted, and every former Adventist, visited';
   const prep=!short?[ph(0,'Pray and plan',PP,'the speaker booked · '+T.bands+' prayer bands meeting · the list of every member in hand'),ph(1,'Reconnect',RC,'every member who has drifted visited at least once'+(dr?' ('+dr.toLocaleString()+')':'')),ph(2,'Prepare hearts',PH,T.gifts+' members with Spiritual Gifts results · '+T.groups+' small group'+(T.groups>1?'s':'')+' meeting'),ph(3,'Invite every member',IN,'every member invited personally · rides arranged')]
     :quick?[ph(0,'Pray and reconnect',PR1,bPR1),ph(1,'Invite every member',IN,'every member invited personally · rides arranged')]
@@ -12024,7 +12066,7 @@ function revPhases(p,pl){
       li('<b>Ten days of prayer</b> before the meetings: '+pDate(addDays(D,-10))+' – '+pDate(addDays(D,-1))+'; every member praying daily, a prayer room open.',1),
       li('<b>'+pDate(addDays(D,-3))+': the phone tree</b>: each elder calls everyone on their list.',1),
       li('Music rehearsed; the children’s room ready with two screened adults each night; the communion prepared for the last Sabbath.'),
-      li('The speaker arrives; the welcome team knows the returning members by name.')],
+      li(p.speaker==='pastor'?'The welcome team knows the returning members by name.':'The speaker arrives; the welcome team knows the returning members by name.')],
       bench:'every member called · every team ready'},
     {name:'The meetings',start:D,end:close,tag:'series',items:[
       li('<b>'+p.nights+' nights</b>, opening '+pDate(D)+', closing '+pDate(close)+'.',1),
@@ -12102,8 +12144,15 @@ function revPromo(p,T){
 }
 function revBudget(p){
   const B=p.budget||0, m=x=>B?'$'+Math.round(B*x).toLocaleString():Math.round(x*100)+'%';
+  // v10.66.0: our pastor speaking, the speaker's share goes to the rest
+  if(p.speaker==='pastor') return [
+    {n:'Hospitality',share:0.30,amt:m(0.30),note:'Our pastor speaks: no honorarium. Returning members are greeted at a table, not only a door.',lines:['Fellowship meals on the Sabbaths','Refreshments after the meetings','A gift of thanks to the pastor\u2019s family, if the board wishes']},
+    {n:'The meetings',share:0.30,amt:m(0.30),note:'',lines:['Music','Children’s and youth program supplies','Communion supplies','The prayer room']},
+    {n:'Inviting',share:0.15,amt:m(0.15),note:'',lines:['The letter to every home: printing and postage','Printed invitation cards','The video invitation, if the church can']},
+    {n:'After the meetings',share:0.25,amt:m(0.25),note:'The revival is measured a year later.',lines:['Small-group books (Steps to Christ for every returning member)','Materials for the new places to serve','Follow-up mailings and visits']}
+  ];
   return [
-    {n:'The speaker',share:0.35,amt:m(0.35),note:'Ask the conference first: many help with a revival speaker.',lines:['Honorarium','Travel','Housing and meals']},
+    {n:'The speaker',share:0.35,amt:m(0.35),note:p.speaker==='conference'?'Ask what the conference covers first.':'Ask the conference first: many help with a revival speaker.',lines:['Honorarium','Travel','Housing and meals']},
     {n:'Hospitality',share:0.20,amt:m(0.20),note:'Returning members are greeted at a table, not only a door.',lines:['Fellowship meals on the Sabbaths','Refreshments after the meetings']},
     {n:'The meetings',share:0.20,amt:m(0.20),note:'',lines:['Music','Children’s and youth program supplies','Communion supplies','The prayer room']},
     {n:'Inviting',share:0.10,amt:m(0.10),note:'',lines:['The letter to every home: printing and postage','Printed invitation cards','The video invitation, if the church can']},
@@ -12115,7 +12164,7 @@ function revDoc(p,pl,T,fit,phases,ST,BU,roster,PR){
   const strip=h=>(h||'').replace(/<[^>]+>/g,'');
   return `<div id="plandoc" class="pdoc">
     <h1>${esc(p.church||'Our church')} — revival plan</h1>
-    <div class="dsub">Revival meetings · ${p.nights} nights · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
+    <div class="dsub">Revival meetings · ${p.nights} nights · the speaker: ${p.speaker?esc(PLAN_SPEAK[p.speaker].n.toLowerCase()):'not decided yet'} · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
     <div class="dgrid">
       <div class="dk"><b>${T.books.toLocaleString()}</b><span>members on the books</span></div>
       <div class="dk"><b>${T.drifted.toLocaleString()}</b><span>members to visit</span></div>
@@ -12155,6 +12204,30 @@ function revDoc(p,pl,T,fit,phases,ST,BU,roster,PR){
     <div class="sig"><div>Pastor</div><div>Church board · date</div></div>
   </div>`;
 }
+/* v10.66.0 — the pastor (11 Oct 2026): "A lot of times the local Pastor will be the speaker for these events safe to church a lot of
+   money, but not all pastors. Have the ability to really draw and keep people … whether they wanna put all this effort in and have a
+   mediocre speaker or if they want to bring in a really dynamic speaker who can retain people … a lot of people fall off … the option
+   … who will speak the pastor of the church a conference leader … or paid evangelist … big difference with the budget". Who will speak,
+   for both plans: it changes the countdown, the roster, the budget, and a comparison to choose by. '' = not decided yet. */
+const PLAN_SPEAK={
+  pastor:{n:'Our pastor',d:'Saves the most'},
+  conference:{n:'A conference leader or evangelist',d:'The conference often helps'},
+  guest:{n:'A paid evangelist',d:'Costs the most'}
+};
+function planSpeakOf(){ const b=document.querySelector('#pl-speak button[aria-checked="true"]'); return b?b.dataset.sp:''; }
+function planSpeakSet(v){ document.querySelectorAll('#pl-speak button').forEach(x=>{ const on=x.dataset.sp===v; x.classList.toggle('on',on); x.setAttribute('aria-checked',on?'true':'false'); }); }
+function planSpeakHTML(p){
+  const sp=p.speaker||'', n=p.nights;
+  const C={
+    pastor:[['Cost','Nothing extra: no honorarium, no travel.'],['Drawing and keeping people','It depends on the pastor\u2019s gift for preaching night after night. Ask honestly whether they can hold people for '+n+' nights.'],['After the meetings','Stays: knows every name and nurtures every decision.']],
+    conference:[['Cost','Often shared by the conference: ask what it covers (travel, housing, the honorarium).'],['Drawing and keeping people','Experienced in a series. Book early: a year or more ahead for evangelism.'],['After the meetings','Leaves after the last night: the pastor and the elders carry the follow-up.']],
+    guest:[['Cost','The most: an honorarium, travel, housing and meals for every night. Ask for a written quote.'],['Drawing and keeping people','A dynamic speaker can hold a hall to the last night. Ask churches they preached for whether attendance held, and whether the new members stayed.'],['After the meetings','Leaves after the last night: the follow-up must be ready before they come.']]
+  };
+  return `<div class="phead" id="pl-speakw"><h2>Who will speak</h2><span class="hint">${sp?esc(PLAN_SPEAK[sp].n):'not decided yet'}</span></div>
+    <p class="note" style="margin-top:6px">The whole preparation rides on the speaker: a lot of people fall off when the speaker cannot hold them night after night. Choose with the board, honestly; the choice above changes the countdown, the roster and the budget.</p>
+    <div class="pspk">${Object.keys(PLAN_SPEAK).map(k=>`<div class="pspk-c${k===sp?' on':''}" data-sp="${k}"><div class="pspk-h"><b>${esc(PLAN_SPEAK[k].n)}</b>${k===sp?'<span class="pspk-tag">Your choice</span>':''}</div>${C[k].map(r=>`<div class="pspk-r"><span>${esc(r[0])}</span><p>${esc(r[1])}</p></div>`).join('')}</div>`).join('')}</div>
+    <p class="note">A middle way: the pastor preaches, with a guest for the opening weekend; or the guest preaches and the pastor leads the visiting every day.</p>`;
+}
 /* the ready words' Copy buttons, for either plan */
 function planWireCopy(){
   $('pout').querySelectorAll('[data-pl-copy]').forEach(b=>b.onclick=async()=>{
@@ -12190,7 +12263,7 @@ function revRender(p){
     <div class="pwout">${PR.rows.map(r=>`<div class="pwo-row" data-k="${r.k}"><div class="pwo-h"><b>${esc(r.n)}</b><span class="pwo-tag">${r.k==='all'?'Every church':'If your church can'}</span></div><div class="pwo-when">${esc(r.when)}</div><div class="pwo-d">${esc(r.d)}</div><div class="pwo-who">${esc(r.who)}</div></div>`).join('')}</div>
     <h3 class="pwords-h">Words ready to share</h3>
     <div class="pwords">${PR.words.map((w,i)=>`<div class="pword"><b>${esc(w.n)}</b><p id="pl-wd${i}">${esc(w.t)}</p><button type="button" class="btn ghost" data-pl-copy="${i}">Copy</button></div>`).join('')}</div>`;
-  const budgetHtml=`<div class="phead"><h2>The budget</h2><span class="hint">${p.budget?'$'+p.budget.toLocaleString():'35 / 20 / 20 / 10 / 15'}</span></div>
+  const budgetHtml=`<div class="phead"><h2>The budget</h2><span class="hint">${p.budget?'$'+p.budget.toLocaleString():BU.map(b=>Math.round(b.share*100)).join(' / ')}</span></div>
     <p class="note" style="margin-top:6px">A starting split, to change as you plan.${p.budget?'':' Enter a total above and each part becomes a dollar figure.'}</p>
     <div class="budget">${BU.map(b=>`<div class="bud"><div class="bh"><b>${esc(b.n)}</b><span>${esc(b.amt)}</span></div>${b.note?`<div class="bn">${esc(b.note)}</div>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}</div>`;
   const bench=`<div class="pbench">
@@ -12214,6 +12287,7 @@ function revRender(p){
     ${bench}
     <div class="phead"><h2>The countdown</h2><span class="hint">First night ${pDate(D)}</span></div>
     <div class="rail">${rail}</div>
+    ${planSpeakHTML(p)}
     ${rosterHtml}
     ${streamsHtml}
     ${promoHtml}
@@ -12303,6 +12377,7 @@ function plannerRender(p){
     <div class="phead"><h2>The countdown</h2><span class="hint">Opening night ${pDate(D)}</span></div>
     <div class="rail">${rail}</div>
     ${enlistSection(p,pl)}
+    ${planSpeakHTML(p)}
     ${rosterHtml}
     ${streamsHtml}
     ${planMailHTML(p,pl,T)}
@@ -13306,7 +13381,7 @@ function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName,PR){
   const strip=h=>(h||'').replace(/<[^>]+>/g,'');
   return `<div id="plandoc" class="pdoc">
     <h1>${esc(p.church||'Our church')} — evangelistic plan</h1>
-    <div class="dsub">${esc(kindName)} series · ${p.nights} nights, ${p.perweek} a week · opening ${pDate(D)}, closing ${pDate(close)} · prepared ${pDate(new Date())}</div>
+    <div class="dsub">${esc(kindName)} series · ${p.nights} nights, ${p.perweek} a week · opening ${pDate(D)}, closing ${pDate(close)} · the speaker: ${p.speaker?esc(PLAN_SPEAK[p.speaker].n.toLowerCase()):'not decided yet'} · prepared ${pDate(new Date())}</div>
     <div class="dgrid">
       <div class="dk"><b>${p.members}</b><span>active members</span></div>
       <div class="dk"><b>${fit.need}</b><span>roles to lead (${p.leaders} leaders)</span></div>
