@@ -219,6 +219,32 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.67.0 (11 Oct 2026, full lane) — the church directory, built in "Your church".** The pastor: *"the churches need to have a really
+nice directory with pictures and everything so that we can know each other"*, then *"is it possible to create a CHURCH directory build builder
+where if I have the photos and the information names and number if I put it all in it can build a printable church directory"*; his choices:
+in "Your church", Letter pages; and *"It should have a tab on the top that says build your church directory"*. Folded into PR #44 with v10.66.0.
+- **The tab** (`dirTabHTML`, `#u-dirtab`, wired by `uChurchSecWire`): at the top of the survey's "Your church" section, under its line and above
+  the card (the card folds; the tab stays in view): a book, "Build your church directory", and the count ("With photos, to print", "1 family").
+- **The builder** (block "THE CHURCH DIRECTORY" before `capRender`; `#dir-sheet`, the app's sheet frame, full screen on a phone; `DIR_ST`,
+  `dirDraw`, `dirWire`): the families (alphabetical, a photo or the initials, a search past eight; Edit); **+ Add a family** (photo, family
+  name, adults, children, "A parent said yes to showing the children", phone, email, address; Remove takes two taps); **Bring in a list**
+  (`dirParse`, `DIR_COLS`, `dirFromRows`: a CSV file or rows pasted from a spreadsheet, the first row naming the columns: Family, Adults,
+  Children, Phone, Email, Address, Photo; children left out until a parent says yes) and **Photos, all at once** (`dirAddPhotos`: each matched
+  by its file name to the family, or by the list's Photo column; the rest named); **Cover and officers** (title, year, a word from the pastor,
+  the pastor and officers); **Make the directory (PDF)**; **Save a copy / Load a copy** (one file with the photos, to move it to another
+  computer; `dirSaveCopy`, `dirLoadCopy`). EN + ES (`L`).
+- **Everything stays on this device**: the families in the church store (`uChurch().directory` {v:1, title, year, note, families, officers}),
+  the photos in IndexedDB (`terrain-photos`, key `dir/<church id>/<family id>`; in memory where there is none: `dirPhotoGet` / `Put` / `Del`),
+  each photo cropped to 4:3 from the middle at most 800 × 600 as a JPEG (`dirPhotoFrom`). Nothing is sent anywhere.
+- **The PDF** (`dirPdfDoc`, jsPDF through `gfLoadJsPDF`, Letter, `dirPdfName`): a cover (the title, "Church directory · year", the families
+  counted); "From the pastor" and "Pastor and officers" when given; eight families a page, two across, alphabetical, with photo (or initials),
+  names, the children only with a parent's yes, phone, email, address; "Who's who" (every first name with its family and page); every page "For
+  members only. Please do not share outside the church." A lone family card in the builder stretches across its row (`TS_NOLONE` += `.dir-list`).
+- Tests: `v67-directory` (new, 30; failing first on v10.66.0: `v82/ff-v67-directory.log`; the families made up, the photo a real 8 × 6 JPEG);
+  updated with a comment: v45-profile-move (the tab between the line and the card). Checked in Chrome (`v82/shots670.mjs`: ten made-up families,
+  eight drawn photos through the real `dirPhotoFrom`, the PDF through the real jsPDF, 5 pages, 127 KB; its pages looked at, `v82/pdfpages.mjs`):
+  computer 1366 and phone 390, no sideways scroll, no page errors. Full suite: 182 suites · 11,566 passed · 0 failed. Samples `Terrain-v10.67.0-samples` (the PDF there).
+
 **v10.66.0 (11 Oct 2026, quick lane) — the Planner: who will speak.** The pastor: *"A lot of times the local Pastor will be the speaker
 for these events safe to church a lot of money, but not all pastors. Have the ability to really draw and keep people … whether they wanna put
 all this effort in and have a mediocre speaker or if they want to bring in a really dynamic speaker who can retain people … a lot of people fall
@@ -3390,6 +3416,8 @@ Don't relitigate them without a reason he'd accept.
 - **The Planner fits the time left** (v10.65.0, his words: "it has to adjust … the main things to get ready"): a short runway changes
   what the plan asks, not only its dates; the follow-up carries what the preparation could not. Revival meetings prepare members for
   evangelism: every member serving, every member who has drifted and every former Adventist visited.
+- **The church directory stays on the device** (v10.67.0): the pastor or clerk puts the families in; photos never leave the device; children
+  only with a parent's yes; every printed page for members only.
 - **Every way to promote, never required** (v10.64.0, his words: "doesn't mean that we can do all of these things, but there should be
   these options out there if the church can"): each dated back from opening night, marked Every church or If your church can; the mail goes
   where the most people live, never everywhere, and the handbill changes with who lives there.
