@@ -224,6 +224,18 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.69.1 (12 Oct 2026, quick lane) — Compare your churches without the neighborhoods.** The pastor: *"I'm just wondering in compare churches
+why the neighborhood survey is there? What stands out may be a comparison of churches is OK and spiritual gifts comparison and I guess you can
+keep the plans, but I don't think we need the neighborhoods what stands out just the churches, spiritual gifts plans digital footprint"*.
+`chcRender`: What stands out · The churches · Spiritual Gifts · The plans, then Digital footprint (no "The neighborhoods", no "Open its survey
+once…", `CH_FIG`, `chLab` and `.chc-needs` gone; the snapshot `chSnapSave` is still kept, `chTown` reads its town). `chStandOut`: the churches'
+own counts (members on the books, attending, volunteers, leaders: twice another's and three more; ministries in the plan: two more), their
+Spiritual Gifts (none yet · only at · both far apart: "Spiritual Gifts results in: A 24 of 46, B 3 of 55."), and "Your churches look much
+alike on these counts." when two churches filled in differ on none; never a neighborhood's figure. The line under the title and the tile:
+"Your churches side by side: their people, their gifts, their plans and how they are found online." / "…: people, gifts and plans." (ES too).
+Tests: `v69-1-compare-churches` (new, 16; failing first on v10.69.0: `v83/ff-v69-1.log`); `v57-churches` updated with his words. Checked in
+Chrome (`v83/shots691.mjs`): computer 1366 and phone 390, EN + ES, no sideways scroll, no page errors. Full suite: 186 suites · 11,661 passed · 0 failed.
+
 **v10.69.0 (11 Oct 2026, full lane) — the church box knows the church.** The pastor: *"is there a way to make it so that it actually knows
 like … when you type in Google? It will actually populate or Google maps it will populate so if I say Fairview village seventh day so that I
 won't have to put in exactly … how every single thing should be before. It actually knows what church I'm talking about."*

@@ -76,21 +76,21 @@ async function twoChurches(P){
   P.q('#chbtn').click(); await sleep(20);
   P.q('#ch-sheet [data-ch-cmp]').click(); await sleep(60);
   c('the tool opens: its own page, the sheet closed', [P.E('TOOL'),P.q('#chc')&&P.q('#chc').hidden,!!P.q('#ch-sheet[open]'),P.txt('#toolname')], ['churches',false,false,'Compare your churches']);
-  c('…the two churches as columns, in his order, with their towns', P.qa('#chc-hood').length?P.qa('#chc section[aria-labelledby="chc-hood"] thead th b').map(b=>b.textContent):[], ['Bucks County SDA','Fairview Village SDA']);
-  c('five parts, each its own colour: what stands out, the neighborhoods, the churches, Spiritual Gifts, the plans',
-    P.qa('#chc .chc-sec h2').map(h=>h.textContent), ['What stands out','The neighborhoods','The churches','Spiritual Gifts','The plans']);
-  c('…each part coloured', P.qa('#chc .chc-sec').map(s=>/--k:var\(--/.test(s.getAttribute('style')||'')), [true,true,true,true,true]);
+  // v10.69.1 (stale, not a regression): the pastor (12 Oct 2026), "I don't think we need the neighborhoods what stands out just the churches, spiritual gifts plans digital footprint": the neighborhoods' part gone
+  c('…the two churches as columns, in his order, with their towns', P.qa('#chc section[aria-labelledby="chc-church"] thead th b').map(b=>b.textContent), ['Bucks County SDA','Fairview Village SDA']);
+  c('four parts, each its own colour: what stands out, the churches, Spiritual Gifts, the plans',
+    P.qa('#chc .chc-sec h2').map(h=>h.textContent), ['What stands out','The churches','Spiritual Gifts','The plans']);
+  c('…each part coloured', P.qa('#chc .chc-sec').map(s=>/--k:var\(--/.test(s.getAttribute('style')||'')), [true,true,true,true]);
   const row=(sec,lab)=>{ const tr=P.qa(`#chc section[aria-labelledby="chc-${sec}"] tbody tr`).find(r=>r.querySelector('th').textContent===lab); return tr?[...tr.querySelectorAll('td')].map(td=>td.querySelector('.chc-v')?td.querySelector('.chc-v').textContent:td.textContent.replace(/\s+/g,' ').trim()):null; };
-  c('the neighborhoods: each church\'s own figures', [row('hood','Below the poverty line'),row('hood','Homes without a car'),row('hood','Median household income')], [['19.4%','31.4%'],['13.5%','4.2%'],['$52,000','$52,000']]);
-  c('…its top needs', P.qa('#chc .chc-needs').length, 2);
   c('the churches: Your church, each its own', [row('church','Volunteers'),row('church','Leaders'),row('church','Attending')], [['46','14'],['9','2'],['135','55']]);
   c('Spiritual Gifts: results in, of the church\'s count (the demo at Bucks County only)', row('gifts','Results in'), ['24 of 135','0 of 55']);
-  c('a row no church has a figure for is left out (no "Age 65 and over" in this survey; no members on the books)', [row('hood','Age 65 and over'),row('church','Members on the books')], [null,null]);
+  c('a row no church has a figure for is left out (no members on the books)', [row('church','Members on the books')], [null]);
   c('the plans: ministries in the plan, proposals decided', [row('plan','Ministries in the plan'),row('plan','Proposals decided')], [['1','0'],['0','0']]);
   const so=P.qa('#chc .chc-so li').map(l=>l.textContent);
-  c('what stands out: the larger differences, in plain sentences', [so.includes('Below the poverty line: Fairview Village SDA 31.4%, Bucks County SDA 19.4%.'),so.includes('Homes without a car: Bucks County SDA 13.5%, Fairview Village SDA 4.2%.'),
-    so.includes('Volunteers: Bucks County SDA 46, Fairview Village SDA 14.'),so.includes('Spiritual Gifts results so far only at Bucks County SDA.')], [true,true,true,true]);
-  c('…never a figure that is much the same (limited English is 11.2% at both)', so.some(t=>/Limited-English/.test(t)), false);
+  // v10.69.1 (stale, not a regression): the pastor (12 Oct 2026), "I don't think we need the neighborhoods what stands out just the churches, spiritual gifts plans digital footprint": what stands out is the churches' own counts, gifts and plans
+  c('what stands out: the larger differences, in plain sentences', [so.includes('Volunteers: Bucks County SDA 46, Fairview Village SDA 14.'),so.includes('Leaders: Bucks County SDA 9, Fairview Village SDA 2.'),
+    so.includes('Attending: Bucks County SDA 135, Fairview Village SDA 55.'),so.includes('Spiritual Gifts results so far only at Bucks County SDA.')], [true,true,true,true]);
+  c('…never a neighborhood\'s figure', so.some(t=>/poverty|car|English|Population|income|abroad/i.test(t)), false);
   c('…never a ranking or a score', /\b(rank|ranked|score|best church|worst|winner|#1)\b/i.test(P.txt('#chc')), false);
   c('counts only: no member\'s name', [/Alex Rivera|\(sample\)/.test(P.txt('#chc'))], [false]);
   c('comparing changed nothing: the open church and its numbers', [P.E('uStore().active'),P.E('capMerged().volunteers')], [act0,vol0]);
@@ -103,19 +103,18 @@ async function twoChurches(P){
 
   console.log('\n-- a church with no snapshot --');
   P.E(`(()=>{ const s=uStore(); s.churches['ch-c']={id:'ch-c',name:'Pottstown SDA',address:'1 High St, Pottstown, PA 19464',capacity:{},members:[],linked:[],drafts:[],selected:[],overrides:{},share:{}}; uPersist(); chcRender(); })()`); await sleep(20);
-  c('three columns; Pottstown: "Open its survey once…" and a button', [P.qa('#chc section[aria-labelledby="chc-hood"] thead th b').length,/Open its survey once to include its neighborhood\./.test(P.txt('#chc section[aria-labelledby="chc-hood"]')),!!P.q('#chc [data-chc-open="ch-c"]')], [3,true,true]);
+  // v10.69.1 (stale, not a regression): the pastor (12 Oct 2026), "I don't think we need the neighborhoods what stands out just the churches, spiritual gifts plans digital footprint": no neighborhoods, so no "Open its survey once…" and its button
+  c('three columns, nothing asked of Pottstown\'s survey', [P.qa('#chc section[aria-labelledby="chc-church"] thead th b').length,/Open its survey/.test(P.txt('#chc')),!!P.q('#chc [data-chc-open]')], [3,false,false]);
   // v10.61.0 (the audit, "symmetry … everything in its right place"): a church not filled in says so once, on its first row, then "—"
   c('…its church figures say "Not filled in yet" once (its first row), then "—"', [(()=>{ const tr=P.q('#chc section[aria-labelledby="chc-church"] tbody tr'); const td=tr&&tr.querySelectorAll('td')[2]; return td?td.textContent.replace(/\s+/g,' ').trim():null; })(),row('church','Volunteers')[2]], ['Not filled in yet','—']);
-  P.q('#chc [data-chc-open="ch-c"]').click(); await sleep(40);
-  c('…the button opens that church\'s survey', [P.E('uStore().active'),P.E('TOOL'),!!P.q('#chc')&&P.q('#chc').hidden], ['ch-c','survey',true]);
 
   console.log('\n-- the main menu: a sixth tool, 3 + 3 --');
   P.E('showHub()'); await sleep(30);
   // v10.57.1: the order (the pastor: "compare your churches on the bottom left"); the stamps read as "the six agree"
   c('six tools, the sixth Compare your churches', P.qa('#hub .tools .tool').map(b=>b.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
-  c('…its name, line and button', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare your churches','Your churches side by side: needs, people and gifts.','Compare churches']);
+  c('…its name, line and button', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare your churches','Your churches side by side: people, gifts and plans.','Compare churches']);   // v10.69.1 (stale, not a regression): the pastor (12 Oct 2026), "I don't think we need the neighborhoods what stands out just the churches, spiritual gifts plans digital footprint": the tile's line
   P.q('#hub .tool[data-tool="churches"]').click(); await sleep(40);
-  c('…opens the comparison', [P.E('TOOL'),P.q('#chc').hidden,P.qa('#chc .chc-sec').length], ['churches',false,5]);
+  c('…opens the comparison', [P.E('TOOL'),P.q('#chc').hidden,P.qa('#chc .chc-sec').length], ['churches',false,4]);   // v10.69.1 (stale): four parts
   P.E('showHub()'); await sleep(20);
   c('the main menu closes it', [P.q('#chc').hidden,P.q('#chc').innerHTML], [true,'']);
   P.E(`openTool('survey')`); await sleep(20);
@@ -149,9 +148,9 @@ await T.sec(async()=>{
   await twoChurches(P);
   c('the chip\'s title, the sheet', [P.q('#chbtn')&&P.q('#chbtn').title,(P.q('#chbtn').click(),P.txt('#ch-t')),P.txt('#ch-sheet [data-ch-cmp]'),P.txt('#ch-sheet [data-ch-add]')], ['Sus iglesias','Sus iglesias','Compare sus iglesias','+ Añadir una iglesia']);
   P.q('#ch-sheet [data-ch-cmp]').click(); await sleep(60);
-  c('the comparison in Spanish', [P.txt('#chc h1'),P.qa('#chc .chc-sec h2').map(h=>h.textContent)], ['Compare sus iglesias',['Lo que se destaca','Los vecindarios','Las iglesias','Dones espirituales','Los planes']]);
-  c('…its rows and a sentence', [!!P.qa('#chc tbody th').find(t=>t.textContent==='Bajo la línea de pobreza'),P.qa('#chc .chc-so li').map(l=>l.textContent).includes('Ninguna iglesia tiene todavía resultados de Dones espirituales.')], [true,true]);
+  c('the comparison in Spanish', [P.txt('#chc h1'),P.qa('#chc .chc-sec h2').map(h=>h.textContent)], ['Compare sus iglesias',['Lo que se destaca','Las iglesias','Dones espirituales','Los planes']]);   // v10.69.1 (stale): no neighborhoods
+  c('…its rows and a sentence', [!!P.qa('#chc tbody th').find(t=>t.textContent==='Voluntarios'),P.qa('#chc .chc-so li').map(l=>l.textContent).includes('Ninguna iglesia tiene todavía resultados de Dones espirituales.')], [true,true]);
   P.E('showHub()'); await sleep(30);
-  c('the main menu\'s tile', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare sus iglesias','Sus iglesias lado a lado: necesidades, gente y dones.','Comparar iglesias']);
+  c('the main menu\'s tile', [P.txt('#hub .tool[data-tool="churches"] b'),P.txt('#hub .tool[data-tool="churches"] .td'),P.txt('#hub .tool[data-tool="churches"] .tgo')], ['Compare sus iglesias','Sus iglesias lado a lado: gente, dones y planes.','Comparar iglesias']);   // v10.69.1 (stale): the tile's line
   c('no page errors', P.errs, []);
 }); T.done(); })();
