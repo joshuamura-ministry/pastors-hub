@@ -93,9 +93,9 @@ netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's wor
 netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
 netlify/functions/places.mjs         (v10.69.0, places-1.0) the church box's suggestions: the conference's Adventist directory (Digital footprint's findings), then
                                Google's place search (Autocomplete, Place Details), for registered pastors; AC_MONTH_MAX / PD_MONTH_MAX
-netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.0) the lock behind every Claude feature: the passphrase, or a guest code (TERRAIN_AI_GUESTS)
-                               on its own registration (the token's id = the id kept for the code's email); advise.mjs and digital.mjs import
-                               `passCheck`; its own GET says only `{ok, fn}`
+netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.2 since v10.70.0) the lock behind every Claude feature: the passphrase, a tester code he made
+                               in Terrain (t/<sha256> in terrain-registrations, kept by the first registration that uses it), or a guest code
+                               (TERRAIN_AI_GUESTS) on its own registration; advise.mjs and digital.mjs import `passCheck`; its own GET says only `{ok, fn}`
 netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
@@ -185,7 +185,7 @@ values are never in the repo):
 |---|---|---|
 | `ANTHROPIC_API_KEY` | advise.mjs | Anthropic **platform** key (console.anthropic.com), billed per use. Not a claude.ai subscription. |
 | `TERRAIN_AI_PASS` | advise.mjs | Optional passphrase. The pastor unlocks a device once with `?ideas=PASSPHRASE` (v10.41; the old `?ai=` still works, and the page shows only `?ideas=`). |
-| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does, or (v10.63.1) types it in the header's Tester code box; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. |
+| `TERRAIN_AI_GUESTS` | guest-pass.mjs (asked by advise.mjs, digital.mjs) | (v10.62.2, secret) Optional guest codes: one a line (or commas between them), `email=code`, a code of 12 characters or more that he makes up. A guest unlocks a device once with `?ideas=CODE`, as he does, or (v10.63.1) types it in the header's Tester code box; the code works only on a device registered (or signed in) with that email, so a link passed on stays locked. Needs `TERRAIN_REG_SECRET`. Removing the line (then a deploy) ends that guest's access. Since v10.70.0 he makes tester codes in Terrain instead (no variable, no deploy); this one still works, in any capitals. |
 | `ADVISE_MODEL` | advise.mjs | Optional. Defaults to `claude-opus-5-5`. Set `claude-sonnet-5` if Opus hits the 60 s function limit. |
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
@@ -223,6 +223,38 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.70.0 (14 Oct 2026, full lane) — Tester codes made in Terrain; a code that does not work is never kept.** His leader's guest code,
+written in Netlify, did not work (the Production value held the example address from the instructions). The pastor: *"Why is this so
+difficult when say if anybody registers they set it up for free and they just put in a code but does it have to be tied to their email?"*,
+then *"yes build those codes"*.
+- **The server** (`guest-pass.mjs`, **guest-pass-1.2**): on his own device (his passphrase in `x-terrain-pass`) POST `{op: make | list | off | on |
+  delete}`. A code is two words and four digits ("cedar-river-4821", `makeCode`: crypto's `randomInt` over `WORDS`), kept at
+  `t/<sha256 of its letters and digits>` in `terrain-registrations` with his note of who it is for (60 characters, plain words). The first
+  registration that checks it (POST `{code, who}` with its token: `appClaim`, conditional write) keeps it (`reg`, `used`, `who` = the name and
+  church its page sends, plain words); after that it unlocks for that registration only (`unlockOf` → 'guest'), matched by its letters and
+  digits (`canon`: any capitals, spaces or hyphens); anyone else is told `why: 'taken'`, a code turned off `why: 'off'` (a code that does not
+  exist: no why). Off locks it at once; only a code that is off may be deleted. 50 codes on at most (`APP_MAX`). Wrong passphrases on these ops:
+  12 an hour from one connection (`adminCounter`, the same hourly `g/code/` counters gifts-sweep removes); the right one is never counted.
+  The check's answer gains `kind` ('pass' | 'guest') and `keep` (a tester code as written). TERRAIN_AI_GUESTS still works, now in any capitals.
+- **The page:** the header's key button on his own device (the kept code is his passphrase: `aiOwner`, from `terrain-ai-kind`) is **Tester
+  codes** (`#codebtn[data-own]`, "Make tester codes"): a sheet (`cdsOpen`, `CDS`, `cdsDraw`, `cdsRowHTML`, `cdsAct`, `cdsMake`, `cdsCopy`,
+  `cdsMessage`) to make a code (Who is it for?), shown large with **Copy the code** and **Copy a message to send** ("Your Terrain tester code is
+  … Open terrain.church and register, then tap "Tester code" at the top and type the code. It works for you only."), and his codes: Not used yet
+  · made {date} / Used by {name} · {church} · {date} / Off; Copy (the message), Turn off, Turn on, Delete (two taps, only when off). A tester's
+  device shows no key button. **The kept code is checked** (`aiVerify`, `aiVerifySoon`: at start when a registration token is kept, after the
+  registration check, and when registering or signing in ends; once a day, `terrain-ai-kind` {k, f: the code's fingerprint `aiFp`, at}): one that
+  unlocks nothing is dropped, so "Tester code" comes back (before, a wrong code from a `?ideas=` link was kept for good and hid the button); a
+  code from a link that did not work opens the box with "The code in your link did not work. Type the code here to try again." (`AI_FROM_LINK`).
+  The box takes a code typed with spaces or capitals and says why one did not work (taken, off, else "Check it with the person who gave it to
+  you."). The privacy policy says the code's maker sees the user's name and church beside it (effective 14 October 2026).
+- Tests: `v70-tester-codes` (server, 42) and `v70-tester-codes-ui` (page, 28), both failing first on v10.69.1 (`v84/logs/ff-v70-*.log`); updated with
+  comments: v63-1-code-box (the words, spaces, guest-pass-1.2), v62-2-guest-pass (guest-pass-1.2), v62-1-privacy (the date), connect-client (a 30th `memberLink()` guard site, the daily check). Full suite: 188 suites · 11,731 passed · 0 failed
+  (the full run 11,730 and that one stale count, updated with a comment and rerun: 88). Checked in Chrome against guest-pass.mjs itself (`v84/shots70.mjs`,
+  `v84/serve70.mjs`): his computer at 1366 and phone at 390, EN + ES; codes made, kept by a tester, refused as taken, unlocked when typed as words,
+  turned off; a bad link; no sideways scroll, no page errors. Samples `Terrain-v10.70.0-samples`.
+- Verify after deploy: `/.netlify/functions/guest-pass` → `"fn":"guest-pass-1.2"`. On his phone: the key button says Tester codes; make one; on
+  another phone, register and type it.
 
 **v10.69.1 (12 Oct 2026, quick lane) — Compare your churches without the neighborhoods.** The pastor: *"I'm just wondering in compare churches
 why the neighborhood survey is there? What stands out may be a comparison of churches is OK and spiritual gifts comparison and I guess you can
@@ -3512,6 +3544,9 @@ Don't relitigate them without a reason he'd accept.
 - **The Planner fits the time left** (v10.65.0, his words: "it has to adjust … the main things to get ready"): a short runway changes
   what the plan asks, not only its dates; the follow-up carries what the preparation could not. Revival meetings prepare members for
   evangelism: every member serving, every member who has drifted and every former Adventist visited.
+- **Tester codes are made in Terrain** (v10.70.0, his words: "does it have to be tied to their email?"): he makes a code on his own device and
+  gives it to anyone; the first registration to use it keeps it; he sees who used each and turns one off. No Netlify variable, no redeploy.
+  A code kept on a device is checked, and one that does not work is dropped, never kept silently.
 - **The church box knows the church** (v10.69.0, his words: "it actually knows what church I'm talking about"): the conference's Adventist
   directory first, Google's place search for the rest; picking one maps it and keeps its name. Nothing typed is kept.
 - **The app icon is a church lit on a hill** (v10.68.0): the map's open lines below it in the tools' colours, never rings round a point. Every

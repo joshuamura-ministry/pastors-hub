@@ -90,8 +90,8 @@ if (G) {
   c('nothing it does is logged (no code, email or id ever in a log)', logs.filter(l => /Sample-Guest|director|DirectorId/i.test(l)).length, 0);
   const res = await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass'));
   const gj = await res.json();
-  // v10.63.1 (stale): guest-pass-1.1, with the tester code box's POST
-  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.1']);
+  // v10.63.1 (stale): guest-pass-1.1, with the tester code box's POST; v10.70.0 (stale): guest-pass-1.2, the tester codes made in Terrain
+  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.2']);
 }
 
 console.log('\n-- advise.mjs: every mode behind the lock asks guest-pass --');
