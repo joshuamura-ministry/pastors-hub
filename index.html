@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.69.1
+     TERRAIN  v10.70.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.69.1" data-theme="dark">
+<html lang="en" data-version="v10.70.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.69.1">
-<title>Community Map — Terrain v10.69.1</title>
+<meta name="terrain-version" content="v10.70.0">
+<title>Community Map — Terrain v10.70.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -3719,6 +3719,38 @@ button.cd-rowb:hover{background:var(--panel2)}
 .code-st{font-size:.9rem;color:var(--ink2)}
 .code-st.ok{color:var(--acc);font-weight:600}
 .code-st.no{color:var(--m-hardship)}
+/* v10.70.0: his tester codes */
+.cds{display:grid;gap:12px;padding:4px 18px 18px}
+.cds>.note{margin:0}
+.cds-new{display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px}
+.cds-new .u-field{flex:1 1 220px;min-width:0}
+.cds-new input{font:inherit;font-size:1rem}
+.cds-made{border:1px solid var(--acc);border-radius:12px;padding:12px 14px;display:grid;gap:8px;background:color-mix(in srgb,var(--acc) 8%,transparent)}
+.cds-mh{margin:0;font-size:.85rem;color:var(--ink2)}
+.cds-big{margin:0;font:600 1.5rem/1.25 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.02em;color:var(--ink);overflow-wrap:anywhere}
+.cds-mrow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.cds-cpst{font-size:.85rem;color:var(--acc);font-weight:600}
+.cds-copybox{font:inherit;font-size:.9rem;width:100%;box-sizing:border-box;border:1px solid var(--line2);border-radius:8px;padding:8px;background:var(--panel2);color:var(--ink)}
+.cds-h{margin:4px 0 0;font-size:1rem}
+.cds-st0:empty{display:none}
+.cds-list{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.cds-row{border:1px solid var(--line2);border-radius:12px;padding:10px 12px;display:grid;gap:4px;min-width:0}
+.cds-row.off{opacity:.72}
+.cds-top{display:flex;flex-wrap:wrap;gap:2px 12px;align-items:baseline;min-width:0}
+.cds-code{font:600 1rem ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;color:var(--ink);overflow-wrap:anywhere}
+.cds-note{color:var(--ink2);font-size:.9rem;overflow-wrap:anywhere}
+.cds-st{font-size:.85rem;color:var(--ink3)}
+.cds-acts{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.cds-acts button{font:inherit;font-size:.85rem;font-weight:600;color:var(--acc);background:none;border:1px solid var(--line2);border-radius:8px;min-height:36px;padding:0 12px;cursor:pointer;white-space:nowrap}
+.cds-acts button.arm{color:var(--m-hardship);border-color:var(--m-hardship)}
+.cds-empty{color:var(--ink3);font-size:.9rem}
+.cds-made[hidden],.cds-copybox[hidden]{display:none}
+#code-t:focus{outline:none}
+.cds-mrow .btn{flex:1 1 200px;justify-content:center;text-align:center}
+.cds-mrow{align-items:stretch}
+.cds-cpst{flex:1 1 100%}
+.cds-cpst:empty{display:none}
+@media(max-width:520px){ .cds-new .btn{flex:1 1 100%} }
 @media(max-width:560px){
   .whoami .whotxt{display:none}
   .whoami #regchange .rc-t{display:none}
@@ -5211,13 +5243,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <button class="totop tomenu" id="tomenu" hidden><span aria-hidden="true">⌂</span><span>Main menu</span></button>
   <footer>
     <div><b>TERRAIN</b> · terrain.church · <span class="madeby">Created by Joshua Mura</span> · <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a> · <a href="/terms" class="privlink" id="termslink">Terms</a> · <a href="/privacy" class="privlink" id="privlink">Privacy</a></div>
-    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.69.1</span></div>
+    <div><span id="datacred" hidden>Data: U.S. Census Bureau, ACS 5-year · </span><span id="ver">v10.70.0</span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.69.1';
+const VERSION = 'v10.70.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10450,6 +10482,40 @@ function drawGen(bi){
 /* ---- AI planner (optional; only appears when a key is set server-side) ---- */
 let AI_INFO=null;
 const aiPass=()=>localStorage.getItem('terrain-ai-pass')||'';
+/* v10.70.0 — the pastor (14 Oct 2026), after his leader's code did not work: "Why is this so difficult … does it have to be tied to their
+   email?", then "yes build those codes". A code kept on this device is checked against guest-pass once a day (with this registration):
+   what it is ('pass' his passphrase, 'guest' a tester's) is kept beside it, so his own device shows "Tester codes"; a code that unlocks
+   nothing is dropped, so the "Tester code" button comes back (before, a wrong code from a ?ideas= link was kept for good and hid the
+   button). A code from a link that did not work opens the box and says so. */
+const AI_KIND_KEY='terrain-ai-kind';
+let AI_FROM_LINK=false, AI_VERIFY=null;
+function aiFp(v){ let h=5381; for(const ch of String(v||'')) h=((h<<5)+h+ch.charCodeAt(0))|0; return (h>>>0).toString(36); }
+function aiKind(){ try{ const k=JSON.parse(localStorage.getItem(AI_KIND_KEY)||'null'); return k&&typeof k==='object'&&k.f===aiFp(aiPass())?k:null; }catch(e){ return null; } }
+function aiKindSet(k){ try{ localStorage.setItem(AI_KIND_KEY,JSON.stringify({k,f:aiFp(aiPass()),at:Date.now()})); }catch(e){} }
+function aiOwner(){ try{ const k=aiKind(); return !!(aiPass()&&k&&k.k==='pass'); }catch(e){ return false; } }
+function aiWho(){ try{ const r=regGet(); return r?{name:String(r.name||'').slice(0,80),church:String(r.church||'').slice(0,80)}:null; }catch(e){ return null; } }
+function aiVerifySoon(){ setTimeout(()=>{ aiVerify().catch(()=>{}); },0); }
+async function aiVerify(force){
+  if(AI_VERIFY) return AI_VERIFY;
+  const code=aiPass(); if(!code) return;
+  try{ if(memberLink()) return; }catch(e){ return; }
+  const tok=typeof regTok==='function'?regTok():''; if(!tok) return;       // a tester's code needs the registration: keep it until there is one
+  const k=aiKind(); if(!force&&k&&Date.now()-(k.at||0)<864e5) return;     // checked within the day
+  AI_VERIFY=(async()=>{
+    let r=null, j=null;
+    try{ r=await fetch('/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json','x-terrain-reg':tok},body:JSON.stringify({code,who:aiWho()}),signal:AbortSignal.timeout(15000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    if(!r||r.status!==200||!j||!j.ok) return;                              // the server could not say: kept, asked again next visit
+    if(aiPass()!==code) return;                                            // changed meanwhile
+    if(j.open){ aiKindSet('open'); return; }
+    if(j.unlocked){ if(typeof j.keep==='string'&&j.keep&&j.keep!==code){ try{ localStorage.setItem('terrain-ai-pass',j.keep); }catch(e){} }
+      aiKindSet(j.kind==='pass'?'pass':'guest'); try{ showWho(); }catch(e){} return; }
+    const fromLink=AI_FROM_LINK; AI_FROM_LINK=false;
+    try{ localStorage.removeItem('terrain-ai-pass'); localStorage.removeItem(AI_KIND_KEY); }catch(e){}
+    try{ showWho(); }catch(e){}
+    if(fromLink) codeOpen({bad:true});
+  })().finally(()=>{ AI_VERIFY=null; });
+  return AI_VERIFY;
+}
 /* Unlock once per device with ?ideas=YOURPASSPHRASE (or the older ?ai=) on the end of the address.
    The passphrase is then remembered here and stripped out of the URL, so it does
    not sit in the address bar, in a screenshot, or in a shared link. */
@@ -10460,6 +10526,8 @@ function aiClaimPass(){
   const given=q.get('ideas')||h.get('ideas')||q.get('ai')||h.get('ai');
   if(given){
     localStorage.setItem('terrain-ai-pass',given.trim());
+    try{ localStorage.removeItem(AI_KIND_KEY); }catch(e){}
+    AI_FROM_LINK=true;   // v10.70.0: checked once the registration is known; a code that does not work opens the box
     q.delete('ai'); h.delete('ai'); q.delete('ideas'); h.delete('ideas');
     const qs=q.toString(), hs=h.toString();
     history.replaceState(null,'',location.pathname+(qs?'?'+qs:'')+(hs?'#'+hs:''));
@@ -10870,11 +10938,14 @@ function acctWho(){ try{ if(!gated()&&!memberLink()) showWho(); }catch(e){} }
    once; a code that works is kept as ?ideas= keeps it (terrain-ai-pass) and the page starts again with it. The link still works too. */
 const CODE_KEY='<svg class="cb-i" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="7.5" cy="15.5" r="4.5"/><path d="M10.7 12.3 20 3M16 7l3 3M14 9l2 2"/></svg>';
 function codeBtnHTML(){
-  try{ if(memberLink()||aiPass()) return ''; }catch(e){ return ''; }
-  const t=L('Tester code','Código de prueba');
-  return `<button type="button" id="codebtn" title="${esc(L('Enter a tester code','Escribir un código de prueba'))}" aria-label="${esc(L('Enter a tester code','Escribir un código de prueba'))}">${CODE_KEY}<span class="cb-t">${esc(t)}</span></button>`;
+  let own=false;
+  try{ if(memberLink()) return ''; own=aiOwner(); if(aiPass()&&!own) return ''; }catch(e){ return ''; }
+  // v10.70.0: on his own device (his passphrase) the same key makes tester codes
+  const t=own?L('Tester codes','Códigos de prueba'):L('Tester code','Código de prueba');
+  const a=own?L('Make tester codes','Crear códigos de prueba'):L('Enter a tester code','Escribir un código de prueba');
+  return `<button type="button" id="codebtn"${own?' data-own="1"':''} title="${esc(a)}" aria-label="${esc(a)}">${CODE_KEY}<span class="cb-t">${esc(t)}</span></button>`;
 }
-function codeOpen(){
+function codeOpen(o){
   const d=$('code-sheet'); if(!d) return;
   d.innerHTML=`<div class="ns-sh"><div class="ns-shtop"><h2 id="code-t" tabindex="-1">${esc(L('Tester code','Código de prueba'))}</h2><button type="button" class="ns-x" data-code-x aria-label="${esc(L('Close','Cerrar'))}">✕</button></div>
     <form class="code-f" novalidate><p class="note">${esc(L('If you were given a tester code, type it here. It unlocks the deeper study features on this device, for your registration.','Si recibió un código de prueba, escríbalo aquí. Abre las funciones de estudio más profundas en este dispositivo, para su registro.'))}</p>
@@ -10885,24 +10956,122 @@ function codeOpen(){
   d.querySelector('form').onsubmit=e=>{ e.preventDefault(); codeCheck(d); };
   try{ d.showModal(); }catch(e){ d.setAttribute('open',''); }
   const i=d.querySelector('input'); if(i) try{ i.focus(); }catch(e){}
+  if(o&&o.bad===true){ const st=d.querySelector('.code-st'); if(st){ st.textContent=L('The code in your link did not work. Type the code here to try again.','El código de su enlace no funcionó. Escríbalo aquí para intentarlo de nuevo.'); st.className='code-st no'; } }
 }
 function codeClose(){ const d=$('code-sheet'); if(!d) return; try{ d.close(); }catch(e){ d.removeAttribute('open'); } }
 async function codeCheck(d){
   const inp=d.querySelector('input'), st=d.querySelector('.code-st'), btn=d.querySelector('button[type=submit]');
   const code=String(inp.value||'').trim();
   const say=(t,k)=>{ st.textContent=t; st.className='code-st'+(k?' '+k:''); };
-  if(!code||/[\s<>]/.test(code)){ say(L('Please type the code exactly as you received it, without spaces.','Escriba el código tal como lo recibió, sin espacios.'),'no'); return; }
+  if(!code||/[<>]/.test(code)){ say(L('Please type the code exactly as you received it.','Escriba el código tal como lo recibió.'),'no'); return; }
   btn.disabled=true; say(L('Checking…','Comprobando…'));
   let r=null, j=null;
-  try{ const tok=typeof regTok==='function'?regTok():''; r=await fetch('/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({code}),signal:AbortSignal.timeout(15000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+  try{ const tok=typeof regTok==='function'?regTok():''; r=await fetch('/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({code,who:aiWho()}),signal:AbortSignal.timeout(15000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
   btn.disabled=false;
   if(r&&r.status===429){ say(L('Too many tries. Please wait an hour and try again.','Demasiados intentos. Espere una hora e inténtelo de nuevo.'),'no'); return; }
   if(!r||!j||!j.ok){ say(L('The code could not be checked just now. Please try again.','No se pudo comprobar el código ahora. Inténtelo de nuevo.'),'no'); return; }
   if(j.open){ say(L('Everything is already open: no code is needed.','Todo ya está abierto: no hace falta un código.'),'ok'); return; }
-  if(!j.unlocked){ say(L('That code did not work. Check the code, and that you registered with the email address it was set up for.','Ese código no funcionó. Revise el código, y que se registró con el correo electrónico para el que se preparó.'),'no'); return; }
-  try{ localStorage.setItem('terrain-ai-pass',code); }catch(e){}
+  if(!j.unlocked){ say(j.why==='taken'?L('This code is already in use by someone else. Each code is for one person: ask for a new one.','Otra persona ya usa este código. Cada código es para una sola persona: pida uno nuevo.')
+    :j.why==='off'?L('This code has been turned off. Ask the person who gave it to you.','Este código fue desactivado. Pregunte a la persona que se lo dio.')
+    :L('That code did not work. Check it with the person who gave it to you.','Ese código no funcionó. Revíselo con la persona que se lo dio.'),'no'); return; }
+  try{ localStorage.setItem('terrain-ai-pass',typeof j.keep==='string'&&j.keep?j.keep:code); }catch(e){}
+  aiKindSet(j.kind==='pass'?'pass':'guest');
   say(L('Unlocked on this device.','Abierto en este dispositivo.'),'ok');
   if(!window.__codeNoReload) setTimeout(()=>{ try{ location.reload(); }catch(e){} },1200);   // the tests stay on the page
+}
+/* v10.70.0 — his tester codes, on his own device: make a code (who it is for), copy it or a ready message, see who used each, turn one
+   off, delete one that is off (two taps). guest-pass.mjs keeps them; his passphrase (this device's kept code) goes with every ask. */
+const CDS={items:null,made:null,arm:'',armT:0};
+function cdsMessage(code){ return L(`Your Terrain tester code is ${code}. Open terrain.church and register, then tap "Tester code" at the top and type the code. It works for you only.`,
+  `Su código de prueba de Terrain es ${code}. Abra terrain.church y regístrese; luego toque «Código de prueba» arriba y escriba el código. Sirve solo para usted.`); }
+async function cdsCall(body){
+  let r=null, j=null;
+  try{ r=await fetch('/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass()},body:JSON.stringify(body),signal:AbortSignal.timeout(15000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+  return {status:r?r.status:0,j:j||{}};
+}
+function cdsErr(res){
+  const c=res.j&&res.j.code;
+  return res.status===401?L('This device is not unlocked with your passphrase.','Este dispositivo no está abierto con su frase de acceso.')
+    :res.status===429?L('Too many tries. Please wait an hour and try again.','Demasiados intentos. Espere una hora e inténtelo de nuevo.')
+    :c==='full'?L('You have 50 codes turned on. Turn one off to make another.','Tiene 50 códigos activos. Desactive uno para crear otro.')
+    :L('That could not be done just now. Please try again.','No se pudo hacer ahora. Inténtelo de nuevo.');
+}
+function cdsSay(t,k){ const st=document.querySelector('#code-sheet .cds-st0'); if(st){ st.textContent=t||''; st.className='cds-st0 code-st'+(k?' '+k:''); } }
+function cdsDate(t){ try{ return new Date(t).toLocaleDateString(LANG==='es'?'es':'en-US',{day:'numeric',month:'short'}); }catch(e){ return ''; } }
+function cdsRowHTML(x){
+  const who=x.who&&(x.who.name||x.who.church)?[x.who.name,x.who.church].filter(Boolean).join(' · '):'';
+  const used=x.used?(who?`${L('Used by','Lo usa')} ${who} · ${cdsDate(x.used)}`:`${L('Used','Usado')} · ${cdsDate(x.used)}`):'';
+  const st=!x.on?L('Off','Desactivado')+(used?' · '+used:''):(used||`${L('Not used yet','Sin usar todavía')} · ${L('made','creado')} ${cdsDate(x.made)}`);
+  const b=(k,t,cls)=>`<button type="button" data-cds="${k}"${cls?` class="${cls}"`:''}>${esc(t)}</button>`;
+  const acts=x.on?(x.used?'':b('copy',L('Copy','Copiar')))+b('off',L('Turn off','Desactivar'))
+    :b('on',L('Turn on','Activar'))+(CDS.arm===x.id?b('del',L('Tap again to delete','Toque otra vez para eliminar'),'arm'):b('del',L('Delete','Eliminar')));
+  return `<li class="cds-row${x.on?'':' off'}" data-id="${esc(x.id)}"><div class="cds-top"><code class="cds-code">${esc(x.code)}</code><span class="cds-note">${esc(x.note||'')}</span></div>
+    <div class="cds-st">${esc(st)}</div><div class="cds-acts">${acts}</div></li>`;
+}
+function cdsDraw(){
+  const ul=document.querySelector('#code-sheet .cds-list'); if(!ul) return;
+  ul.innerHTML=!CDS.items?'':CDS.items.length?CDS.items.map(cdsRowHTML).join(''):`<li class="cds-empty">${esc(L('No codes yet.','Todavía no hay códigos.'))}</li>`;
+  ul.querySelectorAll('[data-cds]').forEach(bt=>{ bt.onclick=()=>{ const id=bt.closest('.cds-row').dataset.id; cdsAct(bt.dataset.cds,id,bt); }; });
+}
+async function cdsCopy(text,el,anchor){
+  const say=t=>{ if(el) el.textContent=t; };
+  try{ await navigator.clipboard.writeText(text); say(L('Copied.','Copiado.')); return; }catch(e){}
+  // the clipboard refused: show the words, selected, to copy by hand
+  const box=document.querySelector('#code-sheet .cds-copybox'); if(box){ box.hidden=false; box.value=text; try{ box.focus(); box.select(); }catch(e){} }
+  say(L('Select the words below and copy them.','Seleccione el texto de abajo y cópielo.'));
+}
+async function cdsAct(k,id,bt){
+  const x=(CDS.items||[]).find(i=>i.id===id); if(!x) return;
+  if(k==='copy'){ cdsCopy(cdsMessage(x.code),document.querySelector('#code-sheet .cds-st0')); return; }
+  if(k==='del'&&CDS.arm!==id){ CDS.arm=id; clearTimeout(CDS.armT); CDS.armT=setTimeout(()=>{ CDS.arm=''; cdsDraw(); },5000); cdsDraw(); return; }
+  CDS.arm=''; clearTimeout(CDS.armT);
+  const op=k==='del'?'delete':k;
+  if(bt) bt.disabled=true;
+  const res=await cdsCall({op,id});
+  if(res.status!==200||!res.j.ok){ cdsSay(cdsErr(res),'no'); cdsDraw(); return; }
+  cdsSay('');
+  if(op==='delete') CDS.items=CDS.items.filter(i=>i.id!==id);
+  else if(res.j.item) CDS.items=CDS.items.map(i=>i.id===id?res.j.item:i);
+  cdsDraw();
+}
+async function cdsLoad(){
+  cdsSay(L('Loading…','Cargando…'));
+  const res=await cdsCall({op:'list'});
+  if(res.status!==200||!res.j.ok||!Array.isArray(res.j.items)){ cdsSay(res.status===200?L('Your codes could not be loaded just now. Please try again.','No se pudieron cargar sus códigos. Inténtelo de nuevo.'):cdsErr(res),'no'); return; }
+  CDS.items=res.j.items; cdsSay(''); cdsDraw();
+}
+function cdsMadeHTML(x){
+  return `<p class="cds-mh">${esc(L('Your new code','Su código nuevo'))}${x.note?' · '+esc(x.note):''}</p><p class="cds-big">${esc(x.code)}</p>
+    <div class="cds-mrow"><button type="button" class="btn" data-cds-cp="code">${esc(L('Copy the code','Copiar el código'))}</button><button type="button" class="btn ghost" data-cds-cp="msg">${esc(L('Copy a message to send','Copiar un mensaje para enviar'))}</button><span class="cds-cpst" role="status" aria-live="polite"></span></div>`;
+}
+async function cdsMake(d){
+  const inp=d.querySelector('input[name=note]'), btn=d.querySelector('.cds-new button[type=submit]');
+  btn.disabled=true; cdsSay(L('Making a code…','Creando un código…'));
+  const res=await cdsCall({op:'make',note:String(inp.value||'').trim()});
+  btn.disabled=false;
+  if(res.status!==200||!res.j.ok||!res.j.item){ cdsSay(cdsErr(res),'no'); return; }
+  cdsSay(''); inp.value='';
+  const x=res.j.item; CDS.made=x; CDS.items=[x,...(CDS.items||[]).filter(i=>i.id!==x.id)]; cdsDraw();
+  const m=d.querySelector('.cds-made'); m.innerHTML=cdsMadeHTML(x); m.hidden=false;
+  m.querySelectorAll('[data-cds-cp]').forEach(b=>{ b.onclick=()=>cdsCopy(b.dataset.cdsCp==='code'?x.code:cdsMessage(x.code),m.querySelector('.cds-cpst')); });
+}
+function cdsOpen(){
+  const d=$('code-sheet'); if(!d) return;
+  CDS.items=null; CDS.made=null; CDS.arm='';
+  d.innerHTML=`<div class="ns-sh"><div class="ns-shtop"><h2 id="code-t" tabindex="-1">${esc(L('Tester codes','Códigos de prueba'))}</h2><button type="button" class="ns-x" data-code-x aria-label="${esc(L('Close','Cerrar'))}">✕</button></div>
+    <div class="cds"><p class="note">${esc(L('Make a code for someone you want to try the deeper features. Each code works for the first person who uses it.','Cree un código para alguien que quiera probar las funciones más profundas. Cada código sirve para la primera persona que lo use.'))}</p>
+      <form class="cds-new" novalidate><label class="u-field"><span>${esc(L('Who is it for?','¿Para quién es?'))}</span><input name="note" type="text" maxlength="60" autocomplete="off" placeholder="${esc(L('Elder Smith','Anciano Pérez'))}"></label><button type="submit" class="btn">${esc(L('Make a code','Crear un código'))}</button></form>
+      <div class="cds-made" hidden></div>
+      <textarea class="cds-copybox" rows="3" readonly hidden></textarea>
+      <h3 class="cds-h">${esc(L('Your codes','Sus códigos'))}</h3>
+      <p class="cds-st0 code-st" role="status" aria-live="polite"></p>
+      <ul class="cds-list"></ul></div></div>`;
+  d.querySelector('[data-code-x]').onclick=()=>codeClose();
+  d.onclick=e=>{ if(e.target===d) codeClose(); };
+  d.querySelector('form').onsubmit=e=>{ e.preventDefault(); cdsMake(d); };
+  try{ d.showModal(); }catch(e){ d.setAttribute('open',''); }
+  try{ $('code-t').focus(); }catch(e){}
+  cdsLoad();
 }
 function acctBtnHTML(){
   try{ if(memberLink()||(!acctSession()&&!acctBillingOn())) return ''; }catch(e){ return ''; }
@@ -13996,6 +14165,7 @@ function regEnter(){
   GATE=null; REG_PREV=null;
   try{ sessionStorage.removeItem(REG_DRAFT); }catch(e){}
   hideGate(); showWho(); showHub();
+  aiVerifySoon();   // v10.70.0: a code kept from a link before registering is checked now
 }
 /* Send this device's registration again and keep what comes back: after a
    visit that could not reach the server (synced:false), or when the server
@@ -14188,7 +14358,7 @@ function showWho(){
     nav.appendChild(d);
     document.getElementById('regchange').onclick=regChange;
     { const cb=document.getElementById('chbtn'); if(cb) cb.onclick=chSheetOpen; }   // v10.57.0: the church chip
-    { const kb=document.getElementById('codebtn'); if(kb) kb.onclick=codeOpen; }   // v10.63.1: the tester code
+    { const kb=document.getElementById('codebtn'); if(kb) kb.onclick=()=>kb.dataset.own?cdsOpen():codeOpen(); }   // v10.63.1: the tester code; v10.70.0: his tester codes
   }
   { const ab=document.getElementById('acctbtn'); if(ab) ab.onclick=acctOpen; }   // v10.54.0
   measureTop();
@@ -46644,12 +46814,13 @@ if(!/jsdom/i.test((navigator&&navigator.userAgent)||'')) tsSelOn();
   initTheme(); initPrintExpand();
   wireHub();
   initLang();
-  initAccess().then(()=>{ uChrome(); acctBoot(); });   // v10.54.0: accounts and plans after the registration check
+  initAccess().then(()=>{ uChrome(); acctBoot(); aiVerifySoon(); });   // v10.54.0: accounts and plans after the registration check; v10.70.0: the kept code
   measureTop();
   const tt=document.getElementById('totop');
   if(tt) tt.onclick=()=>window.scrollTo({top:0,behavior:window.scrollY>2500?'auto':'smooth'});
   { const tm=document.getElementById('tomenu'); if(tm) tm.onclick=()=>{ tm.hidden=true; showHub(); window.scrollTo({top:0,behavior:'auto'}); }; }
   aiClaimPass();
+  aiVerifySoon();   // v10.70.0: with a registration token kept, the code is checked at once (and again after the registration check, if it had none)
   if(!key()){$('setup').style.display='block';}
   // A permalink must not run itself before we know the visitor is allowed in.
   // Without this, signing out reloaded the page, the #a=... hash re-ran the

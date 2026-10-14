@@ -20,8 +20,10 @@ function withServer(P,answer){ const calls=[]; const f0=P.w.fetch;
   c('a tap opens the box: the title, one line, the field, Unlock', [d.hasAttribute('open'),P.txt('#code-t'),!!d.querySelector('input[name=code]'),P.txt('#code-sheet button[type=submit]')], [true,'Tester code',true,'Unlock']);
   let calls=withServer(P,{status:200,body:{ok:true,unlocked:false,open:false}});
   d.querySelector('input').value='Wrong-Code-Sample-1'; d.querySelector('form').dispatchEvent(new P.w.Event('submit',{cancelable:true})); await until(()=>/did not work/.test(P.txt('#code-sheet .code-st')||''));
+  // v10.70.0 (stale): codes he makes in Terrain need no email, so the words no longer send everyone back to the email ("does it have to be
+  // tied to their email?")
   c('a code that does not work: said plainly, nothing kept; the check sent the code and this registration', [P.txt('#code-sheet .code-st'),P.E("localStorage.getItem('terrain-ai-pass')"),calls[0].body.code,calls[0].reg],
-    ['That code did not work. Check the code, and that you registered with the email address it was set up for.',null,'Wrong-Code-Sample-1',TOK]);
+    ['That code did not work. Check it with the person who gave it to you.',null,'Wrong-Code-Sample-1',TOK]);
   calls=withServer(P,{status:200,body:{ok:true,unlocked:true,open:false}});
   d.querySelector('input').value='  Sample-Guest-Code-2026  '; d.querySelector('form').dispatchEvent(new P.w.Event('submit',{cancelable:true})); await until(()=>/Unlocked/.test(P.txt('#code-sheet .code-st')||''));
   c('a code that works: "Unlocked on this device", kept where the ?ideas= link keeps it (spaces trimmed)', [P.txt('#code-sheet .code-st'),P.E("localStorage.getItem('terrain-ai-pass')")], ['Unlocked on this device.','Sample-Guest-Code-2026']);
@@ -30,8 +32,9 @@ function withServer(P,answer){ const calls=[]; const f0=P.w.fetch;
   { const Q=page({store:{'terrain-reg':REGT}}); await ready(Q); Q.w.__codeNoReload=true; Q.E('showWho()'); Q.q('#codebtn').click(); await sleep(20); const D=Q.q('#code-sheet');
     withServer(Q,{status:429,body:{ok:false,code:'limit'}}); D.querySelector('input').value='Another-Try-Code-1'; D.querySelector('form').dispatchEvent(new Q.w.Event('submit',{cancelable:true})); await until(()=>/Too many/.test(Q.txt('#code-sheet .code-st')||''));
     c('too many tries: wait an hour', Q.txt('#code-sheet .code-st'), 'Too many tries. Please wait an hour and try again.');
-    D.querySelector('input').value='has a space'; D.querySelector('form').dispatchEvent(new Q.w.Event('submit',{cancelable:true})); await sleep(20);
-    c('a code with a space is not sent', Q.txt('#code-sheet .code-st'), 'Please type the code exactly as you received it, without spaces.'); }
+    // v10.70.0 (stale): a code read aloud is typed as words, so spaces are sent now (the server takes its letters and digits); markup is not
+    D.querySelector('input').value='has<markup'; D.querySelector('form').dispatchEvent(new Q.w.Event('submit',{cancelable:true})); await sleep(20);
+    c('a code with markup is not sent', Q.txt('#code-sheet .code-st'), 'Please type the code exactly as you received it.'); }
   { const S=page({lang:'es',store:{'terrain-reg':REGT}}); await ready(S); S.E('showWho()'); await sleep(60);
     c('in Spanish: "Código de prueba"', S.q('#codebtn')?S.q('#codebtn').textContent.trim():null, 'Código de prueba'); }
   { const U=page({store:{'terrain-reg':REGT,'terrain-ai-pass':'already-unlocked'}}); await ready(U); U.E('showWho()'); await sleep(60);
@@ -51,9 +54,11 @@ function withServer(P,answer){ const calls=[]; const f0=P.w.fetch;
   Object.assign(process.env,{TERRAIN_AI_PASS:'open-sesame-guest',TERRAIN_REG_SECRET:SECRET,TERRAIN_AI_GUESTS:'director.sample@example.org=Sample-Guest-Code-2026'});
   const G=await import('../netlify/functions/guest-pass.mjs');
   const post=async(code,t,ip='198.51.100.7')=>{ const r=await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass',{method:'POST',headers:{'content-type':'application/json',...(t?{'x-terrain-reg':t}:{})},body:JSON.stringify({code})}),{ip}); return [r.status,await r.json()]; };
-  c('GET: its version only', await (await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass'))).json(), {ok:true,fn:'guest-pass-1.1'});
+  // v10.70.0 (stale): guest-pass-1.2, with the tester codes he makes in Terrain
+  c('GET: its version only', await (await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass'))).json(), {ok:true,fn:'guest-pass-1.2'});
   c('the guest code on his registration: unlocked; on another: not; the passphrase: unlocked', [(await post('Sample-Guest-Code-2026',tok('DirectorId01')))[1].unlocked,(await post('Sample-Guest-Code-2026',tok('StrangerId99')))[1].unlocked,(await post('open-sesame-guest',''))[1].unlocked], [true,false,true]);
-  c('a code with a space, or none: refused before any check', [(await post('a b',''))[0],(await post('',''))[0]], [400,400]);
+  // v10.70.0 (stale): spaces inside a code are checked now (codes read aloud); markup, or nothing, is still refused before any check
+  c('a code with markup, or none: refused before any check', [(await post('a<b',''))[0],(await post('',''))[0]], [400,400]);
   for(let i=0;i<9;i++) await post('Wrong-Code-'+i,'');
   c('12 tries an hour from one connection (counted right or wrong); another connection is not held back', [(await post('Sample-Guest-Code-2026',tok('DirectorId01')))[0],(await post('Sample-Guest-Code-2026',tok('DirectorId01'),'203.0.113.5'))[1].unlocked], [429,true]);
   c('the tries are kept as hourly counters the daily sweep removes (g/code/<hour>/…)', [...store.keys()].filter(k=>/^g\/code\/\d{4}-\d{2}-\d{2}T\d{2}\/[A-Za-z0-9_-]{22}$/.test(k)).length, 2);
