@@ -20,7 +20,8 @@ const ADDR="D.geo={...D.geo,matched:'118 Bristol Rd, Warminster, PA, 18974'}";
      'Volunteers serving elsewhere','Leaders serving elsewhere','Hours given elsewhere']);
   c('…none over 28 letters, in English or in Spanish', [F.every(t=>t.length<=28),F.map(t=>P.J(`ES[${JSON.stringify(t)}]||''`)).every(t=>t&&t.length<=30)], [true,true]);
   c('…every Spanish word there', F.map(t=>P.J(`ES[${JSON.stringify(t)}]||null`)),
-    ['Miembros en los libros','Asistencia promedio del sábado','Adultos (18+) que asisten','Voluntarios dispuestos','Líderes disponibles','Horas de voluntariado al mes',
+    // v10.70.1 (the audit): "Miembros registrados" ("Miembros en los libros" was a word-for-word translation)
+    ['Miembros registrados','Asistencia promedio del sábado','Adultos (18+) que asisten','Voluntarios dispuestos','Líderes disponibles','Horas de voluntariado al mes',
      'Voluntarios ya ocupados','Líderes ya ocupados','Horas ya ocupadas']);
   P.E(`gfChurchOpen&&gfChurchOpen()`); await sleep(120);
   const step=P.q('#u-cap-form .u-panel[data-panel="0"]');

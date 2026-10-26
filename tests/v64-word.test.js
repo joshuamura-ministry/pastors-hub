@@ -50,7 +50,8 @@ const days=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
 
   console.log('\n-- the countdown, the roster, the budget, the printed plan --');
   const items=P.qa('#pout .rail li').map(txt);
-  c('the countdown: the series goes up online, the video if you can, door to door three weekends, the ads the last two weeks', [items.some(t=>/the series goes up online/.test(t)&&/the promo video is filmed by/.test(t)),items.some(t=>/^Door to door, three weekends running/.test(t)),items.some(t=>/^If your church can: Facebook and Instagram ads with the promo video/.test(t))], [true,true,true]);
+  // v10.70.1 (the audit): the video and the posts are two lines now, so each date sits in the phase that holds it (one item, two dates, straddled a phase)
+  c('the countdown: the series goes up online, the video if you can, door to door three weekends, the ads the last two weeks', [items.some(t=>/the series goes up online/.test(t))&&items.some(t=>/the promo video is filmed by/.test(t)),items.some(t=>/^Door to door, three weekends running/.test(t)),items.some(t=>/^If your church can: Facebook and Instagram ads with the promo video/.test(t))], [true,true,true]);
   const role=P.qa('#pout .rrole').find(r=>txt(r.querySelector('b'))==='Media & publicity');
   c('a Media & publicity person on the roster (not a core role: a small church may combine it)', [!!role,role&&role.classList.contains('core')], [true,false]);
   c('the budget names the banners, the video and the ads', P.qa('#pout .bud li').map(txt).some(t=>/banners and yard signs, and the promo video and social ads, if the church can/.test(t)), true);

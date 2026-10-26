@@ -224,6 +224,51 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.70.1 (26 Oct 2026, full lane) — the whole-app audit.** The pastor: *"can you do a thourogh audit of the app, from the operation making
+sure everything works and functions properly. everything is synmetrical and looks amazing"*. Done AUDIT.md's way on the made-up average
+church (`~/Ministry Work/Terrain-work/v85`): 24 screens at computer 1366, tablet 820, phone 390, computer and phone in Spanish, measured
+by `audit-measure.js` (`audit85.mjs`, served by `serve85.mjs` with guest-pass.mjs and places.mjs themselves; 115 screens, 0 page errors,
+3 faults), then 197 pictures (`tour85.mjs`) read by five reviewers (about 120 notes, sorted: real faults fixed, his choices left), then
+the parts that tour never reached (`tour85b.mjs`). Folded into PR #49 with v10.70.0 (his rule: an open PR takes the next work).
+- **Measured:** the survey's section strip showed a slice of the next chip past each arrow (the arrow stops at the strip's padding):
+  `--snpad`, `.sn-arrow.l/.r::after` cover it in the page's colour, and the arrow is solid (letters showed through it; checked in Chrome
+  with `elementFromPoint` past each arrow, five widths, EN + ES: `v85/arrows85.mjs`); an opened need's four figure circles sat three and
+  one on a tablet (`.ns-figs` is a container: four sit 2 × 2 under 876 px, three one under another under 654); the idea sheet's buttons
+  one a row on a phone ("Create a proposal for this ministry" broke beside the PDF); "Enviar la encuesta de dones" (the Spanish button was
+  wider than its box and pushed the phone page sideways).
+- **The Planner:** `planByDate`: every dated item sits in the phase whose dates hold it (517 dates across the tiers sat in the phase before:
+  handbills given out, the Sabbaths, the fourth letter, door to door); the three Sabbaths and three weekends are split, each phase naming
+  its own days; a deadline is its phase's last day; a date already past stays where it was written. The meetings' gift line comes from
+  `giftMarks` (a 15-night series: gift book at 6, Bible at 11, picture at 14; it said 18 and 24), and tier names keep "Bible" (`giftLow`).
+  `planPreregWhy` (the goal said "half the hall (100 of 200 seats), raised for churn" under 293), `planRolesSub` ("25 roles to lead, 25
+  leaders: one for each role"), `planRosterHint` (the roster's count says what it counts, so it agrees with the card), "the Bible
+  workers' own studies", "a few numbers and a date", door to door from the Friday before the first of three Sabbaths to the Sunday after
+  the last (it covered two weekends), and every stat card's "·" kept with the words after it.
+- **The survey, Compare your churches, Digital footprint, the directory:** `chFacts`: a figure a church never gave is "—" and never enters
+  What stands out (a church never filled in showed 0 leaders and 0 rooms, and was compared on them); a zero draws no bar; skills leave out
+  "Free in the daytime" and are lower case after the first; `dfAgo` ("Last video today", "1 day ago"); the "·" travels with what follows
+  (`.df-tw`, `.statso`, the footer's `.fkeep`); "We could not match your churches in the official list…" (`noOwn` read as a contradiction);
+  `dfPagesWord` (Spanish page names); the footer's data line in Spanish; `lvShow` (the Spanish page says "Sección censal", as `gfAreaName`
+  does; the CSV and file names keep the Census's names); the directory's line under its title two sentences; "Miembros registrados"
+  everywhere; the Economy donut leaves its middle empty without an employed count (it printed the shares' sum, "100"); `congAdhHTML` (the
+  county link the intro promises when no list draws); US spelling ("Colored … gray", "call", "honor") and a sweep of 125 words (neighbor,
+  program, organize, center, behavior) through the survey, Spiritual Gifts, the first-time card and Digital footprint. **Make the Case keeps
+  its British spellings** (about 94 strings) until its golden file (`v43-ongoing-golden`) is re-written in a pass of its own.
+- **Learn from other conferences:** `CMP_NB`, `CMP_DASH`, `CMP_TO` (a date or a range never breaks: "(16–17 / Jan)", "26 Oct / 2026"),
+  `CMP_SEP` and `cU` (every " · " of the tool travels with what follows), the At a glance badge keeps "grade B+", "· 76 events", "past
+  year" whole, "center", "judgment", "canceled", "About the same as most", `cmpSingle` keeps a value off the dashed typical line (2.23 and
+  24.1 sat on it), `cmpNypL` (a month holding the conference's own dates says "1 date known; calendar not published yet"), and a tentative
+  date is "to be confirmed" like the others (`tg_t` gone).
+- **Left as they are (his decisions, or his to decide):** the floating Main menu beside the header's (his v10.47.1 request); pills in
+  Digital footprint's table on two lines (v10.63.0: nothing cut off); "+22% vs county" (percentage points); a figure's two names (his
+  v10.61.1 "skip four"); the Planner in English; a lone card stretched across its row (`TS_NOLONE`); the Ellen White quote on the Spanish main
+  menu (no verified Spanish text on hand); the conferences page's 3 + 2 grids; British words in Make the Case.
+- Tests: `v70-1-audit` (15), `v70-1-audit-planner` (37), `v70-1-audit-survey` (47), `v70-1-audit-conferences` (36), each failing first on
+  v10.70.0 (`v85/ff-*.log`); updated with comments: conferences-view, v63-conference-brief (no-break spaces in dates, "About the same as
+  most"), v64-word (the video and the posts are two lines), case-screens, case-review39, home-church, gifts-sections, v42-sunday, v61-audit
+  (spelling), v60-1-symmetry ("Miembros registrados"). Full suite: 192 suites · 11,866 passed · 0 failed (v10.70.0 before the audit:
+  188 · 11,731).
+
 **v10.70.0 (14 Oct 2026, full lane) — Tester codes made in Terrain; a code that does not work is never kept.** His leader's guest code,
 written in Netlify, did not work (the Production value held the example address from the instructions). The pastor: *"Why is this so
 difficult when say if anybody registers they set it up for free and they just put in a code but does it have to be tied to their email?"*,

@@ -67,7 +67,8 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
       [8,'Evangelism,Pastors,Discipleship,Family,Youth,Pathfinders,Health,Schools']);
     c('Pennsylvania: evangelism less than most, health none published, family and Pathfinders more than most, the rest as most', st.join(','), 'less,typ,typ,more,typ,more,none,typ');
     c('the typical conference as a dashed ring; a key; how to read it', [!!P.q('#cmp-brief .cmp-rtyp'),P.qa('#cmp-brief .cmp-rk').map(k=>k.textContent).join(' | '),/twice as much or more/.test(P.txt('#cmp-brief .cmp-rhow'))],
-      [true,'More than most | About as most | Less than most | None published | Dashed ring: the typical conference',true]);
+      // v10.70.1 (the audit): "About as most" is not English: "About the same as most"
+      [true,'More than most | About the same as most | Less than most | None published | Dashed ring: the typical conference',true]);
     const lab=P.q('#cmp-brief .cmp-radar-svg').getAttribute('aria-label');
     c('a screen reader hears what it shows', [/More than most: Family, women & men, Pathfinders & children/.test(lab),/Less than most: Evangelism & outreach/.test(lab),/None published: Health & community service/.test(lab)], [true,true,true]);
     c('an area\'s place: Pathfinders (34% against 20.6%) beyond the dashed ring; health at the centre', P.E(`(()=>{ const sv=document.querySelector('#cmp-brief .cmp-radar-svg'), d=[...sv.querySelectorAll('circle.cmp-rd')], dist=e=>Math.hypot(+e.getAttribute('cx')-175,+e.getAttribute('cy')-131); return [dist(d[5])>43,dist(d[6])<0.5,Math.abs(dist(d[1])-43*${PA.lenses.pastoral.share}/${base.pastoral})<0.2]; })()`), [true,true,true]);
@@ -91,12 +92,14 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
     const rows=[...boxes[0].querySelectorAll('.cmp-mrow')].map(r=>[r.querySelector('.cmp-mlens').textContent,r.querySelector('.cmp-rst').textContent,r.querySelector('.cmp-mw').textContent,r.querySelector('.s').textContent]);
     c('each area the mission names: its words, where the calendar stands, the count against the typical share', rows,
       [['Evangelism & outreach','Less than most','“share the everlasting gospel”','1 event, 2.1% of the calendar (most: 6.3%)'],
-       ['Prayer & discipleship','About as most','“make disciples”',`4 events, 8.5% of the calendar (most: ${base.discipleship}%)`]]);
+       // v10.70.1 (the audit): "About the same as most"
+       ['Prayer & discipleship','About the same as most','“make disciples”',`4 events, 8.5% of the calendar (most: ${base.discipleship}%)`]]);
     c('a bar for each, the typical share marked on it', [boxes[0].querySelectorAll('.cmp-mbar').length,boxes[0].querySelectorAll('.cmp-mtyp').length], [2,2]);
     c('how many it makes room for, and his question when they part', [boxes[0].querySelector('.cmp-msum').textContent,boxes[0].querySelector('.cmp-mask').textContent],
       ['The calendar gives as much room as most conferences, or more, to 1 of the 2 areas its mission names.','Where they part, it is worth asking: should the calendar change, or the statement?']);
     c('what the calendar gives more room to that the mission does not name', /More than most on the calendar, though the mission does not name it: family, women & men and Pathfinders & children\./.test(boxes[0].textContent), true);
-    c('a conference with none found: said plainly, never "has none"', [boxes[1].querySelector('h4').textContent,boxes[1].querySelector('.note').textContent], ['Ohio','We could not find a mission statement on Ohio’s website (checked 9 Oct 2026).']);
+    // v10.70.1 (the audit): a date never breaks (no-break spaces)
+    c('a conference with none found: said plainly, never "has none"', [boxes[1].querySelector('h4').textContent,boxes[1].querySelector('.note').textContent], ['Ohio','We could not find a mission statement on Ohio’s website (checked 9\u00A0Oct\u00A02026).']);
     c('the sources name where the missions come from', /Mission statements: each conference’s own website/.test(P.txt('#cmp-sources')), true);
     c('no "AI" anywhere in the two frames', BAD.test(readable(P.q('#cmp-brief'))+readable(P.q('#cmp-mission'))), false);
     c('no page errors', P.errs, []);
