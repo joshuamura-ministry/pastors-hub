@@ -270,6 +270,14 @@ the parts that tour never reached (`tour85b.mjs`). Folded into PR #49 with v10.7
   `planKeep`, `pDateNb`, `planRange` (a range breaks only at its dash); `cmpKeepDates` (a published date in a resource card stays whole) and
   "12 months", "115 congregations" whole; `h1,h2,h3,h4{text-wrap:balance}` app-wide (no heading leaves one word alone; it never adds a line)
   and the Resources tabs' labels.
+- **The third look** (the second round's pictures, three more reviewers): `planKeepH` (the countdown's own sentences keep a number with its
+  word and a month with its day, outside any tag; a clause after a comma may start a line) and the plan's heading keeps its "·" with the
+  words after it; title lines that are not headings balance too (`.phase .pt b`, every `summary`, `.cs-samplel`, `.cmp-mghead`); an opened
+  ministry never leaves the next one alone (`TS_NOLONE` += `.cmp-mglist`, and `flip` asks `tsNoLoneSoon`: a class change adds no element);
+  the circle chart names the area as its card does ("Reaching out" / "Alcance", was "Ways in" / "Puertas") and draws a long side label in two
+  lines (it ran off the chart's edge); "the phone number"; Spanish "Leer de nuevo" (Check again) apart from "Revisar a fondo otra vez"
+  (Review again); the report's heading keeps "Seventh‑day" whole; "Consulte … y acuerde"; the directory's Save and Load two equal halves on a
+  phone, the note under them.
 - **Left as they are (his decisions, or his to decide):** the floating Main menu beside the header's (his v10.47.1 request); pills in
   Digital footprint's table on two lines (v10.63.0: nothing cut off); "+22% vs county" (percentage points); a figure's two names (his
   v10.61.1 "skip four"); the Planner in English; a lone card stretched across its row (`TS_NOLONE`); the Ellen White quote on the Spanish main
@@ -278,11 +286,12 @@ the parts that tour never reached (`tour85b.mjs`). Folded into PR #49 with v10.7
   status lines stay English on the Spanish page (as v10.58.0 chose); Acts 17:26's Spanish reads "los términos de los habitación de ellos"
   exactly as Bible Gateway's RVA prints it (his to decide, with the two verses of the v10.44 review).
 - Tests: `v70-1-audit` (15), `v70-1-audit-planner` (37), `v70-1-audit-survey` (47), `v70-1-audit-conferences` (36), each failing first on
-  v10.70.0, and the second look's `v70-1-audit-r2a` (35) and `v70-1-audit-r2b` (44), failing first on the first round's commit
-  (`v85/ff-*.log`); updated with comments: conferences-view, v63-conference-brief (no-break spaces in dates, "About the same as most"),
+  v10.70.0, the second look's `v70-1-audit-r2a` (35) and `v70-1-audit-r2b` (44), failing first on the first round's commit, and the
+  third look's `v70-1-audit-r3` (19), failing first on the second's (`v85/ff-*.log`); updated with comments: conferences-view, v63-conference-brief (no-break spaces in dates, "About the same as most"),
   v64-word (the video and the posts are two lines), case-screens, case-review39, home-church, gifts-sections, v42-sunday, v61-audit
   (spelling), v60-1-symmetry ("Miembros registrados"), v66-speaker (the speaker line starts now), v58-resources (a date kept whole),
-  v60-digital (the town line's span), v45-needs (its hash reads "mediana" back as "media"). Full suite: 194 suites · 11,945 passed · 0 failed (after the first round
+  v60-digital (the town line's span), v45-needs (its hash reads "mediana" back as "media"), v61-digital-depth ("Reaching out" /
+  "Alcance"), v62-digital-bar ("the phone number", "Revisar a fondo otra vez"), v65-revival (the heading read as words). Full suite: 194 suites · 11,945 passed · 0 failed (after the first round
   192 · 11,866; v10.70.0 before the audit: 188 · 11,731).
 
 **v10.70.0 (14 Oct 2026, full lane) — Tester codes made in Terrain; a code that does not work is never kept.** His leader's guest code,

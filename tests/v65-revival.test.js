@@ -28,7 +28,8 @@ const days=(a,b)=>Math.round((new Date(a)-new Date(b))/864e5);
   c('saved as a revival: 9 nights, every night, for 150 active members and 220 on the books, $6,000, a demo', [plan.type,plan.nights,plan.perweek,plan.members,plan.books,plan.budget,plan.demo], ['revival',9,7,150,220,6000,true]);
   c('the first night a Friday about seven months out, so the whole six months shows', [new Date(D).getDay(),days(D,new Date())>=200&&days(D,new Date())<=225], [5,true]);
   // v10.66.0 (stale, not a regression): the pastor (11 Oct 2026), "the option … who will speak the pastor of the church a conference leader … or paid evangelist": the plan shows Who will speak
-  c('the page: Revival meetings, the countdown, the roster, who comes, getting the word out, the budget; no Track or Forms', [P.qa('#pout > .phead h2').map(h=>h.textContent),P.q('#pmode').hidden], [['Sample church (demo) · Revival meetings','The countdown','Who will speak','The roster','Who comes','Getting the word out','The budget'],true]);
+  // v10.70.1 (the audit, third look): the heading keeps its "·" with the words after it (a no-break space): read as words
+  c('the page: Revival meetings, the countdown, the roster, who comes, getting the word out, the budget; no Track or Forms', [P.qa('#pout > .phead h2').map(h=>h.textContent.replace(/\u00a0/g,' ')),P.q('#pmode').hidden], [['Sample church (demo) · Revival meetings','The countdown','Who will speak','The roster','Who comes','Getting the word out','The budget'],true]);
   const bench=P.qa('#pout .pbench .card').map(k=>[txt(k.querySelector('.n')),txt(k.querySelector('.l'))]);
   c('the bench: 220 members to invite, 70 to visit (on the books less active), 50 prayer bands, the roles and leaders', bench.map(b=>b[1]).slice(0,3).concat([bench[0][0],bench[1][0],bench[2][0]]), ['members to invite','members to visit','prayer bands','220','70','50']);
   const ph=P.qa('#pout .rail .pb').map(b=>[txt(b.querySelector('.pt b')),b]);
