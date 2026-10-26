@@ -259,15 +259,31 @@ the parts that tour never reached (`tour85b.mjs`). Folded into PR #49 with v10.7
   year" whole, "center", "judgment", "canceled", "About the same as most", `cmpSingle` keeps a value off the dashed typical line (2.23 and
   24.1 sat on it), `cmpNypL` (a month holding the conference's own dates says "1 date known; calendar not published yet"), and a tentative
   date is "to be confirmed" like the others (`tg_t` gone).
+- **The second look** (`tour85b.mjs`: each page to its very end, 324 pictures, six reviewers; then `tour85c.mjs`: two churches side by side, his
+  own church's footprint card, every Resources tab, a ministry opened): Digital footprint's towns (`dfTowns`, `DF_TOWN_ST`: Pennsylvania's
+  directory writes addresses without commas and the reader took a street word with the town, "Rd Hanover", "Ext York": 6 of 129 cleaned where
+  the findings arrive; "St" left out, St Marys is a town; the reader `digital-read.mjs` still cuts them so until its next versioned release),
+  `DF_KEEP` / `dfNb` / `dfDot` (a month and year, "3 days ago", "39 members" and every " · …" kept whole), Spanish "al pastor", the two plain
+  sentences of "What this can and cannot see", "Iglesias cercanas" in Spanish when no list draws, "sección censal" and "mediana / mediano"
+  (the Census's median) throughout, the directory's buttons two by two (521–800 px) or one a row (phone); the Planner's speaker line says
+  the work starts now when its deadline falls after the first phase ("Begin booking the evangelist now: confirm by Apr 28, 2027…", `spNow`),
+  `planKeep`, `pDateNb`, `planRange` (a range breaks only at its dash); `cmpKeepDates` (a published date in a resource card stays whole) and
+  "12 months", "115 congregations" whole; `h1,h2,h3,h4{text-wrap:balance}` app-wide (no heading leaves one word alone; it never adds a line)
+  and the Resources tabs' labels.
 - **Left as they are (his decisions, or his to decide):** the floating Main menu beside the header's (his v10.47.1 request); pills in
   Digital footprint's table on two lines (v10.63.0: nothing cut off); "+22% vs county" (percentage points); a figure's two names (his
   v10.61.1 "skip four"); the Planner in English; a lone card stretched across its row (`TS_NOLONE`); the Ellen White quote on the Spanish main
-  menu (no verified Spanish text on hand); the conferences page's 3 + 2 grids; British words in Make the Case.
+  menu (no verified Spanish text on hand); the conferences page's 3 + 2 grids; British words in Make the Case. **Open:** "Churches nearby"
+  with map data (`congregationsHTML`, and what each tradition teaches) is English on the Spanish page; the Resources cards' published
+  status lines stay English on the Spanish page (as v10.58.0 chose); Acts 17:26's Spanish reads "los términos de los habitación de ellos"
+  exactly as Bible Gateway's RVA prints it (his to decide, with the two verses of the v10.44 review).
 - Tests: `v70-1-audit` (15), `v70-1-audit-planner` (37), `v70-1-audit-survey` (47), `v70-1-audit-conferences` (36), each failing first on
-  v10.70.0 (`v85/ff-*.log`); updated with comments: conferences-view, v63-conference-brief (no-break spaces in dates, "About the same as
-  most"), v64-word (the video and the posts are two lines), case-screens, case-review39, home-church, gifts-sections, v42-sunday, v61-audit
-  (spelling), v60-1-symmetry ("Miembros registrados"). Full suite: 192 suites · 11,866 passed · 0 failed (v10.70.0 before the audit:
-  188 · 11,731).
+  v10.70.0, and the second look's `v70-1-audit-r2a` (35) and `v70-1-audit-r2b` (44), failing first on the first round's commit
+  (`v85/ff-*.log`); updated with comments: conferences-view, v63-conference-brief (no-break spaces in dates, "About the same as most"),
+  v64-word (the video and the posts are two lines), case-screens, case-review39, home-church, gifts-sections, v42-sunday, v61-audit
+  (spelling), v60-1-symmetry ("Miembros registrados"), v66-speaker (the speaker line starts now), v58-resources (a date kept whole),
+  v60-digital (the town line's span), v45-needs (its hash reads "mediana" back as "media"). Full suite: 194 suites · 11,945 passed · 0 failed (after the first round
+  192 · 11,866; v10.70.0 before the audit: 188 · 11,731).
 
 **v10.70.0 (14 Oct 2026, full lane) — Tester codes made in Terrain; a code that does not work is never kept.** His leader's guest code,
 written in Netlify, did not work (the Production value held the example address from the instructions). The pastor: *"Why is this so

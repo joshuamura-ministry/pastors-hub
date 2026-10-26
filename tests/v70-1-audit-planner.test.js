@@ -46,11 +46,13 @@ const rosterHint=P=>{ const h=P.qa('#pout .phead').find(x=>x.querySelector('h2')
   { const o=grp.items.find(t=>/^Order the handbills by/.test(t)), b=ph.find(x=>x.name==='Seminars and Bible studies').items.find(t=>/^The Bible workers in place by/.test(t));
     c('"Order the handbills by" falls inside its phase (it said the first day of the next)', o?dayN(dates(o)[0])<=dayN(grp.dates[1]):null, true);
     c('…and "The Bible workers in place by" inside "Seminars and Bible studies"', b?dayN(dates(b)[0])<=dayN(ph.find(x=>x.name==='Seminars and Bible studies').dates[1]):null, true); }
-  c('the demo\'s whole countdown: no day outside its phase (the opening night line, the speaker\'s booking and the leaders\' note aside)', ph.flatMap(p=>out(p,/^(Opening night fixed|Book the evangelist|Campaign coordinator)/)), []);
+  // v10.70.1 (the audit, second look): 18 months out the booking begins now and is confirmed a year ahead ("Begin booking the evangelist now: confirm by …"): its deadline sits after the phase on purpose
+  c('the demo\'s whole countdown: no day outside its phase (the opening night line, the speaker\'s booking and the leaders\' note aside)', ph.flatMap(p=>out(p,/^(Opening night fixed|Book the evangelist|Begin booking the evangelist now|Campaign coordinator)/)), []);
   // every tier, both plans: weekly from one week to 82 weeks out, every opening-night weekday
   const scan=P.J(`(()=>{
     const MONS=${JSON.stringify(MONS)}, strip=h=>String(h||'').replace(/<[^>]+>/g,''), dk=d=>{ const x=new Date(d); x.setHours(12,0,0,0); return Math.round(x.getTime()/864e5); };
-    const SPEAK=/^(Opening night fixed|Book the|Ask the conference for|Decide who will speak|Our pastor preaches)/;
+    // v10.70.1 (the audit, second look): the speaker's line may begin "Begin booking …now", its deadline after the first phase (v70-1-audit-r2b holds it)
+    const SPEAK=/^(Opening night fixed|Book the|Begin booking|Ask the conference for|Decide who will speak|Our pastor preaches)/;
     const bad=[], tiers={};
     const base={church:'X',members:150,leaders:25,workers:50,nights:15,perweek:5,seats:200,file:150,budget:25000,bw:2,kind:'both',speaker:'guest',books:220};
     for(const type of ['evangelism','revival']) for(let w=1; w<=82; w++){
@@ -111,9 +113,11 @@ const rosterHint=P=>{ const h=P.qa('#pout .phead').find(x=>x.querySelector('h2')
 
   console.log('\n-- (P7) a "·" in a stat card never ends a line alone: it travels with the words after it --');
   const sepOk=k=>!/·[ \n]/.test(k)&&!/·$/.test(k);
-  c('revival: "every home on the books · 150 active", "two to four members each · 10 small groups"', [card(P,0).raw.split('|')[0],card(P,2).raw.split('|')[0]], ['every home on the books · 150 active','two to four members each · 10 small groups']);
+  // v10.70.1 (the audit, second look): each number keeps its word too ("150\u00a0active", "10\u00a0small groups"; "· 9 / nights" on a phone)
+  c('revival: "every home on the books · 150 active", "two to four members each · 10 small groups"', [card(P,0).raw.split('|')[0],card(P,2).raw.split('|')[0]], ['every home on the books \u00b7\u00a0150\u00a0active','two to four members each \u00b7\u00a010\u00a0small groups']);
   c('…every card, every line', P.qa('#pout .pbench .card').map(k=>k.textContent).every(sepOk), true);
   P.q('#pl-clear').click(); await sleep(80); P.q('#pl-type [data-pt="evangelism"]').click(); P.q('#pl-demo').click(); await sleep(250);
-  c('evangelism: every card, every line', [P.qa('#pout .pbench .card').map(k=>k.textContent).every(sepOk),card(P,2).raw.split('|')[0]], [true,'three times the membership · 25 Bible studies running']);
+  // v10.70.1 (the audit, second look): "25\u00a0Bible studies" (a number keeps its word)
+  c('evangelism: every card, every line', [P.qa('#pout .pbench .card').map(k=>k.textContent).every(sepOk),card(P,2).raw.split('|')[0]], [true,'three times the membership \u00b7\u00a025\u00a0Bible studies running']);
   c('no page errors', P.errs, []);
 }); T.done(); })();

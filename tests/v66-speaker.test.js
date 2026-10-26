@@ -26,7 +26,8 @@ const fri=n=>{ const d=new Date(); d.setDate(d.getDate()+n); while(d.getDay()!==
   c('the demo series has a paid evangelist (its $25,000 budget), saved with the plan', plan().speaker, 'guest');
   const first=()=>[...P.qa('#pout .rail .pb')[0].querySelectorAll(':scope > ul > li')].map(txt);
   const D=plan().date+'T12:00:00', mo=s=>{ const m=s.match(/by (\w+ \d+, \d{4})/); return m?Math.round((new Date(D)-new Date(m[1]+' 12:00'))/864e5/30.44):null; };
-  let L=first().find(t=>/^Book the evangelist by/.test(t));
+  // v10.70.1 (the audit, second look): 18 months out the first phase ends long before the booking's deadline, so the line says the work begins now: "Begin booking the evangelist now: confirm by …, a year before opening night" (the year ahead kept)
+  let L=first().find(t=>/^Begin booking the evangelist now: confirm by/.test(t));
   c('a paid evangelist: booked a year before opening night, with references and a written agreement', [!!L,L&&mo(L),/whether attendance held to the last night and the new members stayed/.test(L||''),/a written agreement: the honorarium, travel, housing and meals, who keeps the names, and the follow-up/.test(L||'')], [true,12,true,true]);
   const roles=()=>P.qa('#pout .rrole .rr1 b').map(txt);
   c('…a speaker host on the roster (combined with the platform when leaders are few)', roles().some(r=>/^Speaker host/.test(r)), true);
@@ -39,9 +40,11 @@ const fri=n=>{ const d=new Date(); d.setDate(d.getDate()+n); while(d.getDay()!==
   L=first().find(t=>/^Our pastor preaches/.test(t));
   c('our pastor: the series planned a year ahead, a coach, the visiting shared; no host; no honorarium', [!!L,L&&mo(L),roles().some(r=>/^Speaker host/.test(r)),P.qa('#pout .bud li').map(txt).includes('The speaker: our pastor (no honorarium)'),/^The evangelist leaves/.test(txt(P.qa('#pout .rail .pb').slice(-1)[0].querySelector('li')))], [true,12,false,true,false]);
   set('conference'); await sleep(40);
-  c('a conference leader or evangelist: asked for early; what the conference covers', first().some(t=>/^Ask the conference for an evangelist by .*: the ministerial department books a year or more ahead\. Ask what it covers/.test(t)), true);
+  // v10.70.1 (the audit, second look): asked now, confirmed by the date a year ahead ("Ask the conference for an evangelist now: … so confirm by …")
+  c('a conference leader or evangelist: asked for early; what the conference covers', first().some(t=>/^Ask the conference for an evangelist now: the ministerial department books a year or more ahead, so confirm by \w+ \d+, \d{4}\. Ask what it covers/.test(t)), true);
   set(''); await sleep(40);
-  c('not decided: deciding is the first step, pointing to the comparison', [first().some(t=>/^Decide who will speak by .*: our pastor, a conference leader or evangelist, or a paid evangelist/.test(t)),P.txt('#pl-speakw .hint')], [true,'not decided yet']);
+  // v10.70.1 (the audit, second look): decided now, the speaker booked by the date a year ahead ("Decide who will speak now: …, booked by …")
+  c('not decided: deciding is the first step, pointing to the comparison', [first().some(t=>/^Decide who will speak now: our pastor, a conference leader or evangelist, or a paid evangelist, booked by \w+ \d+, \d{4}/.test(t)),P.txt('#pl-speakw .hint')], [true,'not decided yet']);
   P.E(`PLAN.date=${JSON.stringify(fri(91))}; PLAN.speaker='guest'; planSave(PLAN); plannerRender(PLAN);`); await sleep(40);
   L=first().find(t=>/^Book the evangelist by/.test(t));
   c('three months out: booked this week, inside the first phase', L?Math.round((new Date(L.match(/by (\w+ \d+, \d{4})/)[1]+' 12:00')-new Date())/864e5):null, 7);

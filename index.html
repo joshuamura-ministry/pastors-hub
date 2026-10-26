@@ -164,6 +164,9 @@ body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16p
 a{color:var(--acc);text-decoration:none}
 a:hover{text-decoration:underline}
 button,input{font-family:inherit;font-size:1rem;color:inherit}
+/* v10.70.1 (the audit, second look): a heading's lines are even, never one word alone on its last line ("Where the calendar's energy /
+   goes", "Every church in the Pennsylvania / Conference", "Hacia dónde va la energía del / calendario"); balancing never adds a line */
+h1,h2,h3,h4{text-wrap:balance}
 :focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 
@@ -1330,6 +1333,8 @@ details[open]>summary .chev{transform:rotate(-135deg);margin-top:2px}
 .seg button{flex:1;min-height:40px;border:none;background:none;border-radius:9px;font-weight:600;font-size:.9rem;color:var(--ink2);cursor:pointer}
 .seg button.on{background:var(--panel);color:var(--ink);box-shadow:var(--shadow);border:1px solid var(--line)}
 .pbench{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:22px}
+/* v10.70.1 (the audit, second look): each number keeps its word, so a line may run one longer: never one word alone on the last */
+.pbench .card .sub{text-wrap:pretty}
 @media(min-width:640px){.pbench{grid-template-columns:repeat(4,1fr)}}
 .phead{margin-top:30px;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
 .phead h2{font-family:var(--disp);font-weight:600;font-size:clamp(1.35rem,4.6vw,1.7rem);letter-spacing:-.02em}
@@ -3818,7 +3823,7 @@ button.cd-rowb:hover{background:var(--panel2)}
 .df-verse{font-family:var(--script);font-style:italic;font-size:1.12rem;color:var(--ink2);margin:0;max-width:62ch}
 .df-verse span{font-family:var(--font);font-style:normal;font-size:.76rem;color:var(--ink3);margin-left:6px}
 .df-pills{display:flex;flex-wrap:wrap;gap:8px}
-.df-pills span{border:1px solid var(--line2);border-radius:999px;padding:3px 12px;font-size:.82rem;color:var(--ink2);background:var(--panel)}
+.df-pills>span{border:1px solid var(--line2);border-radius:999px;padding:3px 12px;font-size:.82rem;color:var(--ink2);background:var(--panel)}
 .df-pills b{color:var(--ink);font-variant-numeric:tabular-nums}
 .df-msg{color:var(--ink2);margin:0}
 .df-part{border:1px solid color-mix(in srgb,var(--dfk) 38%,var(--line2));border-radius:14px;background:var(--panel);padding:16px;display:grid;gap:12px;min-width:0}
@@ -4502,7 +4507,8 @@ html.cn-nofonts .cnp,html.cn-nofonts .cn-church,html.cn-nofonts .cn-lang button,
 .cmp-rtab .ic,.cmp-mgic{flex:none;display:grid;place-items:center;background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--k);transition:background-color .2s,color .2s}
 .cmp-rtab .ic{width:36px;height:36px;border-radius:11px}
 .cmp-rtab svg,.cmp-mgic svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.cmp-rtab .lb{flex:1 1 auto;min-width:0}
+/* v10.70.1 (the audit, second look): "Money you can / ask for", "What the / church is doing / now": balanced at every width */
+.cmp-rtab .lb{flex:1 1 auto;min-width:0;text-wrap:balance}
 .cmp-rtab .n,.cmp-mgn{flex:none;min-width:28px;padding:2px 8px;border-radius:999px;background:color-mix(in srgb,var(--k) 16%,transparent);color:var(--k);font-size:.78rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums}
 .cmp-rtab[aria-selected=true]{border-color:var(--k);background:linear-gradient(180deg,color-mix(in srgb,var(--k) 22%,var(--panel2)),color-mix(in srgb,var(--k) 8%,var(--panel2)));box-shadow:0 0 0 1px color-mix(in srgb,var(--k) 40%,transparent),0 12px 30px -14px var(--k)}
 .cmp-rtab[aria-selected=true] .ic{background:var(--k);color:var(--btn-ink)}
@@ -4861,6 +4867,11 @@ dialog.dir-sheet{max-width:min(880px,calc(100vw - 24px))}
 .dir-x{background:var(--panel2);border:1px solid var(--line2);border-radius:50%;width:44px;height:44px;flex:0 0 auto;color:var(--ink2);font-size:1.2rem;cursor:pointer}
 .dir-acts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
 .dir-acts .btn,.dir-foot .btn{cursor:pointer}
+/* v10.70.1 (the audit, second look): the four buttons even: one row on a computer; two by two, of one width, where four do not fit across
+   (they need 645 px in English and 708 in Spanish, measured: three and one on a tablet); each the full width on a phone, one height */
+@media (max-width:800px){ .dir-acts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))} .dir-acts .btn{width:100%;min-height:46px} }
+@media (max-width:520px){ .dir-acts{grid-template-columns:minmax(0,1fr)} }
+.dir-tw{white-space:nowrap}
 .dir-msg{font-size:.86rem;color:var(--acc);margin:6px 0}
 .dir-msg:empty{display:none}
 .dir-count{display:flex;flex-wrap:wrap;align-items:center;gap:6px 12px;margin:8px 0;font-size:.88rem;color:var(--ink2)}
@@ -7390,7 +7401,7 @@ const RULES_ES={
           `Ofrezca lo práctico cuando lo note: una bombilla, un formulario, llevarle a una cita.`],
   ask:()=>`¿Por quién no ha preguntado nadie en seis meses? Alguien de su congregación ya conoce un nombre.`},
  'older-area':{
-  ev:m=>`La edad media es ${m.medAge==null?'—':m.medAge.toFixed(1)} — un vecindario mayor.`,
+  ev:m=>`La edad mediana es ${m.medAge==null?'—':m.medAge.toFixed(1)} — un vecindario mayor.`,
   t:()=>`La accesibilidad también es evangelismo`,
   do:()=>[`Audición, asientos, distancia del estacionamiento, acceso sin escalones, tamaño de letra: cada detalle incluye o excluye en silencio.`,
           `El apoyo en el duelo y a quienes cuidan a un familiar escasea siempre y se necesita mucho.`],
@@ -7490,7 +7501,7 @@ const RULES_ES={
  'gini':{
   ev:m=>`La desigualdad de ingresos aquí marca ${m.gini==null?'—':m.gini.toFixed(2)} en el índice de Gini — alta.`,
   t:()=>`Aquí los promedios le engañarán`,
-  do:()=>[`El ingreso medio esconde la dispersión; no planifique para el medio, porque allí vive menos gente de la que cree.`],
+  do:()=>[`El ingreso mediano esconde la dispersión; no planifique para el medio, porque allí vive menos gente de la que cree.`],
   ask:()=>`¿Qué calle se siente distinta de la de al lado? Recorra el límite.`},
  'affluent':{
   ev:m=>`El ${fmtPct(m.incHigh)} de los hogares gana más de $150 mil; solo el ${fmtPct(m.incLow)} menos de $35 mil.`,
@@ -7536,7 +7547,7 @@ const RULES_ES={
  'grief':{
   ev:m=>m.seniorsAlone!=null&&m.seniorsAlone>=9
     ?`El ${fmtPct(m.seniorsAlone)} de los hogares es una persona mayor que vive sola — muchas de ellas viudas.`
-    :`Con una edad media de ${m.medAge}, el duelo aquí es constante y casi nadie lo atiende.`,
+    :`Con una edad mediana de ${m.medAge}, el duelo aquí es constante y casi nadie lo atiende.`,
   t:()=>`Aquí nadie acompaña el duelo`,
   do:()=>['Un grupo de duelo de seis semanas necesita un líder capacitado y una sala tranquila.',
           'Contacte a las funerarias locales — saben quién no tiene a nadie.',
@@ -7552,14 +7563,14 @@ const RULES_ES={
           'Diga con claridad que la iglesia no presta dinero, y cúmplalo — protege a todos.'],
   ask:()=>'¿A dónde acude alguien de aquí cuando vence el préstamo de día de pago?'},
  'newborn':{
-  ev:m=>`Un vecindario joven — edad media ${m.medAge}, ${fmtPct(m.kidsShare)} de niños — significa madres primerizas en estas calles cada mes.`,
+  ev:m=>`Un vecindario joven — edad mediana ${m.medAge}, ${fmtPct(m.kidsShare)} de niños — significa madres primerizas en estas calles cada mes.`,
   t:()=>`Aquí nacen bebés constantemente`,
   do:()=>['Un calendario de comidas después de un nacimiento es la ayuda que más se acepta de una iglesia, sea o no miembro.',
           'Una hora entre semana para padres y bebés cuesta una sala y una tetera.',
           'Pregunte en la clínica pediátrica o en la oficina de WIC qué falta en la zona. Se lo dirán con exactitud.'],
   ask:()=>'¿Quién tuvo un bebé en esta calle en los últimos seis meses, y alguien le llevó una comida?'},
  'isolationyoung':{
-  ev:m=>`Un vecindario joven y de inquilinos — edad media ${m.medAge}, ${fmtPct(m.renters)} alquila — suele significar gente que vive lejos de su familia y se muda a menudo.`,
+  ev:m=>`Un vecindario joven y de inquilinos — edad mediana ${m.medAge}, ${fmtPct(m.renters)} alquila — suele significar gente que vive lejos de su familia y se muda a menudo.`,
   t:()=>`Los adultos jóvenes aquí están más solos de lo que parece`,
   do:()=>['Una comida compartida vale más que un evento. Cocine, no programe.',
           'La tarde del domingo es la hora más solitaria de la semana para quien vive solo.',
@@ -7791,7 +7802,7 @@ const RULES_MORE_ES={
     `Ayude con las cartas de la escuela y las reuniones de padres en el idioma de la familia.`],
   ask:()=>`¿Qué carta o reunión de la escuela les cuesta más seguir a los padres de aquí? Pregunte al enlace con las familias de la escuela.`},
  'aging-owners':{
-  ev:m=>m.medAge>=45?`El ${fmtPct(m.homeowners)} de los hogares es dueño de su casa, y la edad media es de ${nsAge(m.medAge)} años.`
+  ev:m=>m.medAge>=45?`El ${fmtPct(m.homeowners)} de los hogares es dueño de su casa, y la edad mediana es de ${nsAge(m.medAge)} años.`
     :`El ${fmtPct(m.homeowners)} de los hogares es dueño de su casa, y el ${fmtPct(m.seniorsShare)} de los residentes tiene 65 años o más.`,
   t:()=>`Casas que mantener, manos que envejecen`,
   do:()=>[`Canaletas, alarmas de humo, barras de apoyo, un escalón suelto: las reparaciones pequeñas mantienen a un vecino mayor seguro en su casa.`,
@@ -7838,7 +7849,7 @@ const RULES_SAY={
   en:{t:()=>`Be there for people in grief`,
       ev:m=>m.seniorsAlone!=null&&m.seniorsAlone>=9?`${fmtPct(m.seniorsAlone)} of households are one person over 65 living alone.`:`The median age here is ${nsAge(m.medAge)}.`},
   es:{t:()=>`Acompañe a quienes están de duelo`,
-      ev:m=>m.seniorsAlone!=null&&m.seniorsAlone>=9?`En el ${fmtPct(m.seniorsAlone)} de los hogares vive sola una persona mayor de 65 años.`:`La edad media aquí es de ${nsAge(m.medAge)} años.`}},
+      ev:m=>m.seniorsAlone!=null&&m.seniorsAlone>=9?`En el ${fmtPct(m.seniorsAlone)} de los hogares vive sola una persona mayor de 65 años.`:`La edad mediana aquí es de ${nsAge(m.medAge)} años.`}},
  'debt':{
   en:{t:()=>`Debt can take hold here`, ev:m=>nsDebtEv(m,false)},
   es:{t:()=>`Aquí la deuda puede echar raíces`, ev:m=>nsDebtEv(m,true)}},
@@ -7859,7 +7870,7 @@ const RULES_SAY={
   es:{t:()=>`Muchos hogares necesitan ayuda con la comida`}},
  'isolationyoung':{
   en:{ev:m=>`A young, renting neighborhood — median age ${m.medAge}, ${fmtPct(m.renters)} renting — often means people living far from family and moving often.`},
-  es:{ev:m=>`Un vecindario joven y de inquilinos — edad media ${m.medAge}, ${fmtPct(m.renters)} alquila — a menudo significa gente que vive lejos de su familia y se muda a menudo.`}}
+  es:{ev:m=>`Un vecindario joven y de inquilinos — edad mediana ${m.medAge}, ${fmtPct(m.renters)} alquila — a menudo significa gente que vive lejos de su familia y se muda a menudo.`}}
 };
 /* One gate the survey adds (RULES keeps its own test): debt's rent half needs renters as rent50's own rule does
    (Warminster: 9% rent, and "34% of renters pay over half" was about 200 homes). */
@@ -9225,8 +9236,9 @@ function doctrineCard(key,count){
   </details>`;
 }
 /* v10.70.1 (the audit): the county's adherence link, which "Churches nearby" promises, drawn whatever the map holds */
+/* v10.70.1 (the audit, second look): in Spanish on the Spanish page (the county's name is in it, so the dictionary cannot match it) */
 function congAdhHTML(county){ return `<div class="ext" style="margin-top:10px">
-      <a href="https://www.thearda.com/us-religion/census/congregational-membership" target="_blank" rel="noopener">County adherence \u00b7 US Religion Census 2020<span>Adherents per 1,000 people by denomination for ${esc(county)} \u2014 the only county-level religious data in the country. Published by county, not by block, so it sits alongside this list rather than on the map.</span></a>
+      <a href="https://www.thearda.com/us-religion/census/congregational-membership" target="_blank" rel="noopener">${L('County adherence \u00b7 US Religion Census 2020','Adherencia por condado \u00b7 Censo Religioso de EE. UU. 2020')}<span>${L(`Adherents per 1,000 people by denomination for ${esc(county)} \u2014 the only county-level religious data in the country. Published by county, not by block, so it sits alongside this list rather than on the map.`,`Adherentes por cada 1,000 personas, por denominación, en ${esc(county)}: los únicos datos religiosos por condado del país. Se publican por condado, no por manzana, así que van junto a esta lista y no en el mapa.`)}</span></a>
     </div>`; }
 function congregationsHTML(list,radiusMi,county){
   if(!list.length){
@@ -9951,10 +9963,11 @@ const ES={
    'Terrain lee el censo de EE. UU. alrededor de su iglesia y lo convierte en un plan de ministerio a la medida de quienes viven allí.',
  'Access code':'Código de acceso','Enter':'Entrar',
  // common labels
- 'Median household income':'Ingreso medio del hogar','Below the poverty line':'Bajo el umbral de pobreza',
+ // v10.70.1 (the audit, second look): the Census's median is "mediano / mediana" in Spanish ("medio / media" is the mean), here and in every Spanish line whose English says median
+ 'Median household income':'Ingreso mediano del hogar','Below the poverty line':'Bajo el umbral de pobreza',
  'Children in poverty':'Niños en pobreza','Unemployed':'Desempleados',
  'Households on SNAP':'Hogares con SNAP','No health insurance':'Sin seguro médico',
- 'Households':'Hogares','Renters':'Inquilinos','Median age':'Edad media',
+ 'Households':'Hogares','Renters':'Inquilinos','Median age':'Edad mediana',
  'In school':'Estudiando','Single-parent families':'Familias monoparentales',
  'Seniors living alone':'Mayores que viven solos','Families with children':'Familias con hijos',
  'Born outside the U.S.':'Nacidos fuera de EE. UU.','Only English at home':'Solo inglés en casa',
@@ -10045,7 +10058,7 @@ const ES={
  "Rent burden, overcrowding and no car are hardship measured a different way — so they sit here rather than in a section of their own.":"La carga del alquiler, el hacinamiento y no tener auto son necesidad medida de otra manera — por eso están aquí y no en una sección aparte.",
  "Homelessness and evictions are only published at county level":"Las cifras de personas sin hogar y de desalojos solo se publican por condado",
  "HUD counts people experiencing homelessness once a year by":"HUD cuenta una vez al año a las personas sin hogar por",
- "(usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighborhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:":"(normalmente el condado o un grupo de condados). Las demandas de desalojo las registran los tribunales del condado. Ninguna de las dos cifras llega al nivel del vecindario, así que Terrain muestra arriba las señales más cercanas por sector censal (carga severa de alquiler, hacinamiento, sin auto) y enlaza a los informes originales:",
+ "(usually the county or a group of counties). Eviction filings are tracked by county courts. Neither is broken down to the neighborhood, so Terrain shows the closest tract-level signals above (severe rent burden, overcrowding, no vehicle) and links to the source reports:":"(normalmente el condado o un grupo de condados). Las demandas de desalojo las registran los tribunales del condado. Ninguna de las dos cifras llega al nivel del vecindario, así que Terrain muestra arriba las señales más cercanas por sección censal (carga severa de alquiler, hacinamiento, sin auto) y enlaza a los informes originales:",
  "Employed residents":"Residentes con empleo",
  "Everything else":"Todo lo demás",
  "Download chart":"Descargar gráfico",
@@ -10260,7 +10273,7 @@ Object.assign(ES,{
 'Hardship alone, ignoring distance. Some of these may be a drive away.':
  'Solo la necesidad, sin considerar distancia. Algunas quedan a varios minutos en auto.',
 'People per square mile, measured from each block’s own boundary — not raw counts, which flatter big empty tracts.':
- 'Habitantes por milla cuadrada, calculado desde el propio límite de cada manzana — no conteos brutos, que favorecen a los sectores grandes y vacíos.',
+ 'Habitantes por milla cuadrada, calculado desde el propio límite de cada manzana — no conteos brutos, que favorecen a las secciones censales grandes y vacías.',
 'Share of residents under 18 — where the families are.':
  'Proporción de residentes menores de 18 años: dónde están las familias.',
 'Households that are one person over 65 living alone — where isolation concentrates.':
@@ -10392,11 +10405,11 @@ function briefES(M,levels,scope){
       h+= Math.abs(d)<3?' — similar al condado':(d>0?` — muy por encima del ${fmtPct(cty.renters)} del condado`:` — por debajo del ${fmtPct(cty.renters)} del condado`); }
     hp.push(h);
   }
-  if(me.medAge!=null) hp.push(`${hp.length?'con una':'Tiene una'} edad media de <b>${me.medAge}</b>`+(me.medAge<33?' — un vecindario joven':me.medAge>46?' — un vecindario mayor':''));
+  if(me.medAge!=null) hp.push(`${hp.length?'con una':'Tiene una'} edad mediana de <b>${me.medAge}</b>`+(me.medAge<33?' — un vecindario joven':me.medAge>46?' — un vecindario mayor':''));
   if(hp.length) s.push(hp.join(', ')+'.');
   const ep=[];
   if(me.medInc!=null){
-    let e=`El ingreso medio del hogar es <b>${fmtMoney(me.medInc)}</b>`;
+    let e=`El ingreso mediano del hogar es <b>${fmtMoney(me.medInc)}</b>`;
     if(scope!=='county'&&cty&&me.medInc&&cty.medInc){ const r=me.medInc/cty.medInc;
       e+= r<0.75?` — muy por debajo de los ${fmtMoney(cty.medInc)} del condado`
         : r>1.25?` — muy por encima de los ${fmtMoney(cty.medInc)} del condado`
@@ -12010,6 +12023,12 @@ function planRosterHint(fit,named){
   const parts=[fit.need+' role'+(fit.need===1?'':'s')+' to lead',...also];
   return named+' of '+fit.list.length+' named: '+(parts.length>1?parts.slice(0,-1).join(', ')+' and '+parts[parts.length-1]:parts[0])+(fit.gap?' ·\u00a0'+fit.gap+' leader'+(fit.gap>1?'s':'')+' still to find':'');
 }
+/* v10.70.1 (the audit, second look): on a phone a number left its word ("· 9 / nights", "25 / leaders", "150 / members") and a phase's
+   dates broke inside a date ("May 27, / 2027"): a number keeps the word after it, a range's numbers stay joined, a "·" keeps the words
+   after it, and each date is whole, so a phase's range breaks only after its dash. The words read as before */
+function planKeep(s){ return String(s).replace(/(\d[\d,]*%?|\u00bd)\s+(?=[^\s\u00b7])/g,'$1\u00a0').replace(/(\d)\u2013(?=\d)/g,'$1\u2013\u2060').replace(/ \u00b7 /g,' \u00b7\u00a0'); }
+function pDateNb(d){ return pDate(d).replace(/ /g,'\u00a0'); }
+function planRange(a,b){ return pDateNb(a)+'\u00a0\u2013 '+pDateNb(b); }
 function planPhases(p,pl){
   const S=planSchedule(p), D=S.D, T=planTargets(p,pl), Tg=pl?pl.tags:new Set();
   const H=p.kind!=='prophecy', P=p.kind!=='health';
@@ -12072,7 +12091,15 @@ function planPhases(p,pl){
     :'<b>Door to door</b>, the weekend'+(ds.length>1?'s':'')+' of '+andJoin(ds.map(pDate))+runOf(ks,sabbaths.length,'weekends')+'.'};
   // v10.66.0: who will speak, decided or booked first
   const spBy=(()=>{ const d=S.tier==='full'?addMonths(D,-12):S.tier==='year'?addDays(S.bounds[0],30):addDays(S.today,7); return d<S.today?addDays(S.today,7):d; })();
-  const spLine=p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the series planned by '+pDate(spBy)+' (the titles, the order, the appeal each night); a seasoned evangelist asked to coach; the visiting shared with the elders so the pastor has time to prepare.',1)
+  /* v10.70.1 (the audit, second look): 18 months out the first phase (to Jan 27, 2027) said "Book the evangelist by Apr 28, 2027", a date
+     after it ends. The booking is a year ahead (his v10.66 choice) and the work begins now: when the deadline falls after the first
+     phase, the line says so ("Begin booking the evangelist now: confirm by …, a year before opening night"); inside it, as before */
+  const spNow=spBy>=((S.tier==='short'||S.tier==='quick')?S.sb:S.bounds)[1], spYr=S.tier==='full'?', a year before opening night':'';
+  const spLine=spNow?(p.speaker==='pastor'?li('<b>Our pastor preaches</b>: begin planning the series now (the titles, the order, the appeal each night), ready by '+pDate(spBy)+spYr+'; a seasoned evangelist asked to coach; the visiting shared with the elders so the pastor has time to prepare.',1)
+      :p.speaker==='conference'?li('<b>Ask the conference for an evangelist now</b>: the ministerial department books a year or more ahead, so confirm by '+pDate(spBy)+'. Ask what it covers (travel, housing, the honorarium) and who carries the follow-up.',1)
+      :p.speaker==='guest'?li('<b>Begin booking the evangelist now</b>: confirm by '+pDate(spBy)+spYr+'. Ask churches they preached for whether attendance held to the last night and the new members stayed; then a written agreement: the honorarium, travel, housing and meals, who keeps the names, and the follow-up after they leave.',1)
+      :li('<b>Decide who will speak now</b>: our pastor, a conference leader or evangelist, or a paid evangelist, booked by '+pDate(spBy)+spYr+'. Everything rides on whether the speaker can hold people night after night: see <b>Who will speak</b>, below.',1))
+    :p.speaker==='pastor'?li('<b>Our pastor preaches</b>: the series planned by '+pDate(spBy)+' (the titles, the order, the appeal each night); a seasoned evangelist asked to coach; the visiting shared with the elders so the pastor has time to prepare.',1)
     :p.speaker==='conference'?li('<b>Ask the conference for an evangelist by '+pDate(spBy)+'</b>: the ministerial department books a year or more ahead. Ask what it covers (travel, housing, the honorarium) and who carries the follow-up.',1)
     :p.speaker==='guest'?li('<b>Book the evangelist by '+pDate(spBy)+'</b>: ask churches they preached for whether attendance held to the last night and the new members stayed; then a written agreement: the honorarium, travel, housing and meals, who keeps the names, and the follow-up after they leave.',1)
     :li('<b>Decide who will speak by '+pDate(spBy)+'</b>: our pastor, a conference leader or evangelist, or a paid evangelist. Everything rides on whether the speaker can hold people night after night: see <b>Who will speak</b>, below.',1);
@@ -12635,25 +12662,25 @@ function revRender(p){
     <p class="note" style="margin-top:6px">A starting split, to change as you plan.${p.budget?'':' Enter a total above and each part becomes a dollar figure.'}</p>
     <div class="budget">${BU.map(b=>`<div class="bud"><div class="bh"><b>${esc(b.n)}</b><span>${esc(b.amt)}</span></div>${b.note?`<div class="bn">${esc(b.note)}</div>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}</div>`;
   const bench=`<div class="pbench">
-    <div class="card"><div class="n">${T.books.toLocaleString()}</div><div class="l">members to invite</div><div class="sub">every home on the books ·\u00a0${p.members} active</div></div>
-    <div class="card"><div class="n">${T.drifted.toLocaleString()}</div><div class="l">members to visit</div><div class="sub">${T.drifted?T.pairs+' pair'+(T.pairs>1?'s':'')+' of an elder and a member':'enter the members on the books to count them'}</div></div>
-    <div class="card"><div class="n">${T.bands}</div><div class="l">prayer bands</div><div class="sub">two to four members each ·\u00a0${T.groups} small group${T.groups>1?'s':''}</div></div>
-    <div class="card"><div class="n">${fit.need}<small>/${p.leaders}</small></div><div class="l">roles to lead ·\u00a0leaders you have</div><div class="sub">${planRolesSub(fit,p.leaders)}</div></div>
+    <div class="card"><div class="n">${T.books.toLocaleString()}</div><div class="l">members to invite</div><div class="sub">every home on the books ·\u00a0${p.members}\u00a0active</div></div>
+    <div class="card"><div class="n">${T.drifted.toLocaleString()}</div><div class="l">members to visit</div><div class="sub">${planKeep(T.drifted?T.pairs+' pair'+(T.pairs>1?'s':'')+' of an elder and a member':'enter the members on the books to count them')}</div></div>
+    <div class="card"><div class="n">${T.bands}</div><div class="l">prayer bands</div><div class="sub">two to four members each ·\u00a0${T.groups}\u00a0small group${T.groups>1?'s':''}</div></div>
+    <div class="card"><div class="n">${fit.need}<small>/${p.leaders}</small></div><div class="l">roles to lead ·\u00a0leaders you have</div><div class="sub">${planKeep(planRolesSub(fit,p.leaders))}</div></div>
   </div>`;
   const rail=phases.map(ph=>{
     const st=ph.start, en=ph.end, past=en<today, now=st<=today&&today<=en;
     const mo=ph.tag==='series'?'<b>0</b><small>open</small>':ph.tag==='after'?'<b>+12</b><small>months</small>':ph.tag==='final'?'<b>14</b><small>days</small>':`<b>${ph.mo}</b><small>mo out</small>`;
     return `<div class="phase${past?' past':''}${now?' now':''}"><div class="mo">${mo}</div><div class="pb">
-      <div class="pt"><b>${ph.name}</b><span class="dates">${pDate(st)} – ${pDate(en)}</span>${now?'<span class="tag">now</span>':''}</div>
+      <div class="pt"><b>${ph.name}</b><span class="dates">${planRange(st,en)}</span>${now?'<span class="tag">now</span>':''}</div>
       <ul>${ph.items.map(i=>`<li${i.key?' class="key"':''}>${i.t}</li>`).join('')}</ul>
       <div class="bm">Benchmark: ${ph.bench}</div></div></div>`;
   }).join('');
   $('pout').innerHTML=`${p.demo?`<div class="pdemo"><span><b>Demo revival.</b> Sample numbers, to show how the Planner works: ${p.nights} nights of revival meetings for a church of ${p.members} active members, ${T.books} on the books, $${(p.budget||0).toLocaleString()}.</span><button type="button" class="btn ghost" id="pl-undemo">Clear the demo</button></div>`:''}
     <div class="tbar"><button class="btn" id="pl-doc">Print the whole plan</button><span class="hint">for the board, the conference, or your own file</span></div>
-    <div class="phead"><h2>${esc(p.church||'Your church')} · Revival meetings</h2><span class="hint">${p.members} active · ${T.books} on the books · ${p.leaders} leaders · ${p.workers} workers · ${p.nights} nights</span></div>
+    <div class="phead"><h2>${esc(p.church||'Your church')} · Revival meetings</h2><span class="hint">${planKeep(p.members+' active · '+T.books+' on the books · '+p.leaders+' leaders · '+p.workers+' workers · '+p.nights+' nights')}</span></div>
     <p class="note" style="margin-top:6px">${runway}${modeNote}</p>
     ${bench}
-    <div class="phead"><h2>The countdown</h2><span class="hint">First night ${pDate(D)}</span></div>
+    <div class="phead"><h2>The countdown</h2><span class="hint">First night ${pDateNb(D)}</span></div>
     <div class="rail">${rail}</div>
     ${planSpeakHTML(p)}
     ${rosterHtml}
@@ -12719,10 +12746,10 @@ function plannerRender(p){
     <p class="note" style="margin-top:6px">It is not the size of the budget that decides the harvest; it is how many interests the members create before the meetings, and how wisely the money is placed. Spread over the nine months before opening night.${p.budget?'':' Enter a total above and each part becomes a dollar figure.'}</p>
     <div class="budget">${BU.map(b=>`<div class="bud${b.share==null?' inc':''}"><div class="bh"><b>${esc(b.n)}</b><span>${esc(b.amt)}</span></div>${b.note?`<div class="bn">${esc(b.note)}</div>`:''}<ul>${b.lines.map(l=>`<li>${esc(l)}</li>`).join('')}</ul></div>`).join('')}</div>`;
   const bench=`<div class="pbench">
-    <div class="card"><div class="n">${fit.need}<small>/${p.leaders}</small></div><div class="l">roles to lead ·\u00a0leaders you have</div><div class="sub">${planRolesSub(fit,p.leaders)}</div></div>
-    <div class="card"><div class="n">${T.prereg}</div><div class="l">pre-registrations for opening night</div><div class="sub">${planPreregWhy(p,T)}</div></div>
-    <div class="card"><div class="n">${T.outreach.toLocaleString()}</div><div class="l">outreach attendance this year</div><div class="sub">three times the membership ·\u00a0${T.studies} Bible studies running</div></div>
-    <div class="card"><div class="n">${T.hh?T.hh.toLocaleString():T.groups+'+'+T.guests}</div><div class="l">${T.hh?'households to reach':'home groups, with guests'}</div><div class="sub">${T.hh?T.pairs+' visiting pairs ·\u00a0'+T.handbills.toLocaleString()+' handbills':'4–6 members, each bringing a friend'}</div></div>
+    <div class="card"><div class="n">${fit.need}<small>/${p.leaders}</small></div><div class="l">roles to lead ·\u00a0leaders you have</div><div class="sub">${planKeep(planRolesSub(fit,p.leaders))}</div></div>
+    <div class="card"><div class="n">${T.prereg}</div><div class="l">pre-registrations for opening night</div><div class="sub">${planKeep(planPreregWhy(p,T))}</div></div>
+    <div class="card"><div class="n">${T.outreach.toLocaleString()}</div><div class="l">outreach attendance this year</div><div class="sub">three times the membership ·\u00a0${T.studies}\u00a0Bible studies running</div></div>
+    <div class="card"><div class="n">${T.hh?T.hh.toLocaleString():T.groups+'+'+T.guests}</div><div class="l">${T.hh?'households to reach':'home groups, with guests'}</div><div class="sub">${planKeep(T.hh?T.pairs+' visiting pairs ·\u00a0'+T.handbills.toLocaleString()+' handbills':'4–6 members, each bringing a friend')}</div></div>
   </div>`;
   const rail=phases.map(ph=>{
     const st=ph.start, en=ph.end;
@@ -12731,7 +12758,7 @@ function plannerRender(p){
     return `<div class="phase${past?' past':''}${now?' now':''}">
       <div class="mo">${mo}</div>
       <div class="pb">
-        <div class="pt"><b>${ph.name}</b><span class="dates">${pDate(st)} – ${pDate(en)}</span>${now?'<span class="tag">now</span>':''}</div>
+        <div class="pt"><b>${ph.name}</b><span class="dates">${planRange(st,en)}</span>${now?'<span class="tag">now</span>':''}</div>
         <ul>${ph.items.map(i=>`<li${i.key?' class="key"':(i.plain?' class="plain"':'')}>${i.t}</li>`).join('')}</ul>
         <div class="bm">Benchmark: ${ph.bench}</div>
       </div>
@@ -12739,10 +12766,10 @@ function plannerRender(p){
   }).join('');
   $('pout').innerHTML=`${p.demo?`<div class="pdemo"><span><b>Demo series.</b> Sample numbers, to show how the Planner works: a midsize series of ${p.nights} nights over ${Math.ceil(p.nights/p.perweek)} weeks, $${(p.budget||0).toLocaleString()}.</span><button type="button" class="btn ghost" id="pl-undemo">Clear the demo</button></div>`:''}
     <div class="tbar"><button class="btn" id="pl-doc">Print the whole plan</button><span class="hint">for the board, the conference, or your own file</span></div>
-    <div class="phead"><h2>${esc(p.church||'Your church')} · ${kindName} series</h2><span class="hint">${p.members} members · ${p.leaders} leaders · ${p.workers} workers · ${p.nights} nights · ${p.seats} seats</span></div>
+    <div class="phead"><h2>${esc(p.church||'Your church')} · ${kindName} series</h2><span class="hint">${planKeep(p.members+' members · '+p.leaders+' leaders · '+p.workers+' workers · '+p.nights+' nights · '+p.seats+' seats')}</span></div>
     <p class="note" style="margin-top:6px">${runway}${modeNote}${pl?'':' No survey yet: the neighborhood has not shaped this plan.'}</p>
     ${bench}
-    <div class="phead"><h2>The countdown</h2><span class="hint">Opening night ${pDate(D)}</span></div>
+    <div class="phead"><h2>The countdown</h2><span class="hint">Opening night ${pDateNb(D)}</span></div>
     <div class="rail">${rail}</div>
     ${enlistSection(p,pl)}
     ${planSpeakHTML(p)}
@@ -16210,7 +16237,7 @@ function render(){
     const ch=Object.keys(now).map(k=>[k,(now[k]??0)-(then[k]??0)]).filter(d=>Math.abs(d[1])>=1).sort((a,b)=>Math.abs(b[1])-Math.abs(a[1]));
     const fb=(shiftSrc.foreign??0)-(shiftSrc.past.foreign??0);
     const raceName=k=>L(k,({'White':'Blanca','Hispanic / Latino':'Hispana / latina','Black':'Negra','Asian':'Asiática','Two or more':'Dos o más','Other':'Otra'}[k])||k);
-    shift=`<div class="card wide"><div class="l">${L('Ten-year shift','Cambio en diez años')}, ${ACS_PAST-4}–${ACS_PAST} → ${ACS_YEAR-4}–${ACS_YEAR} <span class="sub">· ${S==='tract'?L('shown for the town (tract lines were redrawn in 2020)','se muestra el municipio (los límites de los sectores censales se redibujaron en 2020)'):L('this area','esta zona')}</span></div>
+    shift=`<div class="card wide"><div class="l">${L('Ten-year shift','Cambio en diez años')}, ${ACS_PAST-4}–${ACS_PAST} → ${ACS_YEAR-4}–${ACS_YEAR} <span class="sub">· ${S==='tract'?L('shown for the town (tract lines were redrawn in 2020)','se muestra el municipio (los límites de las secciones censales se redibujaron en 2020)'):L('this area','esta zona')}</span></div>
       <div class="shift">${ch.length?ch.map(([k,d])=>`<span class="chip ${d>0?'up':''}">${esc(raceName(k))} <b>${d>0?'+':'−'}${Math.abs(d).toFixed(0)} ${Math.abs(d).toFixed(0)==='1'?'pt':'pts'}</b></span>`).join(''):`<span class="chip">${L('Little change in ethnic makeup','Poco cambio en la composición étnica')}</span>`}
       ${Math.abs(fb)>=1?`<span class="chip ${fb>0?'up':''}">${L('Born abroad','Nacidos fuera')} <b>${fb>0?'+':'−'}${Math.abs(fb).toFixed(0)} ${Math.abs(fb).toFixed(0)==='1'?'pt':'pts'}</b></span>`:''}
       ${shiftSrc.past.pop&&shiftSrc.pop?`<span class="chip">${L('Population','Población')} <b>${shiftSrc.pop>=shiftSrc.past.pop?'+':'−'}${fmtNum(Math.abs(shiftSrc.pop-shiftSrc.past.pop))}</b></span>`:''}</div></div>`;
@@ -16335,17 +16362,18 @@ async function loadCongregations(geo){
   drawCongregations();
 }
 let CONGS_ERR='';
+/* v10.70.1 (the audit, second look): every state of the slot in Spanish on the Spanish page ("No congregation data yet." was English) */
 function drawCongregations(){
   const host=document.getElementById('congslot');
   if(!host) return;
-  const county=(DATA&&DATA.levels&&DATA.levels.county.short)||'this county';
-  if(CONGS_STATE==='loading'){ host.innerHTML='<div class="note">Looking for places of worship nearby\u2026</div>'; return; }
-  if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="congfail"><b>The map of nearby churches did not load.</b><span>OpenStreetMap\u2019s free lookup service was slow or unreachable just now — the rest of the report is unaffected.</span><button class="btn ghost" id="cong-retry">Try again</button></div>${congAdhHTML(county)}`;
+  const county=(DATA&&DATA.levels&&DATA.levels.county.short)||L('this county','este condado');
+  if(CONGS_STATE==='loading'){ host.innerHTML='<div class="note">'+L('Looking for places of worship nearby\u2026','Buscando lugares de culto cercanos\u2026')+'</div>'; return; }
+  if(CONGS_STATE==='failed'){ host.innerHTML=`<div class="congfail"><b>${L('The map of nearby churches did not load.','El mapa de las iglesias cercanas no cargó.')}</b><span>${L('OpenStreetMap\u2019s free lookup service was slow or unreachable just now — the rest of the report is unaffected.','El servicio gratuito de OpenStreetMap estuvo lento o no respondió ahora; el resto del informe no se ve afectado.')}</span><button class="btn ghost" id="cong-retry">${L('Try again','Intentar de nuevo')}</button></div>${congAdhHTML(county)}`;
     const rb=document.getElementById('cong-retry'); if(rb) rb.onclick=e=>{ e.preventDefault(); if(DATA&&DATA.geo) loadCongregations(DATA.geo); };
     return; }
   // v10.70.1 (the audit): with no list, the county link the section's line promises is still there
-  if(!CONGS){ host.innerHTML='<div class="note">No congregation data yet.</div>'+congAdhHTML(county); return; }
-  if(!CONGS.length){ host.innerHTML='<div class="note">OpenStreetMap lists no places of worship within about two miles of this address. That may simply mean they are not mapped here — worth confirming on the ground.</div>'+congAdhHTML(county); return; }
+  if(!CONGS){ host.innerHTML='<div class="note">'+L('No congregation data yet.','Aún no hay datos de congregaciones.')+'</div>'+congAdhHTML(county); return; }
+  if(!CONGS.length){ host.innerHTML='<div class="note">'+L('OpenStreetMap lists no places of worship within about two miles of this address. That may simply mean they are not mapped here — worth confirming on the ground.','OpenStreetMap no registra lugares de culto a unas dos millas de esta dirección. Puede que simplemente no estén en el mapa aquí: vale la pena confirmarlo en persona.')+'</div>'+congAdhHTML(county); return; }
   host.innerHTML=congregationsHTML(CONGS,2,county);
   translateDOM();
 }
@@ -19323,7 +19351,7 @@ const GF_NEEDS=(()=>{
  'older-area':{g:{serve:3,mercy:2,admin:1,helps:1},heart:['seniors','sick','grieving'],unit:'yrs',
   fig:get('medAge'),
   figEn:S(v=>`The median age here is ${R(v)}, an older neighborhood`),
-  figEs:S(v=>`La edad media aquí es de ${R(v)} años, un vecindario mayor`),
+  figEs:S(v=>`La edad mediana aquí es de ${R(v)} años, un vecindario mayor`),
   roleEn:'Make the church easy to attend for older neighbors',
   roleEs:'Haga que la iglesia sea accesible para los vecinos mayores',
   whatEn:'Check the building as an older visitor meets it — sound, seating, print size, steps and the walk from the parking lot — and get the obstacles fixed.',
@@ -19588,7 +19616,7 @@ const GF_NEEDS=(()=>{
     ?`With a median age of ${R(v)}, bereavement here is steady and mostly unattended`
     :`${R(v)}% of households are a senior living alone, many of them widowed`; }),
   figEs:S((v,x)=>{ const k=str(x)||(v>=40?'age':'alone'); return k==='age'
-    ?`Con una edad media de ${R(v)} años, el duelo aquí es constante y casi siempre pasa desapercibido`
+    ?`Con una edad mediana de ${R(v)} años, el duelo aquí es constante y casi siempre pasa desapercibido`
     :`En el ${R(v)}% de los hogares vive sola una persona mayor, muchas veces viuda`; }),
   roleEn:'Walk with the bereaved through the second year',
   roleEs:'Acompañe a los que están de duelo durante el segundo año',
@@ -19620,7 +19648,7 @@ const GF_NEEDS=(()=>{
   fig:get('medAge'),
   xOf:m=>xs(get('kidsShare')(m)),
   figEn:S((v,x)=>{ const k=X(x); return `A young neighborhood, median age ${R(v)}${k!=null?`, ${R(k)}% children`:''}, where new babies arrive every month`; }),
-  figEs:S((v,x)=>{ const k=X(x); return `Un vecindario joven, con una edad media de ${R(v)} años${k!=null?` y un ${R(k)}% de niños`:''}, donde nacen bebés cada mes`; }),
+  figEs:S((v,x)=>{ const k=X(x); return `Un vecindario joven, con una edad mediana de ${R(v)} años${k!=null?` y un ${R(k)}% de niños`:''}, donde nacen bebés cada mes`; }),
   roleEn:'Organize meals for families with a new baby',
   roleEs:'Organice comidas para familias con un bebé recién nacido',
   whatEn:'Arrange a week of meals after a birth for any family on these streets, member or not — the help a church offers that is almost never refused.',
@@ -19632,7 +19660,7 @@ const GF_NEEDS=(()=>{
   fig:get('medAge'),
   xOf:m=>xs(get('renters')(m)),
   figEn:S((v,x)=>{ const r=X(x); return `A young, renting neighborhood: median age ${R(v)}${r!=null?`, with ${R(r)}% of households renting`:''}`; }),
-  figEs:S((v,x)=>{ const r=X(x); return `Un vecindario joven y de inquilinos: edad media de ${R(v)} años${r!=null?`, y el ${R(r)}% de los hogares alquila`:''}`; }),
+  figEs:S((v,x)=>{ const r=X(x); return `Un vecindario joven y de inquilinos: edad mediana de ${R(v)} años${r!=null?`, y el ${R(r)}% de los hogares alquila`:''}`; }),
   roleEn:'Cook Sunday supper for young adults far from home',
   roleEs:'Cocine una cena dominical para adultos jóvenes lejos de casa',
   whatEn:'Open your table on the loneliest evening of the week to young adults living far from family — a shared meal, not an event.',
@@ -20886,7 +20914,7 @@ function gfFigBig(id,v){
   const N=GF_NEEDS[id]||{}, u=N.unit||'%', es=LANG==='es';
   const r=Math.round(v), sign=r>0?'+':r<0?'−':'';
   const grp=x=>String(Math.abs(Math.round(x))).replace(/\B(?=(\d{3})+(?!\d))/g,',');
-  if(u==='yrs') return {text:String(r),cap:es?'edad media':'median age'};
+  if(u==='yrs') return {text:String(r),cap:es?'edad mediana':'median age'};
   if(u==='idx') return {text:(v/100).toFixed(2),cap:es?'índice de Gini':'Gini index'};
   if(u==='n') return {text:sign+grp(v),cap:es?'personas en diez años':'people in ten years'};
   if(u==='pts') return {text:sign+Math.abs(r),cap:es?'puntos en diez años':'points in ten years'};
@@ -24934,7 +24962,7 @@ function dirListHTML(){
       <button type="button" class="btn dir-pdf" data-dir="pdf"${fs.length?'':' disabled'}>${esc(L('Make the directory (PDF)','Hacer el directorio (PDF)'))}</button>
     </div>
     ${DIR_ST.msg?`<p class="dir-msg" role="status">${esc(DIR_ST.msg)}</p>`:''}
-    <div class="dir-count"><b>${esc(dirCountWords(fs.length))}</b>${fs.length?` · ${esc(L(ph+' with photos',ph+' con fotos'))}`:''}${fs.length>8?`<input type="search" id="dir-q" placeholder="${esc(L('Find a family','Buscar una familia'))}" value="${esc(DIR_ST.q)}" aria-label="${esc(L('Find a family','Buscar una familia'))}">`:''}</div>
+    <div class="dir-count"><span class="dir-n"><b>${esc(dirCountWords(fs.length))}</b>${fs.length?` <span class="dir-tw">· ${esc(L(ph+' with photos',ph+' con fotos'))}</span>`:''}</span>${fs.length>8?`<input type="search" id="dir-q" placeholder="${esc(L('Find a family','Buscar una familia'))}" value="${esc(DIR_ST.q)}" aria-label="${esc(L('Find a family','Buscar una familia'))}">`:''}</div>
     ${fs.length?`<div class="dir-list">${shown.map(f=>`<div class="dir-fam"><div class="dir-ph" data-ph="${esc(f.id)}">${f.photo?'':`<span>${esc(dirInitials(f))}</span>`}</div><div class="dir-fi"><b>${esc(f.family)}</b><span>${esc(f.people||'')}${f.kids?(f.kidsOk?' · '+esc(f.kids):' · '+esc(L('children not shown','niños no mostrados'))):''}</span><small>${esc([f.phone,f.email].filter(Boolean).join(' · '))}</small></div><button type="button" class="btn ghost dir-ed" data-dir="edit" data-id="${esc(f.id)}">${esc(L('Edit','Editar'))}</button></div>`).join('')}</div>`
       :`<p class="dir-empty">${esc(L('No families yet. Add them one by one, or bring in the clerk’s list and a folder of photos.','Aún no hay familias. Agréguelas una por una, o traiga la lista del secretario y una carpeta de fotos.'))}</p>`}
     <div class="dir-foot"><button type="button" class="btn ghost" data-dir="save"${fs.length?'':' disabled'}>${esc(L('Save a copy','Guardar una copia'))}</button><label class="btn ghost dir-load">${esc(L('Load a copy','Cargar una copia'))}<input type="file" accept="application/json,.json" data-dir="load" hidden></label><span class="note">${esc(L('A copy moves the directory, with its photos, to another computer.','Una copia lleva el directorio, con sus fotos, a otra computadora.'))}</span></div>`;
@@ -44825,9 +44853,10 @@ const DF_T={
   lim1:{en:'Read: the official church list, each church’s website (the pages a visitor looks at), Google’s listing on Maps, the YouTube channel’s last videos{search}. Nothing is posted and no one is contacted.',
         es:'Se lee: la lista oficial, el sitio web de cada iglesia (las páginas que mira un visitante), la ficha de Google en Maps, los últimos videos del canal de YouTube{search}. No se publica nada ni se contacta a nadie.'},
   limS:{en:', and one web search for each church’s name',es:' y una búsqueda en internet del nombre de cada iglesia'},
-  lim2:{en:'Not read: Facebook and Instagram (only a page’s link and, when a search result shows them, its followers); Google’s own search order (no program may read it); YouTube comments.',
-        es:'No se lee: Facebook ni Instagram (solo el enlace de la página y, cuando una búsqueda los muestra, sus seguidores); el orden de búsqueda de Google (ningún programa puede leerlo); los comentarios de YouTube.'},
-  lim3:{en:'A site that asks programs not to read it, or does not let our reader in, is said so, never counted against the church.',es:'Un sitio que pide no ser leído por programas, o no deja entrar a nuestro lector, se dice así, nunca cuenta en contra de la iglesia.'},
+  // v10.70.1 (the audit, second look): plain sentences (it read "when a search result shows them, its followers" and "is said so, never counted")
+  lim2:{en:'Not read: Facebook and Instagram (only each page’s link, and its follower count when a search result shows it); Google’s own search order (no program may read it); YouTube comments.',
+        es:'No se lee: Facebook ni Instagram (solo el enlace de cada página, y su número de seguidores cuando una búsqueda lo muestra); el orden de búsqueda de Google (ningún programa puede leerlo); los comentarios de YouTube.'},
+  lim3:{en:'A site that asks programs not to read it, or does not let our reader in, is marked as such and never counted against the church.',es:'Un sitio que pide no ser leído por programas, o no deja entrar a nuestro lector, se señala como tal y nunca cuenta en contra de la iglesia.'},
   ok:{en:'Current',es:'Al día'}, work:{en:'Needs work',es:'Necesita trabajo'}, help:{en:'Needs help now',es:'Necesita ayuda ya'}, none:{en:'None found',es:'No se encontró'}, unread:{en:'Not read',es:'No leído'}, na:{en:'—',es:'—'},
   aWebsite:{en:'Website',es:'Sitio web'}, aPastor:{en:'Pastor’s name',es:'Nombre del pastor'}, aGoogle:{en:'Google & Maps',es:'Google y Maps'},
   aSocial:{en:'Facebook & Instagram',es:'Facebook e Instagram'}, aYoutube:{en:'YouTube & live stream',es:'YouTube y transmisión'}, aReach:{en:'Reaching out',es:'Alcance'},
@@ -44918,6 +44947,12 @@ const dfMy=d=>{ try{ return new Date(d+'T12:00').toLocaleDateString(LANG==='es'?
 const dfDays=(a,b)=>Math.round((new Date(b)-new Date(a))/864e5);
 /* v10.70.1 (the audit): "0 days ago" is today; one day is "1 day ago" */
 const dfAgo=n=>n<=0?L('today','hoy'):n===1?L('1 day ago','hace 1 día'):L(`${dfNf(n)} days ago`,`hace ${dfNf(n)} días`);
+/* v10.70.1 (the audit, second look): a month and its year, a date, a number and its word never break apart ("Idle since September /
+   2024", "Last video 3 / days ago", "hace 1 / día", "39 / members"): dfNb puts each in a piece that does not break (.df-tw), the words
+   escaped and read the same. dfDot: its first part so, and each " · …" after it one piece with its dot ("· updated monthly") */
+const DF_KEEP=/(?:January|February|March|April|May|June|July|August|September|October|November|December) \d{4}|(?:enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre) de \d{4}|\b\d{1,2} [A-Za-z]{3,4}\.? \d{4}|\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sept?|Oct|Nov|Dec)\.? \d{1,2}\b|\b\d{1,2} (?:ene|feb|mar|abr|may|jun|jul|ago|sept?|oct|nov|dic)\b\.?|(?:hace )?\b\d[\d,.]* (?:days? ago|días?|members|miembros|reviews?|reseñas?|views?|vistas?)(?![A-Za-zÀ-ÿ])/g;
+const dfNb=t=>esc(t==null?'':t).replace(DF_KEEP,m=>`<span class="df-tw">${m}</span>`);
+const dfDot=t=>{ const [a,...b]=String(t==null?'':t).split(' · '); return dfNb(a)+b.map(x=>` <span class="df-tw">· ${esc(x)}</span>`).join(''); };
 const dfSurname=n=>{ const w=String(n||'').replace(/\b(Jr|Sr|II|III|IV)\.?$/i,'').replace(/[.,]/g,' ').trim().split(/\s+/).filter(Boolean); return w.length?w[w.length-1]:''; };
 const dfWords=n=>dfFold(n).toLowerCase().replace(/[.,()]/g,' ').split(/\s+/).filter(x=>x.length>1&&!/^(jr|sr|ii|iii|iv)$/.test(x));
 /* one person, however a page writes the name ("Josh Mura" is Joshua Mura; "Zabdiel Brígido" is Zabdiel Brigido) */
@@ -45148,8 +45183,8 @@ function dfJudge(c,X,today,own,myName){
     const extra=[], W=MK.website, st=dfState(W,false);
     if(listedDead) extra.push(L(`The address in the official listing, ${dfHost(c.site.listed)}, does not open; the church’s site is ${dfHost(site.url)}.`,`La dirección de la ficha oficial, ${dfHost(c.site.listed)}, no abre; el sitio de la iglesia es ${dfHost(site.url)}.`));
     if(other){ const on=[...new Set((other.pastors||[]).filter(p=>(p.pages||[]).some(pg=>DF_MAIN.test(pg))).map(p=>dfCleanName(p.name,c.town+' '+c.name)).filter(n=>n&&dfPersonLike(n)))];
-      extra.push(/seventhdayadventist\.church$/.test(dfHost(other.url))?L(`Another page for the church is also online, on the Adventist church-website platform: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Link it to the church’s site, or choose one.`,`Hay otra página de la iglesia en la plataforma adventista de sitios web: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Enlácela al sitio de la iglesia, o elija uno.`)
-        :L(`A second website is also online: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Visitors may find either one.`,`Hay un segundo sitio web en línea: ${dfHost(other.url)}${on.length?', que nombra a '+on.map(n=>'Pastor '+n).join(' y '):''}. Los visitantes pueden encontrar cualquiera.`)); }
+      extra.push(/seventhdayadventist\.church$/.test(dfHost(other.url))?L(`Another page for the church is also online, on the Adventist church-website platform: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Link it to the church’s site, or choose one.`,`Hay otra página de la iglesia en la plataforma adventista de sitios web: ${dfHost(other.url)}${on.length?', que nombra '+on.map(n=>'al pastor '+n).join(' y '):''}. Enlácela al sitio de la iglesia, o elija uno.`)
+        :L(`A second website is also online: ${dfHost(other.url)}${on.length?', naming '+on.map(n=>'Pastor '+n).join(' and '):''}. Visitors may find either one.`,`Hay un segundo sitio web en línea: ${dfHost(other.url)}${on.length?', que nombra '+on.map(n=>'al pastor '+n).join(' y '):''}. Los visitantes pueden encontrar cualquiera.`)); }
     const info=[]; if('pastDate' in site&&site.nextDate) info.push(L(`Lists dates ahead (the next: ${dfMd(site.nextDate)}).`,`Anuncia fechas próximas (la siguiente: ${dfMd(site.nextDate)}).`));
     const s=extra.length&&st.s==='ok'?'work':st.s;
     A.website=counts({s,head:s==='ok'?L('Current','Al día'):other?(/seventhdayadventist\.church$/.test(dfHost(other.url))?L('Another page online','Otra página en línea'):L('Two websites','Dos sitios web')):listedDead?L('Listed address is out of date','La dirección de la ficha está vencida'):L('Opens, with things to fix','Abre, con cosas por arreglar'),
@@ -45165,10 +45200,11 @@ function dfJudge(c,X,today,own,myName){
     else if(namedPages.length) lines.push(L(`Names ${rec} only on the ${dfPagesWord(namedPages)} (in a sermon or video title), not where a visitor looks for the pastor.`,`Nombra a ${rec} solo en la ${dfPagesWord(namedPages)} (en el título de un sermón o video), no donde un visitante busca al pastor.`));
     else lines.push(L(`We did not find ${rec}’s name where a visitor looks for the pastor.`,`No encontramos el nombre de ${rec} donde un visitante busca al pastor.`));
     for(const p of all.filter(p=>staff.some(x=>dfSame(p.name,x))).slice(0,2)) lines.push(L(`Also names ${p.name}, listed as staff in the official directory.`,`También nombra a ${p.name}, que figura como personal en el directorio oficial.`));
-    for(const p of others.slice(0,3)) lines.push(L(`${p.other?'The older site':'It'} names Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': either the site or the official listing is out of date'}.`,`${p.other?'El sitio antiguo':'Nombra'} ${p.other?'nombra ':''}al Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': el sitio o la ficha oficial está desactualizado'}.`));
+    // v10.70.1 (the audit, second look): Spanish "al pastor" (the title in lower case before a name), "la ficha … desactualizada" (the nearest noun)
+    for(const p of others.slice(0,3)) lines.push(L(`${p.other?'The older site':'It'} names Pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': either the site or the official listing is out of date'}.`,`${p.other?'El sitio antiguo':'Nombra'} ${p.other?'nombra ':''}al pastor ${p.name} (${p.other?dfHost(other.url):dfPagesWord(p.pages)})${own?'':': el sitio o la ficha oficial está desactualizada'}.`));
     // v10.62.0: an embedded video on a page a visitor looks at, naming someone else (the title and date quoted)
     for(const v of videos.slice(0,2)) lines.push(L(`A video on the ${dfPagesWord([v.on])} names ${v.name}, not the pastor of record: “${v.title}” (${dfDay(v.date)}).`,`Un video en la ${dfPagesWord([v.on])} nombra a ${v.name}, no al pastor registrado: “${v.title}” (${dfDay(v.date)}).`));
-    for(const x of dirs.slice(0,3)) lines.push(L(`${x.where} still names Pastor ${x.name}.`,`${x.where} todavía nombra al Pastor ${x.name}.`));
+    for(const x of dirs.slice(0,3)) lines.push(L(`${x.where} still names Pastor ${x.name}.`,`${x.where} todavía nombra al pastor ${x.name}.`));
     if(dirDiffers) lines.push(L(`The official church directory lists ${c.pastor}.`,`El directorio oficial de iglesias tiene a ${c.pastor}.`));
     const vid=videos.length>0, s=!onMain.length&&(othersMain.length||vid)?'help':!onMain.length?'work':others.length||dirs.length||dirDiffers||noPhoto||vid?'work':'ok';
     A.pastor={s,head:s==='ok'?L('Current','Al día'):!onMain.length&&(othersMain.length||vid)?(own?L('Shows another pastor','Muestra a otro pastor'):L('Site and listing disagree','El sitio y la ficha no coinciden')):!onMain.length?L('Pastor not named','No nombra al pastor'):vid?L('Another pastor in a video','Otro pastor en un video'):others.length||dirs.length||dirDiffers?L('Also shows earlier names','También muestra nombres anteriores'):L('Named, no photo','Nombrado, sin foto'),
@@ -45292,9 +45328,9 @@ const DF_ICON={website:'<path d="M3 5h18v14H3z M3 9h18 M6 7h.01 M8.5 7h.01"/>',p
   youtube:'<rect x="3" y="6" width="18" height="12" rx="3.5"/><path d="M10.5 9.5v5l4-2.5z"/>',reach:'<path d="M4 12h9 M10 8l4 4-4 4 M17 5v14"/>',
   forms:'<path d="M6 3h9l4 4v14H6z M15 3v4h4 M9 11h6 M9 15h6"/>',pics:'<rect x="3" y="5" width="18" height="14" rx="2"/><circle cx="9" cy="10" r="1.6"/><path d="M21 16l-5-5-7 8"/>',words:'<path d="M4 18L9 6l5 12 M6 14h6 M15 10h5 M15 14h5 M15 18h3"/>'};
 const dfIco=k=>`<svg class="df-ai" viewBox="0 0 24 24" aria-hidden="true" focusable="false">${DF_ICON[k]||DF_ICON.reach}</svg>`;
-const dfChip=(a,short)=>`<span class="df-st df-st-${a.s}"><i aria-hidden="true"></i>${esc(short?a.head:a.n?`${dfT(a.s)} · ${dfT('of',{met:a.met,n:a.n})}`:dfT(a.s))}</span>`;   // v10.62.0: the state and the count
+const dfChip=(a,short)=>`<span class="df-st df-st-${a.s}"><i aria-hidden="true"></i><span>${dfDot(short?a.head:a.n?`${dfT(a.s)} · ${dfT('of',{met:a.met,n:a.n})}`:dfT(a.s))}</span></span>`;   // v10.62.0: the state and the count
 const dfLink=(u,t)=>u&&/^https?:\/\//i.test(u)?`<a class="df-src" href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(t||u.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,'').slice(0,48))} ↗</a>`:'';
-function dfArea(k,a){ return `<div class="df-area"><div class="df-ah">${dfIco(k)}<b>${esc(dfT(DF_AREA_KEY[k]))}</b>${dfChip(a)}</div><div class="df-ahead">${esc(a.head)}</div>${a.lines.map(l=>`<p>${esc(l)}</p>`).join('')}${a.note?`<p class="df-note">${esc(a.note)}</p>`:''}${dfLink(a.url)}</div>`; }
+function dfArea(k,a){ return `<div class="df-area"><div class="df-ah">${dfIco(k)}<b>${esc(dfT(DF_AREA_KEY[k]))}</b>${dfChip(a)}</div><div class="df-ahead">${dfDot(a.head)}</div>${a.lines.map(l=>`<p>${dfNb(l)}</p>`).join('')}${a.note?`<p class="df-note">${esc(a.note)}</p>`:''}${dfLink(a.url)}</div>`; }
 /* the "take me there" buttons of one church: links that go straight to the right place, and the words ready to paste */
 function dfActs(c,J){
   const A=J.areas, b=[];
@@ -45312,6 +45348,16 @@ function dfMine(F,X){
   const key=s=>dfFold(s).toLowerCase().replace(/seventh-day adventist|seventh day adventist|\bsda\b|church|iglesia|company/g,' ').replace(/[^a-z0-9]+/g,' ').trim();
   return F.churches.filter(c=>(my&&c.pastor&&dfSame(c.pastor,my))||names.some(n=>key(n)&&key(n)===key(c.name)));
 }
+/* v10.70.1 (the audit, second look): Pennsylvania's directory writes an address without commas ("1056 Park Avenue Ext Clearfield PA
+   16830"), and the reader took the two words before the state as the town ("Ext Clearfield", "Dr Watsontown", "Ave Chester"). A leading
+   street word comes off a town of two words or more, once, where the findings arrive. "State College" and "Fairview Village" stay whole;
+   "St" is left alone (St Marys, St Clair and St Thomas are Pennsylvania towns). digital-read.mjs cleans new readings the same way */
+const DF_TOWN_ST=/^(?:Ext|Rd|Road|Dr|Drive|Ave|Avenue|Street|Ln|Lane|Blvd|Boulevard|Hwy|Highway|Ct|Pl|Pkwy|Ter|Cir)\.?\s+(?=\S)/;
+function dfTowns(F){
+  const list=F&&Array.isArray(F.churches)?F.churches:[];
+  for(const c of list) if(c&&typeof c.town==='string'&&/\S\s+\S/.test(c.town.trim())) c.town=c.town.trim().replace(DF_TOWN_ST,'');
+  return F;
+}
 /* ---------------- loading: the findings from the server (registered pastors only), read once, refreshed while a reading runs */
 async function dfLoad(force){
   const conf=typeof myConf==='function'?myConf():'';
@@ -45325,7 +45371,7 @@ async function dfLoad(force){
     const j=await r.json().catch(()=>null);
     if(!r.ok||!j||!j.ok){ DF.state=r.status===401?'noreg':'offline'; }
     else if(!j.supported){ DF.state='unsupported'; }
-    else { DF.data=j.findings||null; DF.reading=j.reading||null; DF.review=!!j.review;
+    else { DF.data=dfTowns(j.findings||null); DF.reading=j.reading||null; DF.review=!!j.review;
       DF.state=j.state==='reading'?'reading':j.findings?'ready':j.enabled?'none':'notyet';
       if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
   }catch(e){ DF.state='offline'; }
@@ -45367,7 +45413,7 @@ function dfReportHTML(c,J,myName,F){
   const vv=v?(LANG==='es'?v.es:v.en):null;
   return `<div class="df-doc" id="df-rep-${esc(c.org)}" role="tabpanel"><div class="df-kick">${esc(dfT('kicker'))}</div><h3>${esc(R.title)}</h3>
     <dl><div><dt>${esc(dfT('to'))}</dt><dd>${esc(dfT('toV'))}</dd></div><div><dt>${esc(dfT('from'))}</dt><dd>${esc(R.from?L('Pastor ','Pastor ')+R.from:'')}</dd></div><div><dt>${esc(dfT('date'))}</dt><dd>${esc(R.date)}</dd></div></dl>
-    <h4>${esc(dfT('rSees'))}</h4>${R.good.length?`<p>${esc(dfT('rGood',{list:R.good.join(', ')}))}</p>`:''}<ul>${R.sees.map(x=>`<li><b>${esc(dfT(DF_AREA_KEY[x.k]))}:</b> ${esc(x.h)}. ${esc(x.l)}</li>`).join('')}</ul>
+    <h4>${esc(dfT('rSees'))}</h4>${R.good.length?`<p>${esc(dfT('rGood',{list:R.good.join(', ')}))}</p>`:''}<ul>${R.sees.map(x=>`<li><b>${esc(dfT(DF_AREA_KEY[x.k]))}:</b> ${dfDot(x.h)}. ${dfNb(x.l)}</li>`).join('')}</ul>
     <h4>${esc(dfT('rFirst'))}</h4><ol>${R.first.map(f=>`<li><div>${esc(f.what)}</div><div class="df-faint">${esc(dfT('who'))}: ${esc(f.who)} · ${esc(dfT('when'))}: ${esc(f.when)} · ${esc(dfT('cost'))}: ${esc(dfT('free'))}</div></li>`).join('')}</ol>
     ${R.then.length?`<h4>${esc(dfT('rThen'))}</h4><ul>${R.then.map(f=>`<li>${esc(f.what)}</li>`).join('')}</ul>`:''}
     ${R.deep?`<div class="df-rep-deep"><h4>${esc(dfT('deepTitle'))}</h4><p>${esc(R.deep.sees)}</p><ul>${R.deep.rows.map(x=>`<li>${esc(x.what)} <b>${esc(dfT('fixW'))}</b>${esc(x.fix)} <span class="df-faint">${esc([x.who,x.effort].filter(Boolean).join(' · '))}</span></li>`).join('')}</ul>
@@ -45418,21 +45464,21 @@ function dfPaint(){
   const mine=rows.filter(r=>r.own), others=rows.filter(r=>!r.own), n=k=>rows.filter(r=>r.fl.includes(k)).length, typ=dfTypical(rows);
   rows.forEach(r=>{ const A=r.J.areas; r.fl=['all',r.J.worst===3&&'help',A.website.s==='help'&&'site',['help','work'].includes(A.pastor.s)&&'pastor',['help','work'].includes(A.google.s)&&'google'].filter(Boolean); });
   DF.rows=rows; DF.my=myName;   // v10.62.0: for the In depth blocks drawn later
-  const pills=`<div class="df-pills"><span>${esc(dfT('conf',{conf}))}</span><span><b>${dfNf(F.churches.length)}</b> ${esc(dfT('count',{n:''}).trim())}</span><span>${esc(dfT('checked',{date:dfDay(F.read)}))}</span></div>`;
+  const pills=`<div class="df-pills"><span>${esc(dfT('conf',{conf}))}</span><span><b>${dfNf(F.churches.length)}</b> ${esc(dfT('count',{n:''}).trim())}</span><span>${dfDot(dfT('checked',{date:dfDay(F.read)}))}</span></div>`;
   const v=typeof PURCHASE_VERSES!=='undefined'?PURCHASE_VERSES.find(x=>x.id==='hab2_2'):null, vv=v?(LANG==='es'?v.es:v.en):null;
   const sees=r=>{ const A=r.J.areas, g=DF_AREAS.filter(k=>A[k].s==='ok'), b=DF_AREAS.filter(k=>A[k].s==='help'), w=DF_AREAS.filter(k=>A[k].s==='work');
     return [g.length&&`${dfT('ok')}: ${g.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,b.length&&`${dfT('help')}: ${b.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`,w.length&&`${dfT('work')}: ${w.map(k=>dfT(DF_AREA_KEY[k])).join(', ')}.`].filter(Boolean).join(' '); };
   // v10.62.0: the fixes on the card (heaviest first), folded; then the In depth block
   const fixes=r=>{ const fx=dfFixes(r.c,r.J,myName); return fx.length?`<details class="df-fixd"><summary>${esc(dfT('fixes',{n:fx.length}))}</summary><ol>${fx.map(f=>`<li>${esc(f.what)} <span class="df-faint">${esc(f.who)} · ${esc(f.when)}</span></li>`).join('')}</ol></details>`:''; };
   const card=r=>{ const acts=dfActs(r.c,r.J);
-    return `<article class="df-own"><header><div><h3>${esc(r.name)}</h3><div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''} · ${esc(L('pastor of record: ','pastor registrado: '))}<b>${esc(myName||r.c.pastor||'—')}</b></div></div>
+    return `<article class="df-own"><header><div><h3>${esc(r.name)}</h3><div class="df-faint">${esc(r.c.town||'')}${r.c.members?` <span class="df-tw">· ${esc(dfT('members',{n:dfNf(r.c.members)}))}</span>`:''} <span class="df-tw">· ${esc(L('pastor of record:','pastor registrado:'))}</span> <b>${esc(myName||r.c.pastor||'—')}</b></div></div>
       <a class="btn ghost gfsm" href="#df-report" data-df-torep="${esc(r.c.org)}">${esc(dfT('report'))}</a></header>
       <div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>
       ${acts.length?`<div class="df-go">${acts.join('')}</div>`:''}${fixes(r)}${dfDeepHTML(r,true)}
-      <div class="df-foot"><span>${esc(dfT('readOn',{date:dfDay(r.c.read||F.read)}))}</span>${DF.msg[r.c.org]?`<span>${esc(DF.msg[r.c.org])}</span>`:`<button type="button" class="btn ghost gfsm" data-df-again="${esc(r.c.org)}">${esc(dfT('checkAgain'))}</button>`}</div></article>`; };
+      <div class="df-foot"><span>${dfNb(dfT('readOn',{date:dfDay(r.c.read||F.read)}))}</span>${DF.msg[r.c.org]?`<span>${esc(DF.msg[r.c.org])}</span>`:`<button type="button" class="btn ghost gfsm" data-df-again="${esc(r.c.org)}">${esc(dfT('checkAgain'))}</button>`}</div></article>`; };
   const side=mine.length>=2?`<section class="df-part"><h3 class="df-h"><span>2</span>${esc(dfT('s2'))}</h3><div class="df-wrap"><table class="df-side" style="min-width:${180+mine.length*220}px"><thead><tr><th></th>${mine.map(r=>`<th scope="col">${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
       <tr class="df-side-chart"><th scope="row">${esc(dfT('chart'))}</th>${mine.map(r=>`<td>${dfRadarFig(r.J,typ,conf,{small:true})}</td>`).join('')}</tr>
-      ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${esc(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
+      ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${dfNb(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
   const P=n=>mine.length>=2?n:n-1;
   // v10.62.0: "Website up, but not working": a site that opens with three or more heavy marks failed, and what they are
   const heavyWhy=r=>{ const h=(r.J.marks&&r.J.marks.website||[]).filter(m=>m.w===2&&m.ok===false).map(m=>m.short).filter(Boolean); return h.join(', ').replace(/^./,x=>x.toUpperCase())+'.'; };
@@ -45444,12 +45490,12 @@ function dfPaint(){
     // v10.61.0 (the audit): five a box, so the boxes stay alike in height; the rest are in Every church, below. v10.62.0: two across (three
     // when three), the odd last box the whole row
   const ncol=groups.length===3?3:2;
-const needs=groups.length?`<div class="df-needs${ncol===2?' n2':''}" style="--n:${ncol}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,5).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a>${r.c.town?`<span class="df-faint"> <span class="df-tw">· ${esc(r.c.town)}</span></span>`:''}<div class="df-why">${esc(why(r))}</div></li>`).join('')}</ul>${list.length>5?`<p class="df-faint">${esc(L(`and ${list.length-5} more, in “Every church” below`,`y ${list.length-5} más, en “Cada iglesia” abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
+const needs=groups.length?`<div class="df-needs${ncol===2?' n2':''}" style="--n:${ncol}">${groups.map(([h,list,why])=>`<section><h4>${esc(h)} <span class="df-cnt">${list.length}</span></h4><ul>${list.slice(0,5).map(r=>`<li><a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a>${r.c.town?`<span class="df-faint"> <span class="df-tw">· ${esc(r.c.town)}</span></span>`:''}<div class="df-why">${dfNb(why(r))}</div></li>`).join('')}</ul>${list.length>5?`<p class="df-faint">${esc(L(`and ${list.length-5} more, in “Every church” below`,`y ${list.length-5} más, en “Cada iglesia” abajo`))}</p>`:''}</section>`).join('')}</div>`:`<p class="df-faint">${esc(L('No church of the conference needs help now in these areas.','Ninguna iglesia de la asociación necesita ayuda ya en estas áreas.'))}</p>`;
   const F0=[['all','fAll'],['help','fHelp'],['site','fSite'],['pastor','fPastor'],['google','fGoogle']];
   const table=`<div class="df-filters" role="group">${F0.map(([k,l])=>`<button type="button" class="df-f${DF.f===k?' on':''}" data-df-f="${k}" aria-pressed="${DF.f===k}">${esc(dfT(l))} <span>${n(k)}</span></button>`).join('')}<input id="df-q" type="search" value="${esc(DF.q)}" placeholder="${esc(dfT('find'))}" aria-label="${esc(dfT('find'))}"></div>
     <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
     ${rows.map(r=>{ const q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase(), show=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())), open=!!DF.open[r.c.org];
-      return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?' · '+esc(dfT('members',{n:dfNf(r.c.members)})):''}${r.c.kind&&r.c.kind!=='church'?' · '+esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo')):''}</div></th>
+      return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?` <span class="df-tw">· ${esc(dfT('members',{n:dfNf(r.c.members)}))}</span>`:''}${r.c.kind&&r.c.kind!=='church'?` <span class="df-tw">· ${esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo'))}</span>`:''}</div></th>
         ${DF_AREAS.map(k=>`<td data-th="${esc(dfT(DF_AREA_KEY[k]))}">${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-dwrap"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>${r.own?'':dfDeepHTML(r,false)}</div></td></tr>`; }).join('')}
     </tbody></table></div><p class="df-faint" id="df-none" hidden>${esc(dfT('none2'))}</p>`;
   const how=`<div class="df-hows">${DF_HOW().map(([k,h,places,what])=>`<article><h4>${dfIco(k)}${esc(h)}</h4><p>${esc(what)}</p>${places.length?`<ul>${places.map(([nm,d,u,t,free])=>`<li>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(nm)}</a>`:`<b>${esc(nm)}</b>`} <span class="df-cost">${esc(free?dfT('free'):L('Paid','De pago'))}</span>${d?`<div class="df-faint">${esc(d)}</div>`:''}<div>${esc(t)}</div></li>`).join('')}</ul>`:''}</article>`).join('')}</div>`;
@@ -45632,7 +45678,8 @@ const CMP_UI={
   // 2 At a glance
   t2:{en:'At a glance',es:'De un vistazo'}, n2:{en:'Size, calendar, and what the calendar leans toward.',es:'Tamaño, calendario y hacia dónde se inclina.'},
   regionalConf:{en:'Regional conference',es:'Asociación regional'},
-  members:{en:'{m} members · {c} congregations ({y})',es:'{m} miembros · {c} congregaciones ({y})'},
+  /* v10.70.1 (the audit, second look): "115 / congregations": each number keeps its word */
+  members:{en:'{m}\u00A0members · {c}\u00A0congregations ({y})',es:'{m}\u00A0miembros · {c}\u00A0congregaciones ({y})'},
   c_high:{en:'Full calendar',es:'Calendario completo'}, c_medium:{en:'Partial calendar',es:'Calendario parcial'}, c_low:{en:'Thin calendar',es:'Calendario escaso'},
   /* v10.70.1 (the audit): "grade / B+", "· 76 events" and "year" alone on three lines: each part kept whole (the dots joined in cU) */
   badge:{en:'{label} · grade\u00A0{g} · {n}\u00A0events in the past\u00A0year',es:'{label} · nota\u00A0{g} · {n}\u00A0eventos en el último\u00A0año'},
@@ -45671,13 +45718,14 @@ const CMP_UI={
   tbc:{en:'(to be confirmed)',es:'(por confirmar)'},
   // 4 Energy
   t4:{en:"Where the calendar's energy goes",es:'Hacia dónde va la energía del calendario'},
-  n4:{en:"Share of each conference's own ministry events, past 12 months.",es:'Parte de los eventos de ministerio de cada asociación, últimos 12 meses.'},
+  /* v10.70.1 (the audit, second look): "past 12 / months" under a section's title: "12 months" kept whole in every section line */
+  n4:{en:"Share of each conference's own ministry events, past 12\u00A0months.",es:'Parte de los eventos de ministerio de cada asociación, últimos 12\u00A0meses.'},
   thinNote:{en:'◌ = thin calendar: read it as a picture of the website, not of the work.',es:'◌ = calendario escaso: léalo como una imagen del sitio web, no del trabajo.'},
   groupsNote:{en:'Caring & equipping = pastors & leaders, prayer & discipleship, family. Reaching out = evangelism, health & community service. Next generation = youth, Pathfinders, children, schools.',
     es:'Cuidar y capacitar = pastores y líderes, oración y discipulado, familia. Alcanzar a otros = evangelismo, salud y servicio a la comunidad. Nueva generación = jóvenes, Conquistadores, niños, escuelas.'},
   nEvents:{en:'{n} events',es:'{n} eventos'}, nEvent:{en:'{n} event',es:'{n} evento'},
   // 5 Heat
-  t5:{en:'Ministry by ministry',es:'Ministerio por ministerio'}, n5:{en:'Brighter = a bigger share of that calendar (past 12 months).',es:'Más brillante = una parte mayor de ese calendario (últimos 12 meses).'},
+  t5:{en:'Ministry by ministry',es:'Ministerio por ministerio'}, n5:{en:'Brighter = a bigger share of that calendar (past 12\u00A0months).',es:'Más brillante = una parte mayor de ese calendario (últimos 12\u00A0meses).'},
   yoursCol:{en:'Yours',es:'La suya'}, typical:{en:'Typical',es:'Típico'}, typicalV:{en:'typical {v}',es:'típico {v}'},
   nOf:{en:'{n} of {t} events',es:'{n} de {t} eventos'}, typConf:{en:'Typical conference: {v}',es:'Asociación típica: {v}'},
   typNote:{en:'Typical = median of {n} usable calendars, past 12 months',es:'Típico = mediana de {n} calendarios útiles, últimos 12 meses'},
@@ -45741,7 +45789,7 @@ const CMP_UI={
   unionIni:{en:'{u}: {n} union initiatives',es:'{u}: {n} iniciativas de la unión'},
   // 13 Month by month
   t13:{en:'Month by month',es:'Mes a mes'},
-  n13:{en:'Conference ministry events each month: the past 12 months, then what is published for the next 12.',es:'Eventos de ministerio de la asociación cada mes: los últimos 12 meses y luego lo publicado para los próximos 12.'},
+  n13:{en:'Conference ministry events each month: the past 12\u00A0months, then what is published for the next 12.',es:'Eventos de ministerio de la asociación cada mes: los últimos 12\u00A0meses y luego lo publicado para los próximos 12.'},
   past12:{en:'Past 12 months: what happened',es:'Últimos 12 meses: lo que ocurrió'}, past12s:{en:'Past 12 months',es:'Últimos 12 meses'},
   next12:{en:'Today ▸ next 12 months: what is published',es:'Hoy ▸ próximos 12 meses: lo publicado'}, next12s:{en:'Today ▸ next 12',es:'Hoy ▸ próximos 12'},
   k_ev:{en:'events',es:'eventos'}, k_none:{en:'nothing published (yet)',es:'nada publicado (aún)'}, k_empty:{en:'published, nothing listed',es:'publicado, nada en la lista'},
@@ -45823,7 +45871,7 @@ const CMP_UI={
   minHint:{en:'Tap a kind to see its ministries; tap one to see what it does and how to invite it.',es:'Toque un tipo para ver sus ministerios; toque uno para ver qué hace y cómo invitarlo.'},
   /* v10.63.0 — the brief and Mission and calendar */
   tB:{en:'Your conference in brief',es:'Su asociación en resumen'},
-  nB:{en:'Where its calendar gives more room than most conferences, and where less, over the past 12 months.',es:'Dónde su calendario da más espacio que la mayoría de las asociaciones, y dónde menos, en los últimos 12 meses.'},
+  nB:{en:'Where its calendar gives more room than most conferences, and where less, over the past 12\u00A0months.',es:'Dónde su calendario da más espacio que la mayoría de las asociaciones, y dónde menos, en los últimos 12\u00A0meses.'},
   conf:{en:'The {name} Conference',es:'La Asociación {name}'},
   b_who:{en:'{m} members in {c} congregations ({y}), in the {union}.',es:'{m} miembros en {c} congregaciones ({y}), en la {union}.'},
   b_cal:{en:'Over the past 12 months its published calendar lists {n} ministry events ({cal}: {mc} of 12 months).',es:'En los últimos 12 meses su calendario publicado muestra {n} eventos de ministerio ({cal}: {mc} de 12 meses).'},
@@ -45852,8 +45900,8 @@ const CMP_UI={
   rd_how:{en:'Each area sits as far out as its share of the calendar against the typical conference: on the dashed ring, about the same as most; at the edge, twice as much or more; at the center, none.',
     es:'Cada área se aleja del centro según su parte del calendario frente a la asociación típica: en el anillo de trazos, como la mayoría; en el borde, el doble o más; en el centro, ninguno.'},
   tM:{en:'Mission and calendar',es:'Misión y calendario'},
-  nM:{en:'Each mission statement as published, beside what the past 12 months of the calendar show. A conference calendar shows conference events, and much of a mission is carried out in local churches: read this as a question to ask, not a verdict.',
-    es:'Cada declaración de misión tal como se publicó, junto a lo que muestran los últimos 12 meses del calendario. El calendario de una asociación muestra los eventos de la asociación, y gran parte de una misión se cumple en las iglesias locales: léalo como una pregunta, no como un veredicto.'},
+  nM:{en:'Each mission statement as published, beside what the past 12\u00A0months of the calendar show. A conference calendar shows conference events, and much of a mission is carried out in local churches: read this as a question to ask, not a verdict.',
+    es:'Cada declaración de misión tal como se publicó, junto a lo que muestran los últimos 12\u00A0meses del calendario. El calendario de una asociación muestra los eventos de la asociación, y gran parte de una misión se cumple en las iglesias locales: léalo como una pregunta, no como un veredicto.'},
   m_h:{en:'Its mission',es:'Su misión'}, m_on:{en:'On its website',es:'En su sitio web'}, m_chk:{en:'checked {d}',es:'revisado el {d}'},
   m_union:{en:'on its union’s website',es:'en el sitio web de su unión'},
   m_named:{en:'Named in the mission',es:'Nombradas en la misión'},
@@ -46591,23 +46639,35 @@ function cmpResItems(R){
   all.forEach(x=>{ if(x&&by[x.g]) by[x.g].push(x); });
   return {p,by,help:p&&R.help[p.slug]||null};
 }
+/* v10.70.1 (the audit, second look): Resources for your church broke its published dates on a phone ("next date 26 October / 2026",
+   "support by 30 / September", "portal 1 / July…"): as the page draws them, a day keeps its month, a month its year or its day, and a
+   range's days stay joined (no-break spaces, a word joiner after the dash). conferences/ and tools/conferences stay as published */
+const CMP_PUB_MON='(?:January|February|March|April|May|June|July|August|September|October|November|December|Jan|Feb|Mar|Apr|Jun|Jul|Aug|Sept|Sep|Oct|Nov|Dec)';
+const CMP_KD=[
+  [new RegExp('\\b(\\d{1,2}) ('+CMP_PUB_MON+')\\b','g'),'$1\u00A0$2'],
+  [new RegExp('\\b('+CMP_PUB_MON+') (\\d{4})\\b','g'),'$1\u00A0$2'],
+  [new RegExp('\\b('+CMP_PUB_MON+') (\\d{1,2})\\b','g'),'$1\u00A0$2'],
+  [new RegExp('\\b('+CMP_PUB_MON+'\u00A0\\d{1,2}), (\\d{4})\\b','g'),'$1,\u00A0$2'],
+  [new RegExp('(\\d)([\u2013-])(?=\\d{1,2}\u00A0'+CMP_PUB_MON+'\\b)','g'),'$1$2\u2060'],
+  [new RegExp('(\\b'+CMP_PUB_MON+'\u00A0\\d{1,2})([\u2013-])(?=\\d)','g'),'$1$2\u2060']];
+function cmpKeepDates(t){ return typeof t==='string'?CMP_KD.reduce((a,[re,to])=>a.replace(re,to),t):t; }
 function cmpResLinks(l){
   const ok=(l||[]).filter(o=>o&&cmpHttps(o.u));
-  return ok.length?`<div class="cmp-rlinks">${ok.map(o=>`<a href="${esc(o.u)}" target="_blank" rel="noopener">${esc(o.t)} <span aria-hidden="true">↗</span></a>`).join('')}</div>`:'';
+  return ok.length?`<div class="cmp-rlinks">${ok.map(o=>`<a href="${esc(o.u)}" target="_blank" rel="noopener">${esc(cmpKeepDates(o.t))} <span aria-hidden="true">↗</span></a>`).join('')}</div>`:'';
 }
 function cmpResCard(x,p){
   // the level's name; the body's own name when a supporting body runs it (Adventist Community Services, Versacare, ASI…)
   const lv=x.lv==='union'?(x.o||(p&&p.union)||''):(x.lv==='nad'||x.lv==='world')&&x.o&&!/^(North American Division|General Conference)$/.test(x.o)?x.o:cU('lv_'+(CMP_LV_K[x.lv]?x.lv:'world'));
   return `<article class="cmp-rcard" data-lv="${CMP_LV_K[x.lv]?x.lv:'world'}" style="--k:var(${CMP_LV_K[x.lv]||'--ink3'})"><div class="cmp-rtop"><span class="cmp-lv">${esc(lv)}</span>${x.st==='planned'?`<span class="cmp-soon">${esc(cU('planned'))}</span>`:''}</div>
-    <h4>${esc(x.n)}</h4>${x.y?`<p class="cmp-ry">${esc(x.y)}</p>`:''}${x.w?`<p class="cmp-rw">${esc(x.w)}</p>`:''}
-    ${x.h&&x.h.length?`<h5>${esc(cU('forChurch'))}</h5><ul>${x.h.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:''}${cmpResLinks(x.l)}</article>`;
+    <h4>${esc(cmpKeepDates(x.n))}</h4>${x.y?`<p class="cmp-ry">${esc(cmpKeepDates(x.y))}</p>`:''}${x.w?`<p class="cmp-rw">${esc(cmpKeepDates(x.w))}</p>`:''}
+    ${x.h&&x.h.length?`<h5>${esc(cU('forChurch'))}</h5><ul>${x.h.map(t=>`<li>${esc(cmpKeepDates(t))}</li>`).join('')}</ul>`:''}${cmpResLinks(x.l)}</article>`;
 }
 function cmpHelpCard(h,p){
   const facts=[h.share&&cU('share',{v:h.share}),h.cap&&cU('cap',{v:h.cap}),h.deadline&&cU('deadline',{v:h.deadline})].filter(Boolean);
   return `<article class="cmp-rcard cmp-help" data-lv="conference" style="--k:var(--acc)"><div class="cmp-rtop"><span class="cmp-lv">${esc(cU('lv_conference'))}</span><span class="cmp-kind">${esc(cU('help_'+h.help))}</span></div>
-    <h4>${esc(cU('helpT',{conf:p.name}))}</h4>${facts.length?`<p class="cmp-facts">${facts.map(f=>`<span>${esc(f)}</span>`).join('')}</p>`:''}
-    ${h.how?`<h5>${esc(cU('how'))}</h5><p class="cmp-rw">${esc(h.how)}</p>`:''}
-    ${h.cond&&h.cond.length?`<h5>${esc(cU('cond'))}</h5><ul>${h.cond.map(t=>`<li>${esc(t)}</li>`).join('')}</ul>`:''}${cmpResLinks(h.l)}</article>`;
+    <h4>${esc(cU('helpT',{conf:p.name}))}</h4>${facts.length?`<p class="cmp-facts">${facts.map(f=>`<span>${esc(cmpKeepDates(f))}</span>`).join('')}</p>`:''}
+    ${h.how?`<h5>${esc(cU('how'))}</h5><p class="cmp-rw">${esc(cmpKeepDates(h.how))}</p>`:''}
+    ${h.cond&&h.cond.length?`<h5>${esc(cU('cond'))}</h5><ul>${h.cond.map(t=>`<li>${esc(cmpKeepDates(t))}</li>`).join('')}</ul>`:''}${cmpResLinks(h.l)}</article>`;
 }
 function cmpResDraw(){
   const host=$('cmp-resg'), R=CMP.res; if(!host||!R) return;
@@ -46642,7 +46702,7 @@ function cmpMinBody(m){
   const em=typeof m.em==='string'&&CMP_EMAIL.test(m.em)?m.em:'', tel=typeof m.tel==='string'&&/^\+?[0-9]{7,15}(?:,[0-9]{1,6})?$/.test(m.tel)?m.tel:'';
   const st=CMP_UI['ms_'+m.st]?m.st:'';
   return `${st?`<div class="cmp-rtop">${cmpHttps(m.su)?`<a class="cmp-stand" href="${esc(m.su)}" target="_blank" rel="noopener" title="${esc(cU('standWhy'))}">${esc(cU('ms_'+st))}</a>`:`<span class="cmp-stand">${esc(cU('ms_'+st))}</span>`}</div>`:''}
-    <p class="cmp-rw">${esc(what||'')}</p>${lines.map(t=>`<p class="cmp-ry">${esc(t)}</p>`).join('')}${m.note?`<p class="cmp-ry cmp-mnote">${esc(cU('minNote',{n:m.note}))}</p>`:''}
+    <p class="cmp-rw">${esc(cmpKeepDates(what||''))}</p>${lines.map(t=>`<p class="cmp-ry">${esc(cmpKeepDates(t))}</p>`).join('')}${m.note?`<p class="cmp-ry cmp-mnote">${esc(cmpKeepDates(cU('minNote',{n:m.note})))}</p>`:''}
     <div class="cmp-rlinks">${cmpHttps(m.site)?`<a href="${esc(m.site)}" target="_blank" rel="noopener">${esc(cU('minWebsite'))} <span aria-hidden="true">↗</span></a>`:''}${cmpHttps(m.inv)?`<a href="${esc(m.inv)}" target="_blank" rel="noopener">${esc(cU('minInvite'))} <span aria-hidden="true">↗</span></a>`:''}</div>
     ${em||tel?`<p class="cmp-contact">${em?`<a href="mailto:${esc(em)}">${esc(em)}</a>`:''}${tel?`<a href="tel:${esc(tel)}">${esc(m.ph)}</a>`:''}</p>`:''}`;
 }
