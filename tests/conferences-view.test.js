@@ -140,15 +140,17 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('12 months', P.qa('#cmp-ya .tl-r').length, 12);
   const nyp=P.qa('#cmp-ya .tl-r').map(r=>!!r.querySelector('.tl-c.nyp'));
   c('Jan – Sep 2027 are "not published yet" (hatched)', nyp, [false,false,false,true,true,true,true,true,true,true,true,true]);
-  c('…and say so', P.qa('#cmp-ya .nyp-l').map(x=>x.textContent).every(t=>t==='not published yet'));
+  // v10.70.1 (the audit): a hatched month holding the conference's own dates (camp meeting, OneVoice27) says "1 date known; calendar not published yet"
+  c('…and say so', P.qa('#cmp-ya .nyp-l').map(x=>x.textContent).every(t=>t==='not published yet'||t==='1 date known; calendar not published yet'));
   // the NAD's "All Things New phase 3" (April 2027) comes first, then the September 2027 series: each "Start now", earliest first
   c('Prepare now opens with what needs a start now', P.qa('#cmp-prep .pi .cmp-hint')[0]&&P.qa('#cmp-prep .pi .cmp-hint')[0].textContent, 'Start now');
   c('…and Pennsylvania\'s OneVoice27 series is among them', P.qa('#cmp-prep .pi').concat(P.qa('#cmp-prep details .pi')).some(x=>/OneVoice27 evangelistic series/.test(x.textContent)&&/Start now/.test(x.textContent)));
   c('a deadline within three months is there (15 Oct)', /Apply by 15 Oct 2026/.test(P.txt('#cmp-prep')));
   c('Start now carries the planner\'s reason', /12 to 18 months/.test(P.q('#cmp-prep .cmp-hint.now').getAttribute('title')));
   c('the note says checked monthly, never live', P.qa('#cmp-ya > .note').map(n=>n.textContent).join(' '), 'Conferences publish their calendars at different times; these are checked again every month.');
-  c('hint words: Start by a month ahead, Start now once it has passed', P.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'start-by',by:'2026-09'},'2026-10'),cmpHintText({k:'start-now',by:'2026-09'},'2026-10')]"), ['Start by Dec 2026','Start now','Start now']);
-  c('registration hints', P.J("[cmpHintText({k:'register',d:'2027-03-01'},'2026-10'),cmpHintText({k:'apply',d:'2026-10',p:'m'},'2026-10'),cmpHintText({k:'opens',d:'2026-10-01',from:'lodging links open'},'2026-10')]"), ['Register by 1 Mar 2027','Apply by Oct 2026','Booking opens 1 Oct 2026']);
+  // v10.70.1 (the audit): a date never breaks across lines: no-break spaces inside it ("Dec 2026", "1 Mar 2027")
+  c('hint words: Start by a month ahead, Start now once it has passed', P.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'start-by',by:'2026-09'},'2026-10'),cmpHintText({k:'start-now',by:'2026-09'},'2026-10')]"), ['Start by Dec\u00A02026','Start now','Start now']);
+  c('registration hints', P.J("[cmpHintText({k:'register',d:'2027-03-01'},'2026-10'),cmpHintText({k:'apply',d:'2026-10',p:'m'},'2026-10'),cmpHintText({k:'opens',d:'2026-10-01',from:'lodging links open'},'2026-10')]"), ['Register by 1\u00A0Mar\u00A02027','Apply by Oct\u00A02026','Booking opens 1\u00A0Oct\u00A02026']);
   P.E("document.querySelector('#cmp-ya [data-cmp-ahead=\"central-california\"]').click()");
   c('another conference\'s year ahead, one at a time', [P.J('CMP.st.ahead'), /^Central California:/.test(P.txt('.cmp-yasum')), P.qa('#cmp-ya .tl-h div')[1].textContent], ['central-california',true,'Central California']);
   // v10.63.3 — the pastor (9 Oct 2026): "When I click … the tabs there yours PA Ohio, Arkansas CCC … it doesn't change what's right
@@ -216,7 +218,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     c('Prepare now in Spanish, named for his conference; the line over the buttons', [S.txt('#cmp-prep h4'), S.txt('#cmp-ya .cmp-segl')], ['Prepárese ya en Pennsylvania','Mostrar el año que viene de']);
     c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya','Pennsylvania: calendario publicado hasta dic 2026. El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27.']);
     c('aún no publicado', S.qa('#cmp-ya .nyp-l')[0].textContent, 'aún no publicado');
-    c('Spanish hints', S.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'register',d:'2027-03-01'},'2026-10')]"), ['Empiece a más tardar en dic 2026','Inscripción: hasta 1 mar 2027']);
+    // v10.70.1 (the audit): no-break spaces in a date
+    c('Spanish hints', S.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'register',d:'2027-03-01'},'2026-10')]"), ['Empiece a más tardar en dic\u00A02026','Inscripción: hasta 1\u00A0mar\u00A02027']);
     c('the character line and the badge', [S.txt('.cmp-card.mine .char'), S.txt('.cmp-card.mine .cmp-badge')], ['Se inclina hacia: Conquistadores y niños; familia, damas y caballeros',`Calendario parcial · nota B · ${pa.counts.ministryEvents} eventos en el último año`]);
     c('the joining caution in Spanish', /no muestran que uno causó el otro/.test(S.txt('#cmp-size .cmp-warn')));
     c('event titles stay as published', /OneVoice27/.test(S.txt('#cmp-ya')));
