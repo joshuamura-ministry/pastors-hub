@@ -54,6 +54,7 @@ async function advise(env) {
 const W = await import(new URL('../netlify/functions/advise-ideas.mjs', import.meta.url).href);
 const SW = await import(new URL('../netlify/functions/needs-sweep.mjs', import.meta.url).href);
 const dev = n => ('dev' + String(n).padStart(4, '0') + 'AAAAAAAAAAAAAAAAAAAA').slice(0, 22);
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 const FIGS = [
   { k: 'pop', label: 'Population', unit: 'n', t: 5480, w: 32000, c: 646000 },
@@ -95,7 +96,7 @@ console.log('-- GET says whether the ideas are on: a key AND a passphrase --');
 { let fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   let g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   // v10.56.0 (stale, not a regression): Claude in Make the Case makes it advise-2.7 and ideas-1.1 (a group's study; a need's is unchanged)
-  c('advise-2.7, ideas true, ideasFn ideas-1.1 (the needs list still on)', [g.fn, g.ideas, g.ideasFn, g.needs], ['advise-2.7', true, 'ideas-1.1', true]);
+  c('advise-2.7, ideas true, ideasFn ideas-1.1 (the needs list still on)', [g.fn, g.ideas, g.ideasFn, g.needs], ['advise-2.8', true, 'ideas-1.1', true]);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: ideas false', g.ideas, false);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV, IDEAS_DAY_MAX: '0' }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -128,7 +129,7 @@ console.log('\n-- 202: the job, kept as hashes; the worker woken; no church, no 
 let JOB = null, KEY1 = null, REC = null;
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(10), ip: '203.0.113.7', tags: ['snap', 'poor', 'not-a-tag', 'no-car'], extra: { church: 'Bucks County SDA', pastor: 'Joshua Mura', address: '10 Greene Rd' } }));
-  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.7', true, true, 4000]);   // v10.56.0 (stale): advise-2.7
+  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.8', true, true, 4000]);   // v10.56.0 (stale): advise-2.7
   JOB = r.job; KEY1 = r.key; REC = S.peek('j/' + r.job);
   c('the record: queued, hashes only, kept by its place, need and figures', [REC.status, REC.keyHash === sha(r.key), /^i\/[0-9a-f]{32}\/en$/.test(REC.cacheKey)], ['queued', true, true]);
   const txt = JSON.stringify(REC);

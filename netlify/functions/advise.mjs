@@ -98,9 +98,21 @@ import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
 // v10.62.2: the lock is the passphrase, or a guest code on its own registration (guest-pass.mjs; TERRAIN_AI_GUESTS)
 import { passCheck } from './guest-pass.mjs';
+import { billingOn, fullFor, claudeBump, claudeGiveBack } from './account.mjs';   // v10.72.0: a plan, once payments are on
+/* v10.72.0: who may ask Claude. The passphrase or a tester code, as always (passCheck, uncounted); else, with payments on, a plan through
+   Terrain's session (account.mjs fullFor: counted a day per account, claudeBump, after each route's own limits). Payments off: the
+   passphrase alone rules, as before. */
+async function claudeGate(request) {
+  if (await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS)) return { ok: true, via: 'pass' };
+  if (!billingOn()) return { ok: false };
+  let f = null; try { f = await fullFor(request, PASS); } catch { f = null; }
+  return f && f.full && f.via === 'plan' ? { ok: true, via: 'plan', uid: f.uid, status: f.status } : { ok: false };
+}
+async function planTake(g, now) { if (g.via !== 'plan') return null; const a = await claudeBump(g.uid, g.status, now); return a.ok ? null : { code: 'limit-plan', retryAfter: a.retryAfter, max: a.max }; }
+async function planBack(g, now) { if (g.via === 'plan') await claudeGiveBack(g.uid, now); }
 
 const MODEL = (process.env.ADVISE_MODEL || 'claude-opus-5-5').trim();
-const FN_VERSION = 'advise-2.7';   // 2.7: Claude in Make the Case (v10.56.0); 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
+const FN_VERSION = 'advise-2.8';   // 2.8: a plan opens Claude once payments are on, counted a day per account (v10.72.0); 2.7: Claude in Make the Case (v10.56.0); 2.6: the work for each need (v10.55.0); 2.5: the needs list (v10.53.0); 2.4: Find prices (v56); 2.3: the Sabbath guideline (SABBATH-GUIDELINE.md, 1 Oct 2026) and free drawings
 const KEY = (process.env.ANTHROPIC_API_KEY || '').trim();
 const PASS = (process.env.TERRAIN_AI_PASS || '').trim();
 const MAX_BODY = 40000;
@@ -602,7 +614,7 @@ async function pricesRoute(request, context, p) {
   if (p.mode === 'prices-status') return pricesStatus(p);
   if (!KEY) return pReply('nokey', 503);
   if (!PASS) return pReply('disabled', 403);
-  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return pReply('locked', 401);
+  const g = await claudeGate(request); if (!g.ok) return pReply('locked', 401);   // v10.72.0
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return pReply('noreg', 401); }
@@ -625,11 +637,12 @@ async function pricesRoute(request, context, p) {
     }
     taken.push(k);
   }
+  { const over = await planTake(g, now); if (over) { for (const t of taken) await pGiveBack(store, keys[t]); return pReply('limit-plan', 429, { retryAfter: over.retryAfter, max: over.max }); } }   // v10.72.0: a plan's day
   const job = pRand(16), key = pRand(32), worker = pRand(32);
   const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: got.input,
     model: PRICES_MODEL(), effort: PRICES_EFFORT(), counts: { dev: keys.dev } };
   const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
-  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return pReply('busy', 503); }
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); await planBack(g, now); return pReply('busy', 503); }
   // wake the worker (the same deploy: a preview wakes its own); only its 202 is awaited
   let woke = false;
   try {
@@ -650,6 +663,7 @@ async function pricesRoute(request, context, p) {
     } catch { /* the sweep tidies it */ }
     if (lost) { pricesLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
     for (const t of taken) await pGiveBack(store, keys[t]);
+    await planBack(g, now);
     return pReply('unavailable', 502);
   }
   pricesLog('queued');
@@ -754,7 +768,7 @@ async function needsRoute(request, context, p) {
   if (p.mode === 'needs-status') return needsStatus(p);
   if (!KEY) return nReply('nokey', 503);
   if (!PASS || needsDayMax() === 0) return nReply('disabled', 403);
-  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return nReply('locked', 401);
+  const g = await claudeGate(request); if (!g.ok) return nReply('locked', 401);   // v10.72.0
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return nReply('noreg', 401); }
@@ -787,11 +801,12 @@ async function needsRoute(request, context, p) {
     }
     taken.push(k);
   }
+  { const over = await planTake(g, now); if (over) { for (const t of taken) await pGiveBack(store, keys[t]); return nReply('limit-plan', 429, { retryAfter: over.retryAfter, max: over.max }); } }   // v10.72.0: a plan's day
   const job = pRand(16), key = pRand(32), worker = pRand(32);
   const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
     model: NEEDS_MODEL(), effort: NEEDS_EFFORT(), counts: { dev: keys.dev } };
   const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
-  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return nReply('busy', 503); }
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); await planBack(g, now); return nReply('busy', 503); }
   let woke = false;
   try {
     const res = await fetch(new URL('/.netlify/functions/advise-needs', request.url), {
@@ -809,6 +824,7 @@ async function needsRoute(request, context, p) {
     } catch { /* the sweep tidies it */ }
     if (lost) { needsLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
     for (const t of taken) await pGiveBack(store, keys[t]);
+    await planBack(g, now);
     return nReply('unavailable', 502);
   }
   needsLog('queued');
@@ -890,7 +906,7 @@ async function ideasRoute(request, context, p) {
   if (p.mode === 'ideas-status') return ideasStatus(p);
   if (!KEY) return iReply('nokey', 503);
   if (!PASS || ideasDayMax() === 0) return iReply('disabled', 403);
-  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return iReply('locked', 401);
+  const g = await claudeGate(request); if (!g.ok) return iReply('locked', 401);   // v10.72.0
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return iReply('noreg', 401); }
@@ -924,11 +940,12 @@ async function ideasRoute(request, context, p) {
     }
     taken.push(k);
   }
+  { const over = await planTake(g, now); if (over) { for (const t of taken) await pGiveBack(store, keys[t]); return iReply('limit-plan', 429, { retryAfter: over.retryAfter, max: over.max }); } }   // v10.72.0: a plan's day
   const job = pRand(16), key = pRand(32), worker = pRand(32);
   const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
     model: IDEAS_MODEL(), effort: IDEAS_EFFORT(), counts: { dev: keys.dev } };
   const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
-  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return iReply('busy', 503); }
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); await planBack(g, now); return iReply('busy', 503); }
   let woke = false;
   try {
     const res = await fetch(new URL('/.netlify/functions/advise-ideas', request.url), {
@@ -946,6 +963,7 @@ async function ideasRoute(request, context, p) {
     } catch { /* the sweep tidies it */ }
     if (lost) { ideasLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
     for (const t of taken) await pGiveBack(store, keys[t]);
+    await planBack(g, now);
     return iReply('unavailable', 502);
   }
   ideasLog('queued');
@@ -1062,7 +1080,7 @@ async function caseRoute(request, context, p) {
   if (p.mode === 'case-status') return caseStatus(p);
   if (!KEY) return cReply('nokey', 503);
   if (!PASS || caseDayMax() === 0) return cReply('disabled', 403);
-  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) return cReply('locked', 401);
+  const g = await claudeGate(request); if (!g.ok) return cReply('locked', 401);   // v10.72.0
   const secret = pRegSecret();
   let rid = null;
   if (secret) { rid = pRegTokenOk(request.headers.get('x-terrain-reg'), secret); if (!rid) return cReply('noreg', 401); }
@@ -1094,11 +1112,12 @@ async function caseRoute(request, context, p) {
     }
     taken.push(k);
   }
+  { const over = await planTake(g, now); if (over) { for (const t of taken) await pGiveBack(store, keys[t]); return cReply('limit-plan', 429, { retryAfter: over.retryAfter, max: over.max }); } }   // v10.72.0: a plan's day
   const job = pRand(16), key = pRand(32), worker = pRand(32);
   const rec = { v: 1, status: 'queued', created: now, keyHash: pSha(key), workerHash: pSha(worker), input: I, cacheKey, fresh: p.fresh === true,
     model: CASE_MODEL(), effort: CASE_EFFORT(), counts: { dev: keys.dev } };
   const w = await store.setJSON('j/' + job, rec, { onlyIfNew: true });
-  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); return cReply('busy', 503); }
+  if (w && w.modified === false) { for (const t of taken) await pGiveBack(store, keys[t]); await planBack(g, now); return cReply('busy', 503); }
   let woke = false;
   try {
     const res = await fetch(new URL('/.netlify/functions/advise-case', request.url), {
@@ -1116,6 +1135,7 @@ async function caseRoute(request, context, p) {
     } catch { /* the sweep tidies it */ }
     if (lost) { caseLog('queued-late'); return reply({ ok: true, fn: FN_VERSION, job, key, poll: 4000 }, 202); }
     for (const t of taken) await pGiveBack(store, keys[t]);
+    await planBack(g, now);
     return cReply('unavailable', 502);
   }
   caseLog('queued');
@@ -1238,7 +1258,8 @@ export default async (request, context) => {
     try { return await pricesRoute(request, context, early); }
     catch (e) { pricesLog('error'); return reply({ error: 'Prices could not be found just now.', code: 'unavailable' }, 502); }
   }
-  if (!(await passCheck(request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS))) {
+  const gate = await claudeGate(request);   // v10.72.0: the passphrase or a tester code, or a plan with payments on
+  if (!gate.ok) {
     return reply({ error: 'This ministry planner is private to the pastor who set it up.', code: 'locked' }, 401);
   }
   if (!KEY) return reply({ error: 'No API key is configured on the server, so AI planning is switched off.' }, 503);
@@ -1252,6 +1273,7 @@ export default async (request, context) => {
   if (!payload || typeof payload.summary !== 'string' || payload.summary.length < 40) {
     return reply({ error: 'No report data was included.' }, 400);
   }
+  { const over = await planTake(gate, Date.now()); if (over) return reply({ error: 'Today’s studies on your plan are used up.', code: 'limit-plan', retryAfter: over.retryAfter, max: over.max }, 429); }   // v10.72.0: a plan's day
 
   // ---------------------------------------------------------- fresh ideas
   if (payload.mode === 'moves') {

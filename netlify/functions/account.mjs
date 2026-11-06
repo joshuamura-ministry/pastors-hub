@@ -1,4 +1,4 @@
-// Terrain · accounts and plans.                                        account-1.0
+// Terrain · accounts and plans.                                        account-1.1
 //
 // v10.54.0 (DESIGN-PRODUCT.md, Terrain-work/v69). The pastor (6 Oct 2026): "Now we need to make sure we connect this to the stripe
 // and build this to be of the product." A pastor signs in (only to pay; the free survey still needs registration only) with Google or
@@ -18,6 +18,12 @@
 // version as before. With a TEST key (sk_test_) checkout works whatever the switch says, so he can try it on one device (?billing=test).
 // TERRAIN_COMP_EMAILS (comma-separated) always have the full version.
 //
+// v10.72.0 (account-1.1): THE SERVER DECIDES (release 2 of the paid version). fullFor(request), used by gifts.mjs (op id), present.mjs
+// (op open), connect.mjs (op create), digital.mjs (the findings, a reading, the review) and advise.mjs (every Claude route): payments off →
+// everyone; on → a plan through Terrain's session (x-terrain-session), else the passphrase or a tester code (guest-pass.mjs). A plan's
+// Claude studies are counted a day per account (t/<day>/<hash of the uid>: PLAN_CLAUDE_DAY on a plan, TRIAL_CLAUDE_DAY in the trial);
+// the passphrase and tester codes are not counted, as before. GET says claudeDay / trialClaudeDay.
+//
 // STORAGE. Netlify Blobs "terrain-accounts": a/<uid> {uid, email, created, updated, customer, plan, trialUsed}; c/<customer> {uid};
 // e/<event> (stripe-webhook.mjs); r/<hour>/<tag> {n} counters. account-sweep.mjs tidies events and counters.
 //
@@ -27,10 +33,12 @@
 
 import { getStore } from '@netlify/blobs';
 import { createHash, createHmac, createPublicKey, verify as rsaVerify, timingSafeEqual } from 'node:crypto';
+import { unlockOf } from './guest-pass.mjs';   // v10.72.0: the passphrase and tester codes count as the full version too
 
-const FN = 'account-1.0';
+const FN = 'account-1.1';   // 1.1 (v10.72.0): fullFor, the day's allowance of Claude studies on a plan
 const STORE_NAME = 'terrain-accounts';
 export const TRIAL_DAYS = 14;
+export const PLAN_CLAUDE_DAY = 6, TRIAL_CLAUDE_DAY = 3;   // v10.72.0: Claude studies a day per account, on a plan and in the trial (his to change)
 const SESSION_DAYS = 30;
 const MAX_BODY = 8192;
 const SESSION_HOUR = 30, CHECKOUT_HOUR = 10, PORTAL_HOUR = 20, PLAN_HOUR = 240;
@@ -148,6 +156,38 @@ export function planOf(rec, email) {
     cancelAtEnd: !!p.cancelAtEnd, trialUsed: !!(rec && rec.trialUsed), billing: !!(rec && rec.customer) };
 }
 
+// ---------------------------------------------------------------- v10.72.0: who has the full version, for the other functions
+/* fullFor(request): payments off → everyone ({full:true, via:'off'}, no store read). On → a plan through Terrain's own session
+   (x-terrain-session → a/<uid> → planOf: active, trialing, past_due, comp), else the passphrase or a tester code (guest-pass.mjs's
+   unlockOf: 'pass' | 'guest'; 'open', no passphrase set, is not a plan), else not. Never throws; a store that cannot be read answers
+   "not full" (the page asks again). `pass` is the caller's own reading of TERRAIN_AI_PASS, as guest-pass.mjs takes it. */
+export async function fullFor(request, pass = env('TERRAIN_AI_PASS'), now = Date.now()) {
+  if (!billingOn()) return { full: true, via: 'off' };
+  const h = k => { try { return request.headers.get(k); } catch { return null; } };
+  const uid = readSession(h('x-terrain-session'), now);
+  if (uid) {
+    let rec = null; try { rec = await theStore().get('a/' + uid, { type: 'json' }); } catch { rec = null; }
+    if (isPlain(rec)) { const p = planOf(rec, rec.email); if (p.full) return { full: true, via: 'plan', status: p.status, uid }; }
+  }
+  let u = ''; try { u = await unlockOf(h('x-terrain-pass'), h('x-terrain-reg'), pass); } catch { u = ''; }
+  if (u === 'pass' || u === 'guest') return { full: true, via: u };
+  return { full: false, via: '' };
+}
+/* a plan's Claude studies, counted a UTC day per account across every feature (t/<day>/<hash of the uid>): PLAN_CLAUDE_DAY on a plan,
+   TRIAL_CLAUDE_DAY in the trial. The passphrase and tester codes are not counted here (each route's own limits still apply to all).
+   A kept list, set, words or review is given at no cost before any route reaches this. account-sweep.mjs removes the keys after two days. */
+const claudeKey = (uid, now) => 't/' + new Date(now).toISOString().slice(0, 10) + '/' + sha(uid).slice(0, 16);
+export async function claudeBump(uid, status, now = Date.now()) {
+  const max = status === 'trialing' ? TRIAL_CLAUDE_DAY : PLAN_CLAUDE_DAY;
+  let n = 0, over = false;
+  await upsert(theStore(), claudeKey(uid, now), cur => { const k = cur && Number.isInteger(cur.n) ? cur.n : 0; if (k >= max) { over = true; return null; } n = k + 1; return { n, at: now }; });
+  if (over) { const d = new Date(now), next = Date.UTC(d.getUTCFullYear(), d.getUTCMonth(), d.getUTCDate() + 1); return { ok: false, max, retryAfter: Math.max(1, Math.ceil((next - now) / 1000)) }; }
+  return { ok: true, n, max };
+}
+export async function claudeGiveBack(uid, now = Date.now()) {
+  try { await upsert(theStore(), claudeKey(uid, now), cur => cur && Number.isInteger(cur.n) && cur.n > 0 ? { ...cur, n: cur.n - 1 } : null); } catch { /* the day turns anyway */ }
+}
+
 // ---------------------------------------------------------------- Stripe (raw requests, no SDK)
 async function stripe(path, pairs, method = 'POST') {
   const res = await fetch('https://api.stripe.com/v1/' + path, {
@@ -239,7 +279,8 @@ export default async (request, context) => {
   try {
     if (request.method === 'GET') {
       const fb = authOn() ? { apiKey: FB_KEY(), authDomain: FB_PROJECT() + '.firebaseapp.com', projectId: FB_PROJECT() } : null;
-      return reply({ fn: FN, auth: !!fb, fb, billing: billingOn() ? 'on' : 'off', mode: stripeMode(), checkout: checkoutOk(), trialDays: TRIAL_DAYS, prices: await prices(Date.now()) });
+      return reply({ fn: FN, auth: !!fb, fb, billing: billingOn() ? 'on' : 'off', mode: stripeMode(), checkout: checkoutOk(), trialDays: TRIAL_DAYS, prices: await prices(Date.now()),
+        claudeDay: PLAN_CLAUDE_DAY, trialClaudeDay: TRIAL_CLAUDE_DAY });   // v10.72.0: the day's allowance of Claude studies, for the page's words
     }
     if (request.method !== 'POST') return reply({ ok: false, code: 'method' }, 405);
     const raw = await request.text();

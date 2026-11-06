@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.71.0
+     TERRAIN  v10.72.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.71.0" data-theme="dark">
+<html lang="en" data-version="v10.72.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.71.0">
-<title>Community Map — Terrain v10.71.0</title>
+<meta name="terrain-version" content="v10.72.0">
+<title>Community Map — Terrain v10.72.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -702,7 +702,7 @@ body:has(#chbtn) #changech,body:has(#chbtn) .homeline .hl-end{display:none!impor
 .u-quick .note{flex:1 1 260px;font-size:.8rem}
 .u-badge-demo{color:var(--m-hardship);border-color:color-mix(in srgb,var(--m-hardship) 45%,transparent);background:color-mix(in srgb,var(--m-hardship) 12%,transparent)}
 .btn.ghost.u-danger{color:var(--m-hardship);border-color:var(--m-hardship);font-weight:700}
-.tool .tlock{display:inline-block;margin:6px 0 0;font-size:.64rem;font-weight:700;letter-spacing:.12em;
+.tool .tlock,.htile .tlock{display:inline-block;margin:6px 0 0;font-size:.64rem;font-weight:700;letter-spacing:.12em;
   text-transform:uppercase;color:var(--acc);background:var(--acc-dim);border-radius:999px;padding:3px 9px}
 .secnav{--snpad:18px;position:sticky;top:var(--topH,58px);z-index:15;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;
   padding:9px 2px;margin:0 calc(-1 * var(--snpad));padding-left:var(--snpad);padding-right:var(--snpad);
@@ -5291,13 +5291,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.71.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.72.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.71.0';
+const VERSION = 'v10.72.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10536,6 +10536,15 @@ function drawGen(bi){
 /* ---- AI planner (optional; only appears when a key is set server-side) ---- */
 let AI_INFO=null;
 const aiPass=()=>localStorage.getItem('terrain-ai-pass')||'';
+/* v10.72.0: the Claude features are open on this device with a code kept here (the passphrase or a tester code), or, with payments on, a
+   plan (account.mjs then counts the plan's studies a day). The header still carries the code, empty when there is none, and every call the
+   server gates carries Terrain's session (sessHdr). */
+function aiOn(){ try{ return !!aiPass()||(typeof acctBillingOn==='function'&&acctBillingOn()&&acctFull()); }catch(e){ return !!aiPass(); } }
+function sessHdr(){ try{ const s=typeof acctSession==='function'?acctSession():''; return s?{'x-terrain-session':s}:{}; }catch(e){ return {}; } }
+/* the last refusal a Claude study met (429 limit-plan: the plan's day of studies is spent), said in the study's own status line */
+const AI_LAST={code:'',max:0};
+function aiNote(j){ AI_LAST.code=j&&typeof j.code==='string'?j.code:''; AI_LAST.max=j&&Number.isInteger(j.max)?j.max:0; }
+function aiLimitNote(){ if(AI_LAST.code!=='limit-plan') return ''; const n=AI_LAST.max||''; return ' '+esc(L(`Today’s ${n} studies on your plan are used up. Tomorrow brings more.`,`Los ${n} estudios de hoy en su plan ya se usaron. Mañana habrá más.`)); }
 /* v10.70.0 — the pastor (14 Oct 2026), after his leader's code did not work: "Why is this so difficult … does it have to be tied to their
    email?", then "yes build those codes". A code kept on this device is checked against guest-pass once a day (with this registration):
    what it is ('pass' his passphrase, 'guest' a tester's) is kept beside it, so his own device shows "Tester codes"; a code that unlocks
@@ -10686,16 +10695,23 @@ const memberLink=()=>GIFTS_LINK.on||WATCH_LINK.on||CONNECT_LINK.on;
           everyone while payments are off (account.mjs says billing "off"), and
           on a member's page; with payments on, 'full' only with a plan that is
           active, in its trial, past due (Stripe still retrying) or given. */
+/* v10.72.0 — the pastor (6 Nov 2026), to the audit report's split: "Yes". Free: the whole survey report and the titles of the needs;
+   Spiritual Gifts "Take it yourself" and your own report. Paid: a need opened (its figures, where to begin, the ideas, the sheets, the
+   PDFs, the proposal), Spiritual Gifts for the whole church, Make the Case, the Planner, the conferences, Compare your churches, the
+   Church Directory, connection cards, everything Claude writes. The server now decides too (account.mjs fullFor): the page's gates are
+   the same split, drawn before the server is asked. Each feature carries its Spanish name and line (`es`) for the lock. */
 const FEATURES={
   survey:  {tier:'free', name:'Community Survey'},
-  plan:    {tier:'full', name:'the action plan',        blurb:'Ministry ideas for every need, a one-page sheet for each, where to look and community resources.'},
-  case:    {tier:'full', name:'Make the Case',          blurb:'A proposal written for the room you are walking into.'},
-  planner: {tier:'full', name:'the Evangelism Planner', blurb:'Eighteen months counted back from opening night, with a benchmark for every phase.'},
-  gifts:   {tier:'full', name:'Spiritual Gifts',        blurb:'Send members a link; their gifts and the ministries that fit come back to you.'},
-  ideas:   {tier:'full', name:'fresh ministry ideas',   blurb:'Ideas invented for this neighborhood and this church, with the steps to start each one.'},
-  connect: {tier:'full', name:'connection cards',       blurb:'A card for your event: people ask for what they want, and you follow up.'},
-  compare: {tier:'full', name:'Learn from other conferences', blurb:'What other conferences’ calendars hold, side by side, and the year ahead.'},
-  churches:{tier:'full', name:'Compare your churches', blurb:'Your churches side by side: their people, their gifts, their plans and how they are found online.'}
+  plan:    {tier:'full', name:'the action plan',        blurb:'Each need opened: the figures behind it, where to begin, ministry ideas for every need in three lifts, a one-page sheet for each, and the proposal.',
+            es:{name:'el plan de acción', blurb:'Cada necesidad abierta: sus cifras, por dónde empezar, ideas de ministerio para cada necesidad en tres niveles, una hoja de una página para cada una y la propuesta.'}},
+  case:    {tier:'full', name:'Make the Case',          blurb:'A proposal written for the room you are walking into.', es:{name:'Presentar el caso', blurb:'Una propuesta escrita para la sala a la que usted entra.'}},
+  planner: {tier:'full', name:'the Evangelism Planner', blurb:'Eighteen months counted back from opening night, with a benchmark for every phase.', es:{name:'el Plan de evangelismo', blurb:'Dieciocho meses contados hacia atrás desde la noche de apertura, con una meta para cada etapa.'}},
+  gifts:   {tier:'full', name:'Spiritual Gifts for your whole church', blurb:'Send members a link; their gifts and the ministries that fit come back to you. Your own report stays free.', es:{name:'Dones espirituales para toda su iglesia', blurb:'Envíe a los miembros un enlace; sus dones y los ministerios que encajan vuelven a usted. Su propio informe sigue gratis.'}},
+  ideas:   {tier:'full', name:'fresh ministry ideas',   blurb:'Ideas invented for this neighborhood and this church, with the steps to start each one.', es:{name:'ideas de ministerio nuevas', blurb:'Ideas pensadas para este vecindario y esta iglesia, con los pasos para empezar cada una.'}},
+  connect: {tier:'full', name:'connection cards',       blurb:'A card for your event: people ask for what they want, and you follow up.', es:{name:'las tarjetas de conexión', blurb:'Una tarjeta para su evento: la gente pide lo que quiere y usted da seguimiento.'}},
+  compare: {tier:'full', name:'Learn from other conferences', blurb:'What other conferences’ calendars hold, side by side, and the year ahead.', es:{name:'Aprender de otras asociaciones', blurb:'Lo que muestran los calendarios de otras asociaciones, lado a lado, y el año que viene.'}},
+  churches:{tier:'full', name:'Compare your churches', blurb:'Your churches side by side: their people, their gifts, their plans and how they are found online.', es:{name:'Comparar sus iglesias', blurb:'Sus iglesias lado a lado: su gente, sus dones, sus planes y cómo se les encuentra en internet.'}},
+  directory:{tier:'full', name:'the Church Directory', blurb:'Photos, names and numbers, printed for your members.', es:{name:'el Directorio de la iglesia', blurb:'Fotos, nombres y números, impresos para sus miembros.'}}
 };
 function currentTier(){
   // ?tier=free lets the pastor preview the free experience before it exists.
@@ -10707,12 +10723,14 @@ function currentTier(){
 }
 function entitled(f){ const d=FEATURES[f]; return !d || d.tier==='free' || currentTier()==='full'; }
 function lockHTML(f){
-  const d=FEATURES[f]||{name:f,blurb:''};
+  const d=FEATURES[f]||{name:f,blurb:''}, es=LANG==='es'&&d.es?d.es:null, name=es?es.name:d.name, blurb=es?es.blurb:(d.blurb||'');
+  const Name=name.charAt(0).toUpperCase()+name.slice(1);
+  // v10.72.0: in both languages; the free version named as it is (the survey, and your own Spiritual Gifts report)
   return `<div class="lock" data-lock="${esc(f)}">
-    <div class="lockk">Full version</div>
-    <h3>${esc(d.name.charAt(0).toUpperCase()+d.name.slice(1))} is part of the full version</h3>
-    <p>${esc(d.blurb)}</p>
-    <p class="note">The free version includes the community survey. Everything that turns the survey into a plan is in the full version.</p>${acctLockBtnHTML()}
+    <div class="lockk">${esc(L('Full version','Versión completa'))}</div>
+    <h3>${esc(L(`${Name} is part of the full version`,`${Name} es parte de la versión completa`))}</h3>
+    <p>${esc(blurb)}</p>
+    <p class="note">${esc(L('The free version includes the Community Survey and your own Spiritual Gifts report. Everything that turns the survey into a plan is in the full version.','La versión gratuita incluye la Encuesta comunitaria y su propio informe de Dones espirituales. Todo lo que convierte la encuesta en un plan está en la versión completa.'))}</p>${acctLockBtnHTML()}
   </div>`;
 }
 /* ==== ACCOUNTS AND PLANS (v10.54.0) ====
@@ -10963,11 +10981,11 @@ function acctOpen(){
 
 /* the plan changed under the page: tiles, the tool on screen, the survey's plan */
 function acctTileLocks(){
-  document.querySelectorAll('.tool').forEach(b=>{
-    const feat=(TOOLS[b.dataset.tool]||{}).feature, has=b.querySelector('.tlock');
-    if(feat&&!entitled(feat)){ if(!has){ const t=document.createElement('span'); t.className='tlock'; t.textContent=tr('Full version'); const bb=b.querySelector('b'); if(bb) bb.after(t); } }
-    else if(has) has.remove();
-  });
+  const tag=(b,feat)=>{ const has=b.querySelector('.tlock');
+    if(feat&&!entitled(feat)){ if(!has){ const t=document.createElement('span'); t.className='tlock'; t.textContent=L('Full version','Versión completa'); const bb=b.querySelector('b'); if(bb) bb.after(t); } }
+    else if(has) has.remove(); };
+  document.querySelectorAll('.tool').forEach(b=>tag(b,(TOOLS[b.dataset.tool]||{}).feature));
+  { const hd=document.getElementById('hubdir'); if(hd) tag(hd,'directory'); }   // v10.72.0: the directory's tile
 }
 function acctApplyTier(){
   try{ acctTileLocks(); }catch(e){}
@@ -10986,6 +11004,9 @@ function acctTierCheck(){
   else ACCT.tierShown=t;
 }
 function acctWho(){ try{ if(!gated()&&!memberLink()) showWho(); }catch(e){} }
+/* v10.72.0: a server said 402 plan (the full version is asked for, and this device has no plan the server knows): ask account.mjs for the
+   plan again and redraw; a session that ran out is forgotten there (acctRefresh). At most once in ten seconds. */
+function acctPlanRefused(){ const t=Date.now(); if(ACCT.refusedAt&&t-ACCT.refusedAt<10000) return; ACCT.refusedAt=t; acctRefresh().then(()=>{ acctTierCheck(); acctWho(); }).catch(()=>{}); }
 /* v10.63.1 — the pastor (9 Oct 2026): "Can you just put a tester code box on the top somewhere and he can click it and then he'll put the
    code in and then it will unlock everything for him". Beside Change while this device is not unlocked (a key on a phone): a box, the code,
    Unlock. guest-pass.mjs checks it with this registration (the pastor's passphrase, or a guest code on its own registration) and says so at
@@ -11177,7 +11198,7 @@ function acctBodyHTML(){
   if(v==='plans'){
     const pr=i.prices, trial=!(p&&p.trialUsed);
     const head=h(L('Terrain, full version','Terrain, versión completa'))
-      +`<p>${esc(L('Spiritual Gifts, Make the Case, the Evangelism Planner, Learn from other conferences, and ministry ideas for every need the survey finds.','Dones Espirituales, Presente su propuesta, el Plan de evangelismo, Aprenda de otras asociaciones, e ideas de ministerio para cada necesidad que encuentra el estudio.'))}</p>`;
+      +`<p>${esc(L('Every need opened, with its ideas and the studies written for your town; Spiritual Gifts for your whole church; Make the Case; the Evangelism Planner; Learn from other conferences; Compare your churches; the Church Directory.','Cada necesidad abierta, con sus ideas y los estudios escritos para su ciudad; Dones espirituales para toda su iglesia; Presentar el caso; el Plan de evangelismo; Aprender de otras asociaciones; Comparar sus iglesias; el Directorio de la iglesia.'))}</p>`;
     if(!pr||!i.checkout) return head+`<p class="acct-err">${esc(acctSay('billing-off'))}</p>`;
     const free=Math.round((pr.month.amount*12-pr.year.amount)/pr.month.amount);
     const go=L(trial?'Start free trial':'Choose',trial?'Empezar la prueba':'Elegir');
@@ -11292,7 +11313,7 @@ const TOOLS={
   survey: {name:'Community Survey',  tabs:['analytics','strategy','mobilize']},
   // standalone: needs no church address or Census data; it has its own panel.
   // Listed second, matching its place on the hub.
-  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts', feature:'gifts'},
+  gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'},   // v10.72.0: the tool opens in the free version (Take it yourself); its landing locks the church's part (FEATURES.gifts)
   case:   {name:'Make the Case',     tabs:['case'], feature:'case'},
   planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner', feature:'planner'},
   // v56 (B2): Learn from other conferences, a tool of its own (no address, no Census)
@@ -13863,9 +13884,10 @@ function wireHub(){
     b.onclick=()=>{ if(b.dataset.tool==='case'&&typeof nsLeaveProp==='function') nsLeaveProp(); openTool(b.dataset.tool); };
     const feat=(TOOLS[b.dataset.tool]||{}).feature;
     if(feat&&!entitled(feat)&&!b.querySelector('.tlock')){
-      const t=document.createElement('span'); t.className='tlock'; t.textContent='Full version'; b.querySelector('b').after(t);
+      const t=document.createElement('span'); t.className='tlock'; t.textContent=L('Full version','Versión completa'); b.querySelector('b').after(t);
     }
   });
+  { const hd=$('hubdir'); if(hd&&!entitled('directory')&&!hd.querySelector('.tlock')){ const t=document.createElement('span'); t.className='tlock'; t.textContent=L('Full version','Versión completa'); const bb=hd.querySelector('b'); if(bb) bb.after(t); } }   // v10.72.0
   const ch=$('changech'); if(ch) ch.onclick=showAddressForm;
   const brand=$('brandlink');
   if(brand) brand.onclick=e=>{ e.preventDefault(); if(memberLink()) return; if(!gated()) showHub(); };
@@ -15103,6 +15125,8 @@ function nsIdeasHTML(n){
         +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`).join('')+`</div>`;
 }
 function nsBodyHTML(n,open,ideasOpen){
+  // v10.72.0: the free version shows the need's title and line; a need opened is the full version (the lock, nothing else)
+  if(!entitled('plan')) return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}><div class="ns-detail ns-locked">${lockHTML('plan')}</div></div>`;
   const steps=Array.isArray(n.steps)?n.steps:[];
   const help=NS_HELP[n.cat];
   // v10.45.1: "what the community needs … more robust with information … the circular graphs with the colors"; and the ideas a
@@ -15277,7 +15301,7 @@ function nsDraw(){
   NS.gk=gk;
   NSM=DATA&&DATA.M?nsModel(DATA.M,SCOPE):null;
   // v10.53.0: the needs list made by Claude, kept with the church for this place and language, replaces the survey's own at once
-  if(NSM&&aiPass()&&SCOPE==='tract'){ const pl=nsAiPlace(), kept=pl?nsAiKept(nsAiKey(pl)):null;
+  if(NSM&&aiOn()&&SCOPE==='tract'){ const pl=nsAiPlace(), kept=pl?nsAiKept(nsAiKey(pl)):null;
     if(kept){ NSM=nsAiApply(NSM,kept.list); if(NS_AI.status!=='working'&&NS_AI.status!=='failed'){ NS_AI.status='done'; NS_AI.made=kept.made; } } }
   if(NS.open&&!nsNeedById(NS.open)){ NS.open=''; NS.ideas=false; }
   if(NS.open&&NSM&&[...NSM.needs,...NSM.also].findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
@@ -15406,11 +15430,11 @@ function nsAiDate(d){ try{ return caseDate(new Date(String(d)+'T12:00:00'),true)
 function nsAiStatusInner(){
   const town=(NSM&&NSM.town)||'', btn=`<button type="button" class="btn ghost gfsm" data-ns-aigen>${esc(nsAiT('again'))}</button>`;
   if(NS_AI.status==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(town?nsAiT('working',{town}):nsAiT('workingNo'))}</span>`;
-  if(NS_AI.status==='failed') return `<span class="ns-aiwhen">${esc(nsAiT('failed'))}</span>${btn}`;
+  if(NS_AI.status==='failed') return `<span class="ns-aiwhen">${esc(nsAiT('failed'))}${aiLimitNote()}</span>${btn}`;
   if(NS_AI.status==='done'&&NS_AI.made) return `<span class="ns-aiwhen">${esc(nsAiT('done',{date:nsAiDate(NS_AI.made)}))}</span>${btn}`;
   return '';
 }
-function nsAiStatusHTML(){ return aiPass()&&SCOPE==='tract'?`<p class="ns-aistat" id="ns-aistat" role="status">${nsAiStatusInner()}</p>`:''; }
+function nsAiStatusHTML(){ return aiOn()&&SCOPE==='tract'?`<p class="ns-aistat" id="ns-aistat" role="status">${nsAiStatusInner()}</p>`:''; }
 function nsAiPaint(){ const p=$('ns-aistat'); if(p) p.innerHTML=nsAiStatusInner(); }
 function nsAiBlocks(n){
   const a=n&&n.ai; if(!a) return '';
@@ -15421,7 +15445,7 @@ function nsAiBlocks(n){
     +(a.churches&&a.churches.length?`<h5 class="ns-aih">${esc(nsAiT('churches'))}</h5>${li(a.churches)}`:'');
 }
 async function nsAiAuto(){
-  if(!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return;
+  if(!aiOn()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return;
   const pl=nsAiPlace(); if(!pl) return;
   const info=await nsAiProbe(); if(!info||!info.needs) { nsAiPaint(); return; }
   const key=nsAiKey(pl);
@@ -15447,8 +15471,9 @@ async function nsAiStart(fresh){
     try{ await libLoadIndex(); }catch(e){}
     const I=nsAiInput(); if(!I) return nsAiFail(key);
     let r=null,j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
       body:JSON.stringify({mode:'needs',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    aiNote(j);   // v10.72.0
     if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.needs)) return nsAiAccept(key,I,j.needs,j.made);
     if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')) NS_AI.info={needs:false}; return nsAiFail(key); }
     const t0=Date.now();
@@ -15506,7 +15531,7 @@ function nsClView(raw,L){
 }
 // the columns from a kept set: in each lift what was kept from the library first, then Claude's, six at most (the pastor: "a few more ideas")
 function nsClList(n){
-  if(!aiPass()||SCOPE!=='tract') return null;
+  if(!aiOn()||SCOPE!=='tract') return null;
   const e=nsClKept(nsClKey(n)); if(!e) return null;
   const L=nsNeedLang(n), kept=(e.keep||[]).map(id=>nsView(id,L)).filter(v=>v&&v.reach!=='in'), made=e.ideas.map(raw=>nsClView(raw,L));
   return NS_LIFTS.flatMap(lf=>[...kept.filter(v=>nsLift(v)===lf),...made.filter(v=>nsLift(v)===lf)].slice(0,6));
@@ -15565,14 +15590,14 @@ function nsClStatusInner(n){
   const key=nsClKey(n), st=NS_CL.status.get(key)||'', e=nsClKept(key), town=(NSM&&NSM.town)||'';
   const btn=k=>`<button type="button" class="btn ghost gfsm" data-ns-clgen="${esc(n.id)}">${esc(nsClT(k))}</button>`;
   if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(town?nsClT('working',{town}):nsClT('workingNo'))}</span>`;
-  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}</span>${btn(e?'again':'retry')}`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}${aiLimitNote()}</span>${btn(e?'again':'retry')}`;
   if(e) return `<span class="ns-aiwhen">${esc(town?nsClT('done',{town,date:nsAiDate(e.made)}):nsClT('doneNo',{date:nsAiDate(e.made)}))}</span>${btn('again')}`;
   return '';
 }
-function nsClStatusHTML(n){ return aiPass()&&SCOPE==='tract'?`<p class="ns-aistat ns-clstat" data-ns-clstat="${esc(n.id)}" role="status">${nsClStatusInner(n)}</p>`:''; }
+function nsClStatusHTML(n){ return aiOn()&&SCOPE==='tract'?`<p class="ns-aistat ns-clstat" data-ns-clstat="${esc(n.id)}" role="status">${nsClStatusInner(n)}</p>`:''; }
 function nsClPaint(n){ document.querySelectorAll('[data-ns-clstat]').forEach(p=>{ if(p.dataset.nsClstat===n.id) p.innerHTML=nsClStatusInner(n); }); }
 async function nsClAuto(n){
-  if(!n||!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract'||!entitled('plan')) return;
+  if(!n||!aiOn()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract'||!entitled('plan')) return;
   const key=nsClKey(n); if(!key) return;
   const info=await nsAiProbe(); if(!info||!info.ideas){ nsClPaint(n); return; }
   if(NS_CL.runs.has(key)||nsClKept(key)||NS_CL.status.get(key)==='failed'){ nsClPaint(n); return; }
@@ -15586,8 +15611,9 @@ async function nsClStart(n,fresh){
     try{ await nsLoad(); }catch(e){}
     const I=nsClInput(n); if(!I) return nsClFail(n,key);
     let r=null,j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
       body:JSON.stringify({mode:'ideas',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    aiNote(j);   // v10.72.0
     if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.ideas)) return nsClAccept(n,key,I,j);
     if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.ideas=false; return nsClFail(n,key); }
     const t0=Date.now();
@@ -15607,9 +15633,9 @@ async function nsClStart(n,fresh){
 }
 // a pick (its proposal or its PDF): the server copies the idea from its own set into the pool for the library; once a page per idea
 function nsClPick(id){
-  if(NS_CL.picked.has(id)||!aiPass()) return; NS_CL.picked.add(id);
+  if(NS_CL.picked.has(id)||!aiOn()) return; NS_CL.picked.add(id);
   const e=nsClSetOf(id); if(!e||!e.set) return;
-  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
     body:JSON.stringify({mode:'ideas-pick',device:buyDevice(),set:e.set,id}),signal:AbortSignal.timeout(15000)}).catch(()=>{}); }catch(e2){}
 }
 /* ---- v10.56.0 — step 2's ideas for one group, by the same deep study (DESIGN-CASE-CLAUDE.md, Terrain-work/v73) --------------------
@@ -15665,7 +15691,7 @@ function cgiStatusInner(G,sec){
   const key=cgiKey(G,sec), st=CASE_GI.status.get(key)||'', e=cgiEntry(G,sec), group=String(G.name||'');
   const btn=k=>`<button type="button" class="btn ghost gfsm" data-cgi-gen="${sec}">${esc(nsClT(k))}</button>`;
   if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(cgiT('working',{group}))}</span>`;
-  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}</span>${btn(e?'again':'retry')}`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(nsClT('failed'))}${aiLimitNote()}</span>${btn(e?'again':'retry')}`;
   if(e&&e.study.key===key) return `<span class="ns-aiwhen">${esc(cgiT('done',{group,date:nsAiDate(e.study.made)}))}</span>${btn('again')}`;
   return '';
 }
@@ -15673,7 +15699,7 @@ function cgiPaint(G,sec){ const b=document.getElementById('case-lib-ai-'+sec); i
 /* The section's head box: the study's line instead of the quick button, when the study is on. False: the quick button as before. */
 function cgiDraw(box,sec){
   const G=typeof caseGroupList==='function'?caseGroupList():null;
-  if(!G||!aiPass()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return false;
+  if(!G||!aiOn()||memberLink()||!DATA||!DATA.M||SCOPE!=='tract') return false;
   const info=NS_AI.info;
   if(!info){ nsAiProbe().then(i=>{ if(i&&i.ideas&&box.isConnected) cgiDraw(box,sec); }); return false; }
   if(!info.ideas||(typeof entitled==='function'&&!entitled('ideas'))) return false;
@@ -15697,8 +15723,9 @@ async function cgiStart(G,sec,fresh){
   const run=(async()=>{
     const I=cgiInput(G,sec); if(!I) return cgiFail(G,sec,key);
     let r=null,j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
       body:JSON.stringify({mode:'ideas',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    aiNote(j);   // v10.72.0
     if(r&&r.status===200&&j&&j.cached&&Array.isArray(j.ideas)) return cgiAccept(G,sec,key,I,j);
     if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.ideas=false; return cgiFail(G,sec,key); }
     const t0=Date.now();
@@ -15718,8 +15745,8 @@ async function cgiStart(G,sec,fresh){
 }
 // "Choose this" on one of Claude's ideas for a group: the server copies it from its own set into the pool (once a page an idea)
 function cgiPick(raw){
-  if(!raw||!/^cl-/.test(String(raw.id))||!raw.clSet||CASE_GI.picked.has(raw.id)||!aiPass()) return; CASE_GI.picked.add(raw.id);
-  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+  if(!raw||!/^cl-/.test(String(raw.id))||!raw.clSet||CASE_GI.picked.has(raw.id)||!aiOn()) return; CASE_GI.picked.add(raw.id);
+  try{ fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
     body:JSON.stringify({mode:'ideas-pick',device:buyDevice(),set:raw.clSet,id:raw.id}),signal:AbortSignal.timeout(15000)}).catch(()=>{}); }catch(e){}
 }
 function nsCardEl(id){ const h=$('u-needs'); return h?h.querySelector(`.ns-need[data-need="${id}"]`):null; }
@@ -17666,6 +17693,7 @@ function gfChurchNav(){
 }
 function gfWireChurchNav(h){
   h.querySelectorAll('[data-gv]').forEach(b=>b.onclick=()=>{
+    if(b.dataset.gv==='setup'&&typeof entitled==='function'&&!entitled('gifts')){ const l=document.getElementById('gf-results'); if(l){ try{ l.scrollIntoView({block:'start'}); }catch(e){} } return; }   // v10.72.0: the free version: the lock below
     GF_VIEW=b.dataset.gv;
     if(GF_VIEW==='take'){ GFS.self=true; gfSave(); }
     gfRender(); window.scrollTo({top:0,behavior:'auto'});
@@ -18423,7 +18451,7 @@ function gfStatus(force){
    'offline' / 'nofn') and whose .status is the HTTP status. */
 async function gfCall(op,body,withCode,again){
   const headers={'content-type':'application/json'};
-  if(withCode){ headers['x-terrain-code']=accessCode(); const tok=regTok(); if(tok) headers['x-terrain-reg']=tok; }
+  if(withCode){ headers['x-terrain-code']=accessCode(); const tok=regTok(); if(tok) headers['x-terrain-reg']=tok; Object.assign(headers,sessHdr()); }   // v10.72.0: and the session
   const fail=(code,status)=>{ const e=new Error(code); e.code=code; e.status=status||0; return e; };
   let r;
   try{ r=await gfRace(fetch(GF_FN,{method:'POST',headers,body:JSON.stringify({...(body||{}),op})}),20000); }
@@ -18431,6 +18459,7 @@ async function gfCall(op,body,withCode,again){
   let j=null; try{ j=await r.json(); }catch(e){ j=null; }
   if(!r||!r.ok||!j||j.ok===false){
     const e=fail((j&&typeof j.error==='string'&&j.error)||(r&&r.status===404?'nofn':'server'),r?r.status:0);
+    if(r&&r.status===402) acctPlanRefused();   // v10.72.0: the full version asked for
     if(j&&(j.lang==='es'||j.lang==='en')) e.lang=j.lang;   // e.g. a used invite, in the member's language
     e.op=op;
     // Registration checked on the server and this device's token missing or
@@ -18443,6 +18472,7 @@ async function gfCall(op,body,withCode,again){
 /* What to tell a person when a call fails, in their language. */
 function gfErrText(e){
   const c=e&&e.code||'';
+  if(c==='plan') return L('This is part of the full version. Choose a plan under Account.','Esto es parte de la versión completa. Elija un plan en Cuenta.');   // v10.72.0
   if(c==='daily-limit') return L('Too many reports have been sent today. Please try again tomorrow.','Hoy se han enviado demasiados informes. Por favor, inténtelo de nuevo mañana.');
   if(c==='offline'||c==='timeout') return L('That did not go through \u2014 you may be offline. Please try again in a moment.','No se pudo enviar; es posible que no tenga conexión. Inténtelo de nuevo en un momento.');
   if(c==='nofn'||c==='server') return L('The results server is not available right now.','El servidor de resultados no está disponible en este momento.');
@@ -18892,7 +18922,7 @@ function gfRenderResume(h){
 
 function gfRender(){
   const h=gfHost(); if(!h) return;
-  if(GF_VIEW==='setup'){ gfRenderSetup(h); return; }
+  if(GF_VIEW==='setup'){ if(typeof entitled==='function'&&!entitled('gifts')){ GF_VIEW='roster'; gfRenderRoster(h); return; } gfRenderSetup(h); return; }   // v10.72.0: the free version never reaches the setup
   if(GF_VIEW==='church'){ gfRenderChurch(h); return; }   // v10.57.1: the main page (step 3 holds it)
   if(GF_VIEW==='roster'){ gfRenderRoster(h); return; }
   if(GF_VIEW==='sample'){ gfRenderSample(h); return; }
@@ -23091,6 +23121,14 @@ function gfRenderRoster(h){
   <div id="gfteamslot"></div>
   </section>`;
 
+  // v10.72.0: the free version keeps the verse, the steps and "Take it yourself"; the church's results and positions are the full version
+  if(typeof entitled==='function'&&!entitled('gifts')){
+    const r=h.querySelector('#gf-results'), p=h.querySelector('#gf-positions');
+    if(r) r.innerHTML=`<h3 class="gfpart-h" id="gf-results-h"><span class="gfpn">2</span>${L('See the results','Vea los resultados')}</h3>${lockHTML('gifts')}`;
+    if(p) p.remove();
+    gfWireChurchNav(h); gfStepsWire(h);
+    return;
+  }
   // The volunteer roster is back-office; it folds under the results. It is
   // mounted LIVE inside the fold, because uTeamMount looks its buttons up by
   // id after inserting them and a detached element has no document.
@@ -24350,7 +24388,7 @@ function libAiDraw(ctx,topic,have,boxId){
     if(!box.isConnected||LIB_AI_RUNNING.has(key)||box.dataset.cgi==='1') return;
     if(!info||!info.enabled) return;                                // no key on the server: no button, as elsewhere
     if(typeof entitled==='function'&&!entitled('ideas')){ box.innerHTML=topic.reach==='in'?msg:msg+lockHTML('ideas'); return; }
-    if(info.locked&&!aiPass()){ box.innerHTML=topic.reach&&topic.reach!=='out'?'':`<p class="note lib-aimsg">${esc(libT('aiLocked'))}</p>`; return; }
+    if(info.locked&&!aiOn()){ box.innerHTML=topic.reach&&topic.reach!=='out'?'':`<p class="note lib-aimsg">${esc(libT('aiLocked'))}</p>`; return; }
     if(have>=LIB_AI_MAX){ box.innerHTML=msg+`<p class="note">${esc(libT('aiFull',have))}</p>`; return; }
     box.innerHTML=`<div class="lib-aibar"><button type="button" class="btn gfsm" data-lib-ai="${esc(topic.reach||'')}">${esc(libT('aiBtn',town))}</button>${topic.reach?'':`<p class="note">${esc(libT('aiNote',have))}</p>`}</div>`+msg;
   });
@@ -24405,7 +24443,7 @@ async function libAiMore(ctx,sec){
       tags:[...env.tags],avoid};
     if(topic.reach) body.reach=topic.reach;
     let r=null, j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},body:JSON.stringify(body),signal:AbortSignal.timeout(58000)});
       j=await r.json().catch(()=>null); }catch(e){ r=null; }
     if(uChurch().id!==ch.id) return;                        // he switched church meanwhile: nothing saved to the wrong one
     if(r&&r.status===401&&j&&j.code==='locked'){ U.aiMsg=aiPass()?libT('aiWrong'):libT('aiLocked'); U.aiErr=true; return; }
@@ -24971,9 +25009,10 @@ function dirDraw(){
   const d=document.getElementById('dir-sheet'); if(!d) return;
   const V=DIR_ST.view;
   const head=`<div class="dir-top"><h2 id="dir-h">${esc(L('Your church directory','El directorio de su iglesia'))}</h2><button type="button" class="dir-x" data-dir="close" aria-label="${esc(L('Close','Cerrar'))}">×</button></div>`;
-  d.innerHTML='<div class="ns-sh dir-sh">'+head+(V==='edit'?dirEditHTML():V==='import'?dirImportHTML():V==='details'?dirDetailsHTML():dirListHTML())+'</div>';
+  const locked=typeof entitled==='function'&&!entitled('directory');   // v10.72.0: the full version
+  d.innerHTML='<div class="ns-sh dir-sh">'+head+(locked?lockHTML('directory'):V==='edit'?dirEditHTML():V==='import'?dirImportHTML():V==='details'?dirDetailsHTML():dirListHTML())+'</div>';
   dirWire();
-  if(V==='list') dirThumbs();
+  if(V==='list'&&!locked) dirThumbs();
 }
 function dirListHTML(){
   const D=dirGet(), fs=dirSort(D.families), q=DIR_ST.q.trim().toLowerCase();
@@ -30108,7 +30147,7 @@ function cnDueFor(ideaId,today){
    registration (and the access code while codes are required), and re-registers quietly once on noreg, as gfCall does. */
 async function cnCall(op,body,withReg,again){
   const headers={'content-type':'application/json'};
-  if(withReg){ try{ const c=accessCode(); if(c) headers['x-terrain-code']=c; }catch(e){} try{ const t=regTok(); if(t) headers['x-terrain-reg']=t; }catch(e){} }
+  if(withReg){ try{ const c=accessCode(); if(c) headers['x-terrain-code']=c; }catch(e){} try{ const t=regTok(); if(t) headers['x-terrain-reg']=t; }catch(e){} Object.assign(headers,sessHdr()); }   // v10.72.0: and the session
   const fail=(code,status)=>{ const e=new Error(code); e.code=code; e.status=status||0; e.op=op; return e; };
   let r;
   try{ r=await Promise.race([fetch(CN_FN,{method:'POST',headers,body:JSON.stringify({...(body||{}),op}),cache:'no-store'}),new Promise((_,no)=>setTimeout(()=>no(new Error('timeout')),20000))]); }
@@ -30116,6 +30155,7 @@ async function cnCall(op,body,withReg,again){
   let j=null; try{ j=await r.json(); }catch(e){ j=null; }
   if(!r||!r.ok||!j||j.ok===false){
     const e=fail((j&&typeof j.error==='string'&&j.error)||(r&&r.status===404?'nofn':'server'),r?r.status:0);
+    if(r&&r.status===402) acctPlanRefused();   // v10.72.0: the full version asked for
     if(withReg&&!again&&e.code==='noreg'){ let ok=false; try{ ok=await regRefresh(); }catch(x){ ok=false; } if(ok) return cnCall(op,body,withReg,true); }
     throw e;
   }
@@ -30123,6 +30163,7 @@ async function cnCall(op,body,withReg,again){
 }
 function cnErrText(e){
   const c=e&&e.code||'';
+  if(c==='plan') return L('This is part of the full version. Choose a plan under Account.','Esto es parte de la versión completa. Elija un plan en Cuenta.');   // v10.72.0
   if(c==='noreg') return L('Terrain could not confirm your registration just now. Please try again in a few minutes.','Terrain no pudo confirmar su registro en este momento. Inténtelo de nuevo en unos minutos.');
   if(c==='slow-down'&&e.op==='create') return L('Too many cards made from this connection this hour.','Se crearon demasiadas tarjetas desde esta conexión en esta hora.');
   if(c==='slow-down') return L('Too many changes this hour. Please try again later.','Demasiados cambios en esta hora. Inténtelo más tarde.');
@@ -37819,12 +37860,12 @@ function cwStatusInner(){
   const k=cwKeyNow(), st=CASE_WD.status.get(k)||'', V=CASE_ST.cw, m=CASE_ST.model, g=m&&m.group?caseGroupFor(m.group.id,m.group.name):'';
   const btn=t=>`<button type="button" class="btn ghost gfsm" data-cw-gen>${esc(cwT(t))}</button>`;
   if(st==='working') return `<span class="ns-aispin" aria-hidden="true"></span><span class="ns-aiwhen">${esc(cwT('working',{group:g}))}</span>`;
-  if(st==='failed') return `<span class="ns-aiwhen">${esc(cwT('failed'))}</span>${btn(V?'again':'retry')}`;
+  if(st==='failed') return `<span class="ns-aiwhen">${esc(cwT('failed'))}${aiLimitNote()}</span>${btn(V?'again':'retry')}`;
   if(V&&V.stale) return `<span class="ns-aiwhen">${esc(cwT('stale'))}</span>${btn('again')}`;
   if(V) return `<span class="ns-aiwhen">${esc(cwT('done',{group:g,date:nsAiDate(V.made)}))}</span>${btn('again')}`;
   return '';
 }
-function cwStatusHTML(){ return aiPass()&&!memberLink()?`<p class="ns-aistat cs-wstat" id="cs-wstat" role="status">${cwStatusInner()}</p>`:''; }
+function cwStatusHTML(){ return aiOn()&&!memberLink()?`<p class="ns-aistat cs-wstat" id="cs-wstat" role="status">${cwStatusInner()}</p>`:''; }
 function cwPaint(){ const p=$('cs-wstat'); if(p) p.innerHTML=cwStatusInner(); }
 function cwFail(k){ if(CASE_WD.status.get(k)!=='done') CASE_WD.status.set(k,'failed'); cwPaint(); return false; }
 function cwAccept(k,I,sig,j){
@@ -37850,7 +37891,7 @@ function cwRedraw(){
   caseDraw3();
 }
 async function cwAuto(){
-  if(!aiPass()||memberLink()||(typeof entitled==='function'&&!entitled('case'))) return;
+  if(!aiOn()||memberLink()||(typeof entitled==='function'&&!entitled('case'))) return;
   const m=CASE_ST.model; if(!m||!m.ok||m.sample||CASE_ST.view!=='build') return;
   const k=cwKeyNow(); if(!k) return;
   const info=await nsAiProbe(); if(!info||!info.case||cwKeyNow()!==k) return;
@@ -37866,8 +37907,9 @@ async function cwStart(fresh){
   CASE_WD.status.set(k,'working'); cwPaint();
   const run=(async()=>{
     let r=null,j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
       body:JSON.stringify({mode:'case',device:buyDevice(),fresh:!!fresh,...I}),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    aiNote(j);   // v10.72.0
     if(r&&r.status===200&&j&&j.cached&&j.words) return cwAccept(k,I,sig,j);
     if(!r||r.status!==202||!j||!j.job||!j.key){ if(j&&(j.code==='locked'||j.code==='disabled'||j.code==='nokey')&&NS_AI.info) NS_AI.info.case=false; return cwFail(k); }
     const t0=Date.now();
@@ -39948,7 +39990,7 @@ async function buyPricesProbe(){
   catch(e){ BUY_PRICES.info={prices:false}; }
   return BUY_PRICES.info;
 }
-function buyPricesOn(){ return !!(BUY_PRICES.info&&BUY_PRICES.info.prices&&aiPass()); }
+function buyPricesOn(){ return !!(BUY_PRICES.info&&BUY_PRICES.info.prices&&aiOn()); }
 /* The page's own random id for the per-device limit (22 base64url characters), made on the first Find prices; nothing else. */
 function buyDevice(){
   let d=''; try{ d=localStorage.getItem('terrain-device')||''; }catch(e){ d=''; }
@@ -39990,8 +40032,9 @@ async function buyPricesFind(id,o){
   const job=(async()=>{
     let item=buyGet(id); if(!item) return {code:'failed'};
     let r=null,j=null;
-    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{})},
+    try{ r=await fetch('/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json','x-terrain-pass':aiPass(),...(typeof regTok==='function'&&regTok()?{'x-terrain-reg':regTok()}:{}),...sessHdr()},
       body:JSON.stringify(buyPricesBody(item)),signal:AbortSignal.timeout(20000)}); j=await r.json().catch(()=>null); }catch(e){ r=null; }
+    aiNote(j);   // v10.72.0
     if(!r||r.status!==202||!j||!j.job||!j.key){
       ideasServerNote(j);
       const c=j&&j.code;
@@ -40684,6 +40727,7 @@ async function prRead(r,op){
   let j=null; try{ j=await r.json(); }catch(e){ j=null; }
   if(!r||!r.ok||!j||j.ok===false){
     const e=prErr((j&&typeof j.error==='string'&&j.error)||(r&&r.status===404&&!j?'nofn':'server'),r?r.status:0);
+    if(r&&r.status===402) acctPlanRefused();   // v10.72.0: the full version asked for
     if(j&&typeof j.where==='string') e.where=j.where;
     e.op=op; throw e;
   }
@@ -40694,7 +40738,7 @@ async function prRead(r,op){
 async function prCall(op,body,o){
   o=o||{};
   const headers={'content-type':'application/json'};
-  if(o.pastor){ headers['x-terrain-code']=accessCode(); const tok=regTok(); if(tok) headers['x-terrain-reg']=tok; }
+  if(o.pastor){ headers['x-terrain-code']=accessCode(); const tok=regTok(); if(tok) headers['x-terrain-reg']=tok; Object.assign(headers,sessHdr()); }   // v10.72.0: and the session
   let r;
   try{ r=await gfRace(fetch(PR_FN,{method:'POST',headers,body:JSON.stringify({...(body||{}),op})}),o.ms||15000); }
   catch(e){ throw prErr('offline'); }
@@ -40715,6 +40759,7 @@ async function prGet(op,q,ms){
 }
 function prErrText(e){
   const c=e&&e.code||'';
+  if(c==='plan') return L('This is part of the full version. Choose a plan under Account.','Esto es parte de la versión completa. Elija un plan en Cuenta.');   // v10.72.0
   if(c==='offline'||c==='timeout') return prU('eOffline');
   if(c==='nofn') return prU('eNoFn');
   if(c==='nocode') return prU('eCode');
@@ -44278,6 +44323,7 @@ function gfOpenLanding(){
 }
 function gfInviteChurch(){
   try{ if(typeof TOOL==='undefined'||TOOL!=='gifts') openTool('gifts'); }catch(e){}
+  if(typeof entitled==='function'&&!entitled('gifts')){ gfOpenLanding(); return false; }   // v10.72.0: the free version: the landing, with its lock
   GF_VIEW='setup'; gfRender();
   const cfg=gfShareCfg(), nm=String(cfg.church||'').trim();
   if(!nm||/^my church$/i.test(nm)){
@@ -45542,13 +45588,13 @@ async function dfLoad(force){
   DF.busy=true; DF.conf=conf;
   try{
     const tok=typeof regTok==='function'?regTok():'';
-    const r=await fetch(DF_FN+'?conf='+encodeURIComponent(conf),{headers:tok?{'x-terrain-reg':tok}:{}});
+    const r=await fetch(DF_FN+'?conf='+encodeURIComponent(conf),{headers:{...(tok?{'x-terrain-reg':tok}:{}),...sessHdr()}});   // v10.72.0: and the session
     const j=await r.json().catch(()=>null);
-    if(!r.ok||!j||!j.ok){ DF.state=r.status===401?'noreg':'offline'; }
+    if(!r.ok||!j||!j.ok){ DF.state=r.status===401?'noreg':'offline'; if(r.status===402) acctPlanRefused(); }   // v10.72.0: the full version asked for
     else if(!j.supported){ DF.state='unsupported'; }
     else { DF.data=dfTowns(j.findings||null); DF.reading=j.reading||null; DF.review=!!j.review;
       DF.state=j.state==='reading'?'reading':j.findings?'ready':j.enabled?'none':'notyet';
-      if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
+      if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{}),...sessHdr()},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
   }catch(e){ DF.state='offline'; }
   DF.busy=false; dfPaint();
   // v10.71.0: the church picker waiting for the list, and a comparison drawn before it came (once: chcRender's dfMount comes back here and returns early, ready)
@@ -45563,7 +45609,7 @@ function dfMount(host){
 }
 async function dfAgain(org){
   const tok=typeof regTok==='function'?regTok():'';
-  try{ const r=await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'again',conf:DF.conf,org})});
+  try{ const r=await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{}),...sessHdr()},body:JSON.stringify({op:'again',conf:DF.conf,org})});
     DF.msg[org]=r.status===429?dfT('limitAgain'):dfT('checking'); }catch(e){ DF.msg[org]=dfT('offline'); }
   dfPaint(); setTimeout(()=>dfLoad(true),DF_POLL_MS);
 }
@@ -45731,7 +45777,7 @@ function dfDeepState(org){ return DF_DEEP.st[dfDeepKey(org)]||null; }
 function dfDeepOn(){ return !!DF.review&&!(typeof memberLink==='function'&&memberLink()); }
 function dfDeepHTML(r,own){
   if(!dfDeepOn()) return '';
-  const org=r.c.org, st=dfDeepState(org), lock=!aiPass()||(st&&st.status==='locked');
+  const org=r.c.org, st=dfDeepState(org), lock=!aiOn()||(st&&st.status==='locked');
   if(lock) return own||st?`<div class="df-deep" data-df-deep="${esc(org)}"><div class="df-deep-h">${esc(dfT('deepTitle'))}</div><p class="df-deep-lock">${esc(dfT('deepLock'))}</p></div>`:'';
   return `<div class="df-deep" data-df-deep="${esc(org)}"><div class="df-deep-h">${esc(dfT('deepTitle'))}</div>${dfDeepInner(r,st,own)}</div>`;
 }
@@ -45767,11 +45813,11 @@ function dfDeepPaint(org){
   dfWire(box,DF.rows,DF.my,DF.data);
 }
 /* his own churches: once per reading, by itself */
-function dfDeepAuto(rows){ if(!dfDeepOn()||!aiPass()) return; (rows||[]).filter(r=>r.own).forEach(r=>{ const k=dfDeepKey(r.c.org); if(DF_DEEP.st[k]||DF_DEEP.runs.has(k)) return; dfDeepStart(r,false); }); }
+function dfDeepAuto(rows){ if(!dfDeepOn()||!aiOn()) return; (rows||[]).filter(r=>r.own).forEach(r=>{ const k=dfDeepKey(r.c.org); if(DF_DEEP.st[k]||DF_DEEP.runs.has(k)) return; dfDeepStart(r,false); }); }
 async function dfDeepStart(r,fresh){
   const org=r.c.org, k=dfDeepKey(org); if(DF_DEEP.runs.has(k)) return DF_DEEP.runs.get(k);
   const prev=DF_DEEP.st[k], keep=prev&&prev.review||null; DF_DEEP.st[k]={status:'working',review:keep}; dfDeepPaint(org);
-  const tok=typeof regTok==='function'?regTok():'', H={'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})};
+  const tok=typeof regTok==='function'?regTok():'', H={'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{}),...sessHdr()};
   const post=b=>fetch(DF_FN,{method:'POST',headers:H,body:JSON.stringify(b),signal:AbortSignal.timeout(20000)}), wait=ms=>new Promise(res=>setTimeout(res,ms));
   const fail=code=>{ code=/^limit-site/.test(code||'')?'limitSite':/^limit/.test(code||'')?'limit':code;   // integration: the server says limit-reg / limit-site
     if(dfDeepKey(org)===k) DF_DEEP.st[k]={status:code==='locked'?'locked':'failed',code,review:keep}; dfDeepPaint(org); return false; };

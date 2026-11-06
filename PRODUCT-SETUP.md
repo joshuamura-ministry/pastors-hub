@@ -24,8 +24,8 @@ is charged.
 
 3. Open **Product catalog**, then **+ Add product**.
 4. Name: `Terrain`. Description: `Ministry planning for pastors: the full version.`
-5. Under pricing choose **Recurring**. Amount `150.00` USD. Billing period **Yearly**. Click **Add product** (or **Save**).
-6. Open the Terrain product. Under **Pricing** click **+ Add another price**: **Recurring**, `15.00` USD, **Monthly**. Save.
+5. Under pricing choose **Recurring**. Amount `120.00` USD. Billing period **Yearly**. Click **Add product** (or **Save**).
+6. Open the Terrain product. Under **Pricing** click **+ Add another price**: **Recurring**, `12.00` USD, **Monthly**. Save.
 7. For each of the two prices, open the **⋯** menu on its row and choose **Copy price ID** (it starts with `price_`). Keep the yearly
    one for `STRIPE_PRICE_YEAR` and the monthly one for `STRIPE_PRICE_MONTH` (part D). You can change the amounts later in Stripe
    without any change to Terrain: Terrain reads the amounts from Stripe.
@@ -115,7 +115,7 @@ is charged.
 ## E. Try it with a test card
 
 35. Check the server: open `https://terrain.church/.netlify/functions/account`. It should say `"fn":"account-1.0"`, `"auth":true`,
-    `"billing":"off"`, `"mode":"test"`, `"checkout":true`, and the two prices (`15000` and `1500`: Stripe counts in cents).
+    `"billing":"off"`, `"mode":"test"`, `"checkout":true`, and the two prices (`12000` and `1200`: Stripe counts in cents).
 36. On your computer open `https://terrain.church/?billing=test`. This turns on the paid version **on this device only**, in test mode.
     An **Account** button appears beside Change, and the paid tools say **Full version**.
 37. Open **Make the Case**, then **Start your 14-day free trial**, then **Sign in with Google**.

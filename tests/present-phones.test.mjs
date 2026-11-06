@@ -50,10 +50,11 @@ const deck=(o={})=>({kind:'tdeck',ver:1,lang:'en',title:'A food pantry',church:'
     {type:'yes',kicker:'Three sizes of yes',headline:'Will you?',options:[{k:'pray',label:'Pray',text:'Pray'},{k:'help',label:'Help',text:'Help'},{k:'lead',label:'Lead',text:'Lead'}],respond:true},
     {type:'close',headline:'Thank you',text:'Speak to the pastor.',quote:null}],...o});
 const pfx=()=>calls.filter(x=>x.method==='PATCH');
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 console.log('-- the version --');
 // v10.42 part 3: present-1.4 keeps every present-1.3 behaviour checked here, and adds the phones' PDF (tests/present-pdf.test.mjs)
-{ const r=await get(''); c('status says present-1.4', [r.status,r.j.fn], [200,'present-1.4']); }
+{ const r=await get(''); c('status says present-1.4', [r.status,r.j.fn], [200,'present-1.5']); }
 
 console.log('\n-- op open: the way phones move, and the PDF --');
 let A, B, O;

@@ -28,6 +28,7 @@ let S = makeStore(); globalThis.__terrainDigitalStore = S;
 let T = Date.parse('2026-10-08T12:00:00Z'); globalThis.__terrainDigitalNow = () => T; globalThis.__terrainDigitalSleep = async () => {};
 const SECRET = 'x'.repeat(40); process.env.TERRAIN_REG_SECRET = SECRET;
 const regTok = (id = 'AbCdEfGhIjKl') => { const iat = Math.floor(T / 1000).toString(36); return `r1.${id}.${iat}.` + createHmac('sha256', SECRET).update(`terrain-reg|r1|${id}|${iat}`, 'utf8').digest('base64url').slice(0, 32); };
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // ---- the made-up web
 const EAD = 'https://www.eadventist.net/search/organization?locale=en&org=';
@@ -111,7 +112,7 @@ try {
   // v10.61.0: digital-read-1.1 (how current a site is, the pastor's photo, how fast it opens: the pastor, "it doesn't even have my picture")
   // v10.62.0: digital-read-1.2 (the whole site read: the pastor, "survey the whole website and see its deficiencies as well") and
   // digital-1.2 (the in-depth review: ops review / review-status; digital-review.test.mjs); the bare GET also says `review`
-  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.2', 'digital-read-1.2', false, false]);
+  c('the bare GET says which keys are set, never their values', [r.j.fn, r.j.readFn, r.j.places, r.j.search], ['digital-1.3', 'digital-read-1.2', false, false]);
   r = await call('GET', '?conf=Atlantis');
   c('a conference the locator does not have: supported false', [r.status, r.j.supported], [200, false]);
   r = await call('GET', '?conf=Pennsylvania');

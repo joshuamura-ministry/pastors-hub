@@ -57,11 +57,12 @@ const dev = n => ('dev' + String(n).padStart(4, '0') + 'AAAAAAAAAAAAAAAAAAAA').s
 const req = (fn, body, h = {}) => quiet(() => fn(new Request('https://pastorshub.org/.netlify/functions/advise', { method: 'POST', headers: { 'content-type': 'application/json', ...h }, body: JSON.stringify(body) }), { ip: h['x-ip'] || '198.51.100.9' }));
 const J = async r => ({ status: r.status, ...(await r.json()) });
 const FN_ON = { ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV };
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 console.log('-- GET: advise-2.7, the proposal\'s words on with a key AND a passphrase; ideas-1.1 --');
 { let fn = await advise(FN_ON);
   let g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
-  c('advise-2.7 · case true · caseFn case-1.0 · ideasFn ideas-1.1', [g.fn, g.case, g.caseFn, g.ideasFn, g.ideas], ['advise-2.7', true, 'case-1.0', 'ideas-1.1', true]);
+  c('advise-2.7 · case true · caseFn case-1.0 · ideasFn ideas-1.1', [g.fn, g.case, g.caseFn, g.ideasFn, g.ideas], ['advise-2.8', true, 'case-1.0', 'ideas-1.1', true]);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: case false', g.case, false);
   fn = await advise({ ...FN_ON, CASE_DAY_MAX: '0' }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -92,7 +93,7 @@ const gask = (fn, o = {}) => req(fn, GBODY(o), { 'x-terrain-pass': PASSV, ...(o.
 let GJOB = null, GKEY = null, GREC = null;
 { const fn = await advise(FN_ON);
   const r = await J(await gask(fn, { device: dev(2), extra: { church: 'Bucks County SDA' } }));
-  c('202: a job for the group', [r.status, r.fn], [202, 'advise-2.7']);
+  c('202: a job for the group', [r.status, r.fn], [202, 'advise-2.8']);
   GJOB = r.job; GKEY = r.key; GREC = S.peek('j/' + r.job);
   c('its target: the group, and a need of its own (g-hospitality-in) for the kept set and the pool', [GREC.input.target, GREC.input.group, GREC.input.need.id, GREC.input.need.title, GREC.input.need.themes],
     ['group', { id: 'hospitality', name: 'Greeters & hospitality', reach: 'in' }, 'g-hospitality-in', 'Greeters & hospitality · for the church family', ['member-care', 'hospitality']]);
@@ -194,7 +195,7 @@ console.log('\n-- 202: the job, hashes only, the input cleaned; the worker woken
 let CJOB = null, CKEY = null, CREC = null;
 { const fn = await advise(FN_ON);
   const r = await J(await cask(fn, { device: dev(21), ip: '203.0.113.7', extra: { church: 'Bucks County SDA', pastor: 'Joshua Mura', address: '10 Greene Rd' } }));
-  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.7', true, true, 4000]);
+  c('202 {ok, fn, job, key, poll}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.8', true, true, 4000]);
   CJOB = r.job; CKEY = r.key; CREC = CS.peek('j/' + r.job);
   c('the record: queued, the key a hash, kept by its whole input (w/<32 hex>/en)', [CREC.status, CREC.keyHash === sha(r.key), /^w\/[0-9a-f]{32}\/en$/.test(CREC.cacheKey)], ['queued', true, true]);
   const txt = JSON.stringify(CREC);

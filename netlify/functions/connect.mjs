@@ -1,4 +1,4 @@
-// Terrain · Connection cards server.                                connect-1.0
+// Terrain · Connection cards server.                                connect-1.1
 //
 // A church holds a one-day event or a series (a health fair, a back-to-school
 // day, a four-night seminar). People who came fill in a short card on their
@@ -121,8 +121,9 @@
 
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
+import { billingOn, fullFor } from './account.mjs';   // v10.72.0: the full version, once payments are on
 
-const FN_VERSION = 'connect-1.0';
+const FN_VERSION = 'connect-1.1';
 const STORE_NAME = 'terrain-connect';
 
 const MAX_BODY = 16 * 1024;                 // whole request
@@ -600,6 +601,7 @@ const OPS = {
     const given = request.headers.get('x-terrain-code');
     if (codeRequired() && !codeListed(given)) throw new Fail(401, 'nocode');
     if (regRequired() && !regTokenOk(request.headers.get('x-terrain-reg'), regSecret())) throw new Fail(401, 'noreg');
+    if (billingOn() && !(await fullFor(request)).full) throw new Fail(402, 'plan');   // v10.72.0: the full version (a plan, the passphrase or a tester code) once payments are on
     const card = cleanCard(b.card);            // before anything is counted
     const vouched = codeListed(given);
     const regId = regRequired() ? (RE_REGTOK.exec(String(request.headers.get('x-terrain-reg') || '').trim()) || [])[1] || null : null;

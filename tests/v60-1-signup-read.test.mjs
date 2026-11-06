@@ -50,6 +50,7 @@ async function post(body, ctx = {}) {
 }
 const reg = (over = {}, ctx = {}) => post({ ...base, ...over }, ctx);
 const fresh = () => { R = makeStore(); D = makeStore(); globalThis.__terrainRegStore = R; globalThis.__terrainDigitalStore = D; wakes = []; hang = false; };
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 try {
   console.log('\n-- registering starts the conference\'s reading --');
@@ -117,7 +118,7 @@ try {
 
   console.log('\n-- the pieces --');
   // v10.62.0: digital-1.2 (the in-depth review's ops; digital-review.test.mjs); warm() and the sign-up's reading are unchanged
-  c('register-1.3, digital-1.2', [(await (await REG.default(new Request(URL0))).json()).fn, DG.FN], ['register-1.3', 'digital-1.2']);
+  c('register-1.3, digital-1.2', [(await (await REG.default(new Request(URL0))).json()).fn, DG.FN], ['register-1.3', 'digital-1.3']);
   c('warm is exported for the sign-up', typeof DG.warm, 'function');
   const html = fs.readFileSync(new URL('../index.html', import.meta.url), 'utf8');
   const confs = Object.keys(eval('(' + html.match(/const CONF_STATES\s*=\s*(\{[\s\S]*?\});/)[1] + ')'));

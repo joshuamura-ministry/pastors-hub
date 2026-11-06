@@ -1,4 +1,4 @@
-// Terrain · Make the Case live slides server.                       present-1.4
+// Terrain · Make the Case live slides server.                       present-1.5
 //
 // The pastor presents a Make the Case slideshow; members open the same slides
 // on their own phones, by QR code or a six-character code, and (once Firebase
@@ -246,8 +246,9 @@
 
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, createSign, createPrivateKey, timingSafeEqual } from 'node:crypto';
+import { billingOn, fullFor } from './account.mjs';   // v10.72.0: the full version, once payments are on
 
-const FN_VERSION = 'present-1.4';
+const FN_VERSION = 'present-1.5';
 const STORE_NAME = 'terrain-present';
 
 const MAX_BODY = 128 * 1024;               // whole request (every op but putpdf)
@@ -1057,6 +1058,7 @@ const OPS = {
     const given = request.headers.get('x-terrain-code');
     if (!codeOk(given)) throw new Fail(401, 'nocode');
     if (regRequired() && !regTokenOk(request.headers.get('x-terrain-reg'), regSecret())) throw new Fail(401, 'noreg');
+    if (billingOn() && !(await fullFor(request)).full) throw new Fail(402, 'plan');   // v10.72.0: the full version (a plan, the passphrase or a tester code) once payments are on
     // A pastor with a listed code is never shut out by the site-wide day limit.
     const vouched = codeListed(given);
     // A registered pastor's opens are counted apart from anonymous ones (registration off):

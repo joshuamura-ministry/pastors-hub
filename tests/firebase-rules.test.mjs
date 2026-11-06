@@ -140,7 +140,9 @@ ok(/process\.env\.PRESENT_FB_URL/.test(sweep) && /process\.env\.PRESENT_FB_SECRE
 // v10.41: present-1.2 (the pastor: "we can appeal to the conference leaders for an EVANGELISM proposal"): the conference audience
 // v10.42: present-1.3 (the pastor: "I want only the presenter to have the ability to control the slides"): phone mode and PDF
 // v10.42 part 3: present-1.4 (SPEC-FOCUS A: "present.mjs gets key-checked upload + public download of that one PDF per room")
-ok(md.includes("present-1.4") && /FN_VERSION = 'present-1\.4'/.test(fn), 'the guide and the function agree on present-1.4');
+// v10.72.0 (stale, not a regression): present-1.5 (op open asks account.mjs for the full version once payments are on); the guide's words
+// about the PDF upload are present-1.4's and still true
+ok(md.includes("present-1.4") && /FN_VERSION = 'present-1\.5'/.test(fn), 'the guide describes present-1.4\'s PDF upload; the function is present-1.5 (v10.72.0)');
 // fix after review: present-1.4 writes two numbers, pv (the handout) and qv (the proposal to vote on); the words said one
 ok(/version\s+numbers\s+of\s+the\s+handout\s+and\s+of\s+the\s+proposal\s+to\s+vote\s+on\s+\(two\s+numbers\)/.test(txt) && !/the\s+version\s+of\s+the\s+proposal\s+PDF\s+\(a\s+number\)/.test(txt),
   'the rules file says the pointer carries the version numbers of the handout and of the proposal to vote on (two numbers)');

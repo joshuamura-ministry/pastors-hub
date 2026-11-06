@@ -32,8 +32,10 @@ const art=(h,l)=>{ const m=new RegExp(`<article lang="${l}"[^>]*>([\\s\\S]*?)</a
   const trial=+((/export const TRIAL_DAYS = (\d+);/.exec(ACC)||[])[1]||0);
   c('the free trial is 14 days in the code, the terms, the refund policy and about', [trial,/a trial lasts 14 days/.test(PAGES.terms),/A free trial lasts 14 days/.test(PAGES.refunds),/14 days free first/.test(PAGES.about)], [14,true,true,true]);
   c('one free trial for each account (the account\'s trialUsed, not more)', [/a\.rec\.trialUsed/.test(ACC),/one free trial for each account/.test(PAGES.terms)], [true,true]);
-  c('the prices as Terrain states them ($150 a year, $15 a month), the yearly plan "Best for a church budget" as in the plan sheet',
-    [/\$150 a year or \$15 a month/.test(PAGES.terms),/\$150 <small>a year/.test(PAGES.about)&&/\$15 <small>a month/.test(PAGES.about),/Best for a church budget/.test(PAGES.about)&&/'Best for a church budget'/.test(HTML)], [true,true,true]);
+  // v10.72.0 (stale, not a regression): the prices he settled on 12 Oct 2026 ($120 a year, $12 a month), written where the pages state them
+  c('the prices as Terrain states them ($120 a year, $12 a month), the yearly plan "Best for a church budget" as in the plan sheet',
+    [/\$120 a year or \$12 a month/.test(PAGES.terms),/\$120 <small>a year/.test(PAGES.about)&&/\$12 <small>a month/.test(PAGES.about),/Best for a church budget/.test(PAGES.about)&&/'Best for a church budget'/.test(HTML)], [true,true,true]);
+  c('the free version names your own Spiritual Gifts report beside the survey (terms and about)', [/The Community Survey, and your own Spiritual Gifts report, stay free/.test(PAGES.terms),/your own Spiritual Gifts report: always free/.test(PAGES.about)], [true,true]);
   c('where to cancel: Account › Manage billing, the plan sheet\'s own words', [/'Manage billing','Administrar pagos'/.test(HTML),['terms','refunds','about'].every(k=>/Account › Manage billing/.test(PAGES[k])),/Cuenta › Administrar pagos/.test(PAGES.refunds)], [true,true,true]);
   c('the refund rules (the defaults, his to change): a trial never charged; the first payment and each yearly renewal within 14 days; monthly renewals not; mistakes always',
     [/Cancel a free trial before it ends and you are never charged/.test(PAGES.refunds),/Your first payment, and each yearly renewal, is refunded in full if you ask within 14 days/.test(PAGES.refunds),/A monthly renewal<\/td><td>Not refunded/.test(PAGES.refunds),/A charge made by mistake is always refunded in full/.test(PAGES.refunds)], [true,true,true,true]);

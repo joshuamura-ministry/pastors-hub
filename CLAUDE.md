@@ -53,7 +53,7 @@ Six tools on the hub (the fifth, **Learn from other conferences**, since v10.44.
 | Tool | What it does | Tier |
 |---|---|---|
 | **Community Survey** | Census report + the action plan (where to look, community resources, church profile, mobilization, ministries) | survey free · plan full |
-| **Spiritual Gifts** | Members take a 105-statement assessment plus 12 heart questions via a short link or QR code; results come back to the pastor through `gifts.mjs`; members get a report tied to the Community Survey, as a PDF and by email | full |
+| **Spiritual Gifts** | Members take a 105-statement assessment plus 12 heart questions via a short link or QR code; results come back to the pastor through `gifts.mjs`; members get a report tied to the Community Survey, as a PDF and by email | your own report free · the church full (v10.72.0) |
 | **Make the Case** | Turns the findings into a proposal for a named board or ministry; since v10.44, also for **a project or purchase** (sound, a camera, a roof, a van…: three options, how we'll pay without tithe, who decides) | full |
 | **Evangelism Planner** | 18-month countdown to opening night, with a benchmark per phase | full |
 | **Learn from other conferences** | What each US conference's published calendar holds, side by side (the past 12 months), and the year ahead for his conference, union, the NAD and the world church (next 12 months, for planning); since v10.58.0, at its foot, Resources for your church (money, free materials, training) and Ministries that come to your church | full |
@@ -84,19 +84,19 @@ netlify/functions/advise-ideas.mjs   (v10.55.0, ideas-1.1 since v10.56.0) the ba
                                through the library's own checker; store `terrain-ideas` (j/, i/, c/, p/ the pool)
 netlify/functions/advise-case.mjs    (v10.56.0, case-1.0) the background worker behind the proposal's words: one request, no web, the strict
                                tool record_words (headlines, what to say, questions), `cleanWords`; store `terrain-case` (j/, w/ kept words, c/)
-netlify/functions/account.mjs        (v10.54.0, account-1.0) accounts and plans: GET (sign-in settings, billing on/off, test or live, the
+netlify/functions/account.mjs        (v10.54.0; account-1.1 v10.72.0: fullFor, the day's allowance of Claude studies on a plan) accounts and plans: GET (sign-in settings, billing on/off, test or live, the
                                two prices read from Stripe), POST op session (Firebase's ID token checked here: Google's keys, RS256, the
                                project, email verified → Terrain's own 30-day session) / plan / checkout (Stripe Checkout, 14 days free the
                                first time, card at sign-up) / portal (Stripe's Customer Portal); Netlify Blobs store `terrain-accounts`
 netlify/functions/stripe-webhook.mjs (v10.54.0, stripe-webhook-1.0) Stripe's word on a plan: the signature checked (5 minutes), each event
                                once (e/<event>), checkout completed links the customer, subscription created/updated/deleted sets the plan
-netlify/functions/account-sweep.mjs  (v10.54.0, account-sweep-1.0) daily: events after 30 days, counters after 2 (never an account)
+netlify/functions/account-sweep.mjs  (v10.54.0; account-sweep-1.1 v10.72.0) daily: events after 30 days, counters and a plan's day of studies (t/) after 2 (never an account)
 netlify/functions/places.mjs         (v10.69.0, places-1.0) the church box's suggestions: the conference's Adventist directory (Digital footprint's findings), then
                                Google's place search (Autocomplete, Place Details), for registered pastors; AC_MONTH_MAX / PD_MONTH_MAX
 netlify/functions/guest-pass.mjs     (v10.62.2, guest-pass-1.2 since v10.70.0) the lock behind every Claude feature: the passphrase, a tester code he made
                                in Terrain (t/<sha256> in terrain-registrations, kept by the first registration that uses it), or a guest code
                                (TERRAIN_AI_GUESTS) on its own registration; advise.mjs and digital.mjs import `passCheck`; its own GET says only `{ok, fn}`
-netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status) Digital footprint for registered pastors (the registration token, as census/gifts):
+netlify/functions/digital.mjs        (v10.60.0; digital-1.1 v10.60.1; digital-1.2 v10.62.0: ops review / review-status; digital-1.3 v10.72.0: the full version asked for) Digital footprint for registered pastors (the registration token, as census/gifts):
                                GET ?conf= the findings (or the reading's progress), POST op read (queue a reading) / again (one church, 3 a
                                registration a day); DIGITAL_CONFS says which conferences may be read (default Pennsylvania); `warm()` (v10.60.1)
                                starts a conference's reading when one of its pastors registers or signs in (register.mjs)
@@ -128,12 +128,12 @@ tools/ideas-src/               the library's SOURCE: themes/<theme>.json (the id
                                cadence.json (v10.43: ongoing / event / series-N for every idea), next.json (an event's or series' two ongoing next steps),
                                nocard.json (68 ideas whose own words promise no names: no follow-up plan, no card),
                                vocab.json, validate.mjs, selftest.mjs, examples.json, SCHEMA.md (fields, search), WRITERS.md (quality bar)
-netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.3: 200 results an hour from one address; Netlify Blobs)
+netlify/functions/gifts.mjs    Spiritual Gifts results server + email (gifts-1.4, v10.72.0: op id needs the full version once payments are on; 1.3: 200 results an hour from one address; Netlify Blobs)
 netlify/functions/gifts-sweep.mjs  daily scheduled purge of expired gifts results
 netlify/functions/register.mjs  first-page registration (name, email, church, role), register-1.3 (1.2: sign-in; 1.3, v10.60.1: the conference read at sign-up)
-netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.4: his handout and the proposal to vote on as PDFs for phones, op putpdf / GET op=pdf, the `how` slide, the gifts deck; 1.3: how phones move, `mode` follow|free, and `pdf`; 1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
+netlify/functions/present.mjs   Make the Case live slideshows: decks in Blobs, slide pointer via Firebase, "I'm in" answers (present-1.5, v10.72.0: op open needs the full version once payments are on; present-1.4: his handout and the proposal to vote on as PDFs for phones, op putpdf / GET op=pdf, the `how` slide, the gifts deck; 1.3: how phones move, `mode` follow|free, and `pdf`; 1.2: the `conference` audience; 1.1: a verse on every slide, the "place" slide)
 netlify/functions/present-sweep.mjs  daily purge of expired presentation rooms and their PDFs (present-sweep-1.1)
-netlify/functions/connect.mjs   connection cards (v10.43, connect-1.0): a card per event or series (secret key for the pastor, public id), the phone's answers
+netlify/functions/connect.mjs   connection cards (v10.43, connect-1.0; connect-1.1 v10.72.0: op create needs the full version once payments are on): a card per event or series (secret key for the pastor, public id), the phone's answers
                                (adults only, no markup), pulled by his device only; Netlify Blobs store `terrain-connect`
 netlify/functions/connect-sweep.mjs  daily purge of expired answers, tombstones and unused cards (connect-sweep-1.0)
 fonts/                         (added 1 Oct 2026, with his OK) CormorantGaramond-SemiBoldItalic.ttf (Cormorant v4.002, CatharsisFonts/Cormorant),
@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.72.0: `/.netlify/functions/account` → `"fn":"account-1.1"`, `"claudeDay":6`, `"trialClaudeDay":3`; gifts → `gifts-1.4`; present → `present-1.5`; connect → `connect-1.1`; digital → `digital-1.3`; advise → `advise-2.8`; the page's badge v10.72.0; with payments still off the page is the full version for everyone, as before
 - v10.62.0: `/.netlify/functions/digital` → `"fn":"digital-1.2"`, `"readFn":"digital-read-1.2"`, `"reviewFn":"review-1.0"`, `"review":true` (the Anthropic key and `TERRAIN_AI_PASS` are set), `"places":true`; the next reading (his "Check again", or the monthly refresh) brings the marks; his own churches' in-depth review runs by itself on his unlocked device (`?ideas=`)
 - v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
 - v10.44: `/.netlify/functions/advise` → `"fn":"advise-2.4"`, `"pricesFn":"prices-1.0"` (and `"prices":true` only when the key **and** the
@@ -190,10 +191,10 @@ values are never in the repo):
 | `PRICES_DAY_MAX` | advise.mjs | Optional (v10.44). Price searches a day for the whole site, default 40 (0 turns Find prices off: the GET then says `prices:false`, so the page shows no button). Also 5 a device, 10 a registration and 8 an address an hour, fixed in code. |
 | `NEEDS_DAY_MAX` | advise.mjs | Optional (v10.53.0). Needs-list studies a day for the whole site, default 60 (0 turns the list off: GET says `needs:false`). Also 6 a device, 12 a registration a day and 10 an address an hour, fixed in code. A neighborhood's kept list (60 days) is given again at no cost. |
 | `STRIPE_SECRET_KEY` | account.mjs | (v10.54.0) Stripe's secret key (`sk_test_…` now; `sk_live_…` only when he says "turn it on"). A test key lets one device try checkout with `?billing=test` while payments are off. |
-| `STRIPE_PRICE_YEAR` / `STRIPE_PRICE_MONTH` | account.mjs | (v10.54.0) The two prices of the product "Terrain" (`price_…`; $150 a year, $15 a month). The amounts are read from Stripe (cached 10 minutes). |
+| `STRIPE_PRICE_YEAR` / `STRIPE_PRICE_MONTH` | account.mjs | (v10.54.0) The two prices of the product "Terrain" (`price_…`; $120 a year, $12 a month since v10.72.0: his prices of 12 Oct 2026; Stripe must hold them before launch). The amounts are read from Stripe (cached 10 minutes). |
 | `STRIPE_WEBHOOK_SECRET` | stripe-webhook.mjs | (v10.54.0) The webhook endpoint's signing secret (`whsec_…`). Without it the webhook answers 503 and plans never update. |
 | `FIREBASE_WEB_API_KEY` / `FIREBASE_PROJECT_ID` | account.mjs | (v10.54.0) Sign-in (Firebase Authentication on `terrain-live`: Google and Email link). The web key is a public identifier (the page gets it from GET account). Without both, no sign-in. |
-| `TERRAIN_BILLING` | account.mjs | (v10.54.0) **Unset = payments off: everyone has the full version.** `on` (with a key and both prices) turns the paid version on for everyone. Only when he says "turn it on", after release 2. |
+| `TERRAIN_BILLING` | account.mjs, and through it gifts, present, connect, digital, advise | (v10.54.0) **Unset = payments off: everyone has the full version.** `on` (with a key and both prices) turns the paid version on for everyone: the page's split and, since v10.72.0, the server's (402 `plan`; Claude on a plan counted 6 a day, 3 in the trial). Only when he says "turn it on". |
 | `TERRAIN_COMP_EMAILS` | account.mjs | (v10.54.0) Optional. Comma-separated addresses that always have the full version ("complimentary"). |
 | `IDEAS_DAY_MAX` | advise.mjs | Optional (v10.55.0). Idea studies a day for the whole site, default 150 (0 turns them off: GET says `ideas:false`). Also 20 a device, 30 a registration a day and 15 an address an hour. A kept set (60 days) is given again at no cost. |
 | `CASE_DAY_MAX` | advise.mjs | Optional (v10.56.0). Proposal-word studies a day for the whole site, default 150 (0 turns them off: GET says `case:false`). Also 20 a device, 30 a registration a day and 15 an address an hour. Kept words (60 days) for the very same slides are given again at no cost. |
@@ -223,6 +224,52 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.72.0 (6 Nov 2026, full lane) — the free version and the full version, decided by the server; $12 a month, $120 a year.** The
+pastor, to the audit report's recommendation (*"the free version shows the problem clearly; the paid version is the only way to answer
+it"*): *"Yes"*. Release 2 of the paid version, promised in v10.54.0. **Payments stay OFF until he says "turn it on"**: with `TERRAIN_BILLING`
+unset nothing here changes what anyone sees. Folded into PR #49 (still open). Design `~/Ministry Work/Terrain-work/v87/DESIGN-PLAN-SERVER.md`.
+- **The split** (the report's table): free: the whole survey report (the brief, the figures, the charts, Community resources, Churches
+  nearby) and the titles of the needs; Spiritual Gifts "Take it yourself" and your own report. Paid: a need opened (its figures, Where to
+  begin, the ideas in three lifts, the sheets, the one-page PDFs, Create a proposal, the studied lists), Spiritual Gifts for the whole church
+  (the link and QR, the results, Across the congregation, Who to ask), Make the Case, the Evangelism Planner, Learn from other conferences,
+  Compare your churches with Digital footprint, the Church Directory, connection cards, everything Claude writes.
+- **The server decides.** `account.mjs` (**account-1.1**): `fullFor(request)` → payments off: everyone; on: a plan through Terrain's session
+  (`x-terrain-session` → `a/<uid>` → `planOf`: active, trialing, past_due, comp), else the passphrase or a tester code (`guest-pass.mjs`'s
+  `unlockOf`), else not; `claudeBump(uid, status)`: a plan's Claude studies are counted a UTC day per account across every feature
+  (`t/<day>/<hash of the uid>`: `PLAN_CLAUDE_DAY` 6, `TRIAL_CLAUDE_DAY` 3, his to change; the passphrase and tester codes uncounted, as before;
+  a kept list, set, words or review still at no cost); GET says `claudeDay` / `trialClaudeDay`; **account-sweep-1.1** removes `t/` after 2
+  days. After the registration check: **gifts-1.4** op id, **present-1.5** op open, **connect-1.1** op create, **digital-1.3** GET / read /
+  again answer 402 `plan` without the full version. **advise-2.8** (`claudeGate`: passCheck, else with payments on a plan; `planTake` after
+  each route's own limits → 429 `limit-plan` {retryAfter, max}, given back with them when the job is not queued; the main route too) and
+  digital's op review the same. Ops with a campaign key, a room key or a card key are not gated (a cancelled pastor's work stays readable).
+  census, places, register and guest-pass are never gated.
+- **The page:** `FEATURES.directory` (full); `TOOLS.gifts` has no `feature` (the tool opens; the landing's results and step 3 are
+  `lockHTML('gifts')`, "Send to members" scrolls to it, `gfInviteChurch` lands on the landing, `gfRender` never reaches the setup);
+  `nsBodyHTML` draws a need opened as the lock in the free tier (titles only); `dirDraw` the lock; the directory's tile tagged
+  (`acctTileLocks`, `wireHub`; `.htile .tlock`); the lock in both languages (`FEATURES[].es`, `L()` in `lockHTML`: "The free version includes
+  the Community Survey and your own Spiritual Gifts report…"); `aiOn()` (a code kept, or billing on and a plan) at every Claude feature's own
+  gate (15 sites; the header still carries `aiPass()`, empty when none); `sessHdr()` on every gated call (8 advise sites, gfCall, cnCall,
+  prCall, the four digital fetches); a 402 → `acctPlanRefused()` (the plan asked again, the tier redrawn, at most once in 10 s) in gfCall,
+  cnCall, prRead and dfLoad, with the words "This is part of the full version. Choose a plan under Account." (gf/cn/prErrText); a 429
+  `limit-plan` → `aiNote` / `aiLimitNote` in the four studies' status lines ("Today’s 6 studies on your plan are used up. Tomorrow brings
+  more."); the plan sheet's line names the whole full version. Prices in words: about.html, terms.html ($120 / $12; the free version names
+  your own report), PRODUCT-SETUP.md (120.00 / 12.00); the plan sheet reads Stripe's amounts.
+- Tests: `v72-plan-server` (65; failing first on v10.71.0: `v87/logs/ff-v72-plan-server.log`) and `v72-free-paid-ui` (42; failing first);
+  updated with comments: the stamps in 15 function suites (account-1.1 with claudeDay, gifts-1.4, present-1.5, connect-1.1, digital-1.3,
+  advise-2.8), entitlement-tiers (Spiritual Gifts untagged; a need opened is the lock), v62-2-guest-pass (claudeGate), v54-account-ui and
+  v62-1-legal (the prices). Checked in Chrome against the functions themselves with payments on (`v87/serve87.mjs`, port 8887: Stripe's
+  prices answered locally, Stripe never called; `POST /__seed` seeds an account and mints its session; `v87/e2e-plan.mjs`, 45 of 45 steps,
+  16 pictures in `v87/e2e/`): the free version at 1366 (the hub's tags, the needs' titles, a need's lock whose trial button opens the sign-in
+  sheet, Spiritual Gifts' two buttons with the lock, Take it yourself, the directory's lock, the four tools' locks); the server asked straight
+  from the page the way a tampered page would (gifts id, connect create, present open, digital GET → 402 plan; census 200); a plan seeded and
+  kept on the device (the full version: a need open, the church's link made with the session, the findings, the directory); the plan
+  cancelled under the page (gifts id 402 → the plan asked again → the landing locked, the hub tagged); a Spanish phone at 390 (the lock in
+  Spanish, no sideways scroll). The Census proxy answered 502 during this run (the geocoder itself answered 200 direct), so the fixture survey
+  was drawn in its place, said in the log; v86 proved the Census path the same day. Full suite: 199 suites · 12,135 passed · 0 failed (the full run 12,130 and five stale checks of the old words and stamps in four suites, updated with comments and rerun: firebase-rules 717, v45-needs-ui 59, v45-profile-move 43, v62-2-guest-pass 38; v10.71.0: 197 · 12,027).
+- **His side before "turn it on":** the two prices in Stripe changed to $120 / $12 (PRODUCT-SETUP.md, steps 5–6; Terrain reads the amounts);
+  then `TERRAIN_BILLING=on`. The allowances (6 / 3 studies a day) are his to change in account.mjs. **Still not built:** accounts syncing
+  churches between devices; a cancelled pastor's work read-only (today it stays editable on the device).
 
 **v10.71.0 (6 Nov 2026, full lane) — the working-order audit; compare any church of the conference.** The pastor: *"the conference has
 decided to use … terrain and so I need you to do a full audit of this app making sure everything works solidly and give me a really solid

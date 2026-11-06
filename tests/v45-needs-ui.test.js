@@ -185,8 +185,10 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   console.log('\n-- the free version: the needs, not the ideas --');
   P=page({needs:STUB,tier:'free'}); await ready(P); survey(P); await sleep(50);
   await openNeed(P,'rent50',true);
-  c('the needs and their detail show; the ideas show the lock, no rows, no sheet', [P.qa('#u-needs .ns-list > .ns-need').length>0,!!P.q('#ns-b-rent50 .ns-detail'),!!P.q('#ns-i-rent50 .lock[data-lock="plan"]'),rows(P,'rent50').length,P.qa('[data-ns-propose]').length],
-    [true,true,true,0,0]);
-  c('…and the lock says what it opens', /Ministry ideas for every need/.test(P.txt('#ns-i-rent50 .lock')||''), true);
+  // v10.72.0 (stale, not a regression): the free version shows the needs' titles; a need opened is the lock itself (its figures, where to
+  // begin and the ideas are the full version: the audit report's split, the pastor's "Yes")
+  c('the needs show; a need opened is the lock, no figures, no rows, no sheet', [P.qa('#u-needs .ns-list > .ns-need').length>0,!!P.q('#ns-b-rent50 .ns-detail'),!!P.q('#ns-b-rent50 .lock[data-lock="plan"]'),P.qa('#ns-b-rent50 .ns-figs, #ns-i-rent50').length,rows(P,'rent50').length,P.qa('[data-ns-propose]').length],
+    [true,true,true,0,0,0]);
+  c('…and the lock says what it opens', /Each need opened/.test(P.txt('#ns-b-rent50 .lock')||''), true);
   c('…nothing of the library or the map is fetched', P.w.__fetched.filter(u=>/^\/ideas\//.test(u)), []);
 }); T.done(); })();

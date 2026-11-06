@@ -1,4 +1,4 @@
-// Terrain · Spiritual Gifts results server.                           gifts-1.3
+// Terrain · Spiritual Gifts results server.                           gifts-1.4
 //
 // Members take the assessment on their own phone. This function keeps their
 // result so the pastor who sent the link can collect it, lets two or three
@@ -134,8 +134,9 @@
 
 import { getStore } from '@netlify/blobs';
 import { randomBytes, createHash, createHmac, timingSafeEqual } from 'node:crypto';
+import { billingOn, fullFor } from './account.mjs';   // v10.72.0: the full version, once payments are on
 
-const FN_VERSION = 'gifts-1.3';
+const FN_VERSION = 'gifts-1.4';
 const STORE_NAME = 'terrain-gifts';
 
 const MAX_BODY = 5 * 1024 * 1024;          // whole request
@@ -576,6 +577,7 @@ const OPS = {
   async id(b, { request, store, context }) {
     if (requireCode() && !codeOk(request.headers.get('x-terrain-code'))) throw new Fail(401, 'nocode');
     if (regRequired() && !regTokenOk(request.headers.get('x-terrain-reg'), regSecret())) throw new Fail(401, 'noreg');
+    if (billingOn() && !(await fullFor(request)).full) throw new Fail(402, 'plan');   // v10.72.0: the full version (a plan, the passphrase or a tester code) once payments are on
     const ctx = b.ctx == null ? null : cleanCtx(b.ctx);
     const church = line(str(b.church)).slice(0, MAX_CHURCH) || (ctx ? ctx.church : '');
     // Ten a day from one client: one small blob per client and day.

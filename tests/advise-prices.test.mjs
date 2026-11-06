@@ -27,6 +27,7 @@ function makeStore() {
 let S = makeStore(); globalThis.__terrainPricesStore = S;
 const KEYV = 'sk-ant-test-key-0000000000000000000000000000000000', PASSV = 'open-sesame-prices';
 const sha = s => createHash('sha256').update(String(s), 'utf8').digest('hex');
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // ---- fetch: the worker's wake-up and the Anthropic API, scripted ---------------------------------------------------------------
 let wakes = [], api = [], script = [], wakeStatus = 202, wakeHook = null;
@@ -73,7 +74,7 @@ console.log('-- GET says whether Find prices is on: a key AND a passphrase --');
   // v10.53.0 (stale): advise-2.5 (the needs list); Find prices is unchanged
   // v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
   // v10.56.0 (stale, not a regression): Claude in Make the Case makes it advise-2.7
-  c('advise-2.7, prices true, pricesFn prices-1.0', [g.fn, g.prices, g.pricesFn], ['advise-2.7', true, 'prices-1.0']);
+  c('advise-2.7, prices true, pricesFn prices-1.0', [g.fn, g.prices, g.pricesFn], ['advise-2.8', true, 'prices-1.0']);
   fn = await advise({ ANTHROPIC_API_KEY: KEYV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
   c('a key but no passphrase: prices false (a site with no passphrase never searches)', g.prices, false);
   fn = await advise({ TERRAIN_AI_PASS: PASSV }); g = await (await fn(new Request('https://x/a', { method: 'GET' }))).json();
@@ -124,7 +125,7 @@ S = makeStore(); globalThis.__terrainPricesStore = S; wakes = []; api = [];
 let JOB = null, KEY1 = null;
 { const fn = await advise({ ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV });
   const r = await J(await ask(fn, { device: dev(10), ip: '203.0.113.7' }));
-  c('202 {ok, fn, job (22), key (43), poll 4000}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.7', true, true, 4000]);   // v10.56.0 (stale): advise-2.7
+  c('202 {ok, fn, job (22), key (43), poll 4000}', [r.status, r.ok, r.fn, /^[A-Za-z0-9_-]{22}$/.test(r.job), /^[A-Za-z0-9_-]{43}$/.test(r.key), r.poll], [202, true, 'advise-2.8', true, true, 4000]);   // v10.56.0 (stale): advise-2.7
   JOB = r.job; KEY1 = r.key;
   const rec = S.peek('j/' + r.job);
   c('the record: queued, the key and the worker token as SHA-256 only', [rec.status, rec.keyHash === sha(r.key), /^[0-9a-f]{64}$/.test(rec.workerHash), JSON.stringify(rec).includes(r.key)], ['queued', true, true, false]);
