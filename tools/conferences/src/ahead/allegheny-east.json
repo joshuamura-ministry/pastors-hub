@@ -9,8 +9,8 @@
   "https://www.visitaec.org/impactphilly",
   "https://columbiaunionvisitor.com/category/allegheny-east-conference"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); public Google Calendar (1,570 entries) re-read 1 Oct 2026.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "A– : full public Google Calendar (ICS) linked from the site menu, kept up to date, covering departments, regions and the Spanish, Haitian, Korean and African ministries. Noise to filter out: holidays, pay days, report deadlines, private logistics.",
  "furthestPublished": "2027-04",
  "furthestNote": "last dated one-off item: 2027-04-09 (Pine Forge Academy weekend). Monthly meeting series repeat with no end date, so they run on indefinitely; they are flagged projected:true.",
@@ -28,7 +28,11 @@
   "https://www.visitaec.org/news",
   "https://aecpathfinders.org/ (403 Forbidden; not retried)",
   "https://columbiaunionvisitor.com/category/allegheny-east-conference",
-  "https://columbiaunionvisitor.com/rss.xml"
+  "https://columbiaunionvisitor.com/rss.xml",
+  "https://www.visitaec.org/youth",
+  "https://www.visitaec.org/news/99wlsso3fodwihlv0qxyaev95f2new",
+  "https://www.visitaec.org/news/q8gpay1pncwd1ao6kmw98mtsafkhdi",
+  "https://www.visitaec.org/news/31rmifekdmi8kdz8d47pdv0vm7sj45"
  ],
  "stats": {
   "records": 14,
@@ -101,21 +105,23 @@
   }
  },
  "counts": {
-  "total": 14,
-  "conferenceLevel": 13,
+  "total": 15,
+  "conferenceLevel": 14,
   "observances": 0,
   "byCategory": {
    "pastoral-leadership": 9,
    "other": 2,
    "education": 1,
    "administration": 1,
-   "stewardship-finance": 1
+   "stewardship-finance": 1,
+   "family-women-men": 1
   },
   "byCategoryConferenceOnly": {
    "pastoral-leadership": 9,
    "other": 2,
    "administration": 1,
-   "stewardship-finance": 1
+   "stewardship-finance": 1,
+   "family-women-men": 1
   }
  },
  "excludedFromCalendar": {
@@ -186,7 +192,7 @@
   {
    "title": "African Ministries - Ministerial Meeting",
    "start": "2027-04-01",
-   "end": "2027-09-02",
+   "end": "2027-10-07",
    "place": null,
    "category": "pastoral-leadership",
    "category2": "multilingual",
@@ -196,14 +202,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-01",
     "2027-05-06",
     "2027-06-03",
     "2027-07-01",
     "2027-08-05",
-    "2027-09-02"
+    "2027-09-02",
+    "2027-10-07"
    ],
    "lastDate": "2027-09-02",
    "projected": true,
@@ -212,7 +219,7 @@
   {
    "title": "UpSet Podcast",
    "start": "2027-04-04",
-   "end": "2027-09-05",
+   "end": "2027-10-03",
    "place": null,
    "category": "other",
    "category2": null,
@@ -222,14 +229,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-04",
     "2027-05-02",
     "2027-06-06",
     "2027-07-04",
     "2027-08-01",
-    "2027-09-05"
+    "2027-09-05",
+    "2027-10-03"
    ],
    "lastDate": "2027-09-05",
    "projected": true,
@@ -238,7 +246,7 @@
   {
    "title": "Delaware Valley - Ministerial Area Meeting",
    "start": "2027-04-08",
-   "end": "2027-09-09",
+   "end": "2027-10-14",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -248,14 +256,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-08",
     "2027-05-13",
     "2027-06-10",
     "2027-07-08",
     "2027-08-12",
-    "2027-09-09"
+    "2027-09-09",
+    "2027-10-14"
    ],
    "lastDate": "2027-09-09",
    "projected": true,
@@ -277,7 +286,7 @@
   {
    "title": "NJ - Ministerial Area Meeting",
    "start": "2027-04-12",
-   "end": "2027-09-13",
+   "end": "2027-10-11",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -287,14 +296,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-12",
     "2027-05-10",
     "2027-06-14",
     "2027-07-12",
     "2027-08-09",
-    "2027-09-13"
+    "2027-09-13",
+    "2027-10-11"
    ],
    "lastDate": "2027-09-13",
    "projected": true,
@@ -303,7 +313,7 @@
   {
    "title": "Area Leaders Meeting",
    "start": "2027-04-15",
-   "end": "2027-09-16",
+   "end": "2027-10-21",
    "place": null,
    "category": "administration",
    "category2": null,
@@ -313,14 +323,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-15",
     "2027-05-20",
     "2027-06-17",
     "2027-07-15",
     "2027-08-19",
-    "2027-09-16"
+    "2027-09-16",
+    "2027-10-21"
    ],
    "lastDate": "2027-09-16",
    "projected": true,
@@ -329,7 +340,7 @@
   {
    "title": "Baltimore Extended - Ministerial Area Meeting",
    "start": "2027-04-20",
-   "end": "2027-09-21",
+   "end": "2027-10-19",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -339,14 +350,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-20",
     "2027-05-18",
     "2027-06-15",
     "2027-07-20",
     "2027-08-17",
-    "2027-09-21"
+    "2027-09-21",
+    "2027-10-19"
    ],
    "lastDate": "2027-09-21",
    "projected": true,
@@ -355,7 +367,7 @@
   {
    "title": "Bay - Ministerial Area Meeting",
    "start": "2027-04-20",
-   "end": "2027-09-21",
+   "end": "2027-10-19",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -365,14 +377,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-20",
     "2027-05-18",
     "2027-06-15",
     "2027-07-20",
     "2027-08-17",
-    "2027-09-21"
+    "2027-09-21",
+    "2027-10-19"
    ],
    "lastDate": "2027-09-21",
    "projected": true,
@@ -381,7 +394,7 @@
   {
    "title": "Stewardship-Estate Planning Class",
    "start": "2027-04-20",
-   "end": "2027-09-21",
+   "end": "2027-10-19",
    "place": null,
    "category": "stewardship-finance",
    "category2": null,
@@ -391,14 +404,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-20",
     "2027-05-18",
     "2027-06-15",
     "2027-07-20",
     "2027-08-17",
-    "2027-09-21"
+    "2027-09-21",
+    "2027-10-19"
    ],
    "lastDate": "2027-09-21",
    "projected": true,
@@ -407,7 +421,7 @@
   {
    "title": "Virginia - Ministerial Area Meeting",
    "start": "2027-04-20",
-   "end": "2027-09-21",
+   "end": "2027-10-19",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -417,14 +431,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-20",
     "2027-05-18",
     "2027-06-15",
     "2027-07-20",
     "2027-08-17",
-    "2027-09-21"
+    "2027-09-21",
+    "2027-10-19"
    ],
    "lastDate": "2027-09-21",
    "projected": true,
@@ -433,7 +448,7 @@
   {
    "title": "Washington Metro - Ministerial Area Meeting",
    "start": "2027-04-20",
-   "end": "2027-09-21",
+   "end": "2027-10-19",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -443,14 +458,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-20",
     "2027-05-18",
     "2027-06-15",
     "2027-07-20",
     "2027-08-17",
-    "2027-09-21"
+    "2027-09-21",
+    "2027-10-19"
    ],
    "lastDate": "2027-09-21",
    "projected": true,
@@ -459,7 +475,7 @@
   {
    "title": "Haitian Ministries - Ministerial Meeting",
    "start": "2027-04-27",
-   "end": "2027-09-28",
+   "end": "2027-10-26",
    "place": null,
    "category": "pastoral-leadership",
    "category2": "multilingual",
@@ -469,14 +485,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-27",
     "2027-05-25",
     "2027-06-22",
     "2027-07-27",
     "2027-08-24",
-    "2027-09-28"
+    "2027-09-28",
+    "2027-10-26"
    ],
    "lastDate": "2027-09-28",
    "projected": true,
@@ -485,7 +502,7 @@
   {
    "title": "Korean Ministries-Ministerial Meeting",
    "start": "2027-04-27",
-   "end": "2027-09-28",
+   "end": "2027-10-26",
    "place": null,
    "category": "pastoral-leadership",
    "category2": "multilingual",
@@ -495,14 +512,15 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-27",
     "2027-05-25",
     "2027-06-29",
     "2027-07-27",
     "2027-08-31",
-    "2027-09-28"
+    "2027-09-28",
+    "2027-10-26"
    ],
    "lastDate": "2027-09-28",
    "projected": true,
@@ -511,7 +529,7 @@
   {
    "title": "AEC Today",
    "start": "2027-04-29",
-   "end": "2027-09-30",
+   "end": "2027-10-28",
    "place": null,
    "category": "other",
    "category2": null,
@@ -521,24 +539,57 @@
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed)",
    "recurring": "monthly",
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-29",
     "2027-05-27",
     "2027-06-24",
     "2027-07-29",
     "2027-08-26",
-    "2027-09-30"
+    "2027-09-30",
+    "2027-10-28"
    ],
    "lastDate": "2027-09-30",
    "projected": true,
    "note": "conference broadcast/bulletin; open-ended monthly rule in the public feed (no end date); dates computed from that rule"
+  },
+  {
+   "title": "Strength for the Journey: AEC Women's Ministries Retreat",
+   "start": "2026-10-29",
+   "end": "2026-11-01",
+   "place": "Kalahari Resort Hotel",
+   "category": "family-women-men",
+   "category2": "discipleship-spiritual",
+   "audience": "women",
+   "level": "conference",
+   "url": "https://www.visitaec.org/news/99wlsso3fodwihlv0qxyaev95f2new",
+   "source": "news",
+   "datePrecision": "day",
+   "note": "First AEC women's ministries retreat, four days Thursday to Sunday; already held, reported 4 Nov 2026 (more than 500 women). Not on the public calendar feed; ends inside the window by one day."
   }
  ],
  "notes": [
   "One-off events on the feed stop at 9–11 Apr 2027. Camp meeting 2027, Impact-style campaigns, youth congress, Built 2 Last and Spanish Ministries dates for 2027 are not published yet.",
   "The 13 series records are open-ended monthly rules (projected:true). They are real standing meetings, but their 2027 dates are computed, not individually posted.",
   "Pine Forge Academy is an institution, so its weekend is level \"institution\"; there are no conference-level one-off events in the window.",
-  "aecpathfinders.org returned 403 Forbidden to a plain request; it was noted and not retried by any other means."
+  "aecpathfinders.org returned 403 Forbidden to a plain request; it was noted and not retried by any other means.",
+  "(2026-11-06) The public Google Calendar feed (1,570 entries) is unchanged in substance since 1 Oct 2026: the same one-off items for Nov-Dec 2026 and the single Apr 2027 item; no new one-off entries were added for 2027.",
+  "(2026-11-06) Window one-offs on the feed left out as before: pay days, remittance and report deadlines, office closures, Office Christmas Event, OOE 3-Way Scholarships Due (1 Nov 2026), Board of Education, EXCOM, ADCOM, Media Committee, Office Staff Meeting.",
+  "(2026-11-06) The 13 projected October 2027 records above are the new-month occurrences of the existing open-ended monthly series (same titles as the existing list); they are only needed if the pipeline does not extend projected series itself.",
+  "(2026-11-06) Site news (Squarespace blog) through 4 Nov 2026 reports held events only: the women's retreat (29 Oct - 1 Nov 2026), Pine Forge Academy fall Academy Day (26 Oct 2026), a Korean church K-Bazaar (18 Oct 2026). The Columbia Union Visitor's AEC category (newest 5 Nov 2026) has no 2027 dates.",
+  "(2026-11-06) The site's 'Conference Calendar' menu item still points to the same public Google Calendar (cid Y2FsZW5kYXJAYWVjc2RhLmNvbQ)."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); public Google Calendar (1,570 entries) re-read 1 Oct 2026.",
+ "aheadChecked_blocked": [
+  "https://aecpathfinders.org/ — no response (connection failed, curl exit 000); one plain retry only, not pursued",
+  "https://www.visitaec.org/events — 404 (no such page; the site's calendar is the Google Calendar link in the menu)",
+  "https://www.visitaec.org/calendar — 404"
+ ],
+ "notPublishedYetNov2026": [
+  "Camp meeting 2027 (the campmeeting page is still 'Camp Meeting 2026')",
+  "Impact Philly-style 2027 campaign dates",
+  "2027 youth congress, Built 2 Last and Spanish Ministries 2027 dates",
+  "A 2027 women's ministries retreat (the first one was held 29 Oct - 1 Nov 2026)",
+  "Any one-off conference event after 11 Apr 2027; nothing dated in Oct 2027 except the monthly series"
  ]
 }

@@ -1143,15 +1143,16 @@
   },
   {
    "title": "Pastoral Enrichment Tour",
-   "start": "2027-03-10",
-   "end": "2027-03-22",
+   "start": "2027-03-09",
+   "end": "2027-03-23",
    "place": "",
    "category": "pastoral-leadership",
    "category2": "",
    "audience": "pastors",
    "url": "https://dakotaadventist.org/events/pastoral-enrichment-tour/",
    "source": "calendar",
-   "level": "conference"
+   "level": "conference",
+   "note": "(2026-11-06) Calendar now shows 9-23 Mar 2027."
   }
  ],
  "notes": [

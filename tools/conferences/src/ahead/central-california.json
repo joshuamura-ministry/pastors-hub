@@ -12,9 +12,9 @@
   "https://www.cccpathfinders.org/events",
   "https://www.cccpathfinders.org/calendar"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "B (public events only; the Pathfinder page is the only one that looks a year ahead)",
  "furthestPublished": "2027-08",
  "furthestNote": "Last conference item: Pathfinder Leadership weekend, 13-15 Aug 2027. The same Pathfinder page also lists the International Camporee, 6-12 Aug 2029 (Oshkosh), a world-church event. The conference events page lists nothing after Nov 2026.",
@@ -26,7 +26,15 @@
   "https://www.cccadventist.org/blog-posts-sitemap.xml",
   "https://www.cccsdayouth.org/events",
   "https://www.campwawona.org/",
-  "https://www.cccadventist.org/post/summer-camp-concludes-for-the-season"
+  "https://www.cccadventist.org/post/summer-camp-concludes-for-the-season",
+  "https://www.cccadventist.org/calendar",
+  "https://www.cccadventist.org/event-details/speed-fellowshipping-1",
+  "https://www.cccadventist.org/event-details/singles-speed-fellowshipping-camp-meeting-2025",
+  "https://www.cccadventist.org/event-details/singles-social-get-together",
+  "https://www.cccadventist.org/event-details/singles-shaver-lake-weekend-campout",
+  "https://www.cccadventist.org/event-details/singles-bonfire-and-vespers-at-monterey-bay-academy",
+  "https://www.cccadventist.org/event-details/singles-amazing-grace-obstacle-course-race",
+  "https://www.adventistfaith.com/news/central-acts-october-2026/"
  ],
  "events": [
   {
@@ -146,6 +154,20 @@
    "source": "Pathfinder events page",
    "when": "upcoming",
    "level": "conference"
+  },
+  {
+   "title": "Speed Fellowshipping (singles)",
+   "start": "2026-11-07",
+   "end": "2026-11-07",
+   "place": "1425 Springer Rd, Mountain View",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "singles",
+   "level": "conference",
+   "url": "https://www.cccadventist.org/event-details/speed-fellowshipping-1",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Singles Ministries event, 2:00-6:00 pm; RSVP through the page (a match list had 100+ sign-ups)."
   }
  ],
  "stats": {
@@ -197,6 +219,17 @@
  ],
  "notes": [
   "cccpathfinders.org shows a browser check to scripts. It was read through a fetch service; nothing was bypassed.",
-  "The youth events page (cccsdayouth.org) goes no further than 30 Oct-1 Nov 2026. The blog (23 posts since May 2026) has no 2027 dates."
+  "The youth events page (cccsdayouth.org) goes no further than 30 Oct-1 Nov 2026. The blog (23 posts since May 2026) has no 2027 dates.",
+  "(2026-11-06) cccpathfinders.org answered a normal request this time (no browser check); its content is unchanged from the previous pass.",
+  "(2026-11-06) Six Wix event pages re-saved on 20-26 Oct 2026 are old singles events (2016-2025) re-published, apart from the new Speed Fellowshipping on 7 Nov 2026.",
+  "(2026-11-06) The /calendar page is a Wix events widget drawing on the same event list as /events; nothing extra was found.",
+  "(2026-11-06) Wix returned 429 to a burst of requests; the pages were re-read one at a time (no block)."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Camp Wawona summer camp 2027: campwawona.org still shows \"2026 Camp Dates and Prices\".",
+  "Soquel Camp Meeting 2027 opening and closing days (only the Pathfinder days 19-24 Jul 2027 are implied).",
+  "Teen Bible Academy 2027 and the 2027 youth retreats: cccsdayouth.org still ends with the Teen Girls Retreat of 30 Oct - 1 Nov 2026.",
+  "2027 women's, men's, marriage, young adult and prayer-conference events: none posted; \"Eventos FEJA 2026\" and \"Lider Juvenil\" are still \"date and time TBD\"."
  ]
 }

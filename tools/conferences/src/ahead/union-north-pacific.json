@@ -14,8 +14,8 @@
   "https://npuc.org/greece-tour",
   "https://www.discipletrek.life/collegiate"
  ],
- "window": "2027-04-01 to 2027-09-30",
- "retrieved": "2026-10-01",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
+ "retrieved": "2026-11-06",
  "furthestPublished": "2028-06",
  "furthestPublishedNote": "The NPUC K-12 education calendar PDF runs to June 2028. The NPUC events calendar itself ends in May 2027 and is mostly committees. The Israel young-adult tour is Oct 25-Nov 2, 2027.",
  "calendarQuality": "The union events calendar is an administrators' calendar (GC, NAD and committee meetings) and ends in May 2027. Real union events come from ministry pages (camporee, young adults, DiscipleTrek), the education calendar PDF and Walla Walla University pages.",
@@ -226,21 +226,49 @@
    "source": "NPUC K-12 Education Calendar 2025-2027 (PDF, revised May 20, 2026)",
    "level": "union",
    "note": "2026 edition was at Ridgefield, Sep 14-17."
+  },
+  {
+   "category2": null,
+   "note": "Youth page (modified Oct 15, 2026) lists it with location \"TBD\"; Washington's youth calendar places it at the Von Braun Center, Huntsville, Alabama.",
+   "title": "NAD Pathfinder Bible Experience",
+   "start": "2027-04-23",
+   "end": "2027-04-24",
+   "place": null,
+   "category": "pathfinders",
+   "audience": "pathfinders",
+   "level": "division",
+   "url": "https://npuc.org/ministries/youth",
+   "source": "events page",
+   "datePrecision": "day"
+  },
+  {
+   "category2": null,
+   "note": "\"EC\" is the calendar's own abbreviation (the 2026 edition was Oct 12-13, 2026 at the Oregon Conference); now inside the window with October 2027.",
+   "title": "NPUC EC Workshop",
+   "start": "2027-10-11",
+   "end": "2027-10-12",
+   "place": "Washington Conference (WAC)",
+   "category": "education",
+   "audience": "teachers",
+   "level": "union",
+   "url": "https://npuc.org/wp-content/uploads/2026/05/NPUC-2-YR-Ed-Calendar-Jul2026-to-Jun2028-may20.pdf",
+   "source": "education calendar PDF",
+   "datePrecision": "day"
   }
  ],
  "counts": {
-  "total": 16,
+  "total": 18,
   "conferenceLevel": 0,
   "unionLevel": 11,
   "institutionOrOther": 5,
   "deadlines": 4,
-  "observances": 1,
+  "observances": 0,
   "monthOnly": 1,
   "byCategory": {
-   "education": 8,
-   "pathfinders": 4,
+   "evangelism-outreach": 1,
    "youth-young-adults": 3,
-   "evangelism-outreach": 1
+   "education": 9,
+   "pathfinders": 5
   },
   "byCategoryConferenceOnly": {}
  },
@@ -480,11 +508,33 @@
   "https://www.wallawalla.edu/admissions-and-aid/visit-wwu/blockout-dates",
   "https://nwadventists.com/classifieds",
   "https://nwadventists.com/issue/2026/09",
-  "https://nwadventists.com/news?section=All (123 articles Mar-Oct 2026 searched for 2027)"
+  "https://nwadventists.com/news?section=All (123 articles Mar-Oct 2026 searched for 2027)",
+  "https://npuc.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=1",
+  "https://npuc.org/wp-json/wp/v2/pages?orderby=modified&per_page=20",
+  "https://npuc.org/wp-json/wp/v2/posts?per_page=20",
+  "https://nwadventists.com/news",
+  "https://npuc.org/wp-content/uploads/2026/10/Greece-Tour-2027-Patmos-Santorini.pdf",
+  "https://npuc.org/wp-content/uploads/2026/10/Israel-Tour-2027-Egypt-Jordan-2.pdf",
+  "https://npuc.org/ministries/creation"
  ],
  "notes": [
   "Union events in alsoOct26toMar27 with alsoInV50 are already in those conferences' first-pass files (level union); de-duplicate by title and date when merging.",
   "The education calendar shows Prayeradigm as \"Nov 11-14, 2028\" in the 2027-28 column; probably a typo for 2027. Not used.",
-  "The NPUC Ministerial Convention was Aug 19-23, 2026; no 2027 ministers' meeting is posted."
+  "The NPUC Ministerial Convention was Aug 19-23, 2026; no 2027 ministers' meeting is posted.",
+  "(2026-11-06) Camporee 2027 page (modified Oct 15, 2026) re-read in full: the recorded deadlines are confirmed unchanged - early ticket price $65 by April 30 (then $75; day passes $25/day), event-staff online registration by August 25, Sterling Volunteers child-protection screening cleared by September 1, 2027. E",
+  "(2026-11-06) Greece tour PDF: main tour April 4-11, 2027 ($1,899 youth 35 and under / $2,499 adults, plus airfare) with optional Patmos pre-extension April 1-5 and Santorini post-extension April 11-14, 2027 ($1,199 each). Israel tour PDF: October 25-November 2, 2027 ($2,799 / $2,899) with optional Egypt pre-exte",
+  "(2026-11-06) Education calendar PDF, 2027-28 column, items in the window already recorded: New Teacher Cohort Aug 3-5 and Oct 20-21, Fall Leadership Council Sep 13-16 (TBD), WWU Fall Classic Oct 7-9, 2027. Left out as boards/internal: NPUC Board of Education (Mar 4 and Oct 7, 2027), Education Council (Feb 1-2), ",
+  "(2026-11-06) The Children page (modified Nov 5, 2026) only carries the Alive in Jesus curriculum rollout years (Junior/Earliteen January 2029); no events. The Creation page (modified Oct 27) has no dates.",
+  "(2026-11-06) nwadventists.com news listing is drawn by script and was not re-read this pass; the union site's own posts endpoint shows nothing newer than Sep 2025."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "NPUC Young Adult Summit / Spark Tank 2027 - Spark page (unchanged since Aug 12, 2026) still says the summit is postponed to a 2027 date \"to be determined\".",
+  "NPUC Youth/Young Adult Ministry Conference 2027-28 - still \"TBD\" on the education calendar.",
+  "Regional Convocation 2027 - convocation page still shows the 2026 (50th) convocation.",
+  "Specially called NPUC constituency meeting (fall 2027) - nothing posted; the 30th session page (modified Sep 30) covers Aug 23, 2026 only.",
+  "Hispanic union-wide events 2027 - nothing posted.",
+  "NPUC Camporee offsite service-project sign-up - \"Coming April 2027\" (not a deadline).",
+  "Israel tour registration - page (modified Nov 3, 2026) says \"Registration Coming Soon\"; the Greece tour page now has \"Register Now\"."
  ]
 }

@@ -1,4 +1,4 @@
-Alaska | Digital evangelism pilot for remote areas (with the NAD) | campaign/current | not-found | words=["digital evangelism"] | 
+Alaska | Digital evangelism pilot for remote areas (with the NAD) | campaign/current | area-active | words=["digital evangelism"] | 
 Alaska | Evangelism 360 & ACTS evangelism training | event/current | on-calendar | words=["evangelism 360","=ACTS"] | Evangelism 360 training (From Everyday Relationships to Lifelong Disciples) 2026-10-16 ;; ACTS Church Planters Training 2026-10-18
 Alaska | Fall Evangelism Training and 2027 evangelism planning session | event/current | on-calendar | words=["evangelism training","evangelism planning"] | Church leaders evangelism training with the NAD Evangelism Institute ("The Little Church That Could") 2026-10-30 ;; 2027 evangelism planning and budget session for pastors and elders 2026-11-01
 Alaska | Broadcast ministry leading to a conference-wide evangelistic thrust (fall 2027) | campaign/planned | coming-up | words=["broadcast"] | 
@@ -30,7 +30,7 @@ Hawaii | Literature evangelism and GLOW tract outreach training | training/curre
 Idaho | GROW (Go Reach Our World) evangelism fund | funding/current | not-an-event | words=[] | 
 Indiana | Johnny Appleseed Project – Planting & Growing Impactful Congregations | strategy/current | not-an-event | words=["johnny appleseed"] | 
 Iowa-Missouri | 7 for Souls (member giving to Conference Evangelism) | offering/current | not-an-event | words=["7 for souls"] | 
-Iowa-Missouri | IM Called: School of Evangelism and Discipleship | training/current | on-calendar | words=["im called","school of evangelism"] | IM Called School of Evangelism and Discipleship (summer 2026 cohort) 2026-06-22 ;; IM Called: School of Evangelism and Discipleship, 2027 school year 2027-06-01 ;; St. Louis Adventist Community Services center grand opening (donated building; also houses IM Called classes) 2026-06-01
+Iowa-Missouri | IM Called: School of Evangelism and Discipleship | training/current | on-calendar | words=["im called","school of evangelism"] | IM Called School of Evangelism and Discipleship (summer 2026 cohort) 2026-06-22 ;; IM Called: School of Evangelism and Discipleship, 2027 school year 2027-06-28 ;; St. Louis Adventist Community Services center grand opening (donated building; also houses IM Called classes) 2026-06-01
 Kentucky-Tennessee | Evangelism boot camps and training weekends | training/current | not-found | words=["boot camp","evangelism training"] | 
 Kentucky-Tennessee | GROW Your Church cycle in the evangelism budget request | process/current | not-an-event | words=["grow your church"] | 
 Kentucky-Tennessee | Hispanic Evangelistic Caravan 2027 | series/planned | coming-up | words=["caravan"] | Caravana Evangelistica (Hispanic evangelistic caravan) 2026-05-29 ;; Hispanic Evangelistic Caravan 2027-06-04
@@ -38,7 +38,7 @@ Michigan | Discipleship Plans (annual church plan and district evangelism funds,
 Michigan | Emmanuel Institute (evangelism training centre) | training/current | on-calendar | words=["emmanuel institute","emmanuel training"] | Emmanuel Training (Conference) 2026-03-29 ;; Emmanuel Institute 2027-08-22
 Michigan | Keys to Revelation (conference series resource) | resource/current | on-calendar | words=["keys to revelation"] | Keys To Revelation 2025-10-03
 Michigan | MAP Pooled Resource Funds (Lay Advisory) | funding/current | not-an-event | words=["map funds","map pooled"] | 
-Minnesota | Literature evangelism: Minnesota Youth Rush and GLOW | ministry/current | not-an-event | words=["youth rush","=GLOW"] | 
+Minnesota | Literature evangelism: Minnesota Youth Rush and GLOW | ministry/current | on-calendar | words=["youth rush","=GLOW"] | Minnesota Youth Rush summer 2027 (student literature evangelism programme) 2027-05-30
 Montana | Each One Reach One | strategy/current | not-an-event | words=["each one reach one"] | 
 Montana | Montana Mission Projects (“Wall of Mission”) | funding/current | not-an-event | words=["wall of mission"] | 
 Montana | Renew & Restore | resource/current | not-an-event | words=["renew & restore","renew and restore"] | 
@@ -46,7 +46,7 @@ Nevada-Utah | Growth Ministry (evangelism, church plants, training) | ministry/c
 Nevada-Utah | Kayenta Navajo Mission (Native American Ministry) | mission-project/current | not-an-event | words=["kayenta","navajo"] | 
 Nevada-Utah | Volunteer Bible Workers | training/current | area-active | words=["bible worker"] | 
 New Jersey | Regional Ministries Training (north, central and south) | training/current | on-calendar | words=["regional ministries training","regional training"] | Regional Ministries Training (north, central, south) 2026-01-01
-Northeastern | Each One Reach One School of Evangelism | training/current | on-calendar | words=["each one reach one","school of evangelism"] | Virtual School of Evangelism 2026-05-31
+Northeastern | Each One Reach One School of Evangelism | training/current | on-calendar | words=["each one reach one","school of evangelism"] | Virtual School of Evangelism 2026-05-31 ;; Personal Ministries Virtual School of Evangelism 2027-03-21
 Northern California | Church growth initiatives: Revitalization Residency, church revitalization and church planting | strategy/current | not-an-event | words=["revitalization","church planting"] | 
 Northern New England | Fill the Baptistry Sabbath | event/current | on-calendar | words=["fill the baptistry"] | Fill the Baptistry Sabbath 2025-10-04
 Northern New England | Revival in the East (vision, mission and strategy 2023–2028) | strategy/current | not-an-event | words=["revival in the east"] | 
@@ -54,8 +54,8 @@ Ohio | Ignite Ohio 2026 (with the Columbia Union) | campaign/ended | on-calendar
 Oklahoma | Oklahoma Reconnect | campaign/current | on-calendar | words=["reconnect"] | Oklahoma Reconnect training (first) 2026-09-14 ;; Oklahoma Reconnect training: reclaiming our children (Tulsa Metro) 2026-10-09 ;; 'Regreso a Casa / Return Home' evangelistic series (Oklahoma Reconnect) 2026-08-22
 Oregon | Oregon Conference Evangelism Offering (camp meeting) | offering/current | not-an-event | words=[] | 
 Oregon | Outreach Ministries: church-planting goal and evangelism coaching | strategy/current | not-an-event | words=["church plant","coaching"] | 
-Pennsylvania | OneVoice27 in the Pennsylvania Conference | campaign/current | on-calendar | words=["onevoice","one voice"] | OneVoice27: The Desire of Ages reading journey (conference-wide) 2026-11-01 ;; OneVoice27 evangelistic series in Pennsylvania churches ("Proclaim in One Accord") 2027-09-01
-Potomac | LEAD groups for pastors (Leadership, Encouragement, Accountability, Dream) | training/current | on-calendar | words=["=LEAD"] | LEAD Leaders Mtg 2025-11-20 ;; LEAD Leader Coaching 2026-05-05 ;; LEAD Leaders Seminar 2026-10-06
+Pennsylvania | OneVoice27 in the Pennsylvania Conference | campaign/current | on-calendar | words=["onevoice","one voice"] | OneVoice27: The Desire of Ages reading journey (conference-wide) 2026-11-01 ;; OneVoice27 Training Events (five regional Sabbath trainings) 2026-11-08 ;; OneVoice27 evangelistic series in Pennsylvania churches ("Proclaim in One Accord") 2027-09-01
+Potomac | LEAD groups for pastors (Leadership, Encouragement, Accountability, Dream) | training/current | on-calendar | words=["=LEAD"] | LEAD Leaders Mtg 2025-11-20 ;; LEAD Leader Coaching 2026-05-05 ;; LEAD Leaders Seminar 2026-10-06 ;; LEAD Leaders Mtg (2027 dates) 2027-02-11
 Rocky Mountain | Annual planning and evaluation process for all churches | process/current | not-an-event | words=["planning and evaluation"] | 
 South Atlantic | M.A.P.S. Strategic Plan 2025–2027 (Phase 2) | strategy/current | not-an-event | words=["m.a.p.s","=MAPS"] | 
 South Central | 3-Year Strategic Plan (2026–2029) | strategy/current | not-an-event | words=["strategic plan"] | 
@@ -68,10 +68,10 @@ Southern New England | Focused outreach to four large cities (Worcester, Hartfor
 Southern New England | “Together in Mission” evangelism offering | offering/current | not-an-event | words=["together in mission"] | 
 Southern New England | Church Evangelism training course (ends with a member-led series) | training/planned | coming-up | words=["church evangelism training","evangelism training"] | 
 Southwest Region | UNA VOZ 27 | campaign/current | on-calendar | words=["una voz"] | UNA VOZ 27 official launch (conference-wide evangelism and discipleship project) 2026-10-10 ;; UNA VOZ 27: preparatory evangelistic series in local churches 2027-06-01 ;; UNA VOZ 27: forty days of prayer and personal invitation 2027-08-01 ;; UNA VOZ 27: simultaneous evangelistic campaigns (nine messages) 2027-09-01
-Texas | MÁS esperanza metropolitan evangelism projects (MÁS Austin 2026 and others) | series/current | on-calendar | words=["más esperanza","mas esperanza","más austin","mas austin","=MAS","=MÁS"] | MAS Evangelismo East Texas (Spanish) 2026-10-24
+Texas | MÁS esperanza metropolitan evangelism projects (MÁS Austin 2026 and others) | series/current | on-calendar | words=["más esperanza","mas esperanza","más austin","mas austin","=MAS","=MÁS"] | MAS Evangelismo East Texas (Spanish) 2026-10-24 ;; MAS San Antonio (Spanish churches) 2027-03-13
 Texas | Together As One Convocations 2026 (local church officer training) | event/current | on-calendar | words=["together as one"] | Together As One Convocation - Valley 2026-01-30 ;; Together As One Convocation - East Texas 2026-02-27 ;; Together As One Convocation - San Antonio 2026-05-29 ;; Together As One Convocation - Houston 2026-06-12
 Texico | Equipping Texico ministry trainings and annual Elder Trainings | training/current | on-calendar | words=["equipping","elder training","elders training"] | Equipping Texico: Weekend of Ministry Trainings (Albuquerque) 2026-01-30 ;; Equipping Texico / Equipando Texico (El Paso) 2026-04-10 ;; Equipping Texico Ministries Training (Midland/Odessa) 2026-10-23 ;; Equipping Texico Ministries Training (West Texas) 2026-12-04
-Upper Columbia | Serve One More | campaign/current | area-active | words=["serve one more"] | 
+Upper Columbia | Serve One More | campaign/current | not-found | words=["serve one more"] | 
 Upper Columbia | Hispanic evangelistic caravan 2027 (after “Try with Jesus” 2026) | series/planned | coming-up | words=["caravan"] | "Try with Jesus" Hispanic evangelistic caravan (nine locations) 2026-04-17
 Washington | PLAN IT. FUND IT. (children's ministry events) | training/current | area-active | words=["plan it"] | 
 Washington | Revangelism (evangelism and church revitalization) | process/current | not-an-event | words=["revangelism"] | 

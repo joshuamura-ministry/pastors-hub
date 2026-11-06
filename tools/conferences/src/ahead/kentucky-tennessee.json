@@ -3,8 +3,8 @@
  "slug": "kentucky-tennessee",
  "union": "Southern",
  "site": "https://www.kytn.net",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://www.kytn.net/calendar",
   "https://www.kytn.net/kytnevents",
@@ -24,7 +24,13 @@
   "https://www.kytnpathfinders.org/pbe.html",
   "https://nadpbe.org/",
   "https://nadministerial.com/called",
-  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://www.kytn.net/calendar?offset=1759329612968&format=json",
+  "https://www.kytn.net/calendar/pathfinder-camporee-1?format=json",
+  "https://www.kytn.net/calendar/pcm-retreat?format=json",
+  "https://www.kytn.net/calendar/summer-camp-registration-opens?format=json",
+  "https://www.kytn.net/kytnevents",
+  "https://www.kytn.net/news?format=json"
  ],
  "usuallyHeldNotYetPublished": [],
  "stats": {
@@ -393,6 +399,59 @@
    "source": "calendar",
    "note": "not described",
    "when": "upcoming"
+  },
+  {
+   "title": "Summer Camp Registration Opens",
+   "start": "2027-01-01",
+   "end": "2027-01-01",
+   "place": null,
+   "category": "children",
+   "category2": "family-women-men",
+   "audience": "families",
+   "level": "conference",
+   "url": "https://www.kytn.net/calendar/summer-camp-registration-opens",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "calendar item pointing to indiancreekcamp.com, where camper registration and staff applications for the 2027 summer open on 1 Jan 2027",
+   "registrationOpens": "2027-01-01"
+  },
+  {
+   "title": "Pathfinder Camporee",
+   "start": "2027-10-07",
+   "end": "2027-10-10",
+   "place": "Salt Lick Camp Grounds, Gainesboro, TN",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "pathfinders",
+   "level": "conference",
+   "url": "https://www.kytn.net/calendar/pathfinder-camporee-1",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "title and place only; the event page has no description"
+  },
+  {
+   "title": "PCM Retreat",
+   "start": "2027-10-22",
+   "end": "2027-10-24",
+   "place": "Indian Creek Camp, Liberty, TN",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://www.kytn.net/calendar/pcm-retreat",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "PCM = Public Campus Ministries (the conference's events page lists Public Campus Ministries next to Youth Summit and Indian Creek Camp); the event page has no description"
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "Nothing beyond Nov 2027 on the live calendar (Master Guide Retreat 12-14 Nov and Hispanic Men's Retreat 19-21 Nov 2027 are the last items, both outside the window).",
+  "Indian Creek Camp has not added 2027 dates for its Lifeguard Camp."
+ ],
+ "notes": [
+  "(2026-11-06) Every existing event in the window was re-found on the calendar JSON with the same dates (dates converted in Central time); no changes.",
+  "(2026-11-06) The Squarespace JSON (?format=json) gave the whole upcoming list in one page; the pagination offset only leads to past events, so headless Chrome was not needed.",
+  "(2026-11-06) The news page (9 latest posts, to 4 Nov 2026) carries no dated conference events."
  ]
 }

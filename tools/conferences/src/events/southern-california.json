@@ -1171,7 +1171,7 @@
   {
    "title": "Region pastors' meetings (GLAR, LAMR, West, Asian/Pacific, Hispanic)",
    "start": "2026-07-21",
-   "end": "2026-11-04",
+   "end": "2027-05-04",
    "place": "Berean SDA Church",
    "category": "pastoral-leadership",
    "category2": null,
@@ -1180,7 +1180,7 @@
    "source": "master calendar (ICS)",
    "when": "past+upcoming",
    "recurring": true,
-   "count": 8,
+   "count": 15,
    "dates": [
     "2026-07-21",
     "2026-08-05",
@@ -1189,9 +1189,17 @@
     "2026-09-21",
     "2026-10-13",
     "2026-10-21",
-    "2026-11-04"
+    "2026-11-04",
+    "2027-01-13",
+    "2027-01-26",
+    "2027-02-03",
+    "2027-02-22",
+    "2027-03-31",
+    "2027-04-07",
+    "2027-05-04"
    ],
-   "level": "conference"
+   "level": "conference",
+   "note": "(2026-11-06) More 2027 dates published (to 4 May 2027)."
   },
   {
    "title": "How to Share Your Faith in a Secular World",

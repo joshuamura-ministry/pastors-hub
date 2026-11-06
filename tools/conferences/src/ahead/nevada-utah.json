@@ -8,25 +8,29 @@
   "https://calendar.google.com/calendar/ical/ejg38pu9s0ijgc56c514pftqf1nq5p72%40import.calendar.google.com/public/basic.ics",
   "https://www.nucsda.com/impact-26"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "A- now, but thin after Jan 2027 (complete office calendar; few 2027 entries yet)",
- "furthestPublished": "2027-09",
- "furthestNote": "The Southern Nevada pastors' series repeats to 7 Sep 2027 and enditnow Day is on 28 Aug 2027. The latest one-off entry is the NAD convention (listed for 26-29 Jul 2027). Pay days and a VVAA board series also repeat to Sep 2027 (left out).",
+ "furthestPublished": "2027-10",
+ "furthestNote": "New: \"NUC Constituency Session\" on 3 Oct 2027 is now the furthest one-off office-calendar entry (it was the NAD convention, Jul 2027). The Southern Nevada pastors' series now repeats to 5 Oct 2027 (the feed's end date moved to 2 Nov 2027); VVAA board and pay-day series also reach Oct 2027 (left out).",
  "aheadSummary": "Four items: the monthly Southern Nevada pastors' meeting (6 dates), the Regional Convocation (4-6 Jun, Salt Lake City, from Recorder news), the NAD CALLED convention, and enditnow Day (28 Aug). Nothing yet for the 2027 evangelism push that the 7 Nov 2026 leadership convocation is preparing for.",
  "aheadChecked": [
   "https://www.nucsda.com/calendar",
   "https://calendar.google.com/calendar/ical/ejg38pu9s0ijgc56c514pftqf1nq5p72%40import.calendar.google.com/public/basic.ics",
   "https://www.nucsda.com/sitemap.xml",
   "https://www.adventistfaith.com/news/staying-faithful-in-a-shifting-world/",
-  "https://www.nadministerial.com/called"
+  "https://www.nadministerial.com/called",
+  "https://www.nucsda.com/week-of-evangelism",
+  "https://www.adventistfaith.com/news/staying-faithful-in-a-shifting-world-2/",
+  "https://www.adventistfaith.com/news/nevada-utah-views-october-2026/",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027&per_page=50"
  ],
  "events": [
   {
    "title": "Southern Nevada area pastors' meeting (monthly, first Tuesday)",
    "start": "2027-04-06",
-   "end": "2027-09-07",
+   "end": "2027-10-05",
    "place": "in person and on Microsoft Teams",
    "category": "pastoral-leadership",
    "category2": null,
@@ -40,16 +44,17 @@
    "when": "upcoming",
    "level": "conference",
    "recurring": true,
-   "count": 6,
+   "count": 7,
    "dates": [
     "2027-04-06",
     "2027-05-04",
     "2027-06-01",
     "2027-07-06",
     "2027-08-03",
-    "2027-09-07"
+    "2027-09-07",
+    "2027-10-05"
    ],
-   "note": "A repeating series on the office calendar from Jan 2026 to 7 Sep 2027. The Utah and Northern Nevada pastors' series end in Jan 2027."
+   "note": "A repeating series on the office calendar from Jan 2026 to 7 Sep 2027. The Utah and Northern Nevada pastors' series end in Jan 2027. (2026-11-06) Series extended to 5 Oct 2027."
   },
   {
    "title": "Nevada-Utah Conference Regional Convocation 2027",
@@ -97,6 +102,20 @@
    "level": "division",
    "observance": true,
    "note": "A yearly entry on the office calendar (fourth Sabbath of August) linking to the enditnow resources page."
+  },
+  {
+   "title": "NUC Constituency Session",
+   "start": "2027-10-03",
+   "end": "2027-10-03",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.nucsda.com/calendar",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "All-day entry on the office calendar (Google Calendar feed); no place or details given. The previous (35th) session was in 2022."
   }
  ],
  "stats": {
@@ -145,6 +164,18 @@
  ],
  "notes": [
   "Left out (rule): Board of Education (6 Apr 2027), VVAA Board (monthly), pay days, Capital Reversion Funds (5 Apr), contracts complete (1 Sep), office closures, staff birthdays and anniversaries.",
-  "None of the 118 nucsda.com pages in the sitemap mentions 2027."
+  "None of the 118 nucsda.com pages in the sitemap mentions 2027.",
+  "(2026-11-06) The own-calendar month was not moved: after Feb 2027 the office calendar still has only a handful of entries (Board of Education 6 Apr, NAD Called Convention 26-29 Jul, Constituency Session 3 Oct) plus repeating series. Suggested wording update for the through line: \"a few meetings repeat to Oct 202",
+  "(2026-11-06) The 14 Oct 2026 Recorder repost of \"Staying Faithful in a Shifting World\" repeats the 2027 Regional Convocation dates (4-6 Jun 2027, Salt Lake City), already in the existing list.",
+  "(2026-11-06) Left out (rule): VVAA Board (to Oct 2027), pay days, Capital Reversion Funds (5 Apr), Board of Education (6 Apr), contracts (1 Sep), office closures, staff birthdays and anniversaries, Leadership Tactical Meeting (3 Dec 2026)."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "aheadChecked_blocked": [
+  "https://www.nucsda.com/impact-26 — 404 - page removed since the previous pass"
+ ],
+ "notPublishedYetNov2026": [
+  "Conference-wide evangelism 2027 (\"Evangelism 2027\"): no dates; the Impact-26 page is gone and the \"week-of-evangelism\" page in the sitemap is a 2022 generic page.",
+  "Pathfinder camporee 2027, youth sports days 2027, couples' retreat 2027, Midweek of Gratitude 2027: none on the calendar.",
+  "Utah and Northern Nevada pastors' series still end in Jan 2027; Personnel, Executive Committee and FIPPA series end Dec 2026."
  ]
 }

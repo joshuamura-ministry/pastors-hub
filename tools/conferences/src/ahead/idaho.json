@@ -12,9 +12,9 @@
   "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
   "https://gemstate.org/student-life/calendar/"
  ],
- "window": "2027-04-01 to 2027-09-30",
- "retrieved": "2026-10-01",
- "furthestPublished": "2027-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
+ "retrieved": "2026-11-06",
+ "furthestPublished": "2027-10",
  "furthestPublishedNote": "The conference calendar (and its API) ends Dec 31, 2026. Two other public calendars run further: the Pathfinder & Adventurer PDF calendar (to Jun 19, 2027) and the Gem State Adventist Academy Google Calendar (to Jun 2, 2027).",
  "calendarQuality": "Main calendar has nothing for 2027. The 2027 look-ahead exists only in the club ministries PDF and the academy calendar, both linked from public pages.",
  "aheadSummary": "Not on the conference calendar, but the Pathfinder PDF dates the spring club rhythm (planning session Apr 11, Pathfinder Fair May 2, club council May 16, Adventurer Family Campout Jun 4-6) and the academy calendar dates its spring concert and graduation. No camp meeting, camp, retreat or evangelism dates for 2027 yet.",
@@ -112,10 +112,38 @@
    "url": "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf",
    "source": "Pathfinder & Adventurer calendar 2025-2027 (PDF linked on idahoadventist.org/departments/pathfinders/)",
    "level": "conference"
+  },
+  {
+   "category2": null,
+   "note": "Academy Google Calendar (public ICS); the conference calendar itself has nothing for 2027.",
+   "title": "GSAA Alumni Homecoming",
+   "start": "2027-10-01",
+   "end": "2027-10-02",
+   "place": "Gem State Adventist Academy, Caldwell, ID",
+   "category": "education",
+   "audience": "members",
+   "level": "institution",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "feed",
+   "datePrecision": "day"
+  },
+  {
+   "category2": "education",
+   "note": "Listed on the academy calendar the day after Alumni Homecoming; purpose and venue not stated.",
+   "title": "GSAA Golf Tournament",
+   "start": "2027-10-03",
+   "end": "2027-10-03",
+   "place": "Gem State Adventist Academy, Caldwell, ID",
+   "category": "stewardship-finance",
+   "audience": "members",
+   "level": "institution",
+   "url": "https://gemstate.org/student-life/calendar/",
+   "source": "feed",
+   "datePrecision": "day"
   }
  ],
  "counts": {
-  "total": 7,
+  "total": 9,
   "conferenceLevel": 4,
   "unionLevel": 0,
   "institutionOrOther": 3,
@@ -123,10 +151,11 @@
   "observances": 0,
   "monthOnly": 0,
   "byCategory": {
-   "pathfinders": 3,
    "music-worship-arts": 2,
-   "education": 1,
-   "children": 1
+   "pathfinders": 3,
+   "education": 2,
+   "children": 1,
+   "stewardship-finance": 1
   },
   "byCategoryConferenceOnly": {
    "pathfinders": 3,
@@ -367,10 +396,32 @@
   "https://gemstate.org/student-life/calendar/",
   "https://calendar.google.com/calendar/ical/gemstate.org_tlml39sg6fhcgfqv4i1e980ofc%40group.calendar.google.com/public/basic.ics",
   "https://gemstate.org/wp-json/tribe/events/v1/events?start_date=2027-01-01",
-  "https://nwadventists.com/news?section=352"
+  "https://nwadventists.com/news?section=352",
+  "https://idahoadventist.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=1",
+  "https://idahoadventist.org/wp-json/wp/v2/pages?orderby=modified&per_page=20",
+  "https://idahoadventist.org/conference-calendar/"
  ],
  "notes": [
   "The youth page also links a Europe Reformation tour flyer from a travel agency, with no dates; not counted.",
-  "The Pathfinder PDF marks some dates with \"?\" (tentative); those are flagged tentative:true."
+  "The Pathfinder PDF marks some dates with \"?\" (tentative); those are flagged tentative:true.",
+  "(2026-11-06) The main calendar feed for Nov 1, 2026-Oct 31, 2027 returns 18 entries, all before Jan 1, 2027 and all already in the existing list (plus school breaks and office closures, left out).",
+  "(2026-11-06) The GSAA calendar also lists Prayeradigm (Nov 12-15, 2026, the UCC/NPUC prayer retreat at Camp MiVoden), a \"Discipleship Summit\" Nov 16-18, 2026 (the NPUC Youth/Young Adult Ministry Conference dates), Winter School at Camp Ida-Haven Feb 7-9, 2027, a Belize mission trip Mar 16-28 and a Europe trip Ma",
+  "(2026-11-06) The through line did not move (main calendar still ends Dec 2026); the academy calendar now runs to Oct 2027 rather than Jun 2027, so the wording \"club and academy calendars run to Jun 2027\" is slightly stale.",
+  "(2026-11-06) This pass was partial: see aheadChecked_blocked."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "aheadChecked_blocked": [
+  "https://assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf — HTTP 403 AccessDenied (S3/Wasabi) at this address and at the address the Pathfinders page now links (https://s3.us-east-2.wasabisys.com/assets.adventistconnect.org/idahoco1/c202c32cc20f643e1278d8d5.pdf); the Pathfinder & Adventurer calendar PDF could not be re-read",
+  "https://idahoadventist.org/departments/administration/camp-meeting-2027/ — 404 (not created yet)",
+  "https://idahoadventist.org/wp-json/wp/v2/posts?per_page=20 — endpoint returned no JSON array (posts not exposed)"
+ ],
+ "furthestNote": "The conference calendar and its feed still end Dec 31, 2026 (18 entries, all already recorded). The Gem State Adventist Academy Google Calendar now runs to the GSAA Alumni Homecoming (Oct 1-2, 2027) and a Golf Tournament (Oct 3, 2027), plus WWU tournaments in 2028-29. The Pathfinder PDF (to Jun 19, 2027 last pass) could not be re-read (403).",
+ "notPublishedYetNov2026": [
+  "Idaho Conference Camp Meeting 2027 - the camp-meeting-2027 page still does not exist (404); the 2026 page (Jun 9-13, 2026 at GSAA) is unchanged.",
+  "Camp Ida-Haven summer camps 2027 - idahaven.org and its schedules page still show no 2027 dates.",
+  "Women's Retreat 2027 - page unchanged since Aug 26, 2026 (2026 retreat only).",
+  "Pastors' meetings 2027 - ministerial page unchanged (2026 schedule only).",
+  "Teen Mountain Biking, Pathfinder Leadership, fall camporee, Bike-A-Ton (Aug-Sep 2027) - the Pathfinders page (unchanged since Jul 21, 2026) lists only 2026 dates in its text; the PDF that carried the 2027 club dates is now 403.",
+  "The Elders page (modified Oct 11, 2026) only carries the Spanish elders retreat Nov 6-8, 2026, already recorded."
  ]
 }

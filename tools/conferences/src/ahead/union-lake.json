@@ -3,8 +3,8 @@
  "slug": "union-lake",
  "union": "Lake Union",
  "site": "https://lakeunion.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30"
@@ -42,11 +42,16 @@
   "https://nadministerial.com/called",
   "https://asiministries.org/convention/",
   "https://www.camporee.org/",
-  "https://misda.org/wp-json/tribe/events/v1/events (union items on the Michigan calendar)"
+  "https://misda.org/wp-json/tribe/events/v1/events (union items on the Michigan calendar)",
+  "https://lakeunion.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=1 (39 listings, 2026-11-10 to 2027-10-25)",
+  "https://lakeunion.org/wp-json/tribe/events/v1/events?start_date=2027-11-01&end_date=2030-12-31&per_page=50 (0 listings)",
+  "https://lakeunion.org/wp-json/wp/v2/posts?after=2026-09-25T00:00:00&per_page=30 (no posts)",
+  "https://www.lakeunionherald.org/archive/magazines/nov-dec-2026/",
+  "https://assets.adventistconnect.org/lakeunio/2026/10/27110127/NovDec_LUH2026_Web.pdf"
  ],
  "aheadSummary": "The union calendar (lakeunion.org) has 15 listings for April–September 2027, mostly committees (8 left out, 7 kept); two more union items appear only on the Michigan calendar. In all 9 events, of which 2 are union-run (Hispanic Leadership Summit 11 Apr, Secondary Leadership Retreat 30 Sep–3 Oct at Camp Au Sable); the rest are division (NAD) or ASI events shown on the union calendar: SONscreen 8–10 Apr, Health Summit Intensive 9–11 Apr, NAD PBE finals 23–24 Apr (Huntsville), ASI Lake Union 23–24 Apr, CALLED pastors' family convention 21–24 Jun (Lexington KY), ASI convention 4–7 Aug (Orlando), plus the presidents' retreat (internal). No union camporee, youth congress, ministers' meeting or union-wide evangelism series is dated in the window; the next youth congress is Feb 2028 and the union camporee was Sep 2026.",
  "counts": {
-  "total": 9,
+  "total": 17,
   "conferenceRunPublic": 2,
   "internal": 1,
   "otherLevels": 6,
@@ -92,7 +97,22 @@
    "2027-07": 0,
    "2027-08": 0,
    "2027-09": 1
-  }
+  },
+  "conferenceLevel": 0,
+  "observances": 0,
+  "byCategory": {
+   "music-worship-arts": 1,
+   "health": 2,
+   "multilingual": 1,
+   "pathfinders": 2,
+   "evangelism-outreach": 2,
+   "pastoral-leadership": 3,
+   "administration": 3,
+   "education": 1,
+   "children": 1,
+   "other": 1
+  },
+  "byCategoryConferenceOnly": {}
  },
  "stats": {
   "records": 9,
@@ -347,9 +367,125 @@
    "levelDetail": "Lake Union Conference",
    "categoryNote": "title only; audience inferred from \"secondary leadership\"",
    "sourceDetail": "calendar (misda.org Events Calendar REST API, office calendar; not on the lakeunion.org calendar)"
+  },
+  {
+   "title": "Adventist Leadership Summitt",
+   "start": "2026-11-15",
+   "end": "2026-11-15",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "leaders",
+   "level": "union",
+   "url": "https://lakeunion.org/event/adventist-leadership-summitt/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "Title as published (sic); the calendar gives no description or host; same day as the start of the union departmental meetings (15–17 Nov)"
+  },
+  {
+   "title": "Children’s Ministry Retreat – GC",
+   "start": "2027-01-12",
+   "end": "2027-01-16",
+   "place": null,
+   "category": "children",
+   "category2": "pastoral-leadership",
+   "audience": "leaders",
+   "level": "gc",
+   "url": "https://lakeunion.org/event/childrens-ministry-retreat-gc/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "A General Conference children's ministries leaders' retreat shown on the union calendar; no venue given"
+  },
+  {
+   "title": "GC Spring Meeting",
+   "start": "2027-04-13",
+   "end": "2027-04-14",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "gc",
+   "url": "https://lakeunion.org/event/gc-spring-meeting-2/",
+   "source": "feed",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Pathfinder Bible Experience (PBE)",
+   "start": "2027-04-16",
+   "end": "2027-04-17",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "pathfinders",
+   "level": "division",
+   "url": "https://lakeunion.org/event/pathfinder-bible-experience-pbe/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "The union calendar's date for the division-level PBE (Michigan's calendar also says 16–17 Apr); the recorded NAD PBE Finals from nadpbe.org, and the Indiana and Wisconsin calendars, say 23–24 Apr 2027 — the two dates conflict"
+  },
+  {
+   "title": "Made to Move 5K",
+   "start": "2027-10-03",
+   "end": "2027-10-03",
+   "place": null,
+   "category": "health",
+   "category2": "community-service",
+   "audience": "public/community",
+   "level": "union",
+   "url": "https://lakeunion.org/event/made-to-move-5k-2/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "The NAD Health Ministries 'Made to Move' run as listed on the union calendar; host and venue not given"
+  },
+  {
+   "title": "ACM Professional Development Training",
+   "start": "2027-10-04",
+   "end": "2027-10-08",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://lakeunion.org/event/acm-professional-development-training-2/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "'ACM' is not expanded on the page (Adventist Chaplaincy Ministries by the usual usage)"
+  },
+  {
+   "title": "GC Annual Council",
+   "start": "2027-10-07",
+   "end": "2027-10-13",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "gc",
+   "url": "https://lakeunion.org/event/gc-annual-council-2/",
+   "source": "feed",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Society of Adventist Communicators",
+   "start": "2027-10-14",
+   "end": "2027-10-16",
+   "place": null,
+   "category": "other",
+   "category2": "pastoral-leadership",
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://lakeunion.org/event/society-of-adventist-communicators-2/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "The annual NAD communicators' convention as listed on the union calendar; venue not given"
   }
  ],
- "notes": "The union calendar lists titles and dates only (no descriptions or venues), so hosts and categories of SONscreen, the Health Summit Intensive and the Hispanic Leadership Summit are inferred from titles. Two union items appear only on the Michigan calendar (ASI Lake Union, Secondary Leadership Retreat). The Lake Union Herald issues for Jul/Aug, Sep and Oct 2026 contain no dated April–September 2027 events (only a Jan 2027 agriculture conference in Florida and academy alumni notices).",
+ "notes": [
+  "The union calendar lists titles and dates only (no descriptions or venues), so hosts and categories of SONscreen, the Health Summit Intensive and the Hispanic Leadership Summit are inferred from titles. Two union items appear only on the Michigan calendar (ASI Lake Union, Secondary Leadership Retreat). The Lake Union Herald issues for Jul/Aug, Sep and Oct 2026 contain no dated April–September 2027 events (only a Jan 2027 agriculture conference in Florida and academy alumni notices).",
+  "(2026-11-06) The union calendar grew from 15 to 39 window listings since 1 Oct (every listing re-stamped 5 Nov 2026); most additions are committees and left out: K-12 Board of Education (10 and 17 Nov 2026), LUC Officers Council (10 and 17 Nov), LUC Association Board (11 Nov), LUC Departmental Meetings (15–17 No",
+  "(2026-11-06) Already-recorded items re-found: Sonscreen Film Festival (8–10 Apr), Health Summitt Intensive (9–11 Apr), Hispanic Leadership Summitt (11 Apr), Called Convention (21–24 Jun), ASI Convention (4–7 Aug) and Presidents of Large Conferences Retreat (23–26 Aug 2027).",
+  "(2026-11-06) The union calendar still lists titles and dates only (no descriptions or venues); hosts and categories above are inferred from titles.",
+  "(2026-11-06) The Lake Union Herald Nov–Dec 2026 'events' column has no dated 2027 union event (only an outside National Agricultural and Homestead Conference, Camp Kulaqua FL, 19–24 Jan 2027, and a Europe tour); its conference listings are Nov–Dec 2026 items already recorded. Its camporee article confirms Oshkos"
+ ],
  "earlierUnionEvents": [
   {
    "title": "Made to Move 5K (Lake Union health run/walk)",
@@ -364,5 +500,11 @@
    "source": "union events list (LUC Public)",
    "note": "lakeunion.org events API, 1 Oct 2026: 27 listings for Oct 2026 – Mar 2027; the others are committees, boards, councils, NAD meetings and an office closure. Added in review."
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "Lake Union Women’s Ministries Convention ('2027 or 2028') — still no date",
+  "Adventist Conference on Family Research and Practice (ACFRP) 2027 — still no date",
+  "No union-run event is dated in October 2027 beyond the Secondary Leadership Retreat (30 Sep–3 Oct, already recorded); the union camporee (2026) and youth congress (Feb 2028) are outside the window as expected"
  ]
 }

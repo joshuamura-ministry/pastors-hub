@@ -10,8 +10,8 @@
   "https://www.sneconline.org/event-pages-sitemap.xml",
   "https://www.snecyouth.com/event-pages-sitemap.xml"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "furthestPublished": "2027-09",
  "furthestNote": "Latest item is World Pathfinder Day, 18 Sep 2027, on the youth site (local churches). The latest conference-run events are the June 2027 camp meetings. The calendar widget shows nothing in Jul-Oct 2027.",
  "aheadEvents": 4,
@@ -197,6 +197,135 @@
    "level": "observance",
    "kind": "emphasis-day",
    "note": "World-church day kept by local churches; listed on the conference youth site."
+  },
+  {
+   "title": "Teacher Professional Development-Half Day",
+   "start": "2026-11-12",
+   "end": "2026-11-12",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "level": "conference",
+   "url": "https://www.sneconline.org/calendar",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Conference calendar widget (Outlook feed)."
+  },
+  {
+   "title": "Too Busy To Care",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "place": "One Connection Church, Cambridge, MA",
+   "category": "health",
+   "category2": "discipleship-spiritual",
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.sneconline.org/events-1/too-busy-to-care",
+   "source": "events page",
+   "datePrecision": "day",
+   "registrationDeadline": "2026-11-08",
+   "note": "11 am - 2 pm; a presentation and small-group discussions on care, connection and reflection; lunch provided; registration closes 8 Nov 2026 11:50 pm. The speaker's name is left out."
+  },
+  {
+   "title": "WSO Sabbath",
+   "start": "2026-11-14",
+   "end": "2026-11-14",
+   "place": "Meriden Seventh-day Adventist Church, Meriden, CT",
+   "category": "youth-young-adults",
+   "category2": "community-service",
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://www.snecyouth.com/events-1/wso-sabbath-1",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "World Service Organization Sabbath, 11:30 am - 3:30 pm: a day to celebrate and recognize law enforcement, fire and rescue, health-care professionals, military members and veterans (youth department; RSVP). The conference calendar lists it as 'World Service Orgazation Saturday'."
+  },
+  {
+   "title": "Master Guide Outdoor Activity",
+   "start": "2026-11-15",
+   "end": "2026-11-15",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.sneconline.org/calendar",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Conference calendar widget (Outlook feed), all-day."
+  },
+  {
+   "title": "New Teacher In-service",
+   "start": "2026-11-17",
+   "end": "2026-11-17",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "level": "conference",
+   "url": "https://www.sneconline.org/calendar",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Conference calendar widget (Outlook feed)."
+  },
+  {
+   "title": "Senior Youth Leadership Graduation",
+   "start": "2026-11-21",
+   "end": "2026-11-21",
+   "place": null,
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://www.sneconline.org/calendar",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Conference calendar widget (Outlook feed): 'Venue TBD'. Same day as the AYCM & Young Adult Recognition and Investiture Day already recorded (the widget calls that one 'Master Guide Investiture & Club Ministries Recognition Day', 'Somewhere in Connecticut')."
+  },
+  {
+   "title": "Pastors' Appreciation Dinner - For pastors' and their families",
+   "start": "2026-12-06",
+   "end": "2026-12-06",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": "family-women-men",
+   "audience": "pastors",
+   "level": "conference",
+   "url": "https://www.sneconline.org/calendar",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Conference calendar widget (Outlook feed); the last entry on the conference's own calendar."
+  },
+  {
+   "title": "AYCM Leadership Conference 2027",
+   "start": "2027-01-15",
+   "end": "2027-01-17",
+   "place": "Boxboro Regency, Boxborough, MA",
+   "category": "pathfinders",
+   "category2": "youth-young-adults",
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.snecyouth.com/events-1/aycm-leadership-conference-2027",
+   "source": "events page",
+   "datePrecision": "day",
+   "registrationOpens": "2026-11-05",
+   "note": "Fri 15 Jan 4 pm - Sun 17 Jan 12 pm. Tickets (non-refundable): early registration $170 (Saturday only $135) to 14 Dec 2026; regular $210 ($150) from 15 Dec; on-site $245. Hotel block booked through a separate 'Leadership Congress 2027 Hotel Reservation' page open to 4 Jan 2027."
+  },
+  {
+   "title": "Retiro de Damas 2027: Sanadas para Servir",
+   "start": "2027-04-23",
+   "end": "2027-04-25",
+   "place": "Boxboro Regency, Boxborough, MA",
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "women",
+   "level": "conference",
+   "url": "https://www.sneconline.org/events-1/retiro-de-damas-2027-sanadas-para-servir",
+   "source": "events page",
+   "datePrecision": "day",
+   "registrationOpens": "2026-11-06",
+   "note": "Hispanic Women's Ministry weekend retreat, Fri 23 Apr 4 pm - Sun 25 Apr 11:30 am. Early registration $130 (Saturday only $100) to 25 Jan 2027; regular $150 ($115) from 26 Jan 2027. Also on the conference calendar widget."
   }
  ],
  "prepDeadlines": [
@@ -223,6 +352,41 @@
    "appliesTo": "southern-new-england",
    "what": "Book a campsite for United Camp Meeting (18-26 Jun 2027)",
    "url": "https://www.sneconline.org/events-1/tent-reservation-united-camp-meeting-2027"
+  },
+  {
+   "title": "Too Busy To Care: registration closes",
+   "date": "2026-11-08",
+   "kind": "registration",
+   "what": "Online registration for the 14 Nov 2026 event closes 8 Nov 11:50 pm.",
+   "url": "https://www.sneconline.org/events-1/too-busy-to-care"
+  },
+  {
+   "title": "AYCM Leadership Conference 2027: early registration ends",
+   "date": "2026-12-14",
+   "kind": "registration",
+   "what": "Early tickets ($170 full / $135 Saturday only) end 14 Dec 2026 11:59 pm; regular price from 15 Dec; tickets are non-refundable.",
+   "url": "https://www.snecyouth.com/events-1/aycm-leadership-conference-2027"
+  },
+  {
+   "title": "Leadership Congress 2027: hotel reservation closes",
+   "date": "2027-01-04",
+   "kind": "registration",
+   "what": "Boxboro Regency room block for the AYCM Leadership Conference (15-17 Jan 2027) is open until 4 Jan 2027 11:55 pm.",
+   "url": "https://www.snecyouth.com/events-1/leadership-congress-2027-hotel-reservation"
+  },
+  {
+   "title": "Retiro de Damas 2027: early registration ends",
+   "date": "2027-01-25",
+   "kind": "registration",
+   "what": "Inscripción temprana ($130 / sábado $100) ends 25 Jan 2027 11:55 pm; regular registration from 26 Jan 2027.",
+   "url": "https://www.sneconline.org/events-1/retiro-de-damas-2027-sanadas-para-servir"
+  },
+  {
+   "title": "Adventurer NEW Club Registration 2027 closes",
+   "date": "2027-03-29",
+   "kind": "registration",
+   "what": "Registration for new Adventurer clubs (director, sub-director, staff and volunteers, $15 each) closes 29 Mar 2027 11:59 pm; club date 'TBD, by church'.",
+   "url": "https://www.snecyouth.com/events-1/adventurer-new-club-registration-2027"
   }
  ],
  "outsideWindow": [
@@ -387,7 +551,24 @@
   "https://www.sneconline.org/post/snec-breaks-ground-for-new-pathfinder-lodge",
   "https://www.sneconline.org/post/leadership-convention-inspires-service",
   "https://www.sneconline.org/post/united-camp-meeting-sabbath-june-20",
-  "https://atlanticuniongleaner.org/"
+  "https://atlanticuniongleaner.org/",
+  "https://www.sneconline.org/calendar (eventscalendar.co widget opened in headless Chrome; its two data feeds read: the conference Outlook calendar and the Wix events feed)",
+  "https://broker.eventscalendar.co/api/outlook/events (the widget's own request; 14 entries, 7 Nov - 6 Dec 2026)",
+  "https://broker.eventscalendar.co/api/wix/events (the widget's own request; 256 Wix event pages, last 18 Jun 2027)",
+  "https://www.sneconline.org/event-pages-sitemap.xml (270 pages; the 4 changed since 25 Sep 2026 were read)",
+  "https://www.snecyouth.com/event-pages-sitemap.xml (86 pages; the 8 changed since 25 Sep 2026 were read)",
+  "https://www.sneconline.org/blog-posts-sitemap.xml (178 posts; the 2 new ones were read)",
+  "https://www.sneconline.org/events-1/retiro-de-damas-2027-sanadas-para-servir",
+  "https://www.sneconline.org/events-1/too-busy-to-care",
+  "https://www.snecyouth.com/events-1/aycm-leadership-conference-2027",
+  "https://www.snecyouth.com/events-1/leadership-congress-2027-hotel-reservation",
+  "https://www.snecyouth.com/events-1/emergency-communications-training-1",
+  "https://www.snecyouth.com/events-1/adventurer-new-club-registration-2027",
+  "https://www.snecyouth.com/events-1/wso-sabbath-1",
+  "https://www.sneconline.org/post/wrestling-with-god-snec-men-s-ministry-retreat",
+  "https://www.sneconline.org/post/snec-outdoor-school-welcomes-its-largest-and-most-respectful-group-yet",
+  "https://atlanticuniongleaner.org/wp-json/wp/v2/posts?after=2026-09-25T00:00:00",
+  "https://atlanticuniongleaner.org/news/southern-new-england/2026/snec-approves-official-slavic-ministry/"
  ],
  "aheadCheckedNotes": [
   "The calendar widget (eventscalendar.co iframe) draws its grid as a picture, so it was opened in a browser and read month by month: Apr, May, Jul, Aug, Sep and Oct 2027 are empty; Jun 2027 shows the two camp meetings.",
@@ -397,6 +578,21 @@
  ],
  "notes": [
   "The camp-meeting dates are firm (both the tent pages and the calendar widget). Everything else SNEC runs in spring and summer (retreats, Pathfinder events, Elders' and officer training, summer camp) is not posted for 2027 yet.",
-  "The guest speaker of United Camp Meeting is named on the page; the name is left out here."
+  "The guest speaker of United Camp Meeting is named on the page; the name is left out here.",
+  "(2026-11-06) The calendar widget was opened in headless Chrome and its two data requests captured: a conference Outlook calendar (14 entries, 7 Nov - 6 Dec 2026: committees, school days and the ministry events recorded here) and the Wix events feed (every public event page). Committees (Evangelism Committee 10 N",
+  "(2026-11-06) The conference's own calendar now reaches 6 Dec 2026 (Pastors' Appreciation Dinner), so the through month moves from 2026-11 to 2026-12.",
+  "(2026-11-06) An Outlook entry 'Hispanic Women One Day Retreat' on Tue 24 Nov 2026 conflicts with the event page for 'Retiro de Damas: Guiadas en su Proposito' (Sat 7 Nov 2026, Camp Winnekeag, already recorded); it was not recorded as a separate event.",
+  "(2026-11-06) The Elders Retreat (31 Oct 2026, Great Wolf Lodge, Fitchburg) and the Emergency Communications Training (17 Oct 2026) fall just before the window.",
+  "(2026-11-06) The Wix feed gives the United Camp Meeting 2027 as 18-27 Jun (the event page: campsite reservations close 5 Jun 2027); the existing 18-26 Jun record was left as is.",
+  "(2026-11-06) Wix pages were read one at a time with pauses; no rate-limit page appeared this time."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "A Slavic camp meeting in 2027: the Gleaner (2 Oct 2026, 'SNEC Approves Official Slavic Ministry') says conference leaders are planning one; no date.",
+  "Haitian/French camp meeting 2027, Cape Verdean and Portuguese camp meetings 2027 (only the Hispanic 10-13 Jun and United 18-26 Jun camp meetings are posted).",
+  "Camp Winnekeag 2027 summer camp weeks (youth site still shows 2026 weeks).",
+  "2027 spring and fall spiritual revival retreats, men's retreat, elders' summits/retreat, church officer training, Pathfinder Bible Experience, field day, Medical Cadet Corps weekends (only MCC registration closing 29 Mar 2027 is posted).",
+  "The union IMPACT evangelistic series and United Revival planned for SNEC in 2027 (union strategic plan): nothing on sneconline.org.",
+  "Jul-Oct 2027: nothing published; the calendar widget's conference feed ends 6 Dec 2026 and its Wix feed ends with the June 2027 camp meetings."
  ]
 }
