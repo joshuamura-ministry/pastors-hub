@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.70.1
+     TERRAIN  v10.71.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.70.1" data-theme="dark">
+<html lang="en" data-version="v10.71.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.70.1">
-<title>Community Map — Terrain v10.70.1</title>
+<meta name="terrain-version" content="v10.71.0">
+<title>Community Map — Terrain v10.71.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -3788,6 +3788,20 @@ button.cd-rowb:hover{background:var(--panel2)}
 #ch-t:focus{outline:none}
 .ch-row .ch-ren-b{align-self:center}
 .ch-addn{margin:0;font-size:.82rem}
+/* v10.71.0: the church picker (any church of the conference): the list scrolls in its own box so the address way at its foot stays in view;
+   a church already on the device is marked, not a button; the picker's button under the comparison's title; Remove beside Rename */
+#chp-t:focus{outline:none}
+.chp-q input{font:inherit;font-size:1rem}
+.chp-list{max-height:min(48vh,420px);overflow:auto;overscroll-behavior:contain;padding-right:2px}
+.chp-list .chp-none{color:var(--ink3);font-size:.9rem;padding:6px 2px}
+.chp-have{opacity:.72;cursor:default}
+.chp-foot{display:grid;gap:8px;justify-items:start;border-top:1px solid var(--line);padding-top:12px}
+.chp-foot .note,.chp-msg{margin:0}
+.chc-add{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;margin:-8px 0 18px}
+.chc-one .chc-add{margin:0}
+.ch-said{margin:0;font-size:.85rem;color:var(--acc);font-weight:600}
+.ch-row .ch-rm-b{align-self:center}
+@media (max-width:520px){ .chc-one .chc-add .btn{flex:1 1 100%} }
 .chc{padding:8px 0 30px}
 .chc-top h1{font-family:var(--disp);font-size:clamp(1.6rem,4vw,2.2rem);margin:6px 0 6px}
 .chc-top .sub{color:var(--ink2);max-width:65ch;margin:0 0 18px}
@@ -5166,6 +5180,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <div class="cmp" id="cmp" hidden data-notr></div>
   <div class="chc" id="chc" hidden data-notr></div>
   <dialog id="ch-sheet" class="ns-sheet ch-sheet" aria-labelledby="ch-t" data-notr></dialog>
+  <!-- v10.71.0: the church picker (any church of the conference), the same frame -->
+  <dialog id="chp-sheet" class="ns-sheet ch-sheet" aria-labelledby="chp-t" data-notr></dialog>
   <dialog id="code-sheet" class="ns-sheet ch-sheet code-sheet" aria-labelledby="code-t" data-notr></dialog>
   <!-- ===== Evangelism Planner: the countdown calendar ===== -->
   <div class="planner" id="planner" hidden>
@@ -5275,13 +5291,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.70.1</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.71.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.70.1';
+const VERSION = 'v10.71.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -13843,7 +13859,8 @@ function planDoc(p,pl,T,fit,phases,ST,BU,roster,kindName,PR){
 function wireHub(){
   const hd=$('hubdir'); if(hd) hd.onclick=()=>dirOpen();   // v10.67.1: the church directory, from the main menu
   document.querySelectorAll('.tool').forEach(b=>{
-    b.onclick=()=>openTool(b.dataset.tool);
+    // v10.71.0: from the main menu, Make the Case opens whole (never the Proposal view left by a need)
+    b.onclick=()=>{ if(b.dataset.tool==='case'&&typeof nsLeaveProp==='function') nsLeaveProp(); openTool(b.dataset.tool); };
     const feat=(TOOLS[b.dataset.tool]||{}).feature;
     if(feat&&!entitled(feat)&&!b.querySelector('.tlock')){
       const t=document.createElement('span'); t.className='tlock'; t.textContent='Full version'; b.querySelector('b').after(t);
@@ -15954,6 +15971,9 @@ function nsChosenNextHTML(id){
   if(!NS.back||TOOL!=='case'||(NS.back.plan||NS.back.idea)!==id) return '';
   return `<p class="cs-fromnext note"><span>${esc(nsU('nextLine'))}</span> <button type="button" class="btn ghost gfsm" data-cs-from2>${esc(nsU('backShort'))}</button></p>`;
 }
+/* v10.71.0: the main menu's Make the Case tile leaves the Proposal view behind (NS.back is kept in sessionStorage so a reload inside the
+   Proposal view keeps it; arriving from a need still opens it). Found by the working-order audit (6 Nov 2026). */
+function nsLeaveProp(){ NS.back=null; try{ sessionStorage.removeItem('terrain-ns-back'); }catch(e){} }
 function nsBack(){
   const b=NS.back; NS.back=null;
   try{ sessionStorage.removeItem('terrain-ns-back'); }catch(e){}
@@ -31071,6 +31091,9 @@ function fuCardMount(host,m){
   const x=m&&m.ok?caseItemOf(m.ministry.id):null;
   if(!x||!m.followup||m.sample){ host.hidden=true; host.innerHTML=''; return; }
   host.hidden=false; host.innerHTML=fuCardHTML(x,m);
+  // v10.71.0: when the card sheet closes (a card made, closed or removed), this card is drawn again, so "Open the list" appears at once
+  FU_ST.last={host,m};
+  if(!FU_ST.listening){ FU_ST.listening=true; document.addEventListener('terrain:connect',()=>{ const L=FU_ST.last; if(L&&L.host&&document.contains(L.host)&&!L.host.hidden) fuCardMount(L.host,L.m); }); }
   host.onclick=e=>{ const b=e.target.closest('button'); if(!b||!host.contains(b)) return;
     if(b.hasAttribute('data-fu-change')){ FU_ST.pick=!FU_ST.pick; fuCardMount(host,m); if(FU_ST.pick){ const r=host.querySelector('input[name="fu-pick"]:checked')||host.querySelector('input[name="fu-pick"]'); if(r) try{ r.focus({preventScroll:true}); }catch(err){} } return; }
     if(b.hasAttribute('data-fu-cancel')){ FU_ST.pick=false; fuCardMount(host,m); return; }
@@ -44626,12 +44649,12 @@ $('ver').textContent=VERSION;
 const CH_T={
   chip:{en:'Your churches',es:'Sus iglesias'}, lead:{en:'Tap a church to see everything for it.',es:'Toque una iglesia para ver todo lo suyo.'},
   now:{en:'Open now',es:'Abierta ahora'}, noAddr:{en:'No address yet',es:'Sin dirección todavía'},
-  add:{en:'Add a church',es:'Añadir una iglesia'}, addN:{en:'Map its address in the Community Survey: it is kept as a church of its own.',es:'Ubique su dirección en la Encuesta Comunitaria: se guarda como una iglesia aparte.'},
+  add:{en:'Add a church',es:'Añadir una iglesia'}, addN:{en:'From your conference’s list, or by its address.',es:'De la lista de su asociación, o por su dirección.'},
   compare:{en:'Compare your churches',es:'Compare sus iglesias'}, rename:{en:'Rename',es:'Renombrar'}, save:{en:'Save',es:'Guardar'},
   close:{en:'Close',es:'Cerrar'}, name:{en:'Church name',es:'Nombre de la iglesia'},
   title:{en:'Compare your churches',es:'Compare sus iglesias'},
   sub:{en:'Your churches side by side: their people, their gifts, their plans and how they are found online. Differences, never a ranking.',es:'Sus iglesias lado a lado: su gente, sus dones, sus planes y cómo se las encuentra en internet. Diferencias, nunca una clasificación.'},
-  one:{en:'Add a second church to compare: map its address in the Community Survey.',es:'Añada una segunda iglesia para comparar: ubique su dirección en la Encuesta Comunitaria.'},
+  one:{en:'Add a church to compare.',es:'Añada una iglesia para comparar.'},
   church:{en:'The churches',es:'Las iglesias'}, gifts:{en:'Spiritual Gifts',es:'Dones espirituales'},
   plan:{en:'The plans',es:'Los planes'}, stand:{en:'What stands out',es:'Lo que se destaca'},
   members:{en:'Members on the books',es:'Miembros registrados'}, attending:{en:'Attending',es:'Asistencia'}, adults:{en:'Adults attending',es:'Adultos que asisten'},
@@ -44639,11 +44662,21 @@ const CH_T={
   skills:{en:'Strongest skills',es:'Habilidades principales'}, free:{en:'Free to serve',es:'Libres para servir'},
   results:{en:'Results in',es:'Resultados recibidos'}, of:{en:'{n} of {d}',es:'{n} de {d}'}, strongest:{en:'Strongest gifts',es:'Dones más fuertes'},
   inPlan:{en:'Ministries in the plan',es:'Ministerios en el plan'}, decided:{en:'Proposals decided',es:'Propuestas decididas'},
-  notYet:{en:'Not filled in yet',es:'Todavía sin llenar'}, none:{en:'None yet',es:'Ninguno todavía'},
+  notYet:{en:'Not filled in yet',es:'Todavía sin llenar'}, none:{en:'None yet',es:'Ninguno todavía'}, noPlan:{en:'No plan yet',es:'Todavía sin plan'},
   sOnly:{en:'Spiritual Gifts results so far only at {a}.',es:'Hasta ahora solo {a} tiene resultados de Dones espirituales.'},
   sNone:{en:'No church has Spiritual Gifts results yet.',es:'Ninguna iglesia tiene todavía resultados de Dones espirituales.'},
   sCount:{en:'{label}: {list}.',es:'{label}: {list}.'}, sGifts:{en:'Spiritual Gifts results in: {list}.',es:'Resultados de Dones espirituales recibidos: {list}.'},
-  sAlike:{en:'Your churches look much alike on these counts.',es:'Sus iglesias se parecen mucho en estas cifras.'}};
+  sAlike:{en:'Your churches look much alike on these counts.',es:'Sus iglesias se parecen mucho en estas cifras.'},
+  // v10.71.0: any church of the conference (the picker), the official list's count, Remove
+  pick:{en:'Add a church from your conference',es:'Añadir una iglesia de su asociación'}, search:{en:'Church or town',es:'Iglesia o ciudad'},
+  added:{en:'Added',es:'Añadida'}, count:{en:'{n} members',es:'{n} miembros'}, count1:{en:'1 member',es:'1 miembro'},
+  noMatch:{en:'No church matches.',es:'Ninguna iglesia coincide.'},
+  loading:{en:'Loading your conference’s churches…',es:'Cargando las iglesias de su asociación…'},
+  noList:{en:'Your conference’s church list is not available yet.',es:'La lista de iglesias de su asociación todavía no está disponible.'},
+  notIn:{en:'Not in the list? Map its address in the Community Survey.',es:'¿No está en la lista? Ubique su dirección en la Encuesta Comunitaria.'},
+  mapIt:{en:'Map its address',es:'Ubicar su dirección'}, done:{en:'{name} added.',es:'{name} añadida.'},
+  official:{en:'Members on the official list',es:'Miembros en la lista oficial'},
+  remove:{en:'Remove',es:'Quitar'}, removeQ:{en:'Remove?',es:'¿Quitar?'}};
 function chT(k,o){ const e=CH_T[k]; let t=e?(LANG==='es'?e.es:e.en):k; if(o) t=t.replace(/\{(\w+)\}/g,(m,x)=>o[x]!=null?String(o[x]):m); return t; }
 const CH_SVG='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M4 21V12l8-6 8 6v9"/><path d="M12 6V2M10 4h4"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/></svg>';
 /* The churches he has: those with an address, a name of their own, or "Your church" filled in (never the empty placeholder). */
@@ -44658,7 +44691,9 @@ function chName(c){
   const a=String((c&&(c.label||c.address))||'').split(',')[0].trim();
   return a||L('Our church','Nuestra iglesia');
 }
-function chTown(c){ const s=c&&c.snap; if(s&&s.town) return s.town; const a=String(c&&c.address||''); const m=/,\s*([^,]+),\s*[A-Z]{2}\b/.exec(a); return m?m[1].trim():''; }
+function chTown(c){ const s=c&&c.snap; if(s&&s.town) return s.town;
+  // v10.71.0: a church from the conference's list: the directory's town
+  try{ const d=chDirEntry(c); if(d&&d.town) return String(d.town); }catch(e){} const a=String(c&&c.address||''); const m=/,\s*([^,]+),\s*[A-Z]{2}\b/.exec(a); return m?m[1].trim():''; }
 function chChipHTML(){
   try{ if(memberLink()||gated()) return ''; }catch(e){ return ''; }
   const L0=chList(); if(!L0.length) return '';
@@ -44673,16 +44708,16 @@ function chChipPaint(){
   else if(html) who.insertAdjacentHTML('afterbegin',html);
   const b=document.getElementById('chbtn'); if(b) b.onclick=chSheetOpen;
 }
-const CH_ST={rename:''};
+const CH_ST={rename:'',rm:'',rmT:0,said:'',saidT:0,noDir:false};   // v10.71.0: rm = the church whose Remove is armed; said = the line after an add; noDir = drawn before the list
 function chSheetHTML(){
   const L0=chList(); let cur=null; try{ cur=uChurch(); }catch(e){ cur=null; }
   const rows=L0.map(c=>{ const on=c===cur, town=chTown(c);
     if(CH_ST.rename===c.id) return `<li class="ch-row on"><form class="ch-ren" data-ch-renform="${esc(c.id)}"><label class="u-field"><span>${esc(chT('name'))}</span><input name="nm" maxlength="80" value="${esc(chName(c))}" autocomplete="off"></label><button type="submit" class="btn gfsm">${esc(chT('save'))}</button></form></li>`;
-    return `<li class="ch-row${on?' on':''}"><button type="button" class="ch-go" data-ch-go="${esc(c.id)}"${on?' aria-current="true"':''}><b>${esc(chName(c))}</b><span>${esc(town||c.address||chT('noAddr'))}</span>${on?`<em>${esc(chT('now'))}</em>`:''}</button><button type="button" class="btn ghost gfsm ch-ren-b" data-ch-ren="${esc(c.id)}">${esc(chT('rename'))}</button></li>`; }).join('');
+    return `<li class="ch-row${on?' on':''}"><button type="button" class="ch-go" data-ch-go="${esc(c.id)}"${on?' aria-current="true"':''}><b>${esc(chName(c))}</b><span>${esc(town||c.address||chT('noAddr'))}</span>${on?`<em>${esc(chT('now'))}</em>`:''}</button><button type="button" class="btn ghost gfsm ch-ren-b" data-ch-ren="${esc(c.id)}">${esc(chT('rename'))}</button>${chEmpty(c)?`<button type="button" class="btn ghost gfsm ch-rm-b${CH_ST.rm===c.id?' u-danger':''}" data-ch-rm="${esc(c.id)}">${esc(chT(CH_ST.rm===c.id?'removeQ':'remove'))}</button>`:''}</li>`; }).join('');
   return `<div class="ns-sh"><div class="ns-shtop"><h2 id="ch-t" tabindex="-1">${esc(chT('chip'))}</h2><button type="button" class="ns-x" data-ch-x aria-label="${esc(chT('close'))}">✕</button></div>
     <div class="ch-b"><p class="note">${esc(chT('lead'))}</p><ul class="ch-list">${rows}</ul>
     <div class="ch-acts">${L0.length>1?`<button type="button" class="btn" data-ch-cmp>${esc(chT('compare'))}</button>`:''}<button type="button" class="btn ghost" data-ch-add>+ ${esc(chT('add'))}</button></div>
-    <p class="note ch-addn">${esc(chT('addN'))}</p></div></div>`;
+    <p class="note ch-addn">${esc(chT('addN'))}</p>${chSaidHTML()}</div></div>`;
 }
 function chSheetDraw(){ const d=$('ch-sheet'); if(!d) return; d.innerHTML=chSheetHTML(); const f=d.querySelector('[data-ch-renform] input'); if(f) try{ f.focus(); f.select(); }catch(e){} }
 function chSheetClose(){ const d=$('ch-sheet'); if(!d) return; CH_ST.rename=''; if(d.hasAttribute('open')){ if(typeof d.close==='function'){ try{ d.close(); }catch(e){ d.removeAttribute('open'); } } else d.removeAttribute('open'); } }
@@ -44696,7 +44731,9 @@ function chSheetOpen(){
       // the church open now, tapped from the main menu or the comparison: its survey ("It'll show them everything for that CHURCH")
       if(b.dataset.chGo){ const id=b.dataset.chGo; chSheetClose(); let cur=null; try{ cur=uChurch(); }catch(e2){} if(!cur||cur.id!==id) uSwitch(id); else if(!TOOL||TOOL==='churches') openTool('survey'); return; }
       if(b.dataset.chRen){ CH_ST.rename=b.dataset.chRen; chSheetDraw(); return; }
-      if(b.hasAttribute('data-ch-add')){ chSheetClose(); try{ homeChange(); }catch(e2){ openTool('survey'); } return; }
+      // v10.71.0: "+ Add a church" opens the picker over this sheet (the conference's list; the address way at its foot); Remove takes two taps
+      if(b.hasAttribute('data-ch-add')){ chpOpen(); return; }
+      if(b.dataset.chRm){ chRmTap(b); return; }
       if(b.hasAttribute('data-ch-cmp')){ chSheetClose(); openTool('churches'); return; }
     });
     d.addEventListener('submit',e=>{ e.preventDefault(); const f=e.target.closest('[data-ch-renform]'); if(!f) return;
@@ -44708,6 +44745,121 @@ function chSheetOpen(){
   CH_ST.rename=''; chSheetDraw();
   if(!d.hasAttribute('open')){ if(typeof d.showModal==='function'){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } } else d.setAttribute('open',''); }
   const t=$('ch-t'); if(t) try{ t.focus({preventScroll:true}); }catch(e){}
+}
+/* ---------------- v10.71.0: any church of the conference. The pastor (6 Nov 2026): "when I go to compare churches, it doesn't let me put
+   any other CHURCH in there … we want to be able to change to any church at least within the conference." A picker (#chp-sheet, the same
+   frame as #ch-sheet; chpOpen, chpDraw, chpClose, CHP) lists the conference's churches from the official directory Digital footprint
+   already reads (DF.data.churches: name, town, official members; by name; searched by name, other name or town, accents and case folded).
+   A tapped church is kept as a church of its own (chAddDir: the directory's name and address, its listing in `dir`; the open church
+   unchanged). A church of his on the list (chDirEntry: by its listing, else by name, the rule dfMine used, now chKey) shows the list's
+   count in the comparison (chFacts official). A church with nothing filled in may be removed from the switcher (chEmpty, chRmTap: two
+   taps, chRemove). The address way stays at the picker's foot and in the one-church card. */
+const CHP={open:false,q:''};
+/* the name rule shared with dfMine: the denomination's words and "church" dropped, letters and digits only */
+function chKey(s){ return dfFold(s).toLowerCase().replace(/seventh-day adventist|seventh day adventist|\bsda\b|church|iglesia|company/g,' ').replace(/[^a-z0-9]+/g,' ').trim(); }
+const chpFold=s=>dfFold(s).toLowerCase();
+/* the directory's entry for a church of his: by its listing (a church added from the list), else by its name */
+function chDirEntry(c){
+  const F=DF.data, list=F&&Array.isArray(F.churches)?F.churches:null; if(!c||!list) return null;
+  if(c.dir&&c.dir.org){ const d=list.find(x=>x&&x.org===c.dir.org); if(d) return d; }
+  let k=''; try{ k=chKey(chName(c)); }catch(e){ k=''; }
+  return k?list.find(x=>x&&chKey(x.name||'')===k)||null:null;
+}
+function chSaidHTML(){ return CH_ST.said?`<p class="note ch-said" role="status">${esc(CH_ST.said)}</p>`:''; }
+function chSay(t){ CH_ST.said=t; clearTimeout(CH_ST.saidT); CH_ST.saidT=setTimeout(()=>{ CH_ST.said=''; document.querySelectorAll('.ch-said').forEach(e=>e.remove()); },4000); }
+/* everything open follows a church added or removed: the header's chip (uChrome), the switcher, the comparison */
+function chRedraw(){
+  try{ uChrome(); }catch(e){}
+  try{ const d=$('ch-sheet'); if(d&&d.hasAttribute('open')) chSheetDraw(); }catch(e){}
+  try{ const h=$('chc'); if(TOOL==='churches'&&h&&!h.hidden) chcRender(); }catch(e){}
+}
+function chcWire(host){
+  host.querySelectorAll('[data-chp-open]').forEach(b=>{ b.onclick=chpOpen; });
+  host.querySelectorAll('[data-ch-add]').forEach(b=>{ b.onclick=()=>{ try{ homeChange(); }catch(e){ openTool('survey'); } }; });
+}
+function chAddDir(c){
+  if(!c||!c.org) return null;
+  const s=uStore(); if(chList().some(x=>{ const d=chDirEntry(x); return !!d&&d.org===c.org; })) return null;
+  const id=uId(), ch={id,name:String(c.name||'').trim().slice(0,120),address:String(c.address||'').trim(),dir:{org:String(c.org),conf:DF.conf||''},capacity:{},members:[],linked:[],drafts:[],selected:[],overrides:{},share:{}};
+  s.churches[id]=ch; uPersist();
+  chSay(chT('done',{name:chName(ch)}));
+  chpClose(); chRedraw();
+  return ch;
+}
+/* a church with nothing filled in: never the open church; no "Your church", members, plan, directory, connection cards, decisions, ideas
+   or Spiritual Gifts results */
+function chEmpty(c){
+  if(!c||!c.id) return false;
+  let cur=null; try{ cur=uChurch(); }catch(e){ cur=null; } if(cur&&cur.id===c.id) return false;
+  const cap=c.capacity&&typeof c.capacity==='object'?c.capacity:{}; if(cap.confirmed||Object.keys(cap).some(k=>k!=='confirmed')) return false;
+  if(['members','linked','selected','drafts'].some(k=>Array.isArray(c[k])&&c[k].length)) return false;
+  if(c.directory&&((c.directory.families||[]).length||(c.directory.officers||[]).length)) return false;
+  if(c.plan) return false;
+  const C=c.connect; if(C&&((C.cards&&Object.keys(C.cards).length)||(Array.isArray(C.past)&&C.past.length)||(C.people&&Object.values(C.people).some(l=>Array.isArray(l)&&l.length)))) return false;
+  if(c.caseDecisions&&Object.keys(c.caseDecisions).some(k=>c.caseDecisions[k]&&Object.keys(c.caseDecisions[k]).length)) return false;
+  if(['lib','fresh'].some(k=>c[k]&&typeof c[k]==='object'&&Object.keys(c[k]).length)) return false;
+  let g=0; try{ g=chWith(c.id,()=>gfEveryone().length)||0; }catch(e){ g=0; } if(g) return false;
+  return true;
+}
+/* Remove: two taps, and the first says what the second will do; it disarms itself after five seconds (as armThen does) */
+function chRmTap(b){
+  const id=b.dataset.chRm;
+  if(CH_ST.rm!==id){ CH_ST.rm=id; b.textContent=chT('removeQ'); b.classList.add('u-danger'); b.setAttribute('aria-live','polite');
+    clearTimeout(CH_ST.rmT); CH_ST.rmT=setTimeout(()=>{ if(CH_ST.rm!==id) return; CH_ST.rm=''; if(b.isConnected){ b.textContent=chT('remove'); b.classList.remove('u-danger'); } },5000); return; }
+  CH_ST.rm=''; chRemove(id);
+}
+function chRemove(id){
+  const s=uStore(), c=s.churches&&s.churches[id]; if(!c||!chEmpty(c)) return false;
+  delete s.churches[id]; uPersist(); CH_ST.rm='';
+  chRedraw(); return true;
+}
+/* ---- the picker ---- */
+function chpRows(){
+  const F=DF.data, list=F&&Array.isArray(F.churches)?F.churches.filter(x=>x&&x.name):[];
+  const have=new Set(chList().map(x=>{ const d=chDirEntry(x); return d?d.org:''; }).filter(Boolean));
+  const q=chpFold(CHP.q).trim();
+  const rows=list.filter(x=>!q||[x.name,x.aka,x.town].some(v=>v&&chpFold(v).includes(q))).sort((a,b)=>chpFold(a.name).localeCompare(chpFold(b.name)));
+  if(!rows.length) return `<li class="chp-none">${esc(chT('noMatch'))}</li>`;
+  return rows.map(x=>{ const meta=[x.town||'',x.members!=null?chT(Number(x.members)===1?'count1':'count',{n:dfNf(x.members)}):''].filter(Boolean).join(' · ');
+    return have.has(x.org)?`<li class="ch-row on"><span class="ch-go chp-have"><b>${esc(x.name)}</b><span>${esc(meta)}</span><em>${esc(chT('added'))}</em></span></li>`
+      :`<li class="ch-row"><button type="button" class="ch-go" data-chp-add="${esc(x.org)}"><b>${esc(x.name)}</b><span>${esc(meta)}</span></button></li>`; }).join('');
+}
+function chpHTML(){
+  const F=DF.data, has=!!(F&&Array.isArray(F.churches));
+  let body;
+  if(has) body=`<label class="u-field chp-q"><span>${esc(chT('search'))}</span><input type="search" data-chp-q maxlength="80" autocomplete="off" autocapitalize="off" spellcheck="false" value="${esc(CHP.q)}"></label><ul class="ch-list chp-list" id="chp-list">${chpRows()}</ul>`;
+  else if(!DF.state||DF.busy) body=`<p class="note chp-msg" role="status">${esc(chT('loading'))}</p>`;
+  else body=`<p class="note chp-msg">${esc(chT('noList'))}</p>`;
+  return `<div class="ns-sh"><div class="ns-shtop"><h2 id="chp-t" tabindex="-1">${esc(chT('pick'))}</h2><button type="button" class="ns-x" data-chp-x aria-label="${esc(chT('close'))}">✕</button></div>
+    <div class="ch-b">${body}<div class="chp-foot"><p class="note">${esc(chT('notIn'))}</p><button type="button" class="btn ghost" data-chp-map>${esc(chT('mapIt'))}</button></div></div></div>`;
+}
+function chpDraw(){
+  const d=$('chp-sheet'); if(!d) return;
+  const was=document.activeElement, typing=!!(was&&was.matches&&was.matches('#chp-sheet [data-chp-q]')), at=typing?was.selectionStart:0;
+  d.innerHTML=chpHTML();
+  if(typing){ const i=d.querySelector('[data-chp-q]'); if(i) try{ i.focus(); i.setSelectionRange(at,at); }catch(e){} }
+}
+function chpClose(){ const d=$('chp-sheet'); if(!d) return; CHP.open=false; if(d.hasAttribute('open')){ if(typeof d.close==='function'){ try{ d.close(); }catch(e){ d.removeAttribute('open'); } } else d.removeAttribute('open'); } }
+function chpOpen(){
+  const d=$('chp-sheet'); if(!d) return;
+  if(!d.dataset.wired){ d.dataset.wired='1';
+    d.addEventListener('click',e=>{
+      if(e.target===d){ chpClose(); return; }
+      const b=e.target.closest&&e.target.closest('button'); if(!b) return;
+      if(b.hasAttribute('data-chp-x')){ chpClose(); return; }
+      // the address way: the Community Survey's address box (the next address mapped is a church of its own)
+      if(b.hasAttribute('data-chp-map')){ chpClose(); try{ chSheetClose(); }catch(e2){} try{ homeChange(); }catch(e2){ openTool('survey'); } return; }
+      if(b.dataset.chpAdd){ const F=DF.data, c=F&&Array.isArray(F.churches)?F.churches.find(x=>x&&x.org===b.dataset.chpAdd):null; if(c) chAddDir(c); return; }
+    });
+    d.addEventListener('input',e=>{ const i=e.target; if(!(i&&i.matches&&i.matches('[data-chp-q]'))) return; CHP.q=String(i.value||''); const ul=$('chp-list'); if(ul) ul.innerHTML=chpRows(); });
+    d.addEventListener('close',()=>{ CHP.open=false; });
+  }
+  CHP.open=true; CHP.q='';
+  // the list is the official directory Digital footprint reads: asked for here when it is not on hand (dfLoad draws the picker when it arrives)
+  if(!(DF.data&&Array.isArray(DF.data.churches))){ try{ dfLoad(false); }catch(e){} }
+  chpDraw();
+  if(!d.hasAttribute('open')){ if(typeof d.showModal==='function'){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } } else d.setAttribute('open',''); }
+  const t=$('chp-t'); if(t) try{ t.focus({preventScroll:true}); }catch(e){}
 }
 /* The neighborhood, kept with its church each time its survey draws: the figures Compare your churches reads (no Census call there). */
 const CH_SNAP_KEYS=['pop','poverty','kidsShare','seniorsShare','noCar','foreign','limEng','renters','uninsured','medInc'];
@@ -44742,9 +44894,11 @@ function chFacts(c){
     let g=null; try{ g=gfReadiness(); }catch(e){ g=null; }
     let plan=0; try{ plan=uSelected().length; }catch(e){ plan=0; }
     const dec=ch.caseDecisions&&typeof ch.caseDecisions==='object'?Object.keys(ch.caseDecisions).filter(k=>ch.caseDecisions[k]&&Object.keys(ch.caseDecisions[k]).length).length:0;
+    // v10.71.0: the official directory's member count, when this church is on the conference's list
+    let official=null; try{ const d=chDirEntry(ch); official=d&&d.members!=null?n(d.members):null; }catch(e){ official=null; }
     const planKnown=ready||plan>0||dec>0, sh=ch.share||{}, sent=!!(sh.pub||(Array.isArray(sh.old)&&sh.old.length));
     return {id:ch.id,name:chName(ch),town:chTown(ch),snap:ch.snap&&ch.snap.v===1?ch.snap:null,ready,
-      membership:n(m.membership),members:n(m.members),adults:n(m.adults),volunteers:n(m.volunteers),leaders:uNum(raw.leaders)!=null||(m.people||[]).length?n(m.leaders):null,hours:n(raw.hours),rooms,skills,
+      official,membership:n(m.membership),members:n(m.members),adults:n(m.adults),volunteers:n(m.volunteers),leaders:uNum(raw.leaders)!=null||(m.people||[]).length?n(m.leaders):null,hours:n(raw.hours),rooms,skills,
       slots:(m.slots||[]).slice(),gifts:g?{n:g.n,pct:g.pct,d:g.den&&g.den.d||null,strongest:(g.strongest||[]).map(x=>x.name),sent}:{n:0,pct:null,d:null,strongest:[],sent},plan:planKnown?plan:null,dec:planKnown?dec:null};
   });
 }
@@ -44755,7 +44909,7 @@ function chFmt(v,u){ if(v==null) return '—'; if(u==='p') return (Math.round(v*
    and three more (a plan: two more). */
 function chStandOut(F){
   const out=[], counts=[];
-  [['membership','members',3],['members','attending',3],['volunteers','volunteers',3],['leaders','leaders',3],['plan','inPlan',2]].forEach(([k,lk,gap])=>{
+  [['official','official',3],['membership','members',3],['members','attending',3],['volunteers','volunteers',3],['leaders','leaders',3],['plan','inPlan',2]].forEach(([k,lk,gap])=>{
     const vals=F.filter(f=>f[k]!=null); if(vals.length<2) return;
     const hi=Math.max(...vals.map(f=>f[k])), lo=Math.min(...vals.map(f=>f[k]));
     if(hi>=2*Math.max(lo,1)&&hi-lo>=gap) counts.push({d:(hi-lo)/Math.max(hi,1),txt:chT('sCount',{label:chT(lk),list:vals.slice().sort((a,b)=>b[k]-a[k]).map(f=>`${f.name} ${f[k]}`).join(', ')})}); });
@@ -44777,8 +44931,9 @@ function chcBar(v,max,u,text){ if(v==null) return `<span class="chc-v">—</span
 function chcRender(){
   const host=$('chc'); if(!host) return;
   const L0=chList();
-  if(L0.length<2){ host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div><div class="card chc-one"><p>${esc(chT('one'))}</p><button type="button" class="btn" data-ch-add>+ ${esc(chT('add'))}</button></div>`;
-    host.querySelector('[data-ch-add]').onclick=()=>{ try{ homeChange(); }catch(e){ openTool('survey'); } }; dfMount(host); return; }   // v10.60.0: Digital footprint below
+  // v10.71.0: one church: the picker's button (any church of the conference), the address way as the second line
+  if(L0.length<2){ CH_ST.noDir=false; host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div><div class="card chc-one"><p>${esc(chT('one'))}</p><div class="chc-add"><button type="button" class="btn" data-chp-open>+ ${esc(chT('pick'))}</button><button type="button" class="btn ghost" data-ch-add>${esc(chT('mapIt'))}</button></div><p class="note">${esc(chT('notIn'))}</p>${chSaidHTML()}</div>`;
+    chcWire(host); dfMount(host); return; }   // v10.60.0: Digital footprint below
   const F=L0.map(chFacts).filter(Boolean);
   // one width for every section, so the churches' columns line up from top to bottom
   const head=`<tr><th scope="col"></th>${F.map(f=>`<th scope="col"><b>${esc(f.name)}</b><span>${esc(f.town||'')}</span></th>`).join('')}</tr>`;
@@ -44789,21 +44944,30 @@ function chcRender(){
   const num=(k,lab)=>{ const vals=F.map(f=>f[k]), max=Math.max(0,...vals.filter(v=>v!=null)), two=vals.filter(v=>v!=null).length>1;
     if(vals.every(none)) return '';   // a row no church has is left out (and says nothing for anyone)
     return chcRowHTML(chT(lab),F.map((f,i)=>f.ready||vals[i]!=null?chcBar(vals[i],two?max:null,'n'):said.has(f.id)?`<span class="chc-v">—</span>`:(said.add(f.id),`<span class="chc-miss">${esc(chT('notYet'))}</span>`)),vals.every(none)); };
+  // v10.71.0: the first row is the official directory's count (chFacts official); "—" for a church not on the list; left out when no church is
+  const off=F.map(f=>f.official==null?null:f.official), offHas=off.filter(v=>v!=null);
+  const offRow=offHas.length?chcRowHTML(chT('official'),F.map((f,i)=>chcBar(off[i],offHas.length>1?Math.max(0,...offHas):null,'n'))):'';
   let churchRows=[['members','membership'],['attending','members'],['adults','adults'],['volunteers','volunteers'],['leaders','leaders'],['hours','hours'],['rooms','rooms']].map(([lab,k])=>num(k,lab)).join('')
     // v10.70.1 (the audit): one list, read as a sentence: the items after the first in lower case
     +chcRowHTML(chT('skills'),F.map(f=>f.skills.length?esc(f.skills.map((x,i)=>i?x.charAt(0).toLocaleLowerCase()+x.slice(1):x).join(', ')):'—'),F.every(f=>!f.skills.length))
     +chcRowHTML(chT('free'),F.map(f=>f.slots.length?esc(f.slots.map(x=>typeof uSlotName==='function'?uSlotName(x):x).join(', ')):'—'),F.every(f=>!f.slots.length));
   if(!churchRows) churchRows=chcRowHTML(chT('church'),F.map(()=>`<span class="chc-miss">${esc(chT('notYet'))}</span>`));
+  // v10.71.0: the official list's count first; "Not filled in yet" keeps its row after it
+  churchRows=offRow+churchRows;
   // Spiritual Gifts: "24 of 135", the bar their share of the church's count (adults, else attending, else members)
   // v10.70.1 (the audit): no results, no count to set them against and no link ever sent: no figure ("—"), never a "0" with a bar
   const gN=F.map(f=>f.gifts.n||f.gifts.d||f.gifts.sent?f.gifts.n:null), gHas=gN.filter(v=>v!=null), gMax=Math.max(0,...gHas);
   const giftRows=chcRowHTML(chT('results'),F.map((f,i)=>{ const d=f.gifts.d; return gN[i]==null?chcBar(null):d?chcBar(f.gifts.pct||0,100,'p',chT('of',{n:gN[i],d})):chcBar(gN[i],gHas.length>1?gMax:null,'n'); }))
     +chcRowHTML(chT('strongest'),F.map(f=>f.gifts.strongest.length?esc(f.gifts.strongest.join(', ')):'—'),F.every(f=>!f.gifts.strongest.length));
-  const planRows=num('plan','inPlan')+num('dec','decided');
+  let planRows=num('plan','inPlan')+num('dec','decided');
+  // v10.71.0: no church has a plan: one line, never a section of headers alone
+  if(!planRows) planRows=chcRowHTML(chT('inPlan'),F.map(()=>`<span class="chc-miss">${esc(chT('noPlan'))}</span>`));
   const so=chStandOut(F);
-  host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p></div>
+  host.innerHTML=`<div class="chc-top"><h1>${esc(chT('title'))}</h1><p class="sub">${esc(chT('sub'))}</p><div class="chc-add"><button type="button" class="btn ghost gfsm" data-chp-open>+ ${esc(chT('pick'))}</button>${chSaidHTML()}</div></div>
     <section class="chc-sec chc-so" style="--k:var(--m-hardship)" aria-labelledby="chc-stand"><h2 id="chc-stand">${esc(chT('stand'))}</h2><ul>${so.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></section>
     ${sec('church','var(--acc)',churchRows)}${sec('gifts','var(--gfv)',giftRows)}${sec('plan','var(--m-hardship)',planRows)}`;
+  chcWire(host);   // v10.71.0: the picker's button
+  CH_ST.noDir=!(DF.data&&Array.isArray(DF.data.churches));   // v10.71.0: drawn before the list came: dfLoad redraws once when it arrives
   dfMount(host);   // v10.60.0: Digital footprint, at the foot
 }
 function chcOpen(){
@@ -45355,7 +45519,8 @@ function dfActs(c,J){
 function dfMine(F,X){
   const reg=typeof regGet==='function'?regGet():null, my=reg&&reg.name?String(reg.name):'';
   const names=(typeof chList==='function'?chList():[]).map(ch=>{ try{ return chName(ch); }catch(e){ return ''; } }).concat(reg&&reg.church?[reg.church]:[]).filter(Boolean);
-  const key=s=>dfFold(s).toLowerCase().replace(/seventh-day adventist|seventh day adventist|\bsda\b|church|iglesia|company/g,' ').replace(/[^a-z0-9]+/g,' ').trim();
+  // v10.71.0: the name rule is chKey, shared with the comparison's chDirEntry
+  const key=chKey;
   return F.churches.filter(c=>(my&&c.pastor&&dfSame(c.pastor,my))||names.some(n=>key(n)&&key(n)===key(c.name)));
 }
 /* v10.70.1 (the audit, second look): Pennsylvania's directory writes an address without commas ("1056 Park Avenue Ext Clearfield PA
@@ -45386,6 +45551,9 @@ async function dfLoad(force){
       if(DF.state==='none'&&DF.tries<1){ DF.tries++; await fetch(DF_FN,{method:'POST',headers:{'content-type':'application/json',...(tok?{'x-terrain-reg':tok}:{})},body:JSON.stringify({op:'read',conf})}).catch(()=>null); DF.state='reading'; } }
   }catch(e){ DF.state='offline'; }
   DF.busy=false; dfPaint();
+  // v10.71.0: the church picker waiting for the list, and a comparison drawn before it came (once: chcRender's dfMount comes back here and returns early, ready)
+  try{ if(CHP.open) chpDraw(); }catch(e){}
+  try{ const h=$('chc'); if(CH_ST.noDir&&DF.data&&TOOL==='churches'&&h&&!h.hidden&&h.querySelector('.chc-sec')){ CH_ST.noDir=false; chcRender(); } }catch(e){}
   clearTimeout(DF.timer);
   if(DF.state==='reading'||(DF.reading&&DF.reading.only)) DF.timer=setTimeout(()=>{ const h=$('chc'); if(h&&!h.hidden&&document.visibilityState!=='hidden') dfLoad(true); },DF_POLL_MS);
 }

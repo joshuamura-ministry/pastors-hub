@@ -224,6 +224,50 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 
 ## Current state
 
+**v10.71.0 (6 Nov 2026, full lane) — the working-order audit; compare any church of the conference.** The pastor: *"the conference has
+decided to use … terrain and so I need you to do a full audit of this app making sure everything works solidly and give me a really solid
+report. One thing I noticed that when I go to compare churches, it doesn't let me put any other CHURCH in there … we want to be able to
+change to any church at least within the conference."* Folded into PR #49 (still open; the live site was v10.69.1 that day).
+- **The audit** (`~/Ministry Work/Terrain-work/v86`): every Netlify function mounted for real on in-memory stores (`serve86.mjs`, port 8886:
+  register, census → the public Census API, gifts, present (live:false), connect, account (billing off), digital with Pennsylvania's findings,
+  guest-pass, places, advise with no key; `GET /__log` lists every call), then every flow driven end to end in headless Chrome (`e2e-a.mjs`:
+  registration, the real Census survey, needs, ideas, the one-page PDF, the proposal, the slides, Present live with a phone joining, both
+  phone PDFs, Share link & QR, the purchase path, Spanish; `e2e-b.mjs`: the whole Spiritual Gifts member journey on a phone (105 + 12, the
+  report, the result arriving by itself), the Planner's demos, a connection card from the phone to the Connections list, the directory and
+  its PDF, tester codes across four devices, sign-in, two churches compared, Digital footprint, every conference frame, the legal pages,
+  Clear all). 115 of 122 steps passed first time; the rest: Overpass down (said gracefully), no Firebase in the harness (phones cannot lock),
+  small PDFs under the brief's 20 KB bar, and two faults of the app's, fixed below. No console error on any device; no function call ≥ 400
+  but the expected `noreg` before registering.
+- **Fixed:** the main menu's Make the Case tile opened the Proposal view left by "Create a proposal" from a need (`NS.back` lives in
+  sessionStorage), hiding "A ministry | A project or purchase": `nsLeaveProp()` on the tile (arriving from a need, and a reload inside the
+  Proposal view, keep it); step 3's "After the day" card did not redraw when a connection card was made (`cnAfterSheet` fires
+  `terrain:connect`; now `fuCardMount` listens, `FU_ST.last`); Compare's "The plans" with no plan anywhere showed headers alone: one line
+  "No plan yet" / "Todavía sin plan" (`CH_T.noPlan`).
+- **Compare any church of the conference** (block "YOUR CHURCHES"): the picker `#chp-sheet` (`CHP`, `chpOpen` / `chpDraw` / `chpClose`,
+  `chpHTML` / `chpRows`, `chpFold`): "Add a church from your conference" / "Añadir una iglesia de su asociación", a search box (name, other
+  name or town, accents folded), every church of `DF.data.churches` by name with its town and official members, a church already on the device
+  marked "Added" / "Añadida"; a tap → `chAddDir(c)` (a church record in `uEnsureChurch`'s shape with `dir:{org,conf}`, never switching the
+  open church; `chRedraw`: the chip, the switcher, the comparison; "{name} added." for 4 s). No list yet: `dfLoad()` and "Loading your
+  conference's churches…"; a conference that cannot be read: "Your conference's church list is not available yet."; always at the foot
+  "Not in the list? Map its address in the Community Survey." → `homeChange()`. Opens from Compare (`[data-chp-open]`, both states; the
+  one-church card now "Add a church to compare.") and from the switcher's "+ Add a church" (`addN` "From your conference's list, or by its
+  address."). `chKey` (one name rule, `dfMine` uses it), `chDirEntry(c)` (by `dir.org`, else by name), `chFacts().official` and the first row
+  of The churches, "Members on the official list" / "Miembros en la lista oficial" (every church matched to the directory has it, so a church
+  just added compares on something; `chStandOut` counts it like the others; `chTown` falls back to the directory's town); when the findings
+  arrive after the comparison drew, one `chcRender()` (`CH_ST.noDir`). **Remove** (`chEmpty(c)`: not the open church, nothing filled in:
+  capacity, members, linked, selected, drafts, directory, plan, cards, decisions, library picks, gifts results) in the switcher, two taps
+  (`chRmTap` arms "Remove?" for 5 s, then `chRemove`). Church data still lives on each device: an account does not carry churches between
+  devices (accounts sync is later work).
+- Tests: `v71-compare-any` (51; failing first on v10.70.1: `v86/ff-v71.log`), `v71-hub-case` (10; failing first); updated with comments:
+  v57-churches (the picker over the sheet; the one-church card's words). Checked in Chrome (`v86/shots71.mjs`, 22 pictures): computer 1366
+  and phone 390, EN + ES: the picker, "york" → 5 rows, three columns with the official row, Remove armed and done; no sideways scroll, no
+  page errors, no function call ≥ 400. The e2e scripts rerun on the build after the fixes (their logs `v86/e2e-*-v71.log`: 51 + 65 steps
+  pass; the rest the harness). Full suite: 197 suites · 12,025 passed · 0 failed (v10.70.1: 195 · 11,964).
+- **Found, not changed:** the monthly conference-calendar routine (a cloud routine) fired on 1 Nov 2026 and did nothing: its network blocks
+  every conference website (338 hosts feed the calendars); it is now disabled, and the same job is written for a scheduled task on his Mac
+  (`v86/Monthly refresh task (paste into Scheduled tasks).md`), which he creates (the app refused to let the session create it). connect.mjs
+  quietly keeps nothing from a form sent under 1.5 s after it mounted (`MIN_FILL_MS`, a bot defence: a person never trips it).
+
 **v10.70.1 (26 Oct 2026, full lane) — the whole-app audit.** The pastor: *"can you do a thourogh audit of the app, from the operation making
 sure everything works and functions properly. everything is synmetrical and looks amazing"*. Done AUDIT.md's way on the made-up average
 church (`~/Ministry Work/Terrain-work/v85`): 24 screens at computer 1366, tablet 820, phone 390, computer and phone in Spanish, measured

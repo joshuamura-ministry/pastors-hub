@@ -66,7 +66,8 @@ async function twoChurches(P){
   console.log('\n-- add a church --');
   P.q('#chbtn').click(); await sleep(20);
   P.q('#ch-sheet [data-ch-add]').click(); await sleep(40);
-  c('Add a church: the survey with its address box', [!!P.q('#ch-sheet[open]'),P.E('TOOL'),P.q('.ask')&&P.q('.ask').style.display!=='none'], [false,'survey',true]);
+  // v10.71.0 (stale, not a regression): the pastor (6 Nov 2026), "we want to be able to change to any church at least within the conference": + Add a church opens the conference's list; the address way is at its foot
+  c('Add a church: the conference\'s list, over the sheet; its foot: the survey with its address box', (()=>{ const r=[!!P.q('#chp-sheet[open]'),!!P.q('#ch-sheet[open]')]; P.q('#chp-sheet [data-chp-map]').click(); return r.concat([!!P.q('#ch-sheet[open]'),P.E('TOOL'),P.q('.ask')&&P.q('.ask').style.display!=='none']); })(), [true,true,false,'survey',true]);
 
   console.log('\n-- Compare your churches --');
   P.E(`uSwitch(Object.keys(uStore().churches).find(k=>k!=='ch-b'))`); await sleep(30);
@@ -127,7 +128,8 @@ await T.sec(async()=>{
   const P=page(); await ready(P);
   survey(P); await sleep(60);
   P.E(`openTool('churches')`); await sleep(40);
-  c('"Add a second church to compare" and Add a church', [/Add a second church to compare/.test(P.txt('#chc')),!!P.q('#chc [data-ch-add]')], [true,true]);
+  // v10.71.0 (stale, not a regression): the pastor (6 Nov 2026), "we want to be able to change to any church at least within the conference": "Add a church to compare." with the conference's list, the address way kept
+  c('"Add a church to compare", the conference\'s list, and Add a church by its address', [/Add a church to compare/.test(P.txt('#chc')),!!P.q('#chc [data-chp-open]'),!!P.q('#chc [data-ch-add]')], [true,true,true]);
   P.E('showWho()'); P.q('#chbtn').click(); await sleep(20);
   c('…the sheet has no Compare with one church', !!P.q('#ch-sheet [data-ch-cmp]'), false);
   c('a brand-new device (no church mapped): no chip', (()=>{ P.E(`(()=>{ const s=uStore(); Object.values(s.churches).forEach(c=>{ c.name='My church'; c.address=''; c.capacity={}; }); uPersist(); uChrome(); })()`); return !!P.q('#chbtn'); })(), false);
