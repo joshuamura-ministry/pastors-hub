@@ -266,7 +266,14 @@ change to any church at least within the conference."* Folded into PR #49 (still
 - **Found, not changed:** the monthly conference-calendar routine (a cloud routine) fired on 1 Nov 2026 and did nothing: its network blocks
   every conference website (338 hosts feed the calendars); it is now disabled, and the same job runs as a scheduled task on his Mac (the desktop app's
   Scheduled tasks: `terrain-monthly-conference-refresh`, the 1st at 8 am local, while the app is open; its instructions are
-  `v86/Monthly refresh task (paste into Scheduled tasks).md`). November's refresh was run by hand on 6 Nov 2026 (its own pull request). connect.mjs
+  `v86/Monthly refresh task (paste into Scheduled tasks).md`). **November's refresh** was run by hand on 6 Nov 2026 and folded in here
+  (PR #50 closed): `conferences/` checked 2026-11-06 (725 new look-ahead events across 48 of 58 conferences and unions, October 2027 in
+  the year ahead, 20 dates corrected, 18 conferences publishing further ahead, Pennsylvania +6; two lines of `year-ahead.mjs`'s Chesapeake
+  feed table; blocked sites kept their previous data, listed in #50). **The conference checks now read the data** (conferences-data,
+  conferences-view, v63-conference-brief, v70-1-audit-conferences: the check date from `config.json`, the windows from the index's
+  months, Pennsylvania's picks, shares, badges, hatched months and deadlines from the served files, each change commented "v10.71.0: read
+  from the data"), so a refresh never fails them: 29 + 11 checks pinned the 1 October data by hand and the first refresh failed them all.
+  A year range in a published initiative name ("(2026–2029)") could break at its dash in Said vs shown: kept whole like the resource cards. connect.mjs
   quietly keeps nothing from a form sent under 1.5 s after it mounted (`MIN_FILL_MS`, a bot defence: a person never trips it).
 
 **v10.70.1 (26 Oct 2026, full lane) — the whole-app audit.** The pastor: *"can you do a thourogh audit of the app, from the operation making

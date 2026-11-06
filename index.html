@@ -46740,6 +46740,8 @@ function cmpSW(){
 }
 /* ---- 12 What they say, what the calendar shows ---- */
 function cmpSaid(){
+  /* v10.71.0: every published initiative name (a conference's own, its union's) and the match line pass through cmpKeepDates, as the
+     resource cards do: a year range or a year before a spaced dash stays on one line; the words stay as published */
   const host=$('cmp-saidg'); if(!host) return; const I=CMP.idx;
   host.innerHTML=cmpSel().map(s=>{ const p=CMP.conf[s], det=CMP.det[s]; if(!det) return '';
     let h=`<div class="cmp-box"><h4>${esc(p.name)}</h4>`;
@@ -46749,14 +46751,14 @@ function cmpSaid(){
       else if(st==='area-active'||st==='not-found') detail=cU(ini.lensCount===1?'relOne':'relN',{n:ini.lensCount})+(ini.lenses.length?cU('relIn',{a:ini.lenses.map(cmpLensLc).join(', ')}):'');
       else if(st==='later') detail=cU('later',{d:cmpFdate(ini.firstDate)});
       else if(st==='coming-up') detail=ini.match?cU('earlier',{t:ini.match.title,d:cmpFdate(ini.match.start)}):cU('planned');
-      h+=`<div class="ini"><div class="n">${esc(ini.name)}</div><span class="cmp-st ${esc(st)}">${esc(cU('st_'+st))}</span>`
-        +(detail?`<div class="s">${esc(detail)}${link}</div>`:'')
+      h+=`<div class="ini"><div class="n">${esc(cmpKeepDates(ini.name))}</div><span class="cmp-st ${esc(st)}">${esc(cU('st_'+st))}</span>`
+        +(detail?`<div class="s">${esc(cmpKeepDates(detail))}${link}</div>`:'')
         +(ini.source&&cmpHttps(ini.source.url)?`<div class="s">${cmpLink(ini.source.url,cU('stated'))}${ini.source.publisher?CMP_SEP+esc(ini.source.publisher):''}</div>`:'')+'</div>'; });
     const eh=det.evangelismHelp;
     if(eh&&CMP_UI['eh_'+eh.help]) h+=`<details><summary>${esc(cU('ehH'))}</summary><div class="s">${esc(cU('eh_'+eh.help))}`
       +(eh.share||eh.deadline?`<br><span lang="en">${esc(cU('inEnglish'))}${eh.share?esc(cU('ehShare'))+esc(eh.share):''}${eh.share&&eh.deadline?CMP_SEP:''}${eh.deadline?esc(cU('ehBy'))+esc(eh.deadline):''}</span>`:'')
       +(cmpHttps(eh.url)?CMP_SEP+cmpLink(eh.url,cU('source')):'')+'</div></details>';
-    const un=I.unions[p.union]; if(un&&un.length) h+=`<details><summary>${esc(cU('unionIni',{u:p.union,n:un.length}))}</summary><ul>${un.map(u=>`<li>${esc(u.name)}${cmpHttps(u.url)?CMP_SEP+cmpLink(u.url,cU('source')):''}</li>`).join('')}</ul></details>`;
+    const un=I.unions[p.union]; if(un&&un.length) h+=`<details><summary>${esc(cU('unionIni',{u:p.union,n:un.length}))}</summary><ul>${un.map(u=>`<li>${esc(cmpKeepDates(u.name))}${cmpHttps(u.url)?CMP_SEP+cmpLink(u.url,cU('source')):''}</li>`).join('')}</ul></details>`;
     return h+'</div>'; }).join('');
 }
 /* ---- How to read this: the caveats, every number, every source ---- */
@@ -46827,7 +46829,11 @@ const CMP_KD=[
   [new RegExp('\\b('+CMP_PUB_MON+') (\\d{1,2})\\b','g'),'$1\u00A0$2'],
   [new RegExp('\\b('+CMP_PUB_MON+'\u00A0\\d{1,2}), (\\d{4})\\b','g'),'$1,\u00A0$2'],
   [new RegExp('(\\d)([\u2013-])(?=\\d{1,2}\u00A0'+CMP_PUB_MON+'\\b)','g'),'$1$2\u2060'],
-  [new RegExp('(\\b'+CMP_PUB_MON+'\u00A0\\d{1,2})([\u2013-])(?=\\d)','g'),'$1$2\u2060']];
+  [new RegExp('(\\b'+CMP_PUB_MON+'\u00A0\\d{1,2})([\u2013-])(?=\\d)','g'),'$1$2\u2060'],
+  // v10.71.0: a published year range ("2026–2029") keeps a word joiner after its dash, and a year before a spaced dash ("2026 – “KNOWN”")
+  // keeps no-break spaces round it, so What they say (and every card that uses cmpKeepDates) never breaks a name inside its years
+  [/(\d{4})([\u2013-])(?=\d{4}\b)/g,'$1$2\u2060'],
+  [/(\d{4}) ([\u2013-]) (?=\S)/g,'$1\u00A0$2\u2060\u00A0']];
 function cmpKeepDates(t){ return typeof t==='string'?CMP_KD.reduce((a,[re,to])=>a.replace(re,to),t):t; }
 function cmpResLinks(l){
   const ok=(l||[]).filter(o=>o&&cmpHttps(o.u));

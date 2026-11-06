@@ -54,6 +54,25 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
   j.conferences.forEach(c=>{ c.mission=c.slug==='pennsylvania'?MIS_PA:null; }); if(extra) extra(j); return j; };
 (async()=>{ try{
   const idx=JSON.parse(served('index.json')||'null'), PA=idx.conferences.find(c=>c.slug==='pennsylvania'), base=idx.baseline.lens;
+  /* v10.71.0: read from the data (the monthly refresh moves the dates). Where each of Pennsylvania's areas stands follows the one rule the
+     page states (none: nothing published; more: 4+ events, 1.25 × the typical share and 3 points above it; less: half the typical share
+     or under; else about the same), applied to index.json's own shares and typical shares, and every sentence checked below is built
+     from that. Nothing pins a share, a state or a wording's list by hand any more. */
+  const CORE=['evangelism','pastoral','discipleship','family','youth','clubs','health','education'];
+  const state=(p,id)=>{ const L=p.lenses[id], m=base[id]; if(!L.n) return 'none'; if(L.n>=4&&L.share>=1.25*m&&L.share>=m+3) return 'more'; if(L.share<=0.5*m) return 'less'; return 'typ'; };
+  const ST=CORE.map(id=>state(PA,id)), RD={more:'More than most',typ:'About the same as most',less:'Less than most',none:'None published'};
+  const pc=n=>(Math.round(n)===n?n:Number(n).toFixed(1))+'%', ev=n=>n===1?'1 event':n+' events';
+  const lensL=(id,l)=>idx.lenses.find(x=>x.id===id)[l||'en'], lc=(id,l)=>{ const t=lensL(id,l); return l==='es'?(/^Conquistadores/.test(t)?t:t.charAt(0).toLowerCase()+t.slice(1)):t.toLowerCase().replace('pathfinders','Pathfinders'); };
+  const join=(l,lang)=>l.length<2?l.join(''):lang==='es'?l.slice(0,-1).join(', ')+' y '+l[l.length-1]:l.length===2?l.join(' and '):l.slice(0,-1).join(', ')+' and '+l[l.length-1];
+  const MORE=CORE.filter(id=>state(PA,id)==='more').sort((a,b)=>PA.lenses[b].share/base[b]-PA.lenses[a].share/base[a]).slice(0,3);
+  const LESS=CORE.filter(id=>/less|none/.test(state(PA,id))).sort((a,b)=>(base[b]-PA.lenses[b].share)-(base[a]-PA.lenses[a].share)).slice(0,3);
+  const moreL=l=>(l==='es'?'Da más espacio que la mayoría de las asociaciones a ':'It gives more room than most conferences to ')+join(MORE.map(id=>`${lc(id,l)} (${pc(PA.lenses[id].share)}; ${l==='es'?'la mayoría':'most'}: ${pc(base[id])})`),l)+'.';
+  const lessL='Less than most: '+join(LESS.map(id=>PA.lenses[id].n?`${lc(id)} (${ev(PA.lenses[id].n)}, ${pc(PA.lenses[id].share)}; most: ${pc(base[id])})`:`${lc(id)} (none published)`))+'.';
+  const CAL={high:'full calendar',medium:'partial calendar',low:'thin calendar'}[PA.calendar.confidence];
+  const MA=CORE.filter(id=>MIS_PA.a.some(x=>x.l===id)), K=MA.filter(id=>/more|typ/.test(state(PA,id))).length, AREAS=join(MA.map(id=>lc(id)));
+  const misL=K===MA.length?`Its mission names ${AREAS}, and the calendar gives each as much room as most conferences, or more.`:K===0?`Its mission names ${AREAS}; the calendar gives each of them less room than most conferences.`:`Its mission names ${AREAS}; the calendar gives as much room as most conferences, or more, to ${K} of them.`;
+  const EXTRA=CORE.filter(id=>!MA.includes(id)&&state(PA,id)==='more');
+  const aheadL=PA.datesAhead===1?'1 date is published for the year ahead.':PA.datesAhead?`${PA.datesAhead} dates are published for the year ahead.`:'No dates are published for the year ahead yet.';
   console.log('\n-- the frames: the brief second, Mission and calendar third, the rest after --');
   { const P=page({tamper:withMissions,saved:{reg:'pennsylvania',mine:'pennsylvania',others:['ohio','nevada-utah']}}); await openCmp(P);
     c('numbered 1 to 17 with no gap; the brief is 2, Mission and calendar 3, At a glance 4, the resources 16 and 17',
@@ -65,22 +84,32 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
     const dots=P.qa('#cmp-brief .cmp-radar-svg circle.cmp-rd'), st=dots.map(d=>d.getAttribute('class').replace('cmp-rd cmp-rd-',''));
     c('eight areas round the ring, in the comparison\'s own order, each named', [dots.length,P.qa('#cmp-brief .cmp-rl').map(t=>t.textContent).join(',')],
       [8,'Evangelism,Pastors,Discipleship,Family,Youth,Pathfinders,Health,Schools']);
-    c('Pennsylvania: evangelism less than most, health none published, family and Pathfinders more than most, the rest as most', st.join(','), 'less,typ,typ,more,typ,more,none,typ');
+    // v10.71.0: read from the data (the monthly refresh moves the dates): each area where the one rule puts it this month
+    c('Pennsylvania: each of the eight areas where the one rule puts it ('+ST.join(',')+')', st.join(','), ST.join(','));
     c('the typical conference as a dashed ring; a key; how to read it', [!!P.q('#cmp-brief .cmp-rtyp'),P.qa('#cmp-brief .cmp-rk').map(k=>k.textContent).join(' | '),/twice as much or more/.test(P.txt('#cmp-brief .cmp-rhow'))],
       // v10.70.1 (the audit): "About as most" is not English: "About the same as most"
       [true,'More than most | About the same as most | Less than most | None published | Dashed ring: the typical conference',true]);
     const lab=P.q('#cmp-brief .cmp-radar-svg').getAttribute('aria-label');
-    c('a screen reader hears what it shows', [/More than most: Family, women & men, Pathfinders & children/.test(lab),/Less than most: Evangelism & outreach/.test(lab),/None published: Health & community service/.test(lab)], [true,true,true]);
-    c('an area\'s place: Pathfinders (34% against 20.6%) beyond the dashed ring; health at the centre', P.E(`(()=>{ const sv=document.querySelector('#cmp-brief .cmp-radar-svg'), d=[...sv.querySelectorAll('circle.cmp-rd')], dist=e=>Math.hypot(+e.getAttribute('cx')-175,+e.getAttribute('cy')-131); return [dist(d[5])>43,dist(d[6])<0.5,Math.abs(dist(d[1])-43*${PA.lenses.pastoral.share}/${base.pastoral})<0.2]; })()`), [true,true,true]);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the whole label, each state with its areas, from the rule; every
+    // dot as far out as its share against the typical share (the dashed ring at 43, the edge, twice as much or more, at 86)
+    c('a screen reader hears what it shows', lab, ['more','typ','less','none'].map(k=>{ const ls=CORE.filter((id,i)=>ST[i]===k); return ls.length?RD[k]+': '+ls.map(id=>lensL(id)).join(', '):''; }).filter(Boolean).join('. '));
+    const RADIUS=CORE.map(id=>{ const m=base[id], sh=PA.lenses[id].share; return m>0?Math.min(sh/m,2):(sh>0?2:1); });
+    c('an area\'s place: each dot as far out as its share against the typical conference (none at the centre, twice as much at the edge)', P.E(`(()=>{ const sv=document.querySelector('#cmp-brief .cmp-radar-svg'), d=[...sv.querySelectorAll('circle.cmp-rd')], dist=e=>Math.hypot(+e.getAttribute('cx')-175,+e.getAttribute('cy')-131); return ${JSON.stringify(RADIUS)}.map((r,i)=>Math.abs(dist(d[i])-43*r)<0.2); })()`), CORE.map(()=>true));
 
     console.log('\n-- the brief: a few sentences, from the data --');
     const lines=P.qa('#cmp-brief .cmp-btext p').map(p=>p.textContent);
     c('who: under its name, its members and congregations, its union (the name said once)', [P.txt('#cmp-brief .cmp-btext h4'),lines[0]], ['The Pennsylvania Conference',`${PA.official.members.toLocaleString('en-US')} members in ${PA.official.congregations} congregations (${idx.stats.year}), in the Columbia Union.`]);
-    c('its calendar: how many ministry events, and how full the picture is', lines[1], `Over the past 12 months its published calendar lists ${PA.counts.ministryEvents} ministry events (partial calendar: ${PA.calendar.monthsCovered} of 12 months).`);
-    c('more than most, the largest first, with the typical share beside it', lines[2], 'It gives more room than most conferences to Pathfinders & children (34%; most: 20.6%) and family, women & men (17%; most: 11.7%).');
-    c('less than most, the widest gap first; an area with none says so', lines[3], 'Less than most: evangelism & outreach (1 event, 2.1%; most: 6.3%) and health & community service (none published).');
-    c('the mission: the areas it names, and how many the calendar makes room for', lines[4], 'Its mission names evangelism & outreach and prayer & discipleship; the calendar gives as much room as most conferences, or more, to 1 of them.');
-    c('the year ahead', lines[5], `${PA.datesAhead} dates are published for the year ahead.`);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): how full the calendar is, the more / less lines from the rule
+    // (a line is left out when the data has no such area), the mission line from how many of its two areas are in step, the dates ahead
+    c('its calendar: how many ministry events, and how full the picture is', lines[1], `Over the past 12 months its published calendar lists ${PA.counts.ministryEvents} ministry events (${CAL}: ${PA.calendar.monthsCovered} of 12 months).`);
+    let li=2;
+    if(MORE.length) c('more than most, the largest first, with the typical share beside it', lines[li++], moreL());
+    else c('no area more than most this month: no "more room" line', lines.some(t=>/^It gives more room/.test(t)), false);
+    if(LESS.length) c('less than most, the widest gap first; an area with none says so', lines[li++], lessL);
+    else c('no area less than most this month: no "Less than most" line', lines.some(t=>/^Less than most/.test(t)), false);
+    if(!MORE.length&&!LESS.length) c('an even calendar says so', lines[li++], 'Its calendar is close to the typical conference’s in every main area.');
+    c('the mission: the areas it names, and how many the calendar makes room for ('+K+' of '+MA.length+')', lines[li++], misL);
+    c('the year ahead', lines[li++], aheadL);
     c('a way down to Mission and calendar', !!P.q('#cmp-brief [data-cmp-misgo]'), true);
 
     console.log('\n-- Mission and calendar: each chosen conference, its mission word for word beside its calendar --');
@@ -90,14 +119,16 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
     c('the mission quoted as published (English), with a link to its own page (a new tab)', [q.textContent,q.getAttribute('lang'),boxes[0].querySelector('a').getAttribute('href'),boxes[0].querySelector('a').getAttribute('rel')],
       ['“'+MIS_PA.t+'”','en',MIS_PA.u,'noopener']);
     const rows=[...boxes[0].querySelectorAll('.cmp-mrow')].map(r=>[r.querySelector('.cmp-mlens').textContent,r.querySelector('.cmp-rst').textContent,r.querySelector('.cmp-mw').textContent,r.querySelector('.s').textContent]);
+    // v10.70.1 (the audit): "About the same as most"
+    // v10.71.0: read from the data (the monthly refresh moves the dates): each row's state and count from index.json's figures
     c('each area the mission names: its words, where the calendar stands, the count against the typical share', rows,
-      [['Evangelism & outreach','Less than most','“share the everlasting gospel”','1 event, 2.1% of the calendar (most: 6.3%)'],
-       // v10.70.1 (the audit): "About the same as most"
-       ['Prayer & discipleship','About the same as most','“make disciples”',`4 events, 8.5% of the calendar (most: ${base.discipleship}%)`]]);
+      MA.map(id=>[lensL(id),RD[state(PA,id)],'“'+MIS_PA.a.find(x=>x.l===id).w+'”',PA.lenses[id].n?`${ev(PA.lenses[id].n)}, ${pc(PA.lenses[id].share)} of the calendar (most: ${pc(base[id])})`:`None on the published calendar (most: ${pc(base[id])})`]));
     c('a bar for each, the typical share marked on it', [boxes[0].querySelectorAll('.cmp-mbar').length,boxes[0].querySelectorAll('.cmp-mtyp').length], [2,2]);
-    c('how many it makes room for, and his question when they part', [boxes[0].querySelector('.cmp-msum').textContent,boxes[0].querySelector('.cmp-mask').textContent],
-      ['The calendar gives as much room as most conferences, or more, to 1 of the 2 areas its mission names.','Where they part, it is worth asking: should the calendar change, or the statement?']);
-    c('what the calendar gives more room to that the mission does not name', /More than most on the calendar, though the mission does not name it: family, women & men and Pathfinders & children\./.test(boxes[0].textContent), true);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): how many of the two are in step; the question only when they
+    // part; the "more than most" note only when the data has such an area outside the mission
+    c('how many it makes room for, and his question when they part', [boxes[0].querySelector('.cmp-msum').textContent,(e=>e?e.textContent:null)(boxes[0].querySelector('.cmp-mask'))],
+      [`The calendar gives as much room as most conferences, or more, to ${K} of the ${MA.length} areas its mission names.`,K<MA.length?'Where they part, it is worth asking: should the calendar change, or the statement?':null]);
+    c('what the calendar gives more room to that the mission does not name', [...boxes[0].querySelectorAll('p.note')].map(p=>p.textContent).find(t=>/^More than most on the calendar/.test(t))||null, EXTRA.length?`More than most on the calendar, though the mission does not name it: ${join(EXTRA.map(id=>lc(id)))}.`:null);
     // v10.70.1 (the audit): a date never breaks (no-break spaces)
     c('a conference with none found: said plainly, never "has none"', [boxes[1].querySelector('h4').textContent,boxes[1].querySelector('.note').textContent], ['Ohio','We could not find a mission statement on Ohio’s website (checked 9\u00A0Oct\u00A02026).']);
     c('the sources name where the missions come from', /Mission statements: each conference’s own website/.test(P.txt('#cmp-sources')), true);
@@ -114,16 +145,20 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
     const b=P.q('#cmp-misg .cmp-box');
     c('markup shows as text, never as markup; a plain http link is not a link', [b.querySelector('blockquote b'),b.querySelector('blockquote').textContent,b.querySelector('a')], [null,'“To <b>reach</b> every home & "town".”',null]); }
   { const P=page({tamper:(f,j)=>withMissions(f,j,J=>{ J.conferences.find(c=>c.slug==='pennsylvania').mission={t:'To glorify God in all that we do as a family of believers.',u:MIS_PA.u,a:[]}; })}); await openCmp(P);
-    c('a mission that names none of the areas: said so, nothing set beside the calendar', [P.txt('#cmp-misg .cmp-box .note'),P.qa('#cmp-brief .cmp-btext p')[4].textContent],
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the mission line found by its words, wherever the more / less lines leave it
+    c('a mission that names none of the areas: said so, nothing set beside the calendar', [P.txt('#cmp-misg .cmp-box .note'),P.qa('#cmp-brief .cmp-btext p').map(p=>p.textContent).find(t=>/^Its mission/.test(t))],
       ['The statement names none of these ministry areas by name, so there is nothing to set beside the calendar.','Its mission statement names none of these ministry areas by name.']); }
   { const P=page({tamper:(f,j)=>withMissions(f,j,J=>{ J.conferences.find(c=>c.slug==='pennsylvania').mission={...MIS_PA,a:[{l:'clubs',w:'every community'}]}; })}); await openCmp(P);
     const b=P.q('#cmp-misg .cmp-box');
-    c('one area, given room: one sentence, no question', [b.querySelector('.cmp-msum').textContent,!!b.querySelector('.cmp-mask'),P.qa('#cmp-brief .cmp-btext p')[4].textContent],
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the mission line found by its words
+    c('one area, given room: one sentence, no question', [b.querySelector('.cmp-msum').textContent,!!b.querySelector('.cmp-mask'),P.qa('#cmp-brief .cmp-btext p').map(p=>p.textContent).find(t=>/^Its mission/.test(t))],
       ['The calendar gives the one area its mission names as much room as most conferences, or more.',false,'Its mission names Pathfinders & children, and the calendar gives it as much room as most conferences, or more.']); }
-  { const P=page({tamper:(f,j)=>withMissions(f,j,J=>{ J.conferences.find(c=>c.slug==='pennsylvania').mission={...MIS_PA,a:[{l:'evangelism',w:'share the everlasting gospel'},{l:'health',w:'every community'}]}; })}); await openCmp(P);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the two areas' figures are the test's own (evangelism one event at 1%,
+  // less than most; health none published), as the missions are, so the sentence holds whatever the calendars say; the typical share is index.json's
+  { const P=page({tamper:(f,j)=>withMissions(f,j,J=>{ const p=J.conferences.find(c=>c.slug==='pennsylvania'); p.lenses.evangelism={n:1,share:1}; p.lenses.health={n:0,share:0}; p.mission={...MIS_PA,a:[{l:'evangelism',w:'share the everlasting gospel'},{l:'health',w:'every community'}]}; })}); await openCmp(P);
     const b=P.q('#cmp-misg .cmp-box');
-    c('none of the areas given room: said plainly (never "0 of them"); an area with none published says so', [P.qa('#cmp-brief .cmp-btext p')[4].textContent,b.querySelectorAll('.cmp-mrow .s')[1].textContent],
-      ['Its mission names evangelism & outreach and health & community service; the calendar gives each of them less room than most conferences.','None on the published calendar (most: 3.6%)']); }
+    c('none of the areas given room: said plainly (never "0 of them"); an area with none published says so', [P.qa('#cmp-brief .cmp-btext p').map(p=>p.textContent).find(t=>/^Its mission/.test(t)),b.querySelectorAll('.cmp-mrow .s')[1].textContent],
+      ['Its mission names evangelism & outreach and health & community service; the calendar gives each of them less room than most conferences.','None on the published calendar (most: '+pc(base.health)+')']); }
 
   console.log('\n-- a thin calendar, no missions in the data, Spanish --');
   { const P=page({tamper:withMissions,saved:{reg:'pennsylvania',mine:'washington',others:[]}}); await openCmp(P);
@@ -133,8 +168,9 @@ const withMissions=(f,j,extra)=>{ if(f!=='index.json') return null; j.missionChe
       [false,false,'1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16']); }
   { const P=page({lang:'es',tamper:withMissions,saved:{reg:'pennsylvania',mine:'pennsylvania',others:['ohio']}}); await openCmp(P);
     const lines=P.qa('#cmp-brief .cmp-btext p').map(p=>p.textContent);
-    c('in Spanish: the titles, the brief, the chart\'s words', [P.txt('#cmp-brief h3'),P.txt('#cmp-mission h3'),P.txt('#cmp-brief .cmp-btext h4'),lines[2],P.qa('#cmp-brief .cmp-rl').map(t=>t.textContent)[5],P.qa('#cmp-brief .cmp-rk')[0].textContent],
-      ['Su asociación en resumen','Misión y calendario','La Asociación Pennsylvania','Da más espacio que la mayoría de las asociaciones a Conquistadores y niños (34%; la mayoría: 20.6%) y familia, damas y caballeros (17%; la mayoría: 11.7%).','Conquistadores','Más que la mayoría']);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the Spanish "more" line from the rule (left out when the data has no such area)
+    c('in Spanish: the titles, the brief, the chart\'s words', [P.txt('#cmp-brief h3'),P.txt('#cmp-mission h3'),P.txt('#cmp-brief .cmp-btext h4'),MORE.length?lines[2]:null,P.qa('#cmp-brief .cmp-rl').map(t=>t.textContent)[5],P.qa('#cmp-brief .cmp-rk')[0].textContent],
+      ['Su asociación en resumen','Misión y calendario','La Asociación Pennsylvania',MORE.length?moreL('es'):null,'Conquistadores','Más que la mayoría']);
     c('the mission stays as published, said once to be in English', /\(en inglés, como se registró\) /.test(P.txt('#cmp-misg .cmp-box .s')), true);
     c('Ohio, none found, in Spanish', /No encontramos una declaración de misión en el sitio web de Ohio \(revisado el/.test(P.txt('#cmp-misg')), true); }
 } catch(e){ console.log('  FAIL  threw: '+(e&&e.stack||e)); fail++; }

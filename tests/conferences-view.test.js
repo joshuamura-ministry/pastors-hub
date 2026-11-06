@@ -52,6 +52,35 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
 
 (async()=>{ try{
   const idx=JSON.parse(served('index.json')||'null');
+  /* v10.71.0: read from the data (the monthly refresh moves the dates). The check date comes from the builders' config.json (never from
+     the served index, so a served file with a moved month is caught); the year ahead from its month; Pennsylvania's suggested set, its
+     names and codes, the badge, the character line, the published-to month, the hatched months' labels and the Deadlines lane from the
+     served files. Nothing below pins a date, a pick or a share by hand any more. */
+  const cfg=JSON.parse(fs.readFileSync(path.join(ROOT,'tools/conferences/src/config.json'),'utf8')), CHECKED=cfg.checked, CM=CHECKED.slice(0,7);
+  const MON={en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
+  const fMY=(m,l)=>MON[l||'en'][+m.slice(5,7)-1]+' '+m.slice(0,4), fDMY=(s,l)=>(+s.slice(8,10))+' '+fMY(s,l);   // the page writes no-break spaces; txt() folds them
+  const addM=(m,n)=>new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7)-1+n,1)).toISOString().slice(0,7);
+  const addD=(s,n)=>{ const d=new Date(s+'T12:00:00Z'); d.setUTCDate(d.getUTCDate()+n); return d.toISOString().slice(0,10); };
+  const AHEAD=Array.from({length:12},(_,i)=>addM(CM,i));
+  const pa=idx.conferences.find(x=>x.slug==='pennsylvania'), paD=JSON.parse(served('c/pennsylvania.json')), THR=paD.ahead.through;
+  const confOf=s=>idx.conferences.find(x=>x.slug===s), nameOf=s=>confOf(s).name, codeOf=s=>confOf(s).code||confOf(s).name;
+  const SUG=pa.suggest.map(s=>s.slug), pick=k=>pa.suggest.find(s=>s.k===k), SIDE=pick('side').slug, STRONG=pick('strong'), SUGm=SUG.filter(s=>s!==SIDE);
+  const [ADD1,ADD2]=['potomac','chesapeake','new-jersey','allegheny-east','new-york','carolina'].filter(s=>!SUG.includes(s));   // two to add by hand, never already suggested
+  const lensL=(id,l)=>idx.lenses.find(x=>x.id===id)[l||'en'], lensLc=(id,l)=>{ const t=lensL(id,l); return l==='es'?(/^Conquistadores/.test(t)?t:t.charAt(0).toLowerCase()+t.slice(1)):t.toLowerCase().replace('pathfinders','Pathfinders'); };
+  const CAL={high:['Full calendar','Calendario completo'],medium:['Partial calendar','Calendario parcial'],low:['Thin calendar','Calendario escaso']};
+  const calL=l=>CAL[pa.calendar.confidence][l==='es'?1:0];
+  const charL=l=>(pa.character||[]).length?(l==='es'?'Se inclina hacia: '+pa.character.map(id=>lensLc(id,'es')).join('; '):'Leans toward '+pa.character.map(id=>lensLc(id)).join(' and ')):(l==='es'?'Un calendario amplio y equilibrado':'A broad, even calendar');
+  const badgeL=l=>l==='es'?`${calL('es')} · nota ${pa.calendar.grade} · ${pa.counts.ministryEvents} eventos en el último año`:`${calL()} · grade ${pa.calendar.grade} · ${pa.counts.ministryEvents} events in the past year`;
+  const pubL=l=>{ const pub=!THR?'':THR>=AHEAD[11]?(l==='es'?'calendario publicado para todo el año que viene':'calendar published for the whole year ahead'):THR<AHEAD[0]?(l==='es'?'aún no hay nada publicado por delante':'nothing published ahead yet'):(l==='es'?'calendario publicado hasta ':'calendar published to ')+fMY(THR,l);
+    const note=l==='es'?paD.ahead.note.es:paD.ahead.note.en; return 'Pennsylvania: '+(pub?pub+'. '+note:note); };
+  const HATCHED=AHEAD.filter(m=>!(THR&&m<=THR));
+  const knownL=(m,l)=>{ const n=paD.ahead.conf.filter(it=>it.m===m&&!/r/.test(it.f||'')).length;
+    return l==='es'?(n?(n===1?'1 fecha conocida':n+' fechas conocidas')+'; '+(THR?'calendario aún no publicado':'sin calendario de la asociación'):(THR?'aún no publicado':'sin calendario'))
+      :(n?(n===1?'1 date known':n+' dates known')+'; '+(THR?'calendar not published yet':'no conference calendar'):(THR?'not published yet':'no calendar')); };
+  const HINT={early:'Early price to',register:'Register by',transfer:'Transfers end',apply:'Apply by',pay:'Pay by',due:'Due'};
+  const hintOf=d=>(HINT[d.k]||'By')+' '+(d.p==='m'?fMY(d.s.slice(0,7)):fDMY(d.s));
+  const DLS=paD.ahead.dl.filter(d=>d.s>CHECKED).sort((a,b)=>a.s.localeCompare(b.s)), [D1,D2]=DLS;
+  const prepHas=(P,d)=>P.qa('#cmp-prep .pi').some(x=>x.textContent.replace(/\s+/g,' ').includes(hintOf(d))&&!!x.querySelector(`a[href="${d.u}"]`));
   console.log('\n-- the hub tile --');
   { const P=page(); await ready(P);
     const t=P.q('.hub .tool[data-tool="compare"]');
@@ -84,21 +113,23 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   }
 
   console.log('\n-- loading, defaults, English --');
-  const P=page({now:'2026-10-01'}); await openCmp(P);
+  const P=page({now:CHECKED}); await openCmp(P);   // v10.71.0: read from the data (the monthly refresh moves the dates): the device's day is the check day
   const reqs=P.net.filter(u=>/conferences\//.test(u));
   c('index.json first', reqs[0], '/conferences/index.json');
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the four chosen are index.json's suggested set
   c('then the year ahead above the conference, the chosen five and (v10.58.0) the resources, each with the data\'s version', reqs.slice(1).map(u=>u.replace(/\?v=.*/,'')).sort(),
-    ['/conferences/ahead.json','/conferences/c/arkansas-louisiana.json','/conferences/c/central-california.json','/conferences/c/nevada-utah.json','/conferences/c/ohio.json','/conferences/c/pennsylvania.json','/conferences/resources.json']);
+    ['/conferences/ahead.json'].concat(SUG.concat('pennsylvania').map(s=>'/conferences/c/'+s+'.json').sort(),['/conferences/resources.json']));
   // v10.58.0 (stale): the pastor, "put all the different resources and grants … into one concentrated area … at the bottom of the compare
   // conferences page": resources.json is asked for too (Resources for your church; Ministries that come to your church)
   c('…and nothing else', reqs.length, 8);
   c('every later file asks for this version', reqs.slice(1).every(u=>u.endsWith('?v='+idx.v)));
   c('the tool bar names it', P.txt('#toolname'), 'Learn from other conferences');
   c('his conference is the one he registered with', P.J('CMP.st.mine'), 'pennsylvania');
-  c('compared with the suggested set (the approved sample\'s own, on the past 12 months)', P.J('CMP.st.others'), ['ohio','arkansas-louisiana','nevada-utah','central-california']);
-  c('the chips: his first, marked "yours"', P.qa('.cmp-chip').map(x=>x.querySelector('span').textContent), ['Pennsylvania','Ohio','Arkansas-Louisiana','Nevada-Utah','Central California']);
-  c('the reasons are said', /Ohio \(same union\)/.test(P.txt('#cmp-why'))&&/Central California \(strong in evangelism & outreach\)/.test(P.txt('#cmp-why')));
-  c('checked, updated monthly: never "live"', P.txt('#cmp-checked'), 'Checked 1 Oct 2026 · updated monthly');
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the suggested set, its names, its reasons and the check date
+  c('compared with the suggested set (index.json\'s own, on the past 12 months)', P.J('CMP.st.others'), SUG);
+  c('the chips: his first, marked "yours"', P.qa('.cmp-chip').map(x=>x.querySelector('span').textContent), ['Pennsylvania'].concat(SUG.map(nameOf)));
+  c('the reasons are said (same union; strong in '+lensLc(STRONG.lens)+')', [P.txt('#cmp-why').includes(nameOf(pick('union').slug)+' (same union)'), P.txt('#cmp-why').includes(nameOf(STRONG.slug)+' (strong in '+lensLc(STRONG.lens)+')')], [true,true]);
+  c('checked, updated monthly: never "live"', P.txt('#cmp-checked'), 'Checked '+fDMY(CHECKED)+' · updated monthly');
   const all=readable(P.q('#cmp'));
   // Terrain's own words (event titles and researchers' notes are shown as published, and one says a calendar is "live")
   const own=P.J("Object.values(CMP_UI).map(v=>v.en+' | '+v.es).join(' || ')");
@@ -110,12 +141,14 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('every frame, in order', titles, ['Choose','Your conference in brief','Mission and calendar','At a glance','The year ahead','Where the calendar\'s energy goes','Ministry by ministry','By part of the country','Evangelism and pastoral care','Young people','Size and growth','What we could learn','Strengths and room to grow','What they say, what the calendar shows','Month by month','Resources for your church','Ministries that come to your church','How to read this']);
   // v10.58.0 (stale): 14 Resources for your church, 15 Ministries that come to your church, at the foot of the page
   c('numbered 1 to 17, colour on every frame', [P.qa('#cmp .cmp-num').map(n=>n.textContent).join(','), P.qa('#cmp .cmp-step').every(s=>/--k:var\(--/.test(s.getAttribute('style')||''))], ['1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17', true]);
-  c('five cards at a glance, in his order', P.qa('.cmp-card h4').map(h=>h.childNodes[0].textContent.trim()), ['Pennsylvania','Ohio','Arkansas-Louisiana','Nevada-Utah','Central California']);
-  const pa=idx.conferences.find(x=>x.slug==='pennsylvania');
-  c('the badge counts the past year only', P.txt('.cmp-card.mine .cmp-badge'), `Partial calendar · grade B · ${pa.counts.ministryEvents} events in the past year`);
-  c('his character line', P.txt('.cmp-card.mine .char'), 'Leans toward Pathfinders & children and family, women & men');
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the five from the suggested set; the badge's fullness, grade and
+  // count and the character line from index.json's own figures for Pennsylvania
+  c('five cards at a glance, in his order', P.qa('.cmp-card h4').map(h=>h.childNodes[0].textContent.trim()), ['Pennsylvania'].concat(SUG.map(nameOf)));
+  c('the badge counts the past year only', P.txt('.cmp-card.mine .cmp-badge'), badgeL());
+  c('his character line', P.txt('.cmp-card.mine .char'), charL());
   c('captions say the past 12 months', /past 12 months/.test(P.txt('#cmp-balance .cmp-sh'))&&/past 12 months/.test(P.txt('#cmp-heat .cmp-sh')));
-  c('rows keep his order in every chart, never sorted by value', P.qa('#cmp-ch-e1k svg text[text-anchor="end"]').map(t=>t.textContent.replace(/^● /,'')).slice(0,5), ['Pennsylvania','Ohio','Arkansas-Louisiana','Nevada-Utah','Central California']);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): his order is Pennsylvania then the suggested set
+  c('rows keep his order in every chart, never sorted by value', P.qa('#cmp-ch-e1k svg text[text-anchor="end"]').map(t=>t.textContent.replace(/^● /,'')).slice(0,5), ['Pennsylvania'].concat(SUG.map(nameOf)));
   c('the joining caution is always visible beside the chart', !!P.q('#cmp-size .cmp-warn')&&!P.q('#cmp-size .cmp-warn').closest('details')&&/do not show that one caused the other/.test(P.txt('#cmp-size .cmp-warn')));
   c('no ranks, no "best" or "worst" (its own words)', /\b(rank|ranked|best|worst|top \d|league|mejor|peor|clasificaci)\b/i.test(own), false);
   c('it never calls a calendar weak, failing or behind (its own words)', /\b(weak|failing|behind|débil|atrasad)/i.test(own), false);
@@ -124,7 +157,8 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('what we could learn names the stronger calendar and its own events with sources', P.qa('#cmp-learng .cmp-lcard').length>0 && P.qa('#cmp-learng .ev a').every(a=>/^https:\/\//.test(a.getAttribute('href'))));
   c('said vs shown: OneVoice27 is on the calendar', /OneVoice27 in the Pennsylvania Conference/.test(P.txt('#cmp-saidg'))&&/On the calendar/.test(P.txt('#cmp-saidg .cmp-box')));
   c('sources name the statistics and the calendar links', /Annual Statistical Report|ASR/.test(P.txt('#cmp-sources'))&&P.qa('#cmp-sources a').length>5);
-  c('footer: checked · updated monthly', /checked 1 Oct 2026 · updated monthly/.test(P.txt('.cmp-foot')));
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the check date is config.json's
+  c('footer: checked · updated monthly', P.txt('.cmp-foot').includes('checked '+fDMY(CHECKED)+' · updated monthly'));
   c('no "AI" anywhere on the page', BAD.test(all), false);
   // v10.58.0: a ministry's own email and phone ("it will show their contact and how to get a hold of them") are mailto: and tel:, in its
   // contact line only, a checked address and digits only; every other link is https, in a new tab
@@ -133,26 +167,35 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('…a ministry\'s contact line holds only mailto: (a checked address) and tel: (digits) links', P.qa('#cmp .cmp-contact a').length>0&&P.qa('#cmp .cmp-contact a').every(a=>/^mailto:[^\s@<>"?#&=%\/]+@[a-z0-9.-]+\.[a-z]{2,}$/i.test(a.getAttribute('href'))||/^tel:\+?[0-9]{7,15}(,[0-9]{1,6})?$/.test(a.getAttribute('href'))));
 
   console.log('\n-- the year ahead --');
-  c('the sub-line names the year ahead', P.txt('#cmp-ahead .cmp-sh .note'), 'Oct 2026 to Sep 2027: what’s coming, so you can prepare in time.');
-  c('his conference first, a button each', P.qa('#cmp-ya .cmp-seg button').map(b=>b.textContent), ['Yours: PA','Ohio','Ark-La','NUC','CCC']);
-  c('published to Dec 2026, with the reason', P.txt('.cmp-yasum'), 'Pennsylvania: calendar published to Dec 2026. The 2026 calendar ends in December; 2027 dates come from the camp-meeting and OneVoice27 pages.');
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the year ahead runs from the check month; the buttons carry the
+  // suggested set's codes; the published-to month and its reason are Pennsylvania's own file's
+  c('the sub-line names the year ahead ('+fMY(AHEAD[0])+' to '+fMY(AHEAD[11])+')', P.txt('#cmp-ahead .cmp-sh .note'), fMY(AHEAD[0])+' to '+fMY(AHEAD[11])+': what’s coming, so you can prepare in time.');
+  c('his conference first, a button each', P.qa('#cmp-ya .cmp-seg button').map(b=>b.textContent), ['Yours: '+codeOf('pennsylvania')].concat(SUG.map(codeOf)));
+  c('published as far as its file says ('+(THR||'nothing')+'), with the reason', P.txt('.cmp-yasum'), pubL());
   c('five lanes', P.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent), ['Your conference','Your union','North American Division','World church','Deadlines']);
   c('12 months', P.qa('#cmp-ya .tl-r').length, 12);
   const nyp=P.qa('#cmp-ya .tl-r').map(r=>!!r.querySelector('.tl-c.nyp'));
-  c('Jan – Sep 2027 are "not published yet" (hatched)', nyp, [false,false,false,true,true,true,true,true,true,true,true,true]);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): every month after the published-to month is hatched, none before
+  c('the months after '+(THR?fMY(THR):'the start')+' are "not published yet" (hatched): '+HATCHED.length+' of 12', nyp, AHEAD.map(m=>HATCHED.includes(m)));
   // v10.70.1 (the audit): a hatched month holding the conference's own dates (camp meeting, OneVoice27) says "1 date known; calendar not published yet"
-  c('…and say so', P.qa('#cmp-ya .nyp-l').map(x=>x.textContent).every(t=>t==='not published yet'||t==='1 date known; calendar not published yet'));
+  // v10.71.0: read from the data (the monthly refresh moves the dates): each hatched month's label counts that month's own dates in its file
+  c('…and say so, each with its own count of dates known', P.qa('#cmp-ya .nyp-l').map(x=>x.textContent), HATCHED.map(m=>knownL(m)));
   // the NAD's "All Things New phase 3" (April 2027) comes first, then the September 2027 series: each "Start now", earliest first
   c('Prepare now opens with what needs a start now', P.qa('#cmp-prep .pi .cmp-hint')[0]&&P.qa('#cmp-prep .pi .cmp-hint')[0].textContent, 'Start now');
   c('…and Pennsylvania\'s OneVoice27 series is among them', P.qa('#cmp-prep .pi').concat(P.qa('#cmp-prep details .pi')).some(x=>/OneVoice27 evangelistic series/.test(x.textContent)&&/Start now/.test(x.textContent)));
-  c('a deadline within three months is there (15 Oct)', /Apply by 15 Oct 2026/.test(P.txt('#cmp-prep')));
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the Deadlines lane's first date after the check date, seen from a
+  // day inside its three months (never before the check date: cmpToday never sits before it)
+  if(D1){ const Dp=page({now:[CHECKED,addD(D1.s,-60)].sort()[1]}); await openCmp(Dp);
+    c('a deadline within three months is there ('+hintOf(D1)+', seen on '+Dp.J('cmpToday()')+')', prepHas(Dp,D1)); }
+  else c('the Deadlines lane holds a date after the check date (none this month: nothing to see in Prepare now)', !!D1);
   c('Start now carries the planner\'s reason', /12 to 18 months/.test(P.q('#cmp-prep .cmp-hint.now').getAttribute('title')));
   c('the note says checked monthly, never live', P.qa('#cmp-ya > .note').map(n=>n.textContent).join(' '), 'Conferences publish their calendars at different times; these are checked again every month.');
   // v10.70.1 (the audit): a date never breaks across lines: no-break spaces inside it ("Dec 2026", "1 Mar 2027")
   c('hint words: Start by a month ahead, Start now once it has passed', P.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'start-by',by:'2026-09'},'2026-10'),cmpHintText({k:'start-now',by:'2026-09'},'2026-10')]"), ['Start by Dec\u00A02026','Start now','Start now']);
   c('registration hints', P.J("[cmpHintText({k:'register',d:'2027-03-01'},'2026-10'),cmpHintText({k:'apply',d:'2026-10',p:'m'},'2026-10'),cmpHintText({k:'opens',d:'2026-10-01',from:'lodging links open'},'2026-10')]"), ['Register by 1\u00A0Mar\u00A02027','Apply by Oct\u00A02026','Booking opens 1\u00A0Oct\u00A02026']);
-  P.E("document.querySelector('#cmp-ya [data-cmp-ahead=\"central-california\"]').click()");
-  c('another conference\'s year ahead, one at a time', [P.J('CMP.st.ahead'), /^Central California:/.test(P.txt('.cmp-yasum')), P.qa('#cmp-ya .tl-h div')[1].textContent], ['central-california',true,'Central California']);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the "strong" pick, whichever conference it is this month
+  P.E("document.querySelector('#cmp-ya [data-cmp-ahead=\""+STRONG.slug+"\"]').click()");
+  c('another conference\'s year ahead, one at a time ('+nameOf(STRONG.slug)+')', [P.J('CMP.st.ahead'), P.txt('.cmp-yasum').startsWith(nameOf(STRONG.slug)+':'), P.qa('#cmp-ya .tl-h div')[1].textContent], [STRONG.slug,true,nameOf(STRONG.slug)]);
   // v10.63.3 — the pastor (9 Oct 2026): "When I click … the tabs there yours PA Ohio, Arkansas CCC … it doesn't change what's right
   // underneath … if not, those tabs should go underneath and then Pennsylvania should just be": Prepare now is his own conference's,
   // first, named; the conference buttons come under it, with a line saying what they show
@@ -160,8 +203,9 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   c('…and it stays his own while another conference\'s year is shown (Pennsylvania\'s OneVoice27 series; no Pacific Union deadline)', [P.qa('#cmp-prep .pi').concat(P.qa('#cmp-prep details .pi')).some(x=>/OneVoice27 evangelistic series/.test(x.textContent)), /Pacific Union evangelism endowment/.test(P.txt('#cmp-prep'))], [true,false]);
 
   console.log('\n-- his choices --');
-  P.E("document.querySelector('[data-cmp-rm=\"nevada-utah\"]').click()"); await sleep(30);
-  c('a chip removed', P.J('CMP.st.others'), ['ohio','arkansas-louisiana','central-california']);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the "side" pick is removed, whichever conference it is this month
+  P.E("document.querySelector('[data-cmp-rm=\""+SIDE+"\"]').click()"); await sleep(30);
+  c('a chip removed ('+nameOf(SIDE)+')', P.J('CMP.st.others'), SUGm);
   /* v10.51.1 — the pastor (6 Oct 2026): "Can the drop-down look better … the east Midwest South West East Coast, California regional
      conferences … as headings … more across and not just straight down … you can click multiple ones so you don't have to … click one
      and then find it again and open it … up to nine … when you['re] done, it will close everything". "Add conferences" opens a panel:
@@ -171,17 +215,19 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   P.q('#cmp-addbtn').click(); await sleep(20);
   c('…open: the areas across the top, inside the panel', [P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-addp [data-cmp-region]').map(b=>b.textContent)], ['true',['All','East','Midwest','South','West','East Coast','California','Regional conferences']]);
   c('…All: a heading for each part of the country, the conferences in rows under it (all 49 but yours)', [P.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),P.qa('#cmp-addp [data-cmp-pick]').length,P.qa('#cmp-addp [data-cmp-pick="pennsylvania"]').length], [['East','Midwest','South','West'],49,0]);
-  c('…the chosen ones ticked', P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').map(b=>b.dataset.cmpPick).sort(), ['arkansas-louisiana','central-california','ohio']);
-  P.q('#cmp-addp [data-cmp-pick="potomac"]').click(); await sleep(10);
-  P.q('#cmp-addp [data-cmp-pick="chesapeake"]').click(); await sleep(10);
-  c('tap several, one after another: each ticked, the panel stays open, the chips follow', [P.J('CMP.st.others'),!!P.q('#cmp-addp'),P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').length,P.qa('.cmp-chip').length,P.txt('#cmp-addp .cmp-cnt')],
-    [['ohio','arkansas-louisiana','central-california','potomac','chesapeake'],true,5,6,'5 of 9 chosen']);
-  P.q('#cmp-addp [data-cmp-pick="chesapeake"]').click(); await sleep(10);
-  c('…tap a ticked one again: it comes off', P.J('CMP.st.others'), ['ohio','arkansas-louisiana','central-california','potomac']);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the three left of the suggested set, then two added by hand
+  // (ADD1, ADD2: the first two of a fixed list that the suggested set does not already hold)
+  c('…the chosen ones ticked', P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').map(b=>b.dataset.cmpPick).sort(), SUGm.slice().sort());
+  P.q('#cmp-addp [data-cmp-pick="'+ADD1+'"]').click(); await sleep(10);
+  P.q('#cmp-addp [data-cmp-pick="'+ADD2+'"]').click(); await sleep(10);
+  c('tap several, one after another: each ticked, the panel stays open, the chips follow ('+nameOf(ADD1)+', '+nameOf(ADD2)+')', [P.J('CMP.st.others'),!!P.q('#cmp-addp'),P.qa('#cmp-addp [data-cmp-pick][aria-pressed="true"]').length,P.qa('.cmp-chip').length,P.txt('#cmp-addp .cmp-cnt')],
+    [SUGm.concat(ADD1,ADD2),true,SUGm.length+2,SUGm.length+3,(SUGm.length+2)+' of 9 chosen']);
+  P.q('#cmp-addp [data-cmp-pick="'+ADD2+'"]').click(); await sleep(10);
+  c('…tap a ticked one again: it comes off', P.J('CMP.st.others'), SUGm.concat(ADD1));
   P.q('#cmp-addp [data-cmp-done]').click();
-  await until(()=>P.J('!!CMP.det.potomac')); await sleep(30);
-  c('Done: the panel closes, and the comparison has them (the file fetched once)', [P.qa('#cmp-addp').length,P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-cards .cmp-card h4').some(h=>/Potomac/.test(h.textContent)),P.net.filter(u=>/c\/potomac\.json/.test(u)).length], [0,'false',true,1]);
-  c('kept on this device, under his registration', P.J("JSON.parse(localStorage.getItem('terrain-compare'))"), {reg:'pennsylvania',mine:'pennsylvania',others:['ohio','arkansas-louisiana','central-california','potomac']});
+  await until(()=>P.J('!!CMP.det["'+ADD1+'"]')); await sleep(30);
+  c('Done: the panel closes, and the comparison has them (the file fetched once)', [P.qa('#cmp-addp').length,P.q('#cmp-addbtn').getAttribute('aria-expanded'),P.qa('#cmp-cards .cmp-card h4').some(h=>h.textContent.includes(nameOf(ADD1))),P.net.filter(u=>u.includes('c/'+ADD1+'.json')).length], [0,'false',true,1]);
+  c('kept on this device, under his registration', P.J("JSON.parse(localStorage.getItem('terrain-compare'))"), {reg:'pennsylvania',mine:'pennsylvania',others:SUGm.concat(ADD1)});
   P.q('#cmp-addbtn').click(); await sleep(10);
   P.E("document.querySelector('#cmp-addp [data-cmp-region=\"California\"]').click()");
   c('the area buttons narrow the panel to one heading (California: the four with territory there and Nevada-Utah)', [P.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),P.qa('#cmp-addp [data-cmp-pick]').map(b=>b.dataset.cmpPick).sort()],
@@ -205,7 +251,7 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     await until(()=>Q.q('#cmp-ya .cmp-tl')); c('choosing one draws every frame with its suggested set', [Q.qa('#cmp .cmp-step').length, Q.J('CMP.st.others').length], [18,4]); }   // v10.58.0: two frames more; v10.63.0 (stale): two more, the brief and Mission and calendar
 
   console.log('\n-- Spanish --');
-  { const S=page({lang:'es',now:'2026-10-01'}); await openCmp(S);
+  { const S=page({lang:'es',now:CHECKED}); await openCmp(S);   // v10.71.0: read from the data (the monthly refresh moves the dates): the check day
     c('tool bar in Spanish', S.txt('#toolname'), 'Aprender de otras asociaciones');
     S.q('#cmp-addbtn').click();   // v10.51.1: the panel in Spanish
     c('v10.51.1: "Añadir asociaciones", its headings, the count and Listo', [S.txt('#cmp-addbtn'),S.qa('#cmp-addp .cmp-grp h5').map(h=>h.textContent),S.txt('#cmp-addp .cmp-cnt'),S.txt('#cmp-addp [data-cmp-done]')],
@@ -213,14 +259,18 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
     S.q('#cmp-addp [data-cmp-done]').click();
     // v10.63.0 (stale): the brief and Mission and calendar, second and third
     c('every frame in Spanish', S.qa('#cmp .cmp-step h3').map(h=>h.textContent), ['Elija','Su asociación en resumen','Misión y calendario','De un vistazo','El año que viene','Hacia dónde va la energía del calendario','Ministerio por ministerio','Por región del país','Evangelismo y cuidado pastoral','Niños y jóvenes','Tamaño y crecimiento','Lo que podríamos aprender','Fortalezas y espacio para crecer','Lo que dicen y lo que muestra el calendario','Mes a mes','Recursos para su iglesia','Ministerios que visitan su iglesia','Cómo leer esto']);
-    c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el 1 oct 2026 · se actualiza cada mes');
-    c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De oct 2026 a sep 2027: lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the check date and the year ahead's months, in Spanish
+    c('revisado · se actualiza cada mes', S.txt('#cmp-checked'), 'Revisado el '+fDMY(CHECKED,'es')+' · se actualiza cada mes');
+    c('the year ahead in Spanish', [S.txt('#cmp-ahead .cmp-sh .note'), S.qa('#cmp-ya .tl-h div').slice(1).map(x=>x.textContent)], ['De '+fMY(AHEAD[0],'es')+' a '+fMY(AHEAD[11],'es')+': lo que viene, para prepararse a tiempo.',['Su asociación','Su unión','División Norteamericana','Iglesia mundial','Fechas límite']]);
     c('Prepare now in Spanish, named for his conference; the line over the buttons', [S.txt('#cmp-prep h4'), S.txt('#cmp-ya .cmp-segl')], ['Prepárese ya en Pennsylvania','Mostrar el año que viene de']);
-    c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya','Pennsylvania: calendario publicado hasta dic 2026. El calendario de 2026 termina en diciembre; las fechas de 2027 vienen de las páginas del campestre y de OneVoice27.']);
-    c('aún no publicado', S.qa('#cmp-ya .nyp-l')[0].textContent, 'aún no publicado');
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the published-to month and its Spanish note from Pennsylvania's
+    // file; the first hatched month's label with its own count of dates known
+    c('Empiece ya, and the published-to reason in Spanish', [S.q('#cmp-prep .cmp-hint.now').textContent, S.txt('.cmp-yasum')], ['Empiece ya',pubL('es')]);
+    c('aún no publicado (the first hatched month: '+(HATCHED[0]?fMY(HATCHED[0],'es'):'none')+')', (e=>e?e.textContent:null)(S.qa('#cmp-ya .nyp-l')[0]), HATCHED[0]?knownL(HATCHED[0],'es'):null);
     // v10.70.1 (the audit): no-break spaces in a date
     c('Spanish hints', S.J("[cmpHintText({k:'start-by',by:'2026-12'},'2026-10'),cmpHintText({k:'register',d:'2027-03-01'},'2026-10')]"), ['Empiece a más tardar en dic\u00A02026','Inscripción: hasta 1\u00A0mar\u00A02027']);
-    c('the character line and the badge', [S.txt('.cmp-card.mine .char'), S.txt('.cmp-card.mine .cmp-badge')], ['Se inclina hacia: Conquistadores y niños; familia, damas y caballeros',`Calendario parcial · nota B · ${pa.counts.ministryEvents} eventos en el último año`]);
+    // v10.71.0: read from the data (the monthly refresh moves the dates): the character line and the badge from index.json, in Spanish
+    c('the character line and the badge', [S.txt('.cmp-card.mine .char'), S.txt('.cmp-card.mine .cmp-badge')], [charL('es'),badgeL('es')]);
     c('the joining caution in Spanish', /no muestran que uno causó el otro/.test(S.txt('#cmp-size .cmp-warn')));
     c('event titles stay as published', /OneVoice27/.test(S.txt('#cmp-ya')));
     const es=readable(S.q('#cmp'));
@@ -251,12 +301,16 @@ const readable=el=>{ if(!el) return ''; const b=el.cloneNode(true); b.querySelec
   }
 
   console.log('\n-- the day it is: Prepare now and the stale line --');
-  { const L=page({now:'2026-10-20'}); await openCmp(L);
-    c('a deadline already passed leaves Prepare now (15 Oct, seen on 20 Oct)', /Apply by 15 Oct 2026/.test(L.txt('#cmp-prep')), false);
-    c('…a later one stays (26 Oct)', /26 Oct 2026/.test(L.txt('#cmp-prep')));
+  // v10.71.0: read from the data (the monthly refresh moves the dates): seen on the Deadlines lane's second date, its first has passed and
+  // the second is still there (it is that day); the stale line is counted from config.json's check date (CMP_STALE_DAYS is 45)
+  if(D2){ const L=page({now:D2.s}); await openCmp(L);
+    c('a deadline already passed leaves Prepare now ('+hintOf(D1)+', seen on '+D2.s+')', prepHas(L,D1), false);
+    c('…a later one stays ('+hintOf(D2)+')', prepHas(L,D2)); }
+  else c('the Deadlines lane holds two dates after the check date (fewer this month: nothing to see pass)', !!D2);
+  { const L=page({now:addD(CHECKED,20)}); await openCmp(L);
     c('no stale line within the month', !!L.q('.cmp-stale'), false); }
-  { const L=page({now:'2026-12-01'}); await openCmp(L);
-    c('two months after the check date, a quiet line says calendars may have changed', L.txt('.cmp-stale'), 'Some calendars may have changed since 1 Oct 2026.'); }
+  { const L=page({now:addD(CHECKED,61)}); await openCmp(L);
+    c('two months after the check date, a quiet line says calendars may have changed', L.txt('.cmp-stale'), 'Some calendars may have changed since '+fDMY(CHECKED)+'.'); }
 
   console.log('\n-- v10.44 review: the suggested set\'s words, and no "IA" for Iowa-Missouri --');
   { const X=page({reg:'Texico',lang:'es'}); await openCmp(X);

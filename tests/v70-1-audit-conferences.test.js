@@ -51,10 +51,40 @@ const MON='Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec|ene|feb|mar|abr|may|j
 const BREAK=new RegExp(`\\d[ \\t\\n]+(?:${MON})\\b|\\b(?:${MON})[ \\t\\n]+\\d{4}\\b|(?:\\d|\\b(?:${MON}))–(?!\\u2060)|(?:\\d|\\b(?:${MON}))[ \\t\\n]+–|–\\u2060?[ \\t\\n]+\\d`,'g');
 const breaks=t=>(String(t).match(BREAK)||[]);
 const NB='\u00A0', WJ='\u2060';
+/* v10.71.0: read from the data (the monthly refresh moves the dates). The check date from the builders' config.json, the year ahead from
+   its month, Pennsylvania's suggested set, the learn cards, the badges, the hatched months and their known-date labels, the deadlines and
+   the tentative items from the served files; nothing below names a conference, a date or a count by hand any more. */
+const cfg=JSON.parse(fs.readFileSync(path.join(ROOT,'tools/conferences/src/config.json'),'utf8')), CHECKED=cfg.checked, CM=CHECKED.slice(0,7);
+const idx=JSON.parse(served('index.json')), paD=JSON.parse(served('c/pennsylvania.json')), AH=JSON.parse(served('ahead.json')), THR=paD.ahead.through;
+const MONS={en:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],es:['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic']};
+const fMY=(m,l)=>MONS[l||'en'][+m.slice(5,7)-1]+NB+m.slice(0,4), fDMY=(s,l)=>(+s.slice(8,10))+NB+fMY(s,l);
+const addM=(m,n)=>new Date(Date.UTC(+m.slice(0,4),+m.slice(5,7)-1+n,1)).toISOString().slice(0,7);
+const AHEAD=Array.from({length:12},(_,i)=>addM(CM,i)), HATCHED=AHEAD.filter(m=>!(THR&&m<=THR));
+const pa=idx.conferences.find(x=>x.slug==='pennsylvania'), by=Object.fromEntries(idx.conferences.map(x=>[x.slug,x]));
+const SUG=pa.suggest.map(s=>s.slug), SIDE=(pa.suggest.find(s=>s.k==='side')||{}).slug, SEL=['pennsylvania'].concat(SUG), nameOf=s=>by[s].name;
+const pc=n=>(Math.round(n)===n?n:Number(n).toFixed(1))+'%';
+const CAL={high:['Full calendar','Calendario completo'],medium:['Partial calendar','Calendario parcial'],low:['Thin calendar','Calendario escaso']};
+const badgeOf=(s,l)=>{ const q=by[s], L=CAL[q.calendar.confidence][l==='es'?1:0], g=q.calendar.grade||'\u2013', n=q.counts.ministryEvents;
+  return l==='es'?`${L} ·${NB}nota${NB}${g} ·${NB}${n}${NB}eventos en el último${NB}año`:`${L} ·${NB}grade${NB}${g} ·${NB}${n}${NB}events in the past${NB}year`; };
+const known=m=>paD.ahead.conf.filter(it=>it.m===m&&!/r/.test(it.f||'')).length;
+const knownL=(m,l)=>{ const n=known(m); return l==='es'?(n?(n===1?'1 fecha conocida':n+' fechas conocidas')+'; '+(THR?'calendario aún no publicado':'sin calendario de la asociación'):(THR?'aún no publicado':'sin calendario'))
+  :(n?(n===1?'1 date known':n+' dates known')+'; '+(THR?'calendar not published yet':'no conference calendar'):(THR?'not published yet':'no calendar')); };
+const HINT={en:{early:'Early price to',register:'Register by',transfer:'Transfers end',apply:'Apply by',pay:'Pay by',due:'Due'},
+  es:{early:'Precio reducido: hasta',register:'Inscripción: hasta',transfer:'Traslados: hasta',apply:'Solicitud: hasta',pay:'Pago: hasta',due:'Vence:'}};
+const hintOf=(d,l)=>(HINT[l||'en'][d.k]||(l==='es'?'Hasta':'By'))+' '+(d.p==='m'?fMY(d.s.slice(0,7),l):fDMY(d.s,l));
+const D1=paD.ahead.dl.filter(d=>d.s>CHECKED&&AHEAD.includes(d.s.slice(0,7))).sort((a,b)=>a.s.localeCompare(b.s))[0];
+// the learn cards by the page's own rule: another chosen calendar, not thin, 3+ events in the area and 5 points more of its calendar than his
+const CORE=['evangelism','pastoral','discipleship','family','youth','clubs','health','education'];
+const CARDS=CORE.map(lid=>({lid,ahead:SUG.map(s=>by[s]).filter(q=>q.calendar.confidence!=='low'&&q.lenses[lid].n>=3&&q.lenses[lid].share>=pa.lenses[lid].share+5).sort((a,b)=>b.lenses[lid].share-a.lenses[lid].share).slice(0,2)})).filter(c=>c.ahead.length);
+// every tentative or unconfirmed date Pennsylvania's year ahead draws (its own, its union's, the NAD's, the world church's, the deadlines)
+const FLAGGED=[].concat(paD.ahead.conf,AH.unions[pa.union]||[],AH.nad,AH.world,paD.ahead.dl).filter(it=>/[tu]/.test(it.f||'')&&AHEAD.includes(it.m||String(it.s).slice(0,7)));
+const needle=t=>String(t).split('(')[0].trim().slice(0,30);
+// a year range ("2026\u20132029") and a year before a spaced dash ("2026 \u2013 “KNOWN”") as the page must keep them: a word joiner after the dash, no-break spaces round a spaced one
+const RANGE=/\d{4}[\u2013-]\d{4}|\d{4} [\u2013-] \S/, keep=t=>t.replace(/(\d{4})([\u2013-])(?=\d{4}\b)/g,'$1$2'+WJ).replace(/(\d{4}) ([\u2013-]) (?=\S)/g,'$1'+NB+'$2'+WJ+NB);
 
 (async()=>{ try{
-  const P=page({now:'2026-10-01'}); await openCmp(P);
-  const S=page({now:'2026-10-01',lang:'es'}); await openCmp(S);
+  const P=page({now:CHECKED}); await openCmp(P);   // v10.71.0: read from the data (the monthly refresh moves the dates): the device's day is the check day
+  const S=page({now:CHECKED,lang:'es'}); await openCmp(S);
 
   console.log('\n-- (1) a date or a range never breaks: "Last year:" and every date this tool writes --');
   c('the date words themselves: no-break spaces, a word joiner after a range\'s dash',
@@ -70,29 +100,50 @@ const NB='\u00A0', WJ='\u2060';
   c('nowhere in the tool\'s own words (the year ahead, Prepare now, the checked line, what we could learn, the missions, the caveats)', spots(P), []);
   c('…in Spanish', spots(S), []);
 
+  console.log('\n-- (1b) v10.71.0: a published name with a year range stays whole --');
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the November 2026 refresh brought South Central's "3-Year Strategic
+  // Plan (2026\u20132029)" and the Southern Union's "… Conference (EC3) 2026 \u2013 “KNOWN”" into What they say, and the sweep above caught their
+  // dashes breaking. Every initiative name on the page (a chosen conference's own, or its union's) that holds a year range or a year before
+  // a spaced dash is drawn on one line, its words unchanged; the function itself is held to the rule on a made-up name, whatever the data holds
+  const RANGED=[...new Set(SEL.flatMap(s=>JSON.parse(served('c/'+s+'.json')).initiatives.map(i=>i.name)).concat(SEL.flatMap(s=>(idx.unions[by[s].union]||[]).map(u=>u.name))).filter(n=>RANGE.test(n)))];
+  const SAMPLE='Strategic Plan (2026\u20132029) · Evangelism Conference 2026 \u2013 “KNOWN” · Plan 2025-2027 (Phase 2)', kept=P.E('cmpKeepDates('+JSON.stringify(SAMPLE)+')');
+  c('cmpKeepDates keeps a year range and a year before a spaced dash whole, the words unchanged', [kept,kept.replace(/\u2060/g,'').replace(/\u00A0/g,' ')], [keep(SAMPLE),SAMPLE]);
+  const saidg=P.q('#cmp-saidg').textContent;
+  c('…and every such name in What they say ('+RANGED.length+' on the page: '+RANGED.map(n=>n.slice(0,44)).join(' | ')+') is drawn so, never as published with a breakable dash', RANGED.map(n=>[saidg.includes(keep(n)),saidg.includes(n)]), RANGED.map(()=>[true,false]));
+
   console.log('\n-- (2) a deadline\'s pill keeps its date whole --');
-  const hints=P.qa('#cmp-ya .cmp-tl .cmp-hint').map(h=>h.textContent);
-  c('"Applications open 26 Oct 2026" may wrap before the date, never inside it', hints.includes('Applications open 26'+NB+'Oct'+NB+'2026'), true);
-  c('…every pill in the year ahead and in Prepare now', P.qa('#cmp-ya .cmp-hint').flatMap(h=>breaks(h.textContent)), []);
-  c('…in Spanish ("Solicitudes: desde 26 oct 2026")', [S.qa('#cmp-ya .cmp-tl .cmp-hint').map(h=>h.textContent).includes('Solicitudes: desde 26'+NB+'oct'+NB+'2026'),S.qa('#cmp-ya .cmp-hint').flatMap(h=>breaks(h.textContent))], [true,[]]);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the first deadline of Pennsylvania's Deadlines lane in the year ahead,
+  // its pill read as drawn, EN and ES (a made-up one through cmpDlHTML when the lane holds none this month)
+  const hints=P.qa('#cmp-ya .cmp-tl .cmp-hint').map(h=>h.textContent), hintsEs=S.qa('#cmp-ya .cmp-tl .cmp-hint').map(h=>h.textContent);
+  if(D1){ c('"'+hintOf(D1)+'" may wrap before the date, never inside it', hints.includes(hintOf(D1)), true);
+    c('…in Spanish ("'+hintOf(D1,'es')+'")', hintsEs.includes(hintOf(D1,'es')), true); }
+  else { const mk={t:'Made-up application window',s:AHEAD[3]+'-26',u:'https://example.org/apply',k:'apply'}, dl=l=>(l==='es'?S:P).E('cmpDlHTML('+JSON.stringify(mk)+',{name:"x"},"'+CM+'")');
+    c('a made-up deadline\'s pill (the lane holds none this month): "'+hintOf(mk)+'" may wrap before the date, never inside it', [dl().includes('>'+hintOf(mk)+'<'),dl('es').includes('>'+hintOf(mk,'es')+'<')], [true,true]); }
+  c('…every pill in the year ahead and in Prepare now', [P.qa('#cmp-ya .cmp-hint').flatMap(h=>breaks(h.textContent)),S.qa('#cmp-ya .cmp-hint').flatMap(h=>breaks(h.textContent))], [[],[]]);
 
   console.log('\n-- (3) a "·" travels with the words after it, never left at the end of a line --');
   const dots=t=>({alone:/·[ \t\n]/.test(t)||/·$/.test(t.trim()), glued:/\u00A0·/.test(t)});
   const why=P.q('#cmp-why').textContent, whyEs=S.q('#cmp-why').textContent;
-  c('Suggested: "… (other side of the country) · Central California …": a line may break before the dot, not after it',
-    [/\(other side of the country\) ·\u00A0Central California/.test(why),dots(why)], [true,{alone:false,glued:false}]);
-  c('…in Spanish ("(el otro lado del país) ·")', [/\(el otro lado del país\) ·\u00A0/.test(whyEs),dots(whyEs)], [true,{alone:false,glued:false}]);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the name after the "other side" pick is whichever the set holds
+  const NEXT=SUG[SUG.indexOf(SIDE)+1];
+  c('Suggested: "… (other side of the country) · '+(NEXT?nameOf(NEXT):'')+' …": a line may break before the dot, not after it',
+    [NEXT?why.includes('(other side of the country) ·'+NB+nameOf(NEXT)):/\(other side of the country\)\s*$/.test(why),dots(why)], [true,{alone:false,glued:false}]);
+  c('…in Spanish ("(el otro lado del país) ·")', [NEXT?whyEs.includes('(el otro lado del país) ·'+NB+nameOf(NEXT)):/\(el otro lado del país\)\s*$/.test(whyEs),dots(whyEs)], [true,{alone:false,glued:false}]);
   c('At a glance: "Southwestern Union · South" (each card\'s union line)', P.qa('.cmp-card .u').map(u=>dots(u.textContent)).filter(d=>d.alone||d.glued), []);
   c('…the badge ("Partial calendar · grade B")', P.qa('.cmp-badge').map(b=>dots(b.textContent)).filter(d=>d.alone||d.glued), []);
-  c('…the Evangelism card ("Central California 17.1% · ours 2.1%")', [/Central California 17\.1% ·\u00A0ours 2\.1%/.test(P.q('#cmp-learng').textContent),P.qa('#cmp-learng .cmp').map(x=>dots(x.textContent)).filter(d=>d.alone||d.glued)], [true,[]]);
-  c('…the mission\'s source line in Spanish ("En su sitio web · revisado el 9 oct 2026")', S.qa('#cmp-misg .s').some(s=>/En su sitio web ·\u00A0revisado el 9\u00A0oct\u00A02026/.test(s.textContent)), true);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the first learn card by the page's own rule, its whole line
+  const C0=CARDS[0], lineOf=c=>c.ahead.map(q=>q.name+' '+pc(q.lenses[c.lid].share)).join(' ·'+NB)+' ·'+NB+'ours '+pc(pa.lenses[c.lid].share);
+  c('…the first learn card ("'+(C0?lineOf(C0).replace(/\u00A0/g,' '):'none this month')+'")', [C0?P.qa('#cmp-learng .cmp').map(x=>x.textContent).includes(lineOf(C0)):P.qa('#cmp-learng .cmp-lcard').length===0,P.qa('#cmp-learng .cmp').map(x=>dots(x.textContent)).filter(d=>d.alone||d.glued)], [true,[]]);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the missions' check date is index.json's (re-checked yearly)
+  c('…the mission\'s source line in Spanish ("En su sitio web · revisado el '+fDMY(idx.missionChecked,'es').replace(/\u00A0/g,' ')+'")', S.qa('#cmp-misg .s').some(s=>s.textContent.includes('En su sitio web ·'+NB+'revisado el '+fDMY(idx.missionChecked,'es'))), true);
   c('…and no "·" anywhere on the page with a breakable space after it, or held to the words before it (English, Spanish)', [dots(P.q('#cmp').textContent),dots(S.q('#cmp').textContent)], [{alone:false,glued:false},{alone:false,glued:false}]);
 
   console.log('\n-- (4) At a glance: the status pill breaks only between its parts --');
-  const badge=P.qa('.cmp-badge').map(b=>b.textContent), ohio=P.q('.cmp-card:nth-child(2) .cmp-badge').textContent;
-  c('"grade B+" together, "· 76 events" whole, "past year" together (Ohio: "Partial calendar · grade B+ · 76 events in the past year")',
-    [/·\u00A0grade\u00A0B\+ ·\u00A0\d+\u00A0events in the past\u00A0year$/.test(ohio), badge.every(t=>/grade\u00A0\S+ ·\u00A0\d+\u00A0events? in the past\u00A0year$/.test(t))], [true,true]);
-  c('…in Spanish ("nota B+", "76 eventos", "último año")', S.qa('.cmp-badge').map(b=>b.textContent).every(t=>/nota\u00A0\S+ ·\u00A0\d+\u00A0eventos? en el último\u00A0año$/.test(t)), true);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the second card is the suggested set's first; its badge built from index.json
+  const badge=P.qa('.cmp-badge').map(b=>b.textContent), second=P.q('.cmp-card:nth-child(2) .cmp-badge').textContent;
+  c('"grade" with its letter, "· N events" whole, "past year" together ('+nameOf(SUG[0])+': "'+badgeOf(SUG[0]).replace(/\u00A0/g,' ')+'")',
+    [second===badgeOf(SUG[0]), badge.every(t=>/grade\u00A0\S+ ·\u00A0\d+\u00A0events? in the past\u00A0year$/.test(t))], [true,true]);
+  c('…in Spanish ("'+badgeOf(SUG[0],'es').replace(/\u00A0/g,' ')+'")', [S.q('.cmp-card:nth-child(2) .cmp-badge').textContent===badgeOf(SUG[0],'es'), S.qa('.cmp-badge').map(b=>b.textContent).every(t=>/nota\u00A0\S+ ·\u00A0\d+\u00A0eventos? en el último\u00A0año$/.test(t))], [true,true]);
 
   console.log('\n-- (5) American spelling in the tool\'s own English --');
   const en=P.J("Object.values(CMP_UI).map(v=>v.en)");
@@ -116,25 +167,32 @@ const NB='\u00A0', WJ='\u2060';
           if(x>a-3&&x<b+3) out.push(id+' '+W+': '+t.textContent+' over the line at '+x.toFixed(1)); }); } } }
     finally{ cmpW=keep; cmpCharts(); }
     return out; })()`);
-  c('events per 1,000 (Ohio 2.23 against "Typical 2.54") and joining (Nevada-Utah 24.1 against "Typical 27.6"): each number clear of the line', cross(P), []);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): whatever the five values are this month, each clear of the typical line
+  c('events per 1,000 and joining per 1,000: each number clear of the typical line, at every width', cross(P), []);
   c('…every number still drawn, with its halo', P.qa('#cmp-ch-e1k svg text,#cmp-ch-join svg text').filter(t=>/paint-order:stroke/.test(t.getAttribute('style')||'')).length, 10);
 
   console.log('\n-- (8) a hatched month never says "not published yet" over a date that is published --');
   const box=Q=>Q.qa('#cmp-ya .tl-c.nyp').map(b=>[b.querySelector('.nyp-l').textContent,b.querySelectorAll('.cc > .it, .cc > details .it').length]);
-  const pa=box(P);
-  c('Pennsylvania\'s calendar ends in December: its 2027 months are hatched', pa.length, 9);
-  c('a month with the conference\'s own dates from other pages (camp meeting, OneVoice27) says so', pa.filter(b=>b[1]>0).map(b=>b[0]), ['1 date known; calendar not published yet','1 date known; calendar not published yet']);
-  c('…a month with none still says "not published yet"', pa.filter(b=>!b[1]).every(b=>b[0]==='not published yet'), true);
-  c('…in Spanish', [box(S).filter(b=>b[1]>0).map(b=>b[0]),box(S).filter(b=>!b[1]).every(b=>b[0]==='aún no publicado')], [['1 fecha conocida; calendario aún no publicado','1 fecha conocida; calendario aún no publicado'],true]);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): the hatched months are those after the published-to month; each
+  // label counts that month's own dates in Pennsylvania's file, and the cell holds exactly those dates
+  const pa8=box(P);
+  c('Pennsylvania\'s calendar is published to '+(THR||'nothing')+': the '+HATCHED.length+' months after it are hatched', pa8.length, HATCHED.length);
+  c('a hatched month with the conference\'s own dates from other pages says how many it knows ('+HATCHED.filter(m=>known(m)).length+' such months)', pa8.filter(b=>b[1]>0), HATCHED.filter(m=>known(m)).map(m=>[knownL(m),known(m)]));
+  c('…a month with none still says "not published yet"', pa8.filter(b=>!b[1]).map(b=>b[0]), HATCHED.filter(m=>!known(m)).map(m=>knownL(m)));
+  c('…in Spanish', box(S), HATCHED.map(m=>[knownL(m,'es'),known(m)]));
   c('the same words as Month by month\'s hatched squares', P.J("[cU('m_known1')+'; '+cU('m_nyp')]")[0], '1 date known; calendar not published yet');
 
   console.log('\n-- (9) one name for one thing: "to be confirmed" --');
   c('a date its calendar marks tentative is "to be confirmed"', [P.E("cmpTagsHTML({f:'t'})"),P.E("cmpTagsHTML({f:'u'})"),P.E("cmpTagsHTML({f:'tu'})")],
     ['<span class="tag">to be confirmed</span>','<span class="tag">to be confirmed</span>','<span class="tag">to be confirmed</span>']);
-  const pbe=Q=>{ const it=Q.qa('#cmp-ya .tl-r .it').find(x=>/Pathfinder Union Level PBE/.test(x.textContent)); return it?[...it.querySelectorAll('.tag')].map(t=>t.textContent):null; };
-  c('the Columbia Union\'s "Pathfinder Union Level PBE" (March 2027): "to be confirmed"', pbe(P), ['to be confirmed']);
+  // v10.71.0: read from the data (the monthly refresh moves the dates): every tentative or unconfirmed date Pennsylvania's year ahead draws
+  // this month wears "to be confirmed" / "por confirmar" (a made-up one through cmpItemHTML when the data holds none)
+  const tagsOf=(Q,it)=>{ const el=Q.qa('#cmp-ya .it').find(x=>x.textContent.includes(needle(it.t))&&!!x.querySelector('a[href="'+it.u+'"]')); return el?[...el.querySelectorAll('.tag')].map(t=>t.textContent):null; };
+  const MK={t:'Made-up camporee',s:AHEAD[4]+'-13',m:AHEAD[4],u:'https://example.org/camporee',f:'u'}, mkItem=Q=>Q.E('cmpItemHTML('+JSON.stringify(MK)+',"'+CM+'")');
+  if(FLAGGED.length) c(FLAGGED.length+' tentative or unconfirmed date(s) in the data ('+FLAGGED.map(it=>needle(it.t)).join(' | ')+'): each "to be confirmed"', FLAGGED.map(it=>tagsOf(P,it)), FLAGGED.map(()=>['to be confirmed']));
+  else c('a made-up unconfirmed date (the data holds none this month): "to be confirmed"', mkItem(P).includes('<span class="tag">to be confirmed</span>'), true);
   c('"tentative" nowhere in the tool\'s words or on the page', [en.filter(t=>/tentative/i.test(t)),/tentative/i.test(P.q('#cmp').textContent)], [[],false]);
-  c('…Spanish: "por confirmar", never "provisional"', [S.J("Object.values(CMP_UI).map(v=>v.es)").filter(t=>/provisional/i.test(t)),pbe(S)], [[],['por confirmar']]);
+  c('…Spanish: "por confirmar", never "provisional"', [S.J("Object.values(CMP_UI).map(v=>v.es)").filter(t=>/provisional/i.test(t)),FLAGGED.length?FLAGGED.map(it=>tagsOf(S,it)):mkItem(S).includes('<span class="tag">por confirmar</span>')], [[],FLAGGED.length?FLAGGED.map(()=>['por confirmar']):true]);
   c('How to read this: "Dates marked “to be confirmed” may change"', /Dates marked “to be confirmed” may change;/.test(P.q('#cmp-caveats').textContent), true);
 
   c('no page errors', [P.errs,S.errs], [[],[]]);
