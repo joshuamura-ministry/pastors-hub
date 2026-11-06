@@ -262,7 +262,7 @@ change to any church at least within the conference."* Folded into PR #49 (still
   v57-churches (the picker over the sheet; the one-church card's words). Checked in Chrome (`v86/shots71.mjs`, 22 pictures): computer 1366
   and phone 390, EN + ES: the picker, "york" → 5 rows, three columns with the official row, Remove armed and done; no sideways scroll, no
   page errors, no function call ≥ 400. The e2e scripts rerun on the build after the fixes (their logs `v86/e2e-*-v71.log`: 51 + 65 steps
-  pass; the rest the harness). Full suite: 197 suites · 12,025 passed · 0 failed (v10.70.1: 195 · 11,964).
+  pass; the rest the harness). Full suite: 197 suites · 12,027 passed · 0 failed (v10.70.1: 195 · 11,964).
 - **Found, not changed:** the monthly conference-calendar routine (a cloud routine) fired on 1 Nov 2026 and did nothing: its network blocks
   every conference website (338 hosts feed the calendars); it is now disabled, and the same job runs as a scheduled task on his Mac (the desktop app's
   Scheduled tasks: `terrain-monthly-conference-refresh`, the 1st at 8 am local, while the app is open; its instructions are
