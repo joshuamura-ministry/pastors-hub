@@ -13,8 +13,8 @@
   "https://www.nyconf.org/camp-cherokee",
   "https://www.nyconf.org/camp-meeting"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "furthestPublished": "2026-10",
  "furthestNote": "The calendar is still the same five pictures (May-Sep 2026); the latest dated item anywhere on the site is the Camp Cherokee Columbus Day Work Camp, 9-12 Oct 2026.",
  "aheadEvents": 0,
@@ -199,13 +199,31 @@
   "https://www.nyconf.org/pages-sitemap.xml",
   "http://www.campcherokeeadk.com",
   "https://www.nyconf.org/_files/ugd/833cd2_40603be0280b42528308987452a417a3.pdf",
-  "https://atlanticuniongleaner.org/"
+  "https://atlanticuniongleaner.org/",
+  "https://static.wixstatic.com/media/833cd2_e29e0c175df242539c81a65f40180470~mv2.png (and the four other calendar pictures: same five files as last time, screenshots dated 5 May 2026)",
+  "https://static.wixstatic.com/media/833cd2_4ffdc03b9807406aaa33013f04807d8f~mv2.png (the one extra picture: the conference logo)",
+  "https://www.nyconf.org/pages-sitemap.xml (72 pages, every one fetched and searched for 2027)",
+  "https://www.campcherokeeadk.com/",
+  "https://www.campcherokeeadk.com/calendar/",
+  "https://atlanticuniongleaner.org/wp-json/wp/v2/posts?after=2026-09-25T00:00:00"
  ],
  "aheadCheckedNotes": [
   "Camp Cherokee site: \"Registration is now open for 2026\"; no 2027 weeks.",
   "Gleaner (Sep 2026) reports NYC church relocations and renamings; no dated 2027 events."
  ],
  "notes": [
-  "Recheck in spring 2027: NYC posted its 2026 summer calendar pictures in early May 2026, so 2027 dates may not appear until about May 2027."
+  "Recheck in spring 2027: NYC posted its 2026 summer calendar pictures in early May 2026, so 2027 dates may not appear until about May 2027.",
+  "(2026-11-06) Every page in the Wix site map carries lastmod 2026-11-05 (the site was republished), but the content read is unchanged from 1 Oct 2026.",
+  "(2026-11-06) The 'Conference Events' page is stale: its seven undated items (Leadership Training Weekend Sept 13-15, Young Adult Retreat Sept 26-29, Columbus Day Work Camp Oct 10-13, Lay Chaplain Training Oct 11-13, Women's Ministry 1-day Retreat Oct 19, Prayer Workshop Sept 27-28) match 2025 weekdays and were n",
+  "(2026-11-06) No archived copies were used this time; only live pages.",
+  "(2026-11-06) Recheck about May 2027, when the 2026 summer pictures were posted; the camp-meeting page is usually the first to change."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Any 2027 calendar: none of the 72 pages in the site map mentions 2027.",
+  "Camp Meeting 2027 (the camp-meeting page still shows 19-27 Jun 2026 at Union Springs Academy).",
+  "Camp Cherokee 2027 weeks (both the conference page and campcherokeeadk.com still show the 2026 schedule and '2026 registration').",
+  "Leadership Training Weekend, Young Adult Retreat, Women's Ministry retreat, Lay Chaplain training, Prayer Workshop for 2027 (the 'Upcoming Conference Events' page lists these with 2025 dates and no year).",
+  "Oct 2027: nothing published."
  ]
 }

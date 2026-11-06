@@ -3,8 +3,8 @@
  "slug": "georgia-cumberland",
  "union": "Southern",
  "site": "https://www.gccsda.com",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://events.gccsda.com",
   "https://events.gccsda.com/__data.json",
@@ -31,7 +31,11 @@
   "https://www.cs-yc.com/discipletrek",
   "https://www.cs-yc.com/family-camp",
   "https://gcasda.org/regional-events",
-  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://events.gccsda.com/254/__data.json",
+  "https://events.gccsda.com/255/__data.json",
+  "https://www.gccsda.com/news",
+  "https://api.gccsda.com/v1/news/latest.rss"
  ],
  "usuallyHeldNotYetPublished": [
   "Collegedale Camp Meeting (2026: 27-30 May). The academy's alumni page says its Collegedale gathering on 29 May 2027 is held during camp meeting, which suggests the dates, but GCC has not posted them.",
@@ -183,6 +187,47 @@
    "url": "https://www.cs-yc.com/family-camp",
    "source": "camp page",
    "when": "upcoming"
+  },
+  {
+   "place": "Cohutta Springs Conference Center, Crandall, GA",
+   "category2": null,
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Prayer Conference 2027",
+   "start": "2027-02-05",
+   "end": "2027-02-07",
+   "category": "discipleship-spiritual",
+   "audience": "members",
+   "url": "https://events.gccsda.com/255",
+   "source": "events site data",
+   "note": "published 26 Oct 2026; registration through UltraCamp; no description yet"
+  },
+  {
+   "place": "Cohutta Springs Youth Camp, Crandall, GA",
+   "category2": "discipleship-spiritual",
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Oasis High School Retreat 2027",
+   "start": "2027-02-05",
+   "end": "2027-02-07",
+   "category": "youth-young-adults",
+   "audience": "youth",
+   "url": "https://events.gccsda.com/254",
+   "source": "events site data",
+   "registrationDeadline": "2027-01-26",
+   "note": "Bible conference for high school students who are not attending an Adventist school; registration through UltraCamp, deadline 26 Jan 2027"
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "2027 camp meetings (Collegedale, Korean, Upper Cumberland/Olde Time, Hispanic Campestre, Southern Deaf, Northeast Tennessee): the camp meeting page lists only the South Georgia Camp Meeting (Nov 2026); nothing on the events site after May 2027.",
+  "Evangelism rallies, LEADS training, Pathfinder Teen Challenge, Young Adult LIFE retreat and other autumn 2027 events: none posted.",
+  "The conference news feed (latest item 22 Sep 2026) carries no 2027 dates.",
+  "Cohutta Springs summer camp 2027: the camp site still shows the 2027 dates already recorded (Cub Camp 27 Jun-2 Jul, DiscipleTrek 13 Jun-4 Jul, Family Camp 20-25 Jul 2027); the REG and RAD week tables are images, not text."
+ ],
+ "notes": [
+  "(2026-11-06) The events site (SvelteKit) serves 25 future events (Nov 2026-May 2027) and an archive of 232 in its __data.json; all previously recorded dates are unchanged.",
+  "(2026-11-06) gccsda.com/news and /campmeeting are an Angular app fed by api.gccsda.com (RSS); rendered in headless Chrome to confirm no 2027 content.",
+  "(2026-11-06) The Southern Union officers' calendar PDF was not re-read (Last-Modified still 12 Dec 2025)."
  ]
 }

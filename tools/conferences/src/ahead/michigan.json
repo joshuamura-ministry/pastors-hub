@@ -3,8 +3,8 @@
  "slug": "michigan",
  "union": "Lake Union",
  "site": "https://misda.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30",
@@ -22,7 +22,17 @@
   "https://misda.org/calendar/event-calendar/",
   "https://nadpbe.org/",
   "https://asiministries.org/convention/",
-  "https://asilakeunion.org/"
+  "https://asilakeunion.org/",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=1",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=2",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=3",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=4",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=5",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=6",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=7",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=8",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=9",
+  "https://misda.org/wp-json/tribe/events/v1/events?start_date=2027-11-01&end_date=2030-12-31&per_page=50"
  ],
  "aheadSummary": "Michigan has published its whole 2027 calendar, through December 2027 (the REST API returns 298 listings from April to December 2027, last one 29 Dec 2027). April–September 2027 holds 50 records after removing committees, office worship, closures and treasury items; 37 are conference-run public events (camp meeting 11–19 Jun, Hispanic camp meeting 21–23 May, UP camp meeting 10–12 Sep, Youth Rush from 30 May/6 Jun, four family-camp weeks, ministerial retreat 25–28 Jul, evangelism training 1 Aug, Emmanuel Institute 22–28 Aug, Pathfinder camporee 17–19 Sep). Entries carry titles and dates only (no descriptions or venues beyond the title), so categories come from titles.",
  "counts": {
@@ -83,6 +93,31 @@
    "2027-07": 4,
    "2027-08": 11,
    "2027-09": 6
+  },
+  "conferenceLevel": 42,
+  "observances": 1,
+  "byCategory": {
+   "family-women-men": 7,
+   "evangelism-outreach": 9,
+   "youth-young-adults": 7,
+   "pastoral-leadership": 5,
+   "pathfinders": 4,
+   "discipleship-spiritual": 1,
+   "children": 4,
+   "administration": 2,
+   "education": 6,
+   "camp-meeting": 5
+  },
+  "byCategoryConferenceOnly": {
+   "family-women-men": 7,
+   "evangelism-outreach": 6,
+   "youth-young-adults": 7,
+   "pastoral-leadership": 4,
+   "discipleship-spiritual": 1,
+   "children": 4,
+   "pathfinders": 3,
+   "education": 5,
+   "camp-meeting": 5
   }
  },
  "stats": {
@@ -129,6 +164,13 @@
    "date": "2027-03-31",
    "url": "https://misda.org/departments/evangelism/discipleship-plans/",
    "source": "v49 initiatives.json (mic-discipleship-plans)"
+  },
+  {
+   "title": "Camp Meeting Registration",
+   "date": "2027-03-01",
+   "kind": "registration",
+   "what": "Camp-meeting registration period on the conference calendar, 1–15 Mar 2027 (camp meeting is 11–19 Jun 2027 at Camp Au Sable)",
+   "url": "https://misda.org/events/camp-meeting-registration-13/"
   }
  ],
  "undatedAhead": [],
@@ -609,7 +651,8 @@
     "Youth Rush Begins (2027-05-30, calendar)",
     "Youth Rush Begins (2027-06-06, events)"
    ],
-   "sourceDetail": "calendar (misda.org Events Calendar REST API)"
+   "sourceDetail": "calendar (misda.org Events Calendar REST API)",
+   "note": "(2026-11-06) Two start dates are published: 6 Jun 2027 (events listing) and 30 May 2027 (office calendar)."
   },
   {
    "title": "Camp Pitch",
@@ -1118,5 +1161,20 @@
    "sourceDetail": "calendar (misda.org Events Calendar REST API)"
   }
  ],
- "notes": "Michigan publishes two public categories in The Events Calendar (\"Michigan Conference Events\" and the full office calendar \"Michigan Conference Calendar\"); most items appear in both and were merged (same title and date), the second URL kept in alsoListed. Repeated items are listed once with count and dates (Women’s Retreat ×2, ASPIRE Capstone ×2, Family Camp ×4). Internal staff items (camp staff certification/orientation, camp pitch/strike, NAD HR / presidents’ retreats, district superintendents’ retreat) are kept but marked internal:true. Several listings were last modified 2026-09-30, so the calendar is actively maintained."
+ "notes": [
+  "Michigan publishes two public categories in The Events Calendar (\"Michigan Conference Events\" and the full office calendar \"Michigan Conference Calendar\"); most items appear in both and were merged (same title and date), the second URL kept in alsoListed. Repeated items are listed once with count and dates (Women’s Retreat ×2, ASPIRE Capstone ×2, Family Camp ×4). Internal staff items (camp staff certification/orientation, camp pitch/strike, NAD HR / presidents’ retreats, district superintendents’ retreat) are kept but marked internal:true. Several listings were last modified 2026-09-30, so the calendar is actively maintained.",
+  "(2026-11-06) The REST API returned 401 listings (328 unique title+date) for 1 Nov 2026 – 31 Oct 2027 over nine pages; every one of the 114 existing records was found again, and October 2027 (TLT Squared 1–3 Oct, LIFT 3–6 Oct, Mother-Daughter Retreat 8–10 Oct, Pathfinder Council 24 Oct, Lake Union Secondary Leade",
+  "(2026-11-06) What is new since 1 Oct is the office calendar's recurring committee/office dates from April 2027 onward (reported above as 'more dates published'), office closures (Thanksgiving, Christmas, New Year's, MLK Day, Presidents' Day, Memorial Day, 21–22 Jun, Independence Day, Labor Day), two Conference A",
+  "(2026-11-06) Family Camp I–IV (27 Jun–24 Jul 2027) appear as four listings; they are already covered by the existing four-week record. A listing titled 'Pathfinder Camporee (CAS North Woods' (missing bracket) duplicates the recorded camporee 17–19 Sep 2027.",
+  "(2026-11-06) Camp Meeting Registration (1–15 Mar 2027) is a new calendar listing; recorded under prepDeadlines.",
+  "(2026-11-06) Listings still carry titles and dates only (no descriptions or venues)."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "Camp Au Sable Work Week (May 2026) — no 2027 date",
+  "Mini Medical Missionary Training (CAS) (May 2026) — no 2027 date",
+  "Youth Rush Leadership (Conference) (late May 2026) — no 2027 date; only the Youth Rush Leadership Retreat 8–11 Aug 2027 is listed",
+  "Golden Years Retreat (CAS) (Sep 2026) — no 2027 date",
+  "Men of Faith (CAS North Woods) (Sep 2026) — no 2027 date"
+ ]
 }

@@ -12,11 +12,11 @@
   "https://www.rmcyouth.org/",
   "https://www.outlookmag.org/tag/rocky-mountain-conference/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "B- : the calendar (ICS Calendar plugin) only displays from the current month forward (Sep 2026-Aug 2027) and hides its source feed, so the past year cannot be read from it. The conference news site is the richest in the union (244 posts in 12 months) and was used for Oct 2025-Aug 2026.",
  "aheadQuality": "A- : the public calendar is full through Aug 2027, and the youth site lists every 2027 summer camp week. Only September 2027 is hidden by the calendar's 12-month display.",
- "furthestPublished": "2027-08",
+ "furthestPublished": "2027-10",
  "furthestPublishedAnySource": "2027-08",
  "furthestPublishedNote": "The calendar only displays Sep 2026-Aug 2027 (12 months from today), so September 2027 entries cannot be seen yet. Its last visible entry is Aug 31 2027.",
  "aheadChecked": [
@@ -29,11 +29,23 @@
   "https://www.rmcyouth.org/campsessions",
   "https://www.rmcyouth.org/camp",
   "https://www.rmcyouth.org/ministries",
-  "https://www.outlookmag.org/state-of-the-rocky-mountain-conference/"
+  "https://www.outlookmag.org/state-of-the-rocky-mountain-conference/",
+  "https://www.rmcsda.org/calendar/ (headless Chrome; ICS Calendar plugin, months Nov 2026 - Oct 2027)",
+  "https://www.rmcsda.org/wp-json/wp/v2/posts?per_page=40",
+  "https://www.rmcsda.org/wp-json/wp/v2/pages?search=2027",
+  "https://www.rmcsda.org/wp-json/wp/v2/media?search=2027",
+  "https://www.rmcsda.org/wp-content/uploads/2026/10/2027-EVANGELISM-PACKET.pdf",
+  "https://www.rmcsda.org/mission-summit-calls-rmc-to-serve-and-share/",
+  "https://www.rmcsda.org/departments/ministerial-department/",
+  "https://www.rmcsda.org/departments/womens-ministry/",
+  "https://www.rmcsda.org/announcements/",
+  "https://www.rmcyouth.org/greatersummit",
+  "https://www.midamericaadventist.org/about/calendar/",
+  "https://www.outlookmag.org/wp-json/wp/v2/posts?search=rocky%20mountain"
  ],
  "counts": {
-  "total": 20,
-  "conferenceLevel": 16,
+  "total": 29,
+  "conferenceLevel": 21,
   "byLevel": {
    "conference": 16,
    "division": 2,
@@ -43,16 +55,29 @@
   "byCategory": {
    "discipleship-spiritual": 1,
    "children": 4,
-   "administration": 2,
-   "pathfinders": 5,
-   "education": 4,
+   "administration": 3,
+   "pathfinders": 8,
+   "education": 6,
    "youth-young-adults": 2,
-   "pastoral-leadership": 1,
-   "community-service": 1
+   "pastoral-leadership": 2,
+   "community-service": 1,
+   "music-worship-arts": 1,
+   "evangelism-outreach": 1
   },
   "recurringSeries": 2,
   "approximateDates": 0,
-  "unconfirmed": 1
+  "unconfirmed": 1,
+  "observances": 2,
+  "byCategoryConferenceOnly": {
+   "discipleship-spiritual": 1,
+   "children": 3,
+   "administration": 2,
+   "pathfinders": 5,
+   "education": 6,
+   "youth-young-adults": 2,
+   "community-service": 1,
+   "evangelism-outreach": 1
+  }
  },
  "events": [
   {
@@ -81,7 +106,7 @@
   },
   {
    "title": "Area town halls (constituency preparation: choosing nominating committee members)",
-   "start": "2027-04-11",
+   "start": "2027-02-21",
    "end": "2027-05-02",
    "place": "",
    "category": "administration",
@@ -90,14 +115,15 @@
    "url": "https://www.rmcsda.org/calendar/",
    "source": "calendar",
    "level": "conference",
-   "recurring": "regional series",
-   "count": 3,
+   "recurring": true,
+   "count": 4,
    "dates": [
+    "2027-02-21",
     "2027-04-11",
-    "2027-04-12",
+    "2027-04-18",
     "2027-05-02"
    ],
-   "note": "Southwest/New Mexico (Apr 11), Northwest (Apr 12) and Wyoming (May 2) town halls, labelled \"NOMINATING COMMITTEE\" on the calendar; they lead up to the RMC Constituency Session on Aug 22 2027. Metro, SE and NE town halls were in March 2027."
+   "note": "Southwest/New Mexico (Apr 11), Northwest (Apr 12) and Wyoming (May 2) town halls, labelled \"NOMINATING COMMITTEE\" on the calendar; they lead up to the RMC Constituency Session on Aug 22 2027. Metro, SE and NE town halls were in March 2027. (2026-11-06) Calendar dates: 21 Feb (NE, Loveland), 11 Apr (NW, Grand Junction; SW/NM, Durango), 18 Apr (Metro, Aurora; SE, Pueblo), 2 May 2027 (Wyoming)."
   },
   {
    "title": "NAD Pathfinder Bible Experience (division final)",
@@ -307,17 +333,136 @@
    "level": "conference"
   },
   {
-   "title": "RMC Constituency Session",
-   "start": "2027-08-22",
-   "end": "2027-08-22",
-   "place": "",
+   "title": "RMC Constituency Session / Mission Summit Weekend",
+   "start": "2027-08-27",
+   "end": "2027-08-29",
+   "place": "LifeSource Adventist Fellowship, Denver",
    "category": "administration",
    "category2": "",
    "audience": "delegates",
    "url": "https://www.rmcsda.org/calendar/",
    "source": "calendar",
    "level": "conference",
-   "note": "Also reported in RMC news (Sep 9 2026: planning for the \"2027 RMC Constituency Meeting happening August 22\")."
+   "note": "Also reported in RMC news (Sep 9 2026: planning for the \"2027 RMC Constituency Meeting happening August 22\"). (2026-11-06) Calendar now shows the session as a weekend, 27-29 Aug 2027; the union calendar dates the session Sunday 29 Aug."
+  },
+  {
+   "title": "NAD Passionate Leader Conference",
+   "start": "2027-02-04",
+   "end": "2027-02-07",
+   "place": "NAD headquarters, Columbia, MD",
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://www.rmcsda.org/announcements/",
+   "source": "announcements page",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Journey to the Cross",
+   "start": "2027-03-27",
+   "end": "2027-03-27",
+   "place": "Campion Seventh-day Adventist Church, Loveland, CO",
+   "category": "music-worship-arts",
+   "category2": "evangelism-outreach",
+   "audience": "public/community",
+   "level": "local-church",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Easter walk-through programme listed on the conference calendar."
+  },
+  {
+   "title": "RMC Mission Summit / Conference on Mission",
+   "start": "2027-08-27",
+   "end": "2027-08-28",
+   "place": "LifeSource Adventist Fellowship, Denver, CO",
+   "category": "evangelism-outreach",
+   "category2": "discipleship-spiritual",
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.rmcsda.org/mission-summit-calls-rmc-to-serve-and-share/",
+   "source": "news",
+   "datePrecision": "day",
+   "note": "The Oct 21 2026 report on Mission Summit 2026 says \"mark your calendars for August 28, 2027\"; the conference calendar lists \"RMC Constituency Session/Mission Summit Weekend\" Aug 27-29 2027 and the union calendar \"RMC Conference on Mission\" Aug 27-28 with the constituency session Aug 29."
+  },
+  {
+   "title": "Pathfinder Council Weekend",
+   "start": "2027-09-10",
+   "end": "2027-09-12",
+   "place": "Glacier View Ranch, Ward, CO",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Campion Academy Alumni Weekend",
+   "start": "2027-09-17",
+   "end": "2027-09-18",
+   "place": "Campion Academy, Loveland, CO",
+   "category": "education",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "World Pathfinder Day",
+   "start": "2027-09-18",
+   "end": "2027-09-18",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "pathfinders",
+   "level": "observance",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "MHA Alumni Weekend",
+   "start": "2027-09-25",
+   "end": "2027-09-25",
+   "place": "Mile High Academy, Highlands Ranch, CO",
+   "category": "education",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Pathfinder Leadership Weekend",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "place": "Glacier View Ranch, Ward, CO",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "NAD Year-End Meetings",
+   "start": "2027-10-28",
+   "end": "2027-11-02",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://www.rmcsda.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
   }
  ],
  "notPublishedYet": [
@@ -329,6 +474,28 @@
  "notes": [
   "Dropped: Executive Committee (Apr 20, Jun 15, Aug 31 \"if needed\"), RMC Nominating Committee (Jun 13, Jun 27), academy boards, staff worship (weekly), office closures, the MHA Annual Auction and the Pathfinder lunch fundraiser at the constituency session.",
   "The Hispanic camp meeting was in early September in 2026 (Sep 4-7); its 2027 date would fall in the month the calendar does not show yet.",
-  "The calendar page loads its events through the site's own public request (admin-ajax, ICS Calendar plugin); the feed behind it is not exposed."
+  "The calendar page loads its events through the site's own public request (admin-ajax, ICS Calendar plugin); the feed behind it is not exposed.",
+  "(2026-11-06) Sep and Oct 2027 are newly visible: besides the items added, they hold Executive Committee (Sep 28 \"if needed\"), AdCom Retreat Oct 5-7, Executive Committee Retreat Oct 22-24, staff meetings, two alumni golf tournaments and office closures (dropped).",
+  "(2026-11-06) Also dropped: Submit Sabbath Attendance Numbers (Nov 14 2026), RMC office Christmas party, MHA Annual Auction (Apr 4 2027), Pathfinder lunch fundraiser at the constituency session, RMC Nominating Committee (Jun 13 and 27 2027), academy boards and executive committees.",
+  "(2026-11-06) Multi-day all-day entries on this calendar carry an exclusive end date in their markup; dates above are the inclusive dates, matching the existing records.",
+  "(2026-11-06) Glacier View Ranch 2027 weeks on rmcyouth.org match the existing summer-camp entry (Jun 13-18, Tween Jun 20-25 and Jun 27 - Jul 2, Teen Jun 27 - Jul 2 and Jul 4-9, Jul 18-23 at Mills Spring Ranch)."
+ ],
+ "prepDeadlines": [
+  {
+   "title": "2027 Preliminary Evangelism Budget Request due",
+   "date": "2026-10-30",
+   "kind": "evangelism-fund",
+   "what": "Preliminary budget request and evangelism speaker form for 2027 meetings to the Ministerial Department (2027 Evangelism Packet, posted Oct 7 2026); the final budget request is due 60 days before the meetings and the expense report within 60 days after. Deadline already passed when read.",
+   "url": "https://www.rmcsda.org/wp-content/uploads/2026/10/2027-EVANGELISM-PACKET.pdf"
+  }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "furthestNote": "The calendar now displays Nov 2026 - Oct 2027 (12 months); its last entries are the Pathfinder Leadership Weekend Oct 15-17 and the NAD Year-End Meetings Oct 28 - Nov 3 2027.",
+ "notPublishedYetNov2026": [
+  "regional camp meetings 2027: Wyoming, Western Slope (Aug 12-16 in 2026) and Hispanic (Sep 4-7 in 2026) are absent from the Aug-Sep 2027 months now visible",
+  "Indonesian and Hispanic convocations 2027",
+  "young adult retreats after Mar 2027",
+  "Glacier View Ranch summer camp 2027 theme (\"coming soon\"; weeks are posted)",
+  "camp meeting-style conference-wide gathering other than the Aug 27-29 2027 constituency/Mission Summit weekend"
  ]
 }

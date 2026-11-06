@@ -9,8 +9,8 @@
   "https://www.atlanticunionyouth.com/",
   "https://atlanticuniongleaner.org/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "furthestPublished": "2027-06",
  "furthestNote": "Last one-off union event posted: the Seven Churches of Revelation tour, 6-16 Jun 2027. The weekly and monthly \"Let's Pray More\" prayer meetings repeat with no end date (the feed runs to Apr 2032).",
  "aheadEvents": 3,
@@ -200,6 +200,56 @@
    ],
    "lastDate": "2027-09-29",
    "time": "6:00-7:00 pm"
+  },
+  {
+   "title": "Let's Pray More (weekly union prayer on Zoom)",
+   "start": "2027-10-05",
+   "end": "2027-10-05",
+   "place": null,
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "members",
+   "level": "union",
+   "url": "https://atlantic-union.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day",
+   "dates": [
+    "2027-10-05",
+    "2027-10-12",
+    "2027-10-19",
+    "2027-10-26"
+   ],
+   "count": 4,
+   "recurring": true,
+   "note": "Every Tuesday 8-9 pm; the October 2027 dates of the standing series already recorded to Sep 2027. The series continues past this window. Zoom details not copied."
+  },
+  {
+   "title": "Let's Pray More (monthly Wednesday prayer)",
+   "start": "2027-10-27",
+   "end": "2027-10-27",
+   "place": null,
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "members",
+   "level": "union",
+   "url": "https://atlantic-union.org/calendar/",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Last Wednesday of the month, 6-7 pm, with the Prayer Ministries team; the October 2027 date of the standing series already recorded to Sep 2027."
+  },
+  {
+   "title": "All Things New / OneVoice27 worldwide mission emphasis",
+   "start": "2027-09",
+   "end": "2027-09",
+   "place": null,
+   "category": "evangelism-outreach",
+   "category2": null,
+   "audience": "members",
+   "level": "division",
+   "url": "https://atlanticuniongleaner.org/news/atlantic-union/2026/atlantic-union-to-participate-in-all-things-new-mission-initiative/",
+   "source": "news",
+   "datePrecision": "month (page says 'a worldwide mission emphasis in September 2027')",
+   "note": "Gleaner, 23 Oct 2026: the Atlantic Union joins the NAD's All Things New public emphasis for the world church's OneVoice27 initiative, launched 5 Sep 2026 and running to a worldwide mission emphasis in Sep 2027 (about 2,000 years after Christ's baptism); four pillars (Pray, Serve, Share, Follow Like Jesus), a Desire of Ages sharing book (5 million copies across the NAD) and a digital campaign (allthingsnew2027.com). No union-wide dates beyond the month."
   }
  ],
  "prepDeadlines": [
@@ -618,7 +668,34 @@
   "https://www.aucevangelism.org/",
   "https://atlanticuniongleaner.org/wp-json/wp/v2/search?search=2027",
   "https://atlanticuniongleaner.org/wp-json/wp/v2/posts?after=2025-10-01T00:00:00 (45 posts, Oct 2025 - Sep 2026, searched for 2027)",
-  "https://atlanticuniongleaner.org/event/"
+  "https://atlanticuniongleaner.org/event/",
+  "https://atlantic-union.org/wordpress/wp-admin/admin-ajax.php (action r34ics_ajax, the page's own calendar request; grid Feb 2024 - May 2032)",
+  "https://atlantic-union.org/camp-meeting/",
+  "https://atlantic-union.org/summer-camp/",
+  "https://atlantic-union.org/news/",
+  "https://atlantic-union.org/ministries/ministerial/ministerial-spouses/",
+  "https://atlantic-union.org/ministries/family-ministries/",
+  "https://atlantic-union.org/ministries/family-ministries/mens-ministries/",
+  "https://atlantic-union.org/ministries/family-ministries/singles-ministries/",
+  "https://atlantic-union.org/ministries/womens/",
+  "https://atlantic-union.org/ministries/children/",
+  "https://atlantic-union.org/ministries/hispanic-ministries/",
+  "https://atlantic-union.org/ministries/personal-ministries/",
+  "https://atlantic-union.org/ministries/health-ministries/",
+  "https://atlantic-union.org/ministries/sabbath-school/",
+  "https://atlantic-union.org/ministries/stewardship/",
+  "https://atlantic-union.org/ministries/education/",
+  "https://atlantic-union.org/ministries/acs/",
+  "https://atlantic-union.org/ministries/asi/",
+  "https://atlantic-union.org/ministries/communication-dept/",
+  "https://atlantic-union.org/ministries/disabilities/",
+  "https://atlantic-union.org/ministries/human-relations/",
+  "https://atlantic-union.org/ministries/prison-ministries/",
+  "https://atlantic-union.org/ministries/religious-liberty/",
+  "https://www.atlanticunionyouth.com/event-pages-sitemap.xml (25 pages, none changed since 24 May 2026)",
+  "https://atlanticuniongleaner.org/",
+  "https://atlanticuniongleaner.org/wp-json/wp/v2/posts?after=2026-09-25T00:00:00 (4 posts, searched for 2027)",
+  "https://atlanticuniongleaner.org/news/atlantic-union/2026/atlantic-union-to-participate-in-all-things-new-mission-initiative/"
  ],
  "aheadCheckedNotes": [
   "All 334 non-image pages in the atlantic-union.org sitemap were scanned for \"2027\"; only the Events page has 2027 dates.",
@@ -630,6 +707,22 @@
  ],
  "notes": [
   "Union-level items that a conference also lists (e.g. the AU Pathfinder Bible Experience, 27 Mar 2027, on the NNEC calendar) stay in that conference's file.",
-  "Zoom meeting IDs and passwords from the calendar are not copied."
+  "Zoom meeting IDs and passwords from the calendar are not copied.",
+  "(2026-11-06) The union calendar (ICS Calendar Pro view of the union Google calendars, loaded with the page's own request) holds, for the window, only Friday office closures, the daily AUAYM Push prayer (still ending 7 Mar 2027, as recorded) and the two Let's Pray More series; no new one-off union event has been ",
+  "(2026-11-06) The Events page is unchanged: Super Convention 12-14 Feb 2027 (save the date, no place) and the Seven Churches tour 6-16 Jun 2027 (flyer PDF Sep 2026).",
+  "(2026-11-06) Gleaner posts since 25 Sep 2026: the William Miller Farm 125th-anniversary report, the All Things New announcement (recorded), SNEC's new Slavic ministry (a Slavic camp meeting planned for 2027, noted in the SNEC file) and Bermuda's officer elections; the Gleaner's /event/ page still shows the 1 Mar",
+  "(2026-11-06) Union-level items that a conference lists (NEC's calendar carries the Super Convention and an 'Atlantic Union Conference Leadership Convention' 13-15 Feb 2027) stay in that conference's file.",
+  "(2026-11-06) The password-protected /about-us/auc-calendar/ page was not opened. Zoom IDs and passwords from the calendar are not copied."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Hearts in Harmony ministers' and spouses' retreat 2027 (plan: 2025, 2027, 2029): no date or place on the Ministerial or Ministerial Spouses pages.",
+  "The July 2027 union ministerial renewal gathering (plan: February and July); only the Feb 12-14 Super Convention is announced, still without a place.",
+  "AU Virtual School of Evangelism 2027 (aucevangelism.org still shows the 2026 sessions, first on 8 Feb 2026).",
+  "'State of the Atlantic Union' report (plan: third Thursday of November, i.e. 19 Nov 2026 / 18 Nov 2027): not announced.",
+  "IMPACT evangelistic series and United Revival in Southern New England 2027, and the union-sponsored campaign in Northern New England 2027: no dates on the union or conference sites.",
+  "Union camporee / youth events for 2027: atlanticunionyouth.com has had no new event page since May 2026 (all its pages are 2026 camporee pages); no 2027 AU Pathfinder Bible Experience page yet (NNEC lists it on 27 Mar 2027).",
+  "The union Camp Meeting and Summer Camp pages still show the 2025 dates for every conference.",
+  "Oct 2027: only the standing prayer meetings and Friday office closures."
  ]
 }

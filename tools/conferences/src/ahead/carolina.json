@@ -3,8 +3,8 @@
  "slug": "carolina",
  "union": "Southern",
  "site": "https://www.carolinasda.org",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://www.carolinasda.org/conference-calendar",
   "https://calendar.google.com/calendar/ical/carolinasda.org_47pbgk242tl968925qivqas0s8%40group.calendar.google.com/public/basic.ics",
@@ -25,7 +25,12 @@
   "https://cconference.wixsite.com/nosocasummercamp/schedule-and-fees",
   "https://www.ultracamp.com/info/upcomingSessions.aspx?idCamp=61&lnkCategory=Summer+Camp",
   "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
-  "https://www.southernunion.com/wp-content/uploads/2024/12/SU-Calendar-2025-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2024/12/SU-Calendar-2025-2027.pdf",
+  "https://www.carolinasda.org/sitemap.xml",
+  "https://www.carolinasda.org/pages-sitemap.xml",
+  "https://www.carolinasda.org/carolina-evangelism",
+  "https://www.carolinasda.org/evangelism-impact",
+  "https://www.carolinasda.org/_files/ugd/9ecb3c_86cba68ec1d949c282d9c11c1373c800.pdf"
  ],
  "usuallyHeldNotYetPublished": [
   "Nosoca Pines Ranch summer camp: a \"2027 Schedule and Fees\" page exists, but its date table is an embedded widget that shows no dates, and no 2027 sessions are open in the registration system yet.",
@@ -307,6 +312,97 @@
    "url": "https://www.carolinasda.org/conference-calendar",
    "source": "calendar",
    "when": "upcoming"
+  },
+  {
+   "place": "Nosoca Pines Ranch (NPR), Liberty Hill, SC",
+   "category2": null,
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Women's Ministries - English",
+   "start": "2027-10-01",
+   "end": "2027-10-03",
+   "category": "family-women-men",
+   "audience": "women",
+   "url": "https://www.carolinasda.org/conference-calendar",
+   "source": "feed",
+   "note": "Women's Ministries Department weekend; calendar gives title and venue 'NPR' only"
+  },
+  {
+   "place": null,
+   "category2": "multilingual",
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Women's Ministries - Hispanic",
+   "start": "2027-10-08",
+   "end": "2027-10-10",
+   "category": "family-women-men",
+   "audience": "women",
+   "url": "https://www.carolinasda.org/conference-calendar",
+   "source": "feed",
+   "note": "Women's Ministries Department; no venue on the calendar"
+  },
+  {
+   "place": "Camp Barnhardt, Badin, NC",
+   "category2": null,
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Conference Pathfinder Camporee",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "category": "pathfinders",
+   "audience": "pathfinders",
+   "url": "https://www.carolinasda.org/conference-calendar",
+   "source": "feed",
+   "note": "Youth Department"
+  },
+  {
+   "place": null,
+   "category2": "evangelism-outreach",
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Children's Evangelistic Campaign - Hispanic Children's Ministry",
+   "start": "2027-10-16",
+   "end": "2027-10-23",
+   "category": "children",
+   "audience": "children",
+   "url": "https://www.carolinasda.org/conference-calendar",
+   "source": "feed",
+   "note": "Hispanic Children's Ministry; no venue on the calendar"
+  },
+  {
+   "place": null,
+   "category2": null,
+   "level": "conference",
+   "datePrecision": "day",
+   "title": "Low Country Area Campout",
+   "start": "2027-10-29",
+   "end": "2027-10-31",
+   "category": "pathfinders",
+   "audience": "pathfinders",
+   "url": "https://www.carolinasda.org/conference-calendar",
+   "source": "feed",
+   "note": "Youth Department; the feed also lists a Low Country Area Campout on 5-7 Nov 2027 at Camp Kinard (outside the window) and an Impact Youth Rally 5-7 Nov 2027 at Mount Pisgah Academy"
   }
+ ],
+ "prepDeadlines": [
+  {
+   "title": "GROW Carolina 2027 Evangelism Plan due",
+   "date": "2026-11-30",
+   "kind": "evangelism-fund",
+   "what": "The President's Office requires the GROW Carolina 2027 Evangelism Plan form (Prepare, Plant, Cultivate, Harvest, Preserve plans, 2026 baptism and Bible-study figures, church board approval date) from every church and company, whether or not funding is requested; one form per entity, English or Spanish version, by 30 Nov 2026.",
+   "url": "https://www.carolinasda.org/carolina-evangelism"
+  }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "Nosoca Pines Ranch summer camp 2027: the \"2027 Schedule and Fees\" page exists but its date table is still an empty embedded widget; UltraCamp lists no 2027 sessions.",
+  "Hispanic Convention 2027 (Ridgecrest): the feed has only the 2026 convention; no 2027 date.",
+  "Camp meeting 2027: the page gives the dates (30 May-5 Jun 2027), 2027 lodging and meal-plan links and a reservations phone number, but no reservation deadline.",
+  "Monthly offering focus for 2027: only the standing monthly entries (Church Budget 1st and 3rd Sabbaths, Carolina Youth 4th Sabbath, \"TBD\" 2nd Sabbath) continue into 2027; no dated 2027 special emphases yet."
+ ],
+ "notes": [
+  "(2026-11-06) No entry on the Google Calendar feed was created or modified after 1 Oct 2026; the only new items in the window are the October 2027 entries (the new month).",
+  "(2026-11-06) The weekly Conference Prayer Line (Mondays) has no end date on the feed and continues through the whole window.",
+  "(2026-11-06) The Southern Union officers’ calendar PDF (Dec 2025) was not re-read: its Last-Modified header is still 12 Dec 2025."
  ]
 }

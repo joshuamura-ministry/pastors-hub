@@ -3,8 +3,8 @@
  "slug": "southeastern",
  "union": "Southern",
  "site": "https://www.secsda.org",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://www.secsda.org/event",
   "https://www.secsda.org/wp-content/uploads/2025/02/SEC-ACS-and-DR-2025-Calendar.pdf"
@@ -20,7 +20,20 @@
   "https://www.secsda.org/wp-content/uploads/2026/09/2027-RETREAT-WM-COVER-LETTER-ENGLISH.pdf",
   "https://www.secsda.org/?s=2027",
   "https://www.secsda.org/",
-  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://www.secsda.org/event/",
+  "https://www.secsda.org/event/2026-bible-woker-training/",
+  "https://www.secsda.org/wp-content/uploads/2026/09/Bible-worker-flyer.png",
+  "https://www.secsda.org/event/2026-elders-deacons-deaconesses-retreat/",
+  "https://www.secsda.org/wp-content/uploads/2026/09/Region-23-Elders-training.png",
+  "https://www.secsda.org/event/journey-to-wholeness-facilitator-training/",
+  "https://www.secsda.org/event/lets-make-noise/",
+  "https://www.secsda.org/event/salt-service-training-school/",
+  "https://www.secsda.org/wp-content/uploads/2026/09/SALT-Housing-Stability-and-Capacity-Building-HSCB-Training-2026-003.jpg",
+  "https://www.secsda.org/wp-json/wp/v2/media?search=2027&per_page=50",
+  "https://www.secsda.org/wp-json/wp/v2/media?per_page=40&orderby=date&order=desc&_fields=date,title,source_url",
+  "https://www.secsda.org/wp-json/wp/v2/posts?per_page=20&_fields=date,title,link",
+  "https://www.southerntidings.com/news/onevoice27-equips-children-to-know-share-jesus/"
  ],
  "usuallyHeldNotYetPublished": [
   "Camp meeting at the Hawthorne, FL campground (June in 2026), Hispanic camp, I'm Involved disability retreat (Sep in 2026): no 2027 dates."
@@ -72,5 +85,16 @@
    "note": "from the Southern Union officers' calendar ('SEC Constituency'); not on the conference site",
    "when": "upcoming"
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "Still no master calendar, feed or year plan; the event page holds seven flyer-driven items.",
+  "Camp meeting 2027 at Hawthorne, Hispanic camp 2027, the I'm Involved disability retreat: no 2027 dates.",
+  "No OneVoice27 (September 2027) plan with dates: the Southern Tidings article on the 12 Sep 2026 children's ministries gathering speaks only of \"September 2027\"."
+ ],
+ "notes": [
+  "(2026-11-06) The Bible Workers Training flyer confirms 14 Nov 2026, Northside church, Miami (existing record unchanged).",
+  "(2026-11-06) Newer event pages are all before the window or undated: Regions 2 and 3 Elders, Deacons and Deaconesses Retreat 24 Oct 2026 (Tampa); Journey to Wholeness facilitator training 24-25 Oct 2026 (Naples); SALT Service Training School (ACS, five-session cohorts \"starting in September\", dates only on the S",
+  "(2026-11-06) Dates on this site live only inside flyer images; the event pages carry no text dates."
  ]
 }

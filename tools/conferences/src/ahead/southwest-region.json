@@ -3,8 +3,8 @@
  "slug": "southwest-region",
  "union": "Southwestern",
  "site": "https://southwestregionsda.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30"
@@ -14,7 +14,20 @@
  "counts": {
   "events": 4,
   "meetings": 4,
-  "conferenceRun": 4
+  "conferenceRun": 4,
+  "total": 4,
+  "conferenceLevel": 4,
+  "observances": 0,
+  "byCategory": {
+   "evangelism-outreach": 2,
+   "family-women-men": 1,
+   "discipleship-spiritual": 1
+  },
+  "byCategoryConferenceOnly": {
+   "evangelism-outreach": 2,
+   "family-women-men": 1,
+   "discipleship-spiritual": 1
+  }
  },
  "calendarUrls": [
   "https://southwestregionsda.org/ministries/multicultural-ministries/",
@@ -84,7 +97,11 @@
   "Not published yet for 2027: camp meeting (2026 was Jun 10-13 at Lone Star Camp), Spanish camp meeting, summer camp, youth federations, God's Daughters, EndItNow, women's leadership conference.",
   "Out of window: 2027 Married Couples Retreat, Valentine's weekend February 2027 (Record story). A church plans to serve at the 2027 San Antonio rodeo (no date).",
   "All 80 pages in the site map were checked for 2027-2028 dates.",
-  "Record (union magazine): no Apr-Sep 2027 dates in the 2026 Southwest Region stories online or in the Sep/Oct 2026 print issue."
+  "Record (union magazine): no Apr-Sep 2027 dates in the 2026 Southwest Region stories online or in the Sep/Oct 2026 print issue.",
+  "(2026-11-06) No change since Oct 1: the Nov 2026 items (God's Daughters Gala Nov 14, Houston Marriott South; Men's Ministries Retreat Nov 19-22, Lone Star Camp) and the UNA VOZ 27 month records already exist. The gala page adds a hotel block Nov 13-15 with a reservation deadline of Nov 1, 2026 (past).",
+  "(2026-11-06) The Children's Ministries Leadership Certification page lists completed tracks only (Sep 2025, Dec 2025); upcoming sessions are announced by email.",
+  "(2026-11-06) Seven pages are new in the sitemap since the last pass (87 vs 80): all are news stories of past events (youth federation, marriage retreat, leadership conference, robotics, Lone Star Camp investment, Pathfinder Bible Bowl win, women's theme song); none carries a 2027 date.",
+  "(2026-11-06) Record (union magazine) Southwest Region stories to Oct 28, 2026 hold no 2027 dates."
  ],
  "aheadChecked": [
   "https://southwestregionsda.org/2027-calendar-of-events/ (404)",
@@ -102,6 +119,23 @@
   "https://www.swurecord.org/conference/southwest-region",
   "https://www.swurecord.org/article/50-couples-renew-vows-at-marriage-retreat",
   "https://issuu.com/swurecord/docs/september_october_2026",
-  "https://www.nadadventist.org/camp-meeting/"
+  "https://www.nadadventist.org/camp-meeting/",
+  "https://southwestregionsda.org/2027-calendar-of-events/ (404; also /calendar-of-events/, /2027-calendar/, /calendar/, /events/ all 404)",
+  "https://southwestregionsda.org/ministries/multicultural-ministries/ (UNA VOZ 27)",
+  "https://southwestregionsda.org/sitemap-0.xml (87 URLs; all 87 pages fetched and scanned for 2027)",
+  "https://southwestregionsda.org/gods-daughters-gala/",
+  "https://southwestregionsda.org/ministries/men-ministries/",
+  "https://southwestregionsda.org/ministries/childrens-ministries/",
+  "https://southwestregionsda.org/leadership-certification/",
+  "https://southwestregionsda.org/oklahoma-youth-federation/",
+  "https://southwestregionsda.org/bone-of-my-bone-and-flesh-of-my-flesh-marriage-retreat/",
+  "https://southwestregionsda.org/rooted-in-grace-leadership-conference/",
+  "https://swurecord.org/api/apps/69b1cae160b0054de343feb4/entities/Article?q={\"published\":true,\"type\":\"news\",\"news_source\":\"Southwest Region\"} (Record news, 21 stories to Oct 28, 2026)"
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Still no 2027 calendar page (every likely URL returns 404); the 2026 calendar page is unchanged and ends with the Dec 2026-Jan 2, 2027 office closure plus the Jul 2027 cruise.",
+  "Not published for 2027: camp meeting (2026: Jun 10-13, Lone Star Camp), Spanish camp meeting, summer camp, married couples retreat (Valentine's weekend), youth federations, God's Daughters training and gala, EndItNow, women's leadership conference, men's retreat, Adventurer family weekend, PARL convention.",
+  "UNA VOZ 27 still gives months only (Jan-Mar 2027 Conocer y Servir; Apr-Jun Sembrar y Cultivar; Jul-Sep Invitar y Cosechar; Oct-Nov Acompañar y Discipular); no new day-precision dates."
  ]
 }

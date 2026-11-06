@@ -3210,8 +3210,8 @@
   },
   {
    "title": "Pastor's Continued Education",
-   "start": "2026-11-01",
-   "end": "2026-11-03",
+   "start": "2026-11-08",
+   "end": "2026-11-10",
    "place": null,
    "category": "pastoral-leadership",
    "category2": null,
@@ -3220,7 +3220,8 @@
    "source": "calendar",
    "level": "conference",
    "kind": "event",
-   "sourceLabel": "Administration"
+   "sourceLabel": "Administration",
+   "note": "(2026-11-06) Calendar feed: 8-10 Nov 2026."
   },
   {
    "title": "Franco-Haitian Pulpit Exchange",
@@ -3294,8 +3295,8 @@
   },
   {
    "title": "Directors/Associates Vision Casting/Strategic Planning",
-   "start": "2026-11-15",
-   "end": "2026-11-19",
+   "start": "2026-11-29",
+   "end": "2026-12-03",
    "place": null,
    "category": "administration",
    "category2": "pastoral-leadership",
@@ -3304,7 +3305,8 @@
    "source": "calendar",
    "level": "conference",
    "kind": "meeting",
-   "sourceLabel": "Administration"
+   "sourceLabel": "Administration",
+   "note": "(2026-11-06) Calendar feed: 29 Nov - 3 Dec 2026."
   },
   {
    "title": "Praying for Children",
@@ -3448,8 +3450,8 @@
   },
   {
    "title": "Franco-Haitian Min. Pastor's Year End Celebration",
-   "start": "2026-12-08",
-   "end": null,
+   "start": "2026-12-01",
+   "end": "2026-12-01",
    "place": null,
    "category": "pastoral-leadership",
    "category2": "multilingual",
@@ -3458,7 +3460,8 @@
    "source": "calendar",
    "level": "conference",
    "kind": "event",
-   "sourceLabel": "Franco-Haitian"
+   "sourceLabel": "Franco-Haitian",
+   "note": "(2026-11-06) Calendar feed: 1 Dec 2026."
   },
   {
    "title": "Women's Min. English Convention",

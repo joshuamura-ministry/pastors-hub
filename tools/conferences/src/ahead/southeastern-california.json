@@ -13,9 +13,9 @@
   "https://www.seccministerial.org/gen34-calendar",
   "https://www.psr.camp/2026-schedule--overview.html"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "D+ (no conference calendar; department lists only)",
  "furthestPublished": "2027-05",
  "furthestNote": "Last dated items: Club Ministries Fair (16 May 2027) and the required All Pastors' Meeting (18 May 2027).",
@@ -32,7 +32,11 @@
   "https://subsplash.com/+2pqp/lb/ca/+m872758",
   "https://seccyouth.com/events/",
   "https://www.psr.camp/",
-  "https://www.adventistfaith.com/news/empowered/"
+  "https://www.adventistfaith.com/news/empowered/",
+  "https://seccadventist.org/category/events/",
+  "https://www.seccministerial.org/gen34-calendar",
+  "https://www.adventistfaith.com/news/secc-conference-connections-october-2026/",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027&per_page=50"
  ],
  "events": [
   {
@@ -81,6 +85,20 @@
    "source": "ministerial events list (Subsplash)",
    "when": "upcoming",
    "level": "conference"
+  },
+  {
+   "title": "Free Medical Clinic & Health Screening",
+   "start": "2026-11-08",
+   "end": "2026-11-08",
+   "place": "Loma Linda Filipino Church gymnasium, Loma Linda",
+   "category": "health",
+   "category2": "community-service",
+   "audience": "public/community",
+   "level": "local-church",
+   "url": "https://seccadventist.org/category/events/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Hosted by a local church with Adventist Health, 9:00 am - 3:00 pm; posted on the conference events page."
   }
  ],
  "stats": {
@@ -126,6 +144,15 @@
  ],
  "notes": [
   "The ministerial lists are Subsplash embeds; the public list pages were read. The elective list ends 10 Feb 2027; the GEN34 list has no upcoming events.",
-  "The conference \"Upcoming Events\" page and the All Things New post have no 2027 dates."
+  "The conference \"Upcoming Events\" page and the All Things New post have no 2027 dates.",
+  "(2026-11-06) The Subsplash ministerial lists are unchanged: required All Pastors' Meeting 18 May 2027; Ordination Track 17 Feb and 14 Apr 2027; elective Conflict Management 10 Feb 2027.",
+  "(2026-11-06) The conference \"Upcoming Events\" page is empty apart from the Pine Springs Ranch camp link; SECC Conference Connections (Oct 2026) has no 2027 dates."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Pine Springs Ranch summer camp 2027: \"2027 Schedule Coming Soon\"; registration expected \"before March 2027\".",
+  "Asian Pacific Women's Ministries retreat 2027 (Pine Springs Ranch) - no date.",
+  "Youth Leadership Convention, The Experience, Bloom Conference, Teen River Trip, Adventurer Campout and OneLife for 2027: seccyouth.com still shows the 2025/2026 dates; \"AYMT Director & Staff Training\" is \"TBA 2026\".",
+  "Elective pastors' meetings after 10 Feb 2027; the GEN34 list is still empty."
  ]
 }

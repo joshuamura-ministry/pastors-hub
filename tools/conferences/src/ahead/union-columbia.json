@@ -10,8 +10,8 @@
   "https://www.columbiaunion.org/ministries/pathfinders",
   "https://columbiaunionvisitor.com/"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); union-level events only (camporee, education, ministers, youth, evangelism, prayer, funding).",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "C: the union has no general events calendar (/calendar is a sunset table). Dated union events come from the camporee site and the Office of Education calendar (.docx, 2025–2029). Ministries pages carry no 2027 dates.",
  "furthestPublished": "2029-06",
  "furthestNote": "the education calendar runs to June 2029; the latest non-education union event is the camporee (Aug 2027)",
@@ -45,7 +45,10 @@
   "https://cucamporee.com/information/location/",
   "https://columbiaunionvisitor.com/rss.xml",
   "https://columbiaunionvisitor.com/2026/pray-us-2026",
-  "https://columbiaunionvisitor.com/2026/columbia-union-conference-executive-committee-holds-first-executive-committee-meeting"
+  "https://columbiaunionvisitor.com/2026/columbia-union-conference-executive-committee-holds-first-executive-committee-meeting",
+  "https://columbiaunionvisitor.com/",
+  "https://columbiaunionvisitor.com/2026/first-annual-blast-university-announced",
+  "https://columbiaunionvisitor.com/2026/nad-2026-annual-council-highlights-new-resources"
  ],
  "stats": {
   "records": 5,
@@ -118,11 +121,11 @@
   "note": "for this union file, the conference-run fields count union-level records"
  },
  "counts": {
-  "total": 5,
+  "total": 7,
   "conferenceLevel": 0,
   "observances": 0,
   "byCategory": {
-   "education": 4,
+   "education": 6,
    "pathfinders": 1
   },
   "byCategoryConferenceOnly": {}
@@ -235,6 +238,34 @@
    "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
    "source": "calendar",
    "sourceDetail": "union Office of Education calendar 2025–2029 (.docx linked from https://www.columbiaunion.org/education-calendar)"
+  },
+  {
+   "title": "Superintendents' Zoom meeting (union education)",
+   "start": "2027-03-25",
+   "end": "2027-03-25",
+   "place": "online (Zoom)",
+   "category": "education",
+   "category2": null,
+   "audience": "leaders",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar (docx)",
+   "datePrecision": "day",
+   "note": "2:00 pm; listed as Thursday (25 Mar 2027 is a Thursday); the 2 Jun 2027 Zoom is already in the list"
+  },
+  {
+   "title": "Small Schools' (Multigrade) Workshop",
+   "start": "2027-10-17",
+   "end": "2027-10-18",
+   "place": "Columbia, Md.",
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "level": "union",
+   "url": "https://columbiaunion.org/sites/default/files/2025-2029_cuoe_calendar.docx",
+   "source": "calendar (docx)",
+   "datePrecision": "day",
+   "note": "the 2027-28 school-year workshop (the 21-22 Feb 2027 one is the 2026-27 workshop already in the list)"
   }
  ],
  "notes": [
@@ -242,7 +273,13 @@
   "Union Online Prayer Meetings are dated only to 2 Dec 2026 (Visitor, \"Pray With Us in 2026\").",
   "Homeland Missions funding: the latest brochure and application on the union site are for 2025 (due 13 Feb 2025); no 2026 or 2027 cycle is posted.",
   "The union executive committee report (Visitor, Sept 2026) mentions Share Your Table, OneVoice 2027/All Things New, Ignite Ohio and Impact Philly, but gives no union-wide 2027 dates.",
-  "Union education events also appear on the Chesapeake feed (Principals Boot Camp, K-12 Encounter, SALT) with the same dates."
+  "Union education events also appear on the Chesapeake feed (Principals Boot Camp, K-12 Encounter, SALT) with the same dates.",
+  "(2026-11-06) The existing prep item \"Camporee meal package and SBR lodging links open 2026-10-01\" did not happen: the links were still not posted on 6 Nov 2026.",
+  "(2026-11-06) Union education .docx (2025-2029) re-read: the only in-window items not already listed are the 25 Mar 2027 superintendents' Zoom and the 17-18 Oct 2027 Small Schools' Workshop. Left out as committees/councils: Early Childhood Advisory (23 Feb and 19 Oct 2027), School Administrators Council CUSAC (24",
+  "(2026-11-06) Visitor, 5 Nov 2026 (\"First Annual BLAST University Announced\"): the Mountain View Conference will hold a BLAST University in July 2027 in Charleston, W.Va., taught by Ohio Conference pastors; the North American Evangelism Institute offered to make it a national programme and \"the Columbia Union sta",
+  "(2026-11-06) Visitor, 5 Nov 2026 (NAD Annual Council): NAD OneVoice27/All Things New resources lead to a September 2027 evangelism effort; general distribution of the sharing book begins 17 Jan 2027 (division level, not added here).",
+  "(2026-11-06) columbiaunion.org/calendar remains a sunset table; the ministries pages carry no 2027 dates.",
+  "(2026-11-06) No headless Chrome was needed for this group; no profile folder was created."
  ],
  "earlierUnionEvents": [
   {
@@ -259,5 +296,13 @@
    "confirmed": false,
    "note": "The union's calendar (last edited Oct 2025) gives 21-22 Feb 2027; Chesapeake's calendar gives 18-19 Oct 2026. Added in review."
   }
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); union-level events only (camporee, education, ministers, youth, evangelism, prayer, funding).",
+ "notPublishedYetNov2026": [
+  "Camporee registration: the registration page still says \"Registration will open soon!!\" with no link, no opening date and no deadline (prices unchanged: $255 Pathfinders and staff with activities; $175 staff entrance only; $80 staff children grades 1-4; $10 ages 0-pre-K).",
+  "Camporee meal package ($325 for 12 lacto-ovo meals) and SBR lodging links: the page still says \"check back in October\" / \"will be posted in October\", but nothing was posted as of 6 Nov 2026.",
+  "Camporee speaker, schedule and FAQ pages carry no dates beyond 4-8 Aug 2027.",
+  "No union-wide OneVoice27 plan, ministers' meeting, youth congress, 2027 prayer-meeting dates or Homeland Missions 2026-27 cycle on columbiaunion.org.",
+  "2027 camp-meeting dates on the union camp-meeting finder page (none)."
  ]
 }

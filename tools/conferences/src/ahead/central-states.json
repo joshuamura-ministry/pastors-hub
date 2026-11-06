@@ -14,8 +14,8 @@
   "https://central-states.org/ministries/youth-ministry/",
   "https://central-states.org/ministries/pathfinder-ministry/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "C+ : complete public iCal feed (Modern Events Calendar) but only 34 entries in total; very thin Oct 2025-Jan 2026 and nothing after Nov 15 2026. Strong on youth federations; no evangelism, health or Pathfinder events listed. News (OUTLOOK) adds a few items.",
  "aheadQuality": "D : nothing dated is published for Apr-Sep 2027. The events calendar stops in Nov 2026; news posts on the site stop in May 2026.",
  "furthestPublished": "2026-11",
@@ -34,21 +34,30 @@
   "https://www.outlookmag.org/central-states-strengthens-pathfinder-ministry-through-leadership-training/",
   "https://www.outlookmag.org/state-of-the-central-states-conference/",
   "https://adventistregionalministries.org/camp-meeting-calendar/ (only a 2022 list)",
-  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp%20meeting (NAD camp-meeting date lists exist only to 2026)"
+  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp%20meeting (NAD camp-meeting date lists exist only to 2026)",
+  "https://central-states.org/wp-json/wp/v2/posts?per_page=20",
+  "https://central-states.org/events/",
+  "https://www.outlookmag.org/wp-json/wp/v2/posts?search=central%20states",
+  "https://www.outlookmag.org/csc-hosts-hispanic-pathfinder-camporee/"
  ],
  "counts": {
-  "total": 2,
-  "conferenceLevel": 2,
+  "total": 3,
+  "conferenceLevel": 3,
   "byLevel": {
    "conference": 2
   },
   "byCategory": {
-   "discipleship-spiritual": 1,
+   "discipleship-spiritual": 2,
    "pathfinders": 1
   },
   "recurringSeries": 1,
   "approximateDates": 1,
-  "unconfirmed": 1
+  "unconfirmed": 1,
+  "observances": 0,
+  "byCategoryConferenceOnly": {
+   "discipleship-spiritual": 2,
+   "pathfinders": 1
+  }
  },
  "events": [
   {
@@ -108,6 +117,28 @@
    "note": "The article says that \"during the summer of 2027 plans will be put in place\" to hold the first conference Pathfinder Fair. It is unclear whether the fair itself or only its planning falls in summer 2027; no date or place is published.",
    "datePrecision": "season",
    "confirmed": false
+  },
+  {
+   "title": "Men's Prayer Line",
+   "start": "2027-10-04",
+   "end": "2027-10-25",
+   "place": null,
+   "category": "discipleship-spiritual",
+   "category2": "family-women-men",
+   "audience": "men",
+   "level": "conference",
+   "url": "https://central-states.org/events/mens-prayer-line/",
+   "source": "feed",
+   "datePrecision": "day",
+   "dates": [
+    "2027-10-04",
+    "2027-10-11",
+    "2027-10-18",
+    "2027-10-25"
+   ],
+   "count": 4,
+   "recurring": true,
+   "note": "Open-ended weekly phone prayer line (iCal RRULE FREQ=WEEKLY, Mondays 8:00-8:30 PM Central, no end date). These are the Mondays of October 2027, the month newly inside the window."
   }
  ],
  "notPublishedYet": [
@@ -120,6 +151,19 @@
  "notes": [
   "Not published yet: the events calendar ends Nov 15 2026, and nothing dated for Apr-Sep 2027 appears in the calendar, site search, news or OUTLOOK.",
   "Goal, not an event: \"by the end of 2029\" the Pathfinder ministry aims to have 100 Master Guides in the conference (OUTLOOK, Aug 25 2026).",
-  "Union-wide events that Central States clubs and members may join (Limitless Pathfinder Camporee Jul 28-31 2027, UAU events) are in union-mid-america.json."
+  "Union-wide events that Central States clubs and members may join (Limitless Pathfinder Camporee Jul 28-31 2027, UAU events) are in union-mid-america.json.",
+  "(2026-11-06) The Modern Events Calendar feed is identical to the Oct 1 2026 read (34 entries, last dated Nov 15 2026); the REST mec-events list shows no entry modified since Aug 20 2026 and the news page has no post since May 2026.",
+  "(2026-11-06) OUTLOOK (Oct 2026) reports the first Central States Hispanic Pathfinder camporee and OneVoice27, with no 2027 Central States dates.",
+  "(2026-11-06) Union-wide 2027 dates that Central States members may join (Limitless camporee Jul 28-31 2027, union PBE Mar 27 2027, OneVoice27 September 2027) are in union-mid-america.json."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "2027 camp meeting (2026 was Jun 10-14, Kansas City)",
+  "Youth & Young Adult camp meeting 2027",
+  "summer camp 2027 (2026 ran Jun 15-28, Kansas City)",
+  "spring 2027 youth federation dates (five area federations met in Mar-May 2026)",
+  "women's, men's and couples' retreats 2027",
+  "a second Hispanic Pathfinder camporee (the first was held in September 2026, reported in OUTLOOK Oct 1 2026)",
+  "the first conference Pathfinder Fair, still only \"summer of 2027\" in OUTLOOK"
  ]
 }

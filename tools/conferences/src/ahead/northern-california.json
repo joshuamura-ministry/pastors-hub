@@ -12,9 +12,9 @@
   "https://redwoodcampmeeting.com/camp-schedule/",
   "https://www.leonimeadows.org/youth-camps"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "C (sparse events calendar; the 2026-27 youth and Pathfinder calendars are images)",
  "furthestPublished": "2027-05",
  "furthestNote": "Last dated item: Pathfinder Fair, 2 May 2027 (2026-2027 Pathfinder calendar image). The events calendar has nothing after Dec 2026.",
@@ -29,7 +29,17 @@
   "https://nccsda.com/wp-sitemap-posts-mec-events-1.xml",
   "https://redwoodcampmeeting.com/",
   "https://www.leonimeadows.org/youth-camps",
-  "https://www.adventistfaith.com/news/building-organizational-health-to-advance-the-2027-vision/"
+  "https://www.adventistfaith.com/news/building-organizational-health-to-advance-the-2027-vision/",
+  "https://nccsda.com/events/",
+  "https://nccsda.com/feed/?post_type=mec-events",
+  "https://nccsda.com/events/mobile-shower/",
+  "https://nccsda.com/events/ncc-family-ministries-workshop-oct-16-17-2026/",
+  "https://nccsda.com/events/49th-annual-african-american-ministries-convocation/",
+  "https://nccsda.com/health/training-events/",
+  "https://www.nccsdayouth.com/2027-youth-department-mission-trip-dominican-repu",
+  "https://redwoodcampmeeting.com/camp-schedule/",
+  "https://www.adventistfaith.com/news/northern-lights-october-2026/",
+  "https://www.adventistfaith.com/news/made-to-thrive/"
  ],
  "events": [
   {
@@ -65,6 +75,20 @@
    "source": "youth department calendar (image)",
    "when": "upcoming",
    "level": "conference"
+  },
+  {
+   "title": "Mobile Shower Launching & Laundry Unit",
+   "start": "2027-02-01",
+   "end": "2027-12-30",
+   "place": null,
+   "category": "community-service",
+   "category2": null,
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://nccsda.com/events/mobile-shower/",
+   "source": "calendar",
+   "datePrecision": "day (the page gives \"Feb 01 2027 - Dec 30 2027\", which reads as a year-long program window rather than an event date)",
+   "note": "End Homelessness ministry entry on the events calendar; a flyer is offered; no place given. Treat the dates as a program period."
   }
  ],
  "stats": {
@@ -111,6 +135,22 @@
  "notes": [
   "nccsda.com/calendar and the site's WordPress API return a bot-check page to scripts; not bypassed. The events sitemap (newest entry Aug 2026) was read instead.",
   "The education working calendar is on SharePoint behind a sign-in; not read.",
-  "NCC has a stated \"2027 mission goal\" (organizational health in 51% of churches, schools and ministries); it is a goal, not an event."
+  "NCC has a stated \"2027 mission goal\" (organizational health in 51% of churches, schools and ministries); it is a goal, not an event.",
+  "(2026-11-06) nccsda.com/calendar answered a normal request this time (no bot check). Its month view shows only Nov 2026 (Adventurer Family Fun Weekends, two StreamYard webinars); the events archive list shows Nov 2026, Dec 2026 webinars, the Feb 2027 Mobile Shower entry and a \"Test Event 1\" dated 2029 (ignored).",
+  "(2026-11-06) The two youth calendar images on nccsdayouth.com are the same files as last pass (no change), so the youth and Pathfinder items stand.",
+  "(2026-11-06) Recent events on the sitemap are past: Family Ministries Workshop 16-17 Oct 2026 (Carmichael) and the 49th African American convocation 10 Oct 2026.",
+  "(2026-11-06) Northern Lights (Oct 2026) and \"Made to Thrive\" (Leoni Meadows) carry no 2027 event dates; Leoni plans a playground for summer 2027."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "aheadChecked_blocked": [
+  "https://nccsda.com/wp-json/wp/v2/mec-events — 401 - REST API restricted by the site's security plugin (the events archive and RSS feed were read instead)",
+  "https://nccsda.com/?mec-ical-feed=1 — returns the HTML home page, not an ICS feed"
+ ],
+ "notPublishedYetNov2026": [
+  "Redwood Area Camp Meeting 2027: the site says \"2027 dates coming soon\" though the 2027 online application is already open and featured speakers are announced.",
+  "Leoni Meadows summer camps 2027: the youth-camps page still shows 2026 registration and 2026 weeks (28 Jun - 2 Aug).",
+  "50th African American Ministries convocation (2027): the 49th was 10 Oct 2026 (Stockton); nothing for 2027.",
+  "2027 Adventurer Family Fun Weekends, communication and development webinars for 2027, and a 2027-2028 youth or Pathfinder calendar.",
+  "The Dominican Republic youth mission trip 2027 page gives no dates in its text (the existing record keeps March 2027)."
  ]
 }

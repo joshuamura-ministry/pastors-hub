@@ -3,8 +3,8 @@
  "slug": "south-atlantic",
  "union": "Southern",
  "site": "https://www.sacsda.org",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://www.sacsda.org/sac-events/",
   "https://www.sacsda.org/download/161/events/7185/2026-sac-calendar-final-2.pdf",
@@ -23,7 +23,15 @@
   "https://www.sacsda.org/?s=2027",
   "https://www.sacsda.org/campground/",
   "https://www.sacsda.org/camp-meeting/",
-  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://www.sacsda.org/events/tri-state-center-ministries-convention/",
+  "https://www.sacsda.org/wp-content/uploads/2026/10/TSCCA-Convention-SaveDate2.jpg",
+  "https://www.sacsda.org/events/sac-married-lovers-retreat-2027/",
+  "https://www.sacsda.org/wp-json/wp/v2/media?search=calendar&per_page=50",
+  "https://www.sacsda.org/wp-json/wp/v2/media?search=2027&per_page=50",
+  "https://www.sacsda.org/wp-json/wp/v2/media?search=camp&per_page=50",
+  "https://www.sacsda.org/wp-json/wp/v2/media?per_page=40&orderby=date&order=desc&_fields=date,title,source_url",
+  "https://www.sacsda.org/wp-json/wp/v2/posts?per_page=20&_fields=date,title,link"
  ],
  "usuallyHeldNotYetPublished": [
   "River Oaks camp meeting (June) and its Hispanic and Franco-Haitian camp meetings: no 2027 dates.",
@@ -58,6 +66,32 @@
    "source": "calendar",
    "note": "flyer: 15-16 Apr Be Ready Summit (disaster-response training and workshops); 17 Apr ACS Convention with evening banquet; 18 Apr 5K run/walk with Health Ministries; registration details coming soon (earlier registrations transfer). Explains the title the first pass could not.",
    "when": "upcoming"
+  },
+  {
+   "title": "Tri-State Center Ministries Convention",
+   "start": "2027-01-15",
+   "end": "2027-01-17",
+   "place": "River Oaks Convention Center, Orangeburg, SC",
+   "category": "community-service",
+   "category2": "evangelism-outreach",
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.sacsda.org/events/tri-state-center-ministries-convention/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "save-the-date flyer (29 Oct 2026): plenaries, mini sessions and breakouts for pastors, ACS, PARL, Personal Ministries leaders, pantry directors and all members wanting to be equipped for community engagement; sample sessions on community resource centers, grant writing, trauma-informed ministry, disaster response; registration \"opening soon\""
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "No 2027 master calendar PDF: the media library still has only the 2026 calendar (uploaded 30 Jun 2026).",
+  "No 2027 dates for the River Oaks camp meeting or the Hispanic and Franco-Haitian camp meetings on any page or in the feed (a \"Camp Meeting Program 2027\" Word file was uploaded 14 Jul 2026 but is not linked from a page and was not opened: not a PDF/ICS/JSON).",
+  "Tri-State Center Ministries Convention registration had not opened on 6 Nov 2026."
+ ],
+ "notes": [
+  "(2026-11-06) The iCal feed now gives the SAC Married Lovers Retreat 2027 as 12-14 Feb 2027, matching the page (the October pass saw 19-22 Feb in the feed); the existing record (12-14 Feb) needs no change.",
+  "(2026-11-06) The website event list and the feed end in April 2027; Nov-Dec 2026 items come only from the 2026 master calendar already in the data.",
+  "(2026-11-06) Recent uploads in the window are programme booklets for staff-type events (Joint Intern Bootcamp 2026, Elders Retreat 2026 programme) with no page describing them; not recorded.",
+  "(2026-11-06) The camp-meeting page still redirects to the 2025 camp meeting event."
  ]
 }

@@ -3,8 +3,8 @@
  "slug": "south-central",
  "union": "Southern",
  "site": "https://iamsouthcentral.org",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://iamsouthcentral.org/south-central-events/",
   "https://iamsouthcentral.org/wp-content/uploads/2026/03/SCC-2026-Calendar_March30.pdf",
@@ -30,7 +30,13 @@
   "https://iamsouthcentral.org/health-ministries/",
   "https://iamsouthcentral.org/education/",
   "https://iamsouthcentral.org/south-central-news/",
-  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf"
+  "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+  "https://iamsouthcentral.org/wp-json/wp/v2/media?search=calendar&per_page=50",
+  "https://iamsouthcentral.org/wp-json/wp/v2/media?search=2027&per_page=50",
+  "https://iamsouthcentral.org/wp-json/wp/v2/media?per_page=40&orderby=date&order=desc&_fields=date,title,source_url",
+  "https://iamsouthcentral.org/wp-json/wp/v2/posts?per_page=20&_fields=date,title,link",
+  "https://iamsouthcentral.org/wp-content/uploads/2026/10/TENTATIVE-2026-2027-CALENDAR-1-scaled.jpg",
+  "https://iamsouthcentral.org/"
  ],
  "usuallyHeldNotYetPublished": [
   "Camp meeting (June in 2026), Latino camp meeting, Camp Thunderbird summer camp, youth federation days, Simultaneous Harvest campaign, ACS back-to-school outreach: no 2027 dates.",
@@ -45,5 +51,16 @@
   "byMainCategory": {},
   "conferenceRunPublicByMainCategory": {}
  },
- "events": []
+ "events": [],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "No 2027 conference calendar PDF: the media library has the 2026 calendar (30 Mar 2026) and a \"TENTATIVE 2026-2027 CALENDAR\" uploaded 6 Oct 2026, which is the SCC Schools year calendar (in-service, MAP testing, breaks, a TBD mission trip and outdoor school) and carries no conference ministry events.",
+  "Camp meeting 2027, Latino camp meeting, Camp Thunderbird summer camp, youth federation days, Simultaneous Harvest, ACS back-to-school outreach: still no 2027 dates.",
+  "The website event list shows \"No event found!\" from November 2026 onward; the MEC events feed has nothing dated after the June 2026 camp meeting."
+ ],
+ "notes": [
+  "(2026-11-06) The first fetch of the events page timed out (curl exit 000); the retry succeeded.",
+  "(2026-11-06) The tentative calendar PDF could not be text-extracted on this machine (no PDF tools); its JPG twin (same upload) was read instead.",
+  "(2026-11-06) Recent uploads are job postings, an AFE 2028 flyer and an Oshkosh 2029 image, all outside the window."
+ ]
 }

@@ -3,9 +3,9 @@
  "union": "Pacific Union",
  "slug": "union-pacific",
  "site": "https://www.adventistfaith.com",
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarUrls": [
   "https://www.adventistfaith.com/wp-json/tribe/events/v1/events?start_date=2026-10-01&end_date=2028-12-31",
   "https://paucedu.adventistfaith.com/tk12-resources/calendars-and-events/",
@@ -36,7 +36,18 @@
   "https://soulswest.org/s/CALENDAR-2026-2027-revised-8-2-2026.pdf",
   "https://soulswest.org/invite",
   "https://www.adventistfaith.com/ministries/literature-ministries/",
-  "https://youthrush.adventistfaith.org/"
+  "https://youthrush.adventistfaith.org/",
+  "https://www.adventistfaith.com/wp-json/tribe/events/v1/events?start_date=2026-10-01&end_date=2028-12-31&per_page=50",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027&per_page=50",
+  "https://www.adventistfaith.com/wp-json/wp/v2/pages?search=2027&per_page=50",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?after=2026-10-01T00:00:00&per_page=100&orderby=date",
+  "https://www.adventistfaith.com/news/forged-for-more/",
+  "https://www.adventistfaith.com/news/making-an-impact-through-volunteering/",
+  "https://www.adventistfaith.com/news/made-to-thrive/",
+  "https://www.adventistfaith.com/news/staying-faithful-in-a-shifting-world-2/",
+  "https://www.adventistfaith.com/news/around-30-churches-collaborate/",
+  "https://www.adventistfaith.com/news/pacificquest/",
+  "https://www.adventistfaith.com/ministries/native-american-ministries/"
  ],
  "events": [
   {
@@ -359,6 +370,20 @@
   "The \"Calendar of Events 2026-2027 - Revised August 2026\" opens only in an Adobe cloud viewer that could not be read; the February 2026 PDF from the public media library was used.",
   "Left out (rule): NAD Education Advisory Committee (17-19 May), NAD Union Directors' Council (19-20 May), NAD summer curriculum committees (14-25 Jun), Educational Leadership/Superintendents' Councils, MAP test windows, holidays.",
   "NAD FLL Robotics Championship (2 May 2027, Orlando) is on the union calendar but is a division event; it is filed under southern-california, which lists it too.",
-  "SOULS West classes, closed banquet weekend and school shutdown (May 2027) are internal and left out."
+  "SOULS West classes, closed banquet weekend and school shutdown (May 2027) are internal and left out.",
+  "(2026-11-06) Evangelism Endowment Fund deadlines confirmed on the page: 2027 round 1 - Thursday 28 Jan (local conference) and Thursday 25 Feb (union); 2027 round 2 - Thursday 7 Oct (local conference) and Thursday 28 Oct (union). Only applications submitted through the local conference are accepted at the union. ",
+  "(2026-11-06) All 37 union news posts since 1 Oct 2026 were listed and the seven October conference newsletters (Southern Connect, SECC Conference Connections, Northern Lights, Nevada-Utah Views, Ho`ike, Central ACTS, Arizona News) were read: no 2027 event dates beyond the Nevada-Utah Regional Convocation (4-6 Ju",
+  "(2026-11-06) The education calendars page now has a second Adobe cloud link (29e57574...) beside the August 2026 revision; neither can be read without scripts. The February 2026 calendar PDF in the public media library remains the readable version."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "aheadChecked_blocked": [
+  "https://youthrush.adventistfaith.org/ — connection failed (TLS error, as last pass)",
+  "https://acrobat.adobe.com/id/urn:aaid:sc:US:44a1598b-6d2e-4ce3-bc84-092592a1c6a6 — Adobe cloud viewer (scripts only); the \"Calendar of Events 2026-2027 - Revised August 2026\" was not read, same as last pass"
+ ],
+ "notPublishedYetNov2026": [
+  "PUCOE Calendar of Events 2027-2028: still \"Coming soon!\".",
+  "Pacific Union Pathfinder Camporee 2027, the union pastors' meeting / pastor-family retreat 2027, YouthRush 2027 (site unreachable), a union youth congress: no dates on the union site or in its news.",
+  "The union events calendar (Tribe API) is still empty: 0 events from Oct 2026 to Dec 2028.",
+  "SOULS West still posts only the 2026-2027 calendar (revised 2 Aug 2026)."
  ]
 }

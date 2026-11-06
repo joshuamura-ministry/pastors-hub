@@ -11,8 +11,8 @@
   "https://www.nadsecretariat.org/wp-content/uploads/2026/02/2026-NAD-CAMP-MEETING-.pdf",
   "https://columbiaunionvisitor.com/category/chesapeake-conference"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the Google Calendar embedded on ccosda.org/calendar (4,066 entries) has a public ICS feed that reads fine; all of 2027 is marked tentative.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "A– (calendar feed found): ccosda.org/calendar embeds a public Google Calendar whose ICS feed is readable. It holds a full 2027 calendar under a \"**TENTATIVE CALENDAR**\" banner, with departments, ministeriums, camps, clubs, Hispanic ministries, union and NAD items. The first pass (grade C) could not read it.",
  "furthestPublished": "2027-12",
  "furthestNote": "last dated item: 2027-12-18 (Day of Gratitude); the whole of 2027 is tentative",
@@ -26,7 +26,12 @@
   "https://ccosda.org/chesapeake-leaders-tour-frederick-church-ahead-of-2027-constituency-meeting/",
   "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/",
   "https://columbiaunionvisitor.com/category/chesapeake-conference",
-  "https://columbiaunionvisitor.com/rss.xml"
+  "https://columbiaunionvisitor.com/rss.xml",
+  "https://ccosda.org/eventshub/",
+  "https://ccosda.org/category/news/",
+  "https://ccosda.org/wp-json/wp/v2/posts?search=2027&per_page=20",
+  "https://ccosda.org/wp-json/wp/v2/posts?per_page=15&orderby=date&order=desc",
+  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp+meeting&per_page=10&orderby=date&order=desc"
  ],
  "stats": {
   "records": 34,
@@ -102,35 +107,36 @@
   }
  },
  "counts": {
-  "total": 34,
-  "conferenceLevel": 23,
+  "total": 40,
+  "conferenceLevel": 28,
   "observances": 3,
   "byCategory": {
    "pastoral-leadership": 4,
    "children": 5,
-   "health": 1,
-   "pathfinders": 5,
+   "health": 2,
+   "pathfinders": 6,
    "youth-young-adults": 7,
    "evangelism-outreach": 1,
    "administration": 1,
    "camp-meeting": 2,
    "other": 1,
-   "education": 3,
-   "family-women-men": 3,
+   "education": 5,
+   "family-women-men": 5,
    "discipleship-spiritual": 1
   },
   "byCategoryConferenceOnly": {
    "pastoral-leadership": 2,
    "children": 3,
-   "health": 1,
+   "health": 2,
    "youth-young-adults": 7,
    "evangelism-outreach": 1,
-   "pathfinders": 2,
+   "pathfinders": 3,
    "administration": 1,
    "camp-meeting": 2,
    "other": 1,
-   "family-women-men": 2,
-   "discipleship-spiritual": 1
+   "family-women-men": 4,
+   "discipleship-spiritual": 1,
+   "education": 1
   }
  },
  "excludedFromCalendar": {
@@ -365,9 +371,7 @@
      "end": "2027-07-20",
      "title": "Northern Ministerium"
     }
-   ],
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   ]
   },
   {
    "title": "Adventurer Award Days (Frederick church; Ellicott City church)",
@@ -400,8 +404,7 @@
      "title": "Adventurer Award Day - Ellicott City Church"
     }
    ],
-   "tentative": true,
-   "note": "the feed gives the Frederick church address for both days; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "the feed gives the Frederick church address for both days"
   },
   {
    "title": "Chesapeake on the Move",
@@ -415,8 +418,7 @@
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "title only; the October 2025 \"On The Move\" was a 1-mile and 5K run/walk; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "title only; the October 2025 \"On The Move\" was a 1-mile and 5K run/walk"
   },
   {
    "title": "NAD Spanish Leaders' Convention",
@@ -457,9 +459,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Church Evangelism & Revitalization Symposium",
@@ -472,9 +472,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Master Guide University - Skills Campout",
@@ -487,9 +485,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "World Adventurer Day (local church)",
@@ -516,8 +512,7 @@
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "held every five years; elects conference officers. Host church voted by the Executive Committee (news, 16 Jul 2026); the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "held every five years; elects conference officers. Host church voted by the Executive Committee (news, 16 Jul 2026)"
   },
   {
    "title": "Adventurer Family Weekend",
@@ -531,8 +526,7 @@
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "2027 theme chosen, to be revealed later (news, 13 Aug 2026); the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "2027 theme chosen, to be revealed later (news, 13 Aug 2026)"
   },
   {
    "title": "Hispanic Pastors' Retreat",
@@ -545,9 +539,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Spanish Camp Meeting",
@@ -560,9 +552,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Summer camp - director's orientation",
@@ -575,9 +565,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Camp Meeting",
@@ -590,9 +578,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Summer camp - staff training",
@@ -605,9 +591,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "NAD CALLED Pastors' Convention",
@@ -681,8 +665,7 @@
      "title": "FLAG Camp – Week #5"
     }
    ],
-   "tentative": true,
-   "note": "weeks run Sunday to Sunday; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "weeks run Sunday to Sunday"
   },
   {
    "title": "Mt. Aetna summer camp (five weeks)",
@@ -740,8 +723,7 @@
      "title": "Summer Camp - Week #"
     }
    ],
-   "tentative": true,
-   "note": "weeks run Sunday to Sunday; the fifth is titled \"Summer Camp - Week #\" in the feed; the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "weeks run Sunday to Sunday; the fifth is titled \"Summer Camp - Week #\" in the feed"
   },
   {
    "title": "Church Communication Directors Training",
@@ -754,9 +736,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Columbia Union Principals Bootcamp",
@@ -811,7 +791,7 @@
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
    "tentative": true,
    "datePrecision": "feed title says \"Date TBD\"",
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "Marked tentative or \"date TBD\" in the feed itself (6 Nov 2026)."
   },
   {
    "title": "Spanish Men's Retreat",
@@ -827,7 +807,7 @@
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
    "tentative": true,
    "datePrecision": "feed title says \"(TBD)\"",
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "Marked tentative or \"date TBD\" in the feed itself (6 Nov 2026)."
   },
   {
    "title": "End It Now (abuse-prevention emphasis)",
@@ -854,9 +834,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Eastern Shore Convocation",
@@ -869,9 +847,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Children's & Youth Leaders Convention",
@@ -884,9 +860,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "SALT: Spiritual Academy Leadership Training (union)",
@@ -915,7 +889,7 @@
    "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
    "tentative": true,
    "datePrecision": "feed title says \"(TBD)\"",
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "Marked tentative or \"date TBD\" in the feed itself (6 Nov 2026)."
   },
   {
    "title": "World Pathfinder Day",
@@ -941,9 +915,7 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
-   "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
   },
   {
    "title": "Pathfinder Camporee",
@@ -956,9 +928,90 @@
    "level": "conference",
    "url": "https://ccosda.org/calendar/",
    "source": "calendar",
-   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)",
+   "sourceDetail": "calendar (public ICS feed: https://calendar.google.com/calendar/ical/noq994uibcv2sn9lisusj5d4r4%40group.calendar.google.com/public/basic.ics)"
+  },
+  {
+   "title": "Encuentro Familiar - Eastern Shore",
+   "start": "2027-10-02",
+   "end": "2027-10-02",
+   "place": null,
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "families",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "Hispanic family gathering on the Eastern Shore."
+  },
+  {
+   "title": "Women's Ministries Retreat",
+   "start": "2027-10-08",
+   "end": "2027-10-10",
+   "place": null,
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day",
    "tentative": true,
-   "note": "the whole 2027 calendar sits under a \"**TENTATIVE CALENDAR**\" banner entry"
+   "note": "Feed title 'Women's Min. Retreat (tentative)'. The 2026 retreat was held 2-4 Oct 2026 at Hershey Lodge, PA."
+  },
+  {
+   "title": "Master Guide Camporee",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "place": "Camp Pecometh, Centreville, MD",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "Second Master Guide Camporee; the first (theme 'RISE & BUILD', 70 Master Guides) was held at Camp Pecometh in Oct 2026 (news 22 Oct 2026)."
+  },
+  {
+   "title": "CU Education Meetings",
+   "start": "2027-10-17",
+   "end": "2027-10-21",
+   "place": null,
+   "category": "education",
+   "category2": null,
+   "audience": "teachers",
+   "level": "union",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Chesapeake on the Move 2027",
+   "start": "2027-10-24",
+   "end": "2027-10-24",
+   "place": null,
+   "category": "health",
+   "category2": "evangelism-outreach",
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day",
+   "note": "5K and 1-mile run/walk. The first one was held Sunday 25 Oct 2026 at the conference office (about 100 participants, co-sponsored by ADRA); news (28 Oct 2026) says 2027 plans will be unveiled soon. The feed also keeps 'Chesapeake on the Move Event' on 11 Apr 2027 (already in the existing list)."
+  },
+  {
+   "title": "STEM Fest (HVA)",
+   "start": "2027-10-31",
+   "end": "2027-10-31",
+   "place": "Highland View Academy, Hagerstown, MD",
+   "category": "education",
+   "category2": null,
+   "audience": "students",
+   "level": "conference",
+   "url": "https://ccosda.org/calendar/",
+   "source": "feed",
+   "datePrecision": "day"
   }
  ],
  "notes": [
@@ -967,6 +1020,20 @@
   "The constituency meeting (May 2027) is held every five years; the conference news says the Executive Committee voted the Frederick church as host.",
   "The feed also confirms the evangelism-subsidy deadline of 15 Nov 2026 (listed in prepDeadlines).",
   "Left out: committees, boards, councils and advisories (including camp-meeting, constituency organizing and nominating committees, ADCOM weekly), school-calendar dates, holidays and the camp-meeting \"pitch\" (set-up).",
-  "This feed also fills Oct 2026 – Mar 2027, which the first pass left almost empty for Chesapeake (not rebuilt here; see open items)."
+  "This feed also fills Oct 2026 – Mar 2027, which the first pass left almost empty for Chesapeake (not rebuilt here; see open items).",
+  "(2026-11-06) The feed (4,072 entries) is readable and the main agent's feed script will produce the same items; this file lists only what is not in the existing list: Nov 2026 - Mar 2027 ministry items (the first pass left those months almost empty) and the new month, Oct 2027.",
+  "(2026-11-06) All 35 existing Apr-Sep 2027 records were re-checked against the feed: same dates, no cancellations.",
+  "(2026-11-06) Suggested through-line rewording now that the tentative banner is gone (month unchanged, so 'through' is left null): en 'Calendar runs to Dec 2027; a few 2027 retreats are still marked tentative.' / es 'El calendario llega hasta diciembre de 2027; algunos retiros de 2027 siguen marcados como provisi",
+  "(2026-11-06) Left out, as before: ADCOM (weekly), Executive/Personnel/Association/Curriculum committees, councils and advisories (Mission and Church Growth Council, Principal's Council, Children's & Youth Pastors' Advisory, Camp Meeting Committee, constituency organizing and nominating committees), CU committees",
+  "(2026-11-06) Site news to 4 Nov 2026 reports held events only (STEM Fest, Eastern Shore Convocation, the first On the Move race, the first Master Guide Camporee, the women's retreat at Hershey Lodge). The 2027 evangelism subsidy application cycle opened as planned (deadline 15 Nov 2026, already in prepDeadlines)",
+  "(2026-11-06) Columbia Union Visitor's Chesapeake category (newest 5 Nov 2026) adds no dates. No 2027 NAD camp-meeting list is posted yet.",
+  "(2026-11-06) The feed's year-long \"TENTATIVE CALENDAR\" banner over 2027 is gone; the tentative flag now stays only on records whose own title says tentative or TBD (21 flags cleared)."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the Google Calendar embedded on ccosda.org/calendar (4,066 entries) has a public ICS feed that reads fine; all of 2027 is marked tentative.",
+ "notPublishedYetNov2026": [
+  "Locations for the four town halls (Mar-Apr 2027) and for the Oct 2027 women's retreat and Encuentro Familiar",
+  "Plans for Chesapeake on the Move 2027 (news says 'soon')",
+  "The 2027 Adventurer Family Weekend theme (chosen, to be revealed)",
+  "Nothing dated in 2028"
  ]
 }

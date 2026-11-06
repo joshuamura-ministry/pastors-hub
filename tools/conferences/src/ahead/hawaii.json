@@ -11,9 +11,9 @@
   "https://www.hawaiisda.com/hawaii-convocation",
   "https://www.campwaianae.org/camp-dates.html"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "D (no event calendar; reports and pages only)",
  "furthestPublished": "2026-11",
  "furthestNote": "The latest dated item from Hawaii is the union Fall Education Council (10-12 Nov 2026), from the Q2 2026 education report. Hawaii publishes no conference calendar.",
@@ -24,7 +24,13 @@
   "https://www.hawaiisda.com/hawaii-convocation",
   "https://www.campwaianae.org/camp-dates.html",
   "https://www.adventistfaith.com/news/hoike-august-2026/",
-  "https://www.adventistfaith.com/news/reaching-hawaii-with-the-everlasting-gospel/"
+  "https://www.adventistfaith.com/news/reaching-hawaii-with-the-everlasting-gospel/",
+  "https://www.hawaiisda.com/",
+  "https://www.hawaiisda.com/constituency",
+  "https://www.hawaiisda.com/news-basil",
+  "https://www.hawaiisda.com/ministerial",
+  "https://www.adventistfaith.com/news/hoike-october-2026/",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027&per_page=50"
  ],
  "events": [],
  "stats": {
@@ -53,6 +59,18 @@
   }
  ],
  "notes": [
-  "An August 2026 Recorder profile says a five-year strategic evangelism plan is being developed with local pastors, churches and schools. It gives no dates."
+  "An August 2026 Recorder profile says a five-year strategic evangelism plan is being developed with local pastors, churches and schools. It gives no dates.",
+  "(2026-11-06) Newest page change in the sitemap is the ministerial page (4 Aug 2026, a pastoral handbook); none of the 37 pages mentions 2027.",
+  "(2026-11-06) Ho`ike (Recorder, Oct 2026) and the union news search for 2027 carry no Hawaii 2027 dates."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "aheadChecked_blocked": [
+  "https://www.hawaiisda.com/hawaii-convocation — 404 - the convocation page no longer exists"
+ ],
+ "notPublishedYetNov2026": [
+  "A 2026 or 2027 youth department calendar (the page still offers \"2025-YOUTH-DEPT-CALENDAR.pdf\").",
+  "Camp Waianae 2027 summer camp: the camp-dates page still says \"Summer 2026\".",
+  "Big Island convocation 2027: the convocation page has been removed (404).",
+  "The constituency page is still the 2025 session hub; nothing for a 2027 or 2028 session."
  ]
 }

@@ -8,8 +8,8 @@
   "https://calendar.google.com/calendar/ical/rqvja5cave295a17sv48k72kr2umrvlg%40import.calendar.google.com/public/basic.ics",
   "https://columbiaunionvisitor.com/category/ohio-conference"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); Google Calendar embedded on ohioadventist.org/calendar (112 entries) re-read 1 Oct 2026; it ends 22 Aug 2027.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "B+ : public Google Calendar embedded on ohioadventist.org/calendar. It is reliable for club ministries, camps, education and world-church days, and thin on departments, pastors and evangelism. 18 of its 61 records are world-church observance days, flagged as level \"observance\".",
  "furthestPublished": "2027-08",
  "furthestNote": "last dated item: 2027-08-19 (Adventist Young Professionals: Austin, TX: ayp•me/convention); the last conference-run item is Summer Camp Teen Week (4–10 Jul 2027)",
@@ -26,7 +26,9 @@
   "https://www.ohioadventist.org/education",
   "https://www.ohioadventist.org/ohio-conference-celebrates-657-baptisms-following-historic-week-of-evangelism",
   "https://igniteohio.com/",
-  "https://columbiaunionvisitor.com/category/ohio-conference"
+  "https://columbiaunionvisitor.com/category/ohio-conference",
+  "https://columbiaunionvisitor.com/2026/first-annual-blast-university-announced",
+  "https://columbiaunionvisitor.com/rss.xml"
  ],
  "stats": {
   "records": 16,
@@ -350,6 +352,16 @@
  "notes": [
   "PBE division level: Ohio says 16–17 Apr 2027 (place TBD); Potomac and Chesapeake say 23–24 Apr. Kept as each calendar shows it.",
   "Summer Camp \"Junior Week (ages 9-11)\" appears twice (13–19 and 20–26 Jun 2027); the second is probably Tween Week, as in 2026.",
-  "No Ignite Ohio follow-up, camp meeting or pastors' meeting is dated for 2027 anywhere on the site."
+  "No Ignite Ohio follow-up, camp meeting or pastors' meeting is dated for 2027 anywhere on the site.",
+  "(2026-11-06) The public Google Calendar ICS was re-read on 6 Nov 2026: every record dated Nov 2026 to Aug 2027 is already in the existing list with the same dates; no additions, moves or cancellations.",
+  "(2026-11-06) The home page and Visitor still carry the Ignite Ohio results (657 baptisms in the 19-26 Sep 2026 week; 1,220 baptisms in 2026 so far per the Visitor, 5 Nov 2026).",
+  "(2026-11-06) Visitor, 5 Nov 2026: the Mountain View Conference will hold a \"First Annual BLAST University\" in July 2027 in Charleston, W.Va., taught by Ohio Conference pastors; that is a Mountain View event (not added here).",
+  "(2026-11-06) The \"Summer Camp - Junior Week (ages 9-11)\" duplicate (13-19 and 20-26 Jun 2027) is still on the calendar as before."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); Google Calendar embedded on ohioadventist.org/calendar (112 entries) re-read 1 Oct 2026; it ends 22 Aug 2027.",
+ "notPublishedYetNov2026": [
+  "October 2027: nothing on the calendar (it ends 22 Aug 2027).",
+  "2027 camp meeting, pastors' meetings, Ignite Ohio follow-up, evangelism, women's or men's retreat dates: none on the calendar or the department pages.",
+  "Camp Mohaven 2027 summer registration (the camp page carries the 2026 report only)."
  ]
 }
