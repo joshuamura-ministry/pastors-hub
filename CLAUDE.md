@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.72.1: the page's badge v10.72.1 (the page only; no function changed); in Compare your churches, a church added from the conference list is tagged "To compare" in Digital footprint's Side by side and Every church, never under "Your churches"
 - v10.72.0: `/.netlify/functions/account` → `"fn":"account-1.1"`, `"claudeDay":6`, `"trialClaudeDay":3`; gifts → `gifts-1.4`; present → `present-1.5`; connect → `connect-1.1`; digital → `digital-1.3`; advise → `advise-2.8`; the page's badge v10.72.0; with payments still off the page is the full version for everyone, as before
 - v10.62.0: `/.netlify/functions/digital` → `"fn":"digital-1.2"`, `"readFn":"digital-read-1.2"`, `"reviewFn":"review-1.0"`, `"review":true` (the Anthropic key and `TERRAIN_AI_PASS` are set), `"places":true`; the next reading (his "Check again", or the monthly refresh) brings the marks; his own churches' in-depth review runs by itself on his unlocked device (`?ideas=`)
 - v10.61.0: `/.netlify/functions/digital` → `"fn":"digital-1.1"`, `"readFn":"digital-read-1.1"`, `"places":true` (the key is set); `/.netlify/functions/register` → `"fn":"register-1.3"`; a conference's reading starts when one of its pastors registers or signs in (else the first time one opens Compare your churches; about an hour; `?conf=Pennsylvania` with a token shows its progress)
@@ -224,6 +225,20 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.72.1 (6 Nov 2026, quick lane) — a church added from the conference list is one to compare, never one of his.** The pastor, on his
+phone, of Lansdale's Digital footprint card ("We did not find Josh Mura's name where a visitor looks for the pastor"): *"I put Lansdale, which
+is not my church cause I want to compare it and it said this on it it has my name and stuff … the app doesn't know that if it's not my church
+I just wanted to choose Lansdale so that I could see … it in comparison with mine"*. Since v10.71.0 the picker keeps a tapped church on the
+device (`chAddDir`, `dir:{org}`), and `dfMine` counted every church on the device as his by its name: Lansdale was judged against his
+registration (its pastor "not named", a fix telling him to put his name on their site), drawn under "Your churches", and reviewed in depth by
+itself (a paid study). Now `dfMine` leaves out a church added from the list unless the listing names him or he has filled in "Your church"
+there (`capacity.confirmed`); a church mapped by its address is his, as before. Such a church is **To compare** / **Para comparar**
+(`DF_T.cmp`; `rows[].cmp`, `cmpSet` through `chDirEntry`): a column in Side by side after his own (its name a link to its row in Every church,
+the tag beside it; `sideRows`), its row tagged and placed right after his own, judged as every other church is (its listing's pastor the
+pastor of record; "Review in depth" on his tap, never by itself: `dfDeepAuto` keeps to `own`). `vocab.json` rebuilt for the stamps. Tests:
+`v72-1-compare-not-mine` (new, 17; failing first on v10.72.0: `~/Ministry Work/Terrain-work/v88/logs/ff-v72-1-compare-not-mine.log`); the
+twelve suites round Digital footprint, the comparison and the stamps pass unchanged. Full suite: 200 suites · 12,152 passed · 0 failed. Its own PR (PR #49 was merged first, v10.72.0 live).
 
 **v10.72.0 (6 Nov 2026, full lane) — the free version and the full version, decided by the server; $12 a month, $120 a year.** The
 pastor, to the audit report's recommendation (*"the free version shows the problem clearly; the paid version is the only way to answer
