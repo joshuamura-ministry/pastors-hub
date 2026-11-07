@@ -50,8 +50,18 @@ c('the version names this data', /^[0-9a-f]{12}$/.test(idx.v));
 c('the index is small enough for a first view (under 120 KB)', Buffer.byteLength(have['index.json']) < 120000);
 c('every conference file under 40 KB', Object.entries(have).filter(([k]) => k.startsWith('c/')).every(([, v]) => Buffer.byteLength(v) < 40000));
 c('every suggested conference exists', idx.conferences.every(x => x.suggest.length >= 3 && x.suggest.every(s => slugs.includes(s.slug) && ['union', 'size', 'side', 'other', 'strong'].includes(s.k))));
-// the approved v52 sample's own suggestions on the past 12 months (v50's set, on 18 months, was Allegheny East … South Central)
-c('Pennsylvania is there, with the sample\'s suggested set', idx.conferences.find(x => x.slug === 'pennsylvania').suggest.map(s => s.slug + ':' + s.k), ['ohio:union', 'arkansas-louisiana:size', 'nevada-utah:side', 'central-california:strong']);
+// v10.71.0: read from the data (the monthly refresh moves the dates): the approved v52 sample's set was pinned here by name (Ohio,
+// Arkansas-Louisiana, Nevada-Utah, Central California) and the November 2026 calendars moved the "strong" pick; each pick is now held
+// to the builder's own rule (profiles.mjs, "default comparison set"): same union · similar size (within ×1.6, another union) · the other
+// side of the country (East <-> West, a full calendar) · strongest, on a full calendar, in the area where this calendar is thinnest
+{ const by = Object.fromEntries(idx.conferences.map(x => [x.slug, x])), P = by.pennsylvania, S = P.suggest, q = k => by[(S.find(s => s.k === k) || {}).slug] || { calendar: {}, lenses: {}, official: {} };
+  const core = idx.lenses.filter(l => l.core).map(l => l.id), med = idx.baseline.lens;
+  const weakest = core.slice().sort((a, b) => (med[b] - P.lenses[b].share) - (med[a] - P.lenses[a].share))[0];
+  const gap = (a, b) => Math.abs(Math.log(a.official.members / b.official.members));
+  c('Pennsylvania is there, with a suggested set that follows the builder\'s rules (same union · similar size · the other side · strong where its calendar is thinnest: ' + weakest + ')',
+    [S.map(s => s.k), q('union').union === P.union && q('union').calendar.confidence !== 'low', q('size').union !== P.union && gap(q('size'), P) < Math.log(1.6),
+      q('side').region === 'West' && q('side').calendar.confidence === 'high', (S.find(s => s.k === 'strong') || {}).lens === weakest && q('strong').calendar.confidence === 'high' && (q('strong').lenses[weakest] || {}).share >= med[weakest]],
+    [['union', 'size', 'side', 'strong'], true, true, true, true]); }
 c('every lens and group has English and Spanish', idx.lenses.every(l => l.en && l.es && l.en !== l.es) && idx.groups.every(g => g.en && g.es && g.en !== g.es));
 c('no "AI" or "IA" in any label', /\bAI\b|\bIA\b/.test(JSON.stringify(idx.lenses) + JSON.stringify(idx.groups)), false);
 const urls = []; const walk = (v, k) => { if (Array.isArray(v)) v.forEach(x => walk(x, k)); else if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) walk(x, kk); else if (typeof v === 'string' && (k === 'u' || k === 'url' || k === 'calendarUrls')) urls.push(v); };
@@ -70,27 +80,51 @@ c('Ohio\'s Schools examples are its schools\' own events', JSON.parse(have['c/oh
 const strs = []; const walk2 = (v, k, f) => { if (Array.isArray(v)) v.forEach(x => walk2(x, k, f)); else if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) walk2(x, kk, f); else if (typeof v === 'string' && !['u', 'url', 'calendarUrls'].includes(k) && !/^https?:/.test(v)) strs.push(f + ': ' + v); };
 for (const [f, v] of Object.entries(have)) walk2(JSON.parse(v), '', f);
 c('no "AI" or "IA" in any served word (' + strs.length + ' strings)', strs.filter(s => /\bAI\b|\bIA\b|artificial intelligence|inteligencia artificial/i.test(s.replace(/^[^:]+: /, ''))), []);
-c('…Iowa-Missouri\'s and Indiana\'s "IA" written out', [/MO and Iowa Pathfinder Fall Camporees/.test(have['c/iowa-missouri.json']), /Graduation Weekend - Indiana Academy/.test(have['c/indiana.json'])], [true, true]);
+// v10.71.0: read from the data (the monthly refresh moves the dates): two titles were pinned here by name; now every "IA" string of each
+// conference's own source files (src/events, src/ahead) is written out with pack.mjs's word, and the served file must hold none as written
+// and at least one of them (across the two) in its written-out form, so a dropped string never passes for a written-out one
+{ const WO = { 'iowa-missouri': 'Iowa', indiana: 'Indiana Academy' };
+  const srcStrs = sl => { const out = []; for (const d of ['events', 'ahead']) { const f = join(ROOT, 'tools/conferences/src', d, sl + '.json'); if (!existsSync(f)) continue;
+    const w = (v, k) => { if (Array.isArray(v)) v.forEach(x => w(x, k)); else if (v && typeof v === 'object') for (const [kk, x] of Object.entries(v)) w(x, kk); else if (typeof v === 'string' && !['u', 'url', 'calendarUrls'].includes(k)) out.push(v); };
+    w(JSON.parse(readFileSync(f, 'utf8')), ''); } return out; };
+  const ia = Object.entries(WO).map(([sl, to]) => { const pre = 'c/' + sl + '.json: ', served = strs.filter(s => s.startsWith(pre)).map(s => s.slice(pre.length));
+    const src = srcStrs(sl).filter(s => /\bIA\b/.test(s)), written = src.map(s => s.replace(/\bIA\b/g, to));
+    return { sl, src: src.length, asWritten: served.filter(s => /\bIA\b/.test(s)).length, reached: written.filter(w => served.some(s => s.includes(w))).length }; });
+  c('…Iowa-Missouri\'s and Indiana\'s "IA" written out (' + ia.map(x => x.sl + ': ' + x.src + ' in the source, ' + x.reached + ' served as "' + WO[x.sl] + '"').join('; ') + ')',
+    [ia.map(x => x.asWritten), ia.reduce((n, x) => n + x.reached, 0) > 0], [[0, 0], true]); }
 const through = JSON.parse(readFileSync(join(ROOT, 'tools/conferences/src/through.json'), 'utf8'));
 c('every conference says how far its calendar is published, in English and Spanish', slugs.every(s => through[s] && through[s].en && through[s].es && 'through' in through[s]));
 const pa = JSON.parse(have['c/pennsylvania.json']);
-c('Pennsylvania: published to Dec 2026, with both notes', [pa.ahead.through, !!pa.ahead.note.en, !!pa.ahead.note.es], ['2026-12', true, true]);
+// v10.71.0: read from the data (the monthly refresh moves the dates): how far Pennsylvania's calendar is published is src/through.json's
+c('Pennsylvania: published as far as through.json says (' + through.pennsylvania.through + '), with both notes', [pa.ahead.through, !!pa.ahead.note.en, !!pa.ahead.note.es], [through.pennsylvania.through, true, true]);
 c('Pennsylvania: OneVoice27\'s September 2027 series says start now (12 months before)', pa.ahead.conf.filter(x => /OneVoice27/.test(x.t) && x.h).map(x => x.h[0].k), ['start-now']);
 
 console.log('\n-- the past 12 months only; the year ahead is never scored --');
 const cfg = JSON.parse(readFileSync(join(ROOT, 'tools/conferences/src/config.json'), 'utf8'));
-c('the check date is 1 Oct 2026', [cfg.checked, idx.checked], ['2026-10-01', '2026-10-01']);
-c('24 months: the 12 before the check month, then the year ahead', [idx.months[0], idx.months[11], idx.months[12], idx.months[23], idx.past], ['2025-10', '2026-09', '2026-10', '2027-09', 12]);
-c('the profiles compare Oct 2025 – Sep 2026', [A.profiles.window.compared.from, A.profiles.window.compared.to], ['2025-10-01', '2026-09-30']);
+// v10.71.0: read from the data (the monthly refresh moves the dates): the check date is config.json's, a real day no later than today, and
+// index.json and ahead.json carry the same one; the 24 months and both windows follow from its month, never from a date written here
+const addM = (m, n) => new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7) - 1 + n, 1)).toISOString().slice(0, 7);
+const lastDay = m => new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7), 0)).toISOString().slice(0, 10);
+const CM = cfg.checked.slice(0, 7), ah = JSON.parse(have['ahead.json']);
+c('the check date is config.json\'s (' + cfg.checked + ': a real day, not after today), and index.json and ahead.json carry the same one',
+  [/^\d{4}-\d{2}-\d{2}$/.test(cfg.checked) && !isNaN(Date.parse(cfg.checked)) && cfg.checked <= new Date().toISOString().slice(0, 10), idx.checked, ah.today], [true, cfg.checked, cfg.checked]);
+c('24 months: the 12 before the check month, then the year ahead from the check month (' + CM + ')', [idx.months.length, idx.months[0], idx.months[11], idx.months[12], idx.months[23], idx.past], [24, addM(CM, -12), addM(CM, -1), CM, addM(CM, 11), 12]);
+c('the profiles compare the 12 months before the check month (' + addM(CM, -12) + ' to ' + addM(CM, -1) + '); the year ahead starts with it', [A.profiles.window.compared.from, A.profiles.window.compared.to, ah.window.from, ah.window.to],
+  [addM(CM, -12) + '-01', lastDay(addM(CM, -1)), CM + '-01', lastDay(addM(CM, 11))]);
 c('every conference\'s areas add up to its ministry events (one share each, past 12 months)', idx.conferences.every(x => Object.values(x.lenses).reduce((s, l) => s + l.n, 0) === x.counts.ministryEvents));
 c('…and its shares to 100% (±0.6)', idx.conferences.filter(x => x.counts.ministryEvents).every(x => Math.abs(Object.values(x.lenses).reduce((s, l) => s + l.share, 0) - 100) <= 0.6));
 const lastPast = A.profiles.window.compared.to;
 const examples = Object.entries(have).filter(([k]) => k.startsWith('c/')).flatMap(([, v]) => Object.values(JSON.parse(v).examples).flat());
 c('no example used in a comparison is from the year ahead (' + examples.length + ' examples)', examples.filter(e => e.start && e.start > lastPast).map(e => e.title), []);
-c('"typical" is the median of the usable calendars only (40 of 50)', [idx.baseline.basedOn, idx.baseline.total], [40, 50]);
-const B2 = M.buildAll(undefined, { checked: '2026-11-01', firstPassTo: cfg.firstPassTo });
-c('a later check date moves the compared months with it', [B2.profiles.window.compared.from, B2.profiles.window.compared.to], ['2025-11-01', '2026-10-31']);
-c('…and the same months keep the same counts (Nov 2025 – Sep 2026, every conference)', A.profiles.conferences.every(p => { const q = B2.profiles.conferences.find(x => x.slug === p.slug);
+// v10.71.0: read from the data (the monthly refresh moves the dates): the usable calendars are the ones not graded thin
+const usable = idx.conferences.filter(x => x.calendar.confidence !== 'low').length;
+c('"typical" is the median of the usable calendars only (' + usable + ' of 50)', [idx.baseline.basedOn, idx.baseline.total], [usable, 50]);
+// v10.71.0: read from the data (the monthly refresh moves the dates): the later check date is the first day of the month after config.json's,
+// so these windows are always one month on from the served ones (a date written here fell on the served month itself in November 2026)
+const NEXT = addM(CM, 1) + '-01';
+const B2 = M.buildAll(undefined, { checked: NEXT, firstPassTo: cfg.firstPassTo });
+c('a later check date (' + NEXT + ') moves the compared months with it', [B2.profiles.window.compared.from, B2.profiles.window.compared.to], [addM(CM, -11) + '-01', lastDay(CM)]);
+c('…and the same months keep the same counts (' + addM(CM, -11) + ' to ' + addM(CM, -1) + ', every conference)', A.profiles.conferences.every(p => { const q = B2.profiles.conferences.find(x => x.slug === p.slug);
   return JSON.stringify(A.profiles.window.months.slice(1, 12).map(m => p.months[m])) === JSON.stringify(B2.profiles.window.months.slice(0, 11).map(m => q.months[m])); }));
-c('…while the year ahead moves on (Nov 2026 – Oct 2027)', [B2.yearAhead.window.from, B2.yearAhead.window.to], ['2026-11-01', '2027-10-31']);
+c('…while the year ahead moves on (' + addM(CM, 1) + ' to ' + addM(CM, 12) + ')', [B2.yearAhead.window.from, B2.yearAhead.window.to], [NEXT, lastDay(addM(CM, 12))]);
 done();

@@ -11,8 +11,8 @@
   "https://columbiaunionvisitor.com/category/allegheny-west-conference",
   "https://awconf.org/departments/"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); event posts (40 in the Eventin feed) end in Sept 2026; the departments page lists health coordinator meetings to 19 Nov 2026.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "D : the /events page is an empty template. Event posts exist (Eventin plugin, 20 posts, 13 in the window), mostly online trainings. The site news stops in Aug 2025. Camp meeting dates come from the NAD camp meeting list. The website was readable directly on 1 Oct 2026.",
  "furthestPublished": "2026-11",
  "furthestNote": "last dated item: health ministry coordinators' Zoom meeting, 19 Nov 2026 (departments page); one undated 2027 item",
@@ -29,7 +29,20 @@
   "https://awconf.org/wp-json/wp/v2/pages?search=2027",
   "https://awconf.org/wp-json/wp/v2/posts?search=2027",
   "https://www.nadadventist.org/news/what-about-us-how-youth-led-evangelism-sparked-a-movement-in-the-allegheny-west-conference/",
-  "https://columbiaunionvisitor.com/category/allegheny-west-conference"
+  "https://columbiaunionvisitor.com/category/allegheny-west-conference",
+  "https://awconf.org/events/",
+  "https://awconf.org/campmeeting-2026/",
+  "https://awconf.org/campmeeting/",
+  "https://awconf.org/wp-json/wp/v2/posts?search=2027&per_page=20",
+  "https://awconf.org/wp-json/wp/v2/pages?search=2027&per_page=20",
+  "https://awconf.org/wp-json/wp/v2/posts?per_page=15&orderby=date&order=desc",
+  "https://awconf.org/wp-json/wp/v2/pages?per_page=30&orderby=modified&order=desc",
+  "https://awconf.org/wp-json/wp/v2/media?per_page=20&orderby=date&order=desc",
+  "https://columbiaunionvisitor.com/2026/%E2%80%98-me-it%E2%80%99s-more-campground%E2%80%99",
+  "https://columbiaunionvisitor.com/2026/youth-leaders-%E2%80%98level-%E2%80%99-future-ministry",
+  "https://columbiaunionvisitor.com/rss.xml",
+  "https://www.nadsecretariat.org/?s=camp+meeting",
+  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp+meeting&per_page=10&orderby=date&order=desc"
  ],
  "stats": {
   "records": 1,
@@ -101,14 +114,16 @@
   }
  },
  "counts": {
-  "total": 1,
-  "conferenceLevel": 1,
+  "total": 2,
+  "conferenceLevel": 2,
   "observances": 0,
   "byCategory": {
-   "evangelism-outreach": 1
+   "evangelism-outreach": 1,
+   "health": 1
   },
   "byCategoryConferenceOnly": {
-   "evangelism-outreach": 1
+   "evangelism-outreach": 1,
+   "health": 1
   }
  },
  "excludedFromCalendar": {},
@@ -128,10 +143,40 @@
    "source": "news",
    "datePrecision": "year only (2027); NAD news of 7 Jan 2026 says leadership \"committed\" to Cincinnati (2027), Virginia (2028) and Pittsburgh (2029)",
    "note": "follows Rescue+ Ohio (Columbus, 2025)"
+  },
+  {
+   "title": "Health Ministries Coordinators' Meeting (Zoom)",
+   "start": "2026-11-19",
+   "end": "2026-11-19",
+   "place": "online (Zoom)",
+   "category": "health",
+   "category2": "pastoral-leadership",
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://awconf.org/departments/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Bi-monthly meeting of local church health ministry coordinators, third Wednesday at 7:00 pm EST (2026 schedule: 15 Jan, 19 Mar, 21 May, 16 Jul, 17 Sep, 19 Nov). The previous pass used it only for furthestPublished and did not list it; drop if coordinators' meetings are not wanted."
   }
  ],
  "notes": [
   "The /events page is still an empty template; site news stops in Aug 2025.",
-  "Undated records (start null) are not counted as in-window events."
+  "Undated records (start null) are not counted as in-window events.",
+  "(2026-11-06) Nothing new since 1 Oct 2026. The Eventin feed (40 event posts with per_page=100) has no post newer than 19 Aug 2026; the two newest are deaf-ministry events on 18-19 Sep 2026. No post content mentions a 2027 date.",
+  "(2026-11-06) /events/ is still an empty template page (lorem ipsum contact block); site news posts stop in Aug 2025; the most recently modified pages are Disability & Deaf Ministries (19 Aug 2026) and Departments (6 Aug 2026); newest media uploads are Aug 2026 flyers for the SALT/SPICE camp-meeting programmes an",
+  "(2026-11-06) The Columbia Union Visitor's AWC category (newest story 23 Sep 2026, a campground renovation reflection) carries no 2027 dates.",
+  "(2026-11-06) Previous-pass records with start null (undated 2027 Cincinnati child and youth evangelism plan) remain undated."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); event posts (40 in the Eventin feed) end in Sept 2026; the departments page lists health coordinator meetings to 19 Nov 2026.",
+ "aheadChecked_blocked": [
+  "https://awconf.org/campmeeting-2027/ — 404 (still no 2027 camp meeting page)",
+  "https://awconf.org/youth-ministries/ — 404",
+  "https://awconf.org/womens-ministries/ — 404"
+ ],
+ "notPublishedYetNov2026": [
+  "Camp meeting 2027 (no page; the 2026 page is the newest and the generic /campmeeting/ page is a 2021 template with placeholder text); no 2027 NAD camp-meeting list is posted either (newest NAD file is the May 2026 schedule)",
+  "2027 AWC Youth Congress & Retreat (named as a planning item in the Feb 2026 'Level UP' post, no date)",
+  "Women's ministries retreat 2027, Spring Leadership Training 2027, Prayer-A-Thon 2027, Sensational Seniors training 2027 (all 2026 editions were posted Jan-Mar 2026, so 2027 editions may appear in Dec 2026 - Feb 2027)",
+  "Constituency session, Pathfinder/Adventurer, education and Hispanic ministry dates: nothing dated"
  ]
 }

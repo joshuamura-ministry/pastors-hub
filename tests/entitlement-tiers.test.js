@@ -37,7 +37,9 @@ setTimeout(async()=>{
   // v56 (B2): the fifth tile, Learn from other conferences, is a full-version tool like the other three
 // v10.57.0 (stale, not a regression): the pastor (7 Oct 2026), "maybe we could also have a comparison between churches": the sixth tile is paid like the others
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-  c('hub tags the paid tools, not the survey', tags, [['survey',false],['gifts',true],['case',true],['planner',true],['compare',true],['churches',true]]);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
+  // v10.72.0 (stale, not a regression): the pastor's "Yes" to the audit's split: Spiritual Gifts opens in the free version (Take it yourself and your own report);
+  // the church's part is locked inside it, so its tile carries no tag
+  c('hub tags the paid tools, not the survey, not Spiritual Gifts', tags, [['survey',false],['gifts',false],['case',true],['planner',true],['compare',true],['churches',true]]);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   G.eval('DATA='+JSON.stringify(H.DATA)+';SCOPE="tract"; CAP=null; capSave('+JSON.stringify(H.MEDIUM)+'); render(); openTool("survey");');
   const shown=[...G.document.querySelectorAll('#sections section.blk')].filter(s=>!s.classList.contains('offtab')).map(s=>s.querySelector('h2').textContent);
   console.log('    free survey shows:',shown.join(' · '));
@@ -47,8 +49,10 @@ setTimeout(async()=>{
   c('the lock names what is beyond', /action plan is part of the full version/i.test(G.document.querySelector('#sections .lock').textContent));
   // v10.45.0 (§2.11): the needs and their detail are the survey (free); their ideas, the sheet, the PDF and the proposal are the plan
   c('the free survey: the needs, first, and each need\'s detail', [!G.document.getElementById('u-needs').classList.contains('offtab'),G.document.querySelectorAll('#u-needs .ns-need').length>0,!!G.document.querySelector('#u-needs .ns-detail')], [true,true,true]);
-  G.document.querySelector('#u-needs .ns-head').click(); G.document.querySelector('#u-needs .ns-need.open [data-ns-show]').click();
-  c('…its ideas show the lock (what it opens: ministry ideas for every need), no row, no sheet', [!!G.document.querySelector('#u-needs .ns-need.open .lock[data-lock="plan"]'),/Ministry ideas for every need/.test(G.document.querySelector('#u-needs .ns-need.open .lock').textContent),G.document.querySelectorAll('#u-needs .ns-row').length,!!G.document.querySelector('#ns-sheet[open]')], [true,true,0,false]);
+  // v10.72.0 (stale, not a regression): the free version shows the needs' titles; a need tapped opens to the lock itself (its figures,
+  // where to begin and the ideas are the full version: the report's split, his "Yes")
+  G.document.querySelector('#u-needs .ns-head').click();
+  c('…a need opened is the lock (what it opens: each need with its ideas), no figures, no ideas button, no row, no sheet', [!!G.document.querySelector('#u-needs .ns-need.open .lock[data-lock="plan"]'),/Each need opened/.test(G.document.querySelector('#u-needs .ns-need.open .lock').textContent),G.document.querySelectorAll('#u-needs .ns-need.open .ns-figs, #u-needs .ns-need.open [data-ns-show]').length,G.document.querySelectorAll('#u-needs .ns-row').length,!!G.document.querySelector('#ns-sheet[open]')], [true,true,0,0,false]);
   G.eval('openTool("planner")');
   c('opening a paid tool shows the lock', !G.document.getElementById('locked').hidden && /Evangelism Planner is part of the full version/.test(G.document.getElementById('locked').textContent));
   c('the tool itself stays hidden', G.document.getElementById('planner').hidden);

@@ -90,8 +90,8 @@ if (G) {
   c('nothing it does is logged (no code, email or id ever in a log)', logs.filter(l => /Sample-Guest|director|DirectorId/i.test(l)).length, 0);
   const res = await G.default(new Request('https://terrain.church/.netlify/functions/guest-pass'));
   const gj = await res.json();
-  // v10.63.1 (stale): guest-pass-1.1, with the tester code box's POST
-  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.1']);
+  // v10.63.1 (stale): guest-pass-1.1, with the tester code box's POST; v10.70.0 (stale): guest-pass-1.2, the tester codes made in Terrain
+  c('its GET says only which version it is (never whether a guest is set)', [res.status, Object.keys(gj).sort(), gj.fn], [200, ['fn', 'ok'], 'guest-pass-1.2']);
 }
 
 console.log('\n-- advise.mjs: every mode behind the lock asks guest-pass --');
@@ -127,12 +127,15 @@ console.log('\n-- digital.mjs: the in-depth review asks guest-pass too --');
 
 console.log('\n-- the code itself --');
 { const A = read('netlify/functions/advise.mjs'), DG = read('netlify/functions/digital.mjs'), H = read('index.html');
-  c('advise.mjs: passOk is gone; guest-pass\'s passCheck at all five lock sites, with the module\'s own passphrase',
-    [/function passOk/.test(A), /import \{ passCheck \} from '\.\/guest-pass\.mjs'/.test(A), (A.match(/await passCheck\(request\.headers\.get\('x-terrain-pass'\), request\.headers\.get\('x-terrain-reg'\), PASS\)/g) || []).length], [false, true, 5]);
+  // v10.72.0 (stale, not a regression): the five lock sites ask claudeGate, which asks passCheck once with the module's own passphrase
+  // (then, with payments on, a plan through account.mjs): the same door, one step wider
+  c('advise.mjs: passOk is gone; guest-pass\'s passCheck behind all five lock sites (claudeGate), with the module\'s own passphrase',
+    [/function passOk/.test(A), /import \{ passCheck \} from '\.\/guest-pass\.mjs'/.test(A), (A.match(/await passCheck\(request\.headers\.get\('x-terrain-pass'\), request\.headers\.get\('x-terrain-reg'\), PASS\)/g) || []).length, (A.match(/await claudeGate\(request\)/g) || []).length], [false, true, 1, 5]);
   c('digital.mjs: the review asks passCheck with the registration token', [/function passOk/.test(DG), /import \{ passCheck \} from '\.\/guest-pass\.mjs'/.test(DG),
     /await passCheck\(typeof b\.key === 'string' \? b\.key : request\.headers\.get\('x-terrain-pass'\), request\.headers\.get\('x-terrain-reg'\), PASS\(\)\)/.test(DG)], [false, true, true]);
   const more = H.slice(H.indexOf('async function libAiMore'), H.indexOf('async function libAiMore') + 6000);
-  c('the page: "More ideas" now sends the registration token with the code (so a guest\'s works)', /'x-terrain-pass':aiPass\(\),\.\.\.\(typeof regTok==='function'&&regTok\(\)\?\{'x-terrain-reg':regTok\(\)\}:\{\}\)\},body:JSON\.stringify\(body\)/.test(more), true);
+  // v10.72.0 (stale, not a regression): and Terrain's session (sessHdr), so a plan opens it once payments are on
+  c('the page: "More ideas" now sends the registration token with the code (so a guest\'s works), and the session', /'x-terrain-pass':aiPass\(\),\.\.\.\(typeof regTok==='function'&&regTok\(\)\?\{'x-terrain-reg':regTok\(\)\}:\{\}\),\.\.\.sessHdr\(\)\},body:JSON\.stringify\(body\)/.test(more), true);
   c('no code or guest email in the repository (made-up ones in this test only)', [/TERRAIN_AI_GUESTS\s*=/.test(read('netlify.toml')), /=\S{12,}@|@\S+=\S{12,}/.test(read('CLAUDE.md').split('TERRAIN_AI_GUESTS').slice(1).join(' ').slice(0, 2000))], [false, false]);
   c('CLAUDE.md names the variable and how to take a guest away', /\| `TERRAIN_AI_GUESTS` \|[^\n]*guest-pass\.mjs[^\n]*Remov/.test(read('CLAUDE.md')), true); }
 

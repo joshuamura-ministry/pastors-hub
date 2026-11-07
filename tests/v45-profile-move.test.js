@@ -32,7 +32,8 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
     [true,false,['Your church'],false,'u-needs']);
   c('…after Community resources', P.q('#u-church').previousElementSibling.querySelector('h2').textContent, 'Community resources');
   c('the Spiritual Gifts landing holds no church card any more', (landing(P),!!P.q('#gifts #gf-church')), false);
-  c('the hub tile says what the survey does now', [P.txt('[data-tool="survey"] .td'),P.J(`FEATURES.plan.blurb`)], ['Know your neighbors and what they need most.','Ministry ideas for every need, a one-page sheet for each, where to look and community resources.']);
+  // v10.72.0 (stale, not a regression): the plan's line says what a need opened holds (where to look and community resources are the free report's now)
+  c('the hub tile says what the survey does now', [P.txt('[data-tool="survey"] .td'),P.J(`FEATURES.plan.blurb`)], ['Know your neighbors and what they need most.','Each need opened: the figures behind it, where to begin, ministry ideas for every need in three lifts, a one-page sheet for each, and the proposal.']);
 
   console.log('\n-- "Your church" in the survey (was: on the Spiritual Gifts landing) --');
   P=page({store:STORE}); await ready(P); home(P); await sleep(30);

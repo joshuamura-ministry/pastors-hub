@@ -10,8 +10,8 @@
   "https://alaskaconference.org/ministries/alaska-camps/",
   "https://alaskaconference.org/ministries/youthyoung-adults/"
  ],
- "window": "2027-04-01 to 2027-09-30",
- "retrieved": "2026-10-01",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
+ "retrieved": "2026-11-06",
  "furthestPublished": "2027-08",
  "furthestPublishedNote": "Real events on the calendar end with Educators Meetings, Feb 8-10, 2027. The camps page lists summer 2027 camps by month (July and August 2027). The calendar also holds monthly offering Sabbaths through Dec 2029; these are not events and were dropped.",
  "calendarQuality": "Thin for 2027. The Events Calendar (WordPress) API returns 40 entries from Jan 2027 on; after Feb 10, 2027 every entry is an offering Sabbath. Only the camps page has dated items for the window, and only by month.",
@@ -151,10 +151,32 @@
   "https://arcticmissionadventure.org/",
   "https://alaskaconference.org/resources/alyeskan/",
   "https://nwadventists.com/news?section=347",
-  "https://nwadventists.com/news?section=All (Mar-Oct 2026 articles searched for 2027)"
+  "https://nwadventists.com/news?section=All (Mar-Oct 2026 articles searched for 2027)",
+  "https://alaskaconference.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50&page=1",
+  "https://alaskaconference.org/events/",
+  "https://alaskaconference.org/wp-json/wp/v2/pages?orderby=modified&per_page=20",
+  "https://alaskaconference.org/wp-json/wp/v2/posts?per_page=20",
+  "https://alaskaconference.org/wp-json/wp/v2/search?search=2027",
+  "https://alaskaconference.org/around-the-akc/"
  ],
  "notes": [
   "The events calendar is kept current as an offering schedule (to Dec 2029) but has no gatherings after Feb 10, 2027.",
-  "Pastors were asked to bring 2027 evangelism plans and budget requests to a Nov 1, 2026 planning session (homepage), so 2027 evangelism dates may appear after that."
+  "Pastors were asked to bring 2027 evangelism plans and budget requests to a Nov 1, 2026 planning session (homepage), so 2027 evangelism dates may appear after that.",
+  "(2026-11-06) Nothing new since the Oct 1 pass: the Tribe feed, every ministry page (all last modified Sep 9, 2026), the camps page and the homepage carry the same dates. The only pages modified since Oct 1 are \"Around the AKC\" (Nov 2, no dates), Resources (Oct 28) and the homepage (Oct 22).",
+  "(2026-11-06) The homepage promotes \"THRU the Bible 2027\", a year-long read-the-Bible-in-a-year plan for every member starting January 2027; it is a programme, not a dated gathering, so it is not recorded as an event.",
+  "(2026-11-06) The homepage items of Oct 16-18 and Oct 30-31, 2026 (evangelism training weekends) fall before the window."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "aheadChecked_blocked": [
+  "https://alaskaconference.org/camp-meeting/ — 404 (no camp-meeting landing page; the 2026 pages under /camp-meeting/ were read last pass)"
+ ],
+ "notPublishedYetNov2026": [
+  "AKC Pathfinder Camporee 2027 (Memorial Day weekend, Pioneer Peak) - not posted; youth page still only names the Winter Fair Feb 12-14, 2027.",
+  "Camp meetings 2027 (Interior, Southcentral, Southeast) - no 2027 dates anywhere on the site.",
+  "Arctic Mission Adventure village weekends 2027 - none posted.",
+  "Men's Wilderness Retreat and Women's spring retreat 2027 - ministry pages unchanged since Sep 9, 2026.",
+  "Young Adult Summer Weekend 2027 - not posted.",
+  "Fall 2027 evangelistic thrust - no dates; the Nov 1, 2026 planning session for 2027 evangelism plans has passed and nothing new has been published since (homepage last modified Oct 22, 2026).",
+  "Exact dates for the three 2027 summer camps - still month-only."
  ]
 }

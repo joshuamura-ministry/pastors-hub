@@ -10,12 +10,12 @@
   "https://www.azconference.org/_files/ugd/15e531_07c33b4f4a1b4fcaacd7b647f129358b.pdf",
   "https://www.azconference.org/arizonanews"
  ],
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "checked": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "B+ for the current year, but nothing for 2027 yet: one office year calendar (PDF) at a time",
- "furthestPublished": "2026-12",
- "furthestNote": "The only calendar online is the 2026 year calendar PDF (revised 9 Jul 2026); its last entries are in December 2026. Its 4 Aug 2026 entry \"ADCOM - 2027 CALENDAR\" shows the 2027 calendar was being planned, but it is not posted.",
+ "furthestPublished": "2027-06",
+ "furthestNote": "Camp Yavapines (the conference camp) now lists the 2027 camp meetings: 5-13 Jun 2027 and the Hispanic camp meeting 15-20 Jun 2027, registration opening 23 Mar 2027. The conference office calendar is still the 2026 PDF (last entries Dec 2026); no 2027 calendar is posted.",
  "aheadSummary": "Not published yet. No event dated April-September 2027 on the home page, the 2026 calendar PDF, the camp-meeting page, azsdayouth.com or campyavapines.org. 2027 camp-meeting dates are not out.",
  "aheadChecked": [
   "https://www.azconference.org",
@@ -23,9 +23,47 @@
   "https://www.azconference.org/campmeeting",
   "https://www.azsdayouth.com/",
   "https://www.campyavapines.org/",
-  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027"
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027",
+  "https://www.azconference.org/arizonanews",
+  "https://www.azconference.org/_files/ugd/15e531_b4def4966d424645a63706b90678c1df.pdf",
+  "https://www.campyavapines.org/copy-of-youth-camp",
+  "https://www.campyavapines.org/copy-of-youth-camp-1",
+  "https://www.campyavapines.org/copy-of-camp-meeting",
+  "https://www.adventistfaith.com/wp-json/wp/v2/frame_news?search=2027&per_page=50",
+  "https://www.adventistfaith.com/news/arizona-news-october-2026/"
  ],
- "events": [],
+ "events": [
+  {
+   "title": "Arizona Conference Camp Meeting",
+   "start": "2027-06-05",
+   "end": "2027-06-13",
+   "place": "Camp Yavapines, Prescott",
+   "category": "camp-meeting",
+   "category2": null,
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.campyavapines.org/copy-of-youth-camp",
+   "source": "camp-meeting page",
+   "datePrecision": "day",
+   "registrationOpens": "2027-03-23",
+   "note": "Camp Yavapines page \"Camp Meeting 2027\": \"Arizona Conference Camp Meeting June 5-13\"; \"Registration for each camp meeting opens March 23, 2027\". The dates are the same calendar dates as 2026 (5 Jun 2027 is a Saturday), so confirm against the 2027 conference calendar when it is posted; azconference.org/campmeeting still shows the 2026 event."
+  },
+  {
+   "title": "Hispanic Ministries Camp Meeting",
+   "start": "2027-06-15",
+   "end": "2027-06-20",
+   "place": "Camp Yavapines, Prescott",
+   "category": "camp-meeting",
+   "category2": "multilingual",
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.campyavapines.org/copy-of-youth-camp",
+   "source": "camp-meeting page",
+   "datePrecision": "day",
+   "registrationOpens": "2027-03-23",
+   "note": "Camp Yavapines page \"Camp Meeting 2027\": \"Hispanic Ministries Camp Meeting June 15-20\"; registration opens 23 Mar 2027. Same calendar dates as 2026; confirm when the 2027 conference calendar is posted."
+  }
+ ],
  "stats": {
   "items": 0,
   "occurrences": 0,
@@ -81,6 +119,16 @@
  "notes": [
   "Pattern only: the usuallyHeldNotYetPublished list gives 2026 dates so a pastor can expect similar timing in 2027. They are not 2027 dates.",
   "Monthly \"Prayer Time with Pastors\", pre-ordained and Hispanic pastors' meetings run through Dec 2026 on the 2026 calendar; none are scheduled for 2027 yet.",
-  "Left out (rule): ADCOM and other committees, office closures, holidays."
+  "Left out (rule): ADCOM and other committees, office closures, holidays.",
+  "(2026-11-06) The home page \"Next events\" block shows 1 Nov (Adventurer Fun Day), 3 Nov (pre-ordained pastors' meeting) and 5 Nov (prayer time with pastors), all already in the existing list.",
+  "(2026-11-06) A new \"Reuniones Publicas\" PDF on the home page is the Spanish version of the 2026 town-hall meetings (29 Aug - 3 Oct 2026, before the window) held ahead of the 32nd constituency session on 25 Oct 2026; not an event in the window.",
+  "(2026-11-06) Arizona News (Recorder, Oct 2026) and the union news search for 2027 give no Arizona 2027 dates. azsdayouth.com has no dated 2027 items."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "The 2027 conference calendar PDF: the home page still links \"Download the 2026 Calendar\" (same file as last pass).",
+  "Native American Camp Meeting 2027, AZ Pathfinder Camporee 2027, Hispanic Evangelism Harvest 2027, AZ Leadership Convention 2027: no 2027 dates anywhere.",
+  "Camp Yavapines summer camp 2027: a \"2027 Camper Registration\" page exists but gives no week dates in its text.",
+  "Pastors' meetings, prayer time with pastors and other monthly items for 2027: none scheduled yet."
  ]
 }

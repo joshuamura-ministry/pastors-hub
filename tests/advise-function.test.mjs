@@ -12,6 +12,7 @@ const fn=mod.default;
 const post=(body,headers={})=>fn(new Request('https://x/.netlify/functions/advise',{method:'POST',headers:{'content-type':'application/json',...headers},body:JSON.stringify(body)}));
 const summary='GEOGRAPHY: Census Tract 2041.02 SOURCE: ACS. LOCAL FIGURES: poverty 19.4%; renters 48%; Spanish 19%';
 const idea=(n)=>({name:'Idea '+n,why:'Because 19.4% poverty',metric:'poverty',room:'Kitchen',what:'What happens.',first:['Call','Buy','Say','Write'],week1:'Try it',ppl:2,cost:0,skills:['lang','bogus'],watch:'Nobody shows',unlike:'Not on list'});
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 console.log('-- GET --');
 const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
@@ -22,7 +23,7 @@ const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
 // v10.53.0 (stale, not a regression): the needs list (needs / needs-status) makes it advise-2.5
 // v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
 // v10.56.0 (stale, not a regression): Claude in Make the Case (a group's study; the proposal's words) makes it advise-2.7
-c('reports 2.7', g.fn, 'advise-2.7');
+c('reports 2.7', g.fn, 'advise-2.8');
 c('says whether Find prices is on (a key and a passphrase; none set here: off)', [g.prices, g.pricesFn], [false, 'prices-1.0']);
 c('defaults to Opus', g.model, 'claude-opus-5-5');
 c('advertises the kinds', g.kinds, ['Serve','Equip','Belong','Invite']);

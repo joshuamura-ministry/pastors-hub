@@ -85,7 +85,8 @@ const cards=(P,sel)=>P.qa(sel+' .cmp-rcard');
   c('…money open; each a tab with its own colour and a picture', [tabs.map(b=>b.getAttribute('aria-selected')), tabs.every(b=>b.getAttribute('role')==='tab'&&b.querySelector('.ic svg')&&/--k:var\(--/.test(b.getAttribute('style')||''))], [['true','false','false','false'],true]);
   const money=cards(P,'#cmp-resg');
   c('first his conference\'s evangelism help, the width of the box', [money[0].querySelector('h4').textContent, money[0].classList.contains('cmp-help'), money[0].querySelector('.cmp-lv').textContent], ['Evangelism help from the Pennsylvania Conference',true,'Your conference']);
-  c('…its share, its deadline, how to ask, its conditions, its links', [[...money[0].querySelectorAll('.cmp-facts span')].map(s=>s.textContent), money[0].querySelectorAll('li').length, money[0].querySelectorAll('.cmp-rlinks a').length], [['Share: up to 50%','Deadline: 30 September'],4,2]);
+  // v10.70.1 (the audit, second look): a published date keeps its day and month together on a phone ("30\u00a0September")
+  c('…its share, its deadline, how to ask, its conditions, its links', [[...money[0].querySelectorAll('.cmp-facts span')].map(s=>s.textContent), money[0].querySelectorAll('li').length, money[0].querySelectorAll('.cmp-rlinks a').length], [['Share: up to 50%','Deadline: 30\u00a0September'],4,2]);
   c('then the Columbia Union\'s funding, labelled with the union', [money[1].querySelector('.cmp-lv').textContent, /Homeland Missions/.test(money[1].querySelector('h4').textContent), money[1].querySelectorAll('h5').length>0], ['Columbia Union',true,true]);
   c('the count on the tab is the cards in it', +tabs[0].querySelector('.n').textContent, money.length);
   c('…no other conference\'s or union\'s items', money.every(x=>['conference','nad','world'].includes(x.dataset.lv)||(x.dataset.lv==='union'&&/^Columbia Union/.test(x.querySelector('.cmp-lv').textContent))));

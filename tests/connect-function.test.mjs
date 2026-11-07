@@ -9,6 +9,7 @@ import fs from 'node:fs';
 delete process.env.TERRAIN_CODES; delete process.env.TERRAIN_REQUIRE_CODE; delete process.env.TERRAIN_REG_SECRET;
 let pass=0,fail=0;
 const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.log((ok?'  PASS  ':'  FAIL  ')+n);if(!ok){console.log('    got:',JSON.stringify(g).slice(0,300));fail++}else pass++};
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // ---- a fake Netlify Blobs store (the subset the function uses) -------------
 const tick=()=>new Promise(r=>setImmediate(r));
@@ -74,9 +75,9 @@ const clone=o=>JSON.parse(JSON.stringify(o));
 
 console.log('-- status and request hygiene --');
 let r=await get('');
-c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.codeRequired,r.j.regRequired], [200,true,'connect-1.0',false,false]);
+c('GET answers status', [r.status,r.j.ok,r.j.fn,r.j.codeRequired,r.j.regRequired], [200,true,'connect-1.1',false,false]);
 r=await post({op:'status'});
-c('POST op:status too', [r.j.ok,r.j.fn], [true,'connect-1.0']);
+c('POST op:status too', [r.j.ok,r.j.fn], [true,'connect-1.1']);
 r=await post({op:'nonsense'}); c('unknown op → 400', [r.status,r.j.error], [400,'unknown-op']);
 r=await post('{not json'); c('bad JSON → 400', [r.status,r.j.error], [400,'bad-json']);
 r=await post('[1]'); c('an array is not a request → 400', r.status, 400);
@@ -475,7 +476,8 @@ c('S10: no new environment variables (codes and registration only, as gifts and 
 c('S10: the dynamic env read is only envOn(name) for TERRAIN_REQUIRE_CODE', [...SRC.matchAll(/envOn\('([A-Z_]+)'\)/g)].map(m=>m[1]), ['TERRAIN_REQUIRE_CODE']);
 c('S14: the function sends nothing anywhere (no fetch, no email service)', /\bfetch\s*\(|resend|smtp|sendgrid|mailgun/i.test(SRC+SWSRC), false);
 c('C2.1 / Q1: TAKEN_KEEP_DAYS is one named constant, 30 days (the recommendation; he did not answer)', SRC.match(/const TAKEN_KEEP_DAYS = (\d+);/g), ['const TAKEN_KEEP_DAYS = 30;']);
-c('connect-1.0 and connect-sweep-1.0', [/const FN_VERSION = 'connect-1\.0';/.test(SRC),/connect-sweep-1\.0/.test(SWSRC)], [true,true]);
+// v10.72.0 (stale, not a regression): connect-1.1, op create asks account.mjs for the full version once payments are on
+c('connect-1.1 and connect-sweep-1.0', [/const FN_VERSION = 'connect-1\.1';/.test(SRC),/connect-sweep-1\.0/.test(SWSRC)], [true,true]);
 c('S12: the sweep runs daily, inside a 20-second budget', [/export const config = \{ schedule: '@daily' \};/.test(SWSRC),/const BUDGET_MS = 20000;/.test(SWSRC)], [true,true]);
 c('S13: one log line only, the op name', (SRC.match(/console\.(log|error|warn|info)\(/g)||[]).length===3&&/console\.error\('connect: unexpected failure in op ' \+/.test(SRC));
 

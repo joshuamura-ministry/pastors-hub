@@ -13,11 +13,11 @@
   "https://mtviewconf.org/wp-json/tribe/events/v1/events",
   "https://pci.jotform.com/form/260574336374966"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the site's events list holds only offering Sabbaths (to Oct 2028); the one 2027 item comes from a registration form linked from the homepage.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "C : the website’s Events list holds only offering Sabbaths. A full-year calendar PDF exists for 2025 only. 2026 dates are scattered across a newsletter and ministry pages.",
- "furthestPublished": "2027-05",
- "furthestNote": "IDEAL Institute runs to May 2027; offering Sabbaths are posted to Oct 2028 but are not events",
+ "furthestPublished": "2027-07",
+ "furthestNote": "BLAST University, July 2027, Charleston, W.Va. (month only; announced at the NAD Annual Council and reported by the Columbia Union Visitor on 5 Nov 2026). On the conference's own site the furthest item is still the IDEAL Institute training year to May 2027; the Tribe events list holds only offering Sabbaths (posted to 2028) which do not count.",
  "aheadSummary": "Only the IDEAL Institute training year (Sept 2026 – May 2027), which runs into the window. Camp meeting, retreats and summer camp still show 2026. Not published yet for Jun–Sep 2027.",
  "aheadChecked": [
   "https://mtviewconf.org/",
@@ -31,7 +31,26 @@
   "https://pci.jotform.com/form/260574336374966",
   "https://pci.jotform.com/form/260615571042955",
   "https://pci.jotform.com/form/261546728414966",
-  "https://columbiaunionvisitor.com/category/mountain-view-conference"
+  "https://columbiaunionvisitor.com/category/mountain-view-conference",
+  "https://mtviewconf.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2027-10-31&per_page=50",
+  "https://mtviewconf.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2028-12-31&per_page=50",
+  "https://mtviewconf.org/ministries/summer-camp/",
+  "https://mtviewconf.org/ministries/youth-ministries/",
+  "https://mtviewconf.org/ministries/",
+  "https://mtviewconf.org/valleyvista/",
+  "https://mtviewconf.org/events/",
+  "https://mtviewconf.org/wp-json/wp/v2/pages/1428",
+  "https://mtviewconf.org/wp-json/wp/v2/pages/1430",
+  "https://mtviewconf.org/wp-json/wp/v2/posts?search=2027&per_page=20",
+  "https://mtviewconf.org/wp-json/wp/v2/pages?search=2027&per_page=20",
+  "https://mtviewconf.org/wp-json/wp/v2/posts?per_page=15&orderby=date&order=desc",
+  "https://mtviewconf.org/wp-json/wp/v2/pages?per_page=40&orderby=modified&order=desc",
+  "https://mtviewconf.org/wp-json/wp/v2/media?per_page=30&orderby=date&order=desc",
+  "https://s3.us-east-2.wasabisys.com/assets.adventistconnect.org/mountai2/cdde51b5330facc057544c55.pdf",
+  "https://columbiaunionvisitor.com/2026/first-annual-blast-university-announced",
+  "https://columbiaunionvisitor.com/2026/conference-having-blast",
+  "https://columbiaunionvisitor.com/rss.xml",
+  "https://www.nadsecretariat.org/wp-json/wp/v2/media?search=camp+meeting&per_page=10&orderby=date&order=desc"
  ],
  "stats": {
   "records": 1,
@@ -103,14 +122,16 @@
   }
  },
  "counts": {
-  "total": 1,
-  "conferenceLevel": 1,
+  "total": 2,
+  "conferenceLevel": 2,
   "observances": 0,
   "byCategory": {
-   "discipleship-spiritual": 1
+   "discipleship-spiritual": 1,
+   "evangelism-outreach": 1
   },
   "byCategoryConferenceOnly": {
-   "discipleship-spiritual": 1
+   "discipleship-spiritual": 1,
+   "evangelism-outreach": 1
   }
  },
  "excludedFromCalendar": {
@@ -145,10 +166,42 @@
    "datePrecision": "month range (form says \"September 2026 - May 2027\")",
    "startsBeforeWindow": true,
    "note": "$125 per person (materials, training, lunch for in-person meetings)"
+  },
+  {
+   "title": "BLAST University",
+   "start": "2027-07",
+   "end": "2027-07",
+   "place": "Charleston, W.Va.",
+   "category": "evangelism-outreach",
+   "category2": "pastoral-leadership",
+   "audience": "pastors",
+   "level": "conference",
+   "url": "https://columbiaunionvisitor.com/2026/first-annual-blast-university-announced",
+   "source": "news",
+   "datePrecision": "month (article says 'July 2027')",
+   "note": "First annual. Every pastor in the territory is to be trained to run BLAST (Building Lives Around Solid Truth) evangelistic initiatives; taught by Ohio Conference pastors who have used the method; the North American Evangelism Institute offered to make it a national programme. The union says more information will follow. Not yet on the conference's own site."
   }
  ],
  "notes": [
   "The two other homepage forms are for 2026 events (Men's Retreat 9–11 Oct 2026; Professionals' Retreat 2026).",
-  "Evangelism subsidy rule (v47): budget to the treasurer at least 8 months before a series, so a September 2027 OneVoice27 series needs its budget in by January 2027."
+  "Evangelism subsidy rule (v47): budget to the treasurer at least 8 months before a series, so a September 2027 OneVoice27 series needs its budget in by January 2027.",
+  "(2026-11-06) The Tribe events feed still holds only Treasury offering Sabbaths (Church Budget, Mtn. View Mission), two a month, posted through 2028; no other categories.",
+  "(2026-11-06) The site has no posts at all (the posts endpoint returns an empty list); pages modified in Oct 2026 are Contact Us, Employment Forms, Clerk Forms, the home page, the 'Upcoming Events' page (WP page 1428; the nav 'Events' link) and the empty 'Ski Weekend' page (WP page 1430). Those two pages' public ",
+  "(2026-11-06) The three Jotform forms are unchanged: IDEAL Institute (Sept 2026 - May 2027, existing record), Men's Retreat 9-11 Oct 2026 and Professionals' Retreat 2026 (both now past).",
+  "(2026-11-06) The Columbia Union Visitor's MVC category (newest 3 Nov 2026, 'Mountain View Conference Is Having a BLAST') reports one-week and one-day BLAST community events held across the conference in 2026; it dates nothing for 2027. The BLAST University announcement (5 Nov 2026) is the only new dated item.",
+  "(2026-11-06) The 'through' line is unchanged (nothing dated after Oct 2026 on the conference's own calendar except the training year); the BLAST University month comes from the union magazine, not the conference calendar."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the site's events list holds only offering Sabbaths (to Oct 2028); the one 2027 item comes from a registration form linked from the homepage.",
+ "aheadChecked_blocked": [
+  "https://mtviewconf.org/ministries/mens-ministries/ — 404",
+  "https://mtviewconf.org/newsletter/ — 404"
+ ],
+ "notPublishedYetNov2026": [
+  "Camp meeting 2027 (the page is still 'Camp Meeting 2026'; no 2027 NAD camp-meeting list either)",
+  "Summer camp 2027, women's retreat 2027, men's retreat 2027, professionals' retreat 2027, new member retreat 2027, Spanish ministries 2027, pathfinder and youth dates",
+  "The date of the 'Ski Weekend' (an empty page added under Upcoming Events on 20 Oct 2026; the 2025 calendar had a Ski Family Day on 8 Feb 2025, so a Feb 2027 date is likely)",
+  "An exact date and registration for BLAST University (July 2027)",
+  "A 2026 or 2027 full-year calendar PDF: the 'Upcoming Events' page's '2026 Calendar' link still serves the 2025 calendar PDF (Jan-Dec 2025)",
+  "Constituency session: nothing dated"
  ]
 }

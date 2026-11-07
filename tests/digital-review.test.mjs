@@ -33,6 +33,7 @@ const KEYV = 'sk-ant-test-key-0000000000000000000000000000000000', PASSV = 'open
 const env = o => { for (const k of ['ANTHROPIC_API_KEY', 'TERRAIN_AI_PASS', 'REVIEW_DAY_MAX', 'REVIEW_MODEL', 'REVIEW_EFFORT']) delete process.env[k]; Object.assign(process.env, o); };
 const ON = { ANTHROPIC_API_KEY: KEYV, TERRAIN_AI_PASS: PASSV };
 const DAY = '2026-10-08', REG = 'AbCdEfGhIjKl';
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // ---- the stubbed network: the wake of the worker, and the Anthropic API answering from a script. Anything else is a fault.
 let wakes = [], api = [], script = [], wakeStatus = 202;
@@ -163,7 +164,7 @@ try {
   seed({ empty: true });
   env({});
   let r = await call('GET', '');
-  c('digital-1.2, reviewFn review-1.0; nothing set: review false; the rest as before (readFn is the reader\'s own)', [r.j.fn, r.j.reviewFn, r.j.review, typeof r.j.readFn, r.j.places, r.j.search], ['digital-1.2', 'review-1.0', false, 'string', false, false]);
+  c('digital-1.2, reviewFn review-1.0; nothing set: review false; the rest as before (readFn is the reader\'s own)', [r.j.fn, r.j.reviewFn, r.j.review, typeof r.j.readFn, r.j.places, r.j.search], ['digital-1.3', 'review-1.0', false, 'string', false, false]);
   env({ ANTHROPIC_API_KEY: KEYV }); r = await call('GET', '');
   c('a key but no passphrase: review false', r.j.review, false);
   env(ON); r = await call('GET', '');
@@ -222,7 +223,7 @@ try {
   console.log('\n-- the job: queued with hashes only, the input built on the server, the worker woken at digital-review; the lock --');
   seed({}); env(ON);
   r = await ask({ own: true, myName: 'Dana Reyes' });
-  c('202 {ok, fn, job, poll}', [r.status, r.j.ok, r.j.fn, /^[A-Za-z0-9_-]{22}$/.test(r.j.job), r.j.poll, r.cc], [202, true, 'digital-1.2', true, 4000, 'private, no-store']);
+  c('202 {ok, fn, job, poll}', [r.status, r.j.ok, r.j.fn, /^[A-Za-z0-9_-]{22}$/.test(r.j.job), r.j.poll, r.cc], [202, true, 'digital-1.3', true, 4000, 'private, no-store']);
   const JOB = r.j.job, rec = S.peek('q/' + JOB), wake = wakes[0];
   c('the record: queued, the worker token a hash, kept at v/<slug>/<org>/<lang>, the church and the day', [rec.status, /^[0-9a-f]{64}$/.test(rec.workerHash), rec.cacheKey, rec.slug, rec.org, rec.lang, rec.own, rec.readAt === T, rec.counts],
     ['queued', true, 'v/pennsylvania/ANBICG/en', 'pennsylvania', 'ANBICG', 'en', true, true, { reg: null, site: `c/site/${DAY}` }]);

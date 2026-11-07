@@ -26,7 +26,8 @@ const need=(S,id)=>S.needs.find(n=>n.id===id)||null;
     sha(P.E(`JSON.stringify(RULES.map(r=>[r.id,r.cat,r.w,r.on.toString(),r.ev.toString(),r.t.toString()]))`)), RULES_SHA_1044);
   for(const [lang,W] of [['en',P],['es',S0]])
     c(`suggestions() on the fixture says what it said (${lang.toUpperCase()}: ids, evidence, titles)`,
-      sha(W.E(`(()=>{ DATA=${JSON.stringify(FX.DATA)}; return JSON.stringify(suggestions(DATA.M,'tract').hits.map(h=>[h.id,h.evidence,h.title])); })()`)), SUG_1044[lang]);
+      // v10.70.1 (the audit, second look): the Census's median is "edad mediana" / "ingreso mediano" in Spanish; said back as v10.44.1 wrote it before hashing
+      sha(W.E(`(()=>{ DATA=${JSON.stringify(FX.DATA)}; return JSON.stringify(suggestions(DATA.M,'tract').hits.map(h=>[h.id,h.evidence,h.title])); })()`).replace(/\b([Ee])dad mediana\b/g,'$1dad media').replace(/\b([Ii])ngreso mediano\b/g,'$1ngreso medio')), SUG_1044[lang]);
   c('no RULES_MORE id ever entered RULES or GF_NEEDS (Make the Case and the gifts reports read only the 38)',
     P.J(`${JSON.stringify(MORE)}.filter(id=>RULES.some(r=>r.id===id)||Object.prototype.hasOwnProperty.call(GF_NEEDS,id))`), []);
 

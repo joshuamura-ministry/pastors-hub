@@ -149,9 +149,10 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   console.log('\n-- the list: filters, search, details, check again --');
   P.E('openTool("churches")'); await until(()=>P.q('#chc-df tr.df-row'));
   P.q('#chc-df [data-df-f="site"]').click(); await sleep(10);
-  c('"No website found" shows only that church', P.qa('#chc-df tr.df-row:not([hidden]) th span:first-child').map(s=>s.textContent), ['Lonely']);
+  // v10.70.1 (the audit, second look): the town line's "· 120 members" is a span of its own now, so the church's name is read as the th's own first span
+  c('"No website found" shows only that church', P.qa('#chc-df tr.df-row:not([hidden]) th>span:first-child').map(s=>s.textContent), ['Lonely']);
   P.q('#chc-df [data-df-f="all"]').click(); const qi=P.q('#df-q'); qi.value='york'; qi.dispatchEvent(new P.w.Event('input')); await sleep(10);
-  c('the search box finds by name or town', P.qa('#chc-df tr.df-row:not([hidden]) th span:first-child').map(s=>s.textContent), ['York']);
+  c('the search box finds by name or town', P.qa('#chc-df tr.df-row:not([hidden]) th>span:first-child').map(s=>s.textContent), ['York']);
   const row=P.q('#chc-df tr.df-row:not([hidden])'); row.click(); await sleep(10);
   c('a tap opens the church\'s findings', [row.getAttribute('aria-expanded'),row.nextElementSibling.hidden,row.nextElementSibling.querySelectorAll('.df-area').length], ['true',false,6]);
   P.q('#chc-df [data-df-again="ANBZ01"]').click(); await sleep(30);

@@ -65,10 +65,11 @@ const J = async r => ({ status: r.status, ...(await r.json()) });
 stripeScript = { 'prices/*': b => null };
 stripeScript['prices/price_year1'] = { data: { id: 'price_year1', unit_amount: 15000, currency: 'usd' } };
 stripeScript['prices/price_month1'] = { data: { id: 'price_month1', unit_amount: 1500, currency: 'usd' } };
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 console.log('-- GET: what the page needs, no secret in it --');
 { let M = await load({});
-  c('nothing set: no sign-in, payments off', await J(await get(M)), { status: 200, fn: 'account-1.0', auth: false, fb: null, billing: 'off', mode: null, checkout: false, trialDays: 14, prices: null });
+  c('nothing set: no sign-in, payments off', await J(await get(M)), { status: 200, fn: 'account-1.1', auth: false, fb: null, billing: 'off', mode: null, checkout: false, trialDays: 14, prices: null, claudeDay: 6, trialClaudeDay: 3 });
   M = await load(FULLENV);
   const g = await J(await get(M));
   c('set up in test mode: sign-in on (the public web config), payments off until TERRAIN_BILLING=on, checkout on for testing, the prices from Stripe',

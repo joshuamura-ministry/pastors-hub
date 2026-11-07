@@ -28,6 +28,7 @@ const ask=async(ideas,o={})=>{ nextText=typeof ideas==='string'?ideas:JSON.strin
   return {status:r.status,j:await r.json()}; };
 const clone=x=>JSON.parse(JSON.stringify(x));
 const one=(patch,lang='en')=>{ const x=clone(TI[lang][0]); patch(x); return x; };
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 console.log('-- GET and the version --');
 const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
@@ -35,7 +36,7 @@ const g=await (await fn(new Request('https://x/a',{method:'GET'}))).json();
 // v10.53.0 (stale): advise-2.5 adds the needs list (tests/needs-function.test.mjs); the topic mode is unchanged
 // v10.55.0 (stale, not a regression): the work for each need (ideas / ideas-status / ideas-pick) makes it advise-2.6
 // v10.56.0 (stale, not a regression): Claude in Make the Case makes it advise-2.7
-c('reports advise-2.7 (Claude in Make the Case; 2.6 the work for each need; 2.5 the needs list; 2.4 Find prices; 2.3 the Sabbath guideline)', g.fn, 'advise-2.7');
+c('reports advise-2.7 (Claude in Make the Case; 2.6 the work for each need; 2.5 the needs list; 2.4 Find prices; 2.3 the Sabbath guideline)', g.fn, 'advise-2.8');
 c('says the topic mode exists', g.topic, true);
 c('model and per-call limit unchanged (Opus by default, six a call)', [g.model,g.maxIdeasPerCall], ['claude-opus-5-5',6]);
 

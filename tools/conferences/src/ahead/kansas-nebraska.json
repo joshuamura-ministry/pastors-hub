@@ -16,8 +16,8 @@
   "https://www.ks-ne.org/prayerministries",
   "https://www.outlookmag.org/tag/kansas-nebraska-conference/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "C : the conference home-page calendar widget has only 8 real events (Apr-Nov 2026). A separate Club Ministries calendar (ks-ne.club) covers the 2026-27 club season well, and the weekly e-newsletter archive (last 10 weeks) and OUTLOOK fill in the rest. Oct 2025-Jun 2026 is thin.",
  "aheadQuality": "B (clubs only) : the Club Ministries calendar is complete through May 2028; everything else (camp meeting, Broken Arrow Ranch camps, Hispanic events, retreats) is not published for 2027.",
  "furthestPublished": "2028-05",
@@ -37,23 +37,43 @@
   "https://mailchi.mp/18e416e661d8/the-cutting-edge-march-13-13374433",
   "https://www.outlookmag.org/state-of-the-kansas-nebraska-conference/",
   "https://cvak12.org/",
-  "https://enterpriseacademy.org/ (page renders only with scripts; nothing readable)"
+  "https://enterpriseacademy.org/ (page renders only with scripts; nothing readable)",
+  "https://www.ks-ne.org/#Calendar-Home (headless Chrome; Elfsight event-calendar widget)",
+  "https://core.service.elfsight.com/p/boot/?page=https%3A%2F%2Fwww.ks-ne.org%2F&w=73177af5-1b11-42d4-abc7-2a89b3c423c0 (widget data; stale, 2026 events only)",
+  "https://www.ks-ne.org/camp-meeting (404)",
+  "https://www.ks-ne.org/prayerministries (404)",
+  "https://www.brokenarrowranch.org/",
+  "https://www.brokenarrowranch.org/camp-sessions (404)",
+  "https://www.ultracamp.com/info/upcomingsessions.aspx?campCode=bar&idCamp=698",
+  "https://us10.campaign-archive.com/feed?u=71379d5c768fa82cc2cf87f02&id=e7b5620a5e (10 latest Cutting Edge issues, Sep 25 - Oct 30 2026)",
+  "https://mailchi.mp/1b5347e74d13/the-cutting-edge-march-13-13374641 (Cutting Edge, Oct 30 2026)",
+  "https://ksneconference.regfox.com/retiro-de-matrimonios (script-only, nothing readable)",
+  "https://www.outlookmag.org/wp-json/wp/v2/posts?search=kansas-nebraska"
  ],
  "counts": {
-  "total": 11,
-  "conferenceLevel": 8,
+  "total": 23,
+  "conferenceLevel": 20,
   "byLevel": {
    "conference": 8,
    "observance": 2,
    "union": 1
   },
   "byCategory": {
-   "pathfinders": 7,
-   "children": 4
+   "pathfinders": 9,
+   "children": 6,
+   "family-women-men": 5,
+   "youth-young-adults": 3
   },
   "recurringSeries": 1,
   "approximateDates": 0,
-  "unconfirmed": 0
+  "unconfirmed": 0,
+  "observances": 2,
+  "byCategoryConferenceOnly": {
+   "pathfinders": 7,
+   "children": 5,
+   "family-women-men": 5,
+   "youth-young-adults": 3
+  }
  },
  "events": [
   {
@@ -194,6 +214,175 @@
    "url": "https://ks-ne.club/calendar/",
    "source": "calendar",
    "level": "conference"
+  },
+  {
+   "title": "Hispanic Couples Retreat (Retiro de Matrimonios)",
+   "start": "2026-11-20",
+   "end": "2026-11-22",
+   "place": "Holiday Inn, Kearney, NE",
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "families",
+   "level": "conference",
+   "url": "https://www.ks-ne.org/#Calendar-Home",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Home-page calendar widget entry (Hispanic Ministries); registration through RegFox."
+  },
+  {
+   "title": "Hispanic Women's Retreat (Retiro de Mujeres 2027, \"Guiadas por el Espíritu\")",
+   "start": "2027-03-26",
+   "end": "2027-03-28",
+   "place": "Holiday Inn, Kearney, NE",
+   "category": "family-women-men",
+   "category2": "multilingual",
+   "audience": "women",
+   "level": "conference",
+   "url": "https://www.ks-ne.org/ministries/womens-ministries",
+   "source": "events page",
+   "datePrecision": "day",
+   "registrationDeadline": "2027-02-28",
+   "note": "Includes a programme for young women aged 13-19; register before Feb 28 2027 to save $20."
+  },
+  {
+   "title": "Young Adult Camp",
+   "start": "2027-06-17",
+   "end": "2027-06-20",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Adventure Camp (ages 7-10)",
+   "start": "2027-06-20",
+   "end": "2027-06-27",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "children",
+   "category2": null,
+   "audience": "children",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Family Camp",
+   "start": "2027-06-29",
+   "end": "2027-07-04",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "families",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Parenting Solo (single parents and their children)",
+   "start": "2027-07-01",
+   "end": "2027-07-04",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "families",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Camp for single parents and all their children, held alongside Family Camp; register by phone with the conference office."
+  },
+  {
+   "title": "Junior Camp (ages 10-12)",
+   "start": "2027-07-04",
+   "end": "2027-07-11",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "children",
+   "category2": null,
+   "audience": "children",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Earliteen Camp (ages 13-14)",
+   "start": "2027-07-11",
+   "end": "2027-07-18",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "youth-young-adults",
+   "category2": "children",
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Teen Camp (ages 14-17)",
+   "start": "2027-07-18",
+   "end": "2027-07-25",
+   "place": "Broken Arrow Ranch, Olsburg, KS",
+   "category": "youth-young-adults",
+   "category2": null,
+   "audience": "youth",
+   "level": "conference",
+   "url": "https://www.brokenarrowranch.org/",
+   "source": "camp page",
+   "datePrecision": "day",
+   "note": "Dates from the Broken Arrow Ranch 2027 session list (check-in 3 PM on the first day, pick-up 10 AM on the last); registration through UltraCamp."
+  },
+  {
+   "title": "Eastern Kansas Area Pathfinder Fall Camporee",
+   "start": "2027-10-01",
+   "end": "2027-10-03",
+   "place": null,
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "pathfinders",
+   "level": "conference",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "Location TBD (2027-28 club season)."
+  },
+  {
+   "title": "Eastern Nebraska Area Pathfinder Fall Camporee",
+   "start": "2027-10-08",
+   "end": "2027-10-10",
+   "place": "Woodland Acres",
+   "category": "pathfinders",
+   "category2": null,
+   "audience": "pathfinders",
+   "level": "conference",
+   "url": "https://ks-ne.club/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Women's Retreat 2027 (\"Restored by Grace\")",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "place": "Holiday Inn, Kearney, NE",
+   "category": "family-women-men",
+   "category2": null,
+   "audience": "women",
+   "level": "conference",
+   "url": "https://www.ks-ne.org/ministries/womens-ministries",
+   "source": "events page",
+   "datePrecision": "day",
+   "registrationDeadline": "2027-09-30",
+   "note": "Registration opened in October 2026 (full fee or a $50 deposit with payments at your own pace); registration closes Sep 30 2027. Also on the home-page calendar."
   }
  ],
  "notPublishedYet": [
@@ -206,6 +395,36 @@
  "notes": [
   "All Apr-Sep 2027 dates come from the Club Ministries calendar (ks-ne.club), which already lists the whole 2027-28 club season through May 2028.",
   "Beyond the window (already published): Eastern KS fall camporee Oct 1-3 2027, Eastern NE fall camporee Oct 8-10 2027, Adventurer Award Expo Nov 6 2027, TLT training Nov 12-14 2027, spring camporee May 4-6 2028.",
-  "Messiah's Mansion (sanctuary exhibit) comes to Shawnee, KS on Oct 24-31 2026; that is before this window and is in the v50 file."
+  "Messiah's Mansion (sanctuary exhibit) comes to Shawnee, KS on Oct 24-31 2026; that is before this window and is in the v50 file.",
+  "(2026-11-06) The home-page calendar (Elfsight widget, read in headless Chrome) now shows three upcoming entries: Hispanic Couples Retreat Nov 20-22 2026, Hispanic Women's Retreat Mar 26-28 2027 and Women's Retreat Oct 15-17 2027; the widget's public data endpoint still returns the 2026 list, so the live render w",
+  "(2026-11-06) The Club Ministries calendar (ks-ne.club) is unchanged since Oct 1; the two Oct 2027 fall camporees are new only because October 2027 entered the window. It dates the union camporee \"July 28 - Aug 1\" (the camporee site says Jul 28-31).",
+  "(2026-11-06) Blind Camp 2027: blind campers are placed in the regular Broken Arrow Ranch weeks (no separate date).",
+  "(2026-11-06) The ten newest Cutting Edge issues (to Oct 30 2026) mention only one 2027 date: Women's Retreat registration open.",
+  "(2026-11-06) RegFox registration pages render only with scripts; dates were taken from the conference pages instead."
+ ],
+ "prepDeadlines": [
+  {
+   "title": "Hispanic Women's Retreat: early price ends",
+   "date": "2027-02-28",
+   "kind": "registration",
+   "what": "Register for the Mar 26-28 2027 Retiro de Mujeres before Feb 28 to save $20",
+   "url": "https://www.ks-ne.org/ministries/womens-ministries"
+  },
+  {
+   "title": "Women's Retreat 2027: registration closes",
+   "date": "2027-09-30",
+   "kind": "registration",
+   "what": "Registration for the Oct 15-17 2027 Women's Retreat in Kearney closes",
+   "url": "https://www.ks-ne.org/ministries/womens-ministries"
+  }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass; the first pass covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "camp meeting 2027 (the /camp-meeting page now returns 404; 2026 was May 27-30 at College View Church, Lincoln)",
+  "Kansas and Nebraska Hispanic camp meetings and the Panhandle camp meeting 2027 (2026 ones were Sep 4-7 and Oct 2-3)",
+  "men's retreat 2027 (2026 was Apr 24-26 at Broken Arrow Ranch)",
+  "young adult retreat 2027 (2026 was Oct 16-18) and Oxygen youth rally 2027 (2026 was Oct 30 - Nov 1)",
+  "winter convocations 2027",
+  "Broken Arrow Ranch 2027 camp theme and prices (session dates are posted; the camp-sessions page moved: 404)"
  ]
 }

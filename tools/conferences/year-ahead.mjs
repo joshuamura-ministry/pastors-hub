@@ -270,6 +270,8 @@ function chesapeakeFeed() {
     'Music Festival (HVA)': ['music-worship-arts', 'institution'], 'Children’s & Youth Leaders Enrichment Day': ['children', 'conference'],
     "Women's Day of Prayer": ['family-women-men', 'observance'], 'Southern Ministerium': ['pastoral-leadership', 'conference'], 'Pathfinder Union Level PBE': ['pathfinders', 'union'],
     'Global Youth Day (local church)': ['youth-young-adults', 'observance'], 'Western Ministerium': ['pastoral-leadership', 'conference'],
+    // new in the feed at the 6 Nov 2026 refresh
+    "Hispanic Couples' Retreat": ['family-women-men', 'conference', 'multilingual'], 'Town Hall Meeting': ['administration', 'conference'],
   };
   // the first pass already has the women's retreat and the Eastern Shore gathering (from news, with better links)
   const SKIP = /^(Women's Ministries Retreat|Eastern Shore Convocation|ADCOM|Board of Education|Indigenous Peoples Day|Curriculum Committee|Columbia Union Early Childhood Education Committee|Columbia Union School Administrators Council|Executive Committee|Personnel Committee|Camp Meeting Committee|HVA Board|Association Board|Education Staff Development|Office|In-House|Thanksgiving|Principal|Christmas|New Year|\*\*TENTATIVE|School Resumes|MAP Testing|MLK|Staff Dev|Dover School|Children’s & Youth Pastor’s Advisory|Baltimore White Marsh|President's Day|CU |WAU Board|3rd Quarter|Spring Break|Full Day Professional|Joint EXCOM|Good Friday|Easter|Deadline for Evangelism Subsidy|Pastors' Meeting \(alternate date\))/;
@@ -284,7 +286,8 @@ function chesapeakeFeed() {
   if (unknown.length) throw new Error('Chesapeake feed: unsorted titles ' + [...new Set(unknown)].join(' | '));
   for (const [t, list] of Object.entries(byTitle)) {
     const [cat, level, cat2, tent] = M[t];
-    const e = { title: t.replace(/ \(Tentative\)$/, ''), start: list[0].start, end: list[list.length - 1].end, category: cat, category2: cat2 && cat2 !== true ? cat2 : null, level, url: URL, tentative: tent === true || cat2 === true || list[0].start >= '2027-01-01' || undefined };
+    // (6 Nov 2026 refresh: the feed's year-long "TENTATIVE CALENDAR" banner over 2027 is gone, so a 2027 date is no longer tentative by itself)
+    const e = { title: t.replace(/ \(Tentative\)$/, ''), start: list[0].start, end: list[list.length - 1].end, category: cat, category2: cat2 && cat2 !== true ? cat2 : null, level, url: URL, tentative: tent === true || cat2 === true || undefined };
     // the union's own education calendar puts this workshop on 21-22 Feb 2027 (both dates are shown, both to be confirmed)
     if (t === 'Columbia Union Small Schools Workshop') e.confirmed = false;
     if (list.length > 1) { e.count = list.length; e.dates = list.map(o => o.start); e.recurring = true; }

@@ -1,4 +1,4 @@
-// Terrain · Digital footprint, what registered pastors ask for.          digital-1.2
+// Terrain · Digital footprint, what registered pastors ask for.          digital-1.3
 //
 // v10.60.0 (DESIGN-DIGITAL.md). The page's part of "Compare your churches": every church of the pastor's conference, read from public
 // pages by digital-read.mjs (a background function) and kept in Netlify Blobs (store "terrain-digital"). The findings name real
@@ -37,8 +37,9 @@ import { reviewInput } from './digital-review.mjs';
 import { giveBack } from './advise-needs.mjs';
 // v10.62.2: the lock is the passphrase, or a guest code on its own registration (guest-pass.mjs; TERRAIN_AI_GUESTS)
 import { passCheck } from './guest-pass.mjs';
+import { billingOn, fullFor, claudeBump, claudeGiveBack } from './account.mjs';   // v10.72.0: the plan, once payments are on
 
-export const FN = 'digital-1.2';
+export const FN = 'digital-1.3';   // 1.3 (v10.72.0): the full version asked for the findings, a reading, one church again and the review, once payments are on
 const REVIEW_FN = 'review-1.0';   // the worker's own stamp (digital-review.mjs), said back by the bare GET
 const FRESH_DAYS = 25, START_GAP_MS = 6 * 3600e3, STALL_MS = 4 * 60e3, AGAIN_DAY_MAX = 3;
 const REVIEW_REG_DAY = 3, STUCK_MS = 10 * 60e3, REVIEW_POLL_MS = 4000;
@@ -194,7 +195,13 @@ async function wakeReview(base, job, worker) {
 async function reviewRoute(store, request, b, t) {
   if (!KEY()) return rReply('nokey', 503);
   if (!PASS() || reviewDayMax() === 0) return rReply('disabled', 403);
-  if (!(await passCheck(typeof b.key === 'string' ? b.key : request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS()))) return rReply('locked', 401);
+  let g = { via: 'pass' };
+  if (!(await passCheck(typeof b.key === 'string' ? b.key : request.headers.get('x-terrain-pass'), request.headers.get('x-terrain-reg'), PASS()))) {
+    // v10.72.0: with payments on, a plan through Terrain's session may ask too (counted a day per account, as advise.mjs's routes)
+    let f = null; if (billingOn()) { try { f = await fullFor(request, PASS()); } catch { f = null; } }
+    if (!(f && f.full && f.via === 'plan')) return rReply('locked', 401);
+    g = { via: 'plan', uid: f.uid, status: f.status };
+  }
   const reg = regId(request.headers.get('x-terrain-reg'));
   if (!reg) return rReply('noreg', 401, { error: 'Register on the first page to use Terrain.' });
   const got = reviewShape(b);
@@ -214,12 +221,17 @@ async function reviewRoute(store, request, b, t) {
   // REVIEW_DAY_MAX for the whole site; counted before anything is spent, given back on a refusal
   const day = utcDay(t);
   const keys = { reg: reg !== 'open' && (!own || fresh) ? `c/reg/${day}/${reg}` : null, site: `c/site/${day}` };
-  const taken = [];
-  const back = async () => { for (const k of taken) await giveBack(store, keys[k]); };
+  const taken = []; let counted = false;
+  const back = async () => { for (const k of taken) await giveBack(store, keys[k]); if (g.via === 'plan' && counted) { counted = false; await claudeGiveBack(g.uid, t); } };
   for (const [k, max, code] of [['reg', REVIEW_REG_DAY, 'limit-reg'], ['site', reviewDayMax(), 'limit-site']]) {
     if (!keys[k]) continue;
     if (!(await bumpDay(store, keys[k], max, t))) { await back(); return rReply(code, 429, { retryAfter: Math.max(1, Math.ceil((nextUtcDay(t) - t) / 1000)) }); }
     taken.push(k);
+  }
+  if (g.via === 'plan') {   // v10.72.0: one of the plan's day, after the route's own limits
+    const a = await claudeBump(g.uid, g.status, t);
+    if (!a.ok) { await back(); return rReply('limit-plan', 429, { retryAfter: a.retryAfter, max: a.max }); }
+    counted = true;
   }
   const lock = await store.get(`l/${slug}/${org}`, { type: 'json' });
   if (lock && typeof lock.job === 'string') {
@@ -290,6 +302,8 @@ export default async (request) => {
     } else return reply({ ok: false, code: 'method' }, 405);
     const reg = regId(request.headers.get('x-terrain-reg'));
     if (!reg) return reply({ ok: false, code: 'noreg', error: 'Register on the first page to use Terrain.' }, 401);
+    // v10.72.0: once payments are on, the findings, a reading and "Check again" are the full version's (a plan, the passphrase or a tester code)
+    if (billingOn()) { let f = null; try { f = await fullFor(request, PASS()); } catch { f = null; } if (!(f && f.full)) return reply({ ok: false, code: 'plan' }, 402); }
     conf = String(conf || '').trim();
     if (!Object.prototype.hasOwnProperty.call(CONF_ORG, conf)) return reply({ ok: true, fn: FN, conf: conf.slice(0, 60), supported: false });
     const slug = slugOf(conf), enabled = allowed(conf);

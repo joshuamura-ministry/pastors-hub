@@ -975,17 +975,18 @@
    "sourceDetail": "calendar (2026 Calendar of Events list)"
   },
   {
-   "title": "Christmas Tea",
+   "title": "\"Room for Him\" Christmas Tea",
    "start": "2026-12-06",
    "end": "2026-12-06",
-   "place": null,
+   "place": "Mission & Evangelism Center, Hamburg, Pa.",
    "category": "family-women-men",
    "category2": null,
    "audience": "women",
    "level": "conference",
    "url": "https://paconference.org/events/",
    "source": "calendar",
-   "sourceDetail": "calendar (2026 Calendar of Events list)"
+   "sourceDetail": "calendar (2026 Calendar of Events list)",
+   "note": "(2026-11-06) 2-4 pm."
   },
   {
    "title": "DIME 2026",

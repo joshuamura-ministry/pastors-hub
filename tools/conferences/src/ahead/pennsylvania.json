@@ -9,8 +9,8 @@
   "https://paconference.org/camp-meeting/",
   "https://paconference.org/onevoice27/"
  ],
- "retrieved": "2026-10-01",
- "window": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the events page still shows only the \"2026 Calendar of Events\"; 2027 dates come from the camp-meeting and OneVoice27 pages.",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "calendarQuality": "B : a clear year-at-a-glance list (about 70 lines) with dates, but no places or links except the featured events. The site blocks automated access, so it was read through a fetch service and checked twice. No 2027 calendar-of-events list yet.",
  "furthestPublished": "2027-09",
  "furthestNote": "OneVoice27 evangelistic series in September 2027 (month only); the latest day-dated item is camp meeting, 11–20 Jun 2027",
@@ -26,7 +26,23 @@
   "https://laurellakesummercamp.org/",
   "http://laurellakecamp.com/",
   "https://columbiaunionvisitor.com/2026/proclaiming-one-accord",
-  "https://columbiaunionvisitor.com/category/pennsylvania-conference"
+  "https://columbiaunionvisitor.com/category/pennsylvania-conference",
+  "https://paconference.org/onevoice27-training/",
+  "https://paconference.org/retiro-de-damas-hispanas/",
+  "https://paconference.org/equipping-local-church-elders/",
+  "https://paconference.org/hispanic-ministries/",
+  "https://paconference.org/youth-ministries/",
+  "https://paconference.org/pathfinders/",
+  "https://paconference.org/womensministries/",
+  "https://paconference.org/evangelism/",
+  "https://paconference.org/",
+  "https://paconference.org/wp-json/wp/v2/pages?search=2027&per_page=50",
+  "https://paconference.org/wp-json/wp/v2/posts?search=2027&per_page=50",
+  "https://paconference.org/wp-json/wp/v2/pages?search=calendar&per_page=50",
+  "https://paconference.org/wp-json/wp/v2/pages?per_page=40&orderby=modified",
+  "https://paconference.org/wp-json/wp/v2/posts?per_page=30&orderby=date",
+  "https://paconference.org/wp-json/wp/v2/media?search=2027&per_page=50",
+  "https://columbiaunionvisitor.com/rss.xml"
  ],
  "stats": {
   "records": 3,
@@ -98,18 +114,24 @@
   }
  },
  "counts": {
-  "total": 3,
-  "conferenceLevel": 3,
+  "total": 9,
+  "conferenceLevel": 9,
   "observances": 0,
   "byCategory": {
    "discipleship-spiritual": 1,
    "camp-meeting": 1,
-   "evangelism-outreach": 1
+   "evangelism-outreach": 2,
+   "pastoral-leadership": 2,
+   "youth-young-adults": 1,
+   "family-women-men": 2
   },
   "byCategoryConferenceOnly": {
    "discipleship-spiritual": 1,
    "camp-meeting": 1,
-   "evangelism-outreach": 1
+   "evangelism-outreach": 2,
+   "pastoral-leadership": 2,
+   "youth-young-adults": 1,
+   "family-women-men": 2
   }
  },
  "excludedFromCalendar": {},
@@ -158,12 +180,122 @@
    "sourceDetail": "initiative page; theme: https://columbiaunionvisitor.com/2026/proclaiming-one-accord",
    "datePrecision": "month (page says \"an evangelistic series in September 2027\")",
    "note": "churches will be equipped to present a series in September 2027; the conference's 2027 evangelism theme is \"Proclaim in One Accord\""
+  },
+  {
+   "place": null,
+   "category2": "discipleship-spiritual",
+   "level": "conference",
+   "url": "https://paconference.org/onevoice27-training/",
+   "source": "ministry page",
+   "datePrecision": "day",
+   "title": "OneVoice27 Training Events (five regional Sabbath trainings)",
+   "start": "2026-11-08",
+   "end": "2026-12-13",
+   "dates": [
+    "2026-11-08",
+    "2026-11-21",
+    "2026-11-22",
+    "2026-12-06",
+    "2026-12-13"
+   ],
+   "count": 5,
+   "recurring": true,
+   "category": "evangelism-outreach",
+   "audience": "members",
+   "note": "8 Nov Northeast Region, Wyoming Valley church, Hudson, 10 am-1 pm; 21 Nov West Region, Pittsburgh church, 2:30-5:30 pm; 22 Nov West Region, Derrick City church, 10 am-1 pm; 6 Dec Southeast Region, Fairview Village church, Eagleville, 10 am-1 pm; 13 Dec Central Region, Harrisburg church, 10 am-1 pm. Pastors are asked to \"register you and your members\"."
+  },
+  {
+   "place": "online (Zoom)",
+   "category2": "evangelism-outreach",
+   "level": "conference",
+   "url": "https://paconference.org/equipping-local-church-elders/",
+   "source": "ministry page",
+   "datePrecision": "day",
+   "title": "Equipping Local Church Elders - Session 5: Cycle of Evangelism and Discipleship (Zoom)",
+   "start": "2026-11-15",
+   "end": "2026-11-15",
+   "category": "pastoral-leadership",
+   "audience": "leaders",
+   "note": "fifth and last teaching session of the 2026 elders' training series"
+  },
+  {
+   "place": "Huntingdon Valley, Pa. (1845 Byberry Rd)",
+   "category2": null,
+   "level": "joint",
+   "url": "https://paconference.org/events/",
+   "source": "events page",
+   "datePrecision": "day",
+   "title": "Plugged In (teen weekend with New Jersey)",
+   "start": "2026-11-20",
+   "end": "2026-11-21",
+   "category": "youth-young-adults",
+   "audience": "youth",
+   "note": "\"plug in, power up, and live out\" with teens from across Pennsylvania and New Jersey; prizes for the first 100 who register"
+  },
+  {
+   "place": "Hershey Country Club, Hershey, Pa.",
+   "category2": null,
+   "level": "conference",
+   "url": "https://paconference.org/events/",
+   "source": "events page",
+   "datePrecision": "day",
+   "title": "The Marriage Tune-Up: Marriage Conference",
+   "start": "2027-02-27",
+   "end": "2027-02-27",
+   "category": "family-women-men",
+   "audience": "families",
+   "note": "10 am-5 pm; one-day marriage retreat with a visiting couple; \"registration coming soon\""
+  },
+  {
+   "place": null,
+   "category2": null,
+   "level": "conference",
+   "url": "https://paconference.org/equipping-local-church-elders/",
+   "source": "ministry page",
+   "datePrecision": "day",
+   "title": "Elders' Commitment Banquet (Equipping Local Church Elders celebration)",
+   "start": "2027-04-25",
+   "end": "2027-04-25",
+   "category": "pastoral-leadership",
+   "audience": "leaders",
+   "note": "in person; \"more information to follow\"; closes the five-session elders' training"
+  },
+  {
+   "place": "Embassy Suites by Hilton, Piscataway, N.J.",
+   "category2": "multilingual",
+   "level": "conference",
+   "url": "https://paconference.org/retiro-de-damas-hispanas/",
+   "source": "events page",
+   "datePrecision": "day",
+   "title": "Libres en Jesús: Retiro de Damas Hispanas 2027",
+   "start": "2027-09-24",
+   "end": "2027-09-26",
+   "category": "family-women-men",
+   "audience": "women",
+   "registrationOpens": "2026-10-13",
+   "note": "for women 12 and up; early registration $135 until May 2027, then $155 (meals included); hotel room paid separately through the conference link; registration not refundable but transferable"
   }
  ],
  "notes": [
   "Pennsylvania's events page and site were readable directly today (no block).",
   "The OneVoice27 page also says members will \"have opportunities to attend training events\" through the coming year; none is dated yet.",
   "The conference PDF \"OneVoice27 or All Things New?\" gives the NAD phases: Pray Like Jesus Sept 2026–Mar 2027, Serve Like Jesus Jan–Aug 2027, Share Jesus Apr–Sept 2027, Follow Jesus Oct–Dec 2027. These are NAD-level and belong in the division lane, not here.",
-  "Evangelism-subsidy requests are due 30 September each year (v47); the 2026 date passed yesterday, so the next is 30 Sep 2027 for 2028 meetings."
+  "Evangelism-subsidy requests are due 30 September each year (v47); the 2026 date passed yesterday, so the next is 30 Sep 2027 for 2028 meetings.",
+  "(2026-11-06) paconference.org answered directly (no block) on 6 Nov 2026.",
+  "(2026-11-06) New since the last pass: the \"OneVoice27 Training\" page (modified 13 Oct), the Retiro de Damas Hispanas page (13 Oct), the Marriage Tune-Up and Plugged In entries on the events page (events page modified 2 Nov), and the elders' banquet date on the Equipping Local Church Elders page (20 Oct).",
+  "(2026-11-06) The Southeast Region OneVoice27 training (6 Dec 2026) is at the Fairview Village church, Eagleville, Pa.",
+  "(2026-11-06) The media library gained a \"2027 Officers\" image on 2 Nov 2026 (a church-officer notice, not an event).",
+  "(2026-11-06) The Hispanic women's retreat is held in New Jersey (Piscataway) although it is a Pennsylvania Conference event.",
+  "(2026-11-06) The OneVoice27 page still says members will \"have opportunities to attend training events\" through 2027 and that churches will present an evangelistic series in September 2027; no 2027 training dates yet."
+ ],
+ "windowBefore": "look-ahead 2027-04-01 to 2027-09-30 (the months after the first pass, which covered 2025-10-01 to 2027-03-31); the events page still shows only the \"2026 Calendar of Events\"; 2027 dates come from the camp-meeting and OneVoice27 pages.",
+ "notPublishedYetNov2026": [
+  "The 2027 Calendar of Events list: the events page still shows only the \"2026 CALENDAR OF EVENTS\" (November and December).",
+  "Camp meeting 2027 beyond \"June 11-20\": no place, speakers, programme or reservation details (the page still carries the 2026 recordings).",
+  "Hispanic camp meeting 2027 (campestre-hispano still shows 26-28 Jun 2026).",
+  "Laurel Lake summer camp 2027 weeks (laurellakesummercamp.org still lists the 2026 weeks).",
+  "2027 Pathfinder/Adventurer schedule (the Pathfinders page still lists 2025-26 dates) and the 2027 youth rally.",
+  "OneVoice27 training events for 2027 (only the Nov-Dec 2026 regional trainings are posted).",
+  "DIME 2026 (12 Dec) is still not explained anywhere on the site."
  ]
 }

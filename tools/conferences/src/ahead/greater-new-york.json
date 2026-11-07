@@ -8,8 +8,8 @@
   "https://web.archive.org/web/20260412083814/https://gnyc.org/events/month/2025-12/",
   "https://web.archive.org/web/20251011195408/https://gnyc.org/events-calendar/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "furthestPublished": "2027-01",
  "furthestNote": "The 2026 Calendar of Events stops at 28-31 Dec 2026. The only 2027 item anywhere is the youth department's Adventist Youth Congress XIX (29-31 Jan 2027) on its ticketing site.",
  "aheadEvents": 0,
@@ -94,7 +94,21 @@
   "GNYC evangelism subsidy request form"
  ],
  "excludedNonEvents": 0,
- "events": [],
+ "events": [
+  {
+   "title": "Prayer Min. Training #2",
+   "start": "2026-11-09",
+   "end": "2026-11-09",
+   "place": null,
+   "category": "discipleship-spiritual",
+   "category2": null,
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://gnyc.org/events-calendar/",
+   "source": "feed",
+   "datePrecision": "day"
+  }
+ ],
  "prepDeadlines": [
   {
    "title": "Local Church Evangelism Subsidy Request due",
@@ -136,7 +150,7 @@
    "title": "Adventist Youth Congress XIX",
    "start": "2027-01-29",
    "end": "2027-01-31",
-   "place": null,
+   "place": "Parsippany, New Jersey",
    "category": "youth-young-adults",
    "category2": "pastoral-leadership",
    "audience": "youth and young-adult leaders",
@@ -144,7 +158,7 @@
    "source": "youth events page (ticketing site)",
    "level": "conference",
    "kind": "training",
-   "note": "Leadership weekend for youth and young-adult leaders (workshops, worship). Starts Fri 29 Jan 5 pm. Venue not given. Falls in the first window and is missing from v50 (the 2026 calendar ends in December)."
+   "note": "Leadership weekend for youth and young-adult leaders (workshops, worship). Starts Fri 29 Jan 5 pm. Venue not given. Falls in the first window and is missing from v50 (the 2026 calendar ends in December). (2026-11-06) Place published: Parsippany, New Jersey."
   }
  ],
  "plannedUndated": [
@@ -258,7 +272,17 @@
   "https://gnycyouth.com/event/",
   "https://events.gnycyouth.org/events",
   "https://events.gnycyouth.org/event/18/adventist-youth-congress-xix",
-  "https://atlanticuniongleaner.org/"
+  "https://atlanticuniongleaner.org/",
+  "https://www.keepandshare.com/calendar48/subscribe.php?i=2887478 (the page's public ICS subscribe link, 64 entries Oct 2026 - 1 Jan 2027)",
+  "https://www.keepandshare.com/calendar48/show.php?i=2887478&mb=y&mode=event (event list, read in headless Chrome)",
+  "https://www.keepandshare.com/calendar48/show.php?i=2887478&mb=y&vw=month&date=2027-01-01 (and 2027-02, 2027-03, 2027-06: empty)",
+  "https://gnyc.org/docs/2026-GNYC-Calendar.pdf (fetched; same calendar as the feed, text not extractable here)",
+  "https://gnyc.org/docs/2027-GNYC-Calendar.pdf (404)",
+  "https://gnyc.org/sitemap-index.xml and sitemap-0.xml (76 pages, every one fetched and searched for 2027)",
+  "https://gnyc.org/news/",
+  "https://events.gnycyouth.org/ (sign-in page only)",
+  "https://events.gnycyouth.org/events (404)",
+  "https://atlanticuniongleaner.org/wp-json/wp/v2/posts?after=2026-09-25T00:00:00"
  ],
  "aheadCheckedNotes": [
   "gnyc.org/docs/2027-GNYC-Calendar.pdf (and the lower-case form) return 404.",
@@ -267,6 +291,17 @@
   "Camp Berkshire's page has no season dates."
  ],
  "notes": [
-  "Recheck in Dec 2026 - Jan 2027, when GNYC usually posts its next full-year Calendar of Events; it will likely hold the 2027 camp meetings, Pathfinder/Adventurer camporees and language-group conventions."
+  "Recheck in Dec 2026 - Jan 2027, when GNYC usually posts its next full-year Calendar of Events; it will likely hold the 2027 camp meetings, Pathfinder/Adventurer camporees and language-group conventions.",
+  "(2026-11-06) The Calendar of Events page now embeds a KeepAndShare calendar (week view) with 'Open the calendar in a new tab' and 'Subscribe to the calendar' (public ICS) links beside the 2026 PDF; the feed was used as the live source. It exports from about a month back (1 Oct 2026) to the end of the calendar (1",
+  "(2026-11-06) The feed differs from the PDF-based existing list on three dates (see changedEvents); committees (EXCOM, Finance, Principal's meetings), office closures and civic holidays were left out.",
+  "(2026-11-06) gnycyouth.com has been rebuilt as a one-page site for the Youth Congress; its old WordPress sitemap and /event/ pages are gone. The ticketing site's public list (events.gnycyouth.org/events) now returns 404 and the root is a sign-in page; the congress page itself is still public (early registration ",
+  "(2026-11-06) Recheck in Dec 2026 - Jan 2027 for the 2027 Calendar of Events (PDF and KeepAndShare)."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the six months after the first pass, which covered 2025-10-01 to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "The 2027 GNYC Calendar of Events: the 2027 PDF address still returns 404, the embedded KeepAndShare calendar is still named '2026 GNYC Calendar of Events' and its Jan, Feb, Mar and Jun 2027 views are empty, and none of the 76 pages on gnyc.org mentions a 2027 event (the only '2027' is a vacation carry-over form).",
+  "2027 camp meetings at Camp Berkshire (2025 pattern: Korean May, Luso-Brazilian May, English Jun, Haitian Jul, Hispanic Aug, United Sep).",
+  "2027 Pathfinder/Adventurer camporees, Bible Olympics, language-group conventions, women's and men's events.",
+  "Oct 2027: nothing published."
  ]
 }

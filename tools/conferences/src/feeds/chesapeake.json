@@ -1,148 +1,16 @@
 {
- "_about": "Chesapeake Conference public calendar feed (https://ccosda.org/calendar/), read 2026-10-01: title, start, end and status of each meeting from 2026-10-01 to 2027-09-30. Made by tools/conferences/feed.mjs.",
+ "_about": "Chesapeake Conference public calendar feed (https://ccosda.org/calendar/), read 2026-11-06: title, start, end and status of each meeting from 2026-11-01 to 2027-10-31. Made by tools/conferences/feed.mjs.",
  "occ": [
   {
-   "summary": "Women's Ministries Retreat",
-   "start": "2026-10-02",
-   "end": "2026-10-04",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Ministerial Evangelistic Campaign - Spanish",
-   "start": "2026-10-03",
-   "end": "2026-10-31",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "ADCOM  Meeting",
-   "start": "2026-10-07",
-   "end": "2026-10-07",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Peacemaker Training",
-   "start": "2026-10-07",
-   "end": "2026-10-07",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Preventing Conflict & Peacemaking 4-5",
-   "start": "2026-10-07",
-   "end": "2026-10-08",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Board of Education",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Peacemaker Training",
-   "start": "2026-10-08",
-   "end": "2026-10-08",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Indigenous Peoples Day (Schools Closed)",
-   "start": "2026-10-12",
-   "end": "2026-10-12",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "ADCOM  Meeting",
-   "start": "2026-10-14",
-   "end": "2026-10-14",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Curriculum Committee Meeting",
-   "start": "2026-10-14",
-   "end": "2026-10-14",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Master Guide Camporee",
-   "start": "2026-10-16",
-   "end": "2026-10-18",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Columbia Union Small Schools Workshop",
-   "start": "2026-10-18",
-   "end": "2026-10-19",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Columbia Union Early Childhood Education Committee",
-   "start": "2026-10-20",
-   "end": "2026-10-20",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "ADCOM  Meeting",
-   "start": "2026-10-21",
-   "end": "2026-10-21",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Columbia Union School Administrators Council",
-   "start": "2026-10-21",
-   "end": "2026-10-22",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Peacemaker Training",
-   "start": "2026-10-21",
-   "end": "2026-10-21",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Preventing Conflict & Peacemaking 6-7",
-   "start": "2026-10-21",
-   "end": "2026-10-22",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Peacemaker Training",
-   "start": "2026-10-22",
-   "end": "2026-10-22",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Executive Committee",
-   "start": "2026-10-27",
-   "end": "2026-10-27",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Personnel Committee",
-   "start": "2026-10-27",
-   "end": "2026-10-27",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "ADCOM  Meeting",
-   "start": "2026-10-28",
-   "end": "2026-10-28",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Eastern Shore Convocation",
-   "start": "2026-10-30",
-   "end": "2026-10-31",
+   "summary": "Hispanic Couples' Retreat",
+   "start": "2026-11-01",
+   "end": "2026-11-05",
    "status": "CONFIRMED"
   },
   {
    "summary": "STEM Festival (Spencerville)",
    "start": "2026-11-01",
    "end": "2026-11-01",
-   "status": "CONFIRMED"
-  },
-  {
-   "summary": "Camp Meeting Committee",
-   "start": "2026-11-03",
-   "end": "2026-11-03",
    "status": "CONFIRMED"
   },
   {
@@ -212,13 +80,13 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "In-House Meetings",
-   "start": "2026-11-17",
-   "end": "2026-11-17",
+   "summary": "ADCOM  Meeting",
+   "start": "2026-11-18",
+   "end": "2026-11-18",
    "status": "CONFIRMED"
   },
   {
-   "summary": "ADCOM  Meeting",
+   "summary": "Camp Meeting Committee",
    "start": "2026-11-18",
    "end": "2026-11-18",
    "status": "CONFIRMED"
@@ -314,15 +182,15 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "Principal's Council",
+   "summary": "Mission and Church Growth Council",
    "start": "2026-12-09",
    "end": "2026-12-09",
    "status": "CONFIRMED"
   },
   {
-   "summary": "Mission and Church Growth Council",
-   "start": "2026-12-10",
-   "end": "2026-12-10",
+   "summary": "Principal's Council",
+   "start": "2026-12-09",
+   "end": "2026-12-09",
    "status": "CONFIRMED"
   },
   {
@@ -374,12 +242,6 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "**TENTATIVE CALENDAR**",
-   "start": "2027-01-01",
-   "end": "2027-12-31",
-   "status": "CONFIRMED"
-  },
-  {
    "summary": "New Year's Day (Office Closed)",
    "start": "2027-01-01",
    "end": "2027-01-01",
@@ -422,12 +284,6 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "Camp Meeting Committee",
-   "start": "2027-01-11",
-   "end": "2027-01-11",
-   "status": "CONFIRMED"
-  },
-  {
    "summary": "MAP Testing",
    "start": "2027-01-11",
    "end": "2027-01-22",
@@ -437,6 +293,12 @@
    "summary": "Pastors' Zoom Prayer Call",
    "start": "2027-01-11",
    "end": "2027-01-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-01-12",
+   "end": "2027-01-12",
    "status": "CONFIRMED"
   },
   {
@@ -758,6 +620,12 @@
    "status": "CONFIRMED"
   },
   {
+   "summary": "Town Hall Meeting",
+   "start": "2027-03-27",
+   "end": "2027-03-27",
+   "status": "CONFIRMED"
+  },
+  {
    "summary": "Easter Sunday",
    "start": "2027-03-28",
    "end": "2027-03-28",
@@ -773,6 +641,12 @@
    "summary": "ADCOM  Meeting",
    "start": "2027-03-31",
    "end": "2027-03-31",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Town Hall Meeting",
+   "start": "2027-04-03",
+   "end": "2027-04-03",
    "status": "CONFIRMED"
   },
   {
@@ -797,6 +671,12 @@
    "summary": "Northern Ministerium",
    "start": "2027-04-08",
    "end": "2027-04-08",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Town Hall Meeting",
+   "start": "2027-04-10",
+   "end": "2027-04-10",
    "status": "CONFIRMED"
   },
   {
@@ -842,7 +722,13 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "Constituency Session Organizing Committee",
+   "summary": "Town Hall Meeting",
+   "start": "2027-04-17",
+   "end": "2027-04-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Constituency Organizing Committee",
    "start": "2027-04-18",
    "end": "2027-04-18",
    "status": "CONFIRMED"
@@ -902,19 +788,25 @@
    "status": "CONFIRMED"
   },
   {
-   "summary": "Constituency Session Nominating Committee",
+   "summary": "Constituency Nominating Committee",
    "start": "2027-05-02",
    "end": "2027-05-02",
    "status": "CONFIRMED"
   },
   {
-   "summary": "Camp Meeting Committee",
+   "summary": "Eastern Shore Ministerium",
    "start": "2027-05-04",
    "end": "2027-05-04",
    "status": "CONFIRMED"
   },
   {
-   "summary": "Eastern Shore Ministerium",
+   "summary": "Executive Committee Meeting",
+   "start": "2027-05-04",
+   "end": "2027-05-04",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee",
    "start": "2027-05-04",
    "end": "2027-05-04",
    "status": "CONFIRMED"
@@ -971,6 +863,12 @@
    "summary": "Constituency Meeting",
    "start": "2027-05-16",
    "end": "2027-05-16",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Camp Meeting Committee",
+   "start": "2027-05-18",
+   "end": "2027-05-18",
    "status": "CONFIRMED"
   },
   {
@@ -1475,6 +1373,102 @@
    "summary": "Association Board Meeting",
    "start": "2027-09-30",
    "end": "2027-09-30",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Encuentro Familiar -Eastern Shore",
+   "start": "2027-10-02",
+   "end": "2027-10-02",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-10-06",
+   "end": "2027-10-06",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Women's Min. Retreat (tentative)",
+   "start": "2027-10-08",
+   "end": "2027-10-10",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Indigenous People (no school)",
+   "start": "2027-10-11",
+   "end": "2027-10-11",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-10-13",
+   "end": "2027-10-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Curriculum Committee",
+   "start": "2027-10-13",
+   "end": "2027-10-13",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "End of 1st Quarter",
+   "start": "2027-10-15",
+   "end": "2027-10-15",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Master Guide Camporee",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "CU Education Meetings",
+   "start": "2027-10-17",
+   "end": "2027-10-21",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Executive Committee Meeting",
+   "start": "2027-10-19",
+   "end": "2027-10-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Personnel Committee Meeting",
+   "start": "2027-10-19",
+   "end": "2027-10-19",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-10-20",
+   "end": "2027-10-20",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Chesapeake on the Move 2027",
+   "start": "2027-10-24",
+   "end": "2027-10-24",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "Next Step Training",
+   "start": "2027-10-26",
+   "end": "2027-10-26",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "ADCOM  Meeting",
+   "start": "2027-10-27",
+   "end": "2027-10-27",
+   "status": "CONFIRMED"
+  },
+  {
+   "summary": "STEM Fest (HVA)",
+   "start": "2027-10-31",
+   "end": "2027-10-31",
    "status": "CONFIRMED"
   }
  ]

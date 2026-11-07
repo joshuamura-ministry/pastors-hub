@@ -2,8 +2,8 @@
  "union": "Southern",
  "slug": "union-southern",
  "site": "https://www.southernunion.com",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadChecked": [
   "https://www.southernunion.com/events/",
   "https://www.southernunion.com/?s=2027",
@@ -20,7 +20,19 @@
   "https://www.southerntidings.com/?s=2027",
   "https://nadpbe.org/",
   "https://nadministerial.com/called",
-  "https://asiministries.org/convention/"
+  "https://asiministries.org/convention/",
+  "https://www.southernunion.com/wp-json/wp/v2/media?search=calendar&per_page=50",
+  "https://www.southernunion.com/wp-json/wp/v2/media?per_page=40&orderby=date&order=desc&_fields=date,title,source_url",
+  "https://www.southernunion.com/wp-json/wp/v2/posts?per_page=20&_fields=date,title,link",
+  "https://www.southernunion.com/wp-content/uploads/2026/10/PBE-slide.jpeg",
+  "https://www.southernunion.com/ministries-services/religious-liberty/offerings-campaigns/",
+  "https://www.southernunion.com/wp-content/uploads/2026/10/2027-Liberty-PowerPointSlide-scaled.jpg",
+  "https://www.southernunion.com/ministries-services/medical-dental-health-professionals-ministry/medical-dental-health-professionals-calendar-of-events/",
+  "https://camporee.southernunion.com/",
+  "https://www.southerntidings.com/?s=OneVoice27",
+  "https://www.southerntidings.com/suc/",
+  "https://www.southerntidings.com/news/onevoice27-equips-children-to-know-share-jesus/",
+  "https://www.adventistedge.com/wp-json/wp/v2/media?search=calendar&per_page=30&_fields=date,title,source_url"
  ],
  "furthestPublished": "2030-03",
  "aheadSummary": "The union's web event list ends with EC3 (1-3 Nov 2026), but two union PDF calendars reach well past the window: the officers' calendar for 2026-2027 (posted Dec 2025) and the Education department's multi-year planning calendar (updated 24 Jun 2026, to 2030). Union-run in the window: the 21st Southern Union Constituency Session (19-20 Sep 2027) and the SU Leadership conference for educators (16-19 Sep 2027). Three NAD/ASI events meet inside the territory.",
@@ -30,7 +42,14 @@
   "Inside the year ahead (added in review): SU Academy Prayer Conference 13-16 Jan 2027 and SU Pathfinder Bible Experience 26-27 Mar 2027 (officers' calendar; the education multi-year calendar agrees once its columns are read by weekday). Outside it: SU Chaplain Retreat 19-21 Oct 2027; SU Admin/Departmental Council 14-17 Nov 2027."
  ],
  "excludedFromUnionCalendars": "Committee and board meetings (SU Youth & Young Adult Advisory 13-15 Apr 2027, executive committees, LLUH/SAU boards, NAD HR/Secretariat/Treasury councils, GC Spring Meeting 13-14 Apr 2027, NADOUP), staff meetings, holidays and university graduations were left out.",
- "notes": "The officers' calendar also shows a second 'CALLED Convention' bar on 26-29 Jul 2027; it is a leftover from the Dec 2024 version (which had CALLED on those dates). NAD's own page and the KYTN calendar give 21-24 Jun 2027, so only the June dates are used. The Dec 2024 union calendar placed the 2027 ASI convention in 'Tampa Bay'; ASI's own page says Orlando, 4-7 Aug 2027. The newest copy of the education calendar (July upload) returns HTTP 403, so the identical June upload (same 24 Jun 2026 edit) is cited.",
+ "notes": [
+  "The officers' calendar also shows a second 'CALLED Convention' bar on 26-29 Jul 2027; it is a leftover from the Dec 2024 version (which had CALLED on those dates). NAD's own page and the KYTN calendar give 21-24 Jun 2027, so only the June dates are used. The Dec 2024 union calendar placed the 2027 ASI convention in 'Tampa Bay'; ASI's own page says Orlando, 4-7 Aug 2027. The newest copy of the education calendar (July upload) returns HTTP 403, so the identical June upload (same 24 Jun 2026 edit) is cited.",
+  "(2026-11-06) A union PBE slide (28 Oct 2026) confirms the SU Pathfinder Bible Experience on 26-27 Mar 2027 and gives the venue: Highland Academy, Portland, TN (Friday vespers, Sabbath testing 10 am-3 pm; study books Mark, 1-2 Peter, 1-3 John); NAD PBE 23-24 Apr 2027 at the Von Braun Center, Huntsville. Existing",
+  "(2026-11-06) October 2027 on the officers' calendar also shows FLC Constituency (Sun 10 Oct 2027, Florida Conference: belongs in Florida's file), NADOUP (Wed-Thu 27-28 Oct) and the NAD Year-end Meeting (c. 28 Oct - 1 Nov 2027): committee/administrative meetings, not recorded.",
+  "(2026-11-06) The officers' calendar dates were read from a positional text extraction of the PDF (no PDF renderer on this machine): bar text is centred, so the column span was inferred; the Oct 2027 reading matches the October pass's note (SU Chaplain Retreat 19-21 Oct 2027).",
+  "(2026-11-06) The Medical/Dental Ministries calendar of events lists only Loma Linda campus recruiting (5-8 Mar 2027 LLU Homecoming, 18-19 Oct 2027 fall recruiting): staff recruiting in California, not recorded.",
+  "(2026-11-06) The union events page still lists only EC3 (1-3 Nov 2026) and the 2026 Society of Adventist Communicators; the posts endpoint returns no items."
+ ],
  "events": [
   {
    "title": "NAD Pathfinder Bible Experience finals",
@@ -117,6 +136,62 @@
    "count": 2,
    "note": "21-22 Sep and 28-29 Sep 2027 (education calendar, university dates)",
    "when": "upcoming"
+  },
+  {
+   "title": "2027 Religious Liberty Offering",
+   "start": "2027-01-09",
+   "end": "2027-01-09",
+   "place": null,
+   "category": "stewardship-finance",
+   "category2": "other",
+   "audience": "members",
+   "level": "observance",
+   "url": "https://www.southernunion.com/ministries-services/religious-liberty/offerings-campaigns/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Liberty magazine offering Sabbath (\"Whose Child is This?\"); the union runs the largest religious liberty offering campaign in the NAD and posted 2027 posters, brochures (English and Spanish), a slide and an email kit on 27-28 Oct 2026; promotion resources run December to March"
+  },
+  {
+   "title": "GC Annual Council",
+   "start": "2027-10-08",
+   "end": "2027-10-13",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "gc",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "officers' calendar, October 2027 page (bar Fri 8 - Sat 9 continuing Sun 10 - Wed 13); dates read from the bar positions"
+  },
+  {
+   "title": "Society of Adventist Communicators",
+   "start": "2027-10-14",
+   "end": "2027-10-16",
+   "place": null,
+   "category": "other",
+   "category2": "evangelism-outreach",
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "officers' calendar, October 2027 page (bar Thu 14 - Sat 16); the union's events page listed the 2026 convention (15-17 Oct 2026, Orlando); venue for 2027 not stated"
+  },
+  {
+   "title": "SU Chaplain Retreat",
+   "start": "2027-10-19",
+   "end": "2027-10-21",
+   "place": null,
+   "category": "pastoral-leadership",
+   "category2": null,
+   "audience": "pastors",
+   "level": "union",
+   "url": "https://www.southernunion.com/wp-content/uploads/2025/12/Officers-SU-Calendar-2026-2027.pdf",
+   "source": "calendar",
+   "datePrecision": "day",
+   "note": "officers' calendar, October 2027 page (bar Tue 19 - Thu 21); October 2027 is new to the window this month; venue not stated"
   }
  ],
  "stats": {
@@ -166,5 +241,12 @@
    "source": "union calendar",
    "note": "Officers' calendar, March 2027 page (bar Fri 26 – Sat 27 Mar). The education multi-year calendar also gives Mar 26-27 (2027-2028 column). Added in review, 1 Oct 2026."
   }
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "No 2027-2028 officers' calendar yet (the media library's newest is the Dec 2025 upload for 2026-2027).",
+  "No 2027 dates for the Southern Union Evangelism Conference EC3 (the EC3 page still carries 1-3 Nov 2026).",
+  "No OneVoice27 (September 2027) union plan with dates; Southern Tidings only reports a Southeastern children's ministries gathering (12 Sep 2026) preparing for \"September 2027\".",
+  "The union Pathfinder Camporee (\"Deeply Rooted\", Camp Kulaqua, 14-17 Oct 2026) is before the window; the camporee site announces no next edition."
  ]
 }

@@ -3,8 +3,8 @@
  "slug": "oklahoma",
  "union": "Southwestern",
  "site": "https://www.okadventist.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30"
@@ -14,7 +14,20 @@
  "counts": {
   "events": 1,
   "meetings": 1,
-  "conferenceRun": 1
+  "conferenceRun": 1,
+  "total": 3,
+  "conferenceLevel": 3,
+  "observances": 0,
+  "byCategory": {
+   "camp-meeting": 1,
+   "community-service": 1,
+   "administration": 1
+  },
+  "byCategoryConferenceOnly": {
+   "camp-meeting": 1,
+   "community-service": 1,
+   "administration": 1
+  }
  },
  "calendarUrls": [
   "https://www.okadventist.org/campmeeting2026",
@@ -34,6 +47,34 @@
    "url": "https://www.okadventist.org/campmeeting2026",
    "source": "camp-meeting page",
    "note": "The 2026 camp-meeting page says camp meeting next year will be July 9-17, 2027. Online pre-registration for 2027 tent, RV and cabin sites opened Jul 15, 2026."
+  },
+  {
+   "title": "100,000 Meal Packing Event (volunteer day)",
+   "start": "2026-11-01",
+   "end": "2026-11-01",
+   "place": "Tulsa Adventist Academy gymnasium, Tulsa",
+   "category": "community-service",
+   "category2": null,
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://www.okadventist.org/post/volunteers-needed-for-oklahoma-s-100-000-meal-packing-event",
+   "source": "news",
+   "datePrecision": "day",
+   "note": "Sunday Nov 1, 2026: volunteers from churches across Oklahoma pack the second 50,000 meals (students packed the first 50,000 on Oct 27). Meals go to churches and ministries statewide."
+  },
+  {
+   "title": "Mid-term conference-wide gathering",
+   "start": "2027-04-10",
+   "end": "2027-04-10",
+   "place": null,
+   "category": "administration",
+   "category2": "discipleship-spiritual",
+   "audience": "members",
+   "level": "conference",
+   "url": "https://www.okadventist.org/post/executive-committee-report",
+   "source": "news",
+   "datePrecision": "day",
+   "note": "Announced in the Oct 22, 2026 executive committee report: Sabbath Apr 10, 2027, 4:00-6:30 pm, to highlight the mission across the Oklahoma Conference with a joint sharing time (mid-term between constituency sessions). Place not given."
   }
  ],
  "notes": [
@@ -41,7 +82,12 @@
   "Event pages (Wix event site map) end in 2025. The blog feed (20 newest posts, Sep 8-28, 2026) has no 2027 dates.",
   "Not published yet for 2027: Hispanic camp meeting (campamento), Zomi camp meeting, summer camp, Pathfinder camporee, prayer retreat, Oklahoma Reconnect trainings.",
   "Record (union magazine): no Apr-Sep 2027 dates in the 2026 Oklahoma stories online or in the Sep/Oct 2026 print issue.",
-  "The April 2029 constituency session is a business session and lies outside the window; it is not listed as an event."
+  "The April 2029 constituency session is a business session and lies outside the window; it is not listed as an event.",
+  "(2026-11-06) First curl pass hit a Cloudflare managed challenge (HTTP 429, cf-mitigated: challenge) on every okadventist.org page; a single retry a few minutes later, one page at a time, was served normally. No workaround was used.",
+  "(2026-11-06) Executive committee report (Nov 5, 2026 post): next executive committee Dec 10, 2026 (not counted); two pastors hired (names not recorded); the 2027 mid-term gathering, Awaken Youth Nov 2027 and the 2028 joint camporee are the only forward dates.",
+  "(2026-11-06) Workers' meeting story (Oct 14, 2026): pastors were briefed on the \"2027 One Voice initiative\", a statewide effort to unify evangelism; no dates.",
+  "(2026-11-06) All 66 pages in the page sitemap and the 20 newest posts were checked for 2027-2029 dates: only the camp-meeting page (Jul 9-17, 2027), the constituency page (April 2029) and the executive committee report give any.",
+  "(2026-11-06) Record (union magazine) Oklahoma stories to Oct 28, 2026 hold no 2027 dates. The union education calendar lists Oklahoma Conference board of education meetings Dec 2, 2026 and Feb 24, 2027 (boards, not counted)."
  ],
  "aheadChecked": [
   "https://www.okadventist.org/campmeeting2026",
@@ -58,6 +104,32 @@
   "https://www.okadventist.org/wewokawoods",
   "https://www.swurecord.org/conference/oklahoma",
   "https://issuu.com/swurecord/docs/september_october_2026",
-  "https://www.nadadventist.org/camp-meeting/"
+  "https://www.nadadventist.org/camp-meeting/",
+  "https://www.okadventist.org/blog-feed.xml (20 newest posts, Oct 11-Nov 5, 2026)",
+  "https://www.okadventist.org/blog",
+  "https://www.okadventist.org/post/executive-committee-report",
+  "https://www.okadventist.org/post/oklahoma-pastors-convene-for-workers-meeting-at-midwest-city-spanish-church",
+  "https://www.okadventist.org/post/volunteers-needed-for-oklahoma-s-100-000-meal-packing-event",
+  "https://www.okadventist.org/post/two-dedicated-leaders-join-the-oklahoma-conference-team",
+  "https://www.okadventist.org/volunteercampmeeting",
+  "https://www.okadventist.org/reserve-a-ministry-booth-at-campmeeting",
+  "https://www.okadventist.org/campstaff",
+  "https://www.okadventist.org/ministerial",
+  "https://www.okadventist.org/childrensministry",
+  "https://www.okadventist.org/men",
+  "https://www.okadventist.org/prayerministries",
+  "https://www.okadventist.org/communityservice",
+  "https://www.okadventist.org/native",
+  "https://www.okadventist.org/urbansurvival",
+  "https://www.okadventist.org/pages-sitemap.xml (66 pages listed)",
+  "https://www.okadventist.org/event-pages-sitemap.xml (59 event pages, newest Sep 2025)",
+  "https://swurecord.org/api/apps/69b1cae160b0054de343feb4/entities/Article?q={\"published\":true,\"type\":\"news\",\"news_source\":\"Oklahoma\"} (Record news, 34 stories to Oct 28, 2026)",
+  "https://www.southwesternadventisteducation.com/calendar (pages 1-3)"
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "No conference calendar; /campmeeting2027 still 404. Camp meeting Jul 9-17, 2027 at Wewoka Woods (existing) is the only 2027 camp-meeting date.",
+  "Not published for 2027: Hispanic camp meeting (campamento), Zomi camp meeting, summer camp, Pathfinder camporee, prayer retreat, Oklahoma Reconnect trainings, and dates for the \"2027 One Voice\" statewide evangelism initiative.",
+  "Awaken Youth event: \"November 2027\" only (beyond the window, month precision). A joint Oklahoma/Arkansas-Louisiana Pathfinder camporee is planned for 2028 (no date)."
  ]
 }

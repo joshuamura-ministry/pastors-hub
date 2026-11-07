@@ -65,7 +65,8 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   // his churches in name order: Brookfield (all current), then Sampleton
   const fig=P.qa('#chc-df .df-own').find(a=>/Sampleton/.test(a.querySelector('h3').textContent)).querySelector('.df-radar');
   c('each of his churches has a chart beside what a visitor sees', [P.qa('#chc-df .df-own .df-radar').length,!!P.q('#chc-df .df-own .df-sum .df-sees')], [2,true]);
-  c('six areas round the ring, in the order of the cards', [...fig.querySelectorAll('.df-rl')].map(t=>t.textContent), ['Website','Pastor','Google','Facebook','YouTube','Ways in']);
+  // v10.70.1 (the audit, third look): the chart names the area as its card does ("Reaching out"; "Ways in" was a second name)
+  c('six areas round the ring, in the order of the cards', [...fig.querySelectorAll('.df-rl')].map(t=>t.textContent), ['Website','Pastor','Google','Facebook','YouTube','Reaching out']);
   // v10.62.0: Facebook is never read, so its mark is hollow; YouTube needs work (no evangelistic series in its feed)
   c('each mark in its state\'s colour: the website, the pastor and YouTube needing work, Google and the ways in current, Facebook hollow', [...fig.querySelectorAll('.df-dot')].map(d=>d.getAttribute('class').replace('df-dot ','')), ['df-dot-work','df-dot-work','df-dot-ok','df-dot-u','df-dot-work','df-dot-ok']);
   const pts=s=>s.trim().split(/\s+/).map(p=>p.split(',').map(Number)), dist=([x,y])=>Math.round(Math.hypot(x-150,y-124));
@@ -82,6 +83,7 @@ const J=(P,o,own)=>P.J(`(()=>{ const F=${JSON.stringify(FIND)}; const X=dfContex
   c('a church opened in the list shows its chart too', !!P.q('#chc-df tr.df-detail:not([hidden]) .df-radar'), true);
   P.E(`(()=>{ LANG='es'; dfPaint(); })()`); await sleep(20);
   c('in Spanish', [...P.q('#chc-df .df-own .df-radar').querySelectorAll('.df-rl')].map(t=>t.textContent).concat([P.txt('#chc-df .df-own .df-rim')]),
-    ['Sitio web','Pastor','Google','Facebook','YouTube','Puertas','En el borde: al día. En medio: necesita trabajo. Cerca del centro: necesita ayuda ya.']);
+    // v10.70.1 (the audit, third look): "Alcance", as the card says ("Puertas" was a second name)
+    ['Sitio web','Pastor','Google','Facebook','YouTube','Alcance','En el borde: al día. En medio: necesita trabajo. Cerca del centro: necesita ayuda ya.']);
   P.E(`(()=>{ LANG='en'; dfPaint(); })()`);
 }); T.done(); })();

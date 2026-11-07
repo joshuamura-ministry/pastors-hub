@@ -27,7 +27,8 @@ const gone=['Respite Saturday','last Saturday of October','a spring and a fall S
 c('none of the old Saturday wording remains', gone.filter(has), []);
 
 console.log('\n-- the Saturday-night supper is after the Sabbath --');
-c('EN: after sundown', has('Pick one Saturday evening next month, after sundown, and invite three neighbours to supper.'));
+// v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+c('EN: after sundown', has('Pick one Saturday evening next month, after sundown, and invite three neighbors to supper.'));
 c('ES: después de la puesta del sol', has('Elija un sábado por la noche del próximo mes, después de la puesta del sol, e invite a cenar a tres vecinos.'));
 
 console.log(`\n${pass} passed, ${fail} failed`);

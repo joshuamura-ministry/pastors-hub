@@ -247,7 +247,8 @@ const type=(P,s,v)=>{ const e=P.q(s); if(!e) throw new Error('no element '+s); e
     N.E(`openTool('case');`);
     // Updated in v10.40.0 ("why would there be two places to put your address?"): no address
     // box inside Make the Case; a church never mapped gets one card to the Community Survey.
-    c('no address box: the first-time card, and the sample below it', [N.q('.ask').style.display,N.q('#casep').hidden,!!N.q('#casep [data-cs-sample]'),/First, map your church’s neighbourhood/.test(N.txt('#casep'))], ['none',false,true,true]);
+    // v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+    c('no address box: the first-time card, and the sample below it', [N.q('.ask').style.display,N.q('#casep').hidden,!!N.q('#casep [data-cs-sample]'),/First, map your church’s neighborhood/.test(N.txt('#casep'))], ['none',false,true,true]);
     const before=JSON.stringify(Object.entries(N.w.localStorage));
     click(N,'#casep [data-cs-sample]');
     c('the sample: a made-up church and neighbourhood, and it says so', [/every figure are made up/.test(N.txt('#casep .gfsampbar')),N.q('.ask').style.display], [true,'none']);

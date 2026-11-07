@@ -3,8 +3,8 @@
  "slug": "union-southwestern",
  "union": "Southwestern",
  "site": "https://southwesternadventist.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30"
@@ -14,7 +14,14 @@
  "counts": {
   "events": 2,
   "meetings": 2,
-  "conferenceRun": 2
+  "conferenceRun": 2,
+  "total": 8,
+  "conferenceLevel": 0,
+  "observances": 0,
+  "byCategory": {
+   "education": 8
+  },
+  "byCategoryConferenceOnly": {}
  },
  "calendarUrls": [
   "https://southwesternadventist.org/events/",
@@ -48,6 +55,90 @@
    "url": "https://swau.edu/academics/student-records/graduation/",
    "source": "event page",
    "note": "Theology Commissioning Service Friday May 7, 2027, 7 pm; departmental ceremonies May 7-8; commencement Sunday May 9, 2027, 10 am (also on https://catalog.swau.edu/academic-calendar-20262027)."
+  },
+  {
+   "title": "Southwestern Adventist University December commencement",
+   "start": "2026-12-17",
+   "end": "2026-12-17",
+   "place": "Keene SDA Church, Keene, TX",
+   "category": "education",
+   "category2": null,
+   "audience": "families",
+   "level": "institution",
+   "url": "https://swau.edu/academics/student-records/graduation/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Commencement ceremony Thursday Dec 17, 2026, 7 pm."
+  },
+  {
+   "place": "Richardson, TX",
+   "category2": null,
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar (union education office)",
+   "datePrecision": "day",
+   "title": "Texas Scrimmage Robotics",
+   "start": "2027-02-07",
+   "end": "2027-02-07",
+   "category": "education",
+   "audience": "students",
+   "note": "School robotics scrimmage on the union education calendar."
+  },
+  {
+   "place": "Athens, TX",
+   "category2": null,
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar (union education office)",
+   "datePrecision": "day",
+   "title": "Southwest FLL Robotics Qualifier",
+   "start": "2027-03-14",
+   "end": "2027-03-14",
+   "category": "education",
+   "audience": "students",
+   "note": "FIRST LEGO League qualifier for Adventist schools."
+  },
+  {
+   "place": "Bentonville, AR",
+   "category2": null,
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar (union education office)",
+   "datePrecision": "day",
+   "title": "Ozark FLL Robotics Qualifier",
+   "start": "2027-03-23",
+   "end": "2027-03-23",
+   "category": "education",
+   "audience": "students",
+   "note": "FIRST LEGO League qualifier for Adventist schools."
+  },
+  {
+   "place": "Keene, TX",
+   "category2": null,
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar (union education office)",
+   "datePrecision": "day",
+   "title": "SWUC Summer Institute",
+   "start": "2027-07-13",
+   "end": "2027-07-15",
+   "category": "education",
+   "audience": "teachers",
+   "note": "Union teachers' summer institute."
+  },
+  {
+   "place": "Athens, TX",
+   "category2": "youth-young-adults",
+   "level": "union",
+   "url": "https://www.southwesternadventisteducation.com/calendar",
+   "source": "calendar (union education office)",
+   "datePrecision": "day",
+   "title": "Academy Leadership Camp",
+   "start": "2027-09-09",
+   "end": "2027-09-12",
+   "category": "education",
+   "audience": "students",
+   "note": "Union leadership camp for academy student leaders (Lone Star Camp area; 2026 edition reported in the Record)."
   }
  ],
  "notes": [
@@ -56,7 +147,11 @@
   "Union site search for 2027 finds only a story on the Houston church basketball league, which plans a larger third season in 2027 (no dates). All ministry pages were checked; none gives a 2027 date.",
   "Southwestern Union Record: online stories run to Jul 30, 2026 (158 stories from 2026 read; no Apr-Sep 2027 event dates). The Sep/Oct 2026 print issue (Issuu, published Aug 12, 2026) was read page by page for news: no 2027 union dates. It reports the annual union equine (wrangler) training at Lone Star Camp (May 24-29, 2026) and rotating Spanish Children's Ministries certification trainings; neither has a 2027 date.",
   "Not published yet for 2027: union Pathfinder Bible Experience, ministers' meeting or pastors' retreat, women's ministries retreat (2026: Sep 18-20), Cowboy and Biker Camp (2026: Sep 25-27), leadership camp, Asian-Pacific convocation, and any union-wide OneVoice27 plan. NAD and world-church events (including PBE finals and OneVoice27) are in above.json.",
-  "The union's Eventbrite organizer page appears in search results; it was not opened (it returned 403 in the earlier run, and blocks are not worked around)."
+  "The union's Eventbrite organizer page appears in search results; it was not opened (it returned 403 in the earlier run, and blocks are not worked around).",
+  "(2026-11-06) The union education calendar grew since Oct 1 (now to Nov 16, 2027 with 2028 testing windows): six union-run education events added for the window; not counted: CSI survey, surveys, MAP testing windows, Academy Principals' and Superintendents' meetings (Nov 16, 2026 and Nov 15, 2027), Education Advi",
+  "(2026-11-06) Texas Conference's 2027 calendar lists the Pathfinder Bible Experience union level on Apr 3, 2027 (recorded in texas.json at union level); the union site itself does not yet show it.",
+  "(2026-11-06) swurecord.org changed platform: it is now a script-drawn app (\"Record 2026\") whose public article API answers without login; 158 stories were read last time by HTML, this time the newest stories per conference (Sep 25-Nov 5, 2026) were scanned through the API. Union stories: only a NAD tithe-sharing",
+  "(2026-11-06) Southwestern Adventist University: the May 6-9, 2027 commencement weekend (existing) is unchanged; the Dec 17, 2026 commencement is added as an institution event."
  ],
  "aheadChecked": [
   "https://southwesternadventist.org/events/",
@@ -79,6 +174,20 @@
   "https://www.swurecord.org/sitemap.xml",
   "https://www.swurecord.org/events",
   "https://issuu.com/swurecord/docs/september_october_2026",
-  "https://www.nadadventist.org/camp-meeting/"
+  "https://www.nadadventist.org/camp-meeting/",
+  "https://southwesternadventist.org/wp-json/tribe/events/v1/events?start_date=2026-11-01&end_date=2031-12-31&per_page=50 (0 events)",
+  "https://southwesternadventist.org/wp-json/tribe/events/v1/events?start_date=2020-01-01&end_date=2031-12-31&per_page=50 (10 events, last Oct 1-4, 2026)",
+  "https://www.southwesternadventisteducation.com/calendar?2916859d_page=1",
+  "https://www.southwesternadventisteducation.com/calendar?2916859d_page=3 (empty)",
+  "https://www.swurecord.org/ (now a script-drawn \"Record 2026\" news app; read in headless Chrome)",
+  "https://swurecord.org/News",
+  "https://swurecord.org/SouthwesternUnionNews",
+  "https://swurecord.org/sitemap.xml (22 app pages)",
+  "https://swurecord.org/api/apps/69b1cae160b0054de343feb4/entities/Article?q={\"published\":true,\"type\":\"news\",\"news_source\":\"Southwestern Union\"} (public article API, 30 stories to Oct 28, 2026)"
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Union events calendar (The Events Calendar) has nothing after the Oct 1-4, 2026 Pathfinder camporee: no 2027 union PBE, ministers' meeting, women's retreat, Cowboy and Biker Camp, leadership camp, Asian-Pacific convocation or OneVoice27 plan on southwesternadventist.org.",
+  "No Nov/Dec 2026 or 2027 Record print issue found online (the site's current_issue setting has no link); the Record website was rebuilt as a news app and no longer lists an events page."
  ]
 }

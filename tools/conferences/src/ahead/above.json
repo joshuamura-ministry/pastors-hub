@@ -1,10 +1,10 @@
 {
- "retrieved": "2026-10-01",
+ "retrieved": "2026-11-06",
  "window": {
-  "from": "2026-10-01",
-  "to": "2027-09-30"
+  "from": "2026-11-01",
+  "to": "2027-10-31"
  },
- "about": "Dates above the local conference for the year ahead: North American Division (division) and world church (general-conference) events and emphases, plus the funding and registration deadlines a local church must meet. Every item has its source URL. confirmed:false = the date is expected or repeats last year's, but this year's page does not show it yet. Each confirmed item's quoted source text was re-checked by build-above.mjs against a saved copy in above-src/raw or above-src/conf.",
+ "about": "Dates above the local conference for the year ahead: North American Division (division) and world church (general-conference) events and emphases, plus the funding and registration deadlines a local church must meet. Every item has its source URL. confirmed:false = the date is expected or repeats last year's, but this year's page does not show it yet. Each confirmed item's quoted source text was re-checked by build-above.mjs against a saved copy in above-src/raw or above-src/conf. Re-read 2026-11-06 for the window 2026-11-01 to 2027-10-31: October 2027 added from the official pages, the 2027 NAD Calendar of Offerings (posted October 2026) read, every Nov 2026 - Jan 2027 deadline re-confirmed on its page.",
  "fields": {
   "event": "title, start, end (ISO dates), level, owner, category (same list as the conference event files), kind, audience, url, note, confirmed, datePrecision (day|month); optional category2, alsoUrl, repeats {count, dates}, checkedVia",
   "deadline": "title, date, appliesTo (\"all\" or conference slugs), level (division|union|conference), kind, what, url, note, confirmed, basis (dated = this year's date is printed; standing-rule = an undated form gives the same day every year; pattern = last year's date, this year's not posted; announced = a page says it opens that month); optional datePrecision, alsoUrl",
@@ -12,13 +12,14 @@
   "beyondWindow": "items just after 30 Sep 2027 that churches prepare for during the window (not counted in events or deadlines)"
  },
  "counts": {
-  "events": 93,
-  "division": 27,
-  "generalConference": 66,
-  "eventsApr2027toSep2027": 47,
-  "deadlines": 35,
-  "deadlinesApr2027toSep2027": 12,
-  "unconfirmed": 10,
+  "events": 117,
+  "division": 40,
+  "generalConference": 77,
+  "eventsInWindow": 102,
+  "eventsOct2027": 13,
+  "deadlines": 39,
+  "deadlinesInWindow": 26,
+  "unconfirmed": 5,
   "rollingRules": 9
  },
  "events": [
@@ -117,7 +118,7 @@
    "kind": "training",
    "audience": "pastors",
    "url": "https://www.nadadventist.org/events/mision-next-2026/",
-   "note": "Registration details \"coming soon\" on the NAD page. Misión Next 2027 is 11-14 Oct 2027 (NAD Ministerial calendar), just after this window.",
+   "note": "Registration details \"coming soon\" on the NAD page. Misión Next 2027 is 11-14 Oct 2027 (NAD Ministerial calendar), just after this window. (2026-11-06) Misión Next 2027 (11-14 Oct 2027) is now inside the window: its own record.",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -252,7 +253,7 @@
   {
    "title": "NAD Grief Support Group (monthly online session, 8-9 pm)",
    "start": "2026-10-25",
-   "end": "2027-09-27",
+   "end": "2027-10-25",
    "level": "division",
    "owner": "NAD Ministerial",
    "category": "pastoral-leadership",
@@ -260,7 +261,7 @@
    "audience": "pastors and families",
    "url": "https://nadministerial.com/calendar",
    "repeats": {
-    "count": 11,
+    "count": 12,
     "dates": [
      "2026-10-25",
      "2026-11-15",
@@ -272,15 +273,16 @@
      "2027-06-28",
      "2027-07-26",
      "2027-08-23",
-     "2027-09-27"
+     "2027-09-27",
+     "2027-10-25"
     ]
    },
-   "note": "Listed monthly on the NAD Ministerial calendar (no January 2027 date listed).",
+   "note": "Listed monthly on the NAD Ministerial calendar (no January 2027 date listed). (2026-11-06) 2027 list adds 25 Oct 2027 (printed \"October 25\", a Monday: the 2026 calendar days repeated); the first 2027 entries are \"TBD\".",
    "confirmed": true,
    "datePrecision": "day"
   },
   {
-   "title": "NAD Year-End Meeting, Columbia, Maryland",
+   "title": "NAD Annual Council (formerly the Year-End Meeting), Columbia, Maryland",
    "start": "2026-10-29",
    "end": "2026-11-03",
    "level": "division",
@@ -288,8 +290,8 @@
    "category": "administration",
    "kind": "meeting",
    "audience": "leaders",
-   "url": "https://www.nadadventist.org/events/nad-year-end-meeting/",
-   "note": "Annual NAD business meeting (3 pm ET Thu 29 Oct to Tue 3 Nov). Division votes for 2027 would come here.",
+   "url": "https://www.nadadventist.org/events/nad-annual-council/",
+   "note": "Annual NAD business meeting (3 pm ET Thu 29 Oct to Tue 3 Nov). Division votes for 2027 would come here. (2026-11-06) Renamed NAD Annual Council; the old address redirects. Dates unchanged (3 pm ET Thu 29 Oct to 5 pm ET Tue 3 Nov 2026).",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -304,6 +306,20 @@
    "audience": "local church",
    "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/02/2026_NAD_Calendar_Offerings.docx",
    "note": "NAD 2026 Calendar of Offerings.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Washington Seeds 2026 (church-planting conference), Washington Conference",
+   "start": "2026-11-06",
+   "end": "2026-11-07",
+   "level": "division",
+   "owner": "NAD Evangelism Institute with the Washington Conference",
+   "category": "evangelism-outreach",
+   "kind": "training",
+   "audience": "members and church planters",
+   "url": "https://nadei.org/events/washington-conference-seeds-2026/",
+   "note": "NADEI events calendar: Friday supper and programme, Sabbath programme and workshops (meals provided), children's programme ages 4-12. Venue not named on the page.",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -458,7 +474,7 @@
    "kind": "offering",
    "audience": "local church",
    "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/02/2026_NAD_Calendar_Offerings.docx",
-   "note": "NAD 2026 Calendar of Offerings (special materials provided). The 2027 NAD offering calendar is not posted yet.",
+   "note": "NAD 2026 Calendar of Offerings (special materials provided). The 2027 NAD offering calendar is not posted yet. (2026-11-06) The 2027 NAD Calendar of Offerings is posted (the 2027 ACS offering is 11 Dec 2027, outside the window).",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -519,7 +535,7 @@
    "datePrecision": "day"
   },
   {
-   "title": "Ten Days of Prayer: \"Prayers and Prophecy: God's Sure Word\"",
+   "title": "Ten Days of Prayer: \"All Things New: Hope Starts Here\"",
    "start": "2027-01-06",
    "end": "2027-01-16",
    "level": "general-conference",
@@ -528,7 +544,7 @@
    "kind": "prayer-week",
    "audience": "local church",
    "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
-   "note": "Dates from the world calendar 2027. Theme and the 2027 materials (download) are on tendaysofprayer.org, which calls these days the prayer launch pad for OneVoice27. The site header still shows the 2026 dates.",
+   "note": "Dates from the world calendar 2027. Theme and the 2027 materials (download) are on tendaysofprayer.org, which calls these days the prayer launch pad for OneVoice27. The site header still shows the 2026 dates. (2026-11-06) tendaysofprayer.org now prints the 2027 theme \"All Things New: Hope Starts Here\" (John 14:29, Revelation 21:5); 2027 materials are downloadable; dates 6-16 Jan 2027 unchanged.",
    "confirmed": true,
    "datePrecision": "day",
    "alsoUrl": "https://www.tendaysofprayer.org/"
@@ -548,6 +564,21 @@
    "datePrecision": "day"
   },
   {
+   "title": "NAD offering: Religious Liberty",
+   "start": "2027-01-09",
+   "end": "2027-01-09",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (special materials provided; offering code 50087). The world calendar's Religious Liberty Day is the next Sabbath, 16 Jan 2027.",
+   "confirmed": true,
+   "datePrecision": "day",
+   "category2": "other"
+  },
+  {
    "title": "Religious Liberty Day",
    "start": "2027-01-16",
    "end": "2027-01-16",
@@ -557,7 +588,7 @@
    "kind": "emphasis-day",
    "audience": "local church",
    "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
-   "note": "World calendar 2027 (materials by NAD Public Affairs and Religious Liberty). The NAD offering for Religious Liberty may fall on a different Sabbath; the 2027 NAD offering calendar is not posted yet.",
+   "note": "World calendar 2027 (materials by NAD Public Affairs and Religious Liberty). The NAD offering for Religious Liberty may fall on a different Sabbath; the 2027 NAD offering calendar is not posted yet. (2026-11-06) The NAD Religious Liberty offering is 9 Jan 2027 (2027 NAD Calendar of Offerings); the world calendar day stays 16 Jan 2027.",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -590,6 +621,21 @@
    "datePrecision": "day"
   },
   {
+   "title": "NAD offering: Adventist Television Ministries Evangelism",
+   "start": "2027-02-13",
+   "end": "2027-02-13",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (special materials provided; offering code 50014).",
+   "confirmed": true,
+   "datePrecision": "day",
+   "category2": "evangelism-outreach"
+  },
+  {
    "title": "Mission Next certification and training (at the e-huddle), Andrews University",
    "start": "2027-02-15",
    "end": "2027-02-15",
@@ -600,6 +646,20 @@
    "audience": "pastors",
    "url": "https://nadministerial.com/calendar",
    "note": "NAD Ministerial calendar 2027.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Carolina Seeds 2027 (church-planting conference), Foster Seventh-day Adventist Church, Asheville, North Carolina",
+   "start": "2027-02-20",
+   "end": "2027-02-20",
+   "level": "division",
+   "owner": "NAD Evangelism Institute with the Carolina Conference",
+   "category": "evangelism-outreach",
+   "kind": "training",
+   "audience": "members and church planters",
+   "url": "https://nadei.org/events/carolina-seeds-2027/",
+   "note": "NADEI events calendar (8:30 am to 9 pm; registration form on the page). Hosted in the Carolina Conference.",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -642,6 +702,20 @@
    "audience": "local church",
    "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
    "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division).",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Offering: World Budget - Adventist World Radio",
+   "start": "2027-03-13",
+   "end": "2027-03-13",
+   "level": "general-conference",
+   "owner": "General Conference (NAD 2027 offering calendar)",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (offering code 20100). Same Sabbath as Adventist World Radio Sabbath on the world calendar.",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -702,7 +776,7 @@
    "datePrecision": "day"
   },
   {
-   "title": "Thirteenth Sabbath Offering (1st quarter 2027)",
+   "title": "Thirteenth Sabbath Offering: West-Central Africa Division",
    "start": "2027-03-27",
    "end": "2027-03-27",
    "level": "general-conference",
@@ -710,9 +784,9 @@
    "category": "stewardship-finance",
    "kind": "offering",
    "audience": "local church",
-   "url": "https://am.adventistmission.org/mission-offering",
-   "note": "Always the last Sabbath of the quarter. Which division receives it, and the 2027 NAD offering calendar, were not confirmed (the Adventist Mission site blocked automated reading).",
-   "confirmed": false,
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "Receiving division from the 2027 NAD Calendar of Offerings (posted October 2026); the Adventist Mission site itself still answers a security checkpoint. Read 2026-11-06.",
+   "confirmed": true,
    "datePrecision": "day"
   },
   {
@@ -768,6 +842,21 @@
    "audience": "youth",
    "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
    "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division).",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Sonscreen Film Festival 2027, Loma Linda, California",
+   "start": "2027-04-08",
+   "end": "2027-04-10",
+   "level": "division",
+   "owner": "NAD Communication (Sonscreen)",
+   "category": "music-worship-arts",
+   "kind": "festival",
+   "audience": "young filmmakers and students",
+   "url": "https://www.sonscreen.com/",
+   "alsoUrl": "https://www.sonscreen.com/festival",
+   "note": "Site: \"Next Festival: April 8-10 2027. Save the date for Sonscreen 2027. Registration will open soon.\" The festival page gives Loma Linda University Church, Loma Linda, CA (same campus as 2026).",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -828,6 +917,20 @@
    "datePrecision": "day"
   },
   {
+   "title": "Offering: Hope Channel International",
+   "start": "2027-04-10",
+   "end": "2027-04-10",
+   "level": "general-conference",
+   "owner": "General Conference (NAD 2027 offering calendar)",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (offering code 21089). Same Sabbath as Hope Channel International Sabbath and World Impact Day.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
    "title": "GC Spring Meeting, Silver Spring, Maryland",
    "start": "2027-04-12",
    "end": "2027-04-13",
@@ -837,7 +940,7 @@
    "kind": "meeting",
    "audience": "leaders",
    "url": "https://executivecommittee.adventist.org/schedule",
-   "note": "Dates from the GC Executive Committee schedule page, read through the search-engine copy (the page blocked automated reading). Re-check before publishing.",
+   "note": "Dates from the GC Executive Committee schedule page, read through the search-engine copy (the page blocked automated reading). Re-check before publishing. (2026-11-06) Re-confirmed the same way (\"Spring Meeting: April 12-13, 2027\"); the page still answers HTTP 429.",
    "confirmed": true,
    "checkedVia": "search-index copy of the official page",
    "datePrecision": "day"
@@ -900,6 +1003,21 @@
    "datePrecision": "day"
   },
   {
+   "title": "Offering: Disaster and Famine Relief",
+   "start": "2027-05-08",
+   "end": "2027-05-08",
+   "level": "general-conference",
+   "owner": "General Conference and NAD (2027 offering calendar)",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (GC and NAD; special materials provided; offering code 20108).",
+   "confirmed": true,
+   "datePrecision": "day",
+   "category2": "community-service"
+  },
+  {
    "title": "Global Adventurer's Day",
    "start": "2027-05-15",
    "end": "2027-05-15",
@@ -954,6 +1072,21 @@
    "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division).",
    "confirmed": true,
    "datePrecision": "day"
+  },
+  {
+   "title": "NAD offering: Women's Ministries",
+   "start": "2027-06-12",
+   "end": "2027-06-12",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (special materials provided; offering code 21077). Same Sabbath as the world calendar's Women's Ministries Emphasis Day.",
+   "confirmed": true,
+   "datePrecision": "day",
+   "category2": "family-women-men"
   },
   {
    "title": "Adventist Church World Refugee Day",
@@ -1012,7 +1145,7 @@
    "datePrecision": "day"
   },
   {
-   "title": "Thirteenth Sabbath Offering (2nd quarter 2027)",
+   "title": "Thirteenth Sabbath Offering: Southern Asia Division",
    "start": "2027-06-26",
    "end": "2027-06-26",
    "level": "general-conference",
@@ -1020,9 +1153,9 @@
    "category": "stewardship-finance",
    "kind": "offering",
    "audience": "local church",
-   "url": "https://am.adventistmission.org/mission-offering",
-   "note": "Always the last Sabbath of the quarter. Which division receives it, and the 2027 NAD offering calendar, were not confirmed (the Adventist Mission site blocked automated reading).",
-   "confirmed": false,
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "Receiving division from the 2027 NAD Calendar of Offerings (posted October 2026); the Adventist Mission site itself still answers a security checkpoint. Read 2026-11-06.",
+   "confirmed": true,
    "datePrecision": "day"
   },
   {
@@ -1064,6 +1197,20 @@
    "audience": "local church",
    "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
    "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division).",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Offering: World Budget",
+   "start": "2027-07-10",
+   "end": "2027-07-10",
+   "level": "general-conference",
+   "owner": "General Conference (NAD 2027 offering calendar)",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (offering code 20100).",
    "confirmed": true,
    "datePrecision": "day"
   },
@@ -1150,6 +1297,21 @@
    "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division).",
    "confirmed": true,
    "datePrecision": "day"
+  },
+  {
+   "title": "NAD offering: Christian Record Services",
+   "start": "2027-08-14",
+   "end": "2027-08-14",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (special materials provided; offering code 50135).",
+   "confirmed": true,
+   "datePrecision": "day",
+   "category2": "community-service"
   },
   {
    "title": "Education Day",
@@ -1292,6 +1454,20 @@
    "datePrecision": "day"
   },
   {
+   "title": "Offering: World Budget (emphasis: Radio Ministries)",
+   "start": "2027-09-11",
+   "end": "2027-09-11",
+   "level": "general-conference",
+   "owner": "General Conference (NAD 2027 offering calendar)",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings (offering code 20100). Same Sabbath as Mission Promotion Sabbath on the world calendar.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
    "title": "Pathfinder Day",
    "start": "2027-09-18",
    "end": "2027-09-18",
@@ -1335,7 +1511,7 @@
    "datePrecision": "day"
   },
   {
-   "title": "Thirteenth Sabbath Offering (3rd quarter 2027)",
+   "title": "Thirteenth Sabbath Offering: Euro-Asia Division",
    "start": "2027-09-25",
    "end": "2027-09-25",
    "level": "general-conference",
@@ -1343,9 +1519,179 @@
    "category": "stewardship-finance",
    "kind": "offering",
    "audience": "local church",
-   "url": "https://am.adventistmission.org/mission-offering",
-   "note": "Always the last Sabbath of the quarter. Which division receives it, and the 2027 NAD offering calendar, were not confirmed (the Adventist Mission site blocked automated reading).",
-   "confirmed": false,
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "Receiving division from the 2027 NAD Calendar of Offerings (posted October 2026); the Adventist Mission site itself still answers a security checkpoint. Read 2026-11-06.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "All Things New phase 4: Follow Jesus (baptism and discipleship)",
+   "start": "2027-10-01",
+   "end": "2027-12-31",
+   "level": "division",
+   "owner": "North American Division (All Things New / OneVoice27)",
+   "category": "discipleship-spiritual",
+   "kind": "campaign-phase",
+   "audience": "local church",
+   "url": "https://allthingsnew2027.com/",
+   "note": "Page: \"OCT. - DEC. 2027 FOLLOW JESUS\". Baptism and discipleship after the September 2027 public events. Phases overlap on purpose.",
+   "confirmed": true,
+   "datePrecision": "month"
+  },
+  {
+   "title": "It Is Written-supported evangelistic series, Houston, Texas (begins)",
+   "start": "2027-10-01",
+   "end": "2027-10-01",
+   "level": "division",
+   "owner": "It Is Written (NAD media ministry) with the Texas Conference",
+   "category": "evangelism-outreach",
+   "kind": "evangelism-series",
+   "audience": "local church",
+   "url": "https://itiswritten.wetravel.com/trips/houston-mission-trip-it-is-written-mission-trips-7269630584",
+   "note": "Page: \"a three-day medical clinic prior to a large-scale evangelistic series in Houston, beginning October 1\" (clinic 21-27 Sep 2027). End date and venue not published.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Quarterly Day of Prayer",
+   "start": "2027-10-02",
+   "end": "2027-10-02",
+   "level": "general-conference",
+   "owner": "General Conference (world calendar)",
+   "category": "discipleship-spiritual",
+   "kind": "prayer",
+   "audience": "local church",
+   "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
+   "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division). Re-read 6 Nov 2026.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Adventist Review Subscription Promotion",
+   "start": "2027-10-02",
+   "end": "2027-10-02",
+   "level": "general-conference",
+   "owner": "General Conference (world calendar)",
+   "category": "other",
+   "kind": "emphasis-day",
+   "audience": "local church",
+   "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
+   "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division). Re-read 6 Nov 2026.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "GC Annual Council, Silver Spring, Maryland",
+   "start": "2027-10-06",
+   "end": "2027-10-13",
+   "level": "general-conference",
+   "owner": "General Conference Executive Committee",
+   "category": "administration",
+   "kind": "meeting",
+   "audience": "leaders",
+   "url": "https://executivecommittee.adventist.org/schedule",
+   "note": "Dates (\"Annual Council: October 6-13, 2027\") from the GC Executive Committee schedule page, read through the search-engine copy; the page itself answers with a Vercel security checkpoint (HTTP 429), not bypassed. Place assumed (Annual Council normally meets at the GC headquarters). Re-check before publishing.",
+   "confirmed": true,
+   "checkedVia": "search-index copy of the official page",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Pastor Appreciation Day",
+   "start": "2027-10-09",
+   "end": "2027-10-09",
+   "level": "general-conference",
+   "owner": "General Conference (world calendar)",
+   "category": "pastoral-leadership",
+   "kind": "emphasis-day",
+   "audience": "local church",
+   "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
+   "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division). Re-read 6 Nov 2026.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Offering: Union Designated",
+   "start": "2027-10-09",
+   "end": "2027-10-09",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings. A second Union Designated offering is on 30 Oct 2027.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Misión Next 2027 (Hispanic pastors and church leaders), Camp Kulaqua, High Springs, Florida",
+   "start": "2027-10-11",
+   "end": "2027-10-14",
+   "level": "division",
+   "owner": "NAD Ministerial",
+   "category": "pastoral-leadership",
+   "category2": "multilingual",
+   "kind": "training",
+   "audience": "pastors",
+   "url": "https://nadministerial.com/calendar",
+   "note": "NAD Ministerial calendar 2027: \"October 11-14 Misión Next 2027 - Camp Kulaqua, High Spring, FL\". No NAD event page or registration yet.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Spirit of Prophecy and Adventist Heritage Sabbath",
+   "start": "2027-10-16",
+   "end": "2027-10-16",
+   "level": "general-conference",
+   "owner": "General Conference (world calendar)",
+   "category": "discipleship-spiritual",
+   "kind": "emphasis-day",
+   "audience": "local church",
+   "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
+   "note": "World Calendar of Special Days 2027 (official GC document; copy posted by a world division). Re-read 6 Nov 2026.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Creation Sabbath",
+   "start": "2027-10-23",
+   "end": "2027-10-23",
+   "level": "general-conference",
+   "owner": "General Conference (world calendar)",
+   "category": "discipleship-spiritual",
+   "kind": "emphasis-day",
+   "audience": "local church",
+   "url": "https://excom.sid.adventist.org/wp-content/uploads/2024/11/Calendar-of-Special-Days-and-Events-World-2027.pdf",
+   "note": "World calendar 2027 (fourth Sabbath of October). The NAD promotes it every year. The NAD Ministerial calendar prints its 2027 Elder Baptism Day as \"October 24\", a Sunday; the Sabbath is 23 Oct.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Elder Baptism Day (division-wide, at the local church)",
+   "start": "2027-10-24",
+   "end": "2027-10-24",
+   "level": "division",
+   "owner": "NAD Ministerial",
+   "category": "pastoral-leadership",
+   "kind": "emphasis-day",
+   "audience": "local church",
+   "url": "https://nadministerial.com/calendar",
+   "note": "NAD Ministerial calendar 2027 prints \"October 24 Elder Baptism Day (Division-wide at the local church)\". In 2027 that is a Sunday (the 2026 date repeated); the Sabbath is 23 Oct 2027, Creation Sabbath. Expect the calendar to be corrected.",
+   "confirmed": true,
+   "datePrecision": "day"
+  },
+  {
+   "title": "Offering: Union Designated",
+   "start": "2027-10-30",
+   "end": "2027-10-30",
+   "level": "division",
+   "owner": "NAD 2027 offering calendar",
+   "category": "stewardship-finance",
+   "kind": "offering",
+   "audience": "local church",
+   "url": "https://www.nadstewardship.org/aiQu9o/uploads/2026/10/2027-NAD-Calendar-Offerings.docx",
+   "note": "NAD 2027 Calendar of Offerings.",
+   "confirmed": true,
    "datePrecision": "day"
   }
  ],
@@ -1382,7 +1728,7 @@
    "kind": "evangelism-fund",
    "what": "Evangelism Budget Request Form for the upcoming calendar year.",
    "url": "https://www.kytn.net/s/Evangelism-Budget-Request-Form-Revised-081822-1.pdf",
-   "note": "Every year on 1 Oct (form revised 2022). Next: 1 Oct 2027 for 2028 (just after this window).",
+   "note": "Every year on 1 Oct (form revised 2022). Next: 1 Oct 2027 for 2028 (just after this window). (2026-11-06) The 1 Oct 2027 request for 2028 is now inside the window: its own record.",
    "confirmed": true,
    "basis": "standing-rule"
   },
@@ -1572,14 +1918,14 @@
    "kind": "evangelism-fund",
    "what": "On time: up to 50% of outreach cost; late: 25% only.",
    "url": "https://ccosda.org/subsidy/",
-   "note": "The page still shows the 2026 cycle (closed 15 Nov 2025 at midnight). A 16 Sep 2026 news story says the 2027 cycle opens in October 2026; the new date is assumed to be 15 Nov 2026.",
-   "confirmed": false,
-   "basis": "pattern",
+   "note": "The page still shows the 2026 cycle (closed 15 Nov 2025 at midnight). A 16 Sep 2026 news story says the 2027 cycle opens in October 2026; the new date is assumed to be 15 Nov 2026. (2026-11-06) Page: \"The deadline to submit your evangelism subsidy requests ... is November 15, 2026 at midnight\", with a 2027 Evangelism Unified Subsidy Request Form; on time up to 50%, late 25%.",
+   "confirmed": true,
+   "basis": "dated",
    "alsoUrl": "https://ccosda.org/chesapeake-conference-subsidizes-evangelism-across-dozens-of-churches-in-2026/"
   },
   {
    "title": "Southwest Region: evangelism appropriation request and church plans form",
-   "date": "2026-11-25",
+   "date": "2026-11-20",
    "appliesTo": [
     "southwest-region"
    ],
@@ -1587,9 +1933,9 @@
    "kind": "evangelism-fund",
    "what": "Church Plans Form plus Evangelism Appropriation Form to the President's Office.",
    "url": "https://southwestregionsda.org/evangelism-appropriation-request/",
-   "note": "The page still shows 25 Nov 2025; the 2026 date is assumed to repeat.",
-   "confirmed": false,
-   "basis": "pattern"
+   "note": "The page still shows 25 Nov 2025; the 2026 date is assumed to repeat. (2026-11-06) Page: \"submit along with the Evangelism Appropriation Form by the deadline of November 20, 2026\".",
+   "confirmed": true,
+   "basis": "dated"
   },
   {
    "title": "Carolina: GROW Carolina 2027 evangelism plan (every church and company)",
@@ -1678,7 +2024,7 @@
    ],
    "level": "union",
    "kind": "evangelism-fund",
-   "what": "Conferences forward church requests to the union. The fall 2027 round follows (7 Oct to the conference, 28 Oct to the union), just after this window.",
+   "what": "Conferences forward church requests to the union. The fall 2027 round (7 Oct to the conference, 28 Oct to the union) has its own records.",
    "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
    "confirmed": true,
    "basis": "dated"
@@ -1853,6 +2199,18 @@
    "basis": "dated"
   },
   {
+   "title": "It Is Written Houston medical mission trip: register with It Is Written and AMEN",
+   "date": "2027-09-02",
+   "appliesTo": "all",
+   "level": "division",
+   "kind": "registration",
+   "what": "Register for the 21-27 Sep 2027 Houston medical clinic (medical and support volunteers) that precedes the 1 Oct 2027 evangelistic series.",
+   "url": "https://itiswritten.wetravel.com/trips/houston-mission-trip-it-is-written-mission-trips-7269630584",
+   "note": "Page: \"Please register with It Is Written and AMEN by September 2, 2027.\" Extensions by request.",
+   "confirmed": true,
+   "basis": "dated"
+  },
+  {
    "title": "Greater New York: evangelism subsidy requests for 2028",
    "date": "2027-09-30",
    "appliesTo": [
@@ -1877,6 +2235,60 @@
    "url": "https://paconference.org/wp-content/uploads/2026/03/Pennsylvania-Conference-Evangelism-Subsidy-Policy2.pdf",
    "confirmed": true,
    "basis": "standing-rule"
+  },
+  {
+   "title": "Kentucky-Tennessee: evangelism budget request for 2028 (due today)",
+   "date": "2027-10-01",
+   "appliesTo": [
+    "kentucky-tennessee"
+   ],
+   "level": "conference",
+   "kind": "evangelism-fund",
+   "what": "Evangelism Budget Request Form for the upcoming calendar year (\"Submit by October 1 for the upcoming calendar year\").",
+   "url": "https://www.kytn.net/s/Evangelism-Budget-Request-Form-Revised-081822-1.pdf",
+   "note": "Standing rule printed on the form (revised 2022); re-read 6 Nov 2026.",
+   "confirmed": true,
+   "basis": "standing-rule"
+  },
+  {
+   "title": "Pacific Union evangelism endowment, fall 2027 round: application to your local conference",
+   "date": "2027-10-07",
+   "appliesTo": [
+    "arizona",
+    "central-california",
+    "hawaii",
+    "nevada-utah",
+    "northern-california",
+    "southeastern-california",
+    "southern-california"
+   ],
+   "level": "union",
+   "kind": "evangelism-fund",
+   "what": "Church project requests go to the local conference first; the conference forwards them to the union by 28 Oct 2027.",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
+   "note": "Page: \"EVANGELISM ENDOWMENT DEADLINES - 2027 ... Thursday, October 7 - Deadline for applications to be turned into the local Conference\". Northern California's own page asks for endowment requests by 31 Jan or 31 Aug, so check your conference's internal date.",
+   "confirmed": true,
+   "basis": "dated"
+  },
+  {
+   "title": "Pacific Union evangelism endowment, fall 2027 round: due at the union (from conferences only)",
+   "date": "2027-10-28",
+   "appliesTo": [
+    "arizona",
+    "central-california",
+    "hawaii",
+    "nevada-utah",
+    "northern-california",
+    "southeastern-california",
+    "southern-california"
+   ],
+   "level": "union",
+   "kind": "evangelism-fund",
+   "what": "Conferences forward church requests to the union; only applications submitted from the local conference are accepted.",
+   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
+   "note": "Page: \"Thursday, October 28 - Deadline for applications to be turned into the Union\". The spring 2028 round is not posted yet.",
+   "confirmed": true,
+   "basis": "dated"
   }
  ],
  "rollingRules": [
@@ -1966,64 +2378,6 @@
  ],
  "beyondWindow": [
   {
-   "title": "All Things New phase 4: Follow Jesus (baptism and discipleship)",
-   "start": "2027-10-01",
-   "end": "2027-12-31",
-   "level": "division",
-   "url": "https://allthingsnew2027.com/",
-   "confirmed": true,
-   "datePrecision": "month"
-  },
-  {
-   "title": "It Is Written-supported evangelistic series, Houston, Texas (begins)",
-   "start": "2027-10-01",
-   "end": "2027-10-01",
-   "level": "division",
-   "url": "https://itiswritten.wetravel.com/trips/houston-mission-trip-it-is-written-mission-trips-7269630584",
-   "confirmed": true,
-   "datePrecision": "day",
-   "note": "Texas Conference; the September medical clinic leads into it."
-  },
-  {
-   "title": "Kentucky-Tennessee: evangelism budget request for 2028",
-   "start": "2027-10-01",
-   "end": "2027-10-01",
-   "level": "conference",
-   "appliesTo": [
-    "kentucky-tennessee"
-   ],
-   "url": "https://www.kytn.net/s/Evangelism-Budget-Request-Form-Revised-081822-1.pdf",
-   "confirmed": true,
-   "datePrecision": "day"
-  },
-  {
-   "title": "Pacific Union evangelism endowment, fall 2027 round: to the local conference (union deadline 28 Oct 2027)",
-   "start": "2027-10-07",
-   "end": "2027-10-07",
-   "level": "union",
-   "appliesTo": [
-    "arizona",
-    "central-california",
-    "hawaii",
-    "nevada-utah",
-    "northern-california",
-    "southeastern-california",
-    "southern-california"
-   ],
-   "url": "https://www.adventistfaith.com/about/evangelism-endowment-fund/",
-   "confirmed": true,
-   "datePrecision": "day"
-  },
-  {
-   "title": "Misión Next 2027, Camp Kulaqua, High Springs, Florida",
-   "start": "2027-10-11",
-   "end": "2027-10-14",
-   "level": "division",
-   "url": "https://nadministerial.com/calendar",
-   "confirmed": true,
-   "datePrecision": "day"
-  },
-  {
    "title": "NAD International Pathfinder Camporee \"Stand Strong\", Oshkosh, Wisconsin",
    "start": "2029-08-20",
    "end": "2029-08-26",
@@ -2035,15 +2389,38 @@
   }
  ],
  "notPublishedYet": [
-  "OneVoice27 / All Things New: no sign-up, site-registration or reporting deadline published by the NAD or GC; exact September 2027 days not set; the NAD sharing book's title, price and order deadline not out.",
-  "2027 NAD Calendar of Offerings (only 2026 is posted on nadstewardship.org), so NAD offering Sabbaths for Jan-Sep 2027 are missing; the receiving divisions for the 2027 Thirteenth Sabbath Offerings are not confirmed.",
-  "ACS Seed Grant 2027 portal dates; Michigan MAP 2027 rounds; Rocky Mountain 2027 evangelism packet; Chesapeake 2027 subsidy deadline; Southwest Region 2026 form date; Arizona 2026 form; Florida 2027 form; Ignite Ohio 2027; North Pacific Spark Tank 2027.",
-  "No 2027 dates yet for: Sabbath School Alive, Breath of Life young adult rally, Sonscreen, NAD Adventist Ministries Convention, ACS convention, Multiply BootCamp, NAD Health Emphasis Sabbaths, Columbia Union camporee registration deadline.",
-  "No dated 2027 series from Hope Channel, It Is Written or Voice of Prophecy for local churches to host. VOP host-ready series (bridge events and a full series) can be booked any time."
+  "ACS Seed Grant 2027 portal dates (page: 2026 date 26 Oct, \"The portal is NOW CLOSED! ... Please check back\").",
+  "Michigan MAP Pooled Resource Funding 2027 rounds (page still lists only \"2026 Submission Deadlines: March 1, July 26, November 8\").",
+  "Sabbath School Alive 2027 (nadsabbathschool.org: \"Get Notified for the 2027 date!\"; 2026 was 28-29 Aug, virtual).",
+  "Breath of Life young adult rally / Hope Rally 2027 (breathoflife.tv still shows Hope Rally 2025 and the 2026 Los Angeles rally; nothing for 2027).",
+  "NAD Adventist Ministries Convention 2027 (not on the NAD events feed; the NAD Ministerial 2027 list has only \"TBD NAD Hispanic & English Advisory, Louisville, KY\").",
+  "ACS convention 2027 (ACS events page lists no upcoming events; NAD events feed has only the 2026 Greenville convention).",
+  "Multiply BootCamp 2027 (not on the NAD Ministerial 2027 list - 2026 had BootCamp East 11-15 Mar - nor on the NADEI feed).",
+  "Columbia Union Camporee registration deadline (registration not open on 6 Nov 2026).",
+  "Hope Channel 2027 series for churches (hopetv.org blocked, HTTP 429); It Is Written 2027 church-host series (its events page lists only 2027 mission trips and speaker itineraries); Voice of Prophecy 2027 series (no events page on vop.com; host-ready series can be booked any time).",
+  "NAD Health Emphasis Sabbath dates for 2027 (nadhealth.org/sabbaths/ is a resource archive; the NAD Health calendar lists only the 26-28 Feb 2027 Virtual Health Ministries Training).",
+  "Misión Next 2027 registration or NAD event page (only the Ministerial calendar line so far).",
+  "OneVoice27 / All Things New: no sign-up, site-registration or reporting deadline; exact September 2027 days; the NAD sharing book's title, price and order deadline. (Registration for the All Things New social-media campaign opened 15 Oct 2026.)",
+  "The NAD events page (nadadventist.org/events) and its REST feed list nothing after the Adventist Camp Professionals Convention, 2-6 Dec 2026.",
+  "Rocky Mountain 2027 evangelism packet, Florida 2027 form, Ignite Ohio 2027, North Pacific Spark Tank 2027 (not re-read this pass; conference-level, see the conference files)."
  ],
  "blockedSources": [
-  "gc.adventist.org, adventistreview.org, globalyouthday.org, family.adventist.org: Cloudflare bot check (403). Not bypassed.",
-  "executivecommittee.adventist.org, onevoice27.org, adventistmission.org, hopetv.org, news.adventist.asia: Vercel security checkpoint (429). Not bypassed; Annual Council and Spring Meeting dates read from the search-engine copy of the official page.",
-  "web.archive.org: temporarily offline on 1 Oct 2026, so no archived copies were used in this pass."
+  "https://am.adventistmission.org/mission-offering: Vercel security checkpoint (HTTP 429); also the home page. Not bypassed; the 2027 Thirteenth Sabbath divisions were read from the NAD 2027 Calendar of Offerings instead.",
+  "https://executivecommittee.adventist.org/schedule: Vercel security checkpoint (HTTP 429) with two normal fetchers. Not bypassed; dates read from the search-engine copy of the page.",
+  "https://www.hopetv.org/: Vercel security checkpoint (HTTP 429). Not bypassed.",
+  "https://adventist.news/: Vercel security checkpoint (HTTP 429); same for https://news.adventist.org/en/. Not bypassed.",
+  "https://gc.adventist.org/events/special-days: Cloudflare bot check (HTTP 403). Not bypassed.",
+  "https://publishing.gc.adventist.org/: Cloudflare bot check (HTTP 403). Not bypassed.",
+  "https://www.gcyouthministries.org/: Cloudflare bot check (HTTP 403). Not bypassed.",
+  "https://misda.org/departments/evangelism/discipleship-plans/ (linked \"Discipleship Plan Instructions for Pastors\" PDF): Signed Wasabi S3 link (s3.us-east-2.wasabisys.com); the download failed to connect twice (HTTP 000). Not a bot block; the page itself was read."
+ ],
+ "stillUnconfirmed": [
+  "2027 Missionary Book of the Year (Daniel and Revelation): English copies expected ... (Oct 2026) - no title, price or availability page found; the TED/Adventist Review story is unchanged; publishing.gc.adventist.org answers Cloudflare 403; a search found only the April 2026 story. Keep confirmed:false.",
+  "Elder Baptism Day 2027: the NAD Ministerial calendar prints \"October 24\", a Sunday in 2027 (recorded as printed, with a note; the Sabbath is 23 Oct).",
+  "GC Annual Council 2027: dates (6-13 Oct 2027) only from the search-engine copy of the blocked schedule page; place assumed Silver Spring.",
+  "Michigan: church Discipleship Plan for 2027 (1 Dec 2026) and approved plans to the office (1 Mar 2027): the page is unchanged and still links the instruction PDFs, but the PDF sits behind a signed Wasabi S3 link that would not download this pass, so the dates stand on last month's reading.",
+  "Global Youth Day 2027 theme: the GC Youth site answers Cloudflare 403; the NAD youth calendar lists Global Youth Day on 20 Mar 2027 (date confirmed, theme not).",
+  "Sonscreen 2027: dates confirmed; registration not open; venue shown only as the Loma Linda University Church address on the festival page.",
+  "Columbia Union Camporee 2027 (\"UNSHAKABLE\", 4-8 Aug 2027): meal-package and lodging links, promised for October, are still not posted; registration \"will open soon\"; no registration deadline yet."
  ]
 }

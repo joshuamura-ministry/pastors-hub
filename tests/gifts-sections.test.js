@@ -58,7 +58,8 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   c('two done, the third current and empty, three to come', state(D), ['done:100%','done:100%','now:0%','-:0%','-:0%','-:0%']);
   const bar=hb().querySelector('.gfsegs');
   c('a progressbar with values', [bar.getAttribute('role'),bar.getAttribute('aria-valuemin'),bar.getAttribute('aria-valuemax'),bar.getAttribute('aria-valuenow')], ['progressbar','0','105','50']);
-  c('its text names the count and the section', bar.getAttribute('aria-valuetext'), '51 of 105 · Section 3 of 6: Leading and organising');
+  // v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+  c('its text names the count and the section', bar.getAttribute('aria-valuetext'), '51 of 105 · Section 3 of 6: Leading and organizing');
   c('"51 of 105" as before', hb().querySelector('.gfcount').textContent, '51 of 105');
   c('six dots in their colours', dots(D), ['done:word','done:people','now:lead','-:out','-:hands','-:heart']);
   c('the dots are decoration to a screen reader', hb().querySelector('.gfdots').getAttribute('aria-hidden'), 'true');
@@ -66,7 +67,8 @@ const dots=D=>[...D.querySelectorAll('#giftbody .gfdots i')].map(i=>(i.className
   c('opener order: eyebrow, title, rule, verse, description, count and instruction, button',
     [...O.children].map(e=>e.className.split(' ').filter(k=>/^gf/.test(k)&&k!=='gfverse'&&k!=='btn').join('.')||e.tagName),
     ['gfsecn','gfsect-t','gfso-rule','gfso-v','gfso-l','gfso-f','gfbig']);
-  c('eyebrow and title', [O.querySelector('.gfsecn').textContent,O.querySelector('h2').textContent], ['Section 3 of 6','Leading and organising']);
+  // v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+  c('eyebrow and title', [O.querySelector('.gfsecn').textContent,O.querySelector('h2').textContent], ['Section 3 of 6','Leading and organizing']);
   c('the verse, with its reference beneath, KJV', [O.querySelector('.gfso-v q').textContent,O.querySelector('.gfso-v cite').textContent], [E('GF_VERSE_SET[2][0]'),'1 Corinthians 12:18 · KJV']);
   c('the description is its own paragraph', O.querySelector('.gfso-l').textContent.replace(/\u00a0/g,' '), E('GF_FAMS[2].l'));
   c('its dash is kept to the word before, so no line starts with one', [/\u00a0\u2014/.test(O.querySelector('.gfso-l').textContent),/ \u2014/.test(O.querySelector('.gfso-l').textContent)], [true,false]);

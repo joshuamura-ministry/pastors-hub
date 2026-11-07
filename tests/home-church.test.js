@@ -124,7 +124,8 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
   { const N=page({store:store(''),recent:['10 Greene Rd, Warminster, PA','200 Main St, Norristown, PA']});
     await until(()=>!N.q('#hub').hidden);
     N.E(`openTool('case')`); await sleep(60);
-    c('one short card instead of the survey’s address box', [N.q('.ask').style.display,N.txt('#casep .home-first h3')], ['none','First, map your church’s neighbourhood']);
+    // v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+    c('one short card instead of the survey’s address box', [N.q('.ask').style.display,N.txt('#casep .home-first h3')], ['none','First, map your church’s neighborhood']);
     c('…one button, to the Community Survey', N.qa('#casep .home-first .home-acts button').map(b=>b.textContent), ['Open the Community Survey']);
     c('…with the Recent addresses', N.qa('#casep .home-first [data-home-act="recent"]').map(b=>b.textContent), ['10 Greene Rd, Warminster, PA','200 Main St, Norristown, PA']);
     c('…the sample stays', !!N.q('#casep [data-cs-sample]'), true);

@@ -3,8 +3,8 @@
  "slug": "texico",
  "union": "Southwestern",
  "site": "https://texico.org/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30"
@@ -14,7 +14,21 @@
  "counts": {
   "events": 5,
   "meetings": 5,
-  "conferenceRun": 3
+  "conferenceRun": 3,
+  "total": 8,
+  "conferenceLevel": 4,
+  "observances": 0,
+  "byCategory": {
+   "administration": 4,
+   "camp-meeting": 2,
+   "pastoral-leadership": 1,
+   "family-women-men": 1
+  },
+  "byCategoryConferenceOnly": {
+   "camp-meeting": 2,
+   "administration": 1,
+   "family-women-men": 1
+  }
  },
  "calendarUrls": [
   "https://texico.org/calendar/",
@@ -85,6 +99,48 @@
    "url": "https://texico.org/calendar/",
    "source": "calendar",
    "note": "Elects officers for the next term; the 42nd regular session (Sep 18, 2022) elected them for 2022-2027 (https://texico.org/news/texico-conference-42nd-regular-constituency-session/)."
+  },
+  {
+   "place": null,
+   "category2": null,
+   "level": "division",
+   "url": "https://texico.org/calendar/",
+   "source": "feed (public Google Calendar ICS)",
+   "datePrecision": "day",
+   "title": "Annual Conference President's Retreat",
+   "start": "2027-02-01",
+   "end": "2027-02-04",
+   "category": "administration",
+   "audience": "leaders",
+   "note": "NAD presidents' retreat; all-day entry (feed end date exclusive). Arkansas-Louisiana lists the same dates as \"NAD President's Meetings (TBD)\"."
+  },
+  {
+   "place": null,
+   "category2": null,
+   "level": "conference",
+   "url": "https://texico.org/calendar/",
+   "source": "feed (public Google Calendar ICS)",
+   "datePrecision": "day",
+   "title": "Texico Women's Retreat",
+   "start": "2027-10-15",
+   "end": "2027-10-17",
+   "category": "family-women-men",
+   "audience": "women",
+   "note": "Added to the calendar Oct 28, 2026; no place or details yet (2025 retreat was at Glorieta, NM)."
+  },
+  {
+   "place": "Columbia, MD",
+   "category2": null,
+   "level": "division",
+   "url": "https://texico.org/calendar/",
+   "source": "feed (public Google Calendar ICS)",
+   "datePrecision": "day",
+   "title": "NAD Year-End Meeting",
+   "start": "2027-10-28",
+   "end": "2027-11-02",
+   "category": "administration",
+   "audience": "leaders",
+   "note": "Starts inside the window (Oct 28) and runs to Nov 2, 2027."
   }
  ],
  "notes": [
@@ -92,7 +148,12 @@
   "Dropped: 26 offering markers, 3 office closures (May 31, Jul 5, Sep 6), the NAD Hispanic Advisory Meeting (Sep 6-10, 2027, Columbia, MD; a committee), and the open-ended monthly staff meetings (2nd and 4th Wednesday) and monthly convocation planning meeting (2nd Monday).",
   "Beyond the window the calendar holds: NAD Year-End Meeting (Oct 28, 2027), Annual Conference President's Retreat (Jan 2028), Texico Convocation (Jul 21, 2028) and Texico Pastors Retreat (Jul 24, 2028), Texico Convocation (Jul 27, 2029) and Pastors Family Retreat (Jul 30, 2029), International Pathfinder Camporee (Sep 2029 entry), and NAD/GC items to Oct 2030 (GC Session Jul 2030).",
   "Site search for 2027 finds only the 2022 constituency story; the event pages (newest: Sandia View Academy Alumni Weekend, Sep 18-19, 2026) and news (to Sep 30, 2026) have no 2027 dates. A Record story on Camp Texico On the Go ends \"See you in 2027\" without dates.",
-  "Not published yet for 2027: Camp Texico On the Go, family camp, FESJA weekends, women's retreats, Equipping Texico trainings, Pathfinder camporee and fair."
+  "Not published yet for 2027: Camp Texico On the Go, family camp, FESJA weekends, women's retreats, Equipping Texico trainings, Pathfinder camporee and fair.",
+  "(2026-11-06) Feed unchanged apart from three edits since Oct 1: the Leadershop moved to Jan 8-9, 2027 (Ruidoso), a Texico Women's Retreat was added for Oct 15-17, 2027, and the SWUC Asian-Pacific Convocation (Nov 6-8, 2026, existing) gained its venue, Lone Star Camp, Athens, TX.",
+  "(2026-11-06) The window now reaches Oct 2027, so two NAD items already in the feed are reported: the President's Retreat (Feb 1-4, 2027) and the NAD Year-End Meeting (Oct 28-Nov 2, 2027). Still dropped as committees or office items: SWUC Year-end Meetings Nov 15-18, 2026; SWUC Executive Committee Nov 19, 2026; H",
+  "(2026-11-06) The Equipping Texico Midland event page (posted Oct 5, 2026; Midland Seventh-day Adventist Church) is the existing Dec 4-5, 2026 West Texas training; its date is drawn by script and not in the HTML.",
+  "(2026-11-06) Beyond the window the feed still holds: Annual Conference President's Retreat Jan 7-10, 2028; Texico Convocation Jul 21-23 and Pastors Retreat Jul 24-27, 2028; Texico Convocation Jul 27-29 and Pastors Family Retreat Jul 30-Aug 2, 2029; International Pathfinder Camporee Sep 5-11, 2029; GC Session Jul",
+  "(2026-11-06) Record (union magazine) Texico stories to Nov 5, 2026 hold no 2027 dates."
  ],
  "aheadChecked": [
   "https://texico.org/calendar/",
@@ -109,6 +170,18 @@
   "https://www.swurecord.org/conference/texico",
   "https://www.swurecord.org/article/camp-texico-travels-to-local-churches",
   "https://issuu.com/swurecord/docs/september_october_2026",
-  "https://www.nadadventist.org/camp-meeting/"
+  "https://www.nadadventist.org/camp-meeting/",
+  "https://calendar.google.com/calendar/ical/texico%40texico.org/public/basic.ics (1,406 entries; latest start Oct 24, 2030)",
+  "https://texico.org/wp-json/wp/v2/events?per_page=20 (event pages, newest Oct 5, 2026)",
+  "https://texico.org/wp-json/wp/v2/posts?per_page=20 (news, newest Nov 2, 2026)",
+  "https://texico.org/events/equipping-texico-midland-weekend-of-ministry-trainings/",
+  "https://texico.org/news/equipping-texico-trains-west-texas-leaders/",
+  "https://swurecord.org/api/apps/69b1cae160b0054de343feb4/entities/Article?q={\"published\":true,\"type\":\"news\",\"news_source\":\"Texico\"} (Record news, 34 stories to Nov 5, 2026)",
+  "https://www.southwesternadventisteducation.com/calendar (pages 1-3)"
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass, which ran to 2027-03-31)",
+ "notPublishedYetNov2026": [
+  "Not published for 2027: Camp Texico On the Go, family camp, FESJA weekends, Equipping Texico trainings, Pathfinder camporee and fair, children's ministry details (Mar 13, 2027 is title only), Lubbock and Albuquerque convocation details.",
+  "No 2027 event pages or news on texico.org yet (site search for 2027 still finds only the 2022 constituency story)."
  ]
 }

@@ -4,6 +4,7 @@ import { createHash, createHmac, randomBytes } from 'node:crypto';
 delete process.env.TERRAIN_CODES; delete process.env.TERRAIN_REQUIRE_CODE; delete process.env.RESEND_API_KEY; delete process.env.GIFTS_FROM; delete process.env.SITE_URL; delete process.env.TERRAIN_REG_SECRET;
 let pass=0,fail=0;
 const c=(n,g,e=true)=>{const ok=JSON.stringify(g)===JSON.stringify(e);console.log((ok?'  PASS  ':'  FAIL  ')+n);if(!ok){console.log('    got:',JSON.stringify(g).slice(0,200));fail++}else pass++};
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // ---- a fake Netlify Blobs store (the subset the function uses) -------------
 const tick=()=>new Promise(r=>setImmediate(r));
@@ -58,10 +59,10 @@ const plainTag=x=>createHash('sha256').update(x).digest('base64url').slice(0,22)
 console.log('-- status --');
 let r=await call(new Request(URL0,{method:'GET'}));
 // v10.42 part 3 (gifts-1.3): the design, X14: "Take the assessment right there" on one church Wi-Fi must not refuse the 61st member
-c('GET answers status', [r.status,r.j.ok,r.j.fn], [200,true,'gifts-1.3']);
+c('GET answers status', [r.status,r.j.ok,r.j.fn], [200,true,'gifts-1.4']);
 c('email off when Resend is not configured', r.j.email, false);
 r=await post({op:'status'});
-c('POST op:status too', [r.j.ok,r.j.fn,r.j.email], [true,'gifts-1.3',false]);
+c('POST op:status too', [r.j.ok,r.j.fn,r.j.email], [true,'gifts-1.4',false]);
 r=await post({op:'nonsense'});
 c('unknown op → 400', [r.status,r.j.error], [400,'unknown-op']);
 r=await post({});

@@ -84,7 +84,8 @@ const BAD=/\bAI\b|\bIA\b/;
   c('the chip says the state and the count: "Needs work · 10 of 24", "Current · 24 of 24"', [chip('ANBZ01','website'),chip('ANBZ02','website'),chip('ANBZ01','youtube')], ['Needs work · 10 of 24','Current · 24 of 24','Current · 9 of 10']);
   c('the pastor\'s chip keeps its three states, no count; Facebook\'s says Not read', [chip('ANBZ01','pastor'),chip('ANBZ01','social')], ['Needs work','Not read']);
   c('the card\'s lines: the failed marks, then one "Good:" line of the passed ones, last', [a.website.lines.includes('No events page with dates ahead.'),a.website.lines[a.website.lines.length-1]],
-    [true,'Good: secure, fits a phone, opens quickly, the address, the phone, shows service times, names the pastor, online giving, a live-stream link.']);
+    // v10.70.1 (the audit, third look): "the phone number" (the Good list said "the phone")
+    [true,'Good: secure, fits a phone, opens quickly, the address, the phone number, shows service times, names the pastor, online giving, a live-stream link.']);
   c('…the ways in: the failed doors, then what is there', a.reach.lines, ['No page for first-time visitors (Plan your visit).','Nothing on what to expect: parking, children, how long, what to wear.','No form to ask for Bible studies on the site: a neighbor must write an email or go to another site.','No way to ask for prayer.','No contact form: only a gmail.com email address.','No newsletter or text-message sign-up.','No directions or map.','Good: Bible studies offered.']);
   c('…YouTube: the one mark failed, and what is good', [a.youtube.lines.includes('No evangelistic series in the last 90 days.'),a.youtube.lines[a.youtube.lines.length-1]], [true,'Good: a video this week, four or more a month, views past half the members, titles that say the topic, descriptions that invite, a live stream scheduled, names the pastor, subscribers past half the members, the website in About.']);
   c('…Google: no hours, two photos', [a.google.lines.includes('No hours on Google: add the service times.'),a.google.lines.includes('Only 2 photos on Google: add a few of the building and the people.')], [true,true]);
@@ -217,7 +218,8 @@ const BAD=/\bAI\b|\bIA\b/;
   await until(()=>S.qa('#chc-df .df-own .df-deep .df-deep-done').length===2);
   const sd=S.qa('#chc-df .df-own').find(a=>/Sampleton/.test(a.querySelector('h3').textContent));
   c('the chips, the lines and the block in Spanish', [sd.querySelector('.df-area .df-st').textContent,sd.querySelector('.df-deep-h').textContent,[...sd.querySelectorAll('.df-deep h5')].map(h=>h.textContent),sd.querySelector('.df-deep-foot span').textContent,sd.querySelector('[data-df-deepagain]').textContent],
-    ['Necesita trabajo · 10 de 24','A fondo',['Lo que vive un visitante la primera vez','Fortalezas','Lo que deja fuera al vecino','Ayudaría','Pulir','Las fotos','¿Hace un llamado?','El pastor que encuentra un visitante','Texto listo para pegar'],'Revisado el 8 oct 2026','Revisar de nuevo']);
+    // v10.70.1 (the audit, third look): Review again is "Revisar a fondo otra vez" (Check again, "Leer de nuevo", had the same Spanish)
+    ['Necesita trabajo · 10 de 24','A fondo',['Lo que vive un visitante la primera vez','Fortalezas','Lo que deja fuera al vecino','Ayudaría','Pulir','Las fotos','¿Hace un llamado?','El pastor que encuentra un visitante','Texto listo para pegar'],'Revisado el 8 oct 2026','Revisar a fondo otra vez']);
   c('…the review asked for in Spanish', sc.filter(x=>x.body&&x.body.op==='review').every(x=>x.body.lang==='es'), true);
   const se=J(S,'ANBZ01',true);
   c('…the judge\'s words', [se.website.lines[se.website.lines.length-1].slice(0,6),se.reach.lines[0],se.social.head,se.pastor.head], ['Bien: ','Sin página para quienes visitan por primera vez (Planee su visita).','Enlazada, no leída','Otro pastor en un video']);

@@ -69,6 +69,7 @@ async function call(req, ip = '198.51.100.7') {
 const post = (b, raw) => call(new Request(URL0, { method: 'POST', headers: { 'content-type': 'application/json' }, body: raw !== undefined ? raw : JSON.stringify(b) }));
 const get = (q, ip) => call(new Request(URL0 + '?' + q, { method: 'GET' }), ip);
 const clone = v => JSON.parse(JSON.stringify(v));
+// v10.72.0 (stale, not a regression): the stamps moved when the server began deciding the full version (the plan gate: gifts-1.4, present-1.5, connect-1.1, digital-1.3, advise-2.8, account-1.1 with claudeDay / trialClaudeDay)
 
 // A real handout-like PDF from jsPDF (as the page makes it), and bytes made to break one rule each.
 function realPdf(lines = 40, pages = 1) {
@@ -89,7 +90,7 @@ const open = async (o = {}, extra = {}) => (await post({ op: 'open', deck: deck(
 const pput = (A, buf, x = {}) => post({ op: 'putpdf', room: A.room, key: A.key, pdf: typeof buf === 'string' ? buf : b64(buf), name: 'Bucks-County-SDA-food-pantry-board-2026-09-29.pdf', lang: 'en', ...x });
 
 console.log('-- the version --');
-{ const r = await get(''); c('status says present-1.4', [r.status, r.j.fn], [200, 'present-1.4']); }
+{ const r = await get(''); c('status says present-1.4', [r.status, r.j.fn], [200, 'present-1.5']); }
 
 console.log('\n-- 1. putpdf: who may, and what it takes --');
 let A;

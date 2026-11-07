@@ -310,7 +310,8 @@ const mkGifts=`const mk=b=>{ const a={}; GIFTS.forEach(g=>{ for(let k=0;k<5;k++)
     L.E(`openTool('case');`);
     // Updated in v10.40.0 (the pastor: "why would there be two places to put your address?"):
     // with no church mapped yet the landing is the first-time card, not "type the address above".
-    c('(before a survey: the landing and its sample card show)', [L.q('#casep').hidden,/First, map your church’s neighbourhood/.test(L.txt('#casep')||'')], [false,true]);
+    // v10.70.1 (the audit): US spelling across the page's words (neighbor, organize, program…): the words the page now says
+    c('(before a survey: the landing and its sample card show)', [L.q('#casep').hidden,/First, map your church’s neighborhood/.test(L.txt('#casep')||'')], [false,true]);
     L.E(`DATA=${JSON.stringify(D)};SCOPE="tract"; CAP=null; capSave(${JSON.stringify(FX.MEDIUM)}); document.querySelector('.ask').style.display='none'; render();`);
     c('the survey loads: the landing goes, one sample card, the builder shows', [L.q('#casep').hidden,L.txt('#casep'),L.qa('[data-cs-sample]').length,!!L.q('#cs-s1')], [true,'',1,true]);
     c('V4: an empty live-link line is hidden (display:none beats the author rule)', /\.cs-room\[hidden\]\{display:none\}/.test(html), true);

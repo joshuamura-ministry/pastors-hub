@@ -14,9 +14,9 @@
   "https://uau.edu/academics/schedules",
   "https://www.outlookmag.org/"
  ],
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30 (the months after the first pass)",
- "furthestPublished": "2027-09",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
+ "furthestPublished": "2027-11",
  "furthestPublishedAnySource": "2030-04",
  "furthestPublishedNote": "Union calendar: last entry Aug 30 2027 (a Loma Linda board meeting, not counted). Union Adventist University's 2027-28 major-events sheet lists union-wide academy events for Sep 2027; UAU ReUnion dates are set to April 2030.",
  "aheadQuality": "B : the union calendar, camporee site and university calendars give the main 2027 union dates; no union youth congress, ministers' meeting or union evangelism training is published.",
@@ -50,23 +50,34 @@
   "https://www.outlookmag.org/mauc-ministerial-report-collaborating-in-ministry/",
   "https://www.outlookmag.org/mauc-church-ministries-report-building-relationships-equipping-ministry-leaders/",
   "https://www.outlookmag.org/mauc-session-2026/",
-  "https://www.outlookmag.org/investing-in-people/"
+  "https://www.outlookmag.org/investing-in-people/",
+  "https://www.midamericaadventist.org/about/calendar/ (headless Chrome; ICS Calendar plugin, months Aug 2026 - Nov 2029)",
+  "https://midamericacamporee.org/calendar/",
+  "https://midamericacamporee.org/wp-json/wp/v2/pages?per_page=50",
+  "https://midamericacamporee.org/wp-json/wp/v2/posts?per_page=20 (0 posts)",
+  "https://www.outlookmag.org/onevoice-sharing-the-hope-of-all-things-new/",
+  "https://mailchi.mp/mnsda/the-northern-light-extra-12855298 (Minnesota newsletter, Nov 2026: next SALT class)"
  ],
  "counts": {
-  "total": 8,
+  "total": 13,
   "byLevel": {
    "union": 6,
    "division": 1,
    "general-conference": 1
   },
   "byCategory": {
-   "education": 4,
+   "education": 5,
    "pastoral-leadership": 1,
    "pathfinders": 1,
-   "evangelism-outreach": 1,
-   "youth-young-adults": 1
+   "evangelism-outreach": 2,
+   "youth-young-adults": 1,
+   "music-worship-arts": 1,
+   "administration": 2
   },
-  "deadlines": 2
+  "deadlines": 2,
+  "conferenceLevel": 0,
+  "observances": 0,
+  "byCategoryConferenceOnly": {}
  },
  "events": [
   {
@@ -170,6 +181,74 @@
    "url": "https://uau.edu/academics/schedules",
    "source": "university major-events calendar (2027-28)",
    "level": "union"
+  },
+  {
+   "title": "Union Music Festival at Union Adventist University",
+   "start": "2027-02-03",
+   "end": "2027-02-06",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "music-worship-arts",
+   "category2": "education",
+   "audience": "youth",
+   "level": "union",
+   "url": "https://uau.edu/academics/schedules",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Union-wide academy music festival (UAU 2026-27 major-events sheet, Feb 3-6; also on the Iowa-Missouri calendar)."
+  },
+  {
+   "title": "SALT (Soul-winning and Leadership Training) class at Union Adventist University, next course",
+   "start": "2027-08",
+   "end": "2027-12",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "evangelism-outreach",
+   "category2": "discipleship-spiritual",
+   "audience": "members",
+   "level": "union",
+   "url": "https://uau.edu/salt",
+   "source": "news",
+   "datePrecision": "month (Minnesota newsletter says the next course starts in August 2027)",
+   "note": "It Is Written / Union Adventist University semester programme (Bible studies, outreach, an evangelistic series and a mission trip); open to college students and committed members of any age. The SALT page itself gives no 2027 dates yet."
+  },
+  {
+   "title": "GC Annual Council",
+   "start": "2027-10-06",
+   "end": "2027-10-13",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "gc",
+   "url": "https://www.midamericaadventist.org/about/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "NAD Year-End Meetings",
+   "start": "2027-10-28",
+   "end": "2027-11-02",
+   "place": null,
+   "category": "administration",
+   "category2": null,
+   "audience": "leaders",
+   "level": "division",
+   "url": "https://www.midamericaadventist.org/about/calendar/",
+   "source": "calendar",
+   "datePrecision": "day"
+  },
+  {
+   "title": "Union Adventist University Fall Preview Days",
+   "start": "2027-10-31",
+   "end": "2027-11-02",
+   "place": "Union Adventist University, Lincoln, NE",
+   "category": "education",
+   "category2": null,
+   "audience": "youth",
+   "level": "union",
+   "url": "https://uau.edu/academics/schedules",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "UAU 2027-28 major-events sheet."
   }
  ],
  "deadlines": [
@@ -201,6 +280,23 @@
   "Before the window: Union Pathfinder Bible Experience, Mar 27 2027, Lincoln, NE (midamericacamporee.org/pathfinder-bible-experience/).",
   "Beyond the window: NAD International Pathfinder Camporee \"Stand Strong\", Aug 20-26 2029, Oshkosh, WI (posted on the union club ministries site).",
   "RMC Constituency Session (Aug 22 2027) is on the union calendar but is a conference event; it is in rocky-mountain.json.",
-  "Union-level events also appear in the conference files when a conference calendar lists them (level union/division). Count them once when the app adds up the union."
+  "Union-level events also appear in the conference files when a conference calendar lists them (level union/division). Count them once when the app adds up the union.",
+  "(2026-11-06) Limitless camporee deadlines confirmed on midamericacamporee.org/registration/: early bird $95 through May 3 2027, regular $105 May 4 - Jun 1 2027, registration closes Jun 1 2027 or earlier at 2,000 registered Pathfinders and staff; Jul 28-31 2027, Custer SD (no change to the existing prepDeadlines)",
+  "(2026-11-06) Union PBE Mar 27 2027, Lincoln NE (midamericacamporee.org/pathfinder-bible-experience/) is inside the window but is already carried by the conference files (Dakota, Kansas-Nebraska, Iowa-Missouri, Minnesota, Rocky Mountain).",
+  "(2026-11-06) Conference items newly on the union calendar, recorded in the conference files: Iowa-Missouri constituency session Sep 26 2027 (organizing committee Sep 7, nominating committee Sep 19); RMC Conference on Mission Aug 27-28 and RMC constituency session Aug 29 2027.",
+  "(2026-11-06) Dropped from the union calendar: MAUC Presidents' Council Apr 21-22 and Executive Committee Apr 22 2027, Loma Linda committees/boards (Jan 25-27, May 24-26, Aug 30 - Sep 1 2027), Union Adventist University committees/board, conference executive committees, IA-MO organizing and nominating committees.",
+  "(2026-11-06) OUTLOOK (Oct 17 2026): the NAD All Things New social-media campaign runs all of 2027; September 2027 is Mid-America Union's month (theme: Jesus' baptism and commitment); churches register at allthingsnew2027.com.",
+  "(2026-11-06) Sports dropped: Union basketball tournament Feb 17-20 2027 and fall volleyball/soccer tournament Oct 21-23 2027 (UAU sheets)."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30 (the months after the first pass)",
+ "furthestNote": "Union calendar: last entry NAD Year-End Meetings Oct 28 - Nov 3 2027 (its month selector now spans to Nov 2029 but holds nothing after that). Union Adventist University's 2027-28 sheet lists Fall Preview Days Oct 31 - Nov 2 2027 and campus dates to Mar 2028; ReUnion dates are set to April 2030.",
+ "notPublishedYetNov2026": [
+  "MAUC Hispanic Youth Congress 2027 (Faith Mode ON was Jul 9-12 2026)",
+  "union ministers' meeting or pastors' convention 2027",
+  "union evangelism training for OneVoice27 (September 2027 is Mid-America's month in the NAD All Things New social-media campaign)",
+  "ASI Mid-America convention 2027 (site still shows the 2026 convention recordings)",
+  "Limitless camporee: early-bird registration opening date (\"TBD - May 3, 2027\")",
+  "union women's ministries events 2027",
+  "SALT 2027 dates on uau.edu/salt"
  ]
 }

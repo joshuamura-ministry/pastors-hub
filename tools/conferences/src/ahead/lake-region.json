@@ -3,8 +3,8 @@
  "slug": "lake-region",
  "union": "Lake Union",
  "site": "https://www.lrcsda.com/",
- "retrieved": "2026-10-01",
- "window": "2027-04-01 to 2027-09-30",
+ "retrieved": "2026-11-06",
+ "window": "look-ahead 2026-11-01 to 2027-10-31 (re-read 2026-11-06; the first pass covered 2025-10-01 to 2027-03-31, so October 2027 is the month newly inside the window)",
  "aheadWindow": {
   "from": "2027-04-01",
   "to": "2027-09-30",
@@ -32,11 +32,25 @@
   "https://lrcsda.com/wp-content/uploads/2026/06/2026-LRC-Calendar.pdf",
   "https://www.lrcsda.com/wp-content/uploads/2026/08/LRC_Constituency2026_web2.pdf",
   "https://www.lrcsda.com/elementor-19200/",
-  "https://assets.adventistconnect.org/lakeunio/2026/09/28135939/October_LUH2026_web.pdf"
+  "https://assets.adventistconnect.org/lakeunio/2026/09/28135939/October_LUH2026_web.pdf",
+  "https://www.lrcsda.com/wp-json/wp/v2/media?search=2027&per_page=50 (no files)",
+  "https://www.lrcsda.com/wp-json/wp/v2/media?search=calendar&per_page=50 (newest calendar file still 2026-LRC-Calendar.pdf, Jun 2026)",
+  "https://www.lrcsda.com/wp-json/wp/v2/mec-events?per_page=100 (newest event posts 2 Nov 2026)",
+  "https://www.lrcsda.com/wp-json/wp/v2/posts?after=2026-09-25T00:00:00&per_page=50",
+  "https://www.lrcsda.com/events/2026-lrc-master-guide-camp/",
+  "https://www.lrcsda.com/events/christmast-and-holiday-concert/",
+  "https://www.lrcsda.com/events/illiana-youth-federation-ignite-your-faith/",
+  "https://www.lrcsda.com/events/ibc-mens-retreat/",
+  "https://www.lrcsda.com/events/shiloh-sda-church-street-naming-ceremony/",
+  "https://www.lrcsda.com/events/chicago-sda-school-fall-fest/",
+  "https://www.lrcsda.com/events/michiana-youth-federation-week-of-prayer-fall-youth-federation/",
+  "https://www.lrcsda.com/events/chicagoland-fall-youth-federation-unstoppable/",
+  "https://www.lrcsda.com/events/motor-city-youth-and-young-adults-conference/",
+  "https://assets.adventistconnect.org/lakeunio/2026/10/27110127/NovDec_LUH2026_Web.pdf"
  ],
  "aheadSummary": "Nothing is dated for April–September 2027. Lake Region publishes a designed whole-year calendar PDF (the 2026 one went up in June 2026), so 2027 dates may not appear until well into 2027. The 2027 camp meeting is already set as the place where delegates will vote on the remaining constitution and bylaws changes, but it has no date (2026 camp meeting: 1–4 July at Camp Wagner).",
  "counts": {
-  "total": 0,
+  "total": 2,
   "conferenceRunPublic": 0,
   "internal": 0,
   "otherLevels": 0,
@@ -59,6 +73,16 @@
    "2027-07": 0,
    "2027-08": 0,
    "2027-09": 0
+  },
+  "conferenceLevel": 2,
+  "observances": 0,
+  "byCategory": {
+   "pathfinders": 1,
+   "music-worship-arts": 1
+  },
+  "byCategoryConferenceOnly": {
+   "pathfinders": 1,
+   "music-worship-arts": 1
   }
  },
  "stats": {
@@ -343,6 +367,47 @@
  ],
  "usuallyHeldNote": "Held in April–September 2026 (from the 2026 calendar PDF and event posts); none has a 2027 date yet.",
  "beyondWindow": [],
- "events": [],
- "notes": "The 2026 calendar PDF is mostly artwork; text was read page by page in v50. The constituency report says Camp Wagner priorities for 2027 include a splash pad, trails, a woodland chapel and a feasibility study for a large auditorium (no dated events). Caution: lrcsda.com page code has carried hidden spam links (noted in v50); only visible content was used."
+ "events": [
+  {
+   "title": "2026 LRC Master Guide Camp",
+   "start": "2026-11-06",
+   "end": "2026-11-08",
+   "place": "Camp Wagner, Cassopolis MI",
+   "category": "pathfinders",
+   "category2": "pastoral-leadership",
+   "audience": "leaders",
+   "level": "conference",
+   "url": "https://www.lrcsda.com/events/2026-lrc-master-guide-camp/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "Master Guide boot camp; training in English and Spanish; $60 covers lodging, meals and materials; same weekend as the recorded TLT Bootcamp at Camp Wagner"
+  },
+  {
+   "title": "Christmast and Holiday Concert",
+   "start": "2026-12-05",
+   "end": "2026-12-05",
+   "place": "Hartford Nursing and Rehabilitation Center, Detroit",
+   "category": "music-worship-arts",
+   "category2": "community-service",
+   "audience": "public/community",
+   "level": "conference",
+   "url": "https://www.lrcsda.com/events/christmast-and-holiday-concert/",
+   "source": "events page",
+   "datePrecision": "day",
+   "note": "'The Joy of the Lord Celebration', 14:00–16:00, hosted by a chaplain for residents and the community; listed in the site's 'Conference Wide' category (title as published)"
+  }
+ ],
+ "notes": [
+  "The 2026 calendar PDF is mostly artwork; text was read page by page in v50. The constituency report says Camp Wagner priorities for 2027 include a splash pad, trails, a woodland chapel and a feasibility study for a large auditorium (no dated events). Caution: lrcsda.com page code has carried hidden spam links (noted in v50); only visible content was used.",
+  "(2026-11-06) lrcsda.com's calendar page still links only the 2026 PDF. The Modern Events Calendar posts added since 25 Sep are the Master Guide Camp (6–8 Nov), the Illiana Youth Federation 'Ignite Your Faith' (14 Nov, already recorded), a Christmas concert (5 Dec) and October 2026 items (youth federations, a men",
+  "(2026-11-06) The /camp-meeting/ page is now a 'Camp Meeting Employment' page (2024 wording) with no dates.",
+  "(2026-11-06) The Lake Union Herald Nov–Dec 2026 lists for Lake Region only the TLT Bootcamp (it prints 7–8 Nov; the conference calendar says 6–8 Nov) and the Stewardship Revival Week 28 Nov–5 Dec, both already recorded; its 'events' column has no 2027 Lake Region date (only an outside agriculture conference in F",
+  "(2026-11-06) Caution unchanged: lrcsda.com page code has carried hidden spam links; only visible content and the REST API were used."
+ ],
+ "windowBefore": "2027-04-01 to 2027-09-30",
+ "notPublishedYetNov2026": [
+  "The 2027 Calendar of Events PDF (the 2026 one went up in June 2026)",
+  "Lake Region Camp Meeting 2027 (where delegates vote on the remaining constitution and bylaws changes) — still no date",
+  "All the spring–autumn items looked for (FEHJA youth federation, women's ministries training and retreat, schools' week of prayer, Adventurer Escape Weekend, ACS convention, health and wellness retreats, Master Guide camp-out, camp meeting and youth camp meeting, junior camps, Campestre Hispano, Conscious and Justice Council convention, Hispanic evangelism week) — no 2027 dates"
+ ]
 }

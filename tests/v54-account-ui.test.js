@@ -11,7 +11,7 @@ const FB={apiKey:'AIzaSyTESTtestTESTtestTESTtest12345',authDomain:'terrain-live.
 const SESS='s1.dWlkLTE.zzzzzz.'+'A'.repeat(43);
 const DAY=864e5, NOW=Date.now();
 const INFO=(o)=>Object.assign({fn:'account-1.0',auth:true,fb:FB,billing:'off',mode:'test',checkout:true,trialDays:14,
-  prices:{year:{amount:15000,currency:'usd'},month:{amount:1500,currency:'usd'}}},o||{});
+  prices:{year:{amount:12000,currency:'usd'},month:{amount:1200,currency:'usd'}}},o||{});   // v10.72.0: the prices he settled on ($120 / $12)
 
 /* a page on index.html: url, localStorage, an account.mjs stand-in (S) and, unless noFirebase, a Firebase stand-in (A) */
 function pg(o){
@@ -109,8 +109,8 @@ const ON={store:{'terrain-billing-test':'1'}};
     c('the session is kept on the device', P.E("localStorage.getItem('terrain-session')"), SESS);
     const plans=sheet(P);
     c('the plans: yearly first, "best for a church budget"', P.qa('#acct-sheet .acct-plan').map(p=>p.querySelector('b').textContent), ['Yearly','Monthly']);
-    c('…$150 a year · 2 months free', /\$150 a year · 2 months free/.test(plans));
-    c('…$15 a month', /\$15 a month/.test(plans));
+    c('…$120 a year · 2 months free', /\$120 a year · 2 months free/.test(plans));   // v10.72.0 (stale, not a regression): $120 / $12
+    c('…$12 a month', /\$12 a month/.test(plans));
     c('…14 days free, nothing charged if cancelled before', /14 days free, then the plan you choose\. Cancel before the trial ends and nothing is charged\./.test(plans));
     c('…test mode says the card to use', /Test mode: card 4242 4242 4242 4242/.test(plans));
     c('…Stripe takes the card, Terrain never sees it', /Stripe takes the card on its own page\. Terrain never sees it\./.test(plans));
@@ -253,7 +253,7 @@ const ON={store:{'terrain-billing-test':'1'}};
     c('the lock\'s button', P.qa('#locked .lock button').map(b=>b.textContent), ['Empiece su prueba gratis de 14 días']);
     P.E("acctShow('plans')");
     const t=sheet(P);
-    c('the plans', [/Lo mejor para el presupuesto de la iglesia/.test(t), /\$150 al año · 2 meses gratis/.test(t), /\$15 al mes/.test(t), /14 días gratis/.test(t), /Modo de prueba: tarjeta 4242/.test(t)], [true,true,true,true,true]);
+    c('the plans', [/Lo mejor para el presupuesto de la iglesia/.test(t), /\$120 al año · 2 meses gratis/.test(t), /\$12 al mes/.test(t), /14 días gratis/.test(t), /Modo de prueba: tarjeta 4242/.test(t)], [true,true,true,true,true]);
     c('no "AI" / "IA" in the sheet', /\b(AI|IA)\b/.test(t), false); }
   { const P=pg(ON); await ready(P);
     const words=['signin','plans','account','wait','slow','welcome','confirm'].map(v=>{ P.E(`acctShow('${v}')`); return sheet(P); }).join(' ');
