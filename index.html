@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.72.0
+     TERRAIN  v10.72.1
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.72.0" data-theme="dark">
+<html lang="en" data-version="v10.72.1" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.72.0">
-<title>Community Map — Terrain v10.72.0</title>
+<meta name="terrain-version" content="v10.72.1">
+<title>Community Map — Terrain v10.72.1</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -3935,6 +3935,7 @@ button.cd-rowb:hover{background:var(--panel2)}
 .df-row:focus-visible{outline:2px solid var(--acc);outline-offset:-2px}
 .df-row.mine th{box-shadow:inset 3px 0 0 var(--dfk)}
 .df-you{margin-left:8px;font-size:.66rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dfk);border:1px solid var(--dfk);border-radius:999px;padding:0 7px;vertical-align:2px}
+.df-you.df-cmp{color:inherit;opacity:.7;border-color:currentColor}   /* v10.72.1: a church to compare */
 .df-detail td{background:var(--panel2)}
 .df-filters{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .df-f{font:600 .84rem var(--font);border:1px solid var(--line2);background:var(--panel);color:var(--ink2);border-radius:999px;padding:6px 12px;cursor:pointer;min-height:36px}
@@ -5291,13 +5292,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.72.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.72.1</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.72.0';
+const VERSION = 'v10.72.1';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -45083,7 +45084,7 @@ const DF_T={
   rim:{en:'Out at the rim: current. In the middle: needs work. Near the center: needs help now.',es:'En el borde: al día. En medio: necesita trabajo. Cerca del centro: necesita ayuda ya.'},
   fAll:{en:'All',es:'Todas'}, fHelp:{en:'Needs help now',es:'Necesita ayuda ya'}, fSite:{en:'No website found',es:'Sin sitio web'}, fPastor:{en:'Pastor’s name to check',es:'Revisar el pastor'},
   fGoogle:{en:'Google to fix',es:'Google por arreglar'}, find:{en:'Find a church or town',es:'Buscar una iglesia o ciudad'}, none2:{en:'No church matches.',es:'Ninguna iglesia coincide.'},
-  yours:{en:'Yours',es:'Suya'}, members:{en:'{n} members',es:'{n} miembros'},
+  yours:{en:'Yours',es:'Suya'}, cmp:{en:'To compare',es:'Para comparar'}, members:{en:'{n} members',es:'{n} miembros'},
   checkAgain:{en:'Check again',es:'Leer de nuevo'}, checking:{en:'Reading this church again… a minute or two.',es:'Leyendo esta iglesia de nuevo… uno o dos minutos.'},
   limitAgain:{en:'Three checks a day: try again tomorrow.',es:'Tres revisiones al día: inténtelo mañana.'},
   readOn:{en:'Read from public pages on {date}.',es:'Leído de páginas públicas el {date}.'},
@@ -45564,7 +45565,10 @@ function dfActs(c,J){
 }
 function dfMine(F,X){
   const reg=typeof regGet==='function'?regGet():null, my=reg&&reg.name?String(reg.name):'';
-  const names=(typeof chList==='function'?chList():[]).map(ch=>{ try{ return chName(ch); }catch(e){ return ''; } }).concat(reg&&reg.church?[reg.church]:[]).filter(Boolean);
+  // v10.72.1: a church added from the conference list (dir: the picker, v10.71.0) is one to compare, not his: the pastor (6 Nov 2026),
+  // "I put Lansdale, which is not my church cause I want to compare it and it said … it has my name". Its name counts only once he has
+  // filled in "Your church" there; the listing naming him counts as ever. A church mapped by its address is his, as before
+  const names=(typeof chList==='function'?chList():[]).filter(ch=>!(ch&&ch.dir&&ch.dir.org)||!!(ch.capacity&&ch.capacity.confirmed)).map(ch=>{ try{ return chName(ch); }catch(e){ return ''; } }).concat(reg&&reg.church?[reg.church]:[]).filter(Boolean);
   // v10.71.0: the name rule is chKey, shared with the comparison's chDirEntry
   const key=chKey;
   return F.churches.filter(c=>(my&&c.pastor&&dfSame(c.pastor,my))||names.some(n=>key(n)&&key(n)===key(c.name)));
@@ -45683,9 +45687,11 @@ function dfPaint(){
     const R=DF.reading, pct=R&&R.total&&R.phase==='read'?Math.round(100*R.done/R.total):R&&R.phase==='entries'?8:3;
     box.innerHTML=head+`<div class="df-reading" role="status"><p>${esc(dfT('reading',{conf}))}</p><div class="df-bar"><i style="width:${Math.max(3,pct)}%"></i></div><p class="df-faint">${esc(R&&R.phase==='read'&&R.total?dfT('progress',{done:R.done,total:R.total}):dfT('listing'))}</p></div>`; return; }
   const F=DF.data, X=dfContext(F), reg=typeof regGet==='function'?regGet():null, myName=reg&&reg.name?reg.name:'', mineSet=new Set(dfMine(F,X).map(c=>c.org));
-  const rows=F.churches.map(c=>{ const own=mineSet.has(c.org), J=dfJudge(c,X,F.read,own,myName); return {c,J,own,name:String(c.name).replace(/\bSDA\b\s*/,'').replace(/\s+(Church|Company)$/,'').trim()||c.name}; })
-    .sort((a,b)=>(b.own-a.own)||(a.own&&b.own?a.name.localeCompare(b.name):0)||(b.J.score-a.J.score)||a.name.localeCompare(b.name));   // his own in a steady order; the rest by need
-  const mine=rows.filter(r=>r.own), others=rows.filter(r=>!r.own), n=k=>rows.filter(r=>r.fl.includes(k)).length, typ=dfTypical(rows);
+  // v10.72.1: a church on the device that is not his (added from the conference list to compare) is "To compare": judged as the others are
+  const cmpSet=new Set((typeof chList==='function'?chList():[]).map(ch=>{ try{ const d=chDirEntry(ch); return d?d.org:''; }catch(e){ return ''; } }).filter(o=>o&&!mineSet.has(o)));
+  const rows=F.churches.map(c=>{ const own=mineSet.has(c.org), cmp=!own&&cmpSet.has(c.org), J=dfJudge(c,X,F.read,own,myName); return {c,J,own,cmp,name:String(c.name).replace(/\bSDA\b\s*/,'').replace(/\s+(Church|Company)$/,'').trim()||c.name}; })
+    .sort((a,b)=>(b.own-a.own)||(b.cmp-a.cmp)||((a.own&&b.own)||(a.cmp&&b.cmp)?a.name.localeCompare(b.name):0)||(b.J.score-a.J.score)||a.name.localeCompare(b.name));   // his own in a steady order, then the ones to compare; the rest by need
+  const mine=rows.filter(r=>r.own), cmpRows=rows.filter(r=>r.cmp), sideRows=mine.concat(cmpRows), others=rows.filter(r=>!r.own), n=k=>rows.filter(r=>r.fl.includes(k)).length, typ=dfTypical(rows);
   rows.forEach(r=>{ const A=r.J.areas; r.fl=['all',r.J.worst===3&&'help',A.website.s==='help'&&'site',['help','work'].includes(A.pastor.s)&&'pastor',['help','work'].includes(A.google.s)&&'google'].filter(Boolean); });
   DF.rows=rows; DF.my=myName;   // v10.62.0: for the In depth blocks drawn later
   const pills=`<div class="df-pills"><span>${esc(dfT('conf',{conf}))}</span><span><b>${dfNf(F.churches.length)}</b> ${esc(dfT('count',{n:''}).trim())}</span><span>${dfDot(dfT('checked',{date:dfDay(F.read)}))}</span></div>`;
@@ -45700,10 +45706,11 @@ function dfPaint(){
       <div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>
       ${acts.length?`<div class="df-go">${acts.join('')}</div>`:''}${fixes(r)}${dfDeepHTML(r,true)}
       <div class="df-foot"><span>${dfNb(dfT('readOn',{date:dfDay(r.c.read||F.read)}))}</span>${DF.msg[r.c.org]?`<span>${esc(DF.msg[r.c.org])}</span>`:`<button type="button" class="btn ghost gfsm" data-df-again="${esc(r.c.org)}">${esc(dfT('checkAgain'))}</button>`}</div></article>`; };
-  const side=mine.length>=2?`<section class="df-part"><h3 class="df-h"><span>2</span>${esc(dfT('s2'))}</h3><div class="df-wrap"><table class="df-side" style="min-width:${180+mine.length*220}px"><thead><tr><th></th>${mine.map(r=>`<th scope="col">${esc(r.name)}</th>`).join('')}</tr></thead><tbody>
-      <tr class="df-side-chart"><th scope="row">${esc(dfT('chart'))}</th>${mine.map(r=>`<td>${dfRadarFig(r.J,typ,conf,{small:true})}</td>`).join('')}</tr>
-      ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${mine.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${dfNb(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
-  const P=n=>mine.length>=2?n:n-1;
+  // v10.72.1: Side by side holds his own and the churches to compare; a church to compare is tagged, its name a link to its row below
+  const side=sideRows.length>=2?`<section class="df-part"><h3 class="df-h"><span>2</span>${esc(dfT('s2'))}</h3><div class="df-wrap"><table class="df-side" style="min-width:${180+sideRows.length*220}px"><thead><tr><th></th>${sideRows.map(r=>`<th scope="col">${r.cmp?`<a href="#df-row-${esc(r.c.org)}" data-df-open="${esc(r.c.org)}">${esc(r.name)}</a> <span class="df-you df-cmp">${esc(dfT('cmp'))}</span>`:esc(r.name)}</th>`).join('')}</tr></thead><tbody>
+      <tr class="df-side-chart"><th scope="row">${esc(dfT('chart'))}</th>${sideRows.map(r=>`<td>${dfRadarFig(r.J,typ,conf,{small:true})}</td>`).join('')}</tr>
+      ${DF_AREAS.map(k=>`<tr><th scope="row">${dfIco(k)}${esc(dfT(DF_AREA_KEY[k]))}</th>${sideRows.map(r=>`<td>${dfChip(r.J.areas[k],true)}<div class="df-faint">${dfNb(r.J.areas[k].lines[0]||'')}</div></td>`).join('')}</tr>`).join('')}</tbody></table></div></section>`:'';
+  const P=n=>sideRows.length>=2?n:n-1;
   // v10.62.0: "Website up, but not working": a site that opens with three or more heavy marks failed, and what they are
   const heavyWhy=r=>{ const h=(r.J.marks&&r.J.marks.website||[]).filter(m=>m.w===2&&m.ok===false).map(m=>m.short).filter(Boolean); return h.join(', ').replace(/^./,x=>x.toUpperCase())+'.'; };
   const groups=[[L('No working website found','Sin sitio web que funcione'),others.filter(r=>r.J.areas.website.s==='help'),r=>r.J.areas.website.lines.find(l=>/does have|Sí tiene|does not open|no abre/.test(l))||r.J.areas.website.lines[1]||''],
@@ -45719,7 +45726,7 @@ const needs=groups.length?`<div class="df-needs${ncol===2?' n2':''}" style="--n:
   const table=`<div class="df-filters" role="group">${F0.map(([k,l])=>`<button type="button" class="df-f${DF.f===k?' on':''}" data-df-f="${k}" aria-pressed="${DF.f===k}">${esc(dfT(l))} <span>${n(k)}</span></button>`).join('')}<input id="df-q" type="search" value="${esc(DF.q)}" placeholder="${esc(dfT('find'))}" aria-label="${esc(dfT('find'))}"></div>
     <div class="df-wrap"><table class="df-all"><thead><tr><th scope="col">${esc(L('Church','Iglesia'))}</th>${DF_AREAS.map(k=>`<th scope="col">${esc(dfT(DF_AREA_KEY[k]))}</th>`).join('')}</tr></thead><tbody>
     ${rows.map(r=>{ const q=dfFold(r.name+' '+(r.c.town||'')+' '+(r.c.aka||'')).toLowerCase(), show=r.fl.includes(DF.f)&&(!DF.q||q.includes(dfFold(DF.q).toLowerCase())), open=!!DF.open[r.c.org];
-      return `<tr class="df-row${r.own?' mine':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?` <span class="df-tw">· ${esc(dfT('members',{n:dfNf(r.c.members)}))}</span>`:''}${r.c.kind&&r.c.kind!=='church'?` <span class="df-tw">· ${esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo'))}</span>`:''}</div></th>
+      return `<tr class="df-row${r.own?' mine':r.cmp?' cmp':''}" id="df-row-${esc(r.c.org)}" data-df-row="${esc(r.c.org)}" tabindex="0" aria-expanded="${open}"${show?'':' hidden'}><th scope="row"><span>${esc(r.name)}</span>${r.own?`<span class="df-you">${esc(dfT('yours'))}</span>`:r.cmp?`<span class="df-you df-cmp">${esc(dfT('cmp'))}</span>`:''}<div class="df-faint">${esc(r.c.town||'')}${r.c.members?` <span class="df-tw">· ${esc(dfT('members',{n:dfNf(r.c.members)}))}</span>`:''}${r.c.kind&&r.c.kind!=='church'?` <span class="df-tw">· ${esc(r.c.kind==='company'?L('company','compañía'):L('group','grupo'))}</span>`:''}</div></th>
         ${DF_AREAS.map(k=>`<td data-th="${esc(dfT(DF_AREA_KEY[k]))}">${dfChip(r.J.areas[k],true)}</td>`).join('')}</tr><tr class="df-detail"${open&&show?'':' hidden'}><td colspan="7"><div class="df-dwrap"><div class="df-sum">${dfRadarFig(r.J,typ,conf)}<div class="df-sumt"><p class="df-sees"><b>${esc(dfT('sees'))}</b> ${esc(sees(r))}</p><p class="df-faint df-rim">${esc(dfT('rim'))}</p></div></div><div class="df-areas">${DF_AREAS.map(k=>dfArea(k,r.J.areas[k])).join('')}</div>${r.own?'':dfDeepHTML(r,false)}</div></td></tr>`; }).join('')}
     </tbody></table></div><p class="df-faint" id="df-none" hidden>${esc(dfT('none2'))}</p>`;
   const how=`<div class="df-hows">${DF_HOW().map(([k,h,places,what])=>`<article><h4>${dfIco(k)}${esc(h)}</h4><p>${esc(what)}</p>${places.length?`<ul>${places.map(([nm,d,u,t,free])=>`<li>${u?`<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(nm)}</a>`:`<b>${esc(nm)}</b>`} <span class="df-cost">${esc(free?dfT('free'):L('Paid','De pago'))}</span>${d?`<div class="df-faint">${esc(d)}</div>`:''}<div>${esc(t)}</div></li>`).join('')}</ul>`:''}</article>`).join('')}</div>`;
