@@ -271,7 +271,7 @@ const geoCalls=P=>P.net.census.filter(x=>/geocoding/.test(x.u));
   c('one tap on Deacons & deaconesses chooses the group and its kind', P.J('casePrefs()'), {ministry:null,type:'board',group:'deacons',plan:false});
   c('…one tile pressed', P.qa('#cs-s1 [aria-pressed="true"]').map(b=>b.dataset.csGroup), ['deacons']);
   // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The group is named by "More ideas for {group}" now (the step's line says where support is won)
-  c('…step 2 names them, and the step bar moves on', [P.txt('#cs-more h4'),P.qa('#cs-bar .cs-st').map(b=>b.className.replace('cs-st ',''))], ['More ideas for the deacons and deaconesses',['done','now','next']]);   // v10.41.1: English articles, as the Spanish
+  c('…step 2 names them, and the step bar moves on', [P.txt('#cs-more h4'),P.qa('#cs-bar .cs-st').map(b=>b.className.replace('cs-st ','').replace(' view',''))], ['More ideas for the deacons and deaconesses',['done','now','next']]);   // v10.41.1: English articles, as the Spanish   // v10.73.0: .view marks the step on screen (stale, not a regression)
   c('…saved for this church', JSON.parse(P.w.localStorage.getItem('terrain-churches-v1')).churches['church-1'].proposalPrefs, {type:'board',group:'deacons'});
   click(P,'[data-cs-group="smallgroups"]');
   c('another tap moves it across sections: small group leaders, a ministry team', [P.J('casePrefs().type'),P.J('casePrefs().group'),P.qa('#cs-s1 [aria-pressed="true"]').length], ['team','smallgroups',1]);

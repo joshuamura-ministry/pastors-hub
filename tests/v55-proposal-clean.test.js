@@ -57,6 +57,6 @@ const T=checker(), c=T.c;
   c('Size and the goal box are back when it is not the Proposal page', [P.E('casePropMode()'),!!P.q('#cs-s3 #cs-size'),!!P.q('#cs-s3 #cs-goal')], [false,true,true]);
   P.w.__scrolled.length=0;
   P.q('#cs-s1 [data-cs-group="finance"]').click(); await sleep(150);
-  c('…and choosing a group there still brings its list into view', P.w.__scrolled.some(s=>s.id==='cs-s2'), true);
+  c('…and choosing a group there still brings its list into view', P.w.__scrolled.some(s=>s.id==='cs-s2'), false);   // v10.73.0 (stale, not a regression): nothing moves by itself; he taps Done (the pastor, 9 Nov 2026: "it jumps down every time … press done and … it scrolls left like the other ones")
   c('no page errors', P.errs, []);
 }); T.done(); })();

@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.73.0: the page's badge v10.73.0 (the page only; no function changed); Make the Case: three tabs (A ministry · A project · A purchase), one step on screen with ← Back · Step n of m · Done under it
 - v10.72.1: the page's badge v10.72.1 (the page only; no function changed); in Compare your churches, a church added from the conference list is tagged "To compare" in Digital footprint's Side by side and Every church, never under "Your churches"
 - v10.72.0: `/.netlify/functions/account` → `"fn":"account-1.1"`, `"claudeDay":6`, `"trialClaudeDay":3`; gifts → `gifts-1.4`; present → `present-1.5`; connect → `connect-1.1`; digital → `digital-1.3`; advise → `advise-2.8`; the page's badge v10.72.0; with payments still off the page is the full version for everyone, as before
 - v10.62.0: `/.netlify/functions/digital` → `"fn":"digital-1.2"`, `"readFn":"digital-read-1.2"`, `"reviewFn":"review-1.0"`, `"review":true` (the Anthropic key and `TERRAIN_AI_PASS` are set), `"places":true`; the next reading (his "Check again", or the monthly refresh) brings the marks; his own churches' in-depth review runs by itself on his unlocked device (`?ideas=`)
@@ -225,6 +226,44 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.73.0 (9 Nov 2026, full lane) — Make the Case, one step at a time; a ministry, a project or a purchase.** The pastor, on his phone:
+*"when I click a Ministry a project or purchase, it jumps down every time … is it following a very simple simplified process … a project or
+purchase should not be together … there should be make the case for a Ministry, two a project or three a purchase … click save … it jumps to
+three options or click how we'll pay and it jumps down … I don't like that kind of switching … what's better? Is it like scrolls left … every
+time I finish it you just pretty much will press done and once you're done it scrolls left like the other ones. This is much cleaner instead
+of hopping down. It looks so cheesy and cheap."* Looked at first in Chrome (`~/Ministry Work/Terrain-work/v88/look-case/`): both paths stacked
+every step on one page (the later ones empty boxes until the earlier were done) and the app scrolled for him (the switch, a group, an idea, an
+audience, every step-bar button). Design `v88/DESIGN-CASE-SLIDER.md`.
+- **Three choices at the top** (`buySwitchHTML`): **A ministry · A project · A purchase** (ES Un ministerio · Un proyecto · Una compra;
+  `BUY_UI.pathProj`, `pathBuy` now "A purchase"). Stored in `proposalPrefs.path` as `ministry` | `buy` (a purchase, the old value kept) |
+  `project`; `buyPathRaw()` says which, `buyPath()` still answers `buy` for both of the last two (every older reader unchanged), `buyWay()`
+  `purchase` | `project`. A purchase is something bought (kind `buy`); a project a repair, an installation or a build (`buyFam`,
+  `buyKindsFor(C,way)`, `buyCatsFor(way)`): step 1 offers the categories of the family (a purchase eight, no "Building repair"; a project all
+  nine) and the kind row only where the family leaves a choice (a project in the kitchen: Repair or install · Build or add on; a purchase: no
+  row); "Your projects" lists the family's (`buyListFam`; a remembered project of the other family is left alone); a new one takes the
+  family's first kind (`buyNew`). Saved projects keep working: their kind says their family.
+- **One step on screen** (block "ONE STEP AT A TIME" after `caseStepNo`): both paths and the Proposal view from a need keep their sections and
+  draw functions; the sections sit in one box (`.cs-panes`: `#cs-panes` / `#bx-panes`), the current one `.on`, the others laid out but unseen,
+  inert and hidden from readers (`csPaneShow`); under the box one row (`#cs-nav` / `#bx-nav`): **← Back · Step n of m · Done** (`CS_NAV_UI`;
+  ES ← Atrás · Paso n de m · Hecho; no Back on the first, no Done on the last). Done slides the next step in from the right (`cs-in-r`, 300 ms),
+  Back from the left (`cs-in-l`); reduced motion: still; print: every pane, no nav. The step bar's buttons slide (`csGo`), never scroll, and
+  mark the step on screen (`.cs-st.view`; the phone's title under the numbers names it, `csBarView`). The tool opens on the first unfinished
+  step (`caseStepState().cur`, `buyStepState().now`; the Proposal view on the slides when the group is chosen) and keeps the step he is viewing
+  (`CASE_ST.pane`, `BUY_ST.pane`) until it is opened again, the path changes or another project is chosen (`csPaneOpen`). A page already
+  scrolled below the box is brought back to its top on his own Back/Done/bar tap (turning the page), never otherwise.
+- **Nothing moves by itself**: no scrollIntoView on the switch (`buySwitchWire`), a group (`caseChooseGroup`), an idea (`caseChoose`), an
+  audience (`buyDraw4`) or a step-bar button; "Choose a different ministry" slides the list in (`casePropWire`). Kept: the tool opening at the
+  top of the page; "Who to ask" opening in place.
+- Tests: `v73-case-slider` (new, 30; failing first on v10.72.1: `v88/logs/ff-v73-case-slider.log`); updated with comments: case-steps (the
+  panes box; `.view` stripped from the bar's classes), home-church (the same), buy-ui (three tabs; eight categories for a purchase; no kind row
+  for a purchase), v45-handoff (the panes box after the proposal card), v55-proposal-clean (a group chosen no longer scrolls). Checked in
+  Chrome against the static copy (`v88/look-slider.mjs`, pictures `v88/look-slider/`): phone 390, computer 1366, Spanish phone: step 1 → Done →
+  step 2 → an idea → Done → the slides; a purchase (Sound) → Done; a project (Kitchen) with its two kinds; no sideways scroll, no page errors.
+  Full suite: 201 suites · 12,184 passed · 0 failed (v10.72.1: 200 · 12,152).
+- **Next (his words, 9 Nov 2026):** *"the objective of this specific section is to formulate the most compelling, most polished most convincing
+  and based on evidence … the report needs to be rock solid … a slideshow and a beautiful PDF"*: the outputs (slides, handout PDF, Proposal PDF)
+  reviewed against that bar, a list of upgrades with pictures, then its own build.
 
 **v10.72.1 (6 Nov 2026, quick lane) — a church added from the conference list is one to compare, never one of his.** The pastor, on his
 phone, of Lansdale's Digital footprint card ("We did not find Josh Mura's name where a visitor looks for the pastor"): *"I put Lansdale, which
