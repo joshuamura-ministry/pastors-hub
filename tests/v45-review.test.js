@@ -51,20 +51,23 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   c('the fixture shows rent burden and SNAP, so "Debt can take hold here" is not a third card on the same figures', [S.needs.some(n=>n.id==='rent50'),S.needs.some(n=>n.id==='snap'),[...S.needs,...S.also].some(n=>n.id==='debt')], [true,true,false]);
   S=model(P,`Object.assign(D.M.tract,{seniorsAlone:14,seniorsAloneN:280,medAge:50});`);
   c('grief joins "seniors living alone" when that is shown: no card of its own, its ideas in that list', [S.needs.some(n=>n.id==='grief'),S.needs.some(n=>n.id==='seniors-alone'),S.merged['seniors-alone']], [false,true,'grief']);
-  await openNeed(P,'seniors-alone',true); await until(()=>P.q('#ns-i-seniors-alone .ns-row'));
-  const grief4=P.J(`(NS.map.needs.grief||[]).slice(0,4)`), shown=P.qa('#ns-i-seniors-alone .ns-row').map(r=>r.dataset.idea);
+  // v10.74.0: "seniors living alone" is a finding of the Seniors card (here "seniors without a car" leads it); its own list (nsIdeasLib)
+  // holds grief's four, and the card shows a share of it
+  await openNeed(P,'seniors-alone',true);
+  const grief4=P.J(`(NS.map.needs.grief||[]).slice(0,4)`), shown=P.J(`nsIdeasLib(nsNeedById('seniors-alone').finds.find(f=>f.id==='seniors-alone')).map(v=>v.id)`);
   c('…its four strongest ideas are there', grief4.filter(id=>!shown.includes(id)&&P.J(`!!nsView(${JSON.stringify(id)})`)&&P.J(`nsView(${JSON.stringify(id)}).reach!=='in'`)), []);
   c('two rows with the same figure are one ("26% of renters pay…")', P.J(`nsFigKey('26% of renters pay more than half their income in rent — about 1,137 households here.')===nsFigKey('26% of renters pay over half their income in rent — the conditions where debt takes hold.')`), true);
 
   console.log('\n-- #8, #9: the town, and "Also here" in plain words --');
   S=model(P,`D.levels.cousub={kind:'Town',name:'Immokalee Ccd',short:'Immokalee',ccd:true}; D.M.cousub.past=D.M.tract.past; D.M.cousub.pop=D.M.tract.pop; D.M.tract.past=null;`);
   // v10.50.0 — the pastor (6 Oct 2026): the also cards continue the list (no "Also here" heading or intro line): the tag says where
-  c('a census county division is "the Immokalee area": the tag', [P.txt('#u-needs [data-also="town"] .ns-tag'),P.qa('#u-needs .ns-alsob').length], ['Across the Immokalee area',0]);
+  // v10.74.0: a town row folds under its family's card: its tag in the card's "+" line (and on its block when the card is open)
+  c('a census county division is "the Immokalee area": the tag', [/\(across the Immokalee area\)/.test(P.qa('#u-needs .ns-with').map(x=>x.textContent).join(' ')),P.qa('#u-needs .ns-alsob').length], [true,0]);
   c('…the growth figure says where it is ("across the Immokalee area")', /^The population across the Immokalee area has grown/.test((S.needs.find(n=>n.id==='growth')||{}).evidence||''), true);
   // v10.47.0: the place line is the church now (the pastor: "we just need to know which church"); the town is on the Town button
   c('…never "Ccd": not on the place line (the church), not on the Town button', [/Ccd|CCD/.test(P.E(`(renderPlace(DATA.levels,DATA.geo),document.getElementById('place').textContent)`)),/Ccd|CCD/.test(P.txt('#scope')||'')], [false,false]);
   const Pes=page({needs:'file',lang:'es'}); await ready(Pes); survey(Pes,{mod:`D.levels.cousub={kind:'Town',name:'Immokalee Ccd',short:'Immokalee',ccd:true};`});
-  c('…in Spanish: "En toda la zona de Immokalee"', Pes.txt('#u-needs [data-also="town"] .ns-tag'), 'En toda la zona de Immokalee');
+  c('…in Spanish: "en toda la zona de Immokalee"', /\(en toda la zona de Immokalee\)/.test(Pes.qa('#u-needs .ns-with').map(x=>x.textContent).join(' ')), true);   // v10.74.0: in the card's "+" line
   model(P,'');
   c('"Near the line" is "Almost a need here"', P.txt('#u-needs [data-also="near"] .ns-tag'), 'Almost a need here');
   c('no intro line any more: each also card carries its own tag ("Almost a need here" / "Across Warminster")', [P.qa('#u-needs .ns-alsob').length,P.qa('#u-needs .ns-need[data-also] .ns-tag').length>0], [0,true]);   // v10.50.0 — the pastor (6 Oct 2026)
@@ -108,7 +111,7 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
 
   console.log('\n-- #23, M5, M6: the count, and a new address --');
   model(P,'');
-  c('the focus note counts the needs, and "Also here" apart', P.txt('#focusnote'), `Showing everything: ${P.J('NSM.needs.length')} needs here, and ${P.J('NSM.also.length')} more under Also here. Use Focus to narrow it.`);
+  c('the focus note counts the cards, and "Also here" apart', P.txt('#focusnote'), `Showing everything: ${P.J('nsAllNeeds().filter(g=>!g.tag).length')} needs here, and ${P.J('nsAllNeeds().filter(g=>!!g.tag).length')} more under Also here. Use Focus to narrow it.`);   // v10.74.0: one card per family
   await openNeed(P,'rent50',true); P.E(`NS.showAll=true`);
   survey(P,{mod:`D.levels.tract.name='Census Tract 9999';`});
   c('a new address opens with every need closed and the first twelve shown', [P.J('NS.open'),P.J('NS.ideas'),P.J('NS.showAll')], ['',false,false]);
@@ -116,8 +119,10 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   console.log('\n-- the ideas: #13 Spanish list, #14 snow, #11 built-ins in the language, S3 the 4% rule, #27e town rows, M3 --');
   const P=page({needs:'file'}); await ready(P); survey(P,{mod:PA});
   await openNeed(P,'lang-primary',true);
-  const rows=P.qa('#ns-i-lang-primary .ns-row').map(r=>r.dataset.idea), per=P.qa('#ns-i-lang-primary .ns-lift').map(g=>g.querySelectorAll('.ns-row').length);
-  c('the Spanish need: 15 ideas at most, 5 a lift', [rows.length<=15,per.every(n=>n<=5)], [true,true]);
+  // v10.74.0: the Language card holds the Spanish need and the family's other findings; the Spanish need's own rows (data-find) stay 15 at
+  // most, 5 a lift, and lead each lift
+  const rows=P.qa('#ns-i-lang-primary .ns-row[data-find="lang-primary"]').map(r=>r.dataset.idea), per=P.qa('#ns-i-lang-primary .ns-lift').map(g=>g.querySelectorAll('.ns-row[data-find="lang-primary"]').length);
+  c('the Spanish need: 15 ideas at most, 5 a lift (its own rows), first in each lift', [rows.length<=15,per.every(n=>n<=5),P.qa('#ns-i-lang-primary .ns-lift').every(g=>g.querySelector('.ns-row').dataset.find==='lang-primary')], [true,true,true]);
   c('…never the same idea twice in two wordings (the web page, the interpretation)', rows.filter(id=>['immigrants-spanish-web-whatsapp','immigrants-worship-interpretation'].includes(id)), []);
   c('…its own curated ideas first', rows[0], 'immigrants-welcome-card-in-lang');
   c('the built-ins say the language: "A small group in Spanish"', P.txt('#ns-i-lang-primary .ns-row[data-idea="sg-language"] .ns-in'), 'A small group in Spanish');
@@ -199,7 +204,7 @@ const model=(P,mod,lang)=>{ survey(P,{mod}); return P.J(`NSM`); };
   c('#5: above the chosen card, what comes next and the way back', [P.txt('#cs-s2 .cs-fromnext span'),P.txt('#cs-s2 [data-cs-from2]')], ['Next: choose who it is for (step 1, above). The slides appear below.','← Back to the need']);
   c('…and the top line is still the one way back of its kind', P.qa('#casebody [data-cs-from]').length, 1);
   P.q('#cs-s2 [data-cs-from2]').click(); await until(()=>P.E('TOOL')==='survey'); await sleep(100);
-  c('…it goes back to the need', [P.E('TOOL'),P.J('NS.open')], ['survey','lang-also']);
+  c('…it goes back to the need (the Language card, the Haitian Creole finding\'s own sheet)', [P.E('TOOL'),P.J('NS.open'),P.q('#ns-sheet').dataset.find], ['survey','lang-primary','lang-also']);   // v10.74.0: one card per family
   // v10.47.1 — the pastor: "What's next … Does that even have to be there?" It is not drawn in the survey any more (was #27d: "Create the proposal for …")
   c('#27d (v10.47.1): no What\'s next in the survey', P.qa('#u-whatsnext').length, 0);
   P.E(`showHub(); openTool('case'); caseToSurvey();`); await sleep(120);

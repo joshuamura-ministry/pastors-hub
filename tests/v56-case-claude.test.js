@@ -95,8 +95,8 @@ const calls=(P,m)=>P.calls.filter(x=>x.body.mode===m);
     'case-status':()=>wait?{status:200,json:{ok:true,status:'running'}}:{status:200,json:{ok:true,status:'done',made:'2026-10-06',words}}});
   Q.E('CASE_WD.poll=25');
   survey(Q,{mod:ADDR}); await sleep(150); Q.E(`capSave(${JSON.stringify({...FX.MEDIUM,name:'Bucks County SDA'})})`); Q.E(`(()=>{ uChurch().name='Bucks County SDA'; uPersist(); })()`);
-  await openNeed(Q,'snap',true);
-  Q.q('#ns-i-snap .ns-row').click(); await until(()=>Q.q('#ns-sheet[open]'),4000);
+  const snapCard=await openNeed(Q,'snap',true);   // v10.74.0: snap is a finding of the Hardship card (openNeed answers the card's id); its first row as before
+  Q.q(`#ns-i-${snapCard} .ns-row[data-find="snap"]`).click(); await until(()=>Q.q('#ns-sheet[open]'),4000);
   Q.q('#ns-sheet [data-ns-propose]').click(); await until(()=>Q.E('TOOL')==='case'&&Q.E('casePropMode()'),6000); await sleep(150);
   Q.q('#cs-s1 [data-cs-group="board"]').click();
   await until(()=>calls(Q,'case').length,6000);

@@ -55,16 +55,25 @@ function survey(P,o){
   P.E(`(()=>{ const D=${JSON.stringify(FX.DATA)}; ${o.mod||''}; DATA=D; SCOPE=${JSON.stringify(o.scope||'tract')}; CAP=null; const ch=uChurch(); ch.name=${JSON.stringify(o.church||'Bucks County SDA')};
     ch.capacity={}; ch.selected=[]; ch.lib={}; uPersist(); openTool('survey'); render(); })()`);
 }
+/* v10.74.0: one card per family. A finding's id (snap, limeng, lang-also…) lands on the card that holds it; openNeed answers the card's
+   id, and openSheet taps the row that came from that finding (data-find), else the first row with the idea. */
+function cardOf(P,need){ try{ const id=P.E(`(nsNeedById(${JSON.stringify(need)})||{}).id||''`); return id||need; }catch(e){ return need; } }
 async function openNeed(P,need,ideas){
-  await until(()=>P.q(`#u-needs [data-need="${need}"] .ns-head`));
-  const h=P.q(`#u-needs [data-need="${need}"] .ns-head`); if(h.getAttribute('aria-expanded')!=='true') h.click();
-  if(ideas){ const s=P.q(`[data-ns-show="${need}"]`); if(s&&s.getAttribute('aria-expanded')!=='true') s.click();
-    await until(()=>P.q(`#ns-i-${need} .ns-row`)||P.q(`#ns-i-${need} .lock`)||P.q(`#ns-i-${need} .ns-fail`)); }
+  await until(()=>P.q('#u-needs .ns-list > .ns-need .ns-head'));
+  const card=cardOf(P,need);
+  await until(()=>P.q(`#u-needs [data-need="${card}"] .ns-head`));
+  const h=P.q(`#u-needs [data-need="${card}"] .ns-head`); if(h.getAttribute('aria-expanded')!=='true') h.click();
+  if(ideas){ const s=P.q(`[data-ns-show="${card}"]`); if(s&&s.getAttribute('aria-expanded')!=='true') s.click();
+    await until(()=>P.q(`#ns-i-${card} .ns-row`)||P.q(`#ns-i-${card} .lock`)||P.q(`#ns-i-${card} .ns-fail`)); }
+  return card;
 }
 async function openSheet(P,need,idea){
-  await openNeed(P,need,true);
-  await until(()=>P.q(`#ns-i-${need} .ns-row[data-idea="${idea}"]`));
-  P.q(`#ns-i-${need} .ns-row[data-idea="${idea}"]`).click();
+  const card=await openNeed(P,need,true);
+  const row=()=>P.q(`#ns-i-${card} .ns-row[data-idea="${idea}"][data-find="${need}"]`)||P.q(`#ns-i-${card} .ns-row[data-idea="${idea}"]`);
+  await until(()=>row(),3000);
+  // a card of several findings shows a share of each one's list: an idea past that share opens its sheet the way a row would
+  if(row()) row().click(); else P.E(`nsSheetOpen(${JSON.stringify(idea)},${JSON.stringify(card)},{find:${JSON.stringify(need)}})`);
   await until(()=>P.q('#ns-sheet[open]')&&P.q('#ns-sheet').dataset.idea===idea);
+  return card;
 }
 module.exports={ROOT,HTML,FX,IDX,REG,sleep,until,checker,page,ready,survey,openNeed,openSheet};

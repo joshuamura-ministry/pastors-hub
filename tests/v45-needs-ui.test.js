@@ -43,48 +43,55 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
 
   console.log('\n-- the cards --');
   const cards=P.qa('#u-needs .ns-list > .ns-need');
-  c('a card per need, numbered, greatest first; the first wears "Greatest need"', [cards.length,P.txt('#u-needs .ns-need .ns-rank'),P.qa('#u-needs .ns-top').length,P.txt('#u-needs .ns-need .ns-top')], [25,'1',1,'Greatest need']);   // v10.50.0 — the pastor (6 Oct 2026): the two also cards numbered on (23 + 2)   // the review round (#7): debt and grief join other needs here
+  // v10.74.0 (stale, not a regression): one card per family (the pastor, 10 Nov 2026: "seniors and isolation seniors and isolation … didn't
+  // they just be one line"): the fixture's 23 needs and 2 also rows are seven cards; snap and the other Hardship findings sit under the
+  // Hardship card (child-poverty leads it), the two also rows are the Seniors card
+  c('a card per family, numbered, greatest first; the first wears "Greatest need"', [cards.length,P.txt('#u-needs .ns-need .ns-rank'),P.qa('#u-needs .ns-top').length,P.txt('#u-needs .ns-need .ns-top')], [7,'1',1,'Greatest need']);   // v10.50.0 — the pastor (6 Oct 2026): the two also cards numbered on (23 + 2)   // the review round (#7): debt and grief join other needs here
   c('each card: its category, its title as the h3, its evidence, the kind colour', [P.txt('#ns-h-rent50 .ns-cat'),P.txt('#ns-h-rent50 h3'),/^24% of renters pay more than half/.test(P.txt('#ns-h-rent50 .ns-ev')||''),P.q('[data-need="rent50"]').dataset.kind,P.q('[data-need="rent50"]').getAttribute('style')],
     ['Housing pressure','Households one setback from losing housing',true,'housing','--k:var(--m-housing)']);
   c('every control is a button; each toggle names what it opens; the body is a region named by its header',
     [P.qa('#u-needs .ns-head, #u-needs .ns-show').every(b=>b.tagName==='BUTTON'),P.qa('#u-needs .ns-head').every(b=>!!P.q('#'+b.getAttribute('aria-controls'))),P.q('#ns-b-rent50').getAttribute('role'),P.q('#ns-b-rent50').getAttribute('aria-labelledby')],
     [true,true,'region','ns-h-rent50']);
-  c('more than 15 needs: the first 12 show, then "Show all 23 needs"', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,P.txt('[data-ns-more]')], [12,'Show all 25 needs']);
-  P.q('[data-ns-more]').click();
-  c('…which shows them all, numbers kept', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,!!P.q('[data-ns-more]'),P.qa('#u-needs .ns-list .ns-rank').pop().textContent], [25,false,'25']);
+  // v10.74.0 (stale, not a regression): seven cards, all showing; "Show all" is for more than 15 cards and never comes now
+  c('seven cards, all showing, numbered to 7, no "Show all"', [P.qa('#u-needs .ns-list > .ns-need:not([hidden])').length,!!P.q('[data-ns-more]'),P.qa('#u-needs .ns-list .ns-rank').pop().textContent], [7,false,'7']);
   await openNeed(P,'rent50');
   c('a card opens in place: what the community needs and "Ask first"', [P.q('#ns-h-rent50').getAttribute('aria-expanded'),P.q('#ns-b-rent50').hidden,P.qa('#ns-b-rent50 .ns-detail li').length>=2,/^Ask first: /.test(P.txt('#ns-b-rent50 .ns-ask')||'')], ['true',false,true,true]);
-  await openNeed(P,'snap');
-  c('one card open at a time', [P.q('#ns-h-rent50').getAttribute('aria-expanded'),P.q('#ns-b-rent50').hidden,P.q('#ns-h-snap').getAttribute('aria-expanded')], ['false',true,'true']);
-  P.q('#ns-h-snap').click();
-  c('…and a second tap closes it', [P.q('#ns-h-snap').getAttribute('aria-expanded'),P.q('#ns-b-snap').hidden], ['false',true]);
+  await openNeed(P,'child-poverty');   // v10.74.0: the Hardship card (snap is a finding of it)
+  c('one card open at a time', [P.q('#ns-h-rent50').getAttribute('aria-expanded'),P.q('#ns-b-rent50').hidden,P.q('#ns-h-child-poverty').getAttribute('aria-expanded')], ['false',true,'true']);
+  P.q('#ns-h-child-poverty').click();
+  c('…and a second tap closes it', [P.q('#ns-h-child-poverty').getAttribute('aria-expanded'),P.q('#ns-b-child-poverty').hidden], ['false',true]);
   // v10.50.0 — the pastor (6 Oct 2026): "where it says also here make it a continuation … until they're all done" — the also cards are needs cards, numbered on, each with its tag
-  c('the also cards continue the list: numbered on, each with its tag', [P.qa('#u-needs .ns-list .ns-need[data-also]').map(a=>[a.dataset.need,a.dataset.also]),P.qa('#u-needs .ns-need[data-also] .ns-rank').map(x=>x.textContent),P.txt('#ns-h-seniors-alone .ns-tag'),P.qa('#u-needs .ns-alsob').length],
-    [[['seniors-alone','near'],['seniors-nocar','town']],['24','25'],'Almost a need here',0]);   // the review round (#9): plain words
+  // v10.74.0: the two also rows are one Seniors card, numbered on, the near row leading with its tag, the town row named with its tag in the card's "+" line
+  c('the also rows are one card, numbered on, with its tag', [P.qa('#u-needs .ns-list .ns-need[data-also]').map(a=>[a.dataset.need,a.dataset.also]),P.qa('#u-needs .ns-need[data-also] .ns-rank').map(x=>x.textContent),P.txt('#ns-h-seniors-alone .ns-tag'),P.txt('#ns-h-seniors-alone .ns-with'),P.qa('#u-needs .ns-alsob').length],
+    [[['seniors-alone','near']],['7'],'Almost a need here','+ Seniors without a car (across Warminster)',0]);   // the review round (#9): plain words
   await openNeed(P,'seniors-nocar',true);
-  c('…an also row opens into the same body: its detail and its ideas', [!!P.q('#ns-b-seniors-nocar .ns-detail'),rows(P,'seniors-nocar').length>=10], [true,true]);
+  c('…an also row opens into its card: its block, the card\'s detail and ideas', [!!P.q('#ns-b-seniors-alone .ns-detail'),!!P.q('#ns-b-seniors-alone .ns-find[data-find="seniors-nocar"]'),rows(P,'seniors-alone').length>=10], [true,true,true]);
 
   console.log('\n-- Focus narrows the needs too --');
   P.E(`FOCUS.clear(); FOCUS.add('housing'); renderFocus(); applyFocus();`);
-  c('Housing: only the housing cards stay, the section stays', [P.qa('#u-needs .ns-list > .ns-need:not(.hidden)').map(a=>a.dataset.cat).every(x=>x==='Housing pressure'),P.qa('#u-needs .ns-list > .ns-need:not(.hidden)').length,P.q('#u-needs').classList.contains('hidden')], [true,4,false]);
+  c('Housing: only the housing card stays, the section stays', [P.qa('#u-needs .ns-list > .ns-need:not(.hidden)').map(a=>a.dataset.cat).every(x=>x==='Housing pressure'),P.qa('#u-needs .ns-list > .ns-need:not(.hidden)').length,P.q('#u-needs').classList.contains('hidden')], [true,1,false]);   // v10.74.0: one card
   P.E(`FOCUS.clear(); renderFocus(); applyFocus();`);
-  c('the focus note counts the needs here, and "Also here" apart (the review round, #23 and M5)', P.txt('#focusnote'), 'Showing everything: 23 needs here, and 2 more under Also here. Use Focus to narrow it.');
+  c('the focus note counts the cards here, and "Also here" apart (the review round, #23 and M5)', P.txt('#focusnote'), 'Showing everything: 6 needs here, and 1 more under Also here. Use Focus to narrow it.');   // v10.74.0: cards
 
   console.log('\n-- the ideas: Light, Moderate, Heavy; the curated order inside each --');
   await openNeed(P,'rent50',true);
-  const r50=rows(P,'rent50');
+  // v10.74.0: the Housing card holds rent50 and three more findings; rent50's own twelve lead each lift (data-find), the others' rows after them
+  const r50=P.qa('#ns-i-rent50 .ns-row[data-find="rent50"]').map(r=>r.dataset.idea);
   // v10.46.1: each lift's name is on its button across the top (was a heading over each list)
   // v10.50.0 — the pastor (6 Oct 2026): "underneath it will have the columns showing of all the ideas instead of having to click every single thing"
-  c('the twelve, grouped Light → Moderate → Heavy, three columns all open, a heading and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-lcol .ns-lh > span:not(.lift)').map(h=>h.textContent),P.qa('#ns-i-rent50 .ns-lift .ns-gl').length],
-    [12,LIFTS,['Light lift','Moderate lift','Heavy lift'],3]);
+  c('the twelve, grouped Light → Moderate → Heavy, three columns all open, a heading and a line for each', [r50.length,P.qa('#ns-i-rent50 .ns-lift').map(g=>g.dataset.lift),P.qa('#ns-i-rent50 .ns-lcol .ns-lh > span:not(.lift)').map(h=>h.textContent),P.qa('#ns-i-rent50 .ns-lift .ns-gl').length,P.qa('#ns-i-rent50 .ns-lift').every(g=>g.querySelector('.ns-row').dataset.find==='rent50')],
+    [12,LIFTS,['Light lift','Moderate lift','Heavy lift'],3,true]);
   c('…inside each lift, the curator\'s order (most effective first)', r50, [1,2,3].flatMap(t=>STUB.needs.rent50.filter(id=>tierOf(id)===t)));
   c('the button says how many, then "Hide ideas ⌃"', [P.txt('[data-ns-show="rent50"] small'),P.q('[data-ns-show="rent50"]').getAttribute('aria-expanded')], ['Hide ideas ⌃','true']);
   c('a row: the name, one line from the map (d1), people and money', [P.txt('#ns-i-rent50 [data-idea="homeless-rent-help-page"] .ns-id'),P.qa('#ns-i-rent50 [data-idea="homeless-rent-help-page"] .ns-if span').map(s=>s.textContent)],
     ['A first sentence from the map.',[P.J(`LIB.byId.get('homeless-rent-help-page').ppl`)+' people',P.J(`nsMoney(nsView('homeless-rent-help-page'))`)]]);
+  // v10.74.0: snap is a finding of the Hardship card; its own list (nsIdeasLib, what the map and the top-up give it) is as before, and the
+  // card's rows show a share of it, the map's idea first
   await openNeed(P,'snap',true);
-  c('a short list (one built-in) is topped up to ten from the library, three a lift where they exist', [rows(P,'snap').length,rows(P,'snap').includes('pantry-box'),LIFTS.map(L=>P.qa(`#ns-i-snap [data-lift="${L}"] .ns-row`).length>=3)], [10,true,[true,true,true]]);
-  c('…the built-in\'s money is the planning allowance, said with "About"', /^About \$/.test(P.txt('#ns-i-snap [data-idea="pantry-box"] .ns-if span:last-child')||''), true);
-  c('…the map\'s idea first in its lift', P.qa('#ns-i-snap [data-lift="moderate"] .ns-row')[0].dataset.idea, 'pantry-box');
+  const snapOwn=P.J(`nsIdeasLib(nsNeedById('snap').finds.find(f=>f.id==='snap')).map(v=>[v.id,nsLift(v)])`);
+  c('a short list (one built-in) is topped up to ten from the library, three a lift where they exist', [snapOwn.length,snapOwn.some(x=>x[0]==='pantry-box'),LIFTS.map(L=>snapOwn.filter(x=>x[1]===L).length>=3)], [10,true,[true,true,true]]);
+  c('…the built-in\'s money is the planning allowance, said with "About"', /^About \$/.test(P.txt('#ns-i-child-poverty [data-idea="pantry-box"] .ns-if span:last-child')||''), true);
+  c('…the map\'s idea first in its lift (its own list; the card\'s first row from snap in that lift)', [snapOwn.filter(x=>x[1]==='moderate')[0][0],P.qa('#ns-i-child-poverty [data-lift="moderate"] .ns-row[data-find="snap"]')[0].dataset.idea], ['pantry-box','pantry-box']);
 
   console.log('\n-- the idea sheet --');
   await openSheet(P,'rent50','homeless-rent-help-page');
@@ -145,15 +152,20 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   console.log('\n-- the shipped map (ideas/needs.json): every need on the fixture --');
   P=page({needs:'file'}); await ready(P); survey(P); await sleep(50);
   const NEEDS=P.J(`NSM.needs.concat(NSM.also).map(n=>n.id)`);
+  // v10.74.0: one card per family: each finding's own list (nsIdeasLib: the map and the top-up) is checked here as its rows were; a card
+  // draws a share of each of its findings' lists (12 a lift at most)
+  await openNeed(P,NEEDS[0],true);   // the map and the index loaded
+  const FIND=id=>`nsAllNeeds().flatMap(g=>g.finds).find(f=>f.id===${JSON.stringify(id)})`;
   const bad=[];
-  for(const id of NEEDS){ await openNeed(P,id,true); const ids=rows(P,id);
-    const lifts=LIFTS.map(L=>P.qa(`#ns-i-${id} [data-lift="${L}"] .ns-row`).length);
+  for(const id of NEEDS){ const LST=P.J(`nsIdeasLib(${FIND(id)}).map(v=>[v.id,nsLift(v),String(v.name||v.n||'')])`), ids=LST.map(x=>x[0]);
+    const lifts=LIFTS.map(L=>LST.filter(x=>x[1]===L).length);
     if(ids.length<10||ids.length>24||lifts.some(n=>n>8)) bad.push(id+': '+ids.length+' '+lifts.join('/'));
     const ins=P.J(`${JSON.stringify(ids)}.filter(i=>LIB.byId.has(i)&&LIB.byId.get(i).reach==='in')`); if(ins.length) bad.push(id+' reach in: '+ins.join(','));
-    const own=P.J(`(()=>{ const n=nsNeedById(${JSON.stringify(id)}); return n.lang&&['lang-primary','lang-also','lang-third'].includes(n.id)?(NS_LANG[n.lang]||{}).key:''; })()`);
+    const own=P.J(`(()=>{ const n=${FIND(id)}; return n.lang&&['lang-primary','lang-also','lang-third'].includes(n.id)?(NS_LANG[n.lang]||{}).key:''; })()`);
     const named=P.J(`${JSON.stringify(ids)}.filter(i=>{ const v=nsView(i,null); return nsNamedOther(v.n+' '+(v.ne||''),${JSON.stringify(own)}); })`); if(named.length) bad.push(id+' names another language: '+named.join(','));
-    if(P.qa(`#ns-i-${id} .ns-row`).some(r=>/\{lang\}/.test(r.textContent))) bad.push(id+': {lang} on screen'); }
+    if(LST.some(x=>/\{lang\}/.test(x[2]))) bad.push(id+': {lang} left'); }
   c(`every need on the fixture (${NEEDS.length}): 10–24 ideas, at most 8 a lift, none for God's people, none naming another language, no {lang} left`, bad, []);
+  c('…and every card draws at most 12 a lift, each row from one of its findings', P.J(`nsAllNeeds().map(g=>{ const l=nsIdeasFor(g), ok=NS_LIFTS.every(L=>l.filter(v=>nsLift(v)===L).length<=12)&&l.every(v=>!v.find||g.finds.some(f=>f.id===v.find)); return ok?'':g.id; }).filter(Boolean)`), []);
 
   console.log('\n-- the curation\'s {lang}: the need\'s own language --');
   await openNeed(P,'lang-primary',true);
@@ -161,11 +173,15 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   c('…the need\'s own list first, the language\'s own ideas after it', [rows(P,'lang-primary').indexOf('immigrants-welcome-card-in-lang')<rows(P,'lang-primary').indexOf('hospitality-whatsapp-spanish-welcome'),rows(P,'lang-primary').includes('hospitality-whatsapp-spanish-welcome')], [true,true]);
   const VI=`D.M.tract.langs=[{name:'Chinese',share:24,count:1400,ltvw:600},{name:'Vietnamese',share:13,count:730,ltvw:160},{name:'Tagalog',share:10,count:565,ltvw:200}]`;
   survey(P,{mod:VI}); await sleep(30);
+  // v10.74.0: lang-also is a finding of the Language card; its rows there carry data-find="lang-also" and speak its language; its own list
+  // (nsIdeasLib) holds the Vietnamese ideas
   await openNeed(P,'lang-also',true);
+  const VROW='#ns-i-lang-primary [data-idea="immigrants-welcome-card-in-lang"][data-find="lang-also"]';
   c('lang-also speaks the second language ("…in Vietnamese and English"), and its sheet too',
-    [P.txt('#ns-i-lang-also [data-idea="immigrants-welcome-card-in-lang"] .ns-in'),(P.q('#ns-i-lang-also [data-idea="immigrants-welcome-card-in-lang"]').click(),await until(()=>P.q('#ns-sheet[open]')),P.txt('#ns-s-t'))],
-    ['A welcome card in Vietnamese and English','A welcome card in Vietnamese and English']);
-  c('…Vietnamese neighbors get the Lunar New Year and Mid-Autumn ideas; a Spanish one never shows there', [rows(P,'lang-also').includes('holidays-lunar-new-year-red-cards'),rows(P,'lang-also').some(i=>/spanish/.test(i))], [true,false]);
+    [P.txt(VROW+' .ns-in'),(P.q(VROW).click(),await until(()=>P.q('#ns-sheet[open]')),P.txt('#ns-s-t')),P.q('#ns-sheet').dataset.find],
+    ['A welcome card in Vietnamese and English','A welcome card in Vietnamese and English','lang-also']);
+  const vOwn=P.J(`nsIdeasLib(${FIND('lang-also')}).map(v=>v.id)`);
+  c('…Vietnamese neighbors get the Lunar New Year and Mid-Autumn ideas; a Spanish one never shows there', [vOwn.includes('holidays-lunar-new-year-red-cards'),vOwn.some(i=>/spanish/.test(i)),P.qa('#ns-i-lang-primary .ns-row[data-find="lang-also"]').some(r=>/spanish/.test(r.dataset.idea))], [true,false,false]);
   P.q('#ns-sheet [data-ns-propose]').click();
   await until(()=>P.E('TOOL')==='case');
   // (the review round, S1: a {lang} idea is its own plan entry for each language, "…--vietnamese")
@@ -175,10 +191,12 @@ const tierOf=id=>{ const c=IDX.cols, r=IDX.ideas.find(x=>x[0]===id); return r?r[
   await openNeed(P,'lang-primary',true);
   // the review round (#10): a group's {lang} is "our neighbors’ language" ("their" had nothing to point to on a printed card)
   // (the coordinator, after the samples: India among the origins names the group's members, joined by "or")
-  c('a Census group: its members as the origins name them; the Diwali greeting where India is among the commonest origins', [P.txt('#ns-i-lang-primary [data-idea="immigrants-welcome-card-in-lang"] .ns-in'),rows(P,'lang-primary').includes('holidays-diwali-sweets-greeting')], ['A welcome card in Hindi, Gujarati or Urdu and English',true]);
+  // v10.74.0: the Language card here is led by another finding; the group's row carries data-find="lang-primary", its own list holds the greeting
+  { const C=await openNeed(P,'lang-primary',true);
+    c('a Census group: its members as the origins name them; the Diwali greeting where India is among the commonest origins', [P.txt(`#ns-i-${C} [data-idea="immigrants-welcome-card-in-lang"][data-find="lang-primary"] .ns-in`),P.J(`nsIdeasLib(${FIND('lang-primary')}).map(v=>v.id)`).includes('holidays-diwali-sweets-greeting')], ['A welcome card in Hindi, Gujarati or Urdu and English',true]); }
   survey(P,{mod:`D.M.tract.langs=[{name:'Other European',share:9,count:500,ltvw:100}]; D.M.tract.origins=[{name:'Portugal',n:300,share:40},{name:'Iran',n:100,share:13}]`}); await sleep(30);
   await openNeed(P,'lang-primary',true);
-  c('…and not in a Portuguese- or Persian-speaking area (no India among the origins)', rows(P,'lang-primary').includes('holidays-diwali-sweets-greeting'), false);
+  c('…and not in a Portuguese- or Persian-speaking area (no India among the origins)', P.J(`nsIdeasLib(${FIND('lang-primary')}).map(v=>v.id)`).includes('holidays-diwali-sweets-greeting'), false);
   c('the Idea Library and Make the Case fill {lang} too (the first language at home, 4% or more)', P.J(`(()=>{ const r=LIB.byId.get('immigrants-welcome-card-in-lang'); return [libLite(r).n,libFill('en {lang}','es',null)]; })()`), ['A welcome card in Portuguese or Persian and English','en el idioma de nuestros vecinos']);   // (Portugal and Iran name the group's members here; no language at all: the neighbors')
   c('no page error along the way', P.errs, []);
 

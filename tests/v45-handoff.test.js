@@ -59,11 +59,16 @@ function survey(P){
     ch.selected=[]; ch.lib={}; ch.proposalPrefs={path:'buy'}; uPersist(); openTool('survey'); render(); })()`);
 }
 async function openSheet(P,need,idea){
-  await until(()=>P.q(`#u-needs [data-need="${need}"] .ns-head`));
-  const h=P.q(`#u-needs [data-need="${need}"] .ns-head`); if(h.getAttribute('aria-expanded')!=='true') h.click();
-  const s=P.q(`[data-ns-show="${need}"]`); if(s&&s.getAttribute('aria-expanded')!=='true') s.click();
-  await until(()=>P.q(`#ns-i-${need} .ns-row[data-idea="${idea}"]`));
-  P.q(`#ns-i-${need} .ns-row[data-idea="${idea}"]`).click();
+  // v10.74.0: one card per family: a finding's id (snap) lands on the card that holds it (the Hardship card); the row that came from it,
+  // else (an idea past that finding's share of the card) the sheet opened for it as a row would
+  await until(()=>P.q('#u-needs .ns-list > .ns-need .ns-head'));
+  const card=P.E(`(nsNeedById(${JSON.stringify(need)})||{}).id||''`)||need;
+  await until(()=>P.q(`#u-needs [data-need="${card}"] .ns-head`));
+  const h=P.q(`#u-needs [data-need="${card}"] .ns-head`); if(h.getAttribute('aria-expanded')!=='true') h.click();
+  const s=P.q(`[data-ns-show="${card}"]`); if(s&&s.getAttribute('aria-expanded')!=='true') s.click();
+  const row=()=>P.q(`#ns-i-${card} .ns-row[data-idea="${idea}"][data-find="${need}"]`)||P.q(`#ns-i-${card} .ns-row[data-idea="${idea}"]`);
+  await until(()=>row(),3000);
+  if(row()) row().click(); else P.E(`nsSheetOpen(${JSON.stringify(idea)},${JSON.stringify(card)},{find:${JSON.stringify(need)}})`);
   await until(()=>P.q('#ns-sheet[open]')&&P.q('#ns-sheet').dataset.idea===idea);
 }
 const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
