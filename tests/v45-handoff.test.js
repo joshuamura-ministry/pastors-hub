@@ -106,7 +106,7 @@ const lastScroll=P=>P.w.__scrolled[P.w.__scrolled.length-1]||null;
     // v10.48.0 — "big letters above that says proposal … this beautiful thing [the sheet]": the card is the idea's whole sheet
     c('the card names the ministry, its lift and what it needs from our church, and the need it meets', [P.txt('#cs-prop .cs-pt'),!!P.q('#cs-prop .ns-liftline')&&P.qa('#cs-prop .ns-gi').length>=2,
       (P.txt('#cs-prop .cs-pneed')||'').includes(P.J(`NSM.needs.find(n=>n.id==='${NEED}').title`))], [P.E(`gfCap(nsView(${JSON.stringify(IDEA)},nsNeedLang(nsNeedById('${NEED}'))).name)`),true,true]);
-    c('then Who is it for? (step 1), the list of ideas put away, then the slides (step 2)', [P.q('#cs-prop').nextElementSibling.id,P.q('#cs-s2').hidden,(P.txt('#cs-s3 .cs-num')||'')],['cs-s1',true,'2']);
+    c('then Who is it for? (step 1), the list of ideas put away, then the slides (step 2)', [P.q('#cs-prop').nextElementSibling.id,P.q('#cs-s2').hidden,(P.txt('#cs-s3 .cs-num')||'')],['cs-panes',true,'2']); c('…the panes box opens with Who is it for? first', P.q('#cs-panes > .cs-step').id, 'cs-s1');   // v10.73.0 (stale, not a regression): one step at a time (the pastor, 9 Nov 2026: "it jumps down every time … press done and … it scrolls left like the other ones")
     c('the way back, in the card: "← Back to the need"', [P.qa('#casebody [data-cs-from]').length,P.txt('#cs-prop [data-cs-from]')],[1,'← Back to the need']);
     P.q('#cs-prop [data-cs-other]').click();
     c('"Choose a different ministry" brings the list back (step 2), and says how to keep this one', [P.q('#cs-s2').hidden,P.txt('#cs-prop [data-cs-other]')],[false,'Keep this ministry']);

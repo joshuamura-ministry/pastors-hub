@@ -90,12 +90,12 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   c('no lead paragraph any more ("a lot of words, almost overwhelming")', [!!P.q('.cs-intro'),!!P.q('.cs-lead')], [false,false]);
   // v10.42 part 3 (the pastor, SPEC-FOCUS E: "Make the Case shows a gentle one-line banner suggesting it — but never blocks"): the
   // Gifts first line may sit above the step bar; the steps are as they were
-  c('the step bar, then steps 1, 2, 3 in the page', P.qa('#casebody > *').map(e=>e.id||e.className).filter(id=>id!=='cs-gff').slice(0,4), ['cs-bar','cs-s1','cs-s2','cs-s3']);
+  c('the step bar, then steps 1, 2, 3 in the page', P.qa('#casebody > *').map(e=>e.id||e.className).filter(id=>id!=='cs-gff').slice(0,4), ['cs-bar','cs-panes','cs-nav','cs-close']); c('…the three steps inside the panes box', P.qa('#cs-panes > .cs-step').map(e=>e.id), ['cs-s1','cs-s2','cs-s3']);   // v10.73.0 (stale, not a regression): one step at a time (the pastor, 9 Nov 2026: "it jumps down every time … press done and … it scrolls left like the other ones")
   c('titles: Who is it for? · What will you propose? · Your slides', P.qa('.cs-step .cs-sh h3').map(h=>h.lastChild.textContent), ['Who is it for?','What will you propose?','Your slides']);
   c('…each with its big number', P.qa('.cs-step .cs-num').map(e=>e.textContent), ['1','2','3']);
   c('…and ONE short line under each (80 characters or fewer)', P.qa('.cs-step > .cs-sh').map(h=>h.querySelectorAll('.note').length===1&&h.querySelector('.note').textContent.length<=80), [true,true,true]);
   c('screen readers hear "Step 1 of 3"', P.txt('#cs-s1 h3 .cs-vh'), 'Step 1 of 3:');
-  const bar=()=>P.qa('#cs-bar .cs-st').map(b=>[b.className.replace('cs-st ',''),b.querySelector('small').textContent]);
+  const bar=()=>P.qa('#cs-bar .cs-st').map(b=>[b.className.replace('cs-st ','').replace(' view',''),b.querySelector('small').textContent]);   // v10.73.0: .view marks the step on screen (stale, not a regression)
   c('the bar: step 1 now, then next, next', bar(), [['now','Tap a group'],['next','Choose one idea'],['next','Check, then present']]);
   c('…as buttons (a jump, never a #hash in the address)', P.qa('#cs-bar [data-cs-jump]').map(b=>b.tagName), ['BUTTON','BUTTON','BUTTON']);
   c('step 2 before a group: one line, and the search still works', [P.txt('#cs-lib .cs-first'),!!P.q('#cs-q')], ['First choose who it is for, in step 1. The search above reaches every idea.',true]);

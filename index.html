@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.72.1
+     TERRAIN  v10.73.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.72.1" data-theme="dark">
+<html lang="en" data-version="v10.73.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.72.1">
-<title>Community Map — Terrain v10.72.1</title>
+<meta name="terrain-version" content="v10.73.0">
+<title>Community Map — Terrain v10.73.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -2825,6 +2825,22 @@ button.td-opt:disabled{cursor:default}
 .cs-step{margin:16px 0 0;padding:20px;border:1px solid var(--line2);border-radius:18px;background:var(--panel);box-shadow:var(--shadow);min-width:0;
   scroll-margin-top:calc(var(--topH,58px) + 16px)}
 .cs-step[hidden]{display:none}
+/* v10.73.0 — one step at a time (the pastor: "it jumps down every time … press done and once you're done it scrolls left like the other
+   ones"): the panes box clips the slide; a pane not on screen stays laid out (its measurements hold) but unseen and inert */
+.cs-panes{position:relative;overflow:hidden;margin:0 -12px;padding:0 12px 14px;scroll-margin-top:calc(var(--topH,58px) + 16px)}
+.cs-pane:not(.on){position:absolute;visibility:hidden;pointer-events:none;left:12px;right:12px;top:0;margin:0}
+.cs-pane.on{position:relative}
+@keyframes csInR{from{transform:translateX(9%);opacity:.25}to{transform:none;opacity:1}}
+@keyframes csInL{from{transform:translateX(-9%);opacity:.25}to{transform:none;opacity:1}}
+.cs-pane.cs-in-r{animation:csInR .3s ease-out}
+.cs-pane.cs-in-l{animation:csInL .3s ease-out}
+@media (prefers-reduced-motion:reduce){.cs-pane.cs-in-r,.cs-pane.cs-in-l{animation:none}}
+.cs-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 0}
+.cs-navn{font-size:.85rem;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
+.cs-nav .btn{min-width:110px}
+.cs-st.view{background:color-mix(in srgb,var(--case) 14%,var(--panel))}
+.cs-tabs.bx-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media print{.cs-nav{display:none!important}.cs-pane:not(.on){position:static;visibility:visible;margin:16px 0 0}}
 .cs-sh{display:flex;align-items:flex-start;gap:14px;margin:0 0 16px}
 .cs-num{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:700 1.15rem/1 var(--disp);
   background:color-mix(in srgb,var(--case) 16%,transparent);color:var(--case)}
@@ -5292,13 +5308,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.72.1</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.73.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.72.1';
+const VERSION = 'v10.73.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -37116,7 +37132,7 @@ const CASE_ICONS={
 const caseIcon=k=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">${CASE_ICONS[k]||''}</svg>`;
 /* The screen's own state; what must outlive a reload is in uChurch(). */
 const CASE_ST={view:'build', pick:false, all:false, q:'', filter:'all', slide:0, ask:false, rank:null, rankCtx:null,
-  model:null, base:null, deck:null, pv:null, spv:null, sample:null, sampleType:'congregation', back:0, timer:null};
+  model:null, base:null, deck:null, pv:null, spv:null, sample:null, sampleType:'congregation', back:0, timer:null, pane:null};   // v10.73.0: pane, the step on screen
 function caseU(k,v){ const leaf=CASE_UI[k]; return v?caseF(leaf,v)||'':caseT(leaf); }
 function caseN2(k,n){ const a=caseT(CASE_UI[k]); return caseFill(a[n===1?0:1],{n:fmtNum(n)})||''; }
 function caseFold(s){ return String(s||'').normalize('NFD').replace(/[̀-ͯ]/g,'').toLowerCase(); }
@@ -37387,8 +37403,7 @@ function caseChooseGroup(id){
   /* v10.55.0 — the pastor (6 Oct 2026), on the Proposal page: "I click church board it jumps down … it doesn't have to jump down …
      it's just one line … you just kinda scroll to … your slides": the Proposal page stays where it is; Make the Case on its own still
      brings its list (step 2) into view */
-  if(casePropMode()&&!CASE_ST.propList) return;
-  const s=$('cs-s2'); if(s) s.scrollIntoView({block:'start'});
+  // v10.73.0 — the pastor (9 Nov 2026): "it jumps down every time … I don't like that kind of switching": nothing moves; he taps Done
 }
 /* v10.40 fix, kept: every group tile as tall as the tallest (measured, so it holds in both languages
    at any width; again on resize). */
@@ -37663,26 +37678,68 @@ function caseChoose(id,o){
   if(id!==P.ministry) CASE_ST.slide=0;
   CASE_ST.pick=false; CASE_ST.q=''; CASE_ST.all=false;
   const U=LIB_UI.case; U.theme=null; U.browse=false; U.qWas=''; U.modeWas='';
-  caseDraw2(); caseDraw3(); caseStepBar();
-  const s=$(casePrefs().group?'cs-s3':'cs-s1'); if(s&&!s.hidden) s.scrollIntoView({block:'start'});
+  caseDraw2(); caseDraw3(); caseStepBar();   // v10.73.0: nothing moves; he taps Done
 }
 
 /* ---- the step bar: where he is (done / now / next), and a jump to each step ---------------------- */
 /* v10.47.0: in the proposal view (he came with a proposal from the survey) the steps are 1 Who is it for? and 2 Your slides */
 function caseStepNo(n){ return casePropMode()&&!CASE_ST.propList&&n===3?2:n; }
+
+/* ================= v10.73.0 — ONE STEP AT A TIME =================
+   The pastor (9 Nov 2026): "click save … it jumps to three options or click how we'll pay and it jumps down … I don't like that kind of
+   switching … is it like scrolls left … every time I finish it you just pretty much will press done and once you're done it scrolls left
+   like the other ones. This is much cleaner instead of hopping down." Both paths of Make the Case (and the Proposal view from a need) keep
+   their step sections and draw functions; the sections sit in one box (.cs-panes) and only the current one (.on) is on screen; the others
+   stay laid out (their measurements hold) but unseen, inert and hidden from readers. Under the box one row: ← Back · Step n of m · Done.
+   Done slides the next step in from the right, Back from the left; the step bar's buttons slide too, and mark the step on screen (.view).
+   Nothing moves by itself: a group, an idea, an audience or the switch chosen leaves the page where it is. The tool opens on the first
+   unfinished step and keeps the step he is viewing (CASE_ST.pane / BUY_ST.pane) until it is opened again or another project is chosen. */
+const CS_NAV_UI={back:{en:'← Back',es:'← Atrás'},done:{en:'Done',es:'Hecho'},of:{en:'Step {n} of {m}',es:'Paso {n} de {m}'}};
+const csNavT=(k,v)=>{ const leaf=CS_NAV_UI[k]; return v?caseF(leaf,v)||'':caseT(leaf); };
+const CS_SLIDE={'cs-panes':{nav:'cs-nav',bar:'cs-bar',st:()=>CASE_ST},'bx-panes':{nav:'bx-nav',bar:'bx-bar',st:()=>BUY_ST}};
+function csPanes(box){ const b=$(box); return b?[...b.children].filter(e=>e.classList.contains('cs-step')&&!e.hidden):[]; }
+function csPaneCur(box){ const i=csPanes(box).findIndex(p=>p.classList.contains('on')); return i<0?0:i; }
+function csBarView(box,n){ const S=CS_SLIDE[box], b=S&&$(S.bar); if(!b) return; b.querySelectorAll('.cs-st').forEach((e,i)=>e.classList.toggle('view',i===n));
+  if(box==='bx-panes'){ const nb=$('bx-barnow'); if(nb) nb.textContent=buyU('t'+(n+1)); } }   // the phone's title under the numbers: the step on screen
+function csPaneShow(box,n,dir){
+  const S=CS_SLIDE[box]; if(!S) return -1; const ps=csPanes(box); if(!ps.length) return -1;
+  n=Math.max(0,Math.min(ps.length-1,Number.isInteger(n)?n:0));
+  ps.forEach((p,i)=>{ const on=i===n; p.classList.add('cs-pane'); p.classList.remove('cs-in-r','cs-in-l'); p.classList.toggle('on',on);
+    if(on){ if(dir) p.classList.add(dir>0?'cs-in-r':'cs-in-l'); p.removeAttribute('inert'); p.removeAttribute('aria-hidden'); }
+    else{ p.setAttribute('inert',''); p.setAttribute('aria-hidden','true'); } });
+  const nav=$(S.nav);
+  if(nav){ nav.innerHTML=`${n>0?`<button type="button" class="btn ghost" data-cs-back>${esc(csNavT('back'))}</button>`:'<span></span>'}<span class="cs-navn">${esc(csNavT('of',{n:n+1,m:ps.length}))}</span>${n<ps.length-1?`<button type="button" class="btn cs-done" data-cs-done>${esc(csNavT('done'))}</button>`:'<span></span>'}`;
+    const bb=nav.querySelector('[data-cs-back]'); if(bb) bb.onclick=()=>csGo(box,n-1,true);
+    const db=nav.querySelector('[data-cs-done]'); if(db) db.onclick=()=>csGo(box,n+1,true); }
+  S.st().pane=n; csBarView(box,n);
+  return n;
+}
+/* his own tap turns the page: the box's top comes back into view only when he had scrolled below it (never the app moving on its own) */
+function csGo(box,n,turn){
+  const cur=csPaneCur(box), m=csPaneShow(box,n,n>cur?1:n<cur?-1:0); if(m<0) return;
+  if(turn){ try{ const b=$(box), top=b.getBoundingClientRect().top, th=parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--topH'))||58; if(top<th&&b.scrollIntoView) b.scrollIntoView({block:'start'}); }catch(e){} }
+}
+/* the pane the tool opens on: the one he was viewing, else the first unfinished step */
+function csPaneOpen(box,first){ const S=CS_SLIDE[box], k=S?S.st().pane:null; csPaneShow(box,Number.isInteger(k)?k:first,0); }
 function caseStepHead(n,title,note,right){
   return `<div class="cs-sh"><span class="cs-num" aria-hidden="true">${n}</span><div class="cs-sht"><h3><span class="cs-vh">${esc(caseStepT('stepOf',{n}))}</span>${esc(title)}</h3>${note?`<p class="note">${esc(note)}</p>`:''}</div>${right||''}</div>`;
 }
-function caseStepBar(){
-  const b=$('cs-bar'); if(!b) return;
+/* v10.73.0: the steps' state, read by the bar and by the pane the tool opens on */
+function caseStepState(){
   const P=casePrefs(), G=P.group?CASE_GROUPS.find(g=>g.id===P.group):null;
   const x=P.ministry?caseItemOf(P.ministry):null, n=CASE_ST.deck&&CASE_ST.deck.slides?CASE_ST.deck.slides.length:0;
   const done=[!!G,!!x,!!(G&&x&&n)], cur=done[0]?done[1]?2:1:0;
+  return {P,G,x,n,done,cur};
+}
+function caseStepBar(){
+  const b=$('cs-bar'); if(!b) return;
+  const {P,G,x,n,done,cur}=caseStepState();
   const items=[[caseStepT('t1'),G?caseT(G):caseStepT('s1')],[caseStepT('t2'),x?gfCap(caseMinName(x)||x.n||''):caseStepT('s2')],[caseStepT('t3'),n?caseStepT('s3n',{n:fmtNum(n)}):caseStepT('s3')]];
   b.setAttribute('aria-label',caseStepT('bar'));
   b.innerHTML=items.map(([t,s],i)=>{ const st=i===cur?'now':done[i]?'done':'next';
     return `<button type="button" class="cs-st ${st}" data-cs-jump="${i+1}"${i===cur?' aria-current="step"':''}><i aria-hidden="true">${i+1}</i><span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`; }).join('');
-  b.querySelectorAll('[data-cs-jump]').forEach(e=>e.onclick=()=>{ const s=$('cs-s'+e.dataset.csJump); if(s) s.scrollIntoView({block:'start'}); });
+  b.querySelectorAll('[data-cs-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('cs-panes').findIndex(p=>p.id==='cs-s'+e.dataset.csJump); if(i>=0) csGo('cs-panes',i,true); });   // v10.73.0: slides, never scrolls
+  csBarView('cs-panes',csPaneCur('cs-panes'));
 }
 
 /* ---- step 3: the slides, the edit panel, the actions ------------------------- */
@@ -38360,7 +38417,7 @@ function caseEgwHTML(){
    survey, a new profile, new gifts results). */
 function caseMount(fresh){
   const host=$('casebody'); if(!host) return;
-  if(fresh) CASE_ST.rank=null;
+  if(fresh){ CASE_ST.rank=null; CASE_ST.pane=null; if(typeof BUY_ST!=='undefined') BUY_ST.pane=null; }   // v10.73.0: the tool opened again lands on the first unfinished step
   if(CASE_ST.pv){ CASE_ST.pv.destroy(); CASE_ST.pv=null; }
   // Drawn only where it shows: Make the Case itself, or the flat one-page view
   // (the survey's own renders leave it empty, and opening the tool draws it).
@@ -38376,7 +38433,7 @@ function caseMount(fresh){
      came with a proposal from the survey: the proposal card first, nothing above it (no ministry-or-project switch, no Gifts-first
      line, no step bar), then Who is it for?, then the slides. "Choose a different ministry" brings the list back. */
   const PROP=casePropMode();
-  if(swh){ if(PROP){ swh.innerHTML=''; swh.hidden=true; } else { swh.hidden=false; swh.innerHTML=buySwitchHTML(buyPath()); buySwitchWire(swh); } }
+  if(swh){ if(PROP){ swh.innerHTML=''; swh.hidden=true; } else { swh.hidden=false; swh.innerHTML=buySwitchHTML(buyPathRaw()); buySwitchWire(swh); } }
   if(buyPath()==='buy'){ host.innerHTML=`<div id="bx-host"></div><div class="cs-close">${caseEgwHTML()}</div>`; buyMount($('bx-host')); return; }
   const P=casePrefs(); U_PROP=P.ministry;
   // v10.41: the step bar, then three framed steps: who it is for, what he will propose, his slides
@@ -38384,19 +38441,21 @@ function caseMount(fresh){
   if(PROP&&!CASE_ST.propList){ const P0=casePrefs(); if(P0.group&&!CASE_PROP_GROUPS.includes(P0.group)) caseSetPrefs({group:'',type:''}); }
   if(PROP){
     host.innerHTML=`<section class="cs-prop" id="cs-prop" aria-labelledby="cs-prop-h">${casePropHTML()}</section>
-      <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"${CASE_ST.propList?'':' hidden'}></section><section class="cs-step" id="cs-s3"></section>
+      <div class="cs-panes" id="cs-panes"><section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"${CASE_ST.propList?'':' hidden'}></section><section class="cs-step" id="cs-s3"></section></div><div class="cs-nav" id="cs-nav"></div>
       <div class="cs-close">${caseEgwHTML()}</div>`;
     casePropWire(host);
     caseDraw1(); caseDraw2(); caseDraw3();
     const s2=$('cs-s2'); if(s2) s2.hidden=!CASE_ST.propList;
+    csPaneOpen('cs-panes',casePrefs().group?csPanes('cs-panes').length-1:0);   // v10.73.0: one step on screen; the group chosen → the slides
     return;
   }
   host.innerHTML=`<div class="cs-gff" id="cs-gff" role="note" hidden></div><nav class="cs-bar" id="cs-bar"></nav>
-    <section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"></section><section class="cs-step" id="cs-s3"></section>
+    <div class="cs-panes" id="cs-panes"><section class="cs-step" id="cs-s1"></section><section class="cs-step" id="cs-s2"></section><section class="cs-step" id="cs-s3"></section></div><div class="cs-nav" id="cs-nav"></div>
     <div class="cs-close">${caseEgwHTML()}</div>`;
   // v10.45.0 (DESIGN-SURVEY §2.7): "← Back to the need: {title}" while he came from a need in the Community Survey
   { const fh=nsFromHTML(); if(fh){ host.insertAdjacentHTML('afterbegin',fh); const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack; } }
   caseDraw1(); caseDraw2(); caseDraw3(); caseStepBar();
+  csPaneOpen('cs-panes',caseStepState().cur);   // v10.73.0: one step on screen, the first unfinished (or the one he was viewing)
   caseGiftsBanner();   // v10.42 part 3: "Gifts first" below half of the adults (never blocks anything)
 }
 /* The proposal view: he came from a need with "Create a proposal for this ministry", and that ministry is still the one chosen. */
@@ -38456,7 +38515,7 @@ function casePropWire(host){
   host.querySelectorAll('[data-cs-church]').forEach(b=>b.onclick=()=>uChurchGo());   // v10.55.0
   host.querySelectorAll('[data-cs-gifts]').forEach(b=>b.onclick=()=>gfOpenLanding());   // v10.56.2: the main page
   const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need); };
-  const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const s2=$('cs-s2'); if(s2) s2.scrollIntoView({block:'start'}); } };
+  const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const i=csPanes('cs-panes').findIndex(p=>p.id==='cs-s2'); if(i>=0) csGo('cs-panes',i,false); } };   // v10.73.0: the list slides in
 }
 /* ================= /MAKE THE CASE: THE SCREENS ================= */
 
@@ -38482,7 +38541,8 @@ const BUY_LIMITS={items:30,name:60,need:120,goal:200,why:3,whyText:60,names:3,na
 const BUY_UI={
   pathLabel:{en:'Make the case for:',es:'Presentar la propuesta de:'},
   pathMin:{en:'A ministry',es:'Un ministerio'},
-  pathBuy:{en:'A project or purchase',es:'Un proyecto o compra'},
+  pathProj:{en:'A project',es:'Un proyecto'},   // v10.73.0: three choices (the pastor: "a project or purchase should not be together")
+  pathBuy:{en:'A purchase',es:'Una compra'},
   items:{en:'Your projects',es:'Sus proyectos'},
   newItem:{en:'New',es:'Nuevo'},
   newName:{en:'New project',es:'Proyecto nuevo'},
@@ -38970,7 +39030,7 @@ function buyNewId(){
 }
 function buyNew(cat){
   const C=BUY_CATS[cat]||BUY_CATS.sound, now=Date.now();
-  return buySave({v:1,id:buyNewId(),created:now,updated:now,cat:BUY_CATS[cat]?cat:'sound',kind:C.kinds[0],team:C.team,name:{},need:{},goal:{},why:[],names:[],must:[],
+  return buySave({v:1,id:buyNewId(),created:now,updated:now,cat:BUY_CATS[cat]?cat:'sound',kind:buyKindsFor(C,buyWay())[0]||C.kinds[0],team:C.team,name:{},need:{},goal:{},why:[],names:[],must:[],
     options:[],pick:null,pickWhy:null,also:[],rfq:null,fund:{lines:[],phases:null},dates:{},path:null,aud:null,lastSearch:null});
 }
 
@@ -40079,35 +40139,45 @@ async function buyPricesWait(id,o){
 /* ---- the screens: five framed steps, each its own colour (pink people · blue things · amber money · violet deciding · mint
    presenting), each with one short line; a project row above them; the step bar. Phone 390 one column; desktop the same column at
    Make the Case's width. Everything he types is saved on this device, per church (buySave). ---- */
-const BUY_ST={id:null,pv:null,slide:0,edit:null,timer:null,msg:'',pmsg:'',psecs:null,pbusy:false,rfqOpen:false,decOpen:false,pathOpen:false,teamOpen:false};
+const BUY_ST={id:null,pv:null,slide:0,edit:null,timer:null,msg:'',pmsg:'',psecs:null,pbusy:false,rfqOpen:false,decOpen:false,pathOpen:false,teamOpen:false,pane:null};   // v10.73.0: pane
 const BUY_HUE=['people','housing','hardship','children','language'];
 function buyCur(){ return BUY_ST.id?buyGet(BUY_ST.id):null; }
 function buyStepHead(n,title,note,right){
   return `<div class="cs-sh"><span class="cs-num" aria-hidden="true">${n}</span><div class="cs-sht"><h3><span class="cs-vh">${esc(buyU('stepOf',{n}))}</span>${esc(title)}</h3>${note?`<p class="note">${esc(note)}</p>`:''}</div>${right||''}</div>`;
 }
 /* The path switch above everything in Make the Case (the ministry path stays exactly as it is). */
+/* v10.73.0: three choices. A purchase is something bought (kind buy); a project a repair, an installation or a build (the other kinds).
+   Stored as ministry | buy (a purchase: the old value kept) | project; buyPath() still answers buy for both of the last two. */
 function buySwitchHTML(path){
   const b=(k,t)=>`<button type="button" class="cs-tab${path===k?' on':''}" data-bx-path="${k}" aria-pressed="${path===k}">${esc(t)}</button>`;
-  return `<div class="bx-switch"><p class="bx-swl" id="bx-swl">${esc(buyU('pathLabel'))}</p><div class="cs-tabs bx-tabs" role="group" aria-labelledby="bx-swl">${b('ministry',buyU('pathMin'))}${b('buy',buyU('pathBuy'))}</div></div>`;
+  return `<div class="bx-switch"><p class="bx-swl" id="bx-swl">${esc(buyU('pathLabel'))}</p><div class="cs-tabs bx-tabs" role="group" aria-labelledby="bx-swl">${b('ministry',buyU('pathMin'))}${b('project',buyU('pathProj'))}${b('buy',buyU('pathBuy'))}</div></div>`;
 }
 function buySwitchWire(host){
-  host.querySelectorAll('[data-bx-path]').forEach(b=>b.onclick=()=>{ const p=b.dataset.bxPath==='buy'?'buy':'ministry';
-    if(buyPath()===p) return; caseSetPrefs({path:p}); caseMount(); const s=$('cs-switch'); if(s&&s.scrollIntoView) s.scrollIntoView({block:'start'}); });
+  host.querySelectorAll('[data-bx-path]').forEach(b=>b.onclick=()=>{ const k=b.dataset.bxPath, p=k==='buy'||k==='project'?k:'ministry';
+    if(buyPathRaw()===p) return; caseSetPrefs({path:p}); CASE_ST.pane=null; BUY_ST.pane=null; BUY_ST.id=null; caseMount(); });   // v10.73.0: the page stays where it is
 }
 /* Which path Make the Case shows, and the project open, per church (proposalPrefs; casePrefs() itself is unchanged). */
-function buyPath(){ try{ const p=uChurch().proposalPrefs; return p&&p.path==='buy'?'buy':'ministry'; }catch(e){ return 'ministry'; } }
+function buyPathRaw(){ try{ const p=uChurch().proposalPrefs, v=p&&p.path; return v==='buy'||v==='project'?v:'ministry'; }catch(e){ return 'ministry'; } }
+function buyPath(){ const v=buyPathRaw(); return v==='ministry'?'ministry':'buy'; }
+function buyWay(){ return buyPathRaw()==='project'?'project':'purchase'; }
+const buyFam=it=>it&&it.kind&&it.kind!=='buy'?'project':'purchase';
+function buyKindsFor(C,way){ return (way||buyWay())==='purchase'?(C.kinds.includes('buy')?['buy']:[]):C.kinds.filter(k=>k!=='buy'); }
+function buyCatsFor(way){ return BUY_CAT_ORDER.filter(k=>buyKindsFor(BUY_CATS[k],way).length); }
+function buyListFam(){ const w=buyWay(); return buyList().filter(it=>buyFam(it)===w); }
 function buyPrefBuy(){ try{ const p=uChurch().proposalPrefs, b=p&&p.buy; return typeof b==='string'&&(b==='new'||BUY_RE_ID.test(b))?b:null; }catch(e){ return null; } }
 function buyMount(host){
   if(!host) return;
   if(BUY_ST.pv){ BUY_ST.pv.destroy(); BUY_ST.pv=null; }
-  const pb=buyPrefBuy(), list=buyList();
-  if(BUY_ST.id&&!buyGet(BUY_ST.id)) BUY_ST.id=null;
-  if(!BUY_ST.id&&pb&&buyGet(pb)) BUY_ST.id=pb;
+  // v10.73.0: the projects of the family shown (a purchase or a project); a remembered one of the other family is left alone
+  const pb=buyPrefBuy(), list=buyListFam(), fam=it=>!!it&&buyFam(it)===buyWay();
+  if(BUY_ST.id&&!fam(buyGet(BUY_ST.id))) BUY_ST.id=null;
+  if(!BUY_ST.id&&pb&&fam(buyGet(pb))) BUY_ST.id=pb;
   if(!BUY_ST.id&&list.length&&pb!=='new') BUY_ST.id=list[list.length-1].id;
   host.innerHTML=`<div class="bx" id="bx"><div class="bx-items" id="bx-items"></div><nav class="cs-bar bx-bar" id="bx-bar"></nav><p class="bx-barnow" id="bx-barnow" aria-hidden="true"></p>
-    ${[1,2,3,4,5].map(n=>`<section class="cs-step bx-step" id="bx-s${n}" data-bx-hue="${BUY_HUE[n-1]}"></section>`).join('')}</div>`;
+    <div class="cs-panes" id="bx-panes">${[1,2,3,4,5].map(n=>`<section class="cs-step bx-step" id="bx-s${n}" data-bx-hue="${BUY_HUE[n-1]}"></section>`).join('')}</div><div class="cs-nav" id="bx-nav"></div></div>`;
   buyPricesProbe().then(()=>{ if($('bx-s2')) buyDraw2(); }).catch(()=>{});
   buyDrawAll();
+  csPaneOpen('bx-panes',buyStepState().now);   // v10.73.0: one step on screen
   // a search left running (the page was reloaded, or a phone dropped the tab): picked up again (buyPricesResume)
   const it=buyCur(); if(it&&it.lastSearch&&it.lastSearch.status==='running'&&!BUY_PRICES.run[it.id]) buyPricesResume(it.id);
 }
@@ -40126,11 +40196,11 @@ function buyPricesResume(id){
     ()=>{ delete BUY_PRICES.run[id]; BUY_ST.psecs=null; if($('bx-s2')) buyDraw2(); });
 }
 function buyDrawAll(){ buyDrawItems(); buyDraw1(); buyDraw2(); buyDraw3(); buyDraw4(); buyDraw5(); buyStepBar(); }
-function buySelect(id){ BUY_ST.id=id; BUY_ST.edit=null; BUY_ST.slide=0; BUY_ST.pmsg=''; BUY_ST.decOpen=false; BUY_ST.pathOpen=false; caseSetPrefs({buy:id||'new'}); buyDrawAll(); }
+function buySelect(id){ BUY_ST.id=id; BUY_ST.edit=null; BUY_ST.slide=0; BUY_ST.pmsg=''; BUY_ST.decOpen=false; BUY_ST.pathOpen=false; BUY_ST.pane=null; caseSetPrefs({buy:id||'new'}); buyDrawAll(); csPaneOpen('bx-panes',buyStepState().now); }
 /* The project row: New, then each project with a dot for how far its decision has come. */
 function buyDrawItems(){
   const h=$('bx-items'); if(!h) return;
-  const list=buyList();
+  const list=buyListFam();   // v10.73.0: the family shown
   const dot=it=>{ let recs={}; try{ recs=caseDecAll(it.id); }catch(e){ recs={}; } const P=buyPathOf(it).path;
     const done=P.filter(b=>recs[b]&&CASE_POSITIVE.has(recs[b].outcome)).length; return done&&done===P.length?'ok':done?'part':''; };
   h.innerHTML=`<span class="bx-il">${esc(buyU('items'))}</span><div class="bx-chips" role="group" aria-label="${esc(buyU('items'))}">
@@ -40139,20 +40209,26 @@ function buyDrawItems(){
   h.querySelectorAll('[data-bx-item]').forEach(b=>b.onclick=()=>buySelect(b.dataset.bxItem||null));
 }
 /* The step bar: five buttons (number, title, the step's summary); under 760 px the numbers alone, the current step's title below. */
-function buyStepBar(){
-  const b=$('bx-bar'); if(!b) return;
+/* v10.73.0: the steps' state, read by the bar and by the pane the tool opens on */
+function buyStepState(){
   const it=buyCur(), named=!!(it&&(buyIn(it.name)||buyIn(it.need)));
   const pick=it?buyOpt(it,buyPickId(it)):null, M=it?buyMeter(it):null, P=it?buyPathOf(it):null;
   let n=0; try{ const m=it&&pick?buyModel(it,buyAudNow(it)):null; const d=m&&m.ok?buyDeck(m):null; n=d?d.slides.length:0; }catch(e){ n=0; }
   const done=[named,named&&!!pick,named&&!!pick&&M&&(M.state==='planned'||M.state==='over'),named&&!!pick&&!!(it&&it.aud),named&&n>0&&!!(it&&it.aud)];
   const cur=done.findIndex(x=>!x), now=cur<0?4:cur;
+  return {it,named,pick,M,P,n,done,now};
+}
+function buyStepBar(){
+  const b=$('bx-bar'); if(!b) return;
+  const {it,named,pick,M,P,n,done,now}=buyStepState();
   const sum=[named?buyName(it):buyU('s1'),pick?buyU('s2done',{tier:caseT(BUY_TIERS[pick.tier]),total:buyMoney(buyOptTotal(pick))}):buyU('s2'),
     M&&M.sum?buyU('s3done',{n:buyMoney(M.sum)}):buyU('s3'),P&&named?P.path.map(x=>caseT(CASE_DEC.body[x])).join(' › '):buyU('s4'),n?buyU('s5done',{n:fmtNum(n)}):buyU('s5')];
   b.setAttribute('aria-label',buyU('bar'));
   b.innerHTML=[1,2,3,4,5].map(i=>{ const st=i-1===now?'now':done[i-1]?'done':'next';
     return `<button type="button" class="cs-st ${st}" data-bx-jump="${i}"${i-1===now?' aria-current="step"':''}><i aria-hidden="true">${i}</i><span><b>${esc(buyU('t'+i))}</b><small>${esc(sum[i-1])}</small></span></button>`; }).join('');
-  const nb=$('bx-barnow'); if(nb) nb.textContent=buyU('t'+(now+1));
-  b.querySelectorAll('[data-bx-jump]').forEach(e=>e.onclick=()=>{ const s=$('bx-s'+e.dataset.bxJump); if(s) s.scrollIntoView({block:'start'}); });
+  const nb=$('bx-barnow'); if(nb) nb.textContent=buyU('t'+(csPaneCur('bx-panes')+1));   // v10.73.0: the step on screen (csBarView keeps it)
+  b.querySelectorAll('[data-bx-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('bx-panes').findIndex(p=>p.id==='bx-s'+e.dataset.bxJump); if(i>=0) csGo('bx-panes',i,true); });   // v10.73.0: slides, never scrolls
+  csBarView('bx-panes',csPaneCur('bx-panes'));
 }
 /* Save as he types (a quarter of a second after the last key); the other steps follow, never the box he is in. */
 function buyChange(fn,o){
@@ -40169,11 +40245,11 @@ const buyAudNow=it=>{ const A=buyAudiences(it); return it&&it.aud&&A.includes(it
 function buyDraw1(){
   const h=$('bx-s1'); if(!h) return;
   const it=buyCur(), L=caseLang();
-  const tiles=BUY_CAT_ORDER.map(k=>`<button type="button" class="bx-tile${it&&it.cat===k?' on':''}" data-bx-cat="${k}" aria-pressed="${!!(it&&it.cat===k)}"><i class="bx-tdot" aria-hidden="true"></i><b>${esc(caseT(BUY_CATS[k]))}</b></button>`).join('');
+  const tiles=buyCatsFor(buyWay()).map(k=>`<button type="button" class="bx-tile${it&&it.cat===k?' on':''}" data-bx-cat="${k}" aria-pressed="${!!(it&&it.cat===k)}"><i class="bx-tdot" aria-hidden="true"></i><b>${esc(caseT(BUY_CATS[k]))}</b></button>`).join('');
   let body=`<p class="bx-q" id="bx-catq">${esc(buyU('catLabel'))}</p><div class="bx-tiles" role="group" aria-labelledby="bx-catq">${tiles}</div>`;
   if(it){
     const C=BUY_CATS[it.cat];
-    const kinds=C.kinds.length>1?`<p class="bx-q" id="bx-kindq">${esc(buyU('kindLabel'))}</p><div class="u-seg bx-kinds" role="group" aria-labelledby="bx-kindq">${C.kinds.map(k=>`<button type="button" data-bx-kind="${k}" class="${it.kind===k||(k==='repair'&&it.kind==='install')?'on':''}" aria-pressed="${it.kind===k}">${esc(buyU(k==='buy'?'kindBuy':k==='build'?'kindBuild':'kindFix'))}</button>`).join('')}</div>`:'';
+    const KS=buyKindsFor(C,buyWay()), kinds=KS.length>1?`<p class="bx-q" id="bx-kindq">${esc(buyU('kindLabel'))}</p><div class="u-seg bx-kinds" role="group" aria-labelledby="bx-kindq">${KS.map(k=>`<button type="button" data-bx-kind="${k}" class="${it.kind===k||(k==='repair'&&it.kind==='install')?'on':''}" aria-pressed="${it.kind===k}">${esc(buyU(k==='buy'?'kindBuy':k==='build'?'kindBuild':'kindFix'))}</button>`).join('')}</div>`:'';
     const planM=(it.why||[]).some(w=>w.k==='ministries')?buyPlanMins(it,L):null;
     const why=C.why.map(k=>{ const W=BUY_WHY[k], on=(it.why||[]).find(w=>w.k===k);
       const extra=on&&W.count?`<label class="bx-count"><span>${esc(buyU('howMany'))}</span><input type="number" inputmode="numeric" min="1" max="9999" data-bx-n="${k}" value="${on.n||''}"></label>`
@@ -40201,7 +40277,7 @@ function buyDraw1(){
   h.innerHTML=buyStepHead(1,buyU('t1'),buyU('n1'))+body;
   h.querySelectorAll('[data-bx-cat]').forEach(b=>b.onclick=()=>{ const k=b.dataset.bxCat;
     if(!it){ const n=buyNew(k); if(n) buySelect(n.id); return; }
-    buyChange(x=>{ const C=BUY_CATS[k]; x.cat=k; if(!C.kinds.includes(x.kind)&&!(x.kind==='install'&&C.kinds.includes('repair'))) x.kind=C.kinds[0]; if(!x.team||BUY_CATS[it.cat].team===x.team) x.team=C.team;
+    buyChange(x=>{ const C=BUY_CATS[k], ks=buyKindsFor(C,buyWay()); x.cat=k; if(!ks.includes(x.kind)&&!(x.kind==='install'&&ks.includes('repair'))) x.kind=ks[0]||C.kinds[0]; if(!x.team||BUY_CATS[it.cat].team===x.team) x.team=C.team;
       x.why=(x.why||[]).filter(w=>C.why.includes(w.k)); },{now:true}); buyDraw1(); });
   if(!it) return;
   h.querySelectorAll('[data-bx-kind]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.kind=b.dataset.bxKind; },{now:true}); buyDraw1(); });
@@ -40444,8 +40520,7 @@ function buyDraw4(){
   const pc=h.querySelector('[data-bx-pcancel]'); if(pc) pc.onclick=()=>{ BUY_ST.pathOpen=false; buyDraw4(); };
   h.querySelectorAll('[data-bx-rule]').forEach(inp=>inp.addEventListener('change',()=>{ const n=parseInt(inp.value,10); buyRulesSet({[inp.dataset.bxRule]:Number.isInteger(n)&&n>=1?n:null});
     buyDrawItems(); buyDraw3(); buyDraw4(); buyDraw5(); buyStepBar(); }));
-  h.querySelectorAll('[data-bx-aud]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.aud=b.dataset.bxAud; },{now:true}); BUY_ST.slide=0; buyDraw4(); buyDraw5(); buyStepBar();
-    const s=$('bx-s5'); if(s&&s.scrollIntoView) s.scrollIntoView({block:'start'}); });
+  h.querySelectorAll('[data-bx-aud]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.aud=b.dataset.bxAud; },{now:true}); BUY_ST.slide=0; buyDraw4(); buyDraw5(); buyStepBar(); });   // v10.73.0: nothing moves; he taps Done
   buyDecMount($('bx-dec'),it,aud);
 }
 /* The options the records' form takes for a purchase: its own path, the conference when needed, no day or length to agree, and the

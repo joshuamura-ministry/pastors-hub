@@ -28,10 +28,10 @@ async function open(L, prefs) {
 
   console.log('\n-- the switch: "Make the case for: A ministry | A project or purchase" --');
   c('the switch, above the steps, in its own place', [P.txt('#cs-switch .bx-swl'), P.qa('#cs-switch [data-bx-path]').map(b => [b.textContent, b.getAttribute('aria-pressed')])],
-    ['Make the case for:', [['A ministry', 'false'], ['A project or purchase', 'true']]]);
+    ['Make the case for:', [['A ministry', 'false'], ['A project', 'false'], ['A purchase', 'true']]]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   P.q('[data-bx-path="ministry"]').click(); await sleep(50);
   c('"A ministry": exactly the ministry path\'s steps in #casebody (the step bar, then steps 1, 2, 3), no purchase step', [P.qa('#casebody > *').map(e => e.id || e.className).filter(id => id !== 'cs-gff').slice(0, 4), !!P.q('#bx')],
-    [['cs-bar', 'cs-s1', 'cs-s2', 'cs-s3'], false]);
+    [['cs-bar', 'cs-panes', 'cs-nav', 'cs-close'], false]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   c('…and casePrefs() is as it was (the path is kept beside it)', P.J('casePrefs()'), { ministry: null, type: null, group: null, plan: false });
   P.q('[data-bx-path="buy"]').click(); await sleep(50);
   c('"A project or purchase" again: the five steps, the project row and the bar', [!!P.q('#bx-items'), P.qa('#bx .bx-step').length, P.qa('#bx-bar .cs-st').length], [true, 5, 5]);
@@ -42,21 +42,21 @@ async function open(L, prefs) {
   c('…their lines', heads(P).slice(0, 4).map(h => h[2]), ['And why it matters for ministry.', 'Find prices, or type your own.', 'Offerings and gifts. Never tithe.', 'Your church’s path.']);
   const S = await open('es');
   c('ES', heads(S).map(h => h[1]), ['Paso 1 de 5: ¿Qué necesitan?', 'Paso 2 de 5: Tres opciones', 'Paso 3 de 5: Cómo lo pagaremos', 'Paso 4 de 5: Quién decide', 'Paso 5 de 5: Presentar y votar']);
-  c('…the switch in Spanish', [S.txt('#cs-switch .bx-swl'), S.qa('#cs-switch [data-bx-path]').map(b => b.textContent)], ['Presentar la propuesta de:', ['Un ministerio', 'Un proyecto o compra']]);
+  c('…the switch in Spanish', [S.txt('#cs-switch .bx-swl'), S.qa('#cs-switch [data-bx-path]').map(b => b.textContent)], ['Presentar la propuesta de:', ['Un ministerio', 'Un proyecto', 'Una compra']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   c('the bar\'s compact line names the current step (under 760 px the numbers alone show)', [P.txt('#bx-barnow'), S.txt('#bx-barnow')], ['Who decides', 'Quién decide']);
 
   console.log('\n-- ① What do you need? --');
-  c('nine kinds of need', P.qa('[data-bx-cat]').map(b => b.textContent), ['Sound', 'Livestream & video', 'Lighting', 'Computer & projector', 'Music instruments', 'Building repair', 'Kitchen', 'Vehicle', 'Something else']);
-  c('…in Spanish', S.qa('[data-bx-cat]').map(b => b.textContent), ['Sonido', 'Transmisión y video', 'Iluminación', 'Computadora y proyector', 'Instrumentos musicales', 'Reparación del edificio', 'Cocina', 'Vehículo', 'Otra cosa']);
+  c('a purchase offers eight kinds of need (Building repair is a project: nothing to buy there)', P.qa('[data-bx-cat]').map(b => b.textContent), ['Sound', 'Livestream & video', 'Lighting', 'Computer & projector', 'Music instruments', 'Kitchen', 'Vehicle', 'Something else']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  c('…in Spanish', S.qa('[data-bx-cat]').map(b => b.textContent), ['Sonido', 'Transmisión y video', 'Iluminación', 'Computadora y proyector', 'Instrumentos musicales', 'Cocina', 'Vehículo', 'Otra cosa']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   c('the reasons of the livestream (DESIGN §1.2), the two he ticked pressed, his count beside it', [P.qa('[data-bx-why]').map(b => b.dataset.bxWhy), P.qa('[data-bx-why][aria-pressed="true"]').map(b => b.dataset.bxWhy), P.q('[data-bx-n="shutins"]').value],
     [['shutins', 'neighbours', 'guests', 'ministries', 'reliability'], ['shutins', 'ministries'], '9']);
   c('"Ministries in our plan" says which (computed from the plan)', P.txt('.bx-plan'), '2 in your plan: Full health expo · Four nights');
   c('cared for by the team of its kind, with Change', P.txt('.bx-team > span'), 'Cared for by: Media & communication');
   P.q('[data-bx-item=""]').click(); await sleep(30);
-  c('"+ New": only the kinds of need, nothing else yet; steps 2–5 say "First say what you need, in step 1."', [P.qa('[data-bx-cat]').length, !!P.q('[data-bx-f="need"]'), P.txt('#bx-s2 .bx-first')], [9, false, 'First say what you need, in step 1.']);
+  c('"+ New": only the kinds of need, nothing else yet; steps 2–5 say "First say what you need, in step 1."', [P.qa('[data-bx-cat]').length, !!P.q('[data-bx-f="need"]'), P.txt('#bx-s2 .bx-first')], [8, false, 'First say what you need, in step 1.']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   P.q('[data-bx-cat="kitchen"]').click(); await sleep(30);
   const nid = P.E('BUY_ST.id');
-  c('a tap on Kitchen makes the project: its kinds (Buy it · Repair or install · Build or add on), the deacons to care for it', [/^buy-[a-z0-9]{6}$/.test(nid), P.qa('[data-bx-kind]').map(b => b.textContent), P.J(`buyGet(BUY_ST.id).team`)], [true, ['Buy it', 'Repair or install', 'Build or add on'], 'deacons']);
+  c('a tap on Kitchen makes the project: no kind-of-work row (a purchase is bought; a project in the kitchen offers Repair or install · Build or add on, held by v73-case-slider), the deacons to care for it', [/^buy-[a-z0-9]{6}$/.test(nid), P.qa('[data-bx-kind]').map(b => b.textContent), P.J(`buyGet(BUY_ST.id).team`)], [true, [], 'deacons']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   const need = P.q('[data-bx-f="need"]'); need.value = 'A new commercial stove for the fellowship meals'; need.dispatchEvent(new P.w.Event('input')); await sleep(400);
   c('his words name it (the suggestion in the short name\'s box)', [P.q('[data-bx-f="name"]').placeholder, P.J(`buyName(buyGet(BUY_ST.id),'en')`)], ['Commercial stove', 'Commercial stove']);
   P.q('[data-bx-why="meals"]').click(); await sleep(400);
