@@ -10,9 +10,9 @@ const T=checker(), c=T.c;
 (async()=>{ await T.sec(async()=>{
   const P=page({needs:'file'}); await ready(P);
   survey(P); await sleep(150);
-  await openNeed(P,'snap',true);
-  const idea=P.q('#ns-i-snap .ns-row').dataset.idea;
-  P.q('#ns-i-snap .ns-row').click(); await until(()=>P.q('#ns-sheet[open]'),4000);
+  const card=await openNeed(P,'snap',true);   // v10.74.0: snap is a finding of the Hardship card (openNeed answers the card's id)
+  const idea=P.q(`#ns-i-${card} .ns-row`).dataset.idea;
+  P.q(`#ns-i-${card} .ns-row`).click(); await until(()=>P.q('#ns-sheet[open]'),4000);
   P.q('#ns-sheet [data-ns-propose]').click(); await until(()=>P.E('TOOL')==='case'&&P.E('casePropMode()'),6000); await sleep(150);
   c('on the Proposal page (sent from a need)', [P.E('casePropMode()'),P.J('casePrefs().ministry')], [true,idea]);
 

@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.74.0: the page's badge v10.74.0 (the page only; no function changed); the Community Survey's Neighborhood needs: one card per family (no label twice), a "+ …" line naming the card's other findings, an opened card with each finding under its topic
 - v10.73.0: the page's badge v10.73.0 (the page only; no function changed); Make the Case: three tabs (A ministry · A project · A purchase), one step on screen with ← Back · Step n of m · Done under it
 - v10.72.1: the page's badge v10.72.1 (the page only; no function changed); in Compare your churches, a church added from the conference list is tagged "To compare" in Digital footprint's Side by side and Every church, never under "Your churches"
 - v10.72.0: `/.netlify/functions/account` → `"fn":"account-1.1"`, `"claudeDay":6`, `"trialClaudeDay":3`; gifts → `gifts-1.4`; present → `present-1.5`; connect → `connect-1.1`; digital → `digital-1.3`; advise → `advise-2.8`; the page's badge v10.72.0; with payments still off the page is the full version for everyone, as before
@@ -226,6 +227,51 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.74.0 (10 Nov 2026, full lane) — Neighborhood needs: one card per family.** The pastor, of Fairview Village's survey on a computer:
+*"you see there are seniors and isolation seniors and isolation seniors and isolation. There are two work schedules families with children
+families with children … it seems redundant now if these are you know prioritizing that neighborhood needs the senior in isolation didn't they
+just be one line seniors and isolation why is it three different lines"* → *"build it please"*. The list was a list of findings (one rule of
+`RULES` / `RULES_MORE` each, with its own sentence, steps, question and ideas) wearing the family's label, so a family with three findings
+showed its label three times under a heading that says "needs". Design `~/Ministry Work/Terrain-work/v89/DESIGN-NEEDS-GROUPED.md`; the list
+as it was in `v89/look-needs-before/`.
+- **The findings stay** (`nsModel`'s `needs` and `also`, their ranking, `RULES` untouched: Make the Case, "Why here", the PDF, the Claude list's
+  input and `v45-needs` read them as before). **`nsGroups(needs, also)`** → **`S.cards`**: one card per family (`catLabel`), its first finding in
+  the list the lead (**the card's id is the lead's id**, so everything keyed by a need's id keeps working: `#ns-h-<id>`, `NS_FIGS`, `nsClKey`,
+  `whyFrom`, the verse), the family's other findings under it (`g.finds`, `g.lines` their sentences); an "Also here" row folds into its family's
+  card with its tag; a family with only also rows is a tagged card of its own (`data-also`); the badge goes with its finding. Cards in the order
+  the families first appear (greatest first). The Claude-made list is grouped the same way (`nsAiApply` → `cards`). `nsAllNeeds()` is the cards;
+  `nsNeedById(id)` lands a finding's id on its card (the way back kept before this release, `nsBackTo`); the church's snapshot for Compare your
+  churches keeps the first five cards' titles (`chSnapSave`).
+- **The card, closed** (`nsCardHTML`, `data-finds`): number · FAMILY · badge · tag, the lead's title and sentence, then one quiet line
+  (`nsWithHTML`, `.ns-with`): "+ Limited English · Born abroad · Recent arrivals · Families learning English" (the other findings' topics,
+  `NS_TOPIC`; an also row's with its tag in brackets: "+ Seniors without a car (across Warminster)"). **Open** (`nsBodyHTML`): the rings of
+  every finding's figures in turn, no key twice, six at most for a card of several (four for one; six sit three and three, five three and two,
+  never one alone: the container rules under `.ns-figs`), every finding's Claude lines (`nsAiBlocksAll`), What helps once, then one finding
+  as before (Where to begin, Ask first) or, with two or more, each finding under its topic (`nsFindsHTML`, `.ns-find`: its sentence `.ns-fev`,
+  its steps, its question; an also row's tag). **The ideas** (`nsIdeasFor`): inside each lift the lead's own first (half the seats; Claude's
+  work for the lead stands in for its library list when it is here), the other findings' in turn, then the rest of the lead's; no idea twice;
+  the cap a lift 10 for two findings, 12 for three or more (8 for one as before); the button's count says the union; `nsClInput` sends every
+  finding's sentence as the why (400 characters at most).
+- **Every row remembers its finding** (`data-find`; `nsFindOf`): the sheet (`nsSheetOpen` / `nsSheetDraw`: "For the need: {the finding's
+  title}", its sentence as Why here), the one-page PDF, "Create a proposal" (`whyFrom` the finding's own sentence; `NS.back.find`) and the way
+  back (`nsBackTo`; the Proposal page's card and PDF) speak that finding's language. A neighborhood with two languages keeps both: the welcome
+  card is one row per language (Spanish and Vietnamese, each from its finding, each proposed in its own language: `…--vietnamese`). Found
+  during the build: without it the second language's ideas folded under the first and opened in the wrong language.
+- The fixture tract: 23 needs + 2 also rows → 7 cards (Language & newcomers 5 · Hardship & work 7 · Housing pressure 4 · Families with children
+  3 · Work & schedules 1 · A changing community 3 · Seniors & isolation from the two also rows); no "Show all" any more (the code path stays).
+- Tests: `v74-needs-grouped` (new, 50; failing first on v10.73.0: `v89/logs/ff-v74-needs-grouped.log`); `v45-helpers`' `openNeed` / `openSheet`
+  land a finding's id on its card (the row that came from it, else the sheet opened for it); updated with comments: v45-needs-ui (seven cards,
+  the Seniors card from the also rows, the lead's rows first, each finding's own list through `nsIdeasLib`, the second language's rows by
+  `data-find`), v45-review (the grief ideas in the finding's own list, the town tag in the "+" line, the cards counted, the Spanish need's own
+  rows, the way back to the Haitian Creole finding), v45-1-survey (the Housing card's six rings, each finding's topic), v45-handoff (its own
+  openSheet), v53-needs-claude (Claude's order grouped; the new need under its family's card), v55-ideas-claude (its tract keeps SNAP alone
+  among the Hardship findings, so the need leads a card of its own as the suite reads it), v45-needs-data (a finding's own rows by
+  `data-find`, its list through `nsIdeasLib`, the card's button), v55-proposal-clean and v56-case-claude (the card's id from `openNeed`; the
+  first row from snap as before). Checked in Chrome against the static copy (`v89/look-needs.mjs after`, pictures `v89/look-needs-after/`):
+  phone 390, computer 1366, Spanish phone: seven cards, the first open with six rings (three and three), five blocks and 36 ideas; no
+  sideways scroll, no page errors. Full suite: 202 suites · 12,234 passed · 0 failed (the full run 12,191 and six stale checks in three suites,
+  v45-needs-data, v55-proposal-clean and v56-case-claude, updated with comments and rerun: 35, 16, 40; v10.73.0: 201 · 12,184).
 
 **v10.73.0 (9 Nov 2026, full lane) — Make the Case, one step at a time; a ministry, a project or a purchase.** The pastor, on his phone:
 *"when I click a Ministry a project or purchase, it jumps down every time … is it following a very simple simplified process … a project or

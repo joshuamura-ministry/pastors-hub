@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.73.0
+     TERRAIN  v10.74.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.73.0" data-theme="dark">
+<html lang="en" data-version="v10.74.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.73.0">
-<title>Community Map — Terrain v10.73.0</title>
+<meta name="terrain-version" content="v10.74.0">
+<title>Community Map — Terrain v10.74.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -4765,6 +4765,11 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-top{color:var(--bg);background:var(--k);border-radius:999px;padding:1px 8px;letter-spacing:.03em;font-weight:700;text-transform:none;font-size:.72rem}
 .u-needs .ns-need h3{font-family:var(--disp);font-size:1.12rem;font-weight:600;margin-top:4px;line-height:1.28;color:var(--ink);overflow-wrap:break-word}
 .ns-ev{display:block;color:var(--ink2);font-size:.88rem;margin-top:4px;overflow-wrap:break-word}
+/* v10.74.0: one card per family: the other findings' topics on the closed card; each finding's block inside the open one */
+.ns-with{display:block;color:var(--ink3);font-size:.8rem;margin-top:5px;overflow-wrap:break-word}
+.ns-find{display:grid;gap:6px;padding-top:8px;border-top:1px dashed var(--line)}
+.ns-find h5{display:flex;flex-wrap:wrap;align-items:center;gap:6px 8px;margin-top:0}
+.ns-fev{color:var(--ink2);font-size:.92rem;line-height:1.5}
 .ns-chev{width:28px;height:28px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;color:var(--ink2);margin-top:2px;transition:transform .2s ease}
 .ns-need.open .ns-chev{transform:rotate(180deg)}
 .ns-body{padding:0 18px 18px 22px}
@@ -4779,6 +4784,9 @@ section.blk.u-needs{margin-top:56px;padding:0;border-top:none}
 .ns-figs{container-type:inline-size}
 @container (min-width:432px) and (max-width:875.98px){ .ns-figs .stats:has(>.stat:nth-child(4):last-child){grid-template-columns:repeat(2,minmax(0,1fr))} }
 @container (min-width:432px) and (max-width:653.98px){ .ns-figs .stats:has(>.stat:nth-child(3):last-child){grid-template-columns:minmax(0,1fr)} }
+/* v10.74.0: a card of several findings draws up to six rings: six sit three and three, five three and two; in two columns a fifth takes its row */
+@container (min-width:654px){ .ns-figs .stats:has(>.stat:nth-child(5):last-child),.ns-figs .stats:has(>.stat:nth-child(6):last-child){grid-template-columns:repeat(3,minmax(0,1fr))} }
+@container (min-width:432px) and (max-width:653.98px){ .ns-figs .stats:has(>.stat:nth-child(5):last-child)>.stat:last-child{grid-column:1/-1} }
 .ns-figs .stat{box-shadow:none;background:var(--panel2)}
 .ns-figs .stat .ring .trk{stroke:var(--line2)}
 .ns-figs .statkey{margin-top:8px}
@@ -5308,13 +5316,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.73.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.74.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.73.0';
+const VERSION = 'v10.74.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -8079,8 +8087,23 @@ function nsFigKey(t){ const k=/(\d[\d.,]*%)((?:\s+[^\s.,;:—]+){1,3})/.exec(Str
    in Ave Maria too) "the Immokalee area" (review #8) */
 function nsTownWords(lv){ const t=lv&&lv.cousub; if(!t||!t.short) return {en:'',es:'',ccd:false};
   return t.ccd?{en:`the ${t.short} area`,es:`la zona de ${t.short}`,ccd:true}:{en:t.short,es:t.short,ccd:false}; }
+/* v10.74.0 — one card per family. The pastor (10 Nov 2026, his survey on a computer): "seniors and isolation seniors and isolation
+   seniors and isolation … if these are prioritizing that neighborhood needs … didn't they just be one line seniors and isolation why
+   is it three different lines". The findings stay as they are (needs, also: Make the Case, "Why here", the PDF and the Claude list's
+   input read them); the page shows one card per family (catLabel). Its first finding in the list leads (the card's id is the lead's,
+   so everything keyed by a need's id keeps working), the family's other findings fold under it (finds), an "Also here" row with its
+   tag; a family with only also rows is a tagged card of its own. The badge goes with its finding. Design: Terrain-work/v89. */
+function nsGroups(needs,also){
+  const out=[], by=new Map(), fam=n=>String(n.catLabel||n.cat||'');
+  [...(needs||[]),...(also||[])].forEach(n=>{ if(!n||!n.id) return; const k=fam(n); let g=by.get(k);
+    if(!g){ g={...n,finds:[n]}; by.set(k,g); out.push(g); return; }
+    if(g.finds.some(f=>f.id===n.id&&(f.tag||'')===(n.tag||''))) return;
+    g.finds.push(n); });
+  out.forEach(g=>{ g.top=g.finds.some(f=>!!f.top); g.lines=g.finds.map(f=>String(f.evidence||'')).filter(Boolean); });
+  return out;
+}
 function nsModel(M,scope){
-  const m=M&&M[scope]; if(!m) return {needs:[],also:[],langs:[],born:[],groups:[],town:'',merged:{}};
+  const m=M&&M[scope]; if(!m) return {needs:[],also:[],cards:[],langs:[],born:[],groups:[],town:'',merged:{}};
   const c=scope==='county'?null:M.county;
   const trend=trendOf(M,scope);
   const lv=(typeof DATA!=='undefined'&&DATA&&DATA.levels)||{};
@@ -8128,7 +8151,8 @@ function nsModel(M,scope){
   const langs=(m.langs||[]).filter(L=>L.share!=null&&L.share>=2).slice(0,5).map(L=>({name:L.name,show:es?nsLangOf(L).es:nsLangOf(L).en,share:L.share,count:L.count}));
   const born=m.foreign!=null&&m.foreign>=2?namedOrigins(m).slice(0,4).map(o=>es?tr(o.name):o.name):[];
   const groups=[...new Set(langs.map(L=>(NS_LANG[L.name]||{}).group).filter(g=>g==='ie'||g==='ap'))];
-  return {needs,also:also.slice(0,8),langs,born,groups,town,ccd:TW.ccd,merged,englishOnly:m.englishOnly};
+  const alsoOut=also.slice(0,8);
+  return {needs,also:alsoOut,cards:nsGroups(needs,alsoOut),langs,born,groups,town,ccd:TW.ccd,merged,englishOnly:m.englishOnly};
   }finally{ NS_CTX.m=null; }
 }
 
@@ -14908,7 +14932,7 @@ const NS_LIFTS=['light','moderate','heavy'];
    ({need, idea}, also in sessionStorage for the session). */
 const NS={open:'',ideas:false,sheet:'',showAll:false,back:null,last:'',map:null,mapP:null,err:'',lists:new Map(),lastRow:null,leaving:false,status:'',reopen:null};
 let NSM=null;
-try{ const b=JSON.parse(sessionStorage.getItem('terrain-ns-back')||'null'); if(b&&typeof b.need==='string'&&typeof b.idea==='string') NS.back={need:b.need,idea:b.idea,plan:typeof b.plan==='string'?b.plan:b.idea}; }catch(e){}
+try{ const b=JSON.parse(sessionStorage.getItem('terrain-ns-back')||'null'); if(b&&typeof b.need==='string'&&typeof b.idea==='string') NS.back={need:b.need,find:typeof b.find==='string'?b.find:b.need,idea:b.idea,plan:typeof b.plan==='string'?b.plan:b.idea}; }catch(e){}
 /* Lift = the library's tier (1 light, 2 moderate, 3 heavy), a built-in's band of its load. One rule everywhere. */
 function nsLift(v){ return NS_LIFTS[Math.max(1,Math.min(3,+(v&&v.tier)||2))-1]; }
 const nsFirst=s=>{ s=String(s||'').replace(/\s+/g,' ').trim(); const m=/^.*?[.!?](?=\s|$)/.exec(s); return m?m[0]:s; };
@@ -15047,8 +15071,25 @@ function nsSnowIdea(v){ return NS_SNOW.has(v.id)||/\bsnow/i.test(String(v.n||v.n
 const NS_TWINS={'immigrants-spanish-web-whatsapp':'immigrants-lang-page-and-messaging-app','immigrants-worship-interpretation':'immigrants-worship-interpreted-in-lang'};
 const NS_LIFT_MAX=8, NS_LANG_LIFT_MAX=5;
 function nsIdeasFor(n){
-  const cl=nsClList(n); if(cl) return cl;   // v10.55.0: the work Claude wrote for this need, once it is here
-  return nsIdeasLib(n);
+  const F=n.finds&&n.finds.length>1?n.finds:null;
+  if(!F){ const cl=nsClList(n); if(cl) return cl;   // v10.55.0: the work Claude wrote for this need, once it is here
+    return nsIdeasLib(n); }
+  /* v10.74.0: a card of several findings: their lists taken in turn inside each lift (Claude's work for the lead first, when it is
+     here), no idea twice; the cap per lift 10 for two findings, 12 for three or more (8 for one) */
+  const key='card|'+F.map(f=>f.id+'|'+(f.tag||'')).join(',')+'|'+LANG+'|'+SCOPE;
+  if(NS.lists.has(key)) return NS.lists.get(key);
+  const lists=F.map((f,i)=>{ let l=[]; try{ l=(i===0&&nsClList(f))||nsIdeasLib(f); }catch(e){ l=[]; } return {f,l}; });
+  const cap=F.length>=3?12:10, seen=new Set(), out=[];
+  // the lead's own ideas first (half the lift's seats), the other findings' in turn for the rest, then the rest of the lead's. Each
+  // row remembers its finding (find): an idea that says the neighbors' language is one row per language (a welcome card in each);
+  // any other idea once.
+  NS_LIFTS.forEach(lf=>{ const cols=lists.map(x=>({f:x.f,l:x.l.filter(v=>nsLift(v)===lf)})), sibs=cols.slice(1).filter(c=>c.l.length), lead=sibs.length?Math.ceil(cap/2):cap; let k=0;
+    const take=(v,f)=>{ if(!v||k>=cap) return; const key=v.lib&&v.langful?v.id+'|'+nsLangKey(nsNeedLang(f)):v.id; if(seen.has(key)) return; seen.add(key); out.push({...v,find:f.id}); k++; };
+    cols[0].l.slice(0,lead).forEach(v=>take(v,cols[0].f));
+    for(let i=0;k<cap&&sibs.some(c=>i<c.l.length);i++) sibs.forEach(c=>take(c.l[i],c.f));
+    cols[0].l.slice(lead).forEach(v=>take(v,cols[0].f)); });
+  NS.lists.set(key,out);
+  return out;
 }
 function nsIdeasLib(n){
   const key=n.id+'|'+(n.lang||'')+'|'+(n.tag||'')+'|'+LANG+'|'+SCOPE;
@@ -15106,8 +15147,9 @@ function nsLoadSoon(){
   NS.soon=setTimeout(()=>{ const go=()=>{ if(!NS.map&&!NS.mapP&&TOOL==='survey') nsLoad(); };
     if(typeof requestIdleCallback==='function') requestIdleCallback(go,{timeout:2000}); else go(); },1500);
 }
-function nsAllNeeds(){ return NSM?[...NSM.needs,...NSM.also]:[]; }
-function nsNeedById(id){ return nsAllNeeds().find(n=>n.id===id)||null; }
+/* v10.74.0: the cards (one per family); a finding's id lands on the card that holds it (the way back kept before v10.74.0) */
+function nsAllNeeds(){ return NSM?(NSM.cards||nsGroups(NSM.needs,NSM.also)):[]; }
+function nsNeedById(id){ const all=nsAllNeeds(); return all.find(n=>n.id===id)||all.find(n=>(n.finds||[]).some(f=>f.id===id))||null; }
 /* ---- drawing ---- */
 const nsBars=L=>`<span class="lift l${NS_LIFTS.indexOf(L)+1}" aria-hidden="true"><b></b><b></b><b></b></span>`;
 function nsCatName(c){ return LANG==='es'?(NS_CAT_ES[c]||c):c; }
@@ -15138,9 +15180,19 @@ function nsIdeasHTML(n){
      columns side by side (stacked on a phone), every idea showing. (v10.46.1's three buttons, one list at a time, are gone.) */
   const groups=NS_LIFTS.map(L=>[L,list.filter(v=>nsLift(v)===L)]).filter(([,g])=>g.length);
   return nsClStatusHTML(n)+`<div class="ns-lcols">`+groups.map(([L,g])=>`<div class="ns-lift ns-lcol" data-lift="${L}" id="ns-l-${esc(n.id)}-${L}"><h4 class="ns-lh">${nsBars(L)}<span>${esc(nsU(L))}</span><small>${esc(L_IDEAS(g.length))}</small></h4><p class="ns-gl">${esc(nsU(L+'G'))}</p>${g.map(v=>{ const d1=nsD1(v);
-      return `<button type="button" class="ns-row${NS.last===v.id&&NS.open===n.id?' ns-last':''}" data-idea="${esc(v.id)}" data-need="${esc(n.id)}"><span class="ns-in">${esc(gfCap(v.name))}</span><span class="ns-ia" aria-hidden="true">›</span>`
+      return `<button type="button" class="ns-row${NS.last===v.id&&NS.open===n.id?' ns-last':''}" data-idea="${esc(v.id)}" data-need="${esc(n.id)}" data-find="${esc(v.find||n.id)}"><span class="ns-in">${esc(gfCap(v.name))}</span><span class="ns-ia" aria-hidden="true">›</span>`
         +(d1?`<span class="ns-id">${esc(d1)}</span>`:'')+`<span class="ns-if"><span>${esc(nsU('ppl',v.ppl))}</span><span>${esc(nsMoney(v))}</span></span></button>`; }).join('')}</div>`).join('')+`</div>`;
 }
+/* v10.74.0: one finding, as before (Where to begin, Ask first); two or more, each finding under its topic: its sentence, its steps,
+   its question (an also row keeps its tag) */
+function nsFindsHTML(n,steps){
+  const F=n.finds&&n.finds.length>1?n.finds:null;
+  if(!F) return `${steps.length?`<h5>${esc(L('Where to begin','Por dónde empezar'))}</h5><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
+      ${n.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(n.ask)}</p>`:''}`;
+  return F.map(f=>{ const st=Array.isArray(f.steps)?f.steps:[];
+    return `<div class="ns-find" data-find="${esc(f.id)}"><h5>${esc(f.topic||f.title)}${f.tag?` <span class="ns-tag">${esc(nsTagText(f))}</span>`:''}</h5><p class="ns-fev">${esc(f.evidence)}</p>${st.length?`<ul>${st.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}${f.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(f.ask)}</p>`:''}</div>`; }).join('');
+}
+function nsAiBlocksAll(n){ return (n.finds&&n.finds.length?n.finds:[n]).map(f=>nsAiBlocks(f)).join(''); }   // v10.74.0: every finding's lines
 function nsBodyHTML(n,open,ideasOpen){
   // v10.72.0: the free version shows the need's title and line; a need opened is the full version (the lock, nothing else)
   if(!entitled('plan')) return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}><div class="ns-detail ns-locked">${lockHTML('plan')}</div></div>`;
@@ -15149,10 +15201,9 @@ function nsBodyHTML(n,open,ideasOpen){
   // v10.45.1: "what the community needs … more robust with information … the circular graphs with the colors"; and the ideas a
   // section of their own ("there's no differentiation between Ministry ideas to meet the need and what the community needs")
   return `<div class="ns-body" id="ns-b-${esc(n.id)}" role="region" aria-labelledby="ns-h-${esc(n.id)}"${open?'':' hidden'}>
-    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}${open?nsAiBlocks(n):''}
+    <div class="ns-detail"><h4>${esc(nsU('detail'))}</h4>${open?nsFigsHTML(n):''}${open?nsAiBlocksAll(n):''}
       ${help?`<p class="ns-help"><b>${esc(L('What helps','Lo que ayuda'))}</b> ${esc(help[LANG==='es'?1:0])}</p>`:''}
-      ${steps.length?`<h5>${esc(L('Where to begin','Por dónde empezar'))}</h5><ul>${steps.map(s=>`<li>${esc(s)}</li>`).join('')}</ul>`:''}
-      ${n.ask?`<p class="ns-ask"><b>${esc(nsU('ask'))}</b> ${esc(n.ask)}</p>`:''}</div>
+      ${nsFindsHTML(n,steps)}</div>
     <div class="ns-ideasec">
     <button type="button" class="ns-show" data-ns-show="${esc(n.id)}" aria-expanded="${ideasOpen}" aria-controls="ns-i-${esc(n.id)}"><span><i class="ns-bulb" aria-hidden="true"></i>${esc(nsU('show'))}</span><small>${esc(ideasOpen?nsU('hide'):nsCountText(n))}</small></button>
     <div class="ns-ideas" id="ns-i-${esc(n.id)}"${ideasOpen?'':' hidden'}>${ideasOpen?nsIdeasHTML(n):''}</div>
@@ -15227,7 +15278,10 @@ function nsFigs(n){
     const occ=(x,g)=>{ const r=x&&Array.isArray(x.occ)?x.occ.find(o=>o[0]===g):null; return r?r[1]:null; };
     const low=x=>x&&x.ltvw!=null&&x.count?x.ltvw/x.count*100:null;
     const out=[];
-    for(const k of n.figKeys||NS_FIGS[n.id]||[]){   // v10.53.0: a new need's own figures
+    // v10.74.0: a card of several findings draws their figures in turn, no key twice, six at most (one finding: four)
+    const FF=n.finds&&n.finds.length?n.finds:[n], max=FF.length>1?6:4, keys=[];
+    FF.forEach(f=>(f.figKeys||NS_FIGS[f.id]||[]).forEach(k=>{ if(!keys.includes(k)) keys.push(k); }));   // v10.53.0: a new need's own figures
+    for(const k of keys){
       let v=null, cv=null, lab='', kind='language';
       if(k==='@lang'){ if(!L) continue; v=L.share; cv=cL?cL.share:null; lab=es?'Hablan '+name.charAt(0).toLowerCase()+name.slice(1)+' en casa':'Speak '+name+' at home'; }   // in Spanish a language is lower case in a sentence
       else if(k==='@langLow'){ if(!L) continue; v=low(L); cv=low(cL); lab=es?'De ellos, con inglés limitado':'Of them, limited English'; }
@@ -15237,7 +15291,7 @@ function nsFigs(n){
         else { v=m[k]; cv=c?c[k]:null; } }
       if(v==null||!isFinite(v)) continue;
       out.push({v:Math.max(0,Math.min(100,v)),c:cv!=null&&isFinite(cv)?cv:null,label:lab,kind});
-      if(out.length===4) break;
+      if(out.length===max) break;
     }
     return out;
   }catch(e){ return []; }
@@ -15263,13 +15317,20 @@ const NS_CAT_HUE={'Language & newcomers':'language','Housing pressure':'housing'
   'Seniors & isolation':'seniors','A divided neighborhood':'divided','A changing community':'people','Work & schedules':'work','Income':'income',
   'Young adults':'young','Veterans':'veterans'};
 const nsHue=n=>NS_CAT_HUE[n.catLabel||n.cat]||n.kind||'language';
+/* v10.74.0: the card's other findings, by topic ("+ Older homeowners · An older neighborhood"; an also row with its tag in brackets) */
+function nsTagText(f){ return f.tag==='town'?nsU('across',nsTownAll()):nsU('near'); }
+function nsWithHTML(n){
+  const more=(n.finds||[]).slice(1); if(!more.length) return '';
+  const low=t=>String(t).charAt(0).toLowerCase()+String(t).slice(1);
+  return `<span class="ns-with">+ ${more.map(f=>esc(f.topic||f.title)+(f.tag?' ('+esc(low(nsTagText(f)))+')':'')).join(' · ')}</span>`;
+}
 function nsCardHTML(n,i,hide){
   const open=NS.open===n.id, io=open&&NS.ideas;
   const tag=n.tag?` <span class="ns-tag">${esc(n.tag==='town'?nsU('across',nsTownAll()):nsU('near'))}</span>`:'';
-  return `<article class="ns-need${n.tag?' ns-alsorow':''}${open?' open':''}" data-need="${esc(n.id)}" data-cat="${esc(n.cat)}" data-kind="${n.kind}"${n.tag?` data-also="${n.tag}"`:''} style="--k:var(--m-${nsHue(n)})"${hide?' hidden':''}>
+  return `<article class="ns-need${n.tag?' ns-alsorow':''}${open?' open':''}" data-need="${esc(n.id)}" data-cat="${esc(n.cat)}" data-kind="${n.kind}" data-finds="${(n.finds||[n]).length}"${n.tag?` data-also="${n.tag}"`:''} style="--k:var(--m-${nsHue(n)})"${hide?' hidden':''}>
   <button type="button" class="ns-head" id="ns-h-${esc(n.id)}" aria-expanded="${open}" aria-controls="ns-b-${esc(n.id)}">
     <span class="ns-rank">${i+1}</span>
-    <span class="ns-t"><span class="ns-cat">${esc(nsCatName(n.catLabel||n.cat))}${n.top?` <span class="ns-top">${esc(nsU('top'))}</span>`:''}${tag}</span><h3>${esc(n.title)}</h3><span class="ns-ev">${esc(n.evidence)}</span></span>
+    <span class="ns-t"><span class="ns-cat">${esc(nsCatName(n.catLabel||n.cat))}${n.top?` <span class="ns-top">${esc(nsU('top'))}</span>`:''}${tag}</span><h3>${esc(n.title)}</h3><span class="ns-ev">${esc(n.evidence)}</span>${nsWithHTML(n)}</span>
     <span class="ns-chev" aria-hidden="true">⌄</span></button>
   ${nsBodyHTML(n,open,io)}</article>`;
 }
@@ -15294,7 +15355,7 @@ function nsHTML(S){
   if(!S) return '';
   /* v10.50.0 — the pastor (6 Oct 2026): "where it says also here make it a continuation 7 8 9 10 until they're all done": one list,
      numbered on; each "also" card keeps its small tag (across the town / almost a need here). */
-  const all=[...S.needs,...S.also], many=all.length>15, shown=many&&!NS.showAll?12:all.length;
+  const all=S.cards||nsGroups(S.needs,S.also), many=all.length>15, shown=many&&!NS.showAll?12:all.length;   // v10.74.0: one card per family
   const alsoLine=S.also.some(n=>n.tag==='town')?nsU('alsoLine',nsTownAll()):nsU('alsoNear');
   // review #27f: the note short, the church's information a link of its own, the lift legend inside an opened ideas list
   /* v10.45.1 — the pastor (5 Oct 2026): "you don't need the thing that says your church's information is on the spiritual gifts
@@ -15321,7 +15382,7 @@ function nsDraw(){
   if(NSM&&aiOn()&&SCOPE==='tract'){ const pl=nsAiPlace(), kept=pl?nsAiKept(nsAiKey(pl)):null;
     if(kept){ NSM=nsAiApply(NSM,kept.list); if(NS_AI.status!=='working'&&NS_AI.status!=='failed'){ NS_AI.status='done'; NS_AI.made=kept.made; } } }
   if(NS.open&&!nsNeedById(NS.open)){ NS.open=''; NS.ideas=false; }
-  if(NS.open&&NSM&&[...NSM.needs,...NSM.also].findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
+  if(NS.open&&NSM&&nsAllNeeds().findIndex(n=>n.id===NS.open)>=12) NS.showAll=true;   // v10.50.0: one list, the also cards numbered on
   NS.lists.clear();
   h.dataset.chip=nsU('chip');
   h.innerHTML=NSM?nsHTML(NSM):'';
@@ -15434,7 +15495,8 @@ function nsAiApply(S,list){
     const m={...n,title:x.title||n.title,evidence:x.why||n.evidence,ai}; delete m.tag; top.push(m);
   });
   if(top.length<5) return S;
-  return {...S,needs:top,also:S.also.filter(n=>!used.has(n.id)),ai:true};
+  const alsoLeft=S.also.filter(n=>!used.has(n.id));
+  return {...S,needs:top,also:alsoLeft,cards:nsGroups(top,alsoLeft),ai:true};   // v10.74.0: grouped the same way
 }
 function nsAiKept(key){ try{ const all=uChurch().needsList, e=all&&key?all[key]:null; return e&&Array.isArray(e.list)&&e.list.length?e:null; }catch(e){ return null; } }
 function nsAiKeep(key,list,made){
@@ -15569,7 +15631,7 @@ function nsClInput(n){
     .slice(0,40).map(v=>({id:v.id,name:String(v.name).replace(/\s+/g,' ').trim().slice(0,120),lift:NS_LIFTS.indexOf(nsLift(v))+1}));
   return {lang:A.lang,place:A.place,figs:A.figs,langs:A.langs,origins:A.origins,
     need:{id:n.id,title:String(n.title||n.topic||n.id).replace(/\s+/g,' ').trim().slice(0,140),cat:String(n.catLabel||n.cat||'Community').slice(0,60),
-      why:String(n.evidence||'').replace(/\s+/g,' ').trim().slice(0,400),themes:nsClThemes(n,lib)},tags,have};
+      why:String((n.lines&&n.lines.length?n.lines.join(' '):n.evidence)||'').replace(/\s+/g,' ').trim().slice(0,400),themes:nsClThemes(n,lib)},tags,have};   // v10.74.0: every finding's sentence
 }
 // one idea from the server, checked again: its words, its numbers, its links, and Make the Case must be able to take it
 function nsClOk(raw,I,pool,reach){   // v10.56.0: reach, a group's side ('in' for God's people); a need's ideas are 'out'
@@ -15792,7 +15854,7 @@ function nsOpenCard(id,o){
     const bd=x.querySelector('.ns-body'); if(bd) bd.hidden=true; const box=x.querySelector('.ns-ideas'); if(box&&!box.hidden){ box.hidden=true; const s=x.querySelector('.ns-show');
       if(s){ s.setAttribute('aria-expanded','false'); s.querySelector('small').textContent=nsCountText(nsNeedById(x.dataset.need)); } } });
   a.classList.add('open'); head.setAttribute('aria-expanded','true'); a.querySelector('.ns-body').hidden=false;
-  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')&&!det.querySelector('.ns-aih,.ns-plant')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)+nsAiBlocks(n0)); } }   // v10.53.0: and the list's own lines
+  { const det=a.querySelector('.ns-detail'), n0=nsNeedById(id); if(det&&n0&&!det.querySelector('.ns-figs')&&!det.querySelector('.ns-aih,.ns-plant')){ const h4=det.querySelector('h4'); if(h4) h4.insertAdjacentHTML('afterend',nsFigsHTML(n0)+nsAiBlocksAll(n0)); } }   // v10.53.0: and the list's own lines
   NS.open=id;
   nsSetIdeas(a,!!o.ideas);
   if(entitled('plan')&&!NS.map) nsLoad();
@@ -15821,7 +15883,7 @@ function nsClick(e){
     a.querySelectorAll('.ns-lift[data-lift]').forEach(p=>p.hidden=p.dataset.lift!==now);
     return; }
   const row=t.closest('.ns-row[data-idea]');
-  if(row){ nsSheetOpen(row.dataset.idea,row.dataset.need,{row}); return; }
+  if(row){ nsSheetOpen(row.dataset.idea,row.dataset.need,{row,find:row.dataset.find}); return; }   // v10.74.0: the row's finding
   if(t.closest('[data-ns-more]')){ NS.showAll=true; h.querySelectorAll('.ns-list > .ns-need[hidden]').forEach(x=>x.hidden=false); const m=h.querySelector('[data-ns-more]');
     const first=h.querySelectorAll('.ns-list > .ns-need')[12]; if(m) m.remove(); if(first){ const b=first.querySelector('.ns-head'); if(b) b.focus({preventScroll:true}); } return; }
   if(t.closest('[data-ns-retry]')){ NS.err=''; LIB.err=''; nsIdeasRedraw(); nsLoad(); }
@@ -15875,12 +15937,12 @@ function nsSheetHTML(v,n){
 }
 function nsSheetDraw(){
   const d=$('ns-sheet'); if(!d||!NS.sheet) return;
-  const n=nsNeedById(d.dataset.need), v=n&&nsView(NS.sheet,nsNeedLang(n)); if(!v||!n) return;
+  const n=nsNeedById(d.dataset.need), f=nsFindOf(n,d.dataset.find)||n, v=n&&nsView(NS.sheet,nsNeedLang(f)); if(!v||!n) return;   // v10.74.0: the row's finding
   const sc=d.querySelector('.ns-sh'), top=sc?sc.scrollTop:0;
   // drawn again when the idea's steps arrive: the focus stays where it was (the title, or the button he is on)
   const had=d.contains(document.activeElement)?document.activeElement:null;
   const sel=had?(had.id?'#'+had.id:['nsClose','nsPdf','nsPropose','nsRemove','nsSteps'].map(k=>had.dataset[k]!==undefined?'[data-'+k.replace(/[A-Z]/g,c=>'-'+c.toLowerCase())+']':'').find(Boolean)):'';
-  d.innerHTML=nsSheetHTML(v,n);
+  d.innerHTML=nsSheetHTML(v,f);
   const s2=d.querySelector('.ns-sh'); if(s2&&top) s2.scrollTop=top;
   if(sel){ const el=d.querySelector(sel)||$('ns-s-t'); if(el) try{ el.focus({preventScroll:true}); }catch(e){} }
 }
@@ -15891,9 +15953,9 @@ function nsSheetWire(d){
   d.addEventListener('click',e=>{
     const t=e.target;
     if(t===d||t.closest('[data-ns-close]')){ nsSheetClose(); return; }
-    if(t.closest('[data-ns-propose]')){ nsPropose(d.dataset.idea,d.dataset.need); return; }
-    if(t.closest('[data-ns-pdf]')){ nsPdf(d.dataset.idea,d.dataset.need); return; }
-    if(t.closest('[data-ns-remove]')){ const n=nsNeedById(d.dataset.need); nsRemove(nsPlanId(nsView(d.dataset.idea,n?nsNeedLang(n):undefined),n)); return; }
+    if(t.closest('[data-ns-propose]')){ nsPropose(d.dataset.idea,d.dataset.need,d.dataset.find); return; }
+    if(t.closest('[data-ns-pdf]')){ nsPdf(d.dataset.idea,d.dataset.need,d.dataset.find); return; }
+    if(t.closest('[data-ns-remove]')){ const n=nsFindOf(nsNeedById(d.dataset.need),d.dataset.find)||nsNeedById(d.dataset.need); nsRemove(nsPlanId(nsView(d.dataset.idea,n?nsNeedLang(n):undefined),n)); return; }
     if(t.closest('[data-ns-steps]')){ NS.sheetErr=''; nsSheetDraw(); nsSheetText(d.dataset.idea); } });
   // no native dialog (an old browser): Esc closes it all the same
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&nsSheetIsOpen()&&typeof d.showModal!=='function'){ e.preventDefault(); nsSheetClose(); } });
@@ -15909,15 +15971,17 @@ function nsRenewed(id){
   NS.map=null; NS.mapP=null; NS.lists.clear();
   return nsLoad().then(()=>{ if(id&&NS.sheet===id){ nsSheetDraw(); nsSheetText(id); } });
 }
+/* v10.74.0: the finding of a card an idea row came from (the card's own lead when none is named) */
+function nsFindOf(n,id){ if(!n) return null; if(!id||id===n.id) return n; return (n.finds||[]).find(f=>f.id===id)||null; }
 function nsSheetOpen(id,needId,o){
   o=o||{};
   if(!entitled('plan')) return;
   if(!LIB.idx&&NS.map){ nsRenewed().then(()=>nsSheetOpen(id,needId,o)); return; }   // review S4: never a dead row
-  const d=$('ns-sheet'), n=nsNeedById(needId), v=n&&nsView(id,nsNeedLang(n)); if(!d||!n||!v) return;
+  const d=$('ns-sheet'), n=nsNeedById(needId), f=nsFindOf(n,o.find)||n, v=n&&nsView(id,nsNeedLang(f)); if(!d||!n||!v) return;
   nsSheetWire(d);
   NS.sheet=id; NS.last=id; NS.status=''; NS.leaving=false;
   if(o.row) NS.lastRow=o.row;
-  d.dataset.idea=id; d.dataset.need=needId; d.dataset.kind=n.kind; d.style.setProperty('--k',`var(--m-${n.kind})`);
+  d.dataset.idea=id; d.dataset.need=needId; d.dataset.find=f.id; d.dataset.kind=n.kind; d.style.setProperty('--k',`var(--m-${n.kind})`);
   nsSheetDraw();
   if(!d.hasAttribute('open')){ if(typeof d.showModal==='function'){ try{ d.showModal(); }catch(e){ d.setAttribute('open',''); } } else d.setAttribute('open',''); }
   document.documentElement.classList.add('ns-modal');
@@ -15944,9 +16008,9 @@ function nsRemove(id){
 }
 /* ---- "Create a proposal for this ministry" (§2.7): the idea saved, in the plan (no capacity check), chosen in Make the Case
    on the ministry path, and the view landed on its card; the way back remembered. ---- */
-async function nsPropose(id,needId){
+async function nsPropose(id,needId,findId){
   if(!entitled('plan')||!id) return;
-  const n0=nsNeedById(needId), L=n0?nsNeedLang(n0):libLangCtx(), v=nsView(id,L); if(!v) return;
+  const n0=nsNeedById(needId), f0=nsFindOf(n0,findId)||n0, L=n0?nsNeedLang(f0):libLangCtx(), v=nsView(id,L); if(!v) return;   // v10.74.0: the row's finding
   let pid=id;
   if(v.lib){
     nsStatus(nsU('proposing'));
@@ -15962,12 +16026,12 @@ async function nsPropose(id,needId){
   const ch=uChurch(); ch.selected=[...new Set([...uSelected(),pid])];
   // review #4: Make the Case says "Why here" with this need's own figure (its card, its slides), not the first rule it fits
   if(!ch.whyFrom||typeof ch.whyFrom!=='object') ch.whyFrom={};
-  ch.whyFrom[pid]={need:needId,tag:n0&&n0.tag||'',ev:n0?n0.evidence:'',lang:LANG};
+  ch.whyFrom[pid]={need:f0?f0.id:needId,tag:f0&&f0.tag||'',ev:f0?f0.evidence:'',lang:LANG};   // v10.74.0: the finding's own sentence
   uPersist();
   CASE_ST.rank=null; uNextRefresh();
   caseSetPrefs({ministry:pid,plan:false,path:'ministry'});
   CASE_ST.pick=false; CASE_ST.slide=0; CASE_ST.q=''; CASE_ST.nowShow=false; LIB_UI.case=LIB_UI_BLANK();
-  NS.back={need:needId,idea:id,plan:pid}; NS.open=needId; NS.ideas=true; NS.last=id;
+  NS.back={need:needId,find:f0?f0.id:needId,idea:id,plan:pid}; NS.open=needId; NS.ideas=true; NS.last=id;
   try{ sessionStorage.setItem('terrain-ns-back',JSON.stringify(NS.back)); }catch(e){}
   nsMarkLast(id);
   NS.leaving=true; nsSheetClose(); NS.leaving=false;
@@ -16028,9 +16092,9 @@ function nsBack(){
   nsBackTo(b);
 }
 function nsBackTo(b){
-  if(!nsCardEl(b.need)) return;
-  nsOpenCard(b.need,{ideas:true,jump:true});
-  nsSheetOpen(b.idea,b.need);
+  const n=nsNeedById(b.need); if(!n||!nsCardEl(n.id)) return;   // v10.74.0: a finding's id lands on its card
+  nsOpenCard(n.id,{ideas:true,jump:true});
+  nsSheetOpen(b.idea,n.id,{find:b.find||b.need});
 }
 /* "Your church" links anywhere on the page ([data-gf-church]): the Spiritual Gifts landing, the card open (review #18, coordinator 1) */
 document.addEventListener('click',e=>{ const a=e.target&&e.target.closest&&e.target.closest('[data-gf-church]'); if(!a) return; e.preventDefault(); try{ gfChurchOpen(); }catch(er){} });
@@ -16178,8 +16242,8 @@ function nsPdfLayout(doc,v,need,o,faces,lv,draw){
 }
 /* The rows of "What it needs", in the PDF's language (the sheet's nsRows reads the page's). */
 function nsRowsIn(v,es){ const prev=LANG; LANG=es?'es':'en'; try{ return nsRows(v); }finally{ LANG=prev; } }
-async function nsPdf(id,needId){
-  const n=nsNeedById(needId); if(!n||!entitled('plan')) return;
+async function nsPdf(id,needId,findId){
+  const n0=nsNeedById(needId), n=nsFindOf(n0,findId)||n0; if(!n||!entitled('plan')) return;   // v10.74.0: the row's finding (its title, sentence and language)
   nsStatus(nsU('pdfMaking'));
   try{
     const r=LIB.byId&&LIB.byId.get(id);
@@ -38469,8 +38533,8 @@ function casePropMode(){
    need, the name, the lift, what it is, why here, how to get started, what it needs from our church; the PDF, the way back and
    another ministry. */
 function casePropHTML(){
-  const b=NS.back||{}; let n=null, v=null;
-  try{ n=nsNeedById(b.need); v=nsView(b.idea,n?nsNeedLang(n):libLangCtx()); }catch(e){ v=null; }
+  const b=NS.back||{}; let n=null, f=null, v=null;
+  try{ n=nsNeedById(b.need); f=nsFindOf(n,b.find)||n; v=nsView(b.idea,f?nsNeedLang(f):libLangCtx()); }catch(e){ v=null; }   // v10.74.0: the finding's language
   if(!v){ const x=caseItemOf(b.plan); v=x?{name:caseMinName(x)||x.n||'',d:'',tier:2,ppl:0,priced:false}:{name:'',d:'',tier:2,ppl:0,priced:false}; }
   // v10.52.0: the size chosen for it (Size, step 3), its lift line and what it needs from our church with it
   const lv=caseLiftNow(b.plan||'');
@@ -38481,7 +38545,7 @@ function casePropHTML(){
   let rows=[]; try{ rows=v.ppl!=null?nsRows(v):[]; }catch(e){ rows=[]; }
   return `<h2 class="cs-pbig" id="cs-prop-h">${esc(L_PROP('big'))}</h2>
     <div class="cs-pcard" style="--k:var(--m-${n&&n.kind||'language'})">
-      ${n?`<p class="ns-shneed cs-pneed">${esc(nsU('sheetFor',n.title))}</p>`:''}
+      ${n?`<p class="ns-shneed cs-pneed">${esc(nsU('sheetFor',(f||n).title))}</p>`:''}
       <p id="cs-prop-t" class="cs-pt" role="heading" aria-level="3">${esc(gfCap(v.name))}</p>
       <p class="ns-liftline">${nsBars(L)}<span><b>${esc(nsU(L))}</b> · ${esc(nsU(L+'G'))}${v.sab!=null?' · '+esc(v.sab?libT('sab'):libT('noSab')):''}</span></p>
       ${d?`<p class="ns-shd">${esc(d)}</p>`:''}
@@ -38514,7 +38578,7 @@ function casePropWire(host){
   const fb=host.querySelector('[data-cs-from]'); if(fb) fb.onclick=nsBack;
   host.querySelectorAll('[data-cs-church]').forEach(b=>b.onclick=()=>uChurchGo());   // v10.55.0
   host.querySelectorAll('[data-cs-gifts]').forEach(b=>b.onclick=()=>gfOpenLanding());   // v10.56.2: the main page
-  const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need); };
+  const pb=host.querySelector('[data-cs-pdf]'); if(pb) pb.onclick=()=>{ const b=NS.back||{}; nsPdf(b.idea,b.need,b.find); };
   const ob=host.querySelector('[data-cs-other]'); if(ob) ob.onclick=()=>{ CASE_ST.propList=!CASE_ST.propList; caseMount(); if(CASE_ST.propList){ const i=csPanes('cs-panes').findIndex(p=>p.id==='cs-s2'); if(i>=0) csGo('cs-panes',i,false); } };   // v10.73.0: the list slides in
 }
 /* ================= /MAKE THE CASE: THE SCREENS ================= */
@@ -44990,7 +45054,7 @@ function chSnapSave(){
   const ch=uChurch(); if(!ch) return;
   const M=DATA.M, lv=DATA.levels||{}, figs={};
   CH_SNAP_KEYS.forEach(k=>{ const v=[M.tract[k],(M.cousub||{})[k],(M.county||{})[k]].map(x=>typeof x==='number'&&isFinite(x)?Math.round(x*10)/10:null); if(v[0]!=null) figs[k]=v; });
-  let needs=[]; try{ needs=((NSM&&NSM.needs)||[]).slice(0,5).map(n=>String(n.title||n.topic||'').trim()).filter(Boolean); }catch(e){ needs=[]; }
+  let needs=[]; try{ needs=((NSM&&(NSM.cards||NSM.needs))||[]).slice(0,5).map(n=>String(n.title||n.topic||'').trim()).filter(Boolean); }catch(e){ needs=[]; }   // v10.74.0: one per family
   let town=''; try{ town=libTown(); }catch(e){ town=''; }
   const snap={v:1,at:new Date().toISOString().slice(0,10),tract:String((lv.tract&&lv.tract.name)||''),town:String(town||''),county:String((lv.county&&lv.county.name)||''),figs,needs,lang:LANG==='es'?'es':'en'};
   if(JSON.stringify({...ch.snap,at:0})===JSON.stringify({...snap,at:0})) return;

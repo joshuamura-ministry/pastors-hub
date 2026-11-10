@@ -63,13 +63,16 @@ const open=async(P,id)=>{ await until(()=>P.q(`#u-needs [data-need="${id}"] .ns-
 
   console.log('\n-- done: Claude\'s list replaces it, checked again here --');
   hold=false; await until(()=>P.J('NS_AI.status')==='done',4000); await sleep(40);
-  const order=P.qa('#u-needs .ns-list > .ns-need').slice(0,6).map(a=>a.dataset.need);
-  c('its order, the new need numbered in it; the need with a made-up number left out', [order,P.qa('#u-needs .ns-need h3').slice(0,6).map(h=>h.textContent)],
-    [['snap','lang-primary','ai-3','kids','seniors-alone','poverty'],['Hunger close to home','A welcome in Spanish','Rides to the doctor','A neighborhood of children','Seniors on their own','Families stretched thin']]);
+  // v10.74.0 (stale, not a regression): one card per family: Claude's order says which finding leads each card; the new need (ai-3,
+  // Hardship) and poverty fold under snap's card; the need with a made-up number is left out
+  const order=P.qa('#u-needs .ns-list > .ns-need').slice(0,4).map(a=>a.dataset.need);
+  c('its order, one card per family, the new need under its family\'s card; the need with a made-up number left out', [order,P.qa('#u-needs .ns-need h3').slice(0,4).map(h=>h.textContent),P.J(`nsNeedById('snap').finds.map(f=>f.id)`)],
+    [['snap','lang-primary','kids','seniors-alone'],['Hunger close to home','A welcome in Spanish','A neighborhood of children','Seniors on their own'],['snap','ai-3','poverty']]);
   c('a why whose number is not the survey\'s keeps the survey\'s own line ("38.6%" is not a Census figure here)', P.txt('#u-needs [data-need="kids"] .ns-ev'), '27% of residents are under 18 — about 1,490 children.');
   c('a figure written to many decimals is not shown (the page checks it too)', P.J(`nsAiNumsOk('13.499999999% have no car',nsAiPool(nsAiInput()))`), false);
   c('…the others read as Claude wrote them', P.txt('#u-needs [data-need="snap"] .ns-ev'), 'Around the church 16.8% of households receive SNAP, against 6.2% in the county.');
-  c('"Also here" keeps what the list left out (the survey\'s also, less what it took)', P.qa('#u-needs .ns-alsorow').map(a=>a.dataset.need), ['seniors-nocar']);
+  // v10.74.0: the also row the list left out folds under its family's card with its tag (no card of its own)
+  c('"Also here" keeps what the list left out (the survey\'s also, less what it took): under the Seniors card, tagged', [P.qa('#u-needs .ns-alsorow').map(a=>a.dataset.need),P.J(`nsNeedById('seniors-alone').finds.map(f=>[f.id,f.tag||''])`)], [[],[['seniors-alone',''],['seniors-nocar','town']]]);
   c('the line: when, and Generate new community needs', [P.txt('#ns-aistat .ns-aiwhen'),P.txt('#ns-aistat [data-ns-aigen]')], ['Studied 6 Oct 2026','Generate new community needs']);
   await open(P,'snap');
   const S=P.q('#u-needs [data-need="snap"]');
@@ -80,12 +83,13 @@ const open=async(P,id)=>{ await until(()=>P.q(`#u-needs [data-need="${id}"] .ns-
   c('…each line with its source, the site\'s name as the link, https only, opened apart', links,
     [['buckscounty.gov','https://www.buckscounty.gov/news/food','_blank','noopener noreferrer'],['example-sda.org','https://www.example-sda.org/table','_blank','noopener noreferrer']]);
   c('…then the survey\'s own help and steps, as before', [!!S.querySelector('.ns-help'),!!S.querySelector('.ns-detail h5')], [true,true]);
-  await open(P,'ai-3');
-  const NW=P.q('#u-needs [data-need="ai-3"]');
-  c('a new need: its category\'s colour, its figure as a ring, its plant line', [NW.dataset.cat,NW.getAttribute('style'),NW.querySelectorAll('.ns-figs .stat').length,!!NW.querySelector('.ns-plant')], ['Hardship & work','--k:var(--m-hardship)',1,true]);
+  // v10.74.0: a new need folds under its family's card (snap's): its block under its title, its figure among the card's rings, its
+  // plant line among the card's, its ideas rows from its themes (data-find)
+  const NW=P.q('#u-needs [data-need="snap"]');
+  c('a new need in its family\'s card: its category\'s colour, its block, its figure among the rings, its plant line', [NW.dataset.cat,NW.getAttribute('style'),NW.querySelector('.ns-find[data-find="ai-3"] h5').textContent,NW.querySelectorAll('.ns-figs .stat').length>=2,NW.querySelectorAll('.ns-plant').length>=2], ['Hardship & work','--k:var(--m-hardship)','Rides to the doctor',true,true]);
   NW.querySelector('[data-ns-show]').click();
-  await until(()=>NW.querySelector('.ns-ideas .ns-row'),4000);
-  const ideaThemes=P.J(`[...document.querySelectorAll('#ns-i-ai-3 .ns-row')].map(r=>(LIB.byId.get(r.dataset.idea)||{}).theme)`);
+  await until(()=>NW.querySelector('.ns-ideas .ns-row[data-find="ai-3"]'),4000);
+  const ideaThemes=P.J(`[...document.querySelectorAll('#ns-i-snap .ns-row[data-find="ai-3"]')].map(r=>(LIB.byId.get(r.dataset.idea)||{}).theme)`);
   c('…its ideas from the library\'s themes it names', [ideaThemes.length>=3,ideaThemes.every(t=>['transport','seniors'].includes(t))], [true,true]);
   c('the list is kept with the church, by place and language', P.J(`(()=>{ const k=Object.keys(uChurch().needsList||{}); return [k.length,/\\|en$/.test(k[0]),uChurch().needsList[k[0]].made]; })()`), [1,true,'2026-10-06']);
   c('nothing on screen says "AI"', /\bAI\b|\bIA\b/.test(P.txt('#u-needs')), false);

@@ -26,12 +26,14 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   console.log('\n-- an opened need: the figures as rings, what helps, where to begin, the question --');
   await openNeed(P,'rent50');
   const A='#u-needs [data-need="rent50"]';
-  c('its figures as the report draws them: a ring each, the value, the words', [P.qa(A+' .ns-figs .stat svg.ring').length,P.qa(A+' .ns-figs .statlab').map(x=>x.textContent)], [3,['Renters paying half or more','Renters paying 30% or more','Households renting']]);
-  c('in the kind\'s colour (housing is blue)', P.qa(A+' .ns-figs .stat').map(x=>x.getAttribute('style')), ['--hue:var(--m-housing)','--hue:var(--m-housing)','--hue:var(--m-housing)']);
-  c('against the county: a notch on the ring and the words', [P.qa(A+' .ns-figs .ring line.cmp').length,P.qa(A+' .ns-figs .statcmp').every(x=>/vs county|about the county/.test(x.textContent))], [3,true]);
+  // v10.74.0 (stale, not a regression): the Housing card holds four findings (rent50, nocar, renters, overcrowd): their figures in turn, no
+  // key twice, six at most, each in its own kind's colour
+  c('its figures as the report draws them: a ring each, the value, the words', [P.qa(A+' .ns-figs .stat svg.ring').length,P.qa(A+' .ns-figs .statlab').map(x=>x.textContent)], [6,['Renters paying half or more','Renters paying 30% or more','Households renting','Households without a car','Seniors living alone','Below the poverty line']]);
+  c('in the kind\'s colour (housing is blue)', P.qa(A+' .ns-figs .stat').map(x=>x.getAttribute('style')), ['--hue:var(--m-housing)','--hue:var(--m-housing)','--hue:var(--m-housing)','--hue:var(--m-housing)','--hue:var(--m-children)','--hue:var(--m-hardship)']);
+  c('against the county: a notch on the ring and the words', [P.qa(A+' .ns-figs .ring line.cmp').length,P.qa(A+' .ns-figs .statcmp').every(x=>/vs county|about the county/.test(x.textContent))], [6,true]);
   c('the key says what the ring and the mark are', P.txt(A+' .ns-figs .statkey'), 'Each ring is this neighborhood; the mark on it is the county.');
   c('what helps, for the kind of need', /^What helps Housing stress runs on a clock/.test(P.txt(A+' .ns-help')), true);
-  c('then where to begin (the steps) and the question to ask first', [P.txt(A+' .ns-detail h5'),P.qa(A+' .ns-detail li').length>=2,!!P.q(A+' .ns-ask')], ['Where to begin',true,true]);
+  c('then each finding under its topic (the steps) and the question to ask first', [P.txt(A+' .ns-detail h5'),P.qa(A+' .ns-detail li').length>=2,!!P.q(A+' .ns-ask')], ['Severe rent burden',true,true]);   // v10.74.0: a card of several findings
   c('only the open need draws its rings', P.qa('#u-needs .ns-need:not(.open) .ns-figs').length, 0);
   await openNeed(P,'lang-primary');
   c('a language need: the language and its limited English, then where neighbors born abroad come from',
@@ -71,7 +73,7 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
   const S=page({needs:'file',lang:'es'}); await ready(S); survey(S); await sleep(60);
   await openNeed(S,'rent50');
   c('the rings, what helps and where to begin in Spanish', [S.qa('#u-needs [data-need="rent50"] .ns-figs .statlab').map(x=>x.textContent)[0],/^Lo que ayuda La presión de la vivienda/.test(S.txt('#u-needs [data-need="rent50"] .ns-help')),S.txt('#u-needs [data-need="rent50"] .ns-detail h5'),S.txt('#u-needs [data-need="rent50"] .statkey')],
-    ['Inquilinos que pagan la mitad o más',true,'Por dónde empezar','Cada anillo es este vecindario; la marca sobre él es el condado.']);
+    ['Inquilinos que pagan la mitad o más',true,'Alquiler muy alto para el ingreso','Cada anillo es este vecindario; la marca sobre él es el condado.']);   // v10.74.0: the first finding's topic
   c('the Brief chip in Spanish', S.txt('#secnav button[data-t="brief"]'), 'Resumen');
   c('no page error along the way', [P.errs,S.errs], [[],[]]);
 }); await T.sec(async()=>{

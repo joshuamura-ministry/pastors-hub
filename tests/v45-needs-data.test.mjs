@@ -95,13 +95,14 @@ await T.sec(async () => {
   c('nothing of the library is fetched until a need opens or the page settles (1.5 s)', P.w.__fetched.filter(u => /^\/ideas\//.test(u)), []);
   await H.openNeed(P, 'rent50', true);
   c('opening a need loads the index and the map, once', [P.w.__fetched.filter(u => /^\/ideas\/index\.json/.test(u)).length, P.w.__fetched.filter(u => /^\/ideas\/needs\.json/.test(u)).length], [1, 1]);
-  const ids = P.qa('#ns-i-rent50 .ns-row').map(r => r.dataset.idea);
+  // v10.74.0: one card per family: the Housing card's rows that came from rent50 (data-find) are its own list, as the rows were
+  const ids = P.qa('#ns-i-rent50 .ns-row[data-find="rent50"]').map(r => r.dataset.idea);
   c('an id that resolves nowhere is skipped (never an empty row) and said in the log', [ids.includes('not-an-idea-anywhere'), P.J('LOG').some(l => /needs: missing not-an-idea-anywhere/.test(l))], [false, true]);
   c('…the two that resolve keep their place, and the need is topped up to ten from the library', [ids.length, ids.includes('homeless-rent-help-page'), ids.includes('jobs-money-read-before-you-sign-table')], [10, true, true]);
-  await H.openNeed(P, 'snap', true);
-  c('a need the map does not name: ten from the library, by its tags and themes', [P.qa('#ns-i-snap .ns-row').length, P.J(`nsTagsFor('snap')`).length > 0], [10, true]);
+  await H.openNeed(P, 'snap', true);   // v10.74.0: snap is a finding of the Hardship card; its own list (nsIdeasLib) is the ten
+  c('a need the map does not name: ten from the library, by its tags and themes', [P.J(`nsIdeasLib(nsAllNeeds().flatMap(g=>g.finds).find(f=>f.id==='snap')).length`), P.J(`nsTagsFor('snap')`).length > 0], [10, true]);
   P = H.page({needs: null}); await H.ready(P); H.survey(P); await H.openNeed(P, 'rent50', true);
-  c('needs.json missing (404): every need from the library, no error line', [P.qa('#ns-i-rent50 .ns-row').length, !!P.q('#ns-i-rent50 .ns-fail')], [10, false]);
+  c('needs.json missing (404): every need from the library, no error line', [P.qa('#ns-i-rent50 .ns-row[data-find="rent50"]').length, !!P.q('#ns-i-rent50 .ns-fail')], [10, false]);
   P = H.page({needs: MAP, session: {'terrain-lib-idx': {...H.IDX, hash: 'aaaaaaaaaaaa'}}}); await H.ready(P); H.survey(P);
   await H.openNeed(P, 'rent50', true);
   await H.until(() => P.J('LIB.renewed') === true && P.qa('#ns-i-rent50 .ns-row').length >= 10);
@@ -110,7 +111,7 @@ await T.sec(async () => {
   P = H.page({needs: MAP, idx404: true}); await H.ready(P); H.survey(P); await H.openNeed(P, 'rent50', true);
   c('the index too fails (offline): the detail stays, "The ideas could not load…" and Try again, no partial list',
     [!!P.q('#ns-b-rent50 .ns-detail'), P.txt('#ns-i-rent50 .ns-fail'), P.qa('#ns-i-rent50 .ns-row').length], [true, 'The ideas could not load. Check the connection and try again. Try again', 0]);
-  c('…the count says … rather than a number', P.txt('[data-ns-show="snap"] small'), '…');
+  c('…the count says … rather than a number', P.txt('[data-ns-show="child-poverty"] small'), '…');   // v10.74.0: the Hardship card's button
   P.E(`window.fetch=(f=>async u=>{ if(/index\\.json/.test(String(u))) return {ok:true,status:200,json:async()=>(${JSON.stringify(H.IDX)})}; return f(u); })(window.fetch)`);
   P.q('#ns-i-rent50 [data-ns-retry]').click();
   await H.until(() => P.qa('#ns-i-rent50 .ns-row').length >= 10);

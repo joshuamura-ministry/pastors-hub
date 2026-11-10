@@ -7,7 +7,10 @@
 const {sleep,until,checker,page,ready,survey}=require('./v45-helpers.js');
 const T=checker(), c=T.c;
 const PASSV='open-sesame-ideas';
-const ADDR="D.geo={...D.geo,matched:'118 Bristol Rd, Warminster, PA, 18974'}";
+// v10.74.0: one card per family, and the work is asked for the card (its lead). This suite is about one need's own work, so its tract
+// has SNAP alone among the Hardship findings (poverty, child poverty, low income, unemployment, no insurance, cash assistance and getting to
+// food all under their lines and their "almost" bands): snap leads a card of its own, as the suite always read it.
+const ADDR="D.geo={...D.geo,matched:'118 Bristol Rd, Warminster, PA, 18974'};Object.assign(D.M.tract,{poverty:10,childPoverty:12,incLow:15,unemp:4,uninsured:6,pubAssist:2,noCar:9})";
 const hex=i=>('0123456789abcd'+i).slice(-14).replace(/[^0-9a-f]/g,'a');
 const WHY='Around the church 16.8% of households receive SNAP, against 6.2% in the county.';
 const NUMS={1:{ppl:2,leaders:0,hrs:3,cost:40,costMo:0},2:{ppl:6,leaders:1,hrs:12,cost:400,costMo:60},3:{ppl:12,leaders:2,hrs:30,cost:2000,costMo:300}};
