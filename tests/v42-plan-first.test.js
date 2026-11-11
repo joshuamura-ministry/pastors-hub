@@ -119,7 +119,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     await P.E(`libLoadIndex()`); await until(()=>P.J('!!LIB.idx'));
     setup(P,{pre:PLAN});
     await choose(P,'community');
-    c('ONE short line under the title: this is where you win support', P.txt('#cs-s2 .cs-sh .note'), 'This is where you win support for what your church will do.');
+    c('ONE short line under the title: this is where you win support', P.txt('#cs-s2 .cs-sh .note'), 'Choose the ministry you will propose. Tap one to pick it.');
     // v10.43 (the pastor, 30 Sep 2026: "separate the things that are weekly or monthly — ongoing ministry — and events, which are one-time, one day… after one day there needs to be some kind of follow-up"): how it runs (#cs-cad) sits above "From your plan"
     c('the parts in order: How it runs, From your plan, More ideas for the group (its search inside), the list', P.qa('#cs-s2 > *').map(e=>e.id||e.className.split(' ')[0]),
       ['cs-sh','cs-cad','cs-plan','cs-more']);
@@ -178,7 +178,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
   await sec(async()=>{ const P=page(); await sleep(1300); setup(P);
     const ids=P.J('CASE_GROUPS.map(g=>g.id)'); const lines=[];
     for(const g of ids){ await choose(P,g); lines.push([g,P.txt('#cs-more h4'),P.txt('#cs-more .cs-parth .note'),P.txt('#cs-s2 .cs-sh .note')]); }
-    c('all 34: "More ideas for {the …}", "Best fit for Warminster first.", and the one step line', [ids.length,lines.filter(([g,h,n,s])=>h!==`More ideas for ${EN_FOR[g]}`||n!=='Best fit for Warminster first.'||s!=='This is where you win support for what your church will do.')], [34,[]]);
+    c('all 34: "More ideas for {the …}", "Best fit for Warminster first.", and the one step line', [ids.length,lines.filter(([g,h,n,s])=>h!==`More ideas for ${EN_FOR[g]}`||n!=='Best fit for Warminster first.'||s!=='Choose the ministry you will propose. Tap one to pick it.')], [34,[]]);
     c('the board and the business meeting open "More ideas" on God\'s people (the community is the survey\'s: it arrives through the plan)', P.J(`['board','business'].map(id=>caseDefaultTab({id}))`), ['in','in']);
     await choose(P,'board');
     c('…on the screen too', P.qa('#cs-lib .lib-sec').filter(s=>!s.hidden).map(s=>s.dataset.libSec), ['in']);
@@ -192,7 +192,7 @@ const sec=async(f)=>{ try{ await f(); }catch(e){ console.log('  FAIL  crashed: '
     c('Spanish, all 34: "Más ideas para {el/la/los/las …}", "Primero, lo que mejor encaja en Warminster."', lines.filter(([g,h,n])=>h!==`Más ideas para ${FOR[g]}`||n!=='Primero, lo que mejor encaja en Warminster.'), []);
     await choose(P,'pathfinders');
     c('…the Pathfinder Club', P.txt('#cs-more h4'), 'Más ideas para el Club de Conquistadores');
-    c('…the step line', P.txt('#cs-s2 .cs-sh .note'), 'Aquí es donde consigue apoyo para lo que su iglesia hará.');
+    c('…the step line', P.txt('#cs-s2 .cs-sh .note'), 'Elija el ministerio que va a proponer. Toque uno para elegirlo.');
     await choose(P,'community');
     c('…"De su plan" and its line, with the group\'s article', [P.txt('#cs-plan h4'),P.txt('#cs-plan .cs-parth .note'),planIds(P)],
       ['De su plan','Lo que su iglesia eligió y que encaja con los Servicios Comunitarios Adventistas (Dorcas).',['food-pantry']]);

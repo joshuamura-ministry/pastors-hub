@@ -27,8 +27,8 @@ async function open(L, prefs) {
   if (!has) return done();
 
   console.log('\n-- the switch: "Make the case for: A ministry | A project or purchase" --');
-  c('the switch, above the steps, in its own place', [P.txt('#cs-switch .bx-swl'), P.qa('#cs-switch [data-bx-path]').map(b => [b.textContent, b.getAttribute('aria-pressed')])],
-    ['Make the case for:', [['A ministry', 'false'], ['A project', 'false'], ['A purchase', 'true']]]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  c('the switch, above the steps, in its own place', [P.txt('#cs-switch .bx-swl'), P.qa('#cs-switch [data-bx-path]').map(b => [b.querySelector('b').textContent, b.getAttribute('aria-pressed')])],
+    ['What is this proposal for?', [['A ministry', 'false'], ['A project', 'false'], ['A purchase', 'true']]]);   // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026)   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   P.q('[data-bx-path="ministry"]').click(); await sleep(50);
   c('"A ministry": exactly the ministry path\'s steps in #casebody (the step bar, then steps 1, 2, 3), no purchase step', [P.qa('#casebody > *').map(e => e.id || e.className).filter(id => id !== 'cs-gff').slice(0, 4), !!P.q('#bx')],
     [['cs-bar', 'cs-panes', 'cs-nav', 'cs-close'], false]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
@@ -39,10 +39,10 @@ async function open(L, prefs) {
   console.log('\n-- five framed steps, each its own colour, one short line --');
   const heads = Q => [1, 2, 3, 4, 5].map(n => [Q.q('#bx-s' + n).dataset.bxHue, Q.txt('#bx-s' + n + ' .cs-sh h3'), Q.txt('#bx-s' + n + ' .cs-sh .note')]);
   c('EN', heads(P).map(h => h.slice(0, 2)), [['people', 'Step 1 of 5: What do you need?'], ['housing', 'Step 2 of 5: Three options'], ['hardship', 'Step 3 of 5: How we’ll pay'], ['children', 'Step 4 of 5: Who decides'], ['language', 'Step 5 of 5: Present and vote']]);
-  c('…their lines', heads(P).slice(0, 4).map(h => h[2]), ['And why it matters for ministry.', 'Find prices, or type your own.', 'Offerings and gifts. Never tithe.', 'Your church’s path.']);
+  c('…their lines (v10.75.0: each says what to do there)', heads(P).slice(0, 4).map(h => h[2]), ['Name it, say why it matters, and who will look after it.', 'Three prices, good, better and best; pick one and say why.', 'Where the money will come from, and how much from each. Never tithe.', 'Who has to say yes, and who you will present to.']);
   const S = await open('es');
   c('ES', heads(S).map(h => h[1]), ['Paso 1 de 5: ¿Qué necesitan?', 'Paso 2 de 5: Tres opciones', 'Paso 3 de 5: Cómo lo pagaremos', 'Paso 4 de 5: Quién decide', 'Paso 5 de 5: Presentar y votar']);
-  c('…the switch in Spanish', [S.txt('#cs-switch .bx-swl'), S.qa('#cs-switch [data-bx-path]').map(b => b.textContent)], ['Presentar la propuesta de:', ['Un ministerio', 'Un proyecto', 'Una compra']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  c('…the switch in Spanish', [S.txt('#cs-switch .bx-swl'), S.qa('#cs-switch [data-bx-path]').map(b => b.querySelector('b').textContent)], ['¿Para qué es esta propuesta?', ['Un ministerio', 'Un proyecto', 'Una compra']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   c('the bar\'s compact line names the current step (under 760 px the numbers alone show)', [P.txt('#bx-barnow'), S.txt('#bx-barnow')], ['Who decides', 'Quién decide']);
 
   console.log('\n-- ① What do you need? --');

@@ -87,7 +87,8 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   c('every group once', P.qa('#cs-s1 [data-cs-group]').map(b=>b.dataset.csGroup).sort(), P.J('CASE_GROUPS.map(g=>g.id)').sort());
 
   console.log('\n-- three framed steps, in order, with the step bar --');
-  c('no lead paragraph any more ("a lot of words, almost overwhelming")', [!!P.q('.cs-intro'),!!P.q('.cs-lead')], [false,false]);
+  // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026): one line under the title again, at his word
+  c('no lead paragraph ("a lot of words, almost overwhelming"); the one line under the title (v10.75.0)', [!!P.q('.cs-intro'),!!P.q('.cs-lead')], [false,true]);
   // v10.42 part 3 (the pastor, SPEC-FOCUS E: "Make the Case shows a gentle one-line banner suggesting it — but never blocks"): the
   // Gifts first line may sit above the step bar; the steps are as they were
   c('the step bar, then steps 1, 2, 3 in the page', P.qa('#casebody > *').map(e=>e.id||e.className).filter(id=>id!=='cs-gff').slice(0,4), ['cs-bar','cs-panes','cs-nav','cs-close']); c('…the three steps inside the panes box', P.qa('#cs-panes > .cs-step').map(e=>e.id), ['cs-s1','cs-s2','cs-s3']);   // v10.73.0 (stale, not a regression): one step at a time (the pastor, 9 Nov 2026: "it jumps down every time … press done and … it scrolls left like the other ones")
@@ -132,7 +133,7 @@ const secN=(P,sec)=>{ const e=P.q(`#cs-lib .lib-sec[data-lib-sec="${sec}"] .lib-
   // v10.42: the pastor (29 Sep 2026, section F, approved): "Why is there another section in Make the Case giving us another option for more ministries to do? Is this redundant or necessary?" The step's one line now says it is where support is won; the group and the town head "More ideas for
   // {group}" (its heading and line), below "From your plan" (tests/v42-plan-first.test.js)
   c('the line under the title says what step 2 is for; the group and the town head "More ideas"', [P.txt('#cs-s2 .cs-sh .note'),P.txt('#cs-more h4'),P.txt('#cs-more .cs-parth .note')],
-    ['This is where you win support for what your church will do.','More ideas for the prayer ministry','Best fit for Warminster first.']);
+    ['Choose the ministry you will propose. Tap one to pick it.','More ideas for the prayer ministry','Best fit for Warminster first.']);
   c('two sections: For God\'s people, For our community', P.qa('#cs-lib .lib-sech h4').map(h=>h.firstChild.textContent.trim()), ['For God’s people','For our community']);
   const libIds=sec=>cards(P,sec).filter(e=>!e.classList.contains('lib-sig')).map(e=>e.dataset.libId);
   // v10.41 integration: SPEC's map gives the Prayer ministry member-care and spiritual-care for God's people and

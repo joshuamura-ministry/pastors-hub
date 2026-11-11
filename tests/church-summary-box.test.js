@@ -56,7 +56,7 @@ setTimeout(()=>{
   c('shows their smaller numbers', /Attending60/.test(b2.textContent)&&/Kitchen \/ fellowship hall40 people/.test(b2.textContent)&&/3can cook for a crowd/i.test(b2.textContent.replace(/\s+/g,' ').replace(' Can',' can')));
   c('omits what they did not fill', /Languages/.test(b2.textContent), false);
   // v10.45.0 (stale): it says who reads these numbers (the form to change them is right under it)
-  c('says who reads these numbers', /Make the Case and the Evangelism Planner read these numbers\./.test(b2.textContent));
+  c('says who reads these numbers', /Proposal and the Evangelism Planner read these numbers\./.test(b2.textContent));
 
   console.log('\n-- Clear all removes it --');
   let b=D.getElementById('u-clear'); b.click(); b=D.getElementById('u-clear'); b.click();

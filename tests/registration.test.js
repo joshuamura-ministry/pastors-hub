@@ -284,7 +284,7 @@ function makeStore(){
     // v10.57.0: the sixth tile, Compare your churches, in Spanish too
     // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"; and "there are resources available … for your church and find resources"
     // v10.59.2 (stale): Compare your churches last (the pastor, 8 Oct 2026: "put compare your churches to the very bottom right instead because it's the weakest one")
-    [['Encuesta comunitaria','Dones espirituales','Presentar el caso','Plan de evangelismo','Aprender de otras asociaciones','Compare sus iglesias'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar','Buscar recursos','Comparar iglesias']]);
+    [['Encuesta comunitaria','Dones espirituales','Propuesta','Plan de evangelismo','Aprender de otras asociaciones','Compare sus iglesias'],['Explorar la encuesta','Descubrir los dones','Preparar una propuesta','Comenzar a planificar','Buscar recursos','Comparar iglesias']]);
   // Updated in the v10.38.0 review (S3): "Welcome back" comes from this
   // device (after Change), not from the server.
   S.D.getElementById('regchange').click();

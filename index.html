@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.74.0
+     TERRAIN  v10.75.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.74.0" data-theme="dark">
+<html lang="en" data-version="v10.75.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.74.0">
-<title>Community Map — Terrain v10.74.0</title>
+<meta name="terrain-version" content="v10.75.0">
+<title>Community Map — Terrain v10.75.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -2819,8 +2819,7 @@ button.td-opt:disabled{cursor:default}
 .cs-st b{font-size:.88rem;font-weight:650;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cs-st small{font-size:.75rem;line-height:1.3;color:var(--ink3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .cs-st.done i{background:var(--case);border-color:var(--case);color:#1b1206}
-.cs-st.now{border-color:var(--case)}
-.cs-st.now i{color:var(--case);border-color:var(--case)}
+/* v10.75.0: one highlight, the step he is on (.view below); the "next thing to do" marker (.now) is no longer drawn */
 @media (hover:hover){ .cs-st:hover{border-color:var(--case)} }
 .cs-step{margin:16px 0 0;padding:20px;border:1px solid var(--line2);border-radius:18px;background:var(--panel);box-shadow:var(--shadow);min-width:0;
   scroll-margin-top:calc(var(--topH,58px) + 16px)}
@@ -2830,16 +2829,33 @@ button.td-opt:disabled{cursor:default}
 .cs-panes{position:relative;overflow:hidden;margin:0 -12px;padding:0 12px 14px;scroll-margin-top:calc(var(--topH,58px) + 16px)}
 .cs-pane:not(.on){position:absolute;visibility:hidden;pointer-events:none;left:12px;right:12px;top:0;margin:0}
 .cs-pane.on{position:relative}
-@keyframes csInR{from{transform:translateX(9%);opacity:.25}to{transform:none;opacity:1}}
-@keyframes csInL{from{transform:translateX(-9%);opacity:.25}to{transform:none;opacity:1}}
+/* v10.75.0 — a real page turn (the pastor: "it always drops down to this part"): the next step comes in across the whole width while
+   the step he leaves slides out the other way */
+@keyframes csInR{from{transform:translateX(100%);opacity:.6}to{transform:none;opacity:1}}
+@keyframes csInL{from{transform:translateX(-100%);opacity:.6}to{transform:none;opacity:1}}
+@keyframes csOutL{from{transform:none;opacity:1}to{transform:translateX(-100%);opacity:0}}
+@keyframes csOutR{from{transform:none;opacity:1}to{transform:translateX(100%);opacity:0}}
 .cs-pane.cs-in-r{animation:csInR .3s ease-out}
 .cs-pane.cs-in-l{animation:csInL .3s ease-out}
-@media (prefers-reduced-motion:reduce){.cs-pane.cs-in-r,.cs-pane.cs-in-l{animation:none}}
+.cs-pane.cs-out-l,.cs-pane.cs-out-r{visibility:visible;pointer-events:none;animation:csOutL .3s ease-out forwards}
+.cs-pane.cs-out-r{animation-name:csOutR}
+@media (prefers-reduced-motion:reduce){.cs-pane.cs-in-r,.cs-pane.cs-in-l,.cs-pane.cs-out-l,.cs-pane.cs-out-r{animation:none}}
 .cs-nav{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:12px 0 0}
 .cs-navn{font-size:.85rem;color:var(--ink3);font-variant-numeric:tabular-nums;white-space:nowrap}
 .cs-nav .btn{min-width:110px}
-.cs-st.view{background:color-mix(in srgb,var(--case) 14%,var(--panel))}
+.cs-st.view{background:color-mix(in srgb,var(--case) 14%,var(--panel));border-color:var(--case)}
+.cs-st.view i{color:var(--case);border-color:var(--case)}
 .cs-tabs.bx-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+/* v10.75.0: the title and its line above the choices; each choice a name and a line; one under another on a phone; how it works below */
+.bx-switch .cs-pbig{margin:6px 0 0}
+.bx-switch .cs-pbig::before,.bx-switch .cs-pbig::after{content:none}
+.cs-lead{margin:6px 0 0;color:var(--ink2);font-size:1.02rem;line-height:1.5;max-width:62ch}
+.bx-switch .cs-lead{margin:6px 0 16px}
+.cs-tabs.bx-tabs .cs-tab{flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;gap:3px;padding:10px 12px}
+.cs-tabs.bx-tabs .cs-tab small{font-weight:500;font-size:.8rem;line-height:1.3;color:var(--ink3)}
+.cs-tabs.bx-tabs .cs-tab.on small{color:var(--ink2)}
+@media (max-width:559.98px){ .cs-tabs.bx-tabs{grid-template-columns:minmax(0,1fr)} }
+.cs-how{margin:8px 0 0}
 @media print{.cs-nav{display:none!important}.cs-pane:not(.on){position:static;visibility:visible;margin:16px 0 0}}
 .cs-sh{display:flex;align-items:flex-start;gap:14px;margin:0 0 16px}
 .cs-num{flex:none;width:40px;height:40px;border-radius:12px;display:grid;place-items:center;font:700 1.15rem/1 var(--disp);
@@ -3012,7 +3028,7 @@ button.td-opt:disabled{cursor:default}
 /* v10.47.0: the proposal card, first in the proposal view */
 .cs-prop{margin:8px 0 22px;scroll-margin-top:calc(var(--topH,58px) + 12px)}
 /* v10.48.0: "Proposal" in large letters, then the idea as its sheet shows it */
-#cs-prop .cs-pbig{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2.4rem,7vw,3.6rem);letter-spacing:-.035em;line-height:1;margin:6px 0 18px;color:var(--ink)}
+#cs-prop .cs-pbig,.bx-switch .cs-pbig{display:block;font-family:var(--disp);font-weight:800;font-size:clamp(2.4rem,7vw,3.6rem);letter-spacing:-.035em;line-height:1;margin:6px 0 18px;color:var(--ink)}   /* v10.75.0: the tool's own title too */
 #cs-prop .cs-pbig::before,#cs-prop .cs-pbig::after{display:none}
 .cs-pcard{--k:var(--acc);display:grid;gap:14px;padding:20px 22px 18px;border:1px solid color-mix(in srgb,var(--acc) 45%,var(--line2));border-radius:18px;
   background:linear-gradient(180deg,color-mix(in srgb,var(--acc) 8%,var(--panel)),var(--panel));box-shadow:var(--shadow)}
@@ -5121,8 +5137,8 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
       </button>
       <button class="tool" data-tool="case" style="--tc:#FBC27C;--tglow:rgba(251,194,124,.44);--td:-3s">
         <span class="tico"><svg class="tsvg" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" fill="none"><defs><linearGradient id="ink-case" x1="55" y1="30" x2="205" y2="226" gradientUnits="userSpaceOnUse"><stop stop-color="#FFE6C2"/><stop offset="0.48" stop-color="#FBC27C"/><stop offset="1" stop-color="#E29A4A"/></linearGradient><filter id="glow-case" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB"><feGaussianBlur in="SourceGraphic" stdDeviation="5" result="wide"/><feComponentTransfer in="wide" result="soft"><feFuncA type="linear" slope="0.30"/></feComponentTransfer><feGaussianBlur in="SourceGraphic" stdDeviation="1.6" result="near"/><feComponentTransfer in="near" result="tight"><feFuncA type="linear" slope="0.38"/></feComponentTransfer><feMerge><feMergeNode in="soft"/><feMergeNode in="tight"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs><g stroke="url(#ink-case)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow-case)"><path d="M57 28h107l43 43v145a12 12 0 0 1-12 12H57a12 12 0 0 1-12-12V40a12 12 0 0 1 12-12Z"/><path d="M164 28v32a11 11 0 0 0 11 11h32M73 67h54M73 91h77M73 115h34"/><g fill="url(#ink-case)" stroke="none"><rect x="73" y="180" width="16" height="28" rx="2"/><rect x="102" y="164" width="16" height="44" rx="2"/><rect x="131" y="146" width="16" height="62" rx="2"/><rect x="160" y="128" width="16" height="80" rx="2"/></g></g></svg></span>
-        <b>Make the Case</b>
-        <span class="td">Proposals for ministries, projects and purchases.</span>
+        <b>Proposal</b>
+        <span class="td">Ministries, projects and purchases, ready for a vote.</span>
         <span class="tgo">Build a proposal <i></i></span>
       </button>
       <button class="tool" data-tool="planner" style="--tc:#F29CBC;--tglow:rgba(242,156,188,.46);--td:-4.5s">
@@ -5316,13 +5332,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.74.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.75.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.74.0';
+const VERSION = 'v10.75.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -10058,11 +10074,11 @@ const ES={
  'Know who lives nearby and where to reach first.':'Conozca su vecindario y por dónde empezar.',
  'Know your neighbors and what they need most.':'Conozca a sus vecinos y lo que más necesitan.',
  'Help members discover their gifts and find a place to serve.':'Ayude a los miembros a hallar sus dones y dónde servir.',
- 'Proposals for ministries, projects and purchases.':'Propuestas para ministerios, proyectos y compras.',
+ 'Ministries, projects and purchases, ready for a vote.':'Ministerios, proyectos y compras, listos para votar.',
  'Evangelism or revival meetings, from planning to follow-up.':'Evangelismo o avivamiento: preparación y seguimiento.',
  
  
- 'Community Survey':'Encuesta comunitaria','Make the Case':'Presentar el caso','Spiritual Gifts':'Dones espirituales',
+ 'Community Survey':'Encuesta comunitaria','Proposal':'Propuesta','Spiritual Gifts':'Dones espirituales',
  'Join a presentation':'Unirse a una presentación','Privacy':'Privacidad','Terms':'Términos',
  // the hub's fourth title and the four verbs under the cards (v10.38.0: seen
  // straight after registering in Spanish, and they were still English)
@@ -10079,7 +10095,7 @@ const ES={
  'Who lives here':'Quién vive aquí',
  
  
- 'Make the Case':'Presentar el caso','Make the case':'Presentar el caso',
+ 'Propose this':'Proponer esta idea',
  'Housing pressure':'Presión de vivienda','Open this block in Maps →':'Ver esta manzana en Maps →',
  // language names, so the brief reads "habla español" rather than "habla Spanish"
  'Spanish':'español','French / Haitian Creole':'francés / criollo haitiano','German':'alemán',
@@ -10745,7 +10761,7 @@ const FEATURES={
   survey:  {tier:'free', name:'Community Survey'},
   plan:    {tier:'full', name:'the action plan',        blurb:'Each need opened: the figures behind it, where to begin, ministry ideas for every need in three lifts, a one-page sheet for each, and the proposal.',
             es:{name:'el plan de acción', blurb:'Cada necesidad abierta: sus cifras, por dónde empezar, ideas de ministerio para cada necesidad en tres niveles, una hoja de una página para cada una y la propuesta.'}},
-  case:    {tier:'full', name:'Make the Case',          blurb:'A proposal written for the room you are walking into.', es:{name:'Presentar el caso', blurb:'Una propuesta escrita para la sala a la que usted entra.'}},
+  case:    {tier:'full', name:'Proposal',               blurb:'Ministries, projects and purchases, ready for a vote.', es:{name:'Propuesta', blurb:'Ministerios, proyectos y compras, listos para votar.'}},
   planner: {tier:'full', name:'the Evangelism Planner', blurb:'Eighteen months counted back from opening night, with a benchmark for every phase.', es:{name:'el Plan de evangelismo', blurb:'Dieciocho meses contados hacia atrás desde la noche de apertura, con una meta para cada etapa.'}},
   gifts:   {tier:'full', name:'Spiritual Gifts for your whole church', blurb:'Send members a link; their gifts and the ministries that fit come back to you. Your own report stays free.', es:{name:'Dones espirituales para toda su iglesia', blurb:'Envíe a los miembros un enlace; sus dones y los ministerios que encajan vuelven a usted. Su propio informe sigue gratis.'}},
   ideas:   {tier:'full', name:'fresh ministry ideas',   blurb:'Ideas invented for this neighborhood and this church, with the steps to start each one.', es:{name:'ideas de ministerio nuevas', blurb:'Ideas pensadas para este vecindario y esta iglesia, con los pasos para empezar cada una.'}},
@@ -11239,7 +11255,7 @@ function acctBodyHTML(){
   if(v==='plans'){
     const pr=i.prices, trial=!(p&&p.trialUsed);
     const head=h(L('Terrain, full version','Terrain, versión completa'))
-      +`<p>${esc(L('Every need opened, with its ideas and the studies written for your town; Spiritual Gifts for your whole church; Make the Case; the Evangelism Planner; Learn from other conferences; Compare your churches; the Church Directory.','Cada necesidad abierta, con sus ideas y los estudios escritos para su ciudad; Dones espirituales para toda su iglesia; Presentar el caso; el Plan de evangelismo; Aprender de otras asociaciones; Comparar sus iglesias; el Directorio de la iglesia.'))}</p>`;
+      +`<p>${esc(L('Every need opened, with its ideas and the studies written for your town; Spiritual Gifts for your whole church; Proposal; the Evangelism Planner; Learn from other conferences; Compare your churches; the Church Directory.','Cada necesidad abierta, con sus ideas y los estudios escritos para su ciudad; Dones espirituales para toda su iglesia; Propuesta; el Plan de evangelismo; Aprender de otras asociaciones; Comparar sus iglesias; el Directorio de la iglesia.'))}</p>`;
     if(!pr||!i.checkout) return head+`<p class="acct-err">${esc(acctSay('billing-off'))}</p>`;
     const free=Math.round((pr.month.amount*12-pr.year.amount)/pr.month.amount);
     const go=L(trial?'Start free trial':'Choose',trial?'Empezar la prueba':'Elegir');
@@ -11355,7 +11371,7 @@ const TOOLS={
   // standalone: needs no church address or Census data; it has its own panel.
   // Listed second, matching its place on the hub.
   gifts:  {name:'Spiritual Gifts',    tabs:[], standalone:true, panel:'gifts'},   // v10.72.0: the tool opens in the free version (Take it yourself); its landing locks the church's part (FEATURES.gifts)
-  case:   {name:'Make the Case',     tabs:['case'], feature:'case'},
+  case:   {name:'Proposal',          tabs:['case'], feature:'case'},
   planner:{name:'Evangelism Planner',tabs:[], standalone:true, panel:'planner', feature:'planner'},
   // v56 (B2): Learn from other conferences, a tool of its own (no address, no Census)
   compare:{name:'Learn from other conferences',tabs:[], standalone:true, panel:'cmp', feature:'compare'},
@@ -11510,8 +11526,8 @@ const HOME_UI={
              es:'Terrain no pudo confirmar su registro en este momento, así que la Encuesta Comunitaria de {church} no se cargó.'},
   again:{en:'Try again',es:'Intentar de nuevo'},
   firstT:{en:'First, map your church’s neighborhood',es:'Primero, trace el mapa del vecindario de su iglesia'},
-  firstP:{en:'Make the Case builds its slides from the Community Survey of your church’s neighborhood, what you saved under Your church and your members’ Spiritual Gifts. Type the church address once, in the Community Survey: Terrain then remembers the church on this device.',
-          es:'Presentar el caso crea sus diapositivas a partir de la Encuesta Comunitaria del vecindario de su iglesia, lo que guardó en Su iglesia y los dones espirituales de sus miembros. Escriba la dirección de la iglesia una sola vez, en la Encuesta Comunitaria: Terrain recordará la iglesia en este dispositivo.'},
+  firstP:{en:'Proposal builds its slides from the Community Survey of your church’s neighborhood, what you saved under Your church and your members’ Spiritual Gifts. Type the church address once, in the Community Survey: Terrain then remembers the church on this device.',
+          es:'Propuesta crea sus diapositivas a partir de la Encuesta Comunitaria del vecindario de su iglesia, lo que guardó en Su iglesia y los dones espirituales de sus miembros. Escriba la dirección de la iglesia una sola vez, en la Encuesta Comunitaria: Terrain recordará la iglesia en este dispositivo.'},
   firstB:{en:'Open the Community Survey',es:'Abrir la Encuesta Comunitaria'},
   recent:{en:'Or one you mapped before:',es:'O una que ya mapeó:'},
   yours:{en:'your church',es:'su iglesia'},
@@ -16455,7 +16471,7 @@ function render(){
      unused here; uNextRefresh finds no block and does nothing). */
 
   // Make the Case: the screens draw themselves into #casebody (caseMount).
-  secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Make the case</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
+  secs.push(`<section class="blk" data-tab="case" data-theme="case"><h2>Proposal</h2><div class="cs bx-swh" id="cs-switch"></div><div class="cs" id="casebody"></div></section>`);
   { const nsEl=document.getElementById('u-needs'), chEl=document.getElementById('gf-church');
     if(chEl) chEl.remove();   // v10.55.0: the live church card is kept across the redraw (what he typed, his step, the fold), as the needs are
     $('sections').innerHTML=secs.join('');
@@ -23198,7 +23214,7 @@ function gfRenderRoster(h){
   <p class="note gfposn">${nres?L('See who fits where: your members’ gifts beside your church’s ministries and your neighborhood’s needs. Then ask each one in person.','Vea quién encaja dónde: los dones de sus miembros junto a los ministerios de su iglesia y las necesidades de su vecindario. Luego invite a cada uno en persona.')
     :L('Once results are in, you see here who fits where, and whom to ask for each ministry.','Cuando lleguen los resultados, aquí verá quién encaja dónde y a quién invitar para cada ministerio.')}</p>
   ${nres?gfChurchHTML():''}
-  ${nres?`<div class="gfnav gfposnav"><button class="btn ghost gfsm" data-gf-tocase>${L('Who to ask, in Make the Case','A quién invitar, en Presentar el caso')}</button></div>`:''}
+  ${nres?`<div class="gfnav gfposnav"><button class="btn ghost gfsm" data-gf-tocase>${L('Who to ask, in Proposal','A quién invitar, en Propuesta')}</button></div>`:''}
   <div id="gfteamslot"></div>
   </section>`;
 
@@ -25022,7 +25038,7 @@ function capSummaryHTML(){
       <div class="capsumg" style="--k:var(--m-housing)"><h4>${L('Building','Edificio')}</h4>${rooms?`<ul>${rooms}</ul>`:`<p class="note">${L('No rooms recorded.','No hay salones registrados.')}</p>`}</div>
       <div class="capsumg" style="--k:var(--m-children)"><h4>${L('Skills','Habilidades')}</h4>${skills||langs||commit?`<ul>${skills}${langs}${commit}</ul>`:`<p class="note">${L('No skills recorded.','No hay habilidades registradas.')}</p>`}</div>
     </div>
-    <p class="note capsumfoot">${raw.demo?L('The sample church: press <b>Clear all</b> above when you are done.','La iglesia de ejemplo: toque <b>Borrar todo</b> arriba cuando termine.'):L('Make the Case and the Evangelism Planner read these numbers.','Presentar el caso y el Planificador de evangelismo usan estas cifras.')}</p>
+    <p class="note capsumfoot">${raw.demo?L('The sample church: press <b>Clear all</b> above when you are done.','La iglesia de ejemplo: toque <b>Borrar todo</b> arriba cuando termine.'):L('Proposal and the Evangelism Planner read these numbers.','Propuesta y el Planificador de evangelismo usan estas cifras.')}</p>
   </div>`;
 }
 /* review #18: the profile's name is the church's (its own, else the one given at registration), never "My church" */
@@ -25508,7 +25524,7 @@ function uCard(x){
     ${f.ok?`<p class="u-fit"><b>Why your church:</b> Available people and approved funds cover this plan.${f.spaces.length?' Uses '+f.spaces.map(k=>esc(U_FAC.find(a=>a.k===k)?.n||k)).join(', ')+'.':''} Required skills: ${(r.skills||[]).map(k=>esc(U_SKILLS.find(a=>a.k===k)?.n||k)).join(', ')||'general volunteer help'}.</p>`:`<ul class="u-gaps">${f.gaps.map(g=>`<li>${esc(g)}</li>`).join('')}</ul>`}
     <details class="u-details"><summary>Budget and first steps</summary>${uMoneyTable(r)}<ol>${(x.how||x.first||['Speak with a few residents about this need.','Confirm a coordinator and the team.','Agree a small trial and a review date.']).map(t=>`<li>${esc(t)}</li>`).join('')}</ol></details>
     ${matches.length?`<details class="u-details"><summary>Possible team members</summary><p class="note">These are people to invite. Their names do not confirm an assignment to this ministry.</p>${matches.map(({p,practical,gifts})=>`<p><b>${esc(p.name)}</b>${p.minor===true?esc(L(' (with an adult)',' (con un adulto)')):''} · ${practical.map(k=>esc(U_SKILLS.find(s=>s.k===k)?.n||k)).concat(gifts.map(g=>esc(g.n)+' (gift)')).join(', ')} · ${p.confirmed&&p.willing?'availability reviewed':'conversation needed'}</p>`).join('')}</details>`:''}
-    <div class="u-actions"><button class="btn ${selected?'ghost':''}" data-u-select="${esc(x.id)}" ${!selected&&!f.ok?'disabled':''}>${selected?'Remove from plan':'Add to plan'}</button><button class="btn ghost" data-u-edit="${esc(x.id)}">Adjust scope & costs</button><button class="btn ghost" data-u-propose="${esc(x.id)}">${esc(L('Make the case for this','Presentar el caso de esta idea'))}</button><label class="u-check"><input type="checkbox" data-u-compare="${esc(x.id)}" ${U_COMPARE.includes(x.id)?'checked':''}> Compare</label></div>
+    <div class="u-actions"><button class="btn ${selected?'ghost':''}" data-u-select="${esc(x.id)}" ${!selected&&!f.ok?'disabled':''}>${selected?'Remove from plan':'Add to plan'}</button><button class="btn ghost" data-u-edit="${esc(x.id)}">Adjust scope & costs</button><button class="btn ghost" data-u-propose="${esc(x.id)}">${esc(L('Propose this','Proponer esta idea'))}</button><label class="u-check"><input type="checkbox" data-u-compare="${esc(x.id)}" ${U_COMPARE.includes(x.id)?'checked':''}> Compare</label></div>
   </article>`;
 }
 let U_COMPARE=[], U_BAND='0', U_GEN_NOTICE='';   // light lift is the default level
@@ -37319,7 +37335,7 @@ const CASE_STEP_UI={
   t2:{en:'What will you propose?',es:'¿Qué va a proponer?'},
   // v10.42 (section F): the step's one line says what Make the Case is for; "Ideas for {group}" is now the heading of
   // "More ideas for {group}" (moreH, below caseGroupFor), "Best fit for {town} first." its line (moreN)
-  n2:{en:'This is where you win support for what your church will do.',es:'Aquí es donde consigue apoyo para lo que su iglesia hará.'},
+  n2:{en:'Choose the ministry you will propose. Tap one to pick it.',es:'Elija el ministerio que va a proponer. Toque uno para elegirlo.'},   // v10.75.0: what to do there
   n2none:{en:'Choose who it is for first, or search every idea.',es:'Primero elija para quién es, o busque en todas las ideas.'},
   n2chosen:{en:'Chosen for {group}.',es:'Elegida para {group}.'},
   s2:{en:'Choose one idea',es:'Elija una idea'},
@@ -37768,7 +37784,10 @@ function csBarView(box,n){ const S=CS_SLIDE[box], b=S&&$(S.bar); if(!b) return; 
 function csPaneShow(box,n,dir){
   const S=CS_SLIDE[box]; if(!S) return -1; const ps=csPanes(box); if(!ps.length) return -1;
   n=Math.max(0,Math.min(ps.length-1,Number.isInteger(n)?n:0));
-  ps.forEach((p,i)=>{ const on=i===n; p.classList.add('cs-pane'); p.classList.remove('cs-in-r','cs-in-l'); p.classList.toggle('on',on);
+  const was=ps.findIndex(p=>p.classList.contains('on'));
+  ps.forEach((p,i)=>{ const on=i===n; p.classList.add('cs-pane'); p.classList.remove('cs-in-r','cs-in-l','cs-out-l','cs-out-r'); p.classList.toggle('on',on);
+    // v10.75.0: the pane he leaves slides out the other way, the whole width (let go when its animation ends, or after 400 ms)
+    if(!on&&i===was&&dir){ const k=dir>0?'cs-out-l':'cs-out-r'; p.classList.add(k); const off=()=>{ p.classList.remove(k); p.removeEventListener('animationend',off); }; p.addEventListener('animationend',off); setTimeout(off,400); }
     if(on){ if(dir) p.classList.add(dir>0?'cs-in-r':'cs-in-l'); p.removeAttribute('inert'); p.removeAttribute('aria-hidden'); }
     else{ p.setAttribute('inert',''); p.setAttribute('aria-hidden','true'); } });
   const nav=$(S.nav);
@@ -37802,7 +37821,7 @@ function caseStepBar(){
   b.setAttribute('aria-label',caseStepT('bar'));
   b.innerHTML=items.map(([t,s],i)=>{ const st=i===cur?'now':done[i]?'done':'next';
     return `<button type="button" class="cs-st ${st}" data-cs-jump="${i+1}"${i===cur?' aria-current="step"':''}><i aria-hidden="true">${i+1}</i><span><b>${esc(t)}</b><small>${esc(s)}</small></span></button>`; }).join('');
-  b.querySelectorAll('[data-cs-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('cs-panes').findIndex(p=>p.id==='cs-s'+e.dataset.csJump); if(i>=0) csGo('cs-panes',i,true); });   // v10.73.0: slides, never scrolls
+  b.querySelectorAll('[data-cs-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('cs-panes').findIndex(p=>p.id==='cs-s'+e.dataset.csJump); if(i>=0) csGo('cs-panes',i,false); });   // v10.75.0: never moves the page   // v10.73.0: slides, never scrolls
   csBarView('cs-panes',csPaneCur('cs-panes'));
 }
 
@@ -38544,6 +38563,7 @@ function casePropHTML(){
   const how=v.how&&v.how.length?`<ol class="ns-steps">${v.how.slice(0,4).map(t=>`<li><span>${esc(t)}</span></li>`).join('')}</ol>`:'';
   let rows=[]; try{ rows=v.ppl!=null?nsRows(v):[]; }catch(e){ rows=[]; }
   return `<h2 class="cs-pbig" id="cs-prop-h">${esc(L_PROP('big'))}</h2>
+    <p class="cs-lead">${esc(buyU('lead'))}</p>
     <div class="cs-pcard" style="--k:var(--m-${n&&n.kind||'language'})">
       ${n?`<p class="ns-shneed cs-pneed">${esc(nsU('sheetFor',(f||n).title))}</p>`:''}
       <p id="cs-prop-t" class="cs-pt" role="heading" aria-level="3">${esc(gfCap(v.name))}</p>
@@ -38603,10 +38623,18 @@ function casePropWire(host){
 const BUY_LIMITS={items:30,name:60,need:120,goal:200,why:3,whyText:60,names:3,nameLen:60,must:5,mustLen:60,optName:80,store:40,host:60,url:300,
   priceMax:500000,features:3,feature:60,warranty:40,note:60,company:60,contact:80,also:6,lines:8,pickWhy:160,phaseLabel:40};
 const BUY_UI={
-  pathLabel:{en:'Make the case for:',es:'Presentar la propuesta de:'},
+  pathLabel:{en:'What is this proposal for?',es:'¿Para qué es esta propuesta?'},   // v10.75.0: asked plainly, each choice defined
   pathMin:{en:'A ministry',es:'Un ministerio'},
   pathProj:{en:'A project',es:'Un proyecto'},   // v10.73.0: three choices (the pastor: "a project or purchase should not be together")
   pathBuy:{en:'A purchase',es:'Una compra'},
+  // v10.75.0 — the pastor (11 Nov 2026): "a beautiful title … proposal and then underneath it will explain … I just have to define those
+  // three … explanations, obviously not too many words, but where they need to be"
+  lead:{en:'Turn an idea into a plan your church can vote on, with the slides and papers to present it.',es:'Convierta una idea en un plan que su iglesia pueda votar, con las diapositivas y los documentos para presentarlo.'},
+  pathMinD:{en:'Something we do for people: a food pantry, a homework club, a health fair.',es:'Algo que hacemos por las personas: una despensa, un club de tareas, una feria de salud.'},
+  pathProjD:{en:'Work on the building or the grounds: a repair, an installation, a build.',es:'Obras en el edificio o el terreno: una reparación, una instalación, una construcción.'},
+  pathBuyD:{en:'Something we buy: sound, a camera, a van, chairs.',es:'Algo que compramos: sonido, una cámara, una camioneta, sillas.'},
+  howMin:{en:'Three steps, one at a time. Press Done when a step is finished.',es:'Tres pasos, uno a la vez. Toque Hecho al terminar cada paso.'},
+  howBuy:{en:'Five steps, one at a time. Press Done when a step is finished.',es:'Cinco pasos, uno a la vez. Toque Hecho al terminar cada paso.'},
   items:{en:'Your projects',es:'Sus proyectos'},
   newItem:{en:'New',es:'Nuevo'},
   newName:{en:'New project',es:'Proyecto nuevo'},
@@ -38614,11 +38642,11 @@ const BUY_UI={
   removeArm:{en:'Tap again to remove',es:'Toque otra vez para quitar'},
   bar:{en:'Steps',es:'Pasos'},
   stepOf:{en:'Step {n} of 5: ',es:'Paso {n} de 5: '},
-  t1:{en:'What do you need?',es:'¿Qué necesitan?'}, n1:{en:'And why it matters for ministry.',es:'Y por qué importa para el ministerio.'},
-  t2:{en:'Three options',es:'Tres opciones'}, n2:{en:'Find prices, or type your own.',es:'Busque precios o escriba los suyos.'},
-  t3:{en:'How we’ll pay',es:'Cómo lo pagaremos'}, n3:{en:'Offerings and gifts. Never tithe.',es:'Ofrendas y donativos. Nunca el diezmo.'},
-  t4:{en:'Who decides',es:'Quién decide'}, n4:{en:'Your church’s path.',es:'El camino de su iglesia.'},
-  t5:{en:'Present and vote',es:'Presentar y votar'}, n5:{en:'Slides, handout and the Proposal.',es:'Diapositivas, folleto y la propuesta.'},
+  t1:{en:'What do you need?',es:'¿Qué necesitan?'}, n1:{en:'Name it, say why it matters, and who will look after it.',es:'Póngale nombre, diga por qué importa y quién lo cuidará.'},   // v10.75.0: each line says what to do there
+  t2:{en:'Three options',es:'Tres opciones'}, n2:{en:'Three prices, good, better and best; pick one and say why.',es:'Tres precios: bueno, mejor y el mejor; elija uno y diga por qué.'},
+  t3:{en:'How we’ll pay',es:'Cómo lo pagaremos'}, n3:{en:'Where the money will come from, and how much from each. Never tithe.',es:'De dónde saldrá el dinero y cuánto de cada fuente. Nunca el diezmo.'},
+  t4:{en:'Who decides',es:'Quién decide'}, n4:{en:'Who has to say yes, and who you will present to.',es:'Quién tiene que dar el sí, y a quién presentará.'},
+  t5:{en:'Present and vote',es:'Presentar y votar'}, n5:{en:'Check the slides, then present; print the handout and the Proposal to vote on.',es:'Revise las diapositivas y presente; imprima el folleto y la propuesta para votar.'},
   s1:{en:'Say what you need',es:'Diga qué necesitan'}, s2:{en:'Three prices',es:'Tres precios'}, s3:{en:'Plan the money',es:'Planifique el dinero'},
   s4:{en:'Who votes',es:'Quién vota'}, s5:{en:'Check, then present',es:'Revise y presente'},
   s2done:{en:'Recommended: {tier} · {total}',es:'Recomendada: {tier} · {total}'},
@@ -40213,8 +40241,12 @@ function buyStepHead(n,title,note,right){
 /* v10.73.0: three choices. A purchase is something bought (kind buy); a project a repair, an installation or a build (the other kinds).
    Stored as ministry | buy (a purchase: the old value kept) | project; buyPath() still answers buy for both of the last two. */
 function buySwitchHTML(path){
-  const b=(k,t)=>`<button type="button" class="cs-tab${path===k?' on':''}" data-bx-path="${k}" aria-pressed="${path===k}">${esc(t)}</button>`;
-  return `<div class="bx-switch"><p class="bx-swl" id="bx-swl">${esc(buyU('pathLabel'))}</p><div class="cs-tabs bx-tabs" role="group" aria-labelledby="bx-swl">${b('ministry',buyU('pathMin'))}${b('project',buyU('pathProj'))}${b('buy',buyU('pathBuy'))}</div></div>`;
+  // v10.75.0: Proposal in large letters (the tool bar's own name steps aside, as on the Proposal view), one line under it, the question,
+  // the three choices each with a line, and how it works for the path chosen
+  const b=(k,t,d)=>`<button type="button" class="cs-tab${path===k?' on':''}" data-bx-path="${k}" aria-pressed="${path===k}"><b>${esc(t)}</b><small>${esc(d)}</small></button>`;
+  return `<div class="bx-switch"><h2 class="cs-pbig" id="cs-prop-h">${esc(L_PROP('big'))}</h2><p class="cs-lead">${esc(buyU('lead'))}</p>
+    <p class="bx-swl" id="bx-swl">${esc(buyU('pathLabel'))}</p><div class="cs-tabs bx-tabs" role="group" aria-labelledby="bx-swl">${b('ministry',buyU('pathMin'),buyU('pathMinD'))}${b('project',buyU('pathProj'),buyU('pathProjD'))}${b('buy',buyU('pathBuy'),buyU('pathBuyD'))}</div>
+    <p class="cs-how note">${esc(buyU(path==='ministry'?'howMin':'howBuy'))}</p></div>`;
 }
 function buySwitchWire(host){
   host.querySelectorAll('[data-bx-path]').forEach(b=>b.onclick=()=>{ const k=b.dataset.bxPath, p=k==='buy'||k==='project'?k:'ministry';
@@ -40264,7 +40296,10 @@ function buySelect(id){ BUY_ST.id=id; BUY_ST.edit=null; BUY_ST.slide=0; BUY_ST.p
 /* The project row: New, then each project with a dot for how far its decision has come. */
 function buyDrawItems(){
   const h=$('bx-items'); if(!h) return;
-  const list=buyListFam();   // v10.73.0: the family shown
+  // v10.75.0: the row shows only once a project has a name (the pastor: "I don't know what this new project and then it says new"):
+  // the family's named projects (and the one open), "+ New" before them; one empty project, no row
+  const all=buyListFam(), list=all.filter(it=>buyIn(it.name)||buyIn(it.need)||it.id===BUY_ST.id);   // v10.73.0: the family shown
+  if(!all.some(it=>buyIn(it.name)||buyIn(it.need))){ h.innerHTML=''; return; }
   const dot=it=>{ let recs={}; try{ recs=caseDecAll(it.id); }catch(e){ recs={}; } const P=buyPathOf(it).path;
     const done=P.filter(b=>recs[b]&&CASE_POSITIVE.has(recs[b].outcome)).length; return done&&done===P.length?'ok':done?'part':''; };
   h.innerHTML=`<span class="bx-il">${esc(buyU('items'))}</span><div class="bx-chips" role="group" aria-label="${esc(buyU('items'))}">
@@ -40291,7 +40326,7 @@ function buyStepBar(){
   b.innerHTML=[1,2,3,4,5].map(i=>{ const st=i-1===now?'now':done[i-1]?'done':'next';
     return `<button type="button" class="cs-st ${st}" data-bx-jump="${i}"${i-1===now?' aria-current="step"':''}><i aria-hidden="true">${i}</i><span><b>${esc(buyU('t'+i))}</b><small>${esc(sum[i-1])}</small></span></button>`; }).join('');
   const nb=$('bx-barnow'); if(nb) nb.textContent=buyU('t'+(csPaneCur('bx-panes')+1));   // v10.73.0: the step on screen (csBarView keeps it)
-  b.querySelectorAll('[data-bx-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('bx-panes').findIndex(p=>p.id==='bx-s'+e.dataset.bxJump); if(i>=0) csGo('bx-panes',i,true); });   // v10.73.0: slides, never scrolls
+  b.querySelectorAll('[data-bx-jump]').forEach(e=>e.onclick=()=>{ const i=csPanes('bx-panes').findIndex(p=>p.id==='bx-s'+e.dataset.bxJump); if(i>=0) csGo('bx-panes',i,false); });   // v10.73.0: slides; v10.75.0: never moves the page
   csBarView('bx-panes',csPaneCur('bx-panes'));
 }
 /* Save as he types (a quarter of a second after the last key); the other steps follow, never the box he is in. */
@@ -40753,7 +40788,7 @@ const PR_UI={
   endedCard:{en:'Presentation ended',es:'La presentación terminó'},
   endedText:{en:'Phones no longer follow you. The slides stay readable on them until {until}.',es:'Los teléfonos ya no le siguen. Las diapositivas seguirán disponibles en ellos hasta el {until}.'},
   endedB:{en:'Ended',es:'Terminada'},
-  back:{en:'Back to Make the Case',es:'Volver a Presentar el caso'},
+  back:{en:'Back to Proposal',es:'Volver a Propuesta'},
   copy:{en:'Copy link',es:'Copiar enlace'},
   copied:{en:'Copied',es:'Copiado'},
   shareB:{en:'Share…',es:'Compartir…'},
@@ -42563,7 +42598,7 @@ function casePdfDocAt(H,opts,lv){
     put((H.sample?clean(Lb.sample)+' · '+(H.madeUp?clean(Lb.madeUp)+' · ':''):'')+foot,MX,PH-28,{bx1:X1-60});
     put(`${Lb.page} ${p} ${Lb.of} ${n}`,X1,PH-28,{align:'right',bx0:X1-60});
   }
-  doc.setProperties({title:clean((H.sample?Lb.sample+' · ':'')+(H.title||H.ministry||'')),subject:es?'Folleto de Presentar el caso':'Make the Case handout',creator:'Terrain'});
+  doc.setProperties({title:clean((H.sample?Lb.sample+' · ':'')+(H.title||H.ministry||'')),subject:es?'Folleto de la propuesta':'Proposal handout',creator:'Terrain'});
   return doc;
 }
 /* Download PDF handout. model: the case model (the pastor), or null with opts.deck (a
@@ -43158,7 +43193,7 @@ function caseProposalDocAt(Pz,opts,lv){
     put((Pz.sample?clean(Lb.sample)+' · ':'')+foot,MX,PH-28,{bx1:X1-60});
     put(`${Lb.page} ${p} ${Lb.of} ${n}`,X1,PH-28,{align:'right',bx0:X1-60});
   }
-  doc.setProperties({title:clean((Pz.sample?Lb.sample+' · ':'')+(es?'Propuesta':'Proposal')+': '+(Pz.ministry||'')),subject:es?'Propuesta de Presentar el caso':'Make the Case proposal',creator:'Terrain'});
+  doc.setProperties({title:clean((Pz.sample?Lb.sample+' · ':'')+(es?'Propuesta':'Proposal')+': '+(Pz.ministry||'')),subject:es?'Propuesta para votar':'Proposal to vote on',creator:'Terrain'});
   return doc;
 }
 /* Proposal to vote on (PDF): made and saved; the status line says the file. */
@@ -44530,17 +44565,17 @@ function gfFirstPrefsSave(o){ try{ const ch=uChurch(); ch.giftsFirst={...gfFirst
      first step not done breathes gently; every step stays a button, so none blocks another (gifts never blocks the case). */
 const NEXT_UI={
   kicker:{en:'What’s next',es:'Lo que sigue'},
-  caseH:{en:'Make the Case',es:'Presentar el caso'},
+  caseH:{en:'Proposal',es:'Propuesta'},
   caseFor:{en:'Create the proposal for {np}',es:'Crear la propuesta {np}'},
   card:{en:'Connection card',es:'Tarjeta de contacto'},
   empty:{en:'Open a need above, choose an idea, then tap “Create a proposal for this ministry”.',es:'Abra una necesidad arriba, elija una idea y toque «Crear una propuesta para este ministerio».'},
   giftsH:{en:'Discover your members’ gifts',es:'Descubra los dones de sus miembros'},
-  giftsLine:{en:'Proposals are stronger when your members know their gifts. You can make the case first and do this alongside.',
-    es:'Las propuestas son más sólidas cuando sus miembros conocen sus dones. Puede presentar el caso primero y hacer esto a la vez.'},
+  giftsLine:{en:'Proposals are stronger when your members know their gifts. You can write the proposal first and do this alongside.',
+    es:'Las propuestas son más sólidas cuando sus miembros conocen sus dones. Puede escribir la propuesta primero y hacer esto a la vez.'},
   path:{en:'Your path',es:'Su camino'},
   s1:{en:'Map your neighborhood',es:'Conozca su vecindario'},
   s2:{en:'Discover your members’ gifts',es:'Descubra los dones de sus miembros'},
-  s3:{en:'Make the case',es:'Presentar el caso'},
+  s3:{en:'Proposal',es:'Propuesta'},
   s4:{en:'Plan an evangelism series',es:'Planifique una serie de evangelismo'},
   done:{en:'Done ✓',es:'Hecho ✓'},
   start:{en:'Start here',es:'Empiece aquí'},

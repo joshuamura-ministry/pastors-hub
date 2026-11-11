@@ -52,7 +52,7 @@ const HTML=fs.readFileSync(path.join(ROOT,'index.html'),'utf8');
     c('"Choose a different ministry": the full list of groups comes back with the list of ideas', R.qa('#cs-s1 .cs-acat').length, 4);
     R.q('#cs-prop [data-cs-other]').click(); await sleep(40);
     R.E(`showHub(); openTool('case')`); await sleep(40);
-    c('Make the Case from the main menu with another ministry chosen is Make the Case again', (R.E(`caseSetPrefs({ministry:'vbs'}); caseMount(); 1`),R.txt('#toolname')), 'Make the Case');
+    c('Make the Case from the main menu with another ministry chosen is Make the Case again', (R.E(`caseSetPrefs({ministry:'vbs'}); caseMount(); 1`),R.txt('#toolname')), 'Proposal');   // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026)
     // v10.49.0 — "take the money part out of your church section … add it in the proposal section", then "we don't wanna add a
     // place to fill in anything … just … mention how much money they will need not versus available funds"
     R.E(`caseSetPrefs({ministry:NS.back.plan}); caseMount();`);

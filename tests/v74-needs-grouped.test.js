@@ -123,6 +123,8 @@ async function open(P,id,ideas){
   c('six rings sit three and three, five three and two (from 654 px); in two columns a fifth takes its row', [/@container \(min-width:654px\)\{ \.ns-figs \.stats:has\(>\.stat:nth-child\(5\):last-child\),\.ns-figs \.stats:has\(>\.stat:nth-child\(6\):last-child\)\{grid-template-columns:repeat\(3,minmax\(0,1fr\)\)\}/.test(HTML),
     /\(max-width:653\.98px\)\{ \.ns-figs \.stats:has\(>\.stat:nth-child\(5\):last-child\)>\.stat:last-child\{grid-column:1\/-1\}/.test(HTML)], [true,true]);
   c('never the word AI on these cards', P.qa('#u-needs .ns-need').every(a=>!/\bAI\b/.test(a.textContent)), true);
-  c('the six stamps say v10.74.0', [(HTML.match(/v10\.74\.0/g)||[]).length>=6, /const VERSION = 'v10\.74\.0'/.test(HTML)], [true,true]);
+  // v10.75.0 (stale, not a regression): the stamps are checked as "the six agree" (v10.74.0 or later), as the other suites do
+  { const v=(HTML.match(/const VERSION = '(v10\.\d+\.\d+)'/)||[])[1]||'';
+    c('the six stamps agree (v10.74.0 or later)', [/^v10\.(7[4-9]|[89]\d|\d{3,})\.\d+$/.test(v), (HTML.match(new RegExp(v.replace(/\./g,'\\.'),'g'))||[]).length>=6], [true,true]); }
   c('no page errors', P.errs, []);
 }); T.done(); })();
