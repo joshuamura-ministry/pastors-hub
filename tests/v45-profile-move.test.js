@@ -55,7 +55,7 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
   c('the Save button and the status, true now', [P.txt('#cap-done'),P.txt('#u-cap-status')], ['Save church','Saved for this church.']);
   c('the summary\'s foot line (the average church is a sample): Clear all is above it now', P.txt('#u-sumbody .capsumfoot'), 'The sample church: press Clear all above when you are done.');
   P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`);
-  c('…for his own church: who reads these numbers', P.txt('#u-sumbody .capsumfoot'), 'Make the Case and the Evangelism Planner read these numbers.');
+  c('…for his own church: who reads these numbers', P.txt('#u-sumbody .capsumfoot'), 'Proposal and the Evangelism Planner read these numbers.');
 
   console.log('\n-- Demo and Save land on "Your church", at once --');
   P=page(); await ready(P); survey(P); home(P); counted(P); await sleep(30);
@@ -117,7 +117,7 @@ const counted=P=>P.E(`(()=>{ window.__auto=0; autoIdeas=function(){ window.__aut
       'Tue evening','Mostly older members','Review needed','Not recorded','What your church has','One profile for'];
     c('…and its form and summary in Spanish too: none of their English words left inside "Su iglesia"', EN.filter(w=>t.includes(w)), []); }
   c('…the summary\'s foot lines', [P.txt('#u-sumbody .capsumfoot'),(P.E(`capSave({...capGet(),demo:false}); gfChurchSum();`),P.txt('#u-sumbody .capsumfoot'))],
-    ['La iglesia de ejemplo: toque Borrar todo arriba cuando termine.','Presentar el caso y el Planificador de evangelismo usan estas cifras.']);
+    ['La iglesia de ejemplo: toque Borrar todo arriba cuando termine.','Propuesta y el Planificador de evangelismo usan estas cifras.']);
   c('…the hub tile', (P.E(`showHub()`),P.txt('[data-tool="survey"] .td')), 'Conozca a sus vecinos y lo que más necesitan.');
   c('no page error along the way', P.errs, []);
 }); await T.sec(async()=>{

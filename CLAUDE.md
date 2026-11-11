@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.75.0: the page's badge v10.75.0 (the page only; no function changed); the main menu's third tile says Proposal; the tool opens with "Proposal" in large letters, one line under it, "What is this proposal for?" and the three choices each with a line; a step-bar tap turns the page sideways and moves nothing; one step lit in the bar; no "+ New · New project" row until a project is named
 - v10.74.0: the page's badge v10.74.0 (the page only; no function changed); the Community Survey's Neighborhood needs: one card per family (no label twice), a "+ …" line naming the card's other findings, an opened card with each finding under its topic
 - v10.73.0: the page's badge v10.73.0 (the page only; no function changed); Make the Case: three tabs (A ministry · A project · A purchase), one step on screen with ← Back · Step n of m · Done under it
 - v10.72.1: the page's badge v10.72.1 (the page only; no function changed); in Compare your churches, a church added from the conference list is tagged "To compare" in Digital footprint's Side by side and Every church, never under "Your churches"
@@ -227,6 +228,44 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.75.0 (11 Nov 2026, full lane) — Proposal: the name, a title and a line on every page, the three choices defined; the page turn,
+one highlight, the projects row hidden until named.** The pastor: *"instead of make the case I would like it to have be called proposal and
+each page has to have a nice title with a description of what the page actually does because right now it just kind of goes right into the
+push buttons … I just have to define those three … someone who doesn't know the app who comes for the first time is gonna be totally lost …
+a real serious very very simplified process for each one and explanations, obviously not too many words, but where they need to be"*; and,
+with a screenshot: *"it always drops down to this part when I click the five options … one of them stays highlighted pink, no matter what I
+press and I don't know what this new project and then it says new"*. Design `~/Ministry Work/Terrain-work/v90/DESIGN-PROPOSAL-WORDS.md`;
+the tool as it was in `v90/look-prop-before/`.
+- **The name is Proposal** (ES **Propuesta**) wherever a person reads it: the main menu's tile ("Ministries, projects and purchases, ready for
+  a vote.", inside the menu's 60-character line), `TOOLS.case.name`, `FEATURES.case` and the lock's list, the first-time card, "Who to ask, in Proposal" (Spiritual
+  Gifts), "Proposal and the Evangelism Planner read these numbers." (Your church), "Propose this" (the survey's ministry card), "Back to
+  Proposal" (`PR_UI`), the PDFs' subjects ("Proposal handout", "Proposal to vote on"), What's next and Your path (`NEXT_UI`). Code names and
+  the notes keep "case"; `v75-proposal-words` scans every string a person reads for the old name. present.mjs's comments untouched.
+- **A title and a line on every page** (`buySwitchHTML`, drawn into `#cs-switch` above both paths): **Proposal** in the Proposal view's large
+  letters (`.cs-pbig#cs-prop-h`, so the tool bar's own name steps aside, `.tb-dup`), the line `.cs-lead` ("Turn an idea into a plan your
+  church can vote on, with the slides and papers to present it."), the question **What is this proposal for?** (`pathLabel`), the three
+  choices each a name and a line (`pathMinD` / `pathProjD` / `pathBuyD`: "Something we do for people: a food pantry, a homework club, a health
+  fair." · "Work on the building or the grounds: a repair, an installation, a build." · "Something we buy: sound, a camera, a van, chairs.";
+  three across, one under another under 560 px), and how it works (`.cs-how`: "Three steps, one at a time. Press Done when a step is
+  finished." / "Five steps…"). Each step's line under its title says what to do there (`BUY_UI.n1`–`n5`, `CASE_STEP_UI.n2`). The Proposal
+  view from a need keeps its big title and gains the line.
+- **The page turn** (`csPaneShow`): the step he leaves slides out the other way (`.cs-out-l` / `.cs-out-r`, `csOutL` / `csOutR`, let go on
+  `animationend` or after 400 ms) while the next comes in across the whole width (`csInR` / `csInL` from 100 %); still under reduced motion.
+  Measured first: nothing had scrolled; the 9 % nudge and fade read as content dropping in below. **A step-bar tap never moves the page**
+  (`csGo(…,false)` from both bars; Done and Back still bring the box's top back when he had scrolled below it).
+- **One highlight**: the "next thing to do" marker (`.cs-st.now`) is no longer drawn; the step he is on (`.cs-st.view`) carries the tint, the
+  edge and the number's colour; a finished step keeps its filled number.
+- **The projects row** (`buyDrawItems`, `#bx-items`) shows only once a project of the family has a name (what he typed in step 1): "+ New",
+  then the named projects (and the one open). One empty project: no row.
+- Tests: `v75-proposal-words` (new, 29; failing first on v10.74.0: `v90/logs/ff-v75-proposal-words.log`); updated with comments (the name, the
+  question and the choices' lines read from each tab's name, the step lines, the tile's line, the projects row, the lead line that v10.41
+  had taken away): buy-ui, case-steps, hub-copy-and-quote, hub-layout, hub-alignment, hub-icons, hub-glow, v73-case-slider, v47-clean,
+  registration, v43-path, church-summary-box, v61-answers, v42-plan-first, v45-profile-move.
+  Checked in Chrome against the static copy (`v90/look-prop.mjs after`, pictures `v90/look-prop-after/`): the main menu, the ministry path,
+  the project path at step 1 and 3, the purchase path; phone 390, computer 1366, Spanish phone; no sideways scroll, no page errors.
+  `vocab.json` rebuilt for the stamps. Full suite: 203 suites · 12,263 passed · 0 failed (the full run 12,262 and one stale check,
+  v74-needs-grouped's pinned stamps, now "the six agree", updated with a comment and rerun: 50; v10.74.0: 202 · 12,234).
 
 **v10.74.0 (10 Nov 2026, full lane) — Neighborhood needs: one card per family.** The pastor, of Fairview Village's survey on a computer:
 *"you see there are seniors and isolation seniors and isolation seniors and isolation. There are two work schedules families with children

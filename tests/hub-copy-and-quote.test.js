@@ -42,13 +42,13 @@ setTimeout(()=>{
   // v10.65.0 (stale, not a regression): the pastor (9 Oct 2026), "two options one for EVANGELISM and one for in reach … We can put revival meetings": the Planner's tile names both
   const esAll=['Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
-    'Proposals for ministries, projects and purchases.',
+    'Ministries, projects and purchases, ready for a vote.',
     'Evangelism or revival meetings, from planning to follow-up.',
     'What other conferences’ calendars hold, side by side.'].map(k=>w.eval('ES['+JSON.stringify(k)+']'));   // v56 (B2): the fifth tile's line, held to the same budget
   esAll.forEach(t=>console.log('    '+String((t||'').length).padStart(2)+'  '+t));
   c('all five still translated', esAll.every(Boolean));   // v56 (B2)
   // v10.44 review (finding 5): Make the Case's line names projects and purchases (DESIGN §1.1, Q10's default), EN and ES
-  c('Make the Case: "Proposals for ministries, projects and purchases." / "Propuestas para ministerios, proyectos y compras."', [en[2], esAll[2]], ['Proposals for ministries, projects and purchases.', 'Propuestas para ministerios, proyectos y compras.']);
+  c('Make the Case: "Proposals for ministries, projects and purchases." / "Propuestas para ministerios, proyectos y compras."', [en[2], esAll[2]], ['Ministries, projects and purchases, ready for a vote.', 'Ministerios, proyectos y compras, listos para votar.']);
   c('Spanish inside the same budget', esAll.every(t=>t.length<=58));
   c('no Spanish card is now the odd one out', Math.max(...esAll.map(t=>t.length))-Math.min(...esAll.map(t=>t.length))<=18);
 

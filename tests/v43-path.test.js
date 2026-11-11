@@ -68,7 +68,7 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
     c('the average church before (an address, 0 of 46, an empty plan, an opening night): four steps in order, the gifts step glows', steps(P), [
       ['Map your neighborhood','Done ✓','','done'],
       ['Discover your members’ gifts','0 of 46','So every proposal knows who is gifted and ready.','now'],
-      ['Make the case','0 ministries in your plan','','todo'],
+      ['Proposal','0 ministries in your plan','','todo'],
       ['Plan an evangelism series','Done ✓','','done']]);
     c('each step opens its tool, in order', P.qa('#hubpath [data-hp]').map(b=>b.dataset.hp), ['survey','gifts','case','planner']);
     c('the glowing step is the current one (aria-current), one only', [P.qa('#hubpath [aria-current="step"]').length,P.q('#hubpath [aria-current="step"]').dataset.hp], [1,'gifts']);
@@ -91,7 +91,7 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
     c('after (40 of 46, half or more): the gifts step done, making the case glows', steps(A).map(s=>s[3]), ['done','done','now','done']);
     c('…"40 of 46"', steps(A)[1][1], '40 of 46');
     A.E(`uChurch().selected=['cooking-school']; uPersist(); showHub();`);
-    c('one ministry in the plan: singular', steps(A)[2].slice(0,2), ['Make the case','1 ministry in your plan']);
+    c('one ministry in the plan: singular', steps(A)[2].slice(0,2), ['Proposal','1 ministry in your plan']);
     A.E(`uChurch().selected=['cooking-school','food-pantry','an-id-no-longer-here']; uPersist(); showHub();`);
     c('two (an id no longer in the catalogue is not counted)', steps(A)[2][1], '2 ministries in your plan');
     c('…still glowing: in the plan is not yet the case made', steps(A)[2][3], 'now');
@@ -113,7 +113,7 @@ const nextBtns=P=>P.qa('#u-whatsnext [data-u-next-case]').map(b=>[b.dataset.uNex
     c('in Spanish (usted): the label, the four steps, the states', [S.q('#hubpath').getAttribute('aria-label'),S.txt('#hubpath .hp-k'),steps(S)], ['Su camino','Su camino',[
       ['Conozca su vecindario','Hecho ✓','','done'],
       ['Descubra los dones de sus miembros','0 de 46','Para que cada propuesta sepa quién tiene el don y está listo.','now'],
-      ['Presentar el caso','0 ministerios en su plan','','todo'],
+      ['Propuesta','0 ministerios en su plan','','todo'],
       ['Planifique una serie de evangelismo','Hecho ✓','','done']]]);
     S.E(`uChurch().selected=['cooking-school']; delete uChurch().plan.date; uPersist(); showHub();`);
     c('…singular, and "Opcional"', [steps(S)[2][1],steps(S)[3][1]], ['1 ministerio en su plan','Opcional']);

@@ -29,7 +29,7 @@ setTimeout(()=>{
   c('icons hidden from screen readers (the label carries it)', tools.every(t=>t.querySelector('svg').getAttribute('aria-hidden')==='true'));
   c('every card still names its tool', tools.map(t=>t.querySelector('b').textContent),
     // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
-    ['Community Survey','Spiritual Gifts','Make the Case','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
+    ['Community Survey','Spiritual Gifts','Proposal','Evangelism Planner','Learn from other conferences','Compare your churches']);   // v10.59.2: Compare your churches last (the pastor: "the weakest one")
   // v10.57.1 (stale, not a regression): the pastor (7 Oct 2026), "compare your churches on the bottom left … EVANGELISM planner … bottom middle … learn from other conferences … on the right"
   c('every card still routes somewhere', tools.map(t=>t.dataset.tool), ['survey','gifts','case','planner','compare','churches']);   // v10.59.2: Compare your churches last (the pastor: "put compare your churches to the very bottom right instead because it's the weakest one")
 

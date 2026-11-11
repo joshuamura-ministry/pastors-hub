@@ -21,8 +21,8 @@ const view=(P,bar)=>P.qa(`#${bar} .cs-st`).findIndex(b=>b.classList.contains('vi
   console.log('\n-- the top: three choices --');
   const P=page(); await ready(P); survey(P); await sleep(60); P.E(`capSave(${JSON.stringify(FX.MEDIUM)})`);
   P.E(`openTool('case')`); await sleep(120);
-  c('Make the case for: A ministry · A project · A purchase (the ministry pressed)', [P.txt('#cs-switch .bx-swl'),P.qa('#cs-switch [data-bx-path]').map(b=>[b.dataset.bxPath,b.textContent,b.getAttribute('aria-pressed')])],
-    ['Make the case for:',[['ministry','A ministry','true'],['project','A project','false'],['buy','A purchase','false']]]);
+  c('Make the case for: A ministry · A project · A purchase (the ministry pressed)', [P.txt('#cs-switch .bx-swl'),P.qa('#cs-switch [data-bx-path]').map(b=>[b.dataset.bxPath,b.querySelector('b').textContent,b.getAttribute('aria-pressed')])],
+    ['What is this proposal for?',[['ministry','A ministry','true'],['project','A project','false'],['buy','A purchase','false']]]);
   console.log('\n-- the ministry path: one step on screen --');
   c('the bar, then the panes box, then the nav row, then the close', P.qa('#casebody > *').map(e=>e.id||e.className).filter(id=>id!=='cs-gff').slice(0,4), ['cs-bar','cs-panes','cs-nav','cs-close']);
   c('the three steps keep their ids inside the panes box; step 1 is on, the other two inert and hidden from readers', [panes(P,'cs-panes'),on(P,'cs-panes'),inert(P,'cs-panes')],
@@ -57,14 +57,15 @@ const view=(P,bar)=>P.qa(`#${bar} .cs-st`).findIndex(b=>b.classList.contains('vi
   c('Done: Three options on screen, step 1 inert', [on(P,'bx-panes'),inert(P,'bx-panes').find(x=>x[0]==='bx-s1')], [['bx-s2'],['bx-s1',true,'true']]);
   console.log('\n-- a project --');
   P.q('#cs-switch [data-bx-path="project"]').click(); await sleep(120);
-  c('stored as "project"; buyPath() still says buy (every older reader unchanged); the purchase is not in this list: + New alone', [P.J('uChurch().proposalPrefs.path'),P.J('buyPath()'),P.J('buyWay()'),P.qa('#bx-items [data-bx-item]').map(b=>b.textContent.trim())], ['project','buy','project',['+ New']]);
+  // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026); the projects row shows only once a project is named
+  c('stored as "project"; buyPath() still says buy (every older reader unchanged); the purchase is not in this list, and no row until a project is named', [P.J('uChurch().proposalPrefs.path'),P.J('buyPath()'),P.J('buyWay()'),P.qa('#bx-items [data-bx-item]').map(b=>b.textContent.trim())], ['project','buy','project',[]]);
   c('a project offers all nine kinds of need, Building repair among them', P.qa('#bx-s1 [data-bx-cat]').length, 9);
   P.q('#bx-s1 [data-bx-cat="kitchen"]').click(); await sleep(60);
   c('Kitchen as a project: a repair by default, the row offers Repair or install · Build or add on, never Buy it', [P.J('buyCur().kind'),P.qa('#bx-s1 [data-bx-kind]').map(b=>b.textContent)], ['repair',['Repair or install','Build or add on']]);
   P.q('#bx-s1 [data-bx-cat="building"]').click(); await sleep(60);
   c('Building repair keeps the repair', P.J('buyCur().kind'), 'repair');
   P.q('#cs-switch [data-bx-path="buy"]').click(); await sleep(120);
-  c('back to purchases: the kitchen purchase is listed and current again', [P.J('BUY_ST.id'),P.qa('#bx-items [data-bx-item]').length], [kid,2]);
+  c('back to purchases: the kitchen purchase is current again (no row: it has no name yet, v10.75.0)', [P.J('BUY_ST.id'),P.qa('#bx-items [data-bx-item]').length], [kid,0]);
   console.log('\n-- the Proposal view from a need --');
   P.q('#cs-switch [data-bx-path="ministry"]').click(); await sleep(80);
   P.E(`NS.back={need:'x-need',idea:${JSON.stringify(pick)},plan:${JSON.stringify(pick)}}; caseSetPrefs({ministry:${JSON.stringify(pick)},group:'board',type:'board'}); CASE_ST.propList=false; CASE_ST.pane=null; caseMount();`); await sleep(80);
@@ -76,7 +77,7 @@ const view=(P,bar)=>P.qa(`#${bar} .cs-st`).findIndex(b=>b.classList.contains('vi
   c('the panes box clips sideways motion and keeps the hidden panes laid out but unseen; reduced motion stills the slide; print shows every pane', [/\.cs-panes\{[^}]*overflow:hidden/.test(html),/\.cs-pane:not\(\.on\)\{[^}]*position:absolute[^}]*visibility:hidden/.test(html),/prefers-reduced-motion:reduce\)\{[^}]*\.cs-pane\.cs-in-r[^}]*animation:none/.test(html),/@media print\{[^}]*\.cs-nav\{display:none/.test(html)], [true,true,true,true]);
   c('three tabs across', /\.cs-tabs\.bx-tabs\{[^}]*repeat\(3,/.test(html), true);
   const S=page({lang:'es'}); await ready(S); survey(S); await sleep(60); S.E(`capSave(${JSON.stringify(FX.MEDIUM)})`); S.E(`openTool('case')`); await sleep(120);
-  c('Spanish: the three choices, the nav row', [S.qa('#cs-switch [data-bx-path]').map(b=>b.textContent),nav(S,'cs-nav')], [['Un ministerio','Un proyecto','Una compra'],{back:null,n:'Paso 1 de 3',done:'Hecho'}]);
+  c('Spanish: the three choices, the nav row', [S.qa('#cs-switch [data-bx-path]').map(b=>b.querySelector('b').textContent),nav(S,'cs-nav')], [['Un ministerio','Un proyecto','Una compra'],{back:null,n:'Paso 1 de 3',done:'Hecho'}]);
   S.q('#cs-nav [data-cs-done]').click(); await sleep(40);
   c('…Atrás', nav(S,'cs-nav'), {back:'← Atrás',n:'Paso 2 de 3',done:'Hecho'});
   c('no "AI" in Make the Case', BAD.test(P.txt('#casebody')+' '+P.txt('#cs-switch')), false);

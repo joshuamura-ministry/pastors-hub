@@ -58,7 +58,7 @@ setTimeout(()=>{
   // v10.65.0 (stale, not a regression): the pastor (9 Oct 2026), "two options one for EVANGELISM and one for in reach … We can put revival meetings": the Planner's tile names both
   c('all four blurbs translated', [ 'Know who lives nearby and where to reach first.',
     'Help members discover their gifts and find a place to serve.',
-    'Proposals for ministries, projects and purchases.',
+    'Ministries, projects and purchases, ready for a vote.',
     'Evangelism or revival meetings, from planning to follow-up.'].every(k=>!!w.eval('ES['+JSON.stringify(k)+']')));
 
   console.log(`\n${pass} passed, ${fail} failed`);

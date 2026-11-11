@@ -29,7 +29,7 @@ const HTML=require('fs').readFileSync(require('path').join(__dirname,'..','index
   P.E(`openTool('churches')`); await sleep(60);
   c('Compare your churches: the same', [P.txt('#chc .chc-top h1'),...dup()], ['Compare your churches',true,true]);
   P.E(`openTool('case')`); await sleep(60);
-  c('Make the Case: its name in the tool bar again (nothing left over from the tool before)', [P.txt('#toolname'),...dup()], ['Make the Case',false,false]);
+  c('Make the Case: its name in the tool bar again (nothing left over from the tool before)', [P.txt('#toolname'),...dup()], ['Proposal',true,true]);   // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026); the page has its own title, so the bar's name steps aside
   { const R=page({needs:'file'}); await ready(R); survey(R);
     const NEED=R.J(`NSM.needs[0].id`); await openNeed(R,NEED,true);
     const IDEA=R.q(`#ns-i-${NEED} .ns-row`).dataset.idea; await openSheet(R,NEED,IDEA);
@@ -38,7 +38,7 @@ const HTML=require('fs').readFileSync(require('path').join(__dirname,'..','index
   { const S=page({lang:'es'}); await ready(S); survey(S); S.E(`openTool('gifts')`); await sleep(60);
     c('in Spanish too ("Dones espirituales")', [S.txt('#gifts .gfhead h2'),S.q('#toolname').classList.contains('tb-dup')], ['Dones espirituales',true]); }
   c('every tool\'s title one size and weight (the tool bar\'s and the pages\' own); the Proposal keeps its big letters',
-    [/\.toolname,\.gfhead h2,\.chc-top h1,\.cmp-top h1\{font-family:var\(--disp\);font-size:clamp\(1\.5rem,4vw,2rem\);font-weight:700/.test(HTML),/#cs-prop \.cs-pbig\{display:block;font-family:var\(--disp\);font-weight:800;font-size:clamp\(2\.4rem,7vw,3\.6rem\)/.test(HTML)], [true,true]);
+    [/\.toolname,\.gfhead h2,\.chc-top h1,\.cmp-top h1\{font-family:var\(--disp\);font-size:clamp\(1\.5rem,4vw,2rem\);font-weight:700/.test(HTML),/#cs-prop \.cs-pbig,\.bx-switch \.cs-pbig\{display:block;font-family:var\(--disp\);font-weight:800;font-size:clamp\(2\.4rem,7vw,3\.6rem\)/.test(HTML)], [true,true]);
 
   console.log('\n-- one way to change church: the church button in the header --');
   c('the survey\'s tool-bar "Change church" and Make the Case\'s line\'s own link give way to the church button (kept only without one)',
