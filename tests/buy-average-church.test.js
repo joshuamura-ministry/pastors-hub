@@ -70,7 +70,8 @@ const ID = 'buy-avs001';
 
   console.log('\n-- a new project on this church, from "+ New" to its slides, with Find prices stubbed (sample prices, nothing spent) --');
   P.E(`(()=>{ const ch=uChurch(); ch.proposalPrefs={...(ch.proposalPrefs||{}),path:'buy',buy:'new'}; uPersist(); openTool('case'); render(); return 1; })()`);
-  await until(() => P.q('#bx-s1 [data-bx-cat]'), 8000);
+  await until(() => P.q('#bx-s1 [data-bx-grp]'), 8000);
+  P.q('[data-bx-grp="av"]').click(); await sleep(30);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
   P.q('[data-bx-cat="light"]').click(); await sleep(30);
   const need = P.q('[data-bx-f="need"]'); need.value = 'Brighter LED lights for the platform so guests can see the speaker'; need.dispatchEvent(new P.w.Event('input')); await sleep(350);
   P.q('[data-bx-why="guests"]').click(); await sleep(30);

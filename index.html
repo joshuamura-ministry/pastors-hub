@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.75.0
+     TERRAIN  v10.76.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.75.0" data-theme="dark">
+<html lang="en" data-version="v10.76.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.75.0">
-<title>Community Map — Terrain v10.75.0</title>
+<meta name="terrain-version" content="v10.76.0">
+<title>Community Map — Terrain v10.76.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -3492,8 +3492,36 @@ section.blk.u-churchsec.u-todo{animation:ucSpin 9s linear infinite,ucGlow 6s eas
 .bx-pathed{margin:10px 0 0}
 .bx-acts{grid-template-columns:repeat(3,minmax(0,1fr))}
 .bx-acts.cs-a4{grid-template-columns:repeat(4,minmax(0,1fr))}
+/* v10.76.0: the kinds in two taps; the three stages; the stages as tabs in step 5 */
+.bx-tiles.bx-groups{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bx-tiles.bx-subs{grid-template-columns:repeat(var(--n,5),minmax(0,1fr))}
+.bx-stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:14px 0 0}
+.bx-stages.bx-n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.bx-stage{display:flex;align-items:flex-start;gap:10px;min-width:0;margin:0;padding:12px 14px;border:1px solid var(--line2);border-radius:14px;background:var(--panel2);color:var(--ink2);cursor:pointer;line-height:1.3}
+.bx-stage.on{border-color:var(--case);background:color-mix(in srgb,var(--case) 12%,var(--panel2));color:var(--ink)}
+.bx-stage.bx-stconf{cursor:default;border-color:var(--m-housing);background:color-mix(in srgb,var(--m-housing) 10%,var(--panel2))}
+.bx-stage input{width:20px;height:20px;flex:none;margin:3px 0 0;accent-color:var(--case)}
+.bx-sn{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;font-family:var(--disp);font-weight:700;font-size:.9rem;background:var(--line);color:var(--ink2)}
+.bx-stage.on .bx-sn{background:var(--case);color:#fff}
+.bx-stage.bx-stconf .bx-sn{background:var(--m-housing);color:#fff}
+.bx-stt{display:grid;gap:3px;min-width:0}
+.bx-stt b{font-size:.95rem;font-weight:700;line-height:1.3}
+.bx-stt small{font-size:.82rem;color:var(--ink3);line-height:1.35}
+.bx-stage.on .bx-stt small{color:var(--ink2)}
+.bx-stage .bx-conf{margin:0;padding:0;border:0;border-radius:0;background:none;font-weight:600}
+.bx-stnote{margin:8px 0 0}
+.bx-stmsg{margin:4px 0 0}.bx-stmsg:empty{display:none}
+.bx-stabl{margin-top:0}
+.cs-tabs.bx-stabs{grid-template-columns:repeat(var(--n,3),minmax(0,1fr));margin:0 0 12px}
+.cs-tabs.bx-stabs .cs-tab{flex-direction:column;gap:2px;padding:8px 10px}
+.cs-tabs.bx-stabs .cs-tab small{font-weight:500;font-size:.76rem;line-height:1.3;color:var(--ink3)}
+.cs-tabs.bx-stabs .cs-tab.on small{color:var(--ink2)}
+.cs-tabs.bx-stabs .cs-tab small:empty{display:none}
 @media(max-width:860px){
   .bx-tiles{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bx-tiles.bx-groups{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .bx-tiles.bx-subs:not(.bx-n2){grid-template-columns:repeat(3,minmax(0,1fr))}
+  .bx-stages.bx-n4{grid-template-columns:repeat(2,minmax(0,1fr))}
   .bx-opts{grid-template-columns:minmax(0,1fr)}
   .bx-opt.rec{order:-1}
   .bx-dgrid{grid-template-columns:repeat(2,minmax(0,1fr))}
@@ -3510,7 +3538,9 @@ section.blk.u-churchsec.u-todo{animation:ucSpin 9s linear infinite,ucGlow 6s eas
   .bx-tile{padding:8px 10px;gap:8px}
   .bx-tile b{font-size:.84rem}
 }
-@media(max-width:420px){ .bx-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px} .bx-tile{min-height:58px;padding:8px 8px} .bx-tdot{display:none} .bx-tile b{font-size:.8rem} }
+@media(max-width:420px){ .bx-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px} .bx-tile{min-height:58px;padding:8px 8px} .bx-tdot{display:none} .bx-tile b{font-size:.8rem} .bx-tiles.bx-groups{grid-template-columns:repeat(2,minmax(0,1fr))} .bx-tiles.bx-subs:not(.bx-n2){grid-template-columns:repeat(3,minmax(0,1fr))} }
+@media(max-width:760px){ .bx-stages,.bx-stages.bx-n4{grid-template-columns:minmax(0,1fr)} }
+@media(max-width:559.98px){ .cs-tabs.bx-stabs.bx-n4{grid-template-columns:repeat(2,minmax(0,1fr))} }
 @media print{ .bx-bar,.bx-acts,.bx-items,.bx-switch{display:none!important} }
 /* ===== MAKE THE CASE · PRESENTING AND FOLLOWING (v10.39.0) =====
    The presenter's overlay (#casepres: setup, the presenter view, the link, the answers)
@@ -5332,13 +5362,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.75.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.76.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.75.0';
+const VERSION = 'v10.76.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -38645,8 +38675,16 @@ const BUY_UI={
   t1:{en:'What do you need?',es:'¿Qué necesitan?'}, n1:{en:'Name it, say why it matters, and who will look after it.',es:'Póngale nombre, diga por qué importa y quién lo cuidará.'},   // v10.75.0: each line says what to do there
   t2:{en:'Three options',es:'Tres opciones'}, n2:{en:'Three prices, good, better and best; pick one and say why.',es:'Tres precios: bueno, mejor y el mejor; elija uno y diga por qué.'},
   t3:{en:'How we’ll pay',es:'Cómo lo pagaremos'}, n3:{en:'Where the money will come from, and how much from each. Never tithe.',es:'De dónde saldrá el dinero y cuánto de cada fuente. Nunca el diezmo.'},
-  t4:{en:'Who decides',es:'Quién decide'}, n4:{en:'Who has to say yes, and who you will present to.',es:'Quién tiene que dar el sí, y a quién presentará.'},
-  t5:{en:'Present and vote',es:'Presentar y votar'}, n5:{en:'Check the slides, then present; print the handout and the Proposal to vote on.',es:'Revise las diapositivas y presente; imprima el folleto y la propuesta para votar.'},
+  // v10.76.0 — the pastor (17 Nov 2026): "Most proposals will go to the finance committee first then the board … we want them to present
+  // the proposal, if it goes through and then a proposal to the Church body so those are the three proposals"
+  t4:{en:'Who decides',es:'Quién decide'}, n4:{en:'Who has to say yes, in order. Untick a stage your church does not need.',es:'Quién tiene que dar el sí, en orden. Desmarque una etapa que su iglesia no necesite.'},
+  t5:{en:'Present and vote',es:'Presentar y votar'}, n5:{en:'Each stage has its own slides, handout and Proposal to vote on. Check them, then present.',es:'Cada etapa tiene sus propias diapositivas, folleto y propuesta para votar. Revíselos y presente.'},
+  stFinance:{en:'Looks at the money first and recommends it to the board.',es:'Revisa primero el dinero y lo recomienda a la junta.'},
+  stBoard:{en:'Votes to approve it, or sends it on to the church.',es:'Vota para aprobarlo, o lo pasa a la iglesia.'},
+  stBusiness:{en:'The whole church votes.',es:'Vota toda la iglesia.'},
+  stNote:{en:'Untick a stage your church does not need. At least one stays.',es:'Desmarque una etapa que su iglesia no necesite. Al menos una se queda.'},
+  presentTo:{en:'Present to:',es:'Presentar a:'},
+  subq:{en:'Which one?',es:'¿Cuál?'},   // v10.76.0: the kind, after its group ("sound livestream lighting … should be under categories")
   s1:{en:'Say what you need',es:'Diga qué necesitan'}, s2:{en:'Three prices',es:'Tres precios'}, s3:{en:'Plan the money',es:'Planifique el dinero'},
   s4:{en:'Who votes',es:'Quién vota'}, s5:{en:'Check, then present',es:'Revise y presente'},
   s2done:{en:'Recommended: {tier} · {total}',es:'Recomendada: {tier} · {total}'},
@@ -38797,6 +38835,17 @@ const BUY_CATS={
   vehicle:{en:'Vehicle',es:'Vehículo',why:['rides','ministries','children'],team:'community',kinds:['buy','repair'],skill:'vehicle',fac:'vehicle',crew:2},
   other:{en:'Something else',es:'Otra cosa',why:['guests','ministries','safety','other'],team:null,kinds:['buy','repair','build'],skill:null,fac:null,crew:0}};
 const BUY_CAT_ORDER=['sound','stream','light','computer','music','building','kitchen','vehicle','other'];
+/* v10.76.0 — the kinds in two taps (the pastor, 17 Nov 2026: "sound livestream lighting now these are all one categories so they should
+   be under categories … if it's audiovisual then that's one thing"): a group first, then the kind. A group with one kind for the family
+   picks it at once. Every kind sits in exactly one group (v76-stages holds it). */
+const BUY_GROUPS={
+  av:{en:'Sound, video & music',es:'Sonido, video y música',cats:['sound','stream','light','computer','music']},
+  grounds:{en:'Building & grounds',es:'Edificio y terreno',cats:['building','kitchen']},
+  vehicle:{en:'Vehicle',es:'Vehículo',cats:['vehicle']},
+  other:{en:'Something else',es:'Otra cosa',cats:['other']}};
+const BUY_GROUP_ORDER=['av','grounds','vehicle','other'];
+function buyGroupOf(cat){ return BUY_GROUP_ORDER.find(g=>BUY_GROUPS[g].cats.includes(cat))||null; }
+function buyGroupCats(g,way){ return (BUY_GROUPS[g]?BUY_GROUPS[g].cats:[]).filter(k=>buyKindsFor(BUY_CATS[k],way).length); }
 /* The reasons: the chip, whether it takes a count (and its words for one / many), the goal's outcome after "so that" / "para que"
    (the Spanish in the subjunctive: the pastor's Q1 rule), the why slide's headline, and what a slide may show (DESIGN §3). */
 const BUY_WHY={
@@ -39167,9 +39216,11 @@ const buyIsWork=item=>!!item&&item.kind!=='buy';
 function buyChecked(item){ return ((item&&item.options)||[]).map(o=>o.checked).filter(Boolean).sort().pop()||null; }
 
 /* ---- who decides --------------------------------------------------------------------------------------------------------------
-   The church's own path without the ministry team (a purchase is decided by the bodies that hold money), changed here for this
-   project only. The business meeting is added only when the total reaches HIS church's amount (no default, Church Manual p. 139:
-   what is "major" is the church's to say). Build or add on, or any debt: the conference and the union before any commitment (p. 153). */
+   v10.76.0: three stages, all on unless he unticks one for this project: the finance committee, the church board, the business meeting
+   (the pastor, 17 Nov 2026: "Most proposals will go to the finance committee first then the board … then a proposal to the Church body
+   so those are the three proposals"). Before: the church's approval path less the team (the board alone by default) and the business
+   meeting only over an amount he typed (`businessAt`, now unread; the key stays for readers). Build or add on, or any debt: the
+   conference and the union before any commitment (Church Manual 2025 p. 153). */
 function buyDebt(item){ return ((item&&item.fund&&item.fund.lines)||[]).some(l=>l.note&&Object.values(l.note).some(s=>BUY_DEBT_RE.test(s))); }
 /* v10.44 review: why the conference comes in, case by case (Church Manual 2025 p. 153: counsel for any debt; the conference and union
    committees for buying or building church property; a repair over his conference's own amount is that conference's rule). */
@@ -39181,18 +39232,14 @@ function buyConfWhy(item){
 }
 function buyNeedsConf(item){ const W=buyConfWhy(item); return W.build||W.debt||W.review; }
 function buyPathOf(item){
-  let path=item&&item.path?item.path.slice():null;
-  if(!path){ let ch=[]; try{ ch=caseApproval().path||[]; }catch(e){ ch=[]; } path=BUY_BODIES.filter(b=>ch.includes(b)); if(!path.length) path=['board']; }
-  const R=buyRules(), t=buyTotal(item);
-  const bizAuto=!path.includes('business')&&R.businessAt!=null&&t!=null&&t>=R.businessAt;
-  if(bizAuto) path=BUY_BODIES.filter(b=>path.includes(b)||b==='business');
-  return {path,conf:buyNeedsConf(item),bizAuto};
+  let path=item&&Array.isArray(item.path)&&item.path.length?BUY_BODIES.filter(b=>item.path.includes(b)):null;
+  if(!path||!path.length) path=BUY_BODIES.slice();   // v10.76.0: the three stages unless he set this project's own
+  return {path,conf:buyNeedsConf(item),bizAuto:false};
 }
-/* The audiences his slides can be for: the bodies on the path, the team that will run it, the whole church, the conference. */
+/* The audiences his slides can be for: the stages on the path, then the conference when it comes in (v10.76.0: one set for each stage;
+   buyModel still takes 'team' and 'congregation' for anything saved before, the screen no longer offers them). */
 function buyAudiences(item){
   const P=buyPathOf(item), out=P.path.slice();
-  if(item&&item.team) out.push('team');
-  out.push('congregation');
   if(P.conf) out.push('conference');
   return out;
 }
@@ -40231,7 +40278,7 @@ async function buyPricesWait(id,o){
 /* ---- the screens: five framed steps, each its own colour (pink people · blue things · amber money · violet deciding · mint
    presenting), each with one short line; a project row above them; the step bar. Phone 390 one column; desktop the same column at
    Make the Case's width. Everything he types is saved on this device, per church (buySave). ---- */
-const BUY_ST={id:null,pv:null,slide:0,edit:null,timer:null,msg:'',pmsg:'',psecs:null,pbusy:false,rfqOpen:false,decOpen:false,pathOpen:false,teamOpen:false,pane:null};   // v10.73.0: pane
+const BUY_ST={id:null,pv:null,slide:0,edit:null,timer:null,msg:'',pmsg:'',psecs:null,pbusy:false,rfqOpen:false,decOpen:false,pathOpen:false,teamOpen:false,pane:null,grp:null};   // v10.73.0: pane; v10.76.0: grp (a group tapped before its kind)
 const BUY_HUE=['people','housing','hardship','children','language'];
 function buyCur(){ return BUY_ST.id?buyGet(BUY_ST.id):null; }
 function buyStepHead(n,title,note,right){
@@ -40267,6 +40314,7 @@ function buyMount(host){
   // v10.73.0: the projects of the family shown (a purchase or a project); a remembered one of the other family is left alone
   const pb=buyPrefBuy(), list=buyListFam(), fam=it=>!!it&&buyFam(it)===buyWay();
   if(BUY_ST.id&&!fam(buyGet(BUY_ST.id))) BUY_ST.id=null;
+  BUY_ST.grp=null;
   if(!BUY_ST.id&&pb&&fam(buyGet(pb))) BUY_ST.id=pb;
   if(!BUY_ST.id&&list.length&&pb!=='new') BUY_ST.id=list[list.length-1].id;
   host.innerHTML=`<div class="bx" id="bx"><div class="bx-items" id="bx-items"></div><nav class="cs-bar bx-bar" id="bx-bar"></nav><p class="bx-barnow" id="bx-barnow" aria-hidden="true"></p>
@@ -40292,7 +40340,7 @@ function buyPricesResume(id){
     ()=>{ delete BUY_PRICES.run[id]; BUY_ST.psecs=null; if($('bx-s2')) buyDraw2(); });
 }
 function buyDrawAll(){ buyDrawItems(); buyDraw1(); buyDraw2(); buyDraw3(); buyDraw4(); buyDraw5(); buyStepBar(); }
-function buySelect(id){ BUY_ST.id=id; BUY_ST.edit=null; BUY_ST.slide=0; BUY_ST.pmsg=''; BUY_ST.decOpen=false; BUY_ST.pathOpen=false; BUY_ST.pane=null; caseSetPrefs({buy:id||'new'}); buyDrawAll(); csPaneOpen('bx-panes',buyStepState().now); }
+function buySelect(id){ BUY_ST.id=id; BUY_ST.edit=null; BUY_ST.slide=0; BUY_ST.pmsg=''; BUY_ST.decOpen=false; BUY_ST.pathOpen=false; BUY_ST.pane=null; BUY_ST.grp=null; caseSetPrefs({buy:id||'new'}); buyDrawAll(); csPaneOpen('bx-panes',buyStepState().now); }
 /* The project row: New, then each project with a dot for how far its decision has come. */
 function buyDrawItems(){
   const h=$('bx-items'); if(!h) return;
@@ -40313,7 +40361,9 @@ function buyStepState(){
   const it=buyCur(), named=!!(it&&(buyIn(it.name)||buyIn(it.need)));
   const pick=it?buyOpt(it,buyPickId(it)):null, M=it?buyMeter(it):null, P=it?buyPathOf(it):null;
   let n=0; try{ const m=it&&pick?buyModel(it,buyAudNow(it)):null; const d=m&&m.ok?buyDeck(m):null; n=d?d.slides.length:0; }catch(e){ n=0; }
-  const done=[named,named&&!!pick,named&&!!pick&&M&&(M.state==='planned'||M.state==='over'),named&&!!pick&&!!(it&&it.aud),named&&n>0&&!!(it&&it.aud)];
+  // v10.76.0: step 4 is done once the money is planned (the three stages stand unless he unticks one); step 5 once there are slides
+  const planned=!!(named&&pick&&M&&(M.state==='planned'||M.state==='over'));
+  const done=[named,named&&!!pick,planned,planned,named&&!!pick&&n>0];
   const cur=done.findIndex(x=>!x), now=cur<0?4:cur;
   return {it,named,pick,M,P,n,done,now};
 }
@@ -40343,9 +40393,13 @@ const buyAudNow=it=>{ const A=buyAudiences(it); return it&&it.aud&&A.includes(it
 /* ① What do you need? (pink) */
 function buyDraw1(){
   const h=$('bx-s1'); if(!h) return;
-  const it=buyCur(), L=caseLang();
-  const tiles=buyCatsFor(buyWay()).map(k=>`<button type="button" class="bx-tile${it&&it.cat===k?' on':''}" data-bx-cat="${k}" aria-pressed="${!!(it&&it.cat===k)}"><i class="bx-tdot" aria-hidden="true"></i><b>${esc(caseT(BUY_CATS[k]))}</b></button>`).join('');
-  let body=`<p class="bx-q" id="bx-catq">${esc(buyU('catLabel'))}</p><div class="bx-tiles" role="group" aria-labelledby="bx-catq">${tiles}</div>`;
+  const it=buyCur(), L=caseLang(), way=buyWay();
+  // v10.76.0: the kinds in two taps: the groups, then the kinds of the group tapped (or of the project's own kind)
+  const grp=BUY_ST.grp||(it?buyGroupOf(it.cat):null);
+  const gtiles=BUY_GROUP_ORDER.filter(g=>buyGroupCats(g,way).length).map(g=>`<button type="button" class="bx-tile${grp===g?' on':''}" data-bx-grp="${g}" aria-pressed="${grp===g}"><i class="bx-tdot" aria-hidden="true"></i><b>${esc(caseT(BUY_GROUPS[g]))}</b></button>`).join('');
+  const subs=grp?buyGroupCats(grp,way):[];
+  const stiles=subs.length>1?`<p class="bx-q" id="bx-subq">${esc(buyU('subq'))}</p><div class="bx-tiles bx-subs${subs.length===2?' bx-n2':''}" role="group" aria-labelledby="bx-subq" style="--n:${subs.length}">${subs.map(k=>`<button type="button" class="bx-tile${it&&it.cat===k?' on':''}" data-bx-cat="${k}" aria-pressed="${!!(it&&it.cat===k)}"><i class="bx-tdot" aria-hidden="true"></i><b>${esc(caseT(BUY_CATS[k]))}</b></button>`).join('')}</div>`:'';
+  let body=`<p class="bx-q" id="bx-catq">${esc(buyU('catLabel'))}</p><div class="bx-tiles bx-groups" role="group" aria-labelledby="bx-catq">${gtiles}</div>${stiles}`;
   if(it){
     const C=BUY_CATS[it.cat];
     const KS=buyKindsFor(C,buyWay()), kinds=KS.length>1?`<p class="bx-q" id="bx-kindq">${esc(buyU('kindLabel'))}</p><div class="u-seg bx-kinds" role="group" aria-labelledby="bx-kindq">${KS.map(k=>`<button type="button" data-bx-kind="${k}" class="${it.kind===k||(k==='repair'&&it.kind==='install')?'on':''}" aria-pressed="${it.kind===k}">${esc(buyU(k==='buy'?'kindBuy':k==='build'?'kindBuild':'kindFix'))}</button>`).join('')}</div>`:'';
@@ -40374,10 +40428,15 @@ function buyDraw1(){
       <div class="bx-rm"><button type="button" class="btn ghost gfsm" data-bx-remove>${esc(buyU('remove'))}</button></div>`;
   }
   h.innerHTML=buyStepHead(1,buyU('t1'),buyU('n1'))+body;
-  h.querySelectorAll('[data-bx-cat]').forEach(b=>b.onclick=()=>{ const k=b.dataset.bxCat;
+  const pickCat=k=>{ BUY_ST.grp=null;
     if(!it){ const n=buyNew(k); if(n) buySelect(n.id); return; }
     buyChange(x=>{ const C=BUY_CATS[k], ks=buyKindsFor(C,buyWay()); x.cat=k; if(!ks.includes(x.kind)&&!(x.kind==='install'&&ks.includes('repair'))) x.kind=ks[0]||C.kinds[0]; if(!x.team||BUY_CATS[it.cat].team===x.team) x.team=C.team;
-      x.why=(x.why||[]).filter(w=>C.why.includes(w.k)); },{now:true}); buyDraw1(); });
+      x.why=(x.why||[]).filter(w=>C.why.includes(w.k)); },{now:true}); buyDraw1(); };
+  h.querySelectorAll('[data-bx-cat]').forEach(b=>b.onclick=()=>pickCat(b.dataset.bxCat));
+  // v10.76.0: a group with one kind for this family is picked at once; else its kinds are shown and he taps one
+  h.querySelectorAll('[data-bx-grp]').forEach(b=>b.onclick=()=>{ const g=b.dataset.bxGrp, ks=buyGroupCats(g,buyWay());
+    if(ks.length===1){ pickCat(ks[0]); return; }
+    BUY_ST.grp=g; buyDraw1(); });
   if(!it) return;
   h.querySelectorAll('[data-bx-kind]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.kind=b.dataset.bxKind; },{now:true}); buyDraw1(); });
   const err=h.querySelector('[data-bx-err1]'), bad=v=>BUY_TAG_RE.test(v);
@@ -40586,40 +40645,32 @@ function buyMeterPaint(){
 }
 
 /* ④ Who decides (violet) */
+/* v10.76.0: the three stages as cards, each a tick (on by default), its number, its name and one line saying its job; the conference
+   a fourth card with no tick when it comes in; the conference's review amount only for a building or kitchen repair (his conference's
+   rule); then the trail and Record what we decided. Gone: "In {church}: …" + Change and its tick editor, the business-meeting amount,
+   the three-quotes amount, "Make slides for:" and the audience tiles (step 5 offers one set for each stage). */
 function buyDraw4(){
   const h=$('bx-s4'); if(!h) return;
   const it=buyCur(), named=!!(it&&(buyIn(it.name)||buyIn(it.need)));
   if(!it||!named){ h.classList.add('bx-off'); h.innerHTML=buyStepHead(4,buyU('t4'),buyU('n4'))+`<p class="note bx-first">${esc(buyU('first'))}</p>`; return; }
   h.classList.remove('bx-off');
-  const P=buyPathOf(it), R=buyRules(), church=churchNameInSentence(), total=buyTotal(it), aud=buyAudNow(it);
-  const tiles=sec=>`<div class="cs-agrid">${sec.map(([a,name])=>`<button type="button" class="cs-atile${aud===a?' on':''}" data-bx-aud="${a}" aria-pressed="${aud===a}"><span class="cs-adot" aria-hidden="true"></span><span class="cs-an"><b>${esc(name)}</b></span></button>`).join('')}</div>`;
-  const secs=[];
-  const dec=P.path.map(b=>[b,caseT(CASE_DEC.body[b])]);
-  secs.push(`<section class="cs-aud" style="--g:var(--m-hardship)"><h4>${esc(caseT(CASE_AUD_SECTIONS[0]))}</h4>${tiles(dec)}</section>`);
-  if(it.team) secs.push(`<section class="cs-aud" style="--g:var(--m-children)"><h4>${esc(caseT(CASE_AUD_SECTIONS[1]))}</h4>${tiles([['team',buyTeamName(it)]])}</section>`);
-  secs.push(`<section class="cs-aud" style="--g:var(--m-language)"><h4>${esc(caseT(CASE_AUD_SECTIONS[2]))}</h4>${tiles([['congregation',caseT(CASE_GROUPS.find(g=>g.id==='congregation'))]])}</section>`);
-  if(P.conf) secs.push(`<section class="cs-aud" style="--g:var(--m-housing)"><h4>${esc(caseT(CASE_AUD_SECTIONS[3]))}</h4>${tiles([['conference',caseT(CASE_DEC.body.conference)]])}</section>`);
+  const P=buyPathOf(it), R=buyRules(), aud=buyAudNow(it), W=buyConfWhy(it);
+  const ST={finance:'stFinance',board:'stBoard',business:'stBusiness'};
+  const cards=BUY_BODIES.map((b,i)=>{ const on=P.path.includes(b);
+    return `<label class="bx-stage${on?' on':''}" data-bx-stage="${b}"><input type="checkbox" data-bx-st="${b}"${on?' checked':''}><span class="bx-sn" aria-hidden="true">${i+1}</span><span class="bx-stt"><b>${esc(caseT(CASE_DEC.body[b]))}</b><small>${esc(buyU(ST[b]))}</small></span></label>`; });
+  if(P.conf){ const why=[W.build?buyU('confRow'):'',W.debt?buyU('confDebtRow'):'',W.review?buyU('confReviewRow',{n:buyMoney(W.at)}):''].filter(Boolean);
+    cards.push(`<div class="bx-stage bx-stconf on" data-bx-stage="conference"><span class="bx-sn" aria-hidden="true">+</span><span class="bx-stt"><b>${esc(caseT(CASE_DEC.body.conference))}</b>${why.map(t=>`<small class="bx-conf">${esc(t)}</small>`).join('')}</span></div>`); }
   const rule=(k,label,val)=>`<label class="u-field bx-rulef"><span>${esc(label)}</span><input type="number" min="1" step="1" inputmode="numeric" data-bx-rule="${k}" value="${val==null?'':val}" placeholder="$"></label>`;
-  const pathEd=BUY_ST.pathOpen?`<div class="cd-pathed bx-pathed"><p class="cd-ph">${esc(buyU('pathEditH'))}</p><p class="note">${esc(buyU('pathNote'))}</p>
-    <div class="cd-ticks">${BUY_BODIES.map(b=>`<label class="cd-tick"><input type="checkbox" data-bx-pb="${b}"${(it.path||P.path).includes(b)?' checked':''}><span>${esc(caseT(CASE_DEC.body[b]))}</span></label>`).join('')}</div>
-    <div class="cd-btns"><button type="button" class="btn" data-bx-psave>${esc(buyU('save'))}</button><button type="button" class="btn ghost" data-bx-pcancel>${esc(buyU('cancel'))}</button></div><p class="cd-msg" role="status" data-bx-pmsg2></p></div>`:'';
   h.innerHTML=buyStepHead(4,buyU('t4'),buyU('n4'))
-    +`<p class="cd-path"><span>${esc(buyU('pathIn',{church,path:[...P.path.map(b=>caseT(CASE_DEC.body[b])),...(P.conf?[caseT(CASE_DEC.body.conference)]:[])].join(' › ')}))}</span> <button type="button" class="btn ghost gfsm" data-bx-path>${esc(buyU('change'))}</button></p>`+pathEd
-    +(()=>{ const W=buyConfWhy(it); return [W.build?buyU('confRow'):'',W.debt?buyU('confDebtRow'):'',W.review?buyU('confReviewRow',{n:buyMoney(W.at)}):''].filter(Boolean).map(t=>`<p class="bx-conf">${esc(t)}</p>`).join(''); })()
-    +rule('businessAt',R.businessAt!=null?buyU('bizRule',{n:buyMoney(R.businessAt)}):buyU('bizAsk'),R.businessAt)
-    +(P.bizAuto?`<p class="note bx-biz">${esc(buyU('bizAdded'))}</p>`:'')
+    +`<div class="bx-stages${cards.length>3?' bx-n4':''}" role="group" aria-label="${esc(buyU('t4'))}">${cards.join('')}</div>`
+    +`<p class="note bx-stnote">${esc(buyU('stNote'))}</p><p class="cd-msg bx-stmsg" role="status" data-bx-pmsg></p>`
     +((it.kind==='repair'||it.kind==='install')&&(it.cat==='building'||it.cat==='kitchen')?rule('confAt',buyU('confAsk'),R.confAt):'')
-    +rule('quotesAt',buyU('quotesAsk'),R.quotesAt)
-    +`<p class="bx-q bx-sfor">${esc(buyU('slidesFor'))}</p><div class="cs-auds bx-auds">${secs.join('')}</div>`
     +`<section class="card gfcard cs-dec bx-dec" id="bx-dec"></section>`;
-  h.querySelector('[data-bx-path]').onclick=()=>{ BUY_ST.pathOpen=!BUY_ST.pathOpen; buyDraw4(); };
-  const ps=h.querySelector('[data-bx-psave]'); if(ps) ps.onclick=()=>{ const path=BUY_BODIES.filter(b=>h.querySelector(`[data-bx-pb="${b}"]`).checked);
-    if(!path.length){ h.querySelector('[data-bx-pmsg2]').textContent=buyU('errPath'); return; }
-    BUY_ST.pathOpen=false; buyChange(x=>{ x.path=path; if(['finance','board','business'].includes(x.aud)&&!path.includes(x.aud)) x.aud=null; },{now:true}); buyDraw4(); caseDecPush(it.id).catch(()=>{}); };
-  const pc=h.querySelector('[data-bx-pcancel]'); if(pc) pc.onclick=()=>{ BUY_ST.pathOpen=false; buyDraw4(); };
+  h.querySelectorAll('[data-bx-st]').forEach(inp=>inp.addEventListener('change',()=>{ const path=BUY_BODIES.filter(b=>h.querySelector(`[data-bx-st="${b}"]`).checked);
+    if(!path.length){ inp.checked=true; h.querySelector('[data-bx-pmsg]').textContent=buyU('errPath'); return; }
+    buyChange(x=>{ x.path=path; if(['finance','board','business'].includes(x.aud)&&!path.includes(x.aud)) x.aud=null; },{now:true}); buyDraw4(); caseDecPush(it.id).catch(()=>{}); }));
   h.querySelectorAll('[data-bx-rule]').forEach(inp=>inp.addEventListener('change',()=>{ const n=parseInt(inp.value,10); buyRulesSet({[inp.dataset.bxRule]:Number.isInteger(n)&&n>=1?n:null});
     buyDrawItems(); buyDraw3(); buyDraw4(); buyDraw5(); buyStepBar(); }));
-  h.querySelectorAll('[data-bx-aud]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.aud=b.dataset.bxAud; },{now:true}); BUY_ST.slide=0; buyDraw4(); buyDraw5(); buyStepBar(); });   // v10.73.0: nothing moves; he taps Done
   buyDecMount($('bx-dec'),it,aud);
 }
 /* The options the records' form takes for a purchase: its own path, the conference when needed, no day or length to agree, and the
@@ -40673,7 +40724,12 @@ function buyDraw5(){
   const n=deck.slides.length, G=CASE_GROUPS.find(g=>g.id===m.group);
   const vote=['finance','board','business','conference'].includes(aud);
   const b=(k,cls)=>`<button type="button" class="btn${cls?' '+cls:''}" data-bx-act="${k}">${esc(buyU(k))}</button>`;
-  h.innerHTML=buyStepHead(5,buyU('t5'),caseF(CASE_STEP_UI.n3,{n:fmtNum(n),group:G?caseGroupFor(G.id,caseT(G)).replace(/^(The|Toda) /,w=>w.toLowerCase()):''})||buyU('n5'))
+  // v10.76.0: one set for each stage: the stages as tabs (and the conference when it comes in), each with its recorded decision
+  const auds=buyAudiences(it); let recs={}; try{ recs=caseDecAll(it.id); }catch(e){ recs={}; }
+  const said=a=>{ const r=recs[a]; if(!r) return ''; const w=caseDecWord(r)||cdOutcomeLabel(a,r.outcome,m.path); return w?w+' '+caseDate(caseDecDay(r.date),true):''; };
+  const tabs=`<p class="bx-q bx-stabl" id="bx-stabl">${esc(buyU('presentTo'))}</p><div class="cs-tabs bx-stabs${auds.length>3?' bx-n4':''}" role="group" aria-labelledby="bx-stabl" style="--n:${auds.length}">${auds.map(a=>`<button type="button" class="cs-tab${a===aud?' on':''}" data-bx-aud="${a}" aria-pressed="${a===aud}"><b>${esc(caseT(CASE_DEC.body[a]))}</b><small>${esc(said(a))}</small></button>`).join('')}</div>`;
+  h.innerHTML=buyStepHead(5,buyU('t5'),buyU('n5'))
+    +tabs
     +casePvHTML('bx-pv',false)
     +`<details class="cs-qs cs-about"><summary>${esc(buyU('about'))}</summary><p class="note cs-info">${esc(buyU('aboutNums'))}</p><p class="note cs-info">${esc(buyU('aboutLinks'))}</p></details>`
     +`<div class="cs-acts bx-acts${vote?' cs-a4':''}" role="group" aria-label="${esc(buyU('actsLabel'))}">${b('present','')}${b('share','ghost')}${b('pdf','ghost')}${vote?b('proposal','ghost'):''}</div>
@@ -40686,6 +40742,7 @@ function buyDraw5(){
     if(k==='share') return caseShare(deck,{model:m});
     if(k==='pdf') return buyPdfSave(m,'handout',say);
     if(k==='proposal') return buyPdfSave(m,'vote',say); });
+  h.querySelectorAll('[data-bx-aud]').forEach(b=>b.onclick=()=>{ buyChange(x=>{ x.aud=b.dataset.bxAud; },{now:true}); BUY_ST.slide=0; buyDraw4(); buyDraw5(); buyStepBar(); });   // v10.76.0: the stage he presents to; nothing moves
   buyRoomPaint(deck,m);
 }
 /* The live link line (as step 3's for a ministry): open until … · code …, and the link panel. */

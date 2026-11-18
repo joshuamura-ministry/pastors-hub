@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.76.0: the page's badge v10.76.0 (the page only; no function changed); Proposal › A purchase › step 1 asks "What kind of need?" with four groups, then "Which one?"; step 4 shows three stage cards (Finance committee · Church board · Business meeting) with ticks and no amount box; step 5 opens with "Present to:" and one tab a stage
 - v10.75.0: the page's badge v10.75.0 (the page only; no function changed); the main menu's third tile says Proposal; the tool opens with "Proposal" in large letters, one line under it, "What is this proposal for?" and the three choices each with a line; a step-bar tap turns the page sideways and moves nothing; one step lit in the bar; no "+ New · New project" row until a project is named
 - v10.74.0: the page's badge v10.74.0 (the page only; no function changed); the Community Survey's Neighborhood needs: one card per family (no label twice), a "+ …" line naming the card's other findings, an opened card with each finding under its topic
 - v10.73.0: the page's badge v10.73.0 (the page only; no function changed); Make the Case: three tabs (A ministry · A project · A purchase), one step on screen with ← Back · Step n of m · Done under it
@@ -228,6 +229,46 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.76.0 (18 Nov 2026, full lane) — Proposal, a project or a purchase: the kinds in two taps; Finance committee → Church board →
+Business meeting, one set for each.** The pastor (17 Nov 2026): *"I need you to really vet the proposal … I don't want it to be too
+complicated again … it says sound livestream lighting now these are all one categories so they should be under categories … if it's
+audiovisual then that's one thing … Most proposals will go to the finance committee first then the board … we don't want the finance
+committee to prepare the proposal. We want them to present the proposal, if it goes through and then a proposal to the Church body so
+those are the three proposals"*; to the vetting report's two releases (this one, then the papers' quality): *"Both"*. Design
+`~/Ministry Work/Terrain-work/v91/DESIGN-STAGES.md`; the steps as they were in `v91/look-stages-before/`. The ministry path is untouched
+(its "Who is it for?", its decks and goldens); the same stages there would be a release of its own.
+- **Step 1, the kinds in two taps** (`BUY_GROUPS`, `BUY_GROUP_ORDER`, `buyGroupOf`, `buyGroupCats`; `buyDraw1`): "What kind of need?" offers
+  four groups (`.bx-tiles.bx-groups`, `data-bx-grp`): **Sound, video & music** (sound, stream, light, computer, music) · **Building &
+  grounds** (building, kitchen; a purchase: the kitchen alone) · **Vehicle** · **Something else**; a group with one kind for the family picks
+  it at once, else "Which one?" shows its kinds (`.bx-subs`, `data-bx-cat`) and a tap makes or changes the project as before (`BUY_ST.grp`
+  holds a group tapped before its kind). Nothing under step 1 changes: every kind keeps its reasons, team, verses and slides. Four across
+  (two by two on a phone), the kinds five across (three and two on a phone).
+- **Step 4, Who decides** (`buyPathOf`, `buyDraw4`): the path is the project's own, else **the three stages, finance, board, business**, in
+  that order (before: the church's approval path less the team, the board alone by default; the business meeting only over an amount typed
+  in a box). Three cards (`.bx-stages`, `.bx-stage`, `data-bx-stage`): a tick (on by default), the number, the name and one line (Looks at
+  the money first and recommends it to the board · Votes to approve it, or sends it on to the church · The whole church votes), the note
+  "Untick a stage your church does not need. At least one stays." (the last tick is refused with "Tick at least one."), the conference a
+  fourth card with no tick when it comes in (build / a loan / the conference's review amount; its words kept in `.bx-conf`), the review
+  amount box only for a building or kitchen repair (his conference's rule), then the trail and Record what we decided. Gone: "In {church}:
+  …" + Change and its tick editor, the business-meeting amount (`businessAt` unread; `bizAuto` always false), the three-quotes amount,
+  "Make slides for:" and the audience tiles. Step 3's dates follow the path. `buyStepState`: step 4 is done once the money is planned.
+- **Step 5, one set for each stage** (`buyAudiences`: the path's bodies, then the conference when needed; no team or whole-church set on
+  the screen, `buyModel` still takes them for anything saved before): "Present to:" and the stages as tabs (`.cs-tabs.bx-stabs`,
+  `data-bx-aud`), each with its recorded decision under its name ("Recommended 1 Oct 2026"); the chosen stage's slides, Present live ·
+  Share link & QR · Handout (PDF) · Proposal to vote on (PDF) (every stage votes), the live-link line. The first stage opens by default.
+  The finance committee's set already says "To recommend to the church board…"; the board's gains "Recommended to the business meeting"
+  when the business meeting follows (`caseDecOutcomes`). Lines: `n4` "Who has to say yes, in order. Untick a stage your church does not
+  need."; `n5` "Each stage has its own slides, handout and Proposal to vote on. Check them, then present." (ES too).
+- Tests: `v76-stages` (new, 39; failing first on v10.75.0: `v91/logs/ff-v76-stages.log`); updated with notes: buy-ui (the groups, the
+  stage cards, the stages as tabs, every set with the Proposal), buy-core (no amount adds a stage; the audiences), buy-average-church
+  (the kind through its group), v73-case-slider (the groups; the kitchen through Building & grounds), v75-proposal-words (a group of one
+  kind; the step lines; the stamps "agree"), buy-deck (the roof goes to the business meeting by its tick). Checked in Chrome against the
+  static copy (`v91/look-stages.mjs after`, pictures `v91/look-stages-after/`): phone 390, computer 1366, Spanish phone: step 1 of the
+  seed project and of a new one (the group tapped), step 4, step 5; no sideways scroll, no page errors. `vocab.json` rebuilt for the
+  stamps. Full suite: 204 suites · 12,303 passed · 0 failed (v10.75.0: 203 · 12,263).
+- **Next (his "Both"):** release 2, the papers' quality (a cover band, the three options as a chart, the funding plan as a meter, the
+  handout's page break and type, the neighborhood figures and the evidence from elsewhere; projector-friendly slides).
 
 **v10.75.0 (11 Nov 2026, full lane) — Proposal: the name, a title and a line on every page, the three choices defined; the page turn,
 one highlight, the projects row hidden until named.** The pastor: *"instead of make the case I would like it to have be called proposal and
