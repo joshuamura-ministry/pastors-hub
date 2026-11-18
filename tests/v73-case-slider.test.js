@@ -49,8 +49,9 @@ const view=(P,bar)=>P.qa(`#${bar} .cs-st`).findIndex(b=>b.classList.contains('vi
   console.log('\n-- a purchase --');
   P.w.__scrolled.length=0; P.q('#cs-switch [data-bx-path="buy"]').click(); await sleep(120);
   c('the switch does not move the page; the five steps are panes, step 1 on; "Step 1 of 5"', [scrolledTo(P,'cs-switch'),panes(P,'bx-panes'),on(P,'bx-panes'),nav(P,'bx-nav')], [0,['bx-s1','bx-s2','bx-s3','bx-s4','bx-s5'],['bx-s1'],{back:null,n:'Step 1 of 5',done:'Done'}]);
-  c('a purchase offers eight kinds of need (no "Building repair": nothing to buy there)', P.qa('#bx-s1 [data-bx-cat]').map(b=>b.textContent), ['Sound','Livestream & video','Lighting','Computer & projector','Music instruments','Kitchen','Vehicle','Something else']);
-  P.q('#bx-s1 [data-bx-cat="kitchen"]').click(); await sleep(60);
+  // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
+  c('a purchase offers the four groups (Building & grounds is the kitchen alone: no "Building repair", nothing to buy there)', P.qa('#bx-s1 [data-bx-grp]').map(b=>b.textContent), ['Sound, video & music','Building & grounds','Vehicle','Something else']);
+  P.q('#bx-s1 [data-bx-grp="grounds"]').click(); await sleep(60);
   const kid=P.J('BUY_ST.id');
   c('Kitchen tapped: a purchase (kind buy), and no "what kind of work" row (a purchase is bought)', [P.J(`buyGet(${JSON.stringify(kid)}).kind`),P.qa('#bx-s1 [data-bx-kind]').length,P.J('buyWay()'),P.J('buyPath()')], ['buy',0,'purchase','buy']);
   P.q('#bx-nav [data-cs-done]').click(); await sleep(40);
@@ -59,7 +60,8 @@ const view=(P,bar)=>P.qa(`#${bar} .cs-st`).findIndex(b=>b.classList.contains('vi
   P.q('#cs-switch [data-bx-path="project"]').click(); await sleep(120);
   // v10.75.0 (stale, not a regression): the tool is Proposal, a title and a line on every page, the three choices defined (the pastor, 11 Nov 2026); the projects row shows only once a project is named
   c('stored as "project"; buyPath() still says buy (every older reader unchanged); the purchase is not in this list, and no row until a project is named', [P.J('uChurch().proposalPrefs.path'),P.J('buyPath()'),P.J('buyWay()'),P.qa('#bx-items [data-bx-item]').map(b=>b.textContent.trim())], ['project','buy','project',[]]);
-  c('a project offers all nine kinds of need, Building repair among them', P.qa('#bx-s1 [data-bx-cat]').length, 9);
+  P.q('#bx-s1 [data-bx-grp="grounds"]').click(); await sleep(60);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
+  c('a project: Building & grounds offers Building repair and Kitchen', P.qa('#bx-s1 [data-bx-cat]').map(b=>b.textContent), ['Building repair','Kitchen']);
   P.q('#bx-s1 [data-bx-cat="kitchen"]').click(); await sleep(60);
   c('Kitchen as a project: a repair by default, the row offers Repair or install · Build or add on, never Buy it', [P.J('buyCur().kind'),P.qa('#bx-s1 [data-bx-kind]').map(b=>b.textContent)], ['repair',['Repair or install','Build or add on']]);
   P.q('#bx-s1 [data-bx-cat="building"]').click(); await sleep(60);

@@ -39,22 +39,23 @@ async function open(L, prefs) {
   console.log('\n-- five framed steps, each its own colour, one short line --');
   const heads = Q => [1, 2, 3, 4, 5].map(n => [Q.q('#bx-s' + n).dataset.bxHue, Q.txt('#bx-s' + n + ' .cs-sh h3'), Q.txt('#bx-s' + n + ' .cs-sh .note')]);
   c('EN', heads(P).map(h => h.slice(0, 2)), [['people', 'Step 1 of 5: What do you need?'], ['housing', 'Step 2 of 5: Three options'], ['hardship', 'Step 3 of 5: How we’ll pay'], ['children', 'Step 4 of 5: Who decides'], ['language', 'Step 5 of 5: Present and vote']]);
-  c('…their lines (v10.75.0: each says what to do there)', heads(P).slice(0, 4).map(h => h[2]), ['Name it, say why it matters, and who will look after it.', 'Three prices, good, better and best; pick one and say why.', 'Where the money will come from, and how much from each. Never tithe.', 'Who has to say yes, and who you will present to.']);
+  c('…their lines (v10.75.0: each says what to do there)', heads(P).slice(0, 4).map(h => h[2]), ['Name it, say why it matters, and who will look after it.', 'Three prices, good, better and best; pick one and say why.', 'Where the money will come from, and how much from each. Never tithe.', 'Who has to say yes, in order. Untick a stage your church does not need.']);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
   const S = await open('es');
   c('ES', heads(S).map(h => h[1]), ['Paso 1 de 5: ¿Qué necesitan?', 'Paso 2 de 5: Tres opciones', 'Paso 3 de 5: Cómo lo pagaremos', 'Paso 4 de 5: Quién decide', 'Paso 5 de 5: Presentar y votar']);
   c('…the switch in Spanish', [S.txt('#cs-switch .bx-swl'), S.qa('#cs-switch [data-bx-path]').map(b => b.querySelector('b').textContent)], ['¿Para qué es esta propuesta?', ['Un ministerio', 'Un proyecto', 'Una compra']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
-  c('the bar\'s compact line names the current step (under 760 px the numbers alone show)', [P.txt('#bx-barnow'), S.txt('#bx-barnow')], ['Who decides', 'Quién decide']);
+  c('the bar\'s compact line names the current step (under 760 px the numbers alone show)', [P.txt('#bx-barnow'), S.txt('#bx-barnow')], ['Present and vote', 'Presentar y votar']);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026); step 4 stands once the money is planned, so the seed opens on step 5
 
   console.log('\n-- ① What do you need? --');
-  c('a purchase offers eight kinds of need (Building repair is a project: nothing to buy there)', P.qa('[data-bx-cat]').map(b => b.textContent), ['Sound', 'Livestream & video', 'Lighting', 'Computer & projector', 'Music instruments', 'Kitchen', 'Vehicle', 'Something else']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
-  c('…in Spanish', S.qa('[data-bx-cat]').map(b => b.textContent), ['Sonido', 'Transmisión y video', 'Iluminación', 'Computadora y proyector', 'Instrumentos musicales', 'Cocina', 'Vehículo', 'Otra cosa']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
+  c('the kinds in two taps: the four groups (a purchase: Building & grounds is the kitchen alone), the seed\'s group open with its five kinds', [P.qa('[data-bx-grp]').map(b => b.textContent), P.qa('[data-bx-cat]').map(b => b.textContent)], [['Sound, video & music', 'Building & grounds', 'Vehicle', 'Something else'], ['Sound', 'Livestream & video', 'Lighting', 'Computer & projector', 'Music instruments']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  c('…in Spanish', [S.qa('[data-bx-grp]').map(b => b.textContent), S.qa('[data-bx-cat]').map(b => b.textContent)], [['Sonido, video y música', 'Edificio y terreno', 'Vehículo', 'Otra cosa'], ['Sonido', 'Transmisión y video', 'Iluminación', 'Computadora y proyector', 'Instrumentos musicales']]);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   c('the reasons of the livestream (DESIGN §1.2), the two he ticked pressed, his count beside it', [P.qa('[data-bx-why]').map(b => b.dataset.bxWhy), P.qa('[data-bx-why][aria-pressed="true"]').map(b => b.dataset.bxWhy), P.q('[data-bx-n="shutins"]').value],
     [['shutins', 'neighbours', 'guests', 'ministries', 'reliability'], ['shutins', 'ministries'], '9']);
   c('"Ministries in our plan" says which (computed from the plan)', P.txt('.bx-plan'), '2 in your plan: Full health expo · Four nights');
   c('cared for by the team of its kind, with Change', P.txt('.bx-team > span'), 'Cared for by: Media & communication');
   P.q('[data-bx-item=""]').click(); await sleep(30);
-  c('"+ New": only the kinds of need, nothing else yet; steps 2–5 say "First say what you need, in step 1."', [P.qa('[data-bx-cat]').length, !!P.q('[data-bx-f="need"]'), P.txt('#bx-s2 .bx-first')], [8, false, 'First say what you need, in step 1.']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
-  P.q('[data-bx-cat="kitchen"]').click(); await sleep(30);
+  c('"+ New": only the kinds of need, nothing else yet; steps 2–5 say "First say what you need, in step 1."', [P.qa('[data-bx-grp]').length, P.qa('[data-bx-cat]').length, !!P.q('[data-bx-f="need"]'), P.txt('#bx-s2 .bx-first')], [4, 0, false, 'First say what you need, in step 1.']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
+  P.q('[data-bx-grp="grounds"]').click(); await sleep(30);   // v10.76.0: Building & grounds has one kind for a purchase (the kitchen): picked at once
   const nid = P.E('BUY_ST.id');
   c('a tap on Kitchen makes the project: no kind-of-work row (a purchase is bought; a project in the kitchen offers Repair or install · Build or add on, held by v73-case-slider), the deacons to care for it', [/^buy-[a-z0-9]{6}$/.test(nid), P.qa('[data-bx-kind]').map(b => b.textContent), P.J(`buyGet(BUY_ST.id).team`)], [true, [], 'deacons']);   // v10.73.0 (stale, not a regression): three choices and one step at a time (the pastor, 9 Nov 2026)
   const need = P.q('[data-bx-f="need"]'); need.value = 'A new commercial stove for the fellowship meals'; need.dispatchEvent(new P.w.Event('input')); await sleep(400);
@@ -147,8 +148,9 @@ async function open(L, prefs) {
   c('the ways to pay not yet used, to add', P.qa('[data-bx-add]').map(b => b.dataset.bxAdd), ['grant', 'other']);
 
   console.log('\n-- ④ Who decides --');
-  c('the path, his church\'s business-meeting rule, the audiences (no conference for a purchase)', [P.txt('#bx-s4 .cd-path > span'), P.q('[data-bx-rule="businessAt"]').value, P.qa('[data-bx-aud]').map(b => b.dataset.bxAud)],
-    ['In Sampleton SDA (SAMPLE): Finance committee › Church board', '10000', ['finance', 'board', 'team', 'congregation']]);
+  // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
+  c('who decides: the three stages as cards, the seed\'s own path (finance › board) ticked; no amount box, no audience tiles here (step 5 has the stages as tabs)', [P.qa('#bx-s4 .bx-stage').map(e => [e.dataset.bxStage, !!(e.querySelector('input') && e.querySelector('input').checked)]), P.qa('#bx-s4 [data-bx-rule]').length, P.qa('#bx-s4 [data-bx-aud]').length, P.qa('#bx-s5 [data-bx-aud]').map(b => b.dataset.bxAud)],
+    [[['finance', true], ['board', true], ['business', false]], 0, 0, ['finance', 'board']]);
   P.E(`(()=>{ const it=buyGet('${ID}'); it.kind='build'; it.cat='building'; buySave(it); buyDrawAll(); return 1; })()`);
   c('Build or add on: the conference row and the conference\'s slides', [P.txt('.bx-conf'), P.qa('[data-bx-aud]').map(b => b.dataset.bxAud).includes('conference')], ['Conference and union approval before any commitment (Church Manual)', true]);
   P.E(`(()=>{ const it=buyGet('${ID}'); it.kind='buy'; it.cat='stream'; buySave(it); buyDrawAll(); return 1; })()`);
@@ -168,8 +170,8 @@ async function open(L, prefs) {
   console.log('\n-- ⑤ Present and vote --');
   c('the board\'s slides and its actions: Present live, Share link & QR, Handout (PDF), Proposal to vote on (PDF)', [P.qa('#bx-s5 [data-bx-act]').map(b => b.textContent), !!P.q('#bx-pv [data-cs-phone]')],
     [['Present live', 'Share link & QR', 'Handout (PDF)', 'Proposal to vote on (PDF)'], true]);
-  P.q('[data-bx-aud="congregation"]').click(); await sleep(30);
-  c('the whole church: no Proposal to vote on', P.qa('#bx-s5 [data-bx-act]').map(b => b.dataset.bxAct), ['present', 'share', 'pdf']);
+  P.q('[data-bx-aud="finance"]').click(); await sleep(30);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026); every stage votes, so every set has the Proposal; no whole-church set on the screen
+  c('the finance committee\'s set: the Proposal to vote on too', P.qa('#bx-s5 [data-bx-act]').map(b => b.dataset.bxAct), ['present', 'share', 'pdf', 'proposal']);
   c('…in Spanish', S.qa('#bx-s5 [data-bx-act]').map(b => b.textContent).slice(0, 3), ['Presentar en vivo', 'Compartir enlace y QR', 'Folleto (PDF)']);
 
   console.log('\n-- v10.44 review fixes --');

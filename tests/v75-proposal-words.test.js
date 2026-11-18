@@ -36,7 +36,7 @@ const tx=(P,s)=>{ const e=typeof P.q==='function'?P.q(s):P.querySelector(s); ret
   P.q('[data-bx-path="project"]').click(); await sleep(120);
   c('a project: five steps', [tx(P,'#cs-switch .cs-how'),P.q('[data-bx-path="project"]').classList.contains('on')], ['Five steps, one at a time. Press Done when a step is finished.',true]);
   c('each step\'s line says what to do there', [1,2,3,4,5].map(n=>P.J(`BUY_UI.n${n}.en`)),
-    ['Name it, say why it matters, and who will look after it.','Three prices, good, better and best; pick one and say why.','Where the money will come from, and how much from each. Never tithe.','Who has to say yes, and who you will present to.','Check the slides, then present; print the handout and the Proposal to vote on.']);
+    ['Name it, say why it matters, and who will look after it.','Three prices, good, better and best; pick one and say why.','Where the money will come from, and how much from each. Never tithe.','Who has to say yes, in order. Untick a stage your church does not need.','Each stage has its own slides, handout and Proposal to vote on. Check them, then present.']);   // v10.76.0 (stale, not a regression): the kinds in two taps; Who decides is three stages, the finance committee, the church board, the business meeting (the pastor, 17 Nov 2026)
   c('…drawn under the step\'s title', tx(P,'#bx-s1 .cs-sh .note'), 'Name it, say why it matters, and who will look after it.');
 
   console.log('\n-- one highlight: the step he is on --');
@@ -57,7 +57,7 @@ const tx=(P,s)=>{ const e=typeof P.q==='function'?P.q(s):P.querySelector(s); ret
   console.log('\n-- the projects row: only once a project has a name --');
   c('one empty project: no row', P.q('#bx-items').innerHTML.trim(), '');
   P.q('[data-bx-jump="1"]').click(); await sleep(60);
-  P.q('#bx-s1 [data-bx-cat]').click(); await sleep(450);   // a category tapped makes the project (still unnamed)
+  P.q('#bx-s1 [data-bx-grp="vehicle"]').click(); await sleep(450);   // a kind tapped makes the project (still unnamed); v10.76.0: Vehicle is a group of one kind, picked at once
   c('…a project made but not yet named: still no row', P.q('#bx-items').innerHTML.trim(), '');
   { const inp=P.q('#bx-s1 [data-bx-f="name"]'); inp.value='Sound board'; inp.dispatchEvent(new P.w.Event('input',{bubbles:true})); } await sleep(450);
   c('a name typed in step 1: the row, "+ New" then the project by its name', [tx(P,'#bx-items .bx-il'),P.qa('#bx-items .bx-ichip').map(b=>b.textContent.replace(/\s+/g,' ').trim())], ['Your projects',['+ New','Sound board']]);
@@ -80,5 +80,7 @@ const tx=(P,s)=>{ const e=typeof P.q==='function'?P.q(s):P.querySelector(s); ret
   c('no page errors (ES)', E.errs, []);
 
   console.log('\n-- the stamps --');
-  c('the six stamps say v10.75.0', [(HTML.match(/v10\.75\.0/g)||[]).length>=6,/const VERSION = 'v10\.75\.0'/.test(HTML)], [true,true]);
+  // v10.76.0 (stale, not a regression): the stamps are checked as "the six agree" (v10.75.0 or later), as the other suites do
+  { const v=(HTML.match(/const VERSION = '(v[\d.]+)'/)||[])[1]||'';
+    c('the six stamps agree (v10.75.0 or later)', [/^v10\.(7[5-9]|[89]\d|\d{3,})\.\d+$/.test(v), (HTML.match(new RegExp(v.replace(/\./g,'\\.'),'g'))||[]).length>=6], [true,true]); }
 }); T.done(); })();
