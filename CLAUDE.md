@@ -172,6 +172,7 @@ Verify both halves after any deploy:
 - page: the badge beside TERRAIN, or `<meta name="terrain-version">`
 - function: `https://terrain.church/.netlify/functions/advise` → `"fn"` field (the app is Terrain at terrain.church: check there, never "Pastors Hub"; pastorshub.org only moves old devices and links over)
 - connection cards (v10.43): `https://terrain.church/.netlify/functions/connect` → `"fn":"connect-1.0"`
+- v10.77.0: the page's badge v10.77.0 (the page only; no function changed); Proposal › A purchase › step 5 › Handout (PDF): a green band across the top, the figures as tiles, the three options as bars, the funding plan as a coloured meter, the front page full; Proposal to vote on (PDF): the band, slim bars and the meter
 - v10.76.0: the page's badge v10.76.0 (the page only; no function changed); Proposal › A purchase › step 1 asks "What kind of need?" with four groups, then "Which one?"; step 4 shows three stage cards (Finance committee · Church board · Business meeting) with ticks and no amount box; step 5 opens with "Present to:" and one tab a stage
 - v10.75.0: the page's badge v10.75.0 (the page only; no function changed); the main menu's third tile says Proposal; the tool opens with "Proposal" in large letters, one line under it, "What is this proposal for?" and the three choices each with a line; a step-bar tap turns the page sideways and moves nothing; one step lit in the bar; no "+ New · New project" row until a project is named
 - v10.74.0: the page's badge v10.74.0 (the page only; no function changed); the Community Survey's Neighborhood needs: one card per family (no label twice), a "+ …" line naming the card's other findings, an opened card with each finding under its topic
@@ -229,6 +230,33 @@ v10.43.0 (connect.mjs) adds **no** environment variable: it uses the registratio
 ---
 
 ## Current state
+
+**v10.77.0 (18 Nov 2026, full lane) — the papers of a project or a purchase, raised to his bar: a cover band, the figures as tiles, the
+options as bars, the funding plan as a meter, the pages flowing, larger type.** The pastor (17 Nov 2026): *"I haven't seen the results if
+it's going to be a very high-quality PDF that is created for the proposal"*; (9 Nov) *"the most compelling, most polished most convincing and
+based on evidence … rock solid … a beautiful PDF"*; to the vetting report's two releases: *"Both"* (this is the second). The vetting had judged
+the handout honest but plain: two pages of small type and tables, the front half empty (the back began a new page at levels 0–1), no chart,
+no cover. Design `~/Ministry Work/Terrain-work/v91/DESIGN-PAPERS.md`; the papers as they were in `v91/pdfs/` (pages as PNG), after in
+`v91/pdfs-after/`. The ministry papers keep their layout (their goldens and two-page gates); the same look can follow there on his word.
+- **The handout** (`buyPdfDocAt`): a **cover band** across the top of the front in the tool's green (the body it is for, the name in large
+  letters, "{church} · Prepared by … · {month}", SAMPLE in its corner; the phones' QR tile a white card on its right); **Why it matters as
+  tiles** (`buyPdfTiles`: the number large in its family's colour under a 3 pt bar, the words beneath, the Census source in small type; four
+  across, five to eight as two rows; the Census figures of `buyFacts` come in this way when the survey is loaded: rides → no car, neighbours
+  → an older person alone, language → limited English); **the options as bars** (`buyPdfBars`: tier and name at the left, a bar as long as
+  its total against the dearest, the recommended one filled in green, the total at the right; the comparison table follows without its
+  TOTAL row); **the funding plan as a meter** (`buyPdfMeter`: one stacked bar, a colour a source, phase 2 in grey, a legend with the amounts;
+  the table and "Never from tithe" follow, the table kept whole); **the pages flow** (no forced page; the funding begins on the front);
+  **larger type** (body 9.6–10, bullets 9.4, tables 8.6, the verses 9.6). The sample fits two pages at level 0 in English, level 1 in Spanish.
+- **The Proposal to vote on** (`buyProposalDocAt`): the band (kicker, title, SAMPLE in its corner), the memo under it (two across from level 1,
+  giving the band's height back), slim option bars at levels 0–1, the meter at level 0; everything else as it was; still one page for the
+  sample's finance committee and board, two at most in every case (buy-docs holds it).
+- `buyChart` cols gain `n` (the total as a number); the handout's and the Proposal's `fund` gain `parts`, `totalN`, `phase2N`
+  (`buyFundParts`); facts gain `hue`. Drawn with rectangles and text only (present.mjs's rule for the phones' PDFs: no image).
+- Tests: `v77-papers` (new, 25; failing first on v10.76.0: `v91/logs/ff-v77-papers.log`): the band's lines first, the tiles' values, the
+  bars' totals right of their bars before the table, no TOTAL row, the meter's legend and its wrap, the front used to its foot, the Census
+  tile with the survey loaded, the roof (long names) and a seven-source plan within two pages, the Proposal one page for the sample and its
+  memo two across at level 1, no line outside its box; buy-docs updated with one note (the fact is a tile: its number above its words).
+  Looked at: `v91/pdfs-after/*.png` (the board's handout, the Census variant, the finance committee's and the board's Proposal). Full suite: 205 suites · 12,328 passed · 0 failed (the full run 12,326 and two stale checks, v76-stages' pinned stamps now "the six agree" and vocab.json rebuilt for the stamps, rerun: 39 and 16; v10.76.0: 204 · 12,303).
 
 **v10.76.0 (18 Nov 2026, full lane) — Proposal, a project or a purchase: the kinds in two taps; Finance committee → Church board →
 Business meeting, one set for each.** The pastor (17 Nov 2026): *"I need you to really vet the proposal … I don't want it to be too

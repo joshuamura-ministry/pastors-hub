@@ -106,7 +106,9 @@ async function open(L,prefs){
   c('no page errors (EN, project, ES)', [P.errs,R.errs,S.errs], [[],[],[]]);
 
   console.log('\n-- the stamps --');
-  c('the six stamps say v10.76.0', [(HTML.match(/v10\.76\.0/g)||[]).length>=6,/const VERSION = 'v10\.76\.0'/.test(HTML)], [true,true]);
+  // v10.77.0 (stale, not a regression): the stamps are checked as "the six agree" (v10.76.0 or later), as the other suites do
+  { const v=(HTML.match(/const VERSION = '(v[\d.]+)'/)||[])[1]||'';
+    c('the six stamps agree (v10.76.0 or later)', [/^v10\.(7[6-9]|[89]\d|\d{3,})\.\d+$/.test(v), (HTML.match(new RegExp(v.replace(/\./g,'\\.'),'g'))||[]).length>=6], [true,true]); }
   done();
 })();
 function BUY_SORTED(){ return ['building','computer','kitchen','light','music','other','sound','stream','vehicle'].join(','); }

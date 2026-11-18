@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <!-- ===================================================================
-     TERRAIN  v10.76.0
+     TERRAIN  v10.77.0
      If a version is reported in a screenshot or a bug report, this line
      and the <meta> below are the truth for THIS file. Update all three
      places together: this comment, the meta tag, and `const VERSION`.
      A mismatch means someone edited one and forgot the others — the app
      warns in the console at boot if they disagree.
      =================================================================== -->
-<html lang="en" data-version="v10.76.0" data-theme="dark">
+<html lang="en" data-version="v10.77.0" data-theme="dark">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="dark">
-<meta name="terrain-version" content="v10.76.0">
-<title>Community Map — Terrain v10.76.0</title>
+<meta name="terrain-version" content="v10.77.0">
+<title>Community Map — Terrain v10.77.0</title>
 <meta name="description" content="Who lives around your church. Census data, read plainly.">
 <!-- v10.68.0 — the app icon. The pastor (11 Oct 2026): "Now I need a beautiful app icon for my phone when I wanna add it to my home screen
      and also I need to add it here on my Mac as well as an app icon please embed that in". A church lit on a hill, the map's lines below it
@@ -5362,13 +5362,13 @@ html.acct-modal,html.acct-modal body{overflow:hidden}
   <footer>
     <!-- v10.70.1 (the audit): each "·" opens a piece that never breaks, with the words after it (the dot never ends a line) -->
     <div><b>TERRAIN</b> <span class="fkeep">· terrain.church</span> <span class="fkeep">· <span class="madeby">Created by Joshua Mura</span></span> <span class="fkeep">· <a href="#watch" class="joinlink" id="joinlink">Join a presentation</a></span> <span class="fkeep">· <a href="/terms" class="privlink" id="termslink">Terms</a></span> <span class="fkeep">· <a href="/privacy" class="privlink" id="privlink">Privacy</a></span></div>
-    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.76.0</span></span></div>
+    <div><span id="datacred" hidden><span>Data: U.S. Census Bureau, ACS 5-year</span> </span><span class="fkeep"><span class="dcdot" aria-hidden="true">· </span><span id="ver">v10.77.0</span></span></div>
   </footer>
 </main>
 
 <script>
 /* ================= CONFIG ================= */
-const VERSION = 'v10.76.0';
+const VERSION = 'v10.77.0';
 const CENSUS_KEY = '1a05bcbfef2345b34b677a3cb41c83dd7809ff5f';           // ← paste your free Census API key between the quotes
 const ACS_YEAR = 2024;           // 2020–2024 ACS 5-year (released Dec 2025)
 const ACS_PAST = 2014;           // 2010–2014, for the ten-year shift
@@ -39897,10 +39897,10 @@ function buyHandout(m,o){
     if(m.conf&&!m.recs.conference) trail.push([caseT(CASE_DEC.body.conference),m.aud==='conference'?caseT(P.thisMeeting):caseT(P.pending)]);
     return {kind:'buy',lang:L,church:m.church,sample:m.sample,aud,title:m.name,kicker,by:buyS(BUY_SL.prepared,{presenter:m.presenter,date:m.month}),status:m.status||'',
       goal:{label:T(P.heads.goal),text:m.goal.text},
-      facts:[...m.facts,...(m.crew?[m.crew]:[])].map(f=>({value:String(f.value),label:f.label,source:f.source||'',names:f.names||null})),
+      facts:[...m.facts,...(m.crew?[m.crew]:[])].map(f=>({value:String(f.value),label:f.label,source:f.source||'',names:f.names||null,hue:f.hue||null})),   // v10.77.0: hue, for the tiles
       chart:buyChart(m),pick:{line:m.tier+': '+buyOptName(m.opt,L)+' — '+m.pickWhy,total:buyMoney(m.total)},
       fund:{rows:m.lines.map(l=>[buyLineLabel(l,L,false,true),buyMoney(l.amount),l.k==='offering'&&l.date?buyDay(l.date,true):'']),phase2:m.phase2?buyMoney(m.phase2):'',total:buyMoney(m.total),
-        never:buyP(P.never,{cm:caseT(BUY_CM.edition)})},
+        never:buyP(P.never,{cm:caseT(BUY_CM.edition)}),...buyFundParts(m)},
       dates:buyDateRows(m),how:caseT(m.how.steps),crew:m.crew?m.crew.value+' '+m.crew.label:caseT(P.crewNone),
       risks:buyRiskLines(m).map(r=>r.text),trail,
       verses:verses.slice(0,2),egw:buyEgw(egwId,L),sources:buySourceLines(m),
@@ -39910,7 +39910,7 @@ function buyHandout(m,o){
 /* The options chart: rows of §1.2 ② for each option (label column + three). */
 function buyChart(m){
   const L=m.lang, U=k=>caseInLang(L,()=>buyU(k));
-  const cols=m.opts.map(o=>({id:o.id,rec:o.id===m.pickId,tier:caseInLang(L,()=>caseT(BUY_TIERS[o.tier])),name:buyOptName(o,L),
+  const cols=m.opts.map(o=>({id:o.id,rec:o.id===m.pickId,n:buyOptTotal(o),tier:caseInLang(L,()=>caseT(BUY_TIERS[o.tier])),name:buyOptName(o,L),
     price:o.install&&o.install.how!=='none'&&o.install.cost?caseInLang(L,()=>buyU('plusInstall',{price:buyMoney2(o.price),cost:buyMoney(o.install.cost)})):buyMoney2(o.price)+(o.extra?' + '+buyMoney(o.extra):''),
     total:buyMoney(buyOptTotal(o)),where:o.store+(o.host&&(o.src==='search'||!/\(/.test(o.store))?' · '+o.host:''),features:buyInList(o.features,L),warranty:buyIn(o.warranty,L)||'—',
     install:buyInstallWords(o,L),running:buyRunningWords(o,L)||'—',checked:o.checked?buyDay(o.checked,true):'—'}));
@@ -39933,6 +39933,55 @@ function buySourceLines(m){
     if(o.url) return tier+' · '+buyP(BUY_P.srcSearch,{host:o.host||buyHost(o.url),date:o.checked?buyDay(o.checked,true):'—',url:o.url});
     return tier+' · '+caseT(BUY_P.srcTyped); }));
 }
+/* v10.77.0 — the papers raised to his bar (the pastor, 17 Nov 2026: "a very high-quality PDF"; 9 Nov: "the most compelling … based on
+   evidence … a beautiful PDF"): the money as numbers for the drawings, the figures as tiles, the options as bars, the funding plan as a
+   meter. Drawn with rectangles and text only (present.mjs's rule: no image in a PDF that goes to phones). */
+function buyFundParts(m){ const L=m.lang; return {parts:m.lines.map(l=>({k:l.k,label:buyLineLabel(l,L,true,true),n:l.amount||0})),totalN:m.total||0,phase2N:m.phase2||0}; }
+const BUY_PDF_W='#FFFFFF', BUY_PDF_WT='#D6EFE6', BUY_PDF_SEG=['#0E8F6E','#2563EB','#C2760B','#7C3AED','#BE3E68','#0F9DB5','#6B7280'];
+/* The figures as tiles: the number large in its family's colour, its words, the source; four across, five to eight as two rows. */
+function buyPdfTiles(K,doc,facts){
+  const C=K.C, S=K.S, n=facts.length; if(!n) return;
+  const rows=n<=4?[facts]:[facts.slice(0,Math.ceil(n/2)),facts.slice(Math.ceil(n/2))];
+  const lab=f=>f.label+(f.names&&f.names.length?': '+f.names.join(' · '):'');
+  rows.forEach(row=>{ const k=row.length, gw=(K.CW-(k-1)*8)/k, vo={size:S(18),style:'bold',lh:S(20)}, lo={size:S(8.6),color:C.ink2,lh:S(11)}, so={size:6.6,color:C.ink3,lh:8};
+    const hs=row.map(f=>S(8)+K.tb(f.value,0,0,gw-16,vo,false)+2+K.tb(lab(f),0,0,gw-16,lo,false)+(f.source?3+K.tb(f.source,0,0,gw-16,so,false):0)+S(8));
+    const bh=Math.max(...hs); K.need(bh+6);
+    row.forEach((f,i)=>{ const x=K.MX+i*(gw+8), hue=GF_PDF_KIND[f.hue]||C.acc;
+      K.fill(C.panel); doc.rect(x,K.y,gw,bh,'F'); K.fill(hue); doc.rect(x,K.y,gw,3,'F');
+      let yy=K.y+S(8); yy+=K.tb(f.value,x+8,yy,gw-16,{...vo,color:hue},true)+2; yy+=K.tb(lab(f),x+8,yy,gw-16,lo,true);
+      if(f.source){ yy+=3; K.tb(f.source,x+8,yy,gw-16,so,true); } });
+    K.y+=bh+8; });
+  K.y+=S(2);
+}
+/* The options as bars: the tier and the name at the left, a bar as long as its total against the dearest, the total at the right. */
+function buyPdfBars(K,doc,ch,o){
+  o=o||{}; const C=K.C, S=K.S, cols=ch.cols; if(!cols.length) return;
+  const max=Math.max(...cols.map(c=>c.n||0))||1, slim=!!o.slim, lw=slim?150:180, bx=K.MX+lw, bw=K.CW-lw-66, rh=S(slim?17:22), bh=S(slim?8:10);
+  K.need(rh*cols.length+S(6));
+  cols.forEach(c=>{ const y=K.y, rec=c.rec;
+    K.tb(c.tier+(rec?' · '+caseT(BUY_P.recommendedCol):''),K.MX,y+1,lw-8,{size:S(slim?8.2:8.8),style:'bold',color:rec?C.acc:C.ink,lh:S(10.5)},true);
+    if(!slim) K.tb(buyCut(c.name,64),K.MX,y+S(11.5),lw-8,{size:S(7.4),color:C.ink3,lh:S(9)},true);
+    K.fill(C.track); K.rrect(bx,y+S(slim?2.5:4.5),bw,bh,3,'F'); K.fill(rec?C.acc:C.line2); K.rrect(bx,y+S(slim?2.5:4.5),Math.max(6,bw*(c.n||0)/max),bh,3,'F');
+    K.F(S(slim?8.8:9.6),'bold',rec?C.acc:C.ink); K.put(c.total,K.X1,y+S(slim?9.5:12),{align:'right',bx0:bx+bw});
+    K.y+=rh; });
+  K.y+=S(slim?2:5);
+}
+/* The funding plan as a meter: one stacked bar, a colour a source (phase 2 in grey), and a legend with the amounts. */
+function buyPdfMeter(K,doc,F,o){
+  o=o||{}; const C=K.C, S=K.S, parts=(F.parts||[]).filter(p=>p.n>0), total=F.totalN||parts.reduce((a,p)=>a+p.n,0)+(F.phase2N||0); if(!total||!parts.length) return;
+  const slim=!!o.slim, bh=S(slim?9:14), size=S(o.size||8.4);
+  K.need(bh+S(34));
+  K.fill(C.track); K.rrect(K.MX,K.y,K.CW,bh,3,'F');
+  let x=K.MX; const seg=(w,col)=>{ const ww=Math.max(0,Math.min(w,K.X1-x)); if(ww<=0) return; K.fill(col); doc.rect(x,K.y,ww,bh,'F'); x+=ww; };
+  parts.forEach((p,i)=>seg(K.CW*p.n/total,BUY_PDF_SEG[i%BUY_PDF_SEG.length]));
+  if(F.phase2N) seg(K.CW*F.phase2N/total,C.line2);
+  K.y+=bh+S(5);
+  const items=[...parts.map((p,i)=>({t:p.label+' '+buyMoney(p.n),c:BUY_PDF_SEG[i%BUY_PDF_SEG.length]})),...(F.phase2N?[{t:caseT(BUY_SL.fundL.phase2)+' '+buyMoney(F.phase2N),c:C.line2}]:[])];
+  let lx=K.MX, ly=K.y; K.F(size,'normal',C.ink2);
+  items.forEach(it=>{ const w=K.tw(K.clean(it.t))+12+14; if(lx+w>K.X1&&lx>K.MX){ lx=K.MX; ly+=S(12); }
+    K.fill(it.c); doc.circle(lx+3.5,ly+S(4.2),3.2,'F'); K.F(size,'normal',C.ink2); K.put(it.t,lx+11,ly+S(7.6),{bx0:lx}); lx+=w; });
+  K.y=ly+S(slim?12:15);
+}
 function buyPdfDoc(H,opts){
   opts=opts||{};
   const JS=opts.jsPDF||(typeof window!=='undefined'&&window.jspdf&&window.jspdf.jsPDF); if(!JS) throw new Error('jspdf');
@@ -39943,58 +39992,60 @@ function buyPdfDoc(H,opts){
 }
 function buyPdfDocAt(H,opts,lv){
   const doc=new opts.jsPDF({unit:'pt',format:'letter',orientation:'portrait',compress:opts.compress!==false});
-  const D=[1,.95,.9,.86][lv]||.86, K=buyKit(doc,lv,D), C=K.C, P=BUY_P, T=caseT, S=K.S;
-  if(H.sample){ K.F(7,'bold',C.acc); K.put(caseT(P.sample),K.X1,40,{align:'right',cs:1.2,bx0:K.MX}); }
-  /* front */
-  const qrW=H.qr?S(104):0, tw0=K.CW-(qrW?qrW+16:0), top0=K.y; let hh=0;
-  hh+=K.tb(H.kicker,K.MX,K.y+hh,tw0,{...K.LBL,size:7.2,color:C.acc},true)+4;
-  hh+=K.tb(H.title,K.MX,K.y+hh,tw0,{size:S(18),style:'bold',color:C.ink,lh:S(22)},true)+4;
-  hh+=K.tb(H.by,K.MX,K.y+hh,tw0,{size:8.2,color:C.ink3},true);
-  if(H.status) hh+=3+K.tb(H.status,K.MX,K.y+hh,tw0,{size:8.6,style:'bold',color:C.acc},true);
-  if(H.qr){ const n=H.qr.rows.length, q=4, size=n+2*q, box=qrW, k=(box-12)/size, qx=K.X1-box, qy=top0;
-    K.stroke(C.line2,0.7); K.rrect(qx,qy,box,box+(H.qr.code?20:6),8,'S'); K.fill('#ffffff'); doc.rect(qx+6,qy+6,box-12,box-12,'F'); K.fill('#000000');
+  const D=[1,.95,.9,.86][lv]||.86, K=buyKit(doc,lv,D), C=K.C, P=BUY_P, T=caseT, S=K.S, W=BUY_PDF_W, WT=BUY_PDF_WT;
+  /* v10.77.0 — the cover band: the body it is for, the name, the church and who prepared it; the phones' QR tile on its right */
+  const qrW=H.qr?S(104):0, tw0=K.CW-(qrW?qrW+16:0), byLine=[H.church,H.by].filter(Boolean).join(' · ');
+  const ko={...K.LBL,size:7.4,color:WT}, to={size:S(21),style:'bold',color:W,lh:S(25)}, bo={size:8.6,color:WT,lh:S(11)};
+  const BH=Math.max(S(26)+K.tb(H.kicker,0,0,tw0,ko,false)+5+K.tb(H.title,0,0,tw0,to,false)+5+K.tb(byLine,0,0,tw0,bo,false)+S(22),S(96));
+  K.fill(C.acc); doc.rect(0,0,612,BH,'F');
+  if(H.sample){ K.F(7,'bold',W); K.put(caseT(P.sample),K.MX,16,{cs:1.2}); }
+  { let yy=S(26); yy+=K.tb(H.kicker,K.MX,yy,tw0,ko,true)+5; yy+=K.tb(H.title,K.MX,yy,tw0,to,true)+5; K.tb(byLine,K.MX,yy,tw0,bo,true); }
+  let qb=0;
+  if(H.qr){ const n=H.qr.rows.length, q=4, size=n+2*q, box=qrW, k=(box-12)/size, qx=K.X1-box, qy=S(26), th=box+(H.qr.code?20:6);
+    K.fill(W); K.rrect(qx,qy,box,th,8,'F'); K.fill('#000000');
     H.qr.rows.forEach((row,r)=>{ for(let c=0;c<n;){ if(row[c]!=='1'){ c++; continue; } let e=c; while(e<n&&row[e]==='1') e++; doc.rect(qx+6+(c+q)*k,qy+6+(r+q)*k,(e-c)*k,k,'F'); c=e; } });
     if(H.qr.code){ K.F(10,'bold',C.ink); K.put(H.qr.code,qx+box/2,qy+box+12,{align:'center',cs:1.4,bx0:qx,bx1:qx+box}); }
-    hh=Math.max(hh,box+24); }
-  K.y+=hh+S(10);
-  { const go={size:S(12),style:'bold',color:C.ink,lh:S(15.4)}, iw=K.CW-28;
+    qb=qy+th; }
+  K.y=Math.max(BH,qb)+S(14);
+  if(H.status) K.para(H.status,{size:9.2,style:'bold',color:C.acc,after:S(5)});
+  { const go={size:S(12.4),style:'bold',color:C.ink,lh:S(16)}, iw=K.CW-28;
     const bh=S(9)+K.tb(H.goal.label,0,0,iw,K.LBL,false)+3+K.tb(H.goal.text,0,0,iw,go,false)+S(9); K.need(bh);
     K.fill(C.panel); K.rrect(K.MX,K.y,K.CW,bh,6,'F'); K.fill(C.acc); doc.rect(K.MX,K.y,3,bh,'F');
     let yy=K.y+S(9); yy+=K.tb(H.goal.label,K.MX+16,yy,iw,{...K.LBL,color:C.acc},true)+3; K.tb(H.goal.text,K.MX+16,yy,iw,go,true); K.y+=bh+S(10); }
-  if(H.facts.length){ K.head(T(P.heads.why),60);
-    H.facts.forEach(f=>{ const t=f.value+' '+f.label+(f.names&&f.names.length?': '+f.names.join(' · '):'')+'.'; K.bullet(t,{size:9.2}); if(f.source) K.para(f.source,{size:7.2,color:C.ink3,indent:12,after:2}); });
-    K.gap(3); }
-  /* the chart */
+  /* why it matters: the figures as tiles (v10.77.0) */
+  if(H.facts.length){ K.head(T(P.heads.why),80); buyPdfTiles(K,doc,H.facts); }
+  /* the options: the totals as bars (v10.77.0), then the comparison */
   const ch=H.chart, n=ch.cols.length;
-  if(n){ K.head(T(n===3?P.heads.options:P.heads.optionsN),120);
+  if(n){ K.head(T(n===3?P.heads.options:P.heads.optionsN),110); buyPdfBars(K,doc,ch);
     const lw=88, cw=(K.CW-lw)/n, cols=[{w:lw},...ch.cols.map(c=>({w:cw,tint:c.rec?C.accTint:null}))];   // (88: "CARACTERÍSTICAS" in one word)
     const fe=c=>(lv>=1?c.features.slice(0,2):c.features).join(' · ')||'—';
-    const rows=[['',...ch.cols.map(c=>c.tier+(c.rec?' ('+caseT(P.recommendedCol)+')':'')+'\n'+c.name)],
-      [ch.labels.price,...ch.cols.map(c=>c.price)],[ch.labels.total,...ch.cols.map(c=>c.total)],[ch.labels.where,...ch.cols.map(c=>c.where)],
+    const rows=[['',...ch.cols.map(c=>c.tier+(c.rec?' ('+caseT(P.recommendedCol)+')':'')+' · '+c.name)],
+      [ch.labels.price,...ch.cols.map(c=>c.price)],[ch.labels.where,...ch.cols.map(c=>c.where)],
       [ch.labels.features,...ch.cols.map(fe)],[ch.labels.warranty,...ch.cols.map(c=>c.warranty)],
       lv>=2?[ch.labels.install,...ch.cols.map(c=>c.install+(c.running&&c.running!=='—'?' · '+c.running:''))]:[ch.labels.install,...ch.cols.map(c=>c.install)],
       ...(lv>=2?[]:[[ch.labels.running,...ch.cols.map(c=>c.running)]]),[ch.labels.checked,...ch.cols.map(c=>c.checked)]];
-    rows[0]=rows[0].map(x=>String(x).replace('\n',' · '));
-    buyTable(doc,K,cols,rows,{labelCol:true,bold:[0,2]});
-    if(ch.foot) K.para(ch.foot,{size:7.6,color:C.ink3,after:4}); }
-  K.head(T(P.heads.pick),40); K.para(H.pick.line,{size:9.6,style:'bold'});
-  /* the back: on its own page at levels 0–1, flowing after that */
-  if(lv<2) K.newPage(); else K.gap(4);
-  K.head(T(P.heads.fund),90);
+    buyTable(doc,K,cols,rows,{labelCol:true,bold:[0],size:8.6});   // v10.77.0: no TOTAL row (the bars carry it)
+    if(ch.foot) K.para(ch.foot,{size:7.8,color:C.ink3,after:4}); }
+  K.head(T(P.heads.pick),40); K.para(H.pick.line,{size:10,style:'bold'});
+  /* v10.77.0: the pages flow (the back began a new page at levels 0–1 and left half of the front empty) */
+  K.gap(6);
+  K.head(T(P.heads.fund),60);
+  buyPdfMeter(K,doc,H.fund,{size:lv>=2?8:8.6});
   { const F=P.fundCols, lw=K.CW-170; const rows=[[T(F.source),T(F.amount),T(F.when)],...H.fund.rows];
     if(H.fund.phase2) rows.push([caseT(BUY_SL.fundL.phase2),H.fund.phase2,'']);
     rows.push([caseT(BUY_SL.fundL.total),H.fund.total,'']);
-    buyTable(doc,K,[{w:lw},{w:80},{w:90}],rows,{head:true,bold:[rows.length-1]});
-    K.para(H.fund.never,{size:8.4,color:C.ink2}); }
-  if(H.dates.length){ K.head(T(P.heads.timeline),40); K.para(H.dates.map(r=>r[0]+': '+r[1]).join(' · '),{size:8.8,color:C.ink2}); }
-  K.head(T(P.heads.how),50); H.how.forEach(s=>K.bullet(s)); K.para(caseT(P.heads.crew)+': '+H.crew,{size:8.8,color:C.ink2});
-  K.head(T(P.heads.risks),50); H.risks.forEach(s=>K.bullet(s));
-  K.head(T(P.heads.trail),40); K.para(H.trail.map(r=>r[0]+': '+r[1]).join(' · '),{size:8.8,color:C.ink2});
+    K.need(Math.min(rows.length*S(19)+S(8),260));   // v10.77.0: the table stays whole (its header and first row sat alone at the foot of the front)
+    buyTable(doc,K,[{w:lw},{w:80},{w:90}],rows,{head:true,bold:[rows.length-1],size:8.6});
+    K.para(H.fund.never,{size:8.6,color:C.ink2}); }
+  if(H.dates.length){ K.head(T(P.heads.timeline),40); K.para(H.dates.map(r=>r[0]+': '+r[1]).join(' · '),{size:9.2,color:C.ink2}); }
+  K.head(T(P.heads.how),50); H.how.forEach(s=>K.bullet(s,{size:9.4})); K.para(caseT(P.heads.crew)+': '+H.crew,{size:9.2,color:C.ink2});
+  K.head(T(P.heads.risks),50); H.risks.forEach(s=>K.bullet(s,{size:9.4}));
+  K.head(T(P.heads.trail),40); K.para(H.trail.map(r=>r[0]+': '+r[1]).join(' · '),{size:9.2,color:C.ink2});
   if(H.verses.length){ K.head(T(P.heads.scripture),60);
-    H.verses.forEach(v=>{ if(lv>=3) K.bullet(v.ref); else { K.para('“'+v.text+'”',{size:9.4,fam:'times',style:'italic',after:1}); K.para(v.ref,{size:7.2,color:C.acc,after:4}); } }); }
+    H.verses.forEach(v=>{ if(lv>=3) K.bullet(v.ref); else { K.para('“'+v.text+'”',{size:9.6,fam:'times',style:'italic',after:1}); K.para(v.ref,{size:7.4,color:C.acc,after:4}); } }); }
   // v10.44 review: Ellen White under her own heading, never under "Scripture" (an Adventist board reads the difference)
-  if(H.egw){ K.head(T(P.heads.sop),50); K.para('“'+H.egw.text+'”',{size:9,fam:'times',style:'italic',after:1}); K.para(H.egw.ref,{size:7.2,color:C.acc,after:4}); }
-  K.head(T(P.heads.sources),40); H.sources.forEach(s=>K.para(s,{size:7.8,color:C.ink2,after:2}));
+  if(H.egw){ K.head(T(P.heads.sop),50); K.para('“'+H.egw.text+'”',{size:9.4,fam:'times',style:'italic',after:1}); K.para(H.egw.ref,{size:7.4,color:C.acc,after:4}); }
+  K.head(T(P.heads.sources),40); H.sources.forEach(s=>K.para(s,{size:8.2,color:C.ink2,after:2}));
   return doc;
 }
 
@@ -40018,7 +40069,7 @@ function buyProposal(m,o){
       order:body==='finance'?'fund':order,motion:buyMotionText(m),
       why:{goal:m.goal.text,facts:[...m.facts].map(f=>f.value+' '+f.label+(f.names&&f.names.length?': '+f.names.join(', '):'')+'.'),verse:whyV,egw:buyEgw(buyEgwFor(body),L)},
       chart:buyChart(m),pick:m.tier+': '+m.pickWhy,
-      fund:{rows:m.lines.map(l=>[buyLineLabel(l,L,false,true),buyMoney(l.amount),l.k==='offering'&&l.date?buyDay(l.date,true):'']),phase2:m.phase2?buyMoney(m.phase2):'',total:buyMoney(m.total),dates:buyDateRows(m)},
+      fund:{rows:m.lines.map(l=>[buyLineLabel(l,L,false,true),buyMoney(l.amount),l.k==='offering'&&l.date?buyDay(l.date,true):'']),phase2:m.phase2?buyMoney(m.phase2):'',total:buyMoney(m.total),dates:buyDateRows(m),...buyFundParts(m)},
       policy,risks:buyRiskLines(m).map(r=>r.text),
       review:m.dates.firstUse?buyP(P.review,{date:buyDay(m.dates.firstUse)}):T(P.reviewNone),
       action:{outcomes:(CASE_DEC.outcomes[body==='conference'?'business':body]||[]).filter(x=>!(body==='board'&&x[0]==='recommended'&&!m.path.includes('business'))).map(x=>({k:x[0],label:L==='es'?x[2]:x[1],on:!!(rec&&rec.outcome===x[0])})),
@@ -40036,11 +40087,20 @@ function buyProposalDoc(Pz,opts){
 }
 function buyProposalDocAt(Pz,opts,lv){
   const doc=new opts.jsPDF({unit:'pt',format:'letter',orientation:'portrait',compress:opts.compress!==false});
-  const D=[1,.94,.88,.84][lv]||.84, K=buyKit(doc,lv,D), C=K.C, P=BUY_P, T=caseT, S=K.S;
-  if(Pz.sample){ K.F(7,'bold',C.acc); K.put(caseT(P.sample),K.X1,40,{align:'right',cs:1.2,bx0:K.MX}); }
-  K.y+=K.tb(Pz.kicker,K.MX,K.y,K.CW,{...K.LBL,size:7.2,color:C.acc},true)+4;
-  K.y+=K.tb(Pz.title,K.MX,K.y,K.CW,{size:S(17),style:'bold',color:C.ink,lh:S(21)},true)+S(5);
-  K.rows(Pz.memo,62,{size:9});
+  const D=[1,.94,.88,.84][lv]||.84, K=buyKit(doc,lv,D), C=K.C, P=BUY_P, T=caseT, S=K.S, W=BUY_PDF_W, WT=BUY_PDF_WT;
+  /* v10.77.0 — the band (the body it is for, the name); the memo under it, two across from level 1 */
+  const ko={...K.LBL,size:7.4,color:WT}, to={size:S(18),style:'bold',color:W,lh:S(22)};
+  const BH=S(lv>=2?18:22)+K.tb(Pz.kicker,0,0,K.CW,ko,false)+4+K.tb(Pz.title,0,0,K.CW,to,false)+S(lv>=2?14:18);
+  K.fill(C.acc); doc.rect(0,0,612,BH,'F');
+  if(Pz.sample){ K.F(7,'bold',W); K.put(caseT(P.sample),K.X1,14,{align:'right',cs:1.2,bx0:K.MX}); }
+  { let yy=S(lv>=2?18:22); yy+=K.tb(Pz.kicker,K.MX,yy,K.CW,ko,true)+4; K.tb(Pz.title,K.MX,yy,K.CW,to,true); }
+  K.y=BH+S(12);
+  const memo2=rows=>{ const half=Math.ceil(rows.length/2), L1=rows.slice(0,half), L2=rows.slice(half), cw=K.CW/2, lw=62, vo={size:S(9),color:C.ink,lh:S(12)};
+    let y1=K.y, y2=K.y;
+    L1.forEach(([k,v])=>{ const h=Math.max(K.tb(v,0,0,cw-lw-10,vo,false),S(11))+S(2.5); K.tb(k,K.MX,y1+1.4,lw-8,K.LBL,true); K.tb(v,K.MX+lw,y1,cw-lw-10,vo,true); y1+=h; });
+    L2.forEach(([k,v])=>{ const h=Math.max(K.tb(v,0,0,cw-lw,vo,false),S(11))+S(2.5); K.tb(k,K.MX+cw,y2+1.4,lw-8,K.LBL,true); K.tb(v,K.MX+cw+lw,y2,cw-lw,vo,true); y2+=h; });
+    K.y=Math.max(y1,y2); };
+  if(lv>=1) memo2(Pz.memo); else K.rows(Pz.memo,62,{size:9});
   if(Pz.status) K.para(Pz.status,{size:9,style:'bold',color:C.acc,after:1});
   K.para(Pz.path,{size:7.8,color:C.ink3,after:S(5)});
   const motionBox=label=>{ const mo={size:S(10.8),style:'bold',color:C.ink,lh:S(14)}, iw=K.CW-28;
@@ -40052,6 +40112,7 @@ function buyProposalDocAt(Pz,opts,lv){
     const v=Pz.why.verse; if(v){ if(lv>=3) K.bullet(v.ref,{size:8.6}); else K.bullet('“'+v.text+'” '+v.ref,{size:8.6,fam:'times',style:'italic'}); }
     const g=Pz.why.egw; if(g){ if(lv>=2) K.bullet(g.ref,{size:8.6}); else K.bullet('“'+g.text+'” '+g.ref,{size:8.6,fam:'times',style:'italic'}); } };   // v10.44 review: the Spirit of Prophecy (words to level 1)
   const options=()=>{ const ch=Pz.chart, n=ch.cols.length; if(!n) return; K.head(T(n===3?P.heads.options:P.heads.optionsN),70);
+    if(lv<2) buyPdfBars(K,doc,ch,{slim:true});   // v10.77.0: the totals as bars where the page has room
     const lw=74, cw=(K.CW-lw)/n, cols=[{w:lw},...ch.cols.map(c=>({w:cw,tint:c.rec?C.accTint:null}))];
     const rows=lv>=1?[['',...ch.cols.map(c=>c.tier+(c.rec?' ('+caseT(P.recommendedCol)+')':'')+' · '+c.name)],[ch.labels.total,...ch.cols.map(c=>c.total+' · '+c.where)],
         [ch.labels.install,...ch.cols.map(c=>c.warranty+' · '+c.install)]]
@@ -40064,6 +40125,7 @@ function buyProposalDocAt(Pz,opts,lv){
   const fund=()=>{ K.head(T(P.heads.fund),lv>=1?30:70);
     if(lv>=1){ const parts=[...Pz.fund.rows.map(r=>r[0]+(r[2]?' ('+r[2]+')':'')+' '+r[1]),...(Pz.fund.phase2?[caseT(BUY_SL.fundL.phase2)+' '+Pz.fund.phase2]:[])];
       K.para(parts.join(' · ')+' · '+caseT(BUY_SL.fundL.total)+' '+Pz.fund.total+'.',{size:8.8}); return; }
+    buyPdfMeter(K,doc,Pz.fund,{slim:true,size:8});   // v10.77.0: the plan as a meter at the roomiest level
     const F=P.fundCols, rows=[[T(F.source),T(F.amount),T(F.when)],...Pz.fund.rows];
     if(Pz.fund.phase2) rows.push([caseT(BUY_SL.fundL.phase2),Pz.fund.phase2,'']);
     rows.push([caseT(BUY_SL.fundL.total),Pz.fund.total,'']);
